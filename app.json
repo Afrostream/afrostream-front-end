@@ -3,7 +3,7 @@
   "description": "Front project of Afrostream Netflix for african-american and african tv show and movies",
   "scripts": {},
   "env": {
-    "NODE_ENV": "develop"
+    "NODE_ENV": "development"
   },
   "addons": []
 }
