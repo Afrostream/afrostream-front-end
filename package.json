@@ -56,5 +56,8 @@
     "react-router": "^1.0.0-beta2",
     "redux": "^0.12.0",
     "superagent": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=0.10.32"
   }
 }
