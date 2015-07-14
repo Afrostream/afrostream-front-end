@@ -1,20 +1,20 @@
 {
-  "extends": "eslint-config-airbnb",
+  "parser": "babel-eslint",
+  "settings": {
+    "ecmascript": 6,
+    "jsx": true
+  },
+  "plugins": [ "react" ],
   "env": {
-    "browser": true,
-    "node": true
+    "node": true,
+    "browser": true
   },
   "rules": {
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2,
-    // Temporarirly disabled due to a possible bug in babel-eslint (todomvc example)
-    "block-scoped-var": 0,
-    // Temporarily disabled for test/* until babel/babel-eslint#33 is resolved
-    "padded-blocks": 0,
-    "no-console": 0
-  },
-  "plugins": [
-    "react"
-  ]
+    "new-parens": 0,
+    "no-shadow": 0,
+    "no-underscore-dangle": 0,
+    "no-console": 1,
+    "quotes": [ 1, "single" ],
+    "strict": 0
+  }
 }

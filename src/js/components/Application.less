@@ -1,0 +1,79 @@
+@import (less) '../../../node_modules/normalize.css/normalize.css';
+@import './config.less';
+
+//
+// Base styles
+// -----------------------------------------------------------------------------
+
+@font-face {
+  font-family: din;
+  src: url(../../assets/fonts/DIN-30640-Std.ttf)
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color: #FFFFFF;
+  font-weight: 100;
+  font-size: 1em;
+  font-family: @font-family-base;
+  line-height: 1.375;
+}
+
+html, body, #main, #main > div {
+  height: 100%;
+}
+
+body {
+  background-color: @background-color-base;
+}
+
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -@footer-height;
+}
+
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+
+.Application {
+  min-width: 320px;
+  max-width: 960px;
+  margin: auto;
+}
+
+//
+// Base styles
+// -----------------------------------------------------------------------------
+
+a,
+a:hover,
+a:focus,
+a:active,
+a.active {
+  outline: none;
+  text-decoration: none;
+  color: @brand-primary;
+}
+
+a {
+  color: @brand-primary;
+}
+
+a:hover,
+a:focus,
+a:active,
+a.active {
+  color: darken(@brand-primary, 10%);
+  text-decoration: underline;
+}
+
+.fa-2x {
+  font-size: 1.3em;
+}

@@ -1,0 +1,45 @@
+/* React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
+@import '../config.less';
+
+.Footer {
+  font-size: 14px;
+  color: @brand-footer;
+  background: @background-footer;
+  .background-image(linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, @background-footer 100%));
+
+  &-container {
+    margin: 0 auto;
+    padding: 20px 15px;
+    text-align: center;
+
+  }
+
+  &-menu {
+    display: inline-block;
+    width: 100%;
+    .footer-section {
+      text-align: left;
+      .footer-section-label {
+        margin: 5px 20px 5px 20px;
+      }
+      .footer-links {
+        .footer-menu-link {
+          margin: 5px 20px 5px 20px;
+          font-size: 12px;
+          display: inline-block;
+          &.link-border {
+            border-left: solid 1px  @brand-footer;
+            padding-left: 10px;
+          }
+          a {
+            color: @brand-footer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.Footer, .page-wrap:after {
+  height: @footer-height;
+}
