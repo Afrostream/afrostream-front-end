@@ -33,13 +33,17 @@
 // Typography
 // -----------------------------------------------------------------------------
 
-@font-family-base: 'Segoe UI', 'HelveticaNeue-Light', sans-serif;
+@font-family-base: din, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+
+.body-font() {
+  font-family: @font-family-base;
+}
 
 //
 // Layout
 // -----------------------------------------------------------------------------
 
-@max-content-width: 1000px;
+@max-content-width: 1280px;
 @footer-height: 80px;
 
 //
@@ -60,7 +64,3 @@
 // -----------------------------------------------------------------------------
 
 @animation-swift-out: .45s cubic-bezier(0.3, 1, 0.4, 1) 0s;
-
-.body-font() {
-  font-family: din, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-}

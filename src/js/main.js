@@ -4,15 +4,17 @@ import Router from './components/Router';
 import { Provider } from 'redux/react';
 import createRedux from './lib/createRedux';
 import request from 'superagent';
+import superAgentMock from '../../config/superagent-mock-config';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiServer } from '../../config/client';
-
+//Todo connecter superagentmock pour l'api
+//require('superagent-mock')(request, config);
 const history = new History;
 const api = createAPI(
   /**
- * Client's createRequest() method
- */
+   * Client's createRequest() method
+   */
   ({ method, headers = {}, pathname, query = {}, body = {} }) => {
     pathname = pathname.replace(new RegExp(`^${apiServer.urlPrefix}`), '');
     var url = `${apiServer.urlPrefix}${pathname}`;
@@ -29,7 +31,7 @@ const redux = createRedux(api, __INITIAL_STATE__);
 
 React.render(
   <Provider redux={redux}>
-    {() => <Router {...{ history }} />}
+    {() => <Router {...{history}} />}
   </Provider>,
   document.getElementById('main')
 );

@@ -42,6 +42,7 @@ class FooterLinkItem extends React.Component {
       )
     else
       return (
+
         <Link to={this.props.link.link}>
           {this.renderIcon()}
         </Link>

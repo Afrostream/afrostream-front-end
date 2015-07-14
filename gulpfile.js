@@ -30,7 +30,7 @@ const $ = gulpLoadPlugins();
 const env = process.env.NODE_ENV || 'development';
 const src = Object.create(null);
 var isWatching = false;
-
+var browserSync;
 gulp.task('clean', clean);
 gulp.task('js:lint', jsLint);
 gulp.task('js:bundle', jsBundle);
@@ -38,7 +38,7 @@ gulp.task('browser-sync', browserSyncInitialize);
 
 gulp.task('watch', function () {
   isWatching = true;
-  runSequence(['styles', 'js:lint', 'js:bundle', 'browser-sync']);
+  runSequence(['js:lint', 'js:bundle', 'browser-sync', 'styles']);
 });
 
 gulp.task('nodemon', function () {
@@ -62,20 +62,21 @@ gulp.task('assets', (callback) => {
 
 // Static files
 gulp.task('styles', () => {
-  var srcBlob = [
-    'src/assets/**.less'
-  ];
   src.styles = [
     'dist/**/*.css'
   ];
 
-  $.watch(['dist/**/*.*'].concat(
-    src.styles.map(file => '!' + file)
-  ), file => {
-    browserSync.reload(path.relative(__dirname, file.path));
-  });
+  //$.watch(['dist/**/*.*'].concat(
+  //  src.styles.map(file => '!' + file)
+  //), file => {
+  //  browserSync.reload(path.relative(__dirname, file.path));
+  //  console.log('reloading');
+  //});
+  //
+  //return (isWatching ? $.watch(srcBlob) : gulp.src(srcBlob)).pipe($.size({title: 'less'}));
 
-  return (isWatching ? $.watch(srcBlob) : gulp.src(srcBlob)).pipe($.size({title: 'less'}));
+  // watch for changes
+  return gulp.watch(src.styles).on('change', browserSync.reload);
 });
 
 
@@ -142,7 +143,8 @@ function jsBundle(callback) {
   var lessLoader = {
     test: /\.less$/,
     //loader: ExtractTextPlugin.extract('style-loader/useable', '!css-loader!less-loader!postcss-loader'),
-    loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
+    //loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
+    loader: 'style!css!less',
     exclude: [
       path.resolve(__dirname, 'node_modules')
     ]
@@ -172,7 +174,10 @@ function jsBundle(callback) {
         babelLoader,
         lessLoader,
         imgLoader,
-        fontLoader
+        //fontLoader,
+        {test: /.woff([\?]?.*)$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'},
+        {test: /.ttf([\?]?.*)$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'},
+        {test: /.eot([\?]?.*)$/, loader: 'file-loader'}
       ]
     },
     plugins: [
@@ -190,6 +195,11 @@ function jsBundle(callback) {
       filename: '[name].js',
       chunkFilename: '[id].js'
     },
+    //FIXME WHAT IS THIS
+    //externals: {
+    //  'react': 'React',
+    //  'react/addons': 'React'
+    //},
     postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
   };
 
@@ -200,6 +210,7 @@ function jsBundle(callback) {
     quiet: true,
     noInfo: true,
     watch: true,
+    watchDelay: 100,
     debug: true,
     stats: {
       colors: true
@@ -257,7 +268,7 @@ function jsBundle(callback) {
 }
 
 function browserSyncInitialize() {
-  const browserSync = BrowserSync.create();
+  browserSync = BrowserSync.create();
   browserSync.init({
     files: ['dist/**/*'],
     open: false,

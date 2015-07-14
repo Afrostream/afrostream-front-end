@@ -9,7 +9,7 @@ class SearchBox extends React.Component {
       <div className="search-box">
         <form className="pure-form">
           <fieldset>
-            <input type="text" placeholder="Rechercher"/>
+            <input type="search" placeholder="RECHERCHEZ"/>
           </fieldset>
         </form>
       </div>
