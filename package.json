@@ -64,6 +64,7 @@
     "lodash": "^3.9.3",
     "parse-link-header": "^0.2.0",
     "qs": "^3.1.0",
+    "react-list": "^0.6.0",
     "react-router": "^1.0.0-beta2",
     "redux": "^0.12.0",
     "superagent": "^1.2.0"

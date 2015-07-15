@@ -8,19 +8,23 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header className="header">
-        <div className="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-          <Link className="pure-menu-heading" to="/">
-            <img src="/images/logo.png" alt="Afrostream.tv"/>
-          </Link>
-          <ul className="pure-menu-list">
-            <li className="pure-menu-item pure-menu-selected">
-              <Link to="/facebook" className="pure-menu-link">Home</Link>
-            </li>
-          </ul>
-          <SearchInput />
+      <nav className="navbar navbar-fixed-top" role="navigation">
+        <div className="container-fluid">
+          <div class="navbar-header">
+            <Link className="navbar-brand" to="/">
+              <img src="/images/logo.png" alt="Afrostream.tv"/>
+            </Link>
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <SearchInput />
+          </div>
         </div>
-      </header>
+      </nav>
     );
   }
 }

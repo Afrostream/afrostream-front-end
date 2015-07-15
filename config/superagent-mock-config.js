@@ -4,45 +4,9 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern: 'https://domain.example/(\\w+)/',
+    pattern: 'https://api.github.com/(\\w+)/',
 
-    /**
-     * returns the data
-     *
-     * @param match array Result of the resolution of the regular expression
-     * @param params object sent by 'send' function
-     */
-    fixtures: function (match, params) {
-      /**
-       * example:
-       *   request.get('https://error.example/404').end(function(err, res){
-       *     console.log(err); // 404
-       *   })
-       */
-      if (match[1] === '404') {
-        throw new Error(404);
-      }
-
-      /**
-       * example:
-       *   request.get('https://error.example/200').end(function(err, res){
-       *     console.log(res.body); // "Data fixtures"
-       *   })
-       */
-
-      /**
-       * example:
-       *   request.get('https://domain.send.example/').send({superhero: "me"}).end(function(err, res){
-       *     console.log(res.body); // "Data fixtures - superhero:me"
-       *   })
-       */
-      if(params["superhero"]) {
-        return 'Data fixtures - superhero:' + params["superhero"];
-      } else {
-        return 'Data fixtures';
-      }
-    },
-
+    fixtures: './fixtures/category.js',
     /**
      * returns the result of the request
      *
@@ -50,6 +14,7 @@ module.exports = [
      * @param data  mixed Data returns by `fixtures` attribute
      */
     callback: function (match, data) {
+      console.log(data);
       return {
         body: data
       };

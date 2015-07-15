@@ -136,15 +136,14 @@ function jsBundle(callback) {
 
   var imgLoader =
   {
-    test: /\.(jpeg|png|gif|svg)$/,
+    test: /\.(jpeg|png|gif|svg|favicon)$/,
     loader: 'file'
   };
 
   var lessLoader = {
     test: /\.less$/,
     //loader: ExtractTextPlugin.extract('style-loader/useable', '!css-loader!less-loader!postcss-loader'),
-    //loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
-    loader: 'style!css!less',
+    loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
     exclude: [
       path.resolve(__dirname, 'node_modules')
     ]
@@ -187,6 +186,7 @@ function jsBundle(callback) {
         }
       }),
       new ExtractTextPlugin('../styles/[name].css', {allChunks: false}),
+      new ExtractTextPlugin('../fonts/[name].{ttf,woff,eot}', {allChunks: false}),
       new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
     ],
     output: {
@@ -211,6 +211,9 @@ function jsBundle(callback) {
     noInfo: true,
     watch: true,
     watchDelay: 100,
+    watchOptions: {
+      aggregateTimeout: 100
+    },
     debug: true,
     stats: {
       colors: true

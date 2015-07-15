@@ -15,6 +15,10 @@
   padding: 0;
 }
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 html {
   color: #FFFFFF;
   font-weight: 100;
@@ -29,23 +33,19 @@ html, body, #main, #main > div {
 
 body {
   background-color: @background-color-base;
+  margin-bottom: @footer-height;
 }
 
 .page-wrap {
   min-height: 100%;
-  /* equal to footer height */
-  margin-bottom: -@footer-height;
+  > .container {
+    padding: @app-padding;
+  }
 }
 
 .page-wrap:after {
   content: "";
   display: block;
-}
-
-.Application {
-  min-width: 320px;
-  max-width: 960px;
-  margin: auto;
 }
 
 //

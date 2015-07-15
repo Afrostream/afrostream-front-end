@@ -7,7 +7,7 @@ class SearchBox extends React.Component {
   render() {
     return (
       <div className="search-box">
-        <form className="pure-form">
+        <form className="search-form">
           <fieldset>
             <input type="search" placeholder="RECHERCHEZ"/>
           </fieldset>

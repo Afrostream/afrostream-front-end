@@ -1,0 +1,92 @@
+@import '../config.less';
+
+.SlideShow {
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 56.25%; //Ratio 16:9
+    vertical-align: middle;
+  }
+
+  .slides {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .slide {
+    .fullHeight();
+    display: none;
+    opacity: 0;
+    &:before {
+      content: "";
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+    .slide-background {
+      .fullHeight();
+      position: absolute;
+      z-index: 0;
+      opacity: 0;
+      background-size: cover;
+      background-position: 50% 0%;
+      background-repeat: no-repeat;
+    }
+    .billboard-infos {
+      z-index: 1;
+      display: inline-block;
+      position: relative;
+      vertical-align: middle;
+    }
+
+  }
+
+  .slide.slide--active {
+    display: block;
+    opacity: 1;
+    .slide-background {
+      opacity: 1;
+      .animation(slideShow 24s linear infinite 0s);
+    }
+  }
+
+  .controls {
+    position: relative;
+  }
+
+  .toggle {
+    background: blue;
+    color: white;
+    display: block;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+  }
+
+  .toggle-prev {
+    left: 0;
+  }
+
+  .toggle--next {
+    right: 0;
+  }
+
+  .pagination {
+    margin: 20px;
+    text-align: center;
+  }
+
+  .pager {
+    background-color: red;
+    display: inline-block;
+    height: 20px;
+    margin: 10px;
+    overflow: hidden;
+    text-indent: -9000px;
+    white-space: nowrap;
+    width: 20px;
+  }
+  .keyframes(~'slideShow, 0% { opacity: 0; transform: scale(1);} 4% {opacity: 1} 24% { opacity: 1; } 28% { opacity: 1; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1.2); }');
+}

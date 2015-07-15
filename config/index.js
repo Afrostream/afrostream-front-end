@@ -13,7 +13,8 @@ export default {
    * API Server
    */
   apiServer: {
-    urlPrefix: 'https://api.github.com'
+    //urlPrefix: 'https://api.github.com'
+    urlPrefix: 'http://localhost:9000'
   },
 
   /**

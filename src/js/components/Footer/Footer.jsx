@@ -44,9 +44,9 @@ class Footer extends React.Component {
     //} = this;
 
     return (
-      <footer className="Footer">
-        <div className="Footer-container">
-          <div className="Footer-menu pure-g">
+      <footer className="footer">
+        <div className="footer-container container">
+          <div className="footer-menu row row-centered">
             {sections.map((section, i) => <FooterSection key={i} {...{section}} />)}
           </div>
         </div>

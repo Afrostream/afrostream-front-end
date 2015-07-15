@@ -6,6 +6,6 @@ export default {
    */
   apiServer: {
     //urlPrefix: 'https://api.github.com'
-    urlPrefix: 'https://domain.example'
+    urlPrefix: 'http://localhost:9000'
   }
 };

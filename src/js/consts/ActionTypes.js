@@ -9,5 +9,12 @@ export default {
 
   User: keyMirror({
     getOneByUsername: null
+  }),
+
+  Slides: keyMirror({
+    getTopByCategory: null,
+    toggleNext: null,
+    togglePrev: null,
+    toggleSlide: null
   })
 };

@@ -9,13 +9,13 @@ import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiServer } from '../../config/client';
 //Todo connecter superagentmock pour l'api
-//require('superagent-mock')(request, config);
+require('superagent-mock')(request, superAgentMock);
 const history = new History;
 const api = createAPI(
   /**
    * Client's createRequest() method
    */
-  ({ method, headers = {}, pathname, query = {}, body = {} }) => {
+  ({ method, headers = {}, pathname = '', query = {}, body = {} }) => {
     pathname = pathname.replace(new RegExp(`^${apiServer.urlPrefix}`), '');
     var url = `${apiServer.urlPrefix}${pathname}`;
 
