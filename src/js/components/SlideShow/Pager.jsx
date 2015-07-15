@@ -1,18 +1,12 @@
 import React from 'react';
 import { connect } from 'redux/react';
-import { prepareRoute } from '../../decorators';
 import * as SlidesActionCreators from '../../actions/slides';
 
-@prepareRoute(async function ({ redux }) {
-  return await * [
-      redux.dispatch(SlidesActionCreators.toggleSlide())
-    ];
-})
 @connect(({ Slides }) => ({Slides})) class Pager extends React.Component {
 
   static propTypes = {
-    title: React.PropTypes.string.isRequired
-  }
+    index: React.PropTypes.number.isRequired
+  };
 
   render() {
     const {
@@ -20,20 +14,27 @@ import * as SlidesActionCreators from '../../actions/slides';
         Slides
         }
       } = this;
+
+    const page = Slides.get(`page`);
+
+    const classes = React.addons.classSet({
+      'pager': true,
+      'pager--active': this.props.active
+    });
+    
     return (
-      <span className="pager" onClick={::this.toggleSlide}>{this.props.title}</span>
+      <span className={classes} onClick={::this.toggleSlide}>{this.props.index + 1}</span>
     );
   }
 
   toggleSlide() {
     const {
       props: {
-        dispatch,
-        params: { index }
+        dispatch
         }
       } = this;
 
-    dispatch(SlidesActionCreators.toggleSlide(index));
+    dispatch(SlidesActionCreators.toggleSlide(this.props.index));
   }
 }
 

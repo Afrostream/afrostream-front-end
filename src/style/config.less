@@ -1,4 +1,7 @@
-@import "../../../node_modules/lesshat/build/lesshat.less";
+@import "../../node_modules/lesshat/build/lesshat";
+@import "./mixins";
+@import "./fonts";
+@import "./box-sizing";
 
 //
 // Colors
@@ -29,15 +32,6 @@
 // set the primary color palette for this theme
 @background-color-base: @color-purple;
 @background-footer: @color-purple;
-//
-// Typography
-// -----------------------------------------------------------------------------
-
-@font-family-base: din, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-
-.body-font() {
-  font-family: @font-family-base;
-}
 
 //
 // Layout
@@ -65,11 +59,3 @@
 // -----------------------------------------------------------------------------
 
 @animation-swift-out: .45s cubic-bezier(0.3, 1, 0.4, 1) 0s;
-
-.fullHeight() {
-  margin: auto;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}

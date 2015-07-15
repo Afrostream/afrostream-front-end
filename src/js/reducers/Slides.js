@@ -18,8 +18,8 @@ export default createReducer(initialState, {
       [`total`]: slides.length - 1,
       [`page`]: page,
       [`current`]: category,
-      [`category/${category}__res`]: res,
-      [`category/${category}`]: slides
+      [`category/${category}/top__res`]: res,
+      [`category/${category}/top`]: slides
     });
   },
 
@@ -30,6 +30,12 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.Slides.togglePrev](state, { page }) {
+    return state.merge({
+      [`page`]: page
+    });
+  },
+
+  [ActionTypes.Slides.toggleSlide](state, { page }) {
     return state.merge({
       [`page`]: page
     });

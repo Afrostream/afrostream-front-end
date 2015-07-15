@@ -8,20 +8,23 @@ class Header extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-fixed-top" role="navigation">
+      <nav className="navbar navbar-default navbar-fixed-top" role="navigation">
         <div className="container-fluid">
-          <div class="navbar-header">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#collapsed-button" aria-expanded="false">
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <SearchInput />
+
+            <div id="collapsed-button" className="navbar-collapse collapse navbar-right">
+              <SearchInput/>
+            </div>
           </div>
         </div>
       </nav>

@@ -16,5 +16,14 @@ export default {
     toggleNext: null,
     togglePrev: null,
     toggleSlide: null
+  }),
+
+  Movies: keyMirror({
+    toggleNext: null,
+    togglePrev: null
+  }),
+
+  Category: keyMirror({
+    getCategory: null
   })
 };

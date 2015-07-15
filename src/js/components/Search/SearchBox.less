@@ -1,10 +1,6 @@
-@import '../config.less';
+@import '../../../style/config.less';
 
 .search-box {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 20px;
   fieldset {
     border: none;
   }
@@ -22,6 +18,9 @@
     /*positioning background image*/
     background-position: 10px 12px;
     /*changing background color form white*/
-    background-color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.8);
+    &:focus {
+      background-color: rgba(255, 255, 255, 1);
+    }
   }
 }

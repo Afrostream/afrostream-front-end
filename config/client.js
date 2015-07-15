@@ -7,5 +7,8 @@ export default {
   apiServer: {
     //urlPrefix: 'https://api.github.com'
     urlPrefix: 'http://localhost:9000'
+  },
+  carousel: {
+    interval: 10000
   }
 };

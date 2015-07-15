@@ -31,7 +31,6 @@ export function toggleNext() {
     if (next > total) {
       next = 0;
     }
-    console.log('nex', next, total);
     return {
       type: ActionTypes.Slides.toggleNext,
       page: next
@@ -56,17 +55,18 @@ export function togglePrev() {
 
 export function toggleSlide(index) {
   return (dispatch, getState) => {
-    const data = getState().Slides.get(`category/${category}`);
-    const mapIndex = data.map(function (slide) {
-      return (
-        slide.id
-      );
-    });
-
-    const current = index.indexOf('mapIndex');
+    //const category = getState().Slides.get(`current`);
+    //const data = getState().Slides.get(`category/${category}`);
+    //const mapIndex = data.map(function (slide) {
+    //  return (
+    //    slide.id
+    //  );
+    //});
+    //
+    //const current = index.toString().indexOf('mapIndex');
     return {
       type: ActionTypes.Slides.toggleSlide,
-      page: current
+      page: index
     };
   };
 }

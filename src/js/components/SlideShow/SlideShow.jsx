@@ -1,31 +1,63 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
-import Slides from './Slides';
+import { connect } from 'redux/react';
+import SlidesContainer from './Slides';
 import Pagination from './Pagination';
 import Controls from './Controls';
+import * as SlidesActionCreators from '../../actions/slides';
+import config from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./SlideShow.less');
 }
 
-class SlideShow extends React.Component {
+@connect(({ Slides }) => ({Slides})) class SlideShow extends React.Component {
 
-  static propTypes = {
-    slides: PropTypes.instanceOf(Immutable.List).isRequired,
-    page: React.PropTypes.number.isRequired
+  constructor(props) {
+    super(props);
+    this.interval = 0;
   }
 
   render() {
     const {
-      props: { slides,page }
+      props: {
+        Slides
+        }
       } = this;
+
+    const category = Slides.get(`current`);
+    const slides = Slides.get(`category/${category}/top`);
+    const page = Slides.get(`page`);
 
     return (
       <div className="SlideShow">
-        <Slides  {...{slides, page}}/>
-        <Controls />
+        <SlidesContainer  {...{slides, page}}/>
+        <Pagination {...{slides, page}}/>
       </div>
     );
+  }
+
+  //Next prev button
+  //<Controls />
+
+  componentWillUnmount() {
+    clearTimeout(this.interval);
+  }
+
+  componentDidUpdate() {
+    clearTimeout(this.interval);
+    this.interval = setTimeout(() => this.toggleNext(), config.carousel.interval);
+  }
+
+  toggleNext() {
+
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(SlidesActionCreators.toggleNext());
   }
 }
 

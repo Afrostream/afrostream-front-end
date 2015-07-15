@@ -15,7 +15,7 @@ class Application extends React.Component {
       <div className="app">
         <Header />
 
-        <div className="page-wrap">
+        <div className="container-fluid">
           {children}
         </div>
 

@@ -1,31 +1,33 @@
 import React from 'react';
 import { connect } from 'redux/react';
 import { prepareRoute } from '../decorators';
+import * as CategoryActionCreators from '../actions/category';
 import * as SlidesActionCreators from '../actions/slides';
 import { Link } from 'react-router';
 import SlideShow from './SlideShow/SlideShow';
 
 @prepareRoute(async function ({ redux, params: { category } }) {
   return await * [
+      redux.dispatch(CategoryActionCreators.getCategory(category)),
       redux.dispatch(SlidesActionCreators.getTopByCategory(category))
     ];
 })
-@connect(({ Slides }) => ({Slides})) class HomePage extends React.Component {
+@connect(({ Category }) => ({Category})) class HomePage extends React.Component {
 
   render() {
     const {
       props: {
-        Slides,
+        Category,
         params: { category }
         }
       } = this;
 
-    const slides = Slides.get(`category/${category}`);
-    const page = Slides.get(`page`);
+    console.log(Category);
+    const list = Category.get(`category/${category}`);
 
     return (
-      <div className="container">
-        {slides ? <SlideShow {...{slides, page}} /> : 'Loading...'}
+      <div className="row-fluid">
+        {list ? <SlideShow /> : 'Loading...'}
       </div>
     );
   }

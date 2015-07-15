@@ -1,35 +1,40 @@
 'use strict';
+import _ from 'lodash';
+import client from './client';
 
-export default {
-  /**
-   * Front-End Server
-   */
-  server: {
-    host: 'localhost',
-    port: 8080
-  },
+const config = _.merge(
+  {
+    /**
+     * Front-End Server
+     */
+    server: {
+      host: 'localhost',
+      port: 8080
+    },
 
-  /**
-   * API Server
-   */
-  apiServer: {
-    //urlPrefix: 'https://api.github.com'
-    urlPrefix: 'http://localhost:9000'
-  },
+    /**
+     * API Server
+     */
+    apiServer: {
+      //urlPrefix: 'https://api.github.com'
+      urlPrefix: 'http://localhost:9000'
+    },
 
-  /**
-   * WebpackDevServer
-   */
-  webpackDevServer: {
-    host: 'localhost',
-    port: 8081
-  },
+    /**
+     * WebpackDevServer
+     */
+    webpackDevServer: {
+      host: 'localhost',
+      port: 8081
+    },
 
-  /**
-   * browserSync
-   */
-  browserSyncServer: {
-    host: 'localhost',
-    port: 8082
-  }
-};
+    /**
+     * browserSync
+     */
+    browserSyncServer: {
+      host: 'localhost',
+      port: 8082
+    }
+  }, client);
+
+export default config;

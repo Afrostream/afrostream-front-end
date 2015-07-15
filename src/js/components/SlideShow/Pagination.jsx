@@ -5,23 +5,24 @@ import Pager from './Pager';
 class Pagination extends React.Component {
 
   static propTypes = {
-    slides: PropTypes.instanceOf(Immutable.List).isRequired
-  }
+    slides: PropTypes.instanceOf(Immutable.List).isRequired,
+    page: React.PropTypes.number.isRequired
+  };
 
   render() {
     const {
-      props: { slides }
+      props: { slides,page }
       } = this;
 
-    //return (
-    //  <div className="pagination">
-    //    {slides.map(page => <Pager
-    //      id={page.get('id')}
-    //      key={page.get('id')}
-    //      {...{page}} />)}
-    //  </div>
-    //);
-    return (<div />);
+    return (
+      <div className="pagination">
+        {slides.map((category, i) => <Pager
+          active={page === i}
+          index={i}
+          key={category._id}
+          {...{category}} />)}
+      </div>
+    );
   }
 }
 
