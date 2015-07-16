@@ -1,0 +1,69 @@
+/* React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
+@import '../../../style/config.less';
+
+.footer {
+  /*
+  * Sticky footer
+  */
+  width: 100%;
+
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: @brand-footer;
+  background: @background-footer;
+  .background-image(linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, @background-footer 50%));
+
+  &-container {
+    margin: 0 auto;
+    padding: 20px 15px;
+    text-align: center;
+    max-width: @max-content-width;
+  }
+
+  .row-centered {
+    text-align: center;
+  }
+
+  &-menu {
+    .footer-section {
+      text-align: left;
+      .footer-section-label {
+        margin: 5px 0px 5px 0px;
+      }
+      .footer-links {
+        .footer-menu-link {
+          font-weight: 200;
+          font-size: 11px;
+          text-transform: capitalize;
+          display: inline-block;
+          &.link-border {
+            margin-left: 10px;
+            &:before {
+              content: "";
+              height: 100%;
+              border-left: solid 1px  @brand-footer;
+              padding-left: 10px;
+            }
+          }
+          a {
+            color: @brand-footer;
+          }
+        }
+      }
+      &:nth-child(1) {
+        text-align: left;
+      }
+      &:nth-child(2) {
+        text-align: center;
+      }
+      &:nth-child(3) {
+        text-align: right;
+      }
+    }
+  }
+}
+
+.footer, .page-wrap:after {
+  height: @footer-height;
+}

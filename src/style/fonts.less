@@ -1,0 +1,35 @@
+@import './mixins';
+@import './for';
+
+/* Fonts list array */
+@fonts: 'HelveticaNeue-Black', 'HelveticaNeue-Bold', 'HelveticaNeue-Heavy', 'HelveticaNeue-Light', 'HelveticaNeue-Medium', 'HelveticaNeue-Roman', 'HelveticaNeue-Thin';
+
+/* Call .font-face() mixin for each font from @fonts array */
+//.-(@i: length(@fonts)) when (@i > 0) {
+//  @font: e(extract(@fonts, @i));
+//  .font-face(@font);
+//  .-((@i - 1));
+//} .-;
+
+.for(@fonts);
+.-each(@value) {
+  .font-face(@value);
+}
+
+//
+// Typography
+// -----------------------------------------------------------------------------
+
+@font-family-base: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+@font-light: "HelveticaNeue-Light", Helvetica, sans-serif;
+@font-thin: "HelveticaNeue-Thin", Helvetica, sans-serif;
+@font-medium: "HelveticaNeue-Medium", Helvetica, sans-serif;
+@font-bold: "HelveticaNeue-Bold", Helvetica, sans-serif;
+@font-heavy: "HelveticaNeue-Heavy", Helvetica, sans-serif;
+@font-roman: "HelveticaNeue-Roman", Helvetica, sans-serif;
+@font-black: "HelveticaNeue-Black", Helvetica, sans-serif;
+
+.body-font() {
+  font-family: @font-family-base;
+  line-height: 1;
+}

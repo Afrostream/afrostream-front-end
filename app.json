@@ -1,7 +1,10 @@
 {
-  "name":"afrostream-front-end",
-  "description":"Front project of Afrostream Netflix for african-american and african tv show and movies",
-  "scripts":{},
-  "env":{},
-  "addons":[]
+  "name": "afrostream-front-end",
+  "description": "Front project of Afrostream Netflix for african-american and african tv show and movies",
+  "scripts": {},
+  "env": {
+    "NODE_ENV": "development",
+    "API_END_POINT": "http://api.afrostream.tv"
+  },
+  "addons": []
 }
