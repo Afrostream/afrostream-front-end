@@ -5,6 +5,7 @@ import * as CategoryActionCreators from '../actions/category';
 import * as SlidesActionCreators from '../actions/slides';
 import { Link } from 'react-router';
 import SlideShow from './SlideShow/SlideShow';
+import MoviesList from './Movies/MoviesList';
 
 @prepareRoute(async function ({ redux, params: { category } }) {
   return await * [
@@ -22,12 +23,12 @@ import SlideShow from './SlideShow/SlideShow';
         }
       } = this;
 
-    console.log(Category);
-    const list = Category.get(`category/${category}`);
+    const movies = Category.get(`category/${category}`);
 
     return (
       <div className="row-fluid">
-        {list ? <SlideShow /> : 'Loading...'}
+        {movies ? <SlideShow /> : 'Loading...'}
+        {movies ? <MoviesList {...{movies}}/> : 'Loading...'}
       </div>
     );
   }

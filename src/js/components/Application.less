@@ -15,14 +15,6 @@
   box-sizing: border-box;
 }
 
-html {
-  color: #FFFFFF;
-  font-weight: 100;
-  font-size: 1em;
-  line-height: 1.375;
-  .body-font();
-}
-
 html, body, #main, #main > div {
   height: 100%;
 }
@@ -30,6 +22,11 @@ html, body, #main, #main > div {
 body {
   background-color: @background-color-base;
   margin-bottom: @footer-height;
+  font-weight: 100;
+  font-size: 1em;
+  line-height: 1.4;
+  color: @brand-primary;
+  .body-font();
 }
 
 .app {

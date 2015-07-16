@@ -23,20 +23,34 @@
       vertical-align: middle;
     }
     .slide-background {
+      position: absolute;
+      z-index: 0;
       left: 0;
       top: 0;
       margin: -@app-padding;
       bottom: -@app-padding;
       right: -@app-padding;
-      position: absolute;
-      z-index: 0;
       -webkit-transform-style: preserve-3d;
       transform-style: preserve-3d;
+      transform: translate3d(0, 0, 0);
+
       background-size: cover;
       background-position: 50% 0%;
       background-repeat: no-repeat;
+
+      &:before {
+        content: '';
+        .box-shadow(0px 0px 220px rgba(40, 20, 48, 0.6) inset);
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+      }
     }
     .billboard-infos {
+      z-index: 5;
       position: relative;
       display: inline-block;
       vertical-align: middle;
@@ -45,12 +59,32 @@
       color: @brand-primary;
       //text-shadow: 0 1px 25px rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.5);
       .billboard-title {
-        font-size: 3.5em;
+        font-size: 4.5em;
         line-height: 1;
         text-transform: uppercase;
       }
       .billboard-synopsis {
-        font-size: 1em;
+        font-size: 1.4em;
+      }
+      .billboard-tag-list {
+        list-style: none;
+        display: inline-block;
+        .billboard-tag {
+          background-color: @color-yellow;
+          text-transform: uppercase;
+          display: inline-block;
+          float: left;
+          a,
+          a:active {
+            color: @color-purple;
+            text-decoration: none;
+            font-family: @font-medium;
+          }
+          font-size: 1em;
+          border-radius: 2px;
+          padding: 3px 5px 3px 5px;
+          margin: 5px;
+        }
       }
     }
 
@@ -94,9 +128,12 @@
   }
 
   .pager {
-    background-color: rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.4);
+    @color-purple-alpha : rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.4);
+    background-color: @color-purple-alpha;
     display: inline-block;
     font-family: @font-light;
+    font-size: 1.3em;
+    line-height: 1.6;
     height: 25px;
     margin: 5px;
     padding: 1px;
@@ -105,7 +142,7 @@
     width: 25px;
     color: @brand-primary;
     border-radius: 100%;
-    border: 1px solid rgba(red(@color-yellow), green(@color-yellow), blue(@color-yellow), 0.4);;
+    border: 1px solid;
     cursor: pointer;
     .transition(all 0.2s);
     &:hover,
@@ -114,7 +151,7 @@
     &:active {
       font-family: @font-medium;
       background-color: @color-yellow;
-      border: 1px solid @color-purple;
+      border: 1px solid @color-purple-alpha;
       color: @color-purple;
     }
   }

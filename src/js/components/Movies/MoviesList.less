@@ -1,4 +1,77 @@
+@import '../../../style/config.less';
+@import '../../../style/arrow.less';
+
 .movies-list {
+  @thumb-margin: 10px;
+
   position: relative;
-  width: 100%;
+  margin: 10px 0 10px 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .selection {
+    font-size: 1.8em;
+    font-family: @font-light;
+    text-transform: uppercase;
+    margin: 10px @app-padding 10px @app-padding;
+  }
+  .movies-list__container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overflow-x: visible;
+    overflow-y: hidden;
+    position: relative;
+    width: 100%;
+    ul {
+      width: 100%;
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      li {
+        flex-shrink: 0;
+        padding-bottom: 50px;
+        &:last-child {
+          padding-right: 20px;
+          box-sizing: content-box;
+        }
+      }
+    }
+
+    .slider {
+      position: relative;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+    }
+
+    .thumb {
+
+      display: inline-block;
+      position: relative;
+      padding: 0;
+      margin: @thumb-margin;
+      text-align: center;
+      width: 140px;
+      height: 200px;
+      line-height: 200px;
+      .thumb-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+      .thumb-info {
+        width: 100%;
+        bottom: 0;
+        position: absolute;
+      }
+    }
+  }
 }

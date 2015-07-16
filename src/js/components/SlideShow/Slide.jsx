@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import { Link } from 'react-router';
 
 if (canUseDOM) {
   require('gsap');
@@ -12,7 +13,6 @@ class Slide extends React.Component {
     super(props);
     this.tl = null;
   }
-
 
   initTransition() {
     const container = React.findDOMNode(this.refs.slContainer);
@@ -55,6 +55,7 @@ class Slide extends React.Component {
   }
 
   render() {
+    const maxLength = 450;
     const classes = React.addons.classSet({
       'slide': true,
       'slide--active': this.props.active
@@ -65,13 +66,25 @@ class Slide extends React.Component {
 
     let imageStyles = {backgroundImage: `url(${category.get('poster')})`};
 
+    let title = category.get('title');
+    let tags = category.get('tags') || [];
+    let synopsis = category.get('synopsis') || '';
+    //wrap text
+    if (synopsis.length >= maxLength) {
+      let cutIndex = synopsis.indexOf(' ', maxLength);
+      let shortDescription = synopsis.substring(0, cutIndex) + '...';
+      synopsis = shortDescription;
+    }
+
     return (
       <div ref="slContainer" className={classes}>
         <div ref="slBackground" className="slide-background" style={imageStyles}/>
         <div className="billboard-infos">
-          <div ref="slTitle" className="billboard-title">{category.get('title')}</div>
-
-          <div ref="slSynopsis" className="billboard-synopsis">{category.get('synopsis')}</div>
+          <ul ref="tags" className="billboard-tag-list">
+            {tags.map((tag) => <li className="billboard-tag"><Link to={tag}>{tag}</Link></li>)}
+          </ul>
+          <div ref="slTitle" className="billboard-title">{title}</div>
+          <div ref="slSynopsis" className="billboard-synopsis">{synopsis}</div>
           <a href={category.get('link')}>{category.get('link')}</a>
         </div>
       </div>
