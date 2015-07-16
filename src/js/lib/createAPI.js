@@ -37,7 +37,7 @@ export default function createAPI(createRequest) {
     }
 
     return await new Promise((resolve, reject) => {
-      createRequest({ method, headers, pathname, query, body })
+      createRequest({method, headers, pathname, query, body})
         .end((err, res) => {
           if (err) {
             return reject(err);

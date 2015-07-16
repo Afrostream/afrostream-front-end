@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax, Cubic} = window.GreenSockGlobals;
+  var {TimelineMax,TweenMax} = window.GreenSockGlobals;
 }
 
 class Slide extends React.Component {

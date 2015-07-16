@@ -45,11 +45,11 @@ class Slider extends React.Component {
 
   componentDidMount() {
     this.container = React.findDOMNode(this).lastChild;
-    this.container.addEventListener('scroll', this.handleScroll);
+    this.container.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
   componentWillUnmount() {
-    this.container.removeEventListener('scroll', this.handleScroll);
+    this.container.removeEventListener('scroll', this.handleScroll.bind(this));
   }
 
   /**

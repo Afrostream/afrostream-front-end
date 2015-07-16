@@ -5,8 +5,7 @@ export default {
    * Front-End Server
    */
   apiServer: {
-    //urlPrefix: 'https://api.github.com'
-    urlPrefix: 'http://localhost:9000'
+    urlPrefix: 'http://api.afrostream.tv'
   },
   carousel: {
     interval: 10000

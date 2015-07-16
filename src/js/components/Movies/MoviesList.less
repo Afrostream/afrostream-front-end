@@ -3,6 +3,9 @@
 
 .movies-list {
   @thumb-margin: 10px;
+  @thumb-width: 140px;
+  @thumb-height: 200px;
+  @zoom-padding: 20px 0 20px 0;
 
   position: relative;
   margin: 10px 0 10px 0;
@@ -19,25 +22,8 @@
   .movies-list__container {
     overflow-x: auto;
     overflow-y: hidden;
-    overflow-x: visible;
-    overflow-y: hidden;
     position: relative;
     width: 100%;
-    ul {
-      width: 100%;
-      display: flex;
-      overflow-x: auto;
-      white-space: nowrap;
-      li {
-        flex-shrink: 0;
-        padding-bottom: 50px;
-        &:last-child {
-          padding-right: 20px;
-          box-sizing: content-box;
-        }
-      }
-    }
-
     .slider {
       position: relative;
       top: 0;
@@ -45,32 +31,60 @@
       left: 0;
       width: 100%;
       padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
-    }
-
-    .thumb {
-
-      display: inline-block;
-      position: relative;
-      padding: 0;
-      margin: @thumb-margin;
-      text-align: center;
-      width: 140px;
-      height: 200px;
-      line-height: 200px;
-      .thumb-background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-      }
-      .thumb-info {
+      .slider-conatiner {
         width: 100%;
-        bottom: 0;
-        position: absolute;
+        display: inline-block;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 20px;
+        .thumb-containter {
+          flex-shrink: 0;
+          display: inline-block;
+        }
+      }
+    }
+    .thumb-containter {
+      //Padding for dont hide thumb on zooming effect
+      padding: @zoom-padding;
+      .thumb {
+        display: inline-block;
+        position: relative;
+        padding: 0;
+        margin: @thumb-margin;
+        text-align: center;
+        line-height: 200px;
+        border: 1px solid transparent;
+        //.transition(all 0.2s linear);
+        .thumb-background {
+          position: relative;
+          display: inline-block;
+          vertical-align: middle;
+          width: @thumb-width;
+          height: @thumb-height;
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat;
+          cursor: pointer;
+        }
+        .thumb-info {
+          display: none;
+          width: 0;
+          vertical-align: middle;
+        }
+        &:before {
+          content: "";
+          display: inline-block;
+          vertical-align: middle;
+          height: 100%;
+        }
+        &:hover {
+          background-color: #FFFFFF;
+          border-color: #FFFFFF;
+          //.thumb-info {
+          //  display: inline-block;
+          //  width: @thumb-width * 2;
+          //}
+        }
       }
     }
   }

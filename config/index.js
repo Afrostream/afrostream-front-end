@@ -9,15 +9,17 @@ const config = _.merge(
      */
     server: {
       host: 'localhost',
-      port: 8080
+      ip: process.env.IP ||
+      undefined,
+      port: process.env.PORT ||
+      8080
     },
 
     /**
      * API Server
      */
     apiServer: {
-      //urlPrefix: 'https://api.github.com'
-      urlPrefix: 'http://localhost:9000'
+      urlPrefix: process.env.API_END_POINT || 'http://api.afrostream.tv'
     },
 
     /**

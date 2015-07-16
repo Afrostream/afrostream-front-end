@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import { connect } from 'redux/react';
 import * as MoviesActionCreators from '../../actions/movies';
 import config from '../../../../config';
-import Slider from '../Slider';
+import Slider from '../Slider/Slider';
 import Thumb from './Thumb';
 
 if (process.env.BROWSER) {
@@ -31,9 +31,9 @@ if (process.env.BROWSER) {
 
         <div className="movies-list__container">
           <Slider>
-            <ul>
+            <div className="slider-conatiner">
               {movies.map((movie, i) => <Thumb key={`movie-${i}`} {...{movie}}/>)}
-            </ul>
+            </div>
           </Slider>
         </div>
       </div>
