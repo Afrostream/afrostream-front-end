@@ -4,13 +4,13 @@
   "description": "Universal with React + Redux.",
   "main": "index.js",
   "scripts": {
-    "gulp": "babel-node ./node_modules/gulp/bin/gulp",
-    "express": "babel-node lib/express",
+    "gulp": "./node_modules/.bin/babel-node ./node_modules/gulp/bin/gulp",
+    "express": "./node_modules/.bin/babel-node lib/express",
     "dev": "npm run gulp dev",
     "lint": "npm run gulp js:lint",
     "build": "npm run gulp build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build && babel-node lib/express.js"
+    "start": "npm run build && ./node_modules/.bin/babel-node lib/express.js"
   },
   "keywords": [
     "react",
