@@ -12,7 +12,7 @@ const config = _.merge(
       ip: process.env.IP ||
       undefined,
       port: process.env.PORT ||
-      8080
+      3000
     },
 
     /**
