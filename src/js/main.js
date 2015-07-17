@@ -7,7 +7,7 @@ import request from 'superagent';
 import superAgentMock from '../../config/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
-import { apiServer } from '../../config';
+import { apiClient } from '../../config';
 
 if (process.env.NODE_ENV === 'development') {
   superAgentMock(request);
@@ -19,8 +19,8 @@ const api = createAPI(
    * Client's createRequest() method
    */
   ({ method, headers = {}, pathname = '', query = {}, body = {} }) => {
-    pathname = pathname.replace(new RegExp(`^${apiServer.urlPrefix}`), '');
-    var url = `${apiServer.urlPrefix}${pathname}`;
+    pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '');
+    var url = `${apiClient.urlPrefix}${pathname}`;
 
     return request(method, url)
       .query(qs.stringify(query))

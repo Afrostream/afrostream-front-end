@@ -4,8 +4,8 @@ export default {
   /**
    * Front-End Server
    */
-  apiServer: {
-    urlPrefix: 'http://api.afrostream.tv'
+  apiClient: {
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || '//api.afrostream.tv'
   },
   carousel: {
     interval: 10000

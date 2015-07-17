@@ -27,8 +27,8 @@ const prodConfig = merge({}, webpackConfig, {
     noParse: [/.\/superagent-mock$/]
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    //new webpack.optimize.DedupePlugin(),
+    //new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
