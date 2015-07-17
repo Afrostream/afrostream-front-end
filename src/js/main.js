@@ -4,12 +4,13 @@ import Router from './components/Router';
 import { Provider } from 'redux/react';
 import createRedux from './lib/createRedux';
 import request from 'superagent';
-import superAgentMock from '../../config/superagent-mock';
+import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient } from '../../config';
 
-if (process.env.NODE_ENV === 'development') {
+const env = process.env.NODE_ENV || 'development';
+if (env === 'development') {
   superAgentMock(request);
 }
 

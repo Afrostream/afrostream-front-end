@@ -45,11 +45,12 @@ const webpackConfig = {
   },
   module: {
     preLoaders: [
-      //{
-      //  test: /\.js$/, // include .js files
-      //  exclude: /node_modules/, // exclude any and all files in the node_modules folder
-      //  loader: 'jshint-loader'
-      //}
+      {
+        test: /\.js$/, // include .js files
+        exclude: /node_modules/, // exclude any and all files in the node_modules folder
+        loaders: ['babel-loader']
+        //, 'jshint-loader'
+      }
     ],
     loaders: [
       {
@@ -57,6 +58,11 @@ const webpackConfig = {
         loader: '',
         loaders: ['babel-loader'],
         exclude: /node_modules/
+      },
+      {
+        test: /\.js$/, // include .js files
+        exclude: /node_modules/, // exclude any and all files in the node_modules folder
+        loaders: ['babel-loader']
       },
       {
         test: /\.less$/,

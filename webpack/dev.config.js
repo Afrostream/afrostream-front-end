@@ -2,7 +2,6 @@ import webpack from 'webpack';
 import merge from 'lodash/object/merge';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import webpackConfig from './webpack.config.js';
-import WebpackStrip from 'strip-loader';
 import config from '../config';
 //
 // Configuration for the client-side bundle (app.js)

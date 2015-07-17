@@ -1,6 +1,7 @@
 // ./superagent-mock-config.js file
 import _ from 'lodash';
 import *  as Fixtures from './fixtures';
+import config from '../index';
 
 const getPaginatedItems = function (items, page, per_page) {
   var page = page || 1,
@@ -18,7 +19,7 @@ const getPaginatedItems = function (items, page, per_page) {
 
 const superAgentConfig = [
   {
-    pattern: 'http://api.afrostream.tv/category/(\\w+)$',
+    pattern: `${config.apiServer.urlPrefix}/category/(\\w+)$`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
@@ -28,7 +29,7 @@ const superAgentConfig = [
     }
   },
   {
-    pattern: 'http://api.afrostream.tv/category/(\\w+)/top',
+    patter: `${config.apiServer.urlPrefix}/category/(\\w+)/top`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
