@@ -4,9 +4,12 @@ import Router from './components/Router';
 import { Provider } from 'redux/react';
 import createRedux from './lib/createRedux';
 import request from 'superagent';
+import superAgentMock from '../../config/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiServer } from '../../config';
+
+superAgentMock(request);
 
 const history = new History;
 const api = createAPI(
