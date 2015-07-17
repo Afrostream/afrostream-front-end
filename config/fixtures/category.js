@@ -1,5 +1,5 @@
 // ./category.js file
-export default function Category() {
+export default function () {
   return [
     {
       "_id": "5504b0fdf298061100d4b231",
