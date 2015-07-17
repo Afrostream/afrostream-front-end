@@ -5,10 +5,15 @@ import { Provider } from 'redux/react';
 import createRedux from './lib/createRedux';
 import request from 'superagent';
 import superAgentMock from '../../config/superagent-mock';
-superAgentMock(request);
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiServer } from '../../config';
+
+const env = process.env.NODE_ENV || 'development';
+if (env === 'development') {
+  superAgentMock(request);
+}
+
 const history = new History;
 const api = createAPI(
   /**
