@@ -9,7 +9,6 @@ const CSS_LOADER = 'css-loader';
 // -----------------------------------------------------------------------------
 const { server: { host, port } } = config;
 const serverUrl = `http://${host}:${port}`;
-console.log(serverUrl);
 const prodConfig = merge({}, webpackConfig, {
   devtool: '#source-map',
   externals: /^[a-z][a-z\.\-0-9]*$/,
@@ -31,7 +30,9 @@ const prodConfig = merge({}, webpackConfig, {
       compress: {
         warnings: false
       }
-    })
+    }),
+    // ignore dev config
+    new webpack.IgnorePlugin(/\.\/dev/, /\/config$/)
   )
   //,
   //module: {
