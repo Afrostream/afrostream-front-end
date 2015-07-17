@@ -23,9 +23,9 @@ const prodConfig = merge({}, webpackConfig, {
     __filename: false,
     __dirname: false
   },
-  //module: {
-  //  noParse: [/.\/superagent-mock$/]
-  //},
+  module: {
+    noParse: [/.\/superagent-mock$/]
+  },
   plugins: webpackConfig.plugins.concat(
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -36,9 +36,6 @@ const prodConfig = merge({}, webpackConfig, {
     }),
     // ignore dev config
     new webpack.IgnorePlugin(/.\/superagent-mock$/)
-    //new webpack.IgnorePlugin(/.\/superagent-mock$/),
-    //new webpack.NormalModuleReplacementPlugin(/.\/superagent-mock$/, () => {
-    //})
   )
   //,
   //module: {

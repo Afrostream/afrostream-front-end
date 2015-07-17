@@ -9,7 +9,9 @@ import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiServer } from '../../config';
 
-superAgentMock(request);
+if (process.env.NODE_ENV === 'development') {
+  superAgentMock(request);
+}
 
 const history = new History;
 const api = createAPI(
