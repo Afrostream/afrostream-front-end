@@ -1,7 +1,11 @@
 {
-  "name":"afrostream-front-end",
-  "description":"Front project of Afrostream Netflix for african-american and african tv show and movies",
-  "scripts":{},
-  "env":{},
-  "addons":[]
+  "name": "afrostream-front-end",
+  "description": "Front project of Afrostream Netflix for african-american and african tv show and movies",
+  "scripts": {},
+  "env": {
+    "NODE_ENV": "staging",
+    "API_END_POINT": "http://afrostream-api-v1-staging.herokuapp.com",
+    "API_CLIENT_END_POINT": "http://afrostream-api-v1-staging.herokuapp.com"
+  },
+  "addons": []
 }
