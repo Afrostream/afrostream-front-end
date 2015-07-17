@@ -13,6 +13,13 @@ class Thumb extends React.Component {
     super(props);
     this.tl = null;
     this.thumbWidth = 250;
+    this.overTime = 0;
+    this.perspective = 100;
+    this.thumbOffset = 15;
+    this.scollSpeed = 1.4;
+    this.container = null;
+    this.slider = null;
+    this.thumbBackground = null;
   }
 
   static propTypes = {
@@ -20,29 +27,68 @@ class Thumb extends React.Component {
   };
 
   initTransition() {
-    const container = React.findDOMNode(this.refs.thumbContainer);
+    this.container = React.findDOMNode(this.refs.thumbContainer);
+    this.slider = this.container.parentNode;
+    this.thumbBackground = React.findDOMNode(this.refs.thumbBackground);
     const thumb = React.findDOMNode(this.refs.thumb);
     const info = React.findDOMNode(this.refs.info);
-    TweenMax.set(container, {transformStyle: 'preserve-3d', perspective: 100, perspectiveOrigin: '50% 50%'});
-    this.tl = new TimelineMax({paused: true, delay: 0.2, align: 'start'});
+    TweenMax.set(this.container, {
+      transformStyle: 'preserve-3d',
+      perspective: this.perspective,
+      perspectiveOrigin: '50% 50%'
+    });
+    this.tl = new TimelineMax({paused: true, align: 'start'});
     this.tl.add(TweenMax.fromTo(thumb, 0.4,
-      {transform: 'translateZ(0)'},
-      {transform: 'translateZ(10px)', ease: Sine.easeOut}
+      {
+        transform: 'translate3D(0,0,0)',
+        backgroundColor: 'transparent',
+        borderColor: 'transparent'
+      },
+      {
+        transform: `translate3D(0,0,10px)`,
+        backgroundColor: '#FFF',
+        borderColor: '#FFF',
+        ease: Sine.easeOut
+      }
     ), 0);
-    this.tl.add(TweenMax.fromTo(info, 0.6,
+    this.tl.add(TweenMax.fromTo(info, 0.4,
       {display: 'none', width: 0},
       {display: 'inline-block', width: this.thumbWidth, ease: Sine.easeOut}
     ), 0);
   }
 
   lunchTransition() {
-    this.tl.timeScale(1);
-    this.tl.restart();
+    clearTimeout(this.overTime);
+    this.overTime = setTimeout(() => {
+        this.tl.restart();
+        const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
+        const thumbLeft = this.container.offsetLeft + thumbWith;
+        const thumbRight = this.container.offsetLeft;
+        const sliderPos = this.slider.scrollLeft;
+        const thumbMargin = this.perspective + (this.thumbOffset);
+        const scrollPos = sliderPos + this.slider.clientWidth;
+        switch (true) {
+          case thumbLeft > scrollPos:
+            TweenMax.to(this.slider, this.scollSpeed,
+              {scrollLeft: sliderPos + (thumbWith - thumbMargin), ease: Sine.easeOut}
+            );
+            break;
+          case thumbRight < sliderPos:
+            TweenMax.to(this.slider, this.scollSpeed,
+              {scrollLeft: (thumbRight - thumbMargin), ease: Sine.easeOut}
+            );
+            break;
+        }
+      }, 200
+    );
   }
 
   revertTransition() {
-    this.tl.timeScale(2);
-    this.tl.reverse();
+    clearTimeout(this.overTime);
+    this.overTime = setTimeout(() => {
+        this.tl.reverse();
+      }, 100
+    );
   }
 
   componentDidMount() {
@@ -58,10 +104,10 @@ class Thumb extends React.Component {
     let title = movie.get('title');
 
     return (
-      <div ref="thumbContainer" className="thumb-containter" onMouseOver={::this.lunchTransition}
-           onMouseOut={::this.revertTransition}>
-        <div ref="thumb" className="thumb">
-          <div className="thumb-background" style={imageStyles}/>
+      <div ref="thumbContainer" className="thumb-containter">
+        <div ref="thumb" className="thumb" onMouseEnter={::this.lunchTransition}
+             onMouseLeave={::this.revertTransition}>
+          <div ref="thumbBackground" className="thumb-background" style={imageStyles}/>
           <div ref="info" className="thumb-info">
             <div className="thumb-info__title">{title}</div>
           </div>

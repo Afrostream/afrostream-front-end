@@ -30,8 +30,8 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
       .slider-conatiner {
+        padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
         width: 100%;
         display: inline-block;
         overflow-x: auto;
@@ -54,7 +54,6 @@
         text-align: center;
         line-height: 200px;
         border: 1px solid transparent;
-        //.transition(all 0.2s linear);
         .thumb-background {
           position: relative;
           display: inline-block;
@@ -80,10 +79,10 @@
         &:hover {
           background-color: #FFFFFF;
           border-color: #FFFFFF;
-          //.thumb-info {
-          //  display: inline-block;
-          //  width: @thumb-width * 2;
-          //}
+          .thumb-info {
+            display: inline-block;
+            width: @thumb-width * 2;
+          }
         }
       }
     }

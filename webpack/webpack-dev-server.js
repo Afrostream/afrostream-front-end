@@ -11,6 +11,8 @@ const serverOptions = {
     hot: true,
     quiet: true,
     noInfo: true,
+    cache: false,
+    watch: true,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000
