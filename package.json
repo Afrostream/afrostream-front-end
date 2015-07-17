@@ -9,7 +9,7 @@
     "build": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack/prod.config.js",
     "watch-client": "./node_modules/.bin/babel-node webpack/webpack-dev-server.js",
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\"  \"npm run express\"",
-    "start": "npm run build && npm run express",
+    "start": "NODE_ENV=\"production\" PORT=\"8080\" npm run build && npm run express",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
