@@ -11,8 +11,8 @@ export default function Category() {
       "network": "Cartoon Network",
       "provider": "thetvdvb",
       "rating": 16,
-      "poster": "/images/mock/background/dark-surreal-black-white-sky-clouds-wallpaper-wallpaper-black-dynamite-1920x1080-direct-hd-download-for-iphone-ipad-borders-free-naruto-mobile-3d.jpg",
-      "logo": "/images/mock/logo/black-dynamite-50973211dff98.png",
+      "poster": "/assets/images/mock/background/dark-surreal-black-white-sky-clouds-wallpaper-wallpaper-black-dynamite-1920x1080-direct-hd-download-for-iphone-ipad-borders-free-naruto-mobile-3d.jpg",
+      "logo": "/assets/images/mock/logo/black-dynamite-50973211dff98.png",
       "_keywords": [
         "black",
         "dynamit",
@@ -262,7 +262,7 @@ export default function Category() {
     {
       "_id": "54fde8291f2ab01100934ca3",
       "title": "Bande de filles",
-      "poster": "/images/mock/background/bande-de-filles.jpeg",
+      "poster": "/assets/images/mock/background/bande-de-filles.jpeg",
       "link": "",
       "_keywords": [
         "band",
@@ -393,7 +393,7 @@ export default function Category() {
       "provider": "rotten",
       "link": "",
       "rating": 83,
-      "poster": "/images/mock/background/Belle5.jpg",
+      "poster": "/assets/images/mock/background/Belle5.jpg",
       "_keywords": [
         "bell",
         "gugu",
@@ -1024,8 +1024,8 @@ export default function Category() {
       "provider": "thetvdvb",
       "rating": 2,
       "link": "",
-      "poster": "/images/mock/background/black-ish1.jpg",
-      "logo": "/images/mock/logo/LOGO_Blackish-bw.png",
+      "poster": "/assets/images/mock/background/black-ish1.jpg",
+      "logo": "/assets/images/mock/logo/LOGO_Blackish-bw.png",
       "_keywords": [
         "black",
         "ish",

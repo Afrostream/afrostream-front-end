@@ -1,56 +1,40 @@
-var path = require('path');
-var webpack = require('webpack');
-var writeStats = require('./utils/writeStats');
-var notifyStats = require('./utils/notifyStats');
-var assetsPath = path.resolve(__dirname, '../static/dist');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var host = 'localhost';
-var port = parseInt(process.env.PORT) + 1 || 3001;
-
-module.exports = {
-  devtool: 'eval-source-map',
-  context: path.resolve(__dirname, '..'),
-  entry: {
-    'main': [
-      'webpack-dev-server/client?http://' + host + ':' + port,
-      'webpack/hot/only-dev-server',
-      './src/client.js'
-    ]
-  },
-  output: {
-    path: assetsPath,
-    filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[chunkhash].js',
-    publicPath: 'http://' + host + ':' + port + '/dist/'
-  },
+import webpack from 'webpack';
+import merge from 'lodash/object/merge';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import webpackConfig from './webpack.config.js';
+import config from '../config';
+//
+// Configuration for the client-side bundle (app.js)
+// -----------------------------------------------------------------------------
+const { webpackDevServer: { host, port } } = config;
+var webpackDevServerUrl = `http://${host}:${port}`;
+const devConfig = merge({}, webpackConfig, {
+  devtool: 'source-map',
   module: {
     loaders: [
-      { test: /\.(jpe?g|png|gif|svg)$/, loader: 'file' },
-      { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', 'babel?stage=0&optional=runtime&plugins=typecheck']},
-      { test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true' }
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel-loader', 'react-hot'],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
+        exclude: /node_modules/
+      }
     ]
-  },
-  progress: true,
-  resolve: {
-    modulesDirectories: [
-      'src',
-      'node_modules'
-    ],
-    extensions: ['', '.json', '.js']
-  },
-  plugins: [
+  }
+});
 
-    // hot reload
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({__CLIENT__: true, __SERVER__: false}),
+devConfig.entry.main = [
+  `webpack-dev-server/client?${webpackDevServerUrl}`,
+  'webpack/hot/only-dev-server',
+  devConfig.entry.main
+];
 
-    // stats
-    function () {
-      this.plugin('done', notifyStats);
-    },
-    function () {
-      this.plugin('done', writeStats);
-    }
-  ]
-};
+devConfig.plugins.push(
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.NoErrorsPlugin()
+);
+
+export default devConfig;

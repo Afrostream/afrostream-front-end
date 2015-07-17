@@ -19,7 +19,7 @@ class Header extends React.Component {
               <span className="icon-bar"></span>
             </button>
             <Link className="navbar-brand" to="/">
-              <img src="/images/logo.png" alt="Afrostream.tv"/>
+              <img src="/assets/images/logo.png" alt="Afrostream.tv"/>
             </Link>
 
             <div id="collapsed-button" className="navbar-collapse collapse navbar-right">

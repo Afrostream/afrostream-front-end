@@ -227,7 +227,6 @@ function jsBundle(callback) {
       new webpack.optimize.UglifyJsPlugin()
     );
   }
-
   if (!isWatching) {
     webpack(webpackConfig).run(function (err) {
       if (err) {

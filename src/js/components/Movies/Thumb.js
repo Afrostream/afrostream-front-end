@@ -1,10 +1,10 @@
 import React from 'react/addons';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import { Link } from 'react-router';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax, Sine} = window.GreenSockGlobals;
+  var {TimelineMax, TweenMax, Sine} = window.GreenSockGlobals;
 }
 
 class Thumb extends React.Component {

@@ -8,7 +8,7 @@ if (process.env.BROWSER) {
 
 const sections = [
   {
-    text: 'A propos',
+    text: 'A propos de ma putain',
     links: [
       {link: '/contact', text: 'Contactez-nous'},
       {link: '/cgu', text: 'Conditions d’utilisation'},
