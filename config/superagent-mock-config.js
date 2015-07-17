@@ -20,7 +20,7 @@ const superAgentConfig = [
   {
     pattern: 'http://api.afrostream.tv/category/(\\w+)$',
 
-    fixtures: Fixtures.Category,
+    fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
       return {
         body: data
@@ -30,7 +30,7 @@ const superAgentConfig = [
   {
     pattern: 'http://api.afrostream.tv/category/(\\w+)/top',
 
-    fixtures: Fixtures.Category,
+    fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
       var datasPaginated = getPaginatedItems(data, 1, 5).data;
       return {
