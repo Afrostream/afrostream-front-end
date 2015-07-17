@@ -7,9 +7,15 @@ const CSS_LOADER = 'css-loader';
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
+const { server: { host, port } } = config;
+const serverUrl = `http://${host}:${port}`;
+console.log(serverUrl);
 const prodConfig = merge({}, webpackConfig, {
   devtool: '#source-map',
   externals: /^[a-z][a-z\.\-0-9]*$/,
+  output: {
+    publicPath: `${serverUrl}/js/`
+  },
   node: {
     console: false,
     global: false,

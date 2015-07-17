@@ -16,21 +16,19 @@ const AUTOPREFIXER_BROWSERS = [
   'Safari >= 6'
 ];
 
-var assetsPath = path.resolve(__dirname, '../dist/js');
+const assetsPath = path.resolve(__dirname, '../dist/js');
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
 // -----------------------------------------------------------------------------
 const { webpackDevServer: { host, port } } = config;
-var webpackDevServerUrl = `http://${host}:${port}`;
+const webpackDevServerUrl = `http://${host}:${port}`;
 
 const webpackConfig = {
   devtool: '#inline-source-map',
   output: {
-    path: path.resolve(__dirname, '../dist/js'),
+    path: assetsPath,
     publicPath: `${webpackDevServerUrl}/js/`,
-    //publicPath: path.resolve(__dirname, '../dist'),
-    //publicPath: '/assets/',
     filename: '[name].js',
     chunkFilename: '[id].js'
   },
@@ -65,13 +63,14 @@ const webpackConfig = {
         loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
         exclude: /node_modules/
       },
-      {
-        test: /\.jpe?g$|\.png$|\.gif$|\.svg$|\.favicon$/,
-        loader: 'file'
-      },
+      {test: /\.gif/, loader: 'file-loader!url-loader?limit=10000&minetype=image/gif'},
+      {test: /\.jpg/, loader: 'file-loader!url-loader?limit=10000&minetype=image/jpg'},
+      {test: /\.png/, loader: 'file-loader!url-loader?limit=10000&minetype=image/png'},
+      {test: /\.svg/, loader: 'file-loader!url-loader?limit=10000&minetype=image/svg'},
+      {test: /\.favicon/, loader: 'file-loader!url-loader?limit=10000&minetype=image/favicon'},
       //fontLoader,
-      {test: /.woff([\?]?.*)$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'},
-      {test: /.ttf([\?]?.*)$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'},
+      {test: /.woff([\?]?.*)$/, loader: 'file-loader!url-loader?limit=10000&mimetype=application/font-woff'},
+      {test: /.ttf([\?]?.*)$/, loader: 'file-loader!url-loader?limit=10000&mimetype=application/octet-stream'},
       {test: /.eot([\?]?.*)$/, loader: 'file-loader'}
     ]
   },
