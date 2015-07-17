@@ -5,7 +5,6 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import config from '../config';
 
 const env = process.env.NODE_ENV || 'development';
-
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',
@@ -17,6 +16,7 @@ const AUTOPREFIXER_BROWSERS = [
   'Safari >= 6'
 ];
 
+var assetsPath = path.resolve(__dirname, '../dist/js');
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -27,9 +27,10 @@ var webpackDevServerUrl = `http://${host}:${port}`;
 const webpackConfig = {
   devtool: '#inline-source-map',
   output: {
-    path: './dist/js',
-    //publicPath: `${webpackDevServerUrl}/js/`,
-    publicPath: './assets/',
+    path: path.resolve(__dirname, '../dist/js'),
+    publicPath: `${webpackDevServerUrl}/js/`,
+    //publicPath: path.resolve(__dirname, '../dist'),
+    //publicPath: '/assets/',
     filename: '[name].js',
     chunkFilename: '[id].js'
   },
@@ -46,15 +47,16 @@ const webpackConfig = {
   },
   module: {
     preLoaders: [
-      {
-        test: /\.js$/, // include .js files
-        exclude: /node_modules/, // exclude any and all files in the node_modules folder
-        loader: 'jshint-loader'
-      }
+      //{
+      //  test: /\.js$/, // include .js files
+      //  exclude: /node_modules/, // exclude any and all files in the node_modules folder
+      //  loader: 'jshint-loader'
+      //}
     ],
     loaders: [
       {
         test: /\.jsx?$/,
+        loader: '',
         loaders: ['babel-loader'],
         exclude: /node_modules/
       },
@@ -62,7 +64,15 @@ const webpackConfig = {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
         exclude: /node_modules/
-      }
+      },
+      {
+        test: /\.jpe?g$|\.png$|\.gif$|\.svg$|\.favicon$/,
+        loader: 'file'
+      },
+      //fontLoader,
+      {test: /.woff([\?]?.*)$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'},
+      {test: /.ttf([\?]?.*)$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'},
+      {test: /.eot([\?]?.*)$/, loader: 'file-loader'}
     ]
   },
   plugins: [

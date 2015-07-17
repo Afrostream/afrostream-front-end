@@ -9,21 +9,7 @@ import config from '../config';
 const { webpackDevServer: { host, port } } = config;
 var webpackDevServerUrl = `http://${host}:${port}`;
 const devConfig = merge({}, webpackConfig, {
-  devtool: 'source-map',
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loaders: ['babel-loader', 'react-hot'],
-        exclude: /node_modules/
-      },
-      {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
-        exclude: /node_modules/
-      }
-    ]
-  }
+  devtool: 'source-map'
 });
 
 devConfig.entry.main = [
@@ -36,5 +22,7 @@ devConfig.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin()
 );
+
+devConfig.module.loaders[0].loaders.unshift('react-hot');
 
 export default devConfig;

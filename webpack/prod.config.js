@@ -20,16 +20,24 @@ const prodConfig = merge({}, webpackConfig, {
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin()
-  ),
-  module: {
-    loaders: webpackConfig.module.loaders.map(function (loader) {
-      // Remove style-loader
-      return merge(loader, {
-        loader: loader.loader = loader.loader.replace(STYLE_LOADER + '!', '')
-      });
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
     })
-  }
+  )
+  //,
+  //module: {
+  //  loaders: webpackConfig.module.loaders.map(function (loader) {
+  //    // Remove style-loader
+  //    return merge(loader, {
+  //      loader: loader.loader = loader.loader.replace(STYLE_LOADER + '!', '')
+  //    });
+  //  })
+  //}
 });
+
+delete prodConfig.module.preLoaders;
 
 export default prodConfig;

@@ -8,7 +8,7 @@ if (process.env.BROWSER) {
 
 const sections = [
   {
-    text: 'A propos de ma putain',
+    text: 'A propos',
     links: [
       {link: '/contact', text: 'Contactez-nous'},
       {link: '/cgu', text: 'Conditions d’utilisation'},
@@ -33,16 +33,7 @@ const sections = [
 ];
 
 class Footer extends React.Component {
-
-  //static propTypes = {
-  //  links: PropTypes.instanceOf(Immutable.List).isRequired
-  //}
-
   render() {
-    //const {
-    //props: { links }
-    //} = this;
-
     return (
       <footer className="footer">
         <div className="footer-container container">
