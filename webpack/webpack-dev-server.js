@@ -14,7 +14,6 @@ const serverOptions = {
     noInfo: true,
     cache: false,
     watch: true,
-    devServer: true,
     hotComponents: true,
     devtool: 'eval',
     historyApiFallback: true,

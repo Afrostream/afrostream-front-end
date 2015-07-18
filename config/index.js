@@ -27,7 +27,7 @@ const config = _.merge(
      */
     webpackDevServer: {
       host: 'localhost',
-      port: 3000
+      port: 8081
     }
   }, client);
 

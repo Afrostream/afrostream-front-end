@@ -81,11 +81,6 @@ const webpackConfig = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': `"${env}"`
-      }
-    }),
     new ExtractTextPlugin('../styles/[name].css', {allChunks: false}),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
   ],

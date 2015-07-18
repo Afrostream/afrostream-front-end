@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax, TweenMax, Sine} = window.GreenSockGlobals;
+  var {TimelineMax,TweenMax} = window.GreenSockGlobals;
 }
 
 class Thumb extends React.Component {
@@ -82,7 +82,6 @@ class Thumb extends React.Component {
         const scrollPos = sliderPos + this.slider.clientWidth;
         const visibleLeft = this.slider.clientWidth - (this.container.offsetLeft - this.slider.scrollLeft);
         const hiddenLeft = thumbWith - (visibleLeft + (this.thumbBackground.clientWidth - (thumbMargin * 2 )));
-        console.log(thumbWith, this.slider.scrollLeft, this.container.offsetLeft, hiddenLeft);
         switch (true) {
           case thumbLeft > scrollPos:
             TweenMax.to(this.slider, this.scollSpeed,

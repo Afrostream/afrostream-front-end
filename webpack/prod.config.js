@@ -2,19 +2,16 @@ import webpack from 'webpack';
 import webpackConfig from './webpack.config.js';
 import merge from 'lodash/object/merge';
 import config from '../config';
-const STYLE_LOADER = 'style-loader';
-const CSS_LOADER = 'css-loader';
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
-const { server: { host, port } } = config;
-const serverUrl = `http://${host}:${port}`;
 const prodConfig = merge({}, webpackConfig, {
-  devtool: 'source-map',
-  externals: /^[a-z][a-z\.\-0-9]*$/,
-  output: {
-    publicPath: `${serverUrl}/js/`
-  },
+  devtool: '#source-map',
+  externals: [
+    /^react(\/.*)?$/,
+    /^redux(\/.*)?$/,
+    'superagent',
+    'async'],
   node: {
     console: false,
     global: false,
@@ -39,15 +36,6 @@ const prodConfig = merge({}, webpackConfig, {
     // ignore dev config
     //new webpack.IgnorePlugin(/.\/superagent-mock$/)
   )
-  //,
-  //module: {
-  //  loaders: webpackConfig.module.loaders.map(function (loader) {
-  //    // Remove style-loader
-  //    return merge(loader, {
-  //      loader: loader.loader = loader.loader.replace(STYLE_LOADER + '!', '')
-  //    });
-  //  })
-  //}
 });
 
 delete prodConfig.module.preLoaders;
