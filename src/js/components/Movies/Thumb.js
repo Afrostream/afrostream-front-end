@@ -12,9 +12,9 @@ class Thumb extends React.Component {
   constructor(props) {
     super(props);
     this.tl = null;
-    this.thumbWidth = 250;
+    this.thumbWidth = 420;
     this.overTime = 0;
-    this.perspective = 100;
+    this.perspective = 200;
     this.thumbOffset = 15;
     this.scollSpeed = 1.4;
     this.container = null;
@@ -37,24 +37,30 @@ class Thumb extends React.Component {
       perspective: this.perspective,
       perspectiveOrigin: '50% 50%'
     });
-    this.tl = new TimelineMax({paused: true, align: 'start'});
+    this.tl = new TimelineMax({paused: true});
     this.tl.add(TweenMax.fromTo(thumb, 0.4,
       {
-        transform: 'translate3D(0,0,0)',
+        //transform: 'translate3D(0,0,0)',
+        scale: 1,
+        zIndex: 0,
         backgroundColor: 'transparent',
-        borderColor: 'transparent'
+        borderColor: 'transparent',
+        width: 140
       },
       {
-        transform: `translate3D(0,0,10px)`,
+        //transform: `translate3D(0,0,10px)`,
+        scale: 1.1,
+        zIndex: 9000,
         backgroundColor: '#FFF',
         borderColor: '#FFF',
+        width: this.thumbWidth,
         ease: Sine.easeOut
       }
     ), 0);
     this.tl.add(TweenMax.fromTo(info, 0.4,
-      {display: 'none', width: 0},
-      {display: 'inline-block', width: this.thumbWidth, ease: Sine.easeOut}
-    ), 0);
+      {autoAlpha: 0},
+      {autoAlpha: 1, ease: Sine.easeOut}
+    ), 0.2);
   }
 
   lunchTransition() {
@@ -100,16 +106,43 @@ class Thumb extends React.Component {
       props: { movie }
       } = this;
 
+    const maxLength = 400;
+
     let imageStyles = {backgroundImage: `url(${movie.get('poster')})`};
     let title = movie.get('title');
+    let synopsis = movie.get('synopsis') || '';
+
+    //wrap text
+    if (synopsis.length >= maxLength) {
+      let cutIndex = synopsis.indexOf(' ', maxLength);
+      let shortDescription = synopsis.substring(0, cutIndex) + '...';
+      synopsis = shortDescription;
+    }
+
+    let dateFrom = movie.get('dateFrom');
+    let dateTo = movie.get('dateTo');
+    let nBSeasons = movie.get('seasons') || [];
+    let finalDate = `${dateFrom}-${dateTo} - ${nBSeasons.size}`;
 
     return (
       <div ref="thumbContainer" className="thumb-containter">
-        <div ref="thumb" className="thumb" onMouseEnter={::this.lunchTransition}
-             onMouseLeave={::this.revertTransition}>
-          <div ref="thumbBackground" className="thumb-background" style={imageStyles}/>
+        <div ref="thumb" className="thumb"
+             onMouseEnter={::this.lunchTransition}
+             onMouseLeave={::this.revertTransition}
+          >
+          <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
+            <i className="fa fa-play-circle-o"></i>
+          </div>
           <div ref="info" className="thumb-info">
             <div className="thumb-info__title">{title}</div>
+            <div className="thumb-info__date">{finalDate}</div>
+            <div className="thumb-info__synopsis">{synopsis}</div>
+            <div className="row">
+              <button className="btn btn-xs btn-thumb" href="compte/add">
+                <i className="fa fa-heart"></i>Ajouter à ma liste
+              </button>
+              <button className="btn btn-xs btn-thumb" href="compte/recommander">Recommander</button>
+            </div>
           </div>
         </div>
       </div>

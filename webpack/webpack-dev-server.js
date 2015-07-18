@@ -5,14 +5,19 @@ import devConfig from './dev.config';
 import config from '../config';
 
 const { webpackDevServer: { host, port } } = config;
+
 const serverOptions = {
     contentBase: path.resolve(__dirname, '../dist'),
     publicPath: devConfig.output.publicPath,
     hot: true,
-    quiet: true,
+    quiet: false,
     noInfo: true,
     cache: false,
     watch: true,
+    devServer: true,
+    hotComponents: true,
+    devtool: 'eval',
+    historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000
@@ -20,6 +25,10 @@ const serverOptions = {
     debug: true,
     stats: {
       colors: true
+    },
+    devServer: {
+      port: port,
+      historyApiFallback: true
     }
   },
   compiler = webpack(devConfig),

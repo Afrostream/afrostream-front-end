@@ -67,7 +67,7 @@ class Slide extends React.Component {
     let imageStyles = {backgroundImage: `url(${category.get('poster')})`};
 
     let title = category.get('title');
-    let tags = category.get('tags') || [];
+    let type = category.get('type');
     let synopsis = category.get('synopsis') || '';
     //wrap text
     if (synopsis.length >= maxLength) {
@@ -80,9 +80,7 @@ class Slide extends React.Component {
       <div ref="slContainer" className={classes}>
         <div ref="slBackground" className="slide-background" style={imageStyles}/>
         <div className="billboard-infos">
-          <ul ref="tags" className="billboard-tag-list">
-            {tags.map((tag) => <li className="billboard-tag"><Link to={tag}>{tag}</Link></li>)}
-          </ul>
+          <div className="billboard-tag">{type}</div>
           <div ref="slTitle" className="billboard-title">{title}</div>
           <div ref="slSynopsis" className="billboard-synopsis">{synopsis}</div>
           <a href={category.get('link')}>{category.get('link')}</a>

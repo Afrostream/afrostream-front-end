@@ -35,8 +35,8 @@
         width: 100%;
         display: inline-block;
         overflow-x: auto;
-        white-space: nowrap;
         padding-bottom: 20px;
+        white-space: nowrap;
         .thumb-containter {
           flex-shrink: 0;
           display: inline-block;
@@ -46,14 +46,18 @@
     .thumb-containter {
       //Padding for dont hide thumb on zooming effect
       padding: @zoom-padding;
+      height: 100%;
+      max-height: 100%;
       .thumb {
         display: inline-block;
         position: relative;
         padding: 0;
         margin: @thumb-margin;
-        text-align: center;
-        line-height: 200px;
+        text-align: left;
         border: 1px solid transparent;
+        -webkit-font-smoothing: antialiased;
+        //maxheight with borders
+        max-height: 202px;
         .thumb-background {
           position: relative;
           display: inline-block;
@@ -64,11 +68,65 @@
           background-position: center center;
           background-repeat: no-repeat;
           cursor: pointer;
+
+          i {
+            position: absolute;
+            font-size: 6em;
+            display: none;
+            left: 50%;
+            top: 50%;
+            margin-top: -25px; /* Half the height */
+            margin-left: -25px; /* Half the width */
+          }
+          &:before {
+            content: '';
+            .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+          }
+          i,
+          &:before {
+            display: none;
+            opacity: 0;
+            .transition(all 0.2s linear);
+          }
         }
         .thumb-info {
+          font-family: @font-light;
+          font-weight: 800;
           display: none;
-          width: 0;
-          vertical-align: middle;
+          width: @thumb-width * 2;
+          vertical-align: top;
+          color: @brand-thumbs;
+          padding: 5px 15px 5px 15px;
+          white-space: normal;
+          &__title {
+            color: @color-purple-1;
+            text-transform: uppercase;
+            font-size: 1.5em;
+            line-height: 1.4;
+          }
+          &__date {
+            font-family: @font-medium;
+            line-height: 1.4;
+            text-transform: uppercase;
+            font-size: 1.3em;
+          }
+          &__synopsis {
+            //FIXME force size change it to auto
+            font-size: 1.2em;
+            height: 100%;
+            min-height: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            a {
+              font-size: 1.3em;
+            }
+          }
         }
         &:before {
           content: "";
@@ -81,7 +139,13 @@
           border-color: #FFFFFF;
           .thumb-info {
             display: inline-block;
-            width: @thumb-width * 2;
+          }
+          .thumb-background {
+            i,
+            &:before {
+              display: block;
+              opacity: 0.8;
+            }
           }
         }
       }

@@ -8,7 +8,7 @@
     "deploy": "./node_modules/.bin/babel-node lib/deploy",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc src",
     "build": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack/prod.config.js",
-    "watch-client": "./node_modules/.bin/babel-node webpack/webpack-dev-server.js",
+    "watch-client": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --config webpack/dev.config.js --colors --hot --watch --port 8081 --inline",
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\"  \"npm run express\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run express",
