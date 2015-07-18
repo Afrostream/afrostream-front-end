@@ -7,11 +7,12 @@
 @zoom-padding: 20px 0 20px 0;
 .movies-list {
   position: relative;
+  overflow: hidden;
   margin: 10px 0 10px 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  //top: 0;
+  //left: 0;
+  //right: 0;
+  //bottom: 0;
   .selection {
     font-size: 1.8em;
     font-family: @font-light;
@@ -20,24 +21,25 @@
   }
   .movies-list__container {
     position: relative;
-    margin-top: -25px;
+    overflow: hidden;
+    //margin-top: -25px;
     width: 100%;
     .slider {
       position: relative;
-      top: 0;
-      bottom: 0;
-      left: 0;
+      //top: 0;
+      //bottom: 0;
+      //left: 0;
       width: 100%;
       .slider-conatiner {
         width: 100%;
-        padding-bottom: 20px;
+        //padding-bottom: 20px;
         .thumb-containter {
         }
       }
     }
     .thumb-containter {
       //Padding for dont hide thumb on zooming effect
-      padding: @zoom-padding;
+      //padding: @zoom-padding;
       height: 100%;
       max-height: 100%;
       .thumb {
@@ -123,20 +125,7 @@
           vertical-align: middle;
           height: 100%;
         }
-        &:hover {
-          background-color: #FFFFFF;
-          border-color: #FFFFFF;
-          .thumb-info {
-            display: inline-block;
-          }
-          .thumb-background {
-            i,
-            &:before {
-              display: block;
-              opacity: 0.8;
-            }
-          }
-        }
+
       }
     }
   }
@@ -146,12 +135,11 @@
 
   .movies-list {
     .movies-list__container {
-      overflow-x: auto;
-      overflow-y: hidden;
       .slider {
         .slider-conatiner {
-          display: inline-block;
           overflow-x: auto;
+          overflow-y: hidden;
+          display: inline-block;
           white-space: nowrap;
           padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
           .thumb-containter {
@@ -160,7 +148,7 @@
             flex-shrink: 0;
             display: inline-block;
             //maxheight with borders
-            max-height: 202px;
+            //max-height: 202px;
             .thumb {
               margin: @thumb-margin;
               .thumb-background {
@@ -169,6 +157,20 @@
               .thumb-info {
                 width: @thumb-width * 2;
                 display: none;
+              }
+              &:hover {
+                background-color: #FFFFFF;
+                border-color: #FFFFFF;
+                .thumb-info {
+                  display: inline-block;
+                }
+                .thumb-background {
+                  i,
+                  &:before {
+                    display: block;
+                    opacity: 0.8;
+                  }
+                }
               }
             }
           }
