@@ -10,7 +10,7 @@ const CSS_LOADER = 'css-loader';
 const { server: { host, port } } = config;
 const serverUrl = `http://${host}:${port}`;
 const prodConfig = merge({}, webpackConfig, {
-  devtool: '#source-map',
+  devtool: 'source-map',
   externals: /^[a-z][a-z\.\-0-9]*$/,
   output: {
     publicPath: `${serverUrl}/js/`
@@ -23,17 +23,19 @@ const prodConfig = merge({}, webpackConfig, {
     __filename: false,
     __dirname: false
   },
-  module: {
-    noParse: [/.\/superagent-mock$/]
-  },
+  //FIXME Replace mock remover for staging/production
+  //module: {
+  //  noParse: [/.\/superagent-mock$/]
+  //},
   plugins: webpackConfig.plugins.concat(
-    //new webpack.optimize.DedupePlugin(),
-    //new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
     }),
+    //FIXME Replace mock remover for staging/production
     // ignore dev config
     new webpack.IgnorePlugin(/.\/superagent-mock$/)
   )
