@@ -1,13 +1,14 @@
 'use strict';
 
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { Redirect, Route } from 'react-router';
+import {Route } from 'react-router';
 import Application from './components/Application';
 import HomePage from './components/HomePage';
+import NoMatch from './components/NoMatch';
 
 export default (
-  <Route component={Application}>
+  <Route path="/" component={Application}>
     <Route path="/:category" component={HomePage}/>
-    <Redirect from="/" to="/all"/>
+    <Route path="*" component={NoMatch}/>
   </Route>
 );

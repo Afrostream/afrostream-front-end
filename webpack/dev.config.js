@@ -9,7 +9,7 @@ import config from '../config';
 const { webpackDevServer: { host, port } } = config;
 var webpackDevServerUrl = `http://${host}:${port}`;
 const devConfig = merge({}, webpackConfig, {
-  devtool: 'source-map'
+  devtool: 'eval-source-map'
 });
 
 devConfig.entry.main = [
