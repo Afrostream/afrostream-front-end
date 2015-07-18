@@ -16,9 +16,9 @@ class FooterSection extends React.Component {
     return (
       <div className="footer-section col-xs-12 col-sm-4">
         <div className="footer-section-label">{section.text}</div>
-        <ul className="footer-links">
+        <div className="footer-links row">
           {section.links.map((link, i) => <FooterLinkItem key={i} index={i} {...{link}} />)}
-        </ul>
+        </div>
       </div>
     );
   }

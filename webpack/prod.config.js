@@ -37,7 +37,7 @@ const prodConfig = merge({}, webpackConfig, {
     }),
     //FIXME Replace mock remover for staging/production
     // ignore dev config
-    new webpack.IgnorePlugin(/.\/superagent-mock$/)
+    //new webpack.IgnorePlugin(/.\/superagent-mock$/)
   )
   //,
   //module: {

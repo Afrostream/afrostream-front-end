@@ -15,11 +15,12 @@ class Thumb extends React.Component {
     this.thumbWidth = 420;
     this.overTime = 0;
     this.perspective = 200;
-    this.thumbOffset = 15;
+    this.thumbOffset = 30;
     this.scollSpeed = 1.4;
     this.container = null;
     this.slider = null;
     this.thumbBackground = null;
+    this.isMobileWebkit = false;
   }
 
   static propTypes = {
@@ -27,6 +28,11 @@ class Thumb extends React.Component {
   };
 
   initTransition() {
+    //Detect mobile
+    const ua = navigator.userAgent;
+    this.isMobileWebkit = /WebKit/.test(ua) && /Mobile/.test(ua);
+    if (this.isMobileWebkit) return;
+
     this.container = React.findDOMNode(this.refs.thumbContainer);
     this.slider = this.container.parentNode;
     this.thumbBackground = React.findDOMNode(this.refs.thumbBackground);
@@ -64,6 +70,7 @@ class Thumb extends React.Component {
   }
 
   lunchTransition() {
+    if (this.isMobileWebkit) return;
     clearTimeout(this.overTime);
     this.overTime = setTimeout(() => {
         this.tl.restart();
@@ -71,12 +78,15 @@ class Thumb extends React.Component {
         const thumbLeft = this.container.offsetLeft + thumbWith;
         const thumbRight = this.container.offsetLeft;
         const sliderPos = this.slider.scrollLeft;
-        const thumbMargin = this.perspective + (this.thumbOffset);
+        const thumbMargin = this.thumbOffset;
         const scrollPos = sliderPos + this.slider.clientWidth;
+        const visibleLeft = this.slider.clientWidth - (this.container.offsetLeft - this.slider.scrollLeft);
+        const hiddenLeft = thumbWith - (visibleLeft + (this.thumbBackground.clientWidth - (thumbMargin * 2 )));
+        console.log(thumbWith, this.slider.scrollLeft, this.container.offsetLeft, hiddenLeft);
         switch (true) {
           case thumbLeft > scrollPos:
             TweenMax.to(this.slider, this.scollSpeed,
-              {scrollLeft: sliderPos + (thumbWith - thumbMargin), ease: Sine.easeOut}
+              {scrollLeft: sliderPos + (hiddenLeft), ease: Sine.easeOut}
             );
             break;
           case thumbRight < sliderPos:

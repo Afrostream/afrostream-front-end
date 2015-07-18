@@ -1,12 +1,11 @@
 @import '../../../style/config.less';
 @import '../../../style/arrow.less';
 
+@thumb-margin: 10px;
+@thumb-width: 140px;
+@thumb-height: 200px;
+@zoom-padding: 20px 0 20px 0;
 .movies-list {
-  @thumb-margin: 10px;
-  @thumb-width: 140px;
-  @thumb-height: 200px;
-  @zoom-padding: 20px 0 20px 0;
-
   position: relative;
   margin: 10px 0 10px 0;
   top: 0;
@@ -20,9 +19,8 @@
     margin: 10px @app-padding 10px @app-padding;
   }
   .movies-list__container {
-    overflow-x: auto;
-    overflow-y: hidden;
     position: relative;
+    margin-top: -25px;
     width: 100%;
     .slider {
       position: relative;
@@ -31,15 +29,9 @@
       left: 0;
       width: 100%;
       .slider-conatiner {
-        padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
         width: 100%;
-        display: inline-block;
-        overflow-x: auto;
         padding-bottom: 20px;
-        white-space: nowrap;
         .thumb-containter {
-          flex-shrink: 0;
-          display: inline-block;
         }
       }
     }
@@ -51,18 +43,17 @@
       .thumb {
         display: inline-block;
         position: relative;
+        width: 100%;
         padding: 0;
-        margin: @thumb-margin;
         text-align: left;
-        border: 1px solid transparent;
+        border: 1px solid #FFFFFF;
+        background-color: #FFFFFF;
         -webkit-font-smoothing: antialiased;
-        //maxheight with borders
-        max-height: 202px;
         .thumb-background {
           position: relative;
           display: inline-block;
           vertical-align: middle;
-          width: @thumb-width;
+          width: 100%;
           height: @thumb-height;
           background-size: cover;
           background-position: center center;
@@ -98,8 +89,6 @@
         .thumb-info {
           font-family: @font-light;
           font-weight: 800;
-          display: none;
-          width: @thumb-width * 2;
           vertical-align: top;
           color: @brand-thumbs;
           padding: 5px 15px 5px 15px;
@@ -145,6 +134,42 @@
             &:before {
               display: block;
               opacity: 0.8;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+
+  .movies-list {
+    .movies-list__container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      .slider {
+        .slider-conatiner {
+          display: inline-block;
+          overflow-x: auto;
+          white-space: nowrap;
+          padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+          .thumb-containter {
+            background-color: transparent;
+            border-color: transparent;
+            flex-shrink: 0;
+            display: inline-block;
+            //maxheight with borders
+            max-height: 202px;
+            .thumb {
+              margin: @thumb-margin;
+              .thumb-background {
+                width: @thumb-width;
+              }
+              .thumb-info {
+                width: @thumb-width * 2;
+                display: none;
+              }
             }
           }
         }

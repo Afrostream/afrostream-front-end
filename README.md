@@ -14,6 +14,13 @@ npm install
 npm run dev
 ```
 
+##Deploy
+```
+git push 
+```
+Make on pull request build a new heroku app review automatically
+Push on master to build it
+
 ##How it works
 ###API
 Thanks to React and Redux, Server side and client side calls will run almost the same code for rendering.
