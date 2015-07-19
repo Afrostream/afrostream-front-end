@@ -1,8 +1,32 @@
-@import './mixins';
 @import './for';
 
+/**
+ * Font-face mixin
+ *
+ * @param {String} family
+ * @param {String} weight | Default: normal
+ * @param {String} style | Default: normal
+ */
+.font-face(@family, @weight: normal, @style: normal) {
+  @font-face {
+    font-family: @family;
+    src: url('../../assets/fonts/@{family}.ttf') format('truetype');
+    font-weight: @weight;
+    font-style: @style;
+  }
+}
+
 /* Fonts list array */
-@fonts: 'HelveticaNeue-Black', 'HelveticaNeue-Bold', 'HelveticaNeue-Heavy', 'HelveticaNeue-Light', 'HelveticaNeue-Medium', 'HelveticaNeue-Roman', 'HelveticaNeue-Thin';
+@fonts: 'DIN-30640-Std',
+'DINBLACK',
+'DINBOLD',
+'FtraBd',
+'FtraBk',
+'FtraBkI',
+'FtraHv',
+'FtraLt',
+'fueb__',
+'ful___lh';
 
 /* Call .font-face() mixin for each font from @fonts array */
 //.-(@i: length(@fonts)) when (@i > 0) {
@@ -20,14 +44,14 @@
 // Typography
 // -----------------------------------------------------------------------------
 
-@font-family-base: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-@font-light: "HelveticaNeue-Light", Helvetica, sans-serif;
-@font-thin: "HelveticaNeue-Thin", Helvetica, sans-serif;
-@font-medium: "HelveticaNeue-Medium", Helvetica, sans-serif;
-@font-bold: "HelveticaNeue-Bold", Helvetica, sans-serif;
-@font-heavy: "HelveticaNeue-Heavy", Helvetica, sans-serif;
-@font-roman: "HelveticaNeue-Roman", Helvetica, sans-serif;
-@font-black: "HelveticaNeue-Black", Helvetica, sans-serif;
+@font-family-base: 'DIN-30640-Std', Helvetica, Arial, 'Lucida Grande', sans-serif;
+@font-light: "FtraLt", Helvetica, sans-serif;
+@font-thin: "ful___lh", Helvetica, sans-serif;
+@font-medium: "fueb__", Helvetica, sans-serif;
+@font-bold: "FtraBd", Helvetica, sans-serif;
+@font-heavy: "FtraHv", Helvetica, sans-serif;
+@font-roman: "DIN-30640-Std", Helvetica, sans-serif;
+@font-black: "FtraBk", Helvetica, sans-serif;
 
 .body-font() {
   font-family: @font-family-base;

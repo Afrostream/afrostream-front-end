@@ -69,14 +69,18 @@ const webpackConfig = {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
-      {test: /\.gif/, loader: 'file-loader!url-loader?limit=10000&minetype=image/gif'},
-      {test: /\.jpg/, loader: 'file-loader!url-loader?limit=10000&minetype=image/jpg'},
-      {test: /\.png/, loader: 'file-loader!url-loader?limit=10000&minetype=image/png'},
-      {test: /\.svg/, loader: 'file-loader!url-loader?limit=10000&minetype=image/svg'},
-      {test: /\.favicon/, loader: 'file-loader!url-loader?limit=10000&minetype=image/favicon'},
-      //fontLoader,
-      {test: /.woff([\?]?.*)$/, loader: 'file-loader!url-loader?limit=10000&mimetype=application/font-woff'},
-      {test: /.ttf([\?]?.*)$/, loader: 'file-loader!url-loader?limit=10000&mimetype=application/octet-stream'},
+      {
+        test: /\.(gif|jpg|png|svg|favicon)/,
+        loader: 'file-loader!url-loader?name=[name].[ext]?[hash]&limit=10000'
+      },
+      {
+        test: /.woff([\?]?.*)$/,
+        loader: 'url?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /.ttf([\?]?.*)$/,
+        loader: 'url?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+      },
       {test: /.eot([\?]?.*)$/, loader: 'file-loader'}
     ]
   },

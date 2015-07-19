@@ -55,17 +55,20 @@ class Thumb extends React.Component {
       },
       {
         //transform: `translate3D(0,0,10px)`,
-        scale: 1.1,
+        scale: 1.25,
         zIndex: 9000,
         backgroundColor: '#FFF',
-        borderColor: '#FFF',
+        borderColor: '#ffc809',
+        marginLeft: '+=50px',
+        marginRight: '+=50px',
         width: this.thumbWidth,
+        top: '-15px',
         ease: Sine.easeOut
       }
     ), 0);
     this.tl.add(TweenMax.fromTo(info, 0.4,
       {autoAlpha: 0},
-      {autoAlpha: 1, ease: Sine.easeOut}
+      {autoAlpha: 1, display: 'inline-block', ease: Sine.easeOut}
     ), 0.2);
   }
 
@@ -115,7 +118,7 @@ class Thumb extends React.Component {
       props: { movie }
       } = this;
 
-    const maxLength = 400;
+    const maxLength = 200;
 
     let imageStyles = {backgroundImage: `url(${movie.get('poster')})`};
     let title = movie.get('title');
@@ -149,7 +152,6 @@ class Thumb extends React.Component {
 
           <div ref="info" className="thumb-info">
             <div className="thumb-info__title">{title}</div>
-            <div className="thumb-info__date">{finalDate}</div>
             <div className="thumb-info__synopsis">{synopsis}</div>
             <div className="row">
               <button className="btn btn-xs btn-thumb" href="compte/add">
