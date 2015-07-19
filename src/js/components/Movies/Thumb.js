@@ -132,6 +132,8 @@ class Thumb extends React.Component {
     let dateTo = movie.get('dateTo');
     let nBSeasons = movie.get('seasons') || [];
     let finalDate = `${dateFrom}-${dateTo} - ${nBSeasons.size}`;
+    let type = movie.get('type');
+    let slug = movie.get('slug') || '';
 
     return (
       <div ref="thumbContainer" className="thumb-containter">
@@ -139,9 +141,12 @@ class Thumb extends React.Component {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
-            <i className="fa fa-play-circle-o"></i>
-          </div>
+          <Link to={`${type}/${slug}`}>
+            <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
+              <i className="fa fa-play-circle-o"></i>
+            </div>
+          </Link>
+
           <div ref="info" className="thumb-info">
             <div className="thumb-info__title">{title}</div>
             <div className="thumb-info__date">{finalDate}</div>

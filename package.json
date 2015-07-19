@@ -8,8 +8,9 @@
     "deploy": "./node_modules/.bin/babel-node lib/deploy",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc src",
     "build": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack/prod.config.js",
-    "watch-client": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --progress --colors --hot --watch --inline --config webpack/dev.config.js",
-    "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\"  \"npm run express\"",
+    "watch-client-dev-server": "./node_modules/.bin/babel-node  webpack/webpack-dev-server.js",
+    "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
+    "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
     "start": "npm run build &&  npm run express"
   },
   "keywords": [
@@ -40,6 +41,7 @@
   },
   "dependencies": {
     "autoprefixer-core": "^5.2.1",
+    "autoprefixer-loader": "^2.0.0",
     "babel": "^5.6.14",
     "babel-core": "^5.6.15",
     "babel-eslint": "^3.1.19",
@@ -48,7 +50,7 @@
     "bluebird": "^2.9.30",
     "bootstrap": "^3.3.5",
     "compression": "^1.5.0",
-    "css-loader": "0.15.1",
+    "css-loader": "^0.15.1",
     "cssnext-loader": "1.0.1",
     "express": "^4.13.0",
     "express-handlebars": "^2.0.1",

@@ -10,10 +10,12 @@ const serverOptions = {
     contentBase: path.resolve(__dirname, '../dist'),
     publicPath: devConfig.output.publicPath,
     hot: true,
-    quiet: false,
+    headers: {'Access-Control-Allow-Origin': '*'},
+    quiet: true,
     noInfo: true,
     cache: false,
     watch: true,
+    devServer: true,
     hotComponents: true,
     devtool: 'eval',
     historyApiFallback: true,
@@ -24,10 +26,6 @@ const serverOptions = {
     debug: true,
     stats: {
       colors: true
-    },
-    devServer: {
-      port: port,
-      historyApiFallback: true
     }
   },
   compiler = webpack(devConfig),

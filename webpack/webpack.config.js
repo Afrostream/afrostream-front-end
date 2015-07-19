@@ -16,7 +16,7 @@ const AUTOPREFIXER_BROWSERS = [
   'Safari >= 6'
 ];
 
-const assetsPath = path.resolve(__dirname, '../dist/js');
+const assetsPath = path.resolve(__dirname, '../dist');
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -28,7 +28,7 @@ const webpackConfig = {
   devtool: '#inline-source-map',
   output: {
     path: assetsPath,
-    publicPath: `${webpackDevServerUrl}/js/`,
+    publicPath: `${webpackDevServerUrl}/`,
     filename: '[name].js',
     chunkFilename: '[id].js'
   },
@@ -64,10 +64,10 @@ const webpackConfig = {
         exclude: /node_modules/, // exclude any and all files in the node_modules folder
         loaders: ['babel-loader']
       },
+      {test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader')},
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', '!css-loader!less-loader'),
-        exclude: /node_modules/
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {test: /\.gif/, loader: 'file-loader!url-loader?limit=10000&minetype=image/gif'},
       {test: /\.jpg/, loader: 'file-loader!url-loader?limit=10000&minetype=image/jpg'},
@@ -81,7 +81,7 @@ const webpackConfig = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('../styles/[name].css', {allChunks: false}),
+    new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
   ],
 

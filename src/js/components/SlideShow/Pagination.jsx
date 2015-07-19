@@ -19,7 +19,7 @@ class Pagination extends React.Component {
         {slides.map((category, i) => <Pager
           active={page === i}
           index={i}
-          key={category._id}
+          key={`page-${category.get('_id')}-${i}`}
           {...{category}} />)}
       </div>
     );

@@ -28,6 +28,14 @@ const config = _.merge(
     webpackDevServer: {
       host: 'localhost',
       port: 8081
+    },
+
+    /**
+     * browserSync
+     */
+    browserSyncServer: {
+      host: 'localhost',
+      port: 8082
     }
   }, client);
 
