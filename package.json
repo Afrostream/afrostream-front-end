@@ -12,6 +12,7 @@
     "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
     "start": "npm run express",
+    "test-prod": "NODE_ENV=production PORT=8080 npm run build && NODE_ENV=production PORT=8080 npm run express",
     "postinstall": "node lib/deploy"
   },
   "keywords": [

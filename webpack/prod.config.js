@@ -8,17 +8,19 @@ import config from '../config';
 const prodConfig = merge({}, webpackConfig, {
   devtool: '#source-map',
   externals: [
-    /^react(\/.*)?$/,
-    /^redux(\/.*)?$/,
-    'superagent',
-    'async'],
+    /*
+     /^react(\/.*)?$/,
+     /^redux(\/.*)?$/,
+     'superagent',
+     'async'
+     */],
   node: {
-    console: false,
-    global: false,
-    process: false,
-    Buffer: false,
-    __filename: false,
-    __dirname: false
+    console: false
+    //global: false,
+    //process: false,
+    //Buffer: false,
+    //__filename: false,
+    //__dirname: false
   },
   //FIXME Replace mock remover for staging/production
   //module: {

@@ -9,9 +9,13 @@ This project is written with ES7 and uses `Babel` to transpile to ES5.
 npm install
 ```
 
-##Run
+##Run Dev
 ```
 npm run dev
+```
+##Run Prod
+```
+npm run test-prod
 ```
 
 ##Deploy
