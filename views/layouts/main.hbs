@@ -4,7 +4,9 @@
     <title>Afrostream.tv</title>
     <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/styles/main.css">
+    {{#each cssPaths}}
+        <link rel="stylesheet" href="{{.}}"></link>
+    {{/each}}
 </head>
 <body>
 <div id="main">{{{body}}}</div>
@@ -14,5 +16,6 @@
 {{#each jsPaths}}
     <script src="{{.}}"></script>
 {{/each}}
+
 </body>
 </html>

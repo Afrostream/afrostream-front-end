@@ -15,12 +15,12 @@ class FooterLinkItem extends React.Component {
       props: { link, index },
       } = this;
 
-    const menuClass = 'footer-menu-link' + (this.props.index > 0 ? ' link-border' : '');
+    const menuClass = 'footer-menu-link ' + (this.props.index > 0 ? ' link-border' : '');
 
     return (
-      <li className={menuClass}>
+      <div className={menuClass}>
         {this.renderLink()}
-      </li>
+      </div>
     );
   }
 

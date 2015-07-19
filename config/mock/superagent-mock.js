@@ -7,6 +7,10 @@ import config from './superagent-mock-config';
  * based on https://github.com/M6Web/superagent-mock thk's to @oziks https://twitter.com/oziks
  */
 export default function mock(superagent) {
+  const env = process.env.NODE_ENV || 'development';
+  if (!~'development,staging'.indexOf(env)) {
+    return;
+  }
   var Request = superagent.Request;
   var parsers = [];
 

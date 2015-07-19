@@ -1,6 +1,7 @@
 @import './config.less';
 
 .arrow {
+  display: none;
   width: 80px;
   height: 80px;
   position: absolute;
@@ -8,7 +9,7 @@
   z-index: 3;
   top: 50%;
   opacity: 1;
-  margin-top: -30px;
+  margin-top: -40px;
   &:before {
     z-index: 2;
     content: "";
@@ -41,7 +42,7 @@
 .arrow--left {
   &:after {
   }
-  left: -15px;
+  left: -20px;
   i {
     padding-left: 30px;
   }
@@ -50,8 +51,14 @@
 .arrow--right {
   &:after {
   }
-  right: -15px;
+  right: -20px;
   i {
     padding-left: 25px;
+  }
+}
+
+@media (min-width: 768px) {
+  .arrow {
+    display: block;
   }
 }

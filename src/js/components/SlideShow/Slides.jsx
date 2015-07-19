@@ -18,7 +18,7 @@ class Slides extends React.Component {
     return (
       <div className="slides">
         {slides.map((category, i) => <Slide active={page === i}
-                                            key={category._id}
+                                            key={`slide-${category.get('_id')}-${i}`}
           { ...{category}}/>)}
       </div>
     );

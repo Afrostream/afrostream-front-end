@@ -4,7 +4,8 @@ export default function () {
     {
       "_id": "5504b0fdf298061100d4b231",
       "title": "Black Dynamite",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "Black Dynamite is based on the 2009 film of the same name. Michael Jai White, Byron Minns, Tommy Davidson and Kym Whitley reprise their film roles as Black Dynamite, Bullhorn, Cream Corn and Honeybee, respectively. Like the movie, the show is predominantly a spoof of and tribute to blaxploitation cinema. The show features a dynamic animation style rooted in Japanese anime.",
       "type": "serie",
       "duration": 25,
@@ -31,7 +32,8 @@ export default function () {
         "movi"
       ],
       "__v": 1,
-      "episodes": [],
+      "seasons": ["5504b0fdf298061100d4b231", "5504b0fdf298061100d4b232"],
+      "episodes": ["5504b0fdf298061100d4b231", "5504b0fdf298061100d4b232"],
       "subscribers": [],
       "preview": [
         {
@@ -262,6 +264,8 @@ export default function () {
     {
       "_id": "54fde8291f2ab01100934ca3",
       "title": "Bande de filles",
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "poster": "/images/mock/background/bande-de-filles.jpeg",
       "link": "",
       "_keywords": [
@@ -386,7 +390,8 @@ export default function () {
     {
       "_id": "54fde4121f2ab01100934c98",
       "title": "Belle",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "BELLE is inspired by the true story of Dido Elizabeth Belle (Gugu Mbatha-Raw), the illegitimate mixed race daughter of Admiral Sir John Lindsay (Matthew Goode). Raised by her aristocratic great-uncle Lord Mansfield (Tom Wilkinson) and his wife (Emily Watson), Belle's lineage affords her certain privileges, yet her status prevents her from the traditions of noble social standing. While her cousin Elizabeth (Sarah Gadon) chases suitors for marriage, Belle is left on the sidelines wondering if she will ever find love. After meeting an idealistic young vicar's son bent on changing society, he and Belle help shape Lord Mansfield's role as Lord Chief Justice to end slavery in England. (c) Fox Searchlight",
       "type": "movie",
       "duration": null,
@@ -666,7 +671,8 @@ export default function () {
     {
       "_id": "54fdcec3ab57cb11006e3414",
       "title": "Better Mus Come",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "In Kingston, Jamaica, in the late 1970s, the two main political parties enlist the support of gangs to enforce their policies and advance their political agenda. Young Ricky is a community leader and father, whose gang is aligned to one party. One day he meets Kamala, who belongs to a community controlled by the other party, and the two instantly connect. Will their love triumph, or will bigger forces win the day? Based on true events. Better Mus' Come is the debut film of writer/director Storm Saulter and was produced by award-winning filmmaker Paul Bucknor (The Full Monty). The film has a sizzling original score and all Jamaican lead cast, with an electrifying cameo appearance by Roger Guenveur Smith (Malcolm X, Do the Right Thing, American Gangster) as Prime Minister, delivering the political speech that ended with the promise, \"Better Mus Come!\", reflecting his party's commitment to greater social justice and equality for all Jamaicans. (c) Official FB",
       "type": "movie",
       "duration": null,
@@ -910,6 +916,8 @@ export default function () {
     {
       "_id": "54fdcccaab57cb11006e340b",
       "title": "Being Mrs Elliott",
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "poster": "http://upload.wikimedia.org/wikipedia/en/7/71/Being_Mrs_Elliot_film.jpg",
       "_keywords": [
         "be",
@@ -1016,6 +1024,8 @@ export default function () {
     {
       "_id": "54f5ddc0a2b4831100d518cd",
       "title": "Black-ish",
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "year": "2014-09-24T00:00:00.000Z",
       "synopsis": "An upper-middle-class black man struggles to raise his children with a sense of cultural identity despite constant contradictions and obstacles coming from his liberal wife, old-school father and his assimilated, color-blind kids.",
       "type": "serie",
@@ -1357,7 +1367,8 @@ export default function () {
     {
       "_id": "54f583f21135af11004aa7ce",
       "title": "Being Mary Jane",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "Mary Jane Paul is a one-woman-show: a successful TV news anchor, and an entirely self-sufficient powerhouse who remains devoted to a family that doesn't share her motivation. Intense drama and unforgettable moments unfold as Mary Jane juggles her life, her relationships, her work, and commitments to her family.",
       "type": "serie",
       "duration": 60,
@@ -1562,7 +1573,8 @@ export default function () {
     {
       "_id": "54f583da1135af11004aa7c1",
       "title": "Black Jesus",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "A TV series finds Jesus living in present day Compton, CA on a daily mission to spread love and kindness throughout the neighborhood with the help of his small but loyal group of downtrodden followers.",
       "type": "serie",
       "duration": 20,
@@ -1955,7 +1967,8 @@ export default function () {
       "_id": "54f575ea1135af11004aa760",
       "_relevance": 1.5277777777777777,
       "title": "Boyz'n the Hood, la loi de la rue",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "Tre veut échapper à l'engrenage de la violence et de la misère qui règnent dans son ghetto de L.A.. Mais ses deux copains n'ont guère cette ambition. Seule importe pour eux la loi de la jungle.",
       "type": "movie",
       "duration": 107,
@@ -2229,7 +2242,8 @@ export default function () {
       "_id": "54f5754e1135af11004aa74b",
       "_relevance": 4.2555555555555555,
       "title": "Bad Boys - flics de choc",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "Mike Lowery et Marcus Burnett sont inspecteurs à la brigade des stupéfiants de Miami. Le premier est un séducteur invétéré, héritier d'une fortune et policier par passion ; le deuxième, un homme rangé qui tente avec difficulté de concilier vie familiale et métier de policier, est son collègue et ami. Lorsque les sbires de Fouchet, un redoutable truand, réussissent à voler un important stock d'héroïne au sein même de leur commissariat, les deux policiers se voient confier la mission périlleuse de retrouver la drogue.",
       "type": "movie",
       "duration": 114,
@@ -2536,7 +2550,8 @@ export default function () {
     {
       "_id": "54f574551135af11004aa73c",
       "title": "Beyond the Lights",
-      "year": "1970-01-01T00:00:02.014Z",
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "Beyond the Lights is the story of Noni, the music world's latest superstar. But not all is what it seems, and the pressures of fame have Noni on the edge - until she meets Kaz Nicol, a young cop and aspiring politician who's been assigned to her detail. Drawn to each other, Noni and Kaz fall fast and hard, despite the protests of those around them who urge them to put their career ambitions ahead of their romance. But it is ultimately Kaz's love that gives Noni the courage to find her own voice and break free to become the artist she was meant to be. (c) Relativity",
       "type": "movie",
       "duration": null,
@@ -2847,6 +2862,8 @@ export default function () {
     {
       "_id": "54fdd1d7ab57cb11006e3420",
       "title": "Le bonheur d'Elza",
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "poster": "http://media.senscritique.com/media/000000050923/source_big/Le_bonheur_d_Elza.jpg",
       "_keywords": [
         "le",
@@ -2951,6 +2968,8 @@ export default function () {
     {
       "_id": "54fdd129ab57cb11006e341d",
       "title": "The Butler",
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "poster": "http://i.huffpost.com/gen/1170323/thumbs/o-THE-BUTLER-POSTER-facebook.jpg",
       "_keywords": [
         "the",
@@ -3084,7 +3103,8 @@ export default function () {
     {
       "_id": "54fdd0ffab57cb11006e341c",
       "title": "The Best Man Holiday",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "After nearly 15 years apart, Taye Diggs (television's Private Practice), Nia Long (Soul Food), Morris Chestnut (Kick-Ass 2), Harold Perrineau (Zero Dark Thirty), Terrence Howard (Hustle & Flow), Sanaa Lathan (Contagion), Monica Calhoun (Love & Basketball), Melissa De Sousa (Miss Congeniality) and Regina Hall (Scary Movie franchise) reprise their career-launching roles in The Best Man Holiday, the long-awaited next chapter to the film that ushered in a new era of comedy. When the college friends finally reunite over the Christmas holidays, they will discover just how easy it is for long-forgotten rivalries and romances to be ignited. Malcolm D. Lee returns to write and direct this sequel to his directorial debut. Sean Daniel (The Mummy franchise) will produce alongside Lee for The Sean Daniel Company. (c) Universal Pictures",
       "type": "movie",
       "duration": null,
@@ -3358,7 +3378,8 @@ export default function () {
     {
       "_id": "54f5732f1135af11004aa715",
       "title": "Chris Rock: Bring the Pain",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "",
       "type": "movie",
       "duration": null,
@@ -3550,7 +3571,8 @@ export default function () {
     {
       "_id": "54f5e355a2b4831100d518e3",
       "title": "Le Crocodile du Botswanga",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "",
       "type": "movie",
       "duration": null,
@@ -3812,7 +3834,8 @@ export default function () {
     {
       "_id": "54f57d781135af11004aa775",
       "title": "Temptation",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "A bold exploration of the intrigue and perils of infidelity, Tyler Perry's Temptation: Confessions of a Marriage Counselor is a compelling love story that dives straight into the heart of obsessive passion. \"It's about a woman who starts to get restless in her relationship and her choice to be with another man has a huge effect on the rest of her life,\" explains screenwriter/producer/director Tyler Perry. \"She goes on a journey - in her career and in her marriage - and she ends up in a very different place than she expected.\" In a departure from his previous dramas, this explosive film finds Perry exploring the nature of desire - and just how powerful and dangerous a taste of the forbidden can be. \"This is definitely one of the most provocative movies - sexually and otherwise - that I've made,\" says the director.",
       "type": "movie",
       "duration": null,
@@ -4078,6 +4101,8 @@ export default function () {
     {
       "_id": "54fdcf6fab57cb11006e3416",
       "title": "Misfit",
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "poster": "http://www.bellanaija.com/wp-content/uploads/2013/11/MISFIT-POSTER.jpg",
       "_keywords": [
         "misfit",
@@ -4219,7 +4244,8 @@ export default function () {
     {
       "_id": "54fdd148ab57cb11006e341e",
       "title": "Fruitvale Station",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "Winner of both the Grand Jury Prize for dramatic feature and the Audience Award for U.S. dramatic film at the 2013 Sundance Film Festival, director Ryan Coogler's FRUITVALE STATION follows the true story of Oscar Grant (Michael B. Jordan), a 22-year-old Bay Area resident who wakes up on the morning of December 31, 2008 and feels something in the air. Not sure what it is, he takes it as a sign to get a head start on his resolutions: being a better son to his mother (Octavia Spencer), whose birthday falls on New Year's Eve, being a better partner to his girlfriend Sophina (Melonie Diaz), who he hasn't been completely honest with as of late, and being a better father to Tatiana (Ariana Neal), their beautiful four year-old daughter. Crossing paths with friends, family, and strangers, Oscar starts out well, but as the day goes on, he realizes that change is not going to come easily. His resolve takes a tragic turn, however, when BART officers shoot him in cold blood at the Fruitvale subway stop on New Year's Day. Oscar's life and tragic death would shake the Bay Area - and the entire nation - to its very core. (c) Weinstein",
       "type": "movie",
       "duration": null,
@@ -4489,7 +4515,8 @@ export default function () {
     {
       "_id": "54f5e379a2b4831100d518f7",
       "title": "Think Like a Man",
-      "year": null,
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
       "synopsis": "Based on Steve Harvey's best-selling book, Think Like a Man follows four interconnected and diverse men whose love lives are shaken up after the ladies they are pursuing buy Harvey's book and start taking his advice to heart. When the band of brothers realize they have been betrayed by one of their own, they conspire using the book's insider information to turn the tables and teach the women a lesson of their own. -- (C) Official Site",
       "type": "movie",
       "duration": null,

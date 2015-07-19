@@ -27,7 +27,7 @@
 
   &-menu {
     .footer-section {
-      text-align: left;
+
       .footer-section-label {
         margin: 5px 0px 5px 0px;
       }
@@ -38,27 +38,11 @@
           text-transform: capitalize;
           display: inline-block;
           &.link-border {
-            margin-left: 10px;
-            &:before {
-              content: "";
-              height: 100%;
-              border-left: solid 1px  @brand-footer;
-              padding-left: 10px;
-            }
           }
           a {
             color: @brand-footer;
           }
         }
-      }
-      &:nth-child(1) {
-        text-align: left;
-      }
-      &:nth-child(2) {
-        text-align: center;
-      }
-      &:nth-child(3) {
-        text-align: right;
       }
     }
   }
@@ -66,4 +50,44 @@
 
 .footer, .page-wrap:after {
   height: @footer-height;
+}
+
+@media (min-width: 768px) {
+
+  .footer {
+    &-menu {
+      .footer-section {
+        text-align: left;
+        .footer-links {
+          &.row {
+            margin: 0;
+          }
+          .footer-menu-link {
+            &.link-border {
+              margin-left: 10px;
+              &:before {
+                content: "";
+                height: 100%;
+                border-left: solid 1px  @brand-footer;
+                padding-left: 10px;
+              }
+            }
+            a {
+              color: @brand-footer;
+            }
+          }
+        }
+        &:nth-child(1) {
+          text-align: left;
+        }
+        &:nth-child(2) {
+          text-align: center;
+        }
+        &:nth-child(3) {
+          text-align: right;
+        }
+      }
+    }
+  }
+
 }
