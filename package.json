@@ -38,6 +38,7 @@
     "jshint": "^2.8.0",
     "node-libs-browser": "^0.5.2",
     "node-notifier": "^4.2.3",
+    "raw-loader": "^0.5.1",
     "react-hot-loader": "^1.2.8",
     "webpack-dev-server": "^1.10.0"
   },

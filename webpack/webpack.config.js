@@ -16,7 +16,7 @@ const AUTOPREFIXER_BROWSERS = [
   'Safari >= 6'
 ];
 
-const assetsPath = path.resolve(__dirname, '../dist');
+const assetsPath = path.resolve(__dirname, '../static/dist/js');
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -28,7 +28,7 @@ const webpackConfig = {
   devtool: '#inline-source-map',
   output: {
     path: assetsPath,
-    publicPath: `${webpackDevServerUrl}/`,
+    publicPath: `${webpackDevServerUrl}/static/`,
     filename: '[name].js',
     chunkFilename: '[id].js'
   },
@@ -70,22 +70,29 @@ const webpackConfig = {
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {
-        test: /\.(gif|jpg|png|svg|favicon)/,
-        loader: 'file-loader!url-loader?name=[name].[ext]?[hash]&limit=10000'
+        test: /\.(gif|jpg|png|svg|favicon|ico)/,
+        loader: 'file-loader!url-loader?name=../images/[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /.woff([\?]?.*)$/,
-        loader: 'url?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
+        loader: 'url?name=../fonts/[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /.ttf([\?]?.*)$/,
-        loader: 'url?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url?name=../fonts/[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
       },
-      {test: /.eot([\?]?.*)$/, loader: 'file-loader'}
+      {
+        test: /.eot([\?]?.*)$/,
+        loader: 'file-loader?name=../fonts/[name].[ext]?[hash]'
+      },
+      {
+        test: /.txt([\?]?.*)$/,
+        loader: 'raw-loader'
+      }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new ExtractTextPlugin('../styles/[name].css', {allChunks: true}),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
   ],
 
