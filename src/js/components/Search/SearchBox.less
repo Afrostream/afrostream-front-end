@@ -1,12 +1,16 @@
 @import '../../../styles/config.less';
 
 .search-box {
+  .search-form {
+    position: absolute;
+    right: 20px;
+  }
   fieldset {
     border: none;
   }
   input[type="search"] {
     font-size: 16px;
-    padding: 15px 15px 10px 50px;
+    padding: 10px 10px 10px 30px;
     color: #1f5350;
     /*removing boder from search box*/
     border: none;
@@ -16,10 +20,14 @@
     /*background-size*/
     .background-size(20px 20px);
     /*positioning background image*/
-    background-position: 10px 12px;
+    background-position: 10px 10px;
     /*changing background color form white*/
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 1);
+    width: 0;
+    .transition(width 0.2s linear);
     &:focus {
+      padding: 10px 10px 10px 50px;
+      width: 200px;
       background-color: rgba(255, 255, 255, 1);
     }
   }

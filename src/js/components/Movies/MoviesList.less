@@ -61,16 +61,26 @@
           background-position: center center;
           background-repeat: no-repeat;
           cursor: pointer;
-          .transition(opacity 0.2s linear);
+          .transition(opacity 0.1s linear);
           i {
+            .transition(opacity 0.1s linear);
             position: absolute;
-            font-size: 6em;
             left: 50%;
             top: 50%;
-            margin-top: -25px; /* Half the height */
-            margin-left: -25px; /* Half the width */
+            margin-left: -40px;
+            margin-top: -40px;
+            &.btn-play {
+              background-image: url('../../../../static/images/btn-play.png');
+              background-repeat: no-repeat;
+              background-size: contain;
+              background-position: center center;
+              width: 80px;
+              height: 80px;
+
+            }
           }
           &:before {
+            opacity: 0;
             content: '';
             .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
             position: absolute;
@@ -83,6 +93,13 @@
           i,
           &:before {
             opacity: 0;
+          }
+          &:hover {
+            i,
+            &:before {
+              .transition(opacity 0.1s linear);
+              opacity: 1;
+            }
           }
         }
         .thumb-info {
@@ -169,9 +186,17 @@
                 }
                 .thumb-background {
                   .transition(opacity 0.1s linear);
-                  i,
+                  i {
+                    opacity: 0.6;
+                  }
                   &:before {
-                    opacity: 0.8;
+                    opacity: 1;
+                  }
+                  &:hover {
+                    i,
+                    &:before {
+                      opacity: 1;
+                    }
                   }
                 }
               }

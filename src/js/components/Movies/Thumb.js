@@ -1,10 +1,10 @@
 import React from 'react/addons';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import { Link } from 'react-router';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax} = window.GreenSockGlobals;
+  var {TimelineMax,TweenMax,Expo} = window.GreenSockGlobals;
 }
 
 class Thumb extends React.Component {
@@ -27,6 +27,14 @@ class Thumb extends React.Component {
     movie: React.PropTypes.object.isRequired
   };
 
+  triggerOver() {
+    this.slider.dispatchEvent(new Event('thumbover'));
+  }
+
+  triggerOut() {
+    this.slider.dispatchEvent(new Event('thumbout'));
+  }
+
   initTransition() {
     //Detect mobile
     const ua = navigator.userAgent;
@@ -35,6 +43,7 @@ class Thumb extends React.Component {
 
     this.container = React.findDOMNode(this.refs.thumbContainer);
     this.slider = this.container.parentNode;
+
     this.thumbBackground = React.findDOMNode(this.refs.thumbBackground);
     const thumb = React.findDOMNode(this.refs.thumb);
     const info = React.findDOMNode(this.refs.info);
@@ -44,18 +53,18 @@ class Thumb extends React.Component {
       perspectiveOrigin: '50% 50%'
     });
     this.tl = new TimelineMax({paused: true});
-    this.tl.add(TweenMax.fromTo(thumb, 0.4,
+    this.tl.add(TweenMax.fromTo(thumb, .4,
       {
-        //transform: 'translate3D(0,0,0)',
-        scale: 1,
+        transform: 'translate3D(0,0,0)',
+        //scale: 1,
         zIndex: 0,
         backgroundColor: 'transparent',
         borderColor: 'transparent',
         width: 140
       },
       {
-        //transform: `translate3D(0,0,10px)`,
-        scale: 1.25,
+        transform: `translate3D(0,0,40px)`,
+        //scale: 1.25,
         zIndex: 9000,
         backgroundColor: '#FFF',
         borderColor: '#ffc809',
@@ -66,9 +75,9 @@ class Thumb extends React.Component {
         ease: Sine.easeOut
       }
     ), 0);
-    this.tl.add(TweenMax.fromTo(info, 0.4,
+    this.tl.add(TweenMax.fromTo(info, .3,
       {autoAlpha: 0},
-      {autoAlpha: 1, display: 'inline-block', ease: Sine.easeOut}
+      {autoAlpha: 1, display: 'inline-block', ease: Expo.easeOut}
     ), 0.2);
   }
 
@@ -77,6 +86,7 @@ class Thumb extends React.Component {
     clearTimeout(this.overTime);
     this.overTime = setTimeout(() => {
         this.tl.restart();
+        this.triggerOver();
         const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
         const thumbLeft = this.container.offsetLeft + thumbWith;
         const thumbRight = this.container.offsetLeft;
@@ -105,6 +115,7 @@ class Thumb extends React.Component {
     clearTimeout(this.overTime);
     this.overTime = setTimeout(() => {
         this.tl.reverse();
+        this.triggerOut();
       }, 100
     );
   }
@@ -146,7 +157,7 @@ class Thumb extends React.Component {
           >
           <Link to={`${type}/${slug}`}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
-              <i className="fa fa-play-circle-o"></i>
+              <i className="btn-play"></i>
             </div>
           </Link>
 

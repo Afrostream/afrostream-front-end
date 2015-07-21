@@ -16,7 +16,7 @@ const AUTOPREFIXER_BROWSERS = [
   'Safari >= 6'
 ];
 
-const assetsPath = path.resolve(__dirname, '../static/dist/js');
+const assetsPath = path.resolve(__dirname, '../dist/');
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -64,26 +64,29 @@ const webpackConfig = {
         exclude: /node_modules/, // exclude any and all files in the node_modules folder
         loaders: ['babel-loader']
       },
-      {test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader')},
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico)/,
-        loader: 'file-loader!url-loader?name=../images/[name].[ext]?[hash]&limit=10000'
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /.woff([\?]?.*)$/,
-        loader: 'url?name=../fonts/[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /.ttf([\?]?.*)$/,
-        loader: 'url?name=../fonts/[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /.eot([\?]?.*)$/,
-        loader: 'file-loader?name=../fonts/[name].[ext]?[hash]'
+        loader: 'file-loader?name=[name].[ext]?[hash]'
       },
       {
         test: /.txt([\?]?.*)$/,
@@ -92,7 +95,7 @@ const webpackConfig = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('../styles/[name].css', {allChunks: true}),
+    new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
   ],
 
