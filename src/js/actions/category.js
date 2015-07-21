@@ -10,3 +10,14 @@ export function getCategory(category) {
     })
   });
 }
+
+export function getMenu(category) {
+  return async api => ({
+    type: ActionTypes.Category.getMenu,
+    category,
+    res: await api(`/category/${category}/menu`, {
+      sort: 'updated',
+      direction: 'desc'
+    })
+  });
+}

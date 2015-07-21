@@ -38,6 +38,16 @@ const superAgentConfig = [
         body: datasPaginated
       };
     }
+  },
+  {
+    patter: `${config.apiServer.urlPrefix}/category/(\\w+)/menu`,
+
+    fixtures: Fixtures.CategoryMenu,
+    callback: function (match, data) {
+      return {
+        body: data
+      };
+    }
   }
 ];
 

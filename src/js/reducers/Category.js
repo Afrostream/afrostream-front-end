@@ -12,5 +12,14 @@ export default createReducer(initialState, {
       [`category/${category}__res`]: res,
       [`category/${category}`]: list
     });
-  }
+  },
+  [ActionTypes.Category.getMenu](state, { category, res }) {
+    const list = res.body;
+    return state.merge({
+      [`current`]: category,
+      [`category/${category}/menu__res`]: res,
+      [`category/${category}/menu`]: list
+    });
+  },
+  Category
 });

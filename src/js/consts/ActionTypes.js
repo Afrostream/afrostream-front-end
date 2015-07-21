@@ -24,6 +24,7 @@ export default {
   }),
 
   Category: keyMirror({
-    getCategory: null
+    getCategory: null,
+    getMenu: null
   })
 };
