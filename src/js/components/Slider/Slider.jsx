@@ -46,7 +46,7 @@ class Slider extends React.Component {
     this.scrolling = false;
     this.container = null;
     this.scrollLeft = 0;
-    this.tl = null;
+    this.tlIn = null;
   }
 
   componentDidMount() {
@@ -112,15 +112,15 @@ class Slider extends React.Component {
   initTimeline() {
     const arrowL = React.findDOMNode(this.refs.arrowLeft);
     const arrowR = React.findDOMNode(this.refs.arrowRight);
-    this.tl = new TimelineMax({paused: true});
-    this.tl.add(TweenMax.to(arrowL, .3,
+    this.tlIn = new TimelineMax({paused: true});
+    this.tlIn.add(TweenMax.to(arrowL, .3,
       {
         autoAlpha: 0,
         left: '-=50px', ease: Expo.easeIn
       }
     ), 0.2);
 
-    this.tl.add(TweenMax.to(arrowR, .3,
+    this.tlIn.add(TweenMax.to(arrowR, .3,
       {
         autoAlpha: 0,
         right: '-=50px', ease: Expo.easeIn
@@ -129,12 +129,12 @@ class Slider extends React.Component {
   }
 
   hideArrow() {
-    this.tl.play();
+    this.tlIn.play();
   }
 
 
   showArrow() {
-    this.tl.reverse();
+    this.tlIn.reverse();
   }
 
   /**

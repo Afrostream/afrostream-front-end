@@ -4,15 +4,16 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax,Expo} = window.GreenSockGlobals;
+  var {TimelineMax,TweenMax,Expo,Sine} = window.GreenSockGlobals;
 }
 
 class Thumb extends React.Component {
 
   constructor(props) {
     super(props);
-    this.tl = null;
-    this.thumbWidth = 420;
+    this.tlIn = null;
+    this.tlOut = null;
+    this.thumbWidth = 422;
     this.overTime = 0;
     this.perspective = 200;
     this.thumbOffset = 30;
@@ -52,76 +53,79 @@ class Thumb extends React.Component {
       perspective: this.perspective,
       perspectiveOrigin: '50% 50%'
     });
-    this.tl = new TimelineMax({paused: true});
-    this.tl.add(TweenMax.fromTo(thumb, .4,
+    this.tlIn = new TimelineMax({paused: true});
+    this.tlIn.add(TweenMax.fromTo(thumb, .4,
       {
         transform: 'translate3D(0,0,0)',
-        zIndex: 0,
         borderColor: 'transparent',
-        width: 140,
-        height: 202
+        width: 140
       },
       {
         transform: `translate3D(0,-15px,30px)`,
-        //scale: 1.25,
-        zIndex: 9000,
         borderColor: '#ffc809',
         width: this.thumbWidth,
-        height: 202,
         ease: Sine.easeOut
       }
     ), 0);
-    //this.tl.add(TweenMax.fromTo(this.container, .4,
-    //  {marginLeft: 10, marginRight: 10},
-    //  {marginLeft: 50, marginRight: 50, ease: Expo.easeOut}
-    //), 0);
-    this.tl.add(TweenMax.fromTo(info, .3,
-      {autoAlpha: 0, width: 0},
-      {autoAlpha: 1, width: 280, ease: Expo.easeOut}
+    this.tlIn.add(TweenMax.fromTo(this.container, .5,
+      {marginLeft: 10, marginRight: 10},
+      {marginLeft: 50, marginRight: 50, ease: Expo.easeOut}
     ), 0);
+
+    this.tlIn.add(TweenMax.fromTo(info, .2,
+      {
+        autoAlpha: 0,
+        left: 280
+      },
+      {
+        autoAlpha: 1,
+        left: 140,
+        ease: Sine.easeOut
+      }
+    ), 0.2);
   }
 
   lunchTransition() {
-    //if (this.isMobileWebkit) return;
-    //clearTimeout(this.overTime);
-    //this.overTime = setTimeout(() => {
-    //    this.tl.restart();
-    //    this.triggerOver();
-    //    const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
-    //    const thumbLeft = this.container.offsetLeft + thumbWith;
-    //    const thumbRight = this.container.offsetLeft;
-    //    const sliderPos = this.slider.scrollLeft;
-    //    const thumbMargin = this.thumbOffset;
-    //    const scrollPos = sliderPos + this.slider.clientWidth;
-    //    const visibleLeft = this.slider.clientWidth - (this.container.offsetLeft - this.slider.scrollLeft);
-    //    const hiddenLeft = thumbWith - (visibleLeft + (this.thumbBackground.clientWidth - (thumbMargin * 2 )));
-    //    switch (true) {
-    //      case thumbLeft > scrollPos:
-    //        TweenMax.to(this.slider, this.scollSpeed,
-    //          {scrollLeft: sliderPos + (hiddenLeft), ease: Sine.easeOut}
-    //        );
-    //        break;
-    //      case thumbRight < sliderPos:
-    //        TweenMax.to(this.slider, this.scollSpeed,
-    //          {scrollLeft: (thumbRight - thumbMargin), ease: Sine.easeOut}
-    //        );
-    //        break;
-    //    }
-    //  }, 200
-    //);
+    if (this.isMobileWebkit) return;
+    clearTimeout(this.overTime);
+    this.overTime = setTimeout(() => {
+        this.tlIn.restart();
+        this.triggerOver();
+        const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
+        const thumbLeft = this.container.offsetLeft + thumbWith;
+        const thumbRight = this.container.offsetLeft;
+        const sliderPos = this.slider.scrollLeft;
+        const thumbMargin = this.thumbOffset;
+        const scrollPos = sliderPos + this.slider.clientWidth;
+        const visibleLeft = this.slider.clientWidth - (this.container.offsetLeft - this.slider.scrollLeft);
+        const hiddenLeft = thumbWith - (visibleLeft + (this.thumbBackground.clientWidth - (thumbMargin * 2 )));
+        switch (true) {
+          case thumbLeft > scrollPos:
+            TweenMax.to(this.slider, this.scollSpeed,
+              {scrollLeft: sliderPos + (hiddenLeft), ease: Sine.easeOut}
+            );
+            break;
+          case thumbRight < sliderPos:
+            TweenMax.to(this.slider, this.scollSpeed,
+              {scrollLeft: (thumbRight - thumbMargin), ease: Sine.easeOut}
+            );
+            break;
+        }
+      }, 200
+    );
   }
 
   revertTransition() {
-    //clearTimeout(this.overTime);
-    //this.overTime = setTimeout(() => {
-    //    this.tl.reverse();
-    //    this.triggerOut();
-    //  }, 100
-    //);
+    clearTimeout(this.overTime);
+    this.overTime = setTimeout(() => {
+        this.tlIn.reverse();
+        this.triggerOut();
+      }, 100
+    );
   }
 
   componentDidMount() {
-    //this.initTransition();
+    this.initTransition();
   }
 
   render() {

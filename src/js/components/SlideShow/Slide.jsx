@@ -11,7 +11,7 @@ class Slide extends React.Component {
 
   constructor(props) {
     super(props);
-    this.tl = null;
+    this.tlIn = null;
   }
 
   initTransition() {
@@ -20,14 +20,14 @@ class Slide extends React.Component {
     const titleEl = React.findDOMNode(this.refs.slTitle);
     const synopsisE = React.findDOMNode(this.refs.slSynopsis);
     const slTag = React.findDOMNode(this.refs.slTag || this.refs.slNull);
-    this.tl = new TimelineMax({paused: true});
+    this.tlIn = new TimelineMax({paused: true});
     TweenMax.set(container, {transformStyle: 'preserve-3d', perspective: 100, perspectiveOrigin: '50% 50%'});
-    this.tl.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
-    this.tl.add(TweenMax.fromTo(backGd, 22,
+    this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
+    this.tlIn.add(TweenMax.fromTo(backGd, 22,
       {transform: 'translateZ(0)'},
       {transform: 'translateZ(5px)'}
     ), 0);
-    this.tl.add(TweenMax.staggerFromTo([slTag, titleEl, synopsisE], 1,
+    this.tlIn.add(TweenMax.staggerFromTo([slTag, titleEl, synopsisE], 1,
       {transform: 'translateX(-450px)'},
       {transform: 'translateX(0)'}
       , 0.25), 0);
@@ -37,10 +37,10 @@ class Slide extends React.Component {
     if (!this.props.active) {
       return;
     }
-    if (!this.tl) {
+    if (!this.tlIn) {
       this.initTransition();
     }
-    this.tl.restart();
+    this.tlIn.restart();
   }
 
   componentDidUpdate() {

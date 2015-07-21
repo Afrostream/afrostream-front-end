@@ -107,7 +107,6 @@
           overflow: auto;
           white-space: normal;
           box-sizing: inherit;
-          color: @brand-thumbs;
           float: left;
           min-height: 100%;
           color: #FFFFFF;
@@ -180,13 +179,15 @@
             //.perspective(200);
             //.perspective-origin(center center);
             flex-shrink: 0;
-            margin: @zoom-margin @thumb-margin  @zoom-margin @thumb-margin;
             display: inline-block;
             //.transition(all 0.2s linear);
             //.transition-delay(0.2s);
+            margin: @zoom-margin @thumb-margin  @zoom-margin @thumb-margin;
             .thumb {
+              overflow: hidden;
               max-height: 202px;
               height: 200px;
+              width: @thumb-width;
               background-color: transparent;
               border-color: transparent;
               //.translate3d(0, 0, 0);
@@ -195,7 +196,10 @@
               .thumb-background {
               }
               .thumb-info {
-                display: none;
+                display: inline-block;
+                top: 0;
+                position: absolute;
+                width: @thumb-width * 2;
               }
             }
             &:hover {
@@ -205,10 +209,10 @@
                 //.translate3d(0, 0, 30px);
                 //.transition(all 0.2s linear);
                 //.transition-delay(0.2s);
+                overflow: hidden;
+                width: 420px;
                 .thumb-info {
                   opacity: 1;
-                  display: inline-block;
-                  width: @thumb-width * 2;
                 }
                 .thumb-background {
                   .transition(opacity 0.1s linear);
