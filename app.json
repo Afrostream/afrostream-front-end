@@ -3,7 +3,7 @@
   "description": "Front project of Afrostream Netflix for african-american and african tv show and movies",
   "scripts": {},
   "env": {
-    "NODE_ENV": "staging",
+    "NODE_ENV": "production",
     "API_END_POINT": "http://afrostream-api-v1-staging.herokuapp.com",
     "API_CLIENT_END_POINT": "http://afrostream-api-v1-staging.herokuapp.com"
   },
