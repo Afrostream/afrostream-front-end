@@ -9,8 +9,7 @@
 .movies-list {
   position: relative;
   overflow-x: hidden;
-  padding: 10px 0 40px 0;
-  background-color: @color-indigo;
+  margin: 10px 0 10px 0;
   .selection {
     font-size: 1.8em;
     font-family: @font-light;
@@ -34,19 +33,22 @@
       height: 100%;
       max-height: 100%;
       .thumb {
-        display: inline-block;
+        display: table;
         position: relative;
         width: 100%;
         padding: 0;
         text-align: left;
         border: 1px solid #FFFFFF;
         background-color: #FFFFFF;
+        -webkit-font-smoothing: antialiased;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
         a {
           position: relative;
-          display: inline-block;
-          float: left;
+          display: table-cell;
           width: @thumb-width;
-          height: 100%;
+          height: @thumb-height;
           .thumb-background {
             position: absolute;
             top: 0;
@@ -102,40 +104,17 @@
         }
         .thumb-info {
           position: relative;
-          display: inline-block;
+          display: table-cell;
           vertical-align: middle;
           overflow: auto;
           white-space: normal;
-          box-sizing: inherit;
+          box-sizing: initial;
           color: @brand-thumbs;
           float: left;
+          padding: 5px 15px 5px 15px;
           min-height: 100%;
           color: #FFFFFF;
-
-          -webkit-font-smoothing: antialiased;
-          background-size: cover;
-          background-position: left center;
-          background-repeat: no-repeat;
-          &:before {
-            content: "";
-            background-color: rgba(0, 0, 0, 0.7);
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-          }
-          &__txt {
-            position: absolute;
-            top: 10px;
-            bottom: 42px;
-            left: 10px;
-            right: 10px;
-          }
-          &__btn {
-            position: absolute;
-            bottom: 0;
-          }
+          background-color: rgba(0, 0, 0, 0.7);
           &__title {
             //font-family: @font-thin;
             font-weight: 700;
@@ -149,8 +128,10 @@
             //FIXME force size change it to auto
             font-size: 1.2em;
             vertical-align: middle;
+            height: 100%;
+            min-height: 100%;
+            overflow: hidden;
             text-overflow: ellipsis;
-            padding: 10px 0 10px 0;
             //TODO height 100% de l'info block et center ce texte vertically
             //padding: 30px 0 25px 0;
             a {
@@ -179,6 +160,8 @@
             //.transform-style(preserve-3d);
             //.perspective(200);
             //.perspective-origin(center center);
+            background-color: transparent;
+            border-color: transparent;
             flex-shrink: 0;
             margin: @zoom-margin @thumb-margin  @zoom-margin @thumb-margin;
             display: inline-block;
@@ -186,9 +169,6 @@
             //.transition-delay(0.2s);
             .thumb {
               max-height: 202px;
-              height: 200px;
-              background-color: transparent;
-              border-color: transparent;
               //.translate3d(0, 0, 0);
               //.transition(all 0.2s linear);
               //.transition-delay(0.2s);
@@ -207,7 +187,7 @@
                 //.transition-delay(0.2s);
                 .thumb-info {
                   opacity: 1;
-                  display: inline-block;
+                  display: table-cell;
                   width: @thumb-width * 2;
                 }
                 .thumb-background {

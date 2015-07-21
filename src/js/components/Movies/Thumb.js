@@ -56,72 +56,72 @@ class Thumb extends React.Component {
     this.tl.add(TweenMax.fromTo(thumb, .4,
       {
         transform: 'translate3D(0,0,0)',
-        //scale: 1,
         zIndex: 0,
-        backgroundColor: 'transparent',
         borderColor: 'transparent',
-        width: 140
+        width: 140,
+        height: 202
       },
       {
-        transform: `translate3D(0,0,40px)`,
+        transform: `translate3D(0,-15px,30px)`,
         //scale: 1.25,
         zIndex: 9000,
-        backgroundColor: '#FFF',
         borderColor: '#ffc809',
-        marginLeft: '+=50px',
-        marginRight: '+=50px',
         width: this.thumbWidth,
-        top: '-15px',
+        height: 202,
         ease: Sine.easeOut
       }
     ), 0);
+    //this.tl.add(TweenMax.fromTo(this.container, .4,
+    //  {marginLeft: 10, marginRight: 10},
+    //  {marginLeft: 50, marginRight: 50, ease: Expo.easeOut}
+    //), 0);
     this.tl.add(TweenMax.fromTo(info, .3,
-      {autoAlpha: 0},
-      {autoAlpha: 1, display: 'inline-block', ease: Expo.easeOut}
-    ), 0.2);
+      {autoAlpha: 0, width: 0},
+      {autoAlpha: 1, width: 280, ease: Expo.easeOut}
+    ), 0);
   }
 
   lunchTransition() {
-    if (this.isMobileWebkit) return;
-    clearTimeout(this.overTime);
-    this.overTime = setTimeout(() => {
-        this.tl.restart();
-        this.triggerOver();
-        const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
-        const thumbLeft = this.container.offsetLeft + thumbWith;
-        const thumbRight = this.container.offsetLeft;
-        const sliderPos = this.slider.scrollLeft;
-        const thumbMargin = this.thumbOffset;
-        const scrollPos = sliderPos + this.slider.clientWidth;
-        const visibleLeft = this.slider.clientWidth - (this.container.offsetLeft - this.slider.scrollLeft);
-        const hiddenLeft = thumbWith - (visibleLeft + (this.thumbBackground.clientWidth - (thumbMargin * 2 )));
-        switch (true) {
-          case thumbLeft > scrollPos:
-            TweenMax.to(this.slider, this.scollSpeed,
-              {scrollLeft: sliderPos + (hiddenLeft), ease: Sine.easeOut}
-            );
-            break;
-          case thumbRight < sliderPos:
-            TweenMax.to(this.slider, this.scollSpeed,
-              {scrollLeft: (thumbRight - thumbMargin), ease: Sine.easeOut}
-            );
-            break;
-        }
-      }, 200
-    );
+    //if (this.isMobileWebkit) return;
+    //clearTimeout(this.overTime);
+    //this.overTime = setTimeout(() => {
+    //    this.tl.restart();
+    //    this.triggerOver();
+    //    const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
+    //    const thumbLeft = this.container.offsetLeft + thumbWith;
+    //    const thumbRight = this.container.offsetLeft;
+    //    const sliderPos = this.slider.scrollLeft;
+    //    const thumbMargin = this.thumbOffset;
+    //    const scrollPos = sliderPos + this.slider.clientWidth;
+    //    const visibleLeft = this.slider.clientWidth - (this.container.offsetLeft - this.slider.scrollLeft);
+    //    const hiddenLeft = thumbWith - (visibleLeft + (this.thumbBackground.clientWidth - (thumbMargin * 2 )));
+    //    switch (true) {
+    //      case thumbLeft > scrollPos:
+    //        TweenMax.to(this.slider, this.scollSpeed,
+    //          {scrollLeft: sliderPos + (hiddenLeft), ease: Sine.easeOut}
+    //        );
+    //        break;
+    //      case thumbRight < sliderPos:
+    //        TweenMax.to(this.slider, this.scollSpeed,
+    //          {scrollLeft: (thumbRight - thumbMargin), ease: Sine.easeOut}
+    //        );
+    //        break;
+    //    }
+    //  }, 200
+    //);
   }
 
   revertTransition() {
-    clearTimeout(this.overTime);
-    this.overTime = setTimeout(() => {
-        this.tl.reverse();
-        this.triggerOut();
-      }, 100
-    );
+    //clearTimeout(this.overTime);
+    //this.overTime = setTimeout(() => {
+    //    this.tl.reverse();
+    //    this.triggerOut();
+    //  }, 100
+    //);
   }
 
   componentDidMount() {
-    this.initTransition();
+    //this.initTransition();
   }
 
   render() {
@@ -161,10 +161,12 @@ class Thumb extends React.Component {
             </div>
           </Link>
 
-          <div ref="info" className="thumb-info">
-            <div className="thumb-info__title">{title}</div>
-            <div className="thumb-info__synopsis">{synopsis}</div>
-            <div className="row">
+          <div ref="info" className="thumb-info" style={imageStyles}>
+            <div className="thumb-info__txt">
+              <div className="thumb-info__title">{title}</div>
+              <div className="thumb-info__synopsis">{synopsis}</div>
+            </div>
+            <div className="thumb-info__btn">
               <button className="btn btn-xs btn-thumb" href="compte/add">
                 <i className="fa fa-heart"></i>Ajouter à ma liste
               </button>
