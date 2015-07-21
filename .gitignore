@@ -12,4 +12,4 @@ thumb.db
 /*.log
 
 # Dist
-/static/dist
+/dist
