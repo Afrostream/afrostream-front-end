@@ -74,15 +74,15 @@ const webpackConfig = {
       },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico)/,
-        loader: 'file-loader?name=[name].[ext]?[hash]&limit=10000'
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /.woff([\?]?.*)$/,
-        loader: 'file-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /.ttf([\?]?.*)$/,
-        loader: 'file-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /.eot([\?]?.*)$/,
