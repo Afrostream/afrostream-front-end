@@ -12,7 +12,7 @@ if (process.env.BROWSER) {
   require('./SlideShow.less');
 }
 
-@connect(({ Category }) => ({Category})) class SlideShow extends React.Component {
+@connect(({ Category, Slides }) => ({Category, Slides})) class SlideShow extends React.Component {
 
   constructor(props) {
     super(props);
@@ -22,13 +22,14 @@ if (process.env.BROWSER) {
   render() {
     const {
       props: {
-        Category
+        Category,
+        Slides
         }
       } = this;
 
     const category = Category.get('current');
     const slides = Category.get(`category/${category}/top`);
-    const page = Category.get('page') || 0;
+    const page = Slides.get('page') || 0;
 
     return (
       <div className="SlideShow">

@@ -18,20 +18,13 @@
 
 /* Fonts list array */
 @fonts: 'DIN-30640-Std',
-  //'DinBlack', 'DinBold', 'FtraBd', 'FtraBk',
+'FtraBd',
+'FtraBk',
 'FtraBkI',
 'FtraHv',
 'FtraLt',
+'FtraLh',
 'Futura';
-//'fueb',
-//'fullh';
-
-/* Call .font-face() mixin for each font from @fonts array */
-//.-(@i: length(@fonts)) when (@i > 0) {
-//  @font: e(extract(@fonts, @i));
-//  .font-face(@font);
-//  .-((@i - 1));
-//} .-;
 
 .for(@fonts);
 .-each(@value) {
@@ -44,12 +37,11 @@
 
 @font-family-base: 'DIN-30640-Std', Helvetica, Arial, 'Lucida Grande', sans-serif;
 @font-light: "FtraLt", Helvetica, sans-serif;
-@font-thin: "fullh", Helvetica, sans-serif;
-@font-medium: "fueb", Helvetica, sans-serif;
-@font-bold: "FtraBd", Helvetica, sans-serif;
+@font-thin: "FtraLh", Helvetica, sans-serif;
+@font-book: "FtraBk", Helvetica, sans-serif;
 @font-heavy: "FtraHv", Helvetica, sans-serif;
 @font-roman: "Futura", Helvetica, sans-serif;
-@font-black: "FtraBk", Helvetica, sans-serif;
+@font-black: "FtraBd", Helvetica, sans-serif;
 
 .body-font() {
   font-family: @font-family-base;

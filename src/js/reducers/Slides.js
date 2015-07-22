@@ -2,7 +2,9 @@ import Immutable from 'immutable';
 import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 
-const initialState = Immutable.fromJS({});
+const initialState = Immutable.fromJS({
+  page: 0
+});
 
 export default createReducer(initialState, {
 

@@ -2,7 +2,7 @@ export default function () {
   return [
     {
       "_id": "5504b0fdf298061100d4b231",
-      "label": "Note selection",
+      "label": "Notre selection",
       "slug": "selection"
     },
     {

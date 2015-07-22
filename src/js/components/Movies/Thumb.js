@@ -12,7 +12,6 @@ class Thumb extends React.Component {
   constructor(props) {
     super(props);
     this.tlIn = null;
-    this.tlOut = null;
     this.thumbWidth = 422;
     this.overTime = 0;
     this.perspective = 200;
@@ -54,7 +53,7 @@ class Thumb extends React.Component {
       perspectiveOrigin: '50% 50%'
     });
     this.tlIn = new TimelineMax({paused: true});
-    this.tlIn.add(TweenMax.fromTo(thumb, .4,
+    this.tlIn.add(TweenMax.fromTo(thumb, .3,
       {
         transform: 'translate3D(0,0,0)',
         borderColor: 'transparent',
@@ -67,7 +66,7 @@ class Thumb extends React.Component {
         ease: Sine.easeOut
       }
     ), 0);
-    this.tlIn.add(TweenMax.fromTo(this.container, .5,
+    this.tlIn.add(TweenMax.fromTo(this.container, .6,
       {marginLeft: 10, marginRight: 10},
       {marginLeft: 50, marginRight: 50, ease: Expo.easeOut}
     ), 0);
@@ -75,14 +74,14 @@ class Thumb extends React.Component {
     this.tlIn.add(TweenMax.fromTo(info, .2,
       {
         autoAlpha: 0,
-        left: 280
+        left: 200
       },
       {
         autoAlpha: 1,
         left: 140,
         ease: Sine.easeOut
       }
-    ), 0.2);
+    ), 0.1);
   }
 
   lunchTransition() {
@@ -149,7 +148,7 @@ class Thumb extends React.Component {
     let dateFrom = movie.get('dateFrom');
     let dateTo = movie.get('dateTo');
     let nBSeasons = movie.get('seasons') || [];
-    let finalDate = `${dateFrom}-${dateTo} - ${nBSeasons.size}`;
+    //let finalDate = `${dateFrom}-${dateTo} - ${nBSeasons.size}`;
     let type = movie.get('type');
     let slug = movie.get('slug') || '';
 

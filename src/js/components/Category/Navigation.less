@@ -9,17 +9,19 @@
     list-style: none;
     text-align: right;
     .navigation-item {
-      margin: 10px 0 10px 0;
+      margin: 15px 0 15px 0;
       a {
+        .transition(all 0.2s linear);
         text-decoration: none;
-        background: transparent;
+        background-color: @color-purple-transparent;
         text-transform: uppercase;
-        font-size: 1.3em;
+        font-size: 1.4em;
         border-radius: 2px;
-        padding: 3px 5px 3px 5px;
+        padding: 4px 8px 4px 8px;
         color: @brand-primary;
         &:hover,
         &:active {
+          font-size: 1.6em;
           background-color: @color-yellow;
           color: @color-indigo;
         }

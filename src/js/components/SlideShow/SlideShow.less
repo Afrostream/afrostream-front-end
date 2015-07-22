@@ -53,6 +53,28 @@
         right: 0;
         z-index: 1;
       }
+
+    }
+    &:hover {
+      .btn-play {
+        opacity: 1;
+      }
+    }
+    .btn-play {
+      position: absolute;
+      z-index: 6;
+      width: 100px;
+      height: 100px;
+      background-image: url(../../../../static/images/btn-play.png);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      left: 50%;
+      top: 50%;
+      margin-top: -50px;
+      margin-left: -50px;
+      opacity: 0.8;
+      .transition(opacity 0.2s linear);
     }
     .billboard-infos {
       z-index: 5;
@@ -60,15 +82,24 @@
       display: inline-block;
       vertical-align: middle;
       max-width: 350px;
-      font-family: @font-light;
+      font-family: @font-family-base;
       color: @brand-primary;
       //text-shadow: 0 1px 25px rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.5);
       .billboard-title {
+        font-family: @font-book;
         font-size: 4.5em;
         line-height: 1;
         text-transform: uppercase;
+        padding: 10px 0 10px 0;
+      }
+      .billboard-seasons {
+        font-size: 1.5em;
+        color: @brand-secondary;
+        font-weight: 500;
+        padding-left: 3px;
       }
       .billboard-synopsis {
+        padding: 10px 0 10px 0;
         font-size: 1.4em;
       }
       .billboard-tag {
@@ -142,7 +173,7 @@
     &:focus,
     &.pager--active,
     &:active {
-      font-family: @font-medium;
+      font-family: @font-roman;
       background-color: @color-yellow;
       border: 1px solid @color-purple-alpha;
       color: @color-purple;

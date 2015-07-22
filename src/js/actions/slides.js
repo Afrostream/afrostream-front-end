@@ -2,7 +2,7 @@ import ActionTypes from '../consts/ActionTypes';
 
 export function toggleNext() {
   return (dispatch, getState) => {
-    const current = getState().Category.get('page');
+    const current = getState().Slides.get('page');
     const total = getState().Category.get('total');
     let next = current + 1;
     if (next > total) {
@@ -17,7 +17,7 @@ export function toggleNext() {
 
 export function togglePrev() {
   return (dispatch, getState) => {
-    const current = getState().Category.get('page');
+    const current = getState().Slides.get('page');
     const total = getState().Category.get('total');
     let prev = current - 1;
     if (prev < 0) {
