@@ -2,7 +2,7 @@ import React from 'react';
 import { prepareRoute } from '../decorators';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import Navigation from './Category/Navigation';
+import Navigation from './Navigation/Navigation';
 import * as CategoryActionCreators from '../actions/category';
 
 if (process.env.BROWSER) {

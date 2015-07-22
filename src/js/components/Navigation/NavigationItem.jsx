@@ -18,13 +18,12 @@ class NavigationItem extends React.Component {
       } = this;
 
     const classes = React.addons.classSet({
-      'navigation-item': true,
-      'navigation-item--active': active
+      'active': active
     });
 
     return (
-      <li className={classes}>
-        <Link to={item.get('slug')}>{item.get('label')}</Link>
+      <li className="navigation-item">
+        <Link className={classes} to={item.get('slug')}>{item.get('label')}</Link>
       </li>
     );
   }

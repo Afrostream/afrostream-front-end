@@ -11,16 +11,17 @@ import * as SlidesActionCreators from '../../actions/slides';
   render() {
     const {
       props: {
+        active,index
         }
       } = this;
 
     const classes = React.addons.classSet({
       'pager': true,
-      'pager--active': this.props.active
+      'pager--active': active
     });
 
     return (
-      <span className={classes} onClick={::this.toggleSlide}>{this.props.index + 1}</span>
+      <span className={classes} onClick={::this.toggleSlide}>{index + 1}</span>
     );
   }
 

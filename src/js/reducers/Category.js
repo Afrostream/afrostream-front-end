@@ -25,9 +25,7 @@ export default createReducer(initialState, {
   },
   [ActionTypes.Category.getMenu](state, { res }) {
     const menu = res.body;
-    const current = menu[0].slug;
     return state.merge({
-      ['menu-active']: current,
       ['menu']: menu
     });
   }
