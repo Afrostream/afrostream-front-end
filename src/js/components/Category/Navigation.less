@@ -1,0 +1,30 @@
+@import (reference) '../../../styles/config.less';
+
+.navigation {
+  position: fixed;
+  z-index: @nav-z;
+  right: @app-padding;
+  top: @header-height;
+  .navigation-list {
+    list-style: none;
+    text-align: right;
+    .navigation-item {
+      margin: 10px 0 10px 0;
+      a {
+        text-decoration: none;
+        background: transparent;
+        text-transform: uppercase;
+        font-size: 1.3em;
+        border-radius: 2px;
+        padding: 3px 5px 3px 5px;
+        color: @brand-primary;
+        &:hover,
+        &:active {
+          background-color: @color-yellow;
+          color: @color-indigo;
+        }
+      }
+
+    }
+  }
+}

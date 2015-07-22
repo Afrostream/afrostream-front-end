@@ -5,13 +5,14 @@ import SlidesContainer from './Slides';
 import Pagination from './Pagination';
 import Controls from './Controls';
 import * as SlidesActionCreators from '../../actions/slides';
+import * as CategoryActionCreators from '../../actions/category';
 import config from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./SlideShow.less');
 }
 
-@connect(({ Slides }) => ({Slides})) class SlideShow extends React.Component {
+@connect(({ Category }) => ({Category})) class SlideShow extends React.Component {
 
   constructor(props) {
     super(props);
@@ -21,18 +22,18 @@ if (process.env.BROWSER) {
   render() {
     const {
       props: {
-        Slides
+        Category
         }
       } = this;
 
-    const category = Slides.get(`current`);
-    const slides = Slides.get(`category/${category}/top`);
-    const page = Slides.get(`page`);
+    const category = Category.get('current');
+    const slides = Category.get(`category/${category}/top`);
+    const page = Category.get('page') || 0;
 
     return (
       <div className="SlideShow">
-        <SlidesContainer  {...{slides, page}}/>
-        <Pagination {...{slides, page}}/>
+        {slides ? <SlidesContainer page={page} {...{slides}}/> : 'Loading...'}
+        {slides ? <Pagination page={page} {...{slides}}/> : 'Loading...'}
       </div>
     );
   }

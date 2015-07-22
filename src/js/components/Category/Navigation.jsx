@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
 import { connect } from 'redux/react';
-import { Link } from 'react-router';
 import NavigationItem from './NavigationItem';
 
 if (process.env.BROWSER) {
@@ -10,20 +9,19 @@ if (process.env.BROWSER) {
 
 @connect(({ Category }) => ({Category})) class Navigation extends React.Component {
 
-
   render() {
     const {
       props: {
-        Slides
+        Category
         }
       } = this;
 
-    const category = Category.get(`current`);
-    const menu = Category.get(`category/${category}/menu`);
+    const menu = Category.get('menu');
+    const slug = Category.get('menu-active');
     return (
       <div className="navigation">
         <ul className="navigation-list" role="navigation">
-          {menu.map((item, i) => <NavigationItem active={page === item.slug}
+          {menu.map((item, i) => <NavigationItem active={slug === item.slug}
                                                  key={`menu-${item.get('_id')}-${i}`}
             { ...{item}}/>)}
         </ul>

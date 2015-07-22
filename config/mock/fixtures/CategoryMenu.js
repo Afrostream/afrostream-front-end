@@ -18,6 +18,7 @@ export default function () {
     {
       "_id": "5504b0fdf298061100d4b234",
       "label": "Cinéma americain",
-      "slug": "series"
-    },
+      "slug": "cinema-americain"
+    }
   ];
+}

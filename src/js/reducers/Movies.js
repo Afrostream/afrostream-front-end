@@ -8,13 +8,13 @@ export default createReducer(initialState, {
 
   [ActionTypes.Movies.toggleNext](state, { page }) {
     return state.merge({
-      [`page`]: page
+      [page]: page
     });
   },
 
   [ActionTypes.Movies.togglePrev](state, { page }) {
     return state.merge({
-      [`page`]: page
+      [page]: page
     });
   }
 });

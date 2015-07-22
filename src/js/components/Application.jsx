@@ -1,12 +1,19 @@
 import React from 'react';
+import { prepareRoute } from '../decorators';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
+import Navigation from './Category/Navigation';
+import * as CategoryActionCreators from '../actions/category';
 
 if (process.env.BROWSER) {
   require('./Application.less');
 }
 
-class Application extends React.Component {
+@prepareRoute(async function ({ redux }) {
+  return await * [
+      redux.dispatch(CategoryActionCreators.getMenu())
+    ];
+}) class Application extends React.Component {
 
   render() {
     const { props: { children } } = this;
@@ -14,6 +21,7 @@ class Application extends React.Component {
     return (
       <div className="app">
         <Header />
+        <Navigation />
 
         <div className="container-fluid">
           {children}

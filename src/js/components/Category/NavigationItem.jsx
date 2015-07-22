@@ -1,41 +1,33 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
-import { connect } from 'redux/react';
-import * as CategoryActionCreators from '../../actions/category';
+import { Link } from 'react-router';
 
-@connect(({ Category }) => ({Category})) class Pager extends React.Component {
+class NavigationItem extends React.Component {
 
   static propTypes = {
-    index: React.PropTypes.number.isRequired,
-    menu: PropTypes.instanceOf(Immutable.Object).isRequired
+    item: PropTypes.instanceOf(Immutable.Object).isRequired,
+    active: React.PropTypes.bool.isRequired
   };
 
   render() {
     const {
       props: {
-        Category
+        item,
+        active
         }
       } = this;
 
     const classes = React.addons.classSet({
-      'pager': true,
-      'pager--active': this.props.active
+      'navigation-item': true,
+      'navigation-item--active': active
     });
 
     return (
-      <ul className={classes} onClick={::this.toggleCategory}>{this.props.index + 1}</ul>
+      <li className={classes}>
+        <Link to={item.get('slug')}>{item.get('label')}</Link>
+      </li>
     );
-  }
-
-  toggleCategory() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(CategoryActionCreators.getFilteredCategory(this.props.index));
   }
 }
 
-export default Pager;
+export default NavigationItem;

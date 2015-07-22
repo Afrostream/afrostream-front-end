@@ -40,8 +40,6 @@ compiler.plugin('done', (stats) => {
     console.error('WebpackError');
     stats.toJson().errors.forEach(err => console.error(err));
   }
-
-  console.log('Finished', 'jsBundle()');
 });
 
 webpackDevServer.listen(port, function () {

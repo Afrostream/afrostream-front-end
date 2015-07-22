@@ -17,33 +17,37 @@ const getPaginatedItems = function (items, page, per_page) {
   };
 };
 
-const superAgentConfig = [
-  {
-    pattern: `${config.apiServer.urlPrefix}/category/(\\w+)$`,
+const superAgentConfig = [,
 
-    fixtures: Fixtures.CategoryMock,
-    callback: function (match, data) {
-      return {
-        body: data
-      };
-    }
-  },
   {
-    patter: `${config.apiServer.urlPrefix}/category/(\\w+)/top`,
+    pattern: `${config.apiServer.urlPrefix}/category/(\\w+)/top`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
       var datasPaginated = getPaginatedItems(data, 1, 5).data;
+      console.log('superAgentConfig', 'category/w/top', datasPaginated.length);
       return {
         body: datasPaginated
       };
     }
   },
   {
-    patter: `${config.apiServer.urlPrefix}/category/(\\w+)/menu`,
+    pattern: `${config.apiServer.urlPrefix}/category/(\\w+)`,
+
+    fixtures: Fixtures.CategoryMock,
+    callback: function (match, data) {
+      console.log('superAgentConfig', 'category/w', data.length);
+      return {
+        body: data
+      };
+    }
+  },
+  {
+    pattern: `${config.apiServer.urlPrefix}/category`,
 
     fixtures: Fixtures.CategoryMenu,
     callback: function (match, data) {
+      console.log('superAgentConfig', 'category', data.length);
       return {
         body: data
       };
