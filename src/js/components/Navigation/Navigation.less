@@ -1,0 +1,34 @@
+@import (reference) '../../../styles/config.less';
+
+.navigation {
+  position: fixed;
+  z-index: @nav-z;
+  right: @app-padding;
+  top: @header-height;
+  .navigation-list {
+    list-style: none;
+    text-align: right;
+    .navigation-item {
+      margin: 15px 0 15px 0;
+      a {
+        .transition(all 0.2s linear);
+        text-decoration: none;
+        background-color: @color-purple-transparent;
+        text-transform: uppercase;
+        font-size: 1.4em;
+        border-radius: 2px;
+        padding: 4px 12px 4px 12px;
+        color: @brand-primary;
+        font-weight: 400;
+        font-family: @font-family-base;
+        &:hover,
+        &.active {
+          font-size: 1.6em;
+          background-color: @color-yellow;
+          color: @color-indigo;
+        }
+      }
+
+    }
+  }
+}

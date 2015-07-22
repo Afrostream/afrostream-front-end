@@ -1,6 +1,11 @@
 import React from 'react/addons';
 import penner from 'penner';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+
+if (canUseDOM) {
+  require('gsap');
+  var {TimelineMax,TweenMax,Expo} = window.GreenSockGlobals;
+}
 /**
  * requestAnimationFrame for Smart Animating
  * from http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -41,15 +46,21 @@ class Slider extends React.Component {
     this.scrolling = false;
     this.container = null;
     this.scrollLeft = 0;
+    this.tlIn = null;
   }
 
   componentDidMount() {
     this.container = React.findDOMNode(this).lastChild;
+    this.initTimeline();
     this.container.addEventListener('scroll', this.handleScroll.bind(this));
+    this.container.addEventListener('thumbover', this.hideArrow.bind(this));
+    this.container.addEventListener('thumbout', this.showArrow.bind(this));
   }
 
   componentWillUnmount() {
     this.container.removeEventListener('scroll', this.handleScroll.bind(this));
+    this.container.removeEventListener('thumbover', this.hideArrow.bind(this));
+    this.container.removeEventListener('thumbout', this.showArrow.bind(this));
   }
 
   /**
@@ -96,6 +107,34 @@ class Slider extends React.Component {
     // Reset properties
     this.direction = null;
     clearTimeout(this.clickTimer);
+  }
+
+  initTimeline() {
+    const arrowL = React.findDOMNode(this.refs.arrowLeft);
+    const arrowR = React.findDOMNode(this.refs.arrowRight);
+    this.tlIn = new TimelineMax({paused: true});
+    this.tlIn.add(TweenMax.to(arrowL, .3,
+      {
+        autoAlpha: 0,
+        left: '-=50px', ease: Expo.easeIn
+      }
+    ), 0.2);
+
+    this.tlIn.add(TweenMax.to(arrowR, .3,
+      {
+        autoAlpha: 0,
+        right: '-=50px', ease: Expo.easeIn
+      }
+    ), 0.2);
+  }
+
+  hideArrow() {
+    this.tlIn.play();
+  }
+
+
+  showArrow() {
+    this.tlIn.reverse();
   }
 
   /**
@@ -219,6 +258,7 @@ class Slider extends React.Component {
 
       <div {...this.props} className={sliderClasses}>
         <a
+          ref="arrowLeft"
           href="#"
           className={leftArrowClasses}
           onClick={::this.handleClick}
@@ -227,6 +267,7 @@ class Slider extends React.Component {
           <i className="fa fa-chevron-left"></i>
         </a>
         <a
+          ref="arrowRight"
           href="#"
           className={rightArrowClasses}
           onClick={::this.handleClick}

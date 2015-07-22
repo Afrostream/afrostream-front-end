@@ -12,7 +12,6 @@ export default {
   }),
 
   Slides: keyMirror({
-    getTopByCategory: null,
     toggleNext: null,
     togglePrev: null,
     toggleSlide: null
@@ -24,6 +23,8 @@ export default {
   }),
 
   Category: keyMirror({
-    getCategory: null
+    getTopByCategory: null,
+    getCategory: null,
+    getMenu: null
   })
 };

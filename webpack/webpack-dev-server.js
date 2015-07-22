@@ -11,11 +11,11 @@ const serverOptions = {
     publicPath: devConfig.output.publicPath,
     hot: true,
     headers: {'Access-Control-Allow-Origin': '*'},
-    quiet: true,
+    quiet: false,
     noInfo: true,
     cache: false,
     watch: true,
-    devServer: true,
+    progress: true,
     hotComponents: true,
     devtool: 'eval',
     historyApiFallback: true,
@@ -24,6 +24,10 @@ const serverOptions = {
       poll: 1000
     },
     debug: true,
+    devServer: {
+      port: port,
+      historyApiFallback: true
+    },
     stats: {
       colors: true
     }
@@ -36,8 +40,6 @@ compiler.plugin('done', (stats) => {
     console.error('WebpackError');
     stats.toJson().errors.forEach(err => console.error(err));
   }
-
-  console.log('Finished', 'jsBundle()');
 });
 
 webpackDevServer.listen(port, function () {

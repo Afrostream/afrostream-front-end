@@ -1,18 +1,18 @@
 import React from 'react/addons';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import { Link } from 'react-router';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax} = window.GreenSockGlobals;
+  var {TimelineMax,TweenMax,Expo,Sine} = window.GreenSockGlobals;
 }
 
 class Thumb extends React.Component {
 
   constructor(props) {
     super(props);
-    this.tl = null;
-    this.thumbWidth = 420;
+    this.tlIn = null;
+    this.thumbWidth = 422;
     this.overTime = 0;
     this.perspective = 200;
     this.thumbOffset = 30;
@@ -27,6 +27,14 @@ class Thumb extends React.Component {
     movie: React.PropTypes.object.isRequired
   };
 
+  triggerOver() {
+    this.slider.dispatchEvent(new Event('thumbover'));
+  }
+
+  triggerOut() {
+    this.slider.dispatchEvent(new Event('thumbout'));
+  }
+
   initTransition() {
     //Detect mobile
     const ua = navigator.userAgent;
@@ -35,6 +43,7 @@ class Thumb extends React.Component {
 
     this.container = React.findDOMNode(this.refs.thumbContainer);
     this.slider = this.container.parentNode;
+
     this.thumbBackground = React.findDOMNode(this.refs.thumbBackground);
     const thumb = React.findDOMNode(this.refs.thumb);
     const info = React.findDOMNode(this.refs.info);
@@ -43,37 +52,44 @@ class Thumb extends React.Component {
       perspective: this.perspective,
       perspectiveOrigin: '50% 50%'
     });
-    this.tl = new TimelineMax({paused: true});
-    this.tl.add(TweenMax.fromTo(thumb, 0.4,
+    this.tlIn = new TimelineMax({paused: true});
+    this.tlIn.add(TweenMax.fromTo(thumb, .3,
       {
-        //transform: 'translate3D(0,0,0)',
-        scale: 1,
-        zIndex: 0,
-        backgroundColor: 'transparent',
+        transform: 'translate3D(0,0,0)',
         borderColor: 'transparent',
         width: 140
       },
       {
-        //transform: `translate3D(0,0,10px)`,
-        scale: 1.1,
-        zIndex: 9000,
-        backgroundColor: '#FFF',
-        borderColor: '#FFF',
+        transform: `translate3D(0,-15px,30px)`,
+        borderColor: '#ffc809',
         width: this.thumbWidth,
         ease: Sine.easeOut
       }
     ), 0);
-    this.tl.add(TweenMax.fromTo(info, 0.4,
-      {autoAlpha: 0},
-      {autoAlpha: 1, ease: Sine.easeOut}
-    ), 0.2);
+    this.tlIn.add(TweenMax.fromTo(this.container, .6,
+      {marginLeft: 10, marginRight: 10},
+      {marginLeft: 50, marginRight: 50, ease: Expo.easeOut}
+    ), 0);
+
+    this.tlIn.add(TweenMax.fromTo(info, .2,
+      {
+        autoAlpha: 0,
+        left: 200
+      },
+      {
+        autoAlpha: 1,
+        left: 140,
+        ease: Sine.easeOut
+      }
+    ), 0.1);
   }
 
   lunchTransition() {
     if (this.isMobileWebkit) return;
     clearTimeout(this.overTime);
     this.overTime = setTimeout(() => {
-        this.tl.restart();
+        this.tlIn.restart();
+        this.triggerOver();
         const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
         const thumbLeft = this.container.offsetLeft + thumbWith;
         const thumbRight = this.container.offsetLeft;
@@ -101,7 +117,8 @@ class Thumb extends React.Component {
   revertTransition() {
     clearTimeout(this.overTime);
     this.overTime = setTimeout(() => {
-        this.tl.reverse();
+        this.tlIn.reverse();
+        this.triggerOut();
       }, 100
     );
   }
@@ -115,7 +132,7 @@ class Thumb extends React.Component {
       props: { movie }
       } = this;
 
-    const maxLength = 400;
+    const maxLength = 200;
 
     let imageStyles = {backgroundImage: `url(${movie.get('poster')})`};
     let title = movie.get('title');
@@ -131,7 +148,7 @@ class Thumb extends React.Component {
     let dateFrom = movie.get('dateFrom');
     let dateTo = movie.get('dateTo');
     let nBSeasons = movie.get('seasons') || [];
-    let finalDate = `${dateFrom}-${dateTo} - ${nBSeasons.size}`;
+    //let finalDate = `${dateFrom}-${dateTo} - ${nBSeasons.size}`;
     let type = movie.get('type');
     let slug = movie.get('slug') || '';
 
@@ -143,15 +160,16 @@ class Thumb extends React.Component {
           >
           <Link to={`${type}/${slug}`}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
-              <i className="fa fa-play-circle-o"></i>
+              <i className="btn-play"></i>
             </div>
           </Link>
 
-          <div ref="info" className="thumb-info">
-            <div className="thumb-info__title">{title}</div>
-            <div className="thumb-info__date">{finalDate}</div>
-            <div className="thumb-info__synopsis">{synopsis}</div>
-            <div className="row">
+          <div ref="info" className="thumb-info" style={imageStyles}>
+            <div className="thumb-info__txt">
+              <div className="thumb-info__title">{title}</div>
+              <div className="thumb-info__synopsis">{synopsis}</div>
+            </div>
+            <div className="thumb-info__btn">
               <button className="btn btn-xs btn-thumb" href="compte/add">
                 <i className="fa fa-heart"></i>Ajouter à ma liste
               </button>

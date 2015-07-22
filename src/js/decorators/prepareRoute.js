@@ -7,11 +7,11 @@ export default function prepareRoute(prepareFn) {
   return DecoratedComponent =>
     class PrepareRouteDecorator extends React.Component {
 
-      static prepareRoute = prepareFn
+      static prepareRoute = prepareFn;
 
       static contextTypes = {
         redux: PropTypes.object.isRequired
-      }
+      };
 
       render() {
         return (
@@ -23,9 +23,18 @@ export default function prepareRoute(prepareFn) {
         const {
           context: { redux },
           props: { params, location }
-        } = this;
+          } = this;
 
-        prepareFn({ redux, params, location });
+        prepareFn({redux, params, location});
+      }
+
+      componentDidUpdate() {
+        const {
+          context: { redux },
+          props: { params, location }
+          } = this;
+
+        prepareFn({redux, params, location});
       }
     };
 }

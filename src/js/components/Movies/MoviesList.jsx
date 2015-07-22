@@ -10,20 +10,17 @@ if (process.env.BROWSER) {
   require('./MoviesList.less');
 }
 
-@connect(({ Movies }) => ({Movies})) class MoviesList extends React.Component {
-
-  static propTypes = {
-    movies: PropTypes.instanceOf(Immutable.List).isRequired
-  };
+@connect(({ Category }) => ({Category})) class MoviesList extends React.Component {
 
   render() {
     const {
       props: {
-        Movies,movies
+        Category
         }
       } = this;
 
-    const page = Movies.get(`page`);
+    const category = Category.get('current');
+    const movies = Category.get(`category/${category}`);
 
     return (
       <div className="movies-list">
@@ -31,7 +28,7 @@ if (process.env.BROWSER) {
 
         <div className="movies-list__container">
           <Slider>
-            <div className="slider-conatiner">
+            <div className="slider-container">
               {movies.map((movie, i) => <Thumb key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>)}
             </div>
           </Slider>

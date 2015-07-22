@@ -16,7 +16,7 @@ const AUTOPREFIXER_BROWSERS = [
   'Safari >= 6'
 ];
 
-const assetsPath = path.resolve(__dirname, '../dist');
+const assetsPath = path.resolve(__dirname, '../dist/');
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -28,7 +28,7 @@ const webpackConfig = {
   devtool: '#inline-source-map',
   output: {
     path: assetsPath,
-    publicPath: `${webpackDevServerUrl}/`,
+    publicPath: `${webpackDevServerUrl}/static/`,
     filename: '[name].js',
     chunkFilename: '[id].js'
   },
@@ -64,24 +64,38 @@ const webpackConfig = {
         exclude: /node_modules/, // exclude any and all files in the node_modules folder
         loaders: ['babel-loader']
       },
-      {test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader')},
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
-      {test: /\.gif/, loader: 'file-loader!url-loader?limit=10000&minetype=image/gif'},
-      {test: /\.jpg/, loader: 'file-loader!url-loader?limit=10000&minetype=image/jpg'},
-      {test: /\.png/, loader: 'file-loader!url-loader?limit=10000&minetype=image/png'},
-      {test: /\.svg/, loader: 'file-loader!url-loader?limit=10000&minetype=image/svg'},
-      {test: /\.favicon/, loader: 'file-loader!url-loader?limit=10000&minetype=image/favicon'},
-      //fontLoader,
-      {test: /.woff([\?]?.*)$/, loader: 'file-loader!url-loader?limit=10000&mimetype=application/font-woff'},
-      {test: /.ttf([\?]?.*)$/, loader: 'file-loader!url-loader?limit=10000&mimetype=application/octet-stream'},
-      {test: /.eot([\?]?.*)$/, loader: 'file-loader'}
+      {
+        test: /\.(gif|jpg|png|svg|favicon|ico)/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
+      },
+      {
+        test: /.woff([\?]?.*)$/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /.ttf([\?]?.*)$/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /.eot([\?]?.*)$/,
+        loader: 'file-loader?name=[name].[ext]?[hash]'
+      },
+      {
+        test: /.txt([\?]?.*)$/,
+        loader: 'raw-loader'
+      }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
   ],
 

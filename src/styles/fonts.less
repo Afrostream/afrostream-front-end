@@ -1,0 +1,49 @@
+@import ( reference ) './for';
+
+/**
+ * Font-face mixin
+ *
+ * @param {String} family
+ * @param {String} weight | Default: normal
+ * @param {String} style | Default: normal
+ */
+.font-face(@family, @weight: normal, @style: normal) {
+  @font-face {
+    font-family: @family;
+    src: url('../assets/fonts/@{family}.ttf') format('truetype');
+    font-weight: @weight;
+    font-style: @style;
+  }
+}
+
+/* Fonts list array */
+@fonts: 'DIN-30640-Std',
+'FtraBd',
+'FtraBk',
+'FtraBkI',
+'FtraHv',
+'FtraLt',
+'FtraLh',
+'Futura';
+
+.for(@fonts);
+.-each(@value) {
+  .font-face(@value);
+}
+
+//
+// Typography
+// -----------------------------------------------------------------------------
+
+@font-family-base: 'DIN-30640-Std', Helvetica, Arial, 'Lucida Grande', sans-serif;
+@font-light: "FtraLt", Helvetica, sans-serif;
+@font-thin: "FtraLh", Helvetica, sans-serif;
+@font-book: "FtraBk", Helvetica, sans-serif;
+@font-heavy: "FtraHv", Helvetica, sans-serif;
+@font-roman: "Futura", Helvetica, sans-serif;
+@font-black: "FtraBd", Helvetica, sans-serif;
+
+.body-font() {
+  font-family: @font-family-base;
+  line-height: 1;
+}

@@ -1,4 +1,3 @@
-// ./category.js file
 export default function () {
   return [
     {
@@ -277,6 +276,7 @@ export default function () {
         "movi"
       ],
       "__v": 4,
+      "seasons": ["5504b0fdf298061100d4b231", "5504b0fdf298061100d4b232"],
       "episodes": [],
       "subscribers": [],
       "preview": [
@@ -1062,6 +1062,7 @@ export default function () {
         "popular"
       ],
       "__v": 3,
+      "seasons": ["5504b0fdf298061100d4b231", "5504b0fdf298061100d4b232"],
       "episodes": [],
       "subscribers": [],
       "preview": [

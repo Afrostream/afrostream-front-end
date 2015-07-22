@@ -1,18 +1,16 @@
-@import '../../../style/config.less';
-@import '../../../style/arrow.less';
+@import (reference) '../../../styles/config.less';
+@import '../../../styles/arrow.less';
 
 @thumb-margin: 10px;
+@thumb-margin-hover: 50px;
 @thumb-width: 140px;
 @thumb-height: 200px;
-@zoom-padding: 20px 0 20px 0;
+@zoom-margin: 50px;
 .movies-list {
   position: relative;
-  overflow: hidden;
-  margin: 10px 0 10px 0;
-  //top: 0;
-  //left: 0;
-  //right: 0;
-  //bottom: 0;
+  overflow-x: hidden;
+  padding: 10px 0 40px 0;
+  background-color: @color-indigo;
   .selection {
     font-size: 1.8em;
     font-family: @font-light;
@@ -21,25 +19,18 @@
   }
   .movies-list__container {
     position: relative;
-    overflow: hidden;
-    //margin-top: -25px;
+    overflow-x: hidden;
     width: 100%;
     .slider {
       position: relative;
-      //top: 0;
-      //bottom: 0;
-      //left: 0;
       width: 100%;
-      .slider-conatiner {
+      .slider-container {
         width: 100%;
-        //padding-bottom: 20px;
         .thumb-containter {
         }
       }
     }
     .thumb-containter {
-      //Padding for dont hide thumb on zooming effect
-      //padding: @zoom-padding;
       height: 100%;
       max-height: 100%;
       .thumb {
@@ -50,79 +41,122 @@
         text-align: left;
         border: 1px solid #FFFFFF;
         background-color: #FFFFFF;
-        -webkit-font-smoothing: antialiased;
-        .thumb-background {
+        a {
           position: relative;
           display: inline-block;
-          vertical-align: middle;
-          width: 100%;
-          height: @thumb-height;
-          background-size: cover;
-          background-position: center center;
-          background-repeat: no-repeat;
-          cursor: pointer;
-          .transition(opacity 0.2s linear);
-          i {
-            position: absolute;
-            font-size: 6em;
-            left: 50%;
-            top: 50%;
-            margin-top: -25px; /* Half the height */
-            margin-left: -25px; /* Half the width */
-          }
-          &:before {
-            content: '';
-            .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
+          float: left;
+          width: @thumb-width;
+          height: 100%;
+          .thumb-background {
             position: absolute;
             top: 0;
             left: 0;
             bottom: 0;
             right: 0;
-            z-index: 1;
-          }
-          i,
-          &:before {
-            opacity: 0;
+            vertical-align: middle;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            .transition(opacity 0.1s linear);
+            i {
+              .transition(opacity 0.1s linear);
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              margin-left: -40px;
+              margin-top: -40px;
+              &.btn-play {
+                background-image: url('../../../../static/images/btn-play-thumb.png');
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: center center;
+                width: 80px;
+                height: 80px;
+
+              }
+            }
+            &:before {
+              opacity: 0;
+              content: '';
+              .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
+              position: absolute;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              z-index: 1;
+            }
+            i,
+            &:before {
+              opacity: 0;
+            }
+            &:hover {
+              i,
+              &:before {
+                .transition(opacity 0.1s linear);
+                opacity: 1;
+              }
+            }
           }
         }
         .thumb-info {
-          font-family: @font-light;
-          font-weight: 800;
-          vertical-align: top;
-          color: @brand-thumbs;
-          padding: 5px 15px 5px 15px;
+          position: relative;
+          display: inline-block;
+          vertical-align: middle;
+          overflow: auto;
           white-space: normal;
+          box-sizing: inherit;
+          float: left;
+          min-height: 100%;
+          color: #FFFFFF;
+
+          -webkit-font-smoothing: antialiased;
+          background-size: cover;
+          background-position: left center;
+          background-repeat: no-repeat;
+          &:before {
+            content: "";
+            background-color: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+          }
+          &__txt {
+            position: absolute;
+            top: 10px;
+            bottom: 42px;
+            left: 10px;
+            right: 10px;
+          }
+          &__btn {
+            position: absolute;
+            bottom: 0;
+          }
           &__title {
-            color: @color-purple-1;
+            //font-family: @font-thin;
+            font-weight: 700;
             text-transform: uppercase;
             font-size: 1.5em;
             line-height: 1.4;
-          }
-          &__date {
-            font-family: @font-medium;
-            line-height: 1.4;
-            text-transform: uppercase;
-            font-size: 1.3em;
+            vertical-align: top;
           }
           &__synopsis {
+            font-family: @font-light;
             //FIXME force size change it to auto
             font-size: 1.2em;
-            height: 100%;
-            min-height: 100%;
-            overflow: hidden;
+            vertical-align: middle;
             text-overflow: ellipsis;
+            padding: 10px 0 10px 0;
+            //TODO height 100% de l'info block et center ce texte vertically
+            //padding: 30px 0 25px 0;
             a {
               font-size: 1.3em;
             }
           }
         }
-        &:before {
-          content: "";
-          display: inline-block;
-          vertical-align: middle;
-          height: 100%;
-        }
-
       }
     }
   }
@@ -132,42 +166,67 @@
 
   .movies-list {
     .movies-list__container {
+      margin: -@zoom-margin 0 -@zoom-margin 0;
       .slider {
-        .slider-conatiner {
+        .slider-container {
           overflow-x: auto;
-          overflow-y: hidden;
+          //overflow-y: hidden;
           display: inline-block;
           white-space: nowrap;
           padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
           .thumb-containter {
-            background-color: transparent;
-            border-color: transparent;
+            //.transform-style(preserve-3d);
+            //.perspective(200);
+            //.perspective-origin(center center);
             flex-shrink: 0;
             display: inline-block;
+            //.transition(all 0.2s linear);
+            //.transition-delay(0.2s);
+            margin: @zoom-margin @thumb-margin  @zoom-margin @thumb-margin;
             .thumb {
-              //maxheight with borders
+              overflow: hidden;
               max-height: 202px;
-              margin: @thumb-margin;
+              height: 200px;
+              width: @thumb-width;
+              background-color: transparent;
+              border-color: transparent;
+              //.translate3d(0, 0, 0);
+              //.transition(all 0.2s linear);
+              //.transition-delay(0.2s);
               .thumb-background {
-                width: @thumb-width;
               }
               .thumb-info {
+                display: inline-block;
+                top: 0;
+                position: absolute;
                 width: @thumb-width * 2;
-                display: none;
-                opacity: 0;
               }
-              &:hover {
-                background-color: #FFFFFF;
-                border-color: #FFFFFF;
+            }
+            &:hover {
+              //margin: @zoom-margin @thumb-margin-hover  @zoom-margin @thumb-margin-hover;
+              .thumb {
+                border-color: @color-yellow;
+                //.translate3d(0, 0, 30px);
+                //.transition(all 0.2s linear);
+                //.transition-delay(0.2s);
+                overflow: hidden;
+                width: 420px;
                 .thumb-info {
-                  display: inline-block;
                   opacity: 1;
                 }
                 .thumb-background {
                   .transition(opacity 0.1s linear);
-                  i,
+                  i {
+                    opacity: 0.6;
+                  }
                   &:before {
-                    opacity: 0.8;
+                    opacity: 1;
+                  }
+                  &:hover {
+                    i,
+                    &:before {
+                      opacity: 1;
+                    }
                   }
                 }
               }

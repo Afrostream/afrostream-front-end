@@ -17,9 +17,21 @@ const getPaginatedItems = function (items, page, per_page) {
   };
 };
 
-const superAgentConfig = [
+const superAgentConfig = [,
+
   {
-    pattern: `${config.apiServer.urlPrefix}/category/(\\w+)$`,
+    pattern: `${config.apiServer.urlPrefix}/category/([a-z-]+)/top`,
+
+    fixtures: Fixtures.CategoryMock,
+    callback: function (match, data) {
+      var datasPaginated = getPaginatedItems(data, 1, 5).data;
+      return {
+        body: datasPaginated
+      };
+    }
+  },
+  {
+    pattern: `${config.apiServer.urlPrefix}/category/([a-z-]+)`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
@@ -29,13 +41,12 @@ const superAgentConfig = [
     }
   },
   {
-    patter: `${config.apiServer.urlPrefix}/category/(\\w+)/top`,
+    pattern: `${config.apiServer.urlPrefix}/category`,
 
-    fixtures: Fixtures.CategoryMock,
+    fixtures: Fixtures.CategoryMenu,
     callback: function (match, data) {
-      var datasPaginated = getPaginatedItems(data, 1, 5).data;
       return {
-        body: datasPaginated
+        body: data
       };
     }
   }
