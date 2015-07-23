@@ -6,12 +6,12 @@ const initialState = Immutable.fromJS({});
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Category.getTopByCategory](state, { category, res }) {
+  [ActionTypes.Category.getTop](state, { res }) {
     const catList = res.body;
     return state.merge({
       ['total']: catList.length - 1,
-      [`category/${category}/top__res`]: res,
-      [`category/${category}/top`]: catList
+      [`category/top__res`]: res,
+      [`category/top`]: catList
     });
   },
 

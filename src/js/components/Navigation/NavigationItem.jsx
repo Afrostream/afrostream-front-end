@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
+import { connect } from 'redux/react';
 import { Link } from 'react-router';
+import * as CategoryActionCreators from '../../actions/category';
 
-class NavigationItem extends React.Component {
+@connect(({ Category }) => ({Category})) class NavigationItem extends React.Component {
 
   static propTypes = {
     item: PropTypes.instanceOf(Immutable.Object).isRequired,
@@ -23,9 +25,20 @@ class NavigationItem extends React.Component {
 
     return (
       <li className="navigation-item">
-        <Link className={classes} to={item.get('slug')}>{item.get('label')}</Link>
+        <Link className={classes} onClick={::this.changeSlide} to={item.get('slug')}>{item.get('label')}</Link>
       </li>
     );
+    //<Link className={classes} to={item.get('slug')}>{item.get('label')}</Link>
+  }
+
+  changeSlide() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(CategoryActionCreators.getCategory(this.props.item.get('slug')));
   }
 }
 

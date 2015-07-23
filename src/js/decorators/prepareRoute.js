@@ -28,13 +28,13 @@ export default function prepareRoute(prepareFn) {
         prepareFn({redux, params, location});
       }
 
-      componentDidUpdate() {
-        const {
-          context: { redux },
-          props: { params, location }
-          } = this;
-
-        prepareFn({redux, params, location});
-      }
+      //componentDidUpdate() {
+      //  const {
+      //    context: { redux },
+      //    props: { params, location }
+      //    } = this;
+      //
+      //  prepareFn({redux, params, location});
+      //}
     };
 }

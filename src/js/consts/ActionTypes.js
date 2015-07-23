@@ -23,7 +23,7 @@ export default {
   }),
 
   Category: keyMirror({
-    getTopByCategory: null,
+    getTop: null,
     getCategory: null,
     getMenu: null
   })
