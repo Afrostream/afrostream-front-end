@@ -8,7 +8,7 @@ import MoviesList from './Movies/MoviesList';
 @prepareRoute(async function ({ redux, params: { category } }) {
   return await * [
       redux.dispatch(CategoryActionCreators.getCategory(category)),
-      redux.dispatch(CategoryActionCreators.getTopByCategory(category))
+      redux.dispatch(CategoryActionCreators.getTop())
     ];
 }) class HomePage extends React.Component {
 

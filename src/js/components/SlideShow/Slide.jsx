@@ -41,6 +41,9 @@ class Slide extends React.Component {
     if (!this.tlIn) {
       this.initTransition();
     }
+    if (this.tlIn.isActive()) {
+      return;
+    }
     this.tlIn.restart();
   }
 

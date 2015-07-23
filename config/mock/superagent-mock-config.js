@@ -20,13 +20,23 @@ const getPaginatedItems = function (items, page, per_page) {
 const superAgentConfig = [,
 
   {
-    pattern: `${config.apiServer.urlPrefix}/category/([a-z-]+)/top`,
+    pattern: `${config.apiServer.urlPrefix}/category/top`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
       var datasPaginated = getPaginatedItems(data, 1, 5).data;
       return {
-        body: datasPaginated
+        body: _.shuffle(datasPaginated)
+      };
+    }
+  },
+  {
+    pattern: `${config.apiServer.urlPrefix}/category/menu`,
+
+    fixtures: Fixtures.CategoryMenu,
+    callback: function (match, data) {
+      return {
+        body: data
       };
     }
   },
@@ -36,17 +46,7 @@ const superAgentConfig = [,
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
       return {
-        body: data
-      };
-    }
-  },
-  {
-    pattern: `${config.apiServer.urlPrefix}/category`,
-
-    fixtures: Fixtures.CategoryMenu,
-    callback: function (match, data) {
-      return {
-        body: data
+        body: _.shuffle(data)
       };
     }
   }

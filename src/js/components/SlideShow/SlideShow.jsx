@@ -27,10 +27,8 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    const category = Category.get('current');
-    const slides = Category.get(`category/${category}/top`);
+    const slides = Category.get(`category/top`);
     const page = Slides.get('page') || 0;
-
     return (
       <div className="SlideShow">
         {slides ? <SlidesContainer page={page} {...{slides}}/> : 'Loading...'}

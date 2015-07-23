@@ -1,10 +1,9 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function getTopByCategory(category) {
+export function getTop() {
   return async api => ({
-    type: ActionTypes.Category.getTopByCategory,
-    category,
-    res: await api(`/category/${category}/top`, {
+    type: ActionTypes.Category.getTop,
+    res: await api(`/category/top`, {
       sort: 'updated',
       direction: 'desc'
     })
@@ -25,7 +24,7 @@ export function getCategory(category) {
 export function getMenu() {
   return async api => ({
     type: ActionTypes.Category.getMenu,
-    res: await api(`/category`, {
+    res: await api(`/category/menu`, {
       sort: 'updated',
       direction: 'desc'
     })
