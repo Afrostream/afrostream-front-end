@@ -72,7 +72,7 @@ if (process.env.BROWSER) {
         <div className="movies-list__container">
           <Slider>
             <div ref="slContainer" className="slider-container">
-              {movies.map((movie, i) => <Thumb key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>)}
+              {movies ? movies.map((movie, i) => <Thumb key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>) : ''}
             </div>
           </Slider>
         </div>
