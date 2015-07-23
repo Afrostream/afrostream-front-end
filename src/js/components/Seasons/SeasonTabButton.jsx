@@ -21,7 +21,7 @@ import * as SeasonActionCreators from '../../actions/season';
     });
 
     return (
-      <span className={classes} onClick={::this.toggleSeason}>{index + 1}</span>
+      <span className={classes} onClick={::this.toggleSeason}>SAISON {index + 1}</span>
     );
   }
 

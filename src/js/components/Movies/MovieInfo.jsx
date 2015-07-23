@@ -77,6 +77,10 @@ if (process.env.BROWSER) {
 
     const movieData = movieObj || Movie.get(`movie/${movie}`);
 
+    if (!movieData) {
+      //TODO gerer le 404 sur la movie
+      return (<div>No data yet</div>)
+    }
     let imageStyles = {backgroundImage: `url(${movieData.get('poster')})`};
     let slug = movieData.get('slug') || '';
     let type = movieData.get('type') || '';

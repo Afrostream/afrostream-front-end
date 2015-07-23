@@ -145,6 +145,7 @@ class Thumb extends React.Component {
       synopsis = shortDescription;
     }
 
+    let idMovie = movie.get('_id');
     let dateFrom = movie.get('dateFrom');
     let dateTo = movie.get('dateTo');
     let nBSeasons = movie.get('seasons') || [];
@@ -158,7 +159,7 @@ class Thumb extends React.Component {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <Link to={`/movie/${slug}`}>
+          <Link to={`/movie/${slug}`} params={{movie:idMovie,slug:slug}}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>

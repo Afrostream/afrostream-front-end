@@ -5,7 +5,6 @@ import config from '../../../../config';
 import Slider from '../Slider/Slider';
 import SeasonTabButton from './SeasonTabButton';
 import SeasonEpisodeThumb from './SeasonEpisodeThumb';
-
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 if (canUseDOM) {
@@ -62,23 +61,24 @@ if (process.env.BROWSER) {
   render() {
     const {
       props: {
-        Movie,movie
+        Season,
+        Movie,
+        movie
         }
       } = this;
 
     const seasons = Movie.get(`movie/${movie}/season`);
-
+    //const page = Season.get('season') || 0;
+    const page = 0;
 
     return (
       <div>
-        {seasons.size ? this.parseSeasonList(seasons) : ''}
+        {seasons.size ? this.parseSeasonList(page, seasons) : ''}
       </div>
     );
   }
 
-  parseSeasonList(seasons) {
-
-    const page = Season.get('season');
+  parseSeasonList(page, seasons) {
 
     return (
       <div className="season-list">

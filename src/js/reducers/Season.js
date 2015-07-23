@@ -8,7 +8,7 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Season.toggleSlide](state, { season }) {
+  [ActionTypes.Season.toggleSeason](state, { season }) {
     return state.merge({
       ['season']: season
     });

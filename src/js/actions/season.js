@@ -1,6 +1,6 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function toggleSlide(index) {
+export function toggleSeason(index) {
   return (dispatch, getState) => {
     return {
       type: ActionTypes.Season.toggleSeason,

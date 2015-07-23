@@ -13,7 +13,7 @@ class SeasonEpisodeThumb extends React.Component {
       props: { episode }
       } = this;
 
-    const maxLength = 200;
+    const maxLength = 140;
 
     let imageStyles = {backgroundImage: `url(${episode.get('poster')})`};
     let title = episode.get('title');

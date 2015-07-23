@@ -34,15 +34,12 @@ class Billboard extends React.Component {
     const slSeasons = React.findDOMNode(this.refs.slSeasons || this.refs.slSeasonNull);
     this.tlIn = new TimelineMax({paused: true});
     this.tlIn.add(TweenMax.staggerFromTo([synopsisE, slSeasons, titleEl, slTag], 0.3,
-      {transform: 'translateX(-80px)'},
+      {transform: 'translateX(-200px)'},
       {transform: 'translateX(0)', ease: Sine.easeOut}
       , 0.05), 0);
   }
 
   lunchTransition() {
-    if (!this.props.active) {
-      return;
-    }
     if (!this.tlIn) {
       this.initTransition();
     }
