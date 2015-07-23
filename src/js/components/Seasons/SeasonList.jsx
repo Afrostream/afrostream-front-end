@@ -3,7 +3,8 @@ import Immutable from 'immutable';
 import { connect } from 'redux/react';
 import config from '../../../../config';
 import Slider from '../Slider/Slider';
-import Thumb from './Thumb';
+import SeasonTabButton from './SeasonTabButton';
+import SeasonEpisodeThumb from './SeasonEpisodeThumb';
 
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
@@ -13,15 +14,19 @@ if (canUseDOM) {
 }
 
 if (process.env.BROWSER) {
-  require('./MoviesList.less');
+  require('./SeasonList.less');
 }
 
-@connect(({ Category }) => ({Category})) class MoviesList extends React.Component {
+@connect(({ Movie, Season }) => ({Movie, Season})) class SeasonList extends React.Component {
 
   constructor(props) {
     super(props);
     this.tlIn = null;
   }
+
+  static propTypes = {
+    movie: PropTypes.string.isRequired
+  };
 
   componentDidMount() {
     this.initTransition();
@@ -57,27 +62,46 @@ if (process.env.BROWSER) {
   render() {
     const {
       props: {
-        Category
+        Movie,movie
         }
       } = this;
 
-    const category = Category.get('current');
-    const movies = Category.get(`category/${category}`);
+    const seasons = Movie.get(`movie/${movie}/season`);
+
 
     return (
-      <div className="movies-list">
-        <div className="selection">Notre sélection</div>
+      <div>
+        {seasons.size ? this.parseSeasonList(seasons) : ''}
+      </div>
+    );
+  }
 
-        <div className="movies-list__container">
+  parseSeasonList(seasons) {
+
+    const page = Season.get('season');
+
+    return (
+      <div className="season-list">
+        <div className="selection">
+          {seasons ? seasons.map((season, i) => <SeasonTabButton
+            key={`season-${season.get('_id')}-${i}`}
+            active={page === i}
+            index={i}
+            {...{season}}/>) : ''}
+        </div>
+
+        <div className="season-list__container">
           <Slider>
             <div ref="slContainer" className="slider-container">
-              {movies ? movies.map((movie, i) => <Thumb key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>) : ''}
+              {seasons ? seasons.map((episode, i) => <SeasonEpisodeThumb
+                key={`episode-${episode.get('_id')}-${i}`} {...{episode}}/>) : ''}
             </div>
           </Slider>
         </div>
       </div>
     );
+
   }
 }
 
-export default MoviesList;
+export default SeasonList;

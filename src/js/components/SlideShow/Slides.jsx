@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
-import Slide from './Slide';
+import MovieInfo from '../Movies/MovieInfo';
 import ReactList from 'react-list';
 
 class Slides extends React.Component {
@@ -17,9 +17,9 @@ class Slides extends React.Component {
 
     return (
       <div className="slides">
-        {slides.map((category, i) => <Slide active={page === i}
-                                            key={`slide-${category.get('_id')}-${i}`}
-          { ...{category}}/>)}
+        {slides.map((movieObj, i) => <MovieInfo active={page === i} maxLength="200"
+                                                key={`slide-${movieObj.get('_id')}-${i}`}
+          { ...{movieObj}}/>)}
       </div>
     );
   }

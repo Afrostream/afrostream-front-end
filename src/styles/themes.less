@@ -17,3 +17,38 @@
   font-size: 1.2em;
   margin: 10px;
 }
+
+.btn-transparent {
+  background: rgba(102, 55, 116, 0.5);
+  color: @brand-primary;
+  font-family: @font-roman;
+  text-transform: uppercase;
+  font-size: 1em;
+  .transition(background 0.1s linear);
+}
+
+.btn-transparent:hover, .btn-transparent:focus, .btn-transparent:active, .btn-transparent.active, .open > .dropdown-toggle.btn-transparent {
+  background: @color-yellow;
+  color: @color-indigo;
+}
+
+.btn-transparent:active, .btn-transparent.active {
+  background: rgba(102, 55, 116, 0.5);
+}
+
+.btn-xs {
+  &.btn-thumb,
+  &.btn-transparent {
+    i {
+      padding: 0 5px 0 5px;
+    }
+    margin: 0 10px 0 0;
+    font-size: 0.8em;
+  }
+}
+
+label {
+  color: @color-yellow;
+  font-family: @font-family-base;
+  font-weight: 200;
+}

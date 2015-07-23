@@ -18,7 +18,26 @@ const getPaginatedItems = function (items, page, per_page) {
 };
 
 const superAgentConfig = [,
+  {
+    pattern: `${config.apiServer.urlPrefix}/movie/([\\w-]+)/season`,
 
+    fixtures: Fixtures.SeasonMock,
+    callback: function (match, data) {
+      return {
+        body: data
+      };
+    }
+  },
+  {
+    pattern: `${config.apiServer.urlPrefix}/movie/([\\w-]+)`,
+
+    fixtures: Fixtures.MovieMock,
+    callback: function (match, data) {
+      return {
+        body: data
+      };
+    }
+  },
   {
     pattern: `${config.apiServer.urlPrefix}/category/top`,
 
@@ -41,7 +60,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/category/([a-z-]+)`,
+    pattern: `${config.apiServer.urlPrefix}/category/([\\w-]+)`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {

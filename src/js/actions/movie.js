@@ -1,0 +1,23 @@
+import ActionTypes from '../consts/ActionTypes';
+
+export function getMovie(movie) {
+  return async api => ({
+    type: ActionTypes.Movie.getMovie,
+    movie,
+    res: await api(`/movie/${movie}`, {
+      sort: 'updated',
+      direction: 'desc'
+    })
+  });
+}
+
+export function getSeason(movie) {
+  return async api => ({
+    type: ActionTypes.Movie.getSeason,
+    movie,
+    res: await api(`/movie/${movie}/season`, {
+      sort: 'updated',
+      direction: 'desc'
+    })
+  });
+}
