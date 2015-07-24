@@ -82,8 +82,8 @@ if (process.env.BROWSER) {
       return (<div>No data yet</div>)
     }
     let imageStyles = {backgroundImage: `url(${movieData.get('poster')})`};
-    let slug = movieData.get('slug') || '';
     let type = movieData.get('type') || '';
+    let slug = movieData.get('slug') || '';
     return (
       <div ref="slContainer" className={classes}>
 

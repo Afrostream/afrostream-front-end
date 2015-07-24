@@ -26,12 +26,13 @@ class SeasonEpisodeThumb extends React.Component {
       synopsis = shortDescription;
     }
 
+    let type = episode.get('type') || '';
     let slug = episode.get('slug') || '';
 
     return (
       <div ref="thumbContainer" className="thumb-containter">
         <div ref="thumb" className="thumb">
-          <Link to={`/episode/${slug}`}>
+          <Link to={`/${type}/${slug}/player`}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>

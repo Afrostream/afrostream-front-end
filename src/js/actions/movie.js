@@ -4,10 +4,7 @@ export function getMovie(movie) {
   return async api => ({
     type: ActionTypes.Movie.getMovie,
     movie,
-    res: await api(`/movie/${movie}`, {
-      sort: 'updated',
-      direction: 'desc'
-    })
+    res: await api(`/movie/${movie}`)
   });
 }
 

@@ -12,6 +12,8 @@
   padding: 10px 0 40px 0;
   background-color: @color-indigo;
   .selection {
+    position: relative;
+    z-index: 1;
     font-size: 1.8em;
     text-transform: uppercase;
     margin: 10px @app-padding 10px @app-padding;
@@ -19,6 +21,10 @@
       margin: 0 10px 0 0;
       font-family: @font-family-base;
       cursor: pointer;
+      &:hover,
+      &.season--active {
+        color: @color-yellow
+      }
     }
   }
   .season-list__container {

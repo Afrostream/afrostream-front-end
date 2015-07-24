@@ -3,14 +3,14 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 
 const initialState = Immutable.fromJS({
-  season: 0
+  selected: 0
 });
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Season.toggleSeason](state, { season }) {
+  [ActionTypes.Season.toggleSeason](state, { seasonId }) {
     return state.merge({
-      ['season']: season
+      ['selected']: seasonId
     });
   }
 });

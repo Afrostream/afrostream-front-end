@@ -29,12 +29,10 @@ if (process.env.BROWSER) {
 
   componentDidMount() {
     this.initTransition();
-    this.tlIn.play();
   }
 
   componentDidUpdate() {
     this.initTransition();
-    this.tlIn.play();
   }
 
   initTransition() {
@@ -45,7 +43,9 @@ if (process.env.BROWSER) {
 
     this.container = React.findDOMNode(this.refs.slContainer);
 
-    this.tlIn = new TimelineMax({paused: true});
+    if (!this.container) return;
+
+    this.tlIn = new TimelineMax({});
     this.tlIn.add(TweenMax.staggerFromTo(this.container.children, 0.2, {
       autoAlpha: 0,
       //transform: 'translate3D(0,50,0)'
@@ -68,39 +68,48 @@ if (process.env.BROWSER) {
       } = this;
 
     const seasons = Movie.get(`movie/${movie}/season`);
-    //const page = Season.get('season') || 0;
-    const page = 0;
+    const page = Season.get('selected') || 0;
+
+    if (seasons && seasons.size) {
+      return (
+        <div className="season-list">
+          {this.parseSeasonTab(page, seasons)}
+          {this.parseSeasonList(page, seasons)}
+        </div>
+      );
+
+    } else {
+      return (<div />);
+    }
+  }
+
+  parseSeasonTab(page, seasons) {
 
     return (
-      <div>
-        {seasons.size ? this.parseSeasonList(page, seasons) : ''}
+      <div className="selection">
+        {seasons ? seasons.map((season, i) => <SeasonTabButton
+          key={`season-${season.get('_id')}-${i}`}
+          active={page === i}
+          index={i}
+          {...{season}}/>) : ''}
       </div>
     );
   }
 
   parseSeasonList(page, seasons) {
 
+    const selectedSeason = seasons.get(page);
+    const episodesList = selectedSeason.get('episodes');
     return (
-      <div className="season-list">
-        <div className="selection">
-          {seasons ? seasons.map((season, i) => <SeasonTabButton
-            key={`season-${season.get('_id')}-${i}`}
-            active={page === i}
-            index={i}
-            {...{season}}/>) : ''}
-        </div>
-
-        <div className="season-list__container">
-          <Slider>
-            <div ref="slContainer" className="slider-container">
-              {seasons ? seasons.map((episode, i) => <SeasonEpisodeThumb
-                key={`episode-${episode.get('_id')}-${i}`} {...{episode}}/>) : ''}
-            </div>
-          </Slider>
-        </div>
+      <div className="season-list__container">
+        <Slider>
+          <div ref="slContainer" className="slider-container">
+            {episodesList ? episodesList.map((episode, i) => <SeasonEpisodeThumb
+              key={`episode-${episode.get('_id')}-${i}`} {...{episode}}/>) : ''}
+          </div>
+        </Slider>
       </div>
     );
-
   }
 }
 

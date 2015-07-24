@@ -10,7 +10,7 @@ import NoMatch from './components/NoMatch';
 export default (
   <Route path="/" component={Application}>
     <Route path="/:category" component={HomePage} ignoreScrollBehavior={true}/>
-    <Route name="movie" path="/movie/:movie" component={MoviePage} ignoreScrollBehavior={true}/>
+    <Route name="movie" path="/movie/:movie/:slug" component={MoviePage} ignoreScrollBehavior={true}/>
     <Route path="*" component={NoMatch}/>
   </Route>
 );

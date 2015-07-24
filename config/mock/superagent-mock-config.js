@@ -23,18 +23,47 @@ const superAgentConfig = [,
 
     fixtures: Fixtures.SeasonMock,
     callback: function (match, data) {
+      //var list = Fixtures.CategoryMock;
+      //console.log(list.length);
+      //
+      //var final = _.forEach(data, function (n) {
+      //  n.episodes = _.shuffle(list).slice(0, _.random(Fixtures.MovieMock.length - 1));
+      //});
+
+      let movie = _.find(Fixtures.MovieMock(), function (item) {
+        return item._id === match[1];
+      });
+
+      if (movie.type !== 'serie') {
+        data = [];
+      }
+
       return {
         body: data
       };
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/movie/([\\w-]+)`,
+    pattern: `${config.apiServer.urlPrefix}/movie/([\\w]+)`,
 
     fixtures: Fixtures.MovieMock,
     callback: function (match, data) {
       return {
-        body: data
+        body: _.find(data, function (item) {
+          return item._id === match[1];
+        })
+      };
+    }
+  },
+  {
+    pattern: `${config.apiServer.urlPrefix}/movie/([\\w]+)/([\\w-]+)`,
+
+    fixtures: Fixtures.MovieMock,
+    callback: function (match, data) {
+      return {
+        body: _.find(data, function (item) {
+          return item._id === match[1] || item.slug === match[2];
+        })
       };
     }
   },
