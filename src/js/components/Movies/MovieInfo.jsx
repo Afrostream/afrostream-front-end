@@ -91,7 +91,7 @@ if (process.env.BROWSER) {
         <Link to={`/${type}/${idMovie}/${slug}/player`}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
         </Link>
-        
+
         <Link className="btn-play" to={`/${type}/${idMovie}/${slug}/player`}/>
 
         <Billboard {...{active, movieData, maxLength}}/>
