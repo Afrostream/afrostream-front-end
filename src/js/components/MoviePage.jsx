@@ -1,12 +1,10 @@
 import React from 'react';
 import { prepareRoute } from '../decorators';
 import * as MovieActionCreators from '../actions/movie';
-import { Link } from 'react-router';
 import MovieInfo from './Movies/MovieInfo';
-import SeasonList from './Seasons/SeasonList.jsx';
+import SeasonList from './Seasons/SeasonList';
 
 @prepareRoute(async function ({ redux, params: { type, movie, slug } }) {
-  console.log(type, movie, slug)
   return await * [
       redux.dispatch(MovieActionCreators.getMovie(movie)),
       redux.dispatch(MovieActionCreators.getSeason(movie))
@@ -16,7 +14,7 @@ import SeasonList from './Seasons/SeasonList.jsx';
   render() {
     const {
       props: {
-        params: { type, movie, slug }
+        params: { movie }
         }
       } = this;
 

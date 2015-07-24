@@ -22,6 +22,10 @@ export default {
     getSeason: null
   }),
 
+  Asset: keyMirror({
+    getToken: null
+  }),
+
   Season: keyMirror({
     toggleSeason: null
   }),

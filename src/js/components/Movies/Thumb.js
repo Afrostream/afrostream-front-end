@@ -160,7 +160,7 @@ class Thumb extends React.Component {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <Link to={`/${type}/${idMovie}/${slug}`} onClick={::this.loadMovie}>
+          <Link to={`/${type}/${idMovie}/${slug}/player/${idMovie}`} onClick={::this.loadMovie}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>
@@ -169,7 +169,7 @@ class Thumb extends React.Component {
           <div ref="info" className="thumb-info" style={imageStyles}>
             <div className="thumb-info__txt">
               <div className="thumb-info__title">{title}</div>
-              <div className="thumb-info__synopsis">{synopsis}</div>
+              <div className="thumb-info__synopsis"><Link to={`/${type}/${idMovie}/${slug}/`}>{synopsis}</Link></div>
             </div>
             <div className="thumb-info__btn">
               <button className="btn btn-xs btn-thumb" href="compte/add">

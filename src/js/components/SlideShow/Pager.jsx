@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'redux/react';
+import classSet from 'classnames';
 import * as SlidesActionCreators from '../../actions/slides';
 
 @connect(({ Slides }) => ({Slides})) class Pager extends React.Component {
@@ -15,7 +16,7 @@ import * as SlidesActionCreators from '../../actions/slides';
         }
       } = this;
 
-    const classes = React.addons.classSet({
+    const classes = classSet({
       'pager': true,
       'pager--active': active
     });

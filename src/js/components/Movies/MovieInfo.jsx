@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import { Link } from 'react-router';
 import { connect } from 'redux/react';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import classSet from 'classnames';
 import Billboard from './Billboard'
 
 if (canUseDOM) {
@@ -66,7 +67,7 @@ if (process.env.BROWSER) {
   }
 
   render() {
-    const classes = React.addons.classSet({
+    const classes = classSet({
       'movie': true,
       'movie--active': this.props.active
     });
@@ -88,7 +89,7 @@ if (process.env.BROWSER) {
     return (
       <div ref="slContainer" className={classes}>
 
-        <Link to={`/${type}/${idMovie}/${slug}/player`}>
+        <Link to={`/${type}/${idMovie}/${slug}/player/${idMovie}`}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
         </Link>
 

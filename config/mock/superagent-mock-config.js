@@ -97,6 +97,16 @@ const superAgentConfig = [,
         body: _.shuffle(data)
       };
     }
+  },
+  {
+    pattern: `${config.apiServer.urlPrefix}/asset/([\\w-]+)`,
+
+    fixtures: Fixtures.AssetMock,
+    callback: function (match, data) {
+      return {
+        body: data
+      };
+    }
   }
 ];
 

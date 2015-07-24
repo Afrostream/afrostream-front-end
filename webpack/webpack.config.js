@@ -73,7 +73,7 @@ const webpackConfig = {
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {
-        test: /\.(gif|jpg|png|svg|favicon|ico)/,
+        test: /\.(gif|jpg|png|svg|favicon|ico|swf)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {

@@ -4,3 +4,4 @@ export { default as Slides } from './Slides';
 export { default as Movie } from './Movie';
 export { default as Category } from './Category';
 export { default as Season } from './Season';
+export { default as Asset } from './Asset';
