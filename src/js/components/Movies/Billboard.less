@@ -1,0 +1,53 @@
+@import (reference) '../../../styles/config.less';
+
+.billboard-infos {
+  z-index: 5;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 350px;
+  font-family: @font-family-base;
+  color: @brand-primary;
+  font-size: 1.2em;
+  .billboard-row {
+    padding: 5px 0 5px 0;
+  }
+  .billboard-title {
+    font-family: @font-book;
+    font-size: 4.5em;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-left: -3px;
+  }
+  .billboard-seasons {
+    font-size: 1.2em;
+    color: @brand-secondary;
+    font-weight: 500;
+    label {
+      color: @brand-secondary;
+      font-family: @font-book;
+    }
+  }
+  .billboard-synopsis {
+    line-height: 1.5;
+  }
+  .billboard-infos__btn {
+  }
+  .billboard-tag {
+    background-color: @color-yellow;
+    text-transform: uppercase;
+    font-size: 1em;
+    border-radius: 2px;
+    padding: 3px 8px 3px 8px;
+    margin: 0 10px 0 0;
+    display: inherit;
+    color: @color-indigo;
+    font-weight: 400;
+    a,
+    a:hover,
+    a:active {
+      color: @color-indigo;
+      text-decoration: none;
+    }
+  }
+}

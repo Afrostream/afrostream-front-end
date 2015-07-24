@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import { Link } from 'react-router';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import * as MovieActionCreators from '../../actions/movie';
 
 if (canUseDOM) {
   require('gsap');
@@ -145,6 +146,7 @@ class Thumb extends React.Component {
       synopsis = shortDescription;
     }
 
+    let idMovie = movie.get('_id');
     let dateFrom = movie.get('dateFrom');
     let dateTo = movie.get('dateTo');
     let nBSeasons = movie.get('seasons') || [];
@@ -158,7 +160,7 @@ class Thumb extends React.Component {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <Link to={`${type}/${slug}`}>
+          <Link to={`/${type}/${idMovie}/${slug}`} onClick={::this.loadMovie}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>
@@ -179,6 +181,22 @@ class Thumb extends React.Component {
         </div>
       </div>
     );
+  }
+
+  loadMovie() {
+    const {
+      props: {
+        dispatch,movie
+        }
+      } = this;
+
+    //TODO voir la compatibilite await niveau client
+    //return await * [
+    dispatch(MovieActionCreators.getMovie(movie));
+    dispatch(MovieActionCreators.getSeason(movie));
+    //];
+
+    //dispatch(MovieActionCreators.getMovie(movie.get('_id')));
   }
 }
 

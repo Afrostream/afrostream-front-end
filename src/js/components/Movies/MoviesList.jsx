@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
 import { connect } from 'redux/react';
-import * as MoviesActionCreators from '../../actions/movies';
 import config from '../../../../config';
 import Slider from '../Slider/Slider';
 import Thumb from './Thumb';

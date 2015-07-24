@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import penner from 'penner';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import classSet from 'classnames';
 
 if (canUseDOM) {
   require('gsap');
@@ -47,10 +48,18 @@ class Slider extends React.Component {
     this.container = null;
     this.scrollLeft = 0;
     this.tlIn = null;
+
   }
+
+  //getInitialState() {
+  //  return {
+  //    scrollLeft: 0
+  //  };
+  //}
 
   componentDidMount() {
     this.container = React.findDOMNode(this).lastChild;
+
     this.initTimeline();
     this.container.addEventListener('scroll', this.handleScroll.bind(this));
     this.container.addEventListener('thumbover', this.hideArrow.bind(this));
@@ -67,7 +76,9 @@ class Slider extends React.Component {
    * Scroll event
    */
   handleScroll() {
-    this.scrollLeft = this.container.scrollLeft;
+    this.setState({
+      scrollLeft: this.container.scrollLeft
+    });
     this.triggerLazyLoading();
   }
 
@@ -222,45 +233,45 @@ class Slider extends React.Component {
 
   render() {
 
-    const leftArrowClasses = React.addons.classSet({
-      'arrow': true,
-      'arrow--left': true
-    });
-
-    const rightArrowClasses = React.addons.classSet({
-      'arrow': true,
-      'arrow--right': true
-    });
-
-    const sliderClasses = React.addons.classSet({
-      'slider': true
-    });
-
     //sliderClasses[this.props.className] = this.props.className !== undefined;
 
     // Display arrows
+    let scrollLeft = this.state ? (this.state.scrollLeft || 0) : 0;
+    let maxScroll = 0;
+    let diffScrollWidth = 0;
     if (this.container) {
-      let scrollLeft = this.scrollLeft;
-
+      maxScroll = this.container.scrollWidth - this.container.clientWidth;
+      diffScrollWidth = this.container.scrollWidth !== this.container.clientWidth;
       // Reset scrollLeft state when footer is closed and reopened
-      if (this.container.scrollLeft === 0) {
-        this.scrollLeft = 0;
+      if (this.container.scrollLeft === 0 && this.state) {
+        this.state.scrollLeft = 0;
       }
-
-      let maxScroll = this.container.scrollWidth - this.container.clientWidth;
-      let diffScrollWidth = this.container.scrollWidth !== this.container.clientWidth;
-
-      //leftArrowClasses['arrow--hidden'] = scrollLeft <= 0;
-      //rightArrowClasses['arrow--hidden'] = (scrollLeft === maxScroll) && diffScrollWidth;
     }
+
+
+    let leftArrowClasses = {
+      'arrow': true,
+      'arrow--left': true,
+      'arrow--hidden': scrollLeft <= 0
+    };
+
+    let rightArrowClasses = {
+      'arrow': true,
+      'arrow--right': true,
+      'arrow--hidden': (scrollLeft === maxScroll)// && diffScrollWidth
+    };
+
+    let sliderClasses = {
+      'slider': true
+    };
 
     return (
 
-      <div {...this.props} className={sliderClasses}>
+      <div {...this.props} className={classSet(sliderClasses)}>
         <a
           ref="arrowLeft"
           href="#"
-          className={leftArrowClasses}
+          className={classSet(leftArrowClasses)}
           onClick={::this.handleClick}
           onMouseDown={this.handleMouseDown.bind(this, 'left')}
           onMouseUp={::this.handleMouseUp}>
@@ -269,7 +280,7 @@ class Slider extends React.Component {
         <a
           ref="arrowRight"
           href="#"
-          className={rightArrowClasses}
+          className={classSet(rightArrowClasses)}
           onClick={::this.handleClick}
           onMouseDown={this.handleMouseDown.bind(this, 'right')}
           onMouseUp={::this.handleMouseUp}>

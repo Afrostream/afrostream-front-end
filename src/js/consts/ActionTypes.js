@@ -17,9 +17,13 @@ export default {
     toggleSlide: null
   }),
 
-  Movies: keyMirror({
-    toggleNext: null,
-    togglePrev: null
+  Movie: keyMirror({
+    getMovie: null,
+    getSeason: null
+  }),
+
+  Season: keyMirror({
+    toggleSeason: null
   }),
 
   Category: keyMirror({

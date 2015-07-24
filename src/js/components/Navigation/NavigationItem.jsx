@@ -25,7 +25,7 @@ import * as CategoryActionCreators from '../../actions/category';
 
     return (
       <li className="navigation-item">
-        <Link className={classes} onClick={::this.changeSlide} to={item.get('slug')}>{item.get('label')}</Link>
+        <Link className={classes} onClick={::this.changeSlide} to={`/${item.get('slug')}`}>{item.get('label')}</Link>
       </li>
     );
     //<Link className={classes} to={item.get('slug')}>{item.get('label')}</Link>
