@@ -16,11 +16,13 @@ class Billboard extends React.Component {
   constructor(props) {
     super(props);
     this.tlIn = null;
+    this.oldId = null;
   }
 
   static propTypes = {
     movieData: PropTypes.instanceOf(Object.List).isRequired,
-    maxLength: PropTypes.number.isRequired,
+    active: PropTypes.bool.isRequired,
+    maxLength: PropTypes.number.isRequired
   };
 
   static defaultProps = {
@@ -40,12 +42,18 @@ class Billboard extends React.Component {
   }
 
   lunchTransition() {
+    let newId = this.props.movieData.get('_id');
+    if (!this.props.active) {
+      return;
+    }
     if (!this.tlIn) {
       this.initTransition();
     }
-    if (this.tlIn.isActive()) {
+    //SameId to animate
+    if (this.oldId === newId) {
       return;
     }
+    this.oldId = this.props.movieData.get('_id');
     this.tlIn.restart();
   }
 

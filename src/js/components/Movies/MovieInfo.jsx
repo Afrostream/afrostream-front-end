@@ -72,7 +72,7 @@ if (process.env.BROWSER) {
     });
 
     const {
-      props: { Movie, movie, movieObj,maxLength}
+      props: { Movie, active, movie, movieObj,maxLength}
       } = this;
 
     const movieData = movieObj || Movie.get(`movie/${movie}`);
@@ -93,7 +93,7 @@ if (process.env.BROWSER) {
         </Link>
 
 
-        <Billboard {...{movieData, maxLength}}/>
+        <Billboard {...{active, movieData, maxLength}}/>
       </div>
     );
   }

@@ -15,13 +15,18 @@ class Slides extends React.Component {
       props: { slides,page }
       } = this;
 
+    const movieObj = slides.get(page);
+
     return (
       <div className="slides">
-        {slides.map((movieObj, i) => <MovieInfo active={page === i} maxLength="200"
-                                                key={`slide-${movieObj.get('_id')}-${i}`}
-          { ...{movieObj}}/>)}
+        <MovieInfo active={true} maxLength={200}
+                   key={`slide-${movieObj.get('_id')}`}  { ...{movieObj}}/>
       </div>
     );
+    //This buil all slides i test it whith only one slide for perf
+    //{slides.map((movieObj, i) => <MovieInfo active={page === i} maxLength="200"
+    //                                        key={`slide-${movieObj.get('_id')}-${i}`}
+    //  { ...{movieObj}}/>)}
   }
 }
 
