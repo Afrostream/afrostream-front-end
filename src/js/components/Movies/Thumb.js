@@ -160,7 +160,7 @@ class Thumb extends React.Component {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <Link to={`/movie/${idMovie}/${slug}`} onClick={::this.loadMovie}>
+          <Link to={`/${type}/${idMovie}/${slug}`} onClick={::this.loadMovie}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>

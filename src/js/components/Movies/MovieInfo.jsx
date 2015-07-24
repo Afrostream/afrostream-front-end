@@ -36,7 +36,7 @@ if (process.env.BROWSER) {
     const container = React.findDOMNode(this.refs.slContainer);
     const backGd = React.findDOMNode(this.refs.slBackground);
     this.tlIn = new TimelineMax({paused: true});
-    TweenMax.set(container, {transformStyle: 'preserve-3d', perspective: 100, perspectiveOrigin: '50% 50%'});
+    //TweenMax.set(container, {transformStyle: 'preserve-3d', perspective: 100, perspectiveOrigin: '50% 50%'});
     this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
     this.tlIn.add(TweenMax.fromTo(backGd, 22,
       {transform: 'translateZ(0)'},
@@ -82,16 +82,17 @@ if (process.env.BROWSER) {
       return (<div>No data yet</div>)
     }
     let imageStyles = {backgroundImage: `url(${movieData.get('poster')})`};
+    let idMovie = movieData.get('_id') || '';
     let type = movieData.get('type') || '';
     let slug = movieData.get('slug') || '';
     return (
       <div ref="slContainer" className={classes}>
 
-        <Link to={`/${type}/${slug}/player`}>
+        <Link to={`/${type}/${idMovie}/${slug}/player`}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
-          <div className="btn-play"/>
         </Link>
-
+        
+        <Link className="btn-play" to={`/${type}/${idMovie}/${slug}/player`}/>
 
         <Billboard {...{active, movieData, maxLength}}/>
       </div>

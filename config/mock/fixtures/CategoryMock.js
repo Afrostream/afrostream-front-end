@@ -18,6 +18,7 @@ export default function () {
       "_id": "54fde8291f2ab01100934ca3",
       "title": "Bande de filles",
       "slug": "bande-de-filles",
+      "type": "serie",
       "dateFrom": "2013-09-01",
       "dateTo": "2014-09-01",
       "poster": "/images/mock/background/bande-de-filles.jpeg",
