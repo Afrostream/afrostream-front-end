@@ -13,7 +13,7 @@ export default (
     <Route name="category" path="/:category" component={HomePage} ignoreScrollBehavior={true}/>
     <Route name="movie" path="/:type/:movie/:slug" component={MoviePage} ignoreScrollBehavior={true}/>
     <Route name="player" path="/:type/:movie/:slug/player/:asset" component={PlayerPage} ignoreScrollBehavior={true}/>
+    <Redirect from="/" to="category" path="/selection"/>
     <Route path="*" component={NoMatch}/>
-    <Redirect from="main" to="/selection"/>
   </Route>
 );

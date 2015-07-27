@@ -25,7 +25,10 @@ export default createReducer(initialState, {
   },
   [ActionTypes.Category.getMenu](state, { res }) {
     const menu = res.body;
+    const defaultSection = menu[0];
+
     return state.merge({
+      ['default']: defaultSection,
       ['menu']: menu
     });
   }
