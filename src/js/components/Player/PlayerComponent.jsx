@@ -30,6 +30,7 @@ if (process.env.BROWSER) {
 
     const tokenAsset = Asset.get(`asset/${asset}`);
     videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
+    videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
     // initialize the player
     this.player = videojs('video', tokenAsset.toJS());
     console.log(this.player, tokenAsset.toJS());

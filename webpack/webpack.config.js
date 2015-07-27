@@ -76,8 +76,15 @@ const webpackConfig = {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
+      ////Font-awasome
+      //{
+      //  test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //  loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&minetype=application/font-woff'
+      //},
+      //{test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader?name=[name].[ext]?[hash]'},
+      //END FONT AWASOME
       {
-        test: /.woff([\?]?.*)$/,
+        test: /.(woff|woff2)([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
       },
       {
@@ -88,27 +95,16 @@ const webpackConfig = {
         test: /.eot([\?]?.*)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]'
       },
+      //{
+      //  test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)$/,
+      //  loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+      //},
       {
         test: /.txt([\?]?.*)$/,
         loader: 'raw-loader'
       },
-      //Font-awasome
-      {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url?limit=10000&mimetype=application/font-woff"
-      }, {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url?limit=10000&mimetype=application/font-woff"
-      }, {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url?limit=10000&mimetype=application/octet-stream"
-      }, {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "file"
-      }, {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url?limit=10000&mimetype=image/svg+xml"
-      }
+      //,
+
     ]
   },
   plugins: [
