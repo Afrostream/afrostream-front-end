@@ -76,12 +76,10 @@ const webpackConfig = {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
-      ////Font-awasome
-      //{
-      //  test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      //  loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&minetype=application/font-woff'
-      //},
-      //{test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader?name=[name].[ext]?[hash]'},
+      //Font-awasome
+      //{test: /\.woff($|\?)/, loader: 'url-loader'},
+      //{test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&minetype=application/font-woff'},
+      //{test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader'},
       //END FONT AWASOME
       {
         test: /.(woff|woff2)([\?]?.*)$/,

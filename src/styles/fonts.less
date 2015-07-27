@@ -1,6 +1,7 @@
 @import ( reference ) './for';
 
-//@import '../../node_modules/font-awesome/less/font-awesome.less';
+//@import (less) '../../node_modules/font-awesome/less/font-awesome.less';
+
 //
 //@fa-font-path: '../assets/fonts/';
 
@@ -20,18 +21,6 @@
   }
 }
 
-//@font-face {
-//  font-family: 'FontAwesome';
-//  src: ~"url('@{fa-font-path}/fontawesome-webfont.eot?v=4.1.0')";
-//  src: ~"url('@{fa-font-path}/fontawesome-webfont.eot?#iefix&?v=4.1.0') format('embedded-opentype')",
-//  ~"url('@{fa-font-path}/fontawesome-webfont.woff?v=4.1.0') format('woff')",
-//  ~"url('@{fa-font-path}/fontawesome-webfont.ttf?v=4.1.0') format('truetype')",
-//  ~"url('@{fa-font-path}/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg')";
-//  //  src: url('@{fa-font-path}/FontAwesome.otf') format('opentype'); // used when developing fonts
-//  font-weight: normal;
-//  font-style: normal;
-//}
-
 /* Fonts list array */
 @fonts: 'DIN-30640-Std',
 'FtraBd',
@@ -40,9 +29,7 @@
 'FtraHv',
 'FtraLt',
 'FtraLh',
-'Futura'//,
-//'fontawesome-webfont'
-;
+'Futura';
 
 .for(@fonts);
 .-each(@value) {

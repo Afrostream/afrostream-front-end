@@ -43,11 +43,11 @@ export default function prepareRoute(prepareFn) {
       //}
 
       //isSyncWhithRoute(props = this.props, context = this.context) {
-        //
-        //const storeState = state.store.getState();
-        //const storeLocationState = storeState.router.state;
-        //const routerLocationState = context.router.state.location.state; // LOL
-        //return locationStateEquals(storeLocationState, routerLocationState);
+      //
+      //const storeState = state.store.getState();
+      //const storeLocationState = storeState.router.state;
+      //const routerLocationState = context.router.state.location.state; // LOL
+      //return locationStateEquals(storeLocationState, routerLocationState);
       //  console.log(props, context);
       //  return true;
       //}
