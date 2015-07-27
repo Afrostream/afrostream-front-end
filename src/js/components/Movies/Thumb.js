@@ -2,6 +2,7 @@ import React from 'react/addons';
 import { Link } from 'react-router';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';
+import * as AssetActionCreators from '../../actions/asset';
 
 if (canUseDOM) {
   require('gsap');
@@ -160,7 +161,7 @@ class Thumb extends React.Component {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <Link to={`/${type}/${idMovie}/${slug}/player/${idMovie}`} onClick={::this.loadMovie}>
+          <Link to={`/${type}/${idMovie}/${slug}/player/${idMovie}`} onClick={::this.loadAsset}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>
@@ -169,7 +170,8 @@ class Thumb extends React.Component {
           <div ref="info" className="thumb-info" style={imageStyles}>
             <div className="thumb-info__txt">
               <div className="thumb-info__title">{title}</div>
-              <div className="thumb-info__synopsis"><Link to={`/${type}/${idMovie}/${slug}`}>{synopsis}</Link></div>
+              <div className="thumb-info__synopsis"><Link to={`/${type}/${idMovie}/${slug}`}
+                                                          onClick={::this.loadMovie}>{synopsis}</Link></div>
             </div>
             <div className="thumb-info__btn">
               <button className="btn btn-xs btn-thumb" href="compte/add">
@@ -197,6 +199,16 @@ class Thumb extends React.Component {
     //];
 
     //dispatch(MovieActionCreators.getMovie(movie.get('_id')));
+  }
+
+  loadAsset() {
+    const {
+      props: {
+        dispatch,movie
+        }
+      } = this;
+
+    dispatch(AssetActionCreators.getToken(movie));
   }
 }
 
