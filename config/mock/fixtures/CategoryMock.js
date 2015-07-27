@@ -49,16 +49,7 @@ export default function () {
       "episodes": [],
       "subscribers": []
     },
-    {
-      "_id": "54fdcccaab57cb11006e340b",
-      "title": "Being Mrs Elliott",
-      "slug": "being-mrs-elliott",
-      "dateFrom": "2013-09-01",
-      "dateTo": "2014-09-01",
-      "poster": "http://upload.wikimedia.org/wikipedia/en/7/71/Being_Mrs_Elliot_film.jpg",
-      "seasons": [],
-      "episodes": []
-    },
+
     {
       "_id": "54f5ddc0a2b4831100d518cd",
       "title": "Black-ish",
@@ -82,6 +73,16 @@ export default function () {
       "type": "serie",
       "duration": 60,
       "poster": "http://projectcasting1.projectcasting.netdna-cdn.com/wp-content/uploads/2014/03/being_mary_jane_ver2_xlg.jpg",
+      "episodes": []
+    },
+    {
+      "_id": "54fdcccaab57cb11006e340b",
+      "title": "Being Mrs Elliott",
+      "slug": "being-mrs-elliott",
+      "dateFrom": "2013-09-01",
+      "dateTo": "2014-09-01",
+      "poster": "http://upload.wikimedia.org/wikipedia/en/7/71/Being_Mrs_Elliot_film.jpg",
+      "seasons": [],
       "episodes": []
     },
     {

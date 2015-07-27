@@ -2,10 +2,11 @@ import React from 'react/addons';
 import { Link } from 'react-router';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';
+import * as AssetActionCreators from '../../actions/asset';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax,Expo,Sine} = window.GreenSockGlobals;
+  var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 
 class Thumb extends React.Component {
@@ -17,7 +18,7 @@ class Thumb extends React.Component {
     this.overTime = 0;
     this.perspective = 200;
     this.thumbOffset = 30;
-    this.scollSpeed = 1.4;
+    this.scollSpeed = 0.5;
     this.container = null;
     this.slider = null;
     this.thumbBackground = null;
@@ -53,8 +54,8 @@ class Thumb extends React.Component {
       perspective: this.perspective,
       perspectiveOrigin: '50% 50%'
     });
-    this.tlIn = new TimelineMax({paused: true});
-    this.tlIn.add(TweenMax.fromTo(thumb, .3,
+    this.tlIn = new TimelineMax({paused: true, onComplete: this.scrollContent.bind(this)});
+    this.tlIn.add(TweenMax.fromTo(thumb, .5,
       {
         transform: 'translate3D(0,0,0)',
         borderColor: 'transparent',
@@ -64,15 +65,15 @@ class Thumb extends React.Component {
         transform: `translate3D(0,-15px,30px)`,
         borderColor: '#ffc809',
         width: this.thumbWidth,
-        ease: Sine.easeOut
+        ease: Sine.easeInOut
       }
     ), 0);
-    this.tlIn.add(TweenMax.fromTo(this.container, .6,
+    this.tlIn.add(TweenMax.fromTo(this.container, .8,
       {marginLeft: 10, marginRight: 10},
-      {marginLeft: 50, marginRight: 50, ease: Expo.easeOut}
+      {marginLeft: 50, marginRight: 50, ease: Sine.easeInOut}
     ), 0);
 
-    this.tlIn.add(TweenMax.fromTo(info, .2,
+    this.tlIn.add(TweenMax.fromTo(info, .4,
       {
         autoAlpha: 0,
         left: 200
@@ -80,9 +81,34 @@ class Thumb extends React.Component {
       {
         autoAlpha: 1,
         left: 140,
-        ease: Sine.easeOut
+        ease: Sine.easeInOut
       }
     ), 0.1);
+  }
+
+  scrollContent() {
+    const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
+    const thumbLeft = this.container.offsetLeft + thumbWith;
+    const thumbRight = this.container.offsetLeft;
+    const sliderPos = this.slider.scrollLeft;
+    const thumbMargin = this.thumbOffset;
+    const scrollPos = sliderPos + this.slider.clientWidth;
+    const visibleLeft = this.slider.clientWidth - (this.container.offsetLeft - this.slider.scrollLeft);
+    const hiddenLeft = thumbWith - (visibleLeft + (this.thumbBackground.clientWidth - (thumbMargin * 2 )));
+    switch (true) {
+      case thumbLeft > scrollPos:
+        TweenMax.to(this.slider, this.scollSpeed,
+          {scrollLeft: sliderPos + (hiddenLeft), ease: Sine.easeInOut}
+        );
+        //this.slider.scrollLeft = sliderPos + (hiddenLeft);
+        break;
+      case thumbRight < sliderPos:
+        TweenMax.to(this.slider, this.scollSpeed,
+          {scrollLeft: (thumbRight - thumbMargin), ease: Sine.easeInOut}
+        );
+        //this.slider.scrollLeft = (thumbRight - thumbMargin);
+        break;
+    }
   }
 
   lunchTransition() {
@@ -91,27 +117,7 @@ class Thumb extends React.Component {
     this.overTime = setTimeout(() => {
         this.tlIn.restart();
         this.triggerOver();
-        const thumbWith = this.thumbWidth + this.thumbBackground.clientWidth;
-        const thumbLeft = this.container.offsetLeft + thumbWith;
-        const thumbRight = this.container.offsetLeft;
-        const sliderPos = this.slider.scrollLeft;
-        const thumbMargin = this.thumbOffset;
-        const scrollPos = sliderPos + this.slider.clientWidth;
-        const visibleLeft = this.slider.clientWidth - (this.container.offsetLeft - this.slider.scrollLeft);
-        const hiddenLeft = thumbWith - (visibleLeft + (this.thumbBackground.clientWidth - (thumbMargin * 2 )));
-        switch (true) {
-          case thumbLeft > scrollPos:
-            TweenMax.to(this.slider, this.scollSpeed,
-              {scrollLeft: sliderPos + (hiddenLeft), ease: Sine.easeOut}
-            );
-            break;
-          case thumbRight < sliderPos:
-            TweenMax.to(this.slider, this.scollSpeed,
-              {scrollLeft: (thumbRight - thumbMargin), ease: Sine.easeOut}
-            );
-            break;
-        }
-      }, 200
+      }, 300
     );
   }
 
@@ -120,7 +126,7 @@ class Thumb extends React.Component {
     this.overTime = setTimeout(() => {
         this.tlIn.reverse();
         this.triggerOut();
-      }, 100
+      }, 300
     );
   }
 
@@ -160,7 +166,7 @@ class Thumb extends React.Component {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <Link to={`/${type}/${idMovie}/${slug}`} onClick={::this.loadMovie}>
+          <Link to={`/${type}/${idMovie}/${slug}/player/${idMovie}`} onClick={::this.loadAsset}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>
@@ -169,7 +175,8 @@ class Thumb extends React.Component {
           <div ref="info" className="thumb-info" style={imageStyles}>
             <div className="thumb-info__txt">
               <div className="thumb-info__title">{title}</div>
-              <div className="thumb-info__synopsis">{synopsis}</div>
+              <div className="thumb-info__synopsis"><Link to={`/${type}/${idMovie}/${slug}`}
+                                                          onClick={::this.loadMovie}>{synopsis}</Link></div>
             </div>
             <div className="thumb-info__btn">
               <button className="btn btn-xs btn-thumb" href="compte/add">
@@ -197,6 +204,16 @@ class Thumb extends React.Component {
     //];
 
     //dispatch(MovieActionCreators.getMovie(movie.get('_id')));
+  }
+
+  loadAsset() {
+    const {
+      props: {
+        dispatch,movie
+        }
+      } = this;
+
+    dispatch(AssetActionCreators.getToken(movie));
   }
 }
 

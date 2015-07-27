@@ -5,7 +5,7 @@ class NoMatch extends React.Component {
   render() {
     return (
       <div className="no-match">
-        Sorry nothing else
+        404
       </div>
     );
   }

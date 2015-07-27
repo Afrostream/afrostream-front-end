@@ -1,16 +1,19 @@
 'use strict';
 
 import React from 'react'; // eslint-disable-line no-unused-vars
-import {Route } from 'react-router';
+import { Route, NotFoundRoute, Redirect, DefaultRoute } from 'react-router';
 import Application from './components/Application';
 import HomePage from './components/HomePage';
-import MoviePage from './components/MoviePage';
+import MoviePage from './components/Movies/MoviePage';
+import PlayerPage from './components/PlayerPage';
 import NoMatch from './components/NoMatch';
 
 export default (
-  <Route path="/" component={Application}>
-    <Route path="/:category" component={HomePage} ignoreScrollBehavior={true}/>
+  <Route name="app" path="/" component={Application}>
+    <Route name="category" path="/:category" component={HomePage} ignoreScrollBehavior={true}/>
     <Route name="movie" path="/:type/:movie/:slug" component={MoviePage} ignoreScrollBehavior={true}/>
+    <Route name="player" path="/:type/:movie/:slug/player/:asset" component={PlayerPage} ignoreScrollBehavior={true}/>
+    <Redirect from="/" to="category" path="/selection"/>
     <Route path="*" component={NoMatch}/>
   </Route>
 );

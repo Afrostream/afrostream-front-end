@@ -28,7 +28,7 @@ export default function createAPI(createRequest) {
     query = qs.parse(queryStr);
 
     if (method === 'GET') {
-      if (_.isObject(params)) {
+      if (params && _.isObject(params)) {
         _.assign(query, params);
       }
 

@@ -89,6 +89,9 @@
     "style-loader": "^0.12.3",
     "superagent": "^1.2.0",
     "url-loader": "^0.5.6",
+    "video.js": "^4.12.12",
+    "videojs-contrib-hls": "git+https://github.com/Afrostream/videojs-contrib-hls.git#master",
+    "videojs-swf": "^4.7.2",
     "webpack": "^1.10.0"
   },
   "engines": {

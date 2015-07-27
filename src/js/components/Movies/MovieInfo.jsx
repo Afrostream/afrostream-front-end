@@ -3,7 +3,9 @@ import Immutable from 'immutable';
 import { Link } from 'react-router';
 import { connect } from 'redux/react';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import classSet from 'classnames';
 import Billboard from './Billboard'
+import * as AssetActionCreators from '../../actions/asset';
 
 if (canUseDOM) {
   require('gsap');
@@ -66,7 +68,7 @@ if (process.env.BROWSER) {
   }
 
   render() {
-    const classes = React.addons.classSet({
+    const classes = classSet({
       'movie': true,
       'movie--active': this.props.active
     });
@@ -85,18 +87,32 @@ if (process.env.BROWSER) {
     let idMovie = movieData.get('_id') || '';
     let type = movieData.get('type') || '';
     let slug = movieData.get('slug') || '';
+    let link = `/${type}/${idMovie}/${slug}/player/${idMovie}`;
+
     return (
       <div ref="slContainer" className={classes}>
 
-        <Link to={`/${type}/${idMovie}/${slug}/player`}>
+        <Link to={link} onClick={::this.loadAsset}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
         </Link>
 
-        <Link className="btn-play" to={`/${type}/${idMovie}/${slug}/player`}/>
+        <Link className="btn-play" to={link} onClick={::this.loadAsset}/>
 
         <Billboard {...{active, movieData, maxLength}}/>
       </div>
     );
+  }
+
+  loadAsset() {
+    const {
+      props: {
+        dispatch, Movie, movie, movieObj
+        }
+      } = this;
+
+    const movieData = movieObj || Movie.get(`movie/${movie}`);
+
+    dispatch(AssetActionCreators.getToken(movieData.get('_id')));
   }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'redux/react';
+import classSet from 'classnames';
 import * as SeasonActionCreators from '../../actions/season';
 
 @connect(({ Season }) => ({Season})) class SeasonTabButton extends React.Component {
@@ -15,7 +16,7 @@ import * as SeasonActionCreators from '../../actions/season';
         }
       } = this;
 
-    const classes = React.addons.classSet({
+    const classes = classSet({
       'season': true,
       'season--active': active
     });

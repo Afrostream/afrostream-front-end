@@ -73,11 +73,16 @@ const webpackConfig = {
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {
-        test: /\.(gif|jpg|png|svg|favicon|ico)/,
+        test: /\.(gif|jpg|png|svg|favicon|ico|swf)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
+      //Font-awasome
+      //{test: /\.woff($|\?)/, loader: 'url-loader'},
+      //{test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&minetype=application/font-woff'},
+      //{test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader'},
+      //END FONT AWASOME
       {
-        test: /.woff([\?]?.*)$/,
+        test: /.(woff|woff2)([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
       },
       {
@@ -88,10 +93,16 @@ const webpackConfig = {
         test: /.eot([\?]?.*)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]'
       },
+      //{
+      //  test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)$/,
+      //  loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+      //},
       {
         test: /.txt([\?]?.*)$/,
         loader: 'raw-loader'
-      }
+      },
+      //,
+
     ]
   },
   plugins: [
