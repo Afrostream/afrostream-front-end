@@ -1,15 +1,19 @@
 @import (reference) '../../../styles/config.less';
 
 .movie {
-
+  position: relative;
   .fullHeight();
   padding: @header-height @app-padding;
-
+  display: table-cell;
+  float: none;
+  height: 100%;
+  width: 100%;
+  vertical-align: middle;
   &:before {
     content: '';
     display: inline-block;
     height: 100%;
-    vertical-align: top;
+    vertical-align: middle;
   }
   > a {
     .trans3d();
@@ -19,6 +23,7 @@
     top: 0;
     bottom: 0;
     right: 0;
+    overflow: hidden;
     .movie-background {
       width: 100%;
       height: 100%;

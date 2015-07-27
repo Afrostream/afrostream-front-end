@@ -1,29 +1,22 @@
 @import (reference) '../../../styles/config.less';
 
 .SlideShow {
-
   position: relative;
-  overflow: hidden;
-  height: 100%; /* full height of the content box */
-  min-height: 33vw; /* Will be Ratio box */
-  padding: @app-padding;
-
+  .fullHeight();
+  padding: @header-height @app-padding;
+  display: table-cell;
   .slides {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    //position: absolute;
+    //top: 0;
+    //left: 0;
+    //right: 0;
+    //bottom: 0;
   }
 
   .movie {
-    .trans3d();
+    //.trans3d();
+    position: absolute;
     .fullHeight();
-    display: none;
-  }
-
-  .movie.movie--active {
-    display: block;
   }
 
   .controls {

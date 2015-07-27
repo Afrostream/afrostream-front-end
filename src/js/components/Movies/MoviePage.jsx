@@ -1,8 +1,8 @@
 import React from 'react';
-import { prepareRoute } from '../decorators';
-import * as MovieActionCreators from '../actions/movie';
-import MovieInfo from './Movies/MovieInfo';
-import SeasonList from './Seasons/SeasonList';
+import { prepareRoute } from '../../decorators';
+import * as MovieActionCreators from '../../actions/movie';
+import MovieInfo from './MovieInfo';
+import SeasonList from '../Seasons/SeasonList';
 
 @prepareRoute(async function ({ redux, params: { type, movie, slug } }) {
   return await * [

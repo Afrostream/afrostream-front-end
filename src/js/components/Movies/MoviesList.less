@@ -8,9 +8,10 @@
 @zoom-margin: 50px;
 .movies-list {
   position: relative;
-  overflow-x: hidden;
   padding: 10px 0 40px 0;
   background-color: @color-indigo;
+  width: 100%;
+  display: table-row;
   .selection {
     font-size: 1.8em;
     font-family: @font-light;
@@ -173,7 +174,7 @@
 
   .movies-list {
     .movies-list__container {
-      margin: -@zoom-margin 0 -@zoom-margin 0;
+      margin: -@zoom-margin 0 -40px 0;
       .slider {
         .slider-container {
           overflow-x: auto;

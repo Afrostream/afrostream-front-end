@@ -4,7 +4,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { Route, NotFoundRoute, Redirect } from 'react-router';
 import Application from './components/Application';
 import HomePage from './components/HomePage';
-import MoviePage from './components/MoviePage';
+import MoviePage from './components/Movies/MoviePage';
 import PlayerPage from './components/PlayerPage';
 import NoMatch from './components/NoMatch';
 

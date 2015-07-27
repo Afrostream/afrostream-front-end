@@ -25,9 +25,9 @@ if (process.env.BROWSER) {
 
         <div className="container-fluid">
           {children}
+          <Footer />
         </div>
 
-        <Footer />
       </div>
     );
   }
