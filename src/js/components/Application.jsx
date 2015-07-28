@@ -9,9 +9,9 @@ if (process.env.BROWSER) {
   require('./Application.less');
 }
 
-@prepareRoute(async function ({ redux }) {
+@prepareRoute(async function ({ store }) {
   return await * [
-      redux.dispatch(CategoryActionCreators.getMenu())
+      store.dispatch(CategoryActionCreators.getMenu())
     ];
 }) class Application extends React.Component {
 

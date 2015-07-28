@@ -4,10 +4,10 @@ import * as MovieActionCreators from '../../actions/movie';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
 
-@prepareRoute(async function ({ redux, params: { type, movie, slug } }) {
+@prepareRoute(async function ({ store, params: { type, movie } }) {
   return await * [
-      redux.dispatch(MovieActionCreators.getMovie(movie)),
-      redux.dispatch(MovieActionCreators.getSeason(movie))
+      store.dispatch(MovieActionCreators.getMovie(movie)),
+      store.dispatch(MovieActionCreators.getSeason(movie))
     ];
 }) class HomePage extends React.Component {
 

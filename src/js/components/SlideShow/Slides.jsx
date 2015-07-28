@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
 import MovieInfo from '../Movies/MovieInfo';
-import ReactList from 'react-list';
 
 class Slides extends React.Component {
 
@@ -18,15 +17,9 @@ class Slides extends React.Component {
     const movieObj = slides.get(page);
 
     return (
-      <div className="slides">
-        <MovieInfo active={true} maxLength={200}
-                   key={`slide-${movieObj.get('_id')}`}  { ...{movieObj}}/>
-      </div>
+      <MovieInfo active={true} maxLength={200}
+                 key={`slide-${movieObj.get('_id')}`}  { ...{movieObj}}/>
     );
-    //This buil all slides i test it whith only one slide for perf
-    //{slides.map((movieObj, i) => <MovieInfo active={page === i} maxLength="200"
-    //                                        key={`slide-${movieObj.get('_id')}-${i}`}
-    //  { ...{movieObj}}/>)}
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'redux/react';
+import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
 import * as SlidesActionCreators from '../../actions/slides';
 

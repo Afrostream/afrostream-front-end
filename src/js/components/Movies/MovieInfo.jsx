@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
 import { Link } from 'react-router';
-import { connect } from 'redux/react';
+import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
@@ -81,12 +81,12 @@ if (process.env.BROWSER) {
 
     if (!movieData) {
       //TODO gerer le 404 sur la movie
-      return (<div>No data yet</div>)
+      console.log('pas de données');
     }
-    let imageStyles = {backgroundImage: `url(${movieData.get('poster')})`};
-    let idMovie = movieData.get('_id') || '';
-    let type = movieData.get('type') || '';
-    let slug = movieData.get('slug') || '';
+    let imageStyles = {backgroundImage: `url(${movieData ? movieData.get('poster') : ''})`};
+    let idMovie = movieData ? movieData.get('_id') : '';
+    let type = movieData ? movieData.get('type') : '';
+    let slug = movieData ? movieData.get('slug') : '';
     let link = `/${type}/${idMovie}/${slug}/player/${idMovie}`;
 
     return (
@@ -98,7 +98,7 @@ if (process.env.BROWSER) {
 
         <Link className="btn-play" to={link} onClick={::this.loadAsset}/>
 
-        <Billboard {...{active, movieData, maxLength}}/>
+        {movieData ? <Billboard {...{active, movieData, maxLength}}/> : ''}
       </div>
     );
   }

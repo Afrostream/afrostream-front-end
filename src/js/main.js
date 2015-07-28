@@ -1,8 +1,8 @@
 import React from 'react';
 import History from 'react-router/lib/BrowserHistory';
 import Router from './components/Router';
-import { Provider } from 'redux/react';
-import createRedux from './lib/createRedux';
+import { Provider } from 'react-redux';
+import createStore from './lib/createStore';
 import request from 'superagent';
 import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
@@ -28,10 +28,10 @@ const api = createAPI(
 );
 
 /* global __INITIAL_STATE__:true */
-const redux = createRedux(api, __INITIAL_STATE__);
+const store = createStore(api, __INITIAL_STATE__);
 
 React.render(
-  <Provider redux={redux}>
+  <Provider  {...{store}}>
     {() => <Router {...{history}} />}
   </Provider>,
   document.getElementById('main')

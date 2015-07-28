@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
-import { connect } from 'redux/react';
+import { connect } from 'react-redux';
 import config from '../../../../config';
 import Slider from '../Slider/Slider';
 import SeasonTabButton from './SeasonTabButton';

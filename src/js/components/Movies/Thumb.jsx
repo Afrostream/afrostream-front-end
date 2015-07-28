@@ -1,5 +1,7 @@
 import React from 'react/addons';
-import { Link } from 'react-router';
+import Router from 'react-router';
+import { Link, Navigation } from 'react-router';
+import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';
 import * as AssetActionCreators from '../../actions/asset';
@@ -9,7 +11,7 @@ if (canUseDOM) {
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 
-class Thumb extends React.Component {
+@connect(({ Movie, Asset }) => ({Movie, Asset})) class Thumb extends React.Component {
 
   constructor(props) {
     super(props);
@@ -197,10 +199,11 @@ class Thumb extends React.Component {
         }
       } = this;
 
+    const idMovie = movie.get('_id');
     //TODO voir la compatibilite await niveau client
     //return await * [
-    dispatch(MovieActionCreators.getMovie(movie));
-    dispatch(MovieActionCreators.getSeason(movie));
+    dispatch(MovieActionCreators.getMovie(idMovie));
+    dispatch(MovieActionCreators.getSeason(idMovie));
     //];
 
     //dispatch(MovieActionCreators.getMovie(movie.get('_id')));
@@ -213,7 +216,8 @@ class Thumb extends React.Component {
         }
       } = this;
 
-    dispatch(AssetActionCreators.getToken(movie));
+    const idMovie = movie.get('_id');
+    dispatch(AssetActionCreators.getToken(idMovie));
   }
 }
 

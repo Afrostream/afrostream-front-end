@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
-import { connect } from 'redux/react';
+import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
 import SlidesContainer from './Slides';
 import Pagination from './Pagination';
@@ -12,9 +12,9 @@ import config from '../../../../config';
 if (process.env.BROWSER) {
   require('./SlideShow.less');
 }
-@prepareRoute(async function ({ redux }) {
+@prepareRoute(async function ({ store }) {
   return await * [
-      redux.dispatch(CategoryActionCreators.getTop())
+      store.dispatch(CategoryActionCreators.getTop())
     ];
 })
 @connect(({ Category, Slides }) => ({Category, Slides})) class SlideShow extends React.Component {

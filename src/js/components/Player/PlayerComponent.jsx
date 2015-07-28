@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'redux/react';
+import { connect } from 'react-redux';
 import * as SlidesActionCreators from '../../actions/slides';
 import videojs from 'videojs-contrib-hls';
 
@@ -36,14 +36,12 @@ if (process.env.BROWSER) {
       } = this;
 
     const tokenAsset = Asset.get(`asset/${asset}`);
-    console.log(tokenAsset);
     if (!tokenAsset) return false;
 
     videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
     videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
     // initialize the player
     this.player = videojs('video', tokenAsset.toJS());
-    console.log(this.player, tokenAsset.toJS());
   }
 
   componentWillUnmount() {
