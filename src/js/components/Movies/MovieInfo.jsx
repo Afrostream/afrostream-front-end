@@ -41,8 +41,8 @@ if (process.env.BROWSER) {
     //TweenMax.set(container, {transformStyle: 'preserve-3d', perspective: 100, perspectiveOrigin: '50% 50%'});
     this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
     this.tlIn.add(TweenMax.fromTo(backGd, 22,
-      {transform: 'translateZ(0)'},
-      {transform: 'translateZ(5px)'}
+      {z: 0},
+      {z: 5, force3D: true}
     ), 0);
   }
 
