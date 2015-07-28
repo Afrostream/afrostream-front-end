@@ -7,7 +7,7 @@ if (process.env.BROWSER) {
   require('./Navigation.less');
 }
 
-@connect(({ Category }) => ({Category})) class Navigation extends React.Component {
+@connect(({ Category }) => ({ Category })) class Navigation extends React.Component {
 
   render() {
     const {
