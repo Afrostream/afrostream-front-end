@@ -4,7 +4,7 @@ import * as MovieActionCreators from '../../actions/movie';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
 
-@prepareRoute(async function ({ store, params: { type, movie, slug } }) {
+@prepareRoute(async function ({ store, params: { type, movie } }) {
   return await * [
       store.dispatch(MovieActionCreators.getMovie(movie)),
       store.dispatch(MovieActionCreators.getSeason(movie))

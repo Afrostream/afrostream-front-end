@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
 
 export function getMovie(movie) {
+  console.log('getMovie', movie);
   return async api => ({
     type: ActionTypes.Movie.getMovie,
     movie,

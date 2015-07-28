@@ -1,5 +1,4 @@
-import React, { PropTypes } from 'react';
-import Immutable from 'immutable';
+import React from 'react';
 import { connect } from 'react-redux';
 import config from '../../../../config';
 import Slider from '../Slider/Slider';
@@ -44,11 +43,9 @@ if (process.env.BROWSER) {
     this.tlIn = new TimelineMax({paused: true});
     this.tlIn.add(TweenMax.staggerFromTo(this.container.children, 0.2, {
       autoAlpha: 0,
-      //transform: 'translate3D(0,50,0)'
       y: 30
     }, {
       autoAlpha: 1,
-      //transform: 'translate3D(0,0,0)',
       y: 0,
       ease: Sine.easeOut
     }, 0.03));
@@ -61,7 +58,7 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    const category = Category.get('current');
+    const category = Category.get('current') || 'selection';
     const movies = Category.get(`category/${category}`);
 
     return (

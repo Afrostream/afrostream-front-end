@@ -11,6 +11,7 @@ export function getTop() {
 }
 
 export function getCategory(category) {
+  category = category || 'selection';
   return async api => ({
     type: ActionTypes.Category.getCategory,
     category,
