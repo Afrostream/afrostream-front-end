@@ -24,7 +24,7 @@ export default function prepareRoute(prepareFn) {
           context: { store },
           props: { params, location }
           } = this;
-        
+
         prepareFn({store, params, location});
       }
     };

@@ -23,7 +23,7 @@ devConfig.entry.main = [
 
 devConfig.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin(),
+  new webpack.NoErrorsPlugin()
   //new BrowserSyncPlugin({
   //  host: bSyncHost,
   //  port: bSyncPort,
