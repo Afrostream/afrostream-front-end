@@ -1,13 +1,13 @@
-import React, { PropTypes } from 'react';
-import Immutable from 'immutable';
-import { connect } from 'redux/react';
+import React from 'react';
+import { connect } from 'react-redux';
 import NavigationItem from './NavigationItem';
 
 if (process.env.BROWSER) {
   require('./Navigation.less');
 }
 
-@connect(({ Category }) => ({ Category })) class Navigation extends React.Component {
+@connect(({ Category }) => ({Category})) export default
+class Navigation extends React.Component {
 
   render() {
     const {

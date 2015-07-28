@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
 import { Link } from 'react-router';
-import { connect } from 'redux/react';
+import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'

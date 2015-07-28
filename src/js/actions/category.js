@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
 
 export function getTop() {
+  console.log('getTop');
   return async api => ({
     type: ActionTypes.Category.getTop,
     res: await api(`/category/top`, {
@@ -11,8 +12,6 @@ export function getTop() {
 }
 
 export function getCategory(category) {
-  category = category || Category.get('default');
-
   return async api => ({
     type: ActionTypes.Category.getCategory,
     category,

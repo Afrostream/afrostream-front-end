@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'redux/react';
+import { connect } from 'react-redux';
 import classSet from 'classnames';
 import * as SlidesActionCreators from '../../actions/slides';
 

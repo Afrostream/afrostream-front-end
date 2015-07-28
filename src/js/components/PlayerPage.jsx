@@ -3,9 +3,9 @@ import { prepareRoute } from '../decorators';
 import * as AssetActionCreators from '../actions/asset';
 import PlayerComponent from './Player/PlayerComponent';
 
-@prepareRoute(async function ({ redux, params: { type, movie, slug, asset } }) {
+@prepareRoute(async function ({ store, params: { type, movie, slug, asset } }) {
   return await * [
-      redux.dispatch(AssetActionCreators.getToken(asset))
+      store.dispatch(AssetActionCreators.getToken(asset))
     ];
 }) class PlayerPage extends React.Component {
 
