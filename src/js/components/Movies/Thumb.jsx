@@ -155,10 +155,6 @@ if (canUseDOM) {
     }
 
     let idMovie = movie.get('_id');
-    let dateFrom = movie.get('dateFrom');
-    let dateTo = movie.get('dateTo');
-    let nBSeasons = movie.get('seasons') || [];
-    //let finalDate = `${dateFrom}-${dateTo} - ${nBSeasons.size}`;
     let type = movie.get('type');
     let slug = movie.get('slug') || '';
 
@@ -176,7 +172,8 @@ if (canUseDOM) {
 
           <div ref="info" className="thumb-info" style={imageStyles}>
             <div className="thumb-info__txt">
-              <div className="thumb-info__title">{title}</div>
+              <div className="thumb-info__title"><Link to={`/${type}/${idMovie}/${slug}`}
+                                                       onClick={::this.loadMovie}>{title}</Link></div>
               <div className="thumb-info__synopsis"><Link to={`/${type}/${idMovie}/${slug}`}
                                                           onClick={::this.loadMovie}>{synopsis}</Link></div>
             </div>
