@@ -3,7 +3,9 @@ import keyMirror from 'react/lib/keyMirror';
 export default {
 
   User: keyMirror({
-    getOneByUsername: null
+    getIdToken: null,
+    createLock: null,
+    showLock: null
   }),
 
   Slides: keyMirror({
