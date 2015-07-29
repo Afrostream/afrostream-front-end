@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
+import { Link } from 'react-router';
 
 @connect(({ User }) => ({User})) class UserButton extends React.Component {
 
   componentDidMount() {
-    this.setupAjax();
     this.createLock();
-    //this.setState({idToken: this.getIdToken()})
-    //dispatch(UserActionCreators.getIdToken(this.props.item.get('slug')));
   }
 
   createLock() {
@@ -17,36 +15,49 @@ import * as UserActionCreators from '../../actions/user';
         dispatch
         }
       } = this;
-    //this.lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
     dispatch(UserActionCreators.createLock());
-  }
-
-  showLock() {
-    // We receive lock from the parent component in this case
-    // If you instantiate it in this component, just do this.lock.show()
-    this.props.lock.show();
-  }
-
-  setupAjax() {
-    //$.ajaxSetup({
-    //  'beforeSend': function (xhr) {
-    //    if (localStorage.getItem('afroToken')) {
-    //      xhr.setRequestHeader('Authorization',
-    //        'Bearer ' + localStorage.getItem('afroToken'));
-    //    }
-    //  }
-    //});
+    dispatch(UserActionCreators.getIdToken());
   }
 
   render() {
     const {
       props: {
-        User
+        User,
+        dispatch
         }
       } = this;
 
-    const user = User.get('current');
+    const token = User.get('token');
+    const user = User.get('user');
 
+    if (token) {
+      if (user) {
+        return (
+          <div className="btn-group navbar-collapse collapse navbar-left">
+            <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+              <img src={user.get('picture')} alt="50x50" className="icon-user"/>
+              <span className="label-user">{user.get('nickname')}</span>
+            </button>
+            <ul className="dropdown-menu">
+              <li><Link to="/compte">Mon compte</Link></li>
+              <li role="separator" className="divider"></li>
+              <li><Link to="paiements">Mes paiements</Link></li>
+            </ul>
+          </div>
+        );
+      }
+      else {
+        dispatch(UserActionCreators.getProfile());
+        return (<div className="btn-group navbar-collapse collapse navbar-left">Load user</div>);
+      }
+    } else {
+      return this.getLoginState();
+    }
+  }
+
+  getLoginState() {
     return (
       <div className="btn-group navbar-collapse collapse navbar-left">
         <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
@@ -54,15 +65,7 @@ import * as UserActionCreators from '../../actions/user';
                 aria-expanded="false" onClick={::this.showLock}>
           <img src="https://i.cloudup.com/StzWWrY34s.png" alt="50x50" className="icon-user"/>
         </button>
-        <ul className="dropdown-menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li role="separator" className="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div>
-    );
+      </div>);
   }
 
   showLock() {

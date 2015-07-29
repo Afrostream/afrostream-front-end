@@ -69,6 +69,7 @@
     "html-loader": "^0.3.0",
     "image-webpack-loader": "^1.6.1",
     "immutable": "^3.7.4",
+    "jquery": "^2.1.4",
     "jshint-loader": "^0.8.3",
     "json-loader": "^0.5.2",
     "less": "^2.5.1",

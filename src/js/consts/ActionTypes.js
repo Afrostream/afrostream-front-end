@@ -5,6 +5,7 @@ export default {
   User: keyMirror({
     getIdToken: null,
     createLock: null,
+    getProfile: null,
     showLock: null
   }),
 

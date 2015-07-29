@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import Router from 'react-router';
-import { Link, Navigation } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';

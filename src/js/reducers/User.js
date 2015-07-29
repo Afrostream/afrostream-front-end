@@ -3,15 +3,29 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 
 const initialState = Immutable.fromJS({
-  'current': null
+  'user': null
 });
 
 export default createReducer(initialState, {
 
-  [ActionTypes.User.getIdToken](state, { user, res }) {
+  [ActionTypes.User.getIdToken](state, { token }) {
     return state.merge({
-      ['current']: user,
-      ['token']: res
+      ['token']: token
+    });
+  },
+
+  [ActionTypes.User.showLock](state, {user,token,refreshToken}) {
+    return state.merge({
+      ['user']: user,
+      ['token']: token,
+      ['refreshToken']: refreshToken
+    });
+  },
+
+  [ActionTypes.User.getProfile](state, { user }) {
+    console.log('ActionTypes.User.getProfile', user);
+    return state.merge({
+      ['user']: user
     });
   },
 

@@ -135,7 +135,11 @@ const webpackConfig = {
   },
   plugins: [
     new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
   ],
 
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]

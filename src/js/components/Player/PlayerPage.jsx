@@ -1,7 +1,7 @@
 import React from 'react';
-import { prepareRoute } from '../decorators';
-import * as AssetActionCreators from '../actions/asset';
-import PlayerComponent from './Player/PlayerComponent';
+import { prepareRoute } from '../../decorators';
+import * as AssetActionCreators from '../../actions/asset';
+import PlayerComponent from './PlayerComponent';
 
 @prepareRoute(async function ({ store, params: { type, movie, slug, asset } }) {
   return await * [
