@@ -9,6 +9,8 @@
     {{#each cssPaths}}
         <link rel="stylesheet" href="{{.}}"></link>
     {{/each}}
+    <!-- Streamroot player -->
+    <script src="//files.streamroot.io/release/1.1/api_demo.js"></script>
 </head>
 <body>
 <div id="main">{{{body}}}</div>
@@ -21,9 +23,5 @@
     <script src="{{.}}"></script>
 {{/each}}
 
-<!-- Streamroot player -->
-<script src="//files.streamroot.io/release/1.1/api_demo.js"></script>
-<!-- Auth0Lock script -->
-<script src="//cdn.auth0.com/js/lock-7.5.min.js"></script>
 </body>
 </html>

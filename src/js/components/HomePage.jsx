@@ -5,9 +5,9 @@ import { Link } from 'react-router';
 import SlideShow from './SlideShow/SlideShow';
 import MoviesList from './Movies/MoviesList';
 
-@prepareRoute(async function ({ store, params: { category } }) {
+@prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(CategoryActionCreators.getCategory(category))
+      store.dispatch(CategoryActionCreators.getMeaList())
     ];
 }) class HomePage extends React.Component {
 

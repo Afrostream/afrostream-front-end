@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { Router, State } from 'react-router';
+import { Router, State , Navigation} from 'react-router';
 import routes from '../routes';
 
 class AppRouter extends React.Component {

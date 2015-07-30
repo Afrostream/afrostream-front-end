@@ -51,9 +51,12 @@ body {
       content: none;
     }
     .row-fluid {
-      display: table;
-      table-layout: fixed;
-      height: 100%;
+      &.row-table {
+        display: table;
+        table-layout: fixed;
+        height: 100%;
+      }
+      min-height: 100%;
       width: 100%;
       .container {
         margin-top: @header-height;

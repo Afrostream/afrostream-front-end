@@ -14,10 +14,6 @@ class Header extends React.Component {
     router: PropTypes.object.isRequired
   };
 
-  componentWillMount() {
-    console.log(this.context.router.isActive('compte'));
-  }
-
   render() {
 
     let sliderClasses = {

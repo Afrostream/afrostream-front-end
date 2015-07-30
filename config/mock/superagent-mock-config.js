@@ -79,6 +79,26 @@ const superAgentConfig = [,
     }
   },
   {
+    pattern: `${config.apiServer.urlPrefix}/category/mea`,
+
+    fixtures: Fixtures.CategoryMock,
+    callback: function (match, data) {
+      // on clone les data afin d'avoir plus de données
+      let cloned = _.cloneDeep(data);
+      // on ajoutes les datas clonées entre elles
+      let unions = _.union(data, cloned);
+      // on split en sections afin d'avoir des categories pas type listé dans le menu (slités en n x)
+      let splited = _.chunk(unions, 10);
+      let navigationList = _.forEach(Fixtures.CategoryMenu(), function (item, key) {
+        item.movies = splited[key];
+      });
+
+      return {
+        body: navigationList
+      };
+    }
+  },
+  {
     pattern: `${config.apiServer.urlPrefix}/category/menu`,
 
     fixtures: Fixtures.CategoryMenu,

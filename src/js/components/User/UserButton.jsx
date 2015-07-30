@@ -50,7 +50,7 @@ import { Link } from 'react-router';
       }
       else {
         dispatch(UserActionCreators.getProfile());
-        return (<div className="btn-group navbar-collapse collapse navbar-left">Load user</div>);
+        return this.getLoginState();
       }
     } else {
       return this.getLoginState();

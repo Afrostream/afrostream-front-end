@@ -30,6 +30,7 @@ export default {
 
   Category: keyMirror({
     getTop: null,
+    getMeaList: null,
     getCategory: null,
     getMenu: null
   })
