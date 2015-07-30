@@ -6,7 +6,7 @@
   .fullHeight();
   padding: @header-height @app-padding;
   //display: table-cell;
-  min-height: 36vw;
+  min-height: 110vw;
   .slides {
     //position: absolute;
     //top: 0;
@@ -79,5 +79,11 @@
       border: 1px solid @color-purple-alpha;
       color: @color-purple;
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .SlideShow {
+    min-height: 36vw;
   }
 }

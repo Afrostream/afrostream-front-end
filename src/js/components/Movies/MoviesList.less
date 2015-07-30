@@ -20,7 +20,7 @@
       font-size: 1.8em;
       font-family: @font-light;
       text-transform: uppercase;
-      margin: 10px @app-padding 10px @app-padding;
+      margin: 10px;
     }
     .movies-list__container {
       margin: -@zoom-margin 0 -40px 0;
@@ -36,7 +36,7 @@
           //overflow-y: hidden;
           display: inline-block;
           white-space: nowrap;
-          padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+          //padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
           .thumb-containter {
           }
         }
@@ -197,11 +197,14 @@
 @media (min-width: 768px) {
   .movies-list {
     .movies-category-list {
+      .movies-list__selection {
+        margin: 10px @app-padding 10px @app-padding;
+      }
       .movies-list__container {
 
         .slider {
           .slider-container {
-
+            padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
             .thumb-containter {
 
               .thumb {
