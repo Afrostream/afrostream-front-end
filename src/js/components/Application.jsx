@@ -26,7 +26,7 @@ if (canUseDOM) {
 
     return (
       <div className="app">
-        <Header />
+        <Header {...this.props}/>
         <Navigation />
 
         <div className="container-fluid">
