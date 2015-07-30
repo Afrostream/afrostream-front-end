@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import config from '../../../../config';
 import Slider from '../Slider/Slider';
-import Thumb from './Thumb';
+import LazyLoader from './LazyLoader';
 
 if (canUseDOM) {
   require('gsap');
@@ -17,7 +17,7 @@ if (process.env.BROWSER) {
 class MoviesCategorySlider extends React.Component {
 
   static propTypes = {
-    category: PropTypes.instanceOf(Immutable.Object).isRequired
+    category: PropTypes.instanceOf(Immutable.Object).isRequired,
   };
 
   constructor(props) {
@@ -27,13 +27,18 @@ class MoviesCategorySlider extends React.Component {
 
   componentDidMount() {
     this.initTransition();
-    this.tlIn.play();
+    if (this.tlIn) {
+      this.tlIn.play();
+    }
   }
 
   componentDidUpdate() {
     this.initTransition();
-    this.tlIn.play();
+    if (this.tlIn) {
+      this.tlIn.play();
+    }
   }
+
 
   initTransition() {
     //Detect mobile
@@ -42,6 +47,7 @@ class MoviesCategorySlider extends React.Component {
     if (this.isMobileWebkit) return;
 
     this.container = React.findDOMNode(this.refs.slContainer);
+
     if (!this.container.children) return;
 
     this.tlIn = new TimelineMax({paused: true});
@@ -72,9 +78,7 @@ class MoviesCategorySlider extends React.Component {
 
         <div className="movies-list__container">
           <Slider>
-            <div ref="slContainer" className="slider-container">
-              {movies ? movies.map((movie, i) => <Thumb key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>) : ''}
-            </div>
+            <LazyLoader ref="slContainer" {... {movies}} />
           </Slider>
         </div>
       </div>

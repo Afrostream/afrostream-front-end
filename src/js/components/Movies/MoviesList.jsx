@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MoviesCategorySlider from './MoviesCategorySlider';
-
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 if (canUseDOM) {
