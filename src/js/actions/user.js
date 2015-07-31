@@ -157,6 +157,44 @@ export function showLock(container = null) {
   };
 }
 
+export function showSignupLock() {
+  return (dispatch, getState) => {
+    const lock = getState().User.get('lock');
+    return async auth0 =>(
+      await new Promise(
+      (resolve, reject) => {
+      lock.showSignup(
+      config.auth0.signUp
+      , function (err, profile, id_token, access_token, state, refresh_token) {
+        if (err) {
+          console.log('*** Error loading the profile - most likely the token has expired ***', err);
+          //localStorage.removeItem(storageId);
+          //return reject(err);
+          //try to refresh token session
+          refreshToken(getState, function (tokenErr, data) {
+              if (tokenErr) {
+                return reject(tokenErr);
+              }
+              return resolve(data);
+            });
+          }
+            // store token
+            storeToken(id_token, refresh_token);
+            // store refresh_token
+            return resolve({
+              type: ActionTypes.User.showLock,
+              user: profile,
+              token: id_token,
+              refreshToken: refresh_token
+            });
+          }
+        );
+      }
+    ));
+  };
+}
+
+
 export function getIdToken() {
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');

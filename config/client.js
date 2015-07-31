@@ -44,6 +44,14 @@ export default {
       authParams: {
         scope: 'openid offline_access'
       }
+    },
+    signUp: {
+      dict: 'fr',
+      connections: ['Username-Password-Authentication', 'facebook'],
+      socialBigButtons: true,
+      authParams: {
+        scope: 'openid offline_access'
+      }
     }
   },
   streamRoot: {

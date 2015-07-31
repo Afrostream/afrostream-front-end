@@ -64,7 +64,7 @@ import { Link } from 'react-router';
         <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false" onClick={::this.showLock}>
-          <img src="https://i.cloudup.com/StzWWrY34s.png" alt="50x50" className="icon-user"/>
+          se connecter
         </button>
       </div>);
   }
