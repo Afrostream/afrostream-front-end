@@ -2,7 +2,6 @@ import React from 'react';
 import { prepareRoute } from '../decorators';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import Navigation from './Navigation/Navigation';
 import * as CategoryActionCreators from '../actions/category';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 
@@ -27,7 +26,6 @@ if (canUseDOM) {
     return (
       <div className="app">
         <Header {...this.props}/>
-        <Navigation />
 
         <div className="container-fluid">
           {children}
