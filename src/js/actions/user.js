@@ -194,6 +194,55 @@ export function showSignupLock() {
   };
 }
 
+export function showSigninLock() {
+  return (dispatch, getState) => {
+    const lock = getState().User.get('lock');
+    return async auth0 =>(
+      await new Promise(
+      (resolve, reject) => {
+      lock.show(
+      //FIXME: trouve pourquoi ça marche pas avec config.auth0.signIn
+      //config.auth0.signIn
+      {
+        dict: 'fr',
+        connections: ['Username-Password-Authentication', 'facebook'],
+        socialBigButtons: true,
+        disableSignupAction: true,
+        rememberLastLogin: false,
+        disableResetAction: false,
+        authParams: {
+          scope: 'openid offline_access'
+        }
+      }
+      , function (err, profile, id_token, access_token, state, refresh_token) {
+        if (err) {
+          console.log('*** Error loading the profile - most likely the token has expired ***', err);
+          //localStorage.removeItem(storageId);
+          //return reject(err);
+          //try to refresh token session
+          refreshToken(getState, function (tokenErr, data) {
+            if (tokenErr) {
+              return reject(tokenErr);
+            }
+                return resolve(data);
+              });
+            }
+            // store token
+            storeToken(id_token, refresh_token);
+            // store refresh_token
+            return resolve({
+              type: ActionTypes.User.showLock,
+              user: profile,
+              token: id_token,
+              refreshToken: refresh_token
+            });
+          }
+        );
+      }
+    ));
+  };
+}
+
 
 export function getIdToken() {
   return (dispatch, getState) => {

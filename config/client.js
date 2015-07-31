@@ -53,10 +53,5 @@ export default {
         scope: 'openid offline_access'
       }
     }
-  },
-  streamRoot: {
-    clientId: process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
-    trackerUrl: process.env.STREAMROOT_TRACKER_URL || ''
-
   }
 };
