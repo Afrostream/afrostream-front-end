@@ -16,6 +16,19 @@ export function createLock() {
   };
 }
 
+export function logOut() {
+  return (dispatch, getState) => {
+    const storageId = config.auth0.token;
+    const storageRefreshId = config.auth0.tokenRefresh;
+    localStorage.removeItem(storageId);
+    localStorage.removeItem(storageRefreshId);
+
+    return {
+      type: ActionTypes.User.logOut
+    };
+  };
+}
+
 const storeToken = function (id_token, refresh_token) {
   const storageId = config.auth0.token;
   const storageRefreshId = config.auth0.tokenRefresh;
@@ -102,7 +115,7 @@ export function showLock() {
     return async auth0 =>(
       await new Promise(
         (resolve, reject) => {
-          lock.showSignin(
+          lock.show(
             config.auth0.signIn
             , function (err, profile, id_token, access_token, state, refresh_token) {
               if (err) {

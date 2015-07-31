@@ -3,7 +3,8 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 
 const initialState = Immutable.fromJS({
-  'user': null
+  'user': null,
+  'token': null
 });
 
 export default createReducer(initialState, {
@@ -32,6 +33,14 @@ export default createReducer(initialState, {
   [ActionTypes.User.createLock](state, { lock }) {
     return state.merge({
       ['lock']: lock
+    });
+  },
+
+  [ActionTypes.User.logOut](state, { }) {
+    return state.merge({
+      ['user']: null,
+      ['token']: null,
+      ['refreshToken']: null
     });
   }
 });
