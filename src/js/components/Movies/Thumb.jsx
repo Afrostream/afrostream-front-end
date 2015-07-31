@@ -71,15 +71,21 @@ if (canUseDOM) {
       perspective: this.perspective,
       perspectiveOrigin: '50% 50%'
     });
+
+    //TODO test perf with only on transition timeline in parentContainer
     this.tlIn = new TimelineMax({paused: true, onComplete: this.scrollContent.bind(this)});
     this.tlIn.add(TweenMax.fromTo(thumb, .5,
       {
-        transform: 'translate3D(0,0,0)',
+        //transform: 'translate3D(0,0,0)',
+        y: 0,
+        z: 0,
         borderColor: 'transparent',
         width: 140
       },
       {
-        transform: `translate3D(0,-15px,30px)`,
+        //transform: `translate3D(0,-15px,30px)`,
+        y: -15,
+        z: 30, force3D: true,
         borderColor: '#ffc809',
         width: this.thumbWidth,
         ease: Sine.easeInOut
