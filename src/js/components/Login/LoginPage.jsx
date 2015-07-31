@@ -8,10 +8,28 @@ if (process.env.BROWSER) {
 
 @connect(({ User }) => ({User})) class LoginPage extends React.Component {
 
+  componentDidMount() {
+    this.showLock();
+  }
+
+  showLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+    dispatch(UserActionCreators.showLock('login-container'));
+  }
+
   render() {
     return (
       <div className="row-fluid">
-        <div className="login-page"/>
+        <div className="login-page">
+          <div className="auth-container">
+            <div id="login-container">
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
