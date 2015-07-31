@@ -1,7 +1,7 @@
 import React from 'react/addons';
 import { Link } from 'react-router';
-import UserButton from './../User/UserButton';
 import SignupButton from './../User/SignupButton';
+import SigninButton from './../User/SigninButton';
 
 class Welcome extends React.Component {
 
@@ -19,8 +19,8 @@ class Welcome extends React.Component {
 			return (
 				<div>
 					<h1>In the Welcome Page!</h1>
-					<UserButton />
 					<SignupButton />
+					<SigninButton />
 				</div>
 			);
 	}

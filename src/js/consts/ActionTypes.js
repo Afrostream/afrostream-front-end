@@ -7,7 +7,8 @@ export default {
     createLock: null,
     getProfile: null,
     showLock: null,
-    showSignupLock: null
+    showSignupLock: null,
+    showSigninLock: null
   }),
 
   Slides: keyMirror({

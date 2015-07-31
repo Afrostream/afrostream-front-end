@@ -21,6 +21,8 @@ export default {
       connections: ['Username-Password-Authentication', 'facebook'],
       socialBigButtons: true,
       disableSignupAction: true,
+      rememberLastLogin: false,
+      disableResetAction: false,
       authParams: {
         scope: 'openid offline_access'
       }
