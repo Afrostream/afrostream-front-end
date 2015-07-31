@@ -6,7 +6,8 @@ export default {
     getIdToken: null,
     createLock: null,
     getProfile: null,
-    showLock: null
+    showLock: null,
+    showSignupLock: null
   }),
 
   Slides: keyMirror({
