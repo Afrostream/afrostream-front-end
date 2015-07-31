@@ -1,36 +1,12 @@
 @import (reference) '../../../styles/config.less';
 
-.headroom-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1030;
-}
-
-.headroom {
-  //transition: transform 200ms linear;
-}
-
-.headroom--pinned {
-  //transform: translateY(0%);
-  .navbar-default {
-    background-color: @color-indigo;
-  }
-}
-
-.headroom--unpinned {
-  //transform: translateY(-100%);
-  .navbar-default {
-    background-color: @color-indigo;
-  }
-}
-
 nav {
   &.navbar-default {
     background-color: transparent;
     border-color: transparent;
     .transition(background 0.2s linear);
+    border-radius: 0;
+    z-index: @nav-z + 1;
   }
   .navbar-collapse {
     border: none;
