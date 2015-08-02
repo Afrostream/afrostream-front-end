@@ -1,29 +1,25 @@
-import React from 'react/addons';
-import { Link } from 'react-router';
+import React from 'react';
+import * as UserActionCreators from '../../actions/user';
+import { connect } from 'react-redux';
 import SignupButton from './../User/SignupButton';
 import SigninButton from './../User/SigninButton';
 
-class Welcome extends React.Component {
+var Welcome = React.createClass ({
 
-	static propTypes = {
-
-	};
-
-
-	render() {
-
+	render: function() {
 		const {
-			props: { episode }
-		} = this;
+			props: {
+				User
+				}
+			} = this;
 
-			return (
-				<div>
-					<h1>In the Welcome Page!</h1>
-					<SignupButton />
-					<SigninButton />
-				</div>
-			);
+		return (
+			<div>
+				<SignupButton />
+				<SigninButton />
+			</div>
+		);
 	}
-}
+});
 
-export default Welcome;
+module.exports = Welcome;
