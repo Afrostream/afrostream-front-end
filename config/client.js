@@ -39,6 +39,7 @@ export default {
       defaultADUsernameFromEmailPrefix: true,
       responseType: 'token',
       popup: true,
+      sso: false,
       closable: true,
       authParams: {
         scope: 'openid offline_access'
