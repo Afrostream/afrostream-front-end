@@ -4,6 +4,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Navigation from './Navigation/Navigation';
 import Welcome from './Welcome/Welcome';
+import UserButton from './User/UserButton';
 import ReturningUser from './Welcome/ReturningUser';
 import * as CategoryActionCreators from '../actions/category';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
@@ -19,8 +20,6 @@ if (process.env.BROWSER) {
 }
 
 if (canUseDOM) {
-  //debugger;
-  //Auth0Lock = require('auth0-lock');
   require('jquery');
   require('bootstrap');
 }
@@ -45,48 +44,28 @@ if (canUseDOM) {
     dispatch(UserActionCreators.getIdToken());
   }
 
-  //getIdToken() {
-  //
-  //  //debugger;
-  //  if (canUseDOM) {
-  //    var idToken = localStorage.getItem('afroToken');
-  //    initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
-  //    var authHash = initialLock.parseHash(window.location.hash);
-  //
-  //    if (!idToken && authHash) {
-  //      if (authHash.id_token) {
-  //        idToken = authHash.id_token
-  //        localStorage.setItem('afroToken', authHash.id_token);
-  //      }
-  //      if (authHash.error) {
-  //        console.log("Error signing in", authHash);
-  //      }
-  //    }
-  //    console.log('*** inside getIdToken ***');
-  //    console.log(idToken);
-  //
-  //    return idToken;
-  //  }
-  //}
-
   render() {
-    debugger;
-    //var presetToken = this.getIdToken();
 
-    const { props: { User, children } } = this;
+    const {
+      props: {
+        User,
+        children
+        }
+      } = this;
 
     const token = User.get('token');
-    const lock = User.get('lock');
+    const user = User.get('user');
 
-    console.log(token, lock);
+    console.log(token, user);
 
-    if (token && user) {
+    if (token) {
+      if (user) {
 
-      if (user.paymentStatus !== true) {
-        return (<ReturningUser lock={lock} idToken={token} children={this.props.children}/>);
-      }
-
-      else {
+        //if (user.paymentStatus !== true) {
+        //  return (<ReturningUser children={this.props.children}/>);
+        //}
+        //
+        //else {
 
         return (
           <div className="app">
@@ -100,11 +79,15 @@ if (canUseDOM) {
           </div>
         );
 
+        //}
+      } else {
+        dispatch(UserActionCreators.getProfile());
+        return <div />
       }
     }
     else {
 
-      return (<Welcome lock={lock}/>);
+      return (<div><UserButton />< Welcome/></div>);
     }
   }
 }
