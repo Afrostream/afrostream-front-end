@@ -65,11 +65,7 @@ if (canUseDOM) {
     const lock = User.get('lock');
 
     if (presetToken && this.props.paymentStatus !== true) {
-      return(
-        <div>
-          <ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children} />
-        </div>
-      );
+      return(<ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children} />);
     }
 
     else if (presetToken && this.props.paymentStatus === true) {
@@ -88,11 +84,7 @@ if (canUseDOM) {
 
     } else {
 
-      return(
-        <div>
-         <Welcome lock={initialLock} />
-        </div>
-      );
+      return(<Welcome lock={initialLock} />);
     }
   }
 }
