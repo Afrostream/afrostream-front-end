@@ -3,53 +3,50 @@ import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import config from '../../../../config/client';
 
-var Welcome = React.createClass ({
+@connect(({ User }) => ({User})) class Welcome extends React.Component {
 
-	showSigninLock: function() {
+  showSigninLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
 
-		this.props.lock.show(
-			{
-				dict: 'fr',
-				connections: ['Username-Password-Authentication', 'facebook'],
-				socialBigButtons: true,
-				disableSignupAction: true,
-				rememberLastLogin: false
-			}
-		);
-	},
+    dispatch(UserActionCreators.showLock());
+  }
 
-	showSignupLock: function() {
+  showSignupLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+    //todo make signin action in params showLock('signin')
+    dispatch(UserActionCreators.showLock());
+  }
 
-		this.props.lock.showSignup(
-			{
-				dict: 'fr',
-				connections: ['Username-Password-Authentication', 'facebook'],
-				socialBigButtons: true
-			}
-		);
-	},
+  render() {
 
-	render: function() {
+    return (
+      <div>
+        <h3>In the welcome page</h3>
 
-		return (
-			<div>
-				<h3>In the welcome  page</h3>
-				<div className="btn-group navbar-collapse collapse navbar-left">
-					<button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false" onClick={this.showSignupLock}>abonnez-vous
-					</button>
-				</div>
+        <div className="btn-group navbar-collapse collapse navbar-left">
+          <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false" onClick={::this.showSignupLock}>abonnez-vous
+          </button>
+        </div>
 
-				<div className="btn-group navbar-collapse collapse navbar-left">
-					<button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false" onClick={this.showSigninLock}>se connecter
-					</button>
-				</div>
-			</div>
-		);
-	}
-});
+        <div className="btn-group navbar-collapse collapse navbar-left">
+          <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false" onClick={::this.showSigninLock}>se connecter
+          </button>
+        </div>
+      </div>
+    );
+  }
+}
 
-module.exports = Welcome;
+export default  Welcome;
