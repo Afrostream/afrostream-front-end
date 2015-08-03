@@ -11,14 +11,16 @@ import * as UserActionCreators from '../actions/user';
 import { connect } from 'react-redux';
 
 import config from '../../../config/client';
-var Auth0Lock = require('auth0-lock');
-var initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
+var Auth0Lock;
+var initialLock;
 
 if (process.env.BROWSER) {
   require('./Application.less');
 }
 
 if (canUseDOM) {
+  //debugger;
+  Auth0Lock = require('auth0-lock');
   require('jquery');
   require('bootstrap');
 }
@@ -31,24 +33,30 @@ if (canUseDOM) {
 
   getIdToken() {
 
-    var idToken = localStorage.getItem('afroToken');
-    var authHash = initialLock.parseHash(window.location.hash);
-    if (!idToken && authHash) {
-      if (authHash.id_token) {
-        idToken = authHash.id_token
-        localStorage.setItem('afroToken', authHash.id_token);
-      }
-      if (authHash.error) {
-        console.log("Error signing in", authHash);
-      }
-    }
-    console.log('*** inside getIdToken ***');
-    console.log(idToken);
+    //debugger;
+    if (canUseDOM) {
+      var idToken = localStorage.getItem('afroToken');
+      initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
+      var authHash = initialLock.parseHash(window.location.hash);
 
-    return idToken;
+      if (!idToken && authHash) {
+        if (authHash.id_token) {
+          idToken = authHash.id_token
+          localStorage.setItem('afroToken', authHash.id_token);
+        }
+        if (authHash.error) {
+          console.log("Error signing in", authHash);
+        }
+      }
+      console.log('*** inside getIdToken ***');
+      console.log(idToken);
+
+      return idToken;
+    }
   }
 
   render() {
+    debugger;
     var presetToken = this.getIdToken();
 
     const { props: { User, children } } = this;
@@ -56,20 +64,17 @@ if (canUseDOM) {
     const token = User.get('token');
     const lock = User.get('lock');
 
-    if (presetToken) {
+    if (presetToken && this.props.paymentStatus !== true) {
       return(
-        <div className="app">
-          <ReturningUser lock={initialLock} idToken={presetToken}/>
+        <div>
+          <ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children} />
         </div>
       );
-    } else {
+    }
 
-      return(
-        <div className="app">
-          <Welcome lock={initialLock} />
-        </div>
-      );
-      /*return (
+    else if (presetToken && this.props.paymentStatus === true) {
+
+      return (
         <div className="app">
         <Header />
         <Navigation />
@@ -79,7 +84,15 @@ if (canUseDOM) {
         <Footer />
         </div>
         </div>
-      );*/
+      );
+
+    } else {
+
+      return(
+        <div>
+         <Welcome lock={initialLock} />
+        </div>
+      );
     }
   }
 }

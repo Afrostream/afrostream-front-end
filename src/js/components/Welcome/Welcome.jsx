@@ -30,6 +30,7 @@ var Welcome = React.createClass ({
 	},
 
 	render: function() {
+
 		return (
 			<div>
 				<h3>In the welcome  page</h3>
