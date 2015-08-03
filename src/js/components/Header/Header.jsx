@@ -14,13 +14,39 @@ class Header extends React.Component {
     router: PropTypes.object.isRequired
   };
 
+  static defaultProps = {
+    pinned: false
+  };
+
+  state = {
+    pinned: this.props.pinned
+  };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.updatePin.bind(this));
+    this.updatePin();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.updatePin.bind(this));
+  }
+
+  updatePin() {
+    let pin = window.pageYOffset;
+    if (pin !== this.state.pinned) {
+      this.setState({
+        pinned: !!(pin)
+      });
+    }
+  }
+
   render() {
 
     let sliderClasses = {
       'navbar': true,
       'navbar-default': true,
       'navbar-fixed-top': true,
-      'navbar-fixed-color': this.context.router.isActive('compte')
+      'navbar-fixed-color': this.state.pinned || this.context.router.isActive('compte')
     };
 
     return (

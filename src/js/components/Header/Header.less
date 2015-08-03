@@ -4,6 +4,9 @@ nav {
   &.navbar-default {
     background-color: transparent;
     border-color: transparent;
+    .transition(background 0.2s linear);
+    border-radius: 0;
+    z-index: @nav-z + 1;
   }
   .navbar-collapse {
     border: none;

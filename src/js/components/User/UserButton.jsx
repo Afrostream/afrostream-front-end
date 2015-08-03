@@ -42,8 +42,9 @@ import { Link } from 'react-router';
             </button>
             <ul className="dropdown-menu">
               <li><Link to="/compte">Mon compte</Link></li>
-              <li role="separator" className="divider"></li>
               <li><Link to="paiements">Mes paiements</Link></li>
+              <li role="separator" className="divider"></li>
+              <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
             </ul>
           </div>
         );
@@ -76,6 +77,16 @@ import { Link } from 'react-router';
       } = this;
 
     dispatch(UserActionCreators.showLock());
+  }
+
+  logout() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.logOut());
   }
 }
 
