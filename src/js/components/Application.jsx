@@ -48,6 +48,7 @@ if (canUseDOM) {
 
     const {
       props: {
+        dispatch,
         User,
         children
         }
@@ -55,8 +56,6 @@ if (canUseDOM) {
 
     const token = User.get('token');
     const user = User.get('user');
-
-    console.log(token, user);
 
     if (token) {
       if (user) {
@@ -69,8 +68,6 @@ if (canUseDOM) {
 
         return (
           <div className="app">
-            <Header />
-            <Navigation />
 
             <div className="container-fluid">
               {children}
@@ -87,11 +84,9 @@ if (canUseDOM) {
     }
     else {
 
-      return (<div><UserButton />< Welcome/></div>);
+      return (<Welcome />);
     }
   }
 }
 
-export
-default
-Application;
+export default Application;
