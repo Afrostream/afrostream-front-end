@@ -4,6 +4,7 @@ import Welcome from './Welcome';
 import Browse from './Browse';
 import AfrostreamMonthlyMessage from './AfrostreamMonthlyMessage';
 import Payment from './Payment';
+import Application from '../Application';
 
 var ReturningUser = React.createClass ({
 
@@ -50,7 +51,9 @@ var ReturningUser = React.createClass ({
 				&& (typeof this.state.profile.planCode !== 'undefined')
 				&& (this.state.profile.planCode !== 'afrostreammonthly') ) {
 
-				return (<Browse lock={this.props.lock} idToken={this.props.idToken} profile={this.state.profile}  />);
+				//debugger;
+				//return (<Browse lock={this.props.lock} idToken={this.props.idToken} profile={this.state.profile}  />);
+				return (<Application paymentStatus={true} children={this.props.children} />);
 
 			} else if((typeof this.state.profile.paymentStatus !== 'undefined')
 				&& (this.state.profile.paymentStatus === true)
