@@ -10,6 +10,10 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as UserActionCreators from '../actions/user';
 import { connect } from 'react-redux';
 
+import config from '../../../config/client';
+var Auth0Lock = require('auth0-lock');
+var initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
+
 if (process.env.BROWSER) {
   require('./Application.less');
 }
@@ -25,27 +29,44 @@ if (canUseDOM) {
     ];
 }) @connect(({ User }) => ({User})) class Application extends React.Component {
 
+  getIdToken() {
+
+    var idToken = localStorage.getItem('afroToken');
+    var authHash = initialLock.parseHash(window.location.hash);
+    if (!idToken && authHash) {
+      if (authHash.id_token) {
+        idToken = authHash.id_token
+        localStorage.setItem('afroToken', authHash.id_token);
+      }
+      if (authHash.error) {
+        console.log("Error signing in", authHash);
+      }
+    }
+    console.log('*** inside getIdToken ***');
+    console.log(idToken);
+
+    return idToken;
+  }
+
   render() {
+    var presetToken = this.getIdToken();
+
     const { props: { User, children } } = this;
 
     const token = User.get('token');
     const lock = User.get('lock');
 
-    console.log('*** here is the token ***');
-    console.log(token);
-    console.log('*** end of the token ***');
-
-    if (token) {
+    if (presetToken) {
       return(
         <div className="app">
-          <ReturningUser lock={lock} idToken={token}/>
+          <ReturningUser lock={initialLock} idToken={presetToken}/>
         </div>
       );
     } else {
 
       return(
         <div className="app">
-          <Welcome lock={lock} />
+          <Welcome lock={initialLock} />
         </div>
       );
       /*return (
