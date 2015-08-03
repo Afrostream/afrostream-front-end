@@ -20,7 +20,7 @@ html, body, #main, #main > div {
 }
 
 body {
-  background-color: @background-color-base;
+  background-color: @background-page;
   margin-bottom: @footer-height;
   font-weight: 100;
   font-size: 1em;
@@ -49,16 +49,21 @@ body {
     padding: 0;
     &:before {
       content: none;
-      //content: '';
-      //display: inline-block;
-      //height: 100%;
-      //vertical-align: middle;
     }
     .row-fluid {
-      display: table;
-      table-layout: fixed;
-      height: 100%;
+      &.row-table {
+        display: table;
+        table-layout: fixed;
+        height: 100%;
+      }
+      min-height: 100%;
       width: 100%;
+      .container {
+        margin-top: @header-height;
+        padding: 40px;
+        background: @background-page;
+        min-height: 100%;
+      }
     }
   }
   //> .container-fluid {

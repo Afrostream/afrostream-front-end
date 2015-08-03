@@ -31,5 +31,11 @@ export default createReducer(initialState, {
       ['default']: defaultSection,
       ['menu']: menu
     });
+  },
+  [ActionTypes.Category.getMeaList](state, { res }) {
+    const meaList = res.body;
+    return state.merge({
+      ['meaList']: meaList
+    });
   }
 });

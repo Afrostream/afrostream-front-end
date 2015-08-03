@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import Router from 'react-router';
-import { Link, Navigation } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';
@@ -28,7 +28,22 @@ if (canUseDOM) {
   }
 
   static propTypes = {
-    movie: React.PropTypes.object.isRequired
+    movie: React.PropTypes.object.isRequired,
+    showImage: React.PropTypes.bool,
+    viewport: React.PropTypes.object
+  };
+
+  static defaultProps = {
+    showImage: false,
+    viewport: {
+      left: 0,
+      width: 0
+    }
+  };
+
+  state = {
+    showImage: this.props.showImage,
+    viewport: this.props.viewport
   };
 
   triggerOver() {
@@ -132,8 +147,63 @@ if (canUseDOM) {
     );
   }
 
+  componentDidUpdate(prevProps) {
+    if (!this.props.showImages && prevProps.viewport) {
+      let element = React.findDOMNode(this);
+      this.updateImagePosition(element.offsetLeft, element.offsetHeight);
+    }
+  }
+
+  updateImagePosition(left, width) {
+    // image is already displayed, no need to check anything
+    if (this.state.showImage) {
+      return;
+    }
+
+    let threshold = 10;
+    // update showImage state if component element is in the viewport
+    let min = this.props.viewport.left;
+    let max = this.props.viewport.left + this.props.viewport.width;
+
+    if ((min <= (left + width) && left <= (max - threshold))) {
+      this.setShowImage(true);
+    }
+    //let element = React.findDOMNode(this);
+    //
+    //if (element.getBoundingClientRect().left < window.innerWidth + threshold) {
+    //  this.setShowImage(true);
+    //}
+  }
+
+  setShowImage(show) {
+    this.setState({
+      showImage: !!(show)
+    });
+  }
+
+  componentWillMount() {
+    // allow image display override
+    if (this.props.showImage) {
+      this.setShowImage(true);
+    }
+  }
+
   componentDidMount() {
     this.initTransition();
+  }
+
+  getLazyImageUrl() {
+    const {
+      props: { movie }
+      } = this;
+
+    const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+    let imageStyles = baseUrl;
+    if (this.state.showImage) {
+      imageStyles = movie.get('poster');
+    }
+
+    return {backgroundImage: `url(${imageStyles})`};
   }
 
   render() {
@@ -142,8 +212,7 @@ if (canUseDOM) {
       } = this;
 
     const maxLength = 200;
-
-    let imageStyles = {backgroundImage: `url(${movie.get('poster')})`};
+    let imageStyles = this.getLazyImageUrl();
     let title = movie.get('title');
     let synopsis = movie.get('synopsis') || '';
 
@@ -155,10 +224,6 @@ if (canUseDOM) {
     }
 
     let idMovie = movie.get('_id');
-    let dateFrom = movie.get('dateFrom');
-    let dateTo = movie.get('dateTo');
-    let nBSeasons = movie.get('seasons') || [];
-    //let finalDate = `${dateFrom}-${dateTo} - ${nBSeasons.size}`;
     let type = movie.get('type');
     let slug = movie.get('slug') || '';
 
@@ -176,7 +241,8 @@ if (canUseDOM) {
 
           <div ref="info" className="thumb-info" style={imageStyles}>
             <div className="thumb-info__txt">
-              <div className="thumb-info__title">{title}</div>
+              <div className="thumb-info__title"><Link to={`/${type}/${idMovie}/${slug}`}
+                                                       onClick={::this.loadMovie}>{title}</Link></div>
               <div className="thumb-info__synopsis"><Link to={`/${type}/${idMovie}/${slug}`}
                                                           onClick={::this.loadMovie}>{synopsis}</Link></div>
             </div>

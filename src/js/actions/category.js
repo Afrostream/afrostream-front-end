@@ -22,6 +22,16 @@ export function getCategory(category) {
   });
 }
 
+export function getMeaList() {
+  return async api => ({
+    type: ActionTypes.Category.getMeaList,
+    res: await api(`/category/mea`, {
+      sort: 'top',
+      direction: 'desc'
+    })
+  });
+}
+
 export function getMenu() {
   return async api => ({
     type: ActionTypes.Category.getMenu,

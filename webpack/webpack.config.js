@@ -44,15 +44,42 @@ const webpackConfig = {
     colors: true
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/, // include .js files
-        exclude: /node_modules/, // exclude any and all files in the node_modules folder
-        loaders: ['babel-loader']
-        //, 'jshint-loader'
-      }
-    ],
+    //preLoaders: [
+    //  {
+    //    test: /\.js$/, // include .js files
+    //    exclude: /node_modules/, // exclude any and all files in the node_modules folder
+    //    loaders: ['babel-loader']
+    //    //, 'jshint-loader'
+    //  }
+    //],
     loaders: [
+      //Auth0 required
+      //{
+      //  test: /.js/,
+      //  include: path.join(__dirname, '../node_modules/auth0-lock'),
+      //  loaders: ['transform?packageify', 'transform?brfs']
+      //}, {
+      //  test: /.ejs/,
+      //  include: path.join(__dirname, '../node_modules/auth0-lock'),
+      //  loader: 'transform?ejsify'
+      //}, {
+      //  test: /.json/,
+      //  include: path.join(__dirname, '../node_modules/auth0-lock'),
+      //  loader: 'json'
+      //},
+      {
+        test: /\.js$/,
+        include: path.join(__dirname, '../node_modules/auth0-lock'),
+        loaders: ['transform?brfs', 'transform?packageify']
+      }, {
+        test: /\.ejs$/,
+        include: path.join(__dirname, '../node_modules/auth0-lock'),
+        loader: 'transform?ejsify'
+      }, {
+        test: /.json$/,
+        include: path.join(__dirname, '../node_modules/auth0-lock'),
+        loader: 'json'
+      },
       {
         test: /\.jsx?$/,
         loader: '',
@@ -100,14 +127,19 @@ const webpackConfig = {
       {
         test: /.txt([\?]?.*)$/,
         loader: 'raw-loader'
-      },
+      }
+
       //,
 
     ]
   },
   plugins: [
     new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    })
   ],
 
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]

@@ -5,10 +5,12 @@
     <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!-- STREAMROOT STYLE -->
-    <link href="http://files.streamroot.io/release/1.1/wrappers/videojs/streamroot.css" rel="stylesheet">
+    <link href="//files.streamroot.io/release/1.1/wrappers/videojs/streamroot.css" rel="stylesheet">
     {{#each cssPaths}}
         <link rel="stylesheet" href="{{.}}"></link>
     {{/each}}
+    <!-- Streamroot player -->
+    <script src="//files.streamroot.io/release/1.1/api_demo.js"></script>
 </head>
 <body>
 <div id="main">{{{body}}}</div>
@@ -16,12 +18,10 @@
     __INITIAL_STATE__ = {{{json-stringify initialState}}};
 </script>
 
-<script src="http://files.streamroot.io/release/1.1/api_demo.js"></script>
 
 {{#each jsPaths}}
     <script src="{{.}}"></script>
 {{/each}}
-
 
 </body>
 </html>

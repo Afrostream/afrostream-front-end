@@ -19,7 +19,7 @@ import SeasonList from '../Seasons/SeasonList';
       } = this;
 
     return (
-      <div className="row-fluid">
+      <div className="row-fluid row-table">
         {movie ? <MovieInfo maxLength="600" active="true" {...{movie}}/> : ''}
         {movie ? <SeasonList {...{movie}}/> : ''}
       </div>

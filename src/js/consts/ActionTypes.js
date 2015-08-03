@@ -3,7 +3,10 @@ import keyMirror from 'react/lib/keyMirror';
 export default {
 
   User: keyMirror({
-    getOneByUsername: null
+    getIdToken: null,
+    createLock: null,
+    getProfile: null,
+    showLock: null
   }),
 
   Slides: keyMirror({
@@ -27,6 +30,7 @@ export default {
 
   Category: keyMirror({
     getTop: null,
+    getMeaList: null,
     getCategory: null,
     getMenu: null
   })

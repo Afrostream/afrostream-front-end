@@ -4,9 +4,15 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Navigation from './Navigation/Navigation';
 import * as CategoryActionCreators from '../actions/category';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 
 if (process.env.BROWSER) {
   require('./Application.less');
+}
+
+if (canUseDOM) {
+  require('jquery');
+  require('bootstrap');
 }
 
 @prepareRoute(async function ({ store }) {
@@ -20,7 +26,7 @@ if (process.env.BROWSER) {
 
     return (
       <div className="app">
-        <Header />
+        <Header {...this.props}/>
         <Navigation />
 
         <div className="container-fluid">

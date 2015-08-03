@@ -18,7 +18,7 @@ if (process.env.BROWSER) {
     const menu = Category.get('menu');
     const slug = Category.get('current');
     return (
-      <div className="navigation">
+      <div className="navigation hidden-xs">
         <ul className="navigation-list" role="navigation">
           {menu.map((item, i) => <NavigationItem active={slug === item.get('slug')}
                                                  key={`menu-${item.get('_id')}-${i}`}
