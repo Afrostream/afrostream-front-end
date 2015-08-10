@@ -1,0 +1,60 @@
+@import (reference) '../../../../styles/config.less';
+
+@thumb-margin: 10px;
+@thumb-margin-hover: 50px;
+@thumb-width: 140px;
+@thumb-height: 200px;
+@zoom-margin: 50px;
+
+.partners {
+  display: inline-block;
+  padding-right: 15px;
+  margin-right: auto;
+  margin-left: 0px;
+  background-color: @gray-lighter;
+
+  .partners-image {
+    width: 60%;
+    float: left;
+    position: relative;
+    padding-right: 70px;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .partners-container {
+    position: relative;
+    padding-top: 40px;
+    width: 40%;
+    float: left;
+
+    .partners-text {
+
+      h2 {
+        color: #6E2391;
+        font-size: 32px;
+        line-height: 40px;
+        margin-top: 28px;
+      }
+    }
+
+    .partners-links {
+
+      margin-top: 80px;
+
+      .partners-link {
+        float: left;
+        position: relative;
+        width: 32%;
+
+        img {
+          max-height: 100%;
+          max-width: 96px;
+          align: middle;
+        }
+      }
+    }
+  }
+}

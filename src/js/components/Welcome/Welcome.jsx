@@ -2,6 +2,12 @@ import React from 'react';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import config from '../../../../config/client';
+import WelcomeHeader from './WelcomeComponents/WelcomeHeader';
+import Devices from './WelcomeComponents/Devices';
+import PricingTable from './WelcomeComponents/PricingTable';
+import Partners from './WelcomeComponents/Partners';
+import Press from './WelcomeComponents/Press';
+import WelcomeFooter from './WelcomeComponents/WelcomeFooter';
 
 var Welcome = React.createClass ({
 
@@ -33,20 +39,12 @@ var Welcome = React.createClass ({
 
 		return (
 			<div>
-				<h3>In the welcome  page</h3>
-				<div className="btn-group navbar-collapse collapse navbar-left">
-					<button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false" onClick={this.showSignupLock}>abonnez-vous
-					</button>
-				</div>
-
-				<div className="btn-group navbar-collapse collapse navbar-left">
-					<button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false" onClick={this.showSigninLock}>se connecter
-					</button>
-				</div>
+				<WelcomeHeader />
+				<Devices />
+				<PricingTable />
+				<Partners />
+				<Press />
+				<WelcomeFooter />
 			</div>
 		);
 	}
