@@ -1,0 +1,38 @@
+@import (reference) '../../../../styles/config.less';
+
+@thumb-margin: 10px;
+@thumb-margin-hover: 50px;
+@thumb-width: 140px;
+@thumb-height: 200px;
+@zoom-margin: 50px;
+
+.press {
+  display: inline-block;
+  padding-right: 15px;
+  margin-right: auto;
+  margin-left: 160px;
+  margin-top: 40px;
+  background-color: @white-base;
+
+  .press-text {
+    color: #4C494E;
+    position: relative;
+  }
+
+  .press-images {
+    margin-left: 0px;
+    margin-top: 40px;
+    width: 100%;
+    position: relative;
+
+    .press-image {
+      float: left;
+      max-width: 120px;
+
+      img {
+        float: left;
+        max-width: 75%;
+      }
+    }
+  }
+}
