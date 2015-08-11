@@ -39,7 +39,7 @@ var Welcome = React.createClass ({
 
 		return (
 			<div>
-				<WelcomeHeader />
+				<WelcomeHeader lock={this.props.lock} />
 				<Devices />
 				<PricingTable />
 				<Partners />

@@ -7,6 +7,30 @@ if (process.env.BROWSER) {
 
 var WelcomeHeader = React.createClass ({
 
+		showSigninLock: function() {
+
+			this.props.lock.show(
+				{
+					dict: 'fr',
+					connections: ['Username-Password-Authentication', 'facebook'],
+					socialBigButtons: true,
+					disableSignupAction: true,
+					rememberLastLogin: false
+				}
+			);
+		},
+
+		showSignupLock: function() {
+
+			this.props.lock.showSignup(
+				{
+					dict: 'fr',
+					connections: ['Username-Password-Authentication', 'facebook'],
+					socialBigButtons: true
+				}
+			);
+		},
+
 	render: function() {
 		const {
 			props: {
