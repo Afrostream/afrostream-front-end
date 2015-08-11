@@ -3,6 +3,10 @@ import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import SelectPlan from './SelectPlan';
 
+if (process.env.BROWSER) {
+	require('./Payment.less');
+}
+
 var Payment = React.createClass ({
 
 	onSubmit: function(e){
@@ -19,11 +23,13 @@ var Payment = React.createClass ({
 			} = this;
 
 		return (
-			<div>
-				<h3>Logged in, not yet paid</h3>
-				<p>Please select a plan: </p>
+			<section className="payment">
+				<div className="header">
+					<img className="create-account-logo" src="/images/logo.png" />
+				</div>
+				<div className="choose-plan">Choissisez la formule qui vous ressemble</div>
 				<SelectPlan profile={this.props.profile} />
-			</div>
+			</section>
 		);
 	}
 });

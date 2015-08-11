@@ -3,6 +3,10 @@ import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import PaymentForm from './PaymentForm';
 
+if (process.env.BROWSER) {
+	require('./SelectPlan.less');
+}
+
 var SelectPlan = React.createClass ({
 
 	getInitialState: function() {
@@ -47,58 +51,105 @@ var SelectPlan = React.createClass ({
 		} else {
 
 			return (
-				<div className="row">
-					<div className="plan plan1 col-sm-12 col-md-4 col-lg-4 text-center pull-down">
-						<div className="header">"Think Like A Man"</div>
-						<div className="price">6,99€/mois</div>
-						<div className="monthly">prélèvement mensuel</div>
-						<ul>
-							<li>À partir du 1er octobre</li>
-							<li>Sans engagement</li>
-							<li>1 seul écran connecté</li>
-							<li>Films et séries illimités</li>
-						</ul>
-						<button
-							onClick={this.selectPlan.bind(this, 'afrostreammonthly', '699', '2015-10-01T00:00:00:00Z')}
-							className="signup">Sabonner <br />maintenant démarrer le 1er octobre
-						</button>
+				<div className="select-plan">
+					<div className="formule-row-no-decoration">
+						<div className="row-element-left"></div>
+						<div className="row-element">
+							<span className="blue-text">FORMULE</span>
+						</div>
+						<div className="row-element">
+							<span className="yellow-text">FORMULE</span>
+						</div>
+						<div className="row-element">
+							<span className="purple-text">FORMULE</span>
+						</div>
 					</div>
-
-					<div className="plan plan2 col-sm-12 col-md-4 col-lg-4 text-center pull-down">
-						<div className="header">** Ambassadeurs **</div>
-						<div className="price">59,99€/an</div>
-						<div className="monthly">5 mois offerts inclus</div>
-						<ul>
-							<li><b>Accès Dès le 1er septembre</b></li>
-							<li>2 écrans connectés simultanément</li>
-							<li>Invitations VIP aux avant-premières de films</li>
-							<li>12 mois inclus</li>
-							<li>Films et séries illimités</li>
-						</ul>
-						<button
-							onClick={this.selectPlan.bind(this, 'afrostreamambassadeurs', '5999', '2015-09-01T00:00:00:00Z')}
-							className="signup">Sabonner <br />maintenant
-						</button>
+					<div className="formule-row-no-decoration">
+						<div className="row-element-left-header"></div>
+						<div className="blue-background">
+								THINK LIKE A MAN
+						</div>
+						<div className="yellow-background">
+							ABASSADEUR
+						</div>
+						<div className="purple-background">
+							DO THE RIGHT THING
+						</div>
 					</div>
-
-					<div className="plan plan3 col-sm-12 col-md-4 col-lg-4 text-center pull-down">
-						<div className="header">"Do the right thing"</div>
-						<div className="price">99,99€/an</div>
-						<div className="monthly">Économisez 68 euros !</div>
-						<ul>
-							<li><b>4 écrans connectés simultanément</b></li>
-							<li><b>1 clé <a href="http://www.google.com/chrome/devices/chromecast/"
-								target="_blank">Chromecast</a> offerte</b>
-							</li>
-							<li>1 T-shirt collector Afrostream</li>
-							<li>Accès dès le 1er septembre</li>
-							<li>12 mois inclus</li>
-							<li>Films et séries illimités</li>
-						</ul>
-						<button
-							onClick={this.selectPlan.bind(this, 'afrostreampremium', '9999', '2015-09-01T00:00:00:00Z')}
-							className="signup">Sabonner <br />maintenant
-						</button>
+					<div className="formule-row-decorated-prices">
+						<div className="row-element-left">Tarif après le mois gratuit</div>
+						<div className="row-element-prices">
+							<span className="plan-price">6,99€</span>
+							<span className="plan-period">/MOIS</span>
+						</div>
+						<div className="row-element-prices">
+							<span className="plan-price">59,99€</span>
+							<span className="plan-period">/AN</span>
+						</div>
+						<div className="row-element-prices">
+							<span className="plan-price">99,99€</span>
+							<span className="plan-period">/AN</span>
+						</div>
+					</div>
+					<div className="formule-row-decorated">
+						<div className="row-element-left">HD disponible</div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+					</div>
+					<div className="formule-row-decorated">
+						<div className="row-element-left">Ultra HD (si disponible)</div>
+						<div className="row-element"><i className="fa fa-times"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+					</div>
+					<div className="formule-row-decorated">
+						<div className="row-element-left">Écrans disponibles en simultané</div>
+						<div className="row-element"><strong>1</strong></div>
+						<div className="row-element"><strong>2</strong></div>
+						<div className="row-element"><strong>4</strong></div>
+					</div>
+					<div className="formule-row-decorated">
+						<div className="row-element-left-twolines">Sur votre ordinateur, TV, smartphone et tablette</div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+					</div>
+						<div className="formule-row-decorated">
+						<div className="row-element-left">Films et séries TV en illimité</div>
+					<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+					</div>
+					<div className="formule-row-decorated">
+						<div className="row-element-left">Annulable à tout moment</div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+					</div>
+					<div className="formule-row-decorated">
+						<div className="row-element-left">Invitations avant première film</div>
+						<div className="row-element"><i className="fa fa-times"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-times"></i></div>
+					</div>
+					<div className="formule-row-no-decoration">
+						<div className="row-element-left">Premier mois gratuit</div>
+						<div className="row-element"><i className="fa fa-times"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+						<div className="row-element"><i className="fa fa-check"></i></div>
+					</div>
+					<div className="formule-row-no-decoration">
+						<div className="row-element-left"></div>
+						<div className="row-element">
+							<button className="button-blue" onClick={this.selectPlan.bind(this, 'afrostreammonthly', '699', '2015-10-01T00:00:00:00Z')}>S'ABONNER</button>
+						</div>
+						<div className="row-element">
+							<button className="button-yellow" onClick={this.selectPlan.bind(this, 'afrostreamambassadeurs', '5999', '2015-09-01T00:00:00:00Z')}>S'ABONNER</button>
+						</div>
+						<div className="row-element">
+							<button className="button-purple" onClick={this.selectPlan.bind(this, 'afrostreampremium', '9999', '2015-09-01T00:00:00:00Z')}>S'ABONNER</button>
+						</div>
 					</div>
 				</div>
 			);
