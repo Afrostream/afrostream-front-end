@@ -13,7 +13,7 @@ var CountrySelect = React.createClass ({
 
 		return (
 			<div className="form-inline">
-				<select className="form-control" id="country" name="country" required>
+				<select className="form-control card-country" id="country" name="country" required>
 					<option value="AF">Afghanistan</option>
 					<option value="ZA">Afrique du Sud</option>
 					<option value="AL">Albanie</option>

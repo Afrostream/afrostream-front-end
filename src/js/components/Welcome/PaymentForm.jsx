@@ -9,6 +9,10 @@ if (canUseDOM) {
 	require('bootstrap');
 }
 
+if (process.env.BROWSER) {
+	require('./PaymentForm.less');
+}
+
 var PaymentForm = React.createClass ({
 
 	getInitialState: function() {
@@ -131,7 +135,7 @@ var PaymentForm = React.createClass ({
 			localStorage.removeItem('afroToken');
 
 			return(
-				<div>
+				<div className="payment-form">
 					<h3>Subscription Confirmed</h3>
 					<p>Thank you for subscribing!</p>
 					<p>Please <a href="http://localhost:3000">log in</a> to start enjoying.</p>
@@ -150,141 +154,144 @@ var PaymentForm = React.createClass ({
 
 			return (
 				<div>
-					<form id="subscription-create" name="subscription-create" data-async>
-						<div className="modal-body">
-							<section id="errors"></section>
+					<div className="enter-payment-details">Entrer les détails de paiement</div>
+					<div className="payment-form">
+						<form id="subscription-create" name="subscription-create" data-async>
+							<div className="modal-body">
+								<section id="errors"></section>
 
-							<section id="subscription-form">
-								<label>Vos coordonnées</label>
+								<section id="subscription-form">
+									<label className="name-details">Vos coordonnées</label>
 
-								<div className="form-group">
-									<input
-										type="text"
-										className="form-control"
-										data-recurly="first_name"
-										id="first_name"
-										name="first-name"
-										placeholder="Votre prénom" required />
-								</div>
-
-								<div className="form-group">
-									<input
-										type="text"
-										className="form-control"
-										data-recurly="last_name"
-										id="last_name"
-										name="last-name"
-										placeholder="Votre nom" required />
-								</div>
-
-								<label>Information de paiement
-									<small className="text-muted">[<span className="recurly-cc-brand"></span>]</small>
-								</label>
-
-								<div className="form-group has-feedback has-feedback-left">
-									<input
-										type="tel"
-										className="form-control recurly-cc-number"
-										data-recurly="number"
-										name="number"
-										id="number"
-										autoComplete="cc-number"
-										placeholder="1234 5678 8901 1234" required />
-									<i className="form-control-feedback fa fa-credit-card"></i>
-								</div>
-
-								<div className="form-inline">
-									<div className="form-group has-feedback has-feedback-left col-md-6 inline-feedback">
+									<div className="form-group">
 										<input
-											type="tel"
-											className="form-control recurly-cc-exp"
-											data-recurly="month"
-											name="month"
-											id="month"
-											autoComplete="cc-exp"
-											placeholder="MM/AA" required />
-
-										<i className="form-control-feedback fa fa-calendar-o"></i>
+											type="text"
+											className="form-control first-name"
+											data-recurly="first_name"
+											id="first_name"
+											name="first-name"
+											placeholder="Votre prénom" required />
 									</div>
 
-									<div className="form-group has-feedback has-feedback-left col-md-6 inline-feedback">
+									<div className="form-group">
+										<input
+											type="text"
+											className="form-control last-name"
+											data-recurly="last_name"
+											id="last_name"
+											name="last-name"
+											placeholder="Votre nom" required />
+									</div>
+
+									<label className="payment-details">Information de paiement
+										<small className="text-muted">[<span className="recurly-cc-brand"></span>]</small>
+									</label>
+
+									<div className="form-group has-feedback has-feedback-left">
 										<input
 											type="tel"
-											className="form-control recurly-cc-cvc"
-											data-recurly="cvv"
-											name="cvv"
-											id="cvv"
-											autoComplete="off"
-											placeholder="123" required />
-
-										<i className="form-control-feedback fa fa-barcode"></i>
+											className="form-control recurly-cc-number card-number"
+											data-recurly="number"
+											name="number"
+											id="number"
+											autoComplete="cc-number"
+											placeholder="1234 5678 8901 1234" required />
+										<i className="form-control-feedback fa fa-credit-card"></i>
 									</div>
-								</div>
-								<CountrySelect />
-								<label>Code promo</label>
 
-								<div className="form-group has-feedback has-feedback-left">
+									<div className="form-inline">
+										<div className="form-group has-feedback has-feedback-left col-md-6 inline-feedback">
+											<input
+												type="tel"
+												className="form-control recurly-cc-exp card-date"
+												data-recurly="month"
+												name="month"
+												id="month"
+												autoComplete="cc-exp"
+												placeholder="MM/AA" required />
+
+											<i className="form-control-feedback fa fa-calendar-o"></i>
+										</div>
+
+										<div className="form-group has-feedback has-feedback-left col-md-6 inline-feedback">
+											<input
+												type="tel"
+												className="form-control recurly-cc-cvc card-code"
+												data-recurly="cvv"
+												name="cvv"
+												id="cvv"
+												autoComplete="off"
+												placeholder="123" required />
+
+											<i className="form-control-feedback fa fa-barcode"></i>
+										</div>
+									</div>
+									<CountrySelect />
+									<label className="coupon-code-details">Code promo</label>
+
+									<div className="form-group has-feedback has-feedback-left">
+										<input
+											type="text"
+											className="form-control coupon-code"
+											data-recurly="coupon_code"
+											name="coupon_code"
+											id="coupon_code"
+											value=""
+											placeholder="Entrez votre code" />
+										<i className="form-control-feedback fa fa-ticket"></i>
+									</div>
+
 									<input
-										type="text"
-										className="form-control"
-										data-recurly="coupon_code"
-										name="coupon_code"
-										id="coupon_code"
-										value=""
-										placeholder="Entrez votre code" />
-									<i className="form-control-feedback fa fa-ticket"></i>
-								</div>
+										type="hidden"
+										data-recurly="token"
+										name="recurly-token" />
 
-								<input
-									type="hidden"
-									data-recurly="token"
-									name="recurly-token" />
+									<input
+										type="hidden"
+										id="is_gift"
+										name="is-gift" />
 
-								<input
-									type="hidden"
-									id="is_gift"
-									name="is-gift" />
+									<input
+										type="hidden"
+										id="plan_code"
+										data-recurly="plan_code"
+										name="plan-code" />
 
-								<input
-									type="hidden"
-									id="plan_code"
-									data-recurly="plan_code"
-									name="plan-code" />
+									<input
+										type="hidden"
+										id="plan_name"
+										data-recurly="plan_name"
+										name="plan-name" />
 
-								<input
-									type="hidden"
-									id="plan_name"
-									data-recurly="plan_name"
-									name="plan-name" />
+									<input
+										type="hidden"
+										id="unit_amount_in_cents"
+										data-recurly="unit_amount_in_cents"
+										name="unit-amount-in-cents" />
 
-								<input
-									type="hidden"
-									id="unit_amount_in_cents"
-									data-recurly="unit_amount_in_cents"
-									name="unit-amount-in-cents" />
+									<input
+										type="hidden"
+										id="starts_at"
+										data-recurly="starts_at"
+										name="starts-at" />
 
-								<input
-									type="hidden"
-									id="starts_at"
-									data-recurly="starts_at"
-									name="starts-at" />
+								</section>
+							</div>
+							<div className="modal-footer" id="recurly-form-footer">
+								<span className="price" id="recurly-price"></span>
+								<span className="term" id="recurly-term"></span>
 
-							</section>
-						</div>
-						<div className="modal-footer" id="recurly-form-footer">
-							<span className="price" id="recurly-price"></span>
-							<span className="term" id="recurly-term"></span>
-
-							<button
-								id="subscribe"
-								type="submit"
-								form="subscription-create"
-								className="btn btn-primary"
-								onClick={this.callApi}>Submit
-							</button>
-							<div className="recurly-note"></div>
-						</div>
-					</form>
+								<button
+									id="subscribe"
+									type="submit"
+									form="subscription-create"
+									className="button-create-subscription"
+									onClick={this.callApi}>S'inscrire
+								</button>
+								<div className="recurly-note"></div>
+							</div>
+						</form>
+					</div>
 				</div>
 			);
 		}
