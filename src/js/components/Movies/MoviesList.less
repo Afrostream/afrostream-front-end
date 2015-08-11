@@ -8,160 +8,184 @@
 @zoom-margin: 50px;
 .movies-list {
   position: relative;
-  padding: 10px 0 40px 0;
   background-color: @color-indigo;
   width: 100%;
-  display: table-row;
-  .selection {
-    font-size: 1.8em;
-    font-family: @font-light;
-    text-transform: uppercase;
-    margin: 10px @app-padding 10px @app-padding;
-  }
-  .movies-list__container {
+  padding: @thumb-margin 0 (@thumb-margin-hover + @thumb-margin) 0;
+  //display: table-row;
+  .movies-category-list {
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
     width: 100%;
-    .slider {
-      position: relative;
-      width: 100%;
-      .slider-container {
-        width: 100%;
-        .thumb-containter {
-        }
-      }
+    .movies-list__selection {
+      font-size: 1.8em;
+      font-family: @font-light;
+      text-transform: uppercase;
+      margin: 10px;
     }
-    .thumb-containter {
-      height: 100%;
-      max-height: 100%;
-      .thumb {
-        display: inline-block;
+    .movies-list__container {
+      margin: -@zoom-margin 0 -40px 0;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      .slider {
         position: relative;
         width: 100%;
-        padding: 0;
-        text-align: left;
-        border: 1px solid #FFFFFF;
-        background-color: #FFFFFF;
-        a {
-          position: relative;
+        .slider-container {
+          width: 100%;
+          overflow-x: auto;
+          //overflow-y: hidden;
           display: inline-block;
-          float: left;
+          white-space: nowrap;
+          //padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+          .thumb-containter {
+          }
+        }
+      }
+      .thumb-containter {
+        height: 100%;
+        max-height: 100%;
+        //.transform-style(preserve-3d);
+        //.perspective(200);
+        //.perspective-origin(center center);
+        flex-shrink: 0;
+        display: inline-block;
+        //.transition(all 0.2s linear);
+        //.transition-delay(0.2s);
+        margin: @zoom-margin @thumb-margin  @zoom-margin @thumb-margin;
+        .thumb {
+          display: inline-block;
+          position: relative;
+          width: 100%;
+          padding: 0;
+          text-align: left;
+          border: 1px solid #FFFFFF;
+          background-color: #FFFFFF;
+          overflow: hidden;
+          max-height: 202px;
+          height: 200px;
           width: @thumb-width;
-          height: 100%;
-          .thumb-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            vertical-align: middle;
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            cursor: pointer;
-            .transition(opacity 0.1s linear);
-            i {
-              .transition(opacity 0.1s linear);
-              position: absolute;
-              left: 50%;
-              top: 50%;
-              margin-left: -40px;
-              margin-top: -40px;
-              &.btn-play {
-                background-image: url('../../../../static/images/btn-play-thumb.png');
-                background-repeat: no-repeat;
-                background-size: contain;
-                background-position: center center;
-                width: 80px;
-                height: 80px;
 
-              }
-            }
-            &:before {
-              opacity: 0;
-              content: '';
-              .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
+          a {
+            position: relative;
+            display: inline-block;
+            float: left;
+            width: @thumb-width;
+            height: 100%;
+            .thumb-background {
               position: absolute;
               top: 0;
               left: 0;
               bottom: 0;
               right: 0;
-              z-index: 1;
-            }
-            i,
-            &:before {
-              opacity: 0;
-            }
-            &:hover {
+              vertical-align: middle;
+              background-size: cover;
+              background-position: center center;
+              background-repeat: no-repeat;
+              cursor: pointer;
+              .transition(opacity 0.1s linear);
+              i {
+                .transition(opacity 0.1s linear);
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-left: -40px;
+                margin-top: -40px;
+                &.btn-play {
+                  background-image: url('../../../../static/images/btn-play-thumb.png');
+                  background-repeat: no-repeat;
+                  background-size: contain;
+                  background-position: center center;
+                  width: 80px;
+                  height: 80px;
+
+                }
+              }
+              &:before {
+                opacity: 0;
+                content: '';
+                .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                z-index: 1;
+              }
               i,
               &:before {
-                .transition(opacity 0.1s linear);
-                opacity: 1;
+                opacity: 0;
+              }
+              &:hover {
+                i,
+                &:before {
+                  .transition(opacity 0.1s linear);
+                  opacity: 1;
+                }
               }
             }
           }
-        }
-        .thumb-info {
-          position: relative;
-          display: inline-block;
-          vertical-align: middle;
-          overflow: auto;
-          white-space: normal;
-          box-sizing: inherit;
-          float: left;
-          min-height: 100%;
-          color: #FFFFFF;
-
-          -webkit-font-smoothing: antialiased;
-          background-size: cover;
-          background-position: left center;
-          background-repeat: no-repeat;
-          &:before {
-            content: "";
-            background-color: rgba(0, 0, 0, 0.7);
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-          }
-          &__txt {
-            position: absolute;
-            top: 10px;
-            bottom: 42px;
-            left: 10px;
-            right: 10px;
-          }
-          &__btn {
-            position: absolute;
-            margin: 0 10px 10px 10px;
-            bottom: 0;
-            .btn-thumb {
-              margin: 0 10px 0 10px;
-              font-size: 1.2em;
-            }
-          }
-
-          &__title {
-            //font-family: @font-thin;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 1.5em;
-            line-height: 1.4;
-            vertical-align: top;
-          }
-          &__synopsis {
-            font-family: @font-light;
-            //FIXME force size change it to auto
-            font-size: 1.2em;
+          .thumb-info {
+            position: relative;
+            display: inline-block;
             vertical-align: middle;
-            text-overflow: ellipsis;
-            padding: 10px 0 10px 0;
-            //TODO height 100% de l'info block et center ce texte vertically
-            //padding: 30px 0 25px 0;
-            a {
-              font-size: 1em;
-              width: 100%;
+            overflow: auto;
+            white-space: normal;
+            box-sizing: inherit;
+            float: left;
+            min-height: 100%;
+            color: #FFFFFF;
+
+            -webkit-font-smoothing: antialiased;
+            background-size: cover;
+            background-position: left center;
+            background-repeat: no-repeat;
+            &:before {
+              content: "";
+              background-color: rgba(0, 0, 0, 0.7);
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+            }
+            &__txt {
+              position: absolute;
+              top: 10px;
+              bottom: 42px;
+              left: 10px;
+              right: 10px;
+            }
+            &__btn {
+              position: absolute;
+              margin: 0 10px 10px 10px;
+              bottom: 0;
+              .btn-thumb {
+                margin: 0 10px 0 10px;
+                font-size: 1.2em;
+              }
+            }
+
+            &__title {
+              //font-family: @font-thin;
+              font-weight: 700;
+              text-transform: uppercase;
+              font-size: 1.5em;
+              line-height: 1.4;
+              vertical-align: top;
+            }
+            &__synopsis {
+              font-family: @font-light;
+              //FIXME force size change it to auto
+              font-size: 1.2em;
+              vertical-align: middle;
+              text-overflow: ellipsis;
+              padding: 10px 0 10px 0;
+              //TODO height 100% de l'info block et center ce texte vertically
+              //padding: 30px 0 25px 0;
+              a {
+                font-size: 1em;
+                width: 100%;
+              }
             }
           }
         }
@@ -171,69 +195,58 @@
 }
 
 @media (min-width: 768px) {
-
   .movies-list {
-    .movies-list__container {
-      margin: -@zoom-margin 0 -40px 0;
-      .slider {
-        .slider-container {
-          overflow-x: auto;
-          //overflow-y: hidden;
-          display: inline-block;
-          white-space: nowrap;
-          padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
-          .thumb-containter {
-            //.transform-style(preserve-3d);
-            //.perspective(200);
-            //.perspective-origin(center center);
-            flex-shrink: 0;
-            display: inline-block;
-            //.transition(all 0.2s linear);
-            //.transition-delay(0.2s);
-            margin: @zoom-margin @thumb-margin  @zoom-margin @thumb-margin;
-            .thumb {
-              overflow: hidden;
-              max-height: 202px;
-              height: 200px;
-              width: @thumb-width;
-              background-color: transparent;
-              border-color: transparent;
-              //.translate3d(0, 0, 0);
-              //.transition(all 0.2s linear);
-              //.transition-delay(0.2s);
-              .thumb-background {
-              }
-              .thumb-info {
-                display: inline-block;
-                top: 0;
-                position: absolute;
-                width: @thumb-width * 2;
-              }
-            }
-            &:hover {
-              //margin: @zoom-margin @thumb-margin-hover  @zoom-margin @thumb-margin-hover;
+    .movies-category-list {
+      .movies-list__selection {
+        margin: 10px @app-padding 10px @app-padding;
+      }
+      .movies-list__container {
+
+        .slider {
+          .slider-container {
+            padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+            .thumb-containter {
+
               .thumb {
-                border-color: @color-yellow;
-                //.translate3d(0, 0, 30px);
+                background-color: transparent;
+                border-color: transparent;
+                //.translate3d(0, 0, 0);
                 //.transition(all 0.2s linear);
                 //.transition-delay(0.2s);
-                overflow: hidden;
-                width: 420px;
-                .thumb-info {
-                  opacity: 1;
-                }
                 .thumb-background {
-                  .transition(opacity 0.1s linear);
-                  i {
-                    opacity: 0.6;
-                  }
-                  &:before {
+                }
+                .thumb-info {
+                  display: inline-block;
+                  top: 0;
+                  position: absolute;
+                  width: @thumb-width * 2;
+                }
+              }
+              &:hover {
+                //margin: @zoom-margin @thumb-margin-hover  @zoom-margin @thumb-margin-hover;
+                .thumb {
+                  border-color: @color-yellow;
+                  //.translate3d(0, 0, 30px);
+                  //.transition(all 0.2s linear);
+                  //.transition-delay(0.2s);
+                  overflow: hidden;
+                  width: 420px;
+                  .thumb-info {
                     opacity: 1;
                   }
-                  &:hover {
-                    i,
+                  .thumb-background {
+                    .transition(opacity 0.1s linear);
+                    i {
+                      opacity: 0.6;
+                    }
                     &:before {
                       opacity: 1;
+                    }
+                    &:hover {
+                      i,
+                      &:before {
+                        opacity: 1;
+                      }
                     }
                   }
                 }

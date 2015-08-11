@@ -2,7 +2,6 @@ import React from 'react';
 import { prepareRoute } from '../decorators';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import Navigation from './Navigation/Navigation';
 import Welcome from './Welcome/Welcome';
 import ReturningUser from './Welcome/ReturningUser';
 import * as CategoryActionCreators from '../actions/category';
@@ -58,7 +57,7 @@ if (canUseDOM) {
   render() {
     debugger;
     var presetToken = this.getIdToken();
-
+    
     const { props: { User, children } } = this;
 
     const token = User.get('token');
@@ -70,10 +69,9 @@ if (canUseDOM) {
 
     else if (presetToken && this.props.paymentStatus === true) {
 
-      return (
-        <div className="app">
-        <Header />
-        <Navigation />
+    return (
+      <div className="app">
+        <Header {...this.props}/>
 
         <div className="container-fluid">
         {children}

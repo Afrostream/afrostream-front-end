@@ -1,0 +1,109 @@
+@import "./config";
+
+/*=======================================
+=            Widget Gradient            =
+=======================================*/
+@popup-padding: 30px;
+@line-separator-color: #c6c6c6;
+@popup-radius: 1px;
+@popup-bg-alpha: 20%;
+@btn-radius: 100px;
+
+body #a0-lock.a0-theme-default,
+body #a0-widget {
+  .a0-overlay {
+    background: @background-color-base;
+    background: fade(@background-color-base, @popup-bg-alpha);
+  }
+  .a0-panel {
+    font-family: @font-family-base;
+    background: @brand-primary;
+    color: @brand-label;
+    border-radius: @popup-radius;
+    .a0-header.a0-top-header {
+      h1 {
+        font-family: @font-family-base;
+        font-weight: 500;
+      }
+      border-bottom: 1px solid @line-separator-color;
+      margin: 0 @popup-padding 20px @popup-padding;
+    }
+
+    .a0-close:hover {
+      color: #fff;
+    }
+    .a0-icon-container {
+      height: auto;
+      .a0-avatar {
+      }
+
+      .a0-avatar i {
+        color: @color-purple;
+      }
+    }
+
+    .a0-inputs {
+      border-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .a0-email input, .a0-password input, .a0-repeatPassword input {
+      background: rgba(255, 255, 255, .9);
+      color: black;
+
+    }
+
+    .a0-separator {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .a0-zocial.a0-block {
+      border-radius: @btn-radius;
+    }
+
+    button.a0-primary {
+      background: fade(@color-yellow, 80%);
+      border-radius: @btn-radius;
+      width: 80%;
+      color: @color-indigo;
+      font-family: @font-family-base;
+      padding: 12px 10px;
+      &:hover {
+        background: @color-yellow;
+      }
+    }
+
+    .a0-btn-small {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .a0-btn-small:hover {
+      border-color: white;
+      background: none;
+    }
+    .a0-mode-container {
+      .a0-loggedin.a0-mode {
+        padding: 0 @popup-padding 0 @popup-padding;
+      }
+    }
+    .a0-footer {
+      .a0-logo {
+        display: none;
+        i {
+          color: white;
+        }
+      }
+    }
+
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  body #a0-lock .a0-popup .a0-overlay,
+  body #a0-widget .a0-popup .a0-overlay {
+    .a0-panel {
+    }
+  }
+
+}
+

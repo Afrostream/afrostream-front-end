@@ -4,6 +4,16 @@ nav {
   &.navbar-default {
     background-color: transparent;
     border-color: transparent;
+    .transition(background 0.2s linear);
+    border-radius: 0;
+    z-index: @nav-z + 1;
+  }
+  .navbar-collapse {
+    border: none;
+    top: 5px;
+  }
+  &.navbar-fixed-color {
+    background-color: @color-indigo;
   }
   .navbar-brand {
     padding: 0;

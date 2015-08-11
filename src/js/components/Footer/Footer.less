@@ -6,13 +6,13 @@
   * Sticky footer
   */
   width: 100%;
-  height: @footer-height;
+  min-height: @footer-height;
   font-size: 13px;
   font-weight: 400;
   text-transform: uppercase;
   color: @brand-footer;
   background: @background-footer;
-  .background-image(linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, @background-footer 50%));
+  //.background-image(linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, @background-footer 50%));
 
   &-container {
     margin: 0 auto;
@@ -49,7 +49,7 @@
 }
 
 .footer, .page-wrap:after {
-  height: @footer-height;
+  min-height: @footer-height;
 }
 
 @media (min-width: 768px) {

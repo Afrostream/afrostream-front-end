@@ -28,7 +28,22 @@ if (canUseDOM) {
   }
 
   static propTypes = {
-    movie: React.PropTypes.object.isRequired
+    movie: React.PropTypes.object.isRequired,
+    showImage: React.PropTypes.bool,
+    viewport: React.PropTypes.object
+  };
+
+  static defaultProps = {
+    showImage: false,
+    viewport: {
+      left: 0,
+      width: 0
+    }
+  };
+
+  state = {
+    showImage: this.props.showImage,
+    viewport: this.props.viewport
   };
 
   triggerOver() {
@@ -56,15 +71,21 @@ if (canUseDOM) {
       perspective: this.perspective,
       perspectiveOrigin: '50% 50%'
     });
+
+    //TODO test perf with only on transition timeline in parentContainer
     this.tlIn = new TimelineMax({paused: true, onComplete: this.scrollContent.bind(this)});
     this.tlIn.add(TweenMax.fromTo(thumb, .5,
       {
-        transform: 'translate3D(0,0,0)',
+        //transform: 'translate3D(0,0,0)',
+        y: 0,
+        z: 0,
         borderColor: 'transparent',
         width: 140
       },
       {
-        transform: `translate3D(0,-15px,30px)`,
+        //transform: `translate3D(0,-15px,30px)`,
+        y: -15,
+        z: 30, force3D: true,
         borderColor: '#ffc809',
         width: this.thumbWidth,
         ease: Sine.easeInOut
@@ -132,8 +153,63 @@ if (canUseDOM) {
     );
   }
 
+  componentDidUpdate(prevProps) {
+    if (!this.props.showImages && prevProps.viewport) {
+      let element = React.findDOMNode(this);
+      this.updateImagePosition(element.offsetLeft, element.offsetHeight);
+    }
+  }
+
+  updateImagePosition(left, width) {
+    // image is already displayed, no need to check anything
+    if (this.state.showImage) {
+      return;
+    }
+
+    let threshold = 10;
+    // update showImage state if component element is in the viewport
+    let min = this.props.viewport.left;
+    let max = this.props.viewport.left + this.props.viewport.width;
+
+    if ((min <= (left + width) && left <= (max - threshold))) {
+      this.setShowImage(true);
+    }
+    //let element = React.findDOMNode(this);
+    //
+    //if (element.getBoundingClientRect().left < window.innerWidth + threshold) {
+    //  this.setShowImage(true);
+    //}
+  }
+
+  setShowImage(show) {
+    this.setState({
+      showImage: !!(show)
+    });
+  }
+
+  componentWillMount() {
+    // allow image display override
+    if (this.props.showImage) {
+      this.setShowImage(true);
+    }
+  }
+
   componentDidMount() {
     this.initTransition();
+  }
+
+  getLazyImageUrl() {
+    const {
+      props: { movie }
+      } = this;
+
+    const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+    let imageStyles = baseUrl;
+    if (this.state.showImage) {
+      imageStyles = movie.get('poster');
+    }
+
+    return {backgroundImage: `url(${imageStyles})`};
   }
 
   render() {
@@ -142,8 +218,7 @@ if (canUseDOM) {
       } = this;
 
     const maxLength = 200;
-
-    let imageStyles = {backgroundImage: `url(${movie.get('poster')})`};
+    let imageStyles = this.getLazyImageUrl();
     let title = movie.get('title');
     let synopsis = movie.get('synopsis') || '';
 

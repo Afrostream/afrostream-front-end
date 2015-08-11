@@ -32,6 +32,7 @@ export default function () {
       "dateFrom": "2013-09-01",
       "dateTo": "2014-09-01",
       "synopsis": "BELLE is inspired by the true story of Dido Elizabeth Belle (Gugu Mbatha-Raw), the illegitimate mixed race daughter of Admiral Sir John Lindsay (Matthew Goode). Raised by her aristocratic great-uncle Lord Mansfield (Tom Wilkinson) and his wife (Emily Watson), Belle's lineage affords her certain privileges, yet her status prevents her from the traditions of noble social standing. While her cousin Elizabeth (Sarah Gadon) chases suitors for marriage, Belle is left on the sidelines wondering if she will ever find love. After meeting an idealistic young vicar's son bent on changing society, he and Belle help shape Lord Mansfield's role as Lord Chief Justice to end slavery in England. (c) Fox Searchlight",
+      "poster": "/images/mock/background/belle5.jpg",
       "type": "movie",
       "seasons": [],
       "episodes": []

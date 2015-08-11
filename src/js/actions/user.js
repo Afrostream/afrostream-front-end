@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import config from '../../../config/client';
+import _ from 'lodash';
 
 if (canUseDOM) {
   var Auth0Lock = require('auth0-lock');
@@ -12,6 +13,19 @@ export function createLock() {
     return {
       type: ActionTypes.User.createLock,
       lock: lock
+    };
+  };
+}
+
+export function logOut() {
+  return (dispatch, getState) => {
+    const storageId = config.auth0.token;
+    const storageRefreshId = config.auth0.tokenRefresh;
+    localStorage.removeItem(storageId);
+    localStorage.removeItem(storageRefreshId);
+
+    return {
+      type: ActionTypes.User.logOut
     };
   };
 }
@@ -96,14 +110,24 @@ export function getProfile() {
   };
 }
 
-export function showLock() {
+export function showLock(container = null) {
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
+    let lockOptions = _.cloneDeep(config.auth0.signIn);
+
+    if (container) {
+      _.merge(lockOptions, {
+        popup: false,
+        closable: false,
+        container: container
+      });
+    }
+
     return async auth0 =>(
       await new Promise(
         (resolve, reject) => {
-          lock.showSignin(
-            config.auth0.signIn
+          lock.show(
+            lockOptions
             , function (err, profile, id_token, access_token, state, refresh_token) {
               if (err) {
                 console.log('*** Error loading the profile - most likely the token has expired ***', err);

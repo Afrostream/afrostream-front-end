@@ -8,7 +8,8 @@ export default {
     getProfile: null,
     showLock: null,
     showSignupLock: null,
-    showSigninLock: null
+    showSigninLock: null,
+    logOut: null
   }),
 
   Slides: keyMirror({
@@ -32,6 +33,7 @@ export default {
 
   Category: keyMirror({
     getTop: null,
+    getMeaList: null,
     getCategory: null,
     getMenu: null
   })

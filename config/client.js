@@ -1,4 +1,12 @@
 'use strict';
+import dictFr from '../node_modules/auth0-lock/i18n/fr-FR.json';
+import _ from 'lodash';
+const customDict = _.merge(dictFr, {
+  signin: {
+    "title": "S’identifier",
+    "action": "Se connecter"
+  }
+});
 
 export default {
   /**
@@ -17,7 +25,11 @@ export default {
     token: 'afroToken',
     tokenRefresh: 'afroRefreshToken',
     signIn: {
-      dict: 'fr',
+      dict: customDict,
+      icon: '',
+      theme: 'default',
+      signupLink: '/signup',
+      resetLink: '/reset-password',
       connections: ['Username-Password-Authentication', 'facebook'],
       socialBigButtons: true,
       disableSignupAction: true,
