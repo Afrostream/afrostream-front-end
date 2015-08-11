@@ -27,7 +27,6 @@ var Payment = React.createClass ({
 				<div className="header">
 					<img className="create-account-logo" src="/images/logo.png" />
 				</div>
-				<div className="choose-plan">Choissisez la formule qui vous ressemble</div>
 				<SelectPlan profile={this.props.profile} />
 			</section>
 		);
