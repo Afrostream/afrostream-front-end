@@ -72,7 +72,7 @@ var SelectPlan = React.createClass ({
 									THINK LIKE A MAN
 							</div>
 							<div className="yellow-background">
-								ABASSADEUR
+								AMBASSADEUR
 							</div>
 							<div className="purple-background">
 								DO THE RIGHT THING

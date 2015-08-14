@@ -8,17 +8,21 @@
 
 .partners {
   display: inline-block;
+  position: relative;
   padding-right: 15px;
   margin-right: auto;
   margin-left: 0px;
   margin-top: -1px;
   background-color: @gray-lighter;
+  width: 100%;
 
   .partners-image {
     width: 60%;
     float: left;
     position: relative;
-    padding-right: 70px;
+    display: inline-block;
+    //padding-right: 70px;
+    padding-right: 0px;
 
     img {
       max-width: 100%;
@@ -27,35 +31,52 @@
 
   .partners-container {
     position: relative;
-    padding-top: 40px;
+    display: table;
     width: 40%;
     float: left;
+    min-height: 300px;
 
-    .partners-text {
-
-      h2 {
-        color: #6E2391;
-        font-size: 32px;
-        line-height: 40px;
-        margin-top: 28px;
-      }
-    }
-
-    .partners-links {
-
-      margin-top: 80px;
-
-      .partners-link {
-        float: left;
+      .partners-text {
+        display: table-row;
         position: relative;
-        width: 32%;
+        width: 100%;
+        text-align: center;
 
-        img {
-          max-height: 100%;
-          max-width: 96px;
-          align: middle;
+        h2 {
+          color: #6E2391;
+          font-size: 32px;
+          line-height: 40px;
+          //margin-top: 28px;
         }
       }
-    }
+
+      .partners-links {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        text-align: center;
+        padding-left: 16px;
+
+        .partners-link {
+          float: left;
+          position: relative;
+          width: 32%;
+
+          img {
+            max-height: 100%;
+            //max-width: 96px;
+            max-width: 100%;
+            align: middle;
+          }
+        }
+      }
+  }
+
+  .partners-container:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em; /* Adjusts for spacing */
   }
 }
