@@ -3,6 +3,8 @@ import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import config from '../../../../config/client';
+
 
 if (canUseDOM) {
 	require('jquery');
@@ -82,14 +84,14 @@ var PaymentForm = React.createClass ({
 			}
 			// Otherwise we continue with the form submission
 			else {
-
+				var subscriptionPath = config.apiClient.urlPrefix + '/api/subscriptions';
 				var formData = JSON.stringify($.extend(billingInfo, {
 					'recurly-token': token.id
 				}));
 
 				$.ajax({
 					type: 'POST',
-					url: 'http://localhost:3002/api/subscriptions',
+					url: subscriptionPath,
 					//url: 'https://afrostream-api-v1-staging.herokuapp.com/api/subscriptions',
 					data: formData,
 					contentType: 'application/json',
