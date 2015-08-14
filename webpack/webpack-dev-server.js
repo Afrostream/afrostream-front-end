@@ -44,9 +44,5 @@ compiler.plugin('done', (stats) => {
 
 webpackDevServer.listen(port, function () {
 
-  console.log('*** johnarch environment ***');
-  console.log(process.env.API_CLIENT_END_POINT);
-  console.log('*** end johnarch env debugging ***');
-
   console.info('==> 🚧  Webpack development server listening on %s:%s', host, port);
 });

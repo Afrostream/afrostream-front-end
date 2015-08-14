@@ -2,7 +2,6 @@ import webpack, { DefinePlugin, BannerPlugin } from 'webpack';
 import autoprefixer from 'autoprefixer-core';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import config from '../config';
 
 const env = process.env.NODE_ENV || 'development';
 const AUTOPREFIXER_BROWSERS = [

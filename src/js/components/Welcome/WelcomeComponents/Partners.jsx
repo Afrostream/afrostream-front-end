@@ -5,6 +5,10 @@ if (process.env.BROWSER) {
 	require('./Partners.less');
 }
 
+console.log('*** johnarch - environment ***');
+console.log(process.env);
+console.log('*** end johnarch env debugging ***');
+
 var Partners = React.createClass ({
 
 	render: function() {
