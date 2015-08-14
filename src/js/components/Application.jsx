@@ -57,7 +57,7 @@ if (canUseDOM) {
   render() {
     debugger;
     var presetToken = this.getIdToken();
-    
+
     const { props: { User, children } } = this;
 
     const token = User.get('token');

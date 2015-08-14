@@ -156,7 +156,7 @@ var PaymentForm = React.createClass ({
 				<div>
 					<div className="enter-payment-details">Entrer les détails de paiement</div>
 					<div className="payment-form">
-						<form id="subscription-create" name="subscription-create" data-async>
+						<form id="subscription-create" className="subscription-form" name="subscription-create" data-async>
 							<div className="modal-body">
 								<section id="errors"></section>
 
