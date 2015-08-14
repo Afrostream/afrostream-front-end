@@ -8,6 +8,12 @@ const customDict = _.merge(dictFr, {
   }
 });
 
+console.log('*** johnarch environment ***');
+console.log(process.env.API_CLIENT_END_POINT);
+console.log('*** and the environment ***');
+console.log(process.env);
+console.log('*** end johnarch env debugging ***');
+
 export default {
   /**
    * Front-End Server
