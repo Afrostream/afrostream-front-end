@@ -159,13 +159,13 @@ var PaymentForm = React.createClass ({
 					<div className="enter-payment-details">Entrer les détails de paiement</div>
 					<div className="payment-form">
 						<form id="subscription-create" className="subscription-form" name="subscription-create" data-async>
-							<div className="modal-body">
 								<section id="errors"></section>
 
 								<section id="subscription-form">
-									<label className="name-details">Vos coordonnées</label>
-
+									<div className="name-details">COORDONNÉES</div>
 									<div className="form-group">
+										<label className="first-name-label" htmlFor="first_name">Prénom</label>
+										<label className="last-name-label" htmlFor="last_name">Nom</label>
 										<input
 											type="text"
 											className="form-control first-name"
@@ -173,9 +173,6 @@ var PaymentForm = React.createClass ({
 											id="first_name"
 											name="first-name"
 											placeholder="Votre prénom" required />
-									</div>
-
-									<div className="form-group">
 										<input
 											type="text"
 											className="form-control last-name"
@@ -185,11 +182,12 @@ var PaymentForm = React.createClass ({
 											placeholder="Votre nom" required />
 									</div>
 
-									<label className="payment-details">Information de paiement
+									<label className="payment-details">DÉTAILS DE PAIEMENT
 										<small className="text-muted">[<span className="recurly-cc-brand"></span>]</small>
 									</label>
 
 									<div className="form-group has-feedback has-feedback-left">
+										<label className="card-label" htmlFor="number">Numéro de carte</label>
 										<input
 											type="tel"
 											className="form-control recurly-cc-number card-number"
@@ -198,49 +196,84 @@ var PaymentForm = React.createClass ({
 											id="number"
 											autoComplete="cc-number"
 											placeholder="1234 5678 8901 1234" required />
-										<i className="form-control-feedback fa fa-credit-card"></i>
 									</div>
 
-									<div className="form-inline">
-										<div className="form-group has-feedback has-feedback-left col-md-6 inline-feedback">
-											<input
-												type="tel"
-												className="form-control recurly-cc-exp card-date"
-												data-recurly="month"
-												name="month"
-												id="month"
-												autoComplete="cc-exp"
-												placeholder="MM/AA" required />
+									<div className="form-group">
+										<label className="date-label" htmlFor="month">Numéro de carte</label>
+										<label className="card-code-label" htmlFor="cvv">Code sécurité</label>
+										<select
+											className="form-control recurly-cc-exp card-date-month"
+											data-recurly="month"
+											name="month"
+											id="month"
+											placeholder="MM" required>
+											<option value="01">01 jan</option>
+											<option value="02">02 fév</option>
+											<option value="03">03 mar</option>
+											<option value="04">04 avr</option>
+											<option value="05">05 mai</option>
+											<option value="06">06 jun</option>
+											<option value="07">07 jul</option>
+											<option value="08">08 aoû</option>
+											<option value="09">09 sep</option>
+											<option value="10">10 oct</option>
+											<option value="11">11 nov</option>
+											<option value="12">12 déc</option>
+										</select>
+										<select
+											className="form-control recurly-cc-exp card-date-year"
+											data-recurly="year"
+											name="year"
+											id="year"
+											placeholder="AAAA" required>
+											<option value="2015">2015</option>
+											<option value="2016">2016</option>
+											<option value="2017">2017</option>
+											<option value="2018">2018</option>
+											<option value="2019">2019</option>
+											<option value="2020">2020</option>
+											<option value="2021">2021</option>
+											<option value="2022">2022</option>
+											<option value="2023">2023</option>
+											<option value="2024">2024</option>
+											<option value="2025">2025</option>
+											<option value="2026">2026</option>
+											<option value="2027">2027</option>
+											<option value="2028">2028</option>
+											<option value="2029">2029</option>
+											<option value="2030">2030</option>
+											<option value="2031">2031</option>
+											<option value="2032">2032</option>
+											<option value="2033">2033</option>
+										</select>
 
-											<i className="form-control-feedback fa fa-calendar-o"></i>
+										<input
+											type="tel"
+											className="form-control recurly-cc-cvc card-code"
+											data-recurly="cvv"
+											name="cvv"
+											id="cvv"
+											autoComplete="off"
+											placeholder="123" required />
 										</div>
-
-										<div className="form-group has-feedback has-feedback-left col-md-6 inline-feedback">
-											<input
-												type="tel"
-												className="form-control recurly-cc-cvc card-code"
-												data-recurly="cvv"
-												name="cvv"
-												id="cvv"
-												autoComplete="off"
-												placeholder="123" required />
-
-											<i className="form-control-feedback fa fa-barcode"></i>
-										</div>
-									</div>
 									<CountrySelect />
-									<label className="coupon-code-details">Code promo</label>
 
-									<div className="form-group has-feedback has-feedback-left">
+									<div className="form-group">
+										<label className="coupon-code-label" htmlFor="coupon_code">Entrer le code promo</label>
 										<input
 											type="text"
 											className="form-control coupon-code"
 											data-recurly="coupon_code"
 											name="coupon_code"
 											id="coupon_code"
-											value=""
 											placeholder="Entrez votre code" />
-										<i className="form-control-feedback fa fa-ticket"></i>
+										<button
+											id="subscribe"
+											type="submit"
+											form="subscription-create"
+											className="button-create-subscription"
+											onClick={this.callApi}>VALIDER
+										</button>
 									</div>
 
 									<input
@@ -278,18 +311,9 @@ var PaymentForm = React.createClass ({
 										name="starts-at" />
 
 								</section>
-							</div>
-							<div className="modal-footer" id="recurly-form-footer">
+							<div id="recurly-form-footer">
 								<span className="price" id="recurly-price"></span>
 								<span className="term" id="recurly-term"></span>
-
-								<button
-									id="subscribe"
-									type="submit"
-									form="subscription-create"
-									className="button-create-subscription"
-									onClick={this.callApi}>S'inscrire
-								</button>
 								<div className="recurly-note"></div>
 							</div>
 						</form>

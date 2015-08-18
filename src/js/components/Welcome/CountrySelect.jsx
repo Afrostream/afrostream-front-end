@@ -12,7 +12,8 @@ var CountrySelect = React.createClass ({
 			} = this;
 
 		return (
-			<div className="form-inline">
+			<div className="form-group">
+				<label className="country-label" htmlFor="country">Pays</label>
 				<select className="form-control card-country" id="country" name="country" required>
 					<option value="AF">Afghanistan</option>
 					<option value="ZA">Afrique du Sud</option>
