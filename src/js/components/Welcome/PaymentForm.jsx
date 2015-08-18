@@ -32,7 +32,11 @@ var PaymentForm = React.createClass ({
 
 		// Configure recurly.js
 		//recurly.configure('sjc-WOBbERhzqRX5AJ6hVGOPzv');
-		recurly.configure('sjc-ZhO4HmKNWszC5LIA8BcsMJ');
+		try {
+			recurly.configure('sjc-ZhO4HmKNWszC5LIA8BcsMJ');
+		} catch(err) {
+			console.log(err);
+		}
 		//$('.recurly-cc-number').payment('formatCardNumber');
 		//$('.recurly-cc-exp').payment('formatCardExpiry');
 		//$('.recurly-cc-cvc').payment('formatCardCVC');
@@ -41,6 +45,12 @@ var PaymentForm = React.createClass ({
 			event.preventDefault();
 		});
 
+		$('#errors').text('');
+		$('input').removeClass('error');
+		// Disable the submit button
+		disableForm(true);
+		$('[data-recurly]').removeClass('has-error');
+
 		console.log('*** api being called ***');
 
 		var billingInfo = {
@@ -48,11 +58,8 @@ var PaymentForm = React.createClass ({
 			// required attributes
 			'number': $('.recurly-cc-number').val(),
 
-			//TODO: use the form for the correct day/month values
-			//'month': $('.recurly-cc-exp').payment('cardExpiryVal').month,
-			//'year': $('.recurly-cc-exp').payment('cardExpiryVal').year,
-			'month': '04',
-			'year': '2016',
+			'month': $('#month').val(),
+			'year': $('#year').val(),
 
 			'cvv': $('.recurly-cc-cvc').val(),
 			'first_name': $('#first_name').val(),
@@ -77,10 +84,13 @@ var PaymentForm = React.createClass ({
 			if (err) {
 				console.log('*** recurly token error ***');
 				console.log(err.message);
-				self.setState({
+				error(err);
+
+				//TODO: remove this commented code, on a utilisé ça pour arriver sur une page d'ereur
+				/*self.setState({
 					subscriptionStatus: 'not subscribed',
 					message: err.message
-				});
+				});*/
 			}
 			// Otherwise we continue with the form submission
 			else {
@@ -107,18 +117,35 @@ var PaymentForm = React.createClass ({
 						var errorMessage;
 
 						console.log('**** there was an error ***');
-						console.log(err.message);
+						console.log(err);
 						console.log('*** end of error message ***');
 
 						self.setState({
 							subscriptionStatus: 'not subscribed',
-							message: err.message
+							message: err.responseText
 						});
 					}
 				});
 				return false;
 			}
 		});
+
+		// A simple error handling function to expose errors to the customer
+		function error(err) {
+			console.log('*** there is an error ***');
+			console.log(err);
+			$('#errors').text('Les champs indiqués semblent invalides: ');
+			$.each(err.fields, function (i, field) {
+				$('[data-recurly=' + field + ']').addClass('has-error');
+			});
+			disableForm(false);
+		};
+
+		function disableForm(disabled) {
+
+			$('button').prop('disabled', disabled);
+			$('input').prop('disabled', disabled);
+		};
 	},
 
 	render: function() {
