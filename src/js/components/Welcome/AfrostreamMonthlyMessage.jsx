@@ -3,6 +3,10 @@ import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import Welcome from './Welcome';
 
+if (process.env.BROWSER) {
+	require('./AfrostreamMonthlyMessage.less');
+}
+
 var AfrostreamMonthlyMessage = React.createClass ({
 
 	getInitialState: function() {
@@ -33,17 +37,19 @@ var AfrostreamMonthlyMessage = React.createClass ({
 		if (this.state.loggedIn === true) {
 
 			return (
-				<div>
-					<h3>You are subscribed to the formule "Think like a Man"</h3>
-					<p>To start watching great movies and series on Afrostream,
-						please visit us again on 1 October 2015!</p>
-					<button
-						id="subscribe"
-						form="subscription-create"
-						className="btn btn-primary"
-						onClick={this.logOut}>Log Out
-					</button>
-				</div>
+				<section className="afrostream-monthly-message">
+					<div className="header">
+						<img className="create-account-logo" src="/images/logo.png" />
+					</div>
+					<div className="message-container">
+						<h3>Merci d'avoir réservé la formule THINK LIKE A MAN. </h3>
+						<p>Rendez vous le 1er octobre pour profiter de votre abonnement.</p>
+						<button
+							className="logout-button"
+							onClick={this.logOut}>se déconnecter
+						</button>
+					</div>
+				</section>
 			);
 
 		} else {

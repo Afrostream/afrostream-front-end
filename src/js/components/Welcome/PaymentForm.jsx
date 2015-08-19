@@ -2,6 +2,8 @@ import React from 'react';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
+import PaymentSuccess from './PaymentSuccess';
+import PaymentError from './PaymentError';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import config from '../../../../config/client';
 
@@ -163,20 +165,12 @@ var PaymentForm = React.createClass ({
 
 			localStorage.removeItem('afroToken');
 
-			return(
-				<div className="payment-form">
-					<h3>Subscription Confirmed</h3>
-					<p>Thank you for subscribing!</p>
-					<p>Please <a href="http://localhost:3000">log in</a> to start enjoying.</p>
-				</div>
-			);
+			return(<PaymentSuccess />);
+
 		} else if (this.state.subscriptionStatus === 'not subscribed') {
 
 			return(
-				<div>
-					<h3>Not subscribed</h3>
-					<p>There was a problem with your subscription: {this.state.message}</p>
-				</div>
+				<PaymentError message={this.state.message} />
 			);
 
 		} else {
