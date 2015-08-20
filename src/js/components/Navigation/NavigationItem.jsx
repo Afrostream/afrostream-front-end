@@ -39,7 +39,7 @@ import * as CategoryActionCreators from '../../actions/category';
         }
       } = this;
 
-    dispatch(CategoryActionCreators.getCategory(this.props.item.get('slug')));
+    dispatch(CategoryActionCreators.getCategory(this.props.item.get('_id')));
   }
 }
 

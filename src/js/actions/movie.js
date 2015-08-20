@@ -5,7 +5,7 @@ export function getMovie(movie) {
   return async api => ({
     type: ActionTypes.Movie.getMovie,
     movie,
-    res: await api(`/movie/${movie}`)
+    res: await api(`/movies/${movie}`)
   });
 }
 
@@ -13,7 +13,7 @@ export function getSeason(movie) {
   return async api => ({
     type: ActionTypes.Movie.getSeason,
     movie,
-    res: await api(`/movie/${movie}/season`, {
+    res: await api(`/movies/${movie}/season`, {
       sort: 'updated',
       direction: 'desc'
     })
