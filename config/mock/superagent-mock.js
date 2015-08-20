@@ -6,7 +6,7 @@ import config from './superagent-mock-config';
  * Installs the `mock` extension to superagent.
  * based on https://github.com/M6Web/superagent-mock thk's to @oziks https://twitter.com/oziks
  */
-export default function mock(superagent) {
+export default function (superagent) {
   const env = process.env.NODE_ENV || 'development';
   if (!~'development,staging'.indexOf(env)) {
     return;

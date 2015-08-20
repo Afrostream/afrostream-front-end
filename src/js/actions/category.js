@@ -33,7 +33,7 @@ export function getCategory(category) {
 export function getMeaList() {
   return async api => ({
     type: ActionTypes.Category.getMeaList,
-    res: await api(`/categorys/mea`, {
+    res: await api(`/categorys/meas`, {
       sort: 'top',
       direction: 'desc'
     })

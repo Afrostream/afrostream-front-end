@@ -17,6 +17,8 @@ if (canUseDOM) {
     super(props);
     this.tlIn = null;
     this.thumbWidth = 422;
+    this.thumbW = 140;
+    this.thumbH = 200;
     this.overTime = 0;
     this.perspective = 200;
     this.thumbOffset = 30;
@@ -205,11 +207,11 @@ if (canUseDOM) {
 
     const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
     let imageStyles = baseUrl;
-    if (this.state.showImage) {
-      imageStyles = movie.get('poster');
+    let thumb = movie.get('thumb');
+    if (this.state.showImage && thumb) {
+      imageStyles = thumb.get('imgix');
     }
-
-    return {backgroundImage: `url(${imageStyles})`};
+    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=clamp&w=${this.thumbW}&h=${this.thumbH}&q=65)`};
   }
 
   render() {
@@ -219,6 +221,9 @@ if (canUseDOM) {
 
     const maxLength = 200;
     let imageStyles = this.getLazyImageUrl();
+    let poster = movie.get('poster');
+    let posterImg = poster ? poster.get('imgix') : '';
+    let imagePoster = {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=${this.thumbWidth}&h=${this.thumbH}&q=65)`};
     let title = movie.get('title');
     let synopsis = movie.get('synopsis') || '';
 
@@ -245,7 +250,7 @@ if (canUseDOM) {
             </div>
           </Link>
 
-          <div ref="info" className="thumb-info" style={imageStyles}>
+          <div ref="info" className="thumb-info" style={imagePoster}>
             <div className="thumb-info__txt">
               <div className="thumb-info__title"><Link to={`/${type}/${idMovie}/${slug}`}
                                                        onClick={::this.loadMovie}>{title}</Link></div>
