@@ -20,10 +20,6 @@ var SelectPlan = React.createClass ({
 
 	selectPlan: function(planName, unitAmountInCents, startDate) {
 
-		console.log('*** plan selected ***');
-		console.log(planName + ' ' + unitAmountInCents);
-		console.log('*** end of selected Plan ***');
-
 		this.setState({
 			planName: planName,
 			unitAmountInCents: unitAmountInCents,
