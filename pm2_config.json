@@ -6,7 +6,7 @@
       "exec_interpreter": "babel-node",
       "exec_mode": "cluster",
       "next_gen_js": true,
-      "autorestart": false,
+      "autorestart": false
     }
   ]
 }
