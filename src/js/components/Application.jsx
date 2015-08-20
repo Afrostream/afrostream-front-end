@@ -19,7 +19,6 @@ if (process.env.BROWSER) {
 }
 
 if (canUseDOM) {
-  //debugger;
   Auth0Lock = require('auth0-lock');
   require('jquery');
   require('bootstrap');
@@ -32,8 +31,6 @@ if (canUseDOM) {
 }) @connect(({ User }) => ({User})) class Application extends React.Component {
 
   getIdToken() {
-
-    //debugger;
     if (canUseDOM) {
       var idToken = localStorage.getItem('afroToken');
       initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
@@ -56,7 +53,6 @@ if (canUseDOM) {
   }
 
   render() {
-    debugger;
     var presetToken = this.getIdToken();
 
     const { props: { User, children } } = this;
@@ -65,7 +61,7 @@ if (canUseDOM) {
     const lock = User.get('lock');
 
     if (presetToken && this.props.paymentStatus !== true) {
-      return(<ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children} />);
+      return (<ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children}/>);
     }
 
     else if (presetToken && this.props.paymentStatus === true) {
@@ -84,7 +80,7 @@ if (canUseDOM) {
 
     } else {
 
-      return(<Welcome lock={initialLock} />);
+      return (<Welcome lock={initialLock}/>);
     }
   }
 }

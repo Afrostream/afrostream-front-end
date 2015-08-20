@@ -84,7 +84,10 @@ if (process.env.BROWSER) {
       //TODO gerer le 404 sur la movie
       console.log('pas de données');
     }
-    let imageStyles = {backgroundImage: `url(${movieData ? movieData.get('poster') : ''})`};
+
+    console.log(movieData.get('poster').get('imgix'))
+
+    let imageStyles = {backgroundImage: `url(${movieData ? movieData.get('poster').get('imgix') : ''})`};
     let idMovie = movieData ? movieData.get('_id') : '';
     let type = movieData ? movieData.get('type') : '';
     let slug = movieData ? movieData.get('slug') : '';

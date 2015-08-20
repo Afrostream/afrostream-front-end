@@ -2,7 +2,9 @@ import Immutable from 'immutable';
 import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 
-const initialState = Immutable.fromJS({});
+const initialState = Immutable.fromJS({
+  initial: 2
+});
 
 export default createReducer(initialState, {
 
@@ -26,9 +28,8 @@ export default createReducer(initialState, {
   [ActionTypes.Category.getMenu](state, { res }) {
     const menu = res.body;
     const defaultSection = menu[0];
-
     return state.merge({
-      ['default']: defaultSection,
+      ['initial']: defaultSection._id,
       ['menu']: menu
     });
   },

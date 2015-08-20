@@ -11,8 +11,8 @@
     "watch-client-dev-server": "./node_modules/.bin/babel-node  webpack/webpack-dev-server.js",
     "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
     "dev": "NODE_ENV=development node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
-    "start": "NODE_ENV=staging npm run express",
-    "test-prod": "NODE_ENV=production PORT=8080 npm run build && NODE_ENV=production PORT=8080 npm run express",
+    "start": "./node_modules/.bin/babel-node lib/pm2",
+    "test-prod": "NODE_ENV=production PORT=8080 npm run build && NODE_ENV=production npm run express",
     "postinstall": "node lib/deploy"
   },
   "keywords": [
@@ -83,6 +83,7 @@
     "packageify": "^0.2.2",
     "parse-link-header": "^0.2.0",
     "penner": "^0.1.2",
+    "pm2": "^0.14.7",
     "postcss-loader": "^0.5.1",
     "qs": "^3.1.0",
     "raw-loader": "^0.5.1",
