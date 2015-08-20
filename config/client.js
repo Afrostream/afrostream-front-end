@@ -7,13 +7,13 @@ const customDict = _.merge(dictFr, {
     "action": "Se connecter"
   }
 });
-
-export default {
+const env = process.env.NODE_ENV ||'development';
+const all = {
   /**
    * Front-End Server
    */
   apiClient: {
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || '//localhost:3002'
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || '//localhost:3002/api'
   },
   carousel: {
     interval: 10000
@@ -49,3 +49,10 @@ export default {
     }
   }
 };
+
+
+// Export the config object based on the NODE_ENV
+// ==============================================
+module.exports = _.merge(
+  all,
+  require('./environment/' + env + '.js') || {});

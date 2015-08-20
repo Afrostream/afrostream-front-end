@@ -4,6 +4,6 @@ export function getToken(asset) {
   return async api => ({
     type: ActionTypes.Asset.getToken,
     asset,
-    res: await api(`/asset/${asset}`)
+    res: await api(`/assets/${asset}`)
   });
 }

@@ -26,7 +26,7 @@ if (process.env.BROWSER) {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,
-    movie: PropTypes.string.isRequired,
+    movieId: PropTypes.string.isRequired,
     maxLength: PropTypes.number.isRequired,
     movieObj: PropTypes.instanceOf(Immutable.Object)
   };
@@ -39,12 +39,15 @@ if (process.env.BROWSER) {
     const container = React.findDOMNode(this.refs.slContainer);
     const backGd = React.findDOMNode(this.refs.slBackground);
     this.tlIn = new TimelineMax({paused: true});
-    //TweenMax.set(container, {transformStyle: 'preserve-3d', perspective: 100, perspectiveOrigin: '50% 50%'});
+    if (!container || !backGd) {
+      return;
+    }
     this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
     this.tlIn.add(TweenMax.fromTo(backGd, 22,
       {z: 0},
       {z: 5, force3D: true}
     ), 0);
+
   }
 
   lunchTransition() {
@@ -75,17 +78,19 @@ if (process.env.BROWSER) {
     });
 
     const {
-      props: { Movie, active, movie, movieObj,maxLength}
+      props: { Movie, active, movieId, movieObj,maxLength}
       } = this;
 
-    const movieData = movieObj || Movie.get(`movie/${movie}`);
+    const movieData = movieObj || Movie.get(`movies/${movieId}`);
 
     if (!movieData) {
       //TODO gerer le 404 sur la movie
-      console.log('pas de données');
+      return (<div>Aucunes données</div>);
     }
-    let imageStyles = {backgroundImage: `url(${movieData ? movieData.get('poster') : ''})`};
-    let idMovie = movieData ? movieData.get('_id') : '';
+
+
+    let imageStyles = {backgroundImage: `url(${movieData ? movieData.get('poster').get('imgix') : ''}?crop=faces&fit=clamp&w=1280&h=720&q=70)`};
+    let idMovie = movieData ? movieData.get('_id') : movieId;
     let type = movieData ? movieData.get('type') : '';
     let slug = movieData ? movieData.get('slug') : '';
     let link = `/${type}/${idMovie}/${slug}/player/${idMovie}`;
@@ -110,11 +115,11 @@ if (process.env.BROWSER) {
   loadAsset() {
     const {
       props: {
-        dispatch, Movie, movie, movieObj
+        dispatch, Movie, movieId, movieObj
         }
       } = this;
 
-    const movieData = movieObj || Movie.get(`movie/${movie}`);
+    const movieData = movieObj || Movie.get(`movies/${movieId}`);
 
     dispatch(AssetActionCreators.getToken(movieData.get('_id')));
   }
