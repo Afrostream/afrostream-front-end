@@ -19,7 +19,7 @@ const getPaginatedItems = function (items, page, per_page) {
 
 const superAgentConfig = [,
   {
-    pattern: `${config.apiServer.urlPrefix}/movies/([\\w-]+)/season`,
+    pattern: `${config.apiServer.urlPrefix}/movies/([\\w-]+)/seasons`,
 
     fixtures: Fixtures.SeasonMock,
     callback: function (match, data) {

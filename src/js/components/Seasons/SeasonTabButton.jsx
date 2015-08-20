@@ -6,7 +6,8 @@ import * as SeasonActionCreators from '../../actions/season';
 @connect(({ Season }) => ({Season})) class SeasonTabButton extends React.Component {
 
   static propTypes = {
-    index: React.PropTypes.number.isRequired
+    index: React.PropTypes.number.isRequired,
+    seasonId: React.PropTypes.number.isRequired
   };
 
   render() {
