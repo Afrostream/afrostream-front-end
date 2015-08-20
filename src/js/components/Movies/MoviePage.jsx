@@ -9,7 +9,7 @@ import SeasonList from '../Seasons/SeasonList';
       store.dispatch(MovieActionCreators.getMovie(movieId)),
       store.dispatch(MovieActionCreators.getSeason(movieId))
     ];
-}) class HomePage extends React.Component {
+}) class MoviePage extends React.Component {
 
   render() {
     const {
@@ -27,4 +27,4 @@ import SeasonList from '../Seasons/SeasonList';
   }
 }
 
-export default HomePage;
+export default MoviePage;

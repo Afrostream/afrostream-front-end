@@ -8,7 +8,7 @@ import config from './superagent-mock-config';
  */
 export default function (superagent) {
   const env = process.env.NODE_ENV || 'development';
-  if (!~'development,staging'.indexOf(env)) {
+  if (!~'development'.indexOf(env)) {
     return;
   }
   var Request = superagent.Request;
