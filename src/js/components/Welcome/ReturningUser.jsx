@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import Welcome from './Welcome';
 import Browse from './Browse';
 import AfrostreamMonthlyMessage from './AfrostreamMonthlyMessage';
+import WelcomeFooter from './WelcomeComponents/WelcomeFooter';
 import Payment from './Payment';
 import Application from '../Application';
 
@@ -40,11 +41,6 @@ var ReturningUser = React.createClass ({
 		} = this;
 
 		if (this.state.profile) {
-			console.log('*** here is the user profile ***');
-			console.log(this.state.profile);
-			console.log('*** end of the profile info ***');
-			console.log(this.state.profile.paymentStatus);
-			console.log('*** end of payment status ***');
 
 			if ( (typeof this.state.profile.paymentStatus !== 'undefined')
 				&& (this.state.profile.paymentStatus === true)
@@ -60,11 +56,21 @@ var ReturningUser = React.createClass ({
 				&& (typeof this.state.profile.planCode !== 'undefined')
 				&& (this.state.profile.planCode === 'afrostreammonthly')) {
 
-				return(<AfrostreamMonthlyMessage lock={this.props.lock}  idToken={this.props.idToken} profile={this.state.profile} />);
+				return(
+					<div>
+						<AfrostreamMonthlyMessage lock={this.props.lock}  idToken={this.props.idToken} profile={this.state.profile} />
+						<WelcomeFooter />
+					</div>
+				);
 
 			} else {
 
-				return (<Payment lock={this.props.lock} idToken={this.props.idToken} profile={this.state.profile} />);
+				return (
+					<div>
+						<Payment lock={this.props.lock} idToken={this.props.idToken} profile={this.state.profile} />
+						<WelcomeFooter />
+					</div>
+				);
 			}
 		} else if (this.state.tokenExpired === true) {
 
