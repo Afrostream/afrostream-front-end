@@ -2,9 +2,11 @@
   "apps": [
     {
       "name": "afrostream-front-end",
-      "script": "./lib/express.js --next-gen-js",
+      "script": "./lib/express.js",
       "exec_interpreter": "babel-node",
-      "exec_mode": "cluster"
+      "exec_mode": "cluster",
+      "next_gen_js": true,
+      "autorestart": false,
     }
   ]
 }
