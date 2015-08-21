@@ -1,5 +1,4 @@
 import React from 'react';
-import { prepareRoute } from '../decorators';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Navigation from './Navigation/Navigation';
@@ -24,11 +23,7 @@ if (canUseDOM) {
   require('bootstrap');
 }
 
-@prepareRoute(async function ({ store }) {
-  return await * [
-      store.dispatch(CategoryActionCreators.getMenu())
-    ];
-}) @connect(({ User }) => ({User})) class Application extends React.Component {
+@connect(({ User }) => ({User})) class Application extends React.Component {
 
   getIdToken() {
     if (canUseDOM) {

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
-import Navigation from '../Navigation/Navigation';
 import * as AssetActionCreators from '../../actions/asset';
 
 if (canUseDOM) {
@@ -105,8 +104,6 @@ if (process.env.BROWSER) {
         <Link className="btn-play" to={link} onClick={::this.loadAsset}/>
 
         {movieData ? <Billboard {...{active, movieData, maxLength}}/> : ''}
-
-        <Navigation />
 
       </div>
     );

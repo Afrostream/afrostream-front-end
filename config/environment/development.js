@@ -3,5 +3,10 @@
 // Development specific configuration
 // ==================================
 export default {
-  apiClient: {}
+  apiClient: {
+    urlPrefix: 'http://localhost:3002/api'
+  },
+  apiServer: {
+    urlPrefix: 'http://localhost:3002/api'
+  }
 };

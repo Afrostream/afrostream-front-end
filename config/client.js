@@ -13,7 +13,7 @@ const all = {
    * Front-End Server
    */
   apiClient: {
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || '//localhost:3002/api'
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT
   },
   carousel: {
     interval: 10000

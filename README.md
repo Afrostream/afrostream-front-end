@@ -13,9 +13,13 @@ npm install
 ```
 npm run dev
 ```
+##Run Dev mock
+```
+npm run dev mock
+```
 ##Run Prod
 ```
-npm run test-prod
+NODE_ENV=production PORT=8080 npm run build npm run express
 ```
 
 ##Deploy

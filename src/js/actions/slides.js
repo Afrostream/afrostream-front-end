@@ -1,9 +1,8 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function toggleNext() {
+export function toggleNext(total) {
   return (dispatch, getState) => {
     const current = getState().Slides.get('page');
-    const total = getState().Category.get('total');
     let next = current + 1;
     if (next > total) {
       next = 0;
@@ -15,10 +14,9 @@ export function toggleNext() {
   };
 }
 
-export function togglePrev() {
+export function togglePrev(total) {
   return (dispatch, getState) => {
     const current = getState().Slides.get('page');
-    const total = getState().Category.get('total');
     let prev = current - 1;
     if (prev < 0) {
       prev = total;
