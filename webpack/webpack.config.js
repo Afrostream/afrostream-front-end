@@ -4,7 +4,6 @@ import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import config from '../config';
 
-const env = process.env.NODE_ENV || 'development';
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',

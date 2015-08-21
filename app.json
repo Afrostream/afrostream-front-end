@@ -4,8 +4,8 @@
   "scripts": {},
   "env": {
     "NODE_ENV": "staging",
-    "API_END_POINT": "http://afrostream-api-v1-staging.herokuapp.com",
-    "API_CLIENT_END_POINT": "http://afrostream-api-v1-staging.herokuapp.com",
+    "API_END_POINT": "http://afrostream-api-v1.herokuapp.com",
+    "API_CLIENT_END_POINT": "http://afrostream-api-v1.herokuapp.com",
     "AUTH0_CLIENT_ID": "BtSdIqKqfIse0H1dqlpHFJgKIkUG0NpE",
     "AUTH0_DOMAIN": "afrostream.eu.auth0.com",
     "AUTH0_CALLBACK_URL": "afrostream.herokuapp.com/callback"
