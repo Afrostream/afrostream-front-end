@@ -32,7 +32,7 @@ export default {
   }),
 
   Category: keyMirror({
-    getTop: null,
+    getSpots: null,
     getMeaList: null,
     getCategory: null,
     getMenu: null

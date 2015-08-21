@@ -1,13 +1,15 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function getTop(category) {
+export function getSpots(categoryId) {
   return (dispatch, getState) => {
     //TODO recuperation de l'id top
-    const defaultCategory = 2//getState().Category.get('initial');
-    category = category || defaultCategory;
+    const defaultCategory = getState().Category.get('categoryId');
+    console.log('defaultCategory', defaultCategory)
+    categoryId = categoryId || defaultCategory;
     return async api => ({
-      type: ActionTypes.Category.getTop,
-      res: await api(`/categorys/${category}/spots`, {
+      type: ActionTypes.Category.getSpots,
+      categoryId,
+      res: await api(`/categorys/${categoryId}/spots`, {
         sort: 'updated',
         direction: 'desc'
       })
@@ -15,14 +17,14 @@ export function getTop(category) {
   };
 }
 
-export function getCategory(category) {
+export function getCategory(categoryId) {
   return (dispatch, getState) => {
-    const defaultCategory = getState().Category.get('top');
-    category = category || defaultCategory;
+    const defaultCategory = getState().Category.get('categoryId');
+    categoryId = categoryId || defaultCategory;
     return async api => ({
       type: ActionTypes.Category.getCategory,
-      category,
-      res: await api(`/categorys/${category}`, {
+      categoryId,
+      res: await api(`/categorys/${categoryId}`, {
         sort: 'updated',
         direction: 'desc'
       })

@@ -2,13 +2,18 @@
 
 import qs from 'qs';
 import config from './superagent-mock-config';
+import argv from 'optimist';
+argv.describe('mock')
+  .alias('m', 'mock')
+  .default(false)
+  .argv;
 /**
  * Installs the `mock` extension to superagent.
  * based on https://github.com/M6Web/superagent-mock thk's to @oziks https://twitter.com/oziks
  */
 export default function (superagent) {
   const env = process.env.NODE_ENV || 'development';
-  if (!~'development'.indexOf(env)) {
+  if (argv.mock === undefined || !~'development'.indexOf(env)) {
     return;
   }
   var Request = superagent.Request;

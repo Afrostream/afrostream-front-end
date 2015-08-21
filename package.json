@@ -11,8 +11,8 @@
     "watch-client-dev-server": "./node_modules/.bin/babel-node  webpack/webpack-dev-server.js",
     "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
+    "mock": "npm run dev --mock",
     "start": "./node_modules/.bin/babel-node lib/pm2",
-    "test-prod": "NODE_ENV=production PORT=8080 npm run build && NODE_ENV=production npm run express",
     "postinstall": "node lib/deploy"
   },
   "keywords": [
@@ -47,6 +47,7 @@
     "babel-loader": "^5.3.2",
     "babel-runtime": "^5.7.0",
     "bluebird": "^2.9.30",
+    "body-parser": "^1.13.3",
     "bootstrap": "^3.3.5",
     "brfs": "^1.4.0",
     "browser-sync-webpack-plugin": "^0.1.3",
@@ -77,8 +78,10 @@
     "lesshat": "^3.0.2",
     "lodash": "^3.9.3",
     "markdown-loader": "^0.1.3",
+    "method-override": "^2.3.5",
     "node-libs-browser": "^0.5.2",
     "normalize.css": "^3.0.3",
+    "optimist": "^0.6.1",
     "packageify": "^0.2.2",
     "parse-link-header": "^0.2.0",
     "penner": "^0.1.2",
