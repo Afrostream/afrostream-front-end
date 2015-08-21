@@ -7,7 +7,7 @@ const customDict = _.merge(dictFr, {
     "action": "Se connecter"
   }
 });
-const env = process.env.NODE_ENV || 'development';
+
 const all = {
   /**
    * Front-End Server
@@ -55,4 +55,4 @@ const all = {
 // ==============================================
 module.exports = _.merge(
   all,
-  require('./environment/' + env + '.js') || {});
+  require('./environment/' + process.env.NODE_ENV || 'development' + '.js') || {});
