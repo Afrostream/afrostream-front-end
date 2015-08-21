@@ -1,6 +1,5 @@
 'use strict';
 import dictFr from '../node_modules/auth0-lock/i18n/fr-FR.json';
-import _ from 'lodash';
 const customDict = _.merge(dictFr, {
   signin: {
     "title": "S’identifier",
@@ -13,7 +12,7 @@ const all = {
    * Front-End Server
    */
   apiClient: {
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api'
   },
   carousel: {
     interval: 10000
@@ -55,10 +54,3 @@ const all = {
     }
   }
 };
-
-
-// Export the config object based on the NODE_ENV
-// ==============================================
-module.exports = _.merge(
-  all,
-  require('./environment/' + process.env.NODE_ENV || 'development' + '.js') || {});
