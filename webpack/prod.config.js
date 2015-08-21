@@ -7,6 +7,9 @@ import config from '../config';
 // -----------------------------------------------------------------------------
 const prodConfig = merge({}, webpackConfig, {
   devtool: '#source-map',
+  output: {
+    publicPath: `/static/`
+  },
   externals: [
     /*
      /^react(\/.*)?$/,
