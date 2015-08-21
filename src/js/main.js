@@ -19,6 +19,7 @@ const api = createAPI(
   ({ method, headers = {}, pathname = '', query = {}, body = {} }) => {
     pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '');
     var url = `${apiClient.urlPrefix}${pathname}`;
+    console.log('api url', url)
 
     return request(method, url)
       .query(qs.stringify(query))
