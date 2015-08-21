@@ -8,6 +8,7 @@ const customDict = _.merge(dictFr, {
   }
 });
 
+console.log('PROCESS : ', process.env.API_CLIENT_END_POINT, process.env.API_END_POINT);
 export default {
   /**
    * Front-End Server
