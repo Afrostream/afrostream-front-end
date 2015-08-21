@@ -38,6 +38,9 @@ const prodConfig = merge({}, webpackConfig, {
         warnings: false,
         drop_console: true
       }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
     })
     //FIXME Replace mock remover for staging/production
     // ignore dev config
