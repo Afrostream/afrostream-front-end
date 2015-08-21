@@ -13,7 +13,7 @@ export default {
    * Front-End Server
    */
   apiClient: {
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api'
+    urlPrefix: 'http://afrostream-api-v1.herokuapp.com/api/'// process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api'
   },
   carousel: {
     interval: 10000
