@@ -33,8 +33,10 @@ const prodConfig = merge({}, webpackConfig, {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
+      output: {comments: false},
       compress: {
-        warnings: false
+        warnings: false,
+        drop_console: true
       }
     })
     //FIXME Replace mock remover for staging/production
