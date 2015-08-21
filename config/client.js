@@ -7,7 +7,7 @@ const customDict = _.merge(dictFr, {
     "action": "Se connecter"
   }
 });
-const env = process.env.NODE_ENV ||'development';
+const env = process.env.NODE_ENV || 'development';
 const all = {
   /**
    * Front-End Server
