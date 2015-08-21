@@ -38,5 +38,5 @@ const config = _.merge(
       port: 8082
     }
   }, client);
-
+console.log(config);
 export default config;
