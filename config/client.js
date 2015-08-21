@@ -1,5 +1,6 @@
 'use strict';
 import dictFr from '../node_modules/auth0-lock/i18n/fr-FR.json';
+import _ from 'lodash';
 const customDict = _.merge(dictFr, {
   signin: {
     "title": "S’identifier",
@@ -7,7 +8,7 @@ const customDict = _.merge(dictFr, {
   }
 });
 
-const all = {
+export default {
   /**
    * Front-End Server
    */
