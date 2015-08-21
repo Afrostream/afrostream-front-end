@@ -19,7 +19,7 @@ const config = _.merge(
      * API Server
      */
     apiServer: {
-      urlPrefix: 'http://afrostream-api-v1.herokuapp.com/api/'//process.env.API_END_POINT || 'http://localhost:3002/api'
+      urlPrefix: process.env.API_END_POINT || 'http://localhost:3002/api'
     },
 
     /**
