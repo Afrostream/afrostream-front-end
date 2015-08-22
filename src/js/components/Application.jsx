@@ -1,7 +1,7 @@
 import React from 'react';
+import { prepareRoute } from '../decorators';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import Navigation from './Navigation/Navigation';
 import Welcome from './Welcome/Welcome';
 import ReturningUser from './Welcome/ReturningUser';
 import * as CategoryActionCreators from '../actions/category';
@@ -23,9 +23,14 @@ if (canUseDOM) {
   require('bootstrap');
 }
 
-@connect(({ User }) => ({User})) class Application extends React.Component {
+@prepareRoute(async function ({ store }) {
+  return await * [
+      store.dispatch(CategoryActionCreators.getMenu())
+    ];
+}) @connect(({ User }) => ({User})) class Application extends React.Component {
 
   getIdToken() {
+
     if (canUseDOM) {
       var idToken = localStorage.getItem('afroToken');
       initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
@@ -40,31 +45,28 @@ if (canUseDOM) {
           console.log("Error signing in", authHash);
         }
       }
-      console.log('*** inside getIdToken ***');
-      console.log(idToken);
 
       return idToken;
     }
   }
 
   render() {
+
     var presetToken = this.getIdToken();
 
     const { props: { User, children } } = this;
-
     const token = User.get('token');
     const lock = User.get('lock');
 
     if (presetToken && this.props.paymentStatus !== true) {
-      return (<ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children}/>);
+      return(<ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children} />);
     }
 
     else if (presetToken && this.props.paymentStatus === true) {
 
-      return (
-        <div className="app">
-        <Header />
-        <Navigation />
+    return (
+      <div className="app">
+        <Header {...this.props}/>
 
         <div className="container-fluid">
         {children}
@@ -75,7 +77,7 @@ if (canUseDOM) {
 
     } else {
 
-      return (<Welcome lock={initialLock}/>);
+      return(<Welcome lock={initialLock} />);
     }
   }
 }
