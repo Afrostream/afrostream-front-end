@@ -18,7 +18,6 @@ if (process.env.BROWSER) {
 }
 
 if (canUseDOM) {
-  //debugger;
   Auth0Lock = require('auth0-lock');
   require('jquery');
   require('bootstrap');
@@ -32,7 +31,6 @@ if (canUseDOM) {
 
   getIdToken() {
 
-    //debugger;
     if (canUseDOM) {
       var idToken = localStorage.getItem('afroToken');
       initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
@@ -47,19 +45,16 @@ if (canUseDOM) {
           console.log("Error signing in", authHash);
         }
       }
-      console.log('*** inside getIdToken ***');
-      console.log(idToken);
 
       return idToken;
     }
   }
 
   render() {
-    debugger;
+
     var presetToken = this.getIdToken();
 
     const { props: { User, children } } = this;
-
     const token = User.get('token');
     const lock = User.get('lock');
 

@@ -32,6 +32,7 @@ import { Link } from 'react-router';
 
     if (token) {
       if (user) {
+
         return (
           <div className="btn-group navbar-collapse collapse navbar-left">
             <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"

@@ -79,7 +79,7 @@ const refreshToken = function (getState) {
 };
 
 export function getProfile() {
-  console.log('getProfile');
+
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
     const token = getState().User.get('token');
