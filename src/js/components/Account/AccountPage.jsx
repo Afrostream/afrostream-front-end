@@ -18,7 +18,9 @@ import { connect } from 'react-redux';
       } = this;
 
     const user = User.get('user');
+
     if (user) {
+
       console.log('*** here is the user in the account page ***');
       console.log(user.get('accountCode'));
       console.log('*** end of the user in the account page ***');
@@ -28,6 +30,13 @@ import { connect } from 'react-redux';
           <div className="container">
             <h1>Mon compte</h1>
           </div>
+        </div>
+      );
+    } else {
+
+      return (
+        <div className="row-fluid">
+
         </div>
       );
     }
