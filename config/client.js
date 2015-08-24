@@ -13,7 +13,7 @@ export default {
    * Front-End Server
    */
   apiClient: {
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || '//api.afrostream.tv'
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || '//localhost:3002'
   },
   carousel: {
     interval: 10000
@@ -32,15 +32,17 @@ export default {
       resetLink: '/reset-password',
       connections: ['Username-Password-Authentication', 'facebook'],
       socialBigButtons: true,
-      disableSignupAction: false,
-      loginAfterSignup: true,
-      rememberLastLogin: true,
-      integratedWindowsLogin: true,
-      defaultADUsernameFromEmailPrefix: true,
-      responseType: 'token',
-      popup: true,
-      sso: false,
-      closable: true,
+      disableSignupAction: true,
+      rememberLastLogin: false,
+      disableResetAction: false,
+      authParams: {
+        scope: 'openid offline_access'
+      }
+    },
+    signUp: {
+      dict: 'fr',
+      connections: ['Username-Password-Authentication', 'facebook'],
+      socialBigButtons: true,
       authParams: {
         scope: 'openid offline_access'
       }

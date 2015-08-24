@@ -43,5 +43,6 @@ compiler.plugin('done', (stats) => {
 });
 
 webpackDevServer.listen(port, function () {
+
   console.info('==> 🚧  Webpack development server listening on %s:%s', host, port);
 });

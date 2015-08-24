@@ -7,6 +7,8 @@ export default {
     createLock: null,
     getProfile: null,
     showLock: null,
+    showSignupLock: null,
+    showSigninLock: null,
     logOut: null
   }),
 
