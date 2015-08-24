@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import { Link } from 'react-router';
+import Spinner from '../Spinner/Spinner';
 
 class SeasonEpisodeThumb extends React.Component {
 
@@ -14,8 +15,12 @@ class SeasonEpisodeThumb extends React.Component {
       } = this;
 
     const maxLength = 80;
-
-    let imageStyles = {backgroundImage: `url(${episode.get('poster')})`};
+    if (!episode) {
+      return <Spinner/>
+    }
+    let poster = episode.get('poster');
+    let posterImg = poster ? poster.get('imgix') : '';
+    let imagePoster = {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=200&h=110&q=65)`};
     let title = episode.get('title');
     let synopsis = episode.get('synopsis') || '';
 
@@ -33,7 +38,7 @@ class SeasonEpisodeThumb extends React.Component {
       <div ref="thumbContainer" className="thumb-containter">
         <div ref="thumb" className="thumb">
           <Link to={`/${type}/${slug}/player`}>
-            <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
+            <div ref="thumbBackground" className="thumb-background" style={imagePoster}>
               <i className="btn-play"></i>
             </div>
           </Link>

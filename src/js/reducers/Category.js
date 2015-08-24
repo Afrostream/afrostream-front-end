@@ -2,40 +2,46 @@ import Immutable from 'immutable';
 import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 
-const initialState = Immutable.fromJS({});
+const initialState = Immutable.fromJS({
+  'categoryId': '1'
+});
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Category.getTop](state, { res }) {
-    const catList = res.body;
+  [ActionTypes.Category.getSpots](state, { categoryId,res }) {
+    const data = res.body;
+    console.log('Category.getSpots', categoryId, data);
     return state.merge({
-      ['total']: catList.length - 1,
-      [`category/top__res`]: res,
-      [`category/top`]: catList
+      ['categoryId']: categoryId,
+      [`categorys/${categoryId}/spots__res`]: res,
+      [`categorys/${categoryId}/spots`]: data
     });
   },
 
-  [ActionTypes.Category.getCategory](state, { category, res }) {
-    const list = res.body;
+  [ActionTypes.Category.getCategory](state, { categoryId, res }) {
+    const data = res.body;
+    console.log('Category.getCategory', categoryId, data);
     return state.merge({
-      ['current']: category,
-      [`category/${category}__res`]: res,
-      [`category/${category}`]: list
+      ['categoryId']: categoryId,
+      [`categorys/${categoryId}__res`]: res,
+      [`categorys/${categoryId}`]: data
     });
   },
   [ActionTypes.Category.getMenu](state, { res }) {
-    const menu = res.body;
-    const defaultSection = menu[0];
-
+    const data = res.body;
+    console.log('Category.getMenu', data);
+    const categoryId = data[0]._id;
+    console.log('default categoryId', categoryId);
     return state.merge({
-      ['default']: defaultSection,
-      ['menu']: menu
+      ['categoryId']: categoryId,
+      ['menu']: data
     });
   },
   [ActionTypes.Category.getMeaList](state, { res }) {
-    const meaList = res.body;
+    const data = res.body;
+    console.log('Category.getMeaList', data);
     return state.merge({
-      ['meaList']: meaList
+      ['meaList']: data
     });
   }
 });

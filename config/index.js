@@ -19,7 +19,7 @@ const config = _.merge(
      * API Server
      */
     apiServer: {
-      urlPrefix: process.env.API_END_POINT || '//api.afrostream.tv'
+      urlPrefix: process.env.API_END_POINT || 'http://localhost:3002/api'
     },
 
     /**
