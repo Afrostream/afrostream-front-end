@@ -18,7 +18,7 @@ if (process.env.BROWSER) {
 
   getCardNumber(accountCode) {
 
-    var apiPath = config.apiClient.urlPrefix + '/api/subscriptions/billing/' + accountCode;
+    var apiPath = config.apiClient.urlPrefix + '/subscriptions/billing/' + accountCode;
     var cardNumber;
 
     $.ajax({

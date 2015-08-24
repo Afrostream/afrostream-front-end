@@ -96,7 +96,7 @@ var PaymentForm = React.createClass ({
 			}
 			// Otherwise we continue with the form submission
 			else {
-				var subscriptionPath = config.apiClient.urlPrefix + '/api/subscriptions';
+				var subscriptionPath = config.apiClient.urlPrefix + '/subscriptions';
 				var formData = JSON.stringify($.extend(billingInfo, {
 					'recurly-token': token.id
 				}));
