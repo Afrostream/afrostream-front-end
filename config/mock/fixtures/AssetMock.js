@@ -1,3 +1,5 @@
+import config from '../../../config'
+
 export default function () {
   return [{
     "_id": "5504b0fdf298061100d4b231",
@@ -6,8 +8,8 @@ export default function () {
     "height": "100%",
     "autoplay": true,
     "sr_options": {
-      "ID_CLIENT": "ry-0gzuhlor",
-      "TRACKER_URL": "http://tracker.streamroot.io:80"
+      "ID_CLIENT": config.streamRoot.clientId,
+      "TRACKER_URL": config.streamRoot.trackerUrl
     },
     "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
     "sources": [
@@ -28,8 +30,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -50,8 +52,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -72,8 +74,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -87,14 +89,15 @@ export default function () {
         }
       ]
     },
-    { "_id": "54fdcccaab57cb11006e340b",
+    {
+      "_id": "54fdcccaab57cb11006e340b",
       "controls": true,
       "width": "100%",
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -115,14 +118,18 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
         {
-          "src": "http://origin.digibos.fr/media/digibos/Blackish.S01E16.ism/Blackish.S01E16.mpd",
+          "src": "http://origin.afrostream.tv/vod/MCR107REV/22f46a32a271ae9f.ism/22f46a32a271ae9f.mpd",
           "type": "video/dash"
+        },
+        {
+          "src": "http://origin.afrostream.tv/vod/MCR107REV/22f46a32a271ae9f.ism/master.m3u8",
+          "type": "application/x-mpegURL"
         }
       ]
     },
@@ -133,8 +140,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -155,8 +162,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -177,8 +184,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -197,10 +204,9 @@ export default function () {
       "controls": true,
       "width": "100%",
       "height": "100%",
-      "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -221,8 +227,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -243,8 +249,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -265,8 +271,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -287,9 +293,9 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-      "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
-    },
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
+      },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
         {
@@ -309,8 +315,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -331,8 +337,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -353,8 +359,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -375,8 +381,8 @@ export default function () {
       "height": "100%",
       "autoplay": true,
       "sr_options": {
-        "ID_CLIENT": "ry-0gzuhlor",
-        "TRACKER_URL": "http://tracker.streamroot.io:80"
+        "ID_CLIENT": config.streamRoot.clientId,
+        "TRACKER_URL": config.streamRoot.trackerUrl
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
