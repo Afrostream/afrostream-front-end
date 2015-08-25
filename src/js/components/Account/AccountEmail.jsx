@@ -35,7 +35,7 @@ if (process.env.BROWSER) {
 
     var self = this;
     var clientData = {
-      'client_id': 'BtSdIqKqfIse0H1dqlpHFJgKIkUG0NpE',
+      'client_id': config.auth0.client_id,
       'client_secret': 'KYmL01KW5HczO-XKpltlVUONRCXtynJQ0nFqiGNOsjN9c3RsBAnr5_T-rnnc7DYY',
       'grant_type': 'client_credentials'
     };
@@ -43,9 +43,11 @@ if (process.env.BROWSER) {
 
     clientData = JSON.stringify(clientData);
 
+    var generateTokenUrl = 'https://' + config.auth0.domain + '/oauth/token';
+
     $.ajax({
       type: 'POST',
-      url: 'https://afrostream.eu.auth0.com/oauth/token',
+      url: generateTokenUrl,
       data: clientData,
       crossDomain: true,
       contentType: 'application/json',
