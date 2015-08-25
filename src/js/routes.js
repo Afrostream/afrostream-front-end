@@ -10,11 +10,21 @@ import PlayerPage from './components/Player/PlayerPage';
 import LoginPage from './components/Login/LoginPage';
 
 import AccountPage from './components/Account/AccountPage';
+import AccountEmail from './components/Account/AccountEmail';
+import AccountPassword from './components/Account/AccountPassword';
+import AccountCreditCard from './components/Account/AccountCreditCard';
+import AccountPlan from './components/Account/AccountPlan';
 import NoMatch from './components/NoMatch';
 
 export default (
   <Route name="app" component={Application}>
     <Route name="compte" path="/compte" component={AccountPage}/>
+
+    <Route name="compteEmail" path="/compte/email" component={AccountEmail}/>
+    <Route name="comptePassword" path="/compte/password" component={AccountPassword}/>
+    <Route name="compteCreditCard" path="/compte/credit-card" component={AccountCreditCard}/>
+    <Route name="comptePlan" path="/compte/plan" component={AccountPlan}/>
+
     <Route name="login" path="/login" component={LoginPage}/>
     <Route name="home" path="/" component={HomePage} ignoreScrollBehavior={true}>
       <Route name="category" path=":category" component={MoviesList}/>
