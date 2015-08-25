@@ -22,16 +22,9 @@ if (process.env.BROWSER) {
 })
 @connect(({ User }) => ({User})) class AccountPassword extends React.Component {
 
-  getInitialState() {
 
-    return {
-      cardNumber: null
-    }
-  };
+  state = {passwordChanged: null};
 
-  componentDidMount() {
-
-  }
 
   changePassword() {
     debugger;
@@ -41,7 +34,16 @@ if (process.env.BROWSER) {
 
     var self = this;
     var userId = $('#user-id').val();
-    var auth0Path = 'https://afrostream.eu.auth0.com/api/users/' + userId + '/password';
+
+    var pass1 = $('#new-password').val();
+    var pass2 = $('#confirm-new-password').val();
+    if (pass1 === pass2) {
+      console.log('*** passwords are equal ***');
+    } else {
+      console.log('*** passwords are not equal ***');
+    }
+
+    var auth0Path = 'https://' + client.auth0.domain + '/api/users/' + userId + '/password';
     var token = getAuthToken();
     var emailData = {'password': 's0mepass', 'verify': true};
     var authHeader = 'Bearer ' + token.access_token;
@@ -61,12 +63,19 @@ if (process.env.BROWSER) {
 
         console.log('*** there was some kind of success ***');
         console.log(responseData);
+        self.setState({
+          passwordChanged: true
+        });
+
       },
       error: function (err) {
 
         console.log('**** there was an error ***');
         console.log(err);
         console.log('*** end of error message ***');
+        self.setState({
+          passwordChanged: false
+        });
       }
     });
 
@@ -120,7 +129,7 @@ if (process.env.BROWSER) {
     console.log(user.get('user_id'));
 
     if (user) {
-
+      debugger;
       return (
         <div className="row-fluid">
           <div className="container">
@@ -131,16 +140,16 @@ if (process.env.BROWSER) {
                   className="new-password-label"
                   htmlFor="new-password">Nouveau mot de passe (minimum 6 caractères)</label>
                 <input
-                  type="text"
+                  type="password"
                   className="new-password"
                   id="new-password"
                   name="new-password"
                   pattern=".{6,}" required title="minimum 6 caractères" />
                 <label
                   className="confirm-new-password-label"
-                  htmlFor="confirm-new-password">Nouveau mot de passe (minimum 6 caractères)</label>
+                  htmlFor="confirm-new-password">Confirmation du mot de passe</label>
                 <input
-                  type="text"
+                  type="password"
                   className="confirm-new-password"
                   id="confirm-new-password"
                   name="confirm-new-password"
@@ -155,7 +164,7 @@ if (process.env.BROWSER) {
                   type="submit"
                   form="change-password"
                   className="button-change-password"
-                  onClick={this.changePassword}>ENREGISTRER
+                  onClick={::this.changePassword}>ENREGISTRER
               </button>
               </form>
             </div>
