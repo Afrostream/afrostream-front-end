@@ -16,12 +16,7 @@ if (process.env.BROWSER) {
 })
 @connect(({ User }) => ({User})) class AccountPage extends React.Component {
 
-  getInitialState() {
-
-    return {
-      cardNumber: null
-    }
-  };
+  state = {cardNumber: null};
 
   componentDidMount() {
     var self = this;
@@ -33,6 +28,7 @@ if (process.env.BROWSER) {
       type: 'GET',
       url: apiPath,
       dataType: 'json',
+      async: false,
       success: function (responseData) {
 
         cardLastFour = responseData.data.billing_info.last_four;
@@ -57,45 +53,54 @@ if (process.env.BROWSER) {
       } = this;
 
     const user = User.get('user');
+    var plans = {
+      afrostreammonthly: 'THINK LIKE A MAN',
+      afrostreamambassadeurs: 'Ambassadeurs',
+      afrostreampremium: 'DO THE RIGHT THING'};
 
     if (user) {
 
       return (
         <div className="row-fluid">
           <div className="container">
-            <h1>Mon compte</h1>
-            <div className="account-details">
-              <div className="billing-details-header">
-                ABONNEMENT ET FACTURATION
-              </div>
-              <div className="billing-details-container">
-                <div className="billing-details-email">
-                  <div className="email">{user.get('email')}</div>
+            <div className="account-page">
+              <h1>Mon compte</h1>
+              <div className="account-details">
+                <div className="billing-details-header">
+                  ABONNEMENT ET FACTURATION
                 </div>
+                <div className="billing-details-container">
+                  <div className="billing-details-email">
+                    <div className="email">{user.get('email')}</div>
+                    <div className="change-email">
+                      <Link to="/compte/email">Modifier l'adresse e-mail</Link>
+                    </div>
+                  </div>
 
-                <div className="billing-details-password">
-                  <div className="password">Mot de passe: ******</div>
-                  <div className="change-word">
-                    <Link to="/compte/password">Modifier le mot de passe</Link>
+                  <div className="billing-details-password">
+                    <div className="password">Mot de passe: ******</div>
+                    <div className="change-password">
+                      <Link to="/compte/password">Modifier le mot de passe</Link>
+                    </div>
+                  </div>
+
+                  <div className="billing-details-credit-card">
+                    <div className="credit-card">**** **** **** {this.state.cardNumber}</div>
+                    <div className="change-credit-card">
+                      <Link to="/compte/credit-card">Mettre à jour les informations de paiement</Link>
+                    </div>
                   </div>
                 </div>
-
-                <div className="billing-details-credit-card">
-                  <div className="credit-card">**** **** **** {this.state}</div>
-                  <div className="change-credit-card">
-                    <Link to="/compte/credit-card">Mettre à jour les informations de paiement</Link>
-                  </div>
-                </div>
               </div>
-            </div>
 
-            <div className="plan-details">
-              <div className="plan-details-header">DÉTAIL DU FORFAIT</div>
-              <div className="plan-details-container">
-                <div className="plan-details-plan-name">
-                  <div className="plan-name">{user.get('planCode')}</div>
-                  <div className="change-plan">
-                    <Link to="/compte/plan">Changer de forfait</Link>
+              <div className="plan-details">
+                <div className="plan-details-header">DÉTAIL DU FORFAIT</div>
+                <div className="plan-details-container">
+                  <div className="plan-details-plan-name">
+                    <div className="plan-name">{plans[user.get('planCode')]}</div>
+                    <div className="change-plan">
+                      <Link to="/compte/plan">Changer de forfait</Link>
+                    </div>
                   </div>
                 </div>
               </div>

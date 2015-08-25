@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import config from '../../../../config/client';
 
 if (process.env.BROWSER) {
-  require('./AccountPage.less');
+  require('./AccountPlan.less');
 }
 
 @prepareRoute(async function ({ store }) {
@@ -37,14 +37,21 @@ if (process.env.BROWSER) {
     const user = User.get('user');
 
     if (user) {
-
+      debugger;
       return (
         <div className="row-fluid">
-        <div className="container">
-        <h1>Change your plan</h1>
-      </div>
-      </div>
-    );
+          <div className="container">
+            <div className="account-plan">
+              <h1>Changer de forfait</h1>
+              <div className="account-plan-details">
+                Cette page n’est pas encore active. Pour changer de forfait, veuillez contacter notre
+                service client a l’adresse suivante:
+                <a href="mailto:support@afrostream.tv?Subject=Changer%20mail" target="_top"> support@afrostream.tv</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     } else {
 
       return (

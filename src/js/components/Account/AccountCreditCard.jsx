@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import config from '../../../../config/client';
 
 if (process.env.BROWSER) {
-  require('./AccountPage.less');
+  require('./AccountCreditCard.less');
 }
 
 @prepareRoute(async function ({ store }) {
@@ -37,11 +37,18 @@ if (process.env.BROWSER) {
     const user = User.get('user');
 
     if (user) {
-
+      debugger;
       return (
         <div className="row-fluid">
         <div className="container">
-        <h1>Carte Crédit</h1>
+        <div className="account-credit-card">
+        <h1>Mettre à jour les informations de paiement</h1>
+      <div className="account-credit-card-details">
+        Cette page n’est pas encore active. Pour changer vos informations de paiement, veuillez contacter notre
+        service client a l’adresse suivante:
+        <a href="mailto:support@afrostream.tv?Subject=Changer%20mail" target="_top"> support@afrostream.tv</a>
+      </div>
+      </div>
       </div>
       </div>
     );
