@@ -1,27 +1,7 @@
 import config from '../../../config'
 
 export default function () {
-  return {
-    "controls": true,
-    "width": "100%",
-    "height": "100%",
-    "autoplay": true,
-    "sr_options": {
-      "ID_CLIENT": config.streamRoot.clientId,
-      "TRACKER_URL": config.streamRoot.trackerUrl
-    },
-    "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
-    "sources": [
-      {
-        "src": "http://origin.digibos.fr/media/digibos/Black.Dynamite.2009.ism/Black.Dynamite.2009.mpd",
-        "type": "video/dash"
-      },
-      {
-        "src": "http://origin.digibos.fr/media/digibos/Black.Dynamite.2009.ism/Black.Dynamite.2009.m3u8",
-        "type": "application/x-mpegURL"
-      }
-    ]
-  },
+  return [
     {
       "_id": "54fde8291f2ab01100934ca3",
       "controls": true,
