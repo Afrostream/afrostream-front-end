@@ -16,30 +16,37 @@ if (process.env.BROWSER) {
 })
 @connect(({ User }) => ({User})) class AccountPage extends React.Component {
 
-  getCardNumber(accountCode) {
+  getInitialState() {
 
+    return {
+      cardNumber: null
+    }
+  };
+
+  componentDidMount() {
+    var self = this;
+    var accountCode = this.props.User.get('user').get('accountCode');
     var apiPath = config.apiClient.urlPrefix + '/subscriptions/billing/' + accountCode;
-    var cardNumber;
+    var cardLastFour;
 
     $.ajax({
       type: 'GET',
       url: apiPath,
       dataType: 'json',
       success: function (responseData) {
-        //console.log(responseData);
-        cardNumber = responseData.data.billing_info.last_four;
-        console.log(cardNumber);
+
+        cardLastFour = responseData.data.billing_info.last_four;
+        self.setState({cardNumber: cardLastFour});
       },
       error: function (err) {
 
         console.log('**** there was an error ***');
         console.log(err);
         console.log('*** end of error message ***');
-        cardNumber = '';
+        cardLastFour = '';
+        self.setState({cardNumber: cardLastFour});
       }
     });
-
-    return cardNumber;
   }
 
   render() {
@@ -53,13 +60,6 @@ if (process.env.BROWSER) {
 
     if (user) {
 
-      console.log('*** here is the user in the account page ***');
-      console.log(user.get('accountCode'));
-      console.log('*** end of the user in the account page ***');
-      var cardNumber = this.getCardNumber(user.get('accountCode'));
-      console.log('*** the card number ***');
-      //console.log(cardNumber);
-
       return (
         <div className="row-fluid">
           <div className="container">
@@ -71,9 +71,6 @@ if (process.env.BROWSER) {
               <div className="billing-details-container">
                 <div className="billing-details-email">
                   <div className="email">{user.get('email')}</div>
-                  <div className="change-email">
-                    <Link to="/compte/email">Modifier l'addresse e-mail</Link>
-                  </div>
                 </div>
 
                 <div className="billing-details-password">
@@ -84,7 +81,7 @@ if (process.env.BROWSER) {
                 </div>
 
                 <div className="billing-details-credit-card">
-                  <div className="credit-card">**** **** **** {this.getCardNumber(user.get('accountCode'))}</div>
+                  <div className="credit-card">**** **** **** {this.state}</div>
                   <div className="change-credit-card">
                     <Link to="/compte/credit-card">Mettre à jour les informations de paiement</Link>
                   </div>
