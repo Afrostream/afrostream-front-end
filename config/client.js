@@ -30,7 +30,7 @@ export default {
       theme: 'default',
       signupLink: '/signup',
       resetLink: '/reset-password',
-      connections: ['Username-Password-Authentication', 'facebook'],
+      connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
       disableSignupAction: true,
       rememberLastLogin: false,
@@ -41,7 +41,7 @@ export default {
     },
     signUp: {
       dict: 'fr',
-      connections: ['Username-Password-Authentication', 'facebook'],
+      connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
       authParams: {
         scope: 'openid offline_access'

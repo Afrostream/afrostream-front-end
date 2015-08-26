@@ -11,74 +11,74 @@ var ReturningUser = React.createClass({
 
   getInitialState: function () {
 
-  return {
-    profile: null,
-    tokenExpired: null
-  }
-},
-
-componentDidMount: function () {
-
-  this.props.lock.getProfile(this.props.idToken, function (err, profile) {
-    if (err) {
-
-      console.log("*** Error loading the profile in ReturningUser.jsx - most likely the token has expired ***", err);
-      localStorage.removeItem('afroToken');
-
-      this.setState({
-        tokenExpired: true
-      });
+    return {
+      profile: null,
+      tokenExpired: null
     }
-    this.setState({profile: profile});
+  },
 
-  }.bind(this));
-},
+  componentDidMount: function () {
 
-render: function () {
+    this.props.lock.getProfile(this.props.idToken, function (err, profile) {
+      if (err) {
 
-  const {
-    props: { episode }
-    } = this;
+        console.log("*** Error loading the profile in ReturningUser.jsx - most likely the token has expired ***", err);
+        localStorage.removeItem('afroToken');
 
-  if (this.state.profile) {
+        this.setState({
+          tokenExpired: true
+        });
+      }
+      this.setState({profile: profile});
 
-    if ((typeof this.state.profile.paymentStatus !== 'undefined')
-      && (this.state.profile.paymentStatus === true)
-      && (typeof this.state.profile.planCode !== 'undefined')
-      && (this.state.profile.planCode !== 'afrostreammonthly')) {
+    }.bind(this));
+  },
 
-      //return (<Browse lock={this.props.lock} idToken={this.props.idToken} profile={this.state.profile}  />);
-      return (<Application paymentStatus={true} children={this.props.children}/>);
+  render: function () {
 
-  } else if ((typeof this.state.profile.paymentStatus !== 'undefined')
-    && (this.state.profile.paymentStatus === true)
-    && (typeof this.state.profile.planCode !== 'undefined')
-    && (this.state.profile.planCode === 'afrostreammonthly')) {
+    const {
+      props: { episode }
+      } = this;
 
-    return (
-					<div>
-						<AfrostreamMonthlyMessage lock={this.props.lock}  idToken={this.props.idToken} profile={this.state.profile} />
-						<WelcomeFooter />
-					</div>
-				);
+    if (this.state.profile) {
 
-			} else {
+      if ((typeof this.state.profile.paymentStatus !== 'undefined')
+        && (this.state.profile.paymentStatus === true)
+        && (typeof this.state.profile.planCode !== 'undefined')
+        && (this.state.profile.planCode !== 'afrostreammonthly')) {
 
-				return (
-					<div>
-						<Payment lock={this.props.lock} idToken={this.props.idToken} profile={this.state.profile} />
-						<WelcomeFooter />
-					</div>
-				);
-			}
-		} else if (this.state.tokenExpired === true) {
+        //return (<Browse lock={this.props.lock} idToken={this.props.idToken} profile={this.state.profile}  />);
+        return (<Application paymentStatus={true} children={this.props.children}/>);
 
-			return(<Welcome lock={this.props.lock} />);
-		} else {
+      } else if ((typeof this.state.profile.paymentStatus !== 'undefined')
+        && (this.state.profile.paymentStatus === true)
+        && (typeof this.state.profile.planCode !== 'undefined')
+        && (this.state.profile.planCode === 'afrostreammonthly')) {
 
-			return (<div></div>);
-		}
-	}
+        return (
+          <div>
+            <AfrostreamMonthlyMessage/>
+            <WelcomeFooter />
+          </div>
+        );
+
+      } else {
+
+        return (
+          <div>
+            <Payment/>
+            <WelcomeFooter />
+          </div>
+        );
+      }
+    } else if (this.state.tokenExpired === true) {
+
+      return (<Welcome/>);
+    } else {
+
+      return (<div></div>);
+    }
+  }
 });
 
 module.exports = ReturningUser;

@@ -19,6 +19,7 @@ import NoMatch from './components/NoMatch';
 export default (
   <Route name="app" component={Application}>
     <Route name="compte" path="/compte" component={AccountPage}/>
+    <Route name="compte" path="/compte" component={AccountPage}/>
 
     <Route name="compteEmail" path="/compte/email" component={AccountEmail}/>
     <Route name="comptePassword" path="/compte/password" component={AccountPassword}/>
