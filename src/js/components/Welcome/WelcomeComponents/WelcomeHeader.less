@@ -16,12 +16,29 @@
   background-size: cover;
   display: block;
 
+  @media all and (max-width: @screen-sm-min) {
+    display: inline-table;
+  }
+
   h1 {
-    margin-top: 75px;
+    //margin-top: 75px;
+    margin-top: 180px;
     margin-left: 25px;
     color: @white-base;
     font-size: 36px;
     line-height: 38px;
+
+    @media all and (max-width: @screen-sm-min) {
+      font-size: 28px;
+      line-height: 32px;
+      margin-top: 75px;
+    }
+
+    @media all and (max-width: 460px) {
+      font-size: 28px;
+      line-height: 32px;
+      margin-top: 75px;
+    }
   }
 
   .detail-text {
@@ -31,6 +48,11 @@
     font-size: 18px;
     line-height: 20px;
     max-width: 275px;
+
+    @media all and (max-width: @screen-sm-min) {
+      font-size: 14px;
+      line-height: 18px;
+    }
   }
 
   .afrostream-statement {
@@ -39,7 +61,13 @@
     color: @white-base;
     font-size: 20px;
     line-height: 28px;
-    max-width: 275px;
+    max-width: 270px;
+
+    @media all and (max-width: @screen-sm-min) {
+      font-size: 18px;
+      line-height: 24px;
+      max-width: 244px;
+    }
   }
 
   .afrostream-logo {
@@ -47,6 +75,13 @@
     margin-left: 15px;
     background-color: transparent;
     max-width: 80%;
+
+    @media all and (max-width: @screen-sm-min) {
+      margin-top: 0px;
+      margin-left: 0px;
+      max-width: 60%;
+      max-height: 45px;
+    }
   }
 
   .login-button {
@@ -60,6 +95,10 @@
     padding-left: 16px;
     padding-right: 16px;
     margin: 20px 25px 0 0;
+
+    @media all and (max-width: @screen-sm-min) {
+      margin: 10px 10px 0 0;
+    }
   }
 
   .subscribe-button {
@@ -72,9 +111,9 @@
     padding-left: 16px;
     padding-right: 16px;
     margin: 45px 0 0 25px;
+
+    @media all and (max-width: @screen-sm-min) {
+      margin: 28px 0 16px 25px;
+    }
   }
-}
-
-@media (min-width: 768px) {
-
 }

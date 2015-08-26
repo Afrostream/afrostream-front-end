@@ -50,7 +50,7 @@ var WelcomeHeader = React.createClass ({
 				traversent des épreuves souvent difficiles et comples dans la ville d'Atlanta
 				</div>
 
-				<div className="afrostream-statement">Les meilleurs films <br />et séries afro-américains <br />et africaine en ilimité</div>
+				<div className="afrostream-statement">Les meilleurs films et séries afro-américains et africaine en ilimité</div>
 
 				<button className="subscribe-button" type="button" onClick={this.showSignupLock}>S'ABONNER MAINTENANT</button>
 			</section>
