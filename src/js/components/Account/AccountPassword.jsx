@@ -129,7 +129,6 @@ if (process.env.BROWSER) {
 
     const user = User.get('user');
     console.log('*** the user id ***');
-    console.log(user.get('user_id'));
 
     if (user) {
       debugger;
