@@ -30,8 +30,10 @@ export default (
       <Route name="category" path=":category" component={MoviesList}/>
       <Redirect from="/" to="/selection"/>
     </Route>
-    <Route name="movie" path="/:type/:movieId/:slug" component={MoviePage} ignoreScrollBehavior={true}/>
-    <Route name="player" path="/:type/:movieId/:slug/player/:asset" component={PlayerPage} ignoreScrollBehavior={true}/>
+    <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage} ignoreScrollBehavior={true}/>
+    <Route name="player" path="/:movieId/:movieSlug(/:serieId)(/:serieSlug)(/:episodeId)(/:episodeSlug)/:videoId"
+           component={PlayerPage}
+           ignoreScrollBehavior={true}/>
     <Route path="*" component={NoMatch}/>
   </Route>
 );
