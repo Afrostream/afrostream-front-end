@@ -18,7 +18,6 @@ if (process.env.BROWSER) {
 }
 
 if (canUseDOM) {
-  Auth0Lock = require('auth0-lock');
   require('jquery');
   require('bootstrap');
 }
@@ -29,56 +28,51 @@ if (canUseDOM) {
     ];
 }) @connect(({ User }) => ({User})) class Application extends React.Component {
 
-  getIdToken() {
-
-    if (canUseDOM) {
-      var idToken = localStorage.getItem('afroToken');
-      initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
-      var authHash = initialLock.parseHash(window.location.hash);
-
-      if (!idToken && authHash) {
-        if (authHash.id_token) {
-          idToken = authHash.id_token
-          localStorage.setItem('afroToken', authHash.id_token);
-        }
-        if (authHash.error) {
-          console.log("Error signing in", authHash);
-        }
-      }
-
-      return idToken;
-    }
-  }
+  //getIdToken() {
+  //
+  //  if (canUseDOM) {
+  //    var idToken = localStorage.getItem('afroToken');
+  //    initialLock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
+  //    var authHash = initialLock.parseHash(window.location.hash);
+  //
+  //    if (!idToken && authHash) {
+  //      if (authHash.id_token) {
+  //        idToken = authHash.id_token
+  //        localStorage.setItem('afroToken', authHash.id_token);
+  //      }
+  //      if (authHash.error) {
+  //        console.log("Error signing in", authHash);
+  //      }
+  //    }
+  //
+  //    return idToken;
+  //  }
+  //}
 
   render() {
 
-    var presetToken = this.getIdToken();
+    //var presetToken = this.getIdToken();
 
     const { props: { User, children } } = this;
     const token = User.get('token');
     const lock = User.get('lock');
 
-    if (presetToken && this.props.paymentStatus !== true) {
-      return(<ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children} />);
-    }
-
-    else if (presetToken && this.props.paymentStatus === true) {
-
+    //if (presetToken && this.props.paymentStatus !== true) {
+    //  return (<ReturningUser lock={initialLock} idToken={presetToken} children={this.props.children}/>);
+    //}
+    //
+    //else if (presetToken && this.props.paymentStatus === true) {
     return (
       <div className="app">
         <Header {...this.props}/>
 
         <div className="container-fluid">
-        {children}
-        <Footer />
+          {token ? children : <Welcome />}
+          <Footer />
         </div>
-        </div>
-      );
+      </div>
+    );
 
-    } else {
-
-      return(<Welcome lock={initialLock} />);
-    }
   }
 }
 
