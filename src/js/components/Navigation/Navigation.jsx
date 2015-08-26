@@ -16,14 +16,20 @@ if (process.env.BROWSER) {
       } = this;
 
     const menu = Category.get('menu');
-    const slug = Category.get('current');
+    const categoryId = Category.get('categoryId');
+
     return (
       <div className="navigation hidden-xs">
-        <ul className="navigation-list" role="navigation">
-          {menu.map((item, i) => <NavigationItem active={slug === item.get('slug')}
-                                                 key={`menu-${item.get('_id')}-${i}`}
-            { ...{item}}/>)}
-        </ul>
+        {
+          menu ?
+            <ul className="navigation-list" role="navigation">
+              {menu.map((item, i) => <NavigationItem active={categoryId === item.get('_id')}
+                                                     key={`menu-${item.get('_id')}-${i}`}
+                { ...{item}}/>)}
+            </ul>
+            :
+            <div />
+        }
       </div>
     );
   }
