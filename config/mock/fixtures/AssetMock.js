@@ -9,7 +9,8 @@ export default function () {
     "autoplay": true,
     "sr_options": {
       "ID_CLIENT": config.streamRoot.clientId,
-      "TRACKER_URL": config.streamRoot.trackerUrl
+      "TRACKER_URL": config.streamRoot.trackerUrl,
+      "RANGE_REQUEST_ALLOWED": false
     },
     "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
     "sources": [
@@ -31,7 +32,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -53,7 +55,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -75,7 +78,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -97,7 +101,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -119,7 +124,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -141,7 +147,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -163,7 +170,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -185,7 +193,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -206,7 +215,8 @@ export default function () {
       "height": "100%",
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -228,7 +238,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -250,7 +261,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -272,7 +284,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -294,7 +307,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -316,7 +330,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -338,7 +353,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -360,7 +376,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
@@ -382,7 +399,8 @@ export default function () {
       "autoplay": true,
       "sr_options": {
         "ID_CLIENT": config.streamRoot.clientId,
-        "TRACKER_URL": config.streamRoot.trackerUrl
+        "TRACKER_URL": config.streamRoot.trackerUrl,
+        "RANGE_REQUEST_ALLOWED": false
       },
       "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"],
       "sources": [
