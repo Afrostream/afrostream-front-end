@@ -32,15 +32,11 @@ export default {
       resetLink: '/reset-password',
       connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
-      disableSignupAction: false,
-      loginAfterSignup: true,
-      rememberLastLogin: true,
-      integratedWindowsLogin: true,
-      defaultADUsernameFromEmailPrefix: true,
-      responseType: 'token',
+      disableSignupAction: true,
+      rememberLastLogin: false,
+      disableResetAction: false,
       popup: true,
       sso: false,
-      closable: true,
       authParams: {
         scope: 'openid offline_access'
       }
@@ -49,6 +45,8 @@ export default {
       dict: 'fr',
       connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
+      popup: true,
+      sso: false,
       authParams: {
         scope: 'openid offline_access'
       }

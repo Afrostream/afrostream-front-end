@@ -64,10 +64,10 @@ class Header extends React.Component {
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
             {/* User Account button */}
-            <UserButton />
 
             <div className="navbar-collapse collapse navbar-right">
-              <SearchInput/>
+              {/* <SearchInput/> */}
+              <UserButton />
             </div>
           </div>
         </div>

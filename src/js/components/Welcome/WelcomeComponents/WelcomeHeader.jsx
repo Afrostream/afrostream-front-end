@@ -1,61 +1,43 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as UserActionCreators from '../../../actions/user';
 
 if (process.env.BROWSER) {
-	require('./WelcomeHeader.less');
+  require('./WelcomeHeader.less');
 }
 
-var WelcomeHeader = React.createClass ({
+@connect(({ User }) => ({User})) class WelcomeHeader extends React.Component {
 
-		showSigninLock: function() {
+  showLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
 
-			this.props.lock.show(
-				{
-					dict: 'fr',
-					connections: ['Username-Password-Authentication', 'facebook'],
-					socialBigButtons: true,
-					disableSignupAction: true,
-					rememberLastLogin: false
-				}
-			);
-		},
+    dispatch(UserActionCreators.showSignupLock());
+  }
 
-		showSignupLock: function() {
+  render() {
 
-			this.props.lock.showSignup(
-				{
-					dict: 'fr',
-					connections: ['Username-Password-Authentication', 'facebook'],
-					socialBigButtons: true
-				}
-			);
-		},
+    return (
+      <section className="welcome-header">
+        <img src="/images/logo.png" className="afrostream-logo" alt="Afrostream.tv"/>
 
-	render: function() {
-		const {
-			props: {
-				User
-				}
-			} = this;
+        <h1>HALF OF <br /> A YELLOW <br />SUN</h1>
 
-		return (
-			<section className="welcome-header">
-				<img src="/images/logo.png" className="afrostream-logo" alt="Afrostream.tv" />
+        <div className="detail-text"> Keisha, April et Valerie sont trois meilleures amies qui partagent tout et
+          traversent des épreuves souvent difficiles et comples dans la ville d'Atlanta
+        </div>
 
-				<button type="button" className="login-button" onClick={this.showSigninLock}>connexion</button>
+        <div className="afrostream-statement">Les meilleurs films <br />et séries afro-américains <br />et africaine en
+          ilimité
+        </div>
 
-				<h1>HALF OF <br /> A YELLOW <br />SUN</h1>
+        <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
+      </section>
+    );
+  }
+}
 
-				<div className="detail-text"> Keisha, April et Valerie sont trois meilleures amies qui partagent tout et
-				traversent des épreuves souvent difficiles et comples dans la ville d'Atlanta
-				</div>
-
-				<div className="afrostream-statement">Les meilleurs films <br />et séries afro-américains <br />et africaine en ilimité</div>
-
-				<button className="subscribe-button" type="button" onClick={this.showSignupLock}>S'ABONNER MAINTENANT</button>
-			</section>
-		);
-	}
-});
-
-module.exports = WelcomeHeader;
+export default WelcomeHeader;

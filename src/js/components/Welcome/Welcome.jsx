@@ -9,45 +9,21 @@ import Partners from './WelcomeComponents/Partners';
 import Press from './WelcomeComponents/Press';
 import WelcomeFooter from './WelcomeComponents/WelcomeFooter';
 
-var Welcome = React.createClass ({
+var Welcome = React.createClass({
 
-	showSigninLock: function() {
+  render: function () {
 
-		this.props.lock.show(
-			{
-				dict: 'fr',
-				connections: ['Username-Password-Authentication', 'facebook'],
-				socialBigButtons: true,
-				disableSignupAction: true,
-				rememberLastLogin: false
-			}
-		);
-	},
-
-	showSignupLock: function() {
-
-		this.props.lock.showSignup(
-			{
-				dict: 'fr',
-				connections: ['Username-Password-Authentication', 'facebook'],
-				socialBigButtons: true
-			}
-		);
-	},
-
-	render: function() {
-
-		return (
-			<div>
-				<WelcomeHeader lock={this.props.lock} />
-				<Devices />
-				<PricingTable />
-				<Partners />
-				<Press />
-				<WelcomeFooter />
-			</div>
-		);
-	}
+    return (
+      <div>
+        <WelcomeHeader />
+        <Devices />
+        <PricingTable />
+        <Partners />
+        <Press />
+        {/*<WelcomeFooter />*/}
+      </div>
+    );
+  }
 });
 
 module.exports = Welcome;
