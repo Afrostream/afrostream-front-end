@@ -35,6 +35,8 @@ export default {
       disableSignupAction: true,
       rememberLastLogin: false,
       disableResetAction: false,
+      popup: true,
+      sso: false,
       authParams: {
         scope: 'openid offline_access'
       }
@@ -43,6 +45,8 @@ export default {
       dict: 'fr',
       connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
+      popup: true,
+      sso: false,
       authParams: {
         scope: 'openid offline_access'
       }
