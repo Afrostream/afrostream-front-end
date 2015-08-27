@@ -62,11 +62,6 @@ import { Link } from 'react-router';
   getLoginState() {
     return (
       <div className="btn-group navbar-collapse collapse navbar-right">
-        {/*<button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
-         aria-haspopup="true"
-         aria-expanded="false" onClick={::this.showLock}>
-         se connecter
-         </button>*/}
         <button type="button" className="btn btn-login btn-default" onClick={::this.showLock}>connexion</button>
       </div>);
   }
