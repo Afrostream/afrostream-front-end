@@ -7,6 +7,11 @@
   background-color: #251530;
   padding: 10px 0 0 0;
   min-height: 100px;
+  font-size: 12px;
+
+  @media all and (max-width: @screen-sm-min) {
+    text-align: center;
+  }
 
   .links {
     width: 100%;
@@ -19,9 +24,16 @@
       width: 32%;
       padding-left: 14%;
 
+      @media all and (max-width: @screen-sm-min) {
+        width: 100%;
+        padding-left: 0px;
+        float: none;
+        padding-top: 5px;
+      }
+
       h4 {
         color: @white-base;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: lighter;
       }
 
@@ -52,6 +64,13 @@
         float: left;
         width: 32%;
         padding-left: 14%;
+
+        @media all and (max-width: @screen-sm-min) {
+          width: 100%;
+          padding-left: 0px;
+          float: none;
+          padding-bottom: 5px;
+        }
       }
     }
   }
@@ -59,8 +78,4 @@
   .legal-text {
     padding: 10px 0 0 0;
   }
-}
-
-@media (min-width: 768px) {
-
 }
