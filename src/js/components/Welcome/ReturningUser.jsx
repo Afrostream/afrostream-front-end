@@ -42,18 +42,18 @@ render: function () {
 
   if (this.state.profile) {
 
-    if ((typeof this.state.profile.paymentStatus !== 'undefined')
-      && (this.state.profile.paymentStatus === true)
-      && (typeof this.state.profile.planCode !== 'undefined')
-      && (this.state.profile.planCode !== 'afrostreammonthly')) {
+    if ((typeof this.state.profile.app_metadata.paymentStatus !== 'undefined')
+      && (this.state.profile.app_metadata.paymentStatus === true)
+      && (typeof this.state.profile.app_metadata.planCode !== 'undefined')
+      && (this.state.profile.app_metadata.planCode !== 'afrostreammonthly')) {
 
       //return (<Browse lock={this.props.lock} idToken={this.props.idToken} profile={this.state.profile}  />);
       return (<Application paymentStatus={true} children={this.props.children}/>);
 
-  } else if ((typeof this.state.profile.paymentStatus !== 'undefined')
-    && (this.state.profile.paymentStatus === true)
-    && (typeof this.state.profile.planCode !== 'undefined')
-    && (this.state.profile.planCode === 'afrostreammonthly')) {
+  } else if ((typeof this.state.profile.app_metadata.paymentStatus !== 'undefined')
+    && (this.state.profile.app_metadata.paymentStatus === true)
+    && (typeof this.state.profile.app_metadata.planCode !== 'undefined')
+    && (this.state.profile.app_metadata.planCode === 'afrostreammonthly')) {
 
     return (
 					<div>
@@ -62,7 +62,7 @@ render: function () {
 					</div>
 				);
 
-			} else {
+  } else {
 
 				return (
 					<div>
