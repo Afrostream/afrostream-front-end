@@ -1,24 +1,19 @@
 import React from 'react';
-import { prepareRoute } from '../decorators';
-import * as CategoryActionCreators from '../actions/category';
-import { Link } from 'react-router';
-import SlideShow from './SlideShow/SlideShow';
-import MoviesList from './Movies/MoviesList';
-import Navigation from './Navigation/Navigation';
+import { connect } from 'react-redux';
+import BrowsePage from './Browse/BrowsePage';
+import WelcomePage from './Welcome/WelcomePage';
 
-@prepareRoute(async function ({ store }) {
-  return await * [
-      store.dispatch(CategoryActionCreators.getMenu()),
-      store.dispatch(CategoryActionCreators.getMeaList())
-    ];
-}) class HomePage extends React.Component {
+@connect(({ User }) => ({User})) class HomePage extends React.Component {
 
   render() {
+
+    const { props: { User } } = this;
+    const token = User.get('token');
+    const user = User.get('user');
     return (
       <div className="row-fluid">
-        <Navigation />
-        <SlideShow />
-        <MoviesList />
+        {token && user ? <BrowsePage /> :
+          <WelcomePage />}
       </div>
     );
   }

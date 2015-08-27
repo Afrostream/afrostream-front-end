@@ -9,9 +9,9 @@ import Partners from './WelcomeComponents/Partners';
 import Press from './WelcomeComponents/Press';
 import WelcomeFooter from './WelcomeComponents/WelcomeFooter';
 
-var Welcome = React.createClass({
+class WelcomePage extends React.Component {
 
-  render: function () {
+  render() {
 
     return (
       <div>
@@ -24,6 +24,6 @@ var Welcome = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = Welcome;
+export default WelcomePage;
