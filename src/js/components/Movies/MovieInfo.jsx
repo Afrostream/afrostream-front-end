@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
-import * as AssetActionCreators from '../../actions/asset';
+import * as VideoActionCreators from '../../actions/video';
 
 if (canUseDOM) {
   require('gsap');
@@ -97,11 +97,11 @@ if (process.env.BROWSER) {
     return (
       <div ref="slContainer" className={classes}>
 
-        <Link to={link} onClick={::this.loadAsset}>
+        <Link to={link} onClick={::this.loadVideo}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
         </Link>
 
-        <Link className="btn-play" to={link} onClick={::this.loadAsset}/>
+        <Link className="btn-play" to={link} onClick={::this.loadVideo}/>
 
         {movieData ? <Billboard {...{active, movieData, maxLength}}/> : ''}
 
@@ -109,7 +109,7 @@ if (process.env.BROWSER) {
     );
   }
 
-  loadAsset() {
+  loadVideo() {
     const {
       props: {
         dispatch, Movie, movieId, movieObj
@@ -118,7 +118,7 @@ if (process.env.BROWSER) {
 
     const movieData = movieObj || Movie.get(`movies/${movieId}`);
 
-    dispatch(AssetActionCreators.getToken(movieData.get('_id')));
+    dispatch(VideoActionCreators.getVideo(movieData.get('_id')));
   }
 }
 

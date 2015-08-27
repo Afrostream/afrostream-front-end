@@ -68,6 +68,7 @@ if (process.env.BROWSER) {
         }
       } = this;
 
+    const movieData = Movie.get(`movies/${movieId}`);
     const seasons = Movie.get(`movies/${movieId}/seasons`);
     const page = Season.get('selected') || 0;
 
@@ -75,7 +76,7 @@ if (process.env.BROWSER) {
       return (
         <div className="season-list">
           {this.parseSeasonTab(page, seasons)}
-          {this.parseSeasonList(page, seasons)}
+          {this.parseSeasonList(page, movieData, seasons)}
         </div>
       );
 
@@ -98,7 +99,7 @@ if (process.env.BROWSER) {
     );
   }
 
-  parseSeasonList(page, seasons) {
+  parseSeasonList(page, movie, seasons) {
     const {
       props: {
         dispatch,
@@ -107,19 +108,19 @@ if (process.env.BROWSER) {
       } = this;
 
     const selectedSeasonId = seasons.get(page).get('_id');
-    const currentSeason = Season.get(`seasons/${selectedSeasonId}`);
+    const season = Season.get(`seasons/${selectedSeasonId}`);
 
-    if (!currentSeason && selectedSeasonId) {
+    if (!season && selectedSeasonId) {
       dispatch(SeasonActionCreators.getSeason(selectedSeasonId));
       return (<div className="slider-container">Chargement</div>);
     }
-    const episodesList = currentSeason.get('episodes');
+    const episodesList = season.get('episodes');
     return (
       <div className="season-list__container">
         <Slider>
           <div ref="slContainer" className="slider-container">
             {episodesList ? episodesList.map((episode, i) => <SeasonEpisodeThumb
-              key={`episode-${episode.get('_id')}-${i}`} {...{episode}}/>) : ''}
+              key={`episode-${episode.get('_id')}-${i}`} {...{movie, season, episode}}/>) : ''}
           </div>
         </Slider>
       </div>

@@ -23,8 +23,8 @@ export default {
     getSeason: null
   }),
 
-  Asset: keyMirror({
-    getToken: null
+  Video: keyMirror({
+    getVideo: null
   }),
 
   Season: keyMirror({

@@ -119,7 +119,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/assets/([\\w-]+)`,
+    pattern: `${config.apiServer.urlPrefix}/videos/([\\w-]+)`,
 
     fixtures: Fixtures.AssetMock,
     callback: function (match, data) {

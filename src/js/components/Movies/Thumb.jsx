@@ -4,14 +4,14 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';
-import * as AssetActionCreators from '../../actions/asset';
+import * as VideoActionCreators from '../../actions/video';
 
 if (canUseDOM) {
   require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 
-@connect(({ Movie, Asset }) => ({Movie, Asset})) class Thumb extends React.Component {
+@connect(({ Movie, Video }) => ({Movie, Video})) class Thumb extends React.Component {
 
   constructor(props) {
     super(props);
@@ -234,9 +234,8 @@ if (canUseDOM) {
       synopsis = shortDescription;
     }
 
-    let idMovie = movie.get('_id');
-    let type = movie.get('type');
-    let slug = movie.get('slug') || '';
+    let movieId = movie.get('_id');
+    let movieSlug = movie.get('slug') || '';
 
     return (
       <div ref="thumbContainer" className="thumb-containter">
@@ -244,7 +243,7 @@ if (canUseDOM) {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <Link to={`/${type}/${idMovie}/${slug}/player/${idMovie}`} onClick={::this.loadAsset}>
+          <Link to={`/${movieId}/${movieSlug}/${movieId}/${movieSlug}`} onClick={::this.loadVideo}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>
@@ -252,9 +251,9 @@ if (canUseDOM) {
 
           <div ref="info" className="thumb-info" style={imagePoster}>
             <div className="thumb-info__txt">
-              <div className="thumb-info__title"><Link to={`/${type}/${idMovie}/${slug}`}
+              <div className="thumb-info__title"><Link to={`/${movieId}/${movieSlug}`}
                                                        onClick={::this.loadMovie}>{title}</Link></div>
-              <div className="thumb-info__synopsis"><Link to={`/${type}/${idMovie}/${slug}`}
+              <div className="thumb-info__synopsis"><Link to={`/${movieId}/${movieSlug}`}
                                                           onClick={::this.loadMovie}>{synopsis}</Link></div>
             </div>
             <div className="thumb-info__btn">
@@ -286,7 +285,7 @@ if (canUseDOM) {
     //dispatch(MovieActionCreators.getMovie(movie.get('_id')));
   }
 
-  loadAsset() {
+  loadVideo() {
     const {
       props: {
         dispatch,movie
@@ -294,7 +293,7 @@ if (canUseDOM) {
       } = this;
 
     const idMovie = movie.get('_id');
-    dispatch(AssetActionCreators.getToken(idMovie));
+    dispatch(VideoActionCreators.getVideo(idMovie));
   }
 }
 
