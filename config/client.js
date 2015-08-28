@@ -52,9 +52,15 @@ export default {
       }
     }
   },
-  streamRoot: {
-    clientId: process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
-    trackerUrl: process.env.STREAMROOT_TRACKER_URL || ''
-
+  player: {
+    "autoplay": true,
+    "controls": true,
+    "width": "100%",
+    "height": "100%",
+    "sr_options": {
+      "ID_CLIENT": process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
+      "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
+    },
+    "techOrder": ["streamroot", "srflash", "hls", "html5", "flash"]
   }
 };

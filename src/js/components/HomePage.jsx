@@ -10,6 +10,7 @@ import WelcomePage from './Welcome/WelcomePage';
     const { props: { User } } = this;
     const token = User.get('token');
     const user = User.get('user');
+
     return (
       <div className="row-fluid">
         {token && user ? <BrowsePage /> :
