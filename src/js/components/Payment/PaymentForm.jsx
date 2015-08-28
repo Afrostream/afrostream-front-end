@@ -150,27 +150,25 @@ if (canUseDOM) {
                 <div className="name-details">COORDONNÉES</div>
               </div>
               <div className="row">
-                <div className="form-inline">
-                  <div className="form-group col-sm-12 col-md-6">
-                    <label className="form-label" for="first_name">Prénom</label>
-                    <input
-                      type="text"
-                      className="form-control first-name"
-                      data-recurly="first_name"
-                      id="first_name"
-                      name="first-name"
-                      placeholder="Votre prénom" required/>
-                  </div>
-                  <div className="form-group col-sm-12 col-md-6">
-                    <label className="form-label" for="last_name">Nom</label>
-                    <input
-                      type="text"
-                      className="form-control last-name"
-                      data-recurly="last_name"
-                      id="last_name"
-                      name="last-name"
-                      placeholder="Votre nom" required/>
-                  </div>
+                <div className="form-group col-md-6">
+                  <label className="form-label" for="first_name">Prénom</label>
+                  <input
+                    type="text"
+                    className="form-control first-name"
+                    data-recurly="first_name"
+                    id="first_name"
+                    name="first-name"
+                    placeholder="Votre prénom" required/>
+                </div>
+                <div className="form-group col-md-6">
+                  <label className="form-label" for="last_name">Nom</label>
+                  <input
+                    type="text"
+                    className="form-control last-name"
+                    data-recurly="last_name"
+                    id="last_name"
+                    name="last-name"
+                    placeholder="Votre nom" required/>
                 </div>
               </div>
               <div className="row">
