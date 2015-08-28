@@ -212,8 +212,15 @@ if (canUseDOM) {
     const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
     let imageStyles = baseUrl;
     let thumb = movie.get('thumb');
+    if (!thumb) {
+      return '';
+    }
     if (this.state.showImage && thumb) {
-      imageStyles = thumb.get('imgix');
+      let imgix = thumb.get('imgix');
+      if (!imgix) {
+        return {};
+      }
+      imageStyles = imgix;
     }
     return {backgroundImage: `url(${imageStyles}?crop=faces&fit=clamp&w=${this.thumbW}&h=${this.thumbH}&q=65)`};
   }
@@ -227,7 +234,7 @@ if (canUseDOM) {
     let imageStyles = this.getLazyImageUrl();
     let poster = movie.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imagePoster = {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=${this.thumbWidth}&h=${this.thumbH}&q=65)`};
+    let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=${this.thumbWidth}&h=${this.thumbH}&q=65)`} : {};
     let title = movie.get('title');
     let synopsis = movie.get('synopsis') || '';
 
