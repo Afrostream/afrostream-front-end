@@ -52,6 +52,9 @@ export default {
       }
     }
   },
+  recurly: {
+    key: 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
+  },
   player: {
     "autoplay": true,
     "controls": true,

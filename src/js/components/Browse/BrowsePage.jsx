@@ -15,7 +15,7 @@ import Navigation from '../Navigation/Navigation';
 
   render() {
     return (
-      <div className="row-fluid">
+      <div className="row-fluid white">
         <Navigation />
         <SlideShow />
         <MoviesList />

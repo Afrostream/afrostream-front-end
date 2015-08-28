@@ -1,19 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 if (process.env.BROWSER) {
   require('./Partners.less');
 }
 
-var Partners = React.createClass({
+class Partners extends React.Component {
 
-  render: function () {
-    const {
-      props: {
-        User
-        }
-      } = this;
-
+  render() {
     return (
       <section className="partners">
         <div className="partners-image">
@@ -44,6 +37,6 @@ var Partners = React.createClass({
       </section>
     );
   }
-});
+}
 
-module.exports = Partners;
+export default Partners;
