@@ -15,7 +15,6 @@ export default createReducer(initialState, {
   },
   [ActionTypes.Season.getSeason](state, { seasonId , res}) {
     const data = res.body;
-    console.log('getSeason', data);
     return state.merge({
       [`seasons/${seasonId}`]: data
     });
