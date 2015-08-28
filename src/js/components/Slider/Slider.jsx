@@ -51,12 +51,6 @@ class Slider extends React.Component {
 
   }
 
-  //getInitialState() {
-  //  return {
-  //    scrollLeft: 0
-  //  };
-  //}
-
   componentDidMount() {
     this.container = React.findDOMNode(this).lastChild;
 

@@ -9,7 +9,8 @@ export default {
     showLock: null,
     showSignupLock: null,
     showSigninLock: null,
-    logOut: null
+    logOut: null,
+    subscribe: null
   }),
 
   Slides: keyMirror({

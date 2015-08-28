@@ -1,13 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 if (process.env.BROWSER) {
   require('./WelcomeFooter.less');
 }
 
-var WelcomeFooter = React.createClass({
+class WelcomeFooter extends React.Component {
 
-  render: function () {
+  render() {
     return (
       <section className="welcome-footer">
         <div className="links">
@@ -86,6 +85,6 @@ var WelcomeFooter = React.createClass({
       </section>
     );
   }
-});
+}
 
-module.exports = WelcomeFooter;
+export default WelcomeFooter;

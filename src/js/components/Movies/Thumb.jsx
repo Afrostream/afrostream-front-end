@@ -1,4 +1,4 @@
-import React ,{PropTypes } from 'react';
+import React ,{ PropTypes } from 'react';
 import Router from 'react-router';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';

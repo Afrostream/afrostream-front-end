@@ -1,7 +1,4 @@
 import React from 'react';
-import * as UserActionCreators from '../../actions/user';
-import { connect } from 'react-redux';
-import config from '../../../../config/client';
 import WelcomeHeader from './WelcomeComponents/WelcomeHeader';
 import Devices from './WelcomeComponents/Devices';
 import PricingTable from './WelcomeComponents/PricingTable';

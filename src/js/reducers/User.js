@@ -7,7 +7,16 @@ const initialState = Immutable.fromJS({
   'token': null
 });
 
+
 export default createReducer(initialState, {
+
+  [ActionTypes.User.subscribe](state, { userId,res }) {
+    const data = res.body;
+    console.log('ActionTypes.User.subscribe',data)
+    return state.merge({
+      ['user']: user
+    });
+  },
 
   [ActionTypes.User.getIdToken](state, { token }) {
     return state.merge({

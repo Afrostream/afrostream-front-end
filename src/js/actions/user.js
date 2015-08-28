@@ -7,6 +7,19 @@ if (canUseDOM) {
   var Auth0Lock = require('auth0-lock');
 }
 
+
+export function subscribe(data) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const userId = user.get('_id');
+    return async api => ({
+      type: ActionTypes.User.subscribe,
+      userId,
+      res: await api(`/subscriptions/${userId}`, 'POST', data)
+    });
+  };
+}
+
 export function createLock() {
   return (dispatch, getState) => {
     const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
@@ -23,7 +36,6 @@ export function logOut() {
     const storageRefreshId = config.auth0.tokenRefresh;
     localStorage.removeItem(storageId);
     localStorage.removeItem(storageRefreshId);
-
     return {
       type: ActionTypes.User.logOut
     };
