@@ -42,7 +42,15 @@
     display: table;
     width: 40%;
     float: left;
-    min-height: 300px;
+    min-height: 400px;
+
+    @media all and (max-width: @screen-lg-min) {
+      min-height: 300px;
+    }
+
+    @media all and (max-width: @screen-md-min) {
+      min-height: 240px;
+    }
 
     @media all and (max-width: @screen-sm-min) {
       width: 100%;
