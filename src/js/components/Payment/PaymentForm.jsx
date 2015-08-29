@@ -89,11 +89,11 @@ if (canUseDOM) {
         return self.error(err);
       }
       // Otherwise we continue with the form submission
-      var formData = JSON.stringify($.extend(billingInfo, {
+      var formData = $.extend(billingInfo, {
         'recurly-token': token.id
-      }));
+      });
 
-      dispatch(UserActionCreators.subscribe())
+      dispatch(UserActionCreators.subscribe(formData))
     });
   }
 
@@ -109,6 +109,7 @@ if (canUseDOM) {
   }
 
   disableForm(disabled) {
+    return;
     $('button').prop('disabled', disabled);
     $('input').prop('disabled', disabled);
   }

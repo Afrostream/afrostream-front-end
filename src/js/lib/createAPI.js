@@ -2,6 +2,7 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import qs from 'qs';
 import URL from 'url';
+import config from '../../../config';
 
 /**
  * return api function base on createRequest function
@@ -26,14 +27,35 @@ export default function createAPI(createRequest) {
     }
 
     query = qs.parse(queryStr);
+    var tokenStore = localStorage.getItem(config.auth0.token);
+    var tokenAfroAPI = localStorage.getItem(config.apiClient.token);
+    //if (tokenStore) {
+    //  headers = {
+    //    auth: {
+    //      'bearer': tokenStore
+    //    }
+    //  };
+    //}
 
     if (method === 'GET') {
+      if (tokenAfroAPI) {
+        params.afro_token = tokenAfroAPI;
+      }
+      if (tokenStore) {
+        params.access_token = tokenStore;
+      }
       if (params && _.isObject(params)) {
         _.assign(query, params);
       }
 
     } else {
       body = params;
+      if (tokenAfroAPI) {
+        body.afro_token = tokenAfroAPI;
+      }
+      if (tokenStore) {
+        body.access_token = tokenStore;
+      }
     }
 
     return await new Promise((resolve, reject) => {
