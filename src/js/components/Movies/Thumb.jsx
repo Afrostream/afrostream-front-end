@@ -213,7 +213,7 @@ if (canUseDOM) {
     let imageStyles = baseUrl;
     let thumb = movie.get('thumb');
     if (!thumb) {
-      return '';
+      return {};
     }
     if (this.state.showImage && thumb) {
       let imgix = thumb.get('imgix');
@@ -222,7 +222,7 @@ if (canUseDOM) {
       }
       imageStyles = imgix;
     }
-    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=clamp&w=${this.thumbW}&h=${this.thumbH}&q=65)`};
+    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=65)`};
   }
 
   render() {
