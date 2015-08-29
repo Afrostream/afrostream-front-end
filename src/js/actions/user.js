@@ -7,15 +7,13 @@ if (canUseDOM) {
   var Auth0Lock = require('auth0-lock');
 }
 
-
 export function subscribe(data) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
-    const userId = user.get('_id');
+    console.log('subscribe', user)
     return async api => ({
       type: ActionTypes.User.subscribe,
-      userId,
-      res: await api(`/subscriptions/${userId}`, 'POST', data)
+      res: await api(`/subscriptions/`, 'POST', data)
     });
   };
 }
@@ -42,15 +40,18 @@ export function logOut() {
   };
 }
 
-const storeToken = function (id_token, refresh_token) {
+const storeToken = function (id_token, refresh_token, afro_token) {
   const storageId = config.auth0.token;
   const storageRefreshId = config.auth0.tokenRefresh;
-
+  const storageAfroId = config.apiClient.token;
   if (id_token) {
     localStorage.setItem(storageId, id_token);
   }
   if (refresh_token) {
     localStorage.setItem(storageRefreshId, refresh_token);
+  }
+  if (storageAfroId) {
+    localStorage.setItem(storageAfroId, afro_token);
   }
 };
 
@@ -70,15 +71,15 @@ const refreshToken = function (getState) {
           localStorage.removeItem(storageRefreshId);
           return reject(err);
         }
-        // Get here the new JWT via delegationResult.id_token
-        // store token
-        storeToken(delegationResult.id_token);
 
         lock.getProfile(delegationResult.id_token, function (err, profile) {
           if (err) {
             console.log('*** Error loading the refresh token ***', err);
             localStorage.removeItem(storageRefreshId);
           }
+          // Get here the new JWT via delegationResult.id_token
+          // store token
+          storeToken(delegationResult.id_token, null, profile[config.apiClient.token]);
           console.log('*** Refreshed token ***', profile);
           return resolve({
             type: ActionTypes.User.getProfile,
@@ -154,7 +155,7 @@ export function showLock(container = null) {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token);
+              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
@@ -191,7 +192,7 @@ export function showSignupLock() {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token);
+              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
@@ -238,7 +239,7 @@ export function showReset(container = null) {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token);
+              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
@@ -287,7 +288,7 @@ export function showSigninLock() {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token);
+              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,

@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
-
+import _ from 'lodash'
 const initialState = Immutable.fromJS({
   'user': null,
   'token': null
@@ -10,11 +10,11 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.User.subscribe](state, { userId,res }) {
+  [ActionTypes.User.subscribe](state, { res }) {
     const data = res.body;
-    console.log('ActionTypes.User.subscribe',data)
+    console.log('ActionTypes.User.subscribe', data);
     return state.merge({
-      ['user']: user
+      ['user']: _.merge(state.get('user').toJS(), data)
     });
   },
 
