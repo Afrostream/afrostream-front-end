@@ -87,8 +87,10 @@ if (process.env.BROWSER) {
       return (<div>Aucunes données</div>);
     }
 
+    let poster = movieData.get('poster');
+    let posterImg = poster ? poster.get('imgix') : '';
+    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70)`} : {};
 
-    let imageStyles = {backgroundImage: `url(${movieData ? movieData.get('poster').get('imgix') : ''}?crop=faces&fit=clamp&w=1280&h=720&q=70)`};
     let idMovie = movieData ? movieData.get('_id') : movieId;
     let type = movieData ? movieData.get('type') : '';
     let slug = movieData ? movieData.get('slug') : '';

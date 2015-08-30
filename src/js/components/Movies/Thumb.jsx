@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React ,{ PropTypes } from 'react';
 import Router from 'react-router';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
@@ -12,6 +12,10 @@ if (canUseDOM) {
 }
 
 @connect(({ Movie, Video }) => ({Movie, Video})) class Thumb extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   constructor(props) {
     super(props);
@@ -208,10 +212,17 @@ if (canUseDOM) {
     const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
     let imageStyles = baseUrl;
     let thumb = movie.get('thumb');
-    if (this.state.showImage && thumb) {
-      imageStyles = thumb.get('imgix');
+    if (!thumb) {
+      return {};
     }
-    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=clamp&w=${this.thumbW}&h=${this.thumbH}&q=65)`};
+    if (this.state.showImage && thumb) {
+      let imgix = thumb.get('imgix');
+      if (!imgix) {
+        return {};
+      }
+      imageStyles = imgix;
+    }
+    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=65)`};
   }
 
   render() {
@@ -223,7 +234,7 @@ if (canUseDOM) {
     let imageStyles = this.getLazyImageUrl();
     let poster = movie.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imagePoster = {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=${this.thumbWidth}&h=${this.thumbH}&q=65)`};
+    let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=${this.thumbWidth}&h=${this.thumbH}&q=65)`} : {};
     let title = movie.get('title');
     let synopsis = movie.get('synopsis') || '';
 
@@ -236,25 +247,29 @@ if (canUseDOM) {
 
     let movieId = movie.get('_id');
     let movieSlug = movie.get('slug') || '';
-
+    let data = {
+      movieId: movieId,
+      movieSlug: movieSlug
+    };
     return (
       <div ref="thumbContainer" className="thumb-containter">
         <div ref="thumb" className="thumb"
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <Link to={`/${movieId}/${movieSlug}/${movieId}/${movieSlug}`} onClick={::this.loadVideo}>
+          <a onClick={::this.loadMovie}
+            >
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>
-          </Link>
+          </a>
 
           <div ref="info" className="thumb-info" style={imagePoster}>
             <div className="thumb-info__txt">
-              <div className="thumb-info__title"><Link to={`/${movieId}/${movieSlug}`}
-                                                       onClick={::this.loadMovie}>{title}</Link></div>
-              <div className="thumb-info__synopsis"><Link to={`/${movieId}/${movieSlug}`}
-                                                          onClick={::this.loadMovie}>{synopsis}</Link></div>
+              <div className="thumb-info__title"><a
+                onClick={::this.loadMovie}>{title}</a></div>
+              <div className="thumb-info__synopsis"><a
+                onClick={::this.loadMovie}>{synopsis}</a></div>
             </div>
             <div className="thumb-info__btn">
               <button className="btn btn-xs btn-thumb" href="compte/add">
@@ -271,30 +286,43 @@ if (canUseDOM) {
   loadMovie() {
     const {
       props: {
-        dispatch,movie
+        dispatch,movie,await
         }
       } = this;
 
-    const idMovie = movie.get('_id');
-    //TODO voir la compatibilite await niveau client
-    //return await * [
-    dispatch(MovieActionCreators.getMovie(idMovie));
-    dispatch(MovieActionCreators.getSeason(idMovie));
-    //];
+    let movieId = movie.get('_id');
+    let movieSlug = movie.get('slug') || '';
+    let link = `/${movieId}/${movieSlug}`;
 
-    //dispatch(MovieActionCreators.getMovie(movie.get('_id')));
+    return await * [
+        //dispatch(MovieActionCreators.getMovie(movieId)),
+        //dispatch(MovieActionCreators.getSeason(movieId)),
+        this.context.router.transitionTo(link)
+      ];
   }
 
-  loadVideo() {
-    const {
-      props: {
-        dispatch,movie
-        }
-      } = this;
-
-    const idMovie = movie.get('_id');
-    dispatch(VideoActionCreators.getVideo(idMovie));
-  }
+  //TODO Connect to last video or first video of season/video
+  //loadVideo() {
+  //  const {
+  //    props: {
+  //      dispatch,movie,await
+  //      }
+  //    } = this;
+  //
+  //  let movieId = movie.get('_id');
+  //  let movieSlug = movie.get('slug') || '';
+  //  let videoId = movie.get('videoId') || '';
+  //  videoId = episode ? episode.get('videoId') : videoId;
+  //  let link = `/${movieId}/${movieSlug}/${movieSlug}`;
+  //
+  //  //const idMovie = movie.get('_id');
+  //  //dispatch(VideoActionCreators.getVideo(idMovie));
+  //  return await * [
+  //      //dispatch(MovieActionCreators.getMovie(movieId)),
+  //      //dispatch(MovieActionCreators.getSeason(movieId)),
+  //      this.context.router.transitionTo(link)
+  //    ];
+  //}
 }
 
 export default Thumb;

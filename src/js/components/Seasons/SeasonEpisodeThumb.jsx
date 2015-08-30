@@ -22,7 +22,7 @@ class SeasonEpisodeThumb extends React.Component {
     }
     let poster = episode.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imagePoster = {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=200&h=110&q=65)`};
+    let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=200&h=110&q=65)`} : {};
     let title = episode.get('title');
     let synopsis = episode.get('synopsis') || '';
 

@@ -9,7 +9,8 @@ export default {
     showLock: null,
     showSignupLock: null,
     showSigninLock: null,
-    logOut: null
+    logOut: null,
+    subscribe: null
   }),
 
   Slides: keyMirror({
@@ -29,6 +30,9 @@ export default {
 
   Season: keyMirror({
     toggleSeason: null
+  }),
+  Event: keyMirror({
+    userActive: null
   }),
 
   Category: keyMirror({
