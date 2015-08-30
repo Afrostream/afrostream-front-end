@@ -3,7 +3,7 @@ import _ from 'lodash';
 import qs from 'qs';
 import URL from 'url';
 import config from '../../../config';
-
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 /**
  * return api function base on createRequest function
  * Usage:
@@ -17,9 +17,9 @@ import config from '../../../config';
  * Server: /lib/render.js
  */
 export default function createAPI(createRequest) {
-  return async function api(path, method = 'GET', params = {}) {
+  return async function api(path, method = 'GET', params = {}, tokenStore = null, tokenAfroAPI = null) {
     var { pathname, query: queryStr } = URL.parse(path);
-    var query, headers, body;
+    var query, headers, body/*, tokenStore, tokenAfroAPI*/;
 
     if (_.isObject(method)) {
       params = method;
@@ -27,16 +27,10 @@ export default function createAPI(createRequest) {
     }
 
     query = qs.parse(queryStr);
-    var tokenStore = localStorage.getItem(config.auth0.token);
-    var tokenAfroAPI = localStorage.getItem(config.apiClient.token);
-    //if (tokenStore) {
-    //  headers = {
-    //    auth: {
-    //      'bearer': tokenStore
-    //    }
-    //  };
+    //if (canUseDOM) {
+    //  tokenStore = localStorage.getItem(config.auth0.token);
+    //  tokenAfroAPI = localStorage.getItem(config.apiClient.token);
     //}
-
     if (method === 'GET') {
       if (tokenAfroAPI) {
         params.afro_token = tokenAfroAPI;
@@ -64,7 +58,6 @@ export default function createAPI(createRequest) {
           if (err) {
             return reject(err);
           }
-
           return resolve(res);
         });
     });

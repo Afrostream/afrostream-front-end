@@ -17,13 +17,13 @@ if (process.env.BROWSER) {
 
     const menu = Category.get('menu');
     const categoryId = Category.get('categoryId');
-
+    console.log('categoryId', categoryId)
     return (
       <div className="navigation hidden-xs">
         {
           menu ?
             <ul className="navigation-list" role="navigation">
-              {menu.map((item, i) => <NavigationItem active={categoryId === item.get('_id')}
+              {menu.map((item, i) => <NavigationItem active={categoryId == item.get('_id')}
                                                      key={`menu-${item.get('_id')}-${i}`}
                 { ...{item}}/>)}
             </ul>

@@ -24,11 +24,12 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.showLock](state, {user,token,refreshToken}) {
+  [ActionTypes.User.showLock](state, {user,token,refreshToken,afroToken}) {
     return state.merge({
       ['user']: user,
       ['token']: token,
-      ['refreshToken']: refreshToken
+      ['refreshToken']: refreshToken,
+      ['afroToken']: afroToken
     });
   },
 
