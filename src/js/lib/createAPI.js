@@ -17,9 +17,9 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
  * Server: /lib/render.js
  */
 export default function createAPI(createRequest) {
-  return async function api(path, method = 'GET', params = {}) {
+  return async function api(path, method = 'GET', params = {}, tokenStore = null, tokenAfroAPI = null) {
     var { pathname, query: queryStr } = URL.parse(path);
-    var query, headers, body, tokenStore, tokenAfroAPI;
+    var query, headers, body/*, tokenStore, tokenAfroAPI*/;
 
     if (_.isObject(method)) {
       params = method;
@@ -27,10 +27,10 @@ export default function createAPI(createRequest) {
     }
 
     query = qs.parse(queryStr);
-    if (canUseDOM) {
-      tokenStore = localStorage.getItem(config.auth0.token);
-      tokenAfroAPI = localStorage.getItem(config.apiClient.token);
-    }
+    //if (canUseDOM) {
+    //  tokenStore = localStorage.getItem(config.auth0.token);
+    //  tokenAfroAPI = localStorage.getItem(config.apiClient.token);
+    //}
     if (method === 'GET') {
       if (tokenAfroAPI) {
         params.afro_token = tokenAfroAPI;
@@ -58,7 +58,6 @@ export default function createAPI(createRequest) {
           if (err) {
             return reject(err);
           }
-
           return resolve(res);
         });
     });
