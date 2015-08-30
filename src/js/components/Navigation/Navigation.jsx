@@ -17,7 +17,6 @@ if (process.env.BROWSER) {
 
     const menu = Category.get('menu');
     const categoryId = Category.get('categoryId');
-    console.log('categoryId', categoryId)
     return (
       <div className="navigation hidden-xs">
         {
