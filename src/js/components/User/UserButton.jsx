@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
 import { Link } from 'react-router';
-
+import SearchInput from './../Search/SearchBox';
 @connect(({ User }) => ({User})) class UserButton extends React.Component {
 
   componentDidMount() {
@@ -35,6 +35,7 @@ import { Link } from 'react-router';
 
         return (
           <div className="btn-group navbar-collapse collapse navbar-left">
+            <SearchInput/>
             <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false">

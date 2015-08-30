@@ -1,7 +1,6 @@
 import React ,{PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import SearchInput from './../Search/SearchBox';
 import UserButton from './../User/UserButton';
 import classSet from 'classnames';
 
@@ -76,7 +75,6 @@ if (process.env.BROWSER) {
             {/* User Account button */}
 
             <div className="navbar-collapse collapse navbar-right">
-              {/* <SearchInput/> */}
               <UserButton />
             </div>
           </div>

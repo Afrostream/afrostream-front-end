@@ -39,6 +39,7 @@
     "webpack-dev-server": "^1.10.0"
   },
   "dependencies": {
+    "algoliasearch": "^3.7.7",
     "auth0-lock": "^7.7.1",
     "autoprefixer-core": "^5.2.1",
     "autoprefixer-loader": "^2.0.0",
