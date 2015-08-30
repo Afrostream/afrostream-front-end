@@ -13,7 +13,7 @@ export function subscribe(data) {
     console.log('subscribe', user)
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/`, 'POST', data)
+      res: await api(`/subscriptions/`, 'POST', data, user.get('token'), user.get('afroToken'))
     });
   };
 }
@@ -161,7 +161,8 @@ export function showLock(container = null) {
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
-                refreshToken: refresh_token
+                refreshToken: refresh_token,
+                afroToken: profile[config.apiClient.token]
               });
             }
           );
@@ -198,7 +199,8 @@ export function showSignupLock() {
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
-                refreshToken: refresh_token
+                refreshToken: refresh_token,
+                afroToken: profile[config.apiClient.token]
               });
             }
           );
@@ -245,7 +247,8 @@ export function showReset(container = null) {
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
-                refreshToken: refresh_token
+                refreshToken: refresh_token,
+                afroToken: profile[config.apiClient.token]
               });
             }
           );
@@ -294,7 +297,8 @@ export function showSigninLock() {
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
-                refreshToken: refresh_token
+                refreshToken: refresh_token,
+                afroToken: profile[config.apiClient.token]
               });
             }
           );

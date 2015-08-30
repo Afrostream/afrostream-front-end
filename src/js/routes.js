@@ -8,6 +8,7 @@ import MoviesList from './components/Movies/MoviesList';
 import PlayerPage from './components/Player/PlayerPage';
 import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
+import BrowsePage from './components/Browse/BrowsePage';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 //import SelectPlan from './components/payment/SelectPlan';
 //import PaymentPage from './components/Payment/PaymentPage';
@@ -23,14 +24,13 @@ export default (
   <Route name="app" component={Application}>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
-    <Route name="home" path="/" component={HomePage} ignoreScrollBehavior={true}>
-      {/*<Route name="payment" path="select-plan" component={SelectPlan}>
-       </Route>*/}
+    <Route name="home" component={HomePage} ignoreScrollBehavior={true}>
+      <Route name="browse" path="/:category" component={BrowsePage}/>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage} ignoreScrollBehavior={true}/>
-      <Route name="player" path="/:movieId/:movieSlug(/:serieId)(/:serieSlug)(/:episodeId)(/:episodeSlug)/:videoId"
+      <Route name="player"
+             path="/:movieId/:movieSlug(/:serieId)(/:serieSlug)(/:episodeId)(/:episodeSlug)/:videoId"
              component={PlayerPage}
              ignoreScrollBehavior={true}/>
-      <Route name="category" path=":category" component={MoviesList}/>
       <Redirect from="/" to="/selection"/>
     </Route>
     {/*<Route name="compte" path="/compte" component={AccountPage}>
