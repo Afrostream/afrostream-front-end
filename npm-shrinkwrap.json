@@ -4277,6 +4277,23 @@
         }
       }
     },
+    "cookie-parser": {
+      "version": "1.3.5",
+      "from": "cookie-parser@*",
+      "resolved": "https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.3.5.tgz",
+      "dependencies": {
+        "cookie": {
+          "version": "0.1.3",
+          "from": "cookie@0.1.3",
+          "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.1.3.tgz"
+        },
+        "cookie-signature": {
+          "version": "1.0.6",
+          "from": "cookie-signature@1.0.6",
+          "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz"
+        }
+      }
+    },
     "css-loader": {
       "version": "0.15.6",
       "from": "css-loader@>=0.15.1 <0.16.0",
@@ -14510,47 +14527,47 @@
     },
     "react-router": {
       "version": "1.0.0-beta3",
-      "from": "react-router@>=1.0.0-beta3 <2.0.0",
+      "from": "https://registry.npmjs.org/react-router/-/react-router-1.0.0-beta3.tgz",
       "resolved": "https://registry.npmjs.org/react-router/-/react-router-1.0.0-beta3.tgz",
       "dependencies": {
         "invariant": {
           "version": "2.1.0",
-          "from": "invariant@>=2.0.0 <3.0.0",
+          "from": "https://registry.npmjs.org/invariant/-/invariant-2.1.0.tgz",
           "resolved": "https://registry.npmjs.org/invariant/-/invariant-2.1.0.tgz",
           "dependencies": {
             "envify": {
               "version": "3.4.0",
-              "from": "envify@>=3.0.0 <4.0.0",
+              "from": "https://registry.npmjs.org/envify/-/envify-3.4.0.tgz",
               "resolved": "https://registry.npmjs.org/envify/-/envify-3.4.0.tgz",
               "dependencies": {
                 "through": {
                   "version": "2.3.8",
-                  "from": "through@>=2.3.6 <3.0.0",
+                  "from": "https://registry.npmjs.org/through/-/through-2.3.8.tgz",
                   "resolved": "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
                 },
                 "jstransform": {
                   "version": "10.1.0",
-                  "from": "jstransform@>=10.0.1 <11.0.0",
+                  "from": "https://registry.npmjs.org/jstransform/-/jstransform-10.1.0.tgz",
                   "resolved": "https://registry.npmjs.org/jstransform/-/jstransform-10.1.0.tgz",
                   "dependencies": {
                     "base62": {
                       "version": "0.1.1",
-                      "from": "base62@0.1.1",
+                      "from": "https://registry.npmjs.org/base62/-/base62-0.1.1.tgz",
                       "resolved": "https://registry.npmjs.org/base62/-/base62-0.1.1.tgz"
                     },
                     "esprima-fb": {
                       "version": "13001.1001.0-dev-harmony-fb",
-                      "from": "esprima-fb@13001.1001.0-dev-harmony-fb",
+                      "from": "https://registry.npmjs.org/esprima-fb/-/esprima-fb-13001.1001.0-dev-harmony-fb.tgz",
                       "resolved": "https://registry.npmjs.org/esprima-fb/-/esprima-fb-13001.1001.0-dev-harmony-fb.tgz"
                     },
                     "source-map": {
                       "version": "0.1.31",
-                      "from": "source-map@0.1.31",
+                      "from": "https://registry.npmjs.org/source-map/-/source-map-0.1.31.tgz",
                       "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.31.tgz",
                       "dependencies": {
                         "amdefine": {
                           "version": "1.0.0",
-                          "from": "amdefine@>=0.0.4",
+                          "from": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.0.tgz",
                           "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.0.tgz"
                         }
                       }
@@ -14563,17 +14580,17 @@
         },
         "keymirror": {
           "version": "0.1.1",
-          "from": "keymirror@>=0.1.1 <0.2.0",
+          "from": "https://registry.npmjs.org/keymirror/-/keymirror-0.1.1.tgz",
           "resolved": "https://registry.npmjs.org/keymirror/-/keymirror-0.1.1.tgz"
         },
         "qs": {
           "version": "2.4.1",
-          "from": "qs@2.4.1",
+          "from": "https://registry.npmjs.org/qs/-/qs-2.4.1.tgz",
           "resolved": "https://registry.npmjs.org/qs/-/qs-2.4.1.tgz"
         },
         "warning": {
           "version": "1.0.2",
-          "from": "warning@>=1.0.1 <2.0.0",
+          "from": "https://registry.npmjs.org/warning/-/warning-1.0.2.tgz",
           "resolved": "https://registry.npmjs.org/warning/-/warning-1.0.2.tgz"
         }
       }
@@ -14886,32 +14903,59 @@
         }
       }
     },
-    "videojs-contrib-hls": {
+    "videojs-afrostream": {
       "version": "0.17.5",
-      "from": "git+https://github.com/Afrostream/videojs-contrib-hls.git#44ecb65c1223297d0eb0f7af3f779653fbabc9cb",
-      "resolved": "git+https://github.com/Afrostream/videojs-contrib-hls.git#44ecb65c1223297d0eb0f7af3f779653fbabc9cb",
+      "from": "git+https://github.com/Afrostream/videojs-afrostream.git#master",
+      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#d9215b7947506a27c05b445d6de3eff4c7fffabb",
       "dependencies": {
-        "video.js": {
-          "version": "4.6.4",
-          "from": "https://registry.npmjs.org/video.js/-/video.js-4.6.4.tgz",
-          "resolved": "https://registry.npmjs.org/video.js/-/video.js-4.6.4.tgz",
+        "dashjs": {
+          "version": "1.1.1",
+          "from": "dashjs@>=1.1.1 <2.0.0",
+          "resolved": "https://registry.npmjs.org/dashjs/-/dashjs-1.1.1.tgz",
           "dependencies": {
-            "videojs-swf": {
-              "version": "4.4.2",
-              "from": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.4.2.tgz",
-              "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.4.2.tgz"
+            "dashjs": {
+              "version": "1.4.0",
+              "from": "git://github.com/Dash-Industry-Forum/dash.js.git#master",
+              "resolved": "git://github.com/Dash-Industry-Forum/dash.js.git#b272b1894c6fc41abd4f1bd793c11209ecd92431"
             }
           }
         },
         "pkcs7": {
           "version": "0.2.3",
-          "from": "https://registry.npmjs.org/pkcs7/-/pkcs7-0.2.3.tgz",
+          "from": "pkcs7@>=0.2.2 <0.3.0",
           "resolved": "https://registry.npmjs.org/pkcs7/-/pkcs7-0.2.3.tgz"
+        },
+        "video.js": {
+          "version": "4.12.14",
+          "from": "video.js@>=4.12.14 <5.0.0",
+          "resolved": "https://registry.npmjs.org/video.js/-/video.js-4.12.14.tgz",
+          "dependencies": {
+            "videojs-swf": {
+              "version": "4.7.3",
+              "from": "videojs-swf@4.7.3",
+              "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.3.tgz"
+            },
+            "vtt.js": {
+              "version": "0.12.1",
+              "from": "git+https://github.com/gkatsev/vtt.js.git#vjs-v0.12.1",
+              "resolved": "git+https://github.com/gkatsev/vtt.js.git#8ea664e257ec7b5c092f58ac989e3134ff536a7a"
+            }
+          }
+        },
+        "videojs-contrib-dash": {
+          "version": "1.1.1",
+          "from": "videojs-contrib-dash@>=1.1.1 <2.0.0",
+          "resolved": "https://registry.npmjs.org/videojs-contrib-dash/-/videojs-contrib-dash-1.1.1.tgz"
         },
         "videojs-contrib-media-sources": {
           "version": "1.0.0",
-          "from": "https://registry.npmjs.org/videojs-contrib-media-sources/-/videojs-contrib-media-sources-1.0.0.tgz",
+          "from": "videojs-contrib-media-sources@>=1.0.0 <2.0.0",
           "resolved": "https://registry.npmjs.org/videojs-contrib-media-sources/-/videojs-contrib-media-sources-1.0.0.tgz"
+        },
+        "videojs-swf": {
+          "version": "4.7.4",
+          "from": "videojs-swf@>=4.7.4 <5.0.0",
+          "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.4.tgz"
         }
       }
     },

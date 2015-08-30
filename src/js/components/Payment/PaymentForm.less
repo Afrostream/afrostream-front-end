@@ -1,0 +1,68 @@
+@import (reference) '../../../styles/config.less';
+
+.enter-payment-details {
+  color: #452F50;
+  margin-top: 40px;
+  padding-bottom: 20px;
+  font-size: 24px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.payment-form {
+
+  //recreate local variables
+  @input-height-base: 34px;
+  @input-height-small: 30px;
+  @input-height-large: 46px;
+  @padding-base-horizontal: 12px;
+  @grid-gutter-width: 30px;
+  @screen-sm-min: 768px;
+
+  background-color: #ffffff;
+  color: #6F248B;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 30px 30px 45px;
+  font-size: 12px;
+  text-align: center;
+
+  .subscription-form {
+    height: 100%;
+  }
+
+  .name-details {
+    width: 100%;
+    color: @gray;
+    font-size: 16px;
+    display: -webkit-flex;
+    margin-bottom: 15px;
+  }
+
+  .form-label {
+    float: left;
+    color: #6F248B;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .button-create-subscription {
+    font-weight: bold;
+    background-color: #F0C530;
+    color: #000000;
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px;
+    border: none;
+    margin-top: 20px;
+  }
+
+  .has-error {
+    border-color: #a94442;
+  }
+
+  #errors {
+    color: #a94442;
+  }
+}

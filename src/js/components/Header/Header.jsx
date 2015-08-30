@@ -1,4 +1,5 @@
 import React ,{PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import SearchInput from './../Search/SearchBox';
 import UserButton from './../User/UserButton';
@@ -8,7 +9,7 @@ if (process.env.BROWSER) {
   require('./Header.less');
 }
 
-class Header extends React.Component {
+@connect(({ Event }) => ({Event})) class Header extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -42,10 +43,19 @@ class Header extends React.Component {
 
   render() {
 
+    const {
+      props: {
+        Event
+        }
+      } = this;
+
+    const hiddenMode = !Event.get('userActive');
+
     let sliderClasses = {
       'navbar': true,
       'navbar-default': true,
       'navbar-fixed-top': true,
+      'navbar-hidden': hiddenMode,
       'navbar-fixed-color': this.state.pinned || this.context.router.isActive('compte')
     };
 
@@ -64,10 +74,10 @@ class Header extends React.Component {
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
             {/* User Account button */}
-            <UserButton />
 
             <div className="navbar-collapse collapse navbar-right">
-              <SearchInput/>
+              {/* <SearchInput/> */}
+              <UserButton />
             </div>
           </div>
         </div>

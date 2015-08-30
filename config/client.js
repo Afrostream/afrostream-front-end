@@ -13,7 +13,8 @@ export default {
    * Front-End Server
    */
   apiClient: {
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api'
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api',
+    token: 'afro_token'
   },
   carousel: {
     interval: 10000
@@ -30,27 +31,40 @@ export default {
       theme: 'default',
       signupLink: '/signup',
       resetLink: '/reset-password',
-      connections: ['Username-Password-Authentication', 'facebook'],
+      connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
       disableSignupAction: true,
       rememberLastLogin: false,
       disableResetAction: false,
+      popup: true,
+      sso: false,
       authParams: {
         scope: 'openid offline_access'
       }
     },
     signUp: {
       dict: 'fr',
-      connections: ['Username-Password-Authentication', 'facebook'],
+      connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
+      popup: true,
+      sso: false,
       authParams: {
         scope: 'openid offline_access'
       }
     }
   },
-  streamRoot: {
-    clientId: process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
-    trackerUrl: process.env.STREAMROOT_TRACKER_URL || ''
-
+  recurly: {
+    key: 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
+  },
+  player: {
+    "autoplay": true,
+    "controls": true,
+    "width": "100%",
+    "height": "100%",
+    "sr_options": {
+      "ID_CLIENT": process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
+      "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
+    },
+    "techOrder": ["hls", "dash", "streamroot", "srflash", "html5", "flash"]
   }
 };

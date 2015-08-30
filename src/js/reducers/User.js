@@ -1,13 +1,22 @@
 import Immutable from 'immutable';
 import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
-
+import _ from 'lodash'
 const initialState = Immutable.fromJS({
   'user': null,
   'token': null
 });
 
+
 export default createReducer(initialState, {
+
+  [ActionTypes.User.subscribe](state, { res }) {
+    const data = res.body;
+    console.log('ActionTypes.User.subscribe', data);
+    return state.merge({
+      ['user']: _.merge(state.get('user').toJS(), data)
+    });
+  },
 
   [ActionTypes.User.getIdToken](state, { token }) {
     return state.merge({
@@ -15,11 +24,12 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.showLock](state, {user,token,refreshToken}) {
+  [ActionTypes.User.showLock](state, {user,token,refreshToken,afroToken}) {
     return state.merge({
       ['user']: user,
       ['token']: token,
-      ['refreshToken']: refreshToken
+      ['refreshToken']: refreshToken,
+      ['afroToken']: afroToken
     });
   },
 

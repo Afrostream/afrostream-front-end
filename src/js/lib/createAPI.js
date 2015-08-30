@@ -2,7 +2,8 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import qs from 'qs';
 import URL from 'url';
-
+import config from '../../../config';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 /**
  * return api function base on createRequest function
  * Usage:
@@ -16,9 +17,9 @@ import URL from 'url';
  * Server: /lib/render.js
  */
 export default function createAPI(createRequest) {
-  return async function api(path, method = 'GET', params = {}) {
+  return async function api(path, method = 'GET', params = {}, tokenStore = null, tokenAfroAPI = null) {
     var { pathname, query: queryStr } = URL.parse(path);
-    var query, headers, body;
+    var query, headers, body/*, tokenStore, tokenAfroAPI*/;
 
     if (_.isObject(method)) {
       params = method;
@@ -26,23 +27,36 @@ export default function createAPI(createRequest) {
     }
 
     query = qs.parse(queryStr);
-
+    //if (canUseDOM) {
+    //  tokenStore = localStorage.getItem(config.auth0.token);
+    //  tokenAfroAPI = localStorage.getItem(config.apiClient.token);
+    //}
     if (method === 'GET') {
+      if (tokenAfroAPI) {
+        params.afro_token = tokenAfroAPI;
+      }
+      if (tokenStore) {
+        params.access_token = tokenStore;
+      }
       if (params && _.isObject(params)) {
         _.assign(query, params);
       }
 
     } else {
       body = params;
+      if (tokenAfroAPI) {
+        body.afro_token = tokenAfroAPI;
+      }
+      if (tokenStore) {
+        body.access_token = tokenStore;
+      }
     }
-
     return await new Promise((resolve, reject) => {
       createRequest({method, headers, pathname, query, body})
         .end((err, res) => {
           if (err) {
             return reject(err);
           }
-
           return resolve(res);
         });
     });

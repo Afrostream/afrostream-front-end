@@ -56,15 +56,17 @@ if (process.env.BROWSER) {
     var plans = {
       afrostreammonthly: 'THINK LIKE A MAN',
       afrostreamambassadeurs: 'Ambassadeurs',
-      afrostreampremium: 'DO THE RIGHT THING'};
+      afrostreampremium: 'DO THE RIGHT THING'
+    };
 
     if (user) {
 
       return (
-        <div className="row-fluid">
-          <div className="container">
+        <div className="row-fluid brand-bg">
+          <div className="container brand-bg">
             <div className="account-page">
               <h1>Mon compte</h1>
+
               <div className="account-details">
                 <div className="billing-details-header">
                   ABONNEMENT ET FACTURATION
@@ -114,7 +116,7 @@ if (process.env.BROWSER) {
         <div className="row-fluid">
           no user found
         </div>
-    );
+      );
     }
   }
 }
