@@ -31,6 +31,9 @@ export default {
   Season: keyMirror({
     toggleSeason: null
   }),
+  Event: keyMirror({
+    userActive: null
+  }),
 
   Category: keyMirror({
     getSpots: null,

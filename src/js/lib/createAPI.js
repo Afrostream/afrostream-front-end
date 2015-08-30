@@ -51,7 +51,6 @@ export default function createAPI(createRequest) {
         body.access_token = tokenStore;
       }
     }
-
     return await new Promise((resolve, reject) => {
       createRequest({method, headers, pathname, query, body})
         .end((err, res) => {
