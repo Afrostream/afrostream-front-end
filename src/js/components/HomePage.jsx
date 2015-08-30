@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import WelcomePage from './Welcome/WelcomePage';
+import BrowsePage from './Browse/BrowsePage';
 import AfrostreamMonthlyMessage from './Welcome/AfrostreamMonthlyMessage';
 import PaymentPage from './Payment/PaymentPage';
 
@@ -21,7 +22,7 @@ import PaymentPage from './Payment/PaymentPage';
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-        return (<div>{children}</div>)
+        return (<div>{children ? children : <BrowsePage/>}</div>)
       }
     } else {
       return (<WelcomePage />);

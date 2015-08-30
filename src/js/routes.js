@@ -24,13 +24,13 @@ export default (
   <Route name="app" component={Application}>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
-    <Route name="home" component={HomePage} ignoreScrollBehavior={true}>
-      <Route name="browse" path="/:category" component={BrowsePage}/>
-      <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage} ignoreScrollBehavior={true}/>
+    <Route name="home" path="/" component={HomePage} ignoreScrollBehavior={true}>
+      <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path="/:movieId/:movieSlug(/:serieId)(/:serieSlug)(/:episodeId)(/:episodeSlug)/:videoId"
              component={PlayerPage}
-             ignoreScrollBehavior={true}/>
+             scrollOnTransition={true}/>
+      <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>
     </Route>
     {/*<Route name="compte" path="/compte" component={AccountPage}>

@@ -12,7 +12,7 @@
     "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
     "mock": "npm run dev --mock",
-    "prod": "API_CLIENT_END_POINT=http://afrostream-api-v1.herokuapp.com/api npm run dev",
+    "prod": "API_END_POINT=http://afrostream-api-v1.herokuapp.com/api npm run dev",
     "start": "./node_modules/.bin/babel-node lib/pm2",
     "postinstall": "node lib/deploy"
   },
@@ -104,7 +104,7 @@
     "transform-loader": "^0.2.2",
     "url-loader": "^0.5.6",
     "video.js": "^4.12.12",
-    "videojs-contrib-hls": "git+https://github.com/Afrostream/videojs-contrib-hls.git#master",
+    "videojs-afrostream": "git+https://github.com/Afrostream/videojs-afrostream.git#master",
     "videojs-swf": "^4.7.2",
     "webpack": "^1.10.0"
   },

@@ -32,8 +32,10 @@ export function logOut() {
   return (dispatch, getState) => {
     const storageId = config.auth0.token;
     const storageRefreshId = config.auth0.tokenRefresh;
+    const storageAfroId = config.apiClient.token;
     localStorage.removeItem(storageId);
     localStorage.removeItem(storageRefreshId);
+    localStorage.removeItem(storageAfroId);
     return {
       type: ActionTypes.User.logOut
     };
