@@ -10,10 +10,11 @@ if (canUseDOM) {
 export function subscribe(data) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
-    console.log('subscribe', user)
+    const token = getState().User.get('token');
+    let afroToken = getState().User.get('afroToken') || user.get('afro_token');
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/`, 'POST', data, user.get('token'), user.get('afroToken'))
+      res: await api(`/subscriptions/`, 'POST', data, token, afroToken)
     });
   };
 }
