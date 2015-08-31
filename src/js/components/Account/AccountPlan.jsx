@@ -23,11 +23,8 @@ if (process.env.BROWSER) {
     }
   };
 
-  componentDidMount() {
-
-  }
-
   render() {
+    debugger;
     const {
       props: {
         User
@@ -37,7 +34,6 @@ if (process.env.BROWSER) {
     const user = User.get('user');
 
     if (user) {
-      debugger;
       return (
         <div className="row-fluid">
           <div className="container">
