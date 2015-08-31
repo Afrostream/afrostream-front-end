@@ -18,7 +18,7 @@ import PaymentPage from './Payment/PaymentPage';
       else if (!user.get('planCode')) {
         return ( <PaymentPage />)
       }
-      else if (!user.get('planCode') === 'afrostreammonthly') {
+      else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
