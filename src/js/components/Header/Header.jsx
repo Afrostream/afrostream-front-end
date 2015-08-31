@@ -54,7 +54,7 @@ if (process.env.BROWSER) {
       'navbar': true,
       'navbar-default': true,
       'navbar-fixed-top': true,
-      'navbar-hidden': this.context.router.isActive('player') && hiddenMode,
+      'navbar-hidden': hiddenMode,
       'navbar-fixed-color': this.state.pinned || this.context.router.isActive('compte')
     };
 

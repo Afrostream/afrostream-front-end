@@ -70,8 +70,11 @@ if (process.env.BROWSER) {
 
   componentWillUnmount() {
     if (this.player) {
+      this.player.off('useractive', this.triggerUserActive.bind(this));
+      this.player.off('userinactive', this.triggerUserActive.bind(this));
       this.player.dispose();
       this.player = null;
+      dispatch(EventActionCreators.userActive(false))
     }
   }
 
