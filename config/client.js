@@ -30,7 +30,8 @@ export default {
       icon: '',
       theme: 'default',
       signupLink: '/signup',
-      resetLink: '/reset-password',
+      //TODO: make reset password route work properly
+      //resetLink: '/reset-password',
       connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
       disableSignupAction: true,
