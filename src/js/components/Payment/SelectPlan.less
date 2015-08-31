@@ -12,13 +12,13 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 20px;
-  width: 70%;
+  width: 100%;
   font-size: 24px;
 
   @media all and (max-width: @screen-lg-min) {
-    width: 80%;
+    width: 95%;
   }
 
   @media all and (max-width: @screen-md-min) {
@@ -28,7 +28,7 @@
 
   @media all and (max-width: @screen-xs-min) {
     width: 95%;
-    margin-top: 24px;
+    margin-top: 5px;
     margin-bottom: 10px;
     font-size: 18px;
     font-weight: bold;
@@ -44,12 +44,12 @@
   margin-left: auto;
   margin-right: auto;
   padding: 30px 30px 30px 45px;
-  width: 70%;
+  width: 100%;
   font-size: 12px;
   text-align: center;
 
   @media all and (max-width: @screen-lg-min) {
-    width: 80%;
+    width: 95%;
   }
 
   @media all and (max-width: @screen-md-min) {
@@ -281,6 +281,10 @@
     @media all and (max-width: @screen-md-min) {
       padding: 5px 15px 5px 15px;
     }
+
+    @media all and (max-width: @screen-sm-min) {
+      padding: 5px 12px 5px 12px;
+    }
   }
 
   .button-yellow {
@@ -290,6 +294,14 @@
     padding: 5px 20px 5px 20px;
     border-radius: 20px;
     border: 1px solid #C5C6C7;
+
+    @media all and (max-width: @screen-md-min) {
+      padding: 5px 15px 5px 15px;
+    }
+
+    @media all and (max-width: @screen-sm-min) {
+      padding: 5px 12px 5px 12px;
+    }
   }
 
   .button-purple {
@@ -299,5 +311,13 @@
     padding: 5px 20px 5px 20px;
     border-radius: 20px;
     border: 1px solid #C5C6C7;
+
+    @media all and (max-width: @screen-md-min) {
+      padding: 5px 15px 5px 15px;
+    }
+
+    @media all and (max-width: @screen-sm-min) {
+      padding: 5px 12px 5px 12px;
+    }
   }
 }
