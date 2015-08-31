@@ -16,13 +16,21 @@
   background-color: @gray-lighter;
   width: 100%;
 
+  @media all and (max-width: @screen-sm-min) {
+    padding-right: 0px;
+  }
+
   .partners-image {
     width: 60%;
     float: left;
     position: relative;
     display: inline-block;
-    //padding-right: 70px;
     padding-right: 0px;
+
+    @media all and (max-width: @screen-sm-min) {
+      width: 100%;
+      float: none;
+    }
 
     img {
       max-width: 100%;
@@ -34,7 +42,21 @@
     display: table;
     width: 40%;
     float: left;
-    min-height: 300px;
+    min-height: 340px;
+
+    @media all and (max-width: @screen-lg-min) {
+      min-height: 270px;
+    }
+
+    @media all and (max-width: @screen-md-min) {
+      min-height: 200px;
+    }
+
+    @media all and (max-width: @screen-sm-min) {
+      width: 100%;
+      float: none;
+      margin: 0 5px 0 5px;
+    }
 
       .partners-text {
         display: table-row;
@@ -46,7 +68,11 @@
           color: #6E2391;
           font-size: 32px;
           line-height: 40px;
-          //margin-top: 28px;
+
+          @media all and (max-width: @screen-sm-min) {
+            font-size: 28px;
+            line-height: 36px;
+          }
         }
       }
 
@@ -56,6 +82,10 @@
         width: 100%;
         text-align: center;
         padding-left: 16px;
+
+        @media all and (max-width: @screen-sm-min) {
+          padding-left: 0px;
+        }
 
         .partners-link {
           float: left;
@@ -67,6 +97,11 @@
             //max-width: 96px;
             max-width: 100%;
             align: middle;
+
+            @media all and (max-width: @screen-sm-min) {
+              max-height: 95%;
+              max-width: 95%;
+            }
           }
         }
       }

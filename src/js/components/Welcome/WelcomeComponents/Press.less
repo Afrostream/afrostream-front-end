@@ -7,6 +7,7 @@
 @zoom-margin: 50px;
 
 .press {
+  color: #4C494E;
   display: inline-block;
   width: 100%;
   margin-top: -1px;
@@ -14,10 +15,34 @@
   padding-left: 160px;
   padding-top: 40px;
   background-color: @white-base;
+  text-align: left;
+
+  @media all and (max-width: @screen-lg-min) {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+  }
+
+  @media all and (max-width: @screen-sm-min) {
+    padding-left: 0px;
+    padding-right: 0px;
+    text-align: center;
+  }
 
   .press-text {
     color: #4C494E;
     position: relative;
+  }
+
+  .press-image {
+    margin: 50px auto;
+    /*float: left;
+    max-width: 120px;
+
+    img {
+      float: left;
+      max-width: 75%;
+    }*/
   }
 
   .press-images {
@@ -27,13 +52,14 @@
     position: relative;
 
     .press-image {
-      float: left;
+      margin: 50px auto;
+      /*float: left;
       max-width: 120px;
 
       img {
         float: left;
         max-width: 75%;
-      }
+      }*/
     }
   }
 }

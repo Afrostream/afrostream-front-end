@@ -23,11 +23,11 @@ import PaymentPage from './Payment/PaymentPage';
       }
       else {
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
-      }
-    } else {
-      return (<WelcomePage />);
     }
-  }
+  } else {
+  return (<WelcomePage />);
+}
+}
 
 }
 

@@ -60,27 +60,27 @@ if (process.env.BROWSER) {
 
     return (
       <nav className={classSet(sliderClasses)} role="navigation">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <button type="button" className="navbar-toggle" data-toggle="collapse"
-                    data-target=".navbar-collapse" aria-expanded="false">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <Link className="navbar-brand" to="/">
-              <img src="/images/logo.png" alt="Afrostream.tv"/>
-            </Link>
-            {/* User Account button */}
+      <div className="container-fluid">
+      <div className="navbar-header">
+      <button type="button" className="navbar-toggle" data-toggle="collapse"
+    data-target=".navbar-collapse" aria-expanded="false">
+      <span className="sr-only">Toggle navigation</span>
+    <span className="icon-bar"></span>
+      <span className="icon-bar"></span>
+      <span className="icon-bar"></span>
+      </button>
+      <Link className="navbar-brand" to="/">
+      <img src="/images/logo.png" alt="Afrostream.tv"/>
+      </Link>
+      {/* User Account button */}
 
-            <div className="navbar-collapse collapse navbar-right">
-              <UserButton />
-            </div>
-          </div>
-        </div>
+      <div className="navbar-collapse collapse navbar-right">
+      <UserButton />
+      </div>
+      </div>
+      </div>
       </nav>
-    );
+  );
   }
 }
 
