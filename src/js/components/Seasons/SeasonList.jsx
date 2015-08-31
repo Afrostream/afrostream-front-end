@@ -81,7 +81,7 @@ if (process.env.BROWSER) {
       );
 
     } else {
-      return <Spinner/>
+      return (<div className="season-list"><Spinner/></div>)
     }
   }
 
