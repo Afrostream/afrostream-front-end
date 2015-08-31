@@ -57,7 +57,7 @@ class PricingTable extends React.Component {
                 <span className="period">/AN</span>
               </div>
               <div className="plan2-highlight">4 mois offerts inclus</div>
-              <div className="begin-date-2">ACCÉS DÈS LE 1er SEPTEMBRE</div>
+              <div className="begin-date-2">ACCÉS IMMÉDIATEMENT</div>
               <ul className="plan-benefits-2">
                 <li>2 écrans connectés simultanément</li>
                 <li>Invitations VIP aux avant-premières de films</li>
@@ -82,7 +82,7 @@ class PricingTable extends React.Component {
                 <span className="period">/AN</span>
               </div>
               <div className="plan3-highlight">Economisez 68 euros!</div>
-              <div className="begin-date-2">ACCÉS DÈS LE 1er SEPTEMBRE</div>
+              <div className="begin-date-2">ACCÉS IMMÉDIATEMENT</div>
               <ul className="plan-benefits-1">
                 <li>4 écrans connectés simultanément</li>
                 <li>1 clé Chromcast offerte</li>
