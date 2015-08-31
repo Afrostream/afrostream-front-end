@@ -22,12 +22,12 @@ import PaymentPage from './Payment/PaymentPage';
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-        return (<div>{children ? children : <BrowsePage/>}</div>)
-      }
-    } else {
-      return (<WelcomePage />);
+        return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
     }
-  }
+  } else {
+  return (<WelcomePage />);
+}
+}
 
 }
 

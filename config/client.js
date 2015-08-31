@@ -56,6 +56,10 @@ export default {
   recurly: {
     key: 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
   },
+  algolia: {
+    appId: process.env.ALGOLIA_APP_ID || '3OKNPL7ZVA',
+    apiKey: process.env.ALGOLIA_API_KEY || '3e6547172fb6d80b2ae02d6369edfc72'
+  },
   player: {
     "autoplay": true,
     "controls": true,

@@ -49,6 +49,9 @@ body {
     min-height: 100%;
     width: 100%;
     padding: 0;
+    > div {
+      min-height: 100%;
+    }
     &:before {
       content: none;
     }
@@ -60,6 +63,9 @@ body {
       }
       min-height: 100%;
       width: 100%;
+      .full-page {
+        .fullHeight();
+      }
       .container {
         margin-top: @header-height;
         padding: 40px;

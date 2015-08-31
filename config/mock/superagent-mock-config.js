@@ -123,8 +123,14 @@ const superAgentConfig = [,
 
     fixtures: Fixtures.AssetMock,
     callback: function (match, data) {
-      return {
+      /*return {
         body: data
+      };*/
+      return {
+        body: _.find(data, function (item) {
+          return item._id === match[1];
+
+        })
       };
     }
   }
