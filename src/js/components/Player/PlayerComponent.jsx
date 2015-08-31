@@ -33,9 +33,9 @@ if (process.env.BROWSER) {
   //  this.initPlayer();
   //}
 
-  componentDidUpdate() {
-    this.initPlayer();
-  }
+  //componentDidUpdate() {
+  //  this.initPlayer();
+  //}
 
   initPlayer() {
     const {
@@ -82,7 +82,6 @@ if (process.env.BROWSER) {
         Movie,
         videoId,
         movieId,
-        episodeId
         }
       } = this;
     const videoData = Video.get(`videos/${videoId}`);
