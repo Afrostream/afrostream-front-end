@@ -23,6 +23,10 @@ if (process.env.BROWSER) {
     this.tlIn = null;
   }
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+  
   static propTypes = {
     active: PropTypes.bool.isRequired,
     movieId: PropTypes.string.isRequired,
@@ -91,19 +95,14 @@ if (process.env.BROWSER) {
     let posterImg = poster ? poster.get('imgix') : '';
     let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70)`} : {};
 
-    let idMovie = movieData ? movieData.get('_id') : movieId;
-    let type = movieData ? movieData.get('type') : '';
-    let slug = movieData ? movieData.get('slug') : '';
-    let link = `/${type}/${idMovie}/${slug}/player/${idMovie}`;
-
     return (
       <div ref="slContainer" className={classes}>
 
-        <Link to={link} onClick={::this.loadVideo}>
+        <a href="" onClick={::this.loadVideo}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
-        </Link>
+        </a>
 
-        <Link className="btn-play" to={link} onClick={::this.loadVideo}/>
+        <a href="" className="btn-play" onClick={::this.loadVideo}/>
 
         {movieData ? <Billboard {...{active, movieData, maxLength}}/> : ''}
 
@@ -111,7 +110,8 @@ if (process.env.BROWSER) {
     );
   }
 
-  loadVideo() {
+  loadVideo(e) {
+    e.preventDefault();
     const {
       props: {
         dispatch, Movie, movieId, movieObj
@@ -119,8 +119,20 @@ if (process.env.BROWSER) {
       } = this;
 
     const movieData = movieObj || Movie.get(`movies/${movieId}`);
-
-    dispatch(VideoActionCreators.getVideo(movieData.get('_id')));
+    let idMovie = movieData ? movieData.get('_id') : movieId;
+    let type = movieData ? movieData.get('type') : '';
+    let slug = movieData ? movieData.get('slug') : '';
+    let link = `/${idMovie}/${slug}`;
+    let videoData = movieData.get('video');
+    if (videoData) {
+      if (!videoData) return false;
+      //dispatch(VideoActionCreators.getVideo(videoData.get('_id')));
+      link = `/${idMovie}/${slug}/${videoData.get('_id')}`;
+      this.context.router.transitionTo(link);
+    }
+    else {
+      this.context.router.transitionTo(link);
+    }
   }
 }
 

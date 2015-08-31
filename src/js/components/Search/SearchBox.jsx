@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{ PropTypes } from 'react';
 import algoliasearch from'algoliasearch';
 import Autosuggest from 'react-autosuggest';
 import config from '../../../../config/';
@@ -8,6 +8,10 @@ if (process.env.BROWSER) {
   require('./SearchBox.less');
 }
 class SearchBox extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   state = {
     hasFocus: false
@@ -36,9 +40,36 @@ class SearchBox extends React.Component {
     this.setState({hasFocus: hasFocus});
   }
 
+  getSuggestionValue(suggestionObj) {
+    return suggestionObj.title;
+  }
+
+  onSuggestionSelected(suggestionObj, event) {
+    event.preventDefault();
+    console.log(suggestionObj);
+    let link = `/${suggestionObj._id}/${suggestionObj.slug}`;
+    this.context.router.transitionTo(link)
+  }
+
   renderSuggestion(suggestionObj) {
+
+    let imageStyles = '';
+    let thumb = suggestionObj.thumb;
+    if (thumb) {
+      let imgix = thumb.imgix;
+      imageStyles = imgix;
+    }
+
     return (
-      <small>{ suggestionObj.title}</small>
+      <div className="row">
+        <div className="col-md-4">
+          <img className="img-responsive" alt={suggestionObj.title}
+               src={`${imageStyles}?fit=crop&w=60&h=40&q=30`}/>
+        </div>
+        <div className="col-md-8 text-left">
+          <small>{ suggestionObj.title}</small>
+        </div>
+      </div>
     );
   }
 
@@ -66,6 +97,8 @@ class SearchBox extends React.Component {
               suggestions={::this.getOptions}
               inputAttributes={inputAttributes}
               suggestionRenderer={::this.renderSuggestion}
+              onSuggestionSelected={::this.onSuggestionSelected}
+              suggestionValue={::this.getSuggestionValue}
               />
           </fieldset>
         </form>
