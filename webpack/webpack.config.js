@@ -146,7 +146,9 @@ const webpackConfig = {
         API_END_POINT: JSON.stringify(process.env.API_END_POINT),
         AUTH0_CLIENT_ID: JSON.stringify(process.env.AUTH0_CLIENT_ID),
         AUTH0_DOMAIN: JSON.stringify(process.env.AUTH0_DOMAIN),
-        AUTH0_CALLBACK_URL: JSON.stringify(process.env.AUTH0_CALLBACK_URL)
+        AUTH0_CALLBACK_URL: JSON.stringify(process.env.AUTH0_CALLBACK_URL),
+        ALGOLIA_APP_ID: JSON.stringify(process.env.ALGOLIA_APP_ID),
+        ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY)
       }
     })
   ],

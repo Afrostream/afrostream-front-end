@@ -17,7 +17,7 @@ import PlayerComponent from './PlayerComponent';
   render() {
     const {
       props: {
-        params: { videoId,movieId }
+        params: { videoId,movieId,seasonId }
         }
       } = this;
 

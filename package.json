@@ -39,6 +39,7 @@
     "webpack-dev-server": "^1.10.0"
   },
   "dependencies": {
+    "algoliasearch": "^3.7.7",
     "auth0-lock": "^7.7.1",
     "autoprefixer-core": "^5.2.1",
     "autoprefixer-loader": "^2.0.0",
@@ -92,6 +93,7 @@
     "qs": "^3.1.0",
     "raw-loader": "^0.5.1",
     "react": "^0.13.3",
+    "react-autosuggest": "^1.18.3",
     "react-redux": "^0.2.2",
     "react-router": "^1.0.0-beta3",
     "redux": "^1.0.0-rc",
