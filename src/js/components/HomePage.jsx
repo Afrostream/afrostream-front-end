@@ -22,7 +22,7 @@ import PaymentPage from './Payment/PaymentPage';
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-        return (<div>{children ? children : <BrowsePage/>}</div>)
+        return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {
       return (<WelcomePage />);
