@@ -5,12 +5,11 @@ import * as MovieActionCreators from '../../actions/movie';
 import * as SeasonActionCreators from '../../actions/season';
 import PlayerComponent from './PlayerComponent';
 
-@prepareRoute(async function ({ store, params: { movieId,seasonId, movieSlug, videoId } }) {
-  console.log(movieId, movieSlug, videoId);
+@prepareRoute(async function ({ store, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug, videoId } }) {
+  console.log(movieId, movieSlug, seasonId, seasonSlug, episodeId, episodeSlug, videoId);
   return await * [
       store.dispatch(VideoActionCreators.getVideo(videoId)),
-      store.dispatch(MovieActionCreators.getMovie(movieId)),
-      store.dispatch(SeasonActionCreators.getSeason(seasonId))
+      store.dispatch(MovieActionCreators.getMovie(movieId))
     ];
 }) class PlayerPage extends React.Component {
 

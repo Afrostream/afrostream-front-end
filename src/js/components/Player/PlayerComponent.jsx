@@ -97,7 +97,6 @@ if (process.env.BROWSER) {
             <div className="video-infos_duration">{movieData.get('duration')}</div>
             {movieData.get('type') === 'serie' ?
               (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
-              (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
               : <div />
             }
           </div> : <div />
