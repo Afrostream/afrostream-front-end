@@ -1,0 +1,117 @@
+@import (reference) '../../../../styles/config.less';
+
+@thumb-margin: 10px;
+@thumb-margin-hover: 50px;
+@thumb-width: 140px;
+@thumb-height: 200px;
+@zoom-margin: 50px;
+
+.partners {
+  display: inline-block;
+  position: relative;
+  padding-right: 15px;
+  margin-right: auto;
+  margin-left: 0px;
+  margin-top: -1px;
+  background-color: @gray-lighter;
+  width: 100%;
+
+  @media all and (max-width: @screen-sm-min) {
+    padding-right: 0px;
+  }
+
+  .partners-image {
+    width: 60%;
+    float: left;
+    position: relative;
+    display: inline-block;
+    padding-right: 0px;
+
+    @media all and (max-width: @screen-sm-min) {
+      width: 100%;
+      float: none;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .partners-container {
+    position: relative;
+    display: table;
+    width: 40%;
+    float: left;
+    min-height: 340px;
+
+    @media all and (max-width: @screen-lg-min) {
+      min-height: 270px;
+    }
+
+    @media all and (max-width: @screen-md-min) {
+      min-height: 200px;
+    }
+
+    @media all and (max-width: @screen-sm-min) {
+      width: 100%;
+      float: none;
+      margin: 0 5px 0 5px;
+    }
+
+      .partners-text {
+        display: table-row;
+        position: relative;
+        width: 100%;
+        text-align: center;
+
+        h2 {
+          color: #6E2391;
+          font-size: 32px;
+          line-height: 40px;
+
+          @media all and (max-width: @screen-sm-min) {
+            font-size: 28px;
+            line-height: 36px;
+          }
+        }
+      }
+
+      .partners-links {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        text-align: center;
+        padding-left: 16px;
+
+        @media all and (max-width: @screen-sm-min) {
+          padding-left: 0px;
+        }
+
+        .partners-link {
+          float: left;
+          position: relative;
+          width: 32%;
+
+          img {
+            max-height: 100%;
+            //max-width: 96px;
+            max-width: 100%;
+            align: middle;
+
+            @media all and (max-width: @screen-sm-min) {
+              max-height: 95%;
+              max-width: 95%;
+            }
+          }
+        }
+      }
+  }
+
+  .partners-container:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em; /* Adjusts for spacing */
+  }
+}

@@ -1,0 +1,175 @@
+@import (reference) '../../../styles/config.less';
+
+@thumb-margin: 10px;
+@thumb-margin-hover: 50px;
+@thumb-width: 140px;
+@thumb-height: 200px;
+@zoom-margin: 50px;
+
+.account-page {
+  height: 100%;
+  max-width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 12px;
+  text-align: left;
+
+  h1 {
+    color: #482C4D;
+    text-align: left;
+    font-size: 28px;
+    border-bottom: 1px solid @gray-light;
+    padding-bottom: 15px;
+  }
+
+  .account-details {
+    width: 100%;
+    display: inline-block;
+    border-bottom: 1px solid @gray-light;
+  }
+
+  .billing-details-header {
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: -8px;
+    color: @gray-light;
+    width: 25%;
+    float: left;
+    position: relative;
+    min-height: 100px;
+  }
+
+  .billing-details-container {
+    float: right;
+    position: relative;
+    width: 70%;
+  }
+
+  .billing-details-email {
+    font-weight: bold;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+
+    .email {
+      color: #3C0240;
+      width: 50%;
+      float: left;
+      margin-bottom: 15px;
+    }
+
+    .change-email {
+      margin-left: 20px;
+
+      a {
+        color: #B800C4;
+        width: 50%;
+        float: right;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .billing-details-password {
+    font-weight: bold;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px solid @gray-light;
+    margin-bottom: 10px;
+
+    .password {
+      color: #3C0240;
+      width: 50%;
+      float: left;
+      margin-bottom: 15px;
+    }
+
+    .change-password {
+      margin-left: 20px;
+
+      a {
+        color: #B800C4;
+        width: 50%;
+        float: right;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .billing-details-credit-card {
+    font-weight: bold;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    padding-top: 5px;
+
+    .credit-card {
+      color: #3C0240;
+      width: 50%;
+      float: left;
+      margin-bottom: 15px;
+    }
+
+    .change-credit-card {
+      margin-left: 20px;
+
+      a {
+        color: #B800C4;
+        width: 50%;
+        float: right;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .plan-details {
+    width: 100%;
+    display: inline-block;
+    border-bottom: 1px solid @gray-light;
+    padding-top: 20px;
+  }
+
+  .plan-details-header {
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: -8px;
+    color: @gray-light;
+    width: 25%;
+    float: left;
+    position: relative;
+    min-height: 65px;
+  }
+
+  .plan-details-container {
+    float: right;
+    position: relative;
+    width: 70%;
+  }
+
+  .plan-details-plan-name {
+    font-weight: bold;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+
+    .plan-name {
+      color: #3C0240;
+      width: 50%;
+      float: left;
+      margin-bottom: 10px;
+    }
+
+    .change-plan {
+      margin-left: 20px;
+
+      a {
+        color: #B800C4;
+        width: 50%;
+        float: right;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

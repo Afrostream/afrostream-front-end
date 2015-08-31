@@ -7,7 +7,10 @@ export default {
     createLock: null,
     getProfile: null,
     showLock: null,
-    logOut: null
+    showSignupLock: null,
+    showSigninLock: null,
+    logOut: null,
+    subscribe: null
   }),
 
   Slides: keyMirror({
@@ -21,16 +24,19 @@ export default {
     getSeason: null
   }),
 
-  Asset: keyMirror({
-    getToken: null
+  Video: keyMirror({
+    getVideo: null
   }),
 
   Season: keyMirror({
     toggleSeason: null
   }),
+  Event: keyMirror({
+    userActive: null
+  }),
 
   Category: keyMirror({
-    getTop: null,
+    getSpots: null,
     getMeaList: null,
     getCategory: null,
     getMenu: null

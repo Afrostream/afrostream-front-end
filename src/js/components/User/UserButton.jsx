@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
 import { Link } from 'react-router';
-
+import SearchInput from './../Search/SearchBox';
 @connect(({ User }) => ({User})) class UserButton extends React.Component {
 
   componentDidMount() {
@@ -32,17 +32,18 @@ import { Link } from 'react-router';
 
     if (token) {
       if (user) {
+
         return (
           <div className="btn-group navbar-collapse collapse navbar-left">
+            <SearchInput/>
             <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false">
               <img src={user.get('picture')} alt="50x50" className="icon-user"/>
-              <span className="label-user">{user.get('nickname')}</span>
+              {/*<span className="label-user">{user.get('nickname')}</span>*/}
             </button>
             <ul className="dropdown-menu">
               <li><Link to="/compte">Mon compte</Link></li>
-              <li><Link to="paiements">Mes paiements</Link></li>
               <li role="separator" className="divider"></li>
               <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
             </ul>
@@ -60,12 +61,8 @@ import { Link } from 'react-router';
 
   getLoginState() {
     return (
-      <div className="btn-group navbar-collapse collapse navbar-left">
-        <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false" onClick={::this.showLock}>
-          <img src="https://i.cloudup.com/StzWWrY34s.png" alt="50x50" className="icon-user"/>
-        </button>
+      <div className="btn-group navbar-collapse collapse navbar-right">
+        <button type="button" className="btn btn-login btn-default" onClick={::this.showLock}>connexion</button>
       </div>);
   }
 

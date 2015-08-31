@@ -12,5 +12,11 @@ export default createReducer(initialState, {
     return state.merge({
       ['selected']: seasonId
     });
+  },
+  [ActionTypes.Season.getSeason](state, { seasonId , res}) {
+    const data = res.body;
+    return state.merge({
+      [`seasons/${seasonId}`]: data
+    });
   }
 });

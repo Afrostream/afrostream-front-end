@@ -6,17 +6,17 @@ const initialState = Immutable.fromJS({});
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Movie.getMovie](state, { movie, res }) {
+  [ActionTypes.Movie.getMovie](state, { movieId, res }) {
     const data = res.body;
     return state.merge({
-      [`movie/${movie}`]: data
+      [`movies/${movieId}`]: data
     });
   },
 
-  [ActionTypes.Movie.getSeason](state, { movie, res }) {
+  [ActionTypes.Movie.getSeason](state, { movieId, res }) {
     const data = res.body;
     return state.merge({
-      [`movie/${movie}/season`]: data
+      [`movies/${movieId}/seasons`]: data
     });
   }
 

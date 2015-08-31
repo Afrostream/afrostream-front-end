@@ -19,7 +19,7 @@ const getPaginatedItems = function (items, page, per_page) {
 
 const superAgentConfig = [,
   {
-    pattern: `${config.apiServer.urlPrefix}/movie/([\\w-]+)/season`,
+    pattern: `${config.apiServer.urlPrefix}/movies/([\\w-]+)/seasons`,
 
     fixtures: Fixtures.SeasonMock,
     callback: function (match, data) {
@@ -44,7 +44,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/movie/([\\w]+)`,
+    pattern: `${config.apiServer.urlPrefix}/movies/([\\w]+)`,
 
     fixtures: Fixtures.MovieMock,
     callback: function (match, data) {
@@ -56,7 +56,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/movie/([\\w]+)/([\\w-]+)`,
+    pattern: `${config.apiServer.urlPrefix}/movies/([\\w]+)/([\\w-]+)`,
 
     fixtures: Fixtures.MovieMock,
     callback: function (match, data) {
@@ -68,7 +68,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/category/top`,
+    pattern: `${config.apiServer.urlPrefix}/categorys/([\\w]+)/spots`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
@@ -79,7 +79,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/category/mea`,
+    pattern: `${config.apiServer.urlPrefix}/categorys/mea`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
@@ -99,7 +99,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/category/menu`,
+    pattern: `${config.apiServer.urlPrefix}/categorys/menu`,
 
     fixtures: Fixtures.CategoryMenu,
     callback: function (match, data) {
@@ -109,7 +109,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/category/([\\w-]+)`,
+    pattern: `${config.apiServer.urlPrefix}/categorys/([\\w-]+)`,
 
     fixtures: Fixtures.CategoryMock,
     callback: function (match, data) {
@@ -119,7 +119,7 @@ const superAgentConfig = [,
     }
   },
   {
-    pattern: `${config.apiServer.urlPrefix}/asset/([\\w-]+)`,
+    pattern: `${config.apiServer.urlPrefix}/videos/([\\w-]+)`,
 
     fixtures: Fixtures.AssetMock,
     callback: function (match, data) {

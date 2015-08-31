@@ -4,6 +4,7 @@
 @thumb-margin: 10px;
 @thumb-margin-hover: 50px;
 @thumb-width: 200px;
+@slider-height: 240px;
 @zoom-margin: 50px;
 
 .season-list {
@@ -11,6 +12,7 @@
   padding: 10px 0 40px 0;
   background-color: @color-indigo;
   display: table-row;
+  min-height: @slider-height;
   .selection {
     position: relative;
     z-index: 1;
@@ -29,7 +31,7 @@
   }
   .season-list__container {
     position: relative;
-    overflow-x: hidden;
+    //overflow-x: hidden;
     width: 100%;
     .slider {
       position: relative;
@@ -62,6 +64,7 @@
             bottom: 0;
             right: 0;
             vertical-align: middle;
+            background-image: url(../../../assets/images/default/331x232.jpg);
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;

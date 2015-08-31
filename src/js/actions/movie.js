@@ -1,19 +1,19 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function getMovie(movie) {
-  console.log('getMovie', movie);
+export function getMovie(movieId) {
+  console.log('getMovie', movieId);
   return async api => ({
     type: ActionTypes.Movie.getMovie,
-    movie,
-    res: await api(`/movie/${movie}`)
+    movieId,
+    res: await api(`/movies/${movieId}`)
   });
 }
 
-export function getSeason(movie) {
+export function getSeason(movieId) {
   return async api => ({
     type: ActionTypes.Movie.getSeason,
-    movie,
-    res: await api(`/movie/${movie}/season`, {
+    movieId,
+    res: await api(`/movies/${movieId}/seasons`, {
       sort: 'updated',
       direction: 'desc'
     })

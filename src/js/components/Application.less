@@ -18,6 +18,7 @@
 
 html, body, #main, #main > div {
   height: 100%;
+  //background-color: #ffffff;
 }
 
 body {
@@ -48,6 +49,9 @@ body {
     min-height: 100%;
     width: 100%;
     padding: 0;
+    > div {
+      min-height: 100%;
+    }
     &:before {
       content: none;
     }
@@ -59,11 +63,20 @@ body {
       }
       min-height: 100%;
       width: 100%;
+      .full-page {
+        .fullHeight();
+      }
       .container {
         margin-top: @header-height;
         padding: 40px;
         background: @background-page;
         min-height: 100%;
+        &.brand-bg {
+          background-color: @brand-bg;
+        }
+      }
+      &.brand-bg {
+        background-color: @brand-bg;
       }
     }
   }

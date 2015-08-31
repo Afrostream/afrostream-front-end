@@ -3,10 +3,11 @@ import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import config from '../../../../config';
 import Slider from '../Slider/Slider';
+import Spinner from '../Spinner/Spinner';
 import SeasonTabButton from './SeasonTabButton';
 import SeasonEpisodeThumb from './SeasonEpisodeThumb';
+import * as SeasonActionCreators from '../../actions/season';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
-
 if (canUseDOM) {
   require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
@@ -24,7 +25,7 @@ if (process.env.BROWSER) {
   }
 
   static propTypes = {
-    movie: PropTypes.string.isRequired
+    movieId: PropTypes.string.isRequired
   };
 
   componentDidMount() {
@@ -63,23 +64,24 @@ if (process.env.BROWSER) {
       props: {
         Season,
         Movie,
-        movie
+        movieId
         }
       } = this;
 
-    const seasons = Movie.get(`movie/${movie}/season`);
+    const movieData = Movie.get(`movies/${movieId}`);
+    const seasons = Movie.get(`movies/${movieId}/seasons`);
     const page = Season.get('selected') || 0;
 
     if (seasons && seasons.size) {
       return (
         <div className="season-list">
           {this.parseSeasonTab(page, seasons)}
-          {this.parseSeasonList(page, seasons)}
+          {this.parseSeasonList(page, movieData, seasons)}
         </div>
       );
 
     } else {
-      return (<div />);
+      return <Spinner/>
     }
   }
 
@@ -91,21 +93,34 @@ if (process.env.BROWSER) {
           key={`season-${season.get('_id')}-${i}`}
           active={page === i}
           index={i}
+          seasonId={season.get('_id')}
           {...{season}}/>) : ''}
       </div>
     );
   }
 
-  parseSeasonList(page, seasons) {
+  parseSeasonList(page, movie, seasons) {
+    const {
+      props: {
+        dispatch,
+        Season
+        }
+      } = this;
 
-    const selectedSeason = seasons.get(page);
-    const episodesList = selectedSeason.get('episodes');
+    const selectedSeasonId = seasons.get(page).get('_id');
+    const season = Season.get(`seasons/${selectedSeasonId}`);
+
+    if (!season && selectedSeasonId) {
+      dispatch(SeasonActionCreators.getSeason(selectedSeasonId));
+      return (<div className="slider-container">Chargement</div>);
+    }
+    const episodesList = season.get('episodes');
     return (
       <div className="season-list__container">
         <Slider>
           <div ref="slContainer" className="slider-container">
             {episodesList ? episodesList.map((episode, i) => <SeasonEpisodeThumb
-              key={`episode-${episode.get('_id')}-${i}`} {...{episode}}/>) : ''}
+              key={`episode-${episode.get('_id')}-${i}`} {...{movie, season, episode}}/>) : ''}
           </div>
         </Slider>
       </div>

@@ -4,27 +4,27 @@ import * as MovieActionCreators from '../../actions/movie';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
 
-@prepareRoute(async function ({ store, params: { type, movie } }) {
+@prepareRoute(async function ({ store, params: { movieId } }) {
   return await * [
-      store.dispatch(MovieActionCreators.getMovie(movie)),
-      store.dispatch(MovieActionCreators.getSeason(movie))
+      store.dispatch(MovieActionCreators.getMovie(movieId)),
+      store.dispatch(MovieActionCreators.getSeason(movieId))
     ];
-}) class HomePage extends React.Component {
+}) class MoviePage extends React.Component {
 
   render() {
     const {
       props: {
-        params: { movie }
+        params: { movieId }
         }
       } = this;
 
     return (
-      <div className="row-fluid row-table">
-        {movie ? <MovieInfo maxLength="600" active="true" {...{movie}}/> : ''}
-        {movie ? <SeasonList {...{movie}}/> : ''}
+      <div className="full-page">
+        {movieId ? <MovieInfo maxLength="600" active="true" {...{movieId}}/> : ''}
+        {movieId ? <SeasonList {...{movieId}}/> : ''}
       </div>
     );
   }
 }
 
-export default HomePage;
+export default MoviePage;

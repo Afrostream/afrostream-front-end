@@ -7,6 +7,18 @@ if (canUseDOM) {
   var Auth0Lock = require('auth0-lock');
 }
 
+export function subscribe(data) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().User.get('token');
+    let afroToken = getState().User.get('afroToken') || user.get('afro_token');
+    return async api => ({
+      type: ActionTypes.User.subscribe,
+      res: await api(`/subscriptions/`, 'POST', data, token, afroToken)
+    });
+  };
+}
+
 export function createLock() {
   return (dispatch, getState) => {
     const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
@@ -21,24 +33,28 @@ export function logOut() {
   return (dispatch, getState) => {
     const storageId = config.auth0.token;
     const storageRefreshId = config.auth0.tokenRefresh;
+    const storageAfroId = config.apiClient.token;
     localStorage.removeItem(storageId);
     localStorage.removeItem(storageRefreshId);
-
+    localStorage.removeItem(storageAfroId);
     return {
       type: ActionTypes.User.logOut
     };
   };
 }
 
-const storeToken = function (id_token, refresh_token) {
+const storeToken = function (id_token, refresh_token, afro_token) {
   const storageId = config.auth0.token;
   const storageRefreshId = config.auth0.tokenRefresh;
-
+  const storageAfroId = config.apiClient.token;
   if (id_token) {
     localStorage.setItem(storageId, id_token);
   }
   if (refresh_token) {
     localStorage.setItem(storageRefreshId, refresh_token);
+  }
+  if (storageAfroId) {
+    localStorage.setItem(storageAfroId, afro_token);
   }
 };
 
@@ -58,15 +74,15 @@ const refreshToken = function (getState) {
           localStorage.removeItem(storageRefreshId);
           return reject(err);
         }
-        // Get here the new JWT via delegationResult.id_token
-        // store token
-        storeToken(delegationResult.id_token);
 
         lock.getProfile(delegationResult.id_token, function (err, profile) {
           if (err) {
             console.log('*** Error loading the refresh token ***', err);
             localStorage.removeItem(storageRefreshId);
           }
+          // Get here the new JWT via delegationResult.id_token
+          // store token
+          storeToken(delegationResult.id_token, null, profile[config.apiClient.token]);
           console.log('*** Refreshed token ***', profile);
           return resolve({
             type: ActionTypes.User.getProfile,
@@ -79,7 +95,7 @@ const refreshToken = function (getState) {
 };
 
 export function getProfile() {
-  console.log('getProfile');
+
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
     const token = getState().User.get('token');
@@ -142,13 +158,14 @@ export function showLock(container = null) {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token);
+              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
-                refreshToken: refresh_token
+                refreshToken: refresh_token,
+                afroToken: profile[config.apiClient.token]
               });
             }
           );
@@ -156,6 +173,143 @@ export function showLock(container = null) {
       ));
   };
 }
+
+export function showSignupLock() {
+  return (dispatch, getState) => {
+    const lock = getState().User.get('lock');
+    return async auth0 =>(
+      await new Promise(
+        (resolve, reject) => {
+          lock.showSignup(
+            config.auth0.signUp
+            , function (err, profile, id_token, access_token, state, refresh_token) {
+              if (err) {
+                console.log('*** Error loading the profile - most likely the token has expired ***', err);
+                //localStorage.removeItem(storageId);
+                //return reject(err);
+                //try to refresh token session
+                refreshToken(getState, function (tokenErr, data) {
+                  if (tokenErr) {
+                    return reject(tokenErr);
+                  }
+                  return resolve(data);
+                });
+              }
+              // store token
+              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
+              // store refresh_token
+              return resolve({
+                type: ActionTypes.User.showLock,
+                user: profile,
+                token: id_token,
+                refreshToken: refresh_token,
+                afroToken: profile[config.apiClient.token]
+              });
+            }
+          );
+        }
+      ));
+  };
+}
+
+export function showReset(container = null) {
+  return (dispatch, getState) => {
+    const lock = getState().User.get('lock');
+    let lockOptions = _.cloneDeep(config.auth0.signIn);
+
+    if (container) {
+      _.merge(lockOptions, {
+        popup: false,
+        closable: false,
+        container: container
+      });
+    }
+
+    return async auth0 =>(
+      await new Promise(
+        (resolve, reject) => {
+          lock.showReset(
+            lockOptions
+            , function (err, profile, id_token, access_token, state, refresh_token) {
+              if (err) {
+                console.log('*** Error loading the profile - most likely the token has expired ***', err);
+                //localStorage.removeItem(storageId);
+                //return reject(err);
+                //try to refresh token session
+                refreshToken(getState, function (tokenErr, data) {
+                  if (tokenErr) {
+                    return reject(tokenErr);
+                  }
+                  return resolve(data);
+                });
+              }
+              // store token
+              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
+              // store refresh_token
+              return resolve({
+                type: ActionTypes.User.showLock,
+                user: profile,
+                token: id_token,
+                refreshToken: refresh_token,
+                afroToken: profile[config.apiClient.token]
+              });
+            }
+          );
+        }
+      ));
+  };
+}
+
+export function showSigninLock() {
+  return (dispatch, getState) => {
+    const lock = getState().User.get('lock');
+    return async auth0 =>(
+      await new Promise(
+        (resolve, reject) => {
+          lock.show(
+            //FIXME: trouve pourquoi ça marche pas avec config.auth0.signIn
+            //config.auth0.signIn
+            {
+              dict: 'fr',
+              connections: ['Username-Password-Authentication', 'facebook'],
+              socialBigButtons: true,
+              disableSignupAction: true,
+              rememberLastLogin: false,
+              disableResetAction: false,
+              authParams: {
+                scope: 'openid offline_access'
+              }
+            }
+            , function (err, profile, id_token, access_token, state, refresh_token) {
+              if (err) {
+                console.log('*** Error loading the profile - most likely the token has expired ***', err);
+                //localStorage.removeItem(storageId);
+                //return reject(err);
+                //try to refresh token session
+                refreshToken(getState, function (tokenErr, data) {
+                  if (tokenErr) {
+                    return reject(tokenErr);
+                  }
+                  return resolve(data);
+                });
+              }
+              // store token
+              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
+              // store refresh_token
+              return resolve({
+                type: ActionTypes.User.showLock,
+                user: profile,
+                token: id_token,
+                refreshToken: refresh_token,
+                afroToken: profile[config.apiClient.token]
+              });
+            }
+          );
+        }
+      ));
+  };
+}
+
 
 export function getIdToken() {
   return (dispatch, getState) => {

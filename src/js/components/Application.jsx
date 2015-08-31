@@ -1,9 +1,7 @@
-import React from 'react';
-import { prepareRoute } from '../decorators';
+import React ,{PropTypes } from 'react';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import * as CategoryActionCreators from '../actions/category';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 if (process.env.BROWSER) {
   require('./Application.less');
@@ -14,13 +12,10 @@ if (canUseDOM) {
   require('bootstrap');
 }
 
-@prepareRoute(async function ({ store }) {
-  return await * [
-      store.dispatch(CategoryActionCreators.getMenu())
-    ];
-}) class Application extends React.Component {
+class Application extends React.Component {
 
   render() {
+
     const { props: { children } } = this;
 
     return (
@@ -31,7 +26,6 @@ if (canUseDOM) {
           {children}
           <Footer />
         </div>
-
       </div>
     );
   }

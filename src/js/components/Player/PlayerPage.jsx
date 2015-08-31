@@ -1,24 +1,29 @@
 import React from 'react';
 import { prepareRoute } from '../../decorators';
-import * as AssetActionCreators from '../../actions/asset';
+import * as VideoActionCreators from '../../actions/video';
+import * as MovieActionCreators from '../../actions/movie';
+import * as SeasonActionCreators from '../../actions/season';
 import PlayerComponent from './PlayerComponent';
 
-@prepareRoute(async function ({ store, params: { type, movie, slug, asset } }) {
+@prepareRoute(async function ({ store, params: { movieId,seasonId, movieSlug, videoId } }) {
+  console.log(movieId, movieSlug, videoId);
   return await * [
-      store.dispatch(AssetActionCreators.getToken(asset))
+      store.dispatch(VideoActionCreators.getVideo(videoId)),
+      store.dispatch(MovieActionCreators.getMovie(movieId)),
+      store.dispatch(SeasonActionCreators.getSeason(seasonId))
     ];
 }) class PlayerPage extends React.Component {
 
   render() {
     const {
       props: {
-        params: { asset }
+        params: { videoId,movieId,seasonId }
         }
       } = this;
 
     return (
       <div className="row-fluid">
-        {asset ? <PlayerComponent {...{asset}}/> : ''}
+        {videoId ? <PlayerComponent {...{videoId, movieId, seasonId}}/> : ''}
       </div>
     );
   }

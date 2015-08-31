@@ -4,7 +4,6 @@ import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import config from '../config';
 
-const env = process.env.NODE_ENV || 'development';
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',
@@ -139,6 +138,18 @@ const webpackConfig = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        API_CLIENT_END_POINT: JSON.stringify(process.env.API_CLIENT_END_POINT),
+        API_END_POINT: JSON.stringify(process.env.API_END_POINT),
+        AUTH0_CLIENT_ID: JSON.stringify(process.env.AUTH0_CLIENT_ID),
+        AUTH0_DOMAIN: JSON.stringify(process.env.AUTH0_DOMAIN),
+        AUTH0_CALLBACK_URL: JSON.stringify(process.env.AUTH0_CALLBACK_URL),
+        ALGOLIA_APP_ID: JSON.stringify(process.env.ALGOLIA_APP_ID),
+        ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY)
+      }
     })
   ],
 

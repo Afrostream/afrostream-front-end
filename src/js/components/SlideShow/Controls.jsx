@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
 import * as SlidesActionCreators from '../../actions/slides';
 
-@connect(({ Slides }) => ({Slides})) class Controls extends React.Component {
+@connect(({ Slides,Category }) => ({Slides, Category})) class Controls extends React.Component {
   render() {
     const {
       props: {
@@ -22,21 +22,23 @@ import * as SlidesActionCreators from '../../actions/slides';
   toggleNext() {
     const {
       props: {
-        dispatch
+        dispatch,Category
         }
       } = this;
-
-    dispatch(SlidesActionCreators.toggleNext());
+    const categoryId = Category.get(`categoryId`);
+    const total = Category.get(`categorys/${categoryId}/spots`);
+    dispatch(SlidesActionCreators.toggleNext(total));
   }
 
   togglePrev() {
     const {
       props: {
-        dispatch
+        dispatch,Category
         }
       } = this;
-
-    dispatch(SlidesActionCreators.togglePrev());
+    const categoryId = Category.get(`categoryId`);
+    const total = Category.get(`categorys/${categoryId}/spots`);
+    dispatch(SlidesActionCreators.togglePrev(total));
   }
 }
 

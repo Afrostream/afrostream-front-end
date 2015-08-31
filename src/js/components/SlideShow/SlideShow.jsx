@@ -14,7 +14,7 @@ if (process.env.BROWSER) {
 }
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(CategoryActionCreators.getTop())
+      store.dispatch(CategoryActionCreators.getSpots())
     ];
 })
 @connect(({ Category, Slides }) => ({Category, Slides})) class SlideShow extends React.Component {
@@ -32,7 +32,8 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    const slides = Category.get(`category/top`);
+    const categoryId = Category.get(`categoryId`);
+    const slides = Category.get(`categorys/${categoryId}/spots`);
     const page = Slides.get('page') || 0;
     return (
       <div className="SlideShow">
@@ -58,11 +59,14 @@ if (process.env.BROWSER) {
 
     const {
       props: {
-        dispatch
+        dispatch,
+        Category
         }
       } = this;
-
-    dispatch(SlidesActionCreators.toggleNext());
+    const categoryId = Category.get(`categoryId`);
+    const total = Category.get(`categorys/${categoryId}/spots`);
+    console.log(categoryId, total);
+    dispatch(SlidesActionCreators.toggleNext(total.size));
   }
 }
 

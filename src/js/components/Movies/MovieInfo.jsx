@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
-import Navigation from '../Navigation/Navigation';
-import * as AssetActionCreators from '../../actions/asset';
+import * as VideoActionCreators from '../../actions/video';
 
 if (canUseDOM) {
   require('gsap');
@@ -24,9 +23,13 @@ if (process.env.BROWSER) {
     this.tlIn = null;
   }
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+  
   static propTypes = {
     active: PropTypes.bool.isRequired,
-    movie: PropTypes.string.isRequired,
+    movieId: PropTypes.string.isRequired,
     maxLength: PropTypes.number.isRequired,
     movieObj: PropTypes.instanceOf(Immutable.Object)
   };
@@ -39,12 +42,15 @@ if (process.env.BROWSER) {
     const container = React.findDOMNode(this.refs.slContainer);
     const backGd = React.findDOMNode(this.refs.slBackground);
     this.tlIn = new TimelineMax({paused: true});
-    //TweenMax.set(container, {transformStyle: 'preserve-3d', perspective: 100, perspectiveOrigin: '50% 50%'});
+    if (!container || !backGd) {
+      return;
+    }
     this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
     this.tlIn.add(TweenMax.fromTo(backGd, 22,
       {z: 0},
       {z: 5, force3D: true}
     ), 0);
+
   }
 
   lunchTransition() {
@@ -75,48 +81,58 @@ if (process.env.BROWSER) {
     });
 
     const {
-      props: { Movie, active, movie, movieObj,maxLength}
+      props: { Movie, active, movieId, movieObj,maxLength}
       } = this;
 
-    const movieData = movieObj || Movie.get(`movie/${movie}`);
+    const movieData = movieObj || Movie.get(`movies/${movieId}`);
 
     if (!movieData) {
       //TODO gerer le 404 sur la movie
-      console.log('pas de données');
+      return (<div>Aucunes données</div>);
     }
-    let imageStyles = {backgroundImage: `url(${movieData ? movieData.get('poster') : ''})`};
-    let idMovie = movieData ? movieData.get('_id') : '';
-    let type = movieData ? movieData.get('type') : '';
-    let slug = movieData ? movieData.get('slug') : '';
-    let link = `/${type}/${idMovie}/${slug}/player/${idMovie}`;
+
+    let poster = movieData.get('poster');
+    let posterImg = poster ? poster.get('imgix') : '';
+    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70)`} : {};
 
     return (
       <div ref="slContainer" className={classes}>
 
-        <Link to={link} onClick={::this.loadAsset}>
+        <a href="" onClick={::this.loadVideo}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
-        </Link>
+        </a>
 
-        <Link className="btn-play" to={link} onClick={::this.loadAsset}/>
+        <a href="" className="btn-play" onClick={::this.loadVideo}/>
 
         {movieData ? <Billboard {...{active, movieData, maxLength}}/> : ''}
-
-        <Navigation />
 
       </div>
     );
   }
 
-  loadAsset() {
+  loadVideo(e) {
+    e.preventDefault();
     const {
       props: {
-        dispatch, Movie, movie, movieObj
+        dispatch, Movie, movieId, movieObj
         }
       } = this;
 
-    const movieData = movieObj || Movie.get(`movie/${movie}`);
-
-    dispatch(AssetActionCreators.getToken(movieData.get('_id')));
+    const movieData = movieObj || Movie.get(`movies/${movieId}`);
+    let idMovie = movieData ? movieData.get('_id') : movieId;
+    let type = movieData ? movieData.get('type') : '';
+    let slug = movieData ? movieData.get('slug') : '';
+    let link = `/${idMovie}/${slug}`;
+    let videoData = movieData.get('video');
+    if (videoData) {
+      if (!videoData) return false;
+      //dispatch(VideoActionCreators.getVideo(videoData.get('_id')));
+      link = `/${idMovie}/${slug}/${videoData.get('_id')}`;
+      this.context.router.transitionTo(link);
+    }
+    else {
+      this.context.router.transitionTo(link);
+    }
   }
 }
 
