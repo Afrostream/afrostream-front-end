@@ -257,7 +257,7 @@ if (canUseDOM) {
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
           >
-          <a onClick={::this.loadMovie}
+          <a onClick={::this.loadVideo}
             >
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
@@ -302,27 +302,43 @@ if (canUseDOM) {
   }
 
   //TODO Connect to last video or first video of season/video
-  //loadVideo() {
-  //  const {
-  //    props: {
-  //      dispatch,movie,await
-  //      }
-  //    } = this;
-  //
-  //  let movieId = movie.get('_id');
-  //  let movieSlug = movie.get('slug') || '';
-  //  let videoId = movie.get('videoId') || '';
-  //  videoId = episode ? episode.get('videoId') : videoId;
-  //  let link = `/${movieId}/${movieSlug}/${movieSlug}`;
-  //
-  //  //const idMovie = movie.get('_id');
-  //  //dispatch(VideoActionCreators.getVideo(idMovie));
-  //  return await * [
-  //      //dispatch(MovieActionCreators.getMovie(movieId)),
-  //      //dispatch(MovieActionCreators.getSeason(movieId)),
-  //      this.context.router.transitionTo(link)
-  //    ];
-  //}
+  loadVideo() {
+    const {
+      props: {
+        dispatch,movie,await
+        }
+      } = this;
+
+    const movieDataId = movie.get('_id');
+    const movieData = movie || Movie.get(`movies/${movieId}`);
+    let type = movieData ? movieData.get('type') : '';
+    let movieSlud = movieData ? movieData.get('slug') : '';
+    let link = `/${movieDataId}/${movieSlud}`;
+    let videoData = movieData.get('video');
+    if (type === 'serie') {
+      //const seasons = Movie.get(`movies/${movieDataId}/seasons`);
+      const seasons = movieData.get('seasons');
+      if (seasons) {
+        const season = seasons.get(0);
+        const seasonId = season.get('_id');
+        const seasonSlug = season.get('slug');
+        const episodes = season.get('episodes');
+        //TODO get last viewed episode
+        const episode = episodes.get(0);
+        if (episode) {
+          const episodeId = episode.get('_id');
+          const episodeSlug = episode.get('slug');
+          link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
+          console.log(link)
+          videoData = episode.get('video');
+        }
+      }
+    }
+    if (videoData) {
+      link += `/${videoData.get('_id')}`;
+    }
+    this.context.router.transitionTo(link);
+  }
 }
 
 export default Thumb;

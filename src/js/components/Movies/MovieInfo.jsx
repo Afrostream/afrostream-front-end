@@ -26,7 +26,7 @@ if (process.env.BROWSER) {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
-  
+
   static propTypes = {
     active: PropTypes.bool.isRequired,
     movieId: PropTypes.string.isRequired,
@@ -114,25 +114,40 @@ if (process.env.BROWSER) {
     e.preventDefault();
     const {
       props: {
-        dispatch, Movie, movieId, movieObj
+        dispatch, Movie,movieId, movieObj
         }
       } = this;
 
-    const movieData = movieObj || Movie.get(`movies/${movieId}`);
-    let idMovie = movieData ? movieData.get('_id') : movieId;
+    const movieData = Movie.get(`movies/${movieId}`) || movieObj;
+    const movieDataId = movieId || movieObj.get('_id');
     let type = movieData ? movieData.get('type') : '';
-    let slug = movieData ? movieData.get('slug') : '';
-    let link = `/${idMovie}/${slug}`;
+    let movieSlud = movieData ? movieData.get('slug') : '';
+    let link = `/${movieDataId}/${movieSlud}`;
     let videoData = movieData.get('video');
+    if (type === 'serie') {
+      //const seasons = Movie.get(`movies/${movieDataId}/seasons`);
+      const seasons = movieData.get('seasons');
+      if (seasons) {
+        const season = seasons.get(0);
+        const seasonId = season.get('_id');
+        const seasonSlug = season.get('slug');
+        const episodes = season.get('episodes');
+        //TODO get last viewed episode
+        const episode = episodes.get(0);
+        if (episode) {
+          const episodeId = episode.get('_id');
+          const episodeSlug = episode.get('slug');
+          link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
+          console.log(link)
+          videoData = episode.get('video');
+        }
+      }
+    }
     if (videoData) {
-      if (!videoData) return false;
-      //dispatch(VideoActionCreators.getVideo(videoData.get('_id')));
-      link = `/${idMovie}/${slug}/${videoData.get('_id')}`;
-      this.context.router.transitionTo(link);
+      link += `/${videoData.get('_id')}`;
     }
-    else {
-      this.context.router.transitionTo(link);
-    }
+    this.context.router.transitionTo(link);
+    //dispatch(VideoActionCreators.getVideo(videoData.get('_id')));
   }
 }
 

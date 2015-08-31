@@ -20,9 +20,9 @@ class Application extends React.Component {
 
     return (
       <div className="app">
-        <Header {...this.props}/>
-
         <div className="container-fluid">
+          <Header {...this.props}/>
+
           {children}
           <Footer />
         </div>

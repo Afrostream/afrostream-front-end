@@ -25,7 +25,7 @@ export default (
     <Route name="home" path="/" component={HomePage} ignoreScrollBehavior={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
-             path="/:movieId/:movieSlug(/:serieId)(/:serieSlug)(/:episodeId)(/:episodeSlug)/:videoId"
+             path="/:movieId/:movieSlug(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
              component={PlayerPage}
              scrollOnTransition={true}/>
       <Route name="compte" path="/compte" component={AccountPage}>

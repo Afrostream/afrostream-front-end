@@ -56,10 +56,13 @@ body {
       content: none;
     }
     .row-fluid {
-      &.row-table {
-        display: table;
-        table-layout: fixed;
-        height: 100%;
+      display: table;
+      table-layout: fixed;
+      height: 100%;
+      > .container-fluid {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
       }
       min-height: 100%;
       width: 100%;

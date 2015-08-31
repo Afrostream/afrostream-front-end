@@ -81,7 +81,7 @@ if (process.env.BROWSER) {
       );
 
     } else {
-      return <Spinner/>
+      return (<div></div>)
     }
   }
 
@@ -112,7 +112,7 @@ if (process.env.BROWSER) {
 
     if (!season && selectedSeasonId) {
       dispatch(SeasonActionCreators.getSeason(selectedSeasonId));
-      return (<div className="slider-container">Chargement</div>);
+      return (<div className="slider-container"><Spinner/></div>);
     }
     const episodesList = season.get('episodes');
     return (

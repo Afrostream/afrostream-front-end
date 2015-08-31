@@ -33,9 +33,9 @@ if (process.env.BROWSER) {
   //  this.initPlayer();
   //}
 
-  componentDidUpdate() {
-    this.initPlayer();
-  }
+  //componentDidUpdate() {
+  //  this.initPlayer();
+  //}
 
   initPlayer() {
     const {
@@ -70,8 +70,11 @@ if (process.env.BROWSER) {
 
   componentWillUnmount() {
     if (this.player) {
+      this.player.off('useractive', this.triggerUserActive.bind(this));
+      this.player.off('userinactive', this.triggerUserActive.bind(this));
       this.player.dispose();
       this.player = null;
+      dispatch(EventActionCreators.userActive(false))
     }
   }
 
@@ -82,7 +85,6 @@ if (process.env.BROWSER) {
         Movie,
         videoId,
         movieId,
-        episodeId
         }
       } = this;
     const videoData = Video.get(`videos/${videoId}`);
@@ -96,7 +98,6 @@ if (process.env.BROWSER) {
             <div className="video-infos_title">{movieData.get('title')}</div>
             <div className="video-infos_duration">{movieData.get('duration')}</div>
             {movieData.get('type') === 'serie' ?
-              (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
               (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
               : <div />
             }
