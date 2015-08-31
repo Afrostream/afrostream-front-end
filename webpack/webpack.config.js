@@ -137,7 +137,10 @@ const webpackConfig = {
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
+      jQuery: 'jquery',
+      "window.$": 'jquery',
+      "window.jQuery": "jquery",
+      "root.jQuery": "jquery"
     }),
     new webpack.DefinePlugin({
       'process.env': {
