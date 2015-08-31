@@ -19,7 +19,7 @@ import SeasonList from '../Seasons/SeasonList';
       } = this;
 
     return (
-      <div className="full-page">
+      <div>
         {movieId ? <MovieInfo maxLength="600" active="true" {...{movieId}}/> : ''}
         {movieId ? <SeasonList {...{movieId}}/> : ''}
       </div>
