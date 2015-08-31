@@ -7,7 +7,7 @@ if (process.env.BROWSER) {
 
 @connect(({ User }) => ({User})) class AfrostreamMonthlyMessage extends React.Component {
 
-  logout() {
+  logOut() {
     const {
       props: {
         dispatch
@@ -28,7 +28,6 @@ if (process.env.BROWSER) {
     return (
       <section className="afrostream-monthly-message">
         <div className="header">
-          <img className="create-account-logo" src="/images/logo.png"/>
         </div>
         <div className="message-container">
           <h3>Merci d'avoir réservé la formule THINK LIKE A MAN. </h3>
