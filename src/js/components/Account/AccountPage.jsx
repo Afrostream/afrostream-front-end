@@ -82,13 +82,6 @@ if (process.env.BROWSER) {
                       <Link to="/reset">Modifier le mot de passe</Link>
                     </div>
                   </div>
-
-                  <div className="billing-details-credit-card">
-                    <div className="credit-card">**** **** **** {this.state.cardNumber}</div>
-                    <div className="change-credit-card">
-                      <Link to="/compte/credit-card">Mettre à jour les informations de paiement</Link>
-                    </div>
-                  </div>
                 </div>
               </div>
 
