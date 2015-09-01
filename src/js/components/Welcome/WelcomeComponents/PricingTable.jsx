@@ -1,9 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as UserActionCreators from '../../../actions/user';
 
 if (process.env.BROWSER) {
   require('./PricingTable.less');
 }
-class PricingTable extends React.Component {
+@connect(({ User }) => ({User})) class PricingTable extends React.Component {
+
+  showLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.showSignupLock());
+  }
 
   render() {
 
@@ -40,7 +52,7 @@ class PricingTable extends React.Component {
                 <li>Films et séries illimités</li>
               </ul>
             </div>
-            <button className="plan1-button">
+            <button className="plan1-button" onClick={::this.showLock}>
               S'ABONNER MAINTENANT
             </button>
 
@@ -65,7 +77,7 @@ class PricingTable extends React.Component {
                 <li>Films et séries illimités</li>
               </ul>
             </div>
-            <button className="plan2-button">
+            <button className="plan2-button" onClick={::this.showLock}>
               S'ABONNER MAINTENANT
             </button>
 
@@ -92,7 +104,7 @@ class PricingTable extends React.Component {
                 <li>Films et séries illimités</li>
               </ul>
             </div>
-            <button className="plan3-button">
+            <button className="plan3-button" onClick={::this.showLock}>
               S'ABONNER MAINTENANT
             </button>
 
