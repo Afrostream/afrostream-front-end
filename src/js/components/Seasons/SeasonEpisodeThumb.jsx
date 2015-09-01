@@ -1,12 +1,17 @@
-import React from 'react/addons';
+import React ,{ PropTypes } from 'react';
 import { Link } from 'react-router';
 import Spinner from '../Spinner/Spinner';
+import { connect } from 'react-redux';
 import * as MovieActionCreators from '../../actions/movie';
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
 
 
-class SeasonEpisodeThumb extends React.Component {
+@connect(({ Movie }) => ({Movie})) class SeasonEpisodeThumb extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   static propTypes = {
     movie: React.PropTypes.object.isRequired,
@@ -68,7 +73,6 @@ class SeasonEpisodeThumb extends React.Component {
     let movieSlud = movieData ? movieData.get('slug') : '';
     let link = `/${movieDataId}/${movieSlud}`;
     let videoId = null;
-    let videoData = null;
     const seasonId = season.get('_id');
     const seasonSlug = season.get('slug');
     const episodes = season.get('episodes');
@@ -77,10 +81,9 @@ class SeasonEpisodeThumb extends React.Component {
       const episodeId = episode.get('_id');
       const episodeSlug = episode.get('slug');
       link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
-      videoData = episode.get('video');
+      videoId = episode.get('videoId');
     }
-    if (videoData) {
-      videoId = videoData.get('_id');
+    if (videoId) {
       link += `/${videoId}`;
       return await * [
           dispatch(EventActionCreators.pinHeader(false)),
@@ -88,7 +91,6 @@ class SeasonEpisodeThumb extends React.Component {
           this.context.router.transitionTo(link)
         ];
     }
-    this.context.router.transitionTo(link);
   }
 }
 
