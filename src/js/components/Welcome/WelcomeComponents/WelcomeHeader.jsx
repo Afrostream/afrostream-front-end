@@ -22,7 +22,6 @@ if (process.env.BROWSER) {
 
     return (
       <section className="welcome-header">
-        <img src="/images/logo.png" className="afrostream-logo" alt="Afrostream.tv"/>
 
         <h1>HALF OF <br /> A YELLOW <br />SUN</h1>
 
