@@ -5,6 +5,7 @@ import { prepareRoute } from '../../decorators';
 import SlidesContainer from './Slides';
 import Pagination from './Pagination';
 import Controls from './Controls';
+import Spinner from '../Spinner/Spinner';
 import * as SlidesActionCreators from '../../actions/slides';
 import * as CategoryActionCreators from '../../actions/category';
 import config from '../../../../config';
@@ -37,8 +38,8 @@ if (process.env.BROWSER) {
     const page = Slides.get('page') || 0;
     return (
       <div className="SlideShow">
-        {slides ? <SlidesContainer page={page} {...{slides}}/> : 'Loading...'}
-        {slides ? <Pagination page={page} {...{slides}}/> : 'Loading...'}
+        {slides ? <SlidesContainer page={page} {...{slides}}/> : <Spinner />}
+        {slides ? <Pagination page={page} {...{slides}}/> : <Spinner />}
       </div>
     );
   }

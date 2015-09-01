@@ -104,6 +104,7 @@ class Billboard extends React.Component {
       props: { movieData , maxLength}
       } = this;
 
+    let hasSubtiles = false;
     let title = movieData.get('title');
     let type = movieData.get('type');
     let tags = movieData.get('tags');
@@ -111,7 +112,24 @@ class Billboard extends React.Component {
     let casts = movieData.get('casts');
     let synopsis = movieData.get('synopsis') || '';
     let slug = movieData.get('slug') || '';
-    let seasons = movieData.get('seasons') || [];
+    let seasons = movieData.get('seasons');
+    let videoData = movieData.get('video');
+    if (seasons) {
+      const season = seasons.get(0);
+      const episodes = season.get('episodes');
+      //TODO get last viewed episode
+      const episode = episodes.get(0);
+      if (episode) {
+        videoData = episode.get('video');
+      }
+    }
+    if (videoData) {
+      let subtitles = videoData.get('captions');
+      console.log(subtitles);
+
+      hasSubtiles = subtitles ? subtitles.size : false;
+    }
+
     //wrap text
     if (synopsis.length >= maxLength) {
       let cutIndex = synopsis.indexOf(' ', maxLength);
@@ -131,12 +149,12 @@ class Billboard extends React.Component {
         <a href={movieData.get('link')}>{movieData.get('link')}</a>
 
         <div className="billboard-info__btn">
-          <button className="btn btn-xs btn-transparent" href="#">
+          {hasSubtiles ? <button className="btn btn-xs btn-transparent" href="#">
             <i className="fa fa-align-left"></i>Audio et sous titres
-          </button>
-          <button className=" btn btn-xs btn-transparent" href="#">
-            <i className="fa fa-heart"></i>Ajouter à ma liste
-          </button>
+          </button> : <div />}
+          {/* <button className=" btn btn-xs btn-transparent" href="#">
+           <i className="fa fa-heart"></i>Ajouter à ma liste
+           </button> */}
         </div>
       </div>
     );
