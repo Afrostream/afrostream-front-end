@@ -4,7 +4,7 @@ export function toggleNext(total) {
   return (dispatch, getState) => {
     const current = getState().Slides.get('page');
     let next = current + 1;
-    if (next > total) {
+    if (next > total - 1) {
       next = 0;
     }
     return {

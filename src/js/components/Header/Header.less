@@ -11,6 +11,7 @@ nav {
   &.navbar-hidden {
     opacity: 0;
     .transition(opacity 0.2s linear);
+    display: none;
   }
   .navbar-collapse {
     border: none;
@@ -23,7 +24,7 @@ nav {
     padding: 0;
   }
   .btn-group {
-
+    margin-right: 20px;
     .btn-user {
       width: 40px;
       height: 40px;
@@ -51,6 +52,23 @@ nav {
       padding: 2px 16px 2px 16px;
       margin-right: 20px;
     }
+  }
+}
+
+.login-button {
+  float: right!important;
+  color: #000000;
+  background-color: #E4BD00;
+  border:none;
+  border-radius: 20px;
+  font-size: 16px;
+  line-height: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 20px 25px 0 0;
+
+  @media all and (max-width: @screen-sm-min) {
+    margin: 10px 10px 0 0;
   }
 }
 

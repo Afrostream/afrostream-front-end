@@ -65,7 +65,7 @@ class SelectPlan extends React.Component {
               </div>
             </div>
             <div className="formule-row-decorated-prices">
-              <div className="row-element-left">Tarif après le mois gratuit</div>
+              <div className="row-element-left">Tarif</div>
               <div className="row-element-prices">
                 <span className="plan-price">6,99€</span>
                 <span className="plan-period">/MOIS</span>
@@ -82,12 +82,6 @@ class SelectPlan extends React.Component {
             <div className="formule-row-decorated">
               <div className="row-element-left">HD disponible</div>
               <div className="row-element"><i className="fa fa-check"></i></div>
-              <div className="row-element"><i className="fa fa-check"></i></div>
-              <div className="row-element"><i className="fa fa-check"></i></div>
-            </div>
-            <div className="formule-row-decorated">
-              <div className="row-element-left">Ultra HD (si disponible)</div>
-              <div className="row-element"><i className="fa fa-times"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
@@ -110,7 +104,7 @@ class SelectPlan extends React.Component {
               <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
             <div className="formule-row-decorated">
-              <div className="row-element-left">Annulable à tout moment</div>
+              <div className="row-element-left">Sans engagement</div>
               <div className="row-element"><i className="fa fa-check"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
@@ -119,12 +113,12 @@ class SelectPlan extends React.Component {
               <div className="row-element-left">Invitations avant première film</div>
               <div className="row-element"><i className="fa fa-times"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
-              <div className="row-element"><i className="fa fa-times"></i></div>
+              <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
             <div className="formule-row-no-decoration">
-              <div className="row-element-left">Premier mois gratuit</div>
+              <div className="row-element-left">T-shirt collector et clé Chromecast</div>
               <div className="row-element"><i className="fa fa-times"></i></div>
-              <div className="row-element"><i className="fa fa-check"></i></div>
+              <div className="row-element"><i className="fa fa-times"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
             <div className="formule-row-no-decoration">
