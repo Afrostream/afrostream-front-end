@@ -148,9 +148,9 @@ if (process.env.BROWSER) {
     hasSubtiles = captions ? captions.size : false;
     return (
       <div className="player">
-        <video crossorigin id="afrostream-player"
+        <video crossorigin="anonymous" id="afrostream-player"
                className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-          {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
+          {hasSubtiles ? captions.map((caption, i) => <track kind="captions" crossorigin="anonymous"
                                                              key={`track-${caption.get('_id')}-${i}`}
                                                              src={caption.get('src')}
                                                              srclang={caption.get('lang').get('lang')}
