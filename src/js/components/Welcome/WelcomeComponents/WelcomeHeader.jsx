@@ -34,7 +34,7 @@ if (process.env.BROWSER) {
       <section className="welcome-header">
         <img src="/images/logo.png" className="afrostream-logo" alt="Afrostream.tv" />
 
-        <button type="button" className="login-button" onClick={this.showSigninLock}>connexion</button>
+        <button type="button" className="login-button" onClick={::this.showSigninLock}>connexion</button>
 
         <div className="afrostream-statement">
           <div>Les meilleurs films et séries</div>
