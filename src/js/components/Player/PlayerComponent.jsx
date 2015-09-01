@@ -56,6 +56,10 @@ if (process.env.BROWSER) {
         }
       } = this;
 
+    if (this.player) {
+      return false;
+    }
+
     const videoData = Video.get(`videos/${videoId}`);
 
     if (!videoData) return false;
@@ -128,6 +132,8 @@ if (process.env.BROWSER) {
     const hiddenMode = !Event.get('userActive');
     let videoInfoClasses = {
       'video-infos': true,
+      'hidden-sm': true,
+      'hidden-ms': true,
       'video-infos-hidden': hiddenMode
     };
 
@@ -142,17 +148,6 @@ if (process.env.BROWSER) {
     hasSubtiles = captions ? captions.size : false;
     return (
       <div className="player">
-        {movieData ?
-          <div className={classSet(videoInfoClasses)}>
-            <div className="video-infos_label">Vous regardez</div>
-            <div className="video-infos_title">{movieData.get('title')}</div>
-            <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-            {movieData.get('type') === 'serie' ?
-              (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
-              : <div />
-            }
-          </div> : <div />
-        }
         <video id="afrostream-player"
                className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
           {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
@@ -162,6 +157,17 @@ if (process.env.BROWSER) {
                                                              label={caption.get('lang').get('label')}/>) : ''}
 
         </video>
+        {/*movieData ?
+         <div className={classSet(videoInfoClasses)}>
+         <div className="video-infos_label">Vous regardez</div>
+         <div className="video-infos_title">{movieData.get('title')}</div>
+         <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+         {movieData.get('type') === 'serie' ?
+         (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
+         : <div />
+         }
+         </div> : <div />
+         */}
       </div>
     );
   }
