@@ -4,7 +4,7 @@ import videojs from 'videojs-afrostream';
 import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
-
+import Spinner from '../Spinner/Spinner';
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
 }
@@ -35,7 +35,11 @@ if (process.env.BROWSER) {
   }
 
   //
-  //componentWillReceiveProps() {
+  componentWillReceiveProps() {
+    this.initPlayer();
+  }
+
+  //componentDidUpdate() {
   //  this.initPlayer();
   //}
 
@@ -47,7 +51,8 @@ if (process.env.BROWSER) {
     const {
       props: {
         Video,
-        videoId
+        videoId,
+        dispatch
         }
       } = this;
 
@@ -66,6 +71,7 @@ if (process.env.BROWSER) {
     }.bind(this));
     this.player.on('useractive', this.triggerUserActive.bind(this));
     this.player.on('userinactive', this.triggerUserActive.bind(this));
+    dispatch(EventActionCreators.userActive(true));
   }
 
   triggerUserActive() {
@@ -79,6 +85,11 @@ if (process.env.BROWSER) {
   }
 
   componentWillUnmount() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
     if (this.player) {
       this.player.off('useractive', this.triggerUserActive.bind(this));
       this.player.off('userinactive', this.triggerUserActive.bind(this));
@@ -89,30 +100,18 @@ if (process.env.BROWSER) {
   }
 
   formatTime(seconds) {
-    let s = Math.floor(seconds % 60);
-    let m = Math.floor(seconds / 60 % 60);
-    let h = Math.floor(seconds / 3600);
-    const gm = Math.floor(3600 / 60 % 60);
-    const gh = Math.floor(3600 / 3600);
+    var h = Math.floor(((seconds / 86400) % 1) * 24),
+      m = Math.floor(((seconds / 3600) % 1) * 60),
+      s = Math.round(((seconds / 60) % 1) * 60) + 's', time;
 
-    // handle invalid times
-    if (isNaN(seconds) || seconds === Infinity) {
-      // '-' is false for all relational operators (e.g. <, >=) so this setting
-      // will add the minimum number of fields specified by the guide
-      h = m = s = '-';
+    time = s;
+    if (m) {
+      time = m + 'm ' + time;
     }
-
-    // Check if we need to show hours
-    h = (h > 0 || gh > 0) ? h + ':' : '';
-
-    // If hours are showing, we may need to add a leading zero.
-    // Always show at least one digit of minutes.
-    m = (((h || gm >= 10) && m < 10) ? '0' + m : m) + ':';
-
-    // Check if leading zero is need for seconds
-    s = (s < 10) ? '0' + s : s;
-
-    return h + m + s;
+    if (h) {
+      time = h + 'h ' + time;
+    }
+    return ' ' + time;
   }
 
   render() {
@@ -133,16 +132,21 @@ if (process.env.BROWSER) {
     };
 
     const videoData = Video.get(`videos/${videoId}`);
-    const captions = videoData ? videoData.get('captions') : null;
+    let hasSubtiles = false;
+    if (!videoData) {
+      return (<Spinner />)
+    }
+    let captions = videoData.get('captions');
     const movieData = Movie.get(`movies/${movieId}`);
-    const videoDuration = this.formatTime(this.state.duration || movieData.get('duration'));
+    const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
+    hasSubtiles = captions ? captions.size : false;
     return (
       <div className="player">
         {movieData ?
           <div className={classSet(videoInfoClasses)}>
             <div className="video-infos_label">Vous regardez</div>
             <div className="video-infos_title">{movieData.get('title')}</div>
-            <div className="video-infos_duration">{videoDuration}</div>
+            <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div>
             {movieData.get('type') === 'serie' ?
               (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
               : <div />
@@ -151,11 +155,11 @@ if (process.env.BROWSER) {
         }
         <video id="afrostream-player"
                className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-          {captions ? captions.map((caption, i) => <track kind="captions"
-                                                          key={`track-${caption.get('_id')}-${i}`}
-                                                          src={caption.get('src')}
-                                                          srclang={caption.get('lang').get('lang')}
-                                                          label={caption.get('lang').get('label')}/>) : ''}
+          {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
+                                                             key={`track-${caption.get('_id')}-${i}`}
+                                                             src={caption.get('src')}
+                                                             srclang={caption.get('lang').get('lang')}
+                                                             label={caption.get('lang').get('label')}/>) : ''}
 
         </video>
       </div>

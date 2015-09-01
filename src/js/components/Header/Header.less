@@ -5,12 +5,13 @@ nav {
     background-color: transparent;
     border-color: transparent;
     .transition(background 0.2s linear);
+    .transition(opacity 0.4s linear);
     border-radius: 0;
     z-index: @nav-z + 1;
   }
   &.navbar-hidden {
     opacity: 0;
-    .transition(opacity 0.2s linear);
+    .transition(opacity 0.4s linear);
     display: none;
   }
   .navbar-collapse {
@@ -56,10 +57,10 @@ nav {
 }
 
 .login-button {
-  float: right!important;
+  float: right !important;
   color: #000000;
   background-color: #E4BD00;
-  border:none;
+  border: none;
   border-radius: 20px;
   font-size: 16px;
   line-height: 24px;

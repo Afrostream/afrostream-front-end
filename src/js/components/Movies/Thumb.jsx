@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';
 import * as VideoActionCreators from '../../actions/video';
+import * as EventActionCreators from '../../actions/event';
 
 if (canUseDOM) {
   require('gsap');
@@ -315,6 +316,7 @@ if (canUseDOM) {
     let movieSlud = movieData ? movieData.get('slug') : '';
     let link = `/${movieDataId}/${movieSlud}`;
     let videoData = movieData.get('video');
+    let videoId = null;
     if (type === 'serie') {
       //const seasons = Movie.get(`movies/${movieDataId}/seasons`);
       const seasons = movieData.get('seasons');
@@ -335,7 +337,13 @@ if (canUseDOM) {
       }
     }
     if (videoData) {
-      link += `/${videoData.get('_id')}`;
+      videoId = videoData.get('_id');
+      link += `/${videoId}`;
+      return await * [
+          //dispatch(EventActionCreators.pinHeader(false)),
+          //dispatch(VideoActionCreators.getVideo(videoId)),
+          this.context.router.transitionTo(link)
+        ];
     }
     this.context.router.transitionTo(link);
   }

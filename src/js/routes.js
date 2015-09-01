@@ -22,7 +22,7 @@ export default (
   <Route name="app" component={Application}>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
-    <Route name="home" path="/" component={HomePage} ignoreScrollBehavior={true}>
+    <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path="/:movieId/:movieSlug(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
