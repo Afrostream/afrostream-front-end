@@ -23,10 +23,10 @@ if (process.env.BROWSER) {
     return (
       <section className="welcome-header">
 
-        <h1>HALF OF <br /> A YELLOW <br />SUN</h1>
-
-        <div className="detail-text"> Keisha, April et Valerie sont trois meilleures amies qui partagent tout et
-          traversent des épreuves souvent difficiles et comples dans la ville d'Atlanta
+        <div className="afrostream-statement">
+          <div>Les meilleurs films et séries</div>
+          <div>afro-americaines et africaines</div>
+          <div>en illimité</div>
         </div>
 
         <div className="afrostream-statement">Les meilleurs films <br />et séries afro-américains <br />et africaine en
