@@ -54,7 +54,7 @@ export default {
     }
   },
   recurly: {
-    key: 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
+    key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
   },
   algolia: {
     appId: process.env.ALGOLIA_APP_ID || '3OKNPL7ZVA',
