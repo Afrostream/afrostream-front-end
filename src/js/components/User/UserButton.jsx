@@ -34,7 +34,7 @@ import SearchInput from './../Search/SearchBox';
       if (user) {
 
         return (
-          <div className="btn-group navbar-collapse collapse navbar-left">
+          <div className="btn-group pull-right">
             <SearchInput/>
             <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true"

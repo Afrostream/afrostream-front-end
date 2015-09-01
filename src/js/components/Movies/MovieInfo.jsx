@@ -6,6 +6,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
 import * as VideoActionCreators from '../../actions/video';
+import * as EventActionCreators from '../../actions/event';
 
 if (canUseDOM) {
   require('gsap');
@@ -114,7 +115,7 @@ if (process.env.BROWSER) {
     e.preventDefault();
     const {
       props: {
-        dispatch, Movie,movieId, movieObj
+        dispatch, await,Movie,movieId, movieObj
         }
       } = this;
 
@@ -124,6 +125,7 @@ if (process.env.BROWSER) {
     let movieSlud = movieData ? movieData.get('slug') : '';
     let link = `/${movieDataId}/${movieSlud}`;
     let videoData = movieData.get('video');
+    let videoId = null;
     if (type === 'serie') {
       //const seasons = Movie.get(`movies/${movieDataId}/seasons`);
       const seasons = movieData.get('seasons');
@@ -138,16 +140,23 @@ if (process.env.BROWSER) {
           const episodeId = episode.get('_id');
           const episodeSlug = episode.get('slug');
           link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
-          console.log(link)
           videoData = episode.get('video');
         }
       }
     }
     if (videoData) {
-      link += `/${videoData.get('_id')}`;
+      videoId = videoData.get('_id');
+      link += `/${videoId}`;
+      return await * [
+          //dispatch(EventActionCreators.pinHeader(false)),
+          //dispatch(VideoActionCreators.getVideo(videoId)),
+          this.context.router.transitionTo(link)
+        ];
+
     }
+
     this.context.router.transitionTo(link);
-    //dispatch(VideoActionCreators.getVideo(videoData.get('_id')));
+
   }
 }
 

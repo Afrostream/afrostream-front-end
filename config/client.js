@@ -29,11 +29,11 @@ export default {
       dict: customDict,
       icon: '',
       theme: 'default',
-      signupLink: '/signup',
-      resetLink: '/reset-password',
+      //signupLink: '/signup',
+      resetLink: '/reset',
       connections: ['afrostream-front', 'facebook'],
       socialBigButtons: true,
-      disableSignupAction: true,
+      disableSignupAction: false,
       rememberLastLogin: false,
       disableResetAction: false,
       popup: true,
@@ -54,7 +54,7 @@ export default {
     }
   },
   recurly: {
-    key: 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
+    key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
   },
   algolia: {
     appId: process.env.ALGOLIA_APP_ID || '3OKNPL7ZVA',

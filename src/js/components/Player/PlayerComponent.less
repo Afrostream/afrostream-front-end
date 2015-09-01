@@ -22,7 +22,34 @@
   width: 100%;
   height: 100%;
   max-height: 100%;
-
+  .video-infos {
+    &.video-infos-hidden {
+      opacity: 0;
+      .transition(opacity 0.2s linear);
+    }
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    top: 40%;
+    max-width: 350px;
+    z-index: 5;
+    font-family: @font-family-base;
+    color: @brand-primary;
+    font-size: 1.2em;
+    line-height: 1.3;
+    margin: @app-padding;
+    .video-infos_label {
+      font-family: @font-book;
+      font-size: 2.1em;
+    }
+    .video-infos_title {
+      font-family: @font-roman;
+      font-size: 4.5em;
+      line-height: 1;
+      text-transform: uppercase;
+      margin-left: -3px;
+    }
+  }
   .player-container {
     position: absolute;
     display: inline-block;
