@@ -87,6 +87,7 @@ class PricingTable extends React.Component {
                 <li>4 écrans connectés simultanément</li>
                 <li>1 clé Chromcast offerte</li>
                 <li>1 T-shirt collector Afrostream</li>
+                <li>Invitations VIP aux avant-premières de films</li>
                 <li>12 mois inclus</li>
                 <li>Films et séries illimités</li>
               </ul>

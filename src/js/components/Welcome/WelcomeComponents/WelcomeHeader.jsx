@@ -18,22 +18,29 @@ if (process.env.BROWSER) {
     dispatch(UserActionCreators.showSignupLock());
   }
 
+  showSigninLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.showSigninLock());
+  }
+
   render() {
 
     return (
       <section className="welcome-header">
-        <img src="/images/logo.png" className="afrostream-logo" alt="Afrostream.tv"/>
+        <img src="/images/logo.png" className="afrostream-logo" alt="Afrostream.tv" />
 
-        <h1>HALF OF <br /> A YELLOW <br />SUN</h1>
+        <button type="button" className="login-button" onClick={this.showSigninLock}>connexion</button>
 
-        <div className="detail-text"> Keisha, April et Valerie sont trois meilleures amies qui partagent tout et
-          traversent des épreuves souvent difficiles et comples dans la ville d'Atlanta
+        <div className="afrostream-statement">
+          <div>Les meilleurs films et séries</div>
+          <div>afro-américains et africaine</div>
+          <div>en ilimité</div>
         </div>
-
-        <div className="afrostream-statement">Les meilleurs films <br />et séries afro-américains <br />et africaine en
-          ilimité
-        </div>
-
         <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
       </section>
     );

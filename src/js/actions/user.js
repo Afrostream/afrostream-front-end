@@ -271,7 +271,7 @@ export function showSigninLock() {
             //config.auth0.signIn
             {
               dict: 'fr',
-              connections: ['Username-Password-Authentication', 'facebook'],
+              connections: ['Username-Password-Authentication'],
               socialBigButtons: true,
               disableSignupAction: true,
               rememberLastLogin: false,

@@ -8,7 +8,7 @@ if (process.env.BROWSER) {
   require('./Header.less');
 }
 
-@connect(({ Event }) => ({Event})) class Header extends React.Component {
+@connect(({ Event, User}) => ({Event, User})) class Header extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -44,11 +44,13 @@ if (process.env.BROWSER) {
 
     const {
       props: {
-        Event
+        Event,
+        User
         }
       } = this;
 
-    const hiddenMode = !Event.get('userActive');
+    //const hiddenMode = !Event.get('userActive');
+    var hiddenMode = (User.get('user') === null) ? true : false;
 
     let sliderClasses = {
       'navbar': true,
