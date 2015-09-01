@@ -272,12 +272,12 @@ if (canUseDOM) {
               <div className="thumb-info__synopsis"><a
                 onClick={::this.loadMovie}>{synopsis}</a></div>
             </div>
-            <div className="thumb-info__btn">
-              <button className="btn btn-xs btn-thumb" href="compte/add">
-                <i className="fa fa-heart"></i>Ajouter à ma liste
-              </button>
-              <button className="btn btn-xs btn-thumb" href="compte/recommander">Recommander</button>
-            </div>
+            {/*<div className="thumb-info__btn">
+             <button className="btn btn-xs btn-thumb" href="compte/add">
+             <i className="fa fa-heart"></i>Ajouter à ma liste
+             </button>
+             <button className="btn btn-xs btn-thumb" href="compte/recommander">Recommander</button>
+             </div>*/}
           </div>
         </div>
       </div>

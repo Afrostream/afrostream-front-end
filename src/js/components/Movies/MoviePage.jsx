@@ -1,11 +1,14 @@
 import React from 'react';
 import { prepareRoute } from '../../decorators';
 import * as MovieActionCreators from '../../actions/movie';
+import * as EventActionCreators from '../../actions/event';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
 
 @prepareRoute(async function ({ store, params: { movieId } }) {
   return await * [
+      store.dispatch(EventActionCreators.pinHeader(false)),
+      store.dispatch(EventActionCreators.userActive(true)),
       store.dispatch(MovieActionCreators.getMovie(movieId)),
       store.dispatch(MovieActionCreators.getSeason(movieId))
     ];

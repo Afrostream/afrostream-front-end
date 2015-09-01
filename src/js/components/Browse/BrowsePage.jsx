@@ -9,6 +9,7 @@ import Navigation from '../Navigation/Navigation';
 @prepareRoute(async function ({ store }) {
   return await * [
       store.dispatch(EventActionCreators.pinHeader(false)),
+      store.dispatch(EventActionCreators.userActive(true)),
       store.dispatch(CategoryActionCreators.getMenu()),
       store.dispatch(CategoryActionCreators.getMeaList())
     ];

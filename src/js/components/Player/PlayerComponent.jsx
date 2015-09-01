@@ -157,17 +157,17 @@ if (process.env.BROWSER) {
                                                              label={caption.get('lang').get('label')}/>) : ''}
 
         </video>
-        {/*movieData ?
-         <div className={classSet(videoInfoClasses)}>
-         <div className="video-infos_label">Vous regardez</div>
-         <div className="video-infos_title">{movieData.get('title')}</div>
-         <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-         {movieData.get('type') === 'serie' ?
-         (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
-         : <div />
-         }
-         </div> : <div />
-         */}
+        {movieData ?
+          <div className={classSet(videoInfoClasses)}>
+            <div className="video-infos_label">Vous regardez</div>
+            <div className="video-infos_title">{movieData.get('title')}</div>
+            <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+            {movieData.get('type') === 'serie' ?
+              (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
+              : <div />
+            }
+          </div> : <div />
+        }
       </div>
     );
   }
