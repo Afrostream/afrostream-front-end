@@ -196,7 +196,8 @@ export function showSignupLock() {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
+              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null
+              storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,

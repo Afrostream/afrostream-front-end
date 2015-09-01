@@ -8,3 +8,11 @@ export function userActive(active) {
     };
   };
 }
+export function pinHeader(pin) {
+  return (dispatch, getState) => {
+    return {
+      type: ActionTypes.Event.pinHeader,
+      pin: pin
+    };
+  };
+}

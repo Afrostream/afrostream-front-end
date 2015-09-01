@@ -8,7 +8,7 @@ if (process.env.BROWSER) {
   require('./Header.less');
 }
 
-@connect(({ Event, User}) => ({Event, User})) class Header extends React.Component {
+@connect(({ Event }) => ({Event})) class Header extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -44,39 +44,31 @@ if (process.env.BROWSER) {
 
     const {
       props: {
-        Event,
-        User
+        Event
         }
       } = this;
 
-    //const hiddenMode = !Event.get('userActive');
-    var hiddenMode = (User.get('user') === null) ? true : false;
+    const hiddenMode = !Event.get('userActive');
+    const pinned = Event.get('pinHeader');
 
     let sliderClasses = {
       'navbar': true,
       'navbar-default': true,
       'navbar-fixed-top': true,
       'navbar-hidden': hiddenMode,
-      'navbar-fixed-color': this.state.pinned || this.context.router.isActive('compte')
+      'navbar-fixed-color': this.state.pinned || pinned || this.context.router.isActive('compte')
     };
 
     return (
       <nav className={classSet(sliderClasses)} role="navigation">
         <div className="container-fluid">
           <div className="navbar-header">
-            <button type="button" className="navbar-toggle" data-toggle="collapse"
-                    data-target=".navbar-collapse" aria-expanded="false">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
             {/* User Account button */}
 
-            <div className="navbar-collapse collapse navbar-right">
+            <div className="nav navbar-nav navbar-right">
               <UserButton />
             </div>
           </div>
