@@ -1,6 +1,10 @@
 import React from 'react/addons';
 import { Link } from 'react-router';
 import Spinner from '../Spinner/Spinner';
+import * as MovieActionCreators from '../../actions/movie';
+import * as VideoActionCreators from '../../actions/video';
+import * as EventActionCreators from '../../actions/event';
+
 
 class SeasonEpisodeThumb extends React.Component {
 
@@ -13,7 +17,7 @@ class SeasonEpisodeThumb extends React.Component {
 
   render() {
     const {
-      props: { movie,season,episode }
+      props: { episode }
       } = this;
 
     const maxLength = 80;
@@ -33,33 +37,14 @@ class SeasonEpisodeThumb extends React.Component {
       synopsis = shortDescription;
     }
 
-    let movieId = movie.get('_id') || '';
-    let movieSlug = movie.get('slug') || '';
-    let movieType = movie.get('type') || '';
-    let videoId = movie.get('videoId') || '';
-    let seasonId = season ? season.get('_id') : '';
-    let seasonSlug = season ? season.get('slug') : '';
-    let episodeId = episode ? episode.get('_id') : '';
-    let episodeSlug = episode ? episode.get('slug') : '';
-    videoId = episode ? episode.get('videoId') : videoId;
-    let link = movieType === 'serie' ? `/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}/${videoId}` : `/${movieId}/${movieSlug}/${videoId}`;
-    let data = {
-      movieId: movieId,
-      movieSlug: movieSlug,
-      seasonId: seasonId,
-      seasonSlug: seasonSlug,
-      episodeId: episodeId,
-      episodeSlug: episodeSlug,
-      videoId: videoId
-    };
     return (
       <div ref="thumbContainer" className="thumb-containter">
         <div ref="player" className="thumb">
-          <Link to={link}>
+          <a onClick={::this.loadVideo}>
             <div ref="thumbBackground" className="thumb-background" style={imagePoster}>
               <i className="btn-play"></i>
             </div>
-          </Link>
+          </a>
 
           <div ref="info" className="thumb-info">
             <div className="thumb-info__title">{title}</div>
@@ -68,6 +53,42 @@ class SeasonEpisodeThumb extends React.Component {
         </div>
       </div>
     );
+  }
+
+  //TODO Connect to last video or first video of season/video
+  loadVideo() {
+    const {
+      props: {
+        dispatch,movie,season,episode,Movie,await
+        }
+      } = this;
+
+    const movieDataId = movie.get('_id');
+    const movieData = movie || Movie.get(`movies/${movieDataId}`);
+    let movieSlud = movieData ? movieData.get('slug') : '';
+    let link = `/${movieDataId}/${movieSlud}`;
+    let videoId = null;
+    let videoData = null;
+    const seasonId = season.get('_id');
+    const seasonSlug = season.get('slug');
+    const episodes = season.get('episodes');
+    //TODO get last viewed episode
+    if (episode) {
+      const episodeId = episode.get('_id');
+      const episodeSlug = episode.get('slug');
+      link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
+      videoData = episode.get('video');
+    }
+    if (videoData) {
+      videoId = videoData.get('_id');
+      link += `/${videoId}`;
+      return await * [
+          dispatch(EventActionCreators.pinHeader(false)),
+          dispatch(VideoActionCreators.getVideo(videoId)),
+          this.context.router.transitionTo(link)
+        ];
+    }
+    this.context.router.transitionTo(link);
   }
 }
 

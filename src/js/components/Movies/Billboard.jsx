@@ -114,7 +114,7 @@ class Billboard extends React.Component {
     let slug = movieData.get('slug') || '';
     let seasons = movieData.get('seasons');
     let videoData = movieData.get('video');
-    if (seasons) {
+    if (seasons && seasons.size) {
       const season = seasons.get(0);
       const episodes = season.get('episodes');
       //TODO get last viewed episode
