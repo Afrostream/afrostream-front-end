@@ -74,15 +74,12 @@ if (process.env.BROWSER) {
                 <div className="billing-details-container">
                   <div className="billing-details-email">
                     <div className="email">{user.get('email')}</div>
-                    <div className="change-email">
-                      <Link to="/compte/email">Modifier l'adresse e-mail</Link>
-                    </div>
                   </div>
 
                   <div className="billing-details-password">
                     <div className="password">Mot de passe: ******</div>
                     <div className="change-password">
-                      <Link to="/compte/password">Modifier le mot de passe</Link>
+                      <Link to="/reset">Modifier le mot de passe</Link>
                     </div>
                   </div>
 
@@ -100,9 +97,6 @@ if (process.env.BROWSER) {
                 <div className="plan-details-container">
                   <div className="plan-details-plan-name">
                     <div className="plan-name">{plans[user.get('planCode')]}</div>
-                    <div className="change-plan">
-                      <Link to="/compte/plan">Changer de forfait</Link>
-                    </div>
                   </div>
                 </div>
               </div>

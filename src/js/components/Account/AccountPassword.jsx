@@ -27,7 +27,6 @@ if (process.env.BROWSER) {
 
 
   changePassword() {
-    debugger;
     $( "#change-password" ).submit(function(event) {
       event.preventDefault();
     });
