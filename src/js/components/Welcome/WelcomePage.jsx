@@ -10,7 +10,7 @@ import * as EventActionCreators from '../../actions/event';
 
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(EventActionCreators.pinHeader(true))
+      store.dispatch(EventActionCreators.pinHeader(false))
     ];
 }) class WelcomePage extends React.Component {
 
