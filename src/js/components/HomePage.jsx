@@ -12,28 +12,22 @@ import PaymentPage from './Payment/PaymentPage';
     const user = User.get('user');
 
     if (token) {
-      debugger;
       if (!user) {
-        debugger;
         return (<WelcomePage />);
       }
       else if (!user.get('planCode')) {
-        debugger;
         return ( <PaymentPage />)
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
-        debugger;
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-        debugger;
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
+      }
+    } else {
+      return (<WelcomePage />);
     }
-  } else {
-  debugger;
-  return (<WelcomePage />);
-}
-}
+  }
 
 }
 
