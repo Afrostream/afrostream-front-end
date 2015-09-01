@@ -158,7 +158,8 @@ export function showLock(container = null) {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
+              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
+              storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
@@ -196,7 +197,7 @@ export function showSignupLock() {
                 });
               }
               // store token
-              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null
+              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
               storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token
               return resolve({
@@ -245,7 +246,8 @@ export function showReset(container = null) {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
+              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
+              storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
@@ -271,16 +273,16 @@ export function showSigninLock() {
             //FIXME: trouve pourquoi ça marche pas avec config.auth0.signIn
             config.auth0.signIn
             /*{
-              dict: 'fr',
-              connections: ['Username-Password-Authentication'],
-              socialBigButtons: true,
-              disableSignupAction: true,
-              rememberLastLogin: false,
-              disableResetAction: false,
-              authParams: {
-                scope: 'openid offline_access'
-              }
-            }*/
+             dict: 'fr',
+             connections: ['Username-Password-Authentication'],
+             socialBigButtons: true,
+             disableSignupAction: true,
+             rememberLastLogin: false,
+             disableResetAction: false,
+             authParams: {
+             scope: 'openid offline_access'
+             }
+             }*/
             , function (err, profile, id_token, access_token, state, refresh_token) {
               if (err) {
                 console.log('*** Error loading the profile - most likely the token has expired ***', err);
@@ -295,7 +297,8 @@ export function showSigninLock() {
                 });
               }
               // store token
-              storeToken(id_token, refresh_token, profile[config.apiClient.token]);
+              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
+              storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,

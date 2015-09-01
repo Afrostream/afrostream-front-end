@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
 import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
+import Spinner from '../Spinner/Spinner';
+import classSet from 'classnames';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import config from '../../../../config/client';
-
 if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
@@ -22,7 +23,8 @@ if (canUseDOM) {
   state = {
     userEmail: '',
     subscriptionStatus: '',
-    message: ''
+    message: '',
+    loading: false
   };
 
   componentDidMount() {
@@ -109,171 +111,177 @@ if (canUseDOM) {
   }
 
   disableForm(disabled) {
-    return;
+    this.setState({
+      loading: disabled
+    });
     $('button').prop('disabled', disabled);
     $('input').prop('disabled', disabled);
   }
 
   render() {
-    const {
-      props: {
-        User
-        }
-      } = this;
 
-    console.log('*** initial subscription state ***');
-    console.log(this.state.subscriptionStatus);
-    console.log('*** end of subscription state ***');
+    var spinnerClasses = {
+      'spinner-payment': true,
+      'spinner-loading': this.state.loading
+    };
+    //console.log('*** initial subscription state ***');
+    //console.log(this.state.subscriptionStatus);
+    //console.log('*** end of subscription state ***');
+    //
+    //if (this.state.subscriptionStatus === 'subscribed') {
+    //
+    //  localStorage.removeItem('afroToken');
+    //
+    //  return (<PaymentSuccess />);
+    //
+    //} else if (this.state.subscriptionStatus === 'not subscribed') {
+    //
+    //  return (
+    //    <PaymentError message={this.state.message}/>
+    //  );
+    //
+    //} else {
 
-    if (this.state.subscriptionStatus === 'subscribed') {
+    return (
+      <div>
 
-      localStorage.removeItem('afroToken');
-
-      return (<PaymentSuccess />);
-
-    } else if (this.state.subscriptionStatus === 'not subscribed') {
-
-      return (
-        <PaymentError message={this.state.message}/>
-      );
-
-    } else {
-
-      return (
-        <div>
-          <div className="enter-payment-details">Entrer les détails de paiement</div>
-          <div className="payment-form">
-            <form ref="form" onSubmit={::this.onSubmit} id="subscription-create"
-                  data-async>
-              <section id="errors"></section>
-
-              <div className="row">
-                <div className="name-details">COORDONNÉES</div>
-              </div>
-              <div className="row">
-                <div className="form-group col-md-6">
-                  <label className="form-label" for="first_name">Prénom</label>
-                  <input
-                    type="text"
-                    className="form-control first-name"
-                    data-recurly="first_name"
-                    id="first_name"
-                    name="first-name"
-                    placeholder="Votre prénom" required/>
-                </div>
-                <div className="form-group col-md-6">
-                  <label className="form-label" for="last_name">Nom</label>
-                  <input
-                    type="text"
-                    className="form-control last-name"
-                    data-recurly="last_name"
-                    id="last_name"
-                    name="last-name"
-                    placeholder="Votre nom" required/>
-                </div>
-              </div>
-              <div className="row">
-
-                <label className="name-details">DÉTAILS DE PAIEMENT
-                  <small className="text-muted">[<span className="recurly-cc-brand"></span>]</small>
-                </label>
-              </div>
-              <div className="row">
-                <div className="form-group col-md-6">
-                  <label className="form-label" for="number">Numéro de carte</label>
-                  <input
-                    type="tel"
-                    className="form-control recurly-cc-number card-number"
-                    data-recurly="number"
-                    name="number"
-                    id="number"
-                    autoComplete="cc-number"
-                    placeholder="1234 5678 8901 1234" required/>
-                </div>
-              </div>
-              <div className="row">
-                <div className="form-group col-md-4">
-                  <label className="form-label" for="month">Date de validité</label>
-                  <input type="tel" className="form-control recurly-cc-exp" data-recurly="month"
-                         name="month" id="month"
-                         autocomplete="cc-exp"
-                         placeholder="MM/AA" required/>
-                </div>
-                <div className="form-group col-md-4">
-                  <label className="form-label" for="cvv">Code sécurité</label>
-                  <input type="tel" className="form-control recurly-cc-cvc" data-recurly="cvv"
-                         name="cvv" id="cvv" autocomplete="off"
-                         placeholder="123" required/>
-                </div>
-                <CountrySelect />
-              </div>
-              <div className="row">
-                <div className="form-group col-md-8">
-                  <label className="form-label" for="coupon_code">Entrer le code promo</label>
-                  <input
-                    type="text"
-                    className="form-control coupon-code"
-                    data-recurly="coupon_code"
-                    name="coupon_code"
-                    id="coupon_code"
-                    placeholder="Entrez votre code"/>
-                </div>
-                <div className="form-group  col-md-4">
-                  <button
-                    id="subscribe"
-                    type="submit"
-                    form="subscription-create"
-                    className="button-create-subscription"
-                    >VALIDER
-                  </button>
-                </div>
-              </div>
-              <input
-                type="hidden"
-                data-recurly="token"
-                name="recurly-token"/>
-
-              <input
-                type="hidden"
-                id="is_gift"
-                name="is-gift"/>
-
-              <input
-                type="hidden"
-                id="plan_code"
-                data-recurly="plan_code"
-                name="plan-code"/>
-
-              <input
-                type="hidden"
-                id="plan_name"
-                data-recurly="plan_name"
-                name="plan-name"/>
-
-              <input
-                type="hidden"
-                id="unit_amount_in_cents"
-                data-recurly="unit_amount_in_cents"
-                name="unit-amount-in-cents"/>
-
-              <input
-                type="hidden"
-                id="starts_at"
-                data-recurly="starts_at"
-                name="starts-at"/>
-
-              <div id="recurly-form-footer">
-                <span className="price" id="recurly-price"></span>
-                <span className="term" id="recurly-term"></span>
-
-                <div className="recurly-note"></div>
-              </div>
-            </form>
+        <div className="enter-payment-details">Entrer les détails de paiement</div>
+        <div className="payment-form">
+          <div className={classSet(spinnerClasses)}>
+            <Spinner />
           </div>
-        </div >
-      );
-    }
+          <form ref="form" onSubmit={::this.onSubmit} id="subscription-create"
+                data-async>
+            <section id="errors"></section>
+
+            <div className="row">
+              <div className="name-details">COORDONNÉES</div>
+            </div>
+            <div className="row">
+              <div className="form-group col-md-6">
+                <label className="form-label" for="first_name">Prénom</label>
+                <input
+                  type="text"
+                  className="form-control first-name"
+                  data-recurly="first_name"
+                  id="first_name"
+                  name="first-name"
+                  placeholder="Votre prénom" required/>
+              </div>
+              <div className="form-group col-md-6">
+                <label className="form-label" for="last_name">Nom</label>
+                <input
+                  type="text"
+                  className="form-control last-name"
+                  data-recurly="last_name"
+                  id="last_name"
+                  name="last-name"
+                  placeholder="Votre nom" required/>
+              </div>
+            </div>
+            <div className="row">
+
+              <label className="name-details">DÉTAILS DE PAIEMENT
+                <small className="text-muted">[<span className="recurly-cc-brand"></span>]</small>
+              </label>
+            </div>
+            <div className="row">
+              <div className="form-group col-md-6">
+                <label className="form-label" for="number">Numéro de carte</label>
+                <input
+                  type="tel"
+                  className="form-control recurly-cc-number card-number"
+                  data-recurly="number"
+                  name="number"
+                  id="number"
+                  autoComplete="cc-number"
+                  placeholder="1234 5678 8901 1234" required/>
+              </div>
+            </div>
+            <div className="row">
+              <div className="form-group col-md-4">
+                <label className="form-label" for="month">Date de validité</label>
+                <input type="tel" className="form-control recurly-cc-exp" data-recurly="month"
+                       name="month" id="month"
+                       autocomplete="cc-exp"
+                       placeholder="MM/AA" required/>
+              </div>
+              <div className="form-group col-md-4">
+                <label className="form-label" for="cvv">Code sécurité</label>
+                <input type="tel" className="form-control recurly-cc-cvc" data-recurly="cvv"
+                       name="cvv" id="cvv" autocomplete="off"
+                       placeholder="123" required/>
+              </div>
+              <CountrySelect />
+            </div>
+            <div className="row">
+              <div className="form-group col-md-8">
+                <label className="form-label" for="coupon_code">Entrer le code promo</label>
+                <input
+                  type="text"
+                  className="form-control coupon-code"
+                  data-recurly="coupon_code"
+                  name="coupon_code"
+                  id="coupon_code"
+                  placeholder="Entrez votre code"/>
+              </div>
+              <div className="form-group  col-md-4">
+                <button
+                  id="subscribe"
+                  type="submit"
+                  form="subscription-create"
+                  className="button-create-subscription"
+                  >VALIDER
+                </button>
+              </div>
+            </div>
+            <input
+              type="hidden"
+              data-recurly="token"
+              name="recurly-token"/>
+
+            <input
+              type="hidden"
+              id="is_gift"
+              name="is-gift"/>
+
+            <input
+              type="hidden"
+              id="plan_code"
+              data-recurly="plan_code"
+              name="plan-code"/>
+
+            <input
+              type="hidden"
+              id="plan_name"
+              data-recurly="plan_name"
+              name="plan-name"/>
+
+            <input
+              type="hidden"
+              id="unit_amount_in_cents"
+              data-recurly="unit_amount_in_cents"
+              name="unit-amount-in-cents"/>
+
+            <input
+              type="hidden"
+              id="starts_at"
+              data-recurly="starts_at"
+              name="starts-at"/>
+
+            <div id="recurly-form-footer">
+              <span className="price" id="recurly-price"></span>
+              <span className="term" id="recurly-term"></span>
+
+              <div className="recurly-note"></div>
+            </div>
+          </form>
+        </div>
+      </div >
+    );
   }
+
+  //}
 }
 
 export default PaymentForm;
