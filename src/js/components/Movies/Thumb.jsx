@@ -331,7 +331,6 @@ if (canUseDOM) {
           const episodeId = episode.get('_id');
           const episodeSlug = episode.get('slug');
           link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
-          console.log(link)
           videoData = episode.get('video');
         }
       }
@@ -340,12 +339,16 @@ if (canUseDOM) {
       videoId = videoData.get('_id');
       link += `/${videoId}`;
       return await * [
-          //dispatch(EventActionCreators.pinHeader(false)),
-          //dispatch(VideoActionCreators.getVideo(videoId)),
+          dispatch(EventActionCreators.pinHeader(false)),
+          dispatch(VideoActionCreators.getVideo(videoId)),
           this.context.router.transitionTo(link)
         ];
     }
-    this.context.router.transitionTo(link);
+    return await * [
+        dispatch(MovieActionCreators.getMovie(movieDataId)),
+        dispatch(MovieActionCreators.getSeason(movieDataId)),
+        this.context.router.transitionTo(link)
+      ];
   }
 }
 
