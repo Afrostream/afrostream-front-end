@@ -38,8 +38,8 @@ if (process.env.BROWSER) {
 
         <div className="afrostream-statement">
           <div>Les meilleurs films et séries</div>
-          <div>afro-américains et africaine</div>
-          <div>en ilimité</div>
+          <div>afro-americaines et africaines</div>
+          <div>en illimité</div>
         </div>
         <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
       </section>
