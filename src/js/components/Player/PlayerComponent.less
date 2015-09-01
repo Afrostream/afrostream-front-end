@@ -16,6 +16,19 @@
 @vjs-font-path: '../../../../src/assets/fonts';
 @spinner5-icon: '\e601';
 
+//@media (min-width: 768px) {
+//
+//  .player {
+//    .video-infos {
+//      position: absolute;
+//    }
+//    .player-container {
+//      position: relative;
+//      position: absolute;
+//    }
+//  }
+//}
+
 .player {
   background-color: #000000;
   margin: auto;
@@ -23,6 +36,7 @@
   height: 100%;
   max-height: 100%;
   .video-infos {
+    position: relative;
     &.video-infos-hidden {
       opacity: 0;
       .transition(opacity 0.2s linear);
@@ -51,7 +65,7 @@
     }
   }
   .player-container {
-    position: absolute;
+    position: relative;
     display: inline-block;
     vertical-align: middle;
     max-height: 100%;
@@ -690,4 +704,10 @@
     }
 
   }
+
+  //@media @tablet {
+  //  .video-infos {
+  //    position: relative;
+  //  }
+  //}
 }
