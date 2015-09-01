@@ -29,10 +29,6 @@ if (process.env.BROWSER) {
           <div>en illimité</div>
         </div>
 
-        <div className="afrostream-statement">Les meilleurs films <br />et séries afro-américains <br />et africaine en
-          ilimité
-        </div>
-
         <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
       </section>
     );
