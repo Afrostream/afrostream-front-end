@@ -5,8 +5,11 @@ import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
+import Spinner from '../Spinner/Spinner';
+
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
+import * as MovieActionCreators from '../../actions/movie';
 
 if (canUseDOM) {
   require('gsap');
@@ -89,7 +92,7 @@ if (process.env.BROWSER) {
 
     if (!movieData) {
       //TODO gerer le 404 sur la movie
-      return (<div>Aucunes données</div>);
+      return (<Spinner />);
     }
 
     let poster = movieData.get('poster');
@@ -148,14 +151,18 @@ if (process.env.BROWSER) {
       videoId = videoData.get('_id');
       link += `/${videoId}`;
       return await * [
-          //dispatch(EventActionCreators.pinHeader(false)),
-          //dispatch(VideoActionCreators.getVideo(videoId)),
+          dispatch(EventActionCreators.pinHeader(false)),
+          dispatch(VideoActionCreators.getVideo(videoId)),
           this.context.router.transitionTo(link)
         ];
 
     }
 
-    this.context.router.transitionTo(link);
+    return await * [
+        dispatch(MovieActionCreators.getMovie(movieDataId)),
+        dispatch(MovieActionCreators.getSeason(movieDataId)),
+        this.context.router.transitionTo(link)
+      ];
 
   }
 }
