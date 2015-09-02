@@ -64,18 +64,24 @@ if (process.env.BROWSER) {
 
     if (!videoData) return false;
 
-    videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
-    videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
-    // initialize the player
-    var playerData = _.merge(videoData.toJS(), config.player);
-    this.player = videojs('afrostream-player', playerData).ready(function () {
-      this.setState({
-        duration: this.player.duration()
-      })
-    }.bind(this));
-    this.player.on('useractive', this.triggerUserActive.bind(this));
-    this.player.on('userinactive', this.triggerUserActive.bind(this));
-    dispatch(EventActionCreators.userActive(true));
+    this.destroyPlayer().then(() => {
+      if (typeof config !== 'undefined') {
+        videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
+        videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
+        // initialize the player
+        var playerData = _.merge(videoData.toJS(), config.player);
+        this.player = videojs('afrostream-player', playerData).ready(function () {
+          this.setState({
+            duration: this.player.duration()
+          })
+        }.bind(this));
+        this.player.on('useractive', this.triggerUserActive.bind(this));
+        this.player.on('userinactive', this.triggerUserActive.bind(this));
+      }
+    }).catch((err) => {
+      console.log(err);
+      return false;
+    });
   }
 
   triggerUserActive() {
@@ -89,18 +95,31 @@ if (process.env.BROWSER) {
   }
 
   componentWillUnmount() {
+    this.destroyPlayer();
+  }
+
+  destroyPlayer() {
     const {
       props: {
         dispatch
         }
       } = this;
-    if (this.player) {
-      this.player.off('useractive', this.triggerUserActive.bind(this));
-      this.player.off('userinactive', this.triggerUserActive.bind(this));
-      this.player.dispose();
-      this.player = null;
-      dispatch(EventActionCreators.userActive(false))
-    }
+
+    return new Promise((resolve) => {
+      if (this.player) {
+        this.player.one('dispose', () => {
+          this.player = null;
+          this.player.off('useractive', this.triggerUserActive.bind(this));
+          this.player.off('userinactive', this.triggerUserActive.bind(this));
+          dispatch(EventActionCreators.userActive(true));
+          resolve();
+        });
+        this.player.dispose();
+      } else {
+        // Player not initialized, the promise is resolved immediatly
+        resolve();
+      }
+    });
   }
 
   formatTime(seconds) {
@@ -138,19 +157,19 @@ if (process.env.BROWSER) {
     };
 
     const videoData = Video.get(`videos/${videoId}`);
-    let hasSubtiles = false;
     if (!videoData) {
       return (<Spinner />)
     }
     let captions = videoData.get('captions');
     const movieData = Movie.get(`movies/${movieId}`);
     const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
-    hasSubtiles = captions ? captions.size : false;
+    let hasSubtiles = captions ? captions.size : false;
+
     return (
       <div className="player">
-        <video crossorigin="anonymous" id="afrostream-player"
+        <video crossOrigin id="afrostream-player"
                className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-          {hasSubtiles ? captions.map((caption, i) => <track kind="captions" crossorigin="anonymous"
+          {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
                                                              key={`track-${caption.get('_id')}-${i}`}
                                                              src={caption.get('src')}
                                                              srclang={caption.get('lang').get('lang')}
