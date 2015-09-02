@@ -21,9 +21,7 @@ if (canUseDOM) {
 
 
   state = {
-    userEmail: '',
-    subscriptionStatus: '',
-    message: '',
+    subscriptionStatus: 0,
     loading: false
   };
 
@@ -80,14 +78,8 @@ if (canUseDOM) {
     };
 
     recurly.token(billingInfo, function (err, token) {
-
-      console.log('*** about to attempt the ajax request ***');
-
       // send any errors to the error function below
       if (err) {
-        console.log('*** recurly token error ***');
-        console.log(err.message);
-
         return self.error(err);
       }
       // Otherwise we continue with the form submission
@@ -96,23 +88,20 @@ if (canUseDOM) {
       });
 
       dispatch(UserActionCreators.subscribe(formData)).then(function () {
-        console.log('ok');
+        self.disableForm(false, 1);
       }).catch(function (err) {
-        self.disableForm(false);
-        //$('#errors').text(err.response.body);
         let errors = err.response.body;
+        let message = '';
         $.each(errors, function (i, error) {
-          $('#errors').text(error['#']);
-          $('[data-recurly=' + error.field + ']').addClass('has-error');
+          message += error['#'];
         });
+        self.disableForm(false, 2, message);
       });
     });
   }
 
   // A simple error handling function to expose errors to the customer
   error(err) {
-    console.log('*** there is an error ***');
-    console.log(err);
     $('#errors').text('Les champs indiqués semblent invalides: ');
     $.each(err.fields, function (i, field) {
       $('[data-recurly=' + field + ']').addClass('has-error');
@@ -120,12 +109,14 @@ if (canUseDOM) {
     this.disableForm(false);
   }
 
-  disableForm(disabled) {
-    this.setState({
-      loading: disabled
-    });
+  disableForm(disabled, status = 0, message = '') {
     $('button').prop('disabled', disabled);
     $('input').prop('disabled', disabled);
+    this.setState({
+      message: message,
+      subscriptionStatus: status,
+      loading: disabled
+    });
   }
 
   render() {
@@ -134,18 +125,10 @@ if (canUseDOM) {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
-    if (this.state.subscriptionStatus === 'subscribed') {
-
-      localStorage.removeItem('afroToken');
-
+    if (this.state.subscriptionStatus === 1) {
       return (<PaymentSuccess />);
-
-    } else if (this.state.subscriptionStatus === 'not subscribed') {
-
-      return (
-        <PaymentError message={this.state.message}/>
-      );
-
+    } else if (this.state.subscriptionStatus === 2) {
+      return (<PaymentError message={this.state.message}/>);
     } else {
 
       return (
