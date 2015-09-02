@@ -12,7 +12,6 @@ export default createReducer(initialState, {
 
   [ActionTypes.User.subscribe](state, { res }) {
     const data = res.body;
-    console.log('ActionTypes.User.subscribe', data);
     return state.merge({
       ['user']: _.merge(state.get('user').toJS(), data)
     });
