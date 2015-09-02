@@ -20,8 +20,12 @@ if (process.env.BROWSER) {
 
   render() {
 
+    let posterImg = 'https://afrostream.imgix.net/production/poster/2015/08/ab69b5337b8a05d4c896-last-letter%202560x1440.jpg';
+    let imageStyle = {backgroundImage: `url(${posterImg}?crop=faces&fit=clip&w=1920&h=815&q=65)`};
+
+
     return (
-      <section className="welcome-header">
+      <section className="welcome-header" style={imageStyle}>
 
         <div className="afrostream-statement">
           <div>Les meilleurs films et séries</div>

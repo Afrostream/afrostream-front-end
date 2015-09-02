@@ -68,9 +68,7 @@ if (process.env.BROWSER) {
             </Link>
             {/* User Account button */}
 
-            <div className="nav navbar-nav navbar-right">
-              <UserButton />
-            </div>
+            <UserButton />
           </div>
         </div>
       </nav>

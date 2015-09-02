@@ -34,12 +34,12 @@ import SearchInput from './../Search/SearchBox';
       if (user) {
 
         return (
-          <div className="btn-group pull-right">
+          <div className="nav navbar-nav navbar-right">
             <SearchInput/>
-            <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
+            <button type="button" className="btn-user dropdown-toggle pull-right" data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false">
-              <img src={user.get('picture')} alt="50x50" className="icon-user"/>
+              <img src={user.get('picture')} alt="50x50" className="icon-user img-thumbnail"/>
               {/*<span className="label-user">{user.get('nickname')}</span>*/}
             </button>
             <ul className="dropdown-menu">
@@ -61,8 +61,9 @@ import SearchInput from './../Search/SearchBox';
 
   getLoginState() {
     return (
-      <div className="btn-group navbar-collapse collapse navbar-right">
-        <button type="button" className="btn btn-login btn-default" onClick={::this.showLock}>connexion</button>
+      <div className="nav navbar-nav navbar-right">
+        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.showLock}>connexion
+        </button>
       </div>);
   }
 
