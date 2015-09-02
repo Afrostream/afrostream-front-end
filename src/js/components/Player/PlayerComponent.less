@@ -62,7 +62,84 @@
       visibility: hidden;
     }
   }
+  ///
 
+  .video-js {
+    background-color: black;
+    padding: 0;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+  }
+
+  /* Playback technology elements expand to the width/height of the containing div
+      <video> or <object> */
+  .video-js .vjs-tech {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Fix for Firefox 9 fullscreen (only if it is enabled). Not needed when
+     checking fullScreenEnabled. */
+  .video-js:-moz-full-screen {
+    position: absolute;
+  }
+
+  /* Fullscreen Styles */
+  body.vjs-full-window {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    /* Fix for IE6 full-window. http://www.cssplay.co.uk/layouts/fixed.html */
+    //
+    overflow-y: auto;
+  }
+  .video-js.vjs-fullscreen {
+    position: fixed;
+    overflow: hidden;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100% !important;
+    height: 100% !important;
+    /* IE6 full-window (underscore hack) */
+    //
+    _position: absolute;
+  }
+  .video-js:-webkit-full-screen {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .video-js.vjs-fullscreen.vjs-user-inactive {
+    cursor: none;
+  }
+  /* Fix for Firefox 9 fullscreen (only if it is enabled). Not needed when
+     checking fullScreenEnabled. */
+  .video-js:-moz-full-screen {
+    position: absolute;
+  }
+  .video-js.vjs-using-native-controls .vjs-poster {
+    display: none;
+  }
+
+  /* Text Track Styles */
+  /* Overall track holder for both captions and subtitles */
+  .video-js .vjs-text-track-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 1em;
+    right: 0;
+    pointer-events: none;
+  }
   .video-js.vjs-afrostream-skin {
     //position: absolute;
     //top: 0;
@@ -495,54 +572,6 @@
       .box-shadow(0 0 1em rgba(255, 255, 255, 1));
     }
 
-    ///
-
-    .video-js {
-      background-color: black;
-      padding: 0;
-      position: relative;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      vertical-align: middle;
-    }
-    .video-js .vjs-tech {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-    }
-    .video-js:-moz-full-screen {
-      position: absolute;
-    }
-    .video-js.vjs-fullscreen {
-      position: fixed;
-      overflow: hidden;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      width: 100% !important;
-      height: 100% !important;
-    }
-    .video-js:-webkit-full-screen {
-      width: 100% !important;
-      height: 100% !important;
-    }
-    .video-js.vjs-fullscreen.vjs-user-inactive {
-      cursor: none;
-    }
-
-    body.vjs-full-window {
-      height: 100%;
-      margin: 0;
-      overflow-y: auto;
-      padding: 0;
-    }
-
     /* Subtitles Button */
     .vjs-subtitles-button {
       position: absolute;
@@ -593,20 +622,6 @@
       max-height: 100%;
       padding: 0;
       width: 100%;
-    }
-    .video-js.vjs-using-native-controls .vjs-poster {
-      display: none;
-    }
-
-    /* Text Track Styles */
-    /* Overall track holder for both captions and subtitles */
-    .video-js .vjs-text-track-display {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 1em;
-      right: 0;
-      pointer-events: none;
     }
 
     /* Captions Settings Dialog */
