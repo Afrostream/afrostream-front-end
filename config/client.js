@@ -98,6 +98,6 @@ export default {
       "ID_CLIENT": process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
-    "techOrder": ["hls", "dash", "streamroot", "srflash", "html5", "flash"]
+    "techOrder": ["dash", "hls", "html5", "flash", "streamroot", "srflash"]
   }
 };
