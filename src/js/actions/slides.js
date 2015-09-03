@@ -1,12 +1,15 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function toggleNext(total) {
+export function toggleNext() {
   return (dispatch, getState) => {
+    const categoryId = getState().Category.get(`categoryId`);
+    const total = getState().Category.get(`categorys/${categoryId}/spots`).size;
     const current = getState().Slides.get('page');
     let next = current + 1;
     if (next > total - 1) {
       next = 0;
     }
+    console.log(next, total);
     return {
       type: ActionTypes.Slides.toggleNext,
       page: next
@@ -14,13 +17,16 @@ export function toggleNext(total) {
   };
 }
 
-export function togglePrev(total) {
+export function togglePrev() {
   return (dispatch, getState) => {
+    const categoryId = getState().Category.get(`categoryId`);
+    const total = getState().Category.get(`categorys/${categoryId}/spots`).size;
     const current = getState().Slides.get('page');
     let prev = current - 1;
     if (prev < 0) {
-      prev = total;
+      prev = total - 1;
     }
+    console.log(prev);
     return {
       type: ActionTypes.Slides.togglePrev,
       page: prev

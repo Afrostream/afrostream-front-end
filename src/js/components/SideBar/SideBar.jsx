@@ -11,7 +11,7 @@ if (process.env.BROWSER) {
 
 @connect(({ User,Event }) => ({User, Event})) class SideBar extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     $(document).on('mouseup', this.toggleSideBar.bind(this));
   }
 
