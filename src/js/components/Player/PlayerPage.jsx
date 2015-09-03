@@ -25,7 +25,7 @@ import PlayerComponent from './PlayerComponent';
 
     return (
       <div className="row-fluid">
-        {videoId ? <PlayerComponent {...{videoId, movieId, seasonId}}/> : ''}
+        {videoId && movieId ? <PlayerComponent {...{videoId, movieId, seasonId}}/> : ''}
       </div>
     );
   }
