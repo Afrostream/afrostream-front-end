@@ -32,6 +32,7 @@ export default {
     toggleSeason: null
   }),
   Event: keyMirror({
+    toggleSideBar: null,
     userActive: null,
     pinHeader: null
   }),

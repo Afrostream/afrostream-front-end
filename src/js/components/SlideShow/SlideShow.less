@@ -82,3 +82,35 @@
     min-height: 36vw;
   }
 }
+
+@media @mobile,@tablet{
+
+  .SlideShow {
+    min-height: 46vh;
+  }
+}
+
+@media @mobile{
+
+  .SlideShow {
+    .pager {
+      height: 8px;
+      width: 8px;
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  .movie {
+    .btn-play {
+      display: none;
+    }
+    .billboard-infos {
+      .billboard-synopsis {
+        display: none;
+      }
+    }
+  }
+}
+

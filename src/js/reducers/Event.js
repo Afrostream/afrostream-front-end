@@ -4,7 +4,8 @@ import createReducer from '../lib/createReducer';
 
 const initialState = Immutable.fromJS({
   userActive: true,
-  pinHeader: false
+  pinHeader: false,
+  sideBarToggled: false
 });
 
 export default createReducer(initialState, {
@@ -17,6 +18,12 @@ export default createReducer(initialState, {
   [ActionTypes.Event.pinHeader](state, { pin }) {
     return state.merge({
       ['pinHeader']: pin
+    });
+  },
+  [ActionTypes.Event.toggleSideBar](state, {}) {
+    let toggled = state.get('sideBarToggled');
+    return state.merge({
+      ['sideBarToggled']: !toggled
     });
   }
 });

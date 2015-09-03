@@ -82,6 +82,7 @@ const refreshToken = function (getState) {
           }
           // Get here the new JWT via delegationResult.id_token
           // store token
+          profile = profile || {};
           storeToken(delegationResult.id_token, null, profile[config.apiClient.token]);
           console.log('*** Refreshed token ***', profile);
           return resolve({
@@ -106,7 +107,7 @@ export function getProfile() {
           lock.getProfile(token, function (err, profile) {
             if (err) {
               console.log('*** Error loading the profile - most likely the token has expired ***', err);
-              refreshToken(getState)
+              return refreshToken(getState)
                 .then(function (data) {
                   console.log('getProfile return data', data);
                   return resolve(data);
@@ -115,6 +116,7 @@ export function getProfile() {
                   return reject(tokenErr);
                 });
             }
+            profile = profile || {};
             return resolve({
               type: ActionTypes.User.getProfile,
               user: profile
@@ -150,7 +152,7 @@ export function showLock(container = null) {
                 //localStorage.removeItem(storageId);
                 //return reject(err);
                 //try to refresh token session
-                refreshToken(getState, function (tokenErr, data) {
+                return refreshToken(getState, function (tokenErr, data) {
                   if (tokenErr) {
                     return reject(tokenErr);
                   }
@@ -158,6 +160,7 @@ export function showLock(container = null) {
                 });
               }
               // store token
+              profile = profile || {};
               var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
               storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token
@@ -189,7 +192,7 @@ export function showSignupLock() {
                 //localStorage.removeItem(storageId);
                 //return reject(err);
                 //try to refresh token session
-                refreshToken(getState, function (tokenErr, data) {
+                return refreshToken(getState, function (tokenErr, data) {
                   if (tokenErr) {
                     return reject(tokenErr);
                   }
@@ -197,6 +200,7 @@ export function showSignupLock() {
                 });
               }
               // store token
+              profile = profile || {};
               var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
               storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token
@@ -238,7 +242,7 @@ export function showReset(container = null) {
                 //localStorage.removeItem(storageId);
                 //return reject(err);
                 //try to refresh token session
-                refreshToken(getState, function (tokenErr, data) {
+                return refreshToken(getState, function (tokenErr, data) {
                   if (tokenErr) {
                     return reject(tokenErr);
                   }
@@ -246,6 +250,7 @@ export function showReset(container = null) {
                 });
               }
               // store token
+              profile = profile || {};
               var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
               storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token
@@ -289,7 +294,7 @@ export function showSigninLock() {
                 //localStorage.removeItem(storageId);
                 //return reject(err);
                 //try to refresh token session
-                refreshToken(getState, function (tokenErr, data) {
+                return refreshToken(getState, function (tokenErr, data) {
                   if (tokenErr) {
                     return reject(tokenErr);
                   }
@@ -297,6 +302,7 @@ export function showSigninLock() {
                 });
               }
               // store token
+              profile = profile || {};
               var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
               storeToken(id_token, refresh_token, tokenAfro);
               // store refresh_token

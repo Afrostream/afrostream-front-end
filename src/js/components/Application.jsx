@@ -1,7 +1,10 @@
 import React ,{PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
+import SideBar from './SideBar/SideBar';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import classSet from 'classnames';
 
 if (process.env.BROWSER) {
   require('./Application.less');
@@ -12,19 +15,29 @@ if (canUseDOM) {
   require('bootstrap');
 }
 
-class Application extends React.Component {
+@connect(({ Event,User }) => ({Event, User})) class Application extends React.Component {
 
   render() {
 
-    const { props: { children } } = this;
+    const { props: { children,Event,User } } = this;
+    const toggled = User.get('user') && Event.get('sideBarToggled');
+    let appClasses = {
+      'app': true,
+      'toggled': toggled
+    };
 
     return (
-      <div className="app">
-        <div className="container-fluid">
-          <Header {...this.props}/>
 
-          {children}
-          <Footer />
+      <div className={classSet(appClasses)}>
+        <Header {...this.props}/>
+        <SideBar />
+
+        <div id="page-content-wrapper">
+          <div className="container-fluid">
+
+            {children}
+            <Footer />
+          </div>
         </div>
       </div>
     );

@@ -84,6 +84,9 @@ if (process.env.BROWSER) {
       // initialize the player
       var playerData = _.merge(videoOptions, config.player);
       this.player = videojs('afrostream-player', playerData);
+      this.player.on('pause', this.setDurationInfo.bind(this));
+      this.player.on('play', this.setDurationInfo.bind(this));
+      this.player.on('ended', this.setDurationInfo.bind(this));
       this.player.on('loadedmetadata', this.setDurationInfo.bind(this));
       this.player.on('useractive', this.triggerUserActive.bind(this));
       this.player.on('userinactive', this.triggerUserActive.bind(this));
@@ -106,7 +109,7 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    dispatch(EventActionCreators.userActive(this.player.userActive()))
+    dispatch(EventActionCreators.userActive(this.player.paused() || this.player.userActive()))
   }
 
   componentWillUnmount() {
@@ -123,6 +126,9 @@ if (process.env.BROWSER) {
     return new Promise((resolve) => {
       if (this.player) {
         this.player.one('dispose', () => {
+          this.player.off('pause', this.setDurationInfo.bind(this));
+          this.player.off('play', this.setDurationInfo.bind(this));
+          this.player.off('ended', this.setDurationInfo.bind(this));
           this.player.off('loadedmetadata', this.setDurationInfo.bind(this));
           this.player.off('useractive', this.triggerUserActive.bind(this));
           this.player.off('userinactive', this.triggerUserActive.bind(this));

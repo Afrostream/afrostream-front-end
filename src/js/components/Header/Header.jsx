@@ -56,7 +56,7 @@ if (process.env.BROWSER) {
       'navbar-default': true,
       'navbar-fixed-top': true,
       'navbar-hidden': hiddenMode,
-      'navbar-fixed-color': this.state.pinned || pinned || this.context.router.isActive('compte')
+      'navbar-fixed-color': pinned || this.state.pinned || this.context.router.isActive('compte')
     };
 
     return (
@@ -66,10 +66,9 @@ if (process.env.BROWSER) {
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
-            {/* User Account button */}
-
             <UserButton />
           </div>
+          {/* User Account button */}
         </div>
       </nav>
     );
