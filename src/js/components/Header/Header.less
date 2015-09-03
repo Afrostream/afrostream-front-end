@@ -9,11 +9,7 @@ nav {
     border-radius: 0;
     z-index: @nav-z + 1;
   }
-  &.navbar-hidden {
-    opacity: 0;
-    .transition(opacity 0.4s linear);
-    display: none;
-  }
+
   .navbar-collapse {
     border: none;
     top: 5px;
@@ -23,26 +19,20 @@ nav {
   }
   .navbar-brand {
     padding: 0;
-
-    /*@media all and (max-width: @screen-xs-min) {
-      max-width: 50%;
-    }
-
-    img {
-      @media all and (max-width: @screen-xs-min) {
-        max-width: 50%;
-      }
-    }*/
   }
-  //.btn-group {
-  //  margin-right: 20px;
+  .collapse.in {
+    background-color: @color-indigo;
+  }
   .btn-user {
     width: 40px;
     height: 40px;
     margin-right: 25px;
     background-color: transparent;
     border: none;
-
+    padding: 0;
+    a {
+      padding: 0 !important;
+    }
     .icon-user {
       width: 40px;
       height: 40px;
@@ -66,10 +56,6 @@ nav {
     padding: 2px 16px 2px 16px;
     margin-right: 20px;
   }
-  .dropdown-menu {
-    right: 0;
-  }
-  //}
 }
 
 .login-button {
@@ -102,6 +88,11 @@ nav {
       img {
         display: inherit;
       }
+    }
+    &.navbar-hidden {
+      opacity: 0;
+      .transition(opacity 0.4s linear);
+      display: none;
     }
   }
 }

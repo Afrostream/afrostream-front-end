@@ -4,15 +4,16 @@
   @box-size: 200px;
   .search-form {
     position: absolute;
-    right: @app-padding;
+    right: @app-padding + 20px;
     color: @brand-primary;
   }
   fieldset {
     border: none;
     color: @brand-primary;
+    padding: 1px;
     &:before {
       position: absolute;
-      left: 20px;
+      left: 15px;
       content: '\f002';
       font-family: 'FontAwesome';
       font-size: 1.8em;
@@ -36,7 +37,7 @@
   }
   .react-autosuggest input {
     font-size: 16px;
-    padding: 8px 10px 8px 30px;
+    padding: 10px 10px 10px 30px;
     margin-right: 10px;
     border-radius: 3px;
     color: @brand-black;
@@ -102,5 +103,13 @@
   .react-autosuggest__suggestion--focused {
     background-color: @brand-black;
     color: @brand-primary;
+  }
+}
+
+@media (min-width: 768px) {
+  .search-box {
+    .search-form {
+      right: 0;
+    }
   }
 }

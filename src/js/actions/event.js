@@ -16,3 +16,10 @@ export function pinHeader(pin) {
     };
   };
 }
+export function toggleSideBar() {
+  return (dispatch, getState) => {
+    return {
+      type: ActionTypes.Event.toggleSideBar
+    };
+  };
+}

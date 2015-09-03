@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
+import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
 import SearchInput from './../Search/SearchBox';
 @connect(({ User }) => ({User})) class UserButton extends React.Component {
@@ -34,20 +35,15 @@ import SearchInput from './../Search/SearchBox';
       if (user) {
 
         return (
-          <div className="nav navbar-nav navbar-right">
-            <SearchInput/>
-            <button type="button" className="btn-user dropdown-toggle pull-right" data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
-              <img src={user.get('picture')} alt="50x50" className="icon-user img-thumbnail"/>
-              {/*<span className="label-user">{user.get('nickname')}</span>*/}
-            </button>
-            <ul className="dropdown-menu">
-              <li><Link to="/compte">Mon compte</Link></li>
-              <li role="separator" className="divider"></li>
-              <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
-            </ul>
-          </div>
+          <ul className="nav navbar-nav navbar-right">
+            <li>
+              <SearchInput/>
+            </li>
+            <li className="btn-user pull-right">
+              <a href="#" role="button" onClick={::this.toggleSideBar}><img src={user.get('picture')} alt="50x50"
+                                                                            className="icon-user img-thumbnail"/></a>
+            </li>
+          </ul>
         );
       }
       else {
@@ -75,6 +71,16 @@ import SearchInput from './../Search/SearchBox';
       } = this;
 
     dispatch(UserActionCreators.showLock());
+  }
+
+  toggleSideBar() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(EventActionCreators.toggleSideBar());
   }
 
   logout() {

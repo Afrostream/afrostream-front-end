@@ -31,19 +31,72 @@ body {
   .body-font();
 }
 
+//
+// Base styles
+// -----------------------------------------------------------------------------
+
+a,
+a:hover,
+a:focus,
+a:active,
+a.active {
+  outline: none;
+  text-decoration: none;
+  color: @brand-primary;
+}
+
+a {
+  color: @brand-primary;
+}
+
+a:hover,
+a:focus,
+a:active,
+a.active {
+  color: darken(@brand-primary, 10%);
+  text-decoration: underline;
+}
+
+.fa-2x {
+  font-size: 1.3em;
+}
+
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
 .app {
-  //> .container-fluid {
-  //  display: table;
-  //  table-layout: fixed;
-  //  height: 100%;
-  //  width: 100%;
-  //  .row-fluid {
-  //    display: table-cell;
-  //    float: none;
-  //    width: 100%;
-  //    height: 100%;
-  //  }
-  //}
+  padding-right: 0;
+  .transition(all 0.5s ease);
+}
+
+.app.toggled {
+  padding-right: @sidebar-width;
+}
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  right: @sidebar-width;
+  width: 0;
+  height: 100%;
+  margin-right: -@sidebar-width;
+  overflow-y: auto;
+  background-color: @color-indigo;
+  .transition(all 0.5s ease);
+}
+
+.app.toggled #sidebar-wrapper {
+  width: @sidebar-width;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
   > .container-fluid {
     height: 100%;
     min-height: 100%;
@@ -83,46 +136,21 @@ body {
       }
     }
   }
-  //> .container-fluid {
-  //  height: 100%;
-  //  display: table;
-  //  width: 100%;
-  //  padding: 0;
-  //}
-  //
-  //.row-fluid {
-  //  height: 100%;
-  //  display: table-cell;
-  //  vertical-align: middle;
-  //}
 }
 
-//
-// Base styles
-// -----------------------------------------------------------------------------
-
-a,
-a:hover,
-a:focus,
-a:active,
-a.active {
-  outline: none;
-  text-decoration: none;
-  color: @brand-primary;
+.app.toggled #page-content-wrapper {
+  position: absolute;
+  margin-left: -@sidebar-width;
 }
 
-a {
-  color: @brand-primary;
-}
+@media (min-width: 768px) {
 
-a:hover,
-a:focus,
-a:active,
-a.active {
-  color: darken(@brand-primary, 10%);
-  text-decoration: underline;
-}
+  #page-content-wrapper {
+    position: relative;
+  }
 
-.fa-2x {
-  font-size: 1.3em;
+  .app.toggled #page-content-wrapper {
+    position: relative;
+    margin-left: 0;
+  }
 }

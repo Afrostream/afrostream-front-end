@@ -50,12 +50,13 @@ if (process.env.BROWSER) {
 
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
+    const toggled = Event.get('sideBarToggled');
 
     let sliderClasses = {
       'navbar': true,
       'navbar-default': true,
       'navbar-fixed-top': true,
-      'navbar-hidden': hiddenMode,
+      'navbar-hidden': toggled && hiddenMode,
       'navbar-fixed-color': this.state.pinned || pinned || this.context.router.isActive('compte')
     };
 
@@ -66,10 +67,9 @@ if (process.env.BROWSER) {
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
-            {/* User Account button */}
-
             <UserButton />
           </div>
+          {/* User Account button */}
         </div>
       </nav>
     );
