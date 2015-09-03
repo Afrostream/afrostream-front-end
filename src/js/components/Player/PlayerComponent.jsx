@@ -51,8 +51,9 @@ if (process.env.BROWSER) {
     const {
       props: {
         Video,
+        Movie,
         videoId,
-        dispatch
+        movieId
         }
       } = this;
 
@@ -65,23 +66,37 @@ if (process.env.BROWSER) {
     if (!videoData) return false;
 
     this.destroyPlayer().then(() => {
-      if (typeof config !== 'undefined') {
-        videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
-        videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
-        // initialize the player
-        var playerData = _.merge(videoData.toJS(), config.player);
-        this.player = videojs('afrostream-player', playerData).ready(function () {
-          this.setState({
-            duration: this.player.duration()
-          })
-        }.bind(this));
-        this.player.on('useractive', this.triggerUserActive.bind(this));
-        this.player.on('userinactive', this.triggerUserActive.bind(this));
+      videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
+      videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
+
+      let videoOptions = videoData.toJS();
+      let movie = Movie.get(`movies/${movieId}`);
+      let posterImgImgix = {};
+      if (movie) {
+        let poster = movie.get('poster');
+        let posterImg = poster ? poster.get('imgix') : '';
+        if (posterImg) {
+          posterImgImgix.poster = `${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70`;
+          videoOptions = _.merge(videoOptions, posterImgImgix);
+        }
       }
+
+      // initialize the player
+      var playerData = _.merge(videoOptions, config.player);
+      this.player = videojs('afrostream-player', playerData);
+      this.player.on('loadedmetadata', this.setDurationInfo.bind(this));
+      this.player.on('useractive', this.triggerUserActive.bind(this));
+      this.player.on('userinactive', this.triggerUserActive.bind(this));
     }).catch((err) => {
       console.log(err);
       return false;
     });
+  }
+
+  setDurationInfo() {
+    this.setState({
+      duration: this.player.duration()
+    })
   }
 
   triggerUserActive() {
@@ -108,9 +123,10 @@ if (process.env.BROWSER) {
     return new Promise((resolve) => {
       if (this.player) {
         this.player.one('dispose', () => {
-          this.player = null;
+          this.player.off('loadedmetadata', this.setDurationInfo.bind(this));
           this.player.off('useractive', this.triggerUserActive.bind(this));
           this.player.off('userinactive', this.triggerUserActive.bind(this));
+          this.player = null;
           dispatch(EventActionCreators.userActive(true));
           resolve();
         });
