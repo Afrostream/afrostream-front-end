@@ -319,15 +319,11 @@
     &.vjs-has-started .vjs-control-bar {
       opacity: 1;
       pointer-events: auto;
-      -webkit-transition: opacity 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-      -moz-transition: opacity 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-      transition: opacity 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+      .transition(opacity 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955));
     }
     &.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar {
       opacity: 0;
-      -webkit-transition: opacity 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-      -moz-transition: opacity 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-      transition: opacity 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+      .transition(opacity 1s cubic-bezier(0.455, 0.03, 0.515, 0.955));
     }
     &.vjs-has-started .vjs-poster {
       display: none;

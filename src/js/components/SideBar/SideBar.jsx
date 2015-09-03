@@ -9,7 +9,29 @@ if (process.env.BROWSER) {
   require('./SideBar.less');
 }
 
-@connect(({ User }) => ({User})) class SideBar extends React.Component {
+@connect(({ User,Event }) => ({User, Event})) class SideBar extends React.Component {
+
+  componentWillMount() {
+    $(document).on('mouseup', this.toggleSideBar.bind(this));
+  }
+
+  componentWillUnMount() {
+    $(document).off('mouseup', this.toggleSideBar.bind(this));
+  }
+
+  toggleSideBar() {
+    const {
+      props: {
+        dispatch,
+        Event
+        }
+      } = this;
+
+    const toggled = Event.get('sideBarToggled');
+    if (toggled) {
+      dispatch(EventActionCreators.toggleSideBar());
+    }
+  }
 
   render() {
 
@@ -21,7 +43,7 @@ if (process.env.BROWSER) {
               Menu
             </a>
           </li>
-          <li><Link to="/compte" onClick={::this.close}>Mon compte</Link></li>
+          <li><Link to="/compte">Mon compte</Link></li>
           <li role="separator" className="divider"></li>
           <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
         </ul>
