@@ -50,13 +50,12 @@ if (process.env.BROWSER) {
 
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
-    const toggled = Event.get('sideBarToggled');
 
     let sliderClasses = {
       'navbar': true,
       'navbar-default': true,
       'navbar-fixed-top': true,
-      'navbar-hidden': toggled && hiddenMode,
+      'navbar-hidden': hiddenMode,
       'navbar-fixed-color': this.state.pinned || pinned || this.context.router.isActive('compte')
     };
 
