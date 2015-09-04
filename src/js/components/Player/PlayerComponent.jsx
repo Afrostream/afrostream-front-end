@@ -34,20 +34,24 @@ if (process.env.BROWSER) {
     this.initPlayer();
   }
 
-  //
   componentWillReceiveProps() {
     this.initPlayer();
   }
 
-  //componentDidUpdate() {
-  //  this.initPlayer();
-  //}
-
-  //componentDidUpdate() {
-  //  this.initPlayer();
-  //}
-
   initPlayer() {
+    if (this.player) {
+      return false;
+    }
+    this.generatePlayer()
+      .then(function (player) {
+        this.player = player;
+      }).catch(function (err) {
+        console.log(err);
+        return false;
+      });
+  }
+
+  generatePlayer() {
     const {
       props: {
         Video,
@@ -57,48 +61,52 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    if (this.player) {
-      return false;
-    }
+    return new Promise((resolve, reject) => {
 
-    const videoData = Video.get(`videos/${videoId}`);
+      const videoData = Video.get(`videos/${videoId}`);
 
-    if (!videoData) return false;
+      if (!videoData) return reject('no video data');
 
-    this.destroyPlayer().then(() => {
-      videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
-      videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
+      this.destroyPlayer().then(() => {
+        videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
+        videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
 
-      let videoOptions = videoData.toJS();
-      let movie = Movie.get(`movies/${movieId}`);
-      let posterImgImgix = {};
-      if (movie) {
-        let poster = movie.get('poster');
-        let posterImg = poster ? poster.get('imgix') : '';
-        if (posterImg) {
-          posterImgImgix.poster = `${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70`;
-          videoOptions = _.merge(videoOptions, posterImgImgix);
+        let videoOptions = videoData.toJS();
+        let movie = Movie.get(`movies/${movieId}`);
+        let posterImgImgix = {};
+        if (movie) {
+          let poster = movie.get('poster');
+          let posterImg = poster ? poster.get('imgix') : '';
+          if (posterImg) {
+            posterImgImgix.poster = `${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70`;
+            videoOptions = _.merge(videoOptions, posterImgImgix);
+          }
         }
-      }
 
-      // initialize the player
-      var playerData = _.merge(videoOptions, config.player);
-      this.player = videojs('afrostream-player', playerData);
-      this.player.on('pause', this.setDurationInfo.bind(this));
-      this.player.on('play', this.setDurationInfo.bind(this));
-      this.player.on('ended', this.setDurationInfo.bind(this));
-      this.player.on('loadedmetadata', this.setDurationInfo.bind(this));
-      this.player.on('useractive', this.triggerUserActive.bind(this));
-      this.player.on('userinactive', this.triggerUserActive.bind(this));
-    }).catch((err) => {
-      console.log(err);
-      return false;
+        // initialize the player
+        var playerData = _.merge(videoOptions, config.player);
+        let player = videojs('afrostream-player', playerData);
+        player.on('pause', this.setDurationInfo.bind(this));
+        player.on('play', this.setDurationInfo.bind(this));
+        player.on('ended', this.setDurationInfo.bind(this));
+        player.on('loadedmetadata', this.setDurationInfo.bind(this));
+        player.on('useractive', this.triggerUserActive.bind(this));
+        player.on('userinactive', this.triggerUserActive.bind(this));
+
+        player.on('ready', function () {
+          resolve(this);
+        });
+
+      }).catch((err) => {
+        reject(err);
+      });
     });
   }
 
   setDurationInfo() {
+
     this.setState({
-      duration: this.player.duration()
+      duration: this.player ? this.player.duration() : 0
     })
   }
 
@@ -109,7 +117,7 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    dispatch(EventActionCreators.userActive(this.player.paused() || this.player.userActive()))
+    dispatch(EventActionCreators.userActive(this.player ? (this.player.paused() || this.player.userActive()) : true))
   }
 
   componentWillUnmount() {
