@@ -136,7 +136,7 @@ if (canUseDOM) {
     if (!this.state.hasRecurly) {
       return (<PaymentError
         title="Paiement indisponible"
-        message="Le paiement est momentanement indisponible,veuillez nous en exscuser et recommencer l'operation ulterieurement."
+        message="Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
         link="mailto:support@afrostream.tv"
         linkMessage="Si le probleme persiste, veuillez contacter notre support technique"
         />);
