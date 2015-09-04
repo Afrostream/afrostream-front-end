@@ -21,6 +21,7 @@ if (canUseDOM) {
 
 
   state = {
+    hasRecurly: true,
     subscriptionStatus: 0,
     loading: false
   };
@@ -33,6 +34,9 @@ if (canUseDOM) {
       recurly.configure(config.recurly.key);
     } catch (err) {
       console.log(err);
+      this.setState({
+        hasRecurly: false
+      });
       return;
     }
   }
@@ -129,6 +133,14 @@ if (canUseDOM) {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
+    if (!this.state.hasRecurly) {
+      return (<PaymentError
+        title="Paiement indisponible"
+        message="Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
+        link="mailto:support@afrostream.tv"
+        linkMessage="Si le probleme persiste, veuillez contacter notre support technique"
+        />);
+    }
     if (this.state.subscriptionStatus === 1) {
       return (<PaymentSuccess />);
     } else if (this.state.subscriptionStatus === 2) {
