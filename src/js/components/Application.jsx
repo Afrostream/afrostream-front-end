@@ -32,12 +32,9 @@ if (canUseDOM) {
         <Header {...this.props}/>
         <SideBar />
 
-        <div id="page-content-wrapper">
-          <div className="container-fluid">
-
-            {children}
-            <Footer />
-          </div>
+        <div id="page-content-wrapper" className="container-fluid">
+          {children}
+          <Footer />
         </div>
       </div>
     );

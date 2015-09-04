@@ -3,8 +3,7 @@ import Immutable from 'immutable';
 import FooterSection from './FooterSection';
 
 if (process.env.BROWSER) {
-  //require('./Footer.less');
-  require('../Welcome/WelcomeComponents/WelcomeFooter.less');
+  require('./Footer.less');
 }
 
 const sections = [
@@ -36,7 +35,7 @@ const sections = [
 class Footer extends React.Component {
   render() {
     return (
-      <section className="welcome-footer">
+      <footer className="footer">
         <div className="links">
           <div className="get-help">
             <h4>OBTENIR DE L'AIDE</h4>
@@ -68,7 +67,7 @@ class Footer extends React.Component {
               </li>
               <li>
                 <a className="footer-link"
-                  href="mailto:christina@afrostream.tv?subject=Contact&cc=presse@afrostream.tv">
+                   href="mailto:christina@afrostream.tv?subject=Contact&cc=presse@afrostream.tv">
                   Presse
                 </a>
               </li>
@@ -81,36 +80,36 @@ class Footer extends React.Component {
           </div>
           <div className="get-help">
             <h4>SUIVEZ-NOUS</h4>
-              <ul className="footer-links">
-                <li>
-                  <a className="footer-link" href="https://www.facebook.com/afrostreamtv?fref=ts">
-                    Facebook <i className="fa fa-facebook"></i>
-                  </a>
-                </li>
-                <li>
-                  <a className="footer-link" href="https://twitter.com/intent/user?screen_name=AFROSTREAM">
-                    Twitter <i className="fa fa-twitter"></i>
-                  </a>
-                </li>
-              </ul>
+            <ul className="footer-links">
+              <li>
+                <a className="footer-link" href="https://www.facebook.com/afrostreamtv?fref=ts">
+                  Facebook <i className="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li>
+                <a className="footer-link" href="https://twitter.com/intent/user?screen_name=AFROSTREAM">
+                  Twitter <i className="fa fa-twitter"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="legal-statements">
+          <div className="links">
+            <div className="get-help">
+              <div className="legal-text">Copyright &copy; Afrostream 2015</div>
+            </div>
+            <div className="get-help">
+              &nbsp;
+            </div>
+            <div className="get-help">
+              <div className="legal-text">
+                <a href="https://afrostream.tv/legals.html">Mentions légales</a>
+              </div>
             </div>
           </div>
-          <div className="legal-statements">
-            <div className="links">
-              <div className="get-help">
-                <div className="legal-text">Copyright &copy; Afrostream 2015</div>
-              </div>
-              <div className="get-help">
-                &nbsp;
-              </div>
-              <div className="get-help">
-                <div className="legal-text">
-                  <a href="https://afrostream.tv/legals.html">Mentions légales</a>
-                </div>
-              </div>
-            </div>
-          </div>
-      </section>
+        </div>
+      </footer>
     );
   }
 }
