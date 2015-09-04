@@ -23,14 +23,17 @@ if (canUseDOM) {
     router: PropTypes.object.isRequired
   };
 
-  willTransitionTo(transition, params, query, props) {
+  static willTransitionTo(transition, params, query, props) {
     // log the route transition to google analytics
+    console.log('willTransitionTo');
     ga.pageview(transition.path);
   }
 
   componentWillMount() {
-    console.log('ga.initialize');
-    ga.initialize(config.google.analyticsKey, {debug: true});
+    if (canUseDOM) {
+      console.log(ga);
+      ga.initialize(config.google.analyticsKey, {debug: true});
+    }
   }
 
   render() {
