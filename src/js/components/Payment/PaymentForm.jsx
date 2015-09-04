@@ -89,6 +89,10 @@ if (canUseDOM) {
 
       dispatch(UserActionCreators.subscribe(formData)).then(function () {
         self.disableForm(false, 1);
+        ga.event({
+          category: 'User',
+          action: 'Created an Account'
+        });
       }).catch(function (err) {
         let errors = err.response.body;
         let message = '';

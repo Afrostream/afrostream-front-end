@@ -10,7 +10,8 @@
     "AUTH0_DOMAIN": "afrostream.eu.auth0.com",
     "AUTH0_CALLBACK_URL": "afrostream.herokuapp.com/callback",
     "ALGOLIA_APP_ID": "3OKNPL7ZVA",
-    "ALGOLIA_API_KEY": "3e6547172fb6d80b2ae02d6369edfc72"
+    "ALGOLIA_API_KEY": "3e6547172fb6d80b2ae02d6369edfc72",
+    "GA_TRACKING_ID": "UA-47871575-1"
   },
   "addons": []
 }
