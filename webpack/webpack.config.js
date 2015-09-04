@@ -152,7 +152,8 @@ const webpackConfig = {
         AUTH0_CALLBACK_URL: JSON.stringify(process.env.AUTH0_CALLBACK_URL),
         ALGOLIA_APP_ID: JSON.stringify(process.env.ALGOLIA_APP_ID),
         ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY),
-        RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY)
+        RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY),
+        GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)
       }
     })
   ],

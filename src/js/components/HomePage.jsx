@@ -4,6 +4,7 @@ import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import AfrostreamMonthlyMessage from './Welcome/AfrostreamMonthlyMessage';
 import PaymentPage from './Payment/PaymentPage';
+import Spinner from './Spinner/Spinner';
 
 @connect(({ User }) => ({User})) class HomePage extends React.Component {
   render() {
@@ -13,7 +14,7 @@ import PaymentPage from './Payment/PaymentPage';
 
     if (token) {
       if (!user) {
-        return (<WelcomePage />);
+        return (<Spinner />);
       }
       else if (!user.get('planCode')) {
         return ( <PaymentPage />)
