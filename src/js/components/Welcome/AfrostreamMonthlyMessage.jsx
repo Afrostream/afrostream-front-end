@@ -1,30 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
+import LogOutButton from '../../components/User/LogOutButton';
 if (process.env.BROWSER) {
   require('./AfrostreamMonthlyMessage.less');
 }
 
-@connect(({ User }) => ({User})) class AfrostreamMonthlyMessage extends React.Component {
-
-  logOut() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(UserActionCreators.logOut());
-  }
+class AfrostreamMonthlyMessage extends React.Component {
 
 
   render() {
-    const {
-      props: {
-        User
-        }
-      } = this;
-
     return (
       <section className="afrostream-monthly-message">
         <div className="header">
@@ -33,10 +18,8 @@ if (process.env.BROWSER) {
           <h3>Merci d'avoir réservé la formule THINK LIKE A MAN. </h3>
 
           <p>Rendez vous le 1er octobre pour profiter de votre abonnement.</p>
-          <button
-            className="logout-button"
-            onClick={::this.logOut}>se déconnecter
-          </button>
+
+          <LogOutButton />
         </div>
       </section>
     );
