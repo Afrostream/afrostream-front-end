@@ -1,93 +1,90 @@
 /* React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
 @import (reference) '../../../styles/config.less';
 
-.footer {
-  /*
-  * Sticky footer
-  */
-  width: 100%;
-  min-height: @footer-height;
-  font-size: 13px;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: @brand-footer;
-  background: @background-footer;
-  //.background-image(linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, @background-footer 50%));
-
-  &-container {
-    margin: 0 auto;
-    padding: 20px 15px;
-    text-align: center;
-    max-width: @max-content-width;
-  }
-
-  .row-centered {
-    text-align: center;
-  }
-
-  &-menu {
-    .footer-section {
-
-      .footer-section-label {
-        margin: 5px 0px 5px 0px;
-      }
-      .footer-links {
-        .footer-menu-link {
-          font-weight: 200;
-          font-size: 11px;
-          text-transform: capitalize;
-          display: inline-block;
-          &.link-border {
-          }
-          a {
-            color: @brand-footer;
-          }
-        }
-      }
-    }
-  }
-}
-
 .footer, .page-wrap:after {
   min-height: @footer-height;
 }
 
-@media (min-width: 768px) {
+.footer {
+  /*
+ * Sticky footer
+ */
 
-  .footer {
-    &-menu {
-      .footer-section {
-        text-align: left;
-        .footer-links {
-          &.row {
-            margin: 0;
-          }
-          .footer-menu-link {
-            &.link-border {
-              margin-left: 10px;
-              &:before {
-                content: "";
-                height: 100%;
-                border-left: solid 1px  @brand-footer;
-                padding-left: 10px;
-              }
-            }
-            a {
-              color: @brand-footer;
-            }
-          }
-        }
-        &:nth-child(1) {
-          text-align: left;
-        }
-        &:nth-child(2) {
-          text-align: center;
-        }
-        &:nth-child(3) {
-          text-align: right;
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  background-color: @background-footer;
+  padding: 10px 0 0 0;
+  min-height: @footer-height;
+  font-size: 12px;
+
+  @media all and (max-width: @screen-sm-min) {
+    text-align: center;
+  }
+
+  .links {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+
+    .get-help {
+      position: relative;
+      float: left;
+      width: 32%;
+      padding-left: 14%;
+
+      @media all and (max-width: @screen-sm-min) {
+        width: 100%;
+        padding-left: 0px;
+        float: none;
+        padding-top: 5px;
+      }
+
+      h4 {
+        color: @white-base;
+        font-size: 14px;
+        font-weight: lighter;
+      }
+
+      .footer-links {
+        list-style-type: none;
+      }
+    }
+  }
+
+  .footer-link {
+    color: #A39EA7;
+    line-height: 16px;
+  }
+  .legal-statements {
+    width: 100%;
+    min-height: 30px;
+    background-color: #442E4F;
+    position: relative;
+    display: inline-block;
+
+    .links {
+      width: 100%;
+      position: relative;
+      display: inline-block;
+
+      .get-help {
+        position: relative;
+        float: left;
+        width: 32%;
+        padding-left: 14%;
+
+        @media all and (max-width: @screen-sm-min) {
+          width: 100%;
+          padding-left: 0px;
+          float: none;
+          padding-bottom: 5px;
         }
       }
     }
   }
 
+  .legal-text {
+    padding: 10px 0 0 0;
+  }
 }
