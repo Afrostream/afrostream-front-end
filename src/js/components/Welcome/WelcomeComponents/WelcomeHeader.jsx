@@ -29,7 +29,7 @@ if (process.env.BROWSER) {
 
         <div className="afrostream-statement">
           <div>Les meilleurs films et séries</div>
-          <div>afro-americaines et africaines</div>
+          <div>afro-américains et africains</div>
           <div>en illimité</div>
         </div>
 
