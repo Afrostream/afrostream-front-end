@@ -20,18 +20,14 @@ if (canUseDOM) {
 @connect(({ Event,User }) => ({Event, User})) class Application extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    willTransitionTo: function (transition, params, query, callback) {
+      ga.pageview(transition.router.state.location.pathname);
+    }
   };
-
-  static willTransitionTo(transition, params, query, props) {
-    // log the route transition to google analytics
-    console.log('willTransitionTo');
-    ga.pageview(transition.path);
-  }
 
   componentWillMount() {
     if (canUseDOM) {
-      console.log(ga);
       ga.initialize(config.google.analyticsKey, {debug: true});
     }
   }
