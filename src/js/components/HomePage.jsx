@@ -17,7 +17,7 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-
+        debugger;
         //return ( <PaymentPage />)
         window.location.href= "/payment";
       }
@@ -25,6 +25,7 @@ import Spinner from './Spinner/Spinner';
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
+        debugger;
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {
