@@ -48,6 +48,7 @@
     font-size: 1em;
     line-height: 1;
     margin: @app-padding;
+
     .video-infos_label {
       font-family: @font-book;
       font-size: 1.5em;
@@ -58,6 +59,11 @@
       line-height: 1;
       text-transform: uppercase;
       margin-left: -3px;
+    }
+  }
+  @media @mobile,@tablet{
+    .video-infos {
+      margin: @app-padding-mobile;
     }
   }
   .player-container {
@@ -159,6 +165,13 @@
       left: @app-padding;
       bottom: @app-padding;
       right: @app-padding;
+    }
+    @media @mobile,@tablet{
+      .vjs-control-bar {
+        left: @app-padding-mobile;
+        bottom: @app-padding-mobile;
+        right: @app-padding-mobile;
+      }
     }
 
     /* Loading Spinner

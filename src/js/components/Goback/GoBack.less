@@ -8,6 +8,7 @@
   z-index: 3000;
   transition: width .1s ease-in-out;
   cursor: pointer;
+  text-align: left;
   .transition(background 0.2s linear);
   .transition(opacity 0.4s linear);
   :hover,
@@ -27,5 +28,17 @@
     opacity: 0;
     .transition(opacity 0.4s linear);
     display: none;
+  }
+}
+
+@media @mobile,@tablet{
+  .return-btn {
+    top: 10px;
+    position: relative;
+    left: @app-padding-mobile;
+    &.return-btn-hidden {
+      opacity: 1;
+      display: block;
+    }
   }
 }
