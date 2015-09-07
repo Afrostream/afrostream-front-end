@@ -22,6 +22,7 @@ if (process.env.BROWSER) {
   constructor(props) {
     super(props);
     this.player = null;
+    this.playerInit = null;
   }
 
   static propTypes = {
@@ -39,16 +40,54 @@ if (process.env.BROWSER) {
   }
 
   initPlayer() {
-    if (this.player) {
+    let self = this;
+    if (self.player) {
       return false;
     }
+    //initPlayer
     this.generatePlayer()
       .then(function (player) {
-        this.player = player;
+        console.log('generatePlayer complete');
+        self.player = player;
       }).catch(function (err) {
         console.log(err);
         return false;
       });
+  }
+
+  generateDomTag(videoData) {
+    const {
+      props: {
+        }
+      } = this;
+
+    return new Promise((resolve) => {
+      // initialize the player
+      let captions = videoData.get('captions');
+      let hasSubtiles = captions ? captions.size : false;
+      let wrapper = React.findDOMNode(this.refs.wrapper);
+      let video = document.createElement('video');
+      video.id = 'afrostream-player';
+      video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
+      video.crossOrigin = true;
+      if (hasSubtiles) {
+        captions.map((caption, i) => {
+          let track = document.createElement('track');
+          track.kind = 'subtitles';
+          track.id = `track-${caption.get('_id')}-${i}`;
+          track.src = caption.get('src');
+          track.mode = 'showing';
+          let lang = caption.get('lang');
+          if (lang) {
+            track.srclang = lang.get('lang');
+            track.label = lang.get('label')
+          }
+          video.appendChild(track);
+        });
+      }
+      wrapper.appendChild(video);
+      resolve();
+    });
   }
 
   generatePlayer() {
@@ -61,13 +100,20 @@ if (process.env.BROWSER) {
         }
       } = this;
 
+    let self = this;
+
     return new Promise((resolve, reject) => {
 
       const videoData = Video.get(`videos/${videoId}`);
 
       if (!videoData) return reject('no video data');
 
-      this.destroyPlayer().then(() => {
+
+      if (self.playerInit) return reject('Player init already called');
+
+      self.playerInit = true;
+
+      self.destroyPlayer().then(() => {
         videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
         videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
 
@@ -83,25 +129,87 @@ if (process.env.BROWSER) {
           }
         }
 
-        // initialize the player
-        var playerData = _.merge(videoOptions, config.player);
-        let player = videojs('afrostream-player', playerData);
-        player.on('pause', this.setDurationInfo.bind(this));
-        player.on('play', this.setDurationInfo.bind(this));
-        player.on('ended', this.setDurationInfo.bind(this));
-        player.on('loadedmetadata', this.setDurationInfo.bind(this));
-        player.on('useractive', this.triggerUserActive.bind(this));
-        player.on('userinactive', this.triggerUserActive.bind(this));
+        self.generateDomTag(videoData).then(() => {
+          //initialize the player
+          var playerData = _.merge(videoOptions, config.player);
+          let player = videojs('afrostream-player', playerData);
+          player.on('pause', this.setDurationInfo.bind(this));
+          player.on('play', this.setDurationInfo.bind(this));
+          player.on('ended', this.setDurationInfo.bind(this));
+          player.on('loadedmetadata', this.setDurationInfo.bind(this));
+          player.on('useractive', this.triggerUserActive.bind(this));
+          player.on('userinactive', this.triggerUserActive.bind(this));
 
-        player.on('ready', function () {
-          resolve(this);
+          resolve(player);
+        }).catch((err) => {
+          self.playerInit = false;
+          reject(err);
         });
-
       }).catch((err) => {
+        self.playerInit = false;
         reject(err);
       });
     });
   }
+
+  //
+  //generatePlayer() {
+  //  const {
+  //    props: {
+  //      Video,
+  //      Movie,
+  //      videoId,
+  //      movieId
+  //      }
+  //    } = this;
+  //
+  //  return new Promise((resolve, reject) => {
+  //
+  //    const videoData = Video.get(`videos/${videoId}`);
+  //
+  //    if (!videoData) return reject('no video data');
+  //
+  //
+  //    if (this.playerInit) return reject('Player init already called');
+  //
+  //    this.playerInit = true;
+  //
+  //    this.destroyPlayer().then(() => {
+  //      videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
+  //      videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
+  //
+  //      let videoOptions = videoData.toJS();
+  //      let movie = Movie.get(`movies/${movieId}`);
+  //      let posterImgImgix = {};
+  //      if (movie) {
+  //        let poster = movie.get('poster');
+  //        let posterImg = poster ? poster.get('imgix') : '';
+  //        if (posterImg) {
+  //          posterImgImgix.poster = `${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70`;
+  //          videoOptions = _.merge(videoOptions, posterImgImgix);
+  //        }
+  //      }
+  //
+  //      // initialize the player
+  //      var playerData = _.merge(videoOptions, config.player);
+  //      let player = videojs('afrostream-player', playerData).ready(function () {
+  //
+  //      });
+  //      player.on('pause', this.setDurationInfo.bind(this));
+  //      player.on('play', this.setDurationInfo.bind(this));
+  //      player.on('ended', this.setDurationInfo.bind(this));
+  //      player.on('loadedmetadata', this.setDurationInfo.bind(this));
+  //      player.on('useractive', this.triggerUserActive.bind(this));
+  //      player.on('userinactive', this.triggerUserActive.bind(this));
+  //
+  //      resolve(player);
+  //
+  //    }).catch((err) => {
+  //      this.playerInit = false;
+  //      reject(err);
+  //    });
+  //  });
+  //}
 
   setDurationInfo() {
 
@@ -142,10 +250,13 @@ if (process.env.BROWSER) {
           this.player.off('userinactive', this.triggerUserActive.bind(this));
           this.player = null;
           dispatch(EventActionCreators.userActive(true));
+          console.log('destroyed player');
           resolve();
         });
+        console.log('destroy player');
         this.player.dispose();
       } else {
+        console.log('destroy player impossible');
         // Player not initialized, the promise is resolved immediatly
         resolve();
       }
@@ -193,19 +304,20 @@ if (process.env.BROWSER) {
     let captions = videoData.get('captions');
     const movieData = Movie.get(`movies/${movieId}`);
     const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
-    let hasSubtiles = captions ? captions.size : false;
+    //let hasSubtiles = captions ? captions.size : false;
 
     return (
       <div className="player">
-        <video crossOrigin id="afrostream-player"
-               className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-          {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
-                                                             key={`track-${caption.get('_id')}-${i}`}
-                                                             src={caption.get('src')}
-                                                             srclang={caption.get('lang').get('lang')}
-                                                             label={caption.get('lang').get('label')}/>) : ''}
+        {/*<video crossOrigin id="afrostream-player" ref="wrapped-player"
+         className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
+         {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
+         key={`track-${caption.get('_id')}-${i}`}
+         src={caption.get('src')}
+         srclang={caption.get('lang').get('lang')}
+         label={caption.get('lang').get('label')}/>) : ''}
 
-        </video>
+         </video>*/}
+        <div ref="wrapper"/>
         {movieData ?
           <div className={classSet(videoInfoClasses)}>
             <div className="video-infos_label">Vous regardez</div>
@@ -222,4 +334,6 @@ if (process.env.BROWSER) {
   }
 }
 
-export default PlayerComponent;
+export
+default
+PlayerComponent;
