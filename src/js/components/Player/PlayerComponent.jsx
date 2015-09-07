@@ -6,6 +6,8 @@ import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
+import GoBack from '../GoBack/GoBack';
+
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
 }
@@ -259,8 +261,6 @@ if (process.env.BROWSER) {
     const hiddenMode = !Event.get('userActive');
     let videoInfoClasses = {
       'video-infos': true,
-      'hidden-sm': true,
-      'hidden-ms': true,
       'video-infos-hidden': hiddenMode
     };
 

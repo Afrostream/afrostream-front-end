@@ -1,0 +1,31 @@
+@import '../../../styles/config.less';
+
+.return-btn {
+  position: absolute;
+  top: @header-height + @app-padding;
+  left: @app-padding;
+  overflow: hidden;
+  z-index: 3000;
+  transition: width .1s ease-in-out;
+  cursor: pointer;
+  .transition(background 0.2s linear);
+  .transition(opacity 0.4s linear);
+  :hover,
+  :visited
+  :focus {
+    color: @color-yellow;
+  }
+  .fa {
+    color: @color-yellow;
+    font-size: 2em;
+  }
+  .return-btn-label {
+    font-size: 1.6em;
+    padding: 0 0 0 5px;
+  }
+  &.return-btn-hidden {
+    opacity: 0;
+    .transition(opacity 0.4s linear);
+    display: none;
+  }
+}
