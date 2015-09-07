@@ -17,7 +17,9 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-        return ( <PaymentPage />)
+
+        //return ( <PaymentPage />)
+        window.location.href= "/payment";
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
