@@ -2,7 +2,6 @@ import React ,{PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import UserButton from './../User/UserButton';
-import Goback from './../Goback/Goback';
 import classSet from 'classnames';
 
 if (process.env.BROWSER) {
