@@ -29,6 +29,7 @@ import Spinner from './Spinner/Spinner';
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {
+      debugger;
       return (<WelcomePage />);
     }
   }
