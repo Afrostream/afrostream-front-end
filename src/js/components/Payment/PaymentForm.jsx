@@ -118,6 +118,7 @@ if (canUseDOM) {
   }
 
   disableForm(disabled, status = 0, message = '') {
+
     $('button').prop('disabled', disabled);
     $('input').prop('disabled', disabled);
     this.setState({
