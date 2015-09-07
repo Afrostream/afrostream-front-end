@@ -17,9 +17,10 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-
-        //return ( <PaymentPage />)
+        debugger;
+        //return ( <PaymentPage path={'/payment'} />)
         window.location.href= "/payment";
+        //this.transitionTo('/payment');
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
