@@ -70,7 +70,7 @@ if (process.env.BROWSER) {
       let video = document.createElement('video');
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
-      video.crossOrigin = true;
+      video.crossOrigin = 'anonymous';
       if (hasSubtiles) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
