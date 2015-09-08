@@ -74,10 +74,7 @@ if (process.env.BROWSER) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
           track.kind = 'subtitles';
-          //track.id = `track-${caption.get('_id')}-${i}`;
-          track.key = `track-${caption.get('_id')}-${i}`;
           track.src = caption.get('src');
-          track.mode = 'showing';
           let lang = caption.get('lang');
           if (lang) {
             track.srclang = lang.get('lang');
@@ -133,7 +130,16 @@ if (process.env.BROWSER) {
         self.generateDomTag(videoData).then(() => {
           //initialize the player
           var playerData = _.merge(videoOptions, config.player);
-          let player = videojs('afrostream-player', playerData);
+          let player = videojs('afrostream-player', playerData).ready(function () {
+              var allTracks = this.tech.el().textTracks; // get list of tracks
+              let trackFr = _.find(allTracks, function (track) {
+                return track.lang === 'fr';
+              });
+              if (trackFr) {
+                trackFr.mode = 'showing'; // show this track
+              }
+            }
+          );
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
@@ -152,65 +158,6 @@ if (process.env.BROWSER) {
       });
     });
   }
-
-  //
-  //generatePlayer() {
-  //  const {
-  //    props: {
-  //      Video,
-  //      Movie,
-  //      videoId,
-  //      movieId
-  //      }
-  //    } = this;
-  //
-  //  return new Promise((resolve, reject) => {
-  //
-  //    const videoData = Video.get(`videos/${videoId}`);
-  //
-  //    if (!videoData) return reject('no video data');
-  //
-  //
-  //    if (this.playerInit) return reject('Player init already called');
-  //
-  //    this.playerInit = true;
-  //
-  //    this.destroyPlayer().then(() => {
-  //      videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
-  //      videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
-  //
-  //      let videoOptions = videoData.toJS();
-  //      let movie = Movie.get(`movies/${movieId}`);
-  //      let posterImgImgix = {};
-  //      if (movie) {
-  //        let poster = movie.get('poster');
-  //        let posterImg = poster ? poster.get('imgix') : '';
-  //        if (posterImg) {
-  //          posterImgImgix.poster = `${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70`;
-  //          videoOptions = _.merge(videoOptions, posterImgImgix);
-  //        }
-  //      }
-  //
-  //      // initialize the player
-  //      var playerData = _.merge(videoOptions, config.player);
-  //      let player = videojs('afrostream-player', playerData).ready(function () {
-  //
-  //      });
-  //      player.on('pause', this.setDurationInfo.bind(this));
-  //      player.on('play', this.setDurationInfo.bind(this));
-  //      player.on('ended', this.setDurationInfo.bind(this));
-  //      player.on('loadedmetadata', this.setDurationInfo.bind(this));
-  //      player.on('useractive', this.triggerUserActive.bind(this));
-  //      player.on('userinactive', this.triggerUserActive.bind(this));
-  //
-  //      resolve(player);
-  //
-  //    }).catch((err) => {
-  //      this.playerInit = false;
-  //      reject(err);
-  //    });
-  //  });
-  //}
 
   setDurationInfo() {
 
