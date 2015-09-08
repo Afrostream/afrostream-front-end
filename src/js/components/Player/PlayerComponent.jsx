@@ -80,7 +80,7 @@ if (process.env.BROWSER) {
           //track.key = `track-${caption.get('_id')}-${i}`;
           let lang = caption.get('lang');
           if (lang) {
-            track.srclang = lang.get('lang');
+            track.srcLang = lang.get('lang');
             track.label = lang.get('label')
           }
 
