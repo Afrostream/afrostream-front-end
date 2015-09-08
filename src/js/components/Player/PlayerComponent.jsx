@@ -71,7 +71,6 @@ if (process.env.BROWSER) {
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
       video.crossOrigin = true;
-      video.crossorigin = true;
       if (hasSubtiles) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
