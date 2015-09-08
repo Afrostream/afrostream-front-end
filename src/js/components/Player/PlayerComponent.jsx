@@ -77,6 +77,7 @@ if (process.env.BROWSER) {
           track.kind = 'subtitles';
           track.src = caption.get('src');
           track.id = `track-${caption.get('_id')}-${i}`;
+          track.crossOrigin = true;
           //track.key = `track-${caption.get('_id')}-${i}`;
           let lang = caption.get('lang');
           if (lang) {
@@ -283,14 +284,14 @@ if (process.env.BROWSER) {
          label={caption.get('lang').get('label')}/>) : ''}
 
          </video>*/}
-        <div ref="wrapper"/>
+        <div ref="wrapper" className="wrapper"/>
         {movieData ?
           <div className={classSet(videoInfoClasses)}>
-            <div className="video-infos_label">Vous regardez</div>
-            <div className="video-infos_title">{movieData.get('title')}</div>
-            <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+            <div className=" video-infos_label">Vous regardez</div>
+            <div className=" video-infos_title">{movieData.get('title')}</div>
+            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
             {movieData.get('type') === 'serie' ?
-              (<div className="video-infos_synopsys">{movieData.get('synopsis')}</div>)
+              (<div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>)
               : <div />
             }
           </div> : <div />
