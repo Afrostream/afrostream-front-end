@@ -6,33 +6,48 @@
 @thumb-height: 200px;
 @zoom-margin: 50px;
 
+.plan-container {
+  width: 100%;
+  background-color: #d4d0d6;
+  padding-top: 140px;
+  padding-bottom: 30px;
+
+  @media all and (max-width: @screen-sm-min) {
+    padding-top: 100px;
+  }
+
+  @media all and (max-width: @screen-xs-min) {
+    padding-top: 80px;
+  }
+}
 .choose-plan {
   color: #452F50;
   position: relative;
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 100%;
+  padding-bottom: 10px;
+  width: 80%;
   font-size: 24px;
+  background-color: #d4d0d6;
+  text-align: left;
+  font-weight: bold;
 
   @media all and (max-width: @screen-lg-min) {
     width: 95%;
+    text-align: center
   }
 
   @media all and (max-width: @screen-md-min) {
-    width: 95%;
+    width: 100%;
+    margin: 0 0 0 0;
+    padding: 5px 0 10px 0;
+    font-size: 18px;
     text-align: center;
   }
 
   @media all and (max-width: @screen-xs-min) {
-    width: 95%;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
+
   }
 }
 
@@ -44,7 +59,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 30px 30px 30px 45px;
-  width: 100%;
+  width: 80%;
   font-size: 12px;
   text-align: center;
 
@@ -76,6 +91,12 @@
     @media all and (max-width: @screen-md-min) {
       width: 100%;
       text-align: center;
+    }
+  }
+
+  .row-element-top-left {
+    @media all and (max-width: @screen-md-min) {
+      height: 0px;
     }
   }
 
