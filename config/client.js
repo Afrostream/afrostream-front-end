@@ -12,6 +12,9 @@ export default {
   /**
    * Front-End Server
    */
+  google: {
+    analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
+  },
   apiClient: {
     urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api',
     token: 'afro_token'

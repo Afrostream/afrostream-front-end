@@ -5,17 +5,32 @@ import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
+import config from '../../../config';
 
 if (process.env.BROWSER) {
   require('./Application.less');
 }
 
 if (canUseDOM) {
+  var ga = require('react-ga');
   require('jquery');
   require('bootstrap');
 }
 
 @connect(({ Event,User }) => ({Event, User})) class Application extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired,
+    willTransitionTo: function (transition, params, query, callback) {
+      ga.pageview(transition.router.state.location.pathname);
+    }
+  };
+
+  componentWillMount() {
+    if (canUseDOM) {
+      ga.initialize(config.google.analyticsKey, {debug: true});
+    }
+  }
 
   render() {
 
@@ -32,12 +47,9 @@ if (canUseDOM) {
         <Header {...this.props}/>
         <SideBar />
 
-        <div id="page-content-wrapper">
-          <div className="container-fluid">
-
-            {children}
-            <Footer />
-          </div>
+        <div id="page-content-wrapper" className="container-fluid">
+          {children}
+          <Footer />
         </div>
       </div>
     );

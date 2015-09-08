@@ -5,7 +5,6 @@ import Devices from './WelcomeComponents/Devices';
 import PricingTable from './WelcomeComponents/PricingTable';
 import Partners from './WelcomeComponents/Partners';
 import Press from './WelcomeComponents/Press';
-import WelcomeFooter from './WelcomeComponents/WelcomeFooter';
 import * as EventActionCreators from '../../actions/event';
 
 @prepareRoute(async function ({ store }) {
@@ -23,7 +22,6 @@ import * as EventActionCreators from '../../actions/event';
         <PricingTable />
         <Partners />
         <Press />
-        {/*<WelcomeFooter />*/}
       </div>
     );
   }

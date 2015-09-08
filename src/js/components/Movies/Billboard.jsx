@@ -125,8 +125,6 @@ class Billboard extends React.Component {
     }
     if (videoData) {
       let subtitles = videoData.get('captions');
-      console.log(subtitles);
-
       hasSubtiles = subtitles ? subtitles.size : false;
     }
 
