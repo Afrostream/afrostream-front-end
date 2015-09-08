@@ -97,7 +97,7 @@ if (process.env.BROWSER) {
               <div className="begin-date-2">ACCÉS IMMÉDIATEMENT</div>
               <ul className="plan-benefits-1">
                 <li>4 écrans connectés simultanément</li>
-                <li>1 clé Chromcast offerte</li>
+                <li>1 clé Chromecast offerte</li>
                 <li>1 T-shirt collector Afrostream</li>
                 <li>Invitations VIP aux avant-premières de films</li>
                 <li>12 mois inclus</li>
