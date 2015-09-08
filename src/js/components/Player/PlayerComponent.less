@@ -466,7 +466,7 @@
     .vjs-live-controls,
     .vjs-playback-rate,
       //.vjs-subtitles-button,
-    .vjs-captions-button,
+      //.vjs-captions-button,
     .vjs-mute-control,
     .vjs-hidden {
       display: none;
@@ -604,8 +604,15 @@
     }
 
     /* Captions Button */
-    .vjs-captions-button:before {
-      content: @captions-icon;
+    .vjs-captions-button {
+      position: absolute;
+      top: 35%;
+      right: 85px;
+      height: 14px;
+      width: 22px;
+      &:before {
+        content: @captions-icon;
+      }
     }
     .vjs-fullscreen-control {
       border: 3px solid white;

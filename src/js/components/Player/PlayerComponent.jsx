@@ -73,7 +73,7 @@ if (process.env.BROWSER) {
       if (hasSubtiles) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
-          track.kind = 'subtitles';
+          track.kind = 'captions';
           //track.id = `track-${caption.get('_id')}-${i}`;
           track.key = `track-${caption.get('_id')}-${i}`;
           track.src = caption.get('src');
