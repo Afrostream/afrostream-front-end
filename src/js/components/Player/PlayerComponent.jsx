@@ -70,18 +70,20 @@ if (process.env.BROWSER) {
       let video = document.createElement('video');
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
-      video.crossOrigin = true;
+      video.crossOrigin = 'true';
+      video.crossorigin = 'true';
       if (hasSubtiles) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
           track.kind = 'subtitles';
           track.src = caption.get('src');
           track.id = `track-${caption.get('_id')}-${i}`;
-          track.crossOrigin = true;
+          track.crossOrigin = 'true';
+          track.crossorigin = 'true';
           //track.key = `track-${caption.get('_id')}-${i}`;
           let lang = caption.get('lang');
           if (lang) {
-            track.srcLang = lang.get('lang');
+            track.srclang = lang.get('lang');
             track.label = lang.get('label')
           }
 
@@ -285,32 +287,32 @@ if (process.env.BROWSER) {
 
          </video>*/}
         <div ref="wrapper" className="wrapper">
-          <video crossOrigin id="afrostream-player" ref="wrapped-player"
-                 className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-            {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
-                                                               key={`track-${caption.get('_id')}-${i}`}
-                                                               src={caption.get('src')}
-                                                               srclang={caption.get('lang').get('lang')}
-                                                               label={caption.get('lang').get('label')}/>) : ''}
-
-          </div>
-          {
-            movieData ?
-              <div className={classSet(videoInfoClasses)}>
-                <div className=" video-infos_label">Vous regardez</div>
-                <div className=" video-infos_title">{movieData.get('title')}</div>
-                <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-                {movieData.get('type') === 'serie' ?
-                  (<div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>)
-                  : <div />
-                }
-              </div> : <div />
-          }
+          {/*<video crossOrigin id="afrostream-player" ref="wrapped-player"
+           className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
+           {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
+           key={`track-${caption.get('_id')}-${i}`}
+           src={caption.get('src')}
+           srclang={caption.get('lang').get('lang')}
+           label={caption.get('lang').get('label')}/>) : ''}
+           */}
         </div>
-        );
+        {
+          movieData ?
+            <div className={classSet(videoInfoClasses)}>
+              <div className=" video-infos_label">Vous regardez</div>
+              <div className=" video-infos_title">{movieData.get('title')}</div>
+              <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+              {movieData.get('type') === 'serie' ?
+                (<div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>)
+                : <div />
+              }
+            </div> : <div />
         }
-        }
+      </div>
+    );
+  }
+}
 
-        export
-        default
-        PlayerComponent;
+export
+default
+PlayerComponent;
