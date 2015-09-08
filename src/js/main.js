@@ -13,7 +13,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 superAgentMock(request);
 
 if (canUseDOM) {
-  FastClick.attach(document.body);
+  //FastClick.attach(document.body);
 }
 
 const history = new History;
