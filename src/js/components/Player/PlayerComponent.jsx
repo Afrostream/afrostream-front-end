@@ -71,7 +71,7 @@ if (process.env.BROWSER) {
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
       video.crossOrigin = true;
-      if (hasSubtiles) {
+      /*if (hasSubtiles) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
           track.kind = 'captions';
@@ -89,7 +89,7 @@ if (process.env.BROWSER) {
           }
           video.appendChild(track);
         });
-      }
+      }*/
       wrapper.appendChild(video);
       resolve();
     });
@@ -123,6 +123,7 @@ if (process.env.BROWSER) {
         videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
 
         let videoOptions = videoData.toJS();
+        videoOptions.tracks = videoOptions.captions;
         let movie = Movie.get(`movies/${movieId}`);
         let posterImgImgix = {};
         if (movie) {
