@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import videojs from 'videojs-afrostream';
 import config from '../../../../config';
@@ -73,7 +74,7 @@ if (process.env.BROWSER) {
       if (hasSubtiles) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
-          track.kind = 'subtitles';
+          track.kind = 'captions';
           track.src = caption.get('src');
           let lang = caption.get('lang');
           if (lang) {
