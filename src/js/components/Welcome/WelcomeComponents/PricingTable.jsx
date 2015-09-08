@@ -29,7 +29,7 @@ if (process.env.BROWSER) {
 
           <div className="pricing-header-text">Service uniquement disponible en France, DOM-TOM,
             Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.
-            <a className="pricing-header-link">Les réponses à vos questions</a>
+            <a className="pricing-header-link" href="https://afrostream.tv/faq.html">Les réponses à vos questions</a>
           </div>
         </div>
         <div className="pricing-plans">
