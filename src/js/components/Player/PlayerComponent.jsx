@@ -76,6 +76,8 @@ if (process.env.BROWSER) {
           let track = document.createElement('track');
           track.kind = 'captions';
           track.src = caption.get('src');
+          track.id = `track-${caption.get('_id')}-${i}`;
+          track.key = `track-${caption.get('_id')}-${i}`;
           let lang = caption.get('lang');
           if (lang) {
             track.srclang = lang.get('lang');
@@ -134,7 +136,7 @@ if (process.env.BROWSER) {
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.tech.el().textTracks; // get list of tracks
               let trackFr = _.find(allTracks, function (track) {
-                return track.lang === 'fr';
+                return track.language === 'fr';
               });
               if (trackFr) {
                 trackFr.mode = 'showing'; // show this track
