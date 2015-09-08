@@ -70,16 +70,14 @@ if (process.env.BROWSER) {
       let video = document.createElement('video');
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
-      video.crossOrigin = 'true';
-      video.crossorigin = 'true';
+      video.crossOrigin = true;
+      video.crossorigin = true;
       if (hasSubtiles) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
-          track.kind = 'subtitles';
+          track.kind = 'captions';
           track.src = caption.get('src');
           track.id = `track-${caption.get('_id')}-${i}`;
-          track.crossOrigin = 'true';
-          track.crossorigin = 'true';
           //track.key = `track-${caption.get('_id')}-${i}`;
           let lang = caption.get('lang');
           if (lang) {
