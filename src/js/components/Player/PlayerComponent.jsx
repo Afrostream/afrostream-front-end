@@ -271,7 +271,7 @@ if (process.env.BROWSER) {
     let captions = videoData.get('captions');
     const movieData = Movie.get(`movies/${movieId}`);
     const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
-    //let hasSubtiles = captions ? captions.size : false;
+    let hasSubtiles = captions ? captions.size : false;
 
     return (
       <div className="player">
@@ -284,23 +284,33 @@ if (process.env.BROWSER) {
          label={caption.get('lang').get('label')}/>) : ''}
 
          </video>*/}
-        <div ref="wrapper" className="wrapper"/>
-        {movieData ?
-          <div className={classSet(videoInfoClasses)}>
-            <div className=" video-infos_label">Vous regardez</div>
-            <div className=" video-infos_title">{movieData.get('title')}</div>
-            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-            {movieData.get('type') === 'serie' ?
-              (<div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>)
-              : <div />
-            }
-          </div> : <div />
-        }
-      </div>
-    );
-  }
-}
+        <div ref="wrapper" className="wrapper">
+          <video crossOrigin id="afrostream-player" ref="wrapped-player"
+                 className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
+            {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
+                                                               key={`track-${caption.get('_id')}-${i}`}
+                                                               src={caption.get('src')}
+                                                               srclang={caption.get('lang').get('lang')}
+                                                               label={caption.get('lang').get('label')}/>) : ''}
 
-export
-default
-PlayerComponent;
+          </div>
+          {
+            movieData ?
+              <div className={classSet(videoInfoClasses)}>
+                <div className=" video-infos_label">Vous regardez</div>
+                <div className=" video-infos_title">{movieData.get('title')}</div>
+                <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+                {movieData.get('type') === 'serie' ?
+                  (<div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>)
+                  : <div />
+                }
+              </div> : <div />
+          }
+        </div>
+        );
+        }
+        }
+
+        export
+        default
+        PlayerComponent;
