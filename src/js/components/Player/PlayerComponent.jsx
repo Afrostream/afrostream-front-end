@@ -83,6 +83,10 @@ if (process.env.BROWSER) {
             track.srclang = lang.get('lang');
             track.label = lang.get('label')
           }
+
+          if (lang.get('lang') === 'fr') {
+            track.setAttribute('default', 'default');
+          }
           video.appendChild(track);
         });
       }
