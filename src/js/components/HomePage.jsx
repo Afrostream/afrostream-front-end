@@ -17,9 +17,15 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
+
+        console.log('**** here is the user ***');
+        console.log(user.get('email'));
+        console.log('*** end of the user ***');
+        var email = user.get('email');
+
         debugger;
         //return ( <PaymentPage />)
-        window.location.href= "/payment";
+        window.location.href= "/payment?email=" + email;
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
