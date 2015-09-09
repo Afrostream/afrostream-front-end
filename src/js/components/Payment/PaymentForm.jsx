@@ -42,6 +42,7 @@ if (canUseDOM) {
   }
 
   onSubmit(e) {
+
     e.preventDefault();
 
     const {
@@ -69,7 +70,8 @@ if (canUseDOM) {
       'cvv': $('.recurly-cc-cvc').val(),
       'first_name': $('#first_name').val(),
       'last_name': $('#last_name').val(),
-      'email': user.get('email'),
+      //'email': user.get('email'),
+      'email': this.getQueryString('email'),
       // optional attributes
       'coupon_code': $('#coupon_code').val(),
       'unit-amount-in-cents': this.props.unitAmountInCents,
@@ -118,6 +120,7 @@ if (canUseDOM) {
   }
 
   disableForm(disabled, status = 0, message = '') {
+
     $('button').prop('disabled', disabled);
     $('input').prop('disabled', disabled);
     this.setState({
