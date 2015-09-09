@@ -42,6 +42,9 @@ if (canUseDOM) {
   }
 
   onSubmit(e) {
+
+    localStorage.setItem('afroToken', this.getQueryString('afroToken'));
+    localStorage.setItem('afro_token', this.getQueryString('afro_token'));
     e.preventDefault();
 
     const {

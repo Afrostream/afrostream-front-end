@@ -22,12 +22,10 @@ import Spinner from './Spinner/Spinner';
         console.log(user.get('email'));
         console.log('*** end of the user ***');
         var email = user.get('email');
-        localStorage.setItem('afroToken', token);
-        localStorage.setItem('afro_token', afro_token);
 
         debugger;
         //return ( <PaymentPage />)
-        window.location.href= "/payment?email=" + email;
+        window.location.href= "/payment?email=" + email + "&afroToken=" + token + "&afro_token=" + afro_token;
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
