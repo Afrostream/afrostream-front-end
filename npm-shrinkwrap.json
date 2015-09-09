@@ -15116,7 +15116,7 @@
     "videojs-afrostream": {
       "version": "0.17.5",
       "from": "git+https://github.com/Afrostream/videojs-afrostream.git#master",
-      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#d9215b7947506a27c05b445d6de3eff4c7fffabb",
+      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#f9c748a16150adee91f4bb939eb0cb85bfbc548f",
       "dependencies": {
         "dashjs": {
           "version": "1.1.1",
@@ -15124,9 +15124,9 @@
           "resolved": "https://registry.npmjs.org/dashjs/-/dashjs-1.1.1.tgz",
           "dependencies": {
             "dashjs": {
-              "version": "1.4.0",
+              "version": "1.5.0",
               "from": "git://github.com/Dash-Industry-Forum/dash.js.git#master",
-              "resolved": "git://github.com/Dash-Industry-Forum/dash.js.git#b272b1894c6fc41abd4f1bd793c11209ecd92431"
+              "resolved": "git://github.com/Dash-Industry-Forum/dash.js.git#042ea1d896c4d36ba4eaf388c827284e6e520509"
             }
           }
         },
@@ -15161,6 +15161,11 @@
           "version": "4.7.5",
           "from": "videojs-swf@>=4.7.4 <5.0.0",
           "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.5.tgz"
+        },
+        "videojs-chromecast": {
+          "version": "1.1.1",
+          "from": "git+https://github.com/Afrostream/videojs-chromecast.git#master",
+          "resolved": "git+https://github.com/Afrostream/videojs-chromecast.git#23f5bb57f88254a8720583aa26f90a8324d318bf"
         }
       }
     },
