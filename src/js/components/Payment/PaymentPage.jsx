@@ -27,6 +27,7 @@ if (process.env.BROWSER) {
   }
 
   render() {
+    debugger;
     localStorage.setItem('afroToken', this.getQueryString('afroToken'));
     localStorage.setItem('afro_token', this.getQueryString('afro_token'));
     localStorage.setItem('johnarchHere', 'yoAdrian')
