@@ -30,7 +30,7 @@ if (process.env.BROWSER) {
 
     //localStorage.setItem('afroToken', this.getQueryString('afroToken'));
     //localStorage.setItem('afro_token', this.getQueryString('afro_token'));
-    //localStorage.setItem('johnarchHere', 'yoAdrian');
+    localStorage.setItem('johnarchHere', 'yoAdrian');
 
     return (<SelectPlan />);
   }
