@@ -101,6 +101,15 @@ export default {
       "ID_CLIENT": process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
-    "techOrder": ["html5", "dash", "hls", "flash", "streamroot", "srflash"]
+    "techOrder": ["html5", "dash", "hls", "flash", "streamroot", "srflash"],
+    "plugins": {
+      "chromecast": {
+        "appId": process.env.CHROMECAST_ID || '',
+        "metadata": {
+          "title": "Title",
+          "subtitle": "Subtitle"
+        }
+      }
+    }
   }
 };
