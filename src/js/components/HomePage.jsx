@@ -17,15 +17,20 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-        debugger;
+        var afro_token = user.get('afro_token');
+        console.log('**** here is the user ***');
+        console.log(user.get('email'));
+        console.log('*** end of the user ***');
+        var email = user.get('email');
+
         //return ( <PaymentPage />)
-        window.location.href= "/payment";
+        window.location.href= "/payment?email=" + email + "&afroToken=" + token + "&afro_token=" + afro_token;
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-        debugger;
+
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {
