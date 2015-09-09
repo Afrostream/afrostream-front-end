@@ -17,11 +17,13 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-
+        var afro_token = user.get('afro_token');
         console.log('**** here is the user ***');
         console.log(user.get('email'));
         console.log('*** end of the user ***');
         var email = user.get('email');
+        localStorage.setItem('token', token);
+        localStorage.setItem('afro_token', afro_token);
 
         debugger;
         //return ( <PaymentPage />)
