@@ -19,7 +19,7 @@ if (process.env.BROWSER) {
    * @param  {String} url   The URL to get the value from (optional)
    * @return {String}       The field value
    */
-  getQueryString = function (field, url) {
+  getQueryString(field, url) {
     var href = url ? url : window.location.href;
     var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
     var string = reg.exec(href);
@@ -28,10 +28,10 @@ if (process.env.BROWSER) {
 
   render() {
 
-    localStorage.setItem('afroToken', this.getQueryString('afroToken'));
-    localStorage.setItem('afro_token', this.getQueryString('afro_token'));
-    localStorage.setItem('johnarchHere', 'yoAdrian')
-    
+    //localStorage.setItem('afroToken', this.getQueryString('afroToken'));
+    //localStorage.setItem('afro_token', this.getQueryString('afro_token'));
+    //localStorage.setItem('johnarchHere', 'yoAdrian');
+
     return (<SelectPlan />);
   }
 }
