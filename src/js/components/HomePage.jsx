@@ -22,7 +22,7 @@ import Spinner from './Spinner/Spinner';
         console.log(user.get('email'));
         console.log('*** end of the user ***');
         var email = user.get('email');
-        localStorage.setItem('token', token);
+        localStorage.setItem('afroToken', token);
         localStorage.setItem('afro_token', afro_token);
 
         debugger;
