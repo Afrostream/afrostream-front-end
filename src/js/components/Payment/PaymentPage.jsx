@@ -15,13 +15,7 @@ if (process.env.BROWSER) {
 
   render() {
 
-    return (
-      <div className="row-fluid brand-bg">
-        <div className="container brand-bg payment">
-          <SelectPlan />
-        </div>
-      </div>
-    );
+    return (<SelectPlan />);
   }
 }
 

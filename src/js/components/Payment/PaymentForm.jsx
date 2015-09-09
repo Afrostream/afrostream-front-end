@@ -149,8 +149,7 @@ if (canUseDOM) {
     } else {
 
       return (
-        <div>
-
+        <div className="payment-wrapper">
           <div className="enter-payment-details">Entrer les détails de paiement</div>
           <div className="payment-form">
             <div className={classSet(spinnerClasses)}>
