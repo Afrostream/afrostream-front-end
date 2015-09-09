@@ -69,7 +69,8 @@ if (canUseDOM) {
       'cvv': $('.recurly-cc-cvc').val(),
       'first_name': $('#first_name').val(),
       'last_name': $('#last_name').val(),
-      'email': user.get('email'),
+      //'email': user.get('email'),
+      'email': this.getQueryString('email'),
       // optional attributes
       'coupon_code': $('#coupon_code').val(),
       'unit-amount-in-cents': this.props.unitAmountInCents,
@@ -91,7 +92,8 @@ if (canUseDOM) {
         'recurly-token': token.id
       });
 
-      dispatch(UserActionCreators.subscribe(formData)).then(function () {
+      var passedToken = this.getQueryString('afro_token');
+      dispatch(UserActionCreators.subscribe(formData, passedToken)).then(function () {
         self.disableForm(false, 1);
         ga.event({
           category: 'User',
@@ -126,6 +128,19 @@ if (canUseDOM) {
       subscriptionStatus: status,
       loading: disabled
     });
+  }
+
+  /**
+   * Get the value of a querystring
+   * @param  {String} field The field to get the value of
+   * @param  {String} url   The URL to get the value from (optional)
+   * @return {String}       The field value
+   */
+  getQueryString(field, url) {
+    var href = url ? url : window.location.href;
+    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+    var string = reg.exec(href);
+    return string ? string[1] : null;
   }
 
   render() {
