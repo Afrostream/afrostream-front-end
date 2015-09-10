@@ -103,7 +103,6 @@ if (canUseDOM) {
         });
         window.location.href = "/";
       }).catch(function (err) {
-        window.location.href = "/";
         let errors = err.response.body;
         let message = '';
         $.each(errors, function (i, error) {

@@ -18,9 +18,6 @@ import Spinner from './Spinner/Spinner';
       }
       else if (!user.get('planCode')) {
         var afro_token = user.get('afro_token');
-        console.log('**** here is the user ***');
-        console.log(user.get('email'));
-        console.log('*** end of the user ***');
         var email = user.get('email');
 
         //return ( <PaymentPage />)
@@ -30,11 +27,9 @@ import Spinner from './Spinner/Spinner';
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {
-      debugger;
       return (<WelcomePage />);
     }
   }
