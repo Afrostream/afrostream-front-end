@@ -27,7 +27,6 @@ if (canUseDOM) {
   };
 
   componentDidMount() {
-
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
     window.$('.recurly-cc-cvc').payment('formatCardCVC');
@@ -103,6 +102,11 @@ if (canUseDOM) {
         });
         window.location.href = "/";
       }).catch(function (err) {
+        /**
+         * FIXME: figure out why we always arrive here, even when purchase is completed.
+         * should not change href here, only when purchase is has success.
+         */
+        window.location.href = "/";
         let errors = err.response.body;
         let message = '';
         $.each(errors, function (i, error) {
