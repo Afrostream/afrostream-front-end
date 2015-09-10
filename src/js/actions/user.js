@@ -26,6 +26,7 @@ export function secureRoute() {
 export function subscribe(data) {
 
   return (dispatch, getState) => {
+
     const user = getState().User.get('user');
     const token = getState().User.get('token');
     let afroToken = getState().User.get('afroToken') || user.get('afro_token');
