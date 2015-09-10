@@ -8,6 +8,7 @@ if (canUseDOM) {
 }
 
 export function subscribe(data, passedAfroToken) {
+  
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().User.get('token');
