@@ -15,7 +15,7 @@ export function subscribe(data, passedMainToken, passedToken) {
     let afroToken = getState().User.get('afroToken') /*|| user.get('afro_token')*/ || passedToken;
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/`, 'POST', data, passedMainToken, afroToken)
+      res: await api(`/subscriptions/`, 'POST', data, passedMainToken, passedToken)
     });
   };
 }
