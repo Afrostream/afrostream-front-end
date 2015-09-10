@@ -91,9 +91,7 @@ if (canUseDOM) {
         'recurly-token': token.id
       });
 
-      var passedMainToken = self.getQueryString('afroToken');
-      var passedToken = self.getQueryString('afro_token');
-      dispatch(UserActionCreators.subscribe(formData, passedMainToken, passedToken)).then(function () {
+      dispatch(UserActionCreators.subscribe(formData)).then(function () {
         self.disableForm(false, 1);
         ga.event({
           category: 'User',
@@ -134,19 +132,6 @@ if (canUseDOM) {
       subscriptionStatus: status,
       loading: disabled
     });
-  }
-
-  /**
-   * Get the value of a querystring
-   * @param  {String} field The field to get the value of
-   * @param  {String} url   The URL to get the value from (optional)
-   * @return {String}       The field value
-   */
-  getQueryString(field, url) {
-    var href = url ? url : window.location.href;
-    var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
-    var string = reg.exec(href);
-    return string ? string[1] : null;
   }
 
   render() {
