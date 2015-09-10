@@ -93,8 +93,9 @@ if (canUseDOM) {
         'recurly-token': token.id
       });
 
+      var passedMainToken = self.getQueryString('afroToken');
       var passedToken = self.getQueryString('afro_token');
-      dispatch(UserActionCreators.subscribe(formData, passedToken)).then(function () {
+      dispatch(UserActionCreators.subscribe(formData, passedMainToken, passedToken)).then(function () {
         self.disableForm(false, 1);
         ga.event({
           category: 'User',
@@ -102,6 +103,7 @@ if (canUseDOM) {
         });
         window.location.href = "/";
       }).catch(function (err) {
+        console.log('*** some sort of error ***');
         let errors = err.response.body;
         let message = '';
         $.each(errors, function (i, error) {
