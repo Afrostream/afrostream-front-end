@@ -70,7 +70,7 @@ if (canUseDOM) {
       'first_name': $('#first_name').val(),
       'last_name': $('#last_name').val(),
       //'email': user.get('email'),
-      'email': this.getQueryString('email'),
+      'email': self.getQueryString('email'),
       // optional attributes
       'coupon_code': $('#coupon_code').val(),
       'unit-amount-in-cents': this.props.unitAmountInCents,
@@ -92,7 +92,7 @@ if (canUseDOM) {
         'recurly-token': token.id
       });
 
-      var passedToken = this.getQueryString('afro_token');
+      var passedToken = self.getQueryString('afro_token');
       dispatch(UserActionCreators.subscribe(formData, passedToken)).then(function () {
         self.disableForm(false, 1);
         ga.event({
