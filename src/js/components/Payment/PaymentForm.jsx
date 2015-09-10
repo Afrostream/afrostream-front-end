@@ -27,6 +27,7 @@ if (canUseDOM) {
   };
 
   componentDidMount() {
+    
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
     window.$('.recurly-cc-cvc').payment('formatCardCVC');
