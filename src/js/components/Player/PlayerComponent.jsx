@@ -289,29 +289,10 @@ if (process.env.BROWSER) {
     let captions = videoData.get('captions');
     const movieData = Movie.get(`movies/${movieId}`);
     const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
-    let hasSubtiles = captions ? captions.size : false;
 
     return (
       <div className="player">
-        {/*<video crossOrigin id="afrostream-player" ref="wrapped-player"
-         className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-         {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
-         key={`track-${caption.get('_id')}-${i}`}
-         src={caption.get('src')}
-         srclang={caption.get('lang').get('lang')}
-         label={caption.get('lang').get('label')}/>) : ''}
-
-         </video>*/}
-        <div ref="wrapper" className="wrapper">
-          {/*<video crossOrigin id="afrostream-player" ref="wrapped-player"
-           className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-           {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
-           key={`track-${caption.get('_id')}-${i}`}
-           src={caption.get('src')}
-           srclang={caption.get('lang').get('lang')}
-           label={caption.get('lang').get('label')}/>) : ''}
-           */}
-        </div>
+        <div ref="wrapper" className="wrapper"/>
         {
           movieData ?
             <div className={classSet(videoInfoClasses)}>
