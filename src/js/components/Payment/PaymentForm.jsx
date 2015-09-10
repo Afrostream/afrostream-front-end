@@ -27,7 +27,7 @@ if (canUseDOM) {
   };
 
   componentDidMount() {
-    
+
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
     window.$('.recurly-cc-cvc').payment('formatCardCVC');
@@ -100,7 +100,7 @@ if (canUseDOM) {
           category: 'User',
           action: 'Created an Account'
         });
-        window.location.href= "/";
+        window.location.href = "/";
       }).catch(function (err) {
         let errors = err.response.body;
         let message = '';
