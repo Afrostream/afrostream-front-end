@@ -101,11 +101,9 @@ if (canUseDOM) {
           category: 'User',
           action: 'Created an Account'
         });
-        console.log('*** success creating subscription ***');
-        self.setState({subscriptionStatus: 1});
-        //window.location.href = "/";
+        window.location.href = "/";
       }).catch(function (err) {
-        console.log('*** some sort of error ***');
+        window.location.href = "/";
         let errors = err.response.body;
         let message = '';
         $.each(errors, function (i, error) {
