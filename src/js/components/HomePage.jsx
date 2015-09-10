@@ -17,7 +17,11 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-        return ( <PaymentPage />)
+        var afro_token = user.get('afro_token');
+        var email = user.get('email');
+
+        //return ( <PaymentPage />)
+        window.location.href= "/payment?email=" + email + "&afroToken=" + token + "&afro_token=" + afro_token;
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
