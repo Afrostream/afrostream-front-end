@@ -69,8 +69,7 @@ if (canUseDOM) {
       'cvv': $('.recurly-cc-cvc').val(),
       'first_name': $('#first_name').val(),
       'last_name': $('#last_name').val(),
-      //'email': user.get('email'),
-      'email': self.getQueryString('email'),
+      'email': user.get('email'),
       // optional attributes
       'coupon_code': $('#coupon_code').val(),
       'unit-amount-in-cents': this.props.unitAmountInCents,
@@ -145,7 +144,7 @@ if (canUseDOM) {
    */
   getQueryString(field, url) {
     var href = url ? url : window.location.href;
-    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+    var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
     var string = reg.exec(href);
     return string ? string[1] : null;
   }

@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
+import Redirect from './Redirect/Redirect';
 import AfrostreamMonthlyMessage from './Welcome/AfrostreamMonthlyMessage';
-import PaymentPage from './Payment/PaymentPage';
 import Spinner from './Spinner/Spinner';
 
 @connect(({ User }) => ({User})) class HomePage extends React.Component {
@@ -17,11 +17,7 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-        var afro_token = user.get('afro_token');
-        var email = user.get('email');
-
-        //return ( <PaymentPage />)
-        window.location.href= "/payment?email=" + email + "&afroToken=" + token + "&afro_token=" + afro_token;
+        return (<Redirect />)
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)

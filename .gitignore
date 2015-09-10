@@ -1,3 +1,5 @@
+/static/csr.pem
+/static/key.pem
 # OS temp files
 .DS_Store
 thumb.db
