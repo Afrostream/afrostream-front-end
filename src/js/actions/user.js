@@ -13,7 +13,7 @@ export function secureRoute() {
     const token = getState().User.get('token');
     const tokenId = config.auth0.token;
     let location = `/?&${tokenId}=${token}`;
-    if (canUseDOM) {
+    if (canUseDOM && !location.protocol.indexOf('https:')) {
       return window.location = location;
     }
 
