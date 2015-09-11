@@ -34,7 +34,7 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const user = User.get('user');
-    const paymentStatus = this.getQueryString('payment_success');
+    let paymentStatus = this.getQueryString('payment_success');
 
     if (token) {
       if (!user) {
