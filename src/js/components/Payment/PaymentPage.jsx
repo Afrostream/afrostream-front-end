@@ -11,7 +11,8 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({ store }) {
   return await * [
       store.dispatch(UserActionCreators.secureRoute()),
-      store.dispatch(EventActionCreators.pinHeader(true))
+      store.dispatch(EventActionCreators.pinHeader(true)),
+      store.dispatch(EventActionCreators.userActive(true))
     ];
 }) class PaymentPage extends React.Component {
 
