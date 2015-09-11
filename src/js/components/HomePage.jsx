@@ -45,7 +45,7 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
       }
       else if (!user.get('planCode') && paymentStatus === 'true') {
         //return (<Redirect />)
-        //this::logout;
+        this::logout;
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
