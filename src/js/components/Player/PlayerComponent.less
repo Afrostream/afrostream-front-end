@@ -347,6 +347,7 @@
       background: rgba(0, 0, 0, 0.6);
       border-radius: 2px;
     }
+
     &.vjs-has-started .vjs-control-bar {
       opacity: 1;
       pointer-events: auto;
@@ -362,6 +363,31 @@
     &.vjs-using-native-controls .vjs-control-bar, &.vjs-controls-disabled .vjs-control-bar {
       display: none;
     }
+
+    /* Fullscreen
+     --------------------------------------------------------------------------------
+     */
+    .vjs-fullscreen-control {
+      border: 3px solid white;
+      box-sizing: border-box;
+      float: right;
+      height: 14px;
+      width: 22px;
+    }
+    &.vjs-fullscreen .vjs-fullscreen-control {
+      background: white;
+    }
+    &.vjs-fullscreen .vjs-fullscreen-control:after {
+      background: black;
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 5px;
+      width: 5px;
+    }
+
     .vjs-progress-control {
       position: relative;
       margin: 0;
@@ -427,26 +453,10 @@
       left: auto;
       right: 0;
     }
-    .vjs-fullscreen-control {
-      border: 3px solid white;
-      box-sizing: border-box;
-      float: right;
-      height: 14px;
-      width: 22px;
-    }
-    &.vjs-fullscreen .vjs-fullscreen-control {
-      background: white;
-    }
-    &.vjs-fullscreen .vjs-fullscreen-control:after {
-      background: black;
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 5px;
-      width: 5px;
-    }
+
+    /* Volume
+    --------------------------------------------------------------------------------
+    */
     .vjs-volume-control {
       float: right;
       height: 14px;
@@ -618,13 +628,6 @@
         content: @subtitles-icon //@captions-icon;
       }
     }
-    .vjs-fullscreen-control {
-      border: 3px solid white;
-      box-sizing: border-box;
-      float: right;
-      height: 14px;
-      width: 22px;
-    }
 
     /* Chapters Button */
     .vjs-chapters-button:before {
@@ -727,7 +730,6 @@
     }
 
   }
-
 }
 
 @media (min-width: 768px) {
