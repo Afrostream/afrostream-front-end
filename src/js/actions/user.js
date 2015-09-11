@@ -23,6 +23,18 @@ export function secureRoute() {
   };
 }
 
+export function unsecureRoute() {
+  return (dispatch, getState) => {
+    if (canUseDOM && ~location.protocol.indexOf('https:')) {
+      return window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.search;
+    }
+
+    return {
+      type: ActionTypes.User.unsecureRoute
+    };
+  };
+}
+
 export function subscribe(data) {
 
   return (dispatch, getState) => {

@@ -11,6 +11,7 @@ export default {
     showSigninLock: null,
     logOut: null,
     subscribe: null,
+    unsecureRoute: null,
     secureRoute: null
   }),
 
