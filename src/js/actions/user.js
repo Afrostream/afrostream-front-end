@@ -26,7 +26,7 @@ export function secureRoute() {
 export function unsecureRoute() {
   return (dispatch, getState) => {
     if (canUseDOM && ~location.protocol.indexOf('https:')) {
-      return window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.search;
+      return window.location = 'http://' + window.location.hostname + window.location.pathname + window.location.search;
     }
 
     return {
