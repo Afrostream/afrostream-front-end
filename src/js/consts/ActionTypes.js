@@ -11,7 +11,8 @@ export default {
     showSigninLock: null,
     logOut: null,
     subscribe: null,
-    secureRoute: null
+    secureRoute: null,
+    routeHome: null
   }),
 
   Slides: keyMirror({
