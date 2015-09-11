@@ -21,16 +21,6 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
     return null;
   }
 
-  logout() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(UserActionCreators.logOut());
-  }
-
   render() {
     const { props: { User ,children} } = this;
     const token = User.get('token');
@@ -45,8 +35,6 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
         return (<Redirect />)
       }
       else if (!user.get('planCode') && paymentStatus === 'true') {
-        debugger;
-        console.log('*** passing by paymentSuccess ***');
         return (<PaymentSuccessRedirect />)
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
