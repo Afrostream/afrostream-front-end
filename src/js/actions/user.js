@@ -12,7 +12,7 @@ export function secureRoute() {
     const user = getState().User.get('user');
     const token = getState().User.get('token');
     const tokenId = config.auth0.token;
-    let location = `/payment?&${tokenId}=${token}`;
+    let location = `/?&${tokenId}=${token}`;
     if (canUseDOM) {
       return window.location = location;
     }
@@ -26,6 +26,7 @@ export function secureRoute() {
 export function subscribe(data) {
 
   return (dispatch, getState) => {
+
     const user = getState().User.get('user');
     const token = getState().User.get('token');
     let afroToken = getState().User.get('afroToken') || user.get('afro_token');

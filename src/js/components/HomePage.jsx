@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
-import Redirect from './Redirect/Redirect';
+import PaymentPage from './Payment/PaymentPage';
 import AfrostreamMonthlyMessage from './Welcome/AfrostreamMonthlyMessage';
 import Spinner from './Spinner/Spinner';
 
@@ -17,7 +17,7 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-        return (<Redirect />)
+        return (<PaymentPage />)
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
