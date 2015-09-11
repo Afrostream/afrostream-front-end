@@ -23,6 +23,19 @@ export function secureRoute() {
   };
 }
 
+export function routeHome() {
+  return (dispatch, getState) => {
+    let location = `/`;
+    if (canUseDOM) {
+      return window.location = location;
+    }
+
+    return {
+      type: ActionTypes.User.routeHome
+    };
+  };
+}
+
 export function subscribe(data) {
 
   return (dispatch, getState) => {

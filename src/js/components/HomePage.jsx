@@ -4,6 +4,7 @@ import * as UserActionCreators from '../actions/user';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import Redirect from './Redirect/Redirect';
+import PaymentSuccessRedirect from './Payment/PaymentSuccessRedirect';
 import AfrostreamMonthlyMessage from './Welcome/AfrostreamMonthlyMessage';
 import Spinner from './Spinner/Spinner';
 import { canUseDOM } from 'react/lib/ExecutionEnvironment';
@@ -38,29 +39,20 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 
     if (token) {
       if (!user) {
-        debugger;
-        console.log('*** passing by spinner ***');
         return (<Spinner />);
       }
       else if (!user.get('planCode') && paymentStatus !== 'true') {
-        debugger;
-        console.log('*** passing by redirect ***');
         return (<Redirect />)
       }
       else if (!user.get('planCode') && paymentStatus === 'true') {
         debugger;
-        //return (<Redirect />)
-        console.log('*** passing by logout ***');
-        this::logout;
+        console.log('*** passing by paymentSuccess ***');
+        return (<PaymentSuccessRedirect />)
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
-        debugger;
-        console.log('*** passing by monthly message ***');
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-        debugger;
-        console.log('*** passing by browse ***');
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {

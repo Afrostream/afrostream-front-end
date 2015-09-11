@@ -12,7 +12,6 @@ import BrowsePage from './components/Browse/BrowsePage';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 
 import PaymentPage from './components/Payment/PaymentPage';
-import PaymentSuccessRedirect from './components/Payment/PaymentSuccessRedirect';
 
 import AccountPage from './components/Account/AccountPage';
 import AccountEmail from './components/Account/AccountEmail';
@@ -26,7 +25,6 @@ export default (
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
     <Route name="payment" path="/payment" component={PaymentPage}/>
-    <Route name="paymentSuccessRedirect" path="/payment-success-redirect" component={PaymentSuccessRedirect}/>
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
