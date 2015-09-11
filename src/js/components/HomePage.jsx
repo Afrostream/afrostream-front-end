@@ -34,38 +34,21 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const user = User.get('user');
-    let paymentStatus = this.getQueryString('payment_success');
 
     if (token) {
       if (!user) {
-        debugger;
-        console.log('*** passing by spinner ***');
         return (<Spinner />);
       }
-      else if (!user.get('planCode') && paymentStatus !== 'true') {
-        debugger;
-        console.log('*** passing by redirect ***');
+      else if (!user.get('planCode')) {
         return (<Redirect />)
       }
-      else if (!user.get('planCode') && paymentStatus === 'true') {
-        debugger;
-        //return (<Redirect />)
-        console.log('*** passing by logout ***');
-        this::logout;
-      }
       else if (user.get('planCode') === 'afrostreammonthly') {
-        debugger;
-        console.log('*** passing by monthly message ***');
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-        debugger;
-        console.log('*** passing by browse ***');
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {
-      debugger;
-      console.log('*** passing by welcomepage ***');
       return (<WelcomePage />);
     }
   }

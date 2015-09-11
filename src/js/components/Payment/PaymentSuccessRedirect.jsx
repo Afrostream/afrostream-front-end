@@ -1,13 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as UserActionCreators from '../../actions/user';
+import { canUseDOM } from 'react/lib/ExecutionEnvironment';
+import { prepareRoute } from '../../decorators';
 
 if (process.env.BROWSER) {
 	require('./PaymentSuccess.less');
 }
 
-class PaymentSuccessRedirect extends React.Component {
+@prepareRoute(async function ({ store }) {
+	return await * [
+			store.dispatch(UserActionCreators.logOut()),
+			store.dispatch(UserActionCreators.routeHome())
+		];
+}) class PaymentSuccessRedirect extends React.Component {
 
 	render() {
-
 		return (
 			<div className="payment-success">
 				Payment Success Redirect Page

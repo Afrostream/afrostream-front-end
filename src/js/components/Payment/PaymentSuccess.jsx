@@ -14,7 +14,7 @@ class PaymentSuccess extends React.Component {
 
         <p>merci pour votre inscription</p>
 
-        <p className="success"><a className="success-link" href="/payment-success-redirect?payment_success=true">Commencez la visite sur le site</a></p>
+        <p className="success"><a className="success-link" href="/payment-success-redirect">Commencez la visite sur le site</a></p>
       </div>
     );
   }
