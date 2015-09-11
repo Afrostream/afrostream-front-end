@@ -17,7 +17,6 @@ if (process.env.BROWSER) {
 @connect(({ User }) => ({User}))class PaymentSuccessRedirect extends React.Component {
 
 	render() {
-
 		return (
 			<div />
 		);

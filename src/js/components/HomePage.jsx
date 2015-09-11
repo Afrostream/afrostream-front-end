@@ -35,7 +35,6 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const user = User.get('user');
-    let paymentStatus = this.getQueryString('payment_success');
 
     if (token) {
       if (!user) {
@@ -56,8 +55,6 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {
-      debugger;
-      console.log('*** passing by welcomepage ***');
       return (<WelcomePage />);
     }
   }
