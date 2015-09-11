@@ -17,9 +17,7 @@ if (process.env.BROWSER) {
 
 	render() {
 		return (
-			<div className="payment-success">
-				Payment Success Redirect Page
-			</div>
+			<div />
 		);
 	}
 
