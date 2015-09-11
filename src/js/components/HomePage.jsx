@@ -38,22 +38,28 @@ import { canUseDOM } from 'react/lib/ExecutionEnvironment';
 
     if (token) {
       if (!user) {
+        debugger;
         return (<Spinner />);
       }
       else if (!user.get('planCode') && paymentStatus !== 'true') {
+        debugger;
         return (<Redirect />)
       }
       else if (!user.get('planCode') && paymentStatus === 'true') {
+        debugger;
         //return (<Redirect />)
         this::logout;
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
+        debugger;
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
+        debugger;
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
       }
     } else {
+      debugger;
       return (<WelcomePage />);
     }
   }
