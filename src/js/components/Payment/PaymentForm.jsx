@@ -97,6 +97,8 @@ if (canUseDOM) {
           category: 'User',
           action: 'Created an Account'
         });
+        dispatch(UserActionCreators.unsecureRoute());
+
       }).catch(function (err) {
         let errors = err.response.body;
         let message = '';
@@ -118,6 +120,7 @@ if (canUseDOM) {
   }
 
   disableForm(disabled, status = 0, message = '') {
+
     $('button').prop('disabled', disabled);
     $('input').prop('disabled', disabled);
     this.setState({

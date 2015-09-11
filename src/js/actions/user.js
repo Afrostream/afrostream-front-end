@@ -7,8 +7,38 @@ if (canUseDOM) {
   var Auth0Lock = require('auth0-lock');
 }
 
-export function subscribe(data) {
+export function secureRoute() {
   return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().User.get('token');
+    const tokenId = config.auth0.token;
+    let target = `/?&${tokenId}=${token}`;
+    if (canUseDOM && !~location.protocol.indexOf('https:')) {
+      return window.location = target;
+    }
+
+    return {
+      type: ActionTypes.User.secureRoute
+    };
+  };
+}
+
+export function unsecureRoute() {
+  return (dispatch, getState) => {
+    if (canUseDOM && ~location.protocol.indexOf('https:')) {
+      return window.location = 'http://' + window.location.hostname + window.location.pathname + window.location.search;
+    }
+
+    return {
+      type: ActionTypes.User.unsecureRoute
+    };
+  };
+}
+
+export function subscribe(data) {
+
+  return (dispatch, getState) => {
+
     const user = getState().User.get('user');
     const token = getState().User.get('token');
     let afroToken = getState().User.get('afroToken') || user.get('afro_token');
@@ -42,6 +72,16 @@ export function logOut() {
     };
   };
 }
+
+const getQueryString = function (field, url) {
+  if (canUseDOM) {
+    let href = url ? url : window.location.href;
+    let reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
+    let string = reg.exec(href);
+    return string ? string[1] : null;
+  }
+  return null;
+};
 
 const storeToken = function (id_token, refresh_token, afro_token) {
   const storageId = config.auth0.token;
@@ -325,7 +365,7 @@ export function getIdToken() {
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
     const storageId = config.auth0.token;
-    let idToken = localStorage.getItem(storageId);
+    let idToken = localStorage.getItem(storageId) || getQueryString(storageId);
     const refreshToken = getState().User.get('refreshToken');
 
     return async auth0 =>({

@@ -2,6 +2,7 @@ import React from 'react';
 import SelectPlan from './SelectPlan';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as EventActionCreators from '../../actions/event';
+import * as UserActionCreators from '../../actions/user';
 import { prepareRoute } from '../../decorators';
 if (process.env.BROWSER) {
   require('./PaymentPage.less');
@@ -9,12 +10,13 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(EventActionCreators.pinHeader(true))
+      store.dispatch(UserActionCreators.secureRoute()),
+      store.dispatch(EventActionCreators.pinHeader(true)),
+      store.dispatch(EventActionCreators.userActive(true))
     ];
 }) class PaymentPage extends React.Component {
 
   render() {
-
     return (<SelectPlan />);
   }
 }

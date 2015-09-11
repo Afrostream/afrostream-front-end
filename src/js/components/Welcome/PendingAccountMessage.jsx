@@ -4,7 +4,7 @@ if (process.env.BROWSER) {
   require('./AfrostreamMonthlyMessage.less');
 }
 
-class AfrostreamMonthlyMessage extends React.Component {
+class PendingAccountMessage extends React.Component {
 
 
   render() {
@@ -13,9 +13,9 @@ class AfrostreamMonthlyMessage extends React.Component {
         <div className="header">
         </div>
         <div className="message-container">
-          <h3>Merci d'avoir réservé la formule THINK LIKE A MAN. </h3>
+          <h3>Votre compte est en cours de validation</h3>
 
-          <p>Rendez vous le 1er octobre pour profiter de votre abonnement.</p>
+          <p>Vous allez recevoir un mail de confirmation une fois votre payment finalisé.</p>
 
           <LogOutButton />
         </div>
@@ -24,4 +24,4 @@ class AfrostreamMonthlyMessage extends React.Component {
   }
 }
 
-export default AfrostreamMonthlyMessage;
+export default PendingAccountMessage;

@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
-import AfrostreamMonthlyMessage from './Welcome/AfrostreamMonthlyMessage';
 import PaymentPage from './Payment/PaymentPage';
+import AfrostreamMonthlyMessage from './Welcome/AfrostreamMonthlyMessage';
+import PendingAccountMessage from './Welcome/PendingAccountMessage';
 import Spinner from './Spinner/Spinner';
 
 @connect(({ User }) => ({User})) class HomePage extends React.Component {
@@ -17,10 +18,13 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-        return ( <PaymentPage />)
+        return (<PaymentPage />)
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)
+      }
+      else if (user.get('planCode') === 'pending') {
+        return ( <PendingAccountMessage />)
       }
       else {
         return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
