@@ -97,6 +97,7 @@ if (canUseDOM) {
           category: 'User',
           action: 'Created an Account'
         });
+        window.location.href = "/";
       }).catch(function (err) {
         let errors = err.response.body;
         let message = '';
@@ -118,6 +119,7 @@ if (canUseDOM) {
   }
 
   disableForm(disabled, status = 0, message = '') {
+
     $('button').prop('disabled', disabled);
     $('input').prop('disabled', disabled);
     this.setState({

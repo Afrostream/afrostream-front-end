@@ -30,8 +30,6 @@ class PaymentSuccess extends React.Component {
 
         <p className="error"><a className="error-link" href={this.props.link}>{this.props.linkMessage}</a></p>
 
-        <LogOutButton />
-
       </div>
     );
   }
