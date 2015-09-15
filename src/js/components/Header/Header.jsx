@@ -27,7 +27,7 @@ if (process.env.BROWSER) {
   componentDidMount() {
     window.addEventListener('scroll', this.updatePin.bind(this));
     this.setState({
-      isIOS: navigator.userAgent.match(/(iPod|iPhone|iPad)/i)
+      isIOS: window.navigator.userAgent.match(/(iPod|iPhone|iPad)/i)
     });
     this.updatePin();
   }
