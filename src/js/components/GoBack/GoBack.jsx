@@ -32,7 +32,7 @@ if (process.env.BROWSER) {
 
     let router = this.context.router;
     if (!router.goBack()) {
-      router.transitionTo('home');
+      router.transitionTo('/');
     }
   }
 
@@ -47,7 +47,8 @@ if (process.env.BROWSER) {
     let returnClassesSet = {
       'return-btn': true,
       'btn': true,
-      'btn-xs': true
+      'btn-xs': true,
+      'hidden-xs': true
     };
 
     return (
