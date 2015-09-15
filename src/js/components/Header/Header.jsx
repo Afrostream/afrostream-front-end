@@ -51,7 +51,7 @@ if (process.env.BROWSER) {
 
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
-    const hasHistory = (this.context.router.state.location.pathname.length > 1);
+    const hasHistory = ( navigator ? !navigator.userAgent.match(/(iPod|iPhone|iPad)/i) : true) && (this.context.router.state.location.pathname.length > 1);
 
     let sliderClasses = {
       'navbar': true,
