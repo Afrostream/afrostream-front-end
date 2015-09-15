@@ -20,11 +20,15 @@ if (process.env.BROWSER) {
   };
 
   state = {
-    pinned: this.props.pinned
+    pinned: this.props.pinned,
+    isIOS: false
   };
 
   componentDidMount() {
     window.addEventListener('scroll', this.updatePin.bind(this));
+    this.setState({
+      isIOS: navigator.userAgent.match(/(iPod|iPhone|iPad)/i)
+    });
     this.updatePin();
   }
 
@@ -51,7 +55,7 @@ if (process.env.BROWSER) {
 
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
-    let hasHistory = ( navigator ? !navigator.userAgent.match(/(iPod|iPhone|iPad)/i) : true) && (this.context.router.state.location.pathname.length > 1);
+    let hasHistory = !this.state.isIOS && (this.context.router.state.location.pathname.length > 1);
 
     let sliderClasses = {
       'navbar': true,
