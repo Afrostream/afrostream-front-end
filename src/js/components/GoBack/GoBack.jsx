@@ -44,18 +44,15 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    const hiddenMode = !Event.get('userActive');
-
     let returnClassesSet = {
       'return-btn': true,
       'btn': true,
-      'btn-xs': true,
-      'return-btn-hidden': hiddenMode
+      'btn-xs': true
     };
 
     return (
       <a href="#" className={classSet(returnClassesSet)} onClick={::this.navigationGoBack}>
-        <span className="fa fa-arrow-circle-o-left"></span><span className="return-btn-label">Retour</span>
+        <span className="fa fa-caret-left"></span><span className="return-btn-label">RETOUR</span>
       </a>
     );
   }

@@ -6,8 +6,6 @@ import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
-import GoBack from '../GoBack/GoBack';
-
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
 }
