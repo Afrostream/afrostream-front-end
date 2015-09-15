@@ -48,7 +48,8 @@ if (process.env.BROWSER) {
       'return-btn': true,
       'btn': true,
       'btn-xs': true,
-      'hidden-xs': true
+      'hidden-xs': true,
+      'hidden-sm': true
     };
 
     return (
