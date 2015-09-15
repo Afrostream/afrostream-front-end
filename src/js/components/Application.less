@@ -100,32 +100,40 @@ a.active {
 
 #page-content-wrapper {
   width: 100%;
-  position: absolute;
+  //position: absolute;
   &.container-fluid {
     height: 100%;
     min-height: 100%;
     width: 100%;
     padding: 0;
-    > div {
-      min-height: 100%;
-    }
-    &:before {
-      content: none;
-    }
+    //> div {
+    //  min-height: 100%;
+    //  display: inline-block;
+    //  vertical-align: middle;
+    //}
+    //&:before {
+    //  content: none;
+    //}
     .row-fluid {
-      display: table;
-      table-layout: fixed;
-      height: 100%;
-      > .container-fluid {
-        display: table-cell;
-        text-align: center;
+      //display: table;
+      //table-layout: fixed;
+      &:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
         vertical-align: middle;
       }
+      //> .container-fluid {
+      //display: table-cell;
+      //text-align: center;
+      //vertical-align: middle;
+      //}
+      //height: 100%;
       min-height: 100%;
       width: 100%;
-      .full-page {
-        .fullHeight();
-      }
+      //.full-page {
+      //  .fullHeight();
+      //}
       .container {
         margin-top: @header-height;
         padding: 40px;

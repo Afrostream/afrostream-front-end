@@ -23,7 +23,12 @@ import Spinner from './Spinner/Spinner';
         return ( <AfrostreamMonthlyMessage />)
       }
       else {
-        return (<div className="row-fluid">{children ? children : <BrowsePage/>}</div>)
+        if (children) {
+          return children;
+        }
+        else {
+          return (<BrowsePage/>)
+        }
       }
     } else {
       return (<WelcomePage />);
