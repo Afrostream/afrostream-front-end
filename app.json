@@ -4,13 +4,8 @@
   "scripts": {},
   "env": {
     "NODE_ENV": "staging",
-<<<<<<< HEAD
     "API_END_POINT": "https://afrostream-api-v1-herokuapp-com.global.ssl.fastly.net/api",
     "API_CLIENT_END_POINT": "https://afrostream-api-v1-herokuapp-com.global.ssl.fastly.net/api",
-=======
-    "API_END_POINT": "https://afrostream-api-v1.herokuapp.com/api",
-    "API_CLIENT_END_POINT": "https://afrostream-api-v1.herokuapp.com/api",
->>>>>>> add ssl for payment pages
     "AUTH0_CLIENT_ID": "BtSdIqKqfIse0H1dqlpHFJgKIkUG0NpE",
     "AUTH0_DOMAIN": "afrostream.eu.auth0.com",
     "AUTH0_CALLBACK_URL": "afrostream.herokuapp.com/callback",

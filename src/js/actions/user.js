@@ -7,15 +7,14 @@ if (canUseDOM) {
   var Auth0Lock = require('auth0-lock');
 }
 
-export function subscribe(data, passedMainToken, passedToken) {
-  
+export function subscribe(data) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().User.get('token');
-    let afroToken = getState().User.get('afroToken') /*|| user.get('afro_token')*/ || passedToken;
+    let afroToken = getState().User.get('afroToken') || user.get('afro_token');
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/`, 'POST', data, passedMainToken, passedToken)
+      res: await api(`/subscriptions/`, 'POST', data, token, afroToken)
     });
   };
 }
