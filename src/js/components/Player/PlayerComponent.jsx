@@ -59,11 +59,13 @@ if (process.env.BROWSER) {
   generateDomTag(videoData) {
     const {
       props: {
+        movieId,Movie
         }
       } = this;
 
     return new Promise((resolve) => {
       // initialize the player
+      const movieData = Movie.get(`movies/${movieId}`);
       let captions = videoData.get('captions');
       let hasSubtiles = captions ? captions.size : false;
       let wrapper = React.findDOMNode(this.refs.wrapper);
@@ -72,27 +74,43 @@ if (process.env.BROWSER) {
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
       video.crossOrigin = true;
       video.setAttribute('crossorigin', true);
+
+      var trackOptions = {
+        metadata: {
+          title: movieData.get('title'),
+          subtitle: movieData.get('synopsis')
+        },
+        tracks: []
+      };
+
       if (hasSubtiles) {
         captions.map((caption, i) => {
           let track = document.createElement('track');
           track.kind = 'captions';
           track.src = caption.get('src');
           track.id = `track-${caption.get('_id')}-${i}`;
-          //track.key = `track-${caption.get('_id')}-${i}`;
           let lang = caption.get('lang');
           if (lang) {
             track.srclang = lang.get('lang');
             track.label = lang.get('label')
           }
-
           if (lang.get('lang') === 'fr') {
             track.default = true;
           }
+          trackOptions.tracks.push({
+            kind: track.kind,
+            src: track.src,
+            id: track.id,
+            language: track.srclang,
+            label: track.label,
+            type: 'text/vtt',
+            mode: track.default ? 'showing' : ''
+          });
           video.appendChild(track);
         });
       }
       wrapper.appendChild(video);
-      resolve();
+      resolve(trackOptions);
     });
   }
 
@@ -146,9 +164,11 @@ if (process.env.BROWSER) {
           }
         }
 
-        self.generateDomTag(videoData).then(() => {
+        self.generateDomTag(videoData).then((trackOpt) => {
           //initialize the player
+          config.player.plugins.chromecast = _.merge(config.player.plugins.chromecast, trackOpt);
           var playerData = _.merge(videoOptions, config.player);
+          console.log(playerData);
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.tech.el().textTracks; // get list of tracks
               let trackFr = _.find(allTracks, function (track) {
@@ -269,29 +289,10 @@ if (process.env.BROWSER) {
     let captions = videoData.get('captions');
     const movieData = Movie.get(`movies/${movieId}`);
     const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
-    let hasSubtiles = captions ? captions.size : false;
 
     return (
       <div className="player">
-        {/*<video crossOrigin id="afrostream-player" ref="wrapped-player"
-         className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-         {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
-         key={`track-${caption.get('_id')}-${i}`}
-         src={caption.get('src')}
-         srclang={caption.get('lang').get('lang')}
-         label={caption.get('lang').get('label')}/>) : ''}
-
-         </video>*/}
-        <div ref="wrapper" className="wrapper">
-          {/*<video crossOrigin id="afrostream-player" ref="wrapped-player"
-           className="player-container video-js vjs-afrostream-skin vjs-big-play-centered">
-           {hasSubtiles ? captions.map((caption, i) => <track kind="captions"
-           key={`track-${caption.get('_id')}-${i}`}
-           src={caption.get('src')}
-           srclang={caption.get('lang').get('lang')}
-           label={caption.get('lang').get('label')}/>) : ''}
-           */}
-        </div>
+        <div ref="wrapper" className="wrapper"/>
         {
           movieData ?
             <div className={classSet(videoInfoClasses)}>

@@ -69,7 +69,8 @@ if (canUseDOM) {
       'cvv': $('.recurly-cc-cvc').val(),
       'first_name': $('#first_name').val(),
       'last_name': $('#last_name').val(),
-      'email': user.get('email'),
+      //'email': user.get('email'),
+      'email': self.getQueryString('email'),
       // optional attributes
       'coupon_code': $('#coupon_code').val(),
       'unit-amount-in-cents': this.props.unitAmountInCents,
@@ -91,13 +92,21 @@ if (canUseDOM) {
         'recurly-token': token.id
       });
 
-      dispatch(UserActionCreators.subscribe(formData)).then(function () {
+      var passedMainToken = self.getQueryString('afroToken');
+      var passedToken = self.getQueryString('afro_token');
+      dispatch(UserActionCreators.subscribe(formData, passedMainToken, passedToken)).then(function () {
         self.disableForm(false, 1);
         ga.event({
           category: 'User',
           action: 'Created an Account'
         });
+        window.location.href = "/";
       }).catch(function (err) {
+        /**
+         * FIXME: figure out why we always arrive here, even when purchase is completed.
+         * should not change href here, only when purchase is has success.
+         */
+        window.location.href = "/";
         let errors = err.response.body;
         let message = '';
         $.each(errors, function (i, error) {
@@ -118,6 +127,7 @@ if (canUseDOM) {
   }
 
   disableForm(disabled, status = 0, message = '') {
+
     $('button').prop('disabled', disabled);
     $('input').prop('disabled', disabled);
     this.setState({
@@ -125,6 +135,19 @@ if (canUseDOM) {
       subscriptionStatus: status,
       loading: disabled
     });
+  }
+
+  /**
+   * Get the value of a querystring
+   * @param  {String} field The field to get the value of
+   * @param  {String} url   The URL to get the value from (optional)
+   * @return {String}       The field value
+   */
+  getQueryString(field, url) {
+    var href = url ? url : window.location.href;
+    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+    var string = reg.exec(href);
+    return string ? string[1] : null;
   }
 
   render() {
