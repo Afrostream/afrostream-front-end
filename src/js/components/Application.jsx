@@ -22,7 +22,9 @@ if (canUseDOM) {
   static contextTypes = {
     router: PropTypes.object.isRequired,
     willTransitionTo: function (transition, params, query, callback) {
-      ga.pageview(transition.router.state.location.pathname);
+      if (canUseDOM) {
+        ga.pageview(transition.router.state.location.pathname);
+      }
     }
   };
 

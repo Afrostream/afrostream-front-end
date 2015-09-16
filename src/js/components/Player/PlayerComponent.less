@@ -1,5 +1,6 @@
 @import '../../../../node_modules/video.js/dist/video-js/video-js.less';
 @import '../../../styles/config.less';
+@import '../../../styles/videojs.chromecast.less';
 
 @slider-bar-pattern: ~'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAP0lEQVQIHWWMAQoAIAgDR/QJ/Ub//04+w7ZICBwcOg5FZi5iBB82AGzixEglJrd4TVK5XUJpskSTEvpdFzX9AB2pGziSQcvAAAAAAElFTkSuQmCC';
 @control-bg-color: #07141E;
@@ -165,6 +166,18 @@
       left: @app-padding;
       bottom: @app-padding;
       right: @app-padding;
+      display: flex;
+    }
+
+    .vjs-control {
+      outline: none;
+      position: relative;
+      float: left;
+      text-align: center;
+      margin: -8px 10px 0 10px;
+      padding: 0;
+      top: 50%;
+      cursor: pointer;
     }
     @media @mobile,@tablet{
       .vjs-control-bar {
@@ -334,6 +347,7 @@
       background: rgba(0, 0, 0, 0.6);
       border-radius: 2px;
     }
+
     &.vjs-has-started .vjs-control-bar {
       opacity: 1;
       pointer-events: auto;
@@ -349,12 +363,37 @@
     &.vjs-using-native-controls .vjs-control-bar, &.vjs-controls-disabled .vjs-control-bar {
       display: none;
     }
-    .vjs-progress-control {
+
+    /* Fullscreen
+     --------------------------------------------------------------------------------
+     */
+    .vjs-fullscreen-control {
+      border: 3px solid white;
+      box-sizing: border-box;
+      float: right;
+      height: 14px;
+      width: 22px;
+      order: 1;
+    }
+    &.vjs-fullscreen .vjs-fullscreen-control {
+      background: white;
+    }
+    &.vjs-fullscreen .vjs-fullscreen-control:after {
+      background: black;
+      content: "";
+      display: block;
       position: absolute;
-      top: 0;
-      right: 125px;
       bottom: 0;
-      left: 50px;
+      left: 0;
+      height: 5px;
+      width: 5px;
+    }
+
+    .vjs-progress-control {
+      position: relative;
+      margin: 0;
+      top: 0;
+      flex: 1;
     }
     .vjs-progress-control .vjs-progress-holder {
       cursor: pointer;
@@ -388,11 +427,7 @@
       left: 0;
     }
     .vjs-play-control {
-      cursor: pointer;
-      margin-top: -8px;
-      position: absolute;
-      top: 50%;
-      left: 20px;
+      float: left;
       height: 16px;
       width: 15px;
     }
@@ -419,36 +454,12 @@
       left: auto;
       right: 0;
     }
-    .vjs-fullscreen-control {
-      border: 3px solid white;
-      box-sizing: border-box;
-      cursor: pointer;
-      margin-top: -7px;
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      height: 14px;
-      width: 22px;
-    }
-    &.vjs-fullscreen .vjs-fullscreen-control {
-      background: white;
-    }
-    &.vjs-fullscreen .vjs-fullscreen-control:after {
-      background: black;
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 5px;
-      width: 5px;
-    }
+
+    /* Volume
+    --------------------------------------------------------------------------------
+    */
     .vjs-volume-control {
-      cursor: pointer;
-      margin-top: -7px;
-      position: absolute;
-      top: 50%;
-      right: 55px;
+      float: right;
       height: 14px;
       width: 22px;
     }
@@ -603,9 +614,6 @@
 
     /* Subtitles Button */
     .vjs-subtitles-button {
-      position: absolute;
-      top: 35%;
-      right: 85px;
       height: 14px;
       width: 22px;
       &:before {
@@ -615,25 +623,11 @@
 
     /* Captions Button */
     .vjs-captions-button {
-      position: absolute;
-      top: 35%;
-      right: 85px;
       height: 14px;
       width: 22px;
       &:before {
         content: @subtitles-icon //@captions-icon;
       }
-    }
-    .vjs-fullscreen-control {
-      border: 3px solid white;
-      box-sizing: border-box;
-      cursor: pointer;
-      margin-top: -7px;
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      height: 14px;
-      width: 22px;
     }
 
     /* Chapters Button */
@@ -737,7 +731,6 @@
     }
 
   }
-
 }
 
 @media (min-width: 768px) {

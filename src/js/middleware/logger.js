@@ -1,6 +1,6 @@
 export default function ({ getState }) {
   return (next) => (action) => {
-    console.log('will dispatch', action.type);
+    //console.log('will dispatch', action.type);
 
     // Call the next dispatch method in the middleware chain.
     let returnValue = next(action);
