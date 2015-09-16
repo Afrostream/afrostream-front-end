@@ -2,6 +2,7 @@ import React ,{PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import UserButton from './../User/UserButton';
+import GoBack from './../GoBack/GoBack';
 import classSet from 'classnames';
 
 if (process.env.BROWSER) {
@@ -19,11 +20,15 @@ if (process.env.BROWSER) {
   };
 
   state = {
-    pinned: this.props.pinned
+    pinned: this.props.pinned,
+    isIOS: false
   };
 
   componentDidMount() {
     window.addEventListener('scroll', this.updatePin.bind(this));
+    this.setState({
+      isIOS: window.navigator.userAgent.match(/(iPod|iPhone|iPad)/i)
+    });
     this.updatePin();
   }
 
@@ -50,6 +55,7 @@ if (process.env.BROWSER) {
 
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
+    let hasHistory = !this.state.isIOS && (this.context.router.state.location.pathname.length > 1);
 
     let sliderClasses = {
       'navbar': true,
@@ -63,6 +69,7 @@ if (process.env.BROWSER) {
       <nav className={classSet(sliderClasses)} role="navigation">
         <div className="container-fluid">
           <div className="navbar-header">
+            { hasHistory ? <GoBack /> : ''}
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>

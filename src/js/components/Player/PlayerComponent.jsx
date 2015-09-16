@@ -259,8 +259,6 @@ if (process.env.BROWSER) {
     const hiddenMode = !Event.get('userActive');
     let videoInfoClasses = {
       'video-infos': true,
-      'hidden-sm': true,
-      'hidden-ms': true,
       'video-infos-hidden': hiddenMode
     };
 
@@ -300,10 +298,7 @@ if (process.env.BROWSER) {
               <div className=" video-infos_label">Vous regardez</div>
               <div className=" video-infos_title">{movieData.get('title')}</div>
               <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-              {movieData.get('type') === 'serie' ?
-                (<div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>)
-                : <div />
-              }
+              <div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>
             </div> : <div />
         }
       </div>
