@@ -149,7 +149,7 @@ if (canUseDOM) {
 
       return (
         <div className="payment-wrapper">
-          <div className="enter-payment-details">Entrer les détails de paiement</div>
+          <div className="enter-payment-details">Commencez votre abonnement</div>
           <div className="payment-form">
             <div className={classSet(spinnerClasses)}>
               <Spinner />
@@ -159,7 +159,10 @@ if (canUseDOM) {
               <section id="errors"></section>
 
               <div className="row">
-                <div className="name-details">COORDONNÉES</div>
+                <div className="card-details">
+                  CARTE BANCAIRE
+                  <img src="/images/bank-cards.png" />
+                </div>
               </div>
               <div className="row">
                 <div className="form-group col-md-6">
@@ -184,12 +187,6 @@ if (canUseDOM) {
                 </div>
               </div>
               <div className="row">
-
-                <label className="name-details">DÉTAILS DE PAIEMENT
-                  <small className="text-muted">[<span className="recurly-cc-brand"></span>]</small>
-                </label>
-              </div>
-              <div className="row">
                 <div className="form-group col-md-6">
                   <label className="form-label" for="number">Numéro de carte</label>
                   <input
@@ -201,6 +198,7 @@ if (canUseDOM) {
                     autoComplete="cc-number"
                     placeholder="1234 5678 8901 1234" required/>
                 </div>
+                <CountrySelect />
               </div>
               <div className="row">
                 <div className="form-group col-md-4">
@@ -216,10 +214,9 @@ if (canUseDOM) {
                          name="cvv" id="cvv" autocomplete="off"
                          placeholder="123" required/>
                 </div>
-                <CountrySelect />
               </div>
               <div className="row">
-                <div className="form-group col-md-8">
+                <div className="form-group col-md-4">
                   <label className="form-label" for="coupon_code">Entrer le code promo</label>
                   <input
                     type="text"
@@ -229,13 +226,15 @@ if (canUseDOM) {
                     id="coupon_code"
                     placeholder="Entrez votre code"/>
                 </div>
-                <div className="form-group  col-md-4">
+              </div>
+              <div className="row">
+                <div className="form-group  col-md-12">
                   <button
                     id="subscribe"
                     type="submit"
                     form="subscription-create"
                     className="button-create-subscription"
-                    >VALIDER
+                    >DÉMARREZ MAINTENANT
                   </button>
                 </div>
               </div>
