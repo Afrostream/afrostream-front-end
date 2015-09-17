@@ -8,13 +8,8 @@ import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient } from '../../config';
-import FastClick from 'fastclick';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 superAgentMock(request);
-
-if (canUseDOM) {
-  //FastClick.attach(document.body);
-}
 
 const history = new History;
 const api = createAPI(

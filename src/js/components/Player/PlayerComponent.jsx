@@ -142,16 +142,6 @@ if (process.env.BROWSER) {
         videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
 
         let videoOptions = videoData.toJS();
-        //videoOptions.tracks = videoOptions.captions;
-        //
-        //_.forEach(videoOptions.tracks, function (track) {
-        //  track.srclang = track.lang.lang;
-        //  if (track.srclang === 'fr') {
-        //    track.default = true;
-        //  }
-        //  track.label = track.lang.label;
-        //  track.id = track._id;
-        //});
 
         let movie = Movie.get(`movies/${movieId}`);
         let posterImgImgix = {};
@@ -168,7 +158,18 @@ if (process.env.BROWSER) {
           //initialize the player
           config.player.plugins.chromecast = _.merge(config.player.plugins.chromecast, trackOpt);
           var playerData = _.merge(videoOptions, config.player);
-          console.log(playerData);
+
+          //si on est sur safari mac on priorise hls plutot que dash
+          let isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
+          if (isSafari) {
+            playerData.sources = _.remove(playerData.sources, function (k) {
+              return k.type !== 'application/dash+xml';
+            });
+          }
+
+          console.log(playerData.sources);
+
+
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.tech.el().textTracks; // get list of tracks
               let trackFr = _.find(allTracks, function (track) {
