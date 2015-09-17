@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import CompressionPlugin from 'compression-webpack-plugin';
 import webpackConfig from './webpack.config.js';
 import merge from 'lodash/object/merge';
 import config from '../config';
@@ -10,38 +11,41 @@ const prodConfig = merge({}, webpackConfig, {
   output: {
     publicPath: `/static/`
   },
-  externals: [
-    /*
-     /^react(\/.*)?$/,
-     /^redux(\/.*)?$/,
-     'superagent',
-     'async'
-     */],
+  externals: [],
   node: {
     console: false
-    //global: false,
-    //process: false,
-    //Buffer: false,
-    //__filename: false,
-    //__dirname: false
   },
-  //FIXME Replace mock remover for staging/production
-  //module: {
-  //  noParse: [/.\/superagent-mock$/]
-  //},
+  module: {
+    noParse: [/.\/superagent-mock$/]
+  },
   plugins: webpackConfig.plugins.concat(
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      output: {comments: false},
+      mangle: {
+        except: ['require', 'export', '$super']
+      },
       compress: {
         warnings: false,
+        sequences: true,
+        dead_code: true,
+        conditionals: true,
+        booleans: true,
+        unused: true,
+        if_return: true,
+        join_vars: true,
         drop_console: true
       }
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
+    new webpack.IgnorePlugin(/.\/superagent-mock$/),
+    new CompressionPlugin({
+      asset: '{file}.gz',
+      algorithm: 'gzip',
+      regExp: /\.js$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
     })
-    //FIXME Replace mock remover for staging/production
-    // ignore dev config
-    //new webpack.IgnorePlugin(/.\/superagent-mock$/)
   )
 });
 

@@ -11,6 +11,13 @@ import { apiClient } from '../../config';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 superAgentMock(request);
 
+if (canUseDOM) {
+  require('jquery');
+  require('bootstrap');
+  require('jquery.payment');
+  require('gsap');
+}
+
 const history = new History;
 const api = createAPI(
   /**

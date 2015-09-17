@@ -13,8 +13,6 @@ if (process.env.BROWSER) {
 
 if (canUseDOM) {
   var ga = require('react-ga');
-  require('jquery');
-  require('bootstrap');
 }
 
 @connect(({ Event,User }) => ({Event, User})) class Application extends React.Component {

@@ -9,7 +9,6 @@ import SeasonEpisodeThumb from './SeasonEpisodeThumb';
 import * as SeasonActionCreators from '../../actions/season';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 if (canUseDOM) {
-  require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 

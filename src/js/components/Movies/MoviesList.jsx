@@ -4,7 +4,6 @@ import MoviesCategorySlider from './MoviesCategorySlider';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 if (canUseDOM) {
-  require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 

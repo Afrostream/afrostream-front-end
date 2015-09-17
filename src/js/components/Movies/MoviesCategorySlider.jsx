@@ -6,7 +6,6 @@ import Slider from '../Slider/Slider';
 import LazyLoader from './LazyLoader';
 
 if (canUseDOM) {
-  require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 
