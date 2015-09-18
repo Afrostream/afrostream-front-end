@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
+import CookieMessage from './Welcome/WelcomeComponents/CookieMessage';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../config';
@@ -46,6 +47,7 @@ if (canUseDOM) {
       <div className={classSet(appClasses)}>
         <Header {...this.props}/>
         <SideBar />
+        <CookieMessage />
 
         <div id="page-content-wrapper" className="container-fluid">
           {children}
