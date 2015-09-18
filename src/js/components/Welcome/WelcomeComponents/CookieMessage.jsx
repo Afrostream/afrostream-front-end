@@ -12,13 +12,11 @@ class CookieMessage extends React.Component {
   };
 
   isCookieAccepted() {
-    debugger;
     let isCookieAccepted = null;
 
     if (canUseDOM) {
       isCookieAccepted = localStorage.getItem('afrostreamAcceptedCookies');
     }
-    debugger;
     return isCookieAccepted;
   }
 
@@ -31,7 +29,6 @@ class CookieMessage extends React.Component {
 
   render() {
     let isCookieAccepted = this.isCookieAccepted();
-    debugger;
     if (this.state.isCookieSet === "true") {
 
       return (<div />);
