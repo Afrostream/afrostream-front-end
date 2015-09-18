@@ -18,7 +18,7 @@ const prodConfig = merge({}, webpackConfig, {
     console: false
   },
   module: {
-    noParse: [/.\/superagent-mock$/]
+    //noParse: [/.\/superagent-mock$/]
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].js'),
@@ -42,7 +42,7 @@ const prodConfig = merge({}, webpackConfig, {
       }
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
-    new webpack.IgnorePlugin(/.\/superagent-mock$/),
+    //new webpack.IgnorePlugin(/.\/superagent-mock$/),
     new CompressionPlugin({
       asset: '{file}.gz',
       algorithm: 'gzip',
