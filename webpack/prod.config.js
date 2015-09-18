@@ -22,6 +22,7 @@ const prodConfig = merge({}, webpackConfig, {
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].js'),
+    new ExtractTextPlugin('[name].[hash].css', {allChunks: true}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({

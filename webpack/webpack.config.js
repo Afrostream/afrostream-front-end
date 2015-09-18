@@ -99,14 +99,13 @@ const webpackConfig = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].[hash].css', {allChunks: true}),
+    new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery',
       'window.jQuery': 'jquery',
-      'root.jQuery': 'jquery',
-      'window.GreenSockGlobals': 'gsap'
+      'root.jQuery': 'jquery'
     }),
     new webpack.DefinePlugin({
       'process.env': {
