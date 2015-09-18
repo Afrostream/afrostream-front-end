@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import { Link } from 'react-router';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 if (canUseDOM) {
+  require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 

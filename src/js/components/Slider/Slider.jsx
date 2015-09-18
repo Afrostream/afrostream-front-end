@@ -4,6 +4,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 
 if (canUseDOM) {
+  require('gsap');
   var {TimelineMax,TweenMax,Expo} = window.GreenSockGlobals;
 }
 /**

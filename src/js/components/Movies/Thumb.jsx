@@ -8,6 +8,7 @@ import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
 
 if (canUseDOM) {
+  require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 

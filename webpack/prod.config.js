@@ -9,7 +9,9 @@ import config from '../config';
 const prodConfig = merge({}, webpackConfig, {
   devtool: '#source-map',
   output: {
-    publicPath: `/static/`
+    publicPath: `/static/`,
+    filename: '[name].[hash].js',
+    chunkFilename: '[id].[hash].js'
   },
   externals: [],
   node: {
@@ -19,7 +21,7 @@ const prodConfig = merge({}, webpackConfig, {
     noParse: [/.\/superagent-mock$/]
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].js'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({

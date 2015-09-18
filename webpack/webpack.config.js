@@ -31,13 +31,13 @@ const webpackConfig = {
   output: {
     path: assetsPath,
     publicPath: `${webpackDevServerUrl}/static/`,
-    filename: '[name].[hash].js',
-    chunkFilename: '[id].[hash].js',
+    filename: '[name].js',
+    chunkFilename: '[id].js',
     hashDigestLength: 32
   },
   entry: {
-    main: './src/js/main.js',
-    vendor: './src/js/vendor.js'
+    main: './src/js/main',
+    vendor: './src/js/vendor'
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json']
@@ -103,9 +103,10 @@ const webpackConfig = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      "window.$": 'jquery',
-      "window.jQuery": "jquery",
-      "root.jQuery": "jquery"
+      'window.$': 'jquery',
+      'window.jQuery': 'jquery',
+      'root.jQuery': 'jquery',
+      'window.GreenSockGlobals': 'gsap'
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -122,7 +123,7 @@ const webpackConfig = {
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)
       }
     }),
-    new HashPlugin({ path: assetsPath, fileName: 'hash.txt' })
+    new HashPlugin({path: assetsPath, fileName: 'hash.txt'})
   ],
 
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
