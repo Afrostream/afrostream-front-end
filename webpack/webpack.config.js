@@ -2,8 +2,8 @@ import webpack, { DefinePlugin, BannerPlugin } from 'webpack';
 import autoprefixer from 'autoprefixer-core';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HashPlugin from 'hash-webpack-plugin';
 import config from '../config';
-
 
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
@@ -18,6 +18,7 @@ const AUTOPREFIXER_BROWSERS = [
 
 const assetsPath = path.resolve(__dirname, '../dist/');
 const node_modules_dir = path.resolve(__dirname, '../node_modules');
+let hash = null;
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -35,7 +36,7 @@ const webpackConfig = {
     hashDigestLength: 32
   },
   entry: {
-    app: './src/js/main.js',
+    main: './src/js/main.js',
     vendor: './src/js/vendor.js'
   },
   resolve: {
@@ -99,7 +100,6 @@ const webpackConfig = {
   },
   plugins: [
     new ExtractTextPlugin('[name].[hash].css', {allChunks: true}),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -121,7 +121,8 @@ const webpackConfig = {
         CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)
       }
-    })
+    }),
+    new HashPlugin({ path: assetsPath, fileName: 'hash.txt' })
   ],
 
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
