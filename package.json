@@ -7,7 +7,7 @@
     "express": "./node_modules/.bin/babel-node lib/express",
     "deploy": "./node_modules/.bin/babel-node lib/deploy",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc src",
-    "build": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --production --verbose --colors --display-error-details --config webpack/prod.config.js",
+    "build": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack/prod.config.js",
     "watch-client-dev-server": "./node_modules/.bin/babel-node  webpack/webpack-dev-server.js",
     "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --devtool --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
