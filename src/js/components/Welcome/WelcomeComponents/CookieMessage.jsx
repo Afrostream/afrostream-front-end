@@ -38,7 +38,7 @@ class CookieMessage extends React.Component {
 
     if (this.state.isCookieSet === "true") {
 
-      return (<div className="cookie-message"></div>);
+      return (<div />);
 
     } else {
 
