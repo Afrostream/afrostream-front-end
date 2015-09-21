@@ -2,6 +2,7 @@ import webpack, { DefinePlugin, BannerPlugin } from 'webpack';
 import autoprefixer from 'autoprefixer-core';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HashPlugin from 'hash-webpack-plugin';
 import config from '../config';
 
 const AUTOPREFIXER_BROWSERS = [
@@ -16,6 +17,8 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 const assetsPath = path.resolve(__dirname, '../dist/');
+const node_modules_dir = path.resolve(__dirname, '../node_modules');
+let hash = null;
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -29,43 +32,21 @@ const webpackConfig = {
     path: assetsPath,
     publicPath: `${webpackDevServerUrl}/static/`,
     filename: '[name].js',
-    chunkFilename: '[id].js'
+    chunkFilename: '[id].js',
+    hashDigestLength: 32
   },
   entry: {
     main: './src/js/main',
     vendor: './src/js/vendor'
   },
   resolve: {
-    extensions: ['', '.jsx', '.js'],
-    modulesDirectories: ['node_modules']
+    extensions: ['', '.js', '.jsx', '.json']
   },
   stats: {
     colors: true
   },
   module: {
-    //preLoaders: [
-    //  {
-    //    test: /\.js$/, // include .js files
-    //    exclude: /node_modules/, // exclude any and all files in the node_modules folder
-    //    loaders: ['babel-loader']
-    //    //, 'jshint-loader'
-    //  }
-    //],
     loaders: [
-      //Auth0 required
-      //{
-      //  test: /.js/,
-      //  include: path.join(__dirname, '../node_modules/auth0-lock'),
-      //  loaders: ['transform?packageify', 'transform?brfs']
-      //}, {
-      //  test: /.ejs/,
-      //  include: path.join(__dirname, '../node_modules/auth0-lock'),
-      //  loader: 'transform?ejsify'
-      //}, {
-      //  test: /.json/,
-      //  include: path.join(__dirname, '../node_modules/auth0-lock'),
-      //  loader: 'json'
-      //},
       {
         test: /\.js$/,
         include: path.join(__dirname, '../node_modules/auth0-lock'),
@@ -75,24 +56,25 @@ const webpackConfig = {
         include: path.join(__dirname, '../node_modules/auth0-lock'),
         loader: 'transform?ejsify'
       }, {
-        test: /.json$/,
+        test: /\.json$/,
         include: path.join(__dirname, '../node_modules/auth0-lock'),
         loader: 'json'
       },
       {
         test: /\.jsx?$/,
         loader: '',
-        loaders: ['babel-loader'],
-        exclude: /node_modules/
+        exclude: [node_modules_dir],
+        loaders: ['babel']
       },
       {
         test: /\.js$/, // include .js files
-        exclude: /node_modules/, // exclude any and all files in the node_modules folder
-        loaders: ['babel-loader']
+        loaders: ['babel'],
+        exclude: [node_modules_dir]
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
+        exclude: [node_modules_dir]
       },
       {
         test: /\.less$/,
@@ -102,11 +84,6 @@ const webpackConfig = {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
-      //Font-awasome
-      //{test: /\.woff($|\?)/, loader: 'url-loader'},
-      //{test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&minetype=application/font-woff'},
-      //{test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader'},
-      //END FONT AWASOME
       {
         test: /.(woff|woff2)([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
@@ -118,29 +95,17 @@ const webpackConfig = {
       {
         test: /.eot([\?]?.*)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]'
-      },
-      //{
-      //  test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)$/,
-      //  loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
-      //},
-      {
-        test: /.txt([\?]?.*)$/,
-        loader: 'raw-loader'
       }
-
-      //,
-
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      "window.$": 'jquery',
-      "window.jQuery": "jquery",
-      "root.jQuery": "jquery"
+      'window.$': 'jquery',
+      'window.jQuery': 'jquery',
+      'root.jQuery': 'jquery'
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -156,7 +121,8 @@ const webpackConfig = {
         CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)
       }
-    })
+    }),
+    new HashPlugin({path: assetsPath, fileName: 'hash.txt'})
   ],
 
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]

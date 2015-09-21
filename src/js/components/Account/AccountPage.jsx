@@ -19,30 +19,30 @@ if (process.env.BROWSER) {
   state = {cardNumber: null};
 
   componentDidMount() {
-    var self = this;
-    var accountCode = this.props.User.get('user').get('accountCode');
-    var apiPath = config.apiClient.urlPrefix + '/subscriptions/billing/' + accountCode;
-    var cardLastFour;
-
-    $.ajax({
-      type: 'GET',
-      url: apiPath,
-      dataType: 'json',
-      async: false,
-      success: function (responseData) {
-
-        cardLastFour = responseData.data.billing_info.last_four;
-        self.setState({cardNumber: cardLastFour});
-      },
-      error: function (err) {
-
-        console.log('**** there was an error ***');
-        console.log(err);
-        console.log('*** end of error message ***');
-        cardLastFour = '';
-        self.setState({cardNumber: cardLastFour});
-      }
-    });
+    //var self = this;
+    //var accountCode = this.props.User.get('user').get('accountCode');
+    //var apiPath = config.apiClient.urlPrefix + '/subscriptions/billing/' + accountCode;
+    //var cardLastFour;
+    //
+    //$.ajax({
+    //  type: 'GET',
+    //  url: apiPath,
+    //  dataType: 'json',
+    //  async: false,
+    //  success: function (responseData) {
+    //
+    //    cardLastFour = responseData.data.billing_info.last_four;
+    //    self.setState({cardNumber: cardLastFour});
+    //  },
+    //  error: function (err) {
+    //
+    //    console.log('**** there was an error ***');
+    //    console.log(err);
+    //    console.log('*** end of error message ***');
+    //    cardLastFour = '';
+    //    self.setState({cardNumber: cardLastFour});
+    //  }
+    //});
   }
 
   render() {
