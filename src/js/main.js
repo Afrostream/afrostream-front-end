@@ -8,8 +8,15 @@ import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient } from '../../config';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+
 superAgentMock(request);
+
+if (canUseDOM) {
+  require('jquery');
+  require('bootstrap');
+  require('jquery.payment');
+}
 
 const history = new History;
 const api = createAPI(

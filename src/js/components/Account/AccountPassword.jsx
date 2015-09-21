@@ -6,11 +6,6 @@ import { Link } from 'react-router';
 import config from '../../../../config/client';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
-if (canUseDOM) {
-  require('jquery');
-  require('bootstrap');
-}
-
 if (process.env.BROWSER) {
   require('./AccountPassword.less');
 }
