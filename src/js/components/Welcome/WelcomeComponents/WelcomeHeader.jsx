@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../../actions/user';
-import CookieMessage from './CookieMessage';
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
@@ -35,7 +34,6 @@ if (process.env.BROWSER) {
         </div>
 
         <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
-        <CookieMessage />
       </section>
     );
   }

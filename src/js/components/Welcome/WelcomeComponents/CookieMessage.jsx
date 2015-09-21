@@ -11,6 +11,13 @@ class CookieMessage extends React.Component {
     isCookieSet: null
   };
 
+  componentDidMount() {
+    let isCookieAccepted = this.isCookieAccepted();
+    if (isCookieAccepted === "true") {
+      this.setState({isCookieSet: "true"});
+    }
+  }
+
   isCookieAccepted() {
     let isCookieAccepted = null;
 
@@ -28,7 +35,7 @@ class CookieMessage extends React.Component {
   }
 
   render() {
-    let isCookieAccepted = this.isCookieAccepted();
+
     if (this.state.isCookieSet === "true") {
 
       return (<div className="cookie-message"></div>);

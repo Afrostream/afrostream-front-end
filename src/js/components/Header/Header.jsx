@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import UserButton from './../User/UserButton';
 import GoBack from './../GoBack/GoBack';
+import CookieMessage from './../Welcome/WelcomeComponents/CookieMessage';
 import classSet from 'classnames';
 
 if (process.env.BROWSER) {
@@ -76,6 +77,7 @@ if (process.env.BROWSER) {
             <UserButton />
           </div>
           {/* User Account button */}
+          <CookieMessage />
         </div>
       </nav>
     );
