@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "algoliasearch": "^3.7.7",
-    "auth0-lock": "^7.7.1",
+    "auth0-lock": "^7.9.4",
     "autoprefixer-core": "^5.2.1",
     "autoprefixer-loader": "^2.0.0",
     "babel": "^5.8.12",
