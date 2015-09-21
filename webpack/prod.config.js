@@ -40,7 +40,8 @@ const prodConfig = merge({}, webpackConfig, {
         if_return: true,
         join_vars: true,
         drop_console: true
-      }
+      },
+      minimize: true
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     //new webpack.IgnorePlugin(/.\/superagent-mock$/),
