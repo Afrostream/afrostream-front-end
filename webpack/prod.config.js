@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import CompressionPlugin from 'compression-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import webpackConfig from './webpack.config.js';
 import merge from 'lodash/object/merge';
 import config from '../config';
