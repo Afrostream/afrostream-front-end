@@ -113,7 +113,7 @@
     "video.js": "^4.12.12",
     "videojs-afrostream": "git+https://github.com/Afrostream/videojs-afrostream.git#master",
     "videojs-swf": "^4.7.2",
-    "webpack": "^1.10.0"
+    "webpack": "^1.12.0"
   },
   "engines": {
     "node": ">=0.10.32"
