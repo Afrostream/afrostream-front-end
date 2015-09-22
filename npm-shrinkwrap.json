@@ -15163,7 +15163,7 @@
     "videojs-afrostream": {
       "version": "0.17.5",
       "from": "git+https://github.com/Afrostream/videojs-afrostream.git#master",
-      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#5c8319c7d33eb6d6a3c8bdd178097e1cb2cf936b",
+      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#f697d3f71baff95ca5360870517f05017851838e",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
@@ -15172,7 +15172,7 @@
         },
         "pkcs7": {
           "version": "0.2.3",
-          "from": "pkcs7@>=0.2.2 <0.3.0",
+          "from": "pkcs7@>=0.2.3 <0.3.0",
           "resolved": "https://registry.npmjs.org/pkcs7/-/pkcs7-0.2.3.tgz"
         },
         "video.js": {
