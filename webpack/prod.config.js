@@ -8,7 +8,7 @@ import config from '../config';
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 const prodConfig = merge({}, webpackConfig, {
-  devtool: '#source-map',
+  devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'eval',
   output: {
     publicPath: `/static/`,
     filename: '[name].[hash].js',
@@ -41,7 +41,8 @@ const prodConfig = merge({}, webpackConfig, {
         join_vars: true,
         drop_console: true
       },
-      minimize: true
+      minimize: true,
+      sourceMap: process.env.NODE_ENV === 'production'
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     //new webpack.IgnorePlugin(/.\/superagent-mock$/),
