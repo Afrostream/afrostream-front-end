@@ -7,14 +7,16 @@ if (process.env.BROWSER) {
 
 class CookieMessage extends React.Component {
 
+  // do not render cookie message on server-side
   state = {
-    isCookieSet: null
+    isCookieSet: "true"
   };
 
   componentDidMount() {
     let isCookieAccepted = this.isCookieAccepted();
-    if (isCookieAccepted === "true") {
-      this.setState({isCookieSet: "true"});
+
+    if (isCookieAccepted !== "true") {
+      this.setState({isCookieSet: "false"});
     }
   }
 
