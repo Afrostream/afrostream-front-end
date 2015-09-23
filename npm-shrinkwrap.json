@@ -15148,22 +15148,10 @@
         }
       }
     },
-    "video.js": {
-      "version": "4.12.12",
-      "from": "video.js@>=4.12.12 <5.0.0",
-      "resolved": "https://registry.npmjs.org/video.js/-/video.js-4.12.12.tgz",
-      "dependencies": {
-        "vtt.js": {
-          "version": "0.12.1",
-          "from": "git+https://github.com/gkatsev/vtt.js.git#vjs-v0.12.1",
-          "resolved": "git+https://github.com/gkatsev/vtt.js.git#8ea664e257ec7b5c092f58ac989e3134ff536a7a"
-        }
-      }
-    },
     "videojs-afrostream": {
       "version": "0.17.5",
-      "from": "git+https://github.com/Afrostream/videojs-afrostream.git#master",
-      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#f697d3f71baff95ca5360870517f05017851838e",
+      "from": "git+https://github.com/Afrostream/videojs-afrostream.git#stage-video",
+      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#0367a875e21801b8897d6698c528c495e1e63efc",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
@@ -15180,6 +15168,11 @@
           "from": "video.js@>=4.12.15 <5.0.0",
           "resolved": "https://registry.npmjs.org/video.js/-/video.js-4.12.15.tgz",
           "dependencies": {
+            "videojs-swf": {
+              "version": "4.7.5",
+              "from": "videojs-swf@4.7.5",
+              "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.5.tgz"
+            },
             "vtt.js": {
               "version": "0.12.1",
               "from": "git+https://github.com/gkatsev/vtt.js.git#vjs-v0.12.1",
@@ -15203,16 +15196,11 @@
           "resolved": "https://registry.npmjs.org/videojs-contrib-media-sources/-/videojs-contrib-media-sources-1.0.0.tgz"
         },
         "videojs-swf": {
-          "version": "4.7.5",
-          "from": "videojs-swf@>=4.7.4 <5.0.0",
-          "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.5.tgz"
+          "version": "5.0.0-rc1",
+          "from": "git+https://github.com/Afrostream/video-js-swf.git#stage-video",
+          "resolved": "git+https://github.com/Afrostream/video-js-swf.git#8c81107ceb2addbad9c84e48fc990edb5a3642a4"
         }
       }
-    },
-    "videojs-swf": {
-      "version": "4.7.2",
-      "from": "videojs-swf@>=4.7.2 <5.0.0",
-      "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.2.tgz"
     },
     "webpack": {
       "version": "1.12.2",
