@@ -29,7 +29,8 @@ export default {
   }),
 
   Season: keyMirror({
-    toggleSeason: null
+    toggleSeason: null,
+    getSeason: null
   }),
   Event: keyMirror({
     toggleSideBar: null,

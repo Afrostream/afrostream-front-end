@@ -12,11 +12,6 @@ if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
-if (canUseDOM) {
-  require('jquery');
-  require('jquery.payment');
-}
-
 @connect(({ User}) => ({User})) class PaymentForm extends React.Component {
 
 
