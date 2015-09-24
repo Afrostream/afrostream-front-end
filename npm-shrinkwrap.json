@@ -15035,9 +15035,9 @@
           "resolved": "https://registry.npmjs.org/videojs-contrib-media-sources/-/videojs-contrib-media-sources-1.0.0.tgz"
         },
         "videojs-swf": {
-          "version": "5.0.0-rc1",
+          "version": "5.0.0-rc1-sv",
           "from": "git+https://github.com/Afrostream/video-js-swf.git#feature/stage-video-hardware-accelerated",
-          "resolved": "git+https://github.com/Afrostream/video-js-swf.git#9cbfeec6b65e94af15ca6899f61f95705d80ba2d"
+          "resolved": "git+https://github.com/Afrostream/video-js-swf.git#1224a9b72ec28b93474f37bed5633a3b75b0d580"
         }
       }
     },

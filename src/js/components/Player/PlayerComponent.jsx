@@ -138,9 +138,6 @@ if (process.env.BROWSER) {
       self.playerInit = true;
 
       self.destroyPlayer().then(() => {
-        videojs.options.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
-        videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
-
         let videoOptions = videoData.toJS();
 
         let movie = Movie.get(`movies/${movieId}`);
@@ -170,8 +167,15 @@ if (process.env.BROWSER) {
             return k.type === 'application/dash+xml';
           });
 
-          console.log(playerData.sources);
+          playerData.flash = {
+            swf: require('../../../../node_modules/videojs-afrostream/dist/video-js.swf'),
+            streamrootswf: 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf',
+            params: {
+              wmode: 'direct'
+            }
+          };
 
+          playerData.hls = _.clone(playerData.flash);
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.tech.el().textTracks; // get list of tracks

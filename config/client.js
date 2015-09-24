@@ -69,6 +69,11 @@ export default {
     "width": "100%",
     "height": "100%",
     "language": "fr",
+    "flash": {
+      "params": {
+        "wmode": "direct"
+      }
+    },
     "languages": {
       "fr": {
         "Play": "Lecture",
