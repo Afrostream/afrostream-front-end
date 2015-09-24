@@ -138,7 +138,7 @@ if (process.env.BROWSER) {
       self.playerInit = true;
 
       self.destroyPlayer().then(() => {
-        videojs.options.flash.swf = require('../../../../node_modules/videojs-swf/dist/video-js.swf');
+        videojs.options.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
         videojs.options.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
 
         let videoOptions = videoData.toJS();
@@ -166,6 +166,9 @@ if (process.env.BROWSER) {
               return k.type !== 'application/dash+xml';
             });
           }
+          playerData.sources = _.sortBy(playerData.sources, function (k) {
+            return k.type === 'application/dash+xml';
+          });
 
           console.log(playerData.sources);
 
