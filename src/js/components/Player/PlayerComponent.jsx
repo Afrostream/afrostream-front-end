@@ -1,13 +1,21 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import videojs from 'videojs-afrostream';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+//import Hls from 'hls.js';
+//import videojs from 'videojs-afrostream';
 import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
+}
+if (canUseDOM) {
+  var Hls = require('hls.js');
+  window.Hls = Hls;
+  var videojs = require('videojs-afrostream');
+  console.log(Hls.isSupported());
 }
 
 @connect(({ Video,Movie,Episode,Event }) => ({
