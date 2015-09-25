@@ -47,6 +47,11 @@ const webpackConfig = {
   },
   module: {
     loaders: [
+      //{
+      //  test: /\.js$/,
+      //  include: path.join(__dirname, '../node_modules/hls.js/dist'),
+      //  loaders: ['transform?brfs', 'transform?packageify']
+      //},
       {
         test: /\.js$/,
         include: path.join(__dirname, '../node_modules/auth0-lock'),

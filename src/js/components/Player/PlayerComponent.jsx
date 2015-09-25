@@ -1,13 +1,21 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import videojs from 'videojs-afrostream';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+//import Hls from 'hls.js';
+//import videojs from 'videojs-afrostream';
 import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
+}
+if (canUseDOM) {
+  var Hls = require('hls.js');
+  window.Hls = Hls;
+  var videojs = require('videojs-afrostream');
+  console.log(Hls.isSupported());
 }
 
 @connect(({ Video,Movie,Episode,Event }) => ({
@@ -164,7 +172,7 @@ if (process.env.BROWSER) {
             });
           }
           playerData.sources = _.sortBy(playerData.sources, function (k) {
-            return k.type === 'application/dash+xml';
+            return k.type !== 'application/dash+xml';
           });
 
           playerData.flash = {
@@ -175,18 +183,9 @@ if (process.env.BROWSER) {
             }
           };
 
-          playerData.hls = _.clone(playerData.flash);
+          //playerData.hls = _.clone(playerData.flash);
 
-          let player = videojs('afrostream-player', playerData).ready(function () {
-              var allTracks = this.tech.el().textTracks; // get list of tracks
-              let trackFr = _.find(allTracks, function (track) {
-                return track.language === 'fr';
-              });
-              if (trackFr) {
-                trackFr.mode = 'showing'; // show this track
-              }
-            }
-          );
+          let player = videojs('afrostream-player', playerData);
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
