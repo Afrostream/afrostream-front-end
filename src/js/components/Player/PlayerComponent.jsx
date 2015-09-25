@@ -185,16 +185,7 @@ if (canUseDOM) {
 
           //playerData.hls = _.clone(playerData.flash);
 
-          let player = videojs('afrostream-player', playerData).ready(function () {
-              var allTracks = this.tech.el().textTracks; // get list of tracks
-              let trackFr = _.find(allTracks, function (track) {
-                return track.language === 'fr';
-              });
-              if (trackFr) {
-                trackFr.mode = 'showing'; // show this track
-              }
-            }
-          );
+          let player = videojs('afrostream-player', playerData);
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
