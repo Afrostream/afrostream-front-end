@@ -64,11 +64,11 @@ const webpackConfig = {
         test: /\.jsx?$/,
         loader: '',
         exclude: [node_modules_dir],
-        loaders: ['babel']
+        loaders: ['babel-loader']
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel'],
+        loaders: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {

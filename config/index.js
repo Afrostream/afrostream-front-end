@@ -8,7 +8,7 @@ const config = _.merge(
      * Front-End Server
      */
     server: {
-      host: '0.0.0.0',
+      host: 'localhost',
       ip: process.env.IP ||
       undefined,
       port: process.env.PORT ||
@@ -26,7 +26,7 @@ const config = _.merge(
      * WebpackDevServer
      */
     webpackDevServer: {
-      host: '0.0.0.0',
+      host: 'localhost',
       port: 8081
     },
 
@@ -34,7 +34,7 @@ const config = _.merge(
      * browserSync
      */
     browserSyncServer: {
-      host: '0.0.0.0',
+      host: 'localhost',
       port: 8082
     }
   }, client);
