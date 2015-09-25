@@ -26,6 +26,52 @@
   width: 80%;
 }
 
+
+.conditions-generales {
+  width: 100%;
+  margin: 20px 0 0 0;
+  text-align: left;
+
+  .checkbox-conditions-generales {
+    width: 20px;
+  }
+  .text-conditions-generales {
+    color: #281430;
+    font-weight: bold;
+    text-align: left;
+    line-height: 16px;
+    display: inline;
+
+    a {
+      color: #9800B4;
+    }
+  }
+}
+
+.droit-retractation {
+  width: 100%;
+  margin: 20px 0 0 0;
+  text-align: left;
+
+  .checkbox-droit-retractation {
+    width: 20px;
+  }
+
+  .text-droit-retractation {
+    color: #281430;
+    font-weight: bold;
+    text-align: left;
+    line-height: 16px;
+    display: inline;
+
+    a {
+      color: #9800B4;
+    }
+  }
+}
+
+
+
 .payment-form {
 
   //recreate local variables
@@ -46,6 +92,10 @@
   font-size: 12px;
   text-align: center;
   width: 80%;
+
+  @media all and (max-width: @screen-xs-min) {
+    padding: 30px 30px 30px 30px;
+  }
 
   .spinner-payment {
     position: absolute;
@@ -75,12 +125,21 @@
     margin-bottom: 15px;
     border-bottom: @gray-lighter solid 1px;
 
-    span {
-      padding-right: 20px;
+    @media all and (max-width: @screen-xs-min) {
+      display: inline-block;
     }
 
-    img {
-      max-height: 32px;
+
+    .card-details-img {
+      margin-left: 20px;
+
+      @media all and (max-width: @screen-xs-min) {
+        margin-left: 0px;
+      }
+
+      img {
+        max-height: 32px;
+      }
     }
   }
 
@@ -100,6 +159,10 @@
     border: none;
     margin-top: 20px;
     float: left;
+
+    @media all and (max-width: @screen-xs-min) {
+      float: inherit;
+    }
   }
 
   .has-error {

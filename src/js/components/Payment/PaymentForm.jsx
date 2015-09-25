@@ -155,8 +155,10 @@ if (process.env.BROWSER) {
 
               <div className="row">
                 <div className="card-details">
-                  CARTE BANCAIRE
-                  <img src="/images/bank-cards.png" />
+                  <div className="card-details-text">CARTE BANCAIRE</div>
+                  <div className="card-details-img">
+                      <img src="/images/bank-cards.png" />
+                  </div>
                 </div>
               </div>
               <div className="row">
@@ -222,6 +224,34 @@ if (process.env.BROWSER) {
                     placeholder="Entrez votre code"/>
                 </div>
               </div>
+
+              <div className="row">
+                <div className="form-group col-md-12 conditions-generales">
+                  <input
+                    type="checkbox"
+                    className="checkbox-conditions-generales"
+                    name="accept-conditions-generales"
+                    id="accept-conditions-generales"
+                    required />
+                  <div className="text-conditions-generales">
+                    J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf" target="_blank">( En savoir plus )</a>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="form-group  col-md-12 droit-retractation">
+                  <input
+                    type="checkbox"
+                    className="checkbox-droit-retractation"
+                    name="droit-retractation"
+                    id="droit-retractation"
+                    required />
+                  <div className="text-droit-retractation">
+                    Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger le formulaire de rétractation</a>
+                  </div>
+                </div>
+              </div>
+
               <div className="row">
                 <div className="form-group  col-md-12">
                   <button
