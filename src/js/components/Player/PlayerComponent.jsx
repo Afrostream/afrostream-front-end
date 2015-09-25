@@ -172,7 +172,7 @@ if (canUseDOM) {
             });
           }
           playerData.sources = _.sortBy(playerData.sources, function (k) {
-            return k.type === 'application/dash+xml';
+            return k.type !== 'application/dash+xml';
           });
 
           playerData.flash = {
@@ -183,7 +183,7 @@ if (canUseDOM) {
             }
           };
 
-          playerData.hls = _.clone(playerData.flash);
+          //playerData.hls = _.clone(playerData.flash);
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.tech.el().textTracks; // get list of tracks
