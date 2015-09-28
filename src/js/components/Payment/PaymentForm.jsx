@@ -49,9 +49,25 @@ if (process.env.BROWSER) {
     const user = User.get('user');
     // Disable the submit button
     $('[data-recurly]').removeClass('has-error');
+    $('.conditions-generales').removeClass('checkbox-has-error');
+    $('.droit-retractation').removeClass('checkbox-has-error');
     $('#errors').text('');
     $('input').removeClass('error');
     this.disableForm(true);
+
+    if (!$('.checkbox-conditions-generales').is(':checked')) {
+      $('#errors').text("C'est obligatoire d'accepter les Conditions Générales d'Utilisation");
+      $('.conditions-generales').addClass('checkbox-has-error');
+      self.disableForm(false);
+      return;
+    }
+
+    if (!$('.checkbox-droit-retractation').is(':checked')) {
+      $('#errors').text("C'est obligatoire de renoncer au droit de rétractation");
+      $('.droit-retractation').addClass('checkbox-has-error');
+      self.disableForm(false);
+      return;
+    }
 
     var billingInfo = {
       'plan-code': this.props.planName,
@@ -231,8 +247,7 @@ if (process.env.BROWSER) {
                     type="checkbox"
                     className="checkbox-conditions-generales"
                     name="accept-conditions-generales"
-                    id="accept-conditions-generales"
-                    required />
+                    id="accept-conditions-generales" />
                   <div className="text-conditions-generales">
                     J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf" target="_blank">( En savoir plus )</a>
                   </div>
@@ -244,8 +259,7 @@ if (process.env.BROWSER) {
                     type="checkbox"
                     className="checkbox-droit-retractation"
                     name="droit-retractation"
-                    id="droit-retractation"
-                    required />
+                    id="droit-retractation" />
                   <div className="text-droit-retractation">
                     Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger le formulaire de rétractation</a>
                   </div>
