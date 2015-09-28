@@ -171,7 +171,7 @@ if (process.env.BROWSER) {
             swf: require('../../../../node_modules/videojs-afrostream/dist/video-js.swf'),
             streamrootswf: 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf',
             params: {
-              wmode: 'direct'
+              wmode: 'opaque'
             }
           };
 
