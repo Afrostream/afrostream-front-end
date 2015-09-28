@@ -1,7 +1,7 @@
 @import '../../../../node_modules/videojs-afrostream/dist/video-js.less';
 @import '../../../styles/config.less';
-@import '../../../styles/videojs.chromecast.less';
 @import '../../../styles/videojs-dash.less';
+@import '../../../styles/videojs.chromecast.less';
 
 @slider-bar-pattern: ~'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAP0lEQVQIHWWMAQoAIAgDR/QJ/Ub//04+w7ZICBwcOg5FZi5iBB82AGzixEglJrd4TVK5XUJpskSTEvpdFzX9AB2pGziSQcvAAAAAAElFTkSuQmCC';
 @control-bg-color: #07141E;
@@ -167,7 +167,18 @@
       left: @app-padding;
       bottom: @app-padding;
       right: @app-padding;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -webkit-flexbox;
+      display: -ms-flexbox;
+      display: -webkit-flex;
       display: flex;
+      -webkit-box-pack: start;
+      -moz-box-pack: start;
+      -webkit-flex-pack: start;
+      -ms-flex-pack: start;
+      -webkit-justify-content: flex-start;
+      justify-content: flex-start;
     }
 
     .vjs-control {
@@ -394,6 +405,10 @@
       position: relative;
       margin: 0;
       top: 0;
+      -webkit-box-flex: 1;
+      -moz-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
       flex: 1;
     }
     .vjs-progress-control .vjs-progress-holder {
