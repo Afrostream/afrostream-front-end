@@ -4,6 +4,7 @@ import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import AfrostreamMonthlyMessage from './Welcome/AfrostreamMonthlyMessage';
 import PaymentPage from './Payment/PaymentPage';
+import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
 
 @connect(({ User }) => ({User})) class HomePage extends React.Component {
@@ -17,7 +18,12 @@ import Spinner from './Spinner/Spinner';
         return (<Spinner />);
       }
       else if (!user.get('planCode')) {
-        return ( <PaymentPage />)
+        return (<PaymentPage />);
+      }
+      else if (typeof user.get('newSubscription') !== 'undefined') {
+        if (user.get('newSubscription') === true) {
+          return (<PaymentSuccess />);
+        }
       }
       else if (user.get('planCode') === 'afrostreammonthly') {
         return ( <AfrostreamMonthlyMessage />)

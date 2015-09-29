@@ -31,31 +31,27 @@ import { Link } from 'react-router';
 		const user = User.get('user');
 
 		if (token) {
-			console.log('*** there is a token in signin button ***');
 			if (user) {
-				console.log('*** there is a user in signin button ***');
 				return (
 					<div className="btn-group navbar-collapse collapse navbar-left">
-					<button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
-				aria-haspopup="true"
-				aria-expanded="false">
-					<img src={user.get('picture')} alt="50x50" className="icon-user"/>
-				<span className="label-user">{user.get('nickname')}</span>
-		</button>
-		<ul className="dropdown-menu">
-			<li><Link to="/compte">Mon compte</Link></li>
-		<li role="separator" className="divider"></li>
-			<li><Link to="paiements">Mes paiements</Link></li>
-		</ul>
-		</div>
-	);
+					  <button type="button" className="btn btn-user btn-default dropdown-toggle" data-toggle="dropdown"
+				      aria-haspopup="true"
+				      aria-expanded="false">
+					    <img src={user.get('picture')} alt="50x50" className="icon-user"/>
+				      <span className="label-user">{user.get('nickname')}</span>
+		        </button>
+		        <ul className="dropdown-menu">
+			        <li><Link to="/compte">Mon compte</Link></li>
+		          <li role="separator" className="divider"></li>
+			        <li><Link to="paiements">Mes paiements</Link></li>
+		        </ul>
+		      </div>
+	      );
 	} else {
-	console.log('*** there is NO user in signin button ***');
-	dispatch(UserActionCreators.getProfile());
-	return (<div className="btn-group navbar-collapse collapse navbar-left">Load user</div>);
+    dispatch(UserActionCreators.getProfile());
+    return (<div className="btn-group navbar-collapse collapse navbar-left">Load user</div>);
 }
 } else {
-	console.log('*** there is NO user in signin button ***');
 	return this.getLoginState();
 }
 }
