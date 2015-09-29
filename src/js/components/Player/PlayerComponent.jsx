@@ -98,6 +98,8 @@ if (process.env.BROWSER) {
           if (lang.get('lang') === 'fr') {
             track.default = true;
           }
+          track.mode = track.default ? 'showing' : 'hidden';
+
           trackOptions.tracks.push({
             kind: track.kind,
             src: track.src,
@@ -105,7 +107,7 @@ if (process.env.BROWSER) {
             language: track.srclang,
             label: track.label,
             type: 'text/vtt',
-            mode: track.default ? 'showing' : ''
+            mode: track.default ? 'showing' : 'hidden'
           });
           video.appendChild(track);
         });
@@ -154,7 +156,6 @@ if (process.env.BROWSER) {
 
         self.generateDomTag(videoData).then((trackOpt) => {
           //initialize the player
-          config.player.plugins.chromecast = _.merge(config.player.plugins.chromecast, trackOpt);
           var playerData = _.merge(videoOptions, config.player);
 
           //si on est sur safari mac on priorise hls plutot que dash
@@ -168,19 +169,20 @@ if (process.env.BROWSER) {
             return k.type === 'application/dash+xml';
           });
 
-          playerData.flash = {
-            swf: require('../../../../node_modules/videojs-afrostream/dist/video-js.swf'),
-            streamrootswf: 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf'
-          };
+          playerData.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
+          playerData.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
 
           playerData.hls = _.clone(playerData.flash);
+          playerData.plugins = playerData.plugins || [];
+          playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
           let player = videojs('afrostream-player', playerData).ready(function () {
-              var allTracks = this.tech.el().textTracks; // get list of tracks
+              var allTracks = this.textTracks() || []; // get list of tracks
               let trackFr = _.find(allTracks, function (track) {
                 return track.language === 'fr';
               });
               if (trackFr) {
+                console.log(trackFr);
                 trackFr.mode = 'showing'; // show this track
               }
             }

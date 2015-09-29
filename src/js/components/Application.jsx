@@ -19,12 +19,7 @@ if (canUseDOM) {
 @connect(({ Event,User }) => ({Event, User})) class Application extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired,
-    willTransitionTo: function (transition, params, query, callback) {
-      if (canUseDOM) {
-        ga.pageview(transition.router.state.location.pathname);
-      }
-    }
+    router: PropTypes.object.isRequired
   };
 
   componentWillMount() {
