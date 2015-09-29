@@ -33,17 +33,18 @@ import SearchInput from './../Search/SearchBox';
     let hasFormule;
     let justSubscribed;
 
-    if (user && typeof user.get('planCode') !== 'undefined') {
-      hasFormule = user.get('planCode');
-    }
-
-    if (user && typeof user.get('newSubscription') !== 'undefined') {
-      justSubscribed = user.get('newSubscription');
-    }
 
     if (token) {
       if (user) {
-        debugger;
+        
+        if (typeof user.get('planCode') !== 'undefined') {
+          hasFormule = user.get('planCode');
+        }
+
+        if (typeof user.get('newSubscription') !== 'undefined') {
+          justSubscribed = user.get('newSubscription');
+        }
+
         if (!hasFormule || justSubscribed === true) {
           return (<div />);
         } else {
