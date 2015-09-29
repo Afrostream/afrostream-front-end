@@ -15007,7 +15007,7 @@
     "videojs-afrostream": {
       "version": "0.17.5",
       "from": "git+https://github.com/Afrostream/videojs-afrostream.git#switch-bitrate",
-      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#525c6bfe546587f32c5cc2666a0c3f4766c09d80",
+      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#ae38df6746194a8eecce66f6a96a01a952466f14",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
@@ -15027,7 +15027,7 @@
         "videojs-contrib-dash": {
           "version": "1.1.1",
           "from": "git+https://github.com/Afrostream/videojs-contrib-dash.git#switch-bitrate",
-          "resolved": "git+https://github.com/Afrostream/videojs-contrib-dash.git#03917b22539ac26eacc2481592adcb2ae9379123"
+          "resolved": "git+https://github.com/Afrostream/videojs-contrib-dash.git#2d4a06d5b51637158cbaa789a981bfb4819527cb"
         },
         "videojs-contrib-media-sources": {
           "version": "1.0.0",
