@@ -26,7 +26,7 @@ if (process.env.BROWSER) {
 
         <p>merci pour votre inscription</p>
 
-        <p className="success"><a className="success-link" onClick={::this.logOut}>Commencez la visite sur le site</a></p>
+        <p className="success"><button className="success-button" onClick={::this.logOut}>Commencez la visite sur le site</button></p>
       </div>
     );
   }
