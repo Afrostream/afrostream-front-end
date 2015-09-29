@@ -11,7 +11,10 @@ const initialState = Immutable.fromJS({
 export default createReducer(initialState, {
 
   [ActionTypes.User.subscribe](state, { res }) {
-    const data = res.body;
+    let subscriptionResponse = res.body;
+    subscriptionResponse['newSubscription'] = (typeof res.body['_id'] !== 'undefined') ? true : false;
+    const data = subscriptionResponse;
+
     return state.merge({
       ['user']: _.merge(state.get('user').toJS(), data)
     });
