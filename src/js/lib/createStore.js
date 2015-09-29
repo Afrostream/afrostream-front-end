@@ -20,7 +20,7 @@ function promiseMiddleware(api, { getState }) {
 
 export default function (api, initialState) {
   const createStoreWithMiddleware = applyMiddleware(promiseMiddleware.bind(null,
-    api), middleWare.ga, middleWare.logger)(createStore);
+    api), middleWare.logger)(createStore);
   const reducer = combineReducers(reducers);
 
   return createStoreWithMiddleware(reducer, initialState);

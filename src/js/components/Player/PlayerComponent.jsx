@@ -154,7 +154,6 @@ if (process.env.BROWSER) {
 
         self.generateDomTag(videoData).then((trackOpt) => {
           //initialize the player
-          config.player.plugins.chromecast = _.merge(config.player.plugins.chromecast, trackOpt);
           var playerData = _.merge(videoOptions, config.player);
 
           //si on est sur safari mac on priorise hls plutot que dash
@@ -168,12 +167,12 @@ if (process.env.BROWSER) {
             return k.type === 'application/dash+xml';
           });
 
-          playerData.flash = {
-            swf: require('../../../../node_modules/videojs-afrostream/dist/video-js.swf'),
-            streamrootswf: 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf'
-          };
+          playerData.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
+          playerData.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
 
           playerData.hls = _.clone(playerData.flash);
+          playerData.plugins = playerData.plugins || [];
+          playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.tech.el().textTracks; // get list of tracks

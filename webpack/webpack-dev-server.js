@@ -14,12 +14,11 @@ const serverOptions = {
     quiet: false,
     noInfo: true,
     cache: false,
-    profile: true,
     watch: true,
     progress: true,
     hotComponents: true,
-    devtool: 'eval',
-    historyApiFallback: true,
+    //devtool: 'eval',
+    //historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000

@@ -71,7 +71,12 @@ export default {
     "language": "fr",
     "flash": {
       "params": {
-        "wmode": "opaque"
+        "wmode": "transparent"
+      }
+    },
+    "hls": {
+      "params": {
+        "wmode": "transparent"
       }
     },
     "languages": {
