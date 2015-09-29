@@ -29,6 +29,7 @@ if (process.env.BROWSER) {
   static propTypes = {
     videoId: React.PropTypes.string.isRequired,
     movieId: React.PropTypes.string.isRequired,
+    seasonId: React.PropTypes.string.isRequired,
     episodeId: React.PropTypes.string.isRequired
   };
 
@@ -169,10 +170,7 @@ if (process.env.BROWSER) {
 
           playerData.flash = {
             swf: require('../../../../node_modules/videojs-afrostream/dist/video-js.swf'),
-            streamrootswf: 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf',
-            params: {
-              wmode: 'direct'
-            }
+            streamrootswf: 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf'
           };
 
           playerData.hls = _.clone(playerData.flash);

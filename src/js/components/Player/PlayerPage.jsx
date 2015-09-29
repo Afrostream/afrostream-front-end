@@ -19,13 +19,13 @@ import PlayerComponent from './PlayerComponent';
   render() {
     const {
       props: {
-        params: { videoId,movieId,seasonId }
+        params: { videoId,movieId,seasonId,episodeId }
         }
       } = this;
 
     return (
       <div className="row-fluid">
-        {videoId && movieId ? <PlayerComponent {...{videoId, movieId, seasonId}}/> : ''}
+        {videoId && movieId ? <PlayerComponent {...{videoId, movieId, seasonId, episodeId}}/> : ''}
       </div>
     );
   }

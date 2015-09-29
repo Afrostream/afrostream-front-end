@@ -14971,9 +14971,9 @@
       }
     },
     "transform-loader": {
-      "version": "0.2.2",
-      "from": "https://registry.npmjs.org/transform-loader/-/transform-loader-0.2.2.tgz",
-      "resolved": "https://registry.npmjs.org/transform-loader/-/transform-loader-0.2.2.tgz"
+      "version": "0.2.3",
+      "from": "transform-loader@>=0.2.2 <0.3.0",
+      "resolved": "https://registry.npmjs.org/transform-loader/-/transform-loader-0.2.3.tgz"
     },
     "url-loader": {
       "version": "0.5.6",
@@ -15006,8 +15006,8 @@
     },
     "videojs-afrostream": {
       "version": "0.17.5",
-      "from": "git+https://github.com/Afrostream/videojs-afrostream.git#stage-video",
-      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#5f19654a7fa96ffab9026780552d41e06b0b6651",
+      "from": "git+https://github.com/Afrostream/videojs-afrostream.git#switch-bitrate",
+      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#ae38df6746194a8eecce66f6a96a01a952466f14",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
@@ -15022,12 +15022,12 @@
         "videojs-chromecast": {
           "version": "1.1.1",
           "from": "git+https://github.com/Afrostream/videojs-chromecast.git#master",
-          "resolved": "git+https://github.com/Afrostream/videojs-chromecast.git#384c9604d81d345c378e2ddec2ff886536954201"
+          "resolved": "git+https://github.com/Afrostream/videojs-chromecast.git#cda4207e8db7b31b046602bde908157148a4b5ac"
         },
         "videojs-contrib-dash": {
           "version": "1.1.1",
-          "from": "videojs-contrib-dash@>=1.1.1 <2.0.0",
-          "resolved": "https://registry.npmjs.org/videojs-contrib-dash/-/videojs-contrib-dash-1.1.1.tgz"
+          "from": "git+https://github.com/Afrostream/videojs-contrib-dash.git#switch-bitrate",
+          "resolved": "git+https://github.com/Afrostream/videojs-contrib-dash.git#2d4a06d5b51637158cbaa789a981bfb4819527cb"
         },
         "videojs-contrib-media-sources": {
           "version": "1.0.0",

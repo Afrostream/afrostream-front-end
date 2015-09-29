@@ -71,7 +71,7 @@ export default {
     "language": "fr",
     "flash": {
       "params": {
-        "wmode": "direct"
+        "wmode": "opaque"
       }
     },
     "languages": {

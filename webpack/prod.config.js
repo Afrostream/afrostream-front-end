@@ -30,6 +30,7 @@ const prodConfig = merge({}, webpackConfig, {
       mangle: {
         except: ['require', 'export', '$super']
       },
+      output: {comments: false},
       compress: {
         warnings: false,
         sequences: true,
@@ -39,7 +40,8 @@ const prodConfig = merge({}, webpackConfig, {
         unused: true,
         if_return: true,
         join_vars: true,
-        drop_console: true
+        drop_console: true,
+        pure_funcs: process.env.NODE_ENV === 'production' ? ['vjs.log', 'videojs.log'] : []
       },
       minimize: true,
       sourceMap: process.env.NODE_ENV === 'production'
