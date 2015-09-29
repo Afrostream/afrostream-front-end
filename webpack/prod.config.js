@@ -30,6 +30,7 @@ const prodConfig = merge({}, webpackConfig, {
       mangle: {
         except: ['require', 'export', '$super']
       },
+      output: {comments: false},
       compress: {
         warnings: false,
         sequences: true,
