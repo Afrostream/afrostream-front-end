@@ -31,15 +31,20 @@ import SearchInput from './../Search/SearchBox';
     const token = User.get('token');
     const user = User.get('user');
     let hasFormule;
+    let justSubscribed;
 
     if (user && typeof user.get('planCode') !== 'undefined') {
       hasFormule = user.get('planCode');
     }
 
+    if (user && typeof user.get('newSubscription') !== 'undefined') {
+      justSubscribed = user.get('newSubscription');
+    }
+
     if (token) {
       if (user) {
-
-        if (!hasFormule) {
+        debugger;
+        if (!hasFormule || justSubscribed === true) {
           return (<div />);
         } else {
           return (
@@ -54,7 +59,6 @@ import SearchInput from './../Search/SearchBox';
             </ul>
           );
         }
-
       }
       else {
         dispatch(UserActionCreators.getProfile());
