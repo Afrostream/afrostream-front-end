@@ -30,21 +30,31 @@ import SearchInput from './../Search/SearchBox';
 
     const token = User.get('token');
     const user = User.get('user');
+    let hasFormule;
+
+    if (user && typeof user.get('planCode') !== 'undefined') {
+      hasFormule = user.get('planCode');
+    }
 
     if (token) {
       if (user) {
 
-        return (
-          <ul className="nav navbar-nav navbar-right">
-            <li>
-              <SearchInput/>
-            </li>
-            <li className="btn-user pull-right">
-              <a href="#" role="button" onClick={::this.toggleSideBar}><img src={user.get('picture')} alt="50x50"
-                                                                            className="icon-user img-thumbnail"/></a>
-            </li>
-          </ul>
-        );
+        if (!hasFormule) {
+          return (<div />);
+        } else {
+          return (
+            <ul className="nav navbar-nav navbar-right">
+              <li>
+                <SearchInput/>
+              </li>
+              <li className="btn-user pull-right">
+                <a href="#" role="button" onClick={::this.toggleSideBar}><img src={user.get('picture')} alt="50x50"
+                                                                              className="icon-user img-thumbnail"/></a>
+              </li>
+            </ul>
+          );
+        }
+
       }
       else {
         dispatch(UserActionCreators.getProfile());
