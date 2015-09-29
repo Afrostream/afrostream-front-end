@@ -71,12 +71,12 @@ export default {
     "language": "fr",
     "flash": {
       "params": {
-        "wmode": "transparent"
+        "wmode": "direct"
       }
     },
     "hls": {
       "params": {
-        "wmode": "transparent"
+        "wmode": "direct"
       }
     },
     "languages": {

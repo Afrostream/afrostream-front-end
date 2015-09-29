@@ -98,6 +98,8 @@ if (process.env.BROWSER) {
           if (lang.get('lang') === 'fr') {
             track.default = true;
           }
+          track.mode = track.default ? 'showing' : 'hidden';
+
           trackOptions.tracks.push({
             kind: track.kind,
             src: track.src,
@@ -105,7 +107,7 @@ if (process.env.BROWSER) {
             language: track.srclang,
             label: track.label,
             type: 'text/vtt',
-            mode: track.default ? 'showing' : ''
+            mode: track.default ? 'showing' : 'hidden'
           });
           video.appendChild(track);
         });
@@ -175,11 +177,12 @@ if (process.env.BROWSER) {
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
           let player = videojs('afrostream-player', playerData).ready(function () {
-              var allTracks = this.tech.el().textTracks; // get list of tracks
+              var allTracks = this.textTracks() || []; // get list of tracks
               let trackFr = _.find(allTracks, function (track) {
                 return track.language === 'fr';
               });
               if (trackFr) {
+                console.log(trackFr);
                 trackFr.mode = 'showing'; // show this track
               }
             }
