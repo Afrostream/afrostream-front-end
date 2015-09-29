@@ -14,6 +14,7 @@ const serverOptions = {
     quiet: false,
     noInfo: true,
     cache: false,
+    profile: true,
     watch: true,
     progress: true,
     hotComponents: true,
