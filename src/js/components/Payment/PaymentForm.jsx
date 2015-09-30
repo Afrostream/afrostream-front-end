@@ -56,14 +56,14 @@ if (process.env.BROWSER) {
     this.disableForm(true);
 
     if (!$('.checkbox-conditions-generales').is(':checked')) {
-      $('#errors').text("C'est obligatoire d'accepter les Conditions Générales d'Utilisation");
+      $('#errors').text("Vous devez cocher toutes les cases pour confirmer l'abonnement.");
       $('.conditions-generales').addClass('checkbox-has-error');
       self.disableForm(false);
       return;
     }
 
     if (!$('.checkbox-droit-retractation').is(':checked')) {
-      $('#errors').text("C'est obligatoire de renoncer au droit de rétractation");
+      $('#errors').text("Vous devez cocher toutes les cases pour confirmer l'abonnement.");
       $('.droit-retractation').addClass('checkbox-has-error');
       self.disableForm(false);
       return;
