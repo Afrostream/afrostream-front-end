@@ -1,12 +1,12 @@
 {
-  "name": "afrostream-front-end",
+  "name": "afrostream-front-end-staging",
   "description": "Front project of Afrostream Netflix for african-american and african tv show and movies",
   "scripts": {},
   "env": {
     "NODE_ENV": "staging",
-    "API_END_POINT": "https://afrostream-api-v1-herokuapp-com.global.ssl.fastly.net/api",
-    "API_CLIENT_END_POINT": "https://afrostream-api-v1-herokuapp-com.global.ssl.fastly.net/api",
-    "AUTH0_CLIENT_ID": "BtSdIqKqfIse0H1dqlpHFJgKIkUG0NpE",
+    "API_END_POINT": "https://afrostream-api-v1-staging.herokuapp.com/api",
+    "API_CLIENT_END_POINT": "https://afrostream-api-v1-staging.herokuapp.com/api",
+    "AUTH0_CLIENT_ID": "5RcfgoeUhoNRV4cCPokLzXmIf4sI3afZ",
     "AUTH0_DOMAIN": "afrostream.eu.auth0.com",
     "AUTH0_CALLBACK_URL": "afrostream.herokuapp.com/callback",
     "ALGOLIA_APP_ID": "3OKNPL7ZVA",
