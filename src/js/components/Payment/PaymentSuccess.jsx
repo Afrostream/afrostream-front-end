@@ -1,10 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as UserActionCreators from '../../actions/user';
 
 if (process.env.BROWSER) {
   require('./PaymentSuccess.less');
 }
 
-class PaymentSuccess extends React.Component {
+@connect(({ User }) => ({User}))  class PaymentSuccess extends React.Component {
+
+  logOut() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.logOut());
+  }
 
   render() {
 
@@ -14,7 +26,7 @@ class PaymentSuccess extends React.Component {
 
         <p>merci pour votre inscription</p>
 
-        <p className="success"><a className="success-link" href="/">Commencez la visite sur le site</a></p>
+        <p className="success"><button className="success-button" onClick={::this.logOut}>Commencez la visite sur le site</button></p>
       </div>
     );
   }
