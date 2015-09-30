@@ -25,9 +25,6 @@ import Spinner from './Spinner/Spinner';
           return (<PaymentSuccess />);
         }
       }
-      else if (user.get('planCode') === 'afrostreammonthly') {
-        return ( <AfrostreamMonthlyMessage />)
-      }
       else {
         if (children) {
           return children;
