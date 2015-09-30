@@ -11,6 +11,7 @@ const initialState = Immutable.fromJS({
 export default createReducer(initialState, {
 
   [ActionTypes.User.subscribe](state, { res }) {
+    //FIXME why not User.get('_id');
     let subscriptionResponse = res.body;
     subscriptionResponse['newSubscription'] = (typeof res.body['_id'] !== 'undefined') ? true : false;
     const data = subscriptionResponse;
