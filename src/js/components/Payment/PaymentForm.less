@@ -1,6 +1,5 @@
 @import (reference) '../../../styles/config.less';
 
-
 .payment-wrapper {
   width: 100%;
   background-color: #d4d0d6;
@@ -26,6 +25,52 @@
   width: 80%;
 }
 
+
+.conditions-generales {
+  width: 100%;
+  margin: 20px 0 0 0;
+  text-align: left;
+
+  .checkbox-conditions-generales {
+    width: 20px;
+  }
+  .text-conditions-generales {
+    color: #281430;
+    font-weight: bold;
+    text-align: left;
+    line-height: 16px;
+    display: inline;
+
+    a {
+      color: #9800B4;
+    }
+  }
+}
+
+.droit-retractation {
+  width: 100%;
+  margin: 20px 0 0 0;
+  text-align: left;
+
+  .checkbox-droit-retractation {
+    width: 20px;
+  }
+
+  .text-droit-retractation {
+    color: #281430;
+    font-weight: bold;
+    text-align: left;
+    line-height: 16px;
+    display: inline;
+
+    a {
+      color: #9800B4;
+    }
+  }
+}
+
+
+
 .payment-form {
 
   //recreate local variables
@@ -47,6 +92,10 @@
   text-align: center;
   width: 80%;
 
+  @media all and (max-width: @screen-xs-min) {
+    padding: 30px 30px 30px 30px;
+  }
+
   .spinner-payment {
     position: absolute;
     display: none;
@@ -65,12 +114,32 @@
     height: 100%;
   }
 
-  .name-details {
+  .card-details {
     width: 100%;
     color: @gray;
     font-size: 16px;
+    line-height: 32px;
     display: -webkit-flex;
+    padding: 0 0 15px 0;
     margin-bottom: 15px;
+    border-bottom: @gray-lighter solid 1px;
+
+    @media all and (max-width: @screen-xs-min) {
+      display: inline-block;
+    }
+
+
+    .card-details-img {
+      margin-left: 20px;
+
+      @media all and (max-width: @screen-xs-min) {
+        margin-left: 0px;
+      }
+
+      img {
+        max-height: 32px;
+      }
+    }
   }
 
   .form-label {
@@ -88,10 +157,19 @@
     border-radius: 20px;
     border: none;
     margin-top: 20px;
+    float: left;
+
+    @media all and (max-width: @screen-xs-min) {
+      float: inherit;
+    }
   }
 
   .has-error {
     border-color: #a94442;
+  }
+
+  .checkbox-has-error {
+    border: 1px solid #a94442;
   }
 
   #errors {

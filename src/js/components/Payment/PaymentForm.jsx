@@ -49,9 +49,25 @@ if (process.env.BROWSER) {
     const user = User.get('user');
     // Disable the submit button
     $('[data-recurly]').removeClass('has-error');
+    $('.conditions-generales').removeClass('checkbox-has-error');
+    $('.droit-retractation').removeClass('checkbox-has-error');
     $('#errors').text('');
     $('input').removeClass('error');
     this.disableForm(true);
+
+    if (!$('.checkbox-conditions-generales').is(':checked')) {
+      $('#errors').text("C'est obligatoire d'accepter les Conditions Générales d'Utilisation");
+      $('.conditions-generales').addClass('checkbox-has-error');
+      self.disableForm(false);
+      return;
+    }
+
+    if (!$('.checkbox-droit-retractation').is(':checked')) {
+      $('#errors').text("C'est obligatoire de renoncer au droit de rétractation");
+      $('.droit-retractation').addClass('checkbox-has-error');
+      self.disableForm(false);
+      return;
+    }
 
     var billingInfo = {
       'plan-code': this.props.planName,
@@ -144,7 +160,7 @@ if (process.env.BROWSER) {
 
       return (
         <div className="payment-wrapper">
-          <div className="enter-payment-details">Entrer les détails de paiement</div>
+          <div className="enter-payment-details">Commencez votre abonnement</div>
           <div className="payment-form">
             <div className={classSet(spinnerClasses)}>
               <Spinner />
@@ -154,7 +170,12 @@ if (process.env.BROWSER) {
               <section id="errors"></section>
 
               <div className="row">
-                <div className="name-details">COORDONNÉES</div>
+                <div className="card-details">
+                  <div className="card-details-text">CARTE BANCAIRE</div>
+                  <div className="card-details-img">
+                      <img src="/images/bank-cards.png" />
+                  </div>
+                </div>
               </div>
               <div className="row">
                 <div className="form-group col-md-6">
@@ -179,12 +200,6 @@ if (process.env.BROWSER) {
                 </div>
               </div>
               <div className="row">
-
-                <label className="name-details">DÉTAILS DE PAIEMENT
-                  <small className="text-muted">[<span className="recurly-cc-brand"></span>]</small>
-                </label>
-              </div>
-              <div className="row">
                 <div className="form-group col-md-6">
                   <label className="form-label" for="number">Numéro de carte</label>
                   <input
@@ -196,6 +211,7 @@ if (process.env.BROWSER) {
                     autoComplete="cc-number"
                     placeholder="1234 5678 8901 1234" required/>
                 </div>
+                <CountrySelect />
               </div>
               <div className="row">
                 <div className="form-group col-md-4">
@@ -211,10 +227,9 @@ if (process.env.BROWSER) {
                          name="cvv" id="cvv" autocomplete="off"
                          placeholder="123" required/>
                 </div>
-                <CountrySelect />
               </div>
               <div className="row">
-                <div className="form-group col-md-8">
+                <div className="form-group col-md-4">
                   <label className="form-label" for="coupon_code">Entrer le code promo</label>
                   <input
                     type="text"
@@ -224,13 +239,41 @@ if (process.env.BROWSER) {
                     id="coupon_code"
                     placeholder="Entrez votre code"/>
                 </div>
-                <div className="form-group  col-md-4">
+              </div>
+
+              <div className="row">
+                <div className="form-group col-md-12 conditions-generales">
+                  <input
+                    type="checkbox"
+                    className="checkbox-conditions-generales"
+                    name="accept-conditions-generales"
+                    id="accept-conditions-generales" />
+                  <div className="text-conditions-generales">
+                    J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf" target="_blank">( En savoir plus )</a>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="form-group  col-md-12 droit-retractation">
+                  <input
+                    type="checkbox"
+                    className="checkbox-droit-retractation"
+                    name="droit-retractation"
+                    id="droit-retractation" />
+                  <div className="text-droit-retractation">
+                    Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger le formulaire de rétractation</a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="form-group  col-md-12">
                   <button
                     id="subscribe"
                     type="submit"
                     form="subscription-create"
                     className="button-create-subscription"
-                    >VALIDER
+                    >DÉMARREZ MAINTENANT
                   </button>
                 </div>
               </div>

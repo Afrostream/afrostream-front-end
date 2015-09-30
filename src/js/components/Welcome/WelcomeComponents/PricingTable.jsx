@@ -44,7 +44,7 @@ if (process.env.BROWSER) {
                 <span className="price">6,99€</span>
                 <span className="period">/MOIS</span>
               </div>
-              <div className="plan1-highlight">Prélèvenment mensuel</div>
+              <div className="plan1-highlight">Prélèvement mensuel</div>
               <div className="begin-date-1">A PARTIR DU 1er OCTOBRE</div>
               <ul className="plan-benefits-1">
                 <li>Sans engagement</li>
