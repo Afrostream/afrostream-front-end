@@ -124,8 +124,7 @@ if (process.env.BROWSER) {
         ga.event({
           category: 'User',
           action: 'Subscription',
-          label: 'error',
-          value: message
+          label: message
         });
 
         self.disableForm(false, 2, message);
