@@ -103,17 +103,31 @@ if (process.env.BROWSER) {
       });
 
       dispatch(UserActionCreators.subscribe(formData)).then(function () {
+
         self.disableForm(false, 1);
+
         ga.event({
           category: 'User',
-          action: 'Created an Account'
+          action: 'Subscription',
+          label: 'complete'
         });
+        //FIXME redirect to non https (delete it when full ssl)
+        dispatch(UserActionCreators.unsecureRoute());
+
       }).catch(function (err) {
         let errors = err.response.body;
         let message = '';
         $.each(errors, function (i, error) {
           message += error['#'];
         });
+
+        ga.event({
+          category: 'User',
+          action: 'Subscription',
+          label: 'error',
+          value: message
+        });
+
         self.disableForm(false, 2, message);
       });
     });
@@ -173,7 +187,7 @@ if (process.env.BROWSER) {
                 <div className="card-details">
                   <div className="card-details-text">CARTE BANCAIRE</div>
                   <div className="card-details-img">
-                      <img src="/images/bank-cards.png" />
+                    <img src="/images/bank-cards.png"/>
                   </div>
                 </div>
               </div>
@@ -247,9 +261,11 @@ if (process.env.BROWSER) {
                     type="checkbox"
                     className="checkbox-conditions-generales"
                     name="accept-conditions-generales"
-                    id="accept-conditions-generales" />
+                    id="accept-conditions-generales"/>
+
                   <div className="text-conditions-generales">
-                    J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf" target="_blank">( En savoir plus )</a>
+                    J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf"
+                                                                        target="_blank">( En savoir plus )</a>
                   </div>
                 </div>
               </div>
@@ -259,9 +275,11 @@ if (process.env.BROWSER) {
                     type="checkbox"
                     className="checkbox-droit-retractation"
                     name="droit-retractation"
-                    id="droit-retractation" />
+                    id="droit-retractation"/>
+
                   <div className="text-droit-retractation">
-                    Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger le formulaire de rétractation</a>
+                    Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger
+                    le formulaire de rétractation</a>
                   </div>
                 </div>
               </div>
