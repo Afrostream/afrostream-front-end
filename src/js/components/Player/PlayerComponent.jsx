@@ -169,8 +169,10 @@ if (process.env.BROWSER) {
             });
           }
           if (isIE) {
-            playerData.html5.nativeCaptions = false;
-            playerData.html5.nativeTextTracks = false;
+            playerData.html5 = {
+              nativeCaptions: false,
+              nativeTextTracks: false
+            }
           }
 
           playerData.sources = _.sortBy(playerData.sources, function (k) {
