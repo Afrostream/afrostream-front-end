@@ -158,16 +158,25 @@ if (process.env.BROWSER) {
           //initialize the player
           var playerData = _.merge(videoOptions, config.player);
 
+          // ==== START hacks config
           //si on est sur safari mac on priorise hls plutot que dash
           let isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
+          let isIE = /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
+
           if (isSafari) {
             playerData.sources = _.remove(playerData.sources, function (k) {
               return k.type !== 'application/dash+xml';
             });
           }
+          if (isIE) {
+            playerData.html5.nativeCaptions = false;
+            playerData.html5.nativeTextTracks = false;
+          }
+
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type === 'application/dash+xml';
           });
+          // ==== END hacks config
 
           playerData.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
           playerData.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
@@ -182,11 +191,11 @@ if (process.env.BROWSER) {
                 return track.language === 'fr';
               });
               if (trackFr) {
-                console.log(trackFr);
                 trackFr.mode = 'showing'; // show this track
               }
             }
           );
+
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
