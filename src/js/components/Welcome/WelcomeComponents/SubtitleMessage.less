@@ -1,0 +1,39 @@
+@import (reference) '../../../../styles/config.less';
+
+
+.subtitle-message {
+
+  position: fixed;
+  z-index: 1500;
+  bottom: 11%;
+  height: 50px;
+  background-color: @color-purple;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 14px;
+  padding: 15px 0 5px 0;
+  opacity: 0.6;
+
+  @media all and (max-width: @screen-sm-min) {
+    padding: 5px 0 5px 0;
+  }
+
+  @media all and (max-width: @screen-xs-min) {
+    height: 70px;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.subtitle-button {
+  color: @color-purple;
+  background-color: #999999;
+  border-radius: 12px;
+  margin: 0 0 0 20px;
+  padding: 2px 6px 2px 6px;
+  border: none;
+}
