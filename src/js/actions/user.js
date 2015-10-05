@@ -12,9 +12,10 @@ export function subscribe(data) {
     const user = getState().User.get('user');
     const token = getState().User.get('token');
     let afroToken = getState().User.get('afroToken') || user.get('afro_token');
+    let afroRefreshToken = getState().User.get('afroRefreshToken') || user.get('afro_refresh_token');
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/`, 'POST', data, token, afroToken)
+      res: await api(`/subscriptions/`, 'POST', data, token, afroToken, afroRefreshToken)
     });
   };
 }
@@ -43,10 +44,11 @@ export function logOut() {
   };
 }
 
-const storeToken = function (id_token, refresh_token, afro_token) {
+const storeToken = function (id_token, refresh_token, afro_token, afro_refresh_token) {
   const storageId = config.auth0.token;
   const storageRefreshId = config.auth0.tokenRefresh;
   const storageAfroId = config.apiClient.token;
+  const storageAfroRefreshId = config.apiClient.tokenRefresh;
   if (id_token) {
     localStorage.setItem(storageId, id_token);
   }
@@ -55,6 +57,9 @@ const storeToken = function (id_token, refresh_token, afro_token) {
   }
   if (storageAfroId) {
     localStorage.setItem(storageAfroId, afro_token);
+  }
+  if (storageAfroRefreshId) {
+    localStorage.setItem(storageAfroRefreshId, afro_refresh_token);
   }
 };
 
@@ -83,7 +88,10 @@ const refreshToken = function (getState) {
           // Get here the new JWT via delegationResult.id_token
           // store token
           profile = profile || {};
-          storeToken(delegationResult.id_token, null, profile[config.apiClient.token]);
+          var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
+          var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+          storeToken(delegationResult.id_token, null, tokenAfro, tokenRefreshAfro);
+
           console.log('*** Refreshed token ***', profile);
           return resolve({
             type: ActionTypes.User.getProfile,
@@ -162,14 +170,16 @@ export function showLock(container = null) {
               // store token
               profile = profile || {};
               var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              storeToken(id_token, refresh_token, tokenAfro);
+              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
                 refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token]
+                afroToken: profile[config.apiClient.token],
+                afroRefreshToken: profile[config.apiClient.tokenRefresh]
               });
             }
           );
@@ -202,14 +212,16 @@ export function showSignupLock() {
               // store token
               profile = profile || {};
               var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              storeToken(id_token, refresh_token, tokenAfro);
+              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
                 refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token]
+                afroToken: profile[config.apiClient.token],
+                afroRefreshToken: profile[config.apiClient.tokenRefresh]
               });
             }
           );
@@ -252,14 +264,16 @@ export function showReset(container = null) {
               // store token
               profile = profile || {};
               var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              storeToken(id_token, refresh_token, tokenAfro);
+              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
                 refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token]
+                afroToken: profile[config.apiClient.token],
+                afroRefreshToken: profile[config.apiClient.tokenRefresh]
               });
             }
           );
@@ -304,14 +318,16 @@ export function showSigninLock() {
               // store token
               profile = profile || {};
               var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              storeToken(id_token, refresh_token, tokenAfro);
+              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
               // store refresh_token
               return resolve({
                 type: ActionTypes.User.showLock,
                 user: profile,
                 token: id_token,
                 refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token]
+                afroToken: profile[config.apiClient.token],
+                afroRefreshToken: profile[config.apiClient.tokenRefresh]
               });
             }
           );
