@@ -43,7 +43,7 @@ export default {
       popup: true,
       sso: false,
       authParams: {
-        scope: 'openid offline_access'
+        scope: 'openid'
       }
     },
     signUp: {
@@ -53,7 +53,7 @@ export default {
       popup: true,
       sso: false,
       authParams: {
-        scope: 'openid offline_access'
+        scope: 'openid'
       }
     }
   },
