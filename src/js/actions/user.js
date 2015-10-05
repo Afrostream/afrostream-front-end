@@ -19,11 +19,11 @@ const getQueryString = function (field, url) {
 
 export function secureRoute() {
   return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const token = getState().User.get('token');
-    const tokenId = config.auth0.token;
-    let target = `/?&${tokenId}=${token}`;
     if (canUseDOM && !~location.protocol.indexOf('https:')) {
+      const user = getState().User.get('user');
+      const token = getState().User.get('token');
+      const tokenId = config.auth0.token;
+      let target = `https://${window.location.host}/?&${tokenId}=${token}`;
       return window.location = target;
     }
 
