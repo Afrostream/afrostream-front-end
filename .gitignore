@@ -13,3 +13,6 @@ thumb.db
 
 # Dist
 /dist
+
+# IDE
+.idea
