@@ -23,8 +23,8 @@ export default {
     interval: 10000
   },
   auth0: {
-    clientId: process.env.AUTH0_CLIENT_ID || 'BtSdIqKqfIse0H1dqlpHFJgKIkUG0NpE',
-    domain: process.env.AUTH0_DOMAIN || 'afrostream.eu.auth0.com',
+    clientId: process.env.AUTH0_CLIENT_ID || 'dev',
+    domain: process.env.AUTH0_DOMAIN || '127.0.0.1:6666',
     callbackUrl: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback',
     token: 'afroToken',
     tokenRefresh: 'afroRefreshToken',
