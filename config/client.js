@@ -35,7 +35,7 @@ export default {
       theme: 'default',
       //signupLink: '/signup',
       resetLink: '/reset',
-      connections: ['afrostream-front', 'facebook'],
+      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-staging', 'facebook'],
       socialBigButtons: true,
       disableSignupAction: false,
       rememberLastLogin: false,
@@ -48,7 +48,7 @@ export default {
     },
     signUp: {
       dict: 'fr',
-      connections: ['afrostream-front', 'facebook'],
+      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-staging', 'facebook'],
       socialBigButtons: true,
       popup: true,
       sso: false,
