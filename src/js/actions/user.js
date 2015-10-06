@@ -131,8 +131,7 @@ export function getProfile() {
             });
           });
         }
-      )
-    );
+      ));
   };
 }
 

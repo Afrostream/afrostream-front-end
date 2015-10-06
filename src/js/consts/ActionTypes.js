@@ -10,6 +10,7 @@ export default {
     showSignupLock: null,
     showSigninLock: null,
     logOut: null,
+    me: null,
     subscribe: null
   }),
 
