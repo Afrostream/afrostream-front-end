@@ -12,6 +12,7 @@
     "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --devtool --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
     "mock": "npm run dev --mock",
+    "staging": "AUTH0_CONNECTION=afrostream-front-staging API_END_POINT=http://afr-api-v1-staging.herokuapp.com/api npm run dev",
     "prod": "API_END_POINT=http://afrostream-api-v1.herokuapp.com/api npm run dev",
     "start": "./node_modules/.bin/babel-node lib/pm2",
     "postinstall": "node lib/deploy"

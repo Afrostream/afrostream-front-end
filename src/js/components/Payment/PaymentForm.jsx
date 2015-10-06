@@ -46,7 +46,7 @@ if (process.env.BROWSER) {
       } = this;
 
     const self = this;
-    const user = User.get('user');
+    let user = User.get('user');
     // Disable the submit button
     $('[data-recurly]').removeClass('has-error');
     $('.conditions-generales').removeClass('checkbox-has-error');
@@ -112,7 +112,29 @@ if (process.env.BROWSER) {
           label: 'complete'
         });
         //FIXME redirect to non https (delete it when full ssl)
-        dispatch(UserActionCreators.unsecureRoute());
+        //Force reloading user state auth0
+        //FIXME remove this when kickoff auth0
+        let user = User.get('user');
+        let token = User.get('token');
+        let apiEndpoint = 'https://' + config.auth0.domain;
+
+        $.ajax({
+          method: 'patch',
+          url: apiEndpoint + '/users/' + user.get('user_id'),
+          dataType: 'json',
+          headers: {
+            'Authorization': 'Bearer ' + token
+          },
+          data: user,
+          success: function () {
+            self.dispatch(UserActionCreators.unsecureRoute());
+          },
+          error: function (err) {
+            alert(er);
+            console.log(err);
+          }
+        });
+
 
       }).catch(function (err) {
         let errors = err.response.body;

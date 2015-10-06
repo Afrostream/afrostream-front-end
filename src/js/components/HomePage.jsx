@@ -19,11 +19,11 @@ import Spinner from './Spinner/Spinner';
       else if (!user.get('planCode')) {
         return (<PaymentPage />);
       }
-      else if (typeof user.get('newSubscription') !== 'undefined') {
-        if (user.get('newSubscription') === true) {
-          return (<PaymentSuccess />);
-        }
-      }
+      //else if (typeof user.get('newSubscription') !== 'undefined') {
+      //  if (user.get('newSubscription') === true) {
+      //    return (<PaymentSuccess />);
+      //  }
+      //}
       else {
         if (children) {
           return children;
