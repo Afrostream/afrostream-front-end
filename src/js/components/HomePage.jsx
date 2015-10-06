@@ -14,7 +14,9 @@ import Spinner from './Spinner/Spinner';
 
     if (token) {
       if (!user) {
-        return (<Spinner />);
+        //return (<Spinner />);
+        return (<WelcomePage />);
+        //return (<Spinner />);
       }
       else if (!user.get('planCode')) {
         return (<PaymentPage />);
