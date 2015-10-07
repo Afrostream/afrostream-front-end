@@ -12,6 +12,7 @@
     "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --devtool --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
     "mock": "npm run dev --mock",
+    "staging": "AUTH0_CONNECTION=afrostream-front-staging API_END_POINT=http://afr-api-v1-staging.herokuapp.com/api npm run dev",
     "prod": "API_END_POINT=http://afrostream-api-v1.herokuapp.com/api npm run dev",
     "start": "./node_modules/.bin/babel-node lib/pm2",
     "postinstall": "node lib/deploy"
@@ -36,7 +37,8 @@
     "jshint": "^2.8.0",
     "node-notifier": "^4.2.3",
     "react-hot-loader": "^1.2.8",
-    "webpack-dev-server": "^1.10.0"
+    "webpack-dev-server": "^1.10.0",
+    "browser-sync-webpack-plugin": "^0.1.3"
   },
   "dependencies": {
     "algoliasearch": "^3.7.7",
@@ -52,7 +54,6 @@
     "body-parser": "^1.13.3",
     "bootstrap": "^3.3.5",
     "brfs": "^1.4.0",
-    "browser-sync-webpack-plugin": "^0.1.3",
     "classnames": "^2.1.3",
     "compression": "^1.5.0",
     "compression-webpack-plugin": "^0.2.0",

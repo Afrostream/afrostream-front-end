@@ -27,10 +27,6 @@ export default function createAPI(createRequest) {
     }
 
     query = qs.parse(queryStr);
-    //if (canUseDOM) {
-    //  tokenStore = localStorage.getItem(config.auth0.token);
-    //  tokenAfroAPI = localStorage.getItem(config.apiClient.token);
-    //}
     if (method === 'GET') {
       if (tokenAfroAPI) {
         params.afro_token = tokenAfroAPI;

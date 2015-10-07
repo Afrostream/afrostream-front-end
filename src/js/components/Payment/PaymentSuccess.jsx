@@ -16,6 +16,8 @@ if (process.env.BROWSER) {
       } = this;
 
     dispatch(UserActionCreators.logOut());
+    //FIXME redirect to non https (delete it when full ssl)
+    //dispatch(UserActionCreators.unsecureRoute());
   }
 
   render() {
