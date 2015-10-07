@@ -17,7 +17,8 @@ export default {
   },
   apiClient: {
     urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api',
-    token: 'afro_token'
+    token: 'afro_token',
+    tokenRefresh: 'afro_refresh_token'
   },
   carousel: {
     interval: 10000
@@ -34,7 +35,7 @@ export default {
       theme: 'default',
       //signupLink: '/signup',
       resetLink: '/reset',
-      connections: ['afrostream-front', 'facebook'],
+      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-staging', 'facebook'],
       socialBigButtons: true,
       disableSignupAction: false,
       rememberLastLogin: false,
@@ -42,17 +43,17 @@ export default {
       popup: true,
       sso: false,
       authParams: {
-        scope: 'openid offline_access'
+        scope: 'openid'
       }
     },
     signUp: {
       dict: 'fr',
-      connections: ['afrostream-front', 'facebook'],
+      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-staging', 'facebook'],
       socialBigButtons: true,
       popup: true,
       sso: false,
       authParams: {
-        scope: 'openid offline_access'
+        scope: 'openid'
       }
     }
   },

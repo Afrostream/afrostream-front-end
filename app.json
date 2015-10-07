@@ -4,17 +4,18 @@
   "scripts": {},
   "env": {
     "NODE_ENV": "staging",
-    "API_END_POINT": "https://afrostream-api-v1-staging.herokuapp.com/api",
-    "API_CLIENT_END_POINT": "https://afrostream-api-v1-staging.herokuapp.com/api",
+    "API_END_POINT": "https://afr-api-v1-staging.herokuapp.com/api",
+    "API_CLIENT_END_POINT": "https://afr-api-v1-staging.herokuapp.com/api",
     "AUTH0_CLIENT_ID": "5RcfgoeUhoNRV4cCPokLzXmIf4sI3afZ",
     "AUTH0_DOMAIN": "afrostream.eu.auth0.com",
+    "AUTH0_CONNECTION": "afrostream-front-staging",
     "AUTH0_CALLBACK_URL": "afrostream.herokuapp.com/callback",
     "AUTH0_CONNECTION": "afrostream-front-staging",
     "ALGOLIA_APP_ID": "3OKNPL7ZVA",
     "ALGOLIA_API_KEY": "3e6547172fb6d80b2ae02d6369edfc72",
     "CHROMECAST_ID": "CC1AD845",
     "GA_TRACKING_ID": "UA-47871575-1",
-    "RECURLY_PUBLIC_KEY":"sjc-ZhO4HmKNWszC5LIA8BcsMJ"
+    "RECURLY_PUBLIC_KEY": "sjc-ZhO4HmKNWszC5LIA8BcsMJ"
   },
   "addons": []
 }

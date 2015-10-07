@@ -34,12 +34,13 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.showLock](state, {user,token,refreshToken,afroToken}) {
+  [ActionTypes.User.showLock](state, {user,token,refreshToken,afroToken,afroRefreshToken}) {
     return state.merge({
       ['user']: user,
       ['token']: token,
       ['refreshToken']: refreshToken,
-      ['afroToken']: afroToken
+      ['afroToken']: afroToken,
+      ['afroRefreshToken']: afroRefreshToken
     });
   },
 
