@@ -62,7 +62,9 @@ if (process.env.BROWSER) {
       'navbar-default': true,
       'navbar-fixed-top': true,
       'navbar-hidden': hiddenMode,
-      'navbar-fixed-color': pinned || this.state.pinned || this.context.router.isActive('compte')
+      'navbar-fixed-color': pinned || this.state.pinned
+        || this.context.router.isActive('compte')
+        || this.context.router.isActive('cancel-subscription')
     };
 
     return (

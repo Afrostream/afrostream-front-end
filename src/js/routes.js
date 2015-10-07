@@ -12,6 +12,7 @@ import BrowsePage from './components/Browse/BrowsePage';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 
 import AccountPage from './components/Account/AccountPage';
+import CancelSubscription from './components/Account/CancelSubscription';
 //import AccountEmail from './components/Account/AccountEmail';
 //import AccountPassword from './components/Account/AccountPassword';
 //import AccountCreditCard from './components/Account/AccountCreditCard';
@@ -22,6 +23,7 @@ export default (
   <Route name="app" component={Application}>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
+    <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"

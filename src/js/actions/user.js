@@ -20,6 +20,18 @@ export function subscribe(data) {
   };
 }
 
+export function cancelSubscription() {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().User.get('token');
+    let afroToken = getState().User.get('afroToken') || user.get('afro_token');
+    return async api => ({
+      type: ActionTypes.User.cancelSubscription,
+      res: await api(`/subscriptions/cancel/`, 'GET', null, token, afroToken)
+    });
+  };
+}
+
 export function createLock() {
   return (dispatch, getState) => {
     const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
