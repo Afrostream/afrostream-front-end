@@ -4,6 +4,7 @@ import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from '../../../../config/client';
+import classSet from 'classnames';
 
 if (process.env.BROWSER) {
   require('./AccountPage.less');
@@ -18,33 +19,6 @@ if (process.env.BROWSER) {
 
   state = {cardNumber: null};
 
-  componentDidMount() {
-    //var self = this;
-    //var accountCode = this.props.User.get('user').get('accountCode');
-    //var apiPath = config.apiClient.urlPrefix + '/subscriptions/billing/' + accountCode;
-    //var cardLastFour;
-    //
-    //$.ajax({
-    //  type: 'GET',
-    //  url: apiPath,
-    //  dataType: 'json',
-    //  async: false,
-    //  success: function (responseData) {
-    //
-    //    cardLastFour = responseData.data.billing_info.last_four;
-    //    self.setState({cardNumber: cardLastFour});
-    //  },
-    //  error: function (err) {
-    //
-    //    console.log('**** there was an error ***');
-    //    console.log(err);
-    //    console.log('*** end of error message ***');
-    //    cardLastFour = '';
-    //    self.setState({cardNumber: cardLastFour});
-    //  }
-    //});
-  }
-
   render() {
     const {
       props: {
@@ -53,10 +27,14 @@ if (process.env.BROWSER) {
       } = this;
 
     const user = User.get('user');
-    var plans = {
+    let plans = {
       afrostreammonthly: 'THINK LIKE A MAN',
       afrostreamambassadeurs: 'Ambassadeurs',
       afrostreampremium: 'DO THE RIGHT THING'
+    };
+    let cancelSubscriptionClasses = {
+      'cancel-plan': true,
+      'cancel-plan-hidden': (user.get('planCode') === 'afrostreammonthly' ? false : true)
     };
 
     if (user) {
@@ -90,6 +68,9 @@ if (process.env.BROWSER) {
                 <div className="plan-details-container">
                   <div className="plan-details-plan-name">
                     <div className="plan-name">{plans[user.get('planCode')]}</div>
+                    <div className={classSet(cancelSubscriptionClasses)}>
+                      <Link to="/cancel-subscription">Annuler votre abonnement</Link>
+                    </div>
                   </div>
                 </div>
               </div>
