@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{PropTypes } from 'react';
 import { prepareRoute } from '../../decorators';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
@@ -15,17 +15,17 @@ if (process.env.BROWSER) {
     ];
 })
 @connect(({ User }) => ({User})) class CancelSubscription extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+  }
 
-  getInitialState() {
-
-    return {
-      cardNumber: null
-    }
+  static contextTypes = {
+    router: PropTypes.object.isRequired
   };
 
-  componentDidMount() {
-
-  }
+  state = {
+    subscriptionCancelled: false
+  };
 
   cancelSubscription() {
 
@@ -34,15 +34,25 @@ if (process.env.BROWSER) {
         dispatch
       }
     } = this;
+    let self = this;
 
     dispatch(UserActionCreators.cancelSubscription()).then(function () {
-      console.log('*** appears that cancel subscription was called with success ***');
+      self.setState({
+        subscriptionCancelled: true
+      });
     }).catch(function (err) {
-      console.log('**** there was some sort of error ***');
       console.log(err);
-      console.log('*** end of erors ***');
     });
 
+  }
+
+  navigateToAccountPage(event) {
+    event.preventDefault();
+
+    let router = this.context.router;
+    if (!router.goBack()) {
+      router.transitionTo('/compte');
+    }
   }
 
   render() {
@@ -55,21 +65,44 @@ if (process.env.BROWSER) {
     const user = User.get('user');
 
     if (user) {
-      return (
-        <div className="row-fluid brand-bg">
-          <div className="container brand-bg">
-            <div className="account-credit-card">
-              <h1>Annuler votre abonnement?</h1>
-              <div className="account-credit-card-details">
-                Click "Finish Cancellation" below to cancel your streaming plan.
-                Cancellation will be effective at the end of your current billing period.
+
+      if (this.state.subscriptionCancelled == false) {
+
+        return (
+          <div className="row-fluid brand-bg">
+            <div className="container brand-bg">
+              <div className="account-credit-card">
+                <h1>Annuler votre abonnement?</h1>
+
+                <div className="account-credit-card-details">
+                  Cliquer sur « Annuler l’abonnement » pour suspendre votre abonnement.
+                  Vous n’aurez plus accès au service à la fin de la période de votre abonnement
+                  (soit à partir du jour anniversaire du mois suivant)
+                </div>
+                <button className="button-cancel-subscription" onClick={::this.cancelSubscription}>Annuler l’abonnement</button>
+                <button className="button-return-mon-compte" onClick={::this.navigateToAccountPage}>Retourner à la page de mon compte</button>
               </div>
-              <button onClick={::this.cancelSubscription}>Annuler votre abonnement</button>
-              <Link to="/compte">Retourne a la page de mon compte</Link>
             </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+
+        return (
+          <div className="row-fluid brand-bg">
+            <div className="container brand-bg">
+              <div className="account-credit-card">
+                <h1>Votre abonnement été annulé.</h1>
+
+                <div className="account-credit-card-details">
+                  Vous n’aurez plus accès au service à la fin de la période de votre abonnement
+                  (soit à partir du jour anniversaire du mois suivant)
+                </div>
+                <button className="button-return-mon-compte" onClick={::this.navigateToAccountPage}>Retourner à la page de mon compte</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
     } else {
 
       return (
