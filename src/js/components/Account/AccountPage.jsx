@@ -90,6 +90,9 @@ if (process.env.BROWSER) {
                 <div className="plan-details-container">
                   <div className="plan-details-plan-name">
                     <div className="plan-name">{plans[user.get('planCode')]}</div>
+                    <div className="cancel-plan">
+                      <Link to="/cancel-subscription">Annuler votre abonnement</Link>
+                    </div>
                   </div>
                 </div>
               </div>
