@@ -38,9 +38,8 @@ if (process.env.BROWSER) {
     dispatch(UserActionCreators.cancelSubscription()).then(function () {
       console.log('*** appears that cancel subscription was called with success ***');
     }).catch(function (err) {
-      let errors = err.response.body;
       console.log('**** there was some sort of error ***');
-      console.log(errors);
+      console.log(err);
       console.log('*** end of erors ***');
     });
 

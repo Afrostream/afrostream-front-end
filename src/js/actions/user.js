@@ -26,7 +26,7 @@ export function cancelSubscription() {
     let afroToken = getState().User.get('afroToken') || user.get('afro_token');
     return async api => ({
       type: ActionTypes.User.cancelSubscription,
-      res: await api(`/subscriptions/cancel`, 'GET', null, token, afroToken)
+      res: await api(`/subscriptions/cancel`, 'GET', {}, token, afroToken)
     });
   };
 }

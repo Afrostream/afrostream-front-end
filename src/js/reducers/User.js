@@ -21,7 +21,6 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.User.cancelSubscription](state, { res }) {
-
     const data = res.body;
     return state.merge({
       ['user']: _.merge(state.get('user').toJS(), data)
