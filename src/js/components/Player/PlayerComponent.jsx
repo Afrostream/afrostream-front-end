@@ -10,10 +10,11 @@ if (process.env.BROWSER) {
   require('./PlayerComponent.less');
 }
 
-@connect(({ Video,Movie,Episode,Event }) => ({
+@connect(({ Video,Movie,Episode,Event,User }) => ({
   Video,
   Movie,
-  Event
+  Event,
+  User
 })) class PlayerComponent extends React.Component {
 
   state = {
@@ -122,6 +123,7 @@ if (process.env.BROWSER) {
       props: {
         Video,
         Movie,
+        User,
         videoId,
         movieId
         }
@@ -190,6 +192,11 @@ if (process.env.BROWSER) {
           playerData.hls = _.clone(playerData.flash);
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
+
+          let user = User.get('user');
+          if (user) {
+            playerData.plugins.metrics.user_id = userData.get('user_id');
+          }
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks
