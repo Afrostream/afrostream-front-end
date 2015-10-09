@@ -5,6 +5,9 @@ const customDict = _.merge(dictFr, {
   signin: {
     "title": "S’identifier",
     "action": "Se connecter"
+  },
+  signup: {
+    "serverErrorText": "Votre compte existe déjà. Appuyer sur le bouton connexion pour activer votre abonnement."
   }
 });
 
