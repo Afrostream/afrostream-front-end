@@ -195,7 +195,11 @@ if (process.env.BROWSER) {
 
           let user = User.get('user');
           if (user) {
-            playerData.plugins.metrics.user_id = userData.get('user_id');
+            let userId = user.get('user_id');
+            userId = _.find(userId.split('|'), function (val) {
+              return parseInt(val, 10);
+            });
+            playerData.plugins.metrics.user_id = parseInt(userId, 10);
           }
 
           let player = videojs('afrostream-player', playerData).ready(function () {
