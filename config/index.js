@@ -2,6 +2,16 @@
 import _ from 'lodash';
 import client from './client';
 
+// env
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV;
+
+// chargement de la conf de staging (lorsque l'on est en local)
+if (process.env.NODE_ENV === 'staging') {
+  const herokuConfig = require('../app.json');
+  _.merge(process.env, herokuConfig.env);
+}
+
 const config = _.merge(
   {
     /**
