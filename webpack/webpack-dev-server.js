@@ -37,7 +37,6 @@ const serverOptions = {
 
 compiler.plugin('done', (stats) => {
   process.env.HASH_FILE = stats.hash;
-  console.log(process.env.HASH_FILE)
   if (stats.hasErrors()) {
     console.error('WebpackError');
     stats.toJson().errors.forEach(err => console.error(err));
