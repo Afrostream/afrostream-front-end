@@ -73,7 +73,7 @@ if (process.env.BROWSER) {
       let video = document.createElement('video');
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
-      video.crossOrigin = true;
+      video.crossOrigin = 'anonymous';//true;
       video.setAttribute('crossorigin', true);
 
       var trackOptions = {
@@ -158,16 +158,31 @@ if (process.env.BROWSER) {
           //initialize the player
           var playerData = _.merge(videoOptions, config.player);
 
+          // ==== START hacks config
           //si on est sur safari mac on priorise hls plutot que dash
           let isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
+          let isIE = /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
+
           if (isSafari) {
             playerData.sources = _.remove(playerData.sources, function (k) {
               return k.type !== 'application/dash+xml';
             });
           }
+
+          if (isIE) {
+            if (navigator.appVersion.indexOf('Windows NT 6.1') != -1) {
+              playerData.flash.params.wmode = 'opaque';
+            }
+            playerData.html5 = {
+              nativeCaptions: false,
+              nativeTextTracks: false
+            }
+          }
+
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type === 'application/dash+xml';
           });
+          // ==== END hacks config
 
           playerData.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
           playerData.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';

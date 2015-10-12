@@ -44,8 +44,6 @@ if (canUseDOM) {
         <Header {...this.props}/>
         <SideBar />
         <CookieMessage />
-        <SubtitleMessage />
-
         <div id="page-content-wrapper" className="container-fluid">
           {children}
           <Footer />
