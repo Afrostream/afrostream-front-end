@@ -170,7 +170,9 @@ if (process.env.BROWSER) {
           }
 
           if (isIE) {
-            playerData.flash.params.wmode = 'opaque';
+            if (navigator.appVersion.indexOf('Windows NT 6.1') != -1) {
+              playerData.flash.params.wmode = 'opaque';
+            }
             playerData.html5 = {
               nativeCaptions: false,
               nativeTextTracks: false
