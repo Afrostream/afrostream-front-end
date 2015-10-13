@@ -24,6 +24,10 @@
     padding-right: 70px;
     padding-left: 20px;
 
+    @media all and (max-width: @screen-lg-min) {
+      padding-right: 50px;
+    }
+
     @media all and (max-width: @screen-md-min) {
       width: 100%;
       float: none;
@@ -105,11 +109,16 @@
     color: #2E1237;
 
     @media all and (max-width: @screen-sm-min) {
-      width: 100%;
+      width: 70%;
       margin-top: 10px;
-      margin-left: 0px;
+      margin-left: 15%;
       margin-right: 0px;
       transform: translateY(5%);
+    }
+
+    @media all and (max-width: @screen-xs-min) {
+      width: 100%;
+      margin-left: 0%;
     }
   }
 

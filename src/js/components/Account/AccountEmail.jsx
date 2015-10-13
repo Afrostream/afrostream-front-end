@@ -25,84 +25,6 @@ if (process.env.BROWSER) {
 
   componentDidMount() {
 
-    var tokenData = this.getAuthToken();
-    console.log('*** token data ***');
-    console.log(tokenData);
-    console.log('*** end of token data ***');
-  }
-
-  getAuthToken() {
-
-    var self = this;
-    var clientData = {
-      'client_id': config.auth0.client_id,
-      'client_secret': 'KYmL01KW5HczO-XKpltlVUONRCXtynJQ0nFqiGNOsjN9c3RsBAnr5_T-rnnc7DYY',
-      'grant_type': 'client_credentials'
-    };
-    var returnToken;
-
-    clientData = JSON.stringify(clientData);
-
-    var generateTokenUrl = 'https://' + config.auth0.domain + '/oauth/token';
-
-    $.ajax({
-      type: 'POST',
-      url: generateTokenUrl,
-      data: clientData,
-      crossDomain: true,
-      contentType: 'application/json',
-      success: function (responseData) {
-
-        console.log('*** there was some kind of success in getAuthToken ***');
-        returnToken = responseData;
-
-      },
-      error: function (err) {
-
-        console.log('**** there was an error ***');
-        console.log(err);
-        console.log('*** end of error message ***');
-        returnToken = err;
-      }
-    });
-
-    return returnToken;
-  }
-
-  changeEmail(email) {
-
-    var self = this;
-    var userId = this.props.User.get('user').get('user_id');
-    var auth0Path = 'https://afrostream.eu.auth0.com/api/users/' + userId + '/email';
-    var emailData = {"email": email, "verify": true}
-
-    $.ajax({
-      type: 'POST',
-      url: userId,
-      data: emailData,
-      contentType: 'application/json',
-      success: function () {
-
-        console.log('*** there was some kind of success ***');
-        self.setState({
-          subscriptionStatus: 'subscribed',
-          message: 'You have been subscribed! Thank you.'
-        });
-      },
-      error: function (err) {
-        var errorMessage;
-
-        console.log('**** there was an error ***');
-        console.log(err);
-        console.log('*** end of error message ***');
-
-        self.setState({
-          subscriptionStatus: 'not subscribed',
-          message: err.responseText
-        });
-      }
-    });
-
   }
 
   renderForm() {
@@ -133,8 +55,7 @@ if (process.env.BROWSER) {
                 id="button-change-email"
                 type="submit"
                 form="change-email"
-                className="button-change-email"
-                onClick={this.changeEmail}>ENREGISTRER
+                className="button-change-email">ENREGISTRER
               </button>
             </form>
           </div>
@@ -153,7 +74,7 @@ if (process.env.BROWSER) {
     const user = User.get('user');
 
     if (user) {
-      debugger;
+
       return (
         <div className="row-fluid">
           <div className="container">
