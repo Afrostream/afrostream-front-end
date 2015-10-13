@@ -47,6 +47,8 @@ if (process.env.BROWSER) {
 
     const self = this;
     const user = User.get('user');
+    const cardNumber = $('.recurly-cc-number').val();
+    const excludedCards = ['visaelectron', 'maestro'];
     // Disable the submit button
     $('[data-recurly]').removeClass('has-error');
     $('.conditions-generales').removeClass('checkbox-has-error');
@@ -65,6 +67,13 @@ if (process.env.BROWSER) {
     if (!$('.checkbox-droit-retractation').is(':checked')) {
       $('#errors').text("Vous devez cocher toutes les cases pour confirmer l'abonnement.");
       $('.droit-retractation').addClass('checkbox-has-error');
+      self.disableForm(false);
+      return;
+    }
+    //Excluded cart type message
+    if (~excludedCards.indexOf(window.$.payment.cardType(cardNumber))) {
+      $('#errors').text("Ce type ne carte n'est pas pris en charge actuellement");
+      $('.recurly-cc-number').addClass('has-error');
       self.disableForm(false);
       return;
     }
@@ -173,7 +182,7 @@ if (process.env.BROWSER) {
                 <div className="card-details">
                   <div className="card-details-text">CARTE BANCAIRE</div>
                   <div className="card-details-img">
-                      <img src="/images/bank-cards.png" />
+                    <img src="/images/bank-cards.png"/>
                   </div>
                 </div>
               </div>
@@ -247,9 +256,11 @@ if (process.env.BROWSER) {
                     type="checkbox"
                     className="checkbox-conditions-generales"
                     name="accept-conditions-generales"
-                    id="accept-conditions-generales" />
+                    id="accept-conditions-generales"/>
+
                   <div className="text-conditions-generales">
-                    J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf" target="_blank">( En savoir plus )</a>
+                    J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf"
+                                                                        target="_blank">( En savoir plus )</a>
                   </div>
                 </div>
               </div>
@@ -259,9 +270,11 @@ if (process.env.BROWSER) {
                     type="checkbox"
                     className="checkbox-droit-retractation"
                     name="droit-retractation"
-                    id="droit-retractation" />
+                    id="droit-retractation"/>
+
                   <div className="text-droit-retractation">
-                    Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger le formulaire de rétractation</a>
+                    Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger
+                    le formulaire de rétractation</a>
                   </div>
                 </div>
               </div>
