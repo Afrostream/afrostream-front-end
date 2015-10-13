@@ -36,7 +36,7 @@ if (process.env.BROWSER) {
     var self = this;
     var clientData = {
       'client_id': config.auth0.client_id,
-      'client_secret': 'KYmL01KW5HczO-XKpltlVUONRCXtynJQ0nFqiGNOsjN9c3RsBAnr5_T-rnnc7DYY',
+      'client_secret': '',
       'grant_type': 'client_credentials'
     };
     var returnToken;
