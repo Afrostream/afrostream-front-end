@@ -3,18 +3,17 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
+  'lock': null,
   'user': null,
-  'token': null
+  'token': null,
+  'refreshToken': null
 });
 
 
 export default createReducer(initialState, {
 
   [ActionTypes.User.subscribe](state, { res }) {
-    let subscriptionResponse = res.body;
-    subscriptionResponse['newSubscription'] = (typeof res.body['_id'] !== 'undefined') ? true : false;
-    const data = subscriptionResponse;
-
+    const data = res.body;
     return state.merge({
       ['user']: _.merge(state.get('user').toJS(), data)
     });
@@ -43,9 +42,7 @@ export default createReducer(initialState, {
     return state.merge({
       ['user']: user,
       ['token']: token,
-      ['refreshToken']: refreshToken,
-      ['afroToken']: afroToken,
-      ['afroRefreshToken']: afroRefreshToken
+      ['refreshToken']: refreshToken
     });
   },
 

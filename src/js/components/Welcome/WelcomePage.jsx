@@ -3,7 +3,12 @@ import { prepareRoute } from '../../decorators';
 import WelcomeHeader from './WelcomeComponents/WelcomeHeader';
 import Devices from './WelcomeComponents/Devices';
 import PricingTable from './WelcomeComponents/PricingTable';
+import Spinner from '../Spinner/Spinner';
 import * as EventActionCreators from '../../actions/event';
+
+if (process.env.BROWSER) {
+  require('./WelcomePage.less');
+}
 
 @prepareRoute(async function ({ store }) {
   return await * [
@@ -11,10 +16,36 @@ import * as EventActionCreators from '../../actions/event';
     ];
 }) class WelcomePage extends React.Component {
 
+  static propTypes = {
+    spinner: React.PropTypes.bool
+  };
+
+  static defaultProps = {
+    spinner: false
+  };
+
+
+  state = {
+    spinner: this.props.spinner
+  };
+
+  componentDidMount() {
+    this.setState({
+      spinner: this.props.spinner
+    });
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      spinner: this.props.spinner
+    });
+  }
+
   render() {
     let promoCode = (typeof this.props.promoCode !== 'undefined') ? this.props.promoCode : '';
     return (
-      <div>
+      <div className="welcome-page">
+        {this.state.spinner ? <Spinner /> : <div />}
         <WelcomeHeader promoCode={promoCode} />
         <Devices />
         <PricingTable />

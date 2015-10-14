@@ -9,7 +9,6 @@ export function toggleNext() {
     if (next > total - 1) {
       next = 0;
     }
-    console.log(next, total);
     return {
       type: ActionTypes.Slides.toggleNext,
       page: next
@@ -26,7 +25,6 @@ export function togglePrev() {
     if (prev < 0) {
       prev = total - 1;
     }
-    console.log(prev);
     return {
       type: ActionTypes.Slides.togglePrev,
       page: prev

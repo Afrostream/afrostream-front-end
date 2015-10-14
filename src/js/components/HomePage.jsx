@@ -43,6 +43,8 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     const token = User.get('token');
     const user = User.get('user');
 
+    if (user) {
+      if (!user.get('planCode')) {
     var pathName = '';
     if (canUseDOM) {
       pathName = document.location.pathname;
@@ -73,6 +75,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     } else {
       return (<WelcomePage />);
     }
+    return (<WelcomePage spinner={token}/>);
   }
 
 }

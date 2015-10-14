@@ -63,6 +63,7 @@ import config from '../../../../config';
 
         if (justSubscribed === true) {
 
+        if (!hasFormule) {
           return (<div />);
         } else if (!hasFormule){
           return this.goToHomePage();
