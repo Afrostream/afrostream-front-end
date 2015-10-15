@@ -4,7 +4,8 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
 import webpackConfig from './webpack.config.js';
 import config from '../config';
-//
+import herokuConfig from '../app.json';
+
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 const { webpackDevServer: { host, port } } = config;
@@ -14,6 +15,12 @@ const devConfig = merge({}, webpackConfig, {
   devtool: 'eval-source-map',
   debug: true
 });
+
+// chargement de la conf de staging (lorsque l'on est en local)
+if (process.env.API_END_POINT === herokuConfig.env.API_END_POINT) {
+  delete herokuConfig.env.NODE_ENV;
+  merge(process.env, herokuConfig.env);
+}
 
 devConfig.entry.main = [
   `webpack-dev-server/client?${webpackDevServerUrl}`,
