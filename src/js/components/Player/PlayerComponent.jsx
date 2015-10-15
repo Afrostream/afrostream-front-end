@@ -206,8 +206,8 @@ if (process.env.BROWSER) {
                 return k !== 'html5';
               });
             }
-            console.log(playerData.techOrder);
           }
+          console.log(playerData.techOrder);
 
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type === 'application/dash+xml';
