@@ -20,100 +20,6 @@ if (process.env.BROWSER) {
 
   state = {passwordChanged: null};
 
-
-  changePassword() {
-    $( "#change-password" ).submit(function(event) {
-      event.preventDefault();
-    });
-
-    var self = this;
-    var userId = $('#user-id').val();
-
-    var pass1 = $('#new-password').val();
-    var pass2 = $('#confirm-new-password').val();
-
-    if (pass1 === pass2) {
-      $('#errors-change-password').html('&nbsp;');
-
-    } else {
-      $('#errors-change-password').text('les mots de passe saisis ne sont pas identiques');
-      return;
-    }
-
-    var auth0Path = 'https://' + config.auth0.domain + '/api/users/' + userId + '/password';
-    var token = getAuthToken();
-    var emailData = {'password': pass2, 'verify': true};
-    var authHeader = 'Bearer ' + token.access_token;
-    console.log('auth header');
-
-    emailData = JSON.stringify(emailData);
-
-    $.ajax({
-      type: 'PUT',
-      url: auth0Path,
-      data: emailData,
-      contentType: 'application/json',
-      headers: {
-        'Authorization': authHeader
-      },
-      success: function (responseData) {
-
-        console.log('*** there was some kind of success ***');
-        console.log(responseData);
-        self.setState({
-          passwordChanged: true
-        });
-
-      },
-      error: function (err) {
-
-        console.log('**** there was an error ***');
-        console.log(err);
-        console.log('*** end of error message ***');
-        self.setState({
-          passwordChanged: false
-        });
-      }
-    });
-
-    function getAuthToken() {
-
-      var clientData = {
-        'client_id': config.auth0.clientId,
-        'client_secret': 'KYmL01KW5HczO-XKpltlVUONRCXtynJQ0nFqiGNOsjN9c3RsBAnr5_T-rnnc7DYY',
-        'grant_type': 'client_credentials'
-      };
-      var returnToken;
-
-      clientData = JSON.stringify(clientData);
-
-      $.ajax({
-        type: 'POST',
-        url: 'https://afrostream.eu.auth0.com/oauth/token',
-        data: clientData,
-        crossDomain: true,
-        async: false,
-        contentType: 'application/json',
-        success: function (responseData) {
-
-          console.log('*** there was some kind of success in getAuthToken ***');
-          returnToken = responseData;
-
-        },
-        error: function (err) {
-
-          console.log('**** there was an error ***');
-          console.log(err);
-          console.log('*** end of error message ***');
-          returnToken = err;
-        }
-      });
-
-      return returnToken;
-    }
-
-  }
-
   render() {
     const {
       props: {
@@ -125,7 +31,6 @@ if (process.env.BROWSER) {
     console.log('*** the user id ***');
 
     if (user) {
-      debugger;
 
       if (this.state.passwordChanged === null) {
         return (
@@ -162,8 +67,7 @@ if (process.env.BROWSER) {
                       id="button-change-password"
                       type="submit"
                       form="change-password"
-                      className="button-change-password"
-                      onClick={::this.changePassword}>ENREGISTRER
+                      className="button-change-password">ENREGISTRER
                     </button>
                   </form>
                 </div>
