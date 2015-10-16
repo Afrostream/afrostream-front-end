@@ -3,15 +3,24 @@
 
 .payment-error {
   color: #453050;
+  background-color: #d4d0d6;
   position: relative;
   display: block;
   margin-left: auto;
   margin-right: auto;
-  padding: 60px 30px 30px 45px;
+  padding: 10% 30px 30% 45px;
   width: 100%;
   height: 100%;
   font-size: 12px;
   text-align: center;
+
+  @media all and (max-width: @screen-lg-min) {
+    padding: 25% 30px 15% 45px;
+  }
+
+  @media all and (max-width: @screen-xs-min) {
+    padding: 10% 30px 5% 45px;
+  }
 
   h3 {
     margin-bottom: 20px;

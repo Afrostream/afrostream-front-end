@@ -29,11 +29,14 @@ if (process.env.BROWSER) {
       recurly.configure(config.recurly.key);
     } catch (err) {
       console.log(err);
+
       if (typeof err.code !== 'undefined' && err.code !== 'already-configured') {
+
         this.setState({
           hasRecurly: false
         });
       }
+      
       return;
     }
   }
