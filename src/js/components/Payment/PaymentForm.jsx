@@ -36,7 +36,7 @@ if (process.env.BROWSER) {
           hasRecurly: false
         });
       }
-      
+
       return;
     }
   }
