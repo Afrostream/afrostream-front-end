@@ -1,6 +1,5 @@
 import React from 'react';
 import SelectPlan from './SelectPlan';
-import IntercomScript from './IntercomScript';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as EventActionCreators from '../../actions/event';
 import { prepareRoute } from '../../decorators';
