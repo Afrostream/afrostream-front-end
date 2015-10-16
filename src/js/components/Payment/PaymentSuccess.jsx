@@ -8,6 +8,7 @@ if (process.env.BROWSER) {
 
 @connect(({ User }) => ({User}))  class PaymentSuccess extends React.Component {
 
+
   logOut() {
     const {
       props: {
