@@ -8,6 +8,10 @@ if (process.env.BROWSER) {
 
 @connect(({ User }) => ({User}))  class PaymentSuccess extends React.Component {
 
+  componentWillUnmount() {
+    document.getElementById('intercom-container').style.display = 'none';
+  }
+
   logOut() {
     const {
       props: {

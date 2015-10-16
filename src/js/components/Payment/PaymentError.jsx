@@ -4,7 +4,7 @@ if (process.env.BROWSER) {
   require('./PaymentError.less');
 }
 
-class PaymentSuccess extends React.Component {
+class PaymentError extends React.Component {
 
   static propTypes = {
     title: React.PropTypes.string,
@@ -19,6 +19,10 @@ class PaymentSuccess extends React.Component {
     link: '/',
     linkMessage: 'merci de réessayer'
   };
+
+  componentWillUnmount() {
+    document.getElementById('intercom-container').style.display = 'none';
+  }
 
   render() {
 
@@ -38,4 +42,4 @@ class PaymentSuccess extends React.Component {
 
 }
 
-export default PaymentSuccess;
+export default PaymentError;
