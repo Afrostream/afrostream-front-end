@@ -10,10 +10,11 @@ if (process.env.BROWSER) {
   require('./PlayerComponent.less');
 }
 
-@connect(({ Video,Movie,Episode,Event }) => ({
+@connect(({ Video,Movie,Episode,Event,User }) => ({
   Video,
   Movie,
-  Event
+  Event,
+  User
 })) class PlayerComponent extends React.Component {
 
   state = {
@@ -122,6 +123,7 @@ if (process.env.BROWSER) {
       props: {
         Video,
         Movie,
+        User,
         videoId,
         movieId
         }
@@ -160,16 +162,35 @@ if (process.env.BROWSER) {
 
           // ==== START hacks config
           //si on est sur safari mac on priorise hls plutot que dash
-          let isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
-          let isIE = /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
+          const userAgent = (window.navigator && navigator.userAgent) || "";
+          const detect = function (pattern) {
+            return function () {
+              return (pattern).test(userAgent);
+            };
+          };
 
-          if (isSafari) {
+          const ua = {
+            isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
+            isFirefox: detect(/mozilla.*\Wfirefox\W/i),
+            isIE: function () {
+              if (navigator.appName === 'Microsoft Internet Explorer') {
+                return true;
+              } else if (detect(/\bTrident\b/)) {
+                return true;
+              } else {
+                return false;
+              }
+            },
+            isSafari: detect(/webkit\W(?!.*chrome).*safari\W/i)
+          };
+
+          if (ua.isSafari()) {
             playerData.sources = _.remove(playerData.sources, function (k) {
               return k.type !== 'application/dash+xml';
             });
           }
 
-          if (isIE) {
+          if (ua.isIE()) {
             if (navigator.appVersion.indexOf('Windows NT 6.1') != -1) {
               playerData.flash.params.wmode = 'opaque';
             }
@@ -178,6 +199,15 @@ if (process.env.BROWSER) {
               nativeTextTracks: false
             }
           }
+          if (ua.isChrome()) {
+            let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
+            if (version == 46) {
+              playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
+                return k !== 'html5';
+              });
+            }
+          }
+          console.log(playerData.techOrder);
 
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type === 'application/dash+xml';
@@ -190,6 +220,15 @@ if (process.env.BROWSER) {
           playerData.hls = _.clone(playerData.flash);
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
+
+          let user = User.get('user');
+          if (user) {
+            let userId = user.get('user_id');
+            userId = _.find(userId.split('|'), function (val) {
+              return parseInt(val, 10);
+            });
+            playerData.plugins.metrics.user_id = parseInt(userId, 10);
+          }
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks

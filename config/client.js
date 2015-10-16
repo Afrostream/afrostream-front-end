@@ -124,7 +124,10 @@ export default {
           "subtitle": "Subtitle"
         }
       },
-      "ga": {}
+      "ga": {},
+      "metrics": {
+        'user_id': ''
+      }
     }
   }
 };

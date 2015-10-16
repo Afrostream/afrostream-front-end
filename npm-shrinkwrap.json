@@ -7017,66 +7017,66 @@
     },
     "express-session": {
       "version": "1.11.3",
-      "from": "https://registry.npmjs.org/express-session/-/express-session-1.11.3.tgz",
+      "from": "express-session@*",
       "resolved": "https://registry.npmjs.org/express-session/-/express-session-1.11.3.tgz",
       "dependencies": {
         "cookie": {
           "version": "0.1.3",
-          "from": "https://registry.npmjs.org/cookie/-/cookie-0.1.3.tgz",
+          "from": "cookie@0.1.3",
           "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.1.3.tgz"
         },
         "cookie-signature": {
           "version": "1.0.6",
-          "from": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz",
+          "from": "cookie-signature@1.0.6",
           "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz"
         },
         "crc": {
           "version": "3.3.0",
-          "from": "https://registry.npmjs.org/crc/-/crc-3.3.0.tgz",
+          "from": "crc@3.3.0",
           "resolved": "https://registry.npmjs.org/crc/-/crc-3.3.0.tgz"
         },
         "debug": {
           "version": "2.2.0",
-          "from": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz",
+          "from": "debug@>=2.2.0 <2.3.0",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz",
           "dependencies": {
             "ms": {
               "version": "0.7.1",
-              "from": "https://registry.npmjs.org/ms/-/ms-0.7.1.tgz",
+              "from": "ms@0.7.1",
               "resolved": "https://registry.npmjs.org/ms/-/ms-0.7.1.tgz"
             }
           }
         },
         "depd": {
           "version": "1.0.1",
-          "from": "https://registry.npmjs.org/depd/-/depd-1.0.1.tgz",
+          "from": "depd@>=1.0.1 <1.1.0",
           "resolved": "https://registry.npmjs.org/depd/-/depd-1.0.1.tgz"
         },
         "on-headers": {
-          "version": "1.0.0",
-          "from": "https://registry.npmjs.org/on-headers/-/on-headers-1.0.0.tgz",
-          "resolved": "https://registry.npmjs.org/on-headers/-/on-headers-1.0.0.tgz"
+          "version": "1.0.1",
+          "from": "on-headers@>=1.0.0 <1.1.0",
+          "resolved": "https://registry.npmjs.org/on-headers/-/on-headers-1.0.1.tgz"
         },
         "parseurl": {
           "version": "1.3.0",
-          "from": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.0.tgz",
+          "from": "parseurl@>=1.3.0 <1.4.0",
           "resolved": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.0.tgz"
         },
         "uid-safe": {
           "version": "2.0.0",
-          "from": "https://registry.npmjs.org/uid-safe/-/uid-safe-2.0.0.tgz",
+          "from": "uid-safe@>=2.0.0 <2.1.0",
           "resolved": "https://registry.npmjs.org/uid-safe/-/uid-safe-2.0.0.tgz",
           "dependencies": {
             "base64-url": {
               "version": "1.2.1",
-              "from": "https://registry.npmjs.org/base64-url/-/base64-url-1.2.1.tgz",
+              "from": "base64-url@1.2.1",
               "resolved": "https://registry.npmjs.org/base64-url/-/base64-url-1.2.1.tgz"
             }
           }
         },
         "utils-merge": {
           "version": "1.0.0",
-          "from": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.0.tgz",
+          "from": "utils-merge@1.0.0",
           "resolved": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.0.tgz"
         }
       }
@@ -7141,7 +7141,7 @@
     },
     "fs": {
       "version": "0.0.2",
-      "from": "https://registry.npmjs.org/fs/-/fs-0.0.2.tgz",
+      "from": "fs@0.0.2",
       "resolved": "https://registry.npmjs.org/fs/-/fs-0.0.2.tgz"
     },
     "gsap": {
@@ -14975,6 +14975,18 @@
       "from": "transform-loader@>=0.2.2 <0.3.0",
       "resolved": "https://registry.npmjs.org/transform-loader/-/transform-loader-0.2.3.tgz"
     },
+    "ua-parser": {
+      "version": "0.3.5",
+      "from": "ua-parser@*",
+      "resolved": "https://registry.npmjs.org/ua-parser/-/ua-parser-0.3.5.tgz",
+      "dependencies": {
+        "yamlparser": {
+          "version": "0.0.2",
+          "from": "yamlparser@>=0.0.2",
+          "resolved": "https://registry.npmjs.org/yamlparser/-/yamlparser-0.0.2.tgz"
+        }
+      }
+    },
     "url-loader": {
       "version": "0.5.6",
       "from": "https://registry.npmjs.org/url-loader/-/url-loader-0.5.6.tgz",
@@ -15006,8 +15018,8 @@
     },
     "videojs-afrostream": {
       "version": "0.17.5",
-      "from": "git+https://github.com/Afrostream/videojs-afrostream.git#switch-bitrate",
-      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#392cff07ae34877587fc20345fe96afa3674faf8",
+      "from": "git+https://github.com/Afrostream/videojs-afrostream.git#metrics",
+      "resolved": "git+https://github.com/Afrostream/videojs-afrostream.git#6267f4063ff10cd33e5b367e5f519213d70b932c",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
@@ -15024,10 +15036,15 @@
           "from": "git+https://github.com/Afrostream/videojs-chromecast.git#master",
           "resolved": "git+https://github.com/Afrostream/videojs-chromecast.git#7da686d7d91998395943b53380846c12aad7854a"
         },
+        "videojs-metrics": {
+          "version": "0.0.0",
+          "from": "git+https://github.com/Afrostream/videojs-metrics.git#master",
+          "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#100f1baf76de175253efe505a425f2f0be65cbc5"
+        },
         "videojs-contrib-dash": {
           "version": "1.1.1",
           "from": "git+https://github.com/Afrostream/videojs-contrib-dash.git#switch-bitrate",
-          "resolved": "git+https://github.com/Afrostream/videojs-contrib-dash.git#2d4a06d5b51637158cbaa789a981bfb4819527cb"
+          "resolved": "git+https://github.com/Afrostream/videojs-contrib-dash.git#6e4a0e84904e300f5e6955389a26eb37b9c63539"
         },
         "videojs-contrib-media-sources": {
           "version": "1.0.0",
@@ -15038,6 +15055,23 @@
           "version": "5.0.0-rc1-sv",
           "from": "git+https://github.com/Afrostream/video-js-swf.git#feature/stage-video-hardware-accelerated",
           "resolved": "git+https://github.com/Afrostream/video-js-swf.git#dae2815691de9775321212b6254c00082e152bbe"
+        },
+        "video.js": {
+          "version": "4.12.15",
+          "from": "video.js@>=4.5.0 <5.0.0",
+          "resolved": "https://registry.npmjs.org/video.js/-/video.js-4.12.15.tgz",
+          "dependencies": {
+            "videojs-swf": {
+              "version": "4.7.5",
+              "from": "videojs-swf@4.7.5",
+              "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.5.tgz"
+            },
+            "vtt.js": {
+              "version": "0.12.1",
+              "from": "git+https://github.com/gkatsev/vtt.js.git#vjs-v0.12.1",
+              "resolved": "git+https://github.com/gkatsev/vtt.js.git#8ea664e257ec7b5c092f58ac989e3134ff536a7a"
+            }
+          }
         }
       }
     },
