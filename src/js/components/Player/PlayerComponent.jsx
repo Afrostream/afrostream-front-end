@@ -188,6 +188,9 @@ if (process.env.BROWSER) {
             playerData.sources = _.remove(playerData.sources, function (k) {
               return k.type !== 'application/dash+xml';
             });
+            playerData.techOrder = _.remove(playerData.techOrder, function (k, f) {
+              return k !== 'hls' && k !== 'dash';
+            });
           }
 
           if (ua.isIE()) {
