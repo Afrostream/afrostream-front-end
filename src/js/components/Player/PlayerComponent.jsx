@@ -173,21 +173,19 @@ if (process.env.BROWSER) {
             isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
             isFirefox: detect(/mozilla.*\Wfirefox\W/i),
             isIE: function () {
-              if (navigator.appName === 'Microsoft Internet Explorer') {
-                return true;
-              } else if (detect(/\bTrident\b/)) {
-                return true;
-              } else {
-                return false;
-              }
+              return /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
             },
-            isSafari: detect(/webkit\W(?!.*chrome).*safari\W/i)
+            isSafari: function () {
+              return navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
+            }
           };
 
           if (ua.isSafari()) {
             playerData.sources = _.remove(playerData.sources, function (k) {
               return k.type !== 'application/dash+xml';
             });
+
+            delete playerData.plugins.metrics;
           }
 
           if (ua.isIE()) {
@@ -199,6 +197,7 @@ if (process.env.BROWSER) {
               nativeTextTracks: false
             }
           }
+
           if (ua.isChrome()) {
             let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
             if (version == 46) {
@@ -207,7 +206,6 @@ if (process.env.BROWSER) {
               });
             }
           }
-          console.log(playerData.techOrder);
 
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type === 'application/dash+xml';
@@ -222,7 +220,7 @@ if (process.env.BROWSER) {
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
           let user = User.get('user');
-          if (user) {
+          if (user && playerData.plugins.metrics) {
             let userId = user.get('user_id');
             userId = _.find(userId.split('|'), function (val) {
               return parseInt(val, 10);
