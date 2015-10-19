@@ -224,7 +224,7 @@ if (process.env.BROWSER) {
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
           let user = User.get('user');
-          if (user) {
+          if (user && playerData.plugins.metrics) {
             let userId = user.get('user_id');
             userId = _.find(userId.split('|'), function (val) {
               return parseInt(val, 10);
