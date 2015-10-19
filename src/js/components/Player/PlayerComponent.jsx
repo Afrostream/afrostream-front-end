@@ -169,15 +169,15 @@ if (process.env.BROWSER) {
             };
           };
 
-          let isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
-          let isIE = /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
-
-
           const ua = {
             isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
             isFirefox: detect(/mozilla.*\Wfirefox\W/i),
-            isIE: /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent),
-            isSafari: navigator.vendor && navigator.vendor.indexOf('Apple') > -1
+            isIE: function () {
+              return /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
+            },
+            isSafari: function () {
+              return navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
+            }
           };
 
           if (ua.isSafari()) {
