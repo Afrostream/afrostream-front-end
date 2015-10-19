@@ -60,6 +60,10 @@ export default {
       }
     }
   },
+  fastly: {
+    serviceId: process.env.FASTLY_SERVICE_ID || 'hc67hHS6Htz3hw4rEVvcc',
+    key: process.env.FASTLY_API_KEY || '642762a026b388ab03a60d3fa55b2877'
+  },
   recurly: {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
   },
