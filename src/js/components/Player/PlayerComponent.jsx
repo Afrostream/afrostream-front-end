@@ -169,19 +169,15 @@ if (process.env.BROWSER) {
             };
           };
 
+          let isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
+          let isIE = /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
+
+
           const ua = {
             isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
             isFirefox: detect(/mozilla.*\Wfirefox\W/i),
-            isIE: function () {
-              if (navigator.appName === 'Microsoft Internet Explorer') {
-                return true;
-              } else if (detect(/\bTrident\b/)) {
-                return true;
-              } else {
-                return false;
-              }
-            },
-            isSafari: detect(/webkit\W(?!.*chrome).*safari\W/i)
+            isIE: /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent),
+            isSafari: navigator.vendor && navigator.vendor.indexOf('Apple') > -1
           };
 
           if (ua.isSafari()) {
