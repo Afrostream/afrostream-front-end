@@ -188,9 +188,8 @@ if (process.env.BROWSER) {
             playerData.sources = _.remove(playerData.sources, function (k) {
               return k.type !== 'application/dash+xml';
             });
-            playerData.techOrder = _.remove(playerData.techOrder, function (k, f) {
-              return k !== 'hls' && k !== 'dash';
-            });
+
+            delete playerData.plugins.metrics;
           }
 
           if (ua.isIE()) {
@@ -202,6 +201,7 @@ if (process.env.BROWSER) {
               nativeTextTracks: false
             }
           }
+
           if (ua.isChrome()) {
             let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
             if (version == 46) {
@@ -210,7 +210,6 @@ if (process.env.BROWSER) {
               });
             }
           }
-          console.log(playerData.techOrder);
 
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type === 'application/dash+xml';
