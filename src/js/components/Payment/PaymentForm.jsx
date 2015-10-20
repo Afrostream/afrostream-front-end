@@ -29,7 +29,7 @@ if (process.env.BROWSER) {
       recurly.configure(config.recurly.key);
     } catch (err) {
       console.log(err);
-      if (err.code !== 'already-configured') {
+      if (typeof err.code !== 'undefined' && err.code !== 'already-configured') {
         this.setState({
           hasRecurly: false
         });
