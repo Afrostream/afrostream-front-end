@@ -18418,6 +18418,23 @@
         }
       }
     },
+    "sitemap": {
+      "version": "1.4.0",
+      "from": "sitemap@*",
+      "resolved": "https://registry.npmjs.org/sitemap/-/sitemap-1.4.0.tgz",
+      "dependencies": {
+        "underscore": {
+          "version": "1.8.3",
+          "from": "underscore@>=1.7.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz"
+        },
+        "url-join": {
+          "version": "0.0.1",
+          "from": "url-join@>=0.0.1 <0.0.2",
+          "resolved": "https://registry.npmjs.org/url-join/-/url-join-0.0.1.tgz"
+        }
+      }
+    },
     "stats-webpack-plugin": {
       "version": "0.2.1",
       "from": "https://registry.npmjs.org/stats-webpack-plugin/-/stats-webpack-plugin-0.2.1.tgz",
