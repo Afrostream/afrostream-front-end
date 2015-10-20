@@ -2,12 +2,14 @@
 
 import React, { PropTypes } from 'react';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+
 if (canUseDOM) {
   var ga = require('react-ga');
 }
 export default function prepareRoute(prepareFn) {
 
   return DecoratedComponent =>
+
     class PrepareRouteDecorator extends React.Component {
 
       static prepareRoute = prepareFn;
@@ -23,7 +25,7 @@ export default function prepareRoute(prepareFn) {
         );
       }
 
-      componentDidMount() {
+      componentWillMount() {
         const {
           context: { store },
           props: { params, location }
@@ -32,7 +34,7 @@ export default function prepareRoute(prepareFn) {
         prepareFn({store, params, location});
       }
 
-      componentWillMount() {
+      componentDidMount() {
         if (canUseDOM) {
           ga.pageview(this.context.router.state.location.pathname);
         }

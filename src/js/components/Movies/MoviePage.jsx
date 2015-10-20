@@ -9,7 +9,6 @@ import SeasonList from '../Seasons/SeasonList';
   return await * [
       store.dispatch(EventActionCreators.pinHeader(false)),
       store.dispatch(EventActionCreators.userActive(true)),
-      store.dispatch(MovieActionCreators.getMovie(movieId)),
       store.dispatch(MovieActionCreators.getSeason(movieId))
     ];
 }) class MoviePage extends React.Component {
@@ -23,7 +22,7 @@ import SeasonList from '../Seasons/SeasonList';
 
     return (
       <div className="row-fluid">
-        {movieId ? <MovieInfo maxLength="600" active="true" {...{movieId}}/> : ''}
+        {movieId ? <MovieInfo maxLength="600" active={true} {...{movieId}}/> : ''}
         {movieId ? <SeasonList {...{movieId}}/> : ''}
       </div>
     );
