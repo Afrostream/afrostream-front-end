@@ -2,6 +2,7 @@
 
 import React, { PropTypes,Component } from 'react';
 import Helmet from 'react-helmet';
+import config from '../../../config';
 
 export default () => {
 
@@ -16,7 +17,7 @@ export default () => {
       static defaultProps = {};
 
       state = {
-        title: '',
+        title: config.metadata.title,
         meta: [],
         link: []
       };

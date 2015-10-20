@@ -4,6 +4,10 @@ import client from './client';
 
 const config = _.merge(
   {
+    metadata: {
+      title: 'Afrostream.tv',
+      description: 'AFROSTREAM, LES MEILLEURS FILMS ET SÉRIES AFRO EN ILLIMITÉ'
+    },
     /**
      * Front-End Server
      */
