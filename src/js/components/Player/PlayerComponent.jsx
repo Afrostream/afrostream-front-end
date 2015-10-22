@@ -200,16 +200,16 @@ if (process.env.BROWSER) {
 
           if (ua.isChrome()) {
             let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
-            if (version == 46) {
-              playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
-                return k !== 'html5';
-              });
-            }
+            //if (version == 46) {
+            playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
+              return k !== 'html5';
+            });
+            //}
+            playerData.sources = _.sortBy(playerData.sources, function (k) {
+              return k.type === 'application/dash+xml';
+            });
           }
 
-          playerData.sources = _.sortBy(playerData.sources, function (k) {
-            return k.type === 'application/dash+xml';
-          });
           // ==== END hacks config
 
           playerData.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
