@@ -9,7 +9,6 @@ const config = _.merge(
      */
     server: {
       host: 'localhost',
-      cname: process.env.CNAME || 'beta.afrostream.tv',
       ip: process.env.IP ||
       undefined,
       port: process.env.PORT ||
