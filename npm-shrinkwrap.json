@@ -4,8 +4,8 @@
   "dependencies": {
     "afrostream-player": {
       "version": "0.2.0",
-      "from": "git+https://github.com/Afrostream/afrostream-player.git#master",
-      "resolved": "git+https://github.com/Afrostream/afrostream-player.git#aecc8f3e17309c63e04061bf9784a52763d6e110",
+      "from": "git+ssh://git@github.com/Afrostream/afrostream-player.git#master",
+      "resolved": "git+ssh://git@github.com/Afrostream/afrostream-player.git#0aeea77bdefe55912a8d15905525d6788c9986dd",
       "dependencies": {
         "videojs-chromecast": {
           "version": "1.1.1",
