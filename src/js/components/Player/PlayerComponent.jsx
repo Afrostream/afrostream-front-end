@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import videojs from 'videojs-afrostream';
+import videojs from 'afrostream-player';
 import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
@@ -214,20 +214,23 @@ if (process.env.BROWSER) {
           console.log(playerData.sources);
           // ==== END hacks config
 
-          playerData.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
+          playerData.flash.swf = require('../../../../node_modules/afrostream-player/dist/video-js.swf');
           playerData.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
+          playerData.dasheverywhere.silverlightFile = require('../../../../node_modules/afrostream-player/dist/dashcs.xap');
+          playerData.dasheverywhere.flashFile = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
 
           playerData.hls = _.clone(playerData.flash);
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
+          delete playerData.metrics;
           let user = User.get('user');
-          if (user && playerData.plugins.metrics) {
+          if (user && playerData.metrics) {
             let userId = user.get('user_id');
             userId = _.find(userId.split('|'), function (val) {
               return parseInt(val, 10);
             });
-            playerData.plugins.metrics.user_id = parseInt(userId, 10);
+            playerData.metrics.user_id = parseInt(userId, 10);
           }
 
           let player = videojs('afrostream-player', playerData).ready(function () {

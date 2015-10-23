@@ -81,7 +81,7 @@ const webpackConfig = {
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {
-        test: /\.(gif|jpg|png|svg|favicon|ico|swf)/,
+        test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
@@ -98,6 +98,10 @@ const webpackConfig = {
       }
     ]
   },
+  externals: {
+    //used for castlab dependencys
+   "Math/Long": "bytebuffer"
+  },
   plugins: [
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
@@ -105,7 +109,8 @@ const webpackConfig = {
       jQuery: 'jquery',
       'window.$': 'jquery',
       'window.jQuery': 'jquery',
-      'root.jQuery': 'jquery'
+      'root.jQuery': 'jquery',
+      'Math/Long': 'long'
     }),
     new webpack.DefinePlugin({
       'process.env': {
