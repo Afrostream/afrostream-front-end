@@ -206,10 +206,12 @@ if (process.env.BROWSER) {
             });
             //}
             playerData.sources = _.sortBy(playerData.sources, function (k) {
-              return k.type === 'application/dash+xml';
+              return k.type !== 'application/dash+xml';
             });
           }
 
+          console.log(playerData.techOrder);
+          console.log(playerData.sources);
           // ==== END hacks config
 
           playerData.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
