@@ -40,7 +40,7 @@
     "webpack-dev-server": "^1.10.0"
   },
   "dependencies": {
-    "afrostream-player": "git+https://github.com/Afrostream/afrostream-player.git#master",
+    "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#master",
     "algoliasearch": "^3.7.7",
     "auth0-lock": "^7.9.4",
     "autoprefixer-core": "^5.2.1",
@@ -57,7 +57,7 @@
     "browser-sync-webpack-plugin": "^0.1.3",
     "bytebuffer": "^4.1.0",
     "classnames": "^2.1.3",
-    "compression": "^1.5.0",
+    "compression": "^1.5.2",
     "compression-webpack-plugin": "^0.2.0",
     "concurrently": "^0.1.1",
     "cookie-parser": "^1.3.5",
@@ -65,7 +65,7 @@
     "cssnext-loader": "1.0.1",
     "ejsify": "^1.0.0",
     "envify": "^3.4.0",
-    "express": "^4.13.0",
+    "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
     "express-session": "^1.11.3",
     "extract-text-webpack-plugin": "^0.8.2",
