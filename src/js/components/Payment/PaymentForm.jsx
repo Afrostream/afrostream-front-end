@@ -21,6 +21,10 @@ if (process.env.BROWSER) {
     loading: false
   };
 
+  componentWillMount() {
+    document.scrollingElement.scrollTop = 0;
+  }
+
   componentDidMount() {
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
@@ -123,11 +127,23 @@ if (process.env.BROWSER) {
           action: 'Created an Account'
         });
       }).catch(function (err) {
-        let errors = err.response.body;
+        let errors = '';
         let message = '';
-        $.each(errors, function (i, error) {
-          message += error['#'];
-        });
+
+        if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+          && err.response.statusText === 'Unauthorized') {
+
+          errors = err.response.statusText;
+          message = 'Votre session a expiré, veuillez recommencer.';
+
+        } else {
+          errors = err.response.body;
+          message = '';
+          $.each(errors, function (i, error) {
+            message += error['#'];
+          });
+        }
+
         self.disableForm(false, 2, message);
       });
     });
@@ -158,6 +174,7 @@ if (process.env.BROWSER) {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
+
     if (!this.state.hasRecurly) {
       return (<PaymentError
         title="Paiement indisponible"
