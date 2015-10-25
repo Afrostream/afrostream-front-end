@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
 @connect(({ User }) => ({User}))  class PaymentSuccess extends React.Component {
 
   componentWillMount() {
-    document.getElementsByTagName('BODY').scrollTop = 0;
+    document.getElementsByTagName('BODY')[0].scrollTop = 0;
   }
 
   componentWillUnmount() {

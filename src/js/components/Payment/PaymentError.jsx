@@ -24,7 +24,7 @@ if (process.env.BROWSER) {
   };
 
   componentWillMount() {
-    document.getElementsByTagName('BODY').scrollTop = 0;
+    document.getElementsByTagName('BODY')[0].scrollTop = 0;
   }
 
   componentWillUnmount() {
