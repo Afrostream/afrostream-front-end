@@ -13,11 +13,6 @@ if (process.env.BROWSER) {
     ];
 }) class PaymentPage extends React.Component {
 
-  componentDidMount() {
-    setTimeout(function() {
-      document.getElementById('intercom-container').style.display = 'block';
-    }, 3000);
-  }
 
   render() {
 

@@ -27,10 +27,6 @@ if (process.env.BROWSER) {
     document.scrollingElement.scrollTop = 0;
   }
 
-  componentWillUnmount() {
-    document.getElementById('intercom-container').style.display = 'none';
-  }
-
   logOut() {
     const {
       props: {
