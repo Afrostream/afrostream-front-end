@@ -21,6 +21,7 @@ if (process.env.BROWSER) {
     loading: false
   };
 
+
   componentDidMount() {
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
@@ -29,11 +30,14 @@ if (process.env.BROWSER) {
       recurly.configure(config.recurly.key);
     } catch (err) {
       console.log(err);
+
       if (typeof err.code !== 'undefined' && err.code !== 'already-configured') {
+
         this.setState({
           hasRecurly: false
         });
       }
+
       return;
     }
   }
@@ -125,6 +129,7 @@ if (process.env.BROWSER) {
         $.each(errors, function (i, error) {
           message += error['#'];
         });
+
         self.disableForm(false, 2, message);
       });
     });
@@ -155,6 +160,7 @@ if (process.env.BROWSER) {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
+
     if (!this.state.hasRecurly) {
       return (<PaymentError
         title="Paiement indisponible"
