@@ -21,7 +21,7 @@ if (process.env.BROWSER) {
 
   render() {
 
-    return (<div className="row-fluid"><SelectPlan /></div>);
+    return (<SelectPlan />);
   }
 }
 
