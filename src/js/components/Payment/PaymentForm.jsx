@@ -124,12 +124,12 @@ if (process.env.BROWSER) {
           action: 'Created an Account'
         });
       }).catch(function (err) {
-          let errors = err.response.body;
-          let message = '';
-          $.each(errors, function (i, error) {
-            message += error['#'];
-          });
-        }
+        let errors = err.response.body;
+        let message = '';
+        $.each(errors, function (i, error) {
+          message += error['#'];
+        });
+
         self.disableForm(false, 2, message);
       });
     });
