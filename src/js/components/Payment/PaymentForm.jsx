@@ -21,9 +21,6 @@ if (process.env.BROWSER) {
     loading: false
   };
 
-  componentWillMount() {
-    document.scrollingElement.scrollTop = 0;
-  }
 
   componentDidMount() {
     window.$('.recurly-cc-number').payment('formatCardNumber');
@@ -127,23 +124,12 @@ if (process.env.BROWSER) {
           action: 'Created an Account'
         });
       }).catch(function (err) {
-        let errors = '';
-        let message = '';
-
-        if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-          && err.response.statusText === 'Unauthorized') {
-
-          errors = err.response.statusText;
-          message = 'Votre session a expiré, veuillez recommencer.';
-
-        } else {
-          errors = err.response.body;
-          message = '';
+          let errors = err.response.body;
+          let message = '';
           $.each(errors, function (i, error) {
             message += error['#'];
           });
         }
-
         self.disableForm(false, 2, message);
       });
     });
