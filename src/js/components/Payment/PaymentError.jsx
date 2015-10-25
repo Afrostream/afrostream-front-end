@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import LogOutButton from '../../components/User/LogOutButton';
+import * as UserActionCreators from '../../actions/user';
+
 if (process.env.BROWSER) {
   require('./PaymentError.less');
 }
 
-class PaymentSuccess extends React.Component {
+@connect(({ User }) => ({User})) class PaymentError extends React.Component {
 
   static propTypes = {
     title: React.PropTypes.string,
@@ -20,22 +23,44 @@ class PaymentSuccess extends React.Component {
     linkMessage: 'merci de réessayer'
   };
 
+  componentWillMount() {
+    document.scrollingElement.scrollTop = 0;
+  }
+
+  logOut() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.logOut());
+  }
+
   render() {
 
-    return (
-      <div className="payment-error">
-        <h3>{this.props.title}</h3>
+    if (typeof this.props.message !== 'undefined' && this.props.message === 'Votre session a expiré, veuillez recommencer.') {
 
-        <p>{this.props.message}</p>
+      return (
+        <div className="payment-error">
+          <h3>{this.props.title}</h3>
+          <p>{this.props.message}</p>
+          <p className="error"><button className="error-button" onClick={::this.logOut}>merci de réessayer</button></p>
+        </div>
+      );
+    } else {
 
-        <p className="error"><a className="error-link" href={this.props.link}>{this.props.linkMessage}</a></p>
-
-        <LogOutButton />
-
-      </div>
-    );
+      return (
+        <div className="payment-error">
+          <h3>{this.props.title}</h3>
+          <p>{this.props.message}</p>
+          <p className="error"><a className="error-link" href={this.props.link}>{this.props.linkMessage}</a></p>
+          <LogOutButton />
+        </div>
+      );
+    }
   }
 
 }
 
-export default PaymentSuccess;
+export default PaymentError;

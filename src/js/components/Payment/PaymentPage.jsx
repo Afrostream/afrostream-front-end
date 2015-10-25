@@ -13,6 +13,7 @@ if (process.env.BROWSER) {
     ];
 }) class PaymentPage extends React.Component {
 
+
   render() {
 
     return (<div className="row-fluid"><SelectPlan /></div>);
