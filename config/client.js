@@ -26,6 +26,10 @@ export default {
   carousel: {
     interval: 10000
   },
+  intercom: {
+    url: 'https://widget.intercom.io/widget/',
+    appID: 'k3klwkxq'
+  },
   auth0: {
     clientId: process.env.AUTH0_CLIENT_ID || 'dev',
     domain: process.env.AUTH0_DOMAIN || '127.0.0.1:6666',
