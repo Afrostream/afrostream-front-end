@@ -75,10 +75,7 @@ export function removeIntercom() {
     var w = window;
     var ic = w.Intercom;
     ic('shutdown');
-    ic = null;
-    document.getElementById('intercom-container').style.display = 'none';
-
-
+    ic('hide');
 
     return {
       type: ActionTypes.Intercom.removeIntercom,
