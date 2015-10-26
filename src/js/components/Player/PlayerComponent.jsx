@@ -232,17 +232,7 @@ if (process.env.BROWSER) {
             playerData.metrics.user_id = parseInt(userId, 10);
           }
 
-          let player = videojs('afrostream-player', playerData).ready(function () {
-              var allTracks = this.textTracks() || []; // get list of tracks
-              let trackFr = _.find(allTracks, function (track) {
-                return track.language === 'fr';
-              });
-              if (trackFr) {
-                console.log(trackFr);
-                trackFr.mode = 'showing'; // show this track
-              }
-            }
-          );
+          let player = videojs('afrostream-player', playerData);
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
