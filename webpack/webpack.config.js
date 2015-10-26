@@ -90,7 +90,10 @@ const webpackConfig = {
       },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+        ]
       },
       {
         test: /.(woff|woff2)([\?]?.*)$/,
