@@ -223,7 +223,6 @@ if (process.env.BROWSER) {
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
-          delete playerData.metrics;
           let user = User.get('user');
           if (user && playerData.metrics) {
             let userId = user.get('user_id');
