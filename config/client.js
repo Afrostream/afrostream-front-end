@@ -11,7 +11,33 @@ const customDict = _.merge(dictFr, {
   }
 });
 
-export default {
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+
+const auth0ClientId = process.env.AUTH0_CLIENT_ID || 'dev';
+
+// hack for auth0 mock.
+let auth0MockDomain, auth0MockAssetsUrl;
+if (auth0ClientId === 'dev') {
+  /*
+      dev environment
+   */
+  const auth0MockUseHttps = true;  // on any auth0 error, you can switch this to true.
+  auth0MockDomain = auth0MockUseHttps ? '127.0.0.1:3443' : '127.0.0.1:3080';
+  auth0MockAssetsUrl = auth0MockUseHttps ? undefined : 'http://' + auth0MockDomain + '/';
+
+  if (!auth0MockUseHttps && canUseDOM) {
+    // we "Override" xhr.open to rewrite https request to http requests.
+    window.XMLHttpRequest.prototype.realOpen = XMLHttpRequest.prototype.open;
+    window.XMLHttpRequest.prototype.open = function (method, url) {
+      if (arguments[1].indexOf(config.auth0.domain) !== -1) {
+        arguments[1] = arguments[1].replace(/^https/, 'http');
+      }
+      return this.realOpen.apply(this, arguments);
+    };
+  }
+}
+
+const config = {
   /**
    * Front-End Server
    */
@@ -27,9 +53,10 @@ export default {
     interval: 10000
   },
   auth0: {
-    clientId: process.env.AUTH0_CLIENT_ID || 'dev',
-    domain: process.env.AUTH0_DOMAIN || '127.0.0.1:6666',
+    clientId: auth0ClientId,
+    domain: process.env.AUTH0_DOMAIN || auth0MockDomain,
     callbackUrl: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback',
+    assetsUrl: auth0MockAssetsUrl,
     token: 'afroToken',
     tokenRefresh: 'afroRefreshToken',
     signIn: {
@@ -131,3 +158,5 @@ export default {
     }
   }
 };
+
+export default config;
