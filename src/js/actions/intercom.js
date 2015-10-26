@@ -6,7 +6,7 @@ export function createIntercom() {
   return (dispatch, getState) => {
     if (!document) {
       return {
-        type: ActionTypes.Intercom.removeIntercom,
+        type: ActionTypes.Intercom.createIntercom,
         intercom: null
       };
     }
@@ -64,15 +64,21 @@ export function createIntercom() {
 }
 export function removeIntercom() {
   return (dispatch, getState) => {
-    return {
-      type: ActionTypes.Intercom.removeIntercom,
-      intercom: null
-    };
+    if (!document) {
+      return {
+        type: ActionTypes.Intercom.removeIntercom,
+        intercom: null
+      };
+    }
+
 
     var w = window;
-    var ic = w.Intercom = null;
-
+    var ic = w.Intercom;
+    ic('shutdown');
+    ic = null;
     document.getElementById('intercom-container').style.display = 'none';
+
+
 
     return {
       type: ActionTypes.Intercom.removeIntercom,
