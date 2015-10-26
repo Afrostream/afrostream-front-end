@@ -64,9 +64,16 @@ export default () => {
         };
 
         let title = data.get('title');
+        let slug = data.get('slug');
         let synopsis = data.get('synopsis');
-        let ogTitle = data.get('ogTitle');
-        let ogDescription = data.get('ogDescription');
+        let ogTitle = data.get('title');
+        let ogDescription = data.get('synopsis');
+        let poster = data.get('poster');
+        let imageStyle = 'https://afrostream.imgix.net/production/poster/2015/08/ab69b5337b8a05d4c896-last-letter%202560x1440.jpg';
+        if (poster) {
+          imageStyle = poster.get('imgix');
+        }
+        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1920&h=815&q=65)`;
 
         if (title) {
           metas.title = title;
@@ -90,6 +97,20 @@ export default () => {
           metas.meta.push({
             property: 'og:description',
             content: ogDescription
+          });
+        }
+
+        if (ogImage) {
+          metas.meta.push({
+            property: 'og:image',
+            content: ogImage
+          });
+        }
+
+        if (slug) {
+          metas.meta.push({
+            property: 'og:url',
+            content: slug
           });
         }
 

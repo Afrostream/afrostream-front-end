@@ -50,7 +50,9 @@ if (process.env.BROWSER) {
       movieData = Movie.get(`movies/${movieId}`);
       if (movieData) {
         let poster = movieData.get('poster');
-        data.poster = poster.get('imgix');
+        if (poster) {
+          data.poster = poster.get('imgix');
+        }
         data.movie = {
           title: movieData.get('title'),
           synopsis: movieData.get('synopsis')
