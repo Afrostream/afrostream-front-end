@@ -33,10 +33,16 @@ export default {
     toggleSeason: null,
     getSeason: null
   }),
+
   Event: keyMirror({
     toggleSideBar: null,
     userActive: null,
     pinHeader: null
+  }),
+
+  Intercom: keyMirror({
+    createIntercom: null,
+    removeIntercom: null
   }),
 
   Category: keyMirror({

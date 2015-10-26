@@ -1,19 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
+import * as IntercomActionCreators from '../../actions/intercom';
 
 if (process.env.BROWSER) {
   require('./PaymentSuccess.less');
 }
 
-@connect(({ User }) => ({User}))  class PaymentSuccess extends React.Component {
+@connect(({ User }) => ({User})) class PaymentSuccess extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
   }
 
   componentWillUnmount() {
-    document.getElementById('intercom-container').style.display = 'none';
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+    dispatch(IntercomActionCreators.removeIntercom());
   }
 
   logOut() {
@@ -34,7 +40,9 @@ if (process.env.BROWSER) {
 
         <p>merci pour votre inscription</p>
 
-        <p className="success"><button className="success-button" onClick={::this.logOut}>Commencez la visite sur le site</button></p>
+        <p className="success">
+          <button className="success-button" onClick={::this.logOut}>Commencez la visite sur le site</button>
+        </p>
       </div>
     );
   }

@@ -5,3 +5,4 @@ export { default as Category } from './Category';
 export { default as Season } from './Season';
 export { default as Video } from './Video';
 export { default as Event } from './Event';
+export { default as Intercom } from './Intercom';

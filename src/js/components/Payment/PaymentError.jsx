@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LogOutButton from '../../components/User/LogOutButton';
 import * as UserActionCreators from '../../actions/user';
+import * as IntercomActionCreators from '../../actions/intercom';
 
 if (process.env.BROWSER) {
   require('./PaymentError.less');
@@ -23,12 +24,17 @@ if (process.env.BROWSER) {
     linkMessage: 'merci de réessayer'
   };
 
-  componentWillMount() {
+  componentDidMount() {
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
   }
 
   componentWillUnmount() {
-    document.getElementById('intercom-container').style.display = 'none';
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+    dispatch(IntercomActionCreators.removeIntercom());
   }
 
   logOut() {
@@ -48,8 +54,12 @@ if (process.env.BROWSER) {
       return (
         <div className="payment-error">
           <h3>{this.props.title}</h3>
+
           <p>{this.props.message}</p>
-          <p className="error"><button className="error-button" onClick={::this.logOut}>merci de réessayer</button></p>
+
+          <p className="error">
+            <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
+          </p>
         </div>
       );
     } else {
@@ -57,7 +67,9 @@ if (process.env.BROWSER) {
       return (
         <div className="payment-error">
           <h3>{this.props.title}</h3>
+
           <p>{this.props.message}</p>
+
           <p className="error"><a className="error-link" href={this.props.link}>{this.props.linkMessage}</a></p>
           <LogOutButton />
         </div>

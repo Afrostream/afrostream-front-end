@@ -21,7 +21,7 @@ if (process.env.BROWSER) {
     loading: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
   }
 
