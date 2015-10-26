@@ -5,7 +5,7 @@
     "afrostream-player": {
       "version": "1.0.0",
       "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.1",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#cbde4f4353c9275df92d9a9b7a4060de871cd06b",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.1",
       "dependencies": {
         "videojs-chromecast": {
           "version": "1.1.1",
