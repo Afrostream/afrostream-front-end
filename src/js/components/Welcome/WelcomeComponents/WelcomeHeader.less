@@ -61,23 +61,27 @@
 
   .afrostream-statement {
     margin-top: 0px;
-    padding: 20% 20% 3% 2%;
+    padding: 25% 20% 3% 2%;
     color: @white-base;
     font-size: 36px;
     text-align: left;
     line-height: 44px;
     width: 100%;
 
+    @media all and (max-width: @screen-lg-min) {
+      padding: 28% 20% 3% 2%;
+    }
+
     @media all and (max-width: @screen-sm-min) {
       margin-top: 0px;
-      padding: 24% 16% 3% 2%;
+      padding: 34% 16% 3% 2%;
       font-size: 32px;
       line-height: 40px;
     }
 
     @media all and (max-width: @screen-xs-min) {
       margin-top: 0px;
-      padding: 32% 2% 6% 2%;
+      padding: 37% 2% 6% 2%;
       font-size: 22px;
       line-height: 32px;
     }
@@ -121,15 +125,27 @@
     background-color: #74C3D0;
     border: none;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
-    line-height: 28px;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin: 0% 0% 20% 2%;
+    line-height: 36px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0% 0% 15% 2%;
+
+    @media all and (max-width: @screen-lg-min) {
+      margin: 0% 0% 12% 2%;
+    }
+
+    @media all and (max-width: @screen-lg-min) {
+      margin: 0% 0% 9% 2%;
+    }
 
     @media all and (max-width: @screen-sm-min) {
-      margin: 0% 0% 20% 2%;
+      margin: 0% 0% 10% 2%;
+    }
+
+    @media all and (max-width: @screen-xs-min) {
+      margin: 0% 0% 5% 2%;
     }
   }
 }
