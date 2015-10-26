@@ -16,12 +16,6 @@ const devConfig = merge({}, webpackConfig, {
   debug: true
 });
 
-// chargement de la conf de staging (lorsque l'on est en local)
-if (process.env.API_END_POINT === herokuConfig.env.API_END_POINT) {
-  delete herokuConfig.env.NODE_ENV;
-  merge(process.env, herokuConfig.env);
-}
-
 devConfig.entry.main = [
   `webpack-dev-server/client?${webpackDevServerUrl}`,
   'webpack/hot/only-dev-server',
