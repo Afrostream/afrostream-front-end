@@ -89,10 +89,14 @@ const webpackConfig = {
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {
-        test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
+        test: /\.(swf|xap)/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg|favicon|ico|)$/i,
         loaders: [
           'file?hash=sha512&digest=hex&name=[hash].[ext]',
-          'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
         ]
       },
       {

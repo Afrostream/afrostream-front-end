@@ -4,8 +4,42 @@
   "dependencies": {
     "afrostream-player": {
       "version": "1.0.2",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.2",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#ef5ffc02a4ad951ace248ec59bbe3dc9635077cc"
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.4",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#a19a6bd82a7df65e83baccffc3edcd56a6919d19",
+      "dependencies": {
+        "videojs-chromecast": {
+          "version": "1.1.1",
+          "from": "git+https://github.com/Afrostream/videojs-chromecast.git#master",
+          "resolved": "git+https://github.com/Afrostream/videojs-chromecast.git#7da686d7d91998395943b53380846c12aad7854a"
+        },
+        "videojs-metrics": {
+          "version": "0.0.0",
+          "from": "git+https://github.com/Afrostream/videojs-metrics.git#master",
+          "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#86e552f31a6423bb95891f6bd2e1a1ee1aaef63a"
+        },
+        "videojs-swf": {
+          "version": "5.0.0-rc1-sv",
+          "from": "git+https://github.com/Afrostream/video-js-swf.git#feature/stage-video-hardware-accelerated",
+          "resolved": "git+https://github.com/Afrostream/video-js-swf.git#dae2815691de9775321212b6254c00082e152bbe"
+        },
+        "video.js": {
+          "version": "4.12.15",
+          "from": "video.js@>=4.5.0 <5.0.0",
+          "resolved": "https://registry.npmjs.org/video.js/-/video.js-4.12.15.tgz",
+          "dependencies": {
+            "videojs-swf": {
+              "version": "4.7.5",
+              "from": "videojs-swf@4.7.5",
+              "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.5.tgz"
+            },
+            "vtt.js": {
+              "version": "0.12.1",
+              "from": "git+https://github.com/gkatsev/vtt.js.git#vjs-v0.12.1",
+              "resolved": "git+https://github.com/gkatsev/vtt.js.git#8ea664e257ec7b5c092f58ac989e3134ff536a7a"
+            }
+          }
+        }
+      }
     },
     "algoliasearch": {
       "version": "3.7.7",
