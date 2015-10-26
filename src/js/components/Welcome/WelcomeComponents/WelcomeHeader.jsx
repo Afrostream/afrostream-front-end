@@ -20,7 +20,7 @@ if (process.env.BROWSER) {
 
   render() {
 
-    let posterImg = 'https://afrostream.imgix.net/production/poster/2015/08/ab69b5337b8a05d4c896-last-letter%202560x1440.jpg';
+    let posterImg = 'https://afrostream.imgix.net/production/poster/2015/10/e4a0a6220e8fa50a23af-hear-me-move-home.jpg';
     let imageStyle = {backgroundImage: `url(${posterImg}?crop=faces&fit=clip&w=1920&h=815&q=65)`};
 
 
