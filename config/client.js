@@ -130,7 +130,7 @@ const config = {
       resetLink: '/reset',
       connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
       socialBigButtons: true,
-      disableSignupAction: true,
+      disableSignupAction: false,
       rememberLastLogin: false,
       disableResetAction: false,
       popup: true,
@@ -138,27 +138,10 @@ const config = {
       authParams: {
         scope: 'openid'
       }
-    },
-    signUp: {
-      dict: customDict,
-      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
-      socialBigButtons: true,
-      popup: true,
-      sso: false,
-      authParams: {
-        scope: 'openid'
-      }
-    },
-    gift: {
-      dict: giftDict,
-      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
-      socialBigButtons: true,
-      popup: true,
-      sso: false,
-      authParams: {
-        scope: 'openid'
-      }
     }
+  },
+  gift: {
+    dict: giftDict
   },
   recurly: {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'

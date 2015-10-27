@@ -173,7 +173,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showLock('Signup'));
+    dispatch(UserActionCreators.showLock('showSignup'));
   }
 
   showAfroloveLock() {

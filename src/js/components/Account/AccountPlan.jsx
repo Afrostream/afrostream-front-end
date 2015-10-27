@@ -24,7 +24,6 @@ if (process.env.BROWSER) {
   };
 
   render() {
-    debugger;
     const {
       props: {
         User

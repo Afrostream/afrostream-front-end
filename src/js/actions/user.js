@@ -41,7 +41,6 @@ const mergeProfile = function (profile, data) {
 
     } catch (e) {
       console.log(e, 'remove user data');
-      debugger;
       logoutUser();
       return data;
     }

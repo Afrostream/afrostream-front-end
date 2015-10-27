@@ -13,7 +13,7 @@ if (process.env.BROWSER) {
         dispatch
         }
       } = this;
-    dispatch(UserActionCreators.showLock('Signup'));
+    dispatch(UserActionCreators.showLock('showSignup'));
   }
 
   showGiftLock() {
