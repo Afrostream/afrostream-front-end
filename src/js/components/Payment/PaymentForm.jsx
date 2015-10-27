@@ -41,7 +41,6 @@ if (canUseDOM) {
   }
 
   componentDidMount() {
-
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');

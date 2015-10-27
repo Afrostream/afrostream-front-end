@@ -152,7 +152,7 @@ const refreshToken = function (getState) {
       const storageRefreshId = config.auth0.tokenRefresh;
       const idToken = localStorage.getItem(storageRefreshId);
       const refreshToken = getState().User.get('refreshToken') || idToken;
-      if (!refreshToken) {
+      if (!refreshToken || !lock) {
         return reject('no trefresh token');
       }
       lock.getClient().refreshToken(refreshToken, function (err) {
@@ -233,7 +233,7 @@ export function showLock(type = 'show', container = null) {
     return async auth0 => (
       await new Promise(
         (resolve, reject) => {
-          lock[type](lockOptions, function (err, profile, id_token, access_token, state, refresh_token) {
+          lock[type](lockOptions, function (err, profile, access_token, id_token, state, refresh_token) {
             if (err) {
               reject(err);
             }
@@ -241,11 +241,11 @@ export function showLock(type = 'show', container = null) {
             profile = profile || {};
             var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
             var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-            storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
+            storeToken(access_token, refresh_token, tokenAfro, tokenRefreshAfro);
             // store refresh_token
             resolve({
               type: ActionTypes.User.showLock,
-              token: id_token,
+              token: access_token,
               refreshToken: refresh_token
             });
           });

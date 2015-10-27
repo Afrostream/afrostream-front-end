@@ -44,10 +44,6 @@ if (canUseDOM) {
     }
   }
 
-  componentDidMount() {
-    document.getElementsByTagName('BODY')[0].scrollTop = 0;
-  }
-
   componentWillUnmount() {
     const {
       props: {
