@@ -106,10 +106,7 @@ if (process.env.BROWSER) {
       'unit-amount-in-cents': this.props.unitAmountInCents,
       'country': $('#country').val(),
       'starts_at': this.props.startDate,
-      'is_gift': '0',
-      'gift_first_name': '',
-      'gift_last_name': '',
-      'gift_email': ''
+      'is_gift': '0'
     };
 
     recurly.token(billingInfo, function (err, token) {
@@ -122,32 +119,66 @@ if (process.env.BROWSER) {
         'recurly-token': token.id
       });
 
-      dispatch(UserActionCreators.subscribe(formData)).then(function () {
-        self.disableForm(false, 1);
-        ga.event({
-          category: 'User',
-          action: 'Created an Account'
-        });
-      }).catch(function (err) {
-        let errors = '';
-        let message = '';
+      if (this.state.isGift) {
 
-        if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-          && err.response.statusText === 'Unauthorized') {
+        billingInfo['gift_first_name'] = $('#gift_first_name').val();
+        billingInfo['gift_last_name'] = $('#gift_last_name').val();
+        billingInfo['gift_email_name'] = $('#gift_email').val();
 
-          errors = err.response.statusText;
-          message = 'Votre session a expiré, veuillez recommencer.';
-
-        } else {
-          errors = err.response.body;
-          message = '';
-          $.each(errors, function (i, error) {
-            message += error['#'];
+        dispatch(UserActionCreators.gift(formData)).then(function () {
+          self.disableForm(false, 1);
+          ga.event({
+            category: 'User',
+            action: 'Created an Account'
           });
-        }
+        }).catch(function (err) {
+          let errors = '';
+          let message = '';
 
-        self.disableForm(false, 2, message);
-      });
+          if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+            && err.response.statusText === 'Unauthorized') {
+
+            errors = err.response.statusText;
+            message = 'Votre session a expiré, veuillez recommencer.';
+
+          } else {
+            errors = err.response.body;
+            message = '';
+            $.each(errors, function (i, error) {
+              message += error['#'];
+            });
+          }
+
+          self.disableForm(false, 2, message);
+        });
+      } else {
+        dispatch(UserActionCreators.subscribe(formData)).then(function () {
+          self.disableForm(false, 1);
+          ga.event({
+            category: 'User',
+            action: 'Created an Account'
+          });
+        }).catch(function (err) {
+          let errors = '';
+          let message = '';
+
+          if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+            && err.response.statusText === 'Unauthorized') {
+
+            errors = err.response.statusText;
+            message = 'Votre session a expiré, veuillez recommencer.';
+
+          } else {
+            errors = err.response.body;
+            message = '';
+            $.each(errors, function (i, error) {
+              message += error['#'];
+            });
+          }
+
+          self.disableForm(false, 2, message);
+        });
+      }
     });
   }
 

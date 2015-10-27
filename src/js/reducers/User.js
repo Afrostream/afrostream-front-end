@@ -20,6 +20,12 @@ export default createReducer(initialState, {
     });
   },
 
+  [ActionTypes.User.gift](state, { res }) {
+    return state.merge({
+      ['user']: _.merge(state.get('user').toJS(), {})
+    });
+  },
+
   [ActionTypes.User.cancelSubscription](state, { res }) {
     const data = res.body;
     return state.merge({

@@ -18,7 +18,7 @@ class GiftDetails extends React.Component {
               <input
                 type="text"
                 className="form-control first-name"
-                id="first_name"
+                id="gift_first_name"
                 name="first-name"
                 placeholder="Son prénom" required/>
             </div>
