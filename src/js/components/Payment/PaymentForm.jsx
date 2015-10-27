@@ -123,7 +123,7 @@ if (process.env.BROWSER) {
 
         billingInfo['gift_first_name'] = $('#gift_first_name').val();
         billingInfo['gift_last_name'] = $('#gift_last_name').val();
-        billingInfo['gift_email_name'] = $('#gift_email').val();
+        billingInfo['gift_email'] = $('#gift_email').val();
 
         dispatch(UserActionCreators.gift(formData)).then(function () {
           self.disableForm(false, 1);
