@@ -2,6 +2,7 @@ import React from 'react';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
+import GiftDetails from './GiftDetails';
 import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import Spinner from '../Spinner/Spinner';
@@ -18,14 +19,12 @@ if (process.env.BROWSER) {
   state = {
     hasRecurly: true,
     subscriptionStatus: 0,
-    loading: false
+    loading: false,
+    isGift: 0
   };
 
   componentDidMount() {
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
-  }
-
-  componentDidMount() {
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
     window.$('.recurly-cc-cvc').payment('formatCardCVC');
@@ -39,6 +38,12 @@ if (process.env.BROWSER) {
         });
       }
       return;
+    }
+
+    if (this.props.planName === 'afrostreamgift') {
+      this.setState({
+        isGift: 1
+      });
     }
   }
 
@@ -166,7 +171,6 @@ if (process.env.BROWSER) {
   }
 
   render() {
-
     var spinnerClasses = {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
@@ -207,7 +211,7 @@ if (process.env.BROWSER) {
               </div>
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label className="form-label" for="first_name">Prénom</label>
+                  <label className="form-label" for="first_name">Votre Prénom</label>
                   <input
                     type="text"
                     className="form-control first-name"
@@ -217,7 +221,7 @@ if (process.env.BROWSER) {
                     placeholder="Votre prénom" required/>
                 </div>
                 <div className="form-group col-md-6">
-                  <label className="form-label" for="last_name">Nom</label>
+                  <label className="form-label" for="last_name">Votre Nom</label>
                   <input
                     type="text"
                     className="form-control last-name"
@@ -268,6 +272,8 @@ if (process.env.BROWSER) {
                     placeholder="Entrez votre code"/>
                 </div>
               </div>
+
+              <GiftDetails isVisible={this.state.isGift} />
 
               <div className="row">
                 <div className="form-group col-md-12 conditions-generales">

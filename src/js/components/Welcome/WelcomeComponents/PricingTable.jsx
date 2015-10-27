@@ -84,25 +84,23 @@ if (process.env.BROWSER) {
           <div className="pricing-plan">
             <img className="plan-image" src="/images/titre_abo_3.png" alt="Formule"/>
 
-            <h3 className="plan3-heading">DO THE RIGHT THING</h3>
+            <h3 className="plan3-heading">CADEAU</h3>
 
             <div className="plan-details-3">
               <div>
-                <span className="price">99,99€</span>
+                <span className="price">59,99€</span>
                 <span className="period">/AN</span>
               </div>
-              <div className="plan3-highlight">Economisez 68 euros!</div>
+              <div className="plan3-highlight">4 mois offerts inclus</div>
               <ul className="plan-benefits-1">
-                <li>4 écrans connectés simultanément</li>
-                <li>1 clé Chromecast offerte</li>
-                <li>1 T-shirt collector Afrostream</li>
+                <li>2 écrans connectés simultanément</li>
                 <li>Invitations VIP aux avant-premières de films</li>
                 <li>12 mois inclus</li>
                 <li>Films et séries illimités</li>
               </ul>
             </div>
             <button className="plan3-button" onClick={::this.showLock}>
-              S'ABONNER MAINTENANT
+              OFFRIR UN ABONNEMENT
             </button>
 
           </div>

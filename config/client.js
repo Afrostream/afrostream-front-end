@@ -32,7 +32,7 @@ export default {
   },
   auth0: {
     clientId: process.env.AUTH0_CLIENT_ID || 'dev',
-    domain: process.env.AUTH0_DOMAIN || '127.0.0.1:6666',
+    domain: process.env.AUTH0_DOMAIN || '127.0.0.1:3443',
     callbackUrl: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback',
     token: 'afroToken',
     tokenRefresh: 'afroRefreshToken',

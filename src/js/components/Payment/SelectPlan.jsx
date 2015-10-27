@@ -22,6 +22,10 @@ class SelectPlan extends React.Component {
     });
   }
 
+  componentDidMount() {
+    document.getElementsByTagName('BODY')[0].scrollTop = 0;
+  }
+
 
   render() {
 
@@ -61,7 +65,7 @@ class SelectPlan extends React.Component {
                 AMBASSADEUR
               </div>
               <div className="purple-background">
-                DO THE RIGHT THING
+                CADEAU
               </div>
             </div>
             <div className="formule-row-decorated-prices">
@@ -75,7 +79,7 @@ class SelectPlan extends React.Component {
                 <span className="plan-period">/AN</span>
               </div>
               <div className="row-element-prices">
-                <span className="plan-price">99,99€</span>
+                <span className="plan-price">59,99€</span>
                 <span className="plan-period">/AN</span>
               </div>
             </div>
@@ -89,7 +93,7 @@ class SelectPlan extends React.Component {
               <div className="row-element-left">Écrans disponibles en simultané</div>
               <div className="row-element"><strong>1</strong></div>
               <div className="row-element"><strong>2</strong></div>
-              <div className="row-element"><strong>4</strong></div>
+              <div className="row-element"><strong>2</strong></div>
             </div>
             <div className="formule-row-decorated">
               <div className="row-element-left-twolines">Sur votre ordinateur, TV, smartphone et tablette</div>
@@ -116,12 +120,6 @@ class SelectPlan extends React.Component {
               <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
             <div className="formule-row-no-decoration">
-              <div className="row-element-left">T-shirt collector et clé Chromecast</div>
-              <div className="row-element"><i className="fa fa-times"></i></div>
-              <div className="row-element"><i className="fa fa-times"></i></div>
-              <div className="row-element"><i className="fa fa-check"></i></div>
-            </div>
-            <div className="formule-row-no-decoration">
               <div className="row-element-left"></div>
               <div className="row-element">
                 <button className="button-blue"
@@ -137,8 +135,8 @@ class SelectPlan extends React.Component {
               </div>
               <div className="row-element">
                 <button className="button-purple"
-                        onClick={this.selectPlan.bind(this, 'afrostreampremium', '9999', '2015-09-01T00:00:00:00Z')}>
-                  S'ABONNER
+                        onClick={this.selectPlan.bind(this, 'afrostreamgift', '5999', '2015-09-01T00:00:00:00Z')}>
+                  OFFRIR
                 </button>
               </div>
             </div>
