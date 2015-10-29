@@ -28,7 +28,7 @@ export function gift(data) {
     let afroRefreshToken = getState().User.get('afroRefreshToken') || user.get('afro_refresh_token');
     return async api => ({
       type: ActionTypes.User.gift,
-      res: await api(`/gifts/`, 'POST', data, token, afroToken, afroRefreshToken)
+      res: await api(`/subscriptions/gift`, 'POST', data, token, afroToken, afroRefreshToken)
     });
   };
 }

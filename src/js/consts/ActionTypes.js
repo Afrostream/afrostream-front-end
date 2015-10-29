@@ -11,7 +11,8 @@ export default {
     showSigninLock: null,
     logOut: null,
     subscribe: null,
-    cancelSubscription: null
+    cancelSubscription: null,
+    gift: null
   }),
 
   Slides: keyMirror({

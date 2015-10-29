@@ -119,7 +119,7 @@ if (process.env.BROWSER) {
         'recurly-token': token.id
       });
 
-      if (this.state.isGift) {
+      if (self.state.isGift) {
 
         billingInfo['gift_first_name'] = $('#gift_first_name').val();
         billingInfo['gift_last_name'] = $('#gift_last_name').val();
@@ -136,14 +136,16 @@ if (process.env.BROWSER) {
           let message = '';
 
           if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-            && err.response.statusText === 'Unauthorized') {
-
+            && err.response.status === 401) {
             errors = err.response.statusText;
             message = 'Votre session a expiré, veuillez recommencer.';
 
+          } else if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+            && err.response.status === 500) {
+            errors = err.response.statusText;
+            message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
+
           } else {
-            errors = err.response.body;
-            message = '';
             $.each(errors, function (i, error) {
               message += error['#'];
             });
