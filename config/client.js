@@ -1,6 +1,7 @@
 'use strict';
 import dictFr from '../node_modules/auth0-lock/i18n/fr-FR.json';
 import _ from 'lodash';
+import castlab from './player/castlab';
 const customDict = _.merge(dictFr, {
   signin: {
     "title": "S’identifier",
@@ -87,6 +88,9 @@ export default {
         "wmode": "direct"
       }
     },
+    "metrics": {
+      'user_id': ''
+    },
     "languages": {
       "fr": {
         "Play": "Lecture",
@@ -119,7 +123,8 @@ export default {
       "ID_CLIENT": process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
-    "techOrder": ["hls", "html5", "flash"],
+    "dasheverywhere": castlab,
+    "techOrder": ["dasheverywhere", "html5"],
     "plugins": {
       "chromecast": {
         "appId": process.env.CHROMECAST_ID || '',
@@ -129,8 +134,11 @@ export default {
         }
       },
       "ga": {},
-      "metrics": {
-        'user_id': ''
+      "audiotracks": {
+        "title": "Languages"
+      },
+      "texttracks": {
+        "title": "Subtitles"
       }
     }
   }
