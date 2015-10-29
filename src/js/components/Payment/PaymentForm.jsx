@@ -20,7 +20,8 @@ if (process.env.BROWSER) {
     hasRecurly: true,
     subscriptionStatus: 0,
     loading: false,
-    isGift: 0
+    isGift: 0,
+    pageHeader: 'Commencez votre abonnement'
   };
 
   componentDidMount() {
@@ -42,7 +43,8 @@ if (process.env.BROWSER) {
 
     if (this.props.planName === 'afrostreamgift') {
       this.setState({
-        isGift: 1
+        isGift: 1,
+        pageHeader: 'Offrir un abonnement'
       });
     }
   }
@@ -218,14 +220,14 @@ if (process.env.BROWSER) {
         />);
     }
     if (this.state.subscriptionStatus === 1) {
-      return (<PaymentSuccess />);
+      return (<PaymentSuccess isGift={this.state.isGift} />);
     } else if (this.state.subscriptionStatus === 2) {
       return (<PaymentError message={this.state.message}/>);
     } else {
 
       return (
         <div className="payment-wrapper">
-          <div className="enter-payment-details">Commencez votre abonnement</div>
+          <div className="enter-payment-details">{this.state.pageHeader}</div>
           <div className="payment-form">
             <div className={classSet(spinnerClasses)}>
               <Spinner />

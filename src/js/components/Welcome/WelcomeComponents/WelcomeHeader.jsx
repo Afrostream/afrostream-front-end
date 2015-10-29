@@ -34,6 +34,7 @@ if (process.env.BROWSER) {
         </div>
 
         <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
+        <button className="gift-button" type="button" onClick={::this.showLock}>OFFRIR UN ABONNEMENT</button>
       </section>
     );
   }
