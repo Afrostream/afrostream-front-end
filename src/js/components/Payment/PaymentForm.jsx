@@ -25,10 +25,19 @@ if (process.env.BROWSER) {
   };
 
   componentDidMount() {
+
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
     window.$('.recurly-cc-cvc').payment('formatCardCVC');
+
+    if (this.props.planName === 'afrostreamgift') {
+      this.setState({
+        isGift: 1,
+        pageHeader: 'Offrir un abonnement'
+      });
+    }
+
     try {
       recurly.configure(config.recurly.key);
     } catch (err) {
@@ -38,14 +47,6 @@ if (process.env.BROWSER) {
           hasRecurly: false
         });
       }
-      return;
-    }
-
-    if (this.props.planName === 'afrostreamgift') {
-      this.setState({
-        isGift: 1,
-        pageHeader: 'Offrir un abonnement'
-      });
     }
   }
 
