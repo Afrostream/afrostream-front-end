@@ -11,6 +11,9 @@ import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 
+// payment components
+import SelectPlan from './components/Payment/SelectPlan';
+
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
 //import AccountEmail from './components/Account/AccountEmail';

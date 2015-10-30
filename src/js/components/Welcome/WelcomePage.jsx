@@ -3,8 +3,6 @@ import { prepareRoute } from '../../decorators';
 import WelcomeHeader from './WelcomeComponents/WelcomeHeader';
 import Devices from './WelcomeComponents/Devices';
 import PricingTable from './WelcomeComponents/PricingTable';
-import Partners from './WelcomeComponents/Partners';
-import Press from './WelcomeComponents/Press';
 import * as EventActionCreators from '../../actions/event';
 
 @prepareRoute(async function ({ store }) {
@@ -20,8 +18,6 @@ import * as EventActionCreators from '../../actions/event';
         <WelcomeHeader />
         <Devices />
         <PricingTable />
-        <Partners />
-        <Press />
       </div>
     );
   }

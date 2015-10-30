@@ -4,7 +4,6 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import CookieMessage from './Welcome/WelcomeComponents/CookieMessage';
-import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../config';
