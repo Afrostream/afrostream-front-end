@@ -95,7 +95,7 @@ import LogOutButton from './LogOutButton';
   goToHomePage() {
     return (
       <div className="nav navbar-nav navbar-right">
-        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.logOut}>retour a la page d'accueil
+        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.logOut}>page d'accueil
         </button>
       </div>);
   }
