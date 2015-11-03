@@ -162,10 +162,10 @@ const config = {
       },
       "ga": {},
       "audiotracks": {
-        "title": "Languages"
+        "title": "Langues"
       },
       "texttracks": {
-        "title": "Subtitles"
+        "title": "Sous titres"
       }
     }
   }

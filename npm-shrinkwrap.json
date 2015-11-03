@@ -4,8 +4,8 @@
   "dependencies": {
     "afrostream-player": {
       "version": "1.0.5",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.5",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#ffa1fb418d44fa22689b464a04f5a365d059fced",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.9",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#e6ca67640c1cef361f9f8c5b7b768cfe26ec38d8",
       "dependencies": {
         "videojs-chromecast": {
           "version": "1.1.1",
@@ -15,7 +15,7 @@
         "videojs-metrics": {
           "version": "0.0.0",
           "from": "git+https://github.com/Afrostream/videojs-metrics.git#master",
-          "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#7f73f7de80a4086793dd1f8c3599bd941f3cb5b4"
+          "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#f830cba3c41cea6f90a34adbde96050c860b686c"
         },
         "videojs-swf": {
           "version": "5.0.0-rc1-sv",
