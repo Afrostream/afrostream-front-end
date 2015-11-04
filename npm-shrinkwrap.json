@@ -4,13 +4,45 @@
   "dependencies": {
     "afrostream-player": {
       "version": "1.0.5",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.12",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#4311f39e73968bfe5fab641564864ff8f987e3ef",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.13",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#4ae7efbc8eef07c7c5168b3ffee45fe1e05337d3",
       "dependencies": {
+        "dashjs": {
+          "version": "1.5.0",
+          "from": "git+https://github.com/Dash-Industry-Forum/dash.js.git#v1.5.0",
+          "resolved": "git+https://github.com/Dash-Industry-Forum/dash.js.git#042ea1d896c4d36ba4eaf388c827284e6e520509"
+        },
+        "pkcs7": {
+          "version": "0.2.3",
+          "from": "pkcs7@>=0.2.3 <0.3.0",
+          "resolved": "https://registry.npmjs.org/pkcs7/-/pkcs7-0.2.3.tgz"
+        },
         "videojs-chromecast": {
           "version": "1.1.1",
           "from": "git+https://github.com/Afrostream/videojs-chromecast.git#master",
           "resolved": "git+https://github.com/Afrostream/videojs-chromecast.git#7da686d7d91998395943b53380846c12aad7854a"
+        },
+        "videojs-contrib-dash": {
+          "version": "1.1.1",
+          "from": "git+https://github.com/Afrostream/videojs-contrib-dash.git#switch-bitrate",
+          "resolved": "git+https://github.com/Afrostream/videojs-contrib-dash.git#e8cd119cbe3494114dc74836eaf9336c51db3f83"
+        },
+        "videojs-contrib-hls": {
+          "version": "0.17.9",
+          "from": "videojs-contrib-hls@>=0.17.9 <0.18.0",
+          "resolved": "https://registry.npmjs.org/videojs-contrib-hls/-/videojs-contrib-hls-0.17.9.tgz",
+          "dependencies": {
+            "videojs-swf": {
+              "version": "4.7.5",
+              "from": "videojs-swf@>=4.7.0 <5.0.0",
+              "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.5.tgz"
+            }
+          }
+        },
+        "videojs-contrib-media-sources": {
+          "version": "1.0.0",
+          "from": "videojs-contrib-media-sources@>=1.0.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/videojs-contrib-media-sources/-/videojs-contrib-media-sources-1.0.0.tgz"
         },
         "videojs-metrics": {
           "version": "0.0.0",
@@ -29,7 +61,7 @@
           "dependencies": {
             "videojs-swf": {
               "version": "4.7.5",
-              "from": "videojs-swf@4.7.5",
+              "from": "videojs-swf@>=4.7.0 <5.0.0",
               "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.5.tgz"
             },
             "vtt.js": {
