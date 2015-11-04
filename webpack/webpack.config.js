@@ -23,7 +23,7 @@ const node_modules_dir = path.resolve(__dirname, '../node_modules');
 let hash = null;
 
 // chargement de la conf de staging (lorsque l'on est en local)
-if (process.env.API_END_POINT === 'staging') {
+if (process.env.LOAD_STAGING) {
   delete herokuConfig.env.NODE_ENV;
   process.env = merge(process.env, herokuConfig.env);
 }

@@ -15,7 +15,8 @@ if (process.env.BROWSER) {
   Movie,
   Event,
   User
-})) class PlayerComponent extends React.Component {
+}))
+class PlayerComponent extends React.Component {
 
   state = {
     duration: 0
@@ -53,9 +54,9 @@ if (process.env.BROWSER) {
         console.log('generatePlayer complete');
         self.player = player;
       }).catch(function (err) {
-        console.log(err);
-        return false;
-      });
+      console.log(err);
+      return false;
+    });
   }
 
   generateDomTag(videoData) {
@@ -232,7 +233,18 @@ if (process.env.BROWSER) {
             playerData.metrics.user_id = parseInt(userId, 10);
           }
 
-          let player = videojs('afrostream-player', playerData);
+          let player = videojs('afrostream-player', playerData).ready(function () {
+              var allTracks = this.textTracks() || []; // get list of tracks
+              let trackFr = _.find(allTracks, function (track) {
+                return track.language === 'fr';
+              });
+              console.log('afrostream-player', trackFr);
+              if (trackFr) {
+                console.log(trackFr);
+                trackFr.mode = 'showing'; // show this track
+              }
+            }
+          );
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
@@ -349,13 +361,13 @@ if (process.env.BROWSER) {
         <div ref="wrapper" className="wrapper"/>
         {
           movieData ?
-            <div className={classSet(videoInfoClasses)}>
-              <div className=" video-infos_label">Vous regardez</div>
-              <div className=" video-infos_title">{movieData.get('title')}</div>
-              <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-              <div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>
-            </div> : <div />
-        }
+          <div className={classSet(videoInfoClasses)}>
+            <div className=" video-infos_label">Vous regardez</div>
+            <div className=" video-infos_title">{movieData.get('title')}</div>
+            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+            <div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>
+          </div> : <div />
+          }
       </div>
     );
   }
