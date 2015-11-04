@@ -236,7 +236,9 @@ class PlayerComponent extends React.Component {
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks
               let trackFr = _.find(allTracks, function (track) {
-                return track.language === 'fr';
+                console.log('afrostream-player lang', track);
+                let lang = track.language || track.language_;
+                return lang == 'fr';
               });
               console.log('afrostream-player', trackFr);
               if (trackFr) {
