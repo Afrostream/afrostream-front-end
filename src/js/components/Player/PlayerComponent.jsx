@@ -207,7 +207,7 @@ class PlayerComponent extends React.Component {
             });
             //}
             playerData.sources = _.sortBy(playerData.sources, function (k) {
-              return k.type !== 'application/dash+xml';
+              return k.type === 'application/dash+xml';
             });
           }
 
