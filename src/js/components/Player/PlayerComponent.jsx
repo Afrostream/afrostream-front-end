@@ -233,10 +233,7 @@ class PlayerComponent extends React.Component {
             playerData.metrics.user_id = parseInt(userId, 10);
           }
 
-          let player = videojs('afrostream-player', playerData).ready(function () {
-              resolve(player);
-            }
-          );
+          let player = videojs('afrostream-player', playerData);
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
@@ -244,6 +241,7 @@ class PlayerComponent extends React.Component {
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
 
+          resolve(player);
         }).catch((err) => {
           self.playerInit = false;
           reject(err);
