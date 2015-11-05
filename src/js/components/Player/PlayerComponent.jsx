@@ -15,7 +15,8 @@ if (process.env.BROWSER) {
   Movie,
   Event,
   User
-})) class PlayerComponent extends React.Component {
+}))
+class PlayerComponent extends React.Component {
 
   state = {
     duration: 0
@@ -53,9 +54,9 @@ if (process.env.BROWSER) {
         console.log('generatePlayer complete');
         self.player = player;
       }).catch(function (err) {
-        console.log(err);
-        return false;
-      });
+      console.log(err);
+      return false;
+    });
   }
 
   generateDomTag(videoData) {
@@ -202,11 +203,11 @@ if (process.env.BROWSER) {
             let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
             //if (version == 46) {
             playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
-              return k !== 'html5';
+              return k !== 'dash';
             });
             //}
             playerData.sources = _.sortBy(playerData.sources, function (k) {
-              return k.type !== 'application/dash+xml';
+              return k.type === 'application/dash+xml';
             });
           }
 
@@ -232,7 +233,10 @@ if (process.env.BROWSER) {
             playerData.metrics.user_id = parseInt(userId, 10);
           }
 
-          let player = videojs('afrostream-player', playerData);
+          let player = videojs('afrostream-player', playerData).ready(function () {
+              resolve(player);
+            }
+          );
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
@@ -240,7 +244,6 @@ if (process.env.BROWSER) {
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
 
-          resolve(player);
         }).catch((err) => {
           self.playerInit = false;
           reject(err);
@@ -349,13 +352,13 @@ if (process.env.BROWSER) {
         <div ref="wrapper" className="wrapper"/>
         {
           movieData ?
-            <div className={classSet(videoInfoClasses)}>
-              <div className=" video-infos_label">Vous regardez</div>
-              <div className=" video-infos_title">{movieData.get('title')}</div>
-              <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-              <div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>
-            </div> : <div />
-        }
+          <div className={classSet(videoInfoClasses)}>
+            <div className=" video-infos_label">Vous regardez</div>
+            <div className=" video-infos_title">{movieData.get('title')}</div>
+            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+            <div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>
+          </div> : <div />
+          }
       </div>
     );
   }

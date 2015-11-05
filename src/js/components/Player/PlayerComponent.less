@@ -1,7 +1,8 @@
 @import '../../../../node_modules/afrostream-player/lib/video-js.less';
+@import '../../../../node_modules/afrostream-player/lib/component/control-bar/progress-tip.less';
+@import '../../../../node_modules/afrostream-player/lib/component/control-bar/bitrate-control.less';
+@import '../../../../node_modules/afrostream-player/lib/component/loading-spinner.less';
 @import '../../../../node_modules/afrostream-player/lib/afrostream-player.less';
-@import '../../../../node_modules/afrostream-player/lib/control-bar/bitrate-control.less';
-@import '../../../../node_modules/afrostream-player/lib/control-bar/progress-tip.less';
 @import '../../../styles/config.less';
 
 @slider-bar-pattern: ~'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAP0lEQVQIHWWMAQoAIAgDR/QJ/Ub//04+w7ZICBwcOg5FZi5iBB82AGzixEglJrd4TVK5XUJpskSTEvpdFzX9AB2pGziSQcvAAAAAAElFTkSuQmCC';
@@ -82,87 +83,10 @@
       visibility: hidden;
     }
   }
-  ///
-
-  .video-js {
-    background-color: black;
-    padding: 0;
-    position: relative;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    vertical-align: middle;
-  }
-
-  /* Playback technology elements expand to the width/height of the containing div
-      <video> or <object> */
-  .video-js .vjs-tech {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* Fix for Firefox 9 fullscreen (only if it is enabled). Not needed when
-checking fullScreenEnabled. */
-  .video-js:-moz-full-screen {
-    position: absolute;
-  }
-
-  /* Fullscreen Styles */
-  body.vjs-full-window {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    /* Fix for IE6 full-window. http://www.cssplay.co.uk/layouts/fixed.html */
-    //
-    overflow-y: auto;
-  }
-  .video-js.vjs-fullscreen {
-    position: fixed;
-    overflow: hidden;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 100% !important;
-    height: 100% !important;
-    /* IE6 full-window (underscore hack) */
-    //
-    _position: absolute;
-  }
-  .video-js:-webkit-full-screen {
-    width: 100% !important;
-    height: 100% !important;
-  }
-  .video-js.vjs-fullscreen.vjs-user-inactive {
-    cursor: none;
-  }
-  /* Fix for Firefox 9 fullscreen (only if it is enabled). Not needed when
-     checking fullScreenEnabled. */
-  .video-js:-moz-full-screen {
-    position: absolute;
-  }
-  .video-js.vjs-using-native-controls .vjs-poster {
-    display: none;
-  }
-
-  /* Text Track Styles */
-  /* Overall track holder for both captions and subtitles */
-  .video-js .vjs-text-track-display {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 1.5em;
-    right: 0;
-    pointer-events: none;
-  }
 
   .video-js .vjs-text-track {
     background-color: transparent;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   }
 
   .video-js.vjs-afrostream-skin {

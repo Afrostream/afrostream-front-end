@@ -20,7 +20,7 @@ const auth0ClientId = process.env.AUTH0_CLIENT_ID || 'dev';
 let auth0MockDomain, auth0MockAssetsUrl;
 if (auth0ClientId === 'dev') {
   /*
-      dev environment
+   dev environment
    */
   const auth0MockUseHttps = true;  // on any auth0 error, you can switch this to true.
   auth0MockDomain = auth0MockUseHttps ? '127.0.0.1:3443' : '127.0.0.1:3080';
@@ -151,7 +151,7 @@ const config = {
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
     "dasheverywhere": castlab,
-    "techOrder": ["dasheverywhere", "html5"],
+    "techOrder": ["dash", "html5", "hls"/*,"dasheverywhere"*/],
     "plugins": {
       "chromecast": {
         "appId": process.env.CHROMECAST_ID || '',
@@ -160,13 +160,11 @@ const config = {
           "subtitle": "Subtitle"
         }
       },
-      "ga": {},
-      "audiotracks": {
-        "title": "Languages"
-      },
-      "texttracks": {
-        "title": "Subtitles"
-      }
+      "ga": {}
+      //,
+      //"audiotracks": {
+      //  "title": "Langues"
+      //}
     }
   }
 };
