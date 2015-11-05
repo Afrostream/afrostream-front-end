@@ -160,10 +160,11 @@ const config = {
           "subtitle": "Subtitle"
         }
       },
-      "ga": {},
-      "audiotracks": {
-        "title": "Langues"
-      }
+      "ga": {}
+      //,
+      //"audiotracks": {
+      //  "title": "Langues"
+      //}
     }
   }
 };
