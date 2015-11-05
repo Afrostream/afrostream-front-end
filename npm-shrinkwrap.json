@@ -4,8 +4,8 @@
   "dependencies": {
     "afrostream-player": {
       "version": "1.0.5",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.13",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#4ae7efbc8eef07c7c5168b3ffee45fe1e05337d3",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.14",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#9ce0814670df87f9d64ce6ed60d8bd8c691ec399",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
@@ -21,11 +21,6 @@
           "version": "1.1.1",
           "from": "git+https://github.com/Afrostream/videojs-chromecast.git#master",
           "resolved": "git+https://github.com/Afrostream/videojs-chromecast.git#7da686d7d91998395943b53380846c12aad7854a"
-        },
-        "videojs-contrib-dash": {
-          "version": "1.1.1",
-          "from": "git+https://github.com/Afrostream/videojs-contrib-dash.git#switch-bitrate",
-          "resolved": "git+https://github.com/Afrostream/videojs-contrib-dash.git#e8cd119cbe3494114dc74836eaf9336c51db3f83"
         },
         "videojs-contrib-hls": {
           "version": "0.17.9",
@@ -61,7 +56,7 @@
           "dependencies": {
             "videojs-swf": {
               "version": "4.7.5",
-              "from": "videojs-swf@>=4.7.0 <5.0.0",
+              "from": "videojs-swf@4.7.5",
               "resolved": "https://registry.npmjs.org/videojs-swf/-/videojs-swf-4.7.5.tgz"
             },
             "vtt.js": {
