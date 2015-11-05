@@ -203,7 +203,7 @@ class PlayerComponent extends React.Component {
             let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
             //if (version == 46) {
             playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
-              return k !== 'html5';
+              return k !== 'dash';
             });
             //}
             playerData.sources = _.sortBy(playerData.sources, function (k) {
