@@ -152,7 +152,7 @@ const config = {
     },
     "dasheverywhere": castlab,
     //"techOrder": ["dasheverywhere", "html5"],
-    "techOrder": ["hls", "dash", "html5"],
+    "techOrder": ["dash", "html5", "hls"],
     "plugins": {
       "chromecast": {
         "appId": process.env.CHROMECAST_ID || '',
