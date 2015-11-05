@@ -4,13 +4,13 @@
   "dependencies": {
     "afrostream-player": {
       "version": "1.0.5",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.14",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#9ce0814670df87f9d64ce6ed60d8bd8c691ec399",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.16",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#8895c7c5d6eed8316844e77eaf722e48dcb72a13",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
-          "from": "git+https://github.com/Dash-Industry-Forum/dash.js.git#v1.5.0",
-          "resolved": "git+https://github.com/Dash-Industry-Forum/dash.js.git#042ea1d896c4d36ba4eaf388c827284e6e520509"
+          "from": "git+https://github.com/Dash-Industry-Forum/dash.js.git#v1.5.1",
+          "resolved": "git+https://github.com/Dash-Industry-Forum/dash.js.git#4a168d7930a4a281b664b2cb93b800856a3309ed"
         },
         "pkcs7": {
           "version": "0.2.3",
@@ -42,7 +42,7 @@
         "videojs-metrics": {
           "version": "0.0.0",
           "from": "git+https://github.com/Afrostream/videojs-metrics.git#master",
-          "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#f830cba3c41cea6f90a34adbde96050c860b686c"
+          "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#06003bc8af1f3b10c9540d3b1c15b219d6cf2bf3"
         },
         "videojs-swf": {
           "version": "5.0.0-rc1-sv",
