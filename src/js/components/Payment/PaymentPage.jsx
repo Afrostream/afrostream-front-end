@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import SelectPlan from './SelectPlan';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
@@ -15,6 +15,10 @@ if (process.env.BROWSER) {
     ];
 }) @connect(({ Intercom}) => ({Intercom})) class PaymentPage extends React.Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+
   componentDidMount() {
     const {
       props: {
@@ -23,6 +27,10 @@ if (process.env.BROWSER) {
       } = this;
 
     dispatch(IntercomActionCreators.createIntercom());
+  }
+
+  componentWillMount() {
+    this.context.router.transitionTo('/select-plan');
   }
 
   render() {

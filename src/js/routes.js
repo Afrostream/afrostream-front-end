@@ -11,6 +11,11 @@ import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 
+// payment pages
+import SelectPlan from './components/Payment/SelectPlan';
+import PaymentForm from './components/Payment/PaymentForm';
+
+
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
 //import AccountEmail from './components/Account/AccountEmail';
@@ -25,6 +30,9 @@ export default (
     <Route name="login" path="/login" component={LoginPage}/>
     <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
+      <Route name="selectPlan" path="/select-plan" component={SelectPlan}>
+        <Route name="checkout" path="/select-plan/checkout" component={PaymentForm} />
+      </Route>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path="/:movieId/:movieSlug(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"

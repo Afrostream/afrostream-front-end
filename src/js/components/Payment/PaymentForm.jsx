@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
@@ -15,6 +15,9 @@ if (process.env.BROWSER) {
 
 @connect(({ User}) => ({User})) class PaymentForm extends React.Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   state = {
     hasRecurly: true,
@@ -23,6 +26,11 @@ if (process.env.BROWSER) {
     isGift: 0,
     pageHeader: 'Commencez votre abonnement'
   };
+
+  componentWillMount() {
+    var pathName = '/select-plan/' + this.props.planName + '/checkout';
+    this.context.router.transitionTo(pathName);
+  }
 
   componentDidMount() {
 
