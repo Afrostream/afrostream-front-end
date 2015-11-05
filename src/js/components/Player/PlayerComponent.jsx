@@ -245,6 +245,7 @@ class PlayerComponent extends React.Component {
                 console.log(trackFr);
                 trackFr.mode = 'showing'; // show this track
               }
+              resolve(player);
             }
           );
           player.on('pause', this.setDurationInfo.bind(this));
@@ -254,7 +255,6 @@ class PlayerComponent extends React.Component {
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
 
-          resolve(player);
         }).catch((err) => {
           self.playerInit = false;
           reject(err);
