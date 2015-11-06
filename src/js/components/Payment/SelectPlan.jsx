@@ -22,6 +22,10 @@ class SelectPlan extends React.Component {
     });
   }
 
+  componentDidMount() {
+    document.getElementsByTagName('BODY')[0].scrollTop = 0;
+  }
+
 
   render() {
 
@@ -57,12 +61,19 @@ class SelectPlan extends React.Component {
               <div className="yellow-background">
                 AMBASSADEUR
               </div>
+              <div className="purple-background">
+                CADEAU
+              </div>
             </div>
             <div className="formule-row-decorated-prices">
               <div className="row-element-left">Tarif</div>
               <div className="row-element-prices">
                 <span className="plan-price">6,99€</span>
                 <span className="plan-period">/MOIS</span>
+              </div>
+              <div className="row-element-prices">
+                <span className="plan-price">59,99€</span>
+                <span className="plan-period">/AN</span>
               </div>
               <div className="row-element-prices">
                 <span className="plan-price">59,99€</span>
@@ -77,6 +88,7 @@ class SelectPlan extends React.Component {
             <div className="formule-row-decorated">
               <div className="row-element-left">Écrans disponibles en simultané</div>
               <div className="row-element"><strong>1</strong></div>
+              <div className="row-element"><strong>2</strong></div>
               <div className="row-element"><strong>2</strong></div>
             </div>
             <div className="formule-row-decorated">
@@ -98,6 +110,7 @@ class SelectPlan extends React.Component {
               <div className="row-element-left">Invitations avant première film</div>
               <div className="row-element"><i className="fa fa-times"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
+              <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
             <div className="formule-row-no-decoration">
               <div className="row-element-left"></div>
@@ -111,6 +124,12 @@ class SelectPlan extends React.Component {
                 <button className="button-yellow"
                         onClick={this.selectPlan.bind(this, 'afrostreamambassadeurs', '5999', '2015-09-01T00:00:00:00Z')}>
                   S'ABONNER
+                </button>
+              </div>
+              <div className="row-element">
+                <button className="button-purple"
+                        onClick={this.selectPlan.bind(this, 'afrostreamgift', '5999', '2015-09-01T00:00:00:00Z')}>
+                  OFFRIR
                 </button>
               </div>
             </div>

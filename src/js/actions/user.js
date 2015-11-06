@@ -20,6 +20,19 @@ export function subscribe(data) {
   };
 }
 
+export function gift(data) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().User.get('token');
+    let afroToken = getState().User.get('afroToken') || user.get('afro_token');
+    let afroRefreshToken = getState().User.get('afroRefreshToken') || user.get('afro_refresh_token');
+    return async api => ({
+      type: ActionTypes.User.gift,
+      res: await api(`/subscriptions/gift`, 'POST', data, token, afroToken, afroRefreshToken)
+    });
+  };
+}
+
 export function cancelSubscription() {
   return (dispatch, getState) => {
     const user = getState().User.get('user');

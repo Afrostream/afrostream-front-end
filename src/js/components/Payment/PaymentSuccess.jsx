@@ -20,6 +20,7 @@ if (process.env.BROWSER) {
         }
       } = this;
     dispatch(IntercomActionCreators.removeIntercom());
+    this.logOut();
   }
 
   logOut() {
@@ -34,17 +35,31 @@ if (process.env.BROWSER) {
 
   render() {
 
-    return (
-      <div className="payment-success">
-        <h3>Votre abonnement a bien été enregistré</h3>
+    if (this.props.isGift) {
+      return (
+        <div className="payment-success">
+          <h3>Votre cadeau a bien été enregistré</h3>
 
-        <p>merci pour votre inscription</p>
+          <h3>merci pour votre support</h3>
 
-        <p className="success">
-          <button className="success-button" onClick={::this.logOut}>Commencez la visite sur le site</button>
-        </p>
-      </div>
-    );
+          <p className="success">
+            <button className="success-button" onClick={::this.logOut}>se deconnecter</button>
+          </p>
+        </div>
+      );
+    } else {
+      return (
+        <div className="payment-success">
+          <h3>Votre abonnement a bien été enregistré</h3>
+
+          <h3>merci pour votre inscription</h3>
+
+          <p className="success">
+            <button className="success-button" onClick={::this.logOut}>Commencez la visite sur le site</button>
+          </p>
+        </div>
+      );
+    }
   }
 
 }

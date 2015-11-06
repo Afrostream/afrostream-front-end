@@ -4,6 +4,7 @@ import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
 import SearchInput from './../Search/SearchBox';
+import LogOutButton from './LogOutButton';
 @connect(({ User }) => ({User})) class UserButton extends React.Component {
 
   componentDidMount() {
@@ -18,6 +19,15 @@ import SearchInput from './../Search/SearchBox';
       } = this;
     dispatch(UserActionCreators.createLock());
     dispatch(UserActionCreators.getIdToken());
+  }
+
+  logOut() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+    dispatch(UserActionCreators.logOut());
   }
 
   render() {
@@ -36,7 +46,7 @@ import SearchInput from './../Search/SearchBox';
 
     if (token) {
       if (user) {
-        
+
         if (typeof user.get('planCode') !== 'undefined') {
           hasFormule = user.get('planCode');
         }
@@ -45,9 +55,13 @@ import SearchInput from './../Search/SearchBox';
           justSubscribed = user.get('newSubscription');
         }
 
-        if (!hasFormule || justSubscribed === true) {
+        if (justSubscribed === true) {
+
           return (<div />);
+        } else if (!hasFormule){
+          return this.goToHomePage();
         } else {
+
           return (
             <ul className="nav navbar-nav navbar-right">
               <li>
@@ -74,6 +88,14 @@ import SearchInput from './../Search/SearchBox';
     return (
       <div className="nav navbar-nav navbar-right">
         <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.showLock}>connexion
+        </button>
+      </div>);
+  }
+
+  goToHomePage() {
+    return (
+      <div className="nav navbar-nav navbar-right">
+        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.logOut}>page d'accueil
         </button>
       </div>);
   }

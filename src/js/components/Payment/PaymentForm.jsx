@@ -2,6 +2,7 @@ import React from 'react';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
+import GiftDetails from './GiftDetails';
 import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import Spinner from '../Spinner/Spinner';
@@ -18,17 +19,25 @@ if (process.env.BROWSER) {
   state = {
     hasRecurly: true,
     subscriptionStatus: 0,
-    loading: false
+    loading: false,
+    isGift: 0,
+    pageHeader: 'Commencez votre abonnement'
   };
 
   componentDidMount() {
-    document.getElementsByTagName('BODY')[0].scrollTop = 0;
-  }
 
-  componentDidMount() {
+    document.getElementsByTagName('BODY')[0].scrollTop = 0;
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
     window.$('.recurly-cc-cvc').payment('formatCardCVC');
+
+    if (this.props.planName === 'afrostreamgift') {
+      this.setState({
+        isGift: 1,
+        pageHeader: 'Offrir un abonnement'
+      });
+    }
+
     try {
       recurly.configure(config.recurly.key);
     } catch (err) {
@@ -38,7 +47,6 @@ if (process.env.BROWSER) {
           hasRecurly: false
         });
       }
-      return;
     }
   }
 
@@ -101,10 +109,7 @@ if (process.env.BROWSER) {
       'unit-amount-in-cents': this.props.unitAmountInCents,
       'country': $('#country').val(),
       'starts_at': this.props.startDate,
-      'is_gift': '0',
-      'gift_first_name': '',
-      'gift_last_name': '',
-      'gift_email': ''
+      'is_gift': '0'
     };
 
     recurly.token(billingInfo, function (err, token) {
@@ -117,32 +122,68 @@ if (process.env.BROWSER) {
         'recurly-token': token.id
       });
 
-      dispatch(UserActionCreators.subscribe(formData)).then(function () {
-        self.disableForm(false, 1);
-        ga.event({
-          category: 'User',
-          action: 'Created an Account'
-        });
-      }).catch(function (err) {
-        let errors = '';
-        let message = '';
+      if (self.state.isGift) {
 
-        if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-          && err.response.statusText === 'Unauthorized') {
+        billingInfo['gift_first_name'] = $('#gift_first_name').val();
+        billingInfo['gift_last_name'] = $('#gift_last_name').val();
+        billingInfo['gift_email'] = $('#gift_email').val();
 
-          errors = err.response.statusText;
-          message = 'Votre session a expiré, veuillez recommencer.';
-
-        } else {
-          errors = err.response.body;
-          message = '';
-          $.each(errors, function (i, error) {
-            message += error['#'];
+        dispatch(UserActionCreators.gift(formData)).then(function () {
+          self.disableForm(false, 1);
+          ga.event({
+            category: 'User',
+            action: 'Created an Account'
           });
-        }
+        }).catch(function (err) {
+          let errors = '';
+          let message = '';
 
-        self.disableForm(false, 2, message);
-      });
+          if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+            && err.response.status === 401) {
+            errors = err.response.statusText;
+            message = 'Votre session a expiré, veuillez recommencer.';
+
+          } else if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+            && err.response.status === 500) {
+            errors = err.response.statusText;
+            message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
+
+          } else {
+            $.each(errors, function (i, error) {
+              message += error['#'];
+            });
+          }
+
+          self.disableForm(false, 2, message);
+        });
+      } else {
+        dispatch(UserActionCreators.subscribe(formData)).then(function () {
+          self.disableForm(false, 1);
+          ga.event({
+            category: 'User',
+            action: 'Created an Account'
+          });
+        }).catch(function (err) {
+          let errors = '';
+          let message = '';
+
+          if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+            && err.response.statusText === 'Unauthorized') {
+
+            errors = err.response.statusText;
+            message = 'Votre session a expiré, veuillez recommencer.';
+
+          } else {
+            errors = err.response.body;
+            message = '';
+            $.each(errors, function (i, error) {
+              message += error['#'];
+            });
+          }
+
+          self.disableForm(false, 2, message);
+        });
+      }
     });
   }
 
@@ -166,7 +207,6 @@ if (process.env.BROWSER) {
   }
 
   render() {
-
     var spinnerClasses = {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
@@ -181,14 +221,14 @@ if (process.env.BROWSER) {
         />);
     }
     if (this.state.subscriptionStatus === 1) {
-      return (<PaymentSuccess />);
+      return (<PaymentSuccess isGift={this.state.isGift} />);
     } else if (this.state.subscriptionStatus === 2) {
       return (<PaymentError message={this.state.message}/>);
     } else {
 
       return (
         <div className="payment-wrapper">
-          <div className="enter-payment-details">Commencez votre abonnement</div>
+          <div className="enter-payment-details">{this.state.pageHeader}</div>
           <div className="payment-form">
             <div className={classSet(spinnerClasses)}>
               <Spinner />
@@ -207,7 +247,7 @@ if (process.env.BROWSER) {
               </div>
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label className="form-label" for="first_name">Prénom</label>
+                  <label className="form-label" for="first_name">Votre Prénom</label>
                   <input
                     type="text"
                     className="form-control first-name"
@@ -217,7 +257,7 @@ if (process.env.BROWSER) {
                     placeholder="Votre prénom" required/>
                 </div>
                 <div className="form-group col-md-6">
-                  <label className="form-label" for="last_name">Nom</label>
+                  <label className="form-label" for="last_name">Votre Nom</label>
                   <input
                     type="text"
                     className="form-control last-name"
@@ -268,6 +308,8 @@ if (process.env.BROWSER) {
                     placeholder="Entrez votre code"/>
                 </div>
               </div>
+
+              <GiftDetails isVisible={this.state.isGift} />
 
               <div className="row">
                 <div className="form-group col-md-12 conditions-generales">

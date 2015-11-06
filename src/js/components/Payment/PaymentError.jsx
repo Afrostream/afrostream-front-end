@@ -55,7 +55,7 @@ if (process.env.BROWSER) {
         <div className="payment-error">
           <h3>{this.props.title}</h3>
 
-          <p>{this.props.message}</p>
+          <h4>{this.props.message}</h4>
 
           <p className="error">
             <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
@@ -68,7 +68,7 @@ if (process.env.BROWSER) {
         <div className="payment-error">
           <h3>{this.props.title}</h3>
 
-          <p>{this.props.message}</p>
+          <h4>{this.props.message}</h4>
 
           <p className="error"><a className="error-link" href={this.props.link}>{this.props.linkMessage}</a></p>
           <LogOutButton />

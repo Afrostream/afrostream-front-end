@@ -7,6 +7,11 @@ import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
 
 @connect(({ User }) => ({User})) class HomePage extends React.Component {
+
+  componentDidMount() {
+    document.getElementsByTagName('BODY')[0].scrollTop = 0;
+  }
+
   render() {
     const { props: { User ,children} } = this;
     const token = User.get('token');
