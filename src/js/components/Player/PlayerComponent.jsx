@@ -237,7 +237,7 @@ class PlayerComponent extends React.Component {
               var allTracks = this.textTracks() || []; // get list of tracks
               _.forEach(allTracks, function (track) {
                 let lang = track.language || track.language_;
-                trackFr.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
+                track.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
               });
             }
           );
