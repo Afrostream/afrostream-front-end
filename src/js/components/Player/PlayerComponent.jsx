@@ -233,7 +233,20 @@ class PlayerComponent extends React.Component {
             playerData.metrics.user_id = parseInt(userId, 10);
           }
 
-          let player = videojs('afrostream-player', playerData);
+          let player = videojs('afrostream-player', playerData).ready(function () {
+              var allTracks = this.textTracks() || []; // get list of tracks
+              let trackFr = _.find(allTracks, function (track) {
+                console.log('afrostream-player lang', track);
+                let lang = track.language || track.language_;
+                return lang == 'fr';
+              });
+              console.log('afrostream-player', trackFr);
+              if (trackFr) {
+                console.log(trackFr);
+                trackFr.mode = 'showing'; // show this track
+              }
+            }
+          );
           player.on('pause', this.setDurationInfo.bind(this));
           player.on('play', this.setDurationInfo.bind(this));
           player.on('ended', this.setDurationInfo.bind(this));
