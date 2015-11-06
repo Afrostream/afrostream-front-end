@@ -52,6 +52,9 @@ class SelectPlan extends React.Component {
               <div className="row-element">
                 <span className="yellow-text">FORMULE</span>
               </div>
+              <div className="row-element">
+                <span className="purple-text">FORMULE</span>
+              </div>
             </div>
             <div className="formule-row-no-decoration">
               <div className="row-element-left-header"></div>
