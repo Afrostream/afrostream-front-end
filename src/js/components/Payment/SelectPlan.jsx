@@ -52,9 +52,6 @@ class SelectPlan extends React.Component {
               <div className="row-element">
                 <span className="yellow-text">FORMULE</span>
               </div>
-              <div className="row-element">
-                <span className="purple-text">FORMULE</span>
-              </div>
             </div>
             <div className="formule-row-no-decoration">
               <div className="row-element-left-header"></div>
@@ -87,7 +84,6 @@ class SelectPlan extends React.Component {
               <div className="row-element-left">HD disponible</div>
               <div className="row-element"><i className="fa fa-check"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
-              <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
             <div className="formule-row-decorated">
               <div className="row-element-left">Écrans disponibles en simultané</div>
@@ -99,17 +95,14 @@ class SelectPlan extends React.Component {
               <div className="row-element-left-twolines">Sur votre ordinateur, TV, smartphone et tablette</div>
               <div className="row-element"><i className="fa fa-check"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
-              <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
             <div className="formule-row-decorated">
               <div className="row-element-left">Films et séries TV en illimité</div>
               <div className="row-element"><i className="fa fa-check"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
-              <div className="row-element"><i className="fa fa-check"></i></div>
             </div>
             <div className="formule-row-decorated">
               <div className="row-element-left">Sans engagement</div>
-              <div className="row-element"><i className="fa fa-check"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
               <div className="row-element"><i className="fa fa-check"></i></div>
             </div>

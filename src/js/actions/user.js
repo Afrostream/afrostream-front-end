@@ -47,7 +47,8 @@ export function cancelSubscription() {
 
 export function createLock() {
   return (dispatch, getState) => {
-    const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain);
+    const options = config.auth0.assetsUrl ? { assetsUrl: config.auth0.assetsUrl } : { };
+    const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain, options);
     return {
       type: ActionTypes.User.createLock,
       lock: lock

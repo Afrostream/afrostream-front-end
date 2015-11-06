@@ -13,6 +13,10 @@ npm install
 ```
 npm run dev
 ```
+##Run Staging
+```
+npm run staging
+```
 ##Run Dev mock
 ```
 npm run dev mock

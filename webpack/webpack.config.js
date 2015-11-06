@@ -4,6 +4,8 @@ import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HashPlugin from 'hash-webpack-plugin';
 import config from '../config';
+import merge from 'lodash/object/merge';
+import herokuConfig from '../app.json';
 
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
@@ -19,6 +21,12 @@ const AUTOPREFIXER_BROWSERS = [
 const assetsPath = path.resolve(__dirname, '../dist/');
 const node_modules_dir = path.resolve(__dirname, '../node_modules');
 let hash = null;
+
+// chargement de la conf de staging (lorsque l'on est en local)
+if (process.env.LOAD_STAGING) {
+  delete herokuConfig.env.NODE_ENV;
+  process.env = merge(process.env, herokuConfig.env);
+}
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -81,7 +89,7 @@ const webpackConfig = {
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {
-        test: /\.(gif|jpg|png|svg|favicon|ico|swf)/,
+        test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
@@ -98,6 +106,10 @@ const webpackConfig = {
       }
     ]
   },
+  externals: {
+    //used for castlab dependencys
+    "Math/Long": "bytebuffer"
+  },
   plugins: [
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
@@ -105,7 +117,8 @@ const webpackConfig = {
       jQuery: 'jquery',
       'window.$': 'jquery',
       'window.jQuery': 'jquery',
-      'root.jQuery': 'jquery'
+      'root.jQuery': 'jquery',
+      'Math/Long': 'long'
     }),
     new webpack.DefinePlugin({
       'process.env': {

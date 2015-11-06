@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import videojs from 'videojs-afrostream';
+import videojs from 'afrostream-player';
 import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
@@ -15,7 +15,8 @@ if (process.env.BROWSER) {
   Movie,
   Event,
   User
-})) class PlayerComponent extends React.Component {
+}))
+class PlayerComponent extends React.Component {
 
   state = {
     duration: 0
@@ -53,9 +54,9 @@ if (process.env.BROWSER) {
         console.log('generatePlayer complete');
         self.player = player;
       }).catch(function (err) {
-        console.log(err);
-        return false;
-      });
+      console.log(err);
+      return false;
+    });
   }
 
   generateDomTag(videoData) {
@@ -202,11 +203,11 @@ if (process.env.BROWSER) {
             let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
             //if (version == 46) {
             playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
-              return k !== 'html5';
+              return k !== 'dash';
             });
             //}
             playerData.sources = _.sortBy(playerData.sources, function (k) {
-              return k.type !== 'application/dash+xml';
+              return k.type === 'application/dash+xml';
             });
           }
 
@@ -214,31 +215,30 @@ if (process.env.BROWSER) {
           console.log(playerData.sources);
           // ==== END hacks config
 
-          playerData.flash.swf = require('../../../../node_modules/videojs-afrostream/dist/video-js.swf');
+          playerData.flash.swf = require('../../../../node_modules/afrostream-player/dist/video-js.swf');
           playerData.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
+          playerData.dasheverywhere.silverlightFile = require('../../../../node_modules/afrostream-player/dist/dashcs.xap');
+          playerData.dasheverywhere.flashFile = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
 
           playerData.hls = _.clone(playerData.flash);
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
           let user = User.get('user');
-          if (user && playerData.plugins.metrics) {
+          if (user && playerData.metrics) {
             let userId = user.get('user_id');
             userId = _.find(userId.split('|'), function (val) {
               return parseInt(val, 10);
             });
-            playerData.plugins.metrics.user_id = parseInt(userId, 10);
+            playerData.metrics.user_id = parseInt(userId, 10);
           }
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks
-              let trackFr = _.find(allTracks, function (track) {
-                return track.language === 'fr';
+              _.forEach(allTracks, function (track) {
+                let lang = track.language || track.language_;
+                track.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
               });
-              if (trackFr) {
-                console.log(trackFr);
-                trackFr.mode = 'showing'; // show this track
-              }
             }
           );
           player.on('pause', this.setDurationInfo.bind(this));
@@ -357,13 +357,13 @@ if (process.env.BROWSER) {
         <div ref="wrapper" className="wrapper"/>
         {
           movieData ?
-            <div className={classSet(videoInfoClasses)}>
-              <div className=" video-infos_label">Vous regardez</div>
-              <div className=" video-infos_title">{movieData.get('title')}</div>
-              <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-              <div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>
-            </div> : <div />
-        }
+          <div className={classSet(videoInfoClasses)}>
+            <div className=" video-infos_label">Vous regardez</div>
+            <div className=" video-infos_title">{movieData.get('title')}</div>
+            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+            <div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>
+          </div> : <div />
+          }
       </div>
     );
   }
