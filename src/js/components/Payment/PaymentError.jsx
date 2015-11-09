@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import LogOutButton from '../../components/User/LogOutButton';
 import * as UserActionCreators from '../../actions/user';
 import * as IntercomActionCreators from '../../actions/intercom';
+import config from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./PaymentError.less');
+}
+if (canUseDOM) {
+  var paymentErrorGa = require('react-ga');
 }
 
 @connect(({ User }) => ({User})) class PaymentError extends React.Component {
@@ -14,15 +19,30 @@ if (process.env.BROWSER) {
     title: React.PropTypes.string,
     message: React.PropTypes.string,
     link: React.PropTypes.string,
-    linkMessage: React.PropTypes.string
+    linkMessage: React.PropTypes.string,
+    pathName: React.PropTypes.string
+  };
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
   };
 
   static defaultProps = {
     title: 'Erreur lors de la création de l’abonnement:',
     message: '',
     link: '/',
-    linkMessage: 'merci de réessayer'
+    linkMessage: 'merci de réessayer',
+    pathName: '/error'
   };
+
+  componentWillMount() {
+    if (canUseDOM) {
+      var pathName = this.props.pathName + '/error';
+      paymentErrorGa.initialize(config.google.analyticsKey, {debug: true});
+      paymentErrorGa.pageview(pathName);
+      this.context.router.transitionTo(pathName);
+    }
+  }
 
   componentDidMount() {
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
@@ -35,6 +55,7 @@ if (process.env.BROWSER) {
         }
       } = this;
     dispatch(IntercomActionCreators.removeIntercom());
+    this.context.router.transitionTo('/');
   }
 
   logOut() {

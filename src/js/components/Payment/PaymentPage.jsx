@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import SelectPlan from './SelectPlan';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as EventActionCreators from '../../actions/event';
 import * as IntercomActionCreators from '../../actions/intercom';
 import { prepareRoute } from '../../decorators';
+import config from '../../../../config';
+
+if (canUseDOM) {
+  var selectPlanGa = require('react-ga');
+}
+
 if (process.env.BROWSER) {
   require('./PaymentPage.less');
 }
@@ -15,6 +21,10 @@ if (process.env.BROWSER) {
     ];
 }) @connect(({ Intercom}) => ({Intercom})) class PaymentPage extends React.Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+
   componentDidMount() {
     const {
       props: {
@@ -23,6 +33,14 @@ if (process.env.BROWSER) {
       } = this;
 
     dispatch(IntercomActionCreators.createIntercom());
+  }
+
+  componentWillMount() {
+    if (canUseDOM) {
+      selectPlanGa.initialize(config.google.analyticsKey, {debug: true});
+      selectPlanGa.pageview('/select-plan');
+      this.context.router.transitionTo('/select-plan');
+    }
   }
 
   render() {

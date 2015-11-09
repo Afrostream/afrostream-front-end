@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
@@ -13,8 +13,15 @@ if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
+if (canUseDOM) {
+  var paymentFormGa = require('react-ga');
+}
+
 @connect(({ User}) => ({User})) class PaymentForm extends React.Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   state = {
     hasRecurly: true,
@@ -23,6 +30,15 @@ if (process.env.BROWSER) {
     isGift: 0,
     pageHeader: 'Commencez votre abonnement'
   };
+
+  componentWillMount() {
+    if (canUseDOM) {
+      var pathName = '/select-plan/' + this.props.planName + '/checkout';
+      paymentFormGa.initialize(config.google.analyticsKey, {debug: true});
+      paymentFormGa.pageview(pathName);
+      this.context.router.transitionTo(pathName);
+    }
+  }
 
   componentDidMount() {
 
@@ -213,17 +229,27 @@ if (process.env.BROWSER) {
     };
 
     if (!this.state.hasRecurly) {
+      var pathName;
+      if (canUseDOM) {
+        pathName = document.location.pathname;
+      }
+
       return (<PaymentError
         title="Paiement indisponible"
         message="Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
         link="mailto:support@afrostream.tv"
         linkMessage="Si le probleme persiste, veuillez contacter notre support technique"
+        pathName={pathName}
         />);
     }
     if (this.state.subscriptionStatus === 1) {
       return (<PaymentSuccess isGift={this.state.isGift} />);
     } else if (this.state.subscriptionStatus === 2) {
-      return (<PaymentError message={this.state.message}/>);
+      var pathName;
+      if (canUseDOM) {
+        pathName = document.location.pathname;
+      }
+      return (<PaymentError message={this.state.message} pathName={pathName} />);
     } else {
 
       return (

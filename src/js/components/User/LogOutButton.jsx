@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
+import config from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./LogOutButton.less');
 }
 
 @connect(({ User }) => ({User})) class LogOutButton extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   logOut() {
     const {
@@ -16,6 +21,10 @@ if (process.env.BROWSER) {
       } = this;
 
     dispatch(UserActionCreators.logOut());
+  }
+
+  componentWillUnmount() {
+    this.context.router.transitionTo('/');
   }
 
   render() {
