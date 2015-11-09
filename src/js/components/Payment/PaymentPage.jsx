@@ -5,6 +5,12 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as EventActionCreators from '../../actions/event';
 import * as IntercomActionCreators from '../../actions/intercom';
 import { prepareRoute } from '../../decorators';
+import config from '../../../../config';
+
+if (canUseDOM) {
+  var selectPlanGa = require('react-ga');
+}
+
 if (process.env.BROWSER) {
   require('./PaymentPage.less');
 }
@@ -30,7 +36,11 @@ if (process.env.BROWSER) {
   }
 
   componentWillMount() {
-    this.context.router.transitionTo('/select-plan');
+    if (canUseDOM) {
+      selectPlanGa.initialize(config.google.analyticsKey, {debug: true});
+      selectPlanGa.pageview('/select-plan');
+      this.context.router.transitionTo('/select-plan');
+    }
   }
 
   render() {
