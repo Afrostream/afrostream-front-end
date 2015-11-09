@@ -16,7 +16,6 @@ import Navigation from '../Navigation/Navigation';
 }) class BrowsePage extends React.Component {
 
   render() {
-    debugger;
     return (
       <div className="row-fluid">
         <Navigation />

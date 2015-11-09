@@ -20,7 +20,6 @@ if (canUseDOM) {
   };
 
   componentWillMount() {
-    debugger;
     if (canUseDOM) {
       var pathName = this.props.pathName + '/success';
       paymentSuccessGa.initialize(config.google.analyticsKey, {debug: true});
