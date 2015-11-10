@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
-import SearchInput from './../Search/SearchBox';
-import LogOutButton from './LogOutButton';
+import config from '../../../../config';
+
 @connect(({ User }) => ({User})) class UserButton extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   componentDidMount() {
     this.createLock();
@@ -28,6 +32,7 @@ import LogOutButton from './LogOutButton';
         }
       } = this;
     dispatch(UserActionCreators.logOut());
+    this.context.router.transitionTo('/');
   }
 
   render() {
@@ -95,7 +100,7 @@ import LogOutButton from './LogOutButton';
   goToHomePage() {
     return (
       <div className="nav navbar-nav navbar-right">
-        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.logOut}>page d'accueil
+        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.logOut}>accueil
         </button>
       </div>);
   }

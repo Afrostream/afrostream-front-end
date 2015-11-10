@@ -13,6 +13,11 @@ class Footer extends React.Component {
             <h4>OBTENIR DE L'AIDE</h4>
             <ul className="footer-links">
               <li>
+                <a className="footer-link" href="mailto:support@afrostream.tv">
+                  Support
+                </a>
+              </li>
+              <li>
                 <a className="footer-link" href="https://afrostream.tv/faq.html">
                   Les réponses à vos questions
                 </a>
