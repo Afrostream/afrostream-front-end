@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
+import SearchInput from './../Search/SearchBox';
 import config from '../../../../config';
 
 @connect(({ User }) => ({User})) class UserButton extends React.Component {
