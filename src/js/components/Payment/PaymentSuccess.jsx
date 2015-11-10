@@ -29,7 +29,9 @@ if (canUseDOM) {
   }
 
   componentDidMount() {
-    document.getElementsByTagName('BODY')[0].scrollTop = 0;
+    if (canUseDOM) {
+      document.getElementsByTagName('BODY')[0].scrollTop = 0;
+    }
   }
 
   componentWillUnmount() {
@@ -54,7 +56,6 @@ if (canUseDOM) {
   }
 
   render() {
-
     if (this.props.isGift) {
       return (
         <div className="payment-success">

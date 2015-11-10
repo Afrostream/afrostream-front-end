@@ -17,6 +17,27 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
   }
 
+  componentWillMount(){
+    const { props: { User } } = this;
+    const token = User.get('token');
+    const user = User.get('user');
+    var pathName = '';
+    if (canUseDOM){
+      pathName = document.location.pathname;
+    }
+
+    if (token) {
+      if (!user) {
+       if (pathName.indexOf('select-plan') > -1) {
+         this.context.router.transitionTo('/');
+       }
+      }
+    } else if (pathName.indexOf('select-plan')  > -1) {
+      this.context.router.transitionTo('/');
+    }
+
+  }
+
   render() {
     const { props: { User ,children} } = this;
     const token = User.get('token');
@@ -24,26 +45,19 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
     if (token) {
       if (!user) {
-        var pathName;
-        if (canUseDOM){
-          pathName = document.location.pathname;
-        }
-        if (pathName.indexOf('select-plan' > -1)) {
-          this.context.router.transitionTo('/');
-        } else {
-          return (<WelcomePage />);
-        }
+        return (<WelcomePage />);
+
       }
       else if (!user.get('planCode')) {
         return (<PaymentPage />);
       }
       else if (typeof user.get('newSubscription') !== 'undefined') {
         if (user.get('newSubscription') === true) {
-          var pathName;
+          var successPathName = '';
           if (canUseDOM){
-            pathName = document.location.pathname;
+            successPathName = document.location.pathname;
           }
-          return (<PaymentSuccess pathName={pathName} />);
+          return (<PaymentSuccess pathName={successPathName} />);
         }
       }
       else {
