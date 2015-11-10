@@ -118,6 +118,19 @@ const config = {
     "metrics": {
       'user_id': ''
     },
+    "dash": {
+      "autoSwitch": true,
+      "buffer": {
+        "minBufferTime": 12,
+        "lowBufferThreshold": 4,
+        "bufferTimeAtTopQuality": 30,
+        "bufferTimeAtTopQualityLongForm": 300,
+        "longFormContentDurationThreshold": 600,
+        "richBufferThreshold": 20,
+        "bufferToKeep": 8,
+        "bufferPruningInterval": 8
+      }
+    },
     "languages": {
       "fr": {
         "Play": "Lecture",

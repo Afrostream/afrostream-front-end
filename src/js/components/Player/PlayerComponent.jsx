@@ -181,14 +181,6 @@ class PlayerComponent extends React.Component {
             }
           };
 
-          if (ua.isSafari()) {
-            playerData.sources = _.remove(playerData.sources, function (k) {
-              return k.type !== 'application/dash+xml';
-            });
-
-            delete playerData.plugins.metrics;
-          }
-
           if (ua.isIE()) {
             if (navigator.appVersion.indexOf('Windows NT 6.1') != -1) {
               playerData.flash.params.wmode = 'opaque';
@@ -198,18 +190,10 @@ class PlayerComponent extends React.Component {
               nativeTextTracks: false
             }
           }
-
-          if (ua.isChrome()) {
-            let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
-            //if (version == 46) {
-            playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
-              return k !== 'dash';
-            });
-            //}
-            playerData.sources = _.sortBy(playerData.sources, function (k) {
-              return k.type === 'application/dash+xml';
-            });
-          }
+          //on force dash en tech par default pour tous les browsers ;)
+          playerData.sources = _.sortBy(playerData.sources, function (k) {
+            return k.type === 'application/dash+xml';
+          });
 
           console.log(playerData.techOrder);
           console.log(playerData.sources);
