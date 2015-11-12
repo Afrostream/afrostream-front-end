@@ -75,7 +75,7 @@ class PlayerComponent extends React.Component {
       let video = document.createElement('video');
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
-      video.crossOrigin = 'anonymous';//true;
+      video.crossOrigin = true;
       video.setAttribute('crossorigin', true);
 
       var trackOptions = {
@@ -189,6 +189,7 @@ class PlayerComponent extends React.Component {
               nativeCaptions: false,
               nativeTextTracks: false
             }
+            playerData.dash = _.clone(playerData.html5);
           }
           //on force dash en tech par default pour tous les browsers ;)
           playerData.sources = _.sortBy(playerData.sources, function (k) {
