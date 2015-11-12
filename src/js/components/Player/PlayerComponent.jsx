@@ -226,11 +226,19 @@ class PlayerComponent extends React.Component {
           }
 
           let player = videojs('afrostream-player', playerData).ready(function () {
+              //var allTracks = this.textTracks() || []; // get list of tracks
+              //_.forEach(allTracks, function (track) {
+              //  let lang = track.language || track.language_;
+              //  track.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
+              //});
               var allTracks = this.textTracks() || []; // get list of tracks
-              _.forEach(allTracks, function (track) {
-                let lang = track.language || track.language_;
-                track.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
+              let trackFr = _.find(allTracks, function (track) {
+                return track.language === 'fr';
               });
+              if (trackFr) {
+                console.log(trackFr);
+                trackFr.mode = 'showing'; // show this track
+              }
             }
           );
           player.on('pause', this.setDurationInfo.bind(this));
