@@ -107,7 +107,7 @@ const config = {
     "language": "fr",
     "flash": {
       "params": {
-        "wmode": "direct"
+        "wmode": "opaque"
       }
     },
     "hls": {

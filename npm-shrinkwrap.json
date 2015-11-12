@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "dependencies": {
     "afrostream-player": {
-      "version": "1.0.19",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.19",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#821a3300dfe5af8f8d343daf9b88030bf6bc18b2",
+      "version": "1.0.20",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.20",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#e665ba41592e623aa9f59f78e108c163408d9ec3",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
