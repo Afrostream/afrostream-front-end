@@ -40,7 +40,7 @@
     "webpack-dev-server": "^1.10.0"
   },
   "dependencies": {
-    "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.19",
+    "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.20",
     "algoliasearch": "^3.7.7",
     "auth0-lock": "^7.9.4",
     "autoprefixer-core": "^5.2.1",
@@ -103,9 +103,9 @@
     "react": "^0.13.3",
     "react-autosuggest": "^1.18.3",
     "react-ga": "^1.1.0",
-    "redux": "^3.0.0",
     "react-redux": "^2.1.2",
     "react-router": "1.0.0-beta3",
+    "redux": "^3.0.0",
     "redux-devtools": "^2.1.2",
     "serve-favicon": "^2.3.0",
     "stats-webpack-plugin": "^0.2.1",
