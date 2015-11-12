@@ -26,6 +26,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     if (canUseDOM){
       pathName = document.location.pathname;
     }
+    debugger;
     if (token) {
       if (!user) {
        if (pathName.indexOf('select-plan') > -1) {
@@ -74,10 +75,6 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
           return (<BrowsePage/>)
         }
       }
-    } else if (pathName === '/gift' || pathName === '/select-gift'){
-      debugger;
-      return (<PaymentPage planType='gift' />);
-
     }  else {
       debugger;
       return (<WelcomePage />);

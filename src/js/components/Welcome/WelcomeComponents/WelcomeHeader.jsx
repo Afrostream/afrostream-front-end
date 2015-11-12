@@ -25,10 +25,8 @@ if (process.env.BROWSER) {
   navigateToGiftPage(event) {
     event.preventDefault();
     debugger;
-    let router = this.context.router;
-    if (!router.goBack()) {
-      router.transitionTo('/gift');
-    }
+    console.log('*** transitioning to gift ***');
+    this.context.router.transitionTo('/gift');
   }
 
   render() {

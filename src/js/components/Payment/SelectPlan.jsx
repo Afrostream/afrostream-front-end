@@ -28,7 +28,7 @@ class SelectPlan extends React.Component {
 
 
   render() {
-
+    debugger;
     if (this.state.planName !== '') {
 
       return (
