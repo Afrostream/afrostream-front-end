@@ -18,6 +18,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
   }
 
   componentWillMount(){
+    debugger;
     const { props: { User } } = this;
     const token = User.get('token');
     const user = User.get('user');
@@ -25,7 +26,6 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     if (canUseDOM){
       pathName = document.location.pathname;
     }
-
     if (token) {
       if (!user) {
        if (pathName.indexOf('select-plan') > -1) {
@@ -39,6 +39,12 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
   }
 
   render() {
+
+    var pathName = '';
+    if (canUseDOM){
+      pathName = document.location.pathname;
+    }
+    debugger;
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const user = User.get('user');
@@ -49,15 +55,15 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
       }
       else if (!user.get('planCode')) {
-        return (<PaymentPage />);
+        return (<PaymentPage planType='normal' />);
       }
       else if (typeof user.get('newSubscription') !== 'undefined') {
         if (user.get('newSubscription') === true) {
-          var successPathName = '';
+          var pathName = '';
           if (canUseDOM){
-            successPathName = document.location.pathname;
+            pathName = document.location.pathname;
           }
-          return (<PaymentSuccess pathName={successPathName} />);
+          return (<PaymentSuccess pathName={pathName} />);
         }
       }
       else {
@@ -68,7 +74,12 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
           return (<BrowsePage/>)
         }
       }
-    } else {
+    } else if (pathName === '/gift' || pathName === '/select-gift'){
+      debugger;
+      return (<PaymentPage planType='gift' />);
+
+    }  else {
+      debugger;
       return (<WelcomePage />);
     }
   }

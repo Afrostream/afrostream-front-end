@@ -36,14 +36,23 @@ if (process.env.BROWSER) {
   }
 
   componentWillMount() {
+    debugger;
     if (canUseDOM) {
       selectPlanGa.initialize(config.google.analyticsKey, {debug: true});
       selectPlanGa.pageview('/select-plan');
-      this.context.router.transitionTo('/select-plan');
+      if (this.props.planType === 'gift') {
+        console.log('*** planType is gift ***');
+
+
+      } else {
+        this.context.router.transitionTo('/select-plan');
+      }
+
     }
   }
 
   render() {
+    debugger;
     return (<SelectPlan />);
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../../actions/user';
 
@@ -8,6 +8,10 @@ if (process.env.BROWSER) {
 
 @connect(({ User }) => ({User})) class WelcomeHeader extends React.Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+
   showLock() {
     const {
       props: {
@@ -16,6 +20,15 @@ if (process.env.BROWSER) {
       } = this;
 
     dispatch(UserActionCreators.showSignupLock());
+  }
+
+  navigateToGiftPage(event) {
+    event.preventDefault();
+    debugger;
+    let router = this.context.router;
+    if (!router.goBack()) {
+      router.transitionTo('/gift');
+    }
   }
 
   render() {
@@ -34,7 +47,7 @@ if (process.env.BROWSER) {
         </div>
 
         <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
-        <button className="gift-button" type="button" onClick={::this.showLock}>OFFRIR UN ABONNEMENT</button>
+        <button className="gift-button" type="button" onClick={::this.navigateToGiftPage}>OFFRIR UN ABONNEMENT</button>
       </section>
     );
   }
