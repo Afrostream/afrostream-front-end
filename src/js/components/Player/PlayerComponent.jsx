@@ -198,7 +198,7 @@ class PlayerComponent extends React.Component {
           //Force audio language
           playerData.sources = _.forEach(playerData.sources, function (k) {
             var forceTrackFr = '?tracks=audio_fre,video_eng';
-            if (!~k.src.indexOf()) {
+            if (!~k.src.indexOf(forceTrackFr) && k.type !== 'application/dash+xml') {
               k.src = k.src + forceTrackFr;
             }
           });
