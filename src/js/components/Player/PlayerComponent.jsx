@@ -195,6 +195,14 @@ class PlayerComponent extends React.Component {
             return k.type === 'application/dash+xml';
           });
 
+          //Force audio language
+          playerData.sources = _.forEach(playerData.sources, function (k) {
+            var forceTrackFr = '?tracks=audio_fre,video_eng';
+            if (!~k.src.indexOf(forceTrackFr) && k.type !== 'application/dash+xml') {
+              k.src = k.src + forceTrackFr;
+            }
+          });
+
           console.log(playerData.techOrder);
           console.log(playerData.sources);
           // ==== END hacks config
