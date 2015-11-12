@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "dependencies": {
     "afrostream-player": {
-      "version": "1.0.5",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.18",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#9b4e1f8f8653ca13c92a5649af343b4406da73eb",
+      "version": "1.0.19",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#v1.0.19",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#821a3300dfe5af8f8d343daf9b88030bf6bc18b2",
       "dependencies": {
         "dashjs": {
           "version": "1.5.0",
@@ -16,6 +16,11 @@
           "version": "0.2.3",
           "from": "pkcs7@>=0.2.3 <0.3.0",
           "resolved": "https://registry.npmjs.org/pkcs7/-/pkcs7-0.2.3.tgz"
+        },
+        "smoothie": {
+          "version": "1.27.0",
+          "from": "smoothie@>=1.27.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/smoothie/-/smoothie-1.27.0.tgz"
         },
         "videojs-chromecast": {
           "version": "1.1.1",
