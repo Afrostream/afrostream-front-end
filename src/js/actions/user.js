@@ -223,10 +223,7 @@ export function showSignupLock() {
     return async () => {
       let authorized = true;
       try {
-        var result = await isAuthorized();
-        if (result.authorized === false) {
-          authorized = false;
-        }
+        authorized = await isAuthorized();
       } catch (err) {
         console.error('showSingupLock error requesting /auth/geo ', err);
       }

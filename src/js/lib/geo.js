@@ -14,12 +14,12 @@ export async function isAuthorized() {
         if (err) {
           return reject(err);
         }
-        if (!response ||
-            !response.body ||
-            typeof response.body.authorized === 'undefined') {
-          return resolve(true);
+        if (response && response.body &&
+            response.body.authorized === false) {
+          return resolve(false);
         }
-        return resolve(response.body.authorized);
+        // undefined, error, or true => true.
+        resolve(true);
       });
   });
 }
