@@ -80,10 +80,6 @@ class MovieInfo extends React.Component {
   }
 
   render() {
-    const classes = classSet({
-      'movie': true,
-      'movie--active': this.props.active
-    });
 
     const {
       props: { Movie, active, movieId, movieObj,maxLength}
@@ -91,10 +87,17 @@ class MovieInfo extends React.Component {
 
     const movieData = movieObj || Movie.get(`movies/${movieId}`);
 
+
     if (!movieData) {
       //TODO gerer le 404 sur la movie
       return (<Spinner />);
     }
+
+    const classes = classSet({
+      'movie': true,
+      'serie': movieData.type === 'serie',
+      'movie--active': this.props.active
+    });
 
     let poster = movieData.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';

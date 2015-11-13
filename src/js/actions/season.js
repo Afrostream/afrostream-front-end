@@ -10,12 +10,28 @@ export function toggleSeason(index) {
 }
 
 export function getSeason(seasonId) {
-  return async api => ({
-    type: ActionTypes.Season.getSeason,
-    seasonId,
-    res: await api(`/seasons/${seasonId}`, {
-      sort: 'updated',
-      direction: 'asc'
-    })
-  });
+  return (dispatch, getState) => {
+    if (!seasonId) {
+      console.log('no season id passed in action', seasonId);
+      return {
+        type: ActionTypes.Season.getSeason,
+        seasonId: seasonId,
+        res: {body: null}
+      };
+    }
+    let readySeason = getState().Season.get(`/seasons/${seasonId}`);
+    if (readySeason) {
+      console.log('season already present in data store', seasonId);
+      return {
+        type: ActionTypes.Season.getSeason,
+        seasonId: seasonId,
+        res: {body: readySeason}
+      };
+    }
+    return async api => ({
+      type: ActionTypes.Season.getSeason,
+      seasonId,
+      res: await api(`/seasons/${seasonId}`)
+    });
+  };
 }

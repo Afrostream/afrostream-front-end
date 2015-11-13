@@ -29,12 +29,28 @@ export function getMovie(movieId) {
 }
 
 export function getSeason(movieId) {
-  return async api => ({
-    type: ActionTypes.Movie.getSeason,
-    movieId,
-    res: await api(`/movies/${movieId}/seasons`, {
-      sort: 'updated',
-      direction: 'desc'
-    })
-  });
+  return (dispatch, getState) => {
+    if (!movieId) {
+      console.log('no movie id passed in action', movieId);
+      return {
+        type: ActionTypes.Movie.getSeason,
+        movieId: movieId,
+        res: {body: null}
+      };
+    }
+    let readySeason = getState().Movie.get(`/movies/${movieId}/seasons`);
+    if (readySeason) {
+      console.log('season already present in data store', movieId);
+      return {
+        type: ActionTypes.Movie.getSeason,
+        movieId: movieId,
+        res: {body: readySeason}
+      };
+    }
+    return async api => ({
+      type: ActionTypes.Movie.getSeason,
+      movieId,
+      res: await api(`/movies/${movieId}/seasons`)
+    });
+  };
 }
