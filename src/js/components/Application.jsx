@@ -21,11 +21,12 @@ if (canUseDOM) {
 }
 @prepareRoute(async function ({ store , params: { movieId }}) {
   return await * [
-      store.dispatch(MovieActionCreators.getMovie(movieId))
-    ];
+    store.dispatch(MovieActionCreators.getMovie(movieId))
+  ];
 })
 @metasData()
-@connect(({ Event,User }) => ({Event, User})) class Application extends React.Component {
+@connect(({ Event,User }) => ({Event, User}))
+class Application extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired

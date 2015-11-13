@@ -9,7 +9,8 @@ if (process.env.BROWSER) {
   require('./Header.less');
 }
 
-@connect(({ Event }) => ({Event})) class Header extends React.Component {
+@connect(({ Event,User }) => ({Event, User}))
+class Header extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -49,13 +50,15 @@ if (process.env.BROWSER) {
 
     const {
       props: {
-        Event
+        Event,
+        User
         }
       } = this;
 
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
-    let hasHistory = !this.state.isIOS && (this.context.router.state.location.pathname.length > 1);
+    const user = User.get('user');
+    let hasHistory = !this.state.isIOS && user && (this.context.router.state.location.pathname.length > 1);
 
     let sliderClasses = {
       'navbar': true,
@@ -63,8 +66,8 @@ if (process.env.BROWSER) {
       'navbar-fixed-top': true,
       'navbar-hidden': hiddenMode,
       'navbar-fixed-color': pinned || this.state.pinned
-        || this.context.router.isActive('compte')
-        || this.context.router.isActive('cancel-subscription')
+      || this.context.router.isActive('compte')
+      || this.context.router.isActive('cancel-subscription')
     };
 
     return (

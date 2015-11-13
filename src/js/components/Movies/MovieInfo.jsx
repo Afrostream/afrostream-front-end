@@ -20,7 +20,8 @@ if (process.env.BROWSER) {
   require('./MovieInfo.less');
 }
 
-@connect(({ Movie }) => ({Movie})) class MovieInfo extends React.Component {
+@connect(({ Movie }) => ({Movie}))
+class MovieInfo extends React.Component {
 
   constructor(props) {
     super(props);
@@ -101,15 +102,10 @@ if (process.env.BROWSER) {
 
     return (
       <div ref="slContainer" className={classes}>
-
-        <a href="" onClick={::this.loadVideo} onTouchEnd={::this.loadVideo}>
+        <a href="" onClick={::this.loadVideo}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
-
-
-          <a href="" className="btn-play" onClick={::this.loadVideo} onTouchEnd={::this.loadVideo}/>
-
-          {movieData ? <Billboard {...{active, movieData, maxLength}} onClick={::this.loadVideo}
-                                                                      onTouchEnd={::this.loadVideo}/> : ''}
+          <a href="" className="btn-play"/>
+          {movieData ? <Billboard {...{active, movieData, maxLength}} /> : ''}
         </a>
       </div>
     );
@@ -156,7 +152,6 @@ if (process.env.BROWSER) {
           dispatch(VideoActionCreators.getVideo(videoId)),
           this.context.router.transitionTo(link)
         ];
-
     }
 
     return await * [

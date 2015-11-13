@@ -25,19 +25,17 @@ export default function prepareRoute(prepareFn) {
         );
       }
 
-      componentWillMount() {
+      componentDidMount() {
         const {
           context: { store },
           props: { params, location }
           } = this;
 
-        prepareFn({store, params, location});
-      }
-
-      componentDidMount() {
         if (canUseDOM) {
           ga.pageview(this.context.router.state.location.pathname);
         }
+        prepareFn({store, params, location});
       }
+
     };
 }

@@ -9,6 +9,7 @@ import SeasonList from '../Seasons/SeasonList';
   return await * [
       store.dispatch(EventActionCreators.pinHeader(false)),
       store.dispatch(EventActionCreators.userActive(true)),
+      store.dispatch(MovieActionCreators.getMovie(movieId)),
       store.dispatch(MovieActionCreators.getSeason(movieId))
     ];
 }) class MoviePage extends React.Component {

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../../actions/user';
+import classSet from 'classnames';
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
@@ -63,22 +64,20 @@ class WelcomeHeader extends React.Component {
 
     let imageStyle = {backgroundImage: `url(${data.poster}?crop=faces&fit=clip&w=1920&h=815&q=65)`};
 
+    let welcomeClassesSet = {
+      'welcome-header': true,
+      'hidden-sm': true
+    };
     return (
-      <section className="welcome-header" style={imageStyle}>
+      <section className={classSet(welcomeClassesSet)} style={imageStyle}>
         <div className="afrostream-movie">
           { data.movie ? <div className="afrostream-movie__info">
             <h1>{data.movie.title}</h1>
             <div className='detail-text'>{data.movie.synopsis}</div>
           </div> : ''}
           <div className="afrostream-movie__subscribe">
-            <div className="afrostream-statement">{data.title.split('\n').map(function(item) {
-              return (
-              <span>
-              {item}
-                <br/>
-              </span>
-                )
-              })}</div>
+            <div className="afrostream-statement">{data.title.split('\n').map((statement, i) => {
+              return (<span key={`statement-${i}`}>{statement}</span>)})}</div>
             <button className="subscribe-button" type=" button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
             <button className="gift-button" type="button" onClick={::this.showGiftLock}>OFFRIR UN ABONNEMENT</button>
           </div>
