@@ -18,6 +18,16 @@ if (process.env.BROWSER) {
     dispatch(UserActionCreators.showSignupLock());
   }
 
+  showGiftLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.showGiftLock());
+  }
+
   render() {
 
     let posterImg = 'https://afrostream.imgix.net/production/poster/2015/10/e4a0a6220e8fa50a23af-hear-me-move-home.jpg';
@@ -34,7 +44,7 @@ if (process.env.BROWSER) {
         </div>
 
         <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
-        <button className="gift-button" type="button" onClick={::this.showLock}>OFFRIR UN ABONNEMENT</button>
+        <button className="gift-button" type="button" onClick={::this.showGiftLock}>OFFRIR UN ABONNEMENT</button>
       </section>
     );
   }
