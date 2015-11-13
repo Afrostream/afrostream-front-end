@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import PaymentPage from './Payment/PaymentPage';
+import PaymentForm from './Payment/PaymentForm';
 import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
@@ -29,13 +30,16 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     debugger;
     if (token) {
       if (!user) {
-       if (pathName.indexOf('select-plan') > -1) {
+       if (pathName.indexOf('select-plan') > -1
+         && pathName.indexOf('select-plan/afrostreamgift') == -1) {
          this.context.router.transitionTo('/');
        }
       }
-    } else if (pathName.indexOf('select-plan')  > -1) {
+    } else if (pathName.indexOf('select-plan')  > -1
+        && pathName.indexOf('select-plan/afrostreamgift') == -1) {
       this.context.router.transitionTo('/');
     }
+    debugger;
 
   }
 
@@ -45,7 +49,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     if (canUseDOM){
       pathName = document.location.pathname;
     }
-    debugger;
+
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const user = User.get('user');
@@ -75,6 +79,13 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
           return (<BrowsePage/>)
         }
       }
+    } else if (pathName === '/select-plan/afrostreamgift/checkout') {
+      debugger;
+      return(<PaymentForm
+        planName='afrostreamgift'
+        unitAmountInCents='5999'
+        startDate='' />);
+
     }  else {
       debugger;
       return (<WelcomePage />);

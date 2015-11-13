@@ -24,8 +24,6 @@ if (process.env.BROWSER) {
 
   navigateToGiftPage(event) {
     event.preventDefault();
-    debugger;
-    console.log('*** transitioning to gift ***');
     this.context.router.transitionTo('/gift');
   }
 

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
+import GiftGiverEmail from './GiftGiverEmail';
 import GiftDetails from './GiftDetails';
 import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
@@ -32,6 +33,7 @@ if (canUseDOM) {
   };
 
   componentWillMount() {
+    debugger;
     if (canUseDOM) {
       var pathName = '/select-plan/' + this.props.planName + '/checkout';
       paymentFormGa.initialize(config.google.analyticsKey, {debug: true});
@@ -41,7 +43,7 @@ if (canUseDOM) {
   }
 
   componentDidMount() {
-
+    debugger;
     document.getElementsByTagName('BODY')[0].scrollTop = 0;
     window.$('.recurly-cc-number').payment('formatCardNumber');
     window.$('.recurly-cc-exp').payment('formatCardExpiry');
@@ -55,6 +57,7 @@ if (canUseDOM) {
     }
 
     try {
+      debugger;
       recurly.configure(config.recurly.key);
     } catch (err) {
       console.log(err);
@@ -108,6 +111,8 @@ if (canUseDOM) {
       return;
     }
 
+    var billingEmail = (self.state.isGift) ? $('#giver_email').val() : user.get('email');
+
     var billingInfo = {
       'plan-code': this.props.planName,
       // required attributes
@@ -119,7 +124,7 @@ if (canUseDOM) {
       'cvv': $('.recurly-cc-cvc').val(),
       'first_name': $('#first_name').val(),
       'last_name': $('#last_name').val(),
-      'email': user.get('email'),
+      'email': billingEmail,
       // optional attributes
       'coupon_code': $('#coupon_code').val(),
       'unit-amount-in-cents': this.props.unitAmountInCents,
@@ -223,6 +228,7 @@ if (canUseDOM) {
   }
 
   render() {
+    debugger;
     var spinnerClasses = {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
@@ -271,6 +277,7 @@ if (canUseDOM) {
                   </div>
                 </div>
               </div>
+              <GiftGiverEmail isVisible={this.state.isGift} />
               <div className="row">
                 <div className="form-group col-md-6">
                   <label className="form-label" for="first_name">Votre Prénom</label>

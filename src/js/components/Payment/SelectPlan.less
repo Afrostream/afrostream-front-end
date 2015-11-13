@@ -93,6 +93,10 @@
       width: 100%;
       text-align: center;
     }
+
+    @media all and (max-width: @screen-md-min) {
+      transform: translateY(60%);
+    }
   }
 
   .row-element-top-left {
@@ -149,10 +153,10 @@
     }
   }
 
-  .row-element {
+  .row-element, .row-element-purple {
     position: relative;
     float: left;
-    width: 20%;
+    width: 30%;
     height: 30px;
     white-space: normal;
     top: 50%;
@@ -160,14 +164,20 @@
     color: #76757F;
 
     @media all and (max-width: @screen-md-min) {
-      width:33%;
+      width:49%;
     }
   }
 
-  .row-element-prices {
+  .row-element-purple {
+    @media all and (max-width: @screen-md-min) {
+      width:100%;
+    }
+  }
+
+  .row-element-prices, .row-element-prices-purple {
     position: relative;
     float: left;
-    width: 20%;
+    width: 30%;
     height: 30px;
     white-space: normal;
     top: 50%;
@@ -175,7 +185,13 @@
     color: #76757F;
 
     @media all and (max-width: @screen-md-min) {
-      width: 33%;
+      width: 49%;
+    }
+  }
+
+  .row-element-prices-purple {
+    @media all and (max-width: @screen-md-min) {
+      width: 100%;
     }
   }
 
@@ -220,13 +236,13 @@
     color: @white-base;
     position: relative;
     float: left;
-    width: 20%;
+    width: 30%;
     height: 30px;
     padding: 8px 12px 8px 12px;
     margin-bottom: 5px;
 
     @media all and (max-width: @screen-md-min) {
-      width: 33%;
+      width: 49%;
     }
   }
 
@@ -241,13 +257,13 @@
     color: @white-base;
     position: relative;
     float: left;
-    width: 20%;
+    width: 30%;
     height: 30px;
     padding: 8px 12px 8px 12px;
     margin-bottom: 5px;
 
     @media all and (max-width: @screen-md-min) {
-      width: 33%;
+      width: 49%;
     }
   }
 
@@ -262,14 +278,14 @@
     color: @white-base;
     position: relative;
     float: left;
-    width: 20%;
+    width: 30%;
     height: 30px;
     padding: 8px 12px 8px 12px;
     margin-bottom: 5px;
 
     @media all and (max-width: @screen-md-min) {
       //padding: 5px 12px 8px 12px;
-      width: 33%;
+      width: 100%;
     }
   }
 
