@@ -5,6 +5,7 @@ import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import CookieMessage from './Welcome/WelcomeComponents/CookieMessage';
 import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
+import Modal from './Modal/Modal'
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../config';
@@ -41,6 +42,7 @@ if (canUseDOM) {
     return (
 
       <div className={classSet(appClasses)}>
+        <Modal />
         <Header {...this.props}/>
         <SideBar />
         <CookieMessage />

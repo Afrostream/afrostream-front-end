@@ -22,7 +22,7 @@ if (auth0ClientId === 'dev') {
   /*
    dev environment
    */
-  const auth0MockUseHttps = true;  // on any auth0 error, you can switch this to true.
+  const auth0MockUseHttps = false;  // on any auth0 error, you can switch this to true.
   auth0MockDomain = auth0MockUseHttps ? '127.0.0.1:3443' : '127.0.0.1:3080';
   auth0MockAssetsUrl = auth0MockUseHttps ? undefined : 'http://' + auth0MockDomain + '/';
 
@@ -46,6 +46,8 @@ const config = {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
   },
   apiClient: {
+    protocol: process.env.API_CLIENT_PROTOCOL || 'http',
+    authority: process.env.API_CLIENT_AUTHORITY || 'localhost:3002',
     urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api',
     token: 'afro_token',
     tokenRefresh: 'afro_refresh_token'

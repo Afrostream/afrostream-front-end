@@ -1,7 +1,9 @@
 import ActionTypes from '../consts/ActionTypes';
+import * as ModalActionCreators from './modal';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import config from '../../../config/client';
 import _ from 'lodash';
+import {isAuthorized} from '../lib/geo';
 
 if (canUseDOM) {
   var Auth0Lock = require('auth0-lock');
@@ -217,42 +219,60 @@ export function showLock(container = null) {
 export function showSignupLock() {
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
-    return async auth0 =>(
-      await new Promise(
-        (resolve, reject) => {
-          lock.showSignup(
-            config.auth0.signUp
-            , function (err, profile, id_token, access_token, state, refresh_token) {
-              if (err) {
-                console.log('*** Error loading the profile - most likely the token has expired ***', err);
-                //localStorage.removeItem(storageId);
-                //return reject(err);
-                //try to refresh token session
-                return refreshToken(getState, function (tokenErr, data) {
-                  if (tokenErr) {
-                    return reject(tokenErr);
-                  }
-                  return resolve(data);
+
+    return async () => {
+      let authorized = true;
+      try {
+        var result = await isAuthorized();
+        if (result.authorized === false) {
+          authorized = false;
+        }
+      } catch (err) {
+        console.error('showSingupLock error requesting /auth/geo ', err);
+      }
+
+      if ( ! authorized || true) {
+        // FIXME: how can we call ModalActionCreators.openGeoWall with dispatch ?
+        return ModalActionCreators.openGeoWall()(dispatch, getState);
+      }
+
+      return await new Promise(
+          (resolve, reject) => {
+            console.log('lock show signup -> lock.showSignup');
+            lock.showSignup(
+              config.auth0.signUp
+              , function (err, profile, id_token, access_token, state, refresh_token) {
+                if (err) {
+                  console.log('*** Error loading the profile - most likely the token has expired ***', err);
+                  //localStorage.removeItem(storageId);
+                  //return reject(err);
+                  //try to refresh token session
+                  return refreshToken(getState, function (tokenErr, data) {
+                    if (tokenErr) {
+                      return reject(tokenErr);
+                    }
+                    return resolve(data);
+                  });
+                }
+                // store token
+                profile = profile || {};
+                var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
+                var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+                storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
+                // store refresh_token
+                return resolve({
+                  type: ActionTypes.User.showLock,
+                  user: profile,
+                  token: id_token,
+                  refreshToken: refresh_token,
+                  afroToken: profile[config.apiClient.token],
+                  afroRefreshToken: profile[config.apiClient.tokenRefresh]
                 });
               }
-              // store token
-              profile = profile || {};
-              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
-              // store refresh_token
-              return resolve({
-                type: ActionTypes.User.showLock,
-                user: profile,
-                token: id_token,
-                refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token],
-                afroRefreshToken: profile[config.apiClient.tokenRefresh]
-              });
-            }
-          );
-        }
-      ));
+            );
+          }
+        );
+    }
   };
 }
 

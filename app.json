@@ -4,6 +4,8 @@
   "scripts": {},
   "env": {
     "NODE_ENV": "staging",
+    "API_CLIENT_PROTOCOL": "https",
+    "API_CLIENT_AUTHORITY": "afr-api-v1-staging.herokuapp.com",
     "API_END_POINT": "https://afr-api-v1-staging.herokuapp.com/api",
     "API_CLIENT_END_POINT": "https://afr-api-v1-staging.herokuapp.com/api",
     "AUTH0_CLIENT_ID": "5RcfgoeUhoNRV4cCPokLzXmIf4sI3afZ",

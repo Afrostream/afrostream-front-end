@@ -51,5 +51,9 @@ export default {
     getMeaList: null,
     getCategory: null,
     getMenu: null
+  }),
+
+  Modal: keyMirror({
+    target: null
   })
 };
