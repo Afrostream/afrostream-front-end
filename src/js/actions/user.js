@@ -231,7 +231,7 @@ export function showSignupLock() {
         console.error('showSingupLock error requesting /auth/geo ', err);
       }
 
-      if ( ! authorized || true) {
+      if ( ! authorized ) {
         // FIXME: how can we call ModalActionCreators.openGeoWall with dispatch ?
         return ModalActionCreators.openGeoWall()(dispatch, getState);
       }
