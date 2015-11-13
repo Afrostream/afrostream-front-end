@@ -11,9 +11,18 @@ const customDict = _.merge(dictFr, {
     "title": "Abonnez vous",
     "action": "Abonnez vous",
     "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
-    "serverErrorText": "Votre compte existe déjà. Appuyer sur le bouton connexion pour activer votre abonnement."
+    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion."
   },
   gift: {
+    "title": "Enregistrez-vous",
+    "action": "Enregistrez-vous",
+    "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
+    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, cliquer sur le bouton connexion"
+  }
+});
+
+const giftDict = _.merge(dictFr, {
+  signup: {
     "title": "Enregistrez-vous",
     "action": "Enregistrez-vous",
     "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
@@ -92,6 +101,16 @@ const config = {
     },
     signUp: {
       dict: 'fr',
+      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
+      socialBigButtons: true,
+      popup: true,
+      sso: false,
+      authParams: {
+        scope: 'openid'
+      }
+    },
+    gift: {
+      dict: giftDict,
       connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
       socialBigButtons: true,
       popup: true,
