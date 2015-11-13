@@ -224,7 +224,9 @@ export function showSignupLock() {
       let authorized = true;
       try {
         var result = await isAuthorized();
+        console.log('isAuthorized ? ', result);
         if (result.authorized === false) {
+          console.log('authorized = false');
           authorized = false;
         }
       } catch (err) {
@@ -232,6 +234,7 @@ export function showSignupLock() {
       }
 
       if ( ! authorized ) {
+        console.log('opening modal geowall');
         // FIXME: how can we call ModalActionCreators.openGeoWall with dispatch ?
         return ModalActionCreators.openGeoWall()(dispatch, getState);
       }
