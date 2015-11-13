@@ -34,7 +34,7 @@ class ModalGeoWall extends React.Component {
           <p>
             <form onSubmit={::this.handleSubmit}>
               <input type="text" name="email" ref="email" placeholder="example@address.com"/>
-              <button type="submit" className="btn btn-ok btn-default pull-right">Notify Me</button>
+              <button type="submit" className="btn btn-ok btn-default pull-right">Notify me</button>
             </form>
           </p>
         </div>
