@@ -8,6 +8,15 @@ const customDict = _.merge(dictFr, {
     "action": "Se connecter"
   },
   signup: {
+    "title": "Abonnez vous",
+    "action": "Abonnez vous",
+    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
+    "serverErrorText": "Votre compte existe déjà. Appuyer sur le bouton connexion pour activer votre abonnement."
+  },
+  gift: {
+    "title": "Enregistrez-vous",
+    "action": "Enregistrez-vous",
+    "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
     "serverErrorText": "Votre compte existe déjà. Appuyer sur le bouton connexion pour activer votre abonnement."
   }
 });
