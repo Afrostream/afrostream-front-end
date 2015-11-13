@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import PaymentPage from './Payment/PaymentPage';
+import PaymentForm from './Payment/PaymentForm';
 import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
@@ -18,6 +19,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
   }
 
   componentWillMount(){
+    debugger;
     const { props: { User } } = this;
     const token = User.get('token');
     const user = User.get('user');
@@ -25,20 +27,29 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     if (canUseDOM){
       pathName = document.location.pathname;
     }
-
+    debugger;
     if (token) {
       if (!user) {
-       if (pathName.indexOf('select-plan') > -1) {
+       if (pathName.indexOf('select-plan') > -1
+         && pathName.indexOf('select-plan/afrostreamgift') == -1) {
          this.context.router.transitionTo('/');
        }
       }
-    } else if (pathName.indexOf('select-plan')  > -1) {
+    } else if (pathName.indexOf('select-plan')  > -1
+        && pathName.indexOf('select-plan/afrostreamgift') == -1) {
       this.context.router.transitionTo('/');
     }
+    debugger;
 
   }
 
   render() {
+
+    var pathName = '';
+    if (canUseDOM){
+      pathName = document.location.pathname;
+    }
+
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const user = User.get('user');
@@ -49,15 +60,15 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
       }
       else if (!user.get('planCode')) {
-        return (<PaymentPage />);
+        return (<PaymentPage planType='normal' />);
       }
       else if (typeof user.get('newSubscription') !== 'undefined') {
         if (user.get('newSubscription') === true) {
-          var successPathName = '';
+          var pathName = '';
           if (canUseDOM){
-            successPathName = document.location.pathname;
+            pathName = document.location.pathname;
           }
-          return (<PaymentSuccess pathName={successPathName} />);
+          return (<PaymentSuccess pathName={pathName} />);
         }
       }
       else {
@@ -68,7 +79,15 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
           return (<BrowsePage/>)
         }
       }
-    } else {
+    } else if (pathName === '/select-plan/afrostreamgift/checkout') {
+      debugger;
+      return(<PaymentForm
+        planName='afrostreamgift'
+        unitAmountInCents='5999'
+        startDate='' />);
+
+    }  else {
+      debugger;
       return (<WelcomePage />);
     }
   }

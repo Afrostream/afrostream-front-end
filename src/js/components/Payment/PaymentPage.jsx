@@ -25,6 +25,10 @@ if (process.env.BROWSER) {
     router: PropTypes.object.isRequired
   };
 
+  state = {
+    isGift: 0
+  }
+
   componentDidMount() {
     const {
       props: {
@@ -36,15 +40,23 @@ if (process.env.BROWSER) {
   }
 
   componentWillMount() {
+    var pathName = '/selectPlan';
     if (canUseDOM) {
       selectPlanGa.initialize(config.google.analyticsKey, {debug: true});
       selectPlanGa.pageview('/select-plan');
-      this.context.router.transitionTo('/select-plan');
+      if (document.location.pathname === '/gift') {
+        pathName = '/gift';
+        this.setState({isGift: 1});
+      } else {
+        this.setState({isGift: 0});
+        this.context.router.transitionTo('/select-plan');
+      }
     }
   }
 
   render() {
-    return (<SelectPlan />);
+    debugger;
+    return (<SelectPlan isGift={this.state.isGift} />);
   }
 }
 
