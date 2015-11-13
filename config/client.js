@@ -74,7 +74,7 @@ const config = {
       resetLink: '/reset',
       connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
       socialBigButtons: true,
-      disableSignupAction: false,
+      disableSignupAction: true,
       rememberLastLogin: false,
       disableResetAction: false,
       popup: true,
