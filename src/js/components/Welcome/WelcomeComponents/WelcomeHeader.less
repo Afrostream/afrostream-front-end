@@ -2,9 +2,9 @@
 
 .welcome-header {
   width: 100%;
-  min-height: 75vh;
+  min-height: 100vh;
   //Firefox fix
-  height: 75vh;
+  height: 100vh;
   position: relative;
   background-image: url(../../../../assets/images/default/1920x815.jpg);
   background-position: center center;
@@ -47,16 +47,18 @@
   }
 
   .afrostream-movie__subscribe {
-    bottom: @app-padding;
+    bottom: @app-padding * 2;
     left: @app-padding;
+    margin: 1em 0 1em 0;
+    position: absolute;
     @media all and (max-width: @screen-sm-min) {
       bottom: @app-padding-mobile;
       left: @app-padding-mobile;
     }
-    position: absolute;
     .afrostream-statement {
-      font-size: 1.8em;
-      line-height: 1.9em;
+      font-size: 3.5em;
+      line-height: 1.2em;
+      margin: 1em 0 1em 0;
     }
 
     .subscribe-button, .gift-button {
@@ -72,6 +74,8 @@
     }
 
     .gift-button {
+      display: block;
+      margin-top: 10px;
       color: #000000;
       background-image: url('../../../../../static/images/gold-texture.png');
     }

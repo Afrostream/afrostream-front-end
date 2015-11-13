@@ -6,7 +6,8 @@ if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
 }
 
-@connect(({ User, Movie }) => ({User, Movie})) class WelcomeHeader extends React.Component {
+@connect(({ User, Movie }) => ({User, Movie}))
+class WelcomeHeader extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -67,22 +68,21 @@ if (process.env.BROWSER) {
         <div className="afrostream-movie">
           { data.movie ? <div className="afrostream-movie__info">
             <h1>{data.movie.title}</h1>
-
             <div className='detail-text'>{data.movie.synopsis}</div>
           </div> : ''}
           <div className="afrostream-movie__subscribe">
-            <div className=" afrostream-statement">{data.title}</div>
-            <button className=" subscribe-button" type=" button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
+            <div className="afrostream-statement">{data.title.split('\n').map(function(item) {
+              return (
+              <span>
+              {item}
+                <br/>
+              </span>
+                )
+              })}</div>
+            <button className="subscribe-button" type=" button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
+            <button className="gift-button" type="button" onClick={::this.showGiftLock}>OFFRIR UN ABONNEMENT</button>
           </div>
         </div>
-        <div className="afrostream-statement">
-          <div>Les meilleurs films et séries</div>
-          <div>afro-américains et africains</div>
-          <div>en illimité</div>
-        </div>
-
-        <button className="subscribe-button" type="button" onClick={::this.showLock}>S'ABONNER MAINTENANT</button>
-        <button className="gift-button" type="button" onClick={::this.showGiftLock}>OFFRIR UN ABONNEMENT</button>
       </section>
     );
   }
