@@ -75,7 +75,7 @@ class PlayerComponent extends React.Component {
       let video = document.createElement('video');
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
-      video.crossOrigin = 'anonymous';//true;
+      video.crossOrigin = true;
       video.setAttribute('crossorigin', true);
 
       var trackOptions = {
@@ -181,14 +181,6 @@ class PlayerComponent extends React.Component {
             }
           };
 
-          if (ua.isSafari()) {
-            playerData.sources = _.remove(playerData.sources, function (k) {
-              return k.type !== 'application/dash+xml';
-            });
-
-            delete playerData.plugins.metrics;
-          }
-
           if (ua.isIE()) {
             if (navigator.appVersion.indexOf('Windows NT 6.1') != -1) {
               playerData.flash.params.wmode = 'opaque';
@@ -197,19 +189,12 @@ class PlayerComponent extends React.Component {
               nativeCaptions: false,
               nativeTextTracks: false
             }
+            playerData.dash = _.clone(playerData.html5);
           }
-
-          if (ua.isChrome()) {
-            let version = userAgent.substr(userAgent.lastIndexOf('Chrome/') + 7, 2);
-            //if (version == 46) {
-            playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
-              return k !== 'dash';
-            });
-            //}
-            playerData.sources = _.sortBy(playerData.sources, function (k) {
-              return k.type === 'application/dash+xml';
-            });
-          }
+          //on force dash en tech par default pour tous les browsers ;)
+          playerData.sources = _.sortBy(playerData.sources, function (k) {
+            return k.type === 'application/dash+xml';
+          });
 
           console.log(playerData.techOrder);
           console.log(playerData.sources);

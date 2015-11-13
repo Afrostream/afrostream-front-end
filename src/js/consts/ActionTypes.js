@@ -8,6 +8,7 @@ export default {
     getProfile: null,
     showLock: null,
     showSignupLock: null,
+    showGiftLock: null,
     showSigninLock: null,
     logOut: null,
     subscribe: null,

@@ -50,7 +50,7 @@ if (canUseDOM) {
     if (this.props.planName === 'afrostreamgift') {
       this.setState({
         isGift: 1,
-        pageHeader: 'Offrir un abonnement'
+        pageHeader: 'AFROSTREAM - Formule Cadeau - 59,99€'
       });
     }
 

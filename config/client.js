@@ -2,13 +2,28 @@
 import dictFr from '../node_modules/auth0-lock/i18n/fr-FR.json';
 import _ from 'lodash';
 import castlab from './player/castlab';
+
+var giftDictClone = _.cloneDeep(dictFr);
+
 const customDict = _.merge(dictFr, {
   signin: {
     "title": "S’identifier",
     "action": "Se connecter"
   },
   signup: {
-    "serverErrorText": "Votre compte existe déjà. Appuyer sur le bouton connexion pour activer votre abonnement."
+    "title": "Abonnez vous",
+    "action": "Abonnez vous",
+    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
+    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion."
+  }
+});
+
+const giftDict = _.merge(giftDictClone, {
+  signup: {
+    "title": "Enregistrez-vous",
+    "action": "Enregistrez-vous",
+    "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
+    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, cliquer sur le bouton connexion."
   }
 });
 
@@ -84,7 +99,17 @@ const config = {
       }
     },
     signUp: {
-      dict: 'fr',
+      dict: customDict,
+      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
+      socialBigButtons: true,
+      popup: true,
+      sso: false,
+      authParams: {
+        scope: 'openid'
+      }
+    },
+    gift: {
+      dict: giftDict,
       connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
       socialBigButtons: true,
       popup: true,
@@ -109,7 +134,7 @@ const config = {
     "language": "fr",
     "flash": {
       "params": {
-        "wmode": "direct"
+        "wmode": "opaque"
       }
     },
     "hls": {
@@ -119,6 +144,19 @@ const config = {
     },
     "metrics": {
       'user_id': ''
+    },
+    "dash": {
+      "autoSwitch": true,
+      "buffer": {
+        "minBufferTime": 12,
+        "lowBufferThreshold": 4,
+        "bufferTimeAtTopQuality": 30,
+        "bufferTimeAtTopQualityLongForm": 300,
+        "longFormContentDurationThreshold": 600,
+        "richBufferThreshold": 20,
+        "bufferToKeep": 8,
+        "bufferPruningInterval": 8
+      }
     },
     "languages": {
       "fr": {
