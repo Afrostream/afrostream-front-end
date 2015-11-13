@@ -2,6 +2,9 @@
 import dictFr from '../node_modules/auth0-lock/i18n/fr-FR.json';
 import _ from 'lodash';
 import castlab from './player/castlab';
+
+var giftDictClone = _.cloneDeep(dictFr);
+
 const customDict = _.merge(dictFr, {
   signin: {
     "title": "S’identifier",
@@ -12,16 +15,10 @@ const customDict = _.merge(dictFr, {
     "action": "Abonnez vous",
     "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
     "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion."
-  },
-  gift: {
-    "title": "Enregistrez-vous",
-    "action": "Enregistrez-vous",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
-    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, cliquer sur le bouton connexion"
   }
 });
 
-const giftDict = _.merge(dictFr, {
+const giftDict = _.merge(giftDictClone, {
   signup: {
     "title": "Enregistrez-vous",
     "action": "Enregistrez-vous",
@@ -100,7 +97,7 @@ const config = {
       }
     },
     signUp: {
-      dict: 'fr',
+      dict: customDict,
       connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
       socialBigButtons: true,
       popup: true,
