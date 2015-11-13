@@ -220,9 +220,12 @@ export function showSignupLock() {
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
 
+    console.log('show signup lock');
+
     return async () => {
       let authorized = true;
       try {
+        console.log('before await isAuthorized');
         var result = await isAuthorized();
         console.log('isAuthorized ? ', result);
         if (result.authorized === false) {
@@ -233,11 +236,15 @@ export function showSignupLock() {
         console.error('showSingupLock error requesting /auth/geo ', err);
       }
 
+      console.log('authorized ? ', authorized);
+
       if ( ! authorized ) {
         console.log('opening modal geowall');
         // FIXME: how can we call ModalActionCreators.openGeoWall with dispatch ?
         return ModalActionCreators.openGeoWall()(dispatch, getState);
       }
+
+      console.log('open auth0 popup');
 
       return await new Promise(
           (resolve, reject) => {
