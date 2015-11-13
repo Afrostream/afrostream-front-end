@@ -127,22 +127,21 @@ class MovieInfo extends React.Component {
     let videoData = movieData.get('video');
     let videoId = null;
     if (type === 'serie') {
-      //const seasons = Movie.get(`movies/${movieDataId}/seasons`);
       const seasons = movieData.get('seasons');
-      if (seasons) {
-        const season = seasons.get(0);
-        const seasonId = season.get('_id');
-        const seasonSlug = season.get('slug');
-        const episodes = season.get('episodes');
-        //TODO get last viewed episode
-        const episode = episodes.get(0);
-        if (episode) {
-          const episodeId = episode.get('_id');
-          const episodeSlug = episode.get('slug');
-          link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
-          videoData = episode.get('video');
-        }
-      }
+      //if (seasons) {
+      //  const season = seasons.get(0);
+      //  const seasonId = season.get('_id');
+      //  const seasonSlug = season.get('slug');
+      //  const episodes = season.get('episodes');
+      //  //TODO get last viewed episode
+      //  const episode = episodes.get(0);
+      //  if (episode) {
+      //    const episodeId = episode.get('_id');
+      //    const episodeSlug = episode.get('slug');
+      //    link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
+      //    videoData = episode.get('video');
+      //  }
+      //}
     }
     if (videoData) {
       videoId = videoData.get('_id');

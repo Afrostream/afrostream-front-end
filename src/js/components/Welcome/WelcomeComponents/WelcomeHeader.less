@@ -15,12 +15,12 @@
     content: '';
     display: inline-block;
     height: 100%;
-    vertical-align: middle;
+    vertical-align: bottom;
   }
 
   .afrostream-movie {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: bottom;
     text-align: left;
     max-width: 50%;
     margin: @app-padding;
@@ -50,7 +50,7 @@
     bottom: @app-padding * 2;
     left: @app-padding;
     margin: 1em 0 1em 0;
-    position: absolute;
+    //position: absolute;
     @media all and (max-width: @screen-sm-min) {
       bottom: @app-padding-mobile;
       left: @app-padding-mobile;
@@ -59,6 +59,9 @@
       font-size: 3.5em;
       line-height: 1.2em;
       margin: 1em 0 1em 0;
+      span {
+        display: block;
+      }
     }
 
     .subscribe-button, .gift-button {
