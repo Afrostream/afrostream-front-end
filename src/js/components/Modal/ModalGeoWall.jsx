@@ -27,7 +27,7 @@ class ModalGeoWall extends React.Component {
         <div>
           <a onClick={::this.handleClose} title="Close" className="close">X</a>
           <p className="center bold">Sorry !<br/>
-            Afrostream is not available in your country yet</p>
+            Afrostream is not yet available in your country</p>
           <p className="formText">
             Enter your email to stay informed :
           </p>
