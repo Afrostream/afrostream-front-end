@@ -17,6 +17,16 @@ if (process.env.BROWSER) {
     dispatch(UserActionCreators.showSignupLock());
   }
 
+  showGiftLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.showGiftLock());
+  }
+
   render() {
 
     return (
@@ -99,7 +109,7 @@ if (process.env.BROWSER) {
                 <li>Films et séries illimités</li>
               </ul>
             </div>
-            <button className="plan3-button" onClick={::this.showLock}>
+            <button className="plan3-button" onClick={::this.showGiftLock}>
               OFFRIR UN ABONNEMENT
             </button>
 
