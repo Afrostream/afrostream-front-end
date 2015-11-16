@@ -338,7 +338,7 @@ class PlayerComponent extends React.Component {
     let episodeData = videoData.get('episode');
     const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
     //si on a les données de l'episode alors, on remplace les infos affichées
-    let infos = _.merge(episodeData.toJS() || {}, movieData.toJS() || {});
+    let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
     return (
       <div className="player">
         <div ref="wrapper" className="wrapper"/>
