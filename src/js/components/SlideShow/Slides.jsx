@@ -17,7 +17,7 @@ class Slides extends React.Component {
     const movieObj = slides.get(page);
 
     return (
-      <MovieInfo active={true} maxLength={200}
+      <MovieInfo active={true} maxLength={200} loadEpisode={false}
                  key={`slide-${movieObj.get('_id')}`}  { ...{movieObj}}/>
     );
   }
