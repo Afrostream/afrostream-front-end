@@ -147,3 +147,47 @@ a.active {
     margin-left: 0;
   }
 }
+
+article {
+  font-size: 14px;
+  font-family: @font-family-base;
+  background: #FFF;
+  color: @brand-black;
+  margin: 0;
+  .fullHeight();
+  padding: @header-height @app-padding;
+  section {
+    padding: 1em 0;
+    a,
+    a:hover,
+    a:focus,
+    a:active,
+    a.active {
+      outline: none;
+    }
+
+    a {
+      color: @color-purple;
+    }
+
+    a:hover,
+    a:focus,
+    a:active,
+    a.active {
+      color: darken(@brand-black, 10%);
+    }
+
+    h1, h2, h3, h4, p {
+      color: @brand-black;
+    }
+    ul {
+      li {
+        ul {
+          li:before {
+            content: "\00BB \0020";
+          }
+        }
+      }
+    }
+  }
+}

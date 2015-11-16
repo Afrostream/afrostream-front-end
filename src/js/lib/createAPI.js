@@ -19,7 +19,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 export default function createAPI(createRequest) {
   return async function api(path, method = 'GET', params = {}, tokenStore = null, tokenAfroAPI = null, refreshTokenAfroAPI = null) {
     var { pathname, query: queryStr } = URL.parse(path);
-    var query, headers, body/*, tokenStore, tokenAfroAPI*/;
+    var query, headers, body;
 
     if (_.isObject(method)) {
       params = method;
@@ -27,10 +27,7 @@ export default function createAPI(createRequest) {
     }
 
     query = qs.parse(queryStr);
-    //if (canUseDOM) {
-    //  tokenStore = localStorage.getItem(config.auth0.token);
-    //  tokenAfroAPI = localStorage.getItem(config.apiClient.token);
-    //}
+
     if (method === 'GET') {
       if (tokenAfroAPI) {
         params.afro_token = tokenAfroAPI;

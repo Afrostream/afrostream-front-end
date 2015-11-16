@@ -56,5 +56,10 @@ export default {
 
   Modal: keyMirror({
     target: null
+  }),
+
+  Blog: keyMirror({
+    fetchAll: null,
+    fetchPost: null,
   })
 };

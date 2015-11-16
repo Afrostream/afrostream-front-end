@@ -10,7 +10,8 @@ import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
-
+import * as Static from './components/Static';
+import * as Posts from './components/Blog';
 
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
@@ -24,7 +25,9 @@ export default (
   <Route name="app" component={Application}>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
-    <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
+    <Route name="legals" path="/legals" component={Static.Legals}/>
+    <Route name="cgu" path="/cgu" component={Static.CGU}/>
+    <Route name="faq" path="/faq" component={Static.FAQ}/>
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
@@ -32,10 +35,7 @@ export default (
              component={PlayerPage}
              scrollOnTransition={true}/>
       <Route name="compte" path="/compte" component={AccountPage}>
-        {/*<Route name="compteEmail" path="/email" component={AccountEmail}/>
-         <Route name="comptePassword" path="/password" component={AccountPassword}/>
-         <Route name="compteCreditCard" path="/credit-card" component={AccountCreditCard}/>
-         <Route name="comptePlan" path="/plan" component={AccountPlan}/>*/}
+        <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
       </Route>
       <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>
