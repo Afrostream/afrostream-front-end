@@ -4,7 +4,7 @@
   width: 100%;
   min-height: 100vh;
   //Firefox fix
-  height: 100vh;
+  //height: 100vh;
   position: relative;
   background-image: url(../../../../assets/images/default/1920x815.jpg);
   background-position: center center;
@@ -23,9 +23,10 @@
     vertical-align: bottom;
     text-align: left;
     max-width: 50%;
-    margin: @app-padding;
+    margin: @header-height @app-padding @app-padding @app-padding;
     @media all and (max-width: @screen-sm-min) {
-      margin: @app-padding-mobile;
+      max-width: 100%;
+      margin:  @header-height @app-padding-mobile @app-padding-mobile @app-padding-mobile;
     }
     .afrostream-movie__info {
 
