@@ -52,11 +52,14 @@
       font-family: @font-book;
       font-size: 1.5em;
     }
-    .video-infos_title {
+    .video-infos_title, .video-infos_episode {
       font-family: @font-roman;
       font-size: 2em;
       line-height: 1;
       text-transform: uppercase;
+    }
+    .video-infos_episode {
+      font-size: 1.4em;
     }
   }
   @media @mobile,@tablet{
@@ -130,6 +133,9 @@
       }
       .video-infos_title {
         font-size: 4.5em;
+      }
+      .video-infos_episode {
+        font-size: 2em;
       }
     }
     .wrapper {

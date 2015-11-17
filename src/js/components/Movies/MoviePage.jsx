@@ -7,12 +7,13 @@ import SeasonList from '../Seasons/SeasonList';
 
 @prepareRoute(async function ({ store, params: { movieId } }) {
   return await * [
-      store.dispatch(EventActionCreators.pinHeader(false)),
-      store.dispatch(EventActionCreators.userActive(true)),
-      store.dispatch(MovieActionCreators.getMovie(movieId)),
-      store.dispatch(MovieActionCreators.getSeason(movieId))
-    ];
-}) class MoviePage extends React.Component {
+    store.dispatch(EventActionCreators.pinHeader(false)),
+    store.dispatch(EventActionCreators.userActive(true)),
+    store.dispatch(MovieActionCreators.getMovie(movieId)),
+    store.dispatch(MovieActionCreators.getSeason(movieId))
+  ];
+})
+class MoviePage extends React.Component {
 
   render() {
     const {
@@ -23,7 +24,7 @@ import SeasonList from '../Seasons/SeasonList';
 
     return (
       <div className="row-fluid">
-        {movieId ? <MovieInfo maxLength="600" active="true" {...{movieId}}/> : ''}
+        {movieId ? <MovieInfo maxLength="600" active={true} loadEpisode={true} {...{movieId}}/> : ''}
         {movieId ? <SeasonList {...{movieId}}/> : ''}
       </div>
     );

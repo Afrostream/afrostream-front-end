@@ -46,7 +46,6 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     if (token) {
       if (!user) {
         return (<WelcomePage />);
-
       }
       else if (!user.get('planCode')) {
         return (<PaymentPage />);

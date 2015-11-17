@@ -9,6 +9,8 @@ import Modal from './Modal/Modal'
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../config';
+import { prepareRoute,metasData } from '../decorators';
+import * as MovieActionCreators from '../actions/movie';
 
 if (process.env.BROWSER) {
   require('./Application.less');
@@ -17,14 +19,20 @@ if (process.env.BROWSER) {
 if (canUseDOM) {
   var ga = require('react-ga');
 }
-
-@connect(({ Event,User }) => ({Event, User})) class Application extends React.Component {
+@prepareRoute(async function ({ store , params: { movieId }}) {
+  return await * [
+    store.dispatch(MovieActionCreators.getMovie(movieId))
+  ];
+})
+@metasData()
+@connect(({ Event,User }) => ({Event, User}))
+class Application extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
 
-  componentWillMount() {
+  componentDidMount() {
     if (canUseDOM) {
       ga.initialize(config.google.analyticsKey, {debug: true});
     }
@@ -46,6 +54,7 @@ if (canUseDOM) {
         <Header {...this.props}/>
         <SideBar />
         <CookieMessage />
+
         <div id="page-content-wrapper" className="container-fluid">
           {children}
           <Footer />

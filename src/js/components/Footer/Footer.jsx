@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router';
 if (process.env.BROWSER) {
   require('./Footer.less');
 }
@@ -18,19 +18,19 @@ class Footer extends React.Component {
                 </a>
               </li>
               <li>
-                <a className="footer-link" href="https://afrostream.tv/faq.html">
+                <Link className="footer-link" to="/faq">
                   Les réponses à vos questions
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="footer-link" href="https://afrostream.tv/cgu.html">
+                <Link className="footer-link" to="/cgu">
                   Conditions d'utilisation
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="footer-link" href="https://afrostream.tv/policy.html">
+                <Link className="footer-link" to="/policy">
                   Politique de confidentialité
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -81,7 +81,7 @@ class Footer extends React.Component {
             </div>
             <div className="get-help">
               <div className="legal-text">
-                <a href="https://afrostream.tv/legals.html">Mentions légales</a>
+                <Link href="/legals.html">Mentions légales</Link>
               </div>
             </div>
           </div>

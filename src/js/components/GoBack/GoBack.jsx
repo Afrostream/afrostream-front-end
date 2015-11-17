@@ -18,7 +18,8 @@ if (process.env.BROWSER) {
 }
 
 
-@connect(({ Event }) => ({Event})) class GoBack extends React.Component {
+@connect(({ Event }) => ({Event}))
+class GoBack extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -44,26 +45,12 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    /*let returnClassesSet = {
+    let returnClassesSet = {
       'return-btn': true,
       'btn': true,
       'btn-xs': true,
       'hidden-xs': true,
       'hidden-sm': true
-    };*/
-
-    /**
-     * TODO: when the return button works again,
-     * use the version of the returnClassesSet variable set in the comment above,
-     * and not the one set below.
-     */
-
-    let returnClassesSet = {
-      'return-btn': true,
-      'btn': false,
-      'btn-xs': false,
-      'hidden-xs': false,
-      'hidden-sm': false
     };
 
     return (

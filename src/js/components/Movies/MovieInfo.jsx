@@ -20,7 +20,8 @@ if (process.env.BROWSER) {
   require('./MovieInfo.less');
 }
 
-@connect(({ Movie }) => ({Movie})) class MovieInfo extends React.Component {
+@connect(({ Movie }) => ({Movie}))
+class MovieInfo extends React.Component {
 
   constructor(props) {
     super(props);
@@ -33,13 +34,15 @@ if (process.env.BROWSER) {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,
+    loadEpisode: PropTypes.bool,
     movieId: PropTypes.string.isRequired,
     maxLength: PropTypes.number.isRequired,
     movieObj: PropTypes.instanceOf(Immutable.Object)
   };
 
   static defaultProps = {
-    maxLength: 450
+    maxLength: 450,
+    loadEpisode: false,
   };
 
   initTransition() {
@@ -79,10 +82,6 @@ if (process.env.BROWSER) {
   }
 
   render() {
-    const classes = classSet({
-      'movie': true,
-      'movie--active': this.props.active
-    });
 
     const {
       props: { Movie, active, movieId, movieObj,maxLength}
@@ -90,10 +89,17 @@ if (process.env.BROWSER) {
 
     const movieData = movieObj || Movie.get(`movies/${movieId}`);
 
+
     if (!movieData) {
       //TODO gerer le 404 sur la movie
       return (<Spinner />);
     }
+
+    const classes = classSet({
+      'movie': true,
+      'serie': movieData.get('type') === 'serie',
+      'movie--active': this.props.active
+    });
 
     let poster = movieData.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
@@ -101,15 +107,10 @@ if (process.env.BROWSER) {
 
     return (
       <div ref="slContainer" className={classes}>
-
-        <a href="" onClick={::this.loadVideo} onTouchEnd={::this.loadVideo}>
+        <a href="" onClick={::this.loadVideo}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
-
-
-          <a href="" className="btn-play" onClick={::this.loadVideo} onTouchEnd={::this.loadVideo}/>
-
-          {movieData ? <Billboard {...{active, movieData, maxLength}} onClick={::this.loadVideo}
-                                                                      onTouchEnd={::this.loadVideo}/> : ''}
+          <a href="" className="btn-play"/>
+          {movieData ? <Billboard {...{active, movieData, maxLength}} /> : ''}
         </a>
       </div>
     );
@@ -119,7 +120,7 @@ if (process.env.BROWSER) {
     e.preventDefault();
     const {
       props: {
-        dispatch, await,Movie,movieId, movieObj
+        dispatch, await,Movie,movieId, movieObj,loadEpisode
         }
       } = this;
 
@@ -131,9 +132,8 @@ if (process.env.BROWSER) {
     let videoData = movieData.get('video');
     let videoId = null;
     if (type === 'serie') {
-      //const seasons = Movie.get(`movies/${movieDataId}/seasons`);
       const seasons = movieData.get('seasons');
-      if (seasons) {
+      if (seasons && this.props.loadEpisode) {
         const season = seasons.get(0);
         const seasonId = season.get('_id');
         const seasonSlug = season.get('slug');
@@ -156,7 +156,6 @@ if (process.env.BROWSER) {
           dispatch(VideoActionCreators.getVideo(videoId)),
           this.context.router.transitionTo(link)
         ];
-
     }
 
     return await * [

@@ -1,5 +1,4 @@
-@import (less) '../../../node_modules/normalize.css/normalize.css';
-@import (less) '../../../node_modules/bootstrap/less/bootstrap';
+@import (less) '../../../node_modules/bootstrap/less/bootstrap.less';
 @import '../../styles/normalize.less';
 @import '../../styles/config.less';
 @import '../../styles/aut0-theme-afrostream.less';
@@ -89,7 +88,6 @@ a.active {
   width: 0;
   height: 100%;
   margin-right: -@sidebar-width;
-  overflow-y: auto;
   background-color: @color-indigo;
   .transition(all 0.5s ease);
 }
@@ -146,5 +144,52 @@ a.active {
   .app.toggled #page-content-wrapper {
     position: relative;
     margin-left: 0;
+  }
+}
+
+article {
+  font-size: 14px;
+  font-family: @font-light;
+  background: #FFF;
+  color: @brand-black;
+  margin: 0;
+  //.fullHeight();
+  padding: @header-height * 2  @app-padding;
+  section {
+    a,
+    a:hover,
+    a:focus,
+    a:active,
+    a.active {
+      outline: none;
+    }
+
+    a {
+      color: @color-purple;
+    }
+
+    a:hover,
+    a:focus,
+    a:active,
+    a.active {
+      color: darken(@brand-black, 10%);
+    }
+
+    h1, h2, h3, h4 {
+      color: @brand-black;
+      font-family: @font-book;
+    }
+    p {
+      font-family: @font-light;
+    }
+    ul {
+      li {
+        ul {
+          li {
+            margin-left: 30px;
+          }
+        }
+      }
+    }
   }
 }

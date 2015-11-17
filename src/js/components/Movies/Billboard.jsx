@@ -94,7 +94,7 @@ class Billboard extends React.Component {
     return (
       <div className="billboard-row">
         <label> Acteurs principaux : </label>
-        {casts.map((cast) => <Link to={cast}> {cast} </Link>)}
+        {casts.map((cast,i) => <span> {`${(i ? ' | ' :'')}${cast.get('firstName')} ${cast.get('lastName')}`}</span>)}
       </div>
     );
   }
@@ -109,7 +109,7 @@ class Billboard extends React.Component {
     let type = movieData.get('type');
     let tags = movieData.get('tags');
     let creator = movieData.get('creator');
-    let casts = movieData.get('casts');
+    let actors = movieData.get('actors');
     let synopsis = movieData.get('synopsis') || '';
     let slug = movieData.get('slug') || '';
     let seasons = movieData.get('seasons');
@@ -142,7 +142,7 @@ class Billboard extends React.Component {
         {seasons ? this.getSeasons(seasons) : ''}
         {tags ? this.getGenre(tags) : ''}
         {creator ? this.getCreator(creator) : ''}
-        {casts ? this.getCast(casts) : ''}
+        {actors && actors.size ? this.getCast(actors) : ''}
         <div ref="slSynopsis" className="billboard-synopsis billboard-row">{synopsis}</div>
         <a href={movieData.get('link')}>{movieData.get('link')}</a>
 

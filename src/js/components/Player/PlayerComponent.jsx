@@ -334,9 +334,11 @@ class PlayerComponent extends React.Component {
       return (<Spinner />)
     }
     let captions = videoData.get('captions');
-    const movieData = Movie.get(`movies/${movieId}`);
+    let movieData = Movie.get(`movies/${movieId}`);
+    let episodeData = videoData.get('episode');
     const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
-
+    //si on a les données de l'episode alors, on remplace les infos affichées
+    let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
     return (
       <div className="player">
         <div ref="wrapper" className="wrapper"/>
@@ -344,9 +346,10 @@ class PlayerComponent extends React.Component {
           movieData ?
           <div className={classSet(videoInfoClasses)}>
             <div className=" video-infos_label">Vous regardez</div>
-            <div className=" video-infos_title">{movieData.get('title')}</div>
+            <div className=" video-infos_title">{infos.title}</div>
+            {infos.episodeNumber ? <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> :''}
             <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
-            <div className=" video-infos_synopsys">{movieData.get('synopsis')}</div>
+            <div className=" video-infos_synopsys">{infos.synopsis}</div>
           </div> : <div />
           }
       </div>

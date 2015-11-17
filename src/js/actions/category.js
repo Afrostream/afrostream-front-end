@@ -9,10 +9,7 @@ export function getSpots(categoryId) {
     return async api => ({
       type: ActionTypes.Category.getSpots,
       categoryId,
-      res: await api(`/categorys/${categoryId}/spots`, {
-        sort: 'updated',
-        direction: 'desc'
-      })
+      res: await api(`/categorys/${categoryId}/spots`)
     });
   };
 }
@@ -24,10 +21,7 @@ export function getCategory(categoryId) {
     return async api => ({
       type: ActionTypes.Category.getCategory,
       categoryId,
-      res: await api(`/categorys/${categoryId}`, {
-        sort: 'updated',
-        direction: 'desc'
-      })
+      res: await api(`/categorys/${categoryId}`)
     });
   };
 }
@@ -35,19 +29,13 @@ export function getCategory(categoryId) {
 export function getMeaList() {
   return async api => ({
     type: ActionTypes.Category.getMeaList,
-    res: await api(`/categorys/meas`, {
-      sort: 'top',
-      direction: 'desc'
-    })
+    res: await api(`/categorys/meas`)
   });
 }
 
 export function getMenu() {
   return async api => ({
     type: ActionTypes.Category.getMenu,
-    res: await api(`/categorys/menu`, {
-      sort: 'updated',
-      direction: 'desc'
-    })
+    res: await api(`/categorys/menu`)
   });
 }
