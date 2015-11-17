@@ -11,7 +11,7 @@ import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 import * as Static from './components/Static';
-import * as Posts from './components/Blog';
+import * as Blog from './components/Blog';
 
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
@@ -29,6 +29,9 @@ export default (
     <Route name="policy" path="/policy" component={Static.Policy}/>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
+    <Route name="blog" path="/blog" component={Blog.List}>
+    </Route>
+    <Route name="post" path="/blog/:postId/:postSlug" component={Blog.View}/>
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"

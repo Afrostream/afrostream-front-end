@@ -1,43 +1,66 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { prepareRoute } from '../../decorators';
 import * as BlogActionCreators from '../../actions/blog';
+import MarkdownIt from 'markdown-it';
+const md = MarkdownIt({
+  html: true,        // Enable HTML tags in source
+  xhtmlOut: true,        // Use '/' to close single tags (<br />).
+  // This is only for full CommonMark compatibility.
+  breaks: true,        // Convert '\n' in paragraphs into <br>
+  langPrefix: 'language-',  // CSS language prefix for fenced blocks. Can be
+                            // useful for external highlighters.
+  linkify: true        // Autoconvert URL-like text to links
+});
+
+if (process.env.BROWSER) {
+  require('./Blog.less');
+}
 
 @connect(({ Blog }) => ({
   Blog
 }))
-export default class PostsView extends Component {
+@prepareRoute(async function ({ store, params: { postId } }) {
+  return await * [
+    store.dispatch(BlogActionCreators.fetchPost(postId))
+  ];
+})
+export default class View extends Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object,
-    posts: PropTypes.object
+    params: PropTypes.object
   };
-
-  static fillStore(redux, props) {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-
-    dispatch(BlogActionCreators.fetchPost(props.params.id));
-  }
 
   render() {
     const {
       props: {
-        dispatch,Blog
+        Blog,postId
         }
       } = this;
-    const post = Blog.get(`posts/${this.props.params.id}`);
+
+    const post = Blog.get(`posts/${this.props.params.postId}`);
     if (!post) {
       return (<div />)
     }
+
+    let poster = post.get('poster');
+    let posterImg = poster ? poster.get('imgix') : '';
+    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70)`} : {};
     return (
-      <div styleName="wrapper">
-        <div styleName="title">{title}</div>
-        <p>{content}</p>
-        <small>written by {userId}</small>
+      <div className="row-fluid">
+        <div className="blog">
+          <article key={post.get('_id')}>
+            <header data-stellar-background-ratio='0.5'
+                    style={imageStyles}>
+              <div className="container">
+                <div className="intro-text">
+                  <h1> {post.get('title')}</h1>
+                </div>
+              </div>
+            </header>
+            <section dangerouslySetInnerHTML={{__html: md.render(post.get('body'))}}/>
+          </article>
+        </div>
       </div>
     );
   }

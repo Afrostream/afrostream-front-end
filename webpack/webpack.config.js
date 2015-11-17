@@ -65,7 +65,7 @@ const webpackConfig = {
         loader: 'transform?ejsify'
       }, {
         test: /\.json$/,
-        include: path.join(__dirname, '../node_modules/auth0-lock'),
+        include: [path.join(__dirname, '../node_modules/auth0-lock'), path.join(__dirname, '../node_modules/markdown-it')],
         loader: 'json'
       },
       {

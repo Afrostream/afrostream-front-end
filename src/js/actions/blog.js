@@ -4,7 +4,7 @@ export function fetchAll() {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Blog.fetchAll,
-      res: await api(`/posts/`)
+      res: await api(`/posts`)
     });
   };
 }
@@ -14,7 +14,7 @@ export function fetchPost(postId) {
     return async api => ({
       type: ActionTypes.Blog.fetchPost,
       postId,
-      res: await api(`/posts/${id}`)
+      res: await api(`/posts/${postId}`)
     });
   };
 }
