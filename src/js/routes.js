@@ -23,11 +23,12 @@ import NoMatch from './components/NoMatch';
 
 export default (
   <Route name="app" component={Application}>
-    <Route name="reset" path="/reset" component={ResetPasswordPage}/>
-    <Route name="login" path="/login" component={LoginPage}/>
     <Route name="legals" path="/legals" component={Static.Legals}/>
     <Route name="cgu" path="/cgu" component={Static.CGU}/>
     <Route name="faq" path="/faq" component={Static.FAQ}/>
+    <Route name="policy" path="/policy" component={Static.Policy}/>
+    <Route name="reset" path="/reset" component={ResetPasswordPage}/>
+    <Route name="login" path="/login" component={LoginPage}/>
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
