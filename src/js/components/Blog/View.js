@@ -17,19 +17,13 @@ if (process.env.BROWSER) {
   require('./Blog.less');
 }
 
-@connect(({ Blog }) => ({
-  Blog
-}))
 @prepareRoute(async function ({ store, params: { postId } }) {
   return await * [
     store.dispatch(BlogActionCreators.fetchPost(postId))
   ];
 })
+@connect(({ Blog }) => ({Blog}))
 export default class View extends Component {
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    params: PropTypes.object
-  };
 
   render() {
     const {
@@ -40,8 +34,10 @@ export default class View extends Component {
 
     const post = Blog.get(`posts/${this.props.params.postId}`);
     if (!post) {
+      console.log('no post');
       return (<div />)
     }
+    console.log('post founded');
 
     let poster = post.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
