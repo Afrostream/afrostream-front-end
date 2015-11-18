@@ -33,10 +33,3 @@ export function redirect(req, res, next) {
       res.redirect('/blog/'+response.body[0]._id+'/'+slug);
     });
 };
-
-export function show(req, res, next) {
-  // cache 1 min.
-  res.set('Cache-Control', 'public, max-age=60');
-  // FIXME: display the post ?
-  res.send(req.params.postUUID);
-};
