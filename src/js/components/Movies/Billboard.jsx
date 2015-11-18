@@ -93,7 +93,7 @@ class Billboard extends React.Component {
   getCast(casts) {
     return (
       <div className="billboard-row">
-        <label> Acteurs principaux : </label>
+        <label> Avec : </label>
         {casts.map((cast,i) => <span> {`${(i ? ' | ' :'')}${cast.get('firstName')} ${cast.get('lastName')}`}</span>)}
       </div>
     );
