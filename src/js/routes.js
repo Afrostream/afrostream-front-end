@@ -29,9 +29,8 @@ export default (
     <Route name="policy" path="/policy" component={Static.Policy}/>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
-    <Route name="blog" path="/blog" component={Blog.List}>
-    </Route>
     <Route name="post" path="/blog/:postId/:postSlug" component={Blog.View}/>
+    <Route name="blog" path="/blog" component={Blog.List}/>
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
