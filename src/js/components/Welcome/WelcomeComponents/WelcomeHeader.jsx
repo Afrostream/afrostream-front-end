@@ -65,9 +65,9 @@ class WelcomeHeader extends React.Component {
     let imageStyle = {backgroundImage: `url(${data.poster}?crop=faces&fit=clip&w=1920&h=815&q=65)`};
 
     let welcomeClassesSet = {
-      'welcome-header': true,
-      'hidden-sm': true
+      'welcome-header': true
     };
+
     return (
       <section className={classSet(welcomeClassesSet)} style={imageStyle}>
         <div className="afrostream-movie">
