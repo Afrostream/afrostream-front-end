@@ -12,6 +12,9 @@ const { apiClient: { protocol, authority }} = config;
  *    /blog/761b1042-7d0a-40a9-83ac-1b2ee5918b24/Afrostream-24-hour-love
  */
 export function redirect(req, res, next) {
+  res.redirect('/blog/');
+
+  /* redirect to specific entry
   const url = protocol + '://' + authority + '/api/posts';
   const slug = req.params.slug;
 
@@ -32,4 +35,5 @@ export function redirect(req, res, next) {
       }
       res.redirect('/blog/'+response.body[0]._id+'/'+slug);
     });
+    */
 };
