@@ -4,7 +4,7 @@
   "description": "Universal Afrostream with React + Redux.",
   "main": "lib/server.js",
   "scripts": {
-    "express": "./node_modules/.bin/babel-node lib/express",
+    "express": "./node_modules/.bin/babel-node server",
     "deploy": "./node_modules/.bin/babel-node lib/deploy",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc src",
     "build": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --production --verbose --colors --display-error-details --config webpack/prod.config.js",
