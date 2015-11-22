@@ -1,10 +1,15 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../../actions/user';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
+}
+
+if (canUseDOM) {
+  var countdown = require('countdown');
 }
 
 @connect(({ User, Movie }) => ({User, Movie}))
@@ -13,6 +18,17 @@ class WelcomeHeader extends React.Component {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
+
+  componentDidMount () {
+    if (canUseDOM) {
+      debugger;
+      //let xxx = countdown( new Date(2000, 0, 1) ).toString();
+
+      //console.log('*** here is the countdown string ***');
+      //console.log(xxx);
+    }
+
+  }
 
   showLock() {
     const {
@@ -40,13 +56,13 @@ class WelcomeHeader extends React.Component {
         Movie
         }
       } = this;
-
     let { movieId } = this.context.router.state.params;
     let movieData = null;
     let data = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
       poster: 'https://afrostream.imgix.net/production/poster/2015/10/e4a0a6220e8fa50a23af-hear-me-move-home.jpg'
     };
+    let showCountDown = (typeof this.props.promoCode !== 'undefined') ? true : false;
 
     if (movieId) {
       movieData = Movie.get(`movies/${movieId}`);

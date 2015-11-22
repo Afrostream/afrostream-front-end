@@ -43,6 +43,11 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
     const token = User.get('token');
     const user = User.get('user');
 
+    var pathName = '';
+    if (canUseDOM) {
+      pathName = document.location.pathname;
+    }
+
     if (token) {
       if (!user) {
         return (<WelcomePage />);
@@ -52,11 +57,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
       }
       else if (typeof user.get('newSubscription') !== 'undefined') {
         if (user.get('newSubscription') === true) {
-          var successPathName = '';
-          if (canUseDOM){
-            successPathName = document.location.pathname;
-          }
-          return (<PaymentSuccess pathName={successPathName} />);
+          return (<PaymentSuccess pathName={pathName} />);
         }
       }
       else {
@@ -67,6 +68,8 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
           return (<BrowsePage/>)
         }
       }
+    } else if (pathName === '/AFROLOVE') {
+      return (<WelcomePage promoCode={pathName} />);
     } else {
       return (<WelcomePage />);
     }

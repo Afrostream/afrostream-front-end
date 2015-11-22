@@ -81,7 +81,7 @@ class Footer extends React.Component {
             </div>
             <div className="get-help">
               <div className="legal-text">
-                <Link href="/legals.html">Mentions légales</Link>
+                
               </div>
             </div>
           </div>
