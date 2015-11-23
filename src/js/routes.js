@@ -38,7 +38,7 @@ export default (
              component={PlayerPage}
              scrollOnTransition={true}/>
       <Route name="compte" path="/compte" component={AccountPage} />
-      <Route name="cancelSubscription" path="/cancel-subscri:qcleaption" component={CancelSubscription}/>
+      <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
       <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>
     </Route>
