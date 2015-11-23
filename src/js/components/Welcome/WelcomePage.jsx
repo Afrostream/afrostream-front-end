@@ -13,7 +13,7 @@ import * as EventActionCreators from '../../actions/event';
 
   render() {
     let promoCode = (typeof this.props.promoCode !== 'undefined') ? this.props.promoCode : '';
-
+    debugger;
     return (
       <div>
         <WelcomeHeader promoCode={promoCode} />
