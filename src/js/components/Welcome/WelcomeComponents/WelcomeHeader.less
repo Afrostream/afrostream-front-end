@@ -86,12 +86,64 @@
   }
 
   .promo {
-    display: block;
-    background-color: #6F248B;
+    display: inline-block;
+    background-color: fade(#CB42FF, 50%);
     position: relative;
     margin-left: 20%;
     margin-right: 20%;
+    margin-bottom: 25%;
     width: 60%;
+    text-align: center;
+    padding: 0 10px 20px 10px;
+
+    @media all and (max-width: @screen-lg-min) {
+      margin-bottom: 30%;
+    }
+
+
+    @media all and (max-width: @screen-md-min) {
+      margin-bottom: 35%;
+    }
+
+    @media all and (max-width: @screen-sm-min) {
+      margin-bottom: 45%;
+    }
+
+    @media all and (max-width: @screen-xs-min) {
+      margin-bottom: 70%;
+    }
+
+    .subscribe-button-promo {
+      color: #000000;
+      background-color: #74C3D0;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 36px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  .promo-message{
+    margin-bottom: 20px;
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      color: #ffc809;
+    }
+
+    h6 {
+      margin-top: 25px;
+    }
+  }
+  #countdown{
+    font-size: 24px;
+    margin-bottom: 20px;
   }
 
   .display-none {
