@@ -57,7 +57,7 @@ class WelcomeHeader extends React.Component {
           }
           //if (event.offset.minutes > 0 && event.offset.days === 0) {
           if (event.offset.minutes > 0) {
-            format = '%-M minute%!M ' + format;
+            //format = '%-M minute%!M ' + format;
           }
           //if (event.offset.hours > 0 && event.offset.weeks === 0) {
           if (event.offset.hours > 0) {
@@ -161,15 +161,14 @@ class WelcomeHeader extends React.Component {
         <section className="welcome-header" style={imageStyle}>
           <div className={classSet(countDownClasses)}>
             <div className="promo-message">
-              <h2>2 MOIS DE FILMS ET SÉRIES</h2>
-              <h1>POUR 1€ PAR MOIS</h1>
+              <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ PAR MOIS</h2>
               <h3>avec le code promo: <span>AFROLOVE</span></h3>
               <h6>Fin de l'offre promotionnelle dans</h6>
               <div id="countdown"></div>
-              <h7>Promotion valable jusqu'au 1 décembre *Valable sur la formule mensuelle sans engagement.
-                Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h7>
+              <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN MAINTENANT</button>
             </div>
-            <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN MAINTENANT</button>
+            <h7>Promotion valable jusqu'au 1 décembre *Valable sur la formule mensuelle sans engagement.
+              Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h7>
           </div>
         </section>
       );
