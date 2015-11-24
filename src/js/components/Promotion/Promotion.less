@@ -1,4 +1,4 @@
-@import (reference) '../../../../styles/config.less';
+@import (reference) '../../../styles/config.less';
 
 .welcome-header {
   width: 100%;
@@ -6,7 +6,8 @@
   //Firefox fix
   height: 100vh;
   position: relative;
-  background-image: url(../../../../assets/images/default/1920x815.jpg);
+  background-image: url(https://afrostream.imgix.net/production/poster/2015/10/e4a0a6220e8fa50a23af-hear-me-move-home.jpg);
+  background-attachment: scroll;
   background-position: center center;
   background-size: cover;
   text-align: left;
@@ -16,6 +17,10 @@
     display: inline-block;
     height: 100%;
     vertical-align: bottom;
+  }
+
+  @media all and (max-width: @screen-sm-min) {
+    display: inline-table;
   }
 
   .afrostream-movie {
@@ -81,7 +86,87 @@
       display: block;
       margin-top: 10px;
       color: #000000;
-      background-image: url('../../../../../static/images/gold-texture.png');
+      background-image: url('../../../../static/images/gold-texture.png');
     }
+  }
+
+  .promo {
+    display: inline-block;
+    //background-color: fade(#CB42FF, 50%);
+    position: relative;
+    margin-left: 20%;
+    margin-right: 15%;
+    margin-bottom: 15%;
+    margin-top: 5%;
+    width: 64%;
+    text-align: center;
+    padding: 20px 10px 40px 10px;
+    z-index: 900;
+
+    @media all and (max-width: @screen-lg-min) {
+      margin-top: 10%;
+      margin-bottom: 30%;
+    }
+
+
+    @media all and (max-width: @screen-md-min) {
+      margin-bottom: 35%;
+    }
+
+    @media all and (max-width: @screen-sm-min) {
+      width: 90%;
+      margin-top: 5%;
+      margin-bottom: 40%;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+
+    @media all and (max-width: @screen-xs-min) {
+      width: 100%;
+      margin-bottom: 10%;
+      margin-left: 0%;
+      margin-right: 0%;
+    }
+
+    .subscribe-button-promo {
+
+      color: #000000;
+      background-color: #2bde73;
+      border: none;
+      border-radius: 32px;
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 52px;
+      padding-left: 32px;
+      padding-right: 32px;
+      z-index: 900;
+    }
+  }
+
+  .promo-message{
+    margin-bottom: 20px;
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      color: #ffc809;
+    }
+
+    h5 {
+      margin-top: 25px;
+    }
+
+  }
+  #countdown{
+    font-weight: 600;
+    font-size: 35px;
+    color: #ffc809;
+    margin-bottom: 20px;
+  }
+
+  .display-none {
+    display: none;
   }
 }

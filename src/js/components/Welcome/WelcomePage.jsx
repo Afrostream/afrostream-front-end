@@ -12,10 +12,9 @@ import * as EventActionCreators from '../../actions/event';
 }) class WelcomePage extends React.Component {
 
   render() {
-    let promoCode = (typeof this.props.promoCode !== 'undefined') ? this.props.promoCode : '';
     return (
       <div>
-        <WelcomeHeader promoCode={promoCode} />
+        <WelcomeHeader />
         <Devices />
         <PricingTable />
       </div>
