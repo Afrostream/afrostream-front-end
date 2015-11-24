@@ -135,11 +135,30 @@
       padding-left: 32px;
       padding-right: 32px;
       z-index: 900;
+
+      @media all and (max-width: @screen-sm-min) {
+        border-radius: 24px;
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 40px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
+    h6 {
+      color: #ffc809;
     }
   }
 
   .promo-message{
     margin-bottom: 20px;
+
+    h2 {
+      @media all and (max-width: @screen-sm-min) {
+        font-size: 24px;
+      }
+    }
 
     h1 {
       margin-bottom: 10px;
@@ -147,21 +166,24 @@
 
     h3 {
       color: #ffc809;
+      @media all and (max-width: @screen-sm-min) {
+        font-size: 20px;
+      }
     }
 
     h5 {
       margin-top: 25px;
     }
-
   }
+
   #countdown{
     font-weight: 600;
-    font-size: 35px;
+    font-size: 36px;
     color: #ffc809;
     margin-bottom: 20px;
-  }
 
-  .display-none {
-    display: none;
+    @media all and (max-width: @screen-sm-min) {
+      font-size: 24px;
+    }
   }
 }
