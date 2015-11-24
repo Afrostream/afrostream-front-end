@@ -163,12 +163,13 @@ class WelcomeHeader extends React.Component {
             <div className="promo-message">
               <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ PAR MOIS</h2>
               <h3>avec le code promo: <span>AFROLOVE</span></h3>
-              <h6>Fin de l'offre promotionnelle dans</h6>
+              <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN MAINTENANT</button>
             </div>
-            <h7>Promotion valable jusqu'au 1 décembre *Valable sur la formule mensuelle sans engagement.
-              Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h7>
+            <h6>Promotion valable jusqu'au 1 décembre </h6>
+            <h6>*Valable sur la formule mensuelle sans engagement.
+              Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
           </div>
         </section>
       );
