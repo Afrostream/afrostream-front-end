@@ -12,7 +12,6 @@ import * as EventActionCreators from '../../actions/event';
 }) class WelcomePage extends React.Component {
 
   render() {
-
     return (
       <div>
         <WelcomeHeader />

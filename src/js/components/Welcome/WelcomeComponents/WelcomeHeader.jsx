@@ -40,7 +40,6 @@ class WelcomeHeader extends React.Component {
         Movie
         }
       } = this;
-
     let { movieId } = this.context.router.state.params;
     let movieData = null;
     let data = {

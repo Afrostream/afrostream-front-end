@@ -12,6 +12,7 @@ import BrowsePage from './components/Browse/BrowsePage';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 import * as Static from './components/Static';
 import * as Blog from './components/Blog';
+import PromoPage from './components/Promotion/Promotion';
 
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
@@ -28,6 +29,7 @@ export default (
     <Route name="faq" path="/faq" component={Static.FAQ}/>
     <Route name="policy" path="/policy" component={Static.Policy}/>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
+    <Route name="promotion" path="/AFROLOVE" component={PromoPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
     <Route name="post" path="/blog/:postId/:postSlug" component={Blog.View}/>
     <Route name="blog" path="/blog" component={Blog.List}/>
@@ -38,8 +40,8 @@ export default (
              component={PlayerPage}
              scrollOnTransition={true}/>
       <Route name="compte" path="/compte" component={AccountPage} />
-      <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription} />
-      <Route name="browse" path="/:category" component={BrowsePage} />
+      <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
+      <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>
     </Route>
     <Route path="*" component={NoMatch}/>
