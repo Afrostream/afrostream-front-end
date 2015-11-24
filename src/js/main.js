@@ -16,7 +16,6 @@ if (canUseDOM) {
   require('jquery');
   require('bootstrap');
   require('jquery.payment');
-  require('jquery.countdown');
 }
 
 const history = new History;
