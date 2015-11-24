@@ -34,6 +34,7 @@ if (process.env.BROWSER) {
     obj.delta = {};
     obj.delta.x = settings.dX;
     obj.delta.y = settings.dY;
+
     return obj;
   }
 
