@@ -82,9 +82,13 @@ import config from '../../../../config';
         }
       }
       else {
+
         dispatch(UserActionCreators.getProfile());
         return this.getLoginState();
       }
+    } else if (this.context.router.state.location.pathname === '/AFROLOVE') {
+      return(<div />);
+      ;
     } else {
       return this.getLoginState();
     }

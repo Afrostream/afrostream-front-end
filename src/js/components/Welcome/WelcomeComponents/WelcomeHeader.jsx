@@ -49,7 +49,7 @@ class WelcomeHeader extends React.Component {
           }
           //if (event.offset.minutes > 0 && event.offset.days === 0) {
           if (event.offset.minutes > 0) {
-            //format = '%-M minute%!M ' + format;
+            format = '%-M minute%!M ' + format;
           }
           //if (event.offset.hours > 0 && event.offset.weeks === 0) {
           if (event.offset.hours > 0) {
@@ -78,6 +78,16 @@ class WelcomeHeader extends React.Component {
       } = this;
 
     dispatch(UserActionCreators.showSignupLock());
+  }
+
+  showAfroloveLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.showSigninLock());
   }
 
   showGiftLock() {
@@ -151,11 +161,10 @@ class WelcomeHeader extends React.Component {
               <h3>avec le code promo: <span>AFROLOVE</span></h3>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
-              <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN MAINTENANT</button>
+              <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveLock}>PROFITEZ EN MAINTENANT</button>
             </div>
-            <h6>Promotion valable jusqu'au 1 décembre </h6>
-            <h6>*Valable sur la formule mensuelle sans engagement.
-              Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
+            <h6>*Valable sur la formule mensuelle sans engagement.</h6>
+            <h6>Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
           </div>
         </section>
       );
