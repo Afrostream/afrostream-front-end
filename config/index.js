@@ -6,7 +6,14 @@ const config = _.merge(
   {
     metadata: {
       title: 'Afrostream.tv',
-      description: 'AFROSTREAM, LES MEILLEURS FILMS ET SÉRIES AFRO EN ILLIMITÉ'
+      metas: [{
+        name: 'description',
+        content: 'AFROSTREAM, LES MEILLEURS FILMS ET SÉRIES AFRO EN ILLIMITÉ'
+      }, {
+        name: 'keywords',
+        content: 'netflix, afro, cinema, black, series, shows, empire, cookie, webseries, musique, afrostream, viola davis, taraji p henson, blackxploitation, film, nollywood, ghana, france'
+      }],
+      shareImage: 'https://afrostream.imgix.net/production/poster/2015/08/ab69b5337b8a05d4c896-last-letter%202560x1440.jpg'
     },
     /**
      * Front-End Server

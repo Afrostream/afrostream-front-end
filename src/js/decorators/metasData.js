@@ -18,7 +18,7 @@ export default () => {
 
       state = {
         title: config.metadata.title,
-        meta: [],
+        meta: config.metadata.metas,
         link: []
       };
 
@@ -36,7 +36,6 @@ export default () => {
         const {
           props: { params, location }
           } = this;
-
         if (params && params.movieId) {
           let data = this.context.store.getState().Movie.get(`movies/${params.movieId}`);
           this.setMetadataProps(data);
@@ -58,18 +57,18 @@ export default () => {
         }
 
         let metas = {
-          title: '',
+          title: config.metadata.title,
           meta: [],
           link: []
         };
 
-        let title = data.get('title');
+        let title = data.get('title') || config.metadata.title;
         let slug = data.get('slug');
-        let synopsis = data.get('synopsis');
+        let synopsis = data.get('synopsis') || config.metadata.description;
         let ogTitle = data.get('title');
         let ogDescription = data.get('synopsis');
         let poster = data.get('poster');
-        let imageStyle = 'https://afrostream.imgix.net/production/poster/2015/08/ab69b5337b8a05d4c896-last-letter%202560x1440.jpg';
+        let imageStyle = config.metadata.shareImage;
         if (poster) {
           imageStyle = poster.get('imgix');
         }
