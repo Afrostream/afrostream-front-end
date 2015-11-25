@@ -96,6 +96,7 @@ const webpackConfig = {
         test: /.(woff|woff2)([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
       },
+
       {
         test: /.ttf([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
