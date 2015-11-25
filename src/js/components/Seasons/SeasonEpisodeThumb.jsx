@@ -38,8 +38,10 @@ import * as EventActionCreators from '../../actions/event';
     //wrap text
     if (synopsis.length >= maxLength) {
       let cutIndex = synopsis.indexOf(' ', maxLength);
-      let shortDescription = synopsis.substring(0, cutIndex) + '...';
-      synopsis = shortDescription;
+      if (cutIndex !== -1) {
+        let shortDescription = synopsis.substring(0, cutIndex) + '...';
+        synopsis = shortDescription;
+      }
     }
 
     return (
