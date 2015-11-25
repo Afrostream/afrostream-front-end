@@ -38,8 +38,8 @@ export default (
              component={PlayerPage}
              scrollOnTransition={true}/>
       <Route name="compte" path="/compte" component={AccountPage} />
-      <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription} />
-      <Route name="browse" path="/:category" component={BrowsePage} />
+      <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
+      <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>
     </Route>
     <Route path="*" component={NoMatch}/>

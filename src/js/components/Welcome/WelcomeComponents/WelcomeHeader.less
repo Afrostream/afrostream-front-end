@@ -84,4 +84,106 @@
       background-image: url('../../../../../static/images/gold-texture.png');
     }
   }
+
+  .promo {
+    display: inline-block;
+    //background-color: fade(#CB42FF, 50%);
+    position: relative;
+    margin-left: 20%;
+    margin-right: 15%;
+    margin-bottom: 15%;
+    margin-top: 5%;
+    width: 64%;
+    text-align: center;
+    padding: 20px 10px 40px 10px;
+    z-index: 900;
+
+    @media all and (max-width: @screen-lg-min) {
+      margin-top: 10%;
+      margin-bottom: 30%;
+    }
+
+
+    @media all and (max-width: @screen-md-min) {
+      margin-bottom: 35%;
+    }
+
+    @media all and (max-width: @screen-sm-min) {
+      width: 90%;
+      margin-top: 5%;
+      margin-bottom: 40%;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+
+    @media all and (max-width: @screen-xs-min) {
+      width: 100%;
+      margin-bottom: 10%;
+      margin-left: 0%;
+      margin-right: 0%;
+    }
+
+    .subscribe-button-promo {
+
+      color: #000000;
+      background-color: #2bde73;
+      border: none;
+      border-radius: 32px;
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 52px;
+      padding-left: 32px;
+      padding-right: 32px;
+      z-index: 900;
+
+      @media all and (max-width: @screen-sm-min) {
+        border-radius: 24px;
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 40px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
+    h6 {
+      color: #ffc809;
+    }
+  }
+
+  .promo-message{
+    margin-bottom: 20px;
+
+    h2 {
+      @media all and (max-width: @screen-sm-min) {
+        font-size: 24px;
+      }
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      color: #ffc809;
+      @media all and (max-width: @screen-sm-min) {
+        font-size: 20px;
+      }
+    }
+
+    h5 {
+      margin-top: 25px;
+    }
+  }
+
+  #countdown{
+    font-weight: 600;
+    font-size: 36px;
+    color: #ffc809;
+    margin-bottom: 20px;
+
+    @media all and (max-width: @screen-sm-min) {
+      font-size: 24px;
+    }
+  }
 }

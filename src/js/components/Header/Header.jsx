@@ -60,6 +60,8 @@ class Header extends React.Component {
     const user = User.get('user');
     let hasHistory = !this.state.isIOS && user && (this.context.router.state.location.pathname.length > 1);
 
+    let notPaying = (this.context.router.state.location.pathname.indexOf('select-plan')  > -1) ? false : true;
+
     let sliderClasses = {
       'navbar': true,
       'navbar-default': true,
@@ -68,13 +70,14 @@ class Header extends React.Component {
       'navbar-fixed-color': pinned || this.state.pinned
       || this.context.router.isActive('compte')
       || this.context.router.isActive('cancel-subscription')
+      || this.context.router.isActive('select-plan')
     };
 
     return (
       <nav className={classSet(sliderClasses)} role="navigation">
         <div className="container-fluid">
           <div className="navbar-header">
-            { hasHistory ? <GoBack /> : ''}
+            { (hasHistory && notPaying) ? <GoBack /> : ''}
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
