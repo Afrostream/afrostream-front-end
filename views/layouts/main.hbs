@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    {{{title}}}
-    {{{meta}}}
+  {{{title}}}
+  {{{meta}}}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <meta name="robots" content="noindex, nofollow">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="version" content="Afrostream ({{{version}}})">
-    {{{link}}}
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <!-- STREAMROOT STYLE -->
-    <!--<link href="//files.streamroot.io/release/latest/wrappers/videojs/streamroot.css" rel="stylesheet">-->
-    {{#each cssPaths}}
-      <link rel="stylesheet" href="{{.}}">
-    {{/each}}
+    <meta name="msapplication-TileColor" content="#17071d">
+    <meta name="application-name" content="{{{name}}}">
 
-    <!-- Streamroot player -->
-    <!--<script src="//files.streamroot.io/release/latest/api.js"></script>-->
+    <link rel="author" href="{{{name}}}">
+    <link rel="publisher" href="{{{name}}}">
+  {{{link}}}
+  {{#each cssPaths}}
+      <link rel="stylesheet" href="{{.}}">
+  {{/each}}
 </head>
 <body>
 {{hash}}
