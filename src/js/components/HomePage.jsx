@@ -68,7 +68,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
           return (<BrowsePage/>)
         }
       }
-    } else if (pathName === '/AFROLOVE') {
+    } else if (pathName === '/AFROLOVE' || pathName === '/AFROLOVE2') {
       return (<WelcomePage promoCode={pathName} />);
     } else {
       return (<WelcomePage />);
