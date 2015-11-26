@@ -18,7 +18,7 @@ class Devices extends React.Component {
             </div>
           </div>
           <div className="device-element-text">
-            <h2>Vos films et séries afros préférés quand vous voulez où vous voulez en illimité</h2>
+            <h2>Vos films et séries afro préférés quand vous voulez où vous voulez en illimité</h2>
             <ul className="features-list">
               <li className="features-item">
                 Visionnez en streaming illimité

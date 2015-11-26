@@ -86,7 +86,8 @@ import config from '../../../../config';
         dispatch(UserActionCreators.getProfile());
         return this.getLoginState();
       }
-    } else if (this.context.router.state.location.pathname === '/AFROLOVE') {
+    } else if ((this.context.router.state.location.pathname === '/AFROLOVE')
+      || (this.context.router.state.location.pathname === '/AFROLOVE2')) {
       return(<div />);
       ;
     } else {

@@ -90,6 +90,16 @@ class WelcomeHeader extends React.Component {
     dispatch(UserActionCreators.showSigninLock());
   }
 
+  showAfroloveSignupLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(UserActionCreators.showSignupLock());
+  }
+
   showGiftLock() {
     const {
       props: {
@@ -111,7 +121,7 @@ class WelcomeHeader extends React.Component {
     let movieData = null;
     let data = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
-      poster: 'https://afrostream.imgix.net/production/poster/2015/10/e4a0a6220e8fa50a23af-hear-me-move-home.jpg'
+      poster: 'https://afrostream.imgix.net/production/poster/2015/11/4cf7622100a1a57df590-FBOW2_The%20Big%20Day%20_slide.png'
     };
 
     if (movieId) {
@@ -152,7 +162,7 @@ class WelcomeHeader extends React.Component {
           </div>
         </section>
       );
-    } else {
+    } else if (this.props.promoCode === '/AFROLOVE') {
       return (
         <section className="welcome-header" style={imageStyle}>
           <div className="promo">
@@ -162,6 +172,22 @@ class WelcomeHeader extends React.Component {
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveLock}>PROFITEZ EN MAINTENANT</button>
+            </div>
+            <h6>*Valable sur la formule mensuelle sans engagement.</h6>
+            <h6>Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
+          </div>
+        </section>
+      );
+    } else {
+      return (
+        <section className="welcome-header" style={imageStyle}>
+          <div className="promo">
+            <div className="promo-message">
+              <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ / MOIS</h2>
+              <h3>avec le code promo: <span>AFROLOVE</span></h3>
+              <h5>Fin de l'offre promotionnelle dans</h5>
+              <div id="countdown"></div>
+              <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveSignupLock}>PROFITEZ EN MAINTENANT</button>
             </div>
             <h6>*Valable sur la formule mensuelle sans engagement.</h6>
             <h6>Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
