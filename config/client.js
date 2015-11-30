@@ -67,6 +67,10 @@ const config = {
     token: 'afro_token',
     tokenRefresh: 'afro_refresh_token'
   },
+  images: {
+    quality: 65,
+    type: 'jpg'
+  },
   carousel: {
     interval: 10000
   },

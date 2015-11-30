@@ -72,7 +72,7 @@ export default () => {
         if (poster) {
           imageStyle = poster.get('imgix');
         }
-        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1920&h=815&q=65)`;
+        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1920&h=815&q=${config.images.quality}&fm=${config.images.type})`;
 
         if (title) {
           metas.title = title;

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as MovieActionCreators from '../../actions/movie';
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
-
+import config from '../../../../config';
 
 @connect(({ Movie }) => ({Movie})) class SeasonEpisodeThumb extends React.Component {
 
@@ -31,7 +31,7 @@ import * as EventActionCreators from '../../actions/event';
     }
     let poster = episode.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=200&h=110&q=65)`} : {};
+    let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=200&h=110&q=${config.images.quality}&fm=${config.images.type})`} : {};
     let title = episode.get('title');
     let synopsis = episode.get('synopsis') || '';
 
