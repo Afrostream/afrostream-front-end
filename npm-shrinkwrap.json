@@ -18528,6 +18528,18 @@
         }
       }
     },
+    "redux-raven-middleware": {
+      "version": "0.3.0",
+      "from": "redux-raven-middleware@*",
+      "resolved": "https://registry.npmjs.org/redux-raven-middleware/-/redux-raven-middleware-0.3.0.tgz",
+      "dependencies": {
+        "raven-js": {
+          "version": "1.3.0",
+          "from": "raven-js@>=1.1.19 <2.0.0",
+          "resolved": "https://registry.npmjs.org/raven-js/-/raven-js-1.3.0.tgz"
+        }
+      }
+    },
     "serve-favicon": {
       "version": "2.3.0",
       "from": "https://registry.npmjs.org/serve-favicon/-/serve-favicon-2.3.0.tgz",
