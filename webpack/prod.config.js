@@ -11,8 +11,8 @@ const prodConfig = merge({}, webpackConfig, {
   devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'eval',
   output: {
     publicPath: `/static/`,
-    filename: '[name].[hash].js',
-    chunkFilename: '[id].[hash].js'
+    filename: '[name].js?[hash]',
+    chunkFilename: '[id].js?[hash]'
   },
   externals: [],
   node: {
@@ -22,8 +22,8 @@ const prodConfig = merge({}, webpackConfig, {
     //noParse: [/.\/superagent-mock$/]
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].js'),
-    new ExtractTextPlugin('[name].[hash].css', {allChunks: true}),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js?[hash]'),
+    new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({

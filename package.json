@@ -15,7 +15,7 @@
     "staging": "export LOAD_STAGING=true export API_END_POINT=https://afr-api-v1-staging.herokuapp.com/api && npm run dev",
     "prod": "API_END_POINT=http://afrostream-api-v1.herokuapp.com/api npm run dev",
     "start": "./node_modules/.bin/babel-node lib/server",
-    "postinstall": "node lib/deploy"
+    "postinstall": "npm run deploy"
   },
   "keywords": [
     "afrostream",
@@ -69,6 +69,7 @@
     "express-handlebars": "^2.0.1",
     "express-session": "^1.11.3",
     "extract-text-webpack-plugin": "^0.8.2",
+    "fastly": "^1.2.1",
     "file-loader": "^0.8.4",
     "font-awesome": "^4.3.0",
     "fs": "0.0.2",

@@ -8894,6 +8894,44 @@
         }
       }
     },
+    "fastly": {
+      "version": "1.2.1",
+      "from": "fastly@*",
+      "resolved": "https://registry.npmjs.org/fastly/-/fastly-1.2.1.tgz",
+      "dependencies": {
+        "request": {
+          "version": "2.12.0",
+          "from": "request@>=2.12.0 <2.13.0",
+          "resolved": "https://registry.npmjs.org/request/-/request-2.12.0.tgz",
+          "dependencies": {
+            "form-data": {
+              "version": "0.0.3",
+              "from": "form-data",
+              "dependencies": {
+                "combined-stream": {
+                  "version": "0.0.3",
+                  "from": "combined-stream@0.0.3",
+                  "dependencies": {
+                    "delayed-stream": {
+                      "version": "0.0.5",
+                      "from": "delayed-stream@0.0.5"
+                    }
+                  }
+                },
+                "async": {
+                  "version": "0.1.9",
+                  "from": "async@0.1.9"
+                }
+              }
+            },
+            "mime": {
+              "version": "1.2.7",
+              "from": "mime"
+            }
+          }
+        }
+      }
+    },
     "file-loader": {
       "version": "0.8.4",
       "from": "https://registry.npmjs.org/file-loader/-/file-loader-0.8.4.tgz",
