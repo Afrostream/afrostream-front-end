@@ -9,7 +9,6 @@ import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient } from '../../config';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
-
 superAgentMock(request);
 
 if (canUseDOM) {
