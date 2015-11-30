@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import * as middleWare from '../middleware';
 import * as reducers from '../reducers';
+import config from '../../../config';
 
 function promiseMiddleware(api, { getState }) {
   return next =>

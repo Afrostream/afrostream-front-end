@@ -6,6 +6,7 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
 import Spinner from '../Spinner/Spinner';
+import config from '../../../../config';
 
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
@@ -103,7 +104,7 @@ class MovieInfo extends React.Component {
 
     let poster = movieData.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70)`} : {};
+    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=${config.images.quality}&fm=${config.images.type})`} : {};
 
     return (
       <div ref="slContainer" className={classes}>

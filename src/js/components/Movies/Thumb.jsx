@@ -6,13 +6,15 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
+import config from '../../../../config';
 
 if (canUseDOM) {
   require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 
-@connect(({ Movie, Video }) => ({Movie, Video})) class Thumb extends React.Component {
+@connect(({ Movie, Video }) => ({Movie, Video}))
+class Thumb extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -223,7 +225,7 @@ if (canUseDOM) {
       }
       imageStyles = imgix;
     }
-    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=65)`};
+    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=${config.images.quality}&fm=${config.images.type})`};
   }
 
   render() {
@@ -235,7 +237,7 @@ if (canUseDOM) {
     let imageStyles = this.getLazyImageUrl();
     let poster = movie.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=${this.thumbWidth}&h=${this.thumbH}&q=65)`} : {};
+    let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=${this.thumbWidth}&h=${this.thumbH}&q=${config.images.quality}&fm=${config.images.type})`} : {};
     let title = movie.get('title');
     let synopsis = movie.get('synopsis') || '';
 
@@ -259,9 +261,9 @@ if (canUseDOM) {
         <div ref="thumb" className="thumb"
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}
-          >
+        >
           <a onClick={::this.loadVideo}
-            >
+          >
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>

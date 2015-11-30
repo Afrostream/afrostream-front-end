@@ -67,6 +67,13 @@ const config = {
     token: 'afro_token',
     tokenRefresh: 'afro_refresh_token'
   },
+  images: {
+    quality: 65,
+    type: 'jpg'
+  },
+  sentry: {
+    dns: process.env.SENTRY_DSN || 'https://24502de12b75437cb3783c395bd466f0:0d9f657cbc81459ba70c0ad132536a2d@app.getsentry.com/59853'
+  },
   carousel: {
     interval: 10000
   },
