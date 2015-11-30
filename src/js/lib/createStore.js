@@ -21,7 +21,7 @@ function promiseMiddleware(api, { getState }) {
 
 export default function (api, initialState) {
   const createStoreWithMiddleware = applyMiddleware(promiseMiddleware.bind(null,
-    api), middleWare.logger, middleWare.raven(config.sentry.dns))(createStore);
+    api), middleWare.logger)(createStore);
   const reducer = combineReducers(reducers);
 
   return createStoreWithMiddleware(reducer, initialState);
