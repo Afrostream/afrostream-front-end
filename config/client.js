@@ -72,7 +72,12 @@ const config = {
     type: 'jpg'
   },
   sentry: {
-    dns: process.env.SENTRY_DSN || 'https://24502de12b75437cb3783c395bd466f0:0d9f657cbc81459ba70c0ad132536a2d@app.getsentry.com/59853'
+    dns: process.env.SENTRY_DSN || 'https://24502de12b75437cb3783c395bd466f0@app.getsentry.com/59853',
+    config: {}
+  },
+  fastly: {
+    serviceId: process.env.FASTLY_SERVICE_ID || 'hc67hHS6Htz3hw4rEVvcc',
+    key: process.env.FASTLY_API_KEY || '642762a026b388ab03a60d3fa55b2877'
   },
   carousel: {
     interval: 10000
