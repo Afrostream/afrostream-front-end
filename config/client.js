@@ -72,7 +72,8 @@ const config = {
     type: 'jpg'
   },
   sentry: {
-    dns: process.env.SENTRY_DSN || 'https://24502de12b75437cb3783c395bd466f0:0d9f657cbc81459ba70c0ad132536a2d@app.getsentry.com/59853'
+    dns: process.env.SENTRY_DSN || 'https://24502de12b75437cb3783c395bd466f0@app.getsentry.com/59853',
+    config: {}
   },
   carousel: {
     interval: 10000

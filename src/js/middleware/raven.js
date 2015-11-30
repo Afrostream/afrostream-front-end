@@ -1,7 +1,7 @@
 import Raven from 'raven-js'
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
-
-export default function (dsn, cfg = {}) {
+import config from '../../../config';
+export default function ({ getState }) {
   /*
    Function that generates a crash reporter for Sentry.
 
@@ -15,17 +15,18 @@ export default function (dsn, cfg = {}) {
   }
 
   if (!Raven.isSetup()) {
-    if (!dsn) {
+    let dns = config.sentry.dns;
+    if (!dns) {
       // Skip this middleware if there is no DSN.
       console.error('[redux-raven-middleware] Sentry DSN required.');
       return store => next => action => {
         next(action);
       };
     }
-    Raven.config(dsn, cfg).install();
+    Raven.config(dns, config.sentry.config).install();
   }
 
-  return store => next => action => {
+  return (next) => (action) => {
     try {
       return next(action);
     } catch (err) {
@@ -36,7 +37,7 @@ export default function (dsn, cfg = {}) {
       Raven.captureException(err, {
         extra: {
           action: action,
-          state: store.getState()
+          state: getState()
         }
       });
     }
