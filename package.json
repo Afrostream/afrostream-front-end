@@ -14,7 +14,7 @@
     "mock": "npm run dev --mock",
     "staging": "export LOAD_STAGING=true export API_END_POINT=https://afr-api-v1-staging.herokuapp.com/api && npm run dev",
     "prod": "API_END_POINT=http://afrostream-api-v1.herokuapp.com/api npm run dev",
-    "start": "npm run express",
+    "start": "./node_modules/.bin/babel-node lib/server",
     "postinstall": "node lib/deploy"
   },
   "keywords": [
@@ -65,6 +65,7 @@
     "ejsify": "^1.0.0",
     "envify": "^3.4.0",
     "express": "^4.13.3",
+    "express-cluster": "0.0.4",
     "express-handlebars": "^2.0.1",
     "express-session": "^1.11.3",
     "extract-text-webpack-plugin": "^0.8.2",

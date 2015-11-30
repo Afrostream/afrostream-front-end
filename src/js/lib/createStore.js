@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import * as middleWare from '../middleware';
 import * as reducers from '../reducers';
-import RavenMiddleware from 'redux-raven-middleware';
 import config from '../../../config';
 
 function promiseMiddleware(api, { getState }) {
@@ -22,7 +21,7 @@ function promiseMiddleware(api, { getState }) {
 
 export default function (api, initialState) {
   const createStoreWithMiddleware = applyMiddleware(promiseMiddleware.bind(null,
-    api), middleWare.logger, RavenMiddleware(config.sentry.dns))(createStore);
+    api), middleWare.logger, middleWare.raven(config.sentry.dns))(createStore);
   const reducer = combineReducers(reducers);
 
   return createStoreWithMiddleware(reducer, initialState);

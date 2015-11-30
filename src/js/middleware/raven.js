@@ -1,7 +1,7 @@
 import Raven from 'raven-js'
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
-export default function createMiddleware(dsn, cfg = {}) {
+export default function (dsn, cfg = {}) {
   /*
    Function that generates a crash reporter for Sentry.
 
