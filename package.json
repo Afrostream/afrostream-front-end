@@ -14,7 +14,7 @@
     "mock": "npm run dev --mock",
     "staging": "export LOAD_STAGING=true export API_END_POINT=https://afr-api-v1-staging.herokuapp.com/api && npm run dev",
     "prod": "API_END_POINT=http://afrostream-api-v1.herokuapp.com/api npm run dev",
-    "start": "./node_modules/.bin/babel-node lib/pm2",
+    "start": "npm run express",
     "postinstall": "node lib/deploy"
   },
   "keywords": [
@@ -94,10 +94,10 @@
     "packageify": "^0.2.2",
     "parse-link-header": "^0.2.0",
     "penner": "^0.1.2",
-    "pm2": "^0.14.7",
     "postcss-loader": "^0.5.1",
     "pretty-error": "^1.2.0",
     "qs": "^3.1.0",
+    "raven-js": "^1.3.0",
     "raw-loader": "^0.5.1",
     "react": "^0.13.3",
     "react-autosuggest": "^1.18.3",
@@ -107,7 +107,6 @@
     "react-router": "1.0.0-beta3",
     "redux": "^3.0.0",
     "redux-devtools": "^2.1.2",
-    "redux-raven-middleware": "^0.3.0",
     "serve-favicon": "^2.3.0",
     "sitemap": "^1.4.0",
     "stats-webpack-plugin": "^0.2.1",
