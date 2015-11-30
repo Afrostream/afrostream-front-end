@@ -3,6 +3,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import RavenMiddleware from 'redux-raven-middleware';
 import * as middleWare from '../middleware';
 import * as reducers from '../reducers';
+import config from '../../../config';
 
 function promiseMiddleware(api, { getState }) {
   return next =>
