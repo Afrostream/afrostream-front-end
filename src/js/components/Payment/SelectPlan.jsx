@@ -24,7 +24,6 @@ class SelectPlan extends React.Component {
   }
 
   componentDidMount() {
-    document.getElementsByTagName('BODY')[0].scrollTop = 0;
   }
 
 

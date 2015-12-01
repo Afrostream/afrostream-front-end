@@ -31,7 +31,6 @@
   }
 }
 
-
 .conditions-generales {
   width: 100%;
   margin: 20px 0 0 0;
@@ -75,8 +74,6 @@
   }
 }
 
-
-
 .payment-form {
 
   //recreate local variables
@@ -102,6 +99,13 @@
     padding: 30px 30px 30px 30px;
   }
 
+  .spinner {
+    display: none;
+    &.spinner-loading {
+      display: block;
+    }
+  }
+
   .subscription-form {
     height: 100%;
   }
@@ -119,7 +123,6 @@
     @media all and (max-width: @screen-xs-min) {
       display: inline-block;
     }
-
 
     .card-details-img {
       margin-left: 20px;

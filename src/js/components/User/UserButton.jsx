@@ -57,7 +57,7 @@ class UserButton extends React.Component {
           hasFormule = user.get('planCode');
         }
         if (!hasFormule) {
-          return this.goToHomePage();
+          return <div />;
         } else {
           return (
             <ul className="nav navbar-nav navbar-right">

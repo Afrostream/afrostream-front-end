@@ -17,7 +17,8 @@ if (canUseDOM) {
   var paymentFormGa = require('react-ga');
 }
 
-@connect(({ User}) => ({User})) class PaymentForm extends React.Component {
+@connect(({ User}) => ({User}))
+class PaymentForm extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -33,7 +34,7 @@ if (canUseDOM) {
 
   componentWillMount() {
     if (canUseDOM) {
-      var pathName = '/select-plan/' + this.props.planName + '/checkout';
+      let pathName = '/select-plan/' + this.props.planName + '/checkout';
       paymentFormGa.initialize(config.google.analyticsKey, {debug: true});
       paymentFormGa.pageview(pathName);
       this.context.router.transitionTo(pathName);
@@ -223,7 +224,7 @@ if (canUseDOM) {
 
   render() {
     var spinnerClasses = {
-      'spinner-payment': true,
+      'spinner': true,
       'spinner-loading': this.state.loading
     };
 
@@ -239,25 +240,23 @@ if (canUseDOM) {
         link="mailto:support@afrostream.tv"
         linkMessage="Si le probleme persiste, veuillez contacter notre support technique"
         pathName={pathName}
-        />);
+      />);
     }
     if (this.state.subscriptionStatus === 1) {
-      return (<PaymentSuccess isGift={this.state.isGift} />);
+      return (<PaymentSuccess isGift={this.state.isGift}/>);
     } else if (this.state.subscriptionStatus === 2) {
       var pathName;
       if (canUseDOM) {
         pathName = document.location.pathname;
       }
-      return (<PaymentError message={this.state.message} pathName={pathName} />);
+      return (<PaymentError message={this.state.message} pathName={pathName}/>);
     } else {
 
       return (
         <div className="payment-wrapper">
           <div className="enter-payment-details">{this.state.pageHeader}</div>
           <div className="payment-form">
-            <div className={classSet(spinnerClasses)}>
-              <Spinner />
-            </div>
+            <Spinner className={classSet(spinnerClasses)}/>
             <form ref="form" onSubmit={::this.onSubmit} id="subscription-create"
                   data-async>
               <section id="errors"></section>
@@ -334,7 +333,7 @@ if (canUseDOM) {
                 </div>
               </div>
 
-              <GiftDetails isVisible={this.state.isGift} />
+              <GiftDetails isVisible={this.state.isGift}/>
 
               <div className="row">
                 <div className="form-group col-md-12 conditions-generales">
@@ -372,7 +371,7 @@ if (canUseDOM) {
                     type="submit"
                     form="subscription-create"
                     className="button-create-subscription"
-                    >DÉMARREZ MAINTENANT
+                  >DÉMARREZ MAINTENANT
                   </button>
                 </div>
               </div>

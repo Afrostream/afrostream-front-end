@@ -14,39 +14,20 @@ class HomePage extends React.Component {
     router: PropTypes.object.isRequired
   };
 
-  componentDidMount() {
-    const { props: { User } } = this;
-    const token = User.get('token');
-    const user = User.get('user');
-    let pathName = this.context.router.state.location.pathname;
-
-    if (!token || !user) {
-      if (pathName.indexOf('select-plan') > -1) {
-        this.context.router.transitionTo('/');
-      }
-    }
-
-  }
-
   render() {
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const user = User.get('user');
 
     if (user) {
-      if (!user.get('planCode')) {
-        return (<PaymentPage />);
+      if (children) {
+        return children;
       }
       else {
-        if (children) {
-          return children;
-        }
-        else {
-          return (<BrowsePage/>)
-        }
+        return (<BrowsePage/>)
       }
     } else {
-      return (<WelcomePage spinner={token} />);
+      return (<WelcomePage spinner={token}/>);
     }
   }
 }

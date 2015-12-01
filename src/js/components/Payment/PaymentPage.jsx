@@ -7,19 +7,16 @@ import * as IntercomActionCreators from '../../actions/intercom';
 import { prepareRoute } from '../../decorators';
 import config from '../../../../config';
 
-if (canUseDOM) {
-  var selectPlanGa = require('react-ga');
-}
-
 if (process.env.BROWSER) {
   require('./PaymentPage.less');
 }
 
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(EventActionCreators.pinHeader(true))
-    ];
-}) @connect(({ Intercom}) => ({Intercom})) class PaymentPage extends React.Component {
+    store.dispatch(EventActionCreators.pinHeader(true))
+  ];
+}) @connect(({ Intercom}) => ({Intercom}))
+class PaymentPage extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -35,16 +32,9 @@ if (process.env.BROWSER) {
     dispatch(IntercomActionCreators.createIntercom());
   }
 
-  componentWillMount() {
-    if (canUseDOM) {
-      selectPlanGa.initialize(config.google.analyticsKey, {debug: true});
-      selectPlanGa.pageview('/select-plan');
-      this.context.router.transitionTo('/select-plan');
-    }
-  }
-
   render() {
-    return (<SelectPlan />);
+    const { props: { children} } = this;
+    return (<div>{children}</div>);
   }
 }
 
