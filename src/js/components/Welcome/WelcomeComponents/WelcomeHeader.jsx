@@ -18,28 +18,6 @@ class WelcomeHeader extends React.Component {
 
   componentDidMount() {
     if (canUseDOM && this.props.promoCode !== '') {
-      //$('#countdown').text('yo adrian!!!!!!!');
-      /*!
-       * The Final Countdown for jQuery v2.1.0 (http://hilios.github.io/jQuery.countdown/)
-       * Copyright (c) 2015 Edson Hilios
-       *
-       * Permission is hereby granted, free of charge, to any person obtaining a copy of
-       * this software and associated documentation files (the "Software"), to deal in
-       * the Software without restriction, including without limitation the rights to
-       * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-       * the Software, and to permit persons to whom the Software is furnished to do so,
-       * subject to the following conditions:
-       *
-       * The above copyright notice and this permission notice shall be included in all
-       * copies or substantial portions of the Software.
-       *
-       * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-       * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-       * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-       * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-       * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-       * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-       */
       !function (a) {
         "use strict";
         "function" == typeof define && define.amd ? define(["jquery"], a) : a(jQuery)
@@ -183,17 +161,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showSigninLock());
-  }
-
-  showAfroloveSignupLock() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(UserActionCreators.showSignupLock());
+    dispatch(UserActionCreators.showLock('showSignin'));
   }
 
   showGiftLock() {
@@ -286,7 +254,7 @@ class WelcomeHeader extends React.Component {
               <h3>avec le code promo: <span>AFROLOVE</span></h3>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
-              <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveSignupLock}>PROFITEZ
+              <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ
                 EN MAINTENANT
               </button>
             </div>

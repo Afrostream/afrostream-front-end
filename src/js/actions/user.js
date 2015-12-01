@@ -100,7 +100,7 @@ export function cancelSubscription() {
  */
 export function createLock() {
   return (dispatch, getState) => {
-    const options = config.auth0.assetsUrl ? { assetsUrl: config.auth0.assetsUrl } : { };
+    const options = config.auth0.assetsUrl ? {assetsUrl: config.auth0.assetsUrl} : {};
     const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain, options);
     return {
       type: ActionTypes.User.createLock,
@@ -212,13 +212,17 @@ export function getProfile() {
 
   };
 }
+
+export function showGiftLock() {
+  return this.showLock('show', null, config.auth0.gift);
+}
 /**
  * Show auth 0 lock and return tokens
  * @param type
  * @param container
  * @returns {Function}
  */
-export function showLock(type = 'show', container = null) {
+export function showLock(type = 'show', container = null, options = {}) {
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
     let lockOptions = _.cloneDeep(config.auth0.signIn);
@@ -229,6 +233,9 @@ export function showLock(type = 'show', container = null) {
         closable: false,
         container: container
       });
+    }
+    if (options) {
+      _.merge(lockOptions, options);
     }
     return async auth0 => (
       await new Promise(

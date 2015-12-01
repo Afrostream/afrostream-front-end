@@ -138,10 +138,10 @@ const config = {
       authParams: {
         scope: 'openid'
       }
+    },
+    gift: {
+      dict: giftDict
     }
-  },
-  gift: {
-    dict: giftDict
   },
   recurly: {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
