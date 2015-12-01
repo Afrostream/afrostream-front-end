@@ -213,11 +213,11 @@ class WelcomeHeader extends React.Component {
     let imageStyle = {backgroundImage: `url(${data.poster}?crop=faces&fit=clip&w=1920&h=815&q=${config.images.quality}&fm=${config.images.type})`};
 
     let welcomeClassesSet = {
-      'welcome-header': true
+      'welcome-header': true,
+      'promo': this.props.promoCode
     };
 
     if (!this.props.promoCode) {
-
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="afrostream-movie">
@@ -238,7 +238,7 @@ class WelcomeHeader extends React.Component {
     } else {
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
-          <div className="promo">
+          <div className="promo-content">
             <div className="promo-message">
               <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ / MOIS</h2>
               <h3>avec le code promo: <span>{this.props.promoCode}</span></h3>

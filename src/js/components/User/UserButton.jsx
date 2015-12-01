@@ -56,18 +56,9 @@ class UserButton extends React.Component {
         if (typeof user.get('planCode') !== 'undefined') {
           hasFormule = user.get('planCode');
         }
-
-        if (typeof user.get('newSubscription') !== 'undefined') {
-          justSubscribed = user.get('newSubscription');
-        }
-
-        if (justSubscribed === true) {
-
-          return (<div />);
-        } else if (!hasFormule){
+        if (!hasFormule) {
           return this.goToHomePage();
         } else {
-
           return (
             <ul className="nav navbar-nav navbar-right">
               <li>
@@ -82,13 +73,9 @@ class UserButton extends React.Component {
         }
       }
       else {
-
         dispatch(UserActionCreators.getProfile());
         return this.getLoginState();
       }
-    } else if ((this.context.router.state.location.pathname === '/AFROLOVE')
-      || (this.context.router.state.location.pathname === '/AFROLOVE2')) {
-      return (<div />);
     } else {
       return this.getLoginState();
     }
