@@ -9,8 +9,8 @@ export default function ({ getState }) {
    cfg - object to configure Raven.
    */
   if (!canUseDOM) {
-    return store => next => action => {
-      next(action);
+    return next => action => {
+      return next(action);
     };
   }
 
