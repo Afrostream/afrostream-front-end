@@ -176,7 +176,7 @@ if (process.env.BROWSER) {
     return (
       <div className="SlideShow" ref="slC">
         {slides ? <SlidesContainer page={page} {...{slides}}/> : <Spinner />}
-        {slides ? <Pagination page={page} {...{slides}}/> : <Spinner />}
+        {slides ? <Pagination page={page} {...{slides}}/> : ''}
       </div>
     );
   }

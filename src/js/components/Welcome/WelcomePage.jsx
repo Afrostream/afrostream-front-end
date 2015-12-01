@@ -47,7 +47,7 @@ class WelcomePage extends React.Component {
   render() {
     return (
       <div className="welcome-page">
-        {this.state.spinner ? <Spinner /> : <div />}
+        {this.state.spinner ? <Spinner /> : ''}
         <WelcomeHeader promoCode={this.props.promoCode}/>
         <Devices />
         <PricingTable />
