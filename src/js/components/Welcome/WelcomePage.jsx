@@ -18,13 +18,11 @@ if (process.env.BROWSER) {
 class WelcomePage extends React.Component {
 
   static propTypes = {
-    spinner: React.PropTypes.bool,
-    promoCode: React.PropTypes.string
+    spinner: React.PropTypes.bool
   };
 
   static defaultProps = {
-    spinner: false,
-    promoCode: ''
+    spinner: false
   };
 
 
@@ -48,7 +46,7 @@ class WelcomePage extends React.Component {
     return (
       <div className="welcome-page">
         {this.state.spinner ? <Spinner /> : ''}
-        <WelcomeHeader promoCode={this.props.promoCode}/>
+        <WelcomeHeader />
         <Devices />
         <PricingTable />
       </div>

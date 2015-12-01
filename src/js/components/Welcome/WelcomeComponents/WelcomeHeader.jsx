@@ -4,6 +4,7 @@ import * as UserActionCreators from '../../../actions/user';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../../../config';
+import _ from 'lodash';
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
@@ -25,7 +26,10 @@ class WelcomeHeader extends React.Component {
   };
 
   componentDidMount() {
-    if (canUseDOM && this.props.promoCode !== '') {
+
+    let promoCode = this.hasPromo();
+
+    if (canUseDOM && promoCode) {
       !function (a) {
         "use strict";
         "function" == typeof define && define.amd ? define(["jquery"], a) : a(jQuery)
@@ -122,7 +126,7 @@ class WelcomeHeader extends React.Component {
           })
         }
       });
-      $('#countdown').countdown('2015/12/02')
+      $('#countdown').countdown(promoCode.date)
         .on('update.countdown', function (event) {
           //var format = '%H:%M:%S';
           var format = '';
@@ -160,6 +164,14 @@ class WelcomeHeader extends React.Component {
       } = this;
 
     dispatch(UserActionCreators.showLock('showSignup'));
+  }
+
+  hasPromo() {
+    let pathName = this.context.router.state.location.pathname.split('/').join('');
+    let HasProm = _.find(config.promoCodes, function (promo) {
+      return pathName === promo.code;
+    });
+    return HasProm;
   }
 
   showAfroloveLock() {
@@ -212,12 +224,15 @@ class WelcomeHeader extends React.Component {
 
     let imageStyle = {backgroundImage: `url(${data.poster}?crop=faces&fit=clip&w=1920&h=815&q=${config.images.quality}&fm=${config.images.type})`};
 
+    let promoCode = this.hasPromo();
+
     let welcomeClassesSet = {
       'welcome-header': true,
-      'promo': this.props.promoCode
+      'promo': promoCode
     };
 
-    if (!this.props.promoCode) {
+
+    if (!promoCode) {
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="afrostream-movie">
@@ -241,7 +256,7 @@ class WelcomeHeader extends React.Component {
           <div className="promo-content">
             <div className="promo-message">
               <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ / MOIS</h2>
-              <h3>avec le code promo: <span>{this.props.promoCode}</span></h3>
+              <h3>avec le code promo: <span>{promoCode.code}</span></h3>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveLock}>PROFITEZ EN

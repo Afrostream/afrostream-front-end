@@ -32,7 +32,6 @@ class HomePage extends React.Component {
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const user = User.get('user');
-    let pathName = this.context.router.state.location.pathname.split('/').join('');
 
     if (user) {
       if (!user.get('planCode')) {
@@ -47,7 +46,7 @@ class HomePage extends React.Component {
         }
       }
     } else {
-      return (<WelcomePage spinner={token} promoCode={pathName}/>);
+      return (<WelcomePage spinner={token} />);
     }
   }
 }

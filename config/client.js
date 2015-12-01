@@ -86,6 +86,16 @@ const config = {
   /**
    * Front-End Server
    */
+  promoCodes: [
+    {
+      code: 'PROMOCODE',
+      date: '2015/12/02'
+    },
+    {
+      code: 'PROMOCODE2',
+      date: '2015/12/02'
+    }
+  ],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
   },
