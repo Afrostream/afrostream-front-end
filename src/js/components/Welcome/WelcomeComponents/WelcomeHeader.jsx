@@ -16,6 +16,14 @@ class WelcomeHeader extends React.Component {
     router: PropTypes.object.isRequired
   };
 
+  static propTypes = {
+    promoCode: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    promoCode: ''
+  };
+
   componentDidMount() {
     if (canUseDOM && this.props.promoCode !== '') {
       !function (a) {
@@ -208,7 +216,7 @@ class WelcomeHeader extends React.Component {
       'welcome-header': true
     };
 
-    if (this.props.promoCode === '') {
+    if (!this.props.promoCode) {
 
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
@@ -227,38 +235,20 @@ class WelcomeHeader extends React.Component {
           </div>
         </section>
       );
-    } else if (this.props.promoCode === '/AFROLOVE') {
+    } else {
       return (
-        <section className="welcome-header" style={imageStyle}>
+        <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="promo">
             <div className="promo-message">
               <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ / MOIS</h2>
-              <h3>avec le code promo: <span>AFROLOVE</span></h3>
+              <h3>avec le code promo: <span>{this.props.promoCode}</span></h3>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveLock}>PROFITEZ EN
                 MAINTENANT
               </button>
             </div>
-            <h6>*Valable sur la formule mensuelle sans engagement.</h6>
-            <h6>Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
-          </div>
-        </section>
-      );
-    } else {
-      return (
-        <section className="welcome-header" style={imageStyle}>
-          <div className="promo">
-            <div className="promo-message">
-              <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ / MOIS</h2>
-              <h3>avec le code promo: <span>AFROLOVE</span></h3>
-              <h5>Fin de l'offre promotionnelle dans</h5>
-              <div id="countdown"></div>
-              <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ
-                EN MAINTENANT
-              </button>
-            </div>
-            <h6>*Valable sur la formule mensuelle sans engagement.</h6>
+            <h6>* Valable sur la formule mensuelle sans engagement.</h6>
             <h6>Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
           </div>
         </section>

@@ -12,16 +12,19 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(EventActionCreators.pinHeader(false))
-    ];
-}) class WelcomePage extends React.Component {
+    store.dispatch(EventActionCreators.pinHeader(false))
+  ];
+})
+class WelcomePage extends React.Component {
 
   static propTypes = {
-    spinner: React.PropTypes.bool
+    spinner: React.PropTypes.bool,
+    promoCode: React.PropTypes.string
   };
 
   static defaultProps = {
-    spinner: false
+    spinner: false,
+    promoCode: ''
   };
 
 
@@ -42,11 +45,10 @@ if (process.env.BROWSER) {
   }
 
   render() {
-    let promoCode = (typeof this.props.promoCode !== 'undefined') ? this.props.promoCode : '';
     return (
       <div className="welcome-page">
         {this.state.spinner ? <Spinner /> : <div />}
-        <WelcomeHeader promoCode={promoCode} />
+        <WelcomeHeader promoCode={this.props.promoCode}/>
         <Devices />
         <PricingTable />
       </div>

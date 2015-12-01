@@ -6,7 +6,8 @@ import { Link } from 'react-router';
 import SearchInput from './../Search/SearchBox';
 import config from '../../../../config';
 
-@connect(({ User }) => ({User})) class UserButton extends React.Component {
+@connect(({ User }) => ({User}))
+class UserButton extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -47,7 +48,6 @@ import config from '../../../../config';
     const token = User.get('token');
     const user = User.get('user');
     let hasFormule;
-    let justSubscribed;
 
 
     if (token) {
@@ -63,7 +63,6 @@ import config from '../../../../config';
 
         if (justSubscribed === true) {
 
-        if (!hasFormule) {
           return (<div />);
         } else if (!hasFormule){
           return this.goToHomePage();
@@ -89,8 +88,7 @@ import config from '../../../../config';
       }
     } else if ((this.context.router.state.location.pathname === '/AFROLOVE')
       || (this.context.router.state.location.pathname === '/AFROLOVE2')) {
-      return(<div />);
-      ;
+      return (<div />);
     } else {
       return this.getLoginState();
     }
@@ -100,14 +98,6 @@ import config from '../../../../config';
     return (
       <div className="nav navbar-nav navbar-right">
         <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.showLock}>connexion
-        </button>
-      </div>);
-  }
-
-  goToHomePage() {
-    return (
-      <div className="nav navbar-nav navbar-right">
-        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.logOut}>accueil
         </button>
       </div>);
   }

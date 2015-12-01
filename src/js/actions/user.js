@@ -214,7 +214,7 @@ export function getProfile() {
 }
 
 export function showGiftLock() {
-  return this.showLock('show', null, config.auth0.gift);
+  return this.showLock('showSignup', null, config.auth0.gift);
 }
 /**
  * Show auth 0 lock and return tokens
@@ -228,14 +228,14 @@ export function showLock(type = 'show', container = null, options = {}) {
     let lockOptions = _.cloneDeep(config.auth0.signIn);
 
     if (container) {
-      _.merge(lockOptions, {
+      lockOptions = _.merge(lockOptions, {
         popup: false,
         closable: false,
         container: container
       });
     }
     if (options) {
-      _.merge(lockOptions, options);
+      lockOptions = _.merge(lockOptions, options);
     }
     return async auth0 => (
       await new Promise(
