@@ -1,11 +1,6 @@
 'use strict';
-
 import React, { PropTypes } from 'react';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
-if (canUseDOM) {
-  var ga = require('react-ga');
-}
 export default function prepareRoute(prepareFn) {
 
   return DecoratedComponent =>
@@ -31,9 +26,6 @@ export default function prepareRoute(prepareFn) {
           props: { params, location }
           } = this;
 
-        if (canUseDOM) {
-          ga.pageview(this.context.router.state.location.pathname);
-        }
         prepareFn({store, params, location});
       }
 

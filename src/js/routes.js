@@ -10,7 +10,7 @@ import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
 import PaymentPage from './components/Payment/PaymentPage.jsx';
-import SelectPlan from './components/Payment/SelectPlan.jsx';
+import PaymentForm from './components/Payment/PaymentForm.jsx';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 import * as Static from './components/Static';
 import * as Blog from './components/Blog';
@@ -33,10 +33,10 @@ export default (
     <Route name="login" path="/login" component={LoginPage}/>
     <Route name="post" path="/blog/:postId/:postSlug" component={Blog.View}/>
     <Route name="blog" path="/blog" component={Blog.List}/>
+    <Route name="payment" path="/select-plan" component={PaymentPage}>
+      <Route name="plancode" path="/:planCode" component={PaymentForm}/>
+    </Route>
     <Route name="home" path="/" component={HomePage}>
-      <Route name="payment" path="/select-plan" component={PaymentPage}>
-        <Route name="plancode" path="(/:planCode)" component={SelectPlan}/>
-      </Route>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path="/:movieId/:movieSlug(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"

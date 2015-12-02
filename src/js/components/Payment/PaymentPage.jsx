@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
-import SelectPlan from './SelectPlan';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as EventActionCreators from '../../actions/event';
 import * as IntercomActionCreators from '../../actions/intercom';
-import { prepareRoute } from '../../decorators';
+import { prepareRoute,analytics } from '../../decorators';
 import config from '../../../../config';
+import SelectPlan from './SelectPlan';
 
 if (process.env.BROWSER) {
   require('./PaymentPage.less');
@@ -15,7 +15,9 @@ if (process.env.BROWSER) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true))
   ];
-}) @connect(({ Intercom}) => ({Intercom}))
+})
+@analytics()
+@connect(({ Intercom}) => ({Intercom}))
 class PaymentPage extends React.Component {
 
   static contextTypes = {
@@ -34,7 +36,12 @@ class PaymentPage extends React.Component {
 
   render() {
     const { props: { children} } = this;
-    return (<div>{children}</div>);
+    if (children) {
+      return children;
+    }
+    else {
+      return (<SelectPlan/>)
+    }
   }
 }
 

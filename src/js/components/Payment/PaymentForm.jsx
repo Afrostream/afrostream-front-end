@@ -8,6 +8,7 @@ import PaymentError from './PaymentError';
 import Spinner from '../Spinner/Spinner';
 import classSet from 'classnames';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import { analytics } from '../../decorators';
 import config from '../../../../config/client';
 if (process.env.BROWSER) {
   require('./PaymentForm.less');
@@ -17,6 +18,7 @@ if (canUseDOM) {
   var paymentFormGa = require('react-ga');
 }
 
+@analytics()
 @connect(({ User}) => ({User}))
 class PaymentForm extends React.Component {
 
@@ -32,14 +34,14 @@ class PaymentForm extends React.Component {
     pageHeader: 'Commencez votre abonnement'
   };
 
-  componentWillMount() {
-    if (canUseDOM) {
-      let pathName = '/select-plan/' + this.props.planName + '/checkout';
-      paymentFormGa.initialize(config.google.analyticsKey, {debug: true});
-      paymentFormGa.pageview(pathName);
-      this.context.router.transitionTo(pathName);
-    }
-  }
+  //componentWillMount() {
+  //  if (canUseDOM) {
+  //    let pathName = '/select-plan/' + this.props.planName + '/checkout';
+  //    paymentFormGa.initialize(config.google.analyticsKey, {debug: true});
+  //    paymentFormGa.pageview(pathName);
+  //    this.context.router.transitionTo(pathName);
+  //  }
+  //}
 
   componentDidMount() {
     document.getElementsByTagName('BODY')[0].scrollTop = 0;

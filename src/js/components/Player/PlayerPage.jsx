@@ -1,5 +1,5 @@
 import React from 'react';
-import { prepareRoute } from '../../decorators';
+import { prepareRoute,analytics } from '../../decorators';
 import * as VideoActionCreators from '../../actions/video';
 import * as MovieActionCreators from '../../actions/movie';
 import * as SeasonActionCreators from '../../actions/season';
@@ -14,9 +14,10 @@ import PlayerComponent from './PlayerComponent';
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(VideoActionCreators.getVideo(videoId)),
     store.dispatch(MovieActionCreators.getMovie(movieId)),
-    store.dispatch(PlayerActionCreators.getConfig()),
+    store.dispatch(PlayerActionCreators.getConfig())
   ];
 })
+@analytics()
 class PlayerPage extends React.Component {
 
   render() {

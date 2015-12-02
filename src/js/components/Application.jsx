@@ -9,7 +9,7 @@ import Modal from './Modal/Modal'
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../config';
-import { prepareRoute,metasData } from '../decorators';
+import { prepareRoute,metasData,analytics } from '../decorators';
 import * as MovieActionCreators from '../actions/movie';
 
 if (process.env.BROWSER) {
@@ -24,6 +24,7 @@ if (canUseDOM) {
     store.dispatch(MovieActionCreators.getMovie(movieId))
   ];
 })
+@analytics()
 @metasData()
 @connect(({ Event,User }) => ({Event, User}))
 class Application extends React.Component {
