@@ -96,6 +96,23 @@ const config = {
       date: '2015/12/02'
     }
   ],
+  planCodes: [
+    {
+      code: 'afrostreammonthly',
+      date: '2015-10-01T00:00:00:00Z',
+      price: '699'
+    },
+    {
+      code: 'afrostreamambassadeurs',
+      date: '2015-09-01T00:00:00:00Z',
+      price: '5999'
+    },
+    {
+      code: 'afrostreamgift',
+      date: '2015-09-01T00:00:00:00Z',
+      price: '5999'
+    }
+  ],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
   },

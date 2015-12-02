@@ -6,6 +6,7 @@ import * as IntercomActionCreators from '../../actions/intercom';
 import { prepareRoute,analytics } from '../../decorators';
 import config from '../../../../config';
 import SelectPlan from './SelectPlan';
+import WelcomePage from '../Welcome/WelcomePage';
 
 if (process.env.BROWSER) {
   require('./PaymentPage.less');
@@ -17,7 +18,7 @@ if (process.env.BROWSER) {
   ];
 })
 @analytics()
-@connect(({ Intercom}) => ({Intercom}))
+@connect(({ Intercom,User }) => ({Intercom, User}))
 class PaymentPage extends React.Component {
 
   static contextTypes = {
@@ -35,7 +36,14 @@ class PaymentPage extends React.Component {
   }
 
   render() {
-    const { props: { children} } = this;
+    const { props: { User, children} } = this;
+
+    const user = User.get('user');
+
+    if (!user) {
+      return <WelcomePage/>
+    }
+
     if (children) {
       return children;
     }

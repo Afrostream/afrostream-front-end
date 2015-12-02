@@ -12,16 +12,10 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.User.subscribe](state, { res }) {
-    const data = res.body;
+  [ActionTypes.User.subscribe](state, { res, isGift}) {
+    const data = isGift ? {} : res.body;
     return state.merge({
       ['user']: _.merge(state.get('user').toJS(), data)
-    });
-  },
-
-  [ActionTypes.User.gift](state, { res }) {
-    return state.merge({
-      ['user']: _.merge(state.get('user').toJS(), {})
     });
   },
 

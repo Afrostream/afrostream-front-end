@@ -19,7 +19,7 @@ class HomePage extends React.Component {
     const token = User.get('token');
     const user = User.get('user');
 
-    if (user) {
+    if (user && user.get('planCode')) {
       if (children) {
         return children;
       }

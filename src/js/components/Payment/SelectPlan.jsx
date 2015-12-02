@@ -91,21 +91,22 @@ class SelectPlan extends React.Component {
           </div>
           <div className="formule-row-no-decoration">
             <div className="row-element-left"></div>
+
             <div className="row-element">
               <Link className="button-blue"
-                    to='/select-plan/afrostreammonthly'>
+                    to='/select-plan/afrostreammonthly/checkout'>
                 S'ABONNER
               </Link>
             </div>
             <div className="row-element">
               <Link className="button-yellow"
-                    to="/select-plan/afrostreamambassadeurs">
+                    to="/select-plan/afrostreamambassadeurs/checkout">
                 S'ABONNER
               </Link>
             </div>
             <div className="row-element">
               <Link className="button-purple"
-                    to="/select-plan/afrostreamgift">
+                    to="/select-plan/afrostreamgift/checkout">
                 OFFRIR
               </Link>
             </div>

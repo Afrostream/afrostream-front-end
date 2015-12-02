@@ -10,12 +10,10 @@ import classSet from 'classnames';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import { analytics } from '../../decorators';
 import config from '../../../../config/client';
+import _ from 'lodash';
+
 if (process.env.BROWSER) {
   require('./PaymentForm.less');
-}
-
-if (canUseDOM) {
-  var paymentFormGa = require('react-ga');
 }
 
 @analytics()
@@ -34,37 +32,44 @@ class PaymentForm extends React.Component {
     pageHeader: 'Commencez votre abonnement'
   };
 
-  //componentWillMount() {
-  //  if (canUseDOM) {
-  //    let pathName = '/select-plan/' + this.props.planName + '/checkout';
-  //    paymentFormGa.initialize(config.google.analyticsKey, {debug: true});
-  //    paymentFormGa.pageview(pathName);
-  //    this.context.router.transitionTo(pathName);
-  //  }
-  //}
+  hasPlan() {
+    const {
+      props: {
+        params: { planCode }
+        }
+      } = this;
+    return _.find(config.planCodes, function (plan) {
+      return planCode === plan.code;
+    });
+  }
 
-  componentDidMount() {
-    document.getElementsByTagName('BODY')[0].scrollTop = 0;
-    window.$('.recurly-cc-number').payment('formatCardNumber');
-    window.$('.recurly-cc-exp').payment('formatCardExpiry');
-    window.$('.recurly-cc-cvc').payment('formatCardCVC');
+  componentWillMount() {
+    const {
+      props: {
+        params: { planCode }
+        }
+      } = this;
 
-    if (this.props.planName === 'afrostreamgift') {
+    if (planCode === 'afrostreamgift') {
       this.setState({
         isGift: 1,
         pageHeader: 'AFROSTREAM - Formule Cadeau - 59,99€'
       });
     }
+  }
 
-    try {
+  componentDidMount() {
+    $('.recurly-cc-number').payment('formatCardNumber');
+    $('.recurly-cc-exp').payment('formatCardExpiry');
+    $('.recurly-cc-cvc').payment('formatCardCVC');
+
+    //Detect si le payment via la lib recurly est dispo
+    this.setState({
+      hasRecurly: recurly
+    });
+
+    if (recurly && !recurly.configured) {
       recurly.configure(config.recurly.key);
-    } catch (err) {
-      console.log(err);
-      if (typeof err.code !== 'undefined' && err.code !== 'already-configured') {
-        this.setState({
-          hasRecurly: false
-        });
-      }
     }
   }
 
@@ -73,7 +78,9 @@ class PaymentForm extends React.Component {
 
     const {
       props: {
-        User,dispatch
+        User,
+        dispatch,
+        params: { planCode }
         }
       } = this;
 
@@ -103,30 +110,32 @@ class PaymentForm extends React.Component {
       return;
     }
     //Excluded cart type message
-    if (~excludedCards.indexOf(window.$.payment.cardType(cardNumber))) {
+    if (~excludedCards.indexOf($.payment.cardType(cardNumber))) {
       $('#errors').text("Ce type ne carte n'est pas pris en charge actuellement");
       $('.recurly-cc-number').addClass('has-error');
       self.disableForm(false);
       return;
     }
 
-    var billingInfo = {
-      'plan-code': this.props.planName,
+    let currentPlan = this.hasPlan();
+
+    let billingInfo = {
+      'plan-code': planCode,
       // required attributes
       'number': $('.recurly-cc-number').val(),
 
-      'month': window.$('.recurly-cc-exp').payment('cardExpiryVal').month,
-      'year': window.$('.recurly-cc-exp').payment('cardExpiryVal').year,
+      'month': $('.recurly-cc-exp').payment('cardExpiryVal').month,
+      'year': $('.recurly-cc-exp').payment('cardExpiryVal').year,
 
       'cvv': $('.recurly-cc-cvc').val(),
       'first_name': $('#first_name').val(),
       'last_name': $('#last_name').val(),
       'email': user.get('email'),
+      'unit-amount-in-cents': currentPlan.price,
       // optional attributes
+      'starts_at': currentPlan.date,
       'coupon_code': $('#coupon_code').val(),
-      'unit-amount-in-cents': this.props.unitAmountInCents,
       'country': $('#country').val(),
-      'starts_at': this.props.startDate,
       'is_gift': '0'
     };
 
@@ -136,72 +145,34 @@ class PaymentForm extends React.Component {
         return self.error(err);
       }
       // Otherwise we continue with the form submission
-      var formData = $.extend(billingInfo, {
+      let formData = $.extend(billingInfo, {
         'recurly-token': token.id
       });
 
       if (self.state.isGift) {
-
         billingInfo['gift_first_name'] = $('#gift_first_name').val();
         billingInfo['gift_last_name'] = $('#gift_last_name').val();
         billingInfo['gift_email'] = $('#gift_email').val();
-
-        dispatch(UserActionCreators.gift(formData)).then(function () {
-          self.disableForm(false, 1);
-          ga.event({
-            category: 'User',
-            action: 'Created an Account'
-          });
-        }).catch(function (err) {
-          let errors = '';
-          let message = '';
-
-          if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-            && err.response.status === 401) {
-            errors = err.response.statusText;
-            message = 'Votre session a expiré, veuillez recommencer.';
-
-          } else if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-            && err.response.status === 500) {
-            errors = err.response.statusText;
-            message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
-
-          } else {
-            $.each(errors, function (i, error) {
-              message += error['#'];
-            });
-          }
-
-          self.disableForm(false, 2, message);
-        });
-      } else {
-        dispatch(UserActionCreators.subscribe(formData)).then(function () {
-          self.disableForm(false, 1);
-          ga.event({
-            category: 'User',
-            action: 'Created an Account'
-          });
-        }).catch(function (err) {
-          let errors = '';
-          let message = '';
-
-          if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-            && err.response.statusText === 'Unauthorized') {
-
-            errors = err.response.statusText;
-            message = 'Votre session a expiré, veuillez recommencer.';
-
-          } else {
-            errors = err.response.body;
-            message = '';
-            $.each(errors, function (i, error) {
-              message += error['#'];
-            });
-          }
-
-          self.disableForm(false, 2, message);
-        });
       }
+
+      dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
+        self.disableForm(false, 1);
+        self.context.router.transitionTo(`/select-plan/${planCode}/success`);
+      }).catch(function (err) {
+        let message = '';
+
+        if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+          && err.response.status === 401) {
+          message = 'Votre session a expiré, veuillez recommencer.';
+
+        } else if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+          && err.response.status === 500) {
+          message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
+        }
+
+        self.disableForm(false, 2, message);
+        self.context.router.transitionTo(`/select-plan/${planCode}/error`);
+      });
     });
   }
 
@@ -225,40 +196,38 @@ class PaymentForm extends React.Component {
   }
 
   render() {
+
+    const {
+      props: {
+        params: { status }
+        }
+      } = this;
+
     var spinnerClasses = {
-      'spinner': true,
+      'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
 
     if (!this.state.hasRecurly) {
-      var pathName;
-      if (canUseDOM) {
-        pathName = document.location.pathname;
-      }
-
       return (<PaymentError
         title="Paiement indisponible"
         message="Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
         link="mailto:support@afrostream.tv"
         linkMessage="Si le probleme persiste, veuillez contacter notre support technique"
-        pathName={pathName}
       />);
     }
-    if (this.state.subscriptionStatus === 1) {
+    if (status === 'success') {
       return (<PaymentSuccess isGift={this.state.isGift}/>);
-    } else if (this.state.subscriptionStatus === 2) {
-      var pathName;
-      if (canUseDOM) {
-        pathName = document.location.pathname;
-      }
-      return (<PaymentError message={this.state.message} pathName={pathName}/>);
+    } else if (status === 'error') {
+      return (<PaymentError message={this.state.message}/>);
     } else {
-
       return (
         <div className="payment-wrapper">
           <div className="enter-payment-details">{this.state.pageHeader}</div>
           <div className="payment-form">
-            <Spinner className={classSet(spinnerClasses)}/>
+            <div className={classSet(spinnerClasses)}>
+              <Spinner />
+            </div>
             <form ref="form" onSubmit={::this.onSubmit} id="subscription-create"
                   data-async>
               <section id="errors"></section>

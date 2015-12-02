@@ -52,7 +52,7 @@ const mergeProfile = function (profile, data) {
  * @param data
  * @returns {Function}
  */
-export function subscribe(data) {
+export function subscribe(data, gift = false) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().User.get('token');
@@ -60,24 +60,8 @@ export function subscribe(data) {
     let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/`, 'POST', data, token, afroToken, afroRefreshToken)
-    });
-  };
-}
-/**
- * Cancel current subscription
- * @returns {Function}
- */
-
-export function gift(data) {
-  return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const token = getState().User.get('token');
-    let afroToken = user.get(config.apiClient.token);
-    let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
-    return async api => ({
-      type: ActionTypes.User.gift,
-      res: await api(`/subscriptions/gift`, 'POST', data, token, afroToken, afroRefreshToken)
+      res: await api(`/subscriptions/${gift ? 'gift' : '' }`, 'POST', data, token, afroToken, afroRefreshToken),
+      gift
     });
   };
 }
