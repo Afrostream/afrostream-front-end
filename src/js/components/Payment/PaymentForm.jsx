@@ -161,12 +161,9 @@ class PaymentForm extends React.Component {
       }).catch(function (err) {
         let message = '';
 
-        if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-          && err.response.status === 401) {
+        if (err.response && err.response.status === 401) {
           message = 'Votre session a expiré, veuillez recommencer.';
-
-        } else if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
-          && err.response.status === 500) {
+        } else {
           message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
         }
 
