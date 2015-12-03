@@ -15,7 +15,7 @@ if (canUseDOM) {
  * @param data
  * @returns {Function}
  */
-const logoutUser = function (profile, data) {
+const logoutUser = function () {
   const storageId = config.auth0.token;
   const storageRefreshId = config.auth0.tokenRefresh;
   const storageAfroId = config.apiClient.token;
@@ -24,6 +24,11 @@ const logoutUser = function (profile, data) {
   localStorage.removeItem(storageRefreshId);
   localStorage.removeItem(storageAfroId);
   localStorage.removeItem(storageAfroRefreshId);
+  if (canUseDOM) {
+    if (!~window.location.pathname !== '/') {
+      window.location = '/';
+    }
+  }
 };
 
 const mergeProfile = function (profile, data) {
@@ -178,6 +183,12 @@ export function getProfile() {
             resolve({
               type: ActionTypes.User.getProfile,
               user: user
+            });
+          }
+          if (!lock) {
+            return resolve({
+              type: ActionTypes.User.getProfile,
+              user: null
             });
           }
           //else get auth0 user and merge it

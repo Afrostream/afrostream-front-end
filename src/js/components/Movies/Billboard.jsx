@@ -139,7 +139,8 @@ class Billboard extends React.Component {
 
     return (
       <div className="billboard-infos">
-        {type ? <div ref="slTag" className="billboard-tag billboard-row">{type}</div> : <div ref="slNull"/>}
+        {type ? <div ref="slTag" className="billboard-tag billboard-row">{type === 'movie' ? 'film' : type}</div> :
+        <div ref="slNull"/>}
         <div ref="slTitle" className="billboard-title billboard-row">{title}</div>
         {seasons ? this.getSeasons(seasons) : ''}
         {tags ? this.getGenre(tags) : ''}

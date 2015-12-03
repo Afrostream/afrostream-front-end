@@ -15,7 +15,7 @@ if (process.env.BROWSER) {
       store.dispatch(UserActionCreators.getProfile())
     ];
 })
-@connect(({ User }) => ({User})) class AccountPage extends React.Component {
+@connect(({ User }) => ({ User })) class AccountPage extends React.Component {
 
   state = {cardNumber: null};
 

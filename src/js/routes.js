@@ -24,7 +24,7 @@ import CancelSubscription from './components/Account/CancelSubscription';
 import NoMatch from './components/NoMatch';
 
 export default (
-  <Route name="app" component={Application}>
+  <Route name="app" component={Application} scrollOnTransition={true}>
     <Route name="legals" path="/legals" component={Static.Legals}/>
     <Route name="cgu" path="/cgu" component={Static.CGU}/>
     <Route name="faq" path="/faq" component={Static.FAQ}/>
@@ -33,10 +33,10 @@ export default (
     <Route name="login" path="/login" component={LoginPage}/>
     <Route name="post" path="/blog/:postId/:postSlug" component={Blog.View}/>
     <Route name="blog" path="/blog" component={Blog.List}/>
-    <Route name="payment" path="/select-plan" component={PaymentPage}>
-      <Route name="plancode" path="/:planCode/:status" component={PaymentForm}/>
+    <Route name="payment" path="/select-plan" component={PaymentPage} scrollOnTransition={true}>
+      <Route name="plancode" path="/:planCode(/:status)" component={PaymentForm}/>
     </Route>
-    <Route name="home" path="/" component={HomePage}>
+    <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path="/:movieId/:movieSlug(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
