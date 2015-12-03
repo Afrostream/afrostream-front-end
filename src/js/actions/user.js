@@ -35,6 +35,13 @@ const mergeProfile = function (profile, data) {
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
       //const userInfos = await api(`/users/me`, 'GET', {}, null, tokenAfro);
       const userMerged = _.merge(profile, userSubscriptions.body /*|| {}, userInfos || {}*/);
+      if (!userMerged.hasOwnProperty('planCode') || !userMerged.planCode) {
+        if (canUseDOM) {
+          if (!~window.location.pathname.indexOf('/select-plan')) {
+            window.location = '/select-plan';
+          }
+        }
+      }
       return _.merge(data, {
         user: userMerged
       });
@@ -45,6 +52,7 @@ const mergeProfile = function (profile, data) {
       return data;
     }
   }
+
 };
 
 /**
@@ -78,6 +86,7 @@ export function cancelSubscription() {
     });
   };
 }
+
 /**
  * First call for creating lock widget component
  * @returns {Function}
@@ -92,6 +101,7 @@ export function createLock() {
     };
   };
 }
+
 /**
  * Logout user
  * @returns {Function}
@@ -150,6 +160,7 @@ const refreshToken = function (getState) {
     }
   );
 };
+
 /**
  * Get profile from auth0/afrostream
  * @returns {Function}
@@ -178,7 +189,10 @@ export function getProfile() {
               return refreshToken(getState)
                 .then(function (data) {
                   console.log('getProfile return data', data);
-                  return resolve(data);
+                  return resolve(mergeProfile(data, {
+                    type: ActionTypes.User.getProfile,
+                    user: null
+                  }));
                 })
                 .catch(function (tokenErr) {
                   return reject(tokenErr);
@@ -200,6 +214,7 @@ export function getProfile() {
 export function showGiftLock() {
   return this.showLock('showSignup', null, config.auth0.gift);
 }
+
 /**
  * Show auth 0 lock and return tokens
  * @param type
