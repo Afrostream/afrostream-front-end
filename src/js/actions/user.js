@@ -38,8 +38,11 @@ const mergeProfile = function (profile, data) {
     try {
       const userSubscriptions = await api(`/subscriptions/status`, 'GET', {}, null, tokenAfro, afroRefreshToken);
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
-      //const userInfos = await api(`/users/me`, 'GET', {}, null, tokenAfro);
-      const userMerged = _.merge(profile, userSubscriptions.body /*|| {}, userInfos || {}*/);
+      const userInfos = await api(`/users/me`, 'GET', {}, null, tokenAfro, afroRefreshToken);
+      const userMerged = _.merge(profile, userSubscriptions.body || {}, userInfos.body || {});
+
+      userMerged.user_id = userMerged._id || userMerged.user_id;
+
       if (!userMerged.hasOwnProperty('planCode') || !userMerged.planCode) {
         if (canUseDOM) {
           if (!~window.location.pathname.indexOf('/select-plan')) {
@@ -209,7 +212,7 @@ export function getProfile() {
                   return reject(tokenErr);
                 });
             }
-
+            profile
             return resolve(mergeProfile(profile, {
               type: ActionTypes.User.getProfile,
               user: null
