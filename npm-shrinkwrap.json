@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "dependencies": {
     "afrostream-player": {
-      "version": "1.1.1",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#1.1.1",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#77bd308acd911104bdbd5372b1b12c328e55b4bd",
+      "version": "1.1.2",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#1.1.2",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#f1ea35a78b379fc17aef8e8b4608d7b889d4365a",
       "dependencies": {
         "bower": {
           "version": "1.6.8",
@@ -1626,7 +1626,7 @@
             },
             "findup-sync": {
               "version": "0.1.3",
-              "from": "findup-sync@>=0.1.2 <0.2.0",
+              "from": "findup-sync@>=0.1.0 <0.2.0",
               "resolved": "https://registry.npmjs.org/findup-sync/-/findup-sync-0.1.3.tgz",
               "dependencies": {
                 "glob": {
@@ -1828,7 +1828,7 @@
             },
             "findup-sync": {
               "version": "0.1.3",
-              "from": "findup-sync@>=0.1.2 <0.2.0",
+              "from": "findup-sync@>=0.1.0 <0.2.0",
               "resolved": "https://registry.npmjs.org/findup-sync/-/findup-sync-0.1.3.tgz",
               "dependencies": {
                 "glob": {
@@ -2197,7 +2197,7 @@
           "dependencies": {
             "chalk": {
               "version": "1.1.1",
-              "from": "chalk@>=1.0.0 <2.0.0",
+              "from": "chalk@>=1.1.1 <2.0.0",
               "resolved": "https://registry.npmjs.org/chalk/-/chalk-1.1.1.tgz",
               "dependencies": {
                 "ansi-styles": {
@@ -2378,7 +2378,7 @@
             },
             "chalk": {
               "version": "1.1.1",
-              "from": "chalk@>=1.0.0 <2.0.0",
+              "from": "chalk@>=1.1.1 <2.0.0",
               "resolved": "https://registry.npmjs.org/chalk/-/chalk-1.1.1.tgz",
               "dependencies": {
                 "ansi-styles": {
