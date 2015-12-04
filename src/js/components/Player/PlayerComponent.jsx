@@ -6,6 +6,7 @@ import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
+import base64 from 'base64-js';
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
 }
@@ -174,7 +175,7 @@ class PlayerComponent extends React.Component {
             isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
             isFirefox: detect(/mozilla.*\Wfirefox\W/i),
             isIE: function () {
-              return /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
+              return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
             },
             isSafari: function () {
               return navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
@@ -188,41 +189,58 @@ class PlayerComponent extends React.Component {
             playerData.html5 = {
               nativeCaptions: false,
               nativeTextTracks: false
-            }
-            playerData.dash = _.clone(playerData.html5);
+            };
+            playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
           }
           //on force dash en tech par default pour tous les browsers ;)
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type === 'application/dash+xml';
           });
 
-          console.log(playerData.techOrder);
-          console.log(playerData.sources);
           // ==== END hacks config
-
-          playerData.flash.swf = require('../../../../node_modules/afrostream-player/dist/video-js.swf');
-          playerData.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
-          playerData.dasheverywhere.silverlightFile = require('../../../../node_modules/afrostream-player/dist/dashcs.xap');
-          playerData.dasheverywhere.flashFile = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
-
-          playerData.hls = _.clone(playerData.flash);
+          playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
           let user = User.get('user');
-          if (user && playerData.metrics) {
+          if (user) {
             let userId = user.get('user_id');
+            let token = user.get('afroToken');
             userId = _.find(userId.split('|'), function (val) {
               return parseInt(val, 10);
             });
-            playerData.metrics.user_id = parseInt(userId, 10);
+            if (playerData.metrics) {
+              playerData.metrics.user_id = parseInt(userId, 10);
+            }
+            //encode data to pass it into drmtoday
+            if (playerData.dash && playerData.dash.protData) {
+              let protUser = base64.fromByteArray({
+                userId: userId,
+                sessionId: token,
+                merchant: 'afrostream'
+              });
+              //set custom data header
+              _.forEach(playerData.dash.protData, function (protection) {
+                let header = protection.httpRequestHeaders;
+                if (header) {
+                  let customData = header['dt-custom-data'] || header['customData'] || header['http-header-CustomData'];
+                  if (customData) {
+                    customData = protUser;
+                  }
+                }
+              })
+            }
           }
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks
+              var player = this;
               _.forEach(allTracks, function (track) {
                 let lang = track.language || track.language_;
                 track.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
+                if (player.techName === 'Dash') {
+                  player.removeRemoteTextTrack(track);
+                }
               });
             }
           );
