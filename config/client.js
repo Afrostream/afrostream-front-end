@@ -46,7 +46,7 @@ const protData = {
     "drmtoday": true,
     "serverURL": "https://lic.staging.drmtoday.com/flashaccess/LicenseTrigger/v1",
     "httpRequestHeaders": {
-      "customData": ""
+      "customData": null
     }
   },
   "org.w3.clearkey": {

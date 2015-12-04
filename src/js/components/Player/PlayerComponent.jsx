@@ -218,7 +218,7 @@ class PlayerComponent extends React.Component {
               playerData.metrics.user_id = parseInt(userId, 10);
             }
             //encode data to pass it into drmtoday
-            if (playerData.dash && playerData.dash.protData) {
+            if (playerData.drm && playerData.dash && playerData.dash.protData) {
               let protUser = base64.encode(JSON.stringify({
                 userId: parseInt(userId, 10),
                 sessionId: token,
@@ -242,8 +242,7 @@ class PlayerComponent extends React.Component {
                   }
                 }
               };
-
-              playerData.dash.protData = _.merge(playerData.dash.protData, protData);
+              playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
             }
           }
 
