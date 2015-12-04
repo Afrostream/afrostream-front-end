@@ -6,9 +6,14 @@ import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
-import base64 from 'base64-js';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
+}
+
+if (canUseDOM) {
+  var base64 = require('js-base64').Base64;
 }
 
 @connect(({ Video,Movie,Episode,Event,User }) => ({
@@ -205,7 +210,7 @@ class PlayerComponent extends React.Component {
           let user = User.get('user');
           if (user) {
             let userId = user.get('user_id');
-            let token = user.get('afroToken');
+            let token = user.get('afro_token');
             userId = _.find(userId.split('|'), function (val) {
               return parseInt(val, 10);
             });
@@ -214,21 +219,31 @@ class PlayerComponent extends React.Component {
             }
             //encode data to pass it into drmtoday
             if (playerData.dash && playerData.dash.protData) {
-              let protUser = base64.fromByteArray({
-                userId: userId,
+              let protUser = base64.encode(JSON.stringify({
+                userId: parseInt(userId, 10),
                 sessionId: token,
                 merchant: 'afrostream'
-              });
-              //set custom data header
-              _.forEach(playerData.dash.protData, function (protection) {
-                let header = protection.httpRequestHeaders;
-                if (header) {
-                  let customData = header['dt-custom-data'] || header['customData'] || header['http-header-CustomData'];
-                  if (customData) {
-                    customData = protUser;
+              }));
+
+              let protData = {
+                "com.widevine.alpha": {
+                  "httpRequestHeaders": {
+                    "dt-custom-data": protUser
+                  }
+                },
+                "com.microsoft.playready": {
+                  "httpRequestHeaders": {
+                    "http-header-CustomData": protUser
+                  }
+                },
+                "com.adobe.flashaccess": {
+                  "httpRequestHeaders": {
+                    "customData": protUser
                   }
                 }
-              })
+              };
+
+              playerData.dash.protData = _.merge(playerData.dash.protData, protData);
             }
           }
 
