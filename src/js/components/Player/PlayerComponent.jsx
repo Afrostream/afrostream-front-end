@@ -259,9 +259,6 @@ class PlayerComponent extends React.Component {
               });
             }
           );
-          player.on('pause', this.setDurationInfo.bind(this));
-          player.on('play', this.setDurationInfo.bind(this));
-          player.on('ended', this.setDurationInfo.bind(this));
           player.on('loadedmetadata', this.setDurationInfo.bind(this));
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
@@ -297,13 +294,7 @@ class PlayerComponent extends React.Component {
   }
 
   triggerError(e) {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    if (!Raven.isSetup()) {
+    if (Raven && Raven.isSetup()) {
       // Send the report.
       Raven.captureException(e, {
         extra: {
@@ -327,9 +318,6 @@ class PlayerComponent extends React.Component {
     return new Promise((resolve) => {
       if (this.player) {
         this.player.one('dispose', () => {
-          this.player.off('pause', this.setDurationInfo.bind(this));
-          this.player.off('play', this.setDurationInfo.bind(this));
-          this.player.off('ended', this.setDurationInfo.bind(this));
           this.player.off('loadedmetadata', this.setDurationInfo.bind(this));
           this.player.off('useractive', this.triggerUserActive.bind(this));
           this.player.off('userinactive', this.triggerUserActive.bind(this));
