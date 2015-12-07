@@ -289,7 +289,8 @@ class PlayerComponent extends React.Component {
           if (user) {
             let userId = user.get('user_id');
             let token = user.get('afro_token');
-            userId = _.find(userId.split('|'), function (val) {
+            let splitUser = typeof userId === 'string' ? userId.split('|') : userId;
+            userId = _.find(splitUser, function (val) {
               return parseInt(val, 10);
             });
             if (playerData.metrics) {
@@ -322,7 +323,7 @@ class PlayerComponent extends React.Component {
               };
               playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
             }
-          }
+          };
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks
