@@ -182,9 +182,6 @@ class PlayerComponent extends React.Component {
             isFirefox: detect(/mozilla.*\Wfirefox\W/i),
             isIE: function () {
               return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
-            },
-            isSafari: function () {
-              return navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
             }
           };
 
