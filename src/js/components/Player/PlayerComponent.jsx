@@ -169,7 +169,6 @@ class PlayerComponent extends React.Component {
           var playerData = _.merge(videoOptions, config.player);
 
           // ==== START hacks config
-          //si on est sur safari mac on priorise hls plutot que dash
           const userAgent = (window.navigator && navigator.userAgent) || "";
           const detect = function (pattern) {
             return function () {
