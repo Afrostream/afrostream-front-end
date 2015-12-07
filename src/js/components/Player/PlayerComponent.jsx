@@ -7,6 +7,7 @@ import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import Raven from 'raven-js'
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
@@ -264,6 +265,7 @@ class PlayerComponent extends React.Component {
           player.on('loadedmetadata', this.setDurationInfo.bind(this));
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
+          player.on('error', this.triggerError.bind(this));
 
           resolve(player);
         }).catch((err) => {
@@ -294,6 +296,23 @@ class PlayerComponent extends React.Component {
     dispatch(EventActionCreators.userActive(this.player ? (this.player.paused() || this.player.userActive()) : true))
   }
 
+  triggerError(e) {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    if (!Raven.isSetup()) {
+      // Send the report.
+      Raven.captureException(e, {
+        extra: {
+          cache: this.player.getCache()
+        }
+      });
+    }
+  }
+
   componentWillUnmount() {
     this.destroyPlayer();
   }
@@ -314,6 +333,7 @@ class PlayerComponent extends React.Component {
           this.player.off('loadedmetadata', this.setDurationInfo.bind(this));
           this.player.off('useractive', this.triggerUserActive.bind(this));
           this.player.off('userinactive', this.triggerUserActive.bind(this));
+          this.player.off('error', this.triggerError.bind(this));
           this.player = null;
           dispatch(EventActionCreators.userActive(true));
           console.log('destroyed player');
