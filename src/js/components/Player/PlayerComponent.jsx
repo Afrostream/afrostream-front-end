@@ -330,6 +330,9 @@ class PlayerComponent extends React.Component {
   }
 
   formatTime(seconds) {
+    if (!isFinite(seconds)) {
+      return null;
+    }
     var h = Math.floor(((seconds / 86400) % 1) * 24),
       m = Math.floor(((seconds / 3600) % 1) * 60),
       s = Math.round(((seconds / 60) % 1) * 60) + 's', time;
@@ -368,7 +371,7 @@ class PlayerComponent extends React.Component {
     let captions = videoData.get('captions');
     let movieData = Movie.get(`movies/${movieId}`);
     let episodeData = videoData.get('episode');
-    const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
+    let videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
     return (
@@ -380,7 +383,7 @@ class PlayerComponent extends React.Component {
             <div className=" video-infos_label">Vous regardez</div>
             <div className=" video-infos_title">{infos.title}</div>
             {infos.episodeNumber ? <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> :''}
-            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+            {videoDuration ? <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
             <div className=" video-infos_synopsys">{infos.synopsis}</div>
           </div> : <div />
           }
