@@ -1,5 +1,6 @@
 import React from 'react';
 import PaymentForm from './PaymentForm';
+import PaymentImages from './PaymentImages';
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less');
@@ -141,6 +142,7 @@ class SelectPlan extends React.Component {
               </div>
             </div>
           </div>
+          <PaymentImages />
         </div>
       );
     }
