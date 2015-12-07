@@ -60,8 +60,8 @@ if (process.env.BROWSER) {
       });
     }
 
-    if (movies[1]){
-      movies[1].forEach(function (movie) {
+    if (movies[2]){
+      movies[2].forEach(function (movie) {
         let posterImg = movie.get('thumb').get('imgix');
         series.push(posterImg);
       });
