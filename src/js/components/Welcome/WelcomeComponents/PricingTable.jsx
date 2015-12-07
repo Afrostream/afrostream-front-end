@@ -33,7 +33,7 @@ if (process.env.BROWSER) {
       <section className="pricing-table">
         <div className="pricing-header-element">
           <h1>
-            <span className="pricing-header-purple">Choissisez la formule </span>
+            <span className="pricing-header-purple">Choisissez la formule </span>
             <span className="pricing-header-gray">qui vous ressemble</span>
           </h1>
 
