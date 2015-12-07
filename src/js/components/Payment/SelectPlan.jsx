@@ -42,7 +42,7 @@ class SelectPlan extends React.Component {
 
       return (
         <div className="plan-container">
-          <div className="choose-plan">Choissisez la formule qui vous ressemble</div>
+          <div className="choose-plan">Choisissez la formule qui vous ressemble</div>
           <div className="select-plan">
             <div className="formule-row-no-decoration">
               <div className="row-element-left row-element-top-left"></div>
