@@ -4,8 +4,8 @@
   "dependencies": {
     "afrostream-player": {
       "version": "1.1.2",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#1.1.6",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#95c568cc2773d38b7294a7653873f66b74ce17d0",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#1.1.7",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#744afd01a5c96da2977c89adc63018d158ee22d3",
       "dependencies": {
         "bower": {
           "version": "1.7.0",
@@ -2458,7 +2458,7 @@
               "dependencies": {
                 "eventemitter2": {
                   "version": "0.4.14",
-                  "from": "eventemitter2@>=0.4.13 <0.5.0",
+                  "from": "eventemitter2@>=0.4.9 <0.5.0",
                   "resolved": "https://registry.npmjs.org/eventemitter2/-/eventemitter2-0.4.14.tgz"
                 },
                 "semver": {
@@ -3027,7 +3027,7 @@
                       "dependencies": {
                         "ansi-regex": {
                           "version": "0.2.1",
-                          "from": "ansi-regex@>=0.2.1 <0.3.0",
+                          "from": "ansi-regex@>=0.2.0 <0.3.0",
                           "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-0.2.1.tgz"
                         }
                       }
@@ -3039,7 +3039,7 @@
                       "dependencies": {
                         "ansi-regex": {
                           "version": "0.2.1",
-                          "from": "ansi-regex@>=0.2.1 <0.3.0",
+                          "from": "ansi-regex@>=0.2.0 <0.3.0",
                           "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-0.2.1.tgz"
                         }
                       }
