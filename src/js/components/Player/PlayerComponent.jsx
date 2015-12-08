@@ -51,6 +51,23 @@ class PlayerComponent extends React.Component {
     this.initPlayer();
   }
 
+  detectUA() {
+    const userAgent = (window.navigator && navigator.userAgent) || "";
+    const detect = function (pattern) {
+      return function () {
+        return (pattern).test(userAgent);
+      };
+    };
+
+    return {
+      isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
+      isFirefox: detect(/mozilla.*\Wfirefox\W/i),
+      isIE: function () {
+        return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
+      }
+    };
+  }
+
   initPlayer() {
     let self = this;
     if (self.player) {
@@ -77,7 +94,9 @@ class PlayerComponent extends React.Component {
     return new Promise((resolve) => {
       // initialize the player
       const movieData = Movie.get(`movies/${movieId}`);
-      let captions = videoData.get('captions');
+      const ua = this.detectUA();
+      let isChrome = ua.isChrome();
+      let captions = !isChrome && videoData.get('captions');
       let hasSubtiles = captions ? captions.size : false;
       let wrapper = React.findDOMNode(this.refs.wrapper);
       let video = document.createElement('video');
@@ -175,29 +194,13 @@ class PlayerComponent extends React.Component {
           //merge all configs
           let playerData = _.merge(videoOptions, playerConfig);
           // ==== START hacks config
-          const userAgent = (window.navigator && navigator.userAgent) || "";
-          const detect = function (pattern) {
-            return function () {
-              return (pattern).test(userAgent);
-            };
-          };
-
-          const ua = {
-            isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
-            isFirefox: detect(/mozilla.*\Wfirefox\W/i),
-            isIE: function () {
-              return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
-            }
-          };
+          const ua = self.detectUA();
 
           if (ua.isIE()) {
-            if (navigator.appVersion.indexOf('Windows NT 6.1') != -1) {
-              playerData.flash.params.wmode = 'opaque';
-            }
-            //playerData.html5 = {
-            //  nativeCaptions: false,
-            //  nativeTextTracks: false
-            //};
+            playerData.html5 = {
+              nativeCaptions: false,
+              nativeTextTracks: false
+            };
             playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
           }
           //on force dash en tech par default pour tous les browsers ;)
@@ -255,9 +258,6 @@ class PlayerComponent extends React.Component {
               _.forEach(allTracks, function (track) {
                 let lang = track.language || track.language_;
                 track.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
-                if (player.techName === 'Dash' && ua.isChrome()) {
-                  player.removeRemoteTextTrack(track);
-                }
               });
             }
           );
@@ -283,33 +283,6 @@ class PlayerComponent extends React.Component {
     this.setState({
       duration: this.player ? this.player.duration() : 0
     })
-  }
-
-  /**
-   * TODO make it better with inTrack manifest textTracks
-   */
-  removeDuplicatedTracks() {
-    let player = this.player;
-    let allTracks = player.textTracks() || []; // get list of tracks
-    let uniqTracks = _.uniq(allTracks, function (track) {
-      let lang = track.language || track.language_;
-      return lang.substring(0, 2);
-    });
-
-    // get Diff
-    let diff = _.difference(allTracks, uniqTracks);
-
-    _.forEach(diff, function (track) {
-      player.removeRemoteTextTrack(track);
-    });
-
-    // set language default
-    _.forEach(uniqTracks, function (track) {
-      let lang = track.language || track.language_;
-      let matchLang = (lang === 'fr' || lang === 'fra');
-      track.mode = matchLang ? 'showing' : 'hidden'; // show this track
-    });
-
   }
 
   triggerUserActive() {
