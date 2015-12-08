@@ -31,6 +31,10 @@ export default {
     getVideo: null
   }),
 
+  Player: keyMirror({
+    getConfig: null
+  }),
+
   Season: keyMirror({
     toggleSeason: null,
     getSeason: null

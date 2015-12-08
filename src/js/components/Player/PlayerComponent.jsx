@@ -6,15 +6,23 @@ import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import Raven from 'raven-js'
+
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
 }
 
-@connect(({ Video,Movie,Episode,Event,User }) => ({
+if (canUseDOM) {
+  var base64 = require('js-base64').Base64;
+}
+
+@connect(({ Video,Movie,Episode,Event,User,Player }) => ({
   Video,
   Movie,
   Event,
-  User
+  User,
+  Player
 }))
 class PlayerComponent extends React.Component {
 
@@ -124,6 +132,7 @@ class PlayerComponent extends React.Component {
       props: {
         Video,
         Movie,
+        Player,
         User,
         videoId,
         movieId
@@ -159,10 +168,13 @@ class PlayerComponent extends React.Component {
 
         self.generateDomTag(videoData).then((trackOpt) => {
           //initialize the player
-          var playerData = _.merge(videoOptions, config.player);
-
+          //get config from api
+          //TODO move this in playeraction
+          let apiPlayerConfig = Player.get(`/player/config`).toJS();
+          let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfig));
+          //merge all configs
+          let playerData = _.merge(videoOptions, playerConfig);
           // ==== START hacks config
-          //si on est sur safari mac on priorise hls plutot que dash
           const userAgent = (window.navigator && navigator.userAgent) || "";
           const detect = function (pattern) {
             return function () {
@@ -174,10 +186,7 @@ class PlayerComponent extends React.Component {
             isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
             isFirefox: detect(/mozilla.*\Wfirefox\W/i),
             isIE: function () {
-              return /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
-            },
-            isSafari: function () {
-              return navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
+              return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
             }
           };
 
@@ -188,50 +197,74 @@ class PlayerComponent extends React.Component {
             playerData.html5 = {
               nativeCaptions: false,
               nativeTextTracks: false
-            }
-            playerData.dash = _.clone(playerData.html5);
+            };
+            playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
           }
           //on force dash en tech par default pour tous les browsers ;)
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type === 'application/dash+xml';
           });
 
-          console.log(playerData.techOrder);
-          console.log(playerData.sources);
           // ==== END hacks config
-
-          playerData.flash.swf = require('../../../../node_modules/afrostream-player/dist/video-js.swf');
-          playerData.flash.streamrootswf = 'http://files.streamroot.io/release/1.1/wrappers/videojs/video-js-sr.swf';
-          playerData.dasheverywhere.silverlightFile = require('../../../../node_modules/afrostream-player/dist/dashcs.xap');
-          playerData.dasheverywhere.flashFile = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
-
-          playerData.hls = _.clone(playerData.flash);
+          playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
           let user = User.get('user');
-          if (user && playerData.metrics) {
+          if (user) {
             let userId = user.get('user_id');
+            let token = user.get('afro_token');
             userId = _.find(userId.split('|'), function (val) {
               return parseInt(val, 10);
             });
-            playerData.metrics.user_id = parseInt(userId, 10);
+            if (playerData.metrics) {
+              playerData.metrics.user_id = parseInt(userId, 10);
+            }
+            //encode data to pass it into drmtoday
+            if (playerData.drm && playerData.dash && playerData.dash.protData) {
+              let protUser = base64.encode(JSON.stringify({
+                userId: parseInt(userId, 10),
+                sessionId: token,
+                merchant: 'afrostream'
+              }));
+
+              let protData = {
+                "com.widevine.alpha": {
+                  "httpRequestHeaders": {
+                    "dt-custom-data": protUser
+                  }
+                },
+                "com.microsoft.playready": {
+                  "httpRequestHeaders": {
+                    "http-header-CustomData": protUser
+                  }
+                },
+                "com.adobe.flashaccess": {
+                  "httpRequestHeaders": {
+                    "customData": protUser
+                  }
+                }
+              };
+              playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
+            }
           }
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks
+              var player = this;
               _.forEach(allTracks, function (track) {
                 let lang = track.language || track.language_;
                 track.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
+                if (player.techName === 'Dash') {
+                  player.removeRemoteTextTrack(track);
+                }
               });
             }
           );
-          player.on('pause', this.setDurationInfo.bind(this));
-          player.on('play', this.setDurationInfo.bind(this));
-          player.on('ended', this.setDurationInfo.bind(this));
           player.on('loadedmetadata', this.setDurationInfo.bind(this));
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
+          player.on('error', this.triggerError.bind(this));
 
           resolve(player);
         }).catch((err) => {
@@ -262,6 +295,17 @@ class PlayerComponent extends React.Component {
     dispatch(EventActionCreators.userActive(this.player ? (this.player.paused() || this.player.userActive()) : true))
   }
 
+  triggerError(e) {
+    if (Raven && Raven.isSetup()) {
+      // Send the report.
+      Raven.captureException(e, {
+        extra: {
+          cache: this.player.getCache()
+        }
+      });
+    }
+  }
+
   componentWillUnmount() {
     this.destroyPlayer();
   }
@@ -276,12 +320,10 @@ class PlayerComponent extends React.Component {
     return new Promise((resolve) => {
       if (this.player) {
         this.player.one('dispose', () => {
-          this.player.off('pause', this.setDurationInfo.bind(this));
-          this.player.off('play', this.setDurationInfo.bind(this));
-          this.player.off('ended', this.setDurationInfo.bind(this));
           this.player.off('loadedmetadata', this.setDurationInfo.bind(this));
           this.player.off('useractive', this.triggerUserActive.bind(this));
           this.player.off('userinactive', this.triggerUserActive.bind(this));
+          this.player.off('error', this.triggerError.bind(this));
           this.player = null;
           dispatch(EventActionCreators.userActive(true));
           console.log('destroyed player');
@@ -298,6 +340,9 @@ class PlayerComponent extends React.Component {
   }
 
   formatTime(seconds) {
+    if (!isFinite(seconds)) {
+      return null;
+    }
     var h = Math.floor(((seconds / 86400) % 1) * 24),
       m = Math.floor(((seconds / 3600) % 1) * 60),
       s = Math.round(((seconds / 60) % 1) * 60) + 's', time;
@@ -336,7 +381,7 @@ class PlayerComponent extends React.Component {
     let captions = videoData.get('captions');
     let movieData = Movie.get(`movies/${movieId}`);
     let episodeData = videoData.get('episode');
-    const videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
+    let videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
     return (
@@ -348,7 +393,7 @@ class PlayerComponent extends React.Component {
             <div className=" video-infos_label">Vous regardez</div>
             <div className=" video-infos_title">{infos.title}</div>
             {infos.episodeNumber ? <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> :''}
-            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div>
+            {videoDuration ? <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
             <div className=" video-infos_synopsys">{infos.synopsis}</div>
           </div> : <div />
           }

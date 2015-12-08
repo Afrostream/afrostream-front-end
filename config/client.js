@@ -27,6 +27,35 @@ const giftDict = _.merge(giftDictClone, {
   }
 });
 
+const protData = {
+  "com.widevine.alpha": {
+    "drmtoday": true,
+    "serverURL": "https://lic.staging.drmtoday.com/license-proxy-widevine/cenc/",
+    "httpRequestHeaders": {
+      "dt-custom-data": ""
+    }
+  },
+  "com.microsoft.playready": {
+    "drmtoday": true,
+    "serverURL": "https://lic.staging.drmtoday.com/license-proxy-headerauth/drmtoday/RightsManager.asmx",
+    "httpRequestHeaders": {
+      "http-header-CustomData": ""
+    }
+  },
+  "com.adobe.flashaccess": {
+    "drmtoday": true,
+    "serverURL": "https://lic.staging.drmtoday.com/flashaccess/LicenseTrigger/v1",
+    "httpRequestHeaders": {
+      "customData": null
+    }
+  },
+  "org.w3.clearkey": {
+    "clearkeys": {
+      "21920416600048BC8DBB9A45FD4A3B9E": "0001020304050607"
+    }
+  }
+};
+
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 const auth0ClientId = process.env.AUTH0_CLIENT_ID || 'dev';
@@ -144,20 +173,14 @@ const config = {
     "width": "100%",
     "height": "100%",
     "language": "fr",
-    "flash": {
-      "params": {
-        "wmode": "opaque"
-      }
-    },
-    "hls": {
-      "params": {
-        "wmode": "direct"
-      }
+    "dashas": {
+      "protData": protData
     },
     "metrics": {
-      'user_id': ''
+      "user_id": ""
     },
     "dash": {
+      "protData": protData,
       "autoSwitch": true,
       "buffer": {
         "minBufferTime": 12,
@@ -203,7 +226,7 @@ const config = {
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
     "dasheverywhere": castlab,
-    "techOrder": ["dash", "html5", "hls"/*,"dasheverywhere"*/],
+    "techOrder": ["dash", "html5", "dashas"],
     "plugins": {
       "chromecast": {
         "appId": process.env.CHROMECAST_ID || '',
@@ -213,10 +236,6 @@ const config = {
         }
       },
       "ga": {}
-      //,
-      //"audiotracks": {
-      //  "title": "Langues"
-      //}
     }
   }
 };
