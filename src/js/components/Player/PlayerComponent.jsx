@@ -66,6 +66,9 @@ class PlayerComponent extends React.Component {
       isFirefox: detect(/mozilla.*\Wfirefox\W/i),
       isIE: function () {
         return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
+      },
+      isSafari: function () {
+        return navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
       }
     };
   }
@@ -97,8 +100,7 @@ class PlayerComponent extends React.Component {
       // initialize the player
       const movieData = Movie.get(`movies/${movieId}`);
       const ua = this.detectUA();
-      let isChrome = ua.isChrome();
-      let captions = !isChrome && videoData.get('captions');
+      let captions = !ua.isChrome() && !ua.isSafari() && videoData.get('captions');
       let hasSubtiles = captions ? captions.size : false;
       let wrapper = React.findDOMNode(this.refs.wrapper);
       let video = document.createElement('video');
@@ -263,6 +265,7 @@ class PlayerComponent extends React.Component {
             }
           );
           player.on('loadedmetadata', this.setDurationInfo.bind(this));
+          //player.on('loadedmetadata', this.removeDuplicatedTracks.bind(this));
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
           player.on('error', this.triggerError.bind(this));
@@ -284,6 +287,33 @@ class PlayerComponent extends React.Component {
     this.setState({
       duration: this.player ? this.player.duration() : 0
     })
+  }
+
+  /**
+   * TODO make it better with inTrack manifest textTracks
+   */
+  removeDuplicatedTracks() {
+    let player = this.player;
+    let allTracks = player.textTracks() || []; // get list of tracks
+    let uniqTracks = _.uniq(allTracks, function (track) {
+      let lang = track.language || track.language_;
+      return lang.substring(0, 2);
+    });
+
+    // get Diff
+    let diff = _.difference(allTracks, uniqTracks);
+
+    _.forEach(diff, function (track) {
+      player.removeRemoteTextTrack(track);
+    });
+
+    // set language default
+    _.forEach(uniqTracks, function (track) {
+      let lang = track.language || track.language_;
+      let matchLang = (lang === 'fr' || lang === 'fra');
+      track.mode = matchLang ? 'showing' : 'hidden'; // show this track
+    });
+
   }
 
   triggerUserActive() {
