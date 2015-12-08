@@ -50,7 +50,9 @@ if (process.env.BROWSER) {
     let series = []
 
     categories.forEach(function(category) {
-      movies.push(category.get('movies'));
+      if (category.get('label') === 'Séries' || category.get('label') === 'Notre sélection' ) {
+        movies.push(category.get('movies'));
+      }
     });
 
     if (movies[0]){
@@ -60,8 +62,8 @@ if (process.env.BROWSER) {
       });
     }
 
-    if (movies[2]){
-      movies[2].forEach(function (movie) {
+    if (movies[1]){
+      movies[1].forEach(function (movie) {
         let posterImg = movie.get('thumb').get('imgix');
         series.push(posterImg);
       });
