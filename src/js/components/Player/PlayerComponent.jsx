@@ -186,7 +186,7 @@ class PlayerComponent extends React.Component {
             isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
             isFirefox: detect(/mozilla.*\Wfirefox\W/i),
             isIE: function () {
-              return /(MSIE|Trident\/|Edge\/|rv:\d)/i.test(navigator.userAgent);
+              return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
             }
           };
 
@@ -194,10 +194,10 @@ class PlayerComponent extends React.Component {
             if (navigator.appVersion.indexOf('Windows NT 6.1') != -1) {
               playerData.flash.params.wmode = 'opaque';
             }
-            playerData.html5 = {
-              nativeCaptions: false,
-              nativeTextTracks: false
-            };
+            //playerData.html5 = {
+            //  nativeCaptions: false,
+            //  nativeTextTracks: false
+            //};
             playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
           }
           //on force dash en tech par default pour tous les browsers ;)
