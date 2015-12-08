@@ -60,7 +60,9 @@ class PlayerComponent extends React.Component {
     };
 
     return {
-      isChrome: detect(/webkit\W.*(chrome|chromium)\W/i),
+      isChrome: function () {
+        return detect(/webkit\W.*(chrome|chromium)\W/i)() && !detect(/Edge/)()
+      },
       isFirefox: detect(/mozilla.*\Wfirefox\W/i),
       isIE: function () {
         return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
