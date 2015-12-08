@@ -255,7 +255,7 @@ class PlayerComponent extends React.Component {
               _.forEach(allTracks, function (track) {
                 let lang = track.language || track.language_;
                 track.mode = lang === 'fr' ? 'showing' : 'hidden'; // show this track
-                if (player.techName === 'Dash') {
+                if (player.techName === 'Dash' && ua.isChrome()) {
                   player.removeRemoteTextTrack(track);
                 }
               });
@@ -283,6 +283,33 @@ class PlayerComponent extends React.Component {
     this.setState({
       duration: this.player ? this.player.duration() : 0
     })
+  }
+
+  /**
+   * TODO make it better with inTrack manifest textTracks
+   */
+  removeDuplicatedTracks() {
+    let player = this.player;
+    let allTracks = player.textTracks() || []; // get list of tracks
+    let uniqTracks = _.uniq(allTracks, function (track) {
+      let lang = track.language || track.language_;
+      return lang.substring(0, 2);
+    });
+
+    // get Diff
+    let diff = _.difference(allTracks, uniqTracks);
+
+    _.forEach(diff, function (track) {
+      player.removeRemoteTextTrack(track);
+    });
+
+    // set language default
+    _.forEach(uniqTracks, function (track) {
+      let lang = track.language || track.language_;
+      let matchLang = (lang === 'fr' || lang === 'fra');
+      track.mode = matchLang ? 'showing' : 'hidden'; // show this track
+    });
+
   }
 
   triggerUserActive() {
