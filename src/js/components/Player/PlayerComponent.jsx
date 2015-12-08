@@ -17,11 +17,12 @@ if (canUseDOM) {
   var base64 = require('js-base64').Base64;
 }
 
-@connect(({ Video,Movie,Episode,Event,User }) => ({
+@connect(({ Video,Movie,Episode,Event,User,Player }) => ({
   Video,
   Movie,
   Event,
-  User
+  User,
+  Player
 }))
 class PlayerComponent extends React.Component {
 
@@ -131,6 +132,7 @@ class PlayerComponent extends React.Component {
       props: {
         Video,
         Movie,
+        Player,
         User,
         videoId,
         movieId
@@ -166,8 +168,12 @@ class PlayerComponent extends React.Component {
 
         self.generateDomTag(videoData).then((trackOpt) => {
           //initialize the player
-          var playerData = _.merge(videoOptions, config.player);
-
+          //get config from api
+          //TODO move this in playeraction
+          let apiPlayerConfig = Player.get(`/player/config`).toJS();
+          let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfig));
+          //merge all configs
+          let playerData = _.merge(videoOptions, playerConfig);
           // ==== START hacks config
           const userAgent = (window.navigator && navigator.userAgent) || "";
           const detect = function (pattern) {

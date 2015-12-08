@@ -8,3 +8,4 @@ export { default as Video } from './Video';
 export { default as Event } from './Event';
 export { default as Intercom } from './Intercom';
 export { default as Modal } from './Modal';
+export { default as Player } from './Player';
