@@ -68,7 +68,8 @@ class PlayerComponent extends React.Component {
         return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
       },
       isSafari: function () {
-        return /(Safari)/i.test(navigator.userAgent);
+        return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+          navigator.userAgent && !navigator.userAgent.match('CriOS');
       },
       isIOS: function () {
         return navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
