@@ -60,6 +60,64 @@ class PlayerComponent extends React.Component {
     };
 
     return {
+      getBrowser: function () {
+        var data = {};
+        var browser = '';
+        var version = '';
+        var os = '';
+        var osVersion = '';
+        var parseUserAgent, prepareData, renameOsx, cutSafariVersion;
+
+        parseUserAgent = function () {
+          var userAgent = navigator.userAgent.toLowerCase(),
+            browserParts = /(ie|firefox|chrome|safari|opera)(?:.*version)?(?:[ \/])?([\w.]+)/.exec(userAgent),
+            osParts = /(mac|win|linux|freebsd|mobile|iphone|ipod|ipad|android|blackberry|j2me|webtv)/.exec(userAgent);
+
+          if (!!userAgent.match(/trident\/7\./)) {
+            browser = 'ie';
+            version = 11;
+          } else if (browserParts && browserParts.length > 2) {
+            browser = browserParts[1];
+            version = browserParts[2];
+          }
+
+          if (osParts && osParts.length > 1) {
+            os = osParts[1];
+          }
+
+          osVersion = navigator.oscpu || navigator.appName;
+        };
+
+        prepareData = function () {
+          data.browser = browser;
+          data.version = parseInt(version, 10) || '';
+          data.os = os;
+          data.osVersion = osVersion;
+        };
+
+        renameOsx = function () {
+          if (os === 'mac') {
+            os = 'osx';
+          }
+        };
+
+        cutSafariVersion = function () {
+          videojs.log('cutSafariVersion',version,os)
+          if (os === 'safari') {
+            version = version.substring(0, 1);
+          }
+        };
+
+        parseUserAgent();
+
+        // exception rules
+        renameOsx();
+        cutSafariVersion();
+
+        prepareData();
+
+        return data;
+      },
       isChrome: function () {
         return detect(/webkit\W.*(chrome|chromium)\W/i)() && !detect(/Edge/)()
       },
@@ -210,6 +268,12 @@ class PlayerComponent extends React.Component {
             };
             playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
           }
+          //fix Safari < 6.2 can't play hls
+          if (ua.isSafari() && ua.getBrowser().version < 537) {
+            playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
+              return k !== 'dashas';
+            });
+          }
           //on force dash en tech par default pour tous les browsers ;)
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type !== 'application/dash+xml';
@@ -220,6 +284,7 @@ class PlayerComponent extends React.Component {
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
+          videojs.log(playerData.techOrder,ua.getBrowser());
           let user = User.get('user');
           if (user) {
             let userId = user.get('user_id');

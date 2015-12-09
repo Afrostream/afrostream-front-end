@@ -217,7 +217,7 @@ class WelcomeHeader extends React.Component {
     let movieData = null;
     let data = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
-      poster: 'https://afrostream.imgix.net/production/poster/2015/11/4cf7622100a1a57df590-FBOW2_The%20Big%20Day%20_slide.png'
+      poster: 'https://afrostream.imgix.net/production/poster/2015/12/ba55e2f3825608f0aabe-affichage_320x240_afrostream_wow-imp2.jpg'
     };
 
     if (movieId) {

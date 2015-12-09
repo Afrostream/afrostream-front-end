@@ -44,6 +44,7 @@ const webpackConfig = {
     hashDigestLength: 32
   },
   entry: {
+    polyfill: 'babel-polyfill',
     main: './src/js/main',
     vendor: './src/js/vendor'
   },
