@@ -65,7 +65,7 @@ if (process.env.BROWSER) {
    *
    * @param   {string}  thumbUrl  url for image
    *
-   * @return {object}             react inline css style
+   * @return  {object}            react inline css style
    */
   getBackgroundImageCss(thumbUrl) {
 
