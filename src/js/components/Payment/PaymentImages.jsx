@@ -16,15 +16,37 @@ if (process.env.BROWSER) {
 })
 @connect(({ Category }) => ({Category})) class PaymentImages extends React.Component {
 
-  getBackgroundImageCss(thumbUrl) {
+  /**
+   * getThumbsByCategory
+   *
+   * get thumb urls from the movies of a given category
+   *
+   * @param   {array} categoryMovies  array of movie objects
+   *
+   * @return  {array} thumbs          array of thumbnail urls
+   */
+  getThumbsByCategory(categoryMovies) {
 
-    const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-    let imageStyles = baseUrl;
+    let thumbs = [];
 
-    return {backgroundImage: `url(${thumbUrl}?crop=faces&fit=crop&w=140&h=200&q=${config.images.quality}&fm=${config.images.type})`};
+    categoryMovies.forEach(function (movie) {
+      let posterImg = movie.get('thumb') ? movie.get('thumb').get('imgix') : '';
+      thumbs.push(posterImg);
+    });
+
+    return thumbs;
   }
 
-  generateIconRows(thumbsArray) {
+  /**
+   * generateThumbRow
+   *
+   * generate react markup containing a row of thumb images
+   *
+   * @param   {array}   thumbsArray array with urls of thumb images
+   *
+   * @return  {object}  thumbsRow   array containing react markup
+   */
+  generateThumbRow(thumbsArray) {
     self = this;
     let thumbsRow = [];
     thumbsArray.forEach(function(thumbUrl) {
@@ -36,7 +58,26 @@ if (process.env.BROWSER) {
     return thumbsRow;
   }
 
+  /**
+   * getBackgroundImageCss
+   *
+   * generate css for background image
+   *
+   * @param   {string}  thumbUrl  url for image
+   *
+   * @return {object}             react inline css style
+   */
+  getBackgroundImageCss(thumbUrl) {
 
+    const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+    let imageStyles = baseUrl;
+
+    return {backgroundImage: `url(${thumbUrl}?crop=faces&fit=crop&w=140&h=200&q=${config.images.quality}&fm=${config.images.type})`};
+  }
+
+  /**
+   * render two rows of thumbnails for the payment pages
+   */
   render() {
     const {
       props: {
@@ -44,38 +85,32 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    const categories = Category.get('meaList') ? Category.get('meaList') : [];
+    let categories = Category.get('meaList') || [];
     let movies = [];
     let notreSelection = [];
     let series = []
 
     categories.forEach(function(category) {
-      if (category.get('label') === 'Séries' || category.get('label') === 'Notre sélection' ) {
+      if (category.get('_id') === 1 || category.get('_id') === 3 ) {
         movies.push(category.get('movies'));
       }
     });
 
     if (movies[0]){
-      movies[0].forEach(function (movie) {
-        let posterImg = movie.get('thumb').get('imgix');
-        notreSelection.push(posterImg);
-      });
+      notreSelection = this.getThumbsByCategory(movies[0]);
     }
 
     if (movies[1]){
-      movies[1].forEach(function (movie) {
-        let posterImg = movie.get('thumb').get('imgix');
-        series.push(posterImg);
-      });
+      series = this.getThumbsByCategory(movies[1]);
     }
 
-    let nsIcons = this.generateIconRows(notreSelection);
-    let seriesIcons = this.generateIconRows(series);
+    let nsIcons = this.generateThumbRow(notreSelection);
+    let seriesIcons = this.generateThumbRow(series);
 
     return (
       <div>
         <div className="payment-pages__thumbs-row">
-        {nsIcons}
+          {nsIcons}
         </div>
         <div className="payment-pages__thumbs-row">
           {seriesIcons}
