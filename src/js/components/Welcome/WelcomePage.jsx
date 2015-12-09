@@ -18,19 +18,24 @@ if (process.env.BROWSER) {
 class WelcomePage extends React.Component {
 
   static propTypes = {
-    spinner: React.PropTypes.bool
+    spinner: React.PropTypes.string
   };
 
   static defaultProps = {
     spinner: false
   };
 
-
   state = {
     spinner: this.props.spinner
   };
 
   componentDidMount() {
+    this.setState({
+      spinner: this.props.spinner
+    });
+  }
+
+  componentDidUpdate() {
     this.setState({
       spinner: this.props.spinner
     });
