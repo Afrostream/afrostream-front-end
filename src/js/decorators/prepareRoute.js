@@ -22,11 +22,11 @@ export default function prepareRoute(prepareFn) {
 
       componentDidMount() {
         const {
-          context: { store },
+          context: { store ,router},
           props: { params, location }
           } = this;
 
-        prepareFn({store, params, location});
+        prepareFn({store,router, params, location});
       }
 
     };

@@ -8,11 +8,11 @@ import * as PlayerActionCreators from '../../actions/player';
 
 import PlayerComponent from './PlayerComponent';
 
-@prepareRoute(async function ({ store, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug, videoId } }) {
+@prepareRoute(async function ({ store,router, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug, videoId } }) {
   console.log(movieId, movieSlug, seasonId, seasonSlug, episodeId, episodeSlug, videoId);
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(VideoActionCreators.getVideo(videoId)),
+    store.dispatch(VideoActionCreators.getVideo(videoId,router)),
     store.dispatch(MovieActionCreators.getMovie(movieId)),
     store.dispatch(PlayerActionCreators.getConfig())
   ];

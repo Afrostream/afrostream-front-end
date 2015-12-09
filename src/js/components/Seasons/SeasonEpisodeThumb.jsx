@@ -87,12 +87,13 @@ import config from '../../../../config';
     }
     if (videoId) {
       link += `/${videoId}`;
-      return await * [
-          dispatch(EventActionCreators.pinHeader(false)),
-          dispatch(VideoActionCreators.getVideo(videoId)),
-          this.context.router.transitionTo(link)
-        ];
+      //return await * [
+      //    dispatch(EventActionCreators.pinHeader(false)),
+      //    dispatch(VideoActionCreators.getVideo(videoId)),
+      //    this.context.router.transitionTo(link)
+      //  ];
     }
+    return this.context.router.transitionTo(link);
   }
 }
 

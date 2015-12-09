@@ -152,18 +152,18 @@ class MovieInfo extends React.Component {
     if (videoData) {
       videoId = videoData.get('_id');
       link += `/${videoId}`;
-      return await * [
-          dispatch(EventActionCreators.pinHeader(false)),
-          dispatch(VideoActionCreators.getVideo(videoId)),
-          this.context.router.transitionTo(link)
-        ];
+      //return await * [
+      //    dispatch(EventActionCreators.pinHeader(false)),
+      //    dispatch(VideoActionCreators.getVideo(videoId)),
+      //    this.context.router.transitionTo(link)
+      //  ];
     }
-
-    return await * [
-        dispatch(MovieActionCreators.getMovie(movieDataId)),
-        dispatch(MovieActionCreators.getSeason(movieDataId)),
-        this.context.router.transitionTo(link)
-      ];
+    return this.context.router.transitionTo(link);
+    //return await * [
+    //    dispatch(MovieActionCreators.getMovie(movieDataId)),
+    //    dispatch(MovieActionCreators.getSeason(movieDataId)),
+    //    this.context.router.transitionTo(link)
+    //  ];
 
   }
 }

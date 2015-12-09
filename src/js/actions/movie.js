@@ -34,7 +34,7 @@ export function getSeason(movieId) {
       console.log('no movie id passed in action', movieId);
       return {
         type: ActionTypes.Movie.getSeason,
-        movieId: movieId,
+        movieId,
         res: {body: null}
       };
     }
@@ -43,7 +43,7 @@ export function getSeason(movieId) {
       console.log('season already present in data store', movieId);
       return {
         type: ActionTypes.Movie.getSeason,
-        movieId: movieId,
+        movieId,
         res: {body: readySeason}
       };
     }
