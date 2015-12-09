@@ -284,7 +284,6 @@ class PlayerComponent extends React.Component {
           playerData.plugins = playerData.plugins || [];
           playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
 
-          videojs.log(playerData.techOrder,ua.getBrowser());
           let user = User.get('user');
           if (user) {
             let userId = user.get('user_id');
@@ -334,7 +333,6 @@ class PlayerComponent extends React.Component {
             }
           );
           player.on('loadedmetadata', this.setDurationInfo.bind(this));
-          //player.on('loadedmetadata', this.removeDuplicatedTracks.bind(this));
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
           player.on('error', this.triggerError.bind(this));
@@ -356,33 +354,6 @@ class PlayerComponent extends React.Component {
     this.setState({
       duration: this.player ? this.player.duration() : 0
     })
-  }
-
-  /**
-   * TODO make it better with inTrack manifest textTracks
-   */
-  removeDuplicatedTracks() {
-    let player = this.player;
-    let allTracks = player.textTracks() || []; // get list of tracks
-    let uniqTracks = _.uniq(allTracks, function (track) {
-      let lang = track.language || track.language_;
-      return lang.substring(0, 2);
-    });
-
-    // get Diff
-    let diff = _.difference(allTracks, uniqTracks);
-
-    _.forEach(diff, function (track) {
-      player.removeRemoteTextTrack(track);
-    });
-
-    // set language default
-    _.forEach(uniqTracks, function (track) {
-      let lang = track.language || track.language_;
-      let matchLang = (lang === 'fr' || lang === 'fra');
-      track.mode = matchLang ? 'showing' : 'hidden'; // show this track
-    });
-
   }
 
   triggerUserActive() {
