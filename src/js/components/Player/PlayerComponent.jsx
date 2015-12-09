@@ -212,7 +212,7 @@ class PlayerComponent extends React.Component {
           }
           //on force dash en tech par default pour tous les browsers ;)
           playerData.sources = _.sortBy(playerData.sources, function (k) {
-            return k.type === 'application/dash+xml';
+            return k.type !== 'application/dash+xml';
           });
 
           // ==== END hacks config
