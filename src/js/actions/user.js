@@ -43,13 +43,13 @@ const mergeProfile = function (profile, data) {
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
 
-      if (!userMerged.hasOwnProperty('planCode') || !userMerged.planCode) {
-        if (canUseDOM) {
-          if (!~window.location.pathname.indexOf('/select-plan')) {
-            window.location = '/select-plan';
-          }
-        }
-      }
+      //if (!userMerged.hasOwnProperty('planCode') || !userMerged.planCode) {
+      //  if (canUseDOM) {
+      //    if (!~window.location.pathname.indexOf('/select-plan')) {
+      //      window.location = '/select-plan';
+      //    }
+      //  }
+      //}
       return _.merge(data, {
         user: userMerged
       });

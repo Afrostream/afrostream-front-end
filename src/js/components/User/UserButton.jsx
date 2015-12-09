@@ -52,25 +52,17 @@ class UserButton extends React.Component {
 
     if (token) {
       if (user) {
-
-        if (typeof user.get('planCode') !== 'undefined') {
-          hasFormule = user.get('planCode');
-        }
-        if (!hasFormule) {
-          return <div />;
-        } else {
-          return (
-            <ul className="nav navbar-nav navbar-right">
-              <li>
-                <SearchInput/>
-              </li>
-              <li className="btn-user pull-right">
-                <a href="#" role="button" onClick={::this.toggleSideBar}><img src={user.get('picture')} alt="50x50"
-                                                                              className="icon-user img-thumbnail"/></a>
-              </li>
-            </ul>
-          );
-        }
+        return (
+          <ul className="nav navbar-nav navbar-right">
+            <li>
+              <SearchInput/>
+            </li>
+            <li className="btn-user pull-right">
+              <a href="#" role="button" onClick={::this.toggleSideBar}><img src={user.get('picture')} alt="50x50"
+                                                                            className="icon-user img-thumbnail"/></a>
+            </li>
+          </ul>
+        );
       }
       else {
         dispatch(UserActionCreators.getProfile());

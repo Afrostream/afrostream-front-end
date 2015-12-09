@@ -12,12 +12,54 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(UserActionCreators.getProfile())
-    ];
+    store.dispatch(UserActionCreators.getProfile())
+  ];
 })
-@connect(({ User }) => ({ User })) class AccountPage extends React.Component {
+@connect(({ User }) => ({User}))
+class AccountPage extends React.Component {
 
   state = {cardNumber: null};
+
+  getPlan() {
+    const {
+      props: {
+        User
+        }
+      } = this;
+
+    const user = User.get('user');
+    if (!user) {
+      return '';
+    }
+    const planCode = user.get('planCode');
+
+    if (!planCode) {
+      return '';
+    }
+
+    const plans = {
+      afrostreammonthly: 'THINK LIKE A MAN',
+      afrostreamambassadeurs: 'Ambassadeurs',
+      afrostreampremium: 'DO THE RIGHT THING'
+    };
+
+    let cancelSubscriptionClasses = {
+      'cancel-plan': true,
+      'cancel-plan-hidden': (planCode === 'afrostreammonthly' ? false : true)
+    };
+
+    return ( <div className="plan-details">
+      <div className="plan-details-header">DÉTAIL DU FORFAIT</div>
+      <div className="plan-details-container">
+        <div className="plan-details-plan-name">
+          <div className="plan-name">{plans[user.get('planCode')]}</div>
+          <div className={classSet(cancelSubscriptionClasses)}>
+            <Link to="/cancel-subscription">Annuler votre abonnement</Link>
+          </div>
+        </div>
+      </div>
+    </div>)
+  }
 
   render() {
     const {
@@ -27,18 +69,7 @@ if (process.env.BROWSER) {
       } = this;
 
     const user = User.get('user');
-    let plans = {
-      afrostreammonthly: 'THINK LIKE A MAN',
-      afrostreamambassadeurs: 'Ambassadeurs',
-      afrostreampremium: 'DO THE RIGHT THING'
-    };
-    let cancelSubscriptionClasses = {
-      'cancel-plan': true,
-      'cancel-plan-hidden': (user.get('planCode') === 'afrostreammonthly' ? false : true)
-    };
-
     if (user) {
-
       return (
         <div className="row-fluid brand-bg">
           <div className="container brand-bg">
@@ -62,18 +93,7 @@ if (process.env.BROWSER) {
                   </div>
                 </div>
               </div>
-
-              <div className="plan-details">
-                <div className="plan-details-header">DÉTAIL DU FORFAIT</div>
-                <div className="plan-details-container">
-                  <div className="plan-details-plan-name">
-                    <div className="plan-name">{plans[user.get('planCode')]}</div>
-                    <div className={classSet(cancelSubscriptionClasses)}>
-                      <Link to="/cancel-subscription">Annuler votre abonnement</Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {this.getPlan()}
             </div>
           </div>
         </div>
