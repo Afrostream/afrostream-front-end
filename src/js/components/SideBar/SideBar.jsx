@@ -44,6 +44,7 @@ if (process.env.BROWSER) {
             </a>
           </li>
           <li><Link to="/compte">Mon compte</Link></li>
+          <li><Link to="/offrir-cadeau">Offrir un cadeau</Link></li>
           <li role="separator" className="divider"></li>
           <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
         </ul>

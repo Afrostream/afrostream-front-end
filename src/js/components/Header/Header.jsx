@@ -69,6 +69,7 @@ class Header extends React.Component {
       'navbar-hidden': hiddenMode,
       'navbar-fixed-color': pinned || this.state.pinned
       || this.context.router.isActive('compte')
+      || this.context.router.isActive('offrir-cadeau')
       || this.context.router.isActive('cancel-subscription')
       || this.context.router.isActive('select-plan')
     };
