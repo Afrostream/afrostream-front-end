@@ -42,7 +42,6 @@ const mergeProfile = function (profile, data) {
       const userMerged = _.merge(profile, userSubscriptions.body || {}, userInfos.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
-
       return _.merge(data, {
         user: userMerged
       });

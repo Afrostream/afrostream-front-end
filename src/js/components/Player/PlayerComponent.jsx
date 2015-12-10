@@ -324,7 +324,6 @@ class PlayerComponent extends React.Component {
               playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
             }
           }
-          ;
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks
