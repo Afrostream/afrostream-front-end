@@ -92,9 +92,12 @@ export function cancelSubscription() {
  * @returns {Function}
  */
 export function createLock() {
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
     const options = config.auth0.assetsUrl ? {assetsUrl: config.auth0.assetsUrl} : {};
     const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain, options);
+    lock.on('close', () => {
+      actionDispatcher(pendingUser(false));
+    });
     return {
       type: ActionTypes.User.createLock,
       lock: lock
@@ -192,7 +195,8 @@ export function getProfile() {
               user: null
             });
           }
-          actionDispatcher(pendingUser(true));
+          //fixme this throw error
+          //actionDispatcher(pendingUser(true));
           //else get auth0 user and merge it
           lock.getProfile(token, function (err, profile) {
             profile = profile || {};
@@ -258,6 +262,7 @@ export function showLock(type = 'show', container = null, options = {}) {
           actionDispatcher(pendingUser(true));
           lock[type](lockOptions, function (err, profile, access_token, id_token, state, refresh_token) {
             if (err) {
+              actionDispatcher(pendingUser(false));
               reject(err);
             }
             // store token

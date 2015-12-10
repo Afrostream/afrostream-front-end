@@ -19,6 +19,12 @@ export default class LoadVideo extends Component {
     movieId: null
   };
 
+  render() {
+    return (
+      <div {...this.props} />
+    );
+  }
+
   loadMovie() {
     const {
       props: {
