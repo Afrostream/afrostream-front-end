@@ -6,7 +6,8 @@ const initialState = Immutable.fromJS({
   'lock': null,
   'user': null,
   'token': null,
-  'refreshToken': null
+  'refreshToken': null,
+  'pending': false
 });
 
 
@@ -36,14 +37,16 @@ export default createReducer(initialState, {
     return state.merge({
       ['user']: user,
       ['token']: token,
-      ['refreshToken']: refreshToken
+      ['refreshToken']: refreshToken,
+      ['pending']: false
     });
   },
 
   [ActionTypes.User.getProfile](state, { user }) {
     console.log('ActionTypes.User.getProfile', user);
     return state.merge({
-      ['user']: user
+      ['user']: user,
+      ['pending']: false
     });
   },
 
@@ -58,6 +61,12 @@ export default createReducer(initialState, {
       ['user']: null,
       ['token']: null,
       ['refreshToken']: null
+    });
+  },
+
+  [ActionTypes.User.pendingUser](state, { pending }) {
+    return state.merge({
+      ['pending']: pending
     });
   }
 });

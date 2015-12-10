@@ -3,7 +3,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import * as middleWare from '../middleware';
 import * as reducers from '../reducers';
 
-function promiseMiddleware(api, { getState }) {
+function promiseMiddleware(api, { getState ,dispatch}) {
   return next =>
     function _r(action) {
       if (action && _.isFunction(action.then)) {
@@ -11,7 +11,7 @@ function promiseMiddleware(api, { getState }) {
       }
 
       if (_.isFunction(action)) {
-        return _r(action(api, getState));
+        return _r(action(api, getState, dispatch));
       }
 
       return next(action);
