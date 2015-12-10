@@ -47,9 +47,6 @@ class UserButton extends React.Component {
 
     const token = User.get('token');
     const user = User.get('user');
-    let hasFormule;
-
-
     if (token) {
       if (user) {
         return (
