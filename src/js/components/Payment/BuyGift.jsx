@@ -121,7 +121,7 @@ if (process.env.BROWSER) {
       billingInfo['gift_last_name'] = $('#gift_last_name').val();
       billingInfo['gift_email'] = $('#gift_email').val();
 
-      dispatch(UserActionCreators.gift(formData)).then(function () {
+      dispatch(UserActionCreators.subscribe(formData, '1')).then(function () {
         self.disableForm(false, 1);
       }).catch(function (err) {
         let errors = '';
