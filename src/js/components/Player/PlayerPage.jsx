@@ -12,9 +12,10 @@ import PlayerComponent from './PlayerComponent';
   console.log(movieId, movieSlug, seasonId, seasonSlug, episodeId, episodeSlug, videoId);
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(VideoActionCreators.getVideo(videoId,router)),
+    store.dispatch(PlayerActionCreators.getConfig()),
     store.dispatch(MovieActionCreators.getMovie(movieId)),
-    store.dispatch(PlayerActionCreators.getConfig())
+    store.dispatch(MovieActionCreators.getSeason(movieId)),
+    store.dispatch(VideoActionCreators.getVideo(videoId, router))
   ];
 })
 @analytics()

@@ -39,15 +39,15 @@ class PlayerComponent extends React.Component {
   static propTypes = {
     videoId: React.PropTypes.string.isRequired,
     movieId: React.PropTypes.string.isRequired,
-    seasonId: React.PropTypes.string.isRequired,
-    episodeId: React.PropTypes.string.isRequired
+    seasonId: React.PropTypes.string,
+    episodeId: React.PropTypes.string
   };
 
   componentDidMount() {
     this.initPlayer();
   }
 
-  componentWillReceiveProps() {
+  componentDidUpdate() {
     this.initPlayer();
   }
 
@@ -102,7 +102,7 @@ class PlayerComponent extends React.Component {
         };
 
         cutSafariVersion = function () {
-          videojs.log('cutSafariVersion',version,os)
+          videojs.log('cutSafariVersion', version, os)
           if (os === 'safari') {
             version = version.substring(0, 1);
           }
@@ -228,9 +228,9 @@ class PlayerComponent extends React.Component {
     return new Promise((resolve, reject) => {
 
       const videoData = Video.get(`videos/${videoId}`);
-
+      const apiPlayerConfig = Player.get(`/player/config`);
+      if (!apiPlayerConfig) return reject('no player config api data');
       if (!videoData) return reject('no video data');
-
 
       if (self.playerInit) return reject('Player init already called');
 
@@ -252,10 +252,11 @@ class PlayerComponent extends React.Component {
 
         self.generateDomTag(videoData).then((trackOpt) => {
           //initialize the player
-          //get config from api
-          //TODO move this in playeraction
-          let apiPlayerConfig = Player.get(`/player/config`).toJS();
-          let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfig));
+          let apiPlayerConfigJs = {};
+          if (apiPlayerConfig) {
+            apiPlayerConfigJs = apiPlayerConfig.toJS();
+          }
+          let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfigJs));
           //merge all configs
           let playerData = _.merge(videoOptions, playerConfig);
           // ==== START hacks config
@@ -322,7 +323,8 @@ class PlayerComponent extends React.Component {
               };
               playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
             }
-          };
+          }
+          ;
 
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks

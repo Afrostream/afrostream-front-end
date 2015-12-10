@@ -35,10 +35,12 @@ class WelcomePage extends React.Component {
     });
   }
 
-  componentDidUpdate() {
-    this.setState({
-      spinner: this.props.spinner
-    });
+  componentDidUpdate(params) {
+    if(params.spinner !== this.props.spinner){
+      this.setState({
+        spinner: this.props.spinner
+      });
+    }
   }
 
   componentWillReceiveProps() {

@@ -193,19 +193,22 @@ export function getProfile() {
 
             if (err) {
               console.log('*** Error loading the profile - most likely the token has expired ***', err);
-              return refreshToken(getState)
-                .then(function (data) {
-                  console.log('getProfile return data', data);
-                  return resolve(mergeProfile(data, {
-                    type: ActionTypes.User.getProfile,
-                    user: null
-                  }));
-                })
-                .catch(function (tokenErr) {
-                  return reject(tokenErr);
-                });
+              //return refreshToken(getState)
+              //  .then(function (data) {
+              //    console.log('getProfile return data', data);
+              //    return resolve(mergeProfile(data, {
+              //      type: ActionTypes.User.getProfile,
+              //      user: null
+              //    }));
+              //  })
+              //  .catch(function (tokenErr) {
+              //    return reject(tokenErr);
+              //  });
+              return resolve(mergeProfile(profile, {
+                type: ActionTypes.User.getProfile,
+                user: null
+              }));
             }
-            profile
             return resolve(mergeProfile(profile, {
               type: ActionTypes.User.getProfile,
               user: null

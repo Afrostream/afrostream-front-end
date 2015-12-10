@@ -19,7 +19,6 @@ export function getMovie(movieId) {
         res: {body: readyMovie}
       };
     }
-    console.log('getMovie', movieId);
     return async api => ({
       type: ActionTypes.Movie.getMovie,
       movieId,
