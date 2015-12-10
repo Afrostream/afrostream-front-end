@@ -9,6 +9,8 @@ import PlayerPage from './components/Player/PlayerPage';
 import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
+import PaymentPage from './components/Payment/PaymentPage.jsx';
+import PaymentForm from './components/Payment/PaymentForm.jsx';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 import * as Static from './components/Static';
 import * as Blog from './components/Blog';
@@ -22,7 +24,7 @@ import CancelSubscription from './components/Account/CancelSubscription';
 import NoMatch from './components/NoMatch';
 
 export default (
-  <Route name="app" component={Application}>
+  <Route name="app" component={Application} scrollOnTransition={true}>
     <Route name="legals" path="/legals" component={Static.Legals}/>
     <Route name="cgu" path="/cgu" component={Static.CGU}/>
     <Route name="faq" path="/faq" component={Static.FAQ}/>
@@ -31,13 +33,16 @@ export default (
     <Route name="login" path="/login" component={LoginPage}/>
     <Route name="post" path="/blog/:postId/:postSlug" component={Blog.View}/>
     <Route name="blog" path="/blog" component={Blog.List}/>
+    <Route name="payment" path="/select-plan" component={PaymentPage} scrollOnTransition={true}>
+      <Route name="plancode" path="/:planCode(/:status)" component={PaymentForm}/>
+    </Route>
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path="/:movieId/:movieSlug(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
              component={PlayerPage}
              scrollOnTransition={true}/>
-      <Route name="compte" path="/compte" component={AccountPage} />
+      <Route name="compte" path="/compte" component={AccountPage}/>
       <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
       <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>

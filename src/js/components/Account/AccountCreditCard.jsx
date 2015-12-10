@@ -37,7 +37,6 @@ if (process.env.BROWSER) {
     const user = User.get('user');
 
     if (user) {
-      debugger;
       return (
         <div className="row-fluid">
         <div className="container">

@@ -7,6 +7,7 @@ import * as MovieActionCreators from '../../actions/movie';
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
+import LoadVideo from '../LoadVideo';
 
 if (canUseDOM) {
   require('gsap');
@@ -14,11 +15,7 @@ if (canUseDOM) {
 }
 
 @connect(({ Movie, Video }) => ({Movie, Video}))
-class Thumb extends React.Component {
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
+class Thumb extends LoadVideo {
 
   constructor(props) {
     super(props);
@@ -37,7 +34,6 @@ class Thumb extends React.Component {
   }
 
   static propTypes = {
-    movie: React.PropTypes.object.isRequired,
     showImage: React.PropTypes.bool,
     viewport: React.PropTypes.object
   };
@@ -232,7 +228,6 @@ class Thumb extends React.Component {
     const {
       props: { movie }
       } = this;
-
     const maxLength = 200;
     let imageStyles = this.getLazyImageUrl();
     let poster = movie.get('poster');
@@ -286,73 +281,6 @@ class Thumb extends React.Component {
         </div>
       </div>
     );
-  }
-
-  loadMovie() {
-    const {
-      props: {
-        dispatch,movie,await
-        }
-      } = this;
-
-    let movieId = movie.get('_id');
-    let movieSlug = movie.get('slug') || '';
-    let link = `/${movieId}/${movieSlug}`;
-
-    return await * [
-        //dispatch(MovieActionCreators.getMovie(movieId)),
-        //dispatch(MovieActionCreators.getSeason(movieId)),
-        this.context.router.transitionTo(link)
-      ];
-  }
-
-  //TODO Connect to last video or first video of season/video
-  loadVideo() {
-    const {
-      props: {
-        dispatch,movie,await
-        }
-      } = this;
-
-    const movieDataId = movie.get('_id');
-    const movieData = movie || Movie.get(`movies/${movieId}`);
-    let type = movieData ? movieData.get('type') : '';
-    let movieSlud = movieData ? movieData.get('slug') : '';
-    let link = `/${movieDataId}/${movieSlud}`;
-    let videoData = movieData.get('video');
-    let videoId = null;
-    if (type === 'serie') {
-      //const seasons = Movie.get(`movies/${movieDataId}/seasons`);
-      const seasons = movieData.get('seasons');
-      if (seasons) {
-        const season = seasons.get(0);
-        const seasonId = season.get('_id');
-        const seasonSlug = season.get('slug');
-        const episodes = season.get('episodes');
-        //TODO get last viewed episode
-        const episode = episodes.get(0);
-        if (episode) {
-          const episodeId = episode.get('_id');
-          const episodeSlug = episode.get('slug');
-          link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
-          videoData = episode.get('video');
-        }
-      }
-    }
-    if (videoData) {
-      videoId = videoData.get('_id');
-      link += `/${videoId}`;
-      return await * [
-          dispatch(EventActionCreators.pinHeader(false)),
-          dispatch(VideoActionCreators.getVideo(videoId)),
-          this.context.router.transitionTo(link)
-        ];
-    }
-    return await * [
-        dispatch(MovieActionCreators.getMovie(movieDataId)),
-        dispatch(MovieActionCreators.getSeason(movieDataId)),
-        this.context.router.transitionTo(link)
-      ];
   }
 }
 

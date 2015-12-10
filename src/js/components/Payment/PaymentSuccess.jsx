@@ -9,30 +9,12 @@ if (process.env.BROWSER) {
   require('./PaymentSuccess.less');
 }
 
-if (canUseDOM) {
-  var paymentSuccessGa = require('react-ga');
-}
-
-@connect(({ User }) => ({User})) class PaymentSuccess extends React.Component {
+@connect(({ User }) => ({User}))
+class PaymentSuccess extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
-
-  componentWillMount() {
-    if (canUseDOM) {
-      var pathName = this.props.pathName + '/success';
-      paymentSuccessGa.initialize(config.google.analyticsKey, {debug: true});
-      paymentSuccessGa.pageview(pathName);
-      this.context.router.transitionTo(pathName);
-    }
-  }
-
-  componentDidMount() {
-    if (canUseDOM) {
-      document.getElementsByTagName('BODY')[0].scrollTop = 0;
-    }
-  }
 
   componentWillUnmount() {
     const {
@@ -42,7 +24,6 @@ if (canUseDOM) {
       } = this;
     dispatch(IntercomActionCreators.removeIntercom());
     this.logOut();
-    this.context.router.transitionTo('/');
   }
 
   logOut() {
@@ -52,35 +33,26 @@ if (canUseDOM) {
         }
       } = this;
 
-    dispatch(UserActionCreators.logOut());
+    if (this.props.isGift) {
+      dispatch(UserActionCreators.logOut());
+    } else {
+      this.context.router.transitionTo(`/`);
+    }
   }
 
   render() {
-    if (this.props.isGift) {
-      return (
-        <div className="payment-success">
-          <h3>Votre cadeau a bien été enregistré</h3>
+    return (
+      <div className="payment-success">
+        <h3>{this.props.isGift ? 'Votre cadeau a bien été enregistré' : 'Votre abonnement a bien été enregistré'}</h3>
 
-          <h3>merci pour votre support</h3>
+        <h3>merci pour votre {this.props.isGift ? 'support' : 'inscription'}</h3>
 
-          <p className="success">
-            <button className="success-button" onClick={::this.logOut}>se deconnecter</button>
-          </p>
-        </div>
-      );
-    } else {
-      return (
-        <div className="payment-success">
-          <h3>Votre abonnement a bien été enregistré</h3>
-
-          <h3>merci pour votre inscription</h3>
-
-          <p className="success">
-            <button className="success-button" onClick={::this.logOut}>Commencez la visite sur le site</button>
-          </p>
-        </div>
-      );
-    }
+        <p className="success">
+          <button className="success-button"
+                  onClick={::this.logOut}>{this.props.isGift ? 'se deconnecter' : 'Commencez la visite sur le site'}</button>
+        </p>
+      </div>
+    );
   }
 
 }

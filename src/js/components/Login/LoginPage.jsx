@@ -18,7 +18,7 @@ if (process.env.BROWSER) {
         dispatch
         }
       } = this;
-    dispatch(UserActionCreators.showLock('login-container'));
+    dispatch(UserActionCreators.showLock('show', 'login-container'));
   }
 
   render() {

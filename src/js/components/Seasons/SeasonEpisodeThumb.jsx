@@ -6,15 +6,12 @@ import * as MovieActionCreators from '../../actions/movie';
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
+import LoadVideo from '../LoadVideo';
 
-@connect(({ Movie }) => ({Movie})) class SeasonEpisodeThumb extends React.Component {
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
+@connect(({ Movie }) => ({Movie}))
+class SeasonEpisodeThumb extends LoadVideo {
 
   static propTypes = {
-    movie: React.PropTypes.object.isRequired,
     season: React.PropTypes.object.isRequired,
     episode: React.PropTypes.object.isRequired
   };
@@ -60,39 +57,6 @@ import config from '../../../../config';
         </div>
       </div>
     );
-  }
-
-  //TODO Connect to last video or first video of season/video
-  loadVideo() {
-    const {
-      props: {
-        dispatch,movie,season,episode,Movie,await
-        }
-      } = this;
-
-    const movieDataId = movie.get('_id');
-    const movieData = movie || Movie.get(`movies/${movieDataId}`);
-    let movieSlud = movieData ? movieData.get('slug') : '';
-    let link = `/${movieDataId}/${movieSlud}`;
-    let videoId = null;
-    const seasonId = season.get('_id');
-    const seasonSlug = season.get('slug');
-    const episodes = season.get('episodes');
-    //TODO get last viewed episode
-    if (episode) {
-      const episodeId = episode.get('_id');
-      const episodeSlug = episode.get('slug');
-      link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
-      videoId = episode.get('videoId');
-    }
-    if (videoId) {
-      link += `/${videoId}`;
-      return await * [
-          dispatch(EventActionCreators.pinHeader(false)),
-          dispatch(VideoActionCreators.getVideo(videoId)),
-          this.context.router.transitionTo(link)
-        ];
-    }
   }
 }
 

@@ -4,6 +4,7 @@ import * as UserActionCreators from '../../../actions/user';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../../../config';
+import _ from 'lodash';
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
@@ -16,30 +17,19 @@ class WelcomeHeader extends React.Component {
     router: PropTypes.object.isRequired
   };
 
+  static propTypes = {
+    promoCode: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    promoCode: ''
+  };
+
   componentDidMount() {
-    if (canUseDOM && this.props.promoCode !== '') {
-      //$('#countdown').text('yo adrian!!!!!!!');
-      /*!
-       * The Final Countdown for jQuery v2.1.0 (http://hilios.github.io/jQuery.countdown/)
-       * Copyright (c) 2015 Edson Hilios
-       *
-       * Permission is hereby granted, free of charge, to any person obtaining a copy of
-       * this software and associated documentation files (the "Software"), to deal in
-       * the Software without restriction, including without limitation the rights to
-       * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-       * the Software, and to permit persons to whom the Software is furnished to do so,
-       * subject to the following conditions:
-       *
-       * The above copyright notice and this permission notice shall be included in all
-       * copies or substantial portions of the Software.
-       *
-       * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-       * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-       * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-       * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-       * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-       * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-       */
+
+    let promoCode = this.hasPromo();
+
+    if (canUseDOM && promoCode) {
       !function (a) {
         "use strict";
         "function" == typeof define && define.amd ? define(["jquery"], a) : a(jQuery)
@@ -136,7 +126,7 @@ class WelcomeHeader extends React.Component {
           })
         }
       });
-      $('#countdown').countdown('2015/12/02')
+      $('#countdown').countdown(promoCode.date)
         .on('update.countdown', function (event) {
           //var format = '%H:%M:%S';
           var format = '';
@@ -173,7 +163,15 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showSignupLock());
+    dispatch(UserActionCreators.showLock('showSignup'));
+  }
+
+  hasPromo() {
+    let pathName = this.context.router.state.location.pathname.split('/').join('');
+    let HasProm = _.find(config.promoCodes, function (promo) {
+      return pathName === promo.code;
+    });
+    return HasProm;
   }
 
   showAfroloveLock() {
@@ -183,17 +181,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showSigninLock());
-  }
-
-  showAfroloveSignupLock() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(UserActionCreators.showSignupLock());
+    dispatch(UserActionCreators.showLock('showSignin'));
   }
 
   showGiftLock() {
@@ -236,12 +224,15 @@ class WelcomeHeader extends React.Component {
 
     let imageStyle = {backgroundImage: `url(${data.poster}?crop=faces&fit=clip&w=1920&h=815&q=${config.images.quality}&fm=${config.images.type})`};
 
+    let promoCode = this.hasPromo();
+
     let welcomeClassesSet = {
-      'welcome-header': true
+      'welcome-header': true,
+      'promo': promoCode
     };
 
-    if (this.props.promoCode === '') {
 
+    if (!promoCode) {
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="afrostream-movie">
@@ -259,38 +250,20 @@ class WelcomeHeader extends React.Component {
           </div>
         </section>
       );
-    } else if (this.props.promoCode === '/AFROLOVE') {
+    } else {
       return (
-        <section className="welcome-header" style={imageStyle}>
-          <div className="promo">
+        <section className={classSet(welcomeClassesSet)} style={imageStyle}>
+          <div className="promo-content">
             <div className="promo-message">
               <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ / MOIS</h2>
-              <h3>avec le code promo: <span>AFROLOVE</span></h3>
+              <h3>avec le code promo: <span>{promoCode.code}</span></h3>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveLock}>PROFITEZ EN
                 MAINTENANT
               </button>
             </div>
-            <h6>*Valable sur la formule mensuelle sans engagement.</h6>
-            <h6>Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
-          </div>
-        </section>
-      );
-    } else {
-      return (
-        <section className="welcome-header" style={imageStyle}>
-          <div className="promo">
-            <div className="promo-message">
-              <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ / MOIS</h2>
-              <h3>avec le code promo: <span>AFROLOVE</span></h3>
-              <h5>Fin de l'offre promotionnelle dans</h5>
-              <div id="countdown"></div>
-              <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveSignupLock}>PROFITEZ
-                EN MAINTENANT
-              </button>
-            </div>
-            <h6>*Valable sur la formule mensuelle sans engagement.</h6>
+            <h6>* Valable sur la formule mensuelle sans engagement.</h6>
             <h6>Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
           </div>
         </section>

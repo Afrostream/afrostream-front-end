@@ -1,52 +1,83 @@
+@import (reference) '../../../styles/config.less';
+
 .spinner {
-  width: 100%;
-  height: 100%;
-  left: 0;
-  right: 0;
-  .spinner-container {
-    width: 40px;
-    height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 
-    position: relative;
-    margin: 100px auto;
+  font-size: 4em;
+  line-height: 1;
 
-    .double-bounce1, .double-bounce2 {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background-color: #333;
-      opacity: 0.6;
-      position: absolute;
-      top: 0;
-      left: 0;
+  width: 2em;
+  height: 2em;
 
-      -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-      animation: sk-bounce 2.0s infinite ease-in-out;
+  margin-left: -1em;
+  margin-top: -1em;
+  opacity: 1;
+  z-index: 1;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    text-shadow: none;
+  }
+  .circular {
+    animation: rotate 2s linear infinite;
+    height: 100%;
+    transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .path {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite,
+    color 6s ease-in-out infinite;
+    stroke-linecap: round;
+  }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
     }
-
-    .double-bounce2 {
-      -webkit-animation-delay: -1.0s;
-      animation-delay: -1.0s;
+  }
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
     }
-
-    @-webkit-keyframes sk-bounce {
-      0%, 100% {
-        -webkit-transform: scale(0.0)
-      }
-      50% {
-        -webkit-transform: scale(1.0)
-      }
+    50% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -35;
     }
-
-    @keyframes sk-bounce {
-      0%, 100% {
-        transform: scale(0.0);
-        -webkit-transform: scale(0.0);
-      }
-      50% {
-        transform: scale(1.0);
-        -webkit-transform: scale(1.0);
-      }
+    100% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -124;
+    }
+  }
+  @keyframes color {
+    100%, 0% {
+      stroke: @color-yellow;
+    }
+    40% {
+      stroke: @color-indigo;
+    }
+    66% {
+      stroke: @color-purple;
+    }
+    80%, 90% {
+      stroke: @color-yellow;
     }
   }
 }

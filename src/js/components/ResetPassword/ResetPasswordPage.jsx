@@ -18,7 +18,7 @@ if (process.env.BROWSER) {
         dispatch
         }
       } = this;
-    dispatch(UserActionCreators.showReset('reset-container'));
+    dispatch(UserActionCreators.showLock('showReset', 'reset-container'));
   }
 
   render() {

@@ -3,19 +3,57 @@ import { prepareRoute } from '../../decorators';
 import WelcomeHeader from './WelcomeComponents/WelcomeHeader';
 import Devices from './WelcomeComponents/Devices';
 import PricingTable from './WelcomeComponents/PricingTable';
+import Spinner from '../Spinner/Spinner';
 import * as EventActionCreators from '../../actions/event';
+
+if (process.env.BROWSER) {
+  require('./WelcomePage.less');
+}
 
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(EventActionCreators.pinHeader(false))
-    ];
-}) class WelcomePage extends React.Component {
+    store.dispatch(EventActionCreators.pinHeader(false))
+  ];
+})
+class WelcomePage extends React.Component {
+
+  static propTypes = {
+    spinner: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    spinner: false
+  };
+
+  state = {
+    spinner: this.props.spinner
+  };
+
+  componentDidMount() {
+    this.setState({
+      spinner: this.props.spinner
+    });
+  }
+
+  componentDidUpdate(params) {
+    if(params.spinner !== this.props.spinner){
+      this.setState({
+        spinner: this.props.spinner
+      });
+    }
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      spinner: this.props.spinner
+    });
+  }
 
   render() {
-    let promoCode = (typeof this.props.promoCode !== 'undefined') ? this.props.promoCode : '';
     return (
-      <div>
-        <WelcomeHeader promoCode={promoCode} />
+      <div className="welcome-page">
+        {this.state.spinner ? <Spinner /> : ''}
+        <WelcomeHeader />
         <Devices />
         <PricingTable />
       </div>

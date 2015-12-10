@@ -3,26 +3,19 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
+  'lock': null,
   'user': null,
-  'token': null
+  'token': null,
+  'refreshToken': null
 });
 
 
 export default createReducer(initialState, {
 
-  [ActionTypes.User.subscribe](state, { res }) {
-    let subscriptionResponse = res.body;
-    subscriptionResponse['newSubscription'] = (typeof res.body['_id'] !== 'undefined') ? true : false;
-    const data = subscriptionResponse;
-
+  [ActionTypes.User.subscribe](state, { res, isGift}) {
+    const data = isGift ? {} : res.body;
     return state.merge({
       ['user']: _.merge(state.get('user').toJS(), data)
-    });
-  },
-
-  [ActionTypes.User.gift](state, { res }) {
-    return state.merge({
-      ['user']: _.merge(state.get('user').toJS(), {})
     });
   },
 
@@ -39,13 +32,11 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.showLock](state, {user,token,refreshToken,afroToken,afroRefreshToken}) {
+  [ActionTypes.User.showLock](state, {user,token,refreshToken}) {
     return state.merge({
       ['user']: user,
       ['token']: token,
-      ['refreshToken']: refreshToken,
-      ['afroToken']: afroToken,
-      ['afroRefreshToken']: afroRefreshToken
+      ['refreshToken']: refreshToken
     });
   },
 

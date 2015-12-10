@@ -1,15 +1,12 @@
 import React, { PropTypes } from 'react';
-import SelectPlan from './SelectPlan';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import * as EventActionCreators from '../../actions/event';
 import * as IntercomActionCreators from '../../actions/intercom';
-import { prepareRoute } from '../../decorators';
+import { prepareRoute,analytics } from '../../decorators';
 import config from '../../../../config';
-
-if (canUseDOM) {
-  var selectPlanGa = require('react-ga');
-}
+import SelectPlan from './SelectPlan';
+import WelcomePage from '../Welcome/WelcomePage';
 
 if (process.env.BROWSER) {
   require('./PaymentPage.less');
@@ -17,9 +14,12 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(EventActionCreators.pinHeader(true))
-    ];
-}) @connect(({ Intercom}) => ({Intercom})) class PaymentPage extends React.Component {
+    store.dispatch(EventActionCreators.pinHeader(true))
+  ];
+})
+@analytics()
+@connect(({ Intercom,User }) => ({Intercom, User}))
+class PaymentPage extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -35,16 +35,21 @@ if (process.env.BROWSER) {
     dispatch(IntercomActionCreators.createIntercom());
   }
 
-  componentWillMount() {
-    if (canUseDOM) {
-      selectPlanGa.initialize(config.google.analyticsKey, {debug: true});
-      selectPlanGa.pageview('/select-plan');
-      this.context.router.transitionTo('/select-plan');
-    }
-  }
-
   render() {
-    return (<SelectPlan />);
+    const { props: { User, children} } = this;
+
+    const user = User.get('user');
+
+    if (!user) {
+      return <WelcomePage/>
+    }
+
+    if (children) {
+      return children;
+    }
+    else {
+      return (<SelectPlan/>)
+    }
   }
 }
 

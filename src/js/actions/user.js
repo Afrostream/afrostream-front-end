@@ -9,28 +9,67 @@ if (canUseDOM) {
   var Auth0Lock = require('auth0-lock');
 }
 
-export function subscribe(data) {
+/**
+ * Merge profile return by auth0 whith afrostream api user data
+ * @param profile
+ * @param data
+ * @returns {Function}
+ */
+const logoutUser = function () {
+  const storageId = config.auth0.token;
+  const storageRefreshId = config.auth0.tokenRefresh;
+  const storageAfroId = config.apiClient.token;
+  const storageAfroRefreshId = config.apiClient.tokenRefresh;
+  localStorage.removeItem(storageId);
+  localStorage.removeItem(storageRefreshId);
+  localStorage.removeItem(storageAfroId);
+  localStorage.removeItem(storageAfroRefreshId);
+  if (canUseDOM) {
+    if (!~window.location.pathname !== '/') {
+      window.location = '/';
+    }
+  }
+};
+
+const mergeProfile = function (profile, data) {
+  let tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
+  let afroRefreshToken = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+  return async api => {
+    try {
+      const userSubscriptions = await api(`/subscriptions/status`, 'GET', {}, null, tokenAfro, afroRefreshToken);
+      //FIXMEget user infos from afrostream api when get recurly api data has merge into user
+      const userInfos = await api(`/users/me`, 'GET', {}, null, tokenAfro, afroRefreshToken);
+      const userMerged = _.merge(profile, userSubscriptions.body || {}, userInfos.body || {});
+
+      userMerged.user_id = userMerged._id || userMerged.user_id;
+      return _.merge(data, {
+        user: userMerged
+      });
+
+    } catch (e) {
+      console.log(e, 'remove user data');
+      logoutUser();
+      return data;
+    }
+  }
+
+};
+
+/**
+ * Subscribe to afrostream plan
+ * @param data
+ * @returns {Function}
+ */
+export function subscribe(data, gift = false) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().User.get('token');
-    let afroToken = getState().User.get('afroToken') || user.get('afro_token');
-    let afroRefreshToken = getState().User.get('afroRefreshToken') || user.get('afro_refresh_token');
+    let afroToken = user.get(config.apiClient.token);
+    let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/`, 'POST', data, token, afroToken, afroRefreshToken)
-    });
-  };
-}
-
-export function gift(data) {
-  return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const token = getState().User.get('token');
-    let afroToken = getState().User.get('afroToken') || user.get('afro_token');
-    let afroRefreshToken = getState().User.get('afroRefreshToken') || user.get('afro_refresh_token');
-    return async api => ({
-      type: ActionTypes.User.gift,
-      res: await api(`/subscriptions/gift`, 'POST', data, token, afroToken, afroRefreshToken)
+      res: await api(`/subscriptions/${gift ? 'gift' : '' }`, 'POST', data, token, afroToken, afroRefreshToken),
+      gift
     });
   };
 }
@@ -39,17 +78,22 @@ export function cancelSubscription() {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().User.get('token');
-    let afroToken = getState().User.get('afroToken') || user.get('afro_token');
+    let afroToken = user.get(config.apiClient.token);
+    let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
     return async api => ({
       type: ActionTypes.User.cancelSubscription,
-      res: await api(`/subscriptions/cancel`, 'GET', {}, token, afroToken)
+      res: await api(`/subscriptions/cancel`, 'GET', {}, token, afroToken, afroRefreshToken)
     });
   };
 }
 
+/**
+ * First call for creating lock widget component
+ * @returns {Function}
+ */
 export function createLock() {
   return (dispatch, getState) => {
-    const options = config.auth0.assetsUrl ? { assetsUrl: config.auth0.assetsUrl } : { };
+    const options = config.auth0.assetsUrl ? {assetsUrl: config.auth0.assetsUrl} : {};
     const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain, options);
     return {
       type: ActionTypes.User.createLock,
@@ -58,14 +102,13 @@ export function createLock() {
   };
 }
 
+/**
+ * Logout user
+ * @returns {Function}
+ */
 export function logOut() {
   return (dispatch, getState) => {
-    const storageId = config.auth0.token;
-    const storageRefreshId = config.auth0.tokenRefresh;
-    const storageAfroId = config.apiClient.token;
-    localStorage.removeItem(storageId);
-    localStorage.removeItem(storageRefreshId);
-    localStorage.removeItem(storageAfroId);
+    logoutUser();
     return {
       type: ActionTypes.User.logOut
     };
@@ -91,6 +134,11 @@ const storeToken = function (id_token, refresh_token, afro_token, afro_refresh_t
   }
 };
 
+/**
+ * Get profile from refresh token
+ * @param getState
+ * @returns {Promise}
+ */
 const refreshToken = function (getState) {
   return new Promise(
     (resolve, reject) => {
@@ -98,357 +146,145 @@ const refreshToken = function (getState) {
       const storageRefreshId = config.auth0.tokenRefresh;
       const idToken = localStorage.getItem(storageRefreshId);
       const refreshToken = getState().User.get('refreshToken') || idToken;
-      if (!refreshToken) {
+      if (!refreshToken || !lock) {
         return reject('no trefresh token');
       }
-      lock.getClient().refreshToken(refreshToken, function (err, delegationResult) {
+      lock.getClient().refreshToken(refreshToken, function (err) {
         if (err) {
           console.log('*** Error loading the refresh token ***', err);
           localStorage.removeItem(storageRefreshId);
           return reject(err);
         }
-
-        lock.getProfile(delegationResult.id_token, function (err, profile) {
-          if (err) {
-            console.log('*** Error loading the refresh token ***', err);
-            localStorage.removeItem(storageRefreshId);
-          }
-          // Get here the new JWT via delegationResult.id_token
-          // store token
-          profile = profile || {};
-          var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-          var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-          storeToken(delegationResult.id_token, null, tokenAfro, tokenRefreshAfro);
-
-          console.log('*** Refreshed token ***', profile);
-          return resolve({
-            type: ActionTypes.User.getProfile,
-            user: profile
-          });
-        });
+        return resolve(getProfile());
       });
     }
   );
 };
 
+/**
+ * Get profile from auth0/afrostream
+ * @returns {Function}
+ */
 export function getProfile() {
-
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
     const token = getState().User.get('token');
-
+    const user = getState().User.get('user');
     return async auth0 =>(
       await new Promise(
         (resolve, reject) => {
-          lock.getProfile(token, function (err, profile) {
-            if (err) {
-              console.log('*** Error loading the profile - most likely the token has expired ***', err);
-              return refreshToken(getState)
-                .then(function (data) {
-                  console.log('getProfile return data', data);
-                  return resolve(data);
-                })
-                .catch(function (tokenErr) {
-                  return reject(tokenErr);
-                });
-            }
-            profile = profile || {};
+          //If user alwready in app
+          if (user) {
+            resolve({
+              type: ActionTypes.User.getProfile,
+              user: user
+            });
+          }
+          if (!lock) {
             return resolve({
               type: ActionTypes.User.getProfile,
-              user: profile
+              user: null
             });
+          }
+          //else get auth0 user and merge it
+          lock.getProfile(token, function (err, profile) {
+            profile = profile || {};
+
+            if (err) {
+              console.log('*** Error loading the profile - most likely the token has expired ***', err);
+              //return refreshToken(getState)
+              //  .then(function (data) {
+              //    console.log('getProfile return data', data);
+              //    return resolve(mergeProfile(data, {
+              //      type: ActionTypes.User.getProfile,
+              //      user: null
+              //    }));
+              //  })
+              //  .catch(function (tokenErr) {
+              //    return reject(tokenErr);
+              //  });
+              return resolve(mergeProfile(profile, {
+                type: ActionTypes.User.getProfile,
+                user: null
+              }));
+            }
+            return resolve(mergeProfile(profile, {
+              type: ActionTypes.User.getProfile,
+              user: null
+            }));
           });
         }
       )
     );
-  };
-}
 
-export function showLock(container = null) {
-  return (dispatch, getState) => {
-    const lock = getState().User.get('lock');
-    let lockOptions = _.cloneDeep(config.auth0.signIn);
-
-    if (container) {
-      _.merge(lockOptions, {
-        popup: false,
-        closable: false,
-        container: container
-      });
-    }
-
-    return async auth0 =>(
-      await new Promise(
-        (resolve, reject) => {
-          lock.show(
-            lockOptions
-            , function (err, profile, id_token, access_token, state, refresh_token) {
-              if (err) {
-                console.log('*** Error loading the profile - most likely the token has expired ***', err);
-                //localStorage.removeItem(storageId);
-                //return reject(err);
-                //try to refresh token session
-                return refreshToken(getState, function (tokenErr, data) {
-                  if (tokenErr) {
-                    return reject(tokenErr);
-                  }
-                  return resolve(data);
-                });
-              }
-              // store token
-              profile = profile || {};
-              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
-              // store refresh_token
-              return resolve({
-                type: ActionTypes.User.showLock,
-                user: profile,
-                token: id_token,
-                refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token],
-                afroRefreshToken: profile[config.apiClient.tokenRefresh]
-              });
-            }
-          );
-        }
-      ));
-  };
-}
-
-export function showSignupLock() {
-  return (dispatch, getState) => {
-    const lock = getState().User.get('lock');
-
-    return async () => {
-      let authorized = true;
-      try {
-        authorized = await isAuthorized();
-      } catch (err) {
-        console.error('showSingupLock error requesting /auth/geo ', err);
-      }
-
-      if ( ! authorized ) {
-        // FIXME: how can we call ModalActionCreators.openGeoWall with dispatch ?
-        return ModalActionCreators.openGeoWall()(dispatch, getState);
-      }
-
-      return await new Promise(
-          (resolve, reject) => {
-            console.log('lock show signup -> lock.showSignup');
-            lock.showSignup(
-              config.auth0.signUp
-              , function (err, profile, id_token, access_token, state, refresh_token) {
-                if (err) {
-                  console.log('*** Error loading the profile - most likely the token has expired ***', err);
-                  //localStorage.removeItem(storageId);
-                  //return reject(err);
-                  //try to refresh token session
-                  return refreshToken(getState, function (tokenErr, data) {
-                    if (tokenErr) {
-                      return reject(tokenErr);
-                    }
-                    return resolve(data);
-                  });
-                }
-                // store token
-                profile = profile || {};
-                var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-                var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-                storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
-                // store refresh_token
-                return resolve({
-                  type: ActionTypes.User.showLock,
-                  user: profile,
-                  token: id_token,
-                  refreshToken: refresh_token,
-                  afroToken: profile[config.apiClient.token],
-                  afroRefreshToken: profile[config.apiClient.tokenRefresh]
-                });
-              }
-            );
-          }
-        );
-    }
   };
 }
 
 export function showGiftLock() {
-  return (dispatch, getState) => {
-    const lock = getState().User.get('lock');
-    return async auth0 =>(
-      await new Promise(
-        (resolve, reject) => {
-          lock.showSignup(
-            config.auth0.gift
-            , function (err, profile, id_token, access_token, state, refresh_token) {
-              if (err) {
-                console.log('*** Error loading the profile - most likely the token has expired ***', err);
-                //localStorage.removeItem(storageId);
-                //return reject(err);
-                //try to refresh token session
-                return refreshToken(getState, function (tokenErr, data) {
-                  if (tokenErr) {
-                    return reject(tokenErr);
-                  }
-                  return resolve(data);
-                });
-              }
-              // store token
-              profile = profile || {};
-              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
-              // store refresh_token
-              return resolve({
-                type: ActionTypes.User.showLock,
-                user: profile,
-                token: id_token,
-                refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token],
-                afroRefreshToken: profile[config.apiClient.tokenRefresh]
-              });
-            }
-          );
-        }
-      ));
-  };
+  return this.showLock('showSignup', null, config.auth0.gift);
 }
 
-export function showReset(container = null) {
+/**
+ * Show auth 0 lock and return tokens
+ * @param type
+ * @param container
+ * @returns {Function}
+ */
+export function showLock(type = 'show', container = null, options = {}) {
   return (dispatch, getState) => {
     const lock = getState().User.get('lock');
     let lockOptions = _.cloneDeep(config.auth0.signIn);
 
     if (container) {
-      _.merge(lockOptions, {
+      lockOptions = _.merge(lockOptions, {
         popup: false,
         closable: false,
         container: container
       });
     }
-
-    return async auth0 =>(
+    if (options) {
+      lockOptions = _.merge(lockOptions, options);
+    }
+    return async auth0 => (
       await new Promise(
         (resolve, reject) => {
-          lock.showReset(
-            lockOptions
-            , function (err, profile, id_token, access_token, state, refresh_token) {
-              if (err) {
-                console.log('*** Error loading the profile - most likely the token has expired ***', err);
-                //localStorage.removeItem(storageId);
-                //return reject(err);
-                //try to refresh token session
-                return refreshToken(getState, function (tokenErr, data) {
-                  if (tokenErr) {
-                    return reject(tokenErr);
-                  }
-                  return resolve(data);
-                });
-              }
-              // store token
-              profile = profile || {};
-              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
-              // store refresh_token
+          lock[type](lockOptions, function (err, profile, access_token, id_token, state, refresh_token) {
+            if (err) {
+              reject(err);
+            }
+            // store token
+            profile = profile || {};
+            var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
+            var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+            storeToken(access_token, refresh_token, tokenAfro, tokenRefreshAfro);
+            if (type === 'showReset' || typeof profile === 'string') {
               return resolve({
                 type: ActionTypes.User.showLock,
-                user: profile,
-                token: id_token,
-                refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token],
-                afroRefreshToken: profile[config.apiClient.tokenRefresh]
+                user: null,
+                token: null,
+                refreshToken: null
               });
             }
-          );
-        }
-      ));
+            // store refresh_token
+            return resolve(mergeProfile(profile, {
+              type: ActionTypes.User.showLock,
+              user: null,
+              token: access_token,
+              refreshToken: refresh_token
+            }));
+          });
+        })
+    )
   };
 }
-
-export function showSigninLock() {
-  return (dispatch, getState) => {
-    const lock = getState().User.get('lock');
-    return async auth0 =>(
-      await new Promise(
-        (resolve, reject) => {
-          lock.show(
-            //FIXME: trouve pourquoi ça marche pas avec config.auth0.signIn
-            config.auth0.signIn
-            /*{
-             dict: 'fr',
-             connections: ['Username-Password-Authentication'],
-             socialBigButtons: true,
-             disableSignupAction: true,
-             rememberLastLogin: false,
-             disableResetAction: false,
-             authParams: {
-             scope: 'openid offline_access'
-             }
-             }*/
-            , function (err, profile, id_token, access_token, state, refresh_token) {
-              if (err) {
-                console.log('*** Error loading the profile - most likely the token has expired ***', err);
-                //localStorage.removeItem(storageId);
-                //return reject(err);
-                //try to refresh token session
-                return refreshToken(getState, function (tokenErr, data) {
-                  if (tokenErr) {
-                    return reject(tokenErr);
-                  }
-                  return resolve(data);
-                });
-              }
-              // store token
-              profile = profile || {};
-              var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-              var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-              storeToken(id_token, refresh_token, tokenAfro, tokenRefreshAfro);
-              // store refresh_token
-              return resolve({
-                type: ActionTypes.User.showLock,
-                user: profile,
-                token: id_token,
-                refreshToken: refresh_token,
-                afroToken: profile[config.apiClient.token],
-                afroRefreshToken: profile[config.apiClient.tokenRefresh]
-              });
-            }
-          );
-        }
-      ));
-  };
-}
-
 
 export function getIdToken() {
   return (dispatch, getState) => {
-    const lock = getState().User.get('lock');
     const storageId = config.auth0.token;
     let idToken = localStorage.getItem(storageId);
-    const refreshToken = getState().User.get('refreshToken');
-
-    return async auth0 =>({
+    return {
       type: ActionTypes.User.getIdToken,
-      token: await new Promise((resolve, reject) => {
-        const authHash = lock.parseHash(window.location.hash);
-        if (!idToken && authHash) {
-          if (authHash.id_token) {
-            idToken = authHash.id_token;
-            storeToken(authHash.id_token);
-            return resolve(idToken);
-          }
-          if (authHash.error) {
-            console.log('Error signing in', authHash);
-            return reject(authHash.error);
-          }
-        }
-        else {
-          return resolve(idToken);
-        }
-      })
-    });
-
+      token: idToken
+    };
   };
 }

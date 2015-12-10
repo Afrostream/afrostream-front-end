@@ -86,6 +86,33 @@ const config = {
   /**
    * Front-End Server
    */
+  promoCodes: [
+    {
+      code: 'PROMOCODE',
+      date: '2015/12/02'
+    },
+    {
+      code: 'PROMOCODE2',
+      date: '2015/12/02'
+    }
+  ],
+  planCodes: [
+    {
+      code: 'afrostreammonthly',
+      date: '2015-10-01T00:00:00:00Z',
+      price: '699'
+    },
+    {
+      code: 'afrostreamambassadeurs',
+      date: '2015-09-01T00:00:00:00Z',
+      price: '5999'
+    },
+    {
+      code: 'afrostreamgift',
+      date: '2015-09-01T00:00:00:00Z',
+      price: '5999'
+    }
+  ],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
   },
@@ -139,25 +166,8 @@ const config = {
         scope: 'openid'
       }
     },
-    signUp: {
-      dict: customDict,
-      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
-      socialBigButtons: true,
-      popup: true,
-      sso: false,
-      authParams: {
-        scope: 'openid'
-      }
-    },
     gift: {
-      dict: giftDict,
-      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
-      socialBigButtons: true,
-      popup: true,
-      sso: false,
-      authParams: {
-        scope: 'openid'
-      }
+      dict: giftDict
     }
   },
   recurly: {
