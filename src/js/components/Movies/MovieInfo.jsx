@@ -35,11 +35,13 @@ class MovieInfo extends LoadVideo {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,
+    load: PropTypes.bool.isRequired,
     maxLength: PropTypes.number.isRequired
   };
 
   static defaultProps = {
-    maxLength: 450
+    maxLength: 450,
+    load: true
   };
 
   initTransition() {
@@ -91,11 +93,12 @@ class MovieInfo extends LoadVideo {
       //TODO gerer le 404 sur la movie
       return (<Spinner />);
     }
-
+    const isSerie = movieData.get('type') === 'serie';
     const classes = classSet({
       'movie': true,
-      'serie': movieData.get('type') === 'serie',
-      'movie--active': this.props.active
+      'serie': isSerie,
+      'movie--active': this.props.active,
+      'movie--btn_play': !this.props.load && isSerie
     });
 
     let poster = movieData.get('poster');

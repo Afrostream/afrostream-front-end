@@ -7,8 +7,6 @@ export default class LoadVideo extends Component {
 
   static propTypes = {
     movie: PropTypes.instanceOf(Immutable.Object),
-    movieId: PropTypes.string,
-    load: PropTypes.bool,
     movieId: PropTypes.string
   };
 
@@ -18,8 +16,7 @@ export default class LoadVideo extends Component {
 
   static defaultProps = {
     movie: null,
-    movieId: null,
-    load: true
+    movieId: null
   };
 
   loadMovie() {
@@ -43,7 +40,7 @@ export default class LoadVideo extends Component {
     }
     const {
       props: {
-        movie,movieId,season,episode,load,Movie
+        movie,movieId,season,episode,Movie
         }
       } = this;
 
@@ -61,7 +58,7 @@ export default class LoadVideo extends Component {
       //  const seasons = movieData.get('seasons');
       //  curSeason = seasons ? seasons.get(0) : null;
       //}
-      if (curSeason && load) {
+      if (curSeason) {
         const seasonId = curSeason.get('_id');
         const seasonSlug = curSeason.get('slug');
         //TODO get last viewed episode
