@@ -258,11 +258,12 @@ export function showLock(type = 'show', container = null, options = {}) {
             var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
             storeToken(access_token, refresh_token, tokenAfro, tokenRefreshAfro);
             // store refresh_token
-            resolve({
+            return resolve(mergeProfile(profile, {
               type: ActionTypes.User.showLock,
+              user: null,
               token: access_token,
               refreshToken: refresh_token
-            });
+            }));
           });
         })
     )

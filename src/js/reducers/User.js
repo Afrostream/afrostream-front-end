@@ -32,7 +32,7 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.showLock](state, {user,token,refreshToken,afroToken,afroRefreshToken}) {
+  [ActionTypes.User.showLock](state, {user,token,refreshToken}) {
     return state.merge({
       ['user']: user,
       ['token']: token,
