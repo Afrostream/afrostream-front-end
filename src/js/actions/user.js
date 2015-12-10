@@ -257,6 +257,14 @@ export function showLock(type = 'show', container = null, options = {}) {
             var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
             var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
             storeToken(access_token, refresh_token, tokenAfro, tokenRefreshAfro);
+            if (type === 'showReset' || typeof profile === 'string') {
+              return resolve({
+                type: ActionTypes.User.showLock,
+                user: null,
+                token: null,
+                refreshToken: null
+              });
+            }
             // store refresh_token
             return resolve(mergeProfile(profile, {
               type: ActionTypes.User.showLock,
