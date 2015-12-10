@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import Immutable from 'immutable';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment'
@@ -7,6 +6,7 @@ import classSet from 'classnames';
 import Billboard from './Billboard'
 import Spinner from '../Spinner/Spinner';
 import config from '../../../../config';
+import LoadVideo from '../LoadVideo';
 
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
@@ -14,7 +14,7 @@ import * as MovieActionCreators from '../../actions/movie';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
+  var {TimelineMax,TweenMax} = window.GreenSockGlobals;
 }
 
 if (process.env.BROWSER) {
@@ -22,7 +22,7 @@ if (process.env.BROWSER) {
 }
 
 @connect(({ Movie }) => ({Movie}))
-class MovieInfo extends React.Component {
+class MovieInfo extends LoadVideo {
 
   constructor(props) {
     super(props);
@@ -35,15 +35,11 @@ class MovieInfo extends React.Component {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,
-    loadEpisode: PropTypes.bool,
-    movieId: PropTypes.string.isRequired,
-    maxLength: PropTypes.number.isRequired,
-    movieObj: PropTypes.instanceOf(Immutable.Object)
+    maxLength: PropTypes.number.isRequired
   };
 
   static defaultProps = {
-    maxLength: 450,
-    loadEpisode: false,
+    maxLength: 450
   };
 
   initTransition() {
@@ -85,10 +81,10 @@ class MovieInfo extends React.Component {
   render() {
 
     const {
-      props: { Movie, active, movieId, movieObj,maxLength}
+      props: { Movie, active, movieId, movie,maxLength}
       } = this;
 
-    const movieData = movieObj || Movie.get(`movies/${movieId}`);
+    const movieData = movie || Movie.get(`movies/${movieId}`);
 
 
     if (!movieData) {
@@ -115,56 +111,6 @@ class MovieInfo extends React.Component {
         </a>
       </div>
     );
-  }
-
-  loadVideo(e) {
-    e.preventDefault();
-    const {
-      props: {
-        dispatch, await,Movie,movieId, movieObj,loadEpisode
-        }
-      } = this;
-
-    const movieData = Movie.get(`movies/${movieId}`) || movieObj;
-    const movieDataId = movieId || movieObj.get('_id');
-    let type = movieData ? movieData.get('type') : '';
-    let movieSlud = movieData ? movieData.get('slug') : '';
-    let link = `/${movieDataId}/${movieSlud}`;
-    let videoData = movieData.get('video');
-    let videoId = null;
-    if (type === 'serie') {
-      const seasons = movieData.get('seasons');
-      if (seasons && this.props.loadEpisode) {
-        const season = seasons.get(0);
-        const seasonId = season.get('_id');
-        const seasonSlug = season.get('slug');
-        const episodes = season.get('episodes');
-        //TODO get last viewed episode
-        const episode = episodes.get(0);
-        if (episode) {
-          const episodeId = episode.get('_id');
-          const episodeSlug = episode.get('slug');
-          link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
-          videoData = episode.get('video');
-        }
-      }
-    }
-    if (videoData) {
-      videoId = videoData.get('_id');
-      link += `/${videoId}`;
-      //return await * [
-      //    dispatch(EventActionCreators.pinHeader(false)),
-      //    dispatch(VideoActionCreators.getVideo(videoId)),
-      //    this.context.router.transitionTo(link)
-      //  ];
-    }
-    return this.context.router.transitionTo(link);
-    //return await * [
-    //    dispatch(MovieActionCreators.getMovie(movieDataId)),
-    //    dispatch(MovieActionCreators.getSeason(movieDataId)),
-    //    this.context.router.transitionTo(link)
-    //  ];
-
   }
 }
 
