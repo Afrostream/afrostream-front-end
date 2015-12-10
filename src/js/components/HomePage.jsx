@@ -17,6 +17,7 @@ class HomePage extends React.Component {
   render() {
     const { props: { User ,children} } = this;
     const token = User.get('token');
+    const pending = User.get('pending');
     const user = User.get('user');
 
     if (user) {
@@ -27,7 +28,7 @@ class HomePage extends React.Component {
         return (<BrowsePage/>)
       }
     } else {
-      return (<WelcomePage spinner={token}/>);
+      return (<WelcomePage spinner={token || pending}/>);
     }
   }
 }

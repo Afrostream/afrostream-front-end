@@ -19,6 +19,12 @@ export default class LoadVideo extends Component {
     movieId: null
   };
 
+  render() {
+    return (
+      <div {...this.props} />
+    );
+  }
+
   loadMovie() {
     const {
       props: {
@@ -40,16 +46,18 @@ export default class LoadVideo extends Component {
     }
     const {
       props: {
-        movie,movieId,season,episode,Movie
+        movie,movieId,season,episode,Movie,User
         }
       } = this;
-
+    //const user = User ? User.get('user') : null;
+    //let planCode = user ? user.get('planCode') : null;
     const movieDataId = movieId ? movieId : movie.get('_id');
     const movieData = movie || Movie.get(`movies/${movieDataId}`);
     let type = movieData ? movieData.get('type') : '';
     let movieSlud = movieData ? movieData.get('slug') : '';
     let link = `/${movieDataId}/${movieSlud}`;
     let videoData = movieData.get('video');
+    //let videoId = planCode ? movieData.get('videoId') : null;
     let videoId = movieData.get('videoId');
     if (type === 'serie') {
       videoId = null;
@@ -77,7 +85,7 @@ export default class LoadVideo extends Component {
       }
     }
     else if (videoData) {
-      videoId = videoId = videoData.get('_id');
+      videoId = videoId || videoData.get('_id');
     }
     link += `${videoId ? '/' + videoId : ''}`;
     return this.context.router.transitionTo(link);

@@ -12,6 +12,7 @@ export default {
     showSigninLock: null,
     logOut: null,
     subscribe: null,
+    pendingUser: null,
     cancelSubscription: null
   }),
 

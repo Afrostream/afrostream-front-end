@@ -22,7 +22,7 @@ class WelcomePage extends React.Component {
   };
 
   static defaultProps = {
-    spinner: false
+    spinner: null
   };
 
   state = {

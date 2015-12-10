@@ -130,6 +130,9 @@ class PlayerComponent extends React.Component {
       },
       isIOS: function () {
         return /iPad|iPhone|iPod|CriOS/.test(navigator.platform);
+      },
+      isAndroid: function () {
+        return detect(/Android/i);
       }
     };
   }
@@ -269,7 +272,7 @@ class PlayerComponent extends React.Component {
             };
             playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
           }
-          //fix Safari < 6.2 can't play hls
+          //Fix Safari < 6.2 can't play hls
           if (ua.isSafari() && ua.getBrowser().version < 537) {
             playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
               return k !== 'dashas';
@@ -279,6 +282,15 @@ class PlayerComponent extends React.Component {
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type !== 'application/dash+xml';
           });
+          //Fix android live dash
+          if (ua.isAndroid() && playerData.hasOwnProperty('live') && playerData.live) {
+            playerData.sources = _.sortBy(playerData.sources, function (k) {
+              return k.type === 'application/dash+xml';
+            });
+            playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+              return k !== 'html5';
+            });
+          }
 
           // ==== END hacks config
           playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');

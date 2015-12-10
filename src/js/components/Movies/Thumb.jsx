@@ -255,10 +255,8 @@ class Thumb extends LoadVideo {
       <div ref="thumbContainer" className="thumb-containter">
         <div ref="thumb" className="thumb"
              onMouseEnter={::this.lunchTransition}
-             onMouseLeave={::this.revertTransition}
-        >
-          <a onClick={::this.loadVideo}
-          >
+             onMouseLeave={::this.revertTransition}>
+          <a onClick={::this.loadVideo}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>
