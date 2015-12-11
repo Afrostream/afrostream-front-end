@@ -3,22 +3,19 @@ import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import CountrySelect from './CountrySelect';
 import GiftDetails from './GiftDetails';
-import PaymentSuccess from './PaymentSuccess';
-import PaymentError from './PaymentError';
+import BuyGiftSuccess from './BuyGiftSuccess';
+import BuyGiftError from './BuyGiftError';
 import Spinner from '../Spinner/Spinner';
 import classSet from 'classnames';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
-import { analytics } from '../../decorators';
 import config from '../../../../config/client';
-import _ from 'lodash';
 
 if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
-@analytics()
-@connect(({ User}) => ({User}))
-class PaymentForm extends React.Component {
+
+@connect(({ User}) => ({User})) class BuyGift extends React.Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -28,48 +25,25 @@ class PaymentForm extends React.Component {
     hasRecurly: true,
     subscriptionStatus: 0,
     loading: false,
-    isGift: 0,
-    pageHeader: 'Commencez votre abonnement'
+    pageHeader: 'Formule Cadeau - 1 an de films et séries afro pour 59,99€'
   };
 
-  hasPlan() {
-    const {
-      props: {
-        params: { planCode }
-        }
-      } = this;
-    return _.find(config.planCodes, function (plan) {
-      return planCode === plan.code;
-    });
-  }
-
-  componentWillMount() {
-    const {
-      props: {
-        params: { planCode }
-        }
-      } = this;
-
-    if (planCode === 'afrostreamgift') {
-      this.setState({
-        isGift: 1,
-        pageHeader: 'AFROSTREAM - Formule Cadeau - 59,99€'
-      });
-    }
-  }
-
   componentDidMount() {
-    $('.recurly-cc-number').payment('formatCardNumber');
-    $('.recurly-cc-exp').payment('formatCardExpiry');
-    $('.recurly-cc-cvc').payment('formatCardCVC');
 
-    //Detect si le payment via la lib recurly est dispo
-    this.setState({
-      hasRecurly: recurly
-    });
+    document.getElementsByTagName('BODY')[0].scrollTop = 0;
+    window.$('.recurly-cc-number').payment('formatCardNumber');
+    window.$('.recurly-cc-exp').payment('formatCardExpiry');
+    window.$('.recurly-cc-cvc').payment('formatCardCVC');
 
-    if (recurly && !recurly.configured) {
+    try {
       recurly.configure(config.recurly.key);
+    } catch (err) {
+      console.log(err);
+      if (typeof err.code !== 'undefined' && err.code !== 'already-configured') {
+        this.setState({
+          hasRecurly: false
+        });
+      }
     }
   }
 
@@ -78,9 +52,7 @@ class PaymentForm extends React.Component {
 
     const {
       props: {
-        User,
-        dispatch,
-        params: { planCode }
+        User,dispatch
         }
       } = this;
 
@@ -110,68 +82,74 @@ class PaymentForm extends React.Component {
       return;
     }
     //Excluded cart type message
-    if (~excludedCards.indexOf($.payment.cardType(cardNumber))) {
+    if (~excludedCards.indexOf(window.$.payment.cardType(cardNumber))) {
       $('#errors').text("Ce type ne carte n'est pas pris en charge actuellement");
       $('.recurly-cc-number').addClass('has-error');
       self.disableForm(false);
       return;
     }
 
-    let currentPlan = this.hasPlan();
-
-    let billingInfo = {
-      'plan-code': planCode,
+    var billingInfo = {
+      'plan-code': 'afrostreamgift',
       // required attributes
       'number': $('.recurly-cc-number').val(),
 
-      'month': $('.recurly-cc-exp').payment('cardExpiryVal').month,
-      'year': $('.recurly-cc-exp').payment('cardExpiryVal').year,
+      'month': window.$('.recurly-cc-exp').payment('cardExpiryVal').month,
+      'year': window.$('.recurly-cc-exp').payment('cardExpiryVal').year,
 
       'cvv': $('.recurly-cc-cvc').val(),
       'first_name': $('#first_name').val(),
       'last_name': $('#last_name').val(),
       'email': user.get('email'),
-      'unit-amount-in-cents': currentPlan.price,
       // optional attributes
-      'starts_at': currentPlan.date,
       'coupon_code': $('#coupon_code').val(),
-      'country': $('#country').val(),
-      'is_gift': '0'
+      'unit-amount-in-cents': '5999',
+      'country': $('#country').val()
     };
+
     recurly.token(billingInfo, function (err, token) {
       // send any errors to the error function below
       if (err) {
         return self.error(err);
       }
       // Otherwise we continue with the form submission
-      let formData = $.extend(billingInfo, {
+      var formData = $.extend(billingInfo, {
         'recurly-token': token.id
       });
 
-      if (self.state.isGift) {
-        billingInfo['gift_first_name'] = $('#gift_first_name').val();
-        billingInfo['gift_last_name'] = $('#gift_last_name').val();
-        billingInfo['gift_email'] = $('#gift_email').val();
-      }
+      billingInfo['gift_first_name'] = $('#gift_first_name').val();
+      billingInfo['gift_last_name'] = $('#gift_last_name').val();
+      billingInfo['gift_email'] = $('#gift_email').val();
 
-      dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
+      dispatch(UserActionCreators.subscribe(formData, '1')).then(function () {
         self.disableForm(false, 1);
-        self.context.router.transitionTo(`/select-plan/${planCode}/success`);
       }).catch(function (err) {
+        let errors = '';
         let message = '';
-        if (err.response && err.response.status === 401) {
+
+        if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+          && err.response.status === 401) {
+          errors = err.response.statusText;
           message = 'Votre session a expiré, veuillez recommencer.';
 
         } else if (err.response && err.response.status === 403) {
           message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
 
-        } else {
+        } else if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
+          && err.response.status === 500) {
+
+          errors = err.response.statusText;
           message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
+
+        } else {
+          $.each(errors, function (i, error) {
+            message += error['#'];
+          });
         }
 
         self.disableForm(false, 2, message);
-        self.context.router.transitionTo(`/select-plan/${planCode}/error`);
       });
+
     });
   }
 
@@ -195,30 +173,25 @@ class PaymentForm extends React.Component {
   }
 
   render() {
-
-    const {
-      props: {
-        params: { status }
-        }
-      } = this;
-
     var spinnerClasses = {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
 
     if (!this.state.hasRecurly) {
-      return (<PaymentError
+
+      return (<BuyGiftError
         title="Paiement indisponible"
         message="Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
         link="mailto:support@afrostream.tv"
         linkMessage="Si le probleme persiste, veuillez contacter notre support technique"
-      />);
+        />);
     }
-    if (status === 'success') {
-      return (<PaymentSuccess isGift={this.state.isGift}/>);
-    } else if (status === 'error') {
-      return (<PaymentError message={this.state.message}/>);
+
+    if (this.state.subscriptionStatus === 1) {
+      return (<BuyGiftSuccess />);
+    } else if (this.state.subscriptionStatus === 2) {
+      return (<BuyGiftError message={this.state.message} />);
     } else {
       return (
         <div className="payment-wrapper">
@@ -303,7 +276,7 @@ class PaymentForm extends React.Component {
                 </div>
               </div>
 
-              <GiftDetails isVisible={this.state.isGift}/>
+              <GiftDetails isVisible="1" />
 
               <div className="row">
                 <div className="form-group col-md-12 conditions-generales">
@@ -341,7 +314,7 @@ class PaymentForm extends React.Component {
                     type="submit"
                     form="subscription-create"
                     className="button-create-subscription"
-                  >DÉMARREZ MAINTENANT
+                    >OFFREZ MAINTENANT
                   </button>
                 </div>
               </div>
@@ -393,4 +366,4 @@ class PaymentForm extends React.Component {
   }
 }
 
-export default PaymentForm;
+export default BuyGift;
