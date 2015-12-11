@@ -302,17 +302,17 @@ class PlayerComponent extends React.Component {
           if (user) {
             let userId = user.get('user_id');
             let token = user.get('afro_token');
-            let splitUser = typeof userId === 'string' ? userId.split('|') : userId;
+            let splitUser = typeof userId === 'string' ? userId.split('|') : [userId];
             userId = _.find(splitUser, function (val) {
               return parseInt(val, 10);
             });
             if (playerData.metrics) {
-              playerData.metrics.user_id = parseInt(userId, 10);
+              playerData.metrics.user_id = userId;
             }
             //encode data to pass it into drmtoday
             if (playerData.drm && playerData.dash && playerData.dash.protData) {
               let protUser = base64.encode(JSON.stringify({
-                userId: parseInt(userId, 10),
+                userId: userId,
                 sessionId: token,
                 merchant: 'afrostream'
               }));
