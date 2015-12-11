@@ -25,7 +25,7 @@ if (process.env.BROWSER) {
     hasRecurly: true,
     subscriptionStatus: 0,
     loading: false,
-    pageHeader: 'AFROSTREAM - Formule Cadeau - Un an à 59,99€'
+    pageHeader: 'Formule Cadeau - 1 an de films et séries afro pour 59,99€'
   };
 
   componentDidMount() {
@@ -310,7 +310,7 @@ if (process.env.BROWSER) {
                     type="submit"
                     form="subscription-create"
                     className="button-create-subscription"
-                    >DÉMARREZ MAINTENANT
+                    >OFFREZ MAINTENANT
                   </button>
                 </div>
               </div>
