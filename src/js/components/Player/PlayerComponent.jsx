@@ -102,7 +102,6 @@ class PlayerComponent extends React.Component {
         };
 
         cutSafariVersion = function () {
-          videojs.log('cutSafariVersion', version, os)
           if (os === 'safari') {
             version = version.substring(0, 1);
           }
@@ -162,7 +161,8 @@ class PlayerComponent extends React.Component {
       // initialize the player
       const movieData = Movie.get(`movies/${movieId}`);
       const ua = this.detectUA();
-      let captions = !ua.isChrome() && !ua.isSafari() && videoData.get('captions');
+      let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537));
+      let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
       let hasSubtiles = captions ? captions.size : false;
       let wrapper = React.findDOMNode(this.refs.wrapper);
       let video = document.createElement('video');
@@ -262,7 +262,9 @@ class PlayerComponent extends React.Component {
           //merge all configs
           let playerData = _.merge(videoOptions, playerConfig);
           // ==== START hacks config
+          let isLive = playerData.hasOwnProperty('live') && playerData.live;
           const ua = self.detectUA();
+          let browserVersion = ua.getBrowser();
 
           if (ua.isIE()) {
             playerData.html5 = {
@@ -272,8 +274,8 @@ class PlayerComponent extends React.Component {
             playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
           }
           //Fix Safari < 6.2 can't play hls
-          if (ua.isSafari() && ua.getBrowser().version < 537) {
-            playerData.techOrder = _.sortBy(playerData.techOrder, function (k, f) {
+          if (ua.isSafari() && (browserVersion.version < 537 || (isLive && browserVersion.version === 537 ))) {
+            playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
               return k !== 'dashas';
             });
           }
@@ -282,7 +284,7 @@ class PlayerComponent extends React.Component {
             return k.type !== 'application/dash+xml';
           });
           //Fix android live dash
-          if (ua.isAndroid() && playerData.hasOwnProperty('live') && playerData.live) {
+          if (ua.isAndroid() && isLive) {
             playerData.sources = _.sortBy(playerData.sources, function (k) {
               return k.type === 'application/dash+xml';
             });
