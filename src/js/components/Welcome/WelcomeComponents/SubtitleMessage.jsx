@@ -1,5 +1,5 @@
 import React from 'react';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 if (process.env.BROWSER) {
   require('./SubtitleMessage.less');

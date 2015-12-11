@@ -4,7 +4,7 @@ import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import config from '../../../../config/client';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 if (process.env.BROWSER) {
   require('./AccountPassword.less');

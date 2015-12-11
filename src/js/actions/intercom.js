@@ -1,5 +1,5 @@
 import ActionTypes from '../consts/ActionTypes';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../config/client';
 
 export function createIntercom() {

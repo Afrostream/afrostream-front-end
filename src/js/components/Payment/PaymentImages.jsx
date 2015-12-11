@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
 import * as CategoryActionCreators from '../../actions/category';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../../config';
 
 if (process.env.BROWSER) {

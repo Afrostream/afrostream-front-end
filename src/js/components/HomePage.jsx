@@ -1,25 +1,12 @@
 import React, { PropTypes }  from 'react';
 import { connect } from 'react-redux';
-import { prepareRoute,analytics } from '../decorators';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import PaymentPage from './Payment/PaymentPage';
 import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
-import * as EventActionCreators from '../actions/event';
-import * as MovieActionCreators from '../actions/movie';
-import * as CategoryActionCreators from '../actions/category';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
-@prepareRoute(async function ({ store, router, params: { movieId } }) {
-  return await * [
-    store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(MovieActionCreators.getMovie(movieId, router)),
-    store.dispatch(CategoryActionCreators.getAllSpots()),
-    store.dispatch(CategoryActionCreators.getMenu()),
-    store.dispatch(CategoryActionCreators.getMeaList())
-  ];
-})
 @connect(({ User }) => ({User}))
 class HomePage extends React.Component {
 

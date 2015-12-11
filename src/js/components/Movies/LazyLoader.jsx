@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
 import Thumb from './Thumb';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 class LazyLoader extends React.Component {
 
   static propTypes = {
@@ -46,8 +47,10 @@ class LazyLoader extends React.Component {
 
     return (
       <div className="slider-container">
-        {movies ? movies.map((movie, i) => <Thumb viewport={this.state.viewport}
-                                                  key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>) : ''}
+        <ReactCSSTransitionGroup transitionName="thumbs" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+          {movies ? movies.map((movie, i) => <Thumb viewport={this.state.viewport}
+                                                    key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>) : ''}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

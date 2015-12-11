@@ -7,7 +7,7 @@ import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import Spinner from '../Spinner/Spinner';
 import classSet from 'classnames';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import { analytics } from '../../decorators';
 import config from '../../../../config/client';
 import _ from 'lodash';

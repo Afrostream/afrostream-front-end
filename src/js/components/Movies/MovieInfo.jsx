@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
 import Spinner from '../Spinner/Spinner';

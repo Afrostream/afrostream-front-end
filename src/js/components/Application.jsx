@@ -6,7 +6,7 @@ import SideBar from './SideBar/SideBar';
 import AlertMessage from './Alert/AlertMessage';
 import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
 import Modal from './Modal/Modal'
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../config';
 import { metasData,analytics } from '../decorators';
