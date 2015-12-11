@@ -132,8 +132,12 @@ if (process.env.BROWSER) {
           errors = err.response.statusText;
           message = 'Votre session a expiré, veuillez recommencer.';
 
+        } else if (err.response && err.response.status === 403) {
+          message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
+
         } else if (typeof err.response !== 'undefined' && typeof err.response.statusText !== 'undefined'
           && err.response.status === 500) {
+
           errors = err.response.statusText;
           message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
 
