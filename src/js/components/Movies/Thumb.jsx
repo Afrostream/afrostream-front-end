@@ -14,7 +14,7 @@ if (canUseDOM) {
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
 }
 
-@connect(({ Movie, Video }) => ({Movie, Video}))
+@connect(({ Movie, Video, User }) => ({Movie, Video, User}))
 class Thumb extends LoadVideo {
 
   constructor(props) {

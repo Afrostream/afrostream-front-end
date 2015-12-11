@@ -260,10 +260,14 @@ export function showLock(type = 'show', container = null, options = {}) {
       await new Promise(
         (resolve, reject) => {
           actionDispatcher(pendingUser(true));
+          lock.once('close', () => {
+            return reject('user close popup lock');
+          });
           lock[type](lockOptions, function (err, profile, access_token, id_token, state, refresh_token) {
             if (err) {
-              actionDispatcher(pendingUser(false));
-              reject(err);
+              //on ne reject pas car l'action n'est psa fini, l'user est toujours en essai de connection
+              //return reject(err);
+              return;
             }
             // store token
             profile = profile || {};
