@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import * as EventActionCreators from '../../actions/event';
 import * as IntercomActionCreators from '../../actions/intercom';
 import { prepareRoute,analytics } from '../../decorators';

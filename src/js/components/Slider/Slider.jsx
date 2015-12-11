@@ -1,6 +1,6 @@
-import React from 'react/addons';
+import React from 'react';
 import penner from 'penner';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment'
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 
 if (canUseDOM) {

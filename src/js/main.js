@@ -1,4 +1,5 @@
-import React from 'react';
+import React from'react';
+import ReactDOM from'react-dom';
 import History from 'react-router/lib/BrowserHistory';
 import Router from './components/Router';
 import { Provider } from 'react-redux';
@@ -8,7 +9,7 @@ import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient } from '../../config';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 superAgentMock(request);
 
 if (canUseDOM) {
@@ -36,7 +37,7 @@ const api = createAPI(
 /* global __INITIAL_STATE__:true */
 const store = createStore(api, __INITIAL_STATE__);
 
-React.render(
+ReactDOM.render(
   <Provider  {...{store}}>
     {() => <Router {...{history}} />}
   </Provider>,

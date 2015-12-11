@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 
 if (process.env.BROWSER) {
   require('./Spinner.less');

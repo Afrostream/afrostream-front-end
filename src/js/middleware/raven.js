@@ -1,5 +1,5 @@
 import Raven from 'raven-js'
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../config';
 export default function ({ getState }) {
   /*

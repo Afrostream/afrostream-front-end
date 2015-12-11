@@ -5,7 +5,7 @@ import BrowsePage from './Browse/BrowsePage';
 import PaymentPage from './Payment/PaymentPage';
 import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 @connect(({ User }) => ({User}))
 class HomePage extends React.Component {

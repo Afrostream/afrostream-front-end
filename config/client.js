@@ -56,7 +56,7 @@ const protData = {
   }
 };
 
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 const auth0ClientId = process.env.AUTH0_CLIENT_ID || 'dev';
 

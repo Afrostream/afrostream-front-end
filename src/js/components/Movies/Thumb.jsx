@@ -2,7 +2,7 @@ import React ,{ PropTypes } from 'react';
 import Router from 'react-router';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import * as MovieActionCreators from '../../actions/movie';
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
