@@ -36,10 +36,13 @@ const mergeProfile = function (profile, data) {
   let afroRefreshToken = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
   return async api => {
     try {
-      const userSubscriptions = await api(`/subscriptions/status`, 'GET', {}, null, tokenAfro, afroRefreshToken);
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
       const userInfos = await api(`/users/me`, 'GET', {}, null, tokenAfro, afroRefreshToken);
-      const userMerged = _.merge(profile, userSubscriptions.body || {}, userInfos.body || {});
+      //TODO add subsrciptions status in user
+      const userSubscriptions = {
+        body: {}
+      };//await api(`/subscriptions/status`, 'GET', {}, null, tokenAfro, afroRefreshToken);
+      const userMerged = _.merge(profile, userInfos.body || {}, userSubscriptions.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
       return _.merge(data, {
