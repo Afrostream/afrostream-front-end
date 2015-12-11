@@ -248,6 +248,7 @@ class PlayerComponent extends React.Component {
           if (posterImg) {
             posterImgImgix.poster = `${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=${config.images.quality}&fm=${config.images.type}`;
             videoOptions = _.merge(videoOptions, posterImgImgix);
+            videoOptions.live = movie.get('live');
           }
         }
 
