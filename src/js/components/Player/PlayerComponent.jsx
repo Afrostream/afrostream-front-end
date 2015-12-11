@@ -131,9 +131,7 @@ class PlayerComponent extends React.Component {
       isIOS: function () {
         return /iPad|iPhone|iPod|CriOS/.test(navigator.platform);
       },
-      isAndroid: function () {
-        return detect(/Android/i);
-      }
+      isAndroid: detect(/Android/i)
     };
   }
 
