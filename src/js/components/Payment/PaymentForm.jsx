@@ -138,7 +138,6 @@ class PaymentForm extends React.Component {
       'country': $('#country').val(),
       'is_gift': '0'
     };
-
     recurly.token(billingInfo, function (err, token) {
       // send any errors to the error function below
       if (err) {
@@ -160,9 +159,12 @@ class PaymentForm extends React.Component {
         self.context.router.transitionTo(`/select-plan/${planCode}/success`);
       }).catch(function (err) {
         let message = '';
-
         if (err.response && err.response.status === 401) {
           message = 'Votre session a expiré, veuillez recommencer.';
+
+        } else if (err.response && err.response.status === 403) {
+          message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
+
         } else {
           message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
         }
