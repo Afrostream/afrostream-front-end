@@ -187,10 +187,17 @@ export function getProfile() {
         (resolve, reject) => {
           //If user alwready in app
           if (user) {
-            resolve({
-              type: ActionTypes.User.getProfile,
-              user: user
-            });
+            if (user.get('planCode') === undefined) {
+              return resolve(mergeProfile(user, {
+                type: ActionTypes.User.getProfile,
+                user: null
+              }));
+            } else {
+              return resolve({
+                type: ActionTypes.User.getProfile,
+                user: user
+              });
+            }
           }
           if (!lock) {
             return resolve({
@@ -217,10 +224,10 @@ export function getProfile() {
               //  .catch(function (tokenErr) {
               //    return reject(tokenErr);
               //  });
-              return resolve(mergeProfile(profile, {
+              return resolve({
                 type: ActionTypes.User.getProfile,
                 user: null
-              }));
+              });
             }
             return resolve(mergeProfile(profile, {
               type: ActionTypes.User.getProfile,
