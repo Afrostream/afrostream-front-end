@@ -34,6 +34,7 @@ const logoutUser = function () {
 const mergeProfile = function (profile, data) {
   let tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
   let afroRefreshToken = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+
   return async api => {
     try {
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
@@ -188,14 +189,14 @@ export function getProfile() {
           //If user alwready in app
           if (user) {
             if (user.get('planCode') === undefined) {
-              return resolve(mergeProfile(user, {
+              return resolve(mergeProfile(user.toJS(), {
                 type: ActionTypes.User.getProfile,
                 user: null
               }));
             } else {
               return resolve({
                 type: ActionTypes.User.getProfile,
-                user: user
+                user: user.toJS()
               });
             }
           }
