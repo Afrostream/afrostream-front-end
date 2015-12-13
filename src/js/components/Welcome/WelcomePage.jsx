@@ -18,7 +18,7 @@ if (process.env.BROWSER) {
 class WelcomePage extends React.Component {
 
   static propTypes = {
-    spinner: React.PropTypes.string
+    spinner: React.PropTypes.bool
   };
 
   static defaultProps = {

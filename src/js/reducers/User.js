@@ -42,12 +42,19 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.getProfile](state, { user }) {
+  [ActionTypes.User.getProfile](state, { user ,token,refreshToken}) {
     console.log('ActionTypes.User.getProfile', user);
+    let tokenMerge = {};
+    if (token !== undefined) {
+      tokenMerge = {
+        ['token']: token,
+        ['refreshToken']: refreshToken
+      };
+    }
     return state.merge({
       ['user']: user,
       ['pending']: false
-    });
+    }, tokenMerge);
   },
 
   [ActionTypes.User.createLock](state, { lock }) {
