@@ -29,22 +29,11 @@ class GoBack extends React.Component {
   };
 
   navigationGoBack(event) {
-    event.preventDefault();
-
     let router = this.context.router;
-    if (!router.goBack()) {
-      router.transitionTo('/');
-    }
+    router.goBack()
   }
 
   render() {
-
-    const {
-      props: {
-        Event
-        }
-      } = this;
-
     let returnClassesSet = {
       'return-btn': true,
       'btn': true,
@@ -54,9 +43,9 @@ class GoBack extends React.Component {
     };
 
     return (
-      <a href="#" className={classSet(returnClassesSet)} onClick={::this.navigationGoBack}>
+      <button className={classSet(returnClassesSet)} onClick={::this.navigationGoBack}>
         <span className="fa fa-caret-left"></span><span className="return-btn-label">RETOUR</span>
-      </a>
+      </button>
     );
   }
 }
