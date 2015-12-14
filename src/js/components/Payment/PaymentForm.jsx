@@ -53,7 +53,7 @@ class PaymentForm extends React.Component {
     if (planCode === 'afrostreamgift') {
       this.setState({
         isGift: 1,
-        pageHeader: 'AFROSTREAM - Formule Cadeau - 59,99€'
+        pageHeader: 'Formule Cadeau - 1 an de films et séries afro pour 59,99€'
       });
     }
   }
@@ -341,7 +341,7 @@ class PaymentForm extends React.Component {
                     type="submit"
                     form="subscription-create"
                     className="button-create-subscription"
-                  >DÉMARREZ MAINTENANT
+                  >{this.state.isGift ? 'OFFREZ' :'DÉMARREZ' } MAINTENANT
                   </button>
                 </div>
               </div>

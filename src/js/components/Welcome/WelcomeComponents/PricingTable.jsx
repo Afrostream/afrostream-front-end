@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../../actions/user';
 
 if (process.env.BROWSER) {
   require('./PricingTable.less');
 }
-@connect(({ User }) => ({User})) class PricingTable extends React.Component {
+@connect(({ User }) => ({User}))
+class PricingTable extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
 
   showLock() {
     const {
@@ -23,7 +28,7 @@ if (process.env.BROWSER) {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock());
+    dispatch(UserActionCreators.showGiftLock(this.context.router));
   }
 
   render() {
