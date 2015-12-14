@@ -209,7 +209,6 @@ export function getProfile() {
           //else get auth0 user and merge it
           lock.getProfile(token, function (err, profile) {
             profile = profile || {};
-
             if (err) {
               console.log('*** Error loading the profile - most likely the token has expired ***', err);
               return resolve({
