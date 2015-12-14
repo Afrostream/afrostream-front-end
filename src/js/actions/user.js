@@ -34,6 +34,7 @@ const logoutUser = function () {
 const mergeProfile = function (profile, data) {
   let tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
   let afroRefreshToken = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+
   return async api => {
     try {
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
@@ -184,18 +185,18 @@ export function getProfile() {
     const user = getState().User.get('user');
     return async auth0 =>(
       await new Promise(
-        (resolve, reject) => {
+        (resolve) => {
           //If user alwready in app
           if (user) {
             if (user.get('planCode') === undefined) {
-              return resolve(mergeProfile(user, {
+              return resolve(mergeProfile(user.toJS(), {
                 type: ActionTypes.User.getProfile,
                 user: null
               }));
             } else {
               return resolve({
                 type: ActionTypes.User.getProfile,
-                user: user
+                user: user.toJS()
               });
             }
           }
@@ -205,28 +206,15 @@ export function getProfile() {
               user: null
             });
           }
-          //fixme this throw error
-          //actionDispatcher(pendingUser(true));
           //else get auth0 user and merge it
           lock.getProfile(token, function (err, profile) {
             profile = profile || {};
-
             if (err) {
               console.log('*** Error loading the profile - most likely the token has expired ***', err);
-              //return refreshToken(getState)
-              //  .then(function (data) {
-              //    console.log('getProfile return data', data);
-              //    return resolve(mergeProfile(data, {
-              //      type: ActionTypes.User.getProfile,
-              //      user: null
-              //    }));
-              //  })
-              //  .catch(function (tokenErr) {
-              //    return reject(tokenErr);
-              //  });
               return resolve({
                 type: ActionTypes.User.getProfile,
-                user: null
+                token: null,
+                refreshToken: null
               });
             }
             return resolve(mergeProfile(profile, {

@@ -10,11 +10,6 @@ if (process.env.BROWSER) {
   require('./AccountPage.less');
 }
 
-@prepareRoute(async function ({ store }) {
-  return await * [
-    store.dispatch(UserActionCreators.getProfile())
-  ];
-})
 @connect(({ User }) => ({User}))
 class AccountPage extends React.Component {
 
