@@ -23,7 +23,6 @@ class PaymentSuccess extends React.Component {
         }
       } = this;
     dispatch(IntercomActionCreators.removeIntercom());
-    this.logOut();
   }
 
   logOut() {
@@ -33,11 +32,7 @@ class PaymentSuccess extends React.Component {
         }
       } = this;
 
-    if (this.props.isGift) {
-      dispatch(UserActionCreators.logOut());
-    } else {
-      this.context.router.transitionTo(`/`);
-    }
+    dispatch(UserActionCreators.logOut());
   }
 
   render() {
@@ -48,8 +43,9 @@ class PaymentSuccess extends React.Component {
         <h3>merci pour votre {this.props.isGift ? 'support' : 'inscription'}</h3>
 
         <p className="success">
-          <button className="success-button"
-                  onClick={::this.logOut}>{this.props.isGift ? 'se deconnecter' : 'Commencez la visite sur le site'}</button>
+          <Link className="success-button"
+                to="/">{this.props.isGift ? 'Continuer' : 'Commencez'} la visite sur le site
+          </Link>
         </p>
       </div>
     );
