@@ -64,7 +64,7 @@ const mergeProfile = function (profile, data) {
  * @param data
  * @returns {Function}
  */
-export function subscribe(data, gift = false) {
+export function subscribe(data, isGift = false) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().User.get('token');
@@ -72,8 +72,8 @@ export function subscribe(data, gift = false) {
     let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/${gift ? 'gift' : '' }`, 'POST', data, token, afroToken, afroRefreshToken),
-      gift
+      res: await api(`/subscriptions/${isGift ? 'gift' : '' }`, 'POST', data, token, afroToken, afroRefreshToken),
+      isGift
     });
   };
 }

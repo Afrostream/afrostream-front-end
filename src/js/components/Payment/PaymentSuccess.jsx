@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
 import * as IntercomActionCreators from '../../actions/intercom';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import { Link } from 'react-router';
 import config from '../../../../config';
 
 if (process.env.BROWSER) {
