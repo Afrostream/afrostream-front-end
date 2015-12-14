@@ -255,16 +255,16 @@ class WelcomeHeader extends React.Component {
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="promo-content">
             <div className="promo-message">
-              <h2>2 MOIS DE FILMS ET SÉRIES POUR 1€ / MOIS</h2>
+              <h2>3,50€ POUR LES PREMIER 2 MOIS DE FILMS ET SÉRIES AFRO</h2>
               <h3>avec le code promo: <span>{promoCode.code}</span></h3>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
-              <button className="subscribe-button-promo" type=" button" onClick={::this.showAfroloveLock}>PROFITEZ EN
+              <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN
                 MAINTENANT
               </button>
             </div>
             <h6>* Valable sur la formule mensuelle sans engagement.</h6>
-            <h6>Soit 1 euro au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
+            <h6>Soit 3,50 euros au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
           </div>
         </section>
       );
