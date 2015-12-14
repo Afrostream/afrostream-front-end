@@ -191,7 +191,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock());
+    dispatch(UserActionCreators.showGiftLock(this.context.router));
   }
 
   render() {

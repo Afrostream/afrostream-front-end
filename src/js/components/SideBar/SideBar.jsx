@@ -9,7 +9,8 @@ if (process.env.BROWSER) {
   require('./SideBar.less');
 }
 
-@connect(({ User,Event }) => ({User, Event})) class SideBar extends React.Component {
+@connect(({ User,Event }) => ({User, Event}))
+class SideBar extends React.Component {
 
   componentDidMount() {
     $(document).on('mouseup', this.toggleSideBar.bind(this));
@@ -35,8 +36,6 @@ if (process.env.BROWSER) {
 
   render() {
 
-    let cadeauStyle = {color: '#ffc809'};
-
     return (
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
@@ -46,7 +45,7 @@ if (process.env.BROWSER) {
             </a>
           </li>
           <li><Link to="/compte">Mon compte</Link></li>
-          <li><Link to="/offrir-cadeau" style={cadeauStyle}>Offrir un cadeau</Link></li>
+          <li><Link to="/select-plan/afrostreamgift/checkout" className="sidebar-nav_yellow">Offrir un cadeau</Link></li>
           <li role="separator" className="divider"></li>
           <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
         </ul>

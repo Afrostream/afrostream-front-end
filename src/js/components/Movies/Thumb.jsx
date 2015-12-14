@@ -256,7 +256,7 @@ class Thumb extends LoadVideo {
         <div ref="thumb" className="thumb"
              onMouseEnter={::this.lunchTransition}
              onMouseLeave={::this.revertTransition}>
-          <a onClick={::this.loadVideo}>
+          <a onClick={::this.loadVideo} onTouchEnd={::this.loadVideo}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
               <i className="btn-play"></i>
             </div>
@@ -265,9 +265,9 @@ class Thumb extends LoadVideo {
           <div ref="info" className="thumb-info" style={imagePoster}>
             <div className="thumb-info__txt">
               <div className="thumb-info__title"><a
-                onClick={::this.loadMovie}>{title}</a></div>
+                onClick={::this.loadMovie} onTouchEnd={::this.loadMovie}>{title}</a></div>
               <div className="thumb-info__synopsis"><a
-                onClick={::this.loadMovie}>{synopsis}</a></div>
+                onClick={::this.loadMovie} onTouchEnd={::this.loadMovie}>{synopsis}</a></div>
             </div>
             {/*<div className="thumb-info__btn">
              <button className="btn btn-xs btn-thumb" href="compte/add">
