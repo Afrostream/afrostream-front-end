@@ -88,12 +88,12 @@ const config = {
    */
   promoCodes: [
     {
-      code: 'PROMOCODE',
-      date: '2015/12/02'
+      code: 'afroyoutube',
+      date: '2016/01/03'
     },
     {
-      code: 'PROMOCODE2',
-      date: '2015/12/02'
+      code: 'orangeisthenewblack',
+      date: '2016/01/03'
     }
   ],
   planCodes: [
