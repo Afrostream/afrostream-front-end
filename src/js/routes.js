@@ -17,7 +17,6 @@ import * as Blog from './components/Blog';
 
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
-import BuyGift from './components/Payment/BuyGift';
 //import AccountEmail from './components/Account/AccountEmail';
 //import AccountPassword from './components/Account/AccountPassword';
 //import AccountCreditCard from './components/Account/AccountCreditCard';
@@ -44,7 +43,6 @@ export default (
              component={PlayerPage}
              scrollOnTransition={true}/>
       <Route name="compte" path="/compte" component={AccountPage} />
-      <Route name="buyGift" path="/offrir-cadeau" component={BuyGift} />
       <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
       <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>
