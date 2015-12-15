@@ -255,7 +255,7 @@ class WelcomeHeader extends React.Component {
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="promo-content">
             <div className="promo-message">
-              <h2>3,50€ POUR LES PREMIER 2 MOIS DE FILMS ET SÉRIES AFRO</h2>
+              <h2>3,50€ POUR LES 2 PREMIER MOIS DE FILMS ET SÉRIES AFRO</h2>
               <h3>avec le code promo: <span>{promoCode.code}</span></h3>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>

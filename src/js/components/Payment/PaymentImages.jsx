@@ -47,7 +47,7 @@ if (process.env.BROWSER) {
    * @return  {object}  thumbsRow   array containing react markup
    */
   generateThumbRow(thumbsArray) {
-    self = this;
+    let self = this;
     let thumbsRow = [];
     thumbsArray.forEach(function(thumbUrl) {
 
