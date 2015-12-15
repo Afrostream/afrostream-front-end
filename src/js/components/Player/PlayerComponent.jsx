@@ -382,9 +382,8 @@ class PlayerComponent extends React.Component {
 
   triggerError(e) {
     if (Raven && Raven.isSetup()) {
-      var mess = e ? e.message : this.player.error().message
       // Send the report.
-      Raven.captureException(e.message, {
+      Raven.captureException(e, {
         extra: {
           error: this.player.error(),
           cache: this.player.getCache()
