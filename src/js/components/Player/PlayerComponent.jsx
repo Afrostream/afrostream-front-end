@@ -383,7 +383,7 @@ class PlayerComponent extends React.Component {
   triggerError(e) {
     if (Raven && Raven.isSetup()) {
       // Send the report.
-      Raven.captureException(e, {
+      Raven.captureException(this.player.error(), {
         extra: {
           cache: this.player.getCache()
         }
