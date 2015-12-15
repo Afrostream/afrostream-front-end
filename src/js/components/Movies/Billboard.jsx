@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import { Link } from 'react-router';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
@@ -36,10 +37,10 @@ class Billboard extends React.Component {
   }
 
   initTransition() {
-    const titleEl = React.findDOMNode(this.refs.slTitle);
-    const synopsisE = React.findDOMNode(this.refs.slSynopsis);
-    const slTag = React.findDOMNode(this.refs.slTag || this.refs.slNull);
-    const slSeasons = React.findDOMNode(this.refs.slSeasons || this.refs.slSeasonNull);
+    const titleEl = ReactDOM.findDOMNode(this.refs.slTitle);
+    const synopsisE = ReactDOM.findDOMNode(this.refs.slSynopsis);
+    const slTag = ReactDOM.findDOMNode(this.refs.slTag || this.refs.slNull);
+    const slSeasons = ReactDOM.findDOMNode(this.refs.slSeasons || this.refs.slSeasonNull);
     this.tlIn = new TimelineMax({paused: true});
     this.tlIn.add(TweenMax.staggerFromTo([synopsisE, slSeasons, titleEl, slTag], 0.3,
       {transform: 'translateX(-200px)'},

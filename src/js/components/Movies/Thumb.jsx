@@ -1,5 +1,6 @@
 import React ,{ PropTypes } from 'react';
 import Router from 'react-router';
+import ReactDOM from'react-dom';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import config from '../../../../config';
@@ -52,7 +53,7 @@ class Thumb extends LoadVideo {
 
   componentDidUpdate(prevProps) {
     if (!this.props.showImages && prevProps.viewport) {
-      let element = React.findDOMNode(this);
+      let element = ReactDOM.findDOMNode(this);
       this.updateImagePosition(element.offsetLeft, element.offsetHeight);
     }
   }
