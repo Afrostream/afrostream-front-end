@@ -39,7 +39,7 @@ const store = createStore(api, __INITIAL_STATE__);
 
 ReactDOM.render(
   <Provider  {...{store}}>
-    {() => <Router {...{history}} />}
+    <Router {...{history}} />
   </Provider>,
   document.getElementById('main')
 );

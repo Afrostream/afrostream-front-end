@@ -6,7 +6,8 @@ if (process.env.BROWSER) {
   require('./Navigation.less');
 }
 
-@connect(({ Category }) => ({Category})) class Navigation extends React.Component {
+@connect(({ Category }) => ({Category}))
+class Navigation extends React.Component {
 
   render() {
     const {
@@ -21,14 +22,14 @@ if (process.env.BROWSER) {
       <div className="navigation hidden-xs">
         {
           menu ?
-            <ul className="navigation-list" role="navigation">
-              {menu.map((item, i) => <NavigationItem active={categoryId == item.get('_id')}
-                                                     key={`menu-${item.get('_id')}-${i}`}
-                { ...{item}}/>)}
-            </ul>
+          <ul className="navigation-list" role="navigation">
+            {menu.map((item, i) => <NavigationItem active={categoryId == item.get('_id')}
+                                                   key={`menu-${item.get('_id')}-${i}`}
+              { ...{item}}/>)}
+          </ul>
             :
-            <div />
-        }
+          <div />
+          }
       </div>
     );
   }

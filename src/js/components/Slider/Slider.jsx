@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from'react-dom';
 import penner from 'penner';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames';
@@ -52,7 +53,7 @@ class Slider extends React.Component {
   }
 
   componentDidMount() {
-    this.container = React.findDOMNode(this).lastChild;
+    this.container = ReactDOM.findDOMNode(this).lastChild;
 
     this.initTimeline();
     this.container.addEventListener('scroll', this.handleScroll.bind(this));
@@ -115,8 +116,8 @@ class Slider extends React.Component {
   }
 
   initTimeline() {
-    const arrowL = React.findDOMNode(this.refs.arrowLeft);
-    const arrowR = React.findDOMNode(this.refs.arrowRight);
+    const arrowL = ReactDOM.findDOMNode(this.refs.arrowLeft);
+    const arrowR = ReactDOM.findDOMNode(this.refs.arrowRight);
     this.tlIn = new TimelineMax({paused: true});
     this.tlIn.add(TweenMax.to(arrowL, .3,
       {
@@ -178,7 +179,7 @@ class Slider extends React.Component {
    * Alert the lazy loaded components inside the slider that something has changed.
    */
   triggerLazyLoading() {
-    let item = React.findDOMNode(this).lastChild.firstChild;
+    let item = ReactDOM.findDOMNode(this).lastChild.firstChild;
     let stepWidth = item.offsetWidth * this.props.step;
     if (typeof this.context.lazyLoadTrigger !== 'undefined') {
       // The overlap is set to the value of the single step scroll

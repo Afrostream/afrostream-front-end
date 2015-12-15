@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
@@ -63,7 +64,7 @@ if (process.env.BROWSER) {
     // Maximum number of pixels a user can move between taps
       TAP_DISTANCE = 10;
 
-    const container = React.findDOMNode(this.refs.slC);
+    const container = ReactDOM.findDOMNode(this.refs.slC);
 
     container.addEventListener('touchstart', function (e) {
       // Stop click and other mouse events from triggering also

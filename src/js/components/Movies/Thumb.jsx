@@ -1,4 +1,5 @@
 import React ,{ PropTypes } from 'react';
+import ReactDOM from'react-dom';
 import Router from 'react-router';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
@@ -65,12 +66,12 @@ class Thumb extends LoadVideo {
     this.isMobileWebkit = /WebKit/.test(ua) && /Mobile/.test(ua);
     if (this.isMobileWebkit) return;
 
-    this.container = React.findDOMNode(this.refs.thumbContainer);
+    this.container = ReactDOM.findDOMNode(this.refs.thumbContainer);
     this.slider = this.container.parentNode;
 
-    this.thumbBackground = React.findDOMNode(this.refs.thumbBackground);
-    const thumb = React.findDOMNode(this.refs.thumb);
-    const info = React.findDOMNode(this.refs.info);
+    this.thumbBackground = ReactDOM.findDOMNode(this.refs.thumbBackground);
+    const thumb = ReactDOM.findDOMNode(this.refs.thumb);
+    const info = ReactDOM.findDOMNode(this.refs.info);
     TweenMax.set(this.container, {
       transformStyle: 'preserve-3d',
       perspective: this.perspective,
@@ -160,7 +161,7 @@ class Thumb extends LoadVideo {
 
   componentDidUpdate(prevProps) {
     if (!this.props.showImages && prevProps.viewport) {
-      let element = React.findDOMNode(this);
+      let element = ReactDOM.findDOMNode(this);
       this.updateImagePosition(element.offsetLeft, element.offsetHeight);
     }
   }
@@ -179,7 +180,7 @@ class Thumb extends LoadVideo {
     if ((min <= (left + width) && left <= (max - threshold))) {
       this.setShowImage(true);
     }
-    //let element = React.findDOMNode(this);
+    //let element = ReactDOM.findDOMNode(this);
     //
     //if (element.getBoundingClientRect().left < window.innerWidth + threshold) {
     //  this.setShowImage(true);

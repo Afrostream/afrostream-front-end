@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from'react-dom';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
@@ -45,8 +46,8 @@ class MovieInfo extends LoadVideo {
   };
 
   initTransition() {
-    const container = React.findDOMNode(this.refs.slContainer);
-    const backGd = React.findDOMNode(this.refs.slBackground);
+    const container = ReactDOM.findDOMNode(this.refs.slContainer);
+    const backGd = ReactDOM.findDOMNode(this.refs.slBackground);
     this.tlIn = new TimelineMax({paused: true});
     if (!container || !backGd) {
       return;
@@ -109,7 +110,7 @@ class MovieInfo extends LoadVideo {
       <div ref="slContainer" className={classes}>
         <a href="" onClick={::this.loadVideo} onTouchEnd={::this.loadVideo}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
-          <a href="" className="btn-play"/>
+          <div className="btn-play"/>
           {movieData ? <Billboard {...{active, movieData, maxLength}} /> : ''}
         </a>
       </div>
