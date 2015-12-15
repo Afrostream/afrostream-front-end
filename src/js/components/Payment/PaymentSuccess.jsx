@@ -1,10 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
-import * as IntercomActionCreators from '../../actions/intercom';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import { Link } from 'react-router';
-import config from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./PaymentSuccess.less');
@@ -16,15 +13,6 @@ class PaymentSuccess extends React.Component {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
-
-  componentWillUnmount() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-    dispatch(IntercomActionCreators.removeIntercom());
-  }
 
   logOut() {
     const {

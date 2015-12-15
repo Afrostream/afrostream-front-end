@@ -35,6 +35,15 @@ class PaymentPage extends React.Component {
     dispatch(IntercomActionCreators.createIntercom());
   }
 
+  componentWillUnmount() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+    dispatch(IntercomActionCreators.removeIntercom());
+  }
+
   render() {
     const { props: { User, children} } = this;
 
