@@ -2,11 +2,13 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../actions/user';
 import { Link } from 'react-router';
+import { analytics } from '../../decorators';
 
 if (process.env.BROWSER) {
   require('./PaymentSuccess.less');
 }
 
+@analytics()
 @connect(({ User }) => ({User}))
 class PaymentSuccess extends React.Component {
 
