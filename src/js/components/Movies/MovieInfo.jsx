@@ -52,10 +52,10 @@ class MovieInfo extends LoadVideo {
       return;
     }
     this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
-    this.tlIn.add(TweenMax.fromTo(backGd, 22,
-      {z: 0},
-      {z: 5, force3D: true}
-    ), 0);
+    //this.tlIn.add(TweenMax.fromTo(backGd, 22,
+    //  {z: 0},
+    //  {z: 5, force3D: true}
+    //), 0);
 
   }
 
