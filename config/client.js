@@ -158,7 +158,7 @@ const config = {
       connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
       socialBigButtons: true,
       disableSignupAction: true,
-      rememberLastLogin: false,
+      rememberLastLogin: true,
       disableResetAction: false,
       popup: true,
       sso: false,

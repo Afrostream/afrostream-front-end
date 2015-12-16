@@ -9,14 +9,13 @@ import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
 import LoadVideo from '../LoadVideo';
 
-@connect(({ Movie, Video, User }) => ({Movie, Video, User}))
+@connect(({ Movie, Video }) => ({Movie, Video}))
 class Thumb extends LoadVideo {
 
   constructor(props) {
     super(props);
     this.thumbW = 140;
     this.thumbH = 200;
-    this.slider = null;
   }
 
   static propTypes = {
