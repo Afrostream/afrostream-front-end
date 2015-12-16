@@ -11,7 +11,6 @@
   background-color: @color-indigo;
   width: 100%;
   padding: @thumb-margin 0 (@thumb-margin-hover + @thumb-margin) 0;
-  //display: table-row;
   .movies-category-list {
     position: relative;
     overflow: hidden;
@@ -36,7 +35,6 @@
           overflow-y: hidden;
           display: inline-block;
           white-space: nowrap;
-          //padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
           .thumb-containter {
           }
         }
@@ -44,18 +42,12 @@
       .thumb-containter {
         height: 100%;
         max-height: 100%;
-        //.transform-style(preserve-3d);
-        //.perspective(200);
-        //.perspective-origin(center center);
         flex-shrink: 0;
         display: inline-block;
-        //.transition(all 0.2s linear);
-        //.transition-delay(0.2s);
-        margin: @zoom-margin @thumb-margin  @zoom-margin @thumb-margin;
+        margin: @zoom-margin @thumb-margin @zoom-margin @thumb-margin;
         .thumb {
           display: inline-block;
           position: relative;
-          width: 100%;
           padding: 0;
           text-align: left;
           border: 1px solid #FFFFFF;
@@ -125,75 +117,6 @@
               }
             }
           }
-          .thumb-info {
-            position: relative;
-            display: inline-block;
-            vertical-align: middle;
-            overflow: auto;
-            white-space: normal;
-            box-sizing: inherit;
-            float: left;
-            min-height: 100%;
-            color: #FFFFFF;
-
-            -webkit-font-smoothing: antialiased;
-            background-image: url(../../../assets/images/default/331x232.jpg);
-            background-size: cover;
-            background-position: left center;
-            background-repeat: no-repeat;
-            &:before {
-              content: "";
-              background-color: rgba(0, 0, 0, 0.7);
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              left: 0;
-              right: 0;
-            }
-            &__txt {
-              position: absolute;
-              top: 10px;
-              bottom: 42px;
-              left: 10px;
-              right: 10px;
-              a:hover {
-                color: @color-yellow;
-                cursor: pointer;
-              }
-            }
-            &__btn {
-              position: absolute;
-              margin: 0 10px 10px 10px;
-              bottom: 0;
-              .btn-thumb {
-                margin: 0 10px 0 10px;
-                font-size: 1.2em;
-              }
-            }
-
-            &__title {
-              //font-family: @font-thin;
-              font-weight: 700;
-              text-transform: uppercase;
-              font-size: 1.5em;
-              line-height: 1.4;
-              vertical-align: top;
-            }
-            &__synopsis {
-              font-family: @font-light;
-              //FIXME force size change it to auto
-              font-size: 1.2em;
-              vertical-align: middle;
-              text-overflow: ellipsis;
-              padding: 10px 0 10px 0;
-              //TODO height 100% de l'info block et center ce texte vertically
-              //padding: 30px 0 25px 0;
-              a {
-                font-size: 1em;
-                width: 100%;
-              }
-            }
-          }
         }
       }
     }
@@ -216,30 +139,13 @@
               .thumb {
                 background-color: transparent;
                 border-color: transparent;
-                //.translate3d(0, 0, 0);
-                //.transition(all 0.2s linear);
-                //.transition-delay(0.2s);
                 .thumb-background {
-                }
-                .thumb-info {
-                  display: inline-block;
-                  top: 0;
-                  position: absolute;
-                  width: @thumb-width * 2;
                 }
               }
               &:hover {
-                //margin: @zoom-margin @thumb-margin-hover  @zoom-margin @thumb-margin-hover;
                 .thumb {
                   border-color: @color-yellow;
-                  //.translate3d(0, 0, 30px);
-                  //.transition(all 0.2s linear);
-                  //.transition-delay(0.2s);
                   overflow: hidden;
-                  width: 420px;
-                  .thumb-info {
-                    opacity: 1;
-                  }
                   .thumb-background {
                     .transition(opacity 0.1s linear);
                     i {

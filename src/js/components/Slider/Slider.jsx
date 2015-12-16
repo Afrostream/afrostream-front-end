@@ -47,23 +47,17 @@ class Slider extends React.Component {
     this.scrolling = false;
     this.container = null;
     this.scrollLeft = 0;
-    this.tlIn = null;
 
   }
 
   componentDidMount() {
     this.container = React.findDOMNode(this).lastChild;
-
-    this.initTimeline();
     this.container.addEventListener('scroll', this.handleScroll.bind(this));
-    this.container.addEventListener('thumbover', this.hideArrow.bind(this));
-    this.container.addEventListener('thumbout', this.showArrow.bind(this));
+    this.handleScroll();
   }
 
   componentWillUnmount() {
     this.container.removeEventListener('scroll', this.handleScroll.bind(this));
-    this.container.removeEventListener('thumbover', this.hideArrow.bind(this));
-    this.container.removeEventListener('thumbout', this.showArrow.bind(this));
   }
 
   /**
@@ -112,34 +106,6 @@ class Slider extends React.Component {
     // Reset properties
     this.direction = null;
     clearTimeout(this.clickTimer);
-  }
-
-  initTimeline() {
-    const arrowL = React.findDOMNode(this.refs.arrowLeft);
-    const arrowR = React.findDOMNode(this.refs.arrowRight);
-    this.tlIn = new TimelineMax({paused: true});
-    this.tlIn.add(TweenMax.to(arrowL, .3,
-      {
-        autoAlpha: 0,
-        left: '-=50px', ease: Expo.easeIn
-      }
-    ), 0.2);
-
-    this.tlIn.add(TweenMax.to(arrowR, .3,
-      {
-        autoAlpha: 0,
-        right: '-=50px', ease: Expo.easeIn
-      }
-    ), 0.2);
-  }
-
-  hideArrow() {
-    this.tlIn.play();
-  }
-
-
-  showArrow() {
-    this.tlIn.reverse();
   }
 
   /**
@@ -232,16 +198,13 @@ class Slider extends React.Component {
     // Display arrows
     let scrollLeft = this.state ? (this.state.scrollLeft || 0) : 0;
     let maxScroll = 0;
-    let diffScrollWidth = 0;
     if (this.container) {
       maxScroll = this.container.scrollWidth - this.container.clientWidth;
-      diffScrollWidth = this.container.scrollWidth !== this.container.clientWidth;
       // Reset scrollLeft state when footer is closed and reopened
       if (this.container.scrollLeft === 0 && this.state) {
         this.state.scrollLeft = 0;
       }
     }
-
 
     let leftArrowClasses = {
       'arrow': true,
@@ -252,7 +215,7 @@ class Slider extends React.Component {
     let rightArrowClasses = {
       'arrow': true,
       'arrow--right': true,
-      'arrow--hidden': (scrollLeft === maxScroll)// && diffScrollWidth
+      'arrow--hidden': (scrollLeft === maxScroll)
     };
 
     let sliderClasses = {
