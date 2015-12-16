@@ -61,7 +61,7 @@ class Thumb extends LoadVideo {
     let threshold = 10;
     // update showImage state if component element is in the viewport
     let min = this.props.viewport.left;
-    let max = this.props.viewport.left + this.props.viewport.width;
+    let max = this.props.viewport.left + (this.props.viewport.width * 2);
 
     if ((min <= (left + width) && left <= (max - threshold))) {
       this.setShowImage(true);

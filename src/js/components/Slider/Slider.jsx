@@ -141,7 +141,7 @@ class Slider extends React.Component {
    * @param duration {Number} Duration of the animation
    */
   animateHorizontalScroll(to) {
-    TweenMax.to(this.container, 0.8, {scrollLeft: this.container.scrollLeft + to, ease: Expo.easeInOut})
+    TweenMax.to(this.container, 0.8, {scrollLeft: (this.container.scrollLeft + to), ease: Expo.easeInOut})
   }
 
   render() {
