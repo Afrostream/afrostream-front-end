@@ -29,7 +29,6 @@ class Slider extends React.Component {
     this.clickDelay = 250;
     this.continueClick = false;
     this.direction = null;
-    this.scrolling = false;
     this.container = null;
     this.scrollLeft = 0;
 

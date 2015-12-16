@@ -80,6 +80,12 @@ class Thumb extends LoadVideo {
     }
   }
 
+  getNew() {
+    const {
+      props: { movie }
+      } = this;
+  }
+
   getLazyImageUrl() {
     const {
       props: { movie }
@@ -109,8 +115,8 @@ class Thumb extends LoadVideo {
              onMouseEnter={::this.triggerOver}
              onMouseLeave={::this.triggerOut}>
           <a onClick={::this.loadVideo}>
-            <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
-            </div>
+            <div ref="thumbBackground" className="thumb-background" style={imageStyles}></div>
+            {this.getNew()}
           </a>
         </div>
       </div>

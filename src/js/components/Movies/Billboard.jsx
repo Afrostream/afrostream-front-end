@@ -84,7 +84,7 @@ class Billboard extends React.Component {
         {schedule ? ' - ' : '' }
         {schedule ? <label className="yellow">{schedule}</label> : '' }
       </div> :
-      '');
+      <div ref="slSeasonNull"/>);
   }
 
   getCreator(creator) {
