@@ -74,12 +74,17 @@ class Billboard extends React.Component {
     );
   }
 
-  getSeasons(seasons) {
+  getSeasons(seasons, movie) {
     let label = ' saison' + (seasons.size > 1 ? 's' : '');
-
+    let schedule = movie.get('schedule') || '';
     return (seasons.size ?
-      <div ref="slSeasons" className="billboard-seasons billboard-row"><label>{seasons.size}</label>{label}</div> :
-      <div ref="slSeasonNull"/>);
+      <div ref="slSeasons" className="billboard-seasons billboard-row">
+        <label>{seasons.size}</label>
+        {label}
+        {schedule ? ' - ' : '' }
+        {schedule ? <label className="yellow">{schedule}</label> : '' }
+      </div> :
+      '');
   }
 
   getCreator(creator) {
@@ -94,7 +99,7 @@ class Billboard extends React.Component {
     return (
       <div className="billboard-row">
         <label> Avec : </label>
-        {casts.map((cast,i) => <span> {`${(i ? ' | ' :'')}${cast.get('firstName')} ${cast.get('lastName')}`}</span>)}
+        {casts.map((cast, i) => <span> {`${(i ? ' | ' : '')}${cast.get('firstName')} ${cast.get('lastName')}`}</span>)}
       </div>
     );
   }
@@ -140,9 +145,9 @@ class Billboard extends React.Component {
     return (
       <div className="billboard-infos">
         {type ? <div ref="slTag" className="billboard-tag billboard-row">{type === 'movie' ? 'film' : type}</div> :
-        <div ref="slNull"/>}
+          <div ref="slNull"/>}
         <div ref="slTitle" className="billboard-title billboard-row">{title}</div>
-        {seasons ? this.getSeasons(seasons) : ''}
+        {seasons ? this.getSeasons(seasons, movieData) : ''}
         {tags ? this.getGenre(tags) : ''}
         {creator ? this.getCreator(creator) : ''}
         {actors && actors.size ? this.getCast(actors) : ''}
