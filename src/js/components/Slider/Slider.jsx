@@ -5,22 +5,8 @@ import classSet from 'classnames';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax,Expo} = window.GreenSockGlobals;
+  var {TweenMax,Expo} = window.GreenSockGlobals;
 }
-/**
- * requestAnimationFrame for Smart Animating
- * from http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
- */
-const requestAnimFrame = (function () {
-  if (canUseDOM) {
-    return window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      function (callback) {
-        setTimeout(() => callback(), 1000 / 60);
-      };
-  }
-})();
 
 class Slider extends React.Component {
 
@@ -30,7 +16,6 @@ class Slider extends React.Component {
   };
 
   static defaultProps = {
-    step: 2,
     duration: null
   };
 
@@ -121,23 +106,19 @@ class Slider extends React.Component {
    * Start Continue Scroll mode animation
    */
   continueScroll() {
-    this.continueClick = true;
 
     let to = this.scrollingTo(this.container.scrollWidth);
-    let duration = this.props.duration || 800;
 
-    this.animateHorizontalScroll('continue', to, duration);
+    this.animateHorizontalScroll(to);
   }
 
   /**
    * Start Single Scroll mode animation
    */
   singleScroll() {
-    let item = this.container.firstChild;
-    let itemWidth = item.offsetWidth * this.props.step;
-    let to = this.scrollingTo(itemWidth);
+    let to = this.scrollingTo(this.container.offsetWidth);
 
-    this.animateHorizontalScroll('single', to);
+    this.animateHorizontalScroll(to);
   }
 
   /**
@@ -159,36 +140,8 @@ class Slider extends React.Component {
    * @param to       {Number} Position to scroll in pixel
    * @param duration {Number} Duration of the animation
    */
-  animateHorizontalScroll(type, to, duration) {
-    if (this.scrolling) {
-      return;
-    }
-
-    this.scrolling = true;
-
-    let start = this.container.scrollLeft;
-    let currentTime = 0;
-    let increment = 20;
-    duration = duration || 500;
-
-    let animate = type === 'single' ? penner.easeInOutCubic : penner.easeInCubic;
-
-    let animateScroll = function () {
-      currentTime += increment;
-      this.container.scrollLeft = animate(currentTime, start, to, duration);
-
-      this.triggerLazyLoading();
-
-      if (this.scrolling && (currentTime < duration)) {
-        requestAnimFrame(animateScroll.bind(this));
-      } else {
-        // Animation done
-        this.scrolling = false;
-        this.continueClick = false;
-      }
-    };
-
-    requestAnimFrame(animateScroll.bind(this));
+  animateHorizontalScroll(to) {
+    TweenMax.to(this.container, 0.8, {scrollLeft: this.container.scrollLeft + to, ease: Expo.easeInOut})
   }
 
   render() {

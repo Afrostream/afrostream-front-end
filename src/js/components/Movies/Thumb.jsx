@@ -111,7 +111,6 @@ class Thumb extends LoadVideo {
              onMouseLeave={::this.triggerOut}>
           <a onClick={::this.loadVideo}>
             <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
-              <i className="btn-play"></i>
             </div>
           </a>
         </div>
