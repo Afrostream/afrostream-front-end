@@ -52,10 +52,10 @@ class MovieInfo extends LoadVideo {
       return;
     }
     this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
-    this.tlIn.add(TweenMax.fromTo(backGd, 22,
-      {z: 0},
-      {z: 5, force3D: true}
-    ), 0);
+    //this.tlIn.add(TweenMax.fromTo(backGd, 22,
+    //  {z: 0},
+    //  {z: 5, force3D: true}
+    //), 0);
 
   }
 
@@ -98,7 +98,7 @@ class MovieInfo extends LoadVideo {
       'movie': true,
       'serie': isSerie,
       'movie--active': this.props.active,
-      'movie--btn_play': !this.props.load && isSerie
+      'movie--btn_play': true//!this.props.load && isSerie
     });
 
     let poster = movieData.get('poster');

@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes } from 'react';
+import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 export default function prepareRoute(prepareFn) {
 
@@ -26,7 +27,10 @@ export default function prepareRoute(prepareFn) {
           props: { params, location }
           } = this;
 
-        prepareFn({store,router, params, location});
+        prepareFn({store, router, params, location});
+        if (canUseDOM) {
+          document.getElementsByTagName('BODY')[0].scrollTop = 0;
+        }
       }
 
     };

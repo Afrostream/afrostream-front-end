@@ -5,22 +5,8 @@ import classSet from 'classnames';
 
 if (canUseDOM) {
   require('gsap');
-  var {TimelineMax,TweenMax,Expo} = window.GreenSockGlobals;
+  var {TweenMax,Expo} = window.GreenSockGlobals;
 }
-/**
- * requestAnimationFrame for Smart Animating
- * from http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
- */
-const requestAnimFrame = (function () {
-  if (canUseDOM) {
-    return window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      function (callback) {
-        setTimeout(() => callback(), 1000 / 60);
-      };
-  }
-})();
 
 class Slider extends React.Component {
 
@@ -30,7 +16,6 @@ class Slider extends React.Component {
   };
 
   static defaultProps = {
-    step: 2,
     duration: null
   };
 
@@ -44,26 +29,19 @@ class Slider extends React.Component {
     this.clickDelay = 250;
     this.continueClick = false;
     this.direction = null;
-    this.scrolling = false;
     this.container = null;
     this.scrollLeft = 0;
-    this.tlIn = null;
 
   }
 
   componentDidMount() {
     this.container = React.findDOMNode(this).lastChild;
-
-    this.initTimeline();
     this.container.addEventListener('scroll', this.handleScroll.bind(this));
-    this.container.addEventListener('thumbover', this.hideArrow.bind(this));
-    this.container.addEventListener('thumbout', this.showArrow.bind(this));
+    this.handleScroll();
   }
 
   componentWillUnmount() {
     this.container.removeEventListener('scroll', this.handleScroll.bind(this));
-    this.container.removeEventListener('thumbover', this.hideArrow.bind(this));
-    this.container.removeEventListener('thumbout', this.showArrow.bind(this));
   }
 
   /**
@@ -114,34 +92,6 @@ class Slider extends React.Component {
     clearTimeout(this.clickTimer);
   }
 
-  initTimeline() {
-    const arrowL = React.findDOMNode(this.refs.arrowLeft);
-    const arrowR = React.findDOMNode(this.refs.arrowRight);
-    this.tlIn = new TimelineMax({paused: true});
-    this.tlIn.add(TweenMax.to(arrowL, .3,
-      {
-        autoAlpha: 0,
-        left: '-=50px', ease: Expo.easeIn
-      }
-    ), 0.2);
-
-    this.tlIn.add(TweenMax.to(arrowR, .3,
-      {
-        autoAlpha: 0,
-        right: '-=50px', ease: Expo.easeIn
-      }
-    ), 0.2);
-  }
-
-  hideArrow() {
-    this.tlIn.play();
-  }
-
-
-  showArrow() {
-    this.tlIn.reverse();
-  }
-
   /**
    * Defined the step according to its direction
    *
@@ -155,23 +105,19 @@ class Slider extends React.Component {
    * Start Continue Scroll mode animation
    */
   continueScroll() {
-    this.continueClick = true;
 
     let to = this.scrollingTo(this.container.scrollWidth);
-    let duration = this.props.duration || 800;
 
-    this.animateHorizontalScroll('continue', to, duration);
+    this.animateHorizontalScroll(to);
   }
 
   /**
    * Start Single Scroll mode animation
    */
   singleScroll() {
-    let item = this.container.firstChild;
-    let itemWidth = item.offsetWidth * this.props.step;
-    let to = this.scrollingTo(itemWidth);
+    let to = this.scrollingTo(this.container.offsetWidth);
 
-    this.animateHorizontalScroll('single', to);
+    this.animateHorizontalScroll(to);
   }
 
   /**
@@ -193,36 +139,8 @@ class Slider extends React.Component {
    * @param to       {Number} Position to scroll in pixel
    * @param duration {Number} Duration of the animation
    */
-  animateHorizontalScroll(type, to, duration) {
-    if (this.scrolling) {
-      return;
-    }
-
-    this.scrolling = true;
-
-    let start = this.container.scrollLeft;
-    let currentTime = 0;
-    let increment = 20;
-    duration = duration || 500;
-
-    let animate = type === 'single' ? penner.easeInOutCubic : penner.easeInCubic;
-
-    let animateScroll = function () {
-      currentTime += increment;
-      this.container.scrollLeft = animate(currentTime, start, to, duration);
-
-      this.triggerLazyLoading();
-
-      if (this.scrolling && (currentTime < duration)) {
-        requestAnimFrame(animateScroll.bind(this));
-      } else {
-        // Animation done
-        this.scrolling = false;
-        this.continueClick = false;
-      }
-    };
-
-    requestAnimFrame(animateScroll.bind(this));
+  animateHorizontalScroll(to) {
+    TweenMax.to(this.container, 0.8, {scrollLeft: (this.container.scrollLeft + to), ease: Expo.easeInOut})
   }
 
   render() {
@@ -232,16 +150,13 @@ class Slider extends React.Component {
     // Display arrows
     let scrollLeft = this.state ? (this.state.scrollLeft || 0) : 0;
     let maxScroll = 0;
-    let diffScrollWidth = 0;
     if (this.container) {
       maxScroll = this.container.scrollWidth - this.container.clientWidth;
-      diffScrollWidth = this.container.scrollWidth !== this.container.clientWidth;
       // Reset scrollLeft state when footer is closed and reopened
       if (this.container.scrollLeft === 0 && this.state) {
         this.state.scrollLeft = 0;
       }
     }
-
 
     let leftArrowClasses = {
       'arrow': true,
@@ -252,7 +167,7 @@ class Slider extends React.Component {
     let rightArrowClasses = {
       'arrow': true,
       'arrow--right': true,
-      'arrow--hidden': (scrollLeft === maxScroll)// && diffScrollWidth
+      'arrow--hidden': (scrollLeft === maxScroll)
     };
 
     let sliderClasses = {

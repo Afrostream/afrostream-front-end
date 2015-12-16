@@ -10,6 +10,7 @@
   top: 50%;
   opacity: 1;
   margin-top: -40px;
+  transition: transform ease-out 0.1s;
   &:before {
     z-index: 2;
     content: "";
@@ -36,7 +37,7 @@
 }
 
 .arrow--hidden {
-  display: none !important;
+  transition: transform ease-in 0.1s;
 }
 
 .arrow--left {
@@ -46,6 +47,10 @@
   i {
     padding-left: 30px;
   }
+  &.arrow--hidden {
+    transform: translateX(-100%);
+    //display: none !important;
+  }
 }
 
 .arrow--right {
@@ -54,6 +59,10 @@
   right: -20px;
   i {
     padding-left: 25px;
+  }
+  &.arrow--hidden {
+    transform: translateX(100%);
+    //display: none !important;
   }
 }
 

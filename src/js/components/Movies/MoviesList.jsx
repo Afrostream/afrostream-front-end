@@ -1,18 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MoviesCategorySlider from './MoviesCategorySlider';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
-
-if (canUseDOM) {
-  require('gsap');
-  var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
-}
 
 if (process.env.BROWSER) {
   require('./MoviesList.less');
 }
 
-@connect(({ Category }) => ({Category})) class MoviesList extends React.Component {
+@connect(({ Category }) => ({Category}))
+class MoviesList extends React.Component {
 
   constructor(props) {
     super(props);
