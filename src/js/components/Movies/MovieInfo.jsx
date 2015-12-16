@@ -98,7 +98,7 @@ class MovieInfo extends LoadVideo {
       'movie': true,
       'serie': isSerie,
       'movie--active': this.props.active,
-      'movie--btn_play': !this.props.load && isSerie
+      'movie--btn_play': true//!this.props.load && isSerie
     });
 
     let poster = movieData.get('poster');
