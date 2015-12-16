@@ -11,8 +11,8 @@ const customDict = _.merge(dictFr, {
     "action": "Se connecter"
   },
   signup: {
-    "title": "Inscrivez vous",
-    "action": "Inscrivez vous",
+    "title": "Abonnez vous",
+    "action": "Abonnez vous",
     "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
     "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion."
   }

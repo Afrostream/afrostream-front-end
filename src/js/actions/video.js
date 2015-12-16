@@ -3,8 +3,18 @@ import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 
 export function getVideo(videoId, router) {
   return (dispatch, getState) => {
+
+    if (!videoId) {
+      console.log('no video id passed in action', videoId);
+      return {
+        type: ActionTypes.Video.getVideo,
+        videoId,
+        res: {body: null}
+      };
+    }
+
     const user = getState().User.get('user');
-    if (user) {
+    if (user && router) {
       let planCode = user.get('planCode');
       if (!planCode) {
         router.transitionTo('/select-plan');
@@ -15,14 +25,6 @@ export function getVideo(videoId, router) {
       }
     }
 
-    if (!videoId) {
-      console.log('no video id passed in action', videoId);
-      return {
-        type: ActionTypes.Video.getVideo,
-        videoId,
-        res: {body: null}
-      };
-    }
 
     let readyVideo = getState().Video.get(`/videos/${videoId}`);
     if (readyVideo) {

@@ -46,19 +46,19 @@ export default class LoadVideo extends Component {
     }
     const {
       props: {
-        movie,movieId,season,episode,Movie//,User
+        movie,movieId,season,episode,Movie,User
         }
       } = this;
-    //const user = User ? User.get('user') : null;
-    //let planCode = user ? user.get('planCode') : null;
+    const user = User ? User.get('user') : null;
+    let planCode = user ? user.get('planCode') : null;
     const movieDataId = movieId ? movieId : movie.get('_id');
     const movieData = movie || Movie.get(`movies/${movieDataId}`);
     let type = movieData ? movieData.get('type') : '';
     let movieSlud = movieData ? movieData.get('slug') : '';
     let link = `/${movieDataId}/${movieSlud}`;
     let videoData = movieData.get('video');
-    //let videoId = planCode ? movieData.get('videoId') : null;
-    let videoId = movieData.get('videoId');
+    let videoId = planCode ? movieData.get('videoId') : null;
+    //let videoId = movieData.get('videoId');
     if (type === 'serie') {
       videoId = null;
       let curSeason = season;

@@ -9,7 +9,7 @@ import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
 import LoadVideo from '../LoadVideo';
 
-@connect(({ Movie, Video }) => ({Movie, Video}))
+@connect(({ Movie, Video ,User}) => ({Movie, Video, User}))
 class Thumb extends LoadVideo {
 
   constructor(props) {

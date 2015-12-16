@@ -5,11 +5,11 @@ import * as EventActionCreators from '../../actions/event';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
 
-@prepareRoute(async function ({ store, params: { movieId } }) {
+@prepareRoute(async function ({ store, router, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(EventActionCreators.userActive(true)),
-    store.dispatch(MovieActionCreators.getMovie(movieId)),
+    store.dispatch(MovieActionCreators.getMovie(movieId, router)),
     store.dispatch(MovieActionCreators.getSeason(movieId))
   ];
 })
