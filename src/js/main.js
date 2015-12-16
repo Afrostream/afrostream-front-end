@@ -1,8 +1,8 @@
 import React from'react';
 import ReactDOM from'react-dom';
-import History from 'react-router/lib/BrowserHistory';
 import Router from './components/Router';
 import { Provider } from 'react-redux';
+import { createBrowserHistory} from 'history';
 import createStore from './lib/createStore';
 import request from 'superagent';
 import superAgentMock from '../../config/mock/superagent-mock';
@@ -18,7 +18,7 @@ if (canUseDOM) {
   require('jquery.payment');
 }
 
-const history = new History;
+const history = createBrowserHistory();
 const api = createAPI(
   /**
    * Client's createRequest() method
@@ -35,7 +35,7 @@ const api = createAPI(
 );
 
 /* global __INITIAL_STATE__:true */
-const store = createStore(api, __INITIAL_STATE__);
+const store = createStore(api, __INITIAL_STATE__, Router, history);
 
 ReactDOM.render(
   <Provider  {...{store}}>

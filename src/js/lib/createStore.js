@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { reduxReactRouter} from 'redux-router';
 import * as middleWare from '../middleware';
 import * as reducers from '../reducers';
 
@@ -18,7 +19,7 @@ function promiseMiddleware(api, { getState ,dispatch}) {
     };
 }
 
-export default function (api, initialState) {
+export default function (api, initialState, routes, history) {
   const createStoreWithMiddleware = applyMiddleware(promiseMiddleware.bind(null,
     api), middleWare.raven, middleWare.logger)(createStore);
   const reducer = combineReducers(reducers);

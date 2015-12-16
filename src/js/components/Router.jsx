@@ -11,7 +11,6 @@ class AppRouter extends React.Component {
   };
 
   render() {
-
     return (
       <Router {...this.props}>
         {routes}

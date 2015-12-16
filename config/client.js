@@ -86,6 +86,9 @@ const config = {
   /**
    * Front-End Server
    */
+  featureFlip: {
+    catalog: 0 //Ouverture du catalogue aux inscrits n'ayant pas payé
+  },
   promoCodes: [
     {
       code: 'afroyoutube',
