@@ -58,9 +58,9 @@ export default class LoadVideo extends Component {
     let link = `/${movieDataId}/${movieSlud}`;
     let videoData = movieData.get('video');
     //let videoId = planCode ? movieData.get('videoId') : null;
-    let videoId = null;//movieData.get('videoId');
+    let videoId = movieData.get('videoId');
     if (type === 'serie') {
-      //videoId = null;
+      videoId = null;
       let curSeason = season;
       //if (!curSeason) {
       //  const seasons = movieData.get('seasons');

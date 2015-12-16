@@ -16,6 +16,21 @@ class SeasonEpisodeThumb extends LoadVideo {
     episode: React.PropTypes.object.isRequired
   };
 
+  getNew() {
+    const {
+      props: { episode }
+      } = this;
+    let dateFrom = episode.get('dateFrom');
+
+    if (!dateFrom) {
+      return '';
+    }
+    let dateNow = Date.now();
+    let compare = dateNow - new Date(dateFrom).getTime();
+    if (compare <= (1000 * 3600 * 24)) {
+      return (<div className="thumb-new__item"></div>)
+    }
+  }
 
   render() {
     const {
@@ -47,6 +62,7 @@ class SeasonEpisodeThumb extends LoadVideo {
           <a onClick={::this.loadVideo}>
             <div ref="thumbBackground" className="thumb-background" style={imagePoster}>
               <i className="btn-play"></i>
+              {this.getNew()}
             </div>
           </a>
 
