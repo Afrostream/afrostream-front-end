@@ -106,9 +106,9 @@ class Thumb extends LoadVideo {
       if (!imgix) {
         return {};
       }
-      imageStyles = imgix;
+      imageStyles = `${imgix}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
     }
-    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=${config.images.quality}&fm=${config.images.type})`};
+    return {backgroundImage: `url(${imageStyles})`};
   }
 
   render() {
