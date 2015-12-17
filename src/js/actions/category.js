@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
 
 export function getAllSpots() {
+  console.log('getAllSpots');
   return (dispatch, getState) => {
     let readySpots = getState().Category.get(`/categorys/spots`);
     if (readySpots) {
