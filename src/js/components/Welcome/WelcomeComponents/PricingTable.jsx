@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../../actions/user';
+import { Link } from 'react-router';
 
 if (process.env.BROWSER) {
   require('./PricingTable.less');
@@ -43,7 +44,7 @@ class PricingTable extends React.Component {
 
           <div className="pricing-header-text">Service uniquement disponible en France, DOM-TOM,
             Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.
-            <a className="pricing-header-link" href="https://afrostream.tv/faq.html">Les réponses à vos questions</a>
+            <Link className="pricing-header-link" to="/faq">Les réponses à vos questions</Link>
           </div>
         </div>
         <div className="pricing-plans">
