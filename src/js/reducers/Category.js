@@ -11,14 +11,10 @@ export default createReducer(initialState, {
 
   [ActionTypes.Category.getAllSpots](state, {res }) {
     const data = res.body;
-    let mergeData = {}
-    if (data) {
-      _.forEach(data, function (category) {
-        mergeData[`categorys/${category['_id']}/spots`] = category;
-      });
-    }
-
-    return state.merge(mergeData);
+    return state.merge({
+      [`categorys/spots__res`]: res,
+      [`categorys/spots`]: data
+    });
   },
 
   [ActionTypes.Category.getSpots](state, { categoryId,res }) {

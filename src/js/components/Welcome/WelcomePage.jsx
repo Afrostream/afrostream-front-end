@@ -56,6 +56,7 @@ class WelcomePage extends React.Component {
         <WelcomeHeader />
         <Devices />
         <PricingTable />
+        <Spots />
       </div>
     );
   }
