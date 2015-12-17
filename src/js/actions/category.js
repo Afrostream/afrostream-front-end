@@ -1,5 +1,12 @@
 import ActionTypes from '../consts/ActionTypes';
 
+export function getAllSpots() {
+  return async api => ({
+    type: ActionTypes.Category.getAllSpots,
+    res: await api(`/categorys/spots`)
+  });
+}
+
 export function getSpots(categoryId) {
   return (dispatch, getState) => {
     //TODO recuperation de l'id top

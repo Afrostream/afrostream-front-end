@@ -8,12 +8,13 @@ import MoviesList from '../Movies/MoviesList';
 import Navigation from '../Navigation/Navigation';
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(EventActionCreators.pinHeader(false)),
-      store.dispatch(EventActionCreators.userActive(true)),
-      store.dispatch(CategoryActionCreators.getMenu()),
-      store.dispatch(CategoryActionCreators.getMeaList())
-    ];
-}) class BrowsePage extends React.Component {
+    store.dispatch(EventActionCreators.pinHeader(false)),
+    store.dispatch(EventActionCreators.userActive(true)),
+    store.dispatch(CategoryActionCreators.getMenu()),
+    store.dispatch(CategoryActionCreators.getMeaList())
+  ];
+})
+class BrowsePage extends React.Component {
 
   render() {
     return (

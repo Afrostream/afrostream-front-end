@@ -11,6 +11,7 @@ import classSet from 'classnames';
 import config from '../../../config';
 import { prepareRoute,metasData,analytics } from '../decorators';
 import * as MovieActionCreators from '../actions/movie';
+import * as CategoryActionCreators from '../actions/category';
 
 if (process.env.BROWSER) {
   require('./Application.less');
@@ -21,6 +22,9 @@ if (canUseDOM) {
 }
 @prepareRoute(async function ({ store , params: { movieId }}) {
   return await * [
+    store.dispatch(CategoryActionCreators.getAllSpots()),
+    store.dispatch(CategoryActionCreators.getMenu()),
+    store.dispatch(CategoryActionCreators.getMeaList()),
     store.dispatch(MovieActionCreators.getMovie(movieId))
   ];
 })
