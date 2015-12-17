@@ -10,6 +10,9 @@ const initialState = Immutable.fromJS({
 export default createReducer(initialState, {
 
   [ActionTypes.Category.getAllSpots](state, {res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     return state.merge({
       [`categorys/spots__res`]: res,
@@ -18,8 +21,10 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.Category.getSpots](state, { categoryId,res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
-    console.log('Category.getSpots', categoryId, data);
     return state.merge({
       ['categoryId']: categoryId,
       [`categorys/${categoryId}/spots__res`]: res,
@@ -28,8 +33,10 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.Category.getCategory](state, { categoryId, res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
-    console.log('Category.getCategory', categoryId, data);
     return state.merge({
       ['categoryId']: categoryId,
       [`categorys/${categoryId}__res`]: res,
@@ -37,16 +44,20 @@ export default createReducer(initialState, {
     });
   },
   [ActionTypes.Category.getMenu](state, { res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
-    console.log('Category.getMenu', data);
     const categoryId = data[0]._id;
-    console.log('default categoryId', categoryId);
     return state.merge({
       ['categoryId']: categoryId,
       ['menu']: data
     });
   },
   [ActionTypes.Category.getMeaList](state, { res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     console.log('Category.getMeaList', data);
     return state.merge({

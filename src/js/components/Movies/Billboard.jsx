@@ -29,6 +29,12 @@ class Billboard extends React.Component {
     maxLength: 450
   };
 
+  isMobile() {
+    //Detect mobile
+    const ua = navigator.userAgent;
+    return /WebKit/.test(ua) && /Mobile/.test(ua);
+  }
+
   initTransition() {
     const titleEl = React.findDOMNode(this.refs.slTitle);
     const synopsisE = React.findDOMNode(this.refs.slSynopsis);

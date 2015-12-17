@@ -1,13 +1,13 @@
 import ActionTypes from '../consts/ActionTypes';
 
 export function getMovie(movieId, router) {
+  console.log('getMovie', movieId)
   return (dispatch, getState) => {
     if (!movieId) {
       console.log('no movie id passed in action', movieId);
       return {
         type: ActionTypes.Movie.getMovie,
-        movieId: movieId,
-        res: {body: null}
+        movieId
       };
     }
 
@@ -20,8 +20,7 @@ export function getMovie(movieId, router) {
         router.transitionTo('/select-plan');
         return {
           type: ActionTypes.Movie.getMovie,
-          movieId: movieId,
-          res: {body: readyMovie}
+          movieId
         };
       }
     }
@@ -30,8 +29,7 @@ export function getMovie(movieId, router) {
       console.log('movie already present in data store', movieId);
       return {
         type: ActionTypes.Movie.getMovie,
-        movieId: movieId,
-        res: {body: readyMovie}
+        movieId
       };
     }
     return async api => ({
@@ -48,8 +46,7 @@ export function getSeason(movieId) {
       console.log('no movie id passed in action', movieId);
       return {
         type: ActionTypes.Movie.getSeason,
-        movieId,
-        res: {body: null}
+        movieId
       };
     }
     let readySeason = getState().Movie.get(`/movies/${movieId}/seasons`);
@@ -57,8 +54,7 @@ export function getSeason(movieId) {
       console.log('season already present in data store', movieId);
       return {
         type: ActionTypes.Movie.getSeason,
-        movieId,
-        res: {body: readySeason}
+        movieId
       };
     }
     return async api => ({

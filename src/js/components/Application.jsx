@@ -9,9 +9,7 @@ import Modal from './Modal/Modal'
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../config';
-import { prepareRoute,metasData,analytics } from '../decorators';
-import * as MovieActionCreators from '../actions/movie';
-import * as CategoryActionCreators from '../actions/category';
+import { metasData,analytics } from '../decorators';
 
 if (process.env.BROWSER) {
   require('./Application.less');
@@ -20,15 +18,6 @@ if (process.env.BROWSER) {
 if (canUseDOM) {
   var ga = require('react-ga');
 }
-@prepareRoute(async function ({ store , params: { movieId }}) {
-  return await * [
-    store.dispatch(CategoryActionCreators.getSpots()),
-    store.dispatch(CategoryActionCreators.getAllSpots()),
-    store.dispatch(CategoryActionCreators.getMenu()),
-    store.dispatch(CategoryActionCreators.getMeaList()),
-    store.dispatch(MovieActionCreators.getMovie(movieId))
-  ];
-})
 @analytics()
 @metasData()
 @connect(({ Event,User }) => ({Event, User}))

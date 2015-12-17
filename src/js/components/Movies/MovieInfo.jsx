@@ -46,11 +46,6 @@ class MovieInfo extends LoadVideo {
 
   initTransition() {
 
-    //Detect mobile
-    const ua = navigator.userAgent;
-    this.isMobileWebkit = /WebKit/.test(ua) && /Mobile/.test(ua);
-    if (this.isMobileWebkit) return;
-
     const container = React.findDOMNode(this.refs.slContainer);
     const backGd = React.findDOMNode(this.refs.slBackground);
     this.tlIn = new TimelineMax({paused: true});
@@ -66,6 +61,9 @@ class MovieInfo extends LoadVideo {
   }
 
   lunchTransition() {
+    if (this.isMobile()) {
+      return;
+    }
     if (!this.props.active) {
       return;
     }
@@ -76,6 +74,12 @@ class MovieInfo extends LoadVideo {
       return;
     }
     this.tlIn.restart();
+  }
+
+  isMobile() {
+    //Detect mobile
+    const ua = navigator.userAgent;
+    return /WebKit/.test(ua) && /Mobile/.test(ua);
   }
 
   componentDidUpdate() {

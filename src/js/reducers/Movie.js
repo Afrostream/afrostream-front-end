@@ -7,6 +7,9 @@ const initialState = Immutable.fromJS({});
 export default createReducer(initialState, {
 
   [ActionTypes.Movie.getMovie](state, { movieId, res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     return state.merge({
       [`movies/${movieId}`]: data
@@ -14,6 +17,9 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.Movie.getSeason](state, { movieId, res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     return state.merge({
       [`movies/${movieId}/seasons`]: data

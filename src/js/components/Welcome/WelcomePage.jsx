@@ -6,14 +6,20 @@ import Devices from './WelcomeComponents/Devices';
 import PricingTable from './WelcomeComponents/PricingTable';
 import Spinner from '../Spinner/Spinner';
 import * as EventActionCreators from '../../actions/event';
+import * as MovieActionCreators from '../../actions/movie';
+import * as CategoryActionCreators from '../../actions/category';
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less');
 }
 
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({ store , params: { movieId } }) {
   return await * [
-    store.dispatch(EventActionCreators.pinHeader(false))
+    store.dispatch(EventActionCreators.pinHeader(false)),
+    store.dispatch(CategoryActionCreators.getAllSpots()),
+    store.dispatch(MovieActionCreators.getMovie(movieId)),
+    store.dispatch(CategoryActionCreators.getMenu()),
+    store.dispatch(CategoryActionCreators.getMeaList())
   ];
 })
 class WelcomePage extends React.Component {
@@ -37,7 +43,7 @@ class WelcomePage extends React.Component {
   }
 
   componentDidUpdate(params) {
-    if(params.spinner !== this.props.spinner){
+    if (params.spinner !== this.props.spinner) {
       this.setState({
         spinner: this.props.spinner
       });

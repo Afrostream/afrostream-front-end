@@ -9,11 +9,17 @@ const initialState = Immutable.fromJS({
 export default createReducer(initialState, {
 
   [ActionTypes.Season.toggleSeason](state, { seasonId }) {
+    if (!res) {
+      return state;
+    }
     return state.merge({
       ['selected']: seasonId
     });
   },
   [ActionTypes.Season.getSeason](state, { seasonId , res}) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     return state.merge({
       [`seasons/${seasonId}`]: data
