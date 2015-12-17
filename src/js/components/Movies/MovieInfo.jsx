@@ -45,6 +45,12 @@ class MovieInfo extends LoadVideo {
   };
 
   initTransition() {
+
+    //Detect mobile
+    const ua = navigator.userAgent;
+    this.isMobileWebkit = /WebKit/.test(ua) && /Mobile/.test(ua);
+    if (this.isMobileWebkit) return;
+
     const container = React.findDOMNode(this.refs.slContainer);
     const backGd = React.findDOMNode(this.refs.slBackground);
     this.tlIn = new TimelineMax({paused: true});
