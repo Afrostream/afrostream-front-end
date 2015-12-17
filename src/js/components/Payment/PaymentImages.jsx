@@ -85,7 +85,7 @@ class PaymentImages extends React.Component {
     let categories = Category.get('meaList') || [];
     let movies = [];
     let notreSelection = [];
-    let series = []
+    let series = [];
 
     categories.forEach(function (category) {
       if (category.get('_id') === 1 || category.get('_id') === 3) {
