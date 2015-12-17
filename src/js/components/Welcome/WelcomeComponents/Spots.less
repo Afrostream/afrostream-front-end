@@ -1,5 +1,22 @@
-@import (reference) '../../../styles/config.less';
+@import (reference) '../../../../styles/config.less';
 
 .spots-list {
   width: 100%;
+  margin: 0;
+  text-align: center;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  .thumb-containter {
+    margin: 10px;
+    .thumb {
+      order: 0;
+      flex: 1 1 auto;
+      align-self: auto;
+    }
+  }
 }

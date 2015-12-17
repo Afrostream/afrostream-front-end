@@ -1,6 +1,7 @@
 import React from 'react';
 import { prepareRoute } from '../../decorators';
 import WelcomeHeader from './WelcomeComponents/WelcomeHeader';
+import Spots from './WelcomeComponents/Spots';
 import Devices from './WelcomeComponents/Devices';
 import PricingTable from './WelcomeComponents/PricingTable';
 import Spinner from '../Spinner/Spinner';
