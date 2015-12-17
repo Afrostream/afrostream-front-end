@@ -11,10 +11,11 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(CategoryActionCreators.getMeaList())
-    ];
+    store.dispatch(CategoryActionCreators.getMeaList())
+  ];
 })
-@connect(({ Category }) => ({Category})) class PaymentImages extends React.Component {
+@connect(({ Category }) => ({Category}))
+class PaymentImages extends React.Component {
 
   /**
    * getThumbsByCategory
@@ -49,7 +50,7 @@ if (process.env.BROWSER) {
   generateThumbRow(thumbsArray) {
     let self = this;
     let thumbsRow = [];
-    thumbsArray.forEach(function(thumbUrl) {
+    thumbsArray.forEach(function (thumbUrl) {
 
       let bgCss = self.getBackgroundImageCss(thumbUrl);
       thumbsRow.push(<div className="payment-page__thumb" style={bgCss}></div>);
@@ -68,10 +69,6 @@ if (process.env.BROWSER) {
    * @return  {object}            react inline css style
    */
   getBackgroundImageCss(thumbUrl) {
-
-    const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-    let imageStyles = baseUrl;
-
     return {backgroundImage: `url(${thumbUrl}?crop=faces&fit=crop&w=140&h=200&q=${config.images.quality}&fm=${config.images.type})`};
   }
 
@@ -88,19 +85,19 @@ if (process.env.BROWSER) {
     let categories = Category.get('meaList') || [];
     let movies = [];
     let notreSelection = [];
-    let series = []
+    let series = [];
 
-    categories.forEach(function(category) {
-      if (category.get('_id') === 1 || category.get('_id') === 3 ) {
+    categories.forEach(function (category) {
+      if (category.get('_id') === 1 || category.get('_id') === 3) {
         movies.push(category.get('movies'));
       }
     });
 
-    if (movies[0]){
+    if (movies[0]) {
       notreSelection = this.getThumbsByCategory(movies[0]);
     }
 
-    if (movies[1]){
+    if (movies[1]) {
       series = this.getThumbsByCategory(movies[1]);
     }
 

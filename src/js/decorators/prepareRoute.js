@@ -21,13 +21,25 @@ export default function prepareRoute(prepareFn) {
         );
       }
 
+      componentWillReceiveProps() {
+        const {
+          context: { store ,router},
+          props: { params, location }
+          } = this;
+
+        prepareFn({store, router, params: params || router.state.params, location});
+        if (canUseDOM) {
+          document.getElementsByTagName('BODY')[0].scrollTop = 0;
+        }
+      }
+
       componentDidMount() {
         const {
           context: { store ,router},
           props: { params, location }
           } = this;
 
-        prepareFn({store, router, params, location});
+        prepareFn({store, router, params: params || router.state.params, location});
         if (canUseDOM) {
           document.getElementsByTagName('BODY')[0].scrollTop = 0;
         }

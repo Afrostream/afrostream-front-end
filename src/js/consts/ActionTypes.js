@@ -52,6 +52,7 @@ export default {
   }),
 
   Category: keyMirror({
+    getAllSpots: null,
     getSpots: null,
     getMeaList: null,
     getCategory: null,

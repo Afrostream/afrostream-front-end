@@ -9,6 +9,10 @@ import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
 import LoadVideo from '../LoadVideo';
 
+if (process.env.BROWSER) {
+  require('./Thumb.less');
+}
+
 @connect(({ Movie, Video ,User}) => ({Movie, Video, User}))
 class Thumb extends LoadVideo {
 
@@ -102,9 +106,9 @@ class Thumb extends LoadVideo {
       if (!imgix) {
         return {};
       }
-      imageStyles = imgix;
+      imageStyles = `${imgix}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
     }
-    return {backgroundImage: `url(${imageStyles}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=${config.images.quality}&fm=${config.images.type})`};
+    return {backgroundImage: `url(${imageStyles})`};
   }
 
   render() {
