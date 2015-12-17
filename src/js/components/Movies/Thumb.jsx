@@ -9,6 +9,10 @@ import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
 import LoadVideo from '../LoadVideo';
 
+if (process.env.BROWSER) {
+  require('./Thumb.less');
+}
+
 @connect(({ Movie, Video ,User}) => ({Movie, Video, User}))
 class Thumb extends LoadVideo {
 
