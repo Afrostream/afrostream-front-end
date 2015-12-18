@@ -18,7 +18,8 @@ export function getVideo(videoId, router) {
       if (!planCode) {
         router.transitionTo('/select-plan');
         return {
-          type: ActionTypes.Video.getVideo
+          type: ActionTypes.Video.getVideo,
+          videoId
         };
       }
     }
@@ -29,7 +30,12 @@ export function getVideo(videoId, router) {
       console.log('video already present in data store', videoId);
       return {
         type: ActionTypes.Video.getVideo,
-        videoId
+        videoId,
+        res: {
+          body: {
+            readyVideo
+          }
+        }
       };
     }
 

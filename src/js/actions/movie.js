@@ -29,7 +29,12 @@ export function getMovie(movieId, router) {
       console.log('movie already present in data store', movieId);
       return {
         type: ActionTypes.Movie.getMovie,
-        movieId
+        movieId,
+        res: {
+          body: {
+            readyMovie
+          }
+        }
       };
     }
     return async api => ({
@@ -54,7 +59,12 @@ export function getSeason(movieId) {
       console.log('season already present in data store', movieId);
       return {
         type: ActionTypes.Movie.getSeason,
-        movieId
+        movieId,
+        res: {
+          body: {
+            readySeason
+          }
+        }
       };
     }
     return async api => ({
