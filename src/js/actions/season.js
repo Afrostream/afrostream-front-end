@@ -23,7 +23,10 @@ export function getSeason(seasonId) {
       console.log('season already present in data store', seasonId);
       return {
         type: ActionTypes.Season.getSeason,
-        seasonId: seasonId
+        seasonId: seasonId,
+        res: {
+          body: readySeason.toJS()
+        }
       };
     }
     return async api => ({

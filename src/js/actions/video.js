@@ -32,9 +32,7 @@ export function getVideo(videoId, router) {
         type: ActionTypes.Video.getVideo,
         videoId,
         res: {
-          body: {
-            readyVideo
-          }
+          body: readyVideo.toJS()
         }
       };
     }

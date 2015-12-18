@@ -31,12 +31,11 @@ export function getMovie(movieId, router) {
         type: ActionTypes.Movie.getMovie,
         movieId,
         res: {
-          body: {
-            readyMovie
-          }
+          body: readyMovie.toJS()
         }
       };
     }
+
     return async api => ({
       type: ActionTypes.Movie.getMovie,
       movieId,
@@ -61,9 +60,7 @@ export function getSeason(movieId) {
         type: ActionTypes.Movie.getSeason,
         movieId,
         res: {
-          body: {
-            readySeason
-          }
+          body: readySeason.toJS()
         }
       };
     }

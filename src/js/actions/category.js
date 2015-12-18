@@ -6,7 +6,10 @@ export function getAllSpots() {
     if (readySpots) {
       console.log('spots already present in data store');
       return {
-        type: ActionTypes.Category.getAllSpots
+        type: ActionTypes.Category.getAllSpots,
+        res: {
+          body: readySpots.toJS()
+        }
       };
     }
 
@@ -25,7 +28,10 @@ export function getSpots(categoryId) {
       console.log('spots already present in data store', categoryId);
       return {
         type: ActionTypes.Category.getSpots,
-        categoryId
+        categoryId,
+        res: {
+          body: readySpot.toJS()
+        }
       };
     }
     //TODO recuperation de l'id top
@@ -48,7 +54,10 @@ export function getCategory(categoryId) {
       console.log('Category already present in data store', categoryId);
       return {
         type: ActionTypes.Category.getCategory,
-        categoryId
+        categoryId,
+        res: {
+          body: readySpot.toJS()
+        }
       };
     }
 

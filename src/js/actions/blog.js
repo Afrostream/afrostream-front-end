@@ -6,7 +6,10 @@ export function fetchAll() {
     if (readyPosts) {
       console.log('blog posts already present in data store');
       return {
-        type: ActionTypes.Blog.fetchAll
+        type: ActionTypes.Blog.fetchAll,
+        res: {
+          body: readyPosts.toJS()
+        }
       };
     }
     return async api => ({
@@ -23,6 +26,10 @@ export function fetchPost(postId) {
       console.log('blog post already present in data store');
       return {
         type: ActionTypes.Blog.fetchPost,
+        postId,
+        res: {
+          body: readyPost.toJS()
+        }
       };
     }
     console.log('fetchPost ', postId);
