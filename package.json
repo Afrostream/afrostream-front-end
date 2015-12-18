@@ -13,7 +13,7 @@
     "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"npm run express\"",
     "mock": "npm run dev --mock",
     "staging": "export LOAD_STAGING=true export API_END_POINT=https://afr-api-v1-staging.herokuapp.com/api && npm run dev",
-    "prod": "API_END_POINT=http://afrostream-api-v1.herokuapp.com/api npm run dev",
+    "prod": "export LOAD_STAGING=true export API_END_POINT=https://afr-api-v1-staging.herokuapp.com/api && npm run dev",
     "start": "./node_modules/.bin/babel-node lib/server",
     "postinstall": "npm run deploy"
   },

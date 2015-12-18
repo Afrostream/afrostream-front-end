@@ -32,6 +32,16 @@ const logoutUser = function () {
 };
 
 const mergeProfile = function (profile, data) {
+
+  //remove auth0 fucking cache data
+  let filteredUser = _.pick(data, [
+    'picture',
+    'updated_at',
+    'name',
+    'nickname',
+    'last_ip',
+    'last_login']);
+
   let tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
   let afroRefreshToken = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
 
@@ -46,14 +56,14 @@ const mergeProfile = function (profile, data) {
       const userMerged = _.merge(profile, userInfos.body || {}, userSubscriptions.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
-      return _.merge(data, {
+      return _.merge(filteredUser, {
         user: userMerged
       });
 
     } catch (e) {
       console.log(e, 'remove user data');
       logoutUser();
-      return data;
+      return filteredUser;
     }
   }
 
