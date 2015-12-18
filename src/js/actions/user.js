@@ -34,7 +34,7 @@ const logoutUser = function () {
 const mergeProfile = function (profile, data) {
 
   //remove auth0 fucking cache data
-  let filteredUser = _.pick(data, [
+  let filteredUser = _.pick(profile, [
     'picture',
     'updated_at',
     'name',
@@ -53,17 +53,17 @@ const mergeProfile = function (profile, data) {
       const userSubscriptions = {
         body: {}
       };//await api(`/subscriptions/status`, 'GET', {}, null, tokenAfro, afroRefreshToken);
-      const userMerged = _.merge(profile, userInfos.body || {}, userSubscriptions.body || {});
+      const userMerged = _.merge(filteredUser, userInfos.body || {}, userSubscriptions.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
-      return _.merge(filteredUser, {
+      return _.merge(data, {
         user: userMerged
       });
 
     } catch (e) {
       console.log(e, 'remove user data');
       logoutUser();
-      return filteredUser;
+      return data;
     }
   }
 

@@ -8,20 +8,20 @@ import Spinner from '../Spinner/Spinner';
 import * as EventActionCreators from '../../actions/event';
 import * as MovieActionCreators from '../../actions/movie';
 import * as CategoryActionCreators from '../../actions/category';
+import {metasData,analytics } from '../../decorators';
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less');
 }
 
-@prepareRoute(async function ({ store , params: { movieId } }) {
+@prepareRoute(async function ({ store , router, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(CategoryActionCreators.getAllSpots()),
-    store.dispatch(MovieActionCreators.getMovie(movieId)),
-    store.dispatch(CategoryActionCreators.getMenu()),
-    store.dispatch(CategoryActionCreators.getMeaList())
+    store.dispatch(MovieActionCreators.getMovie(movieId, router))
   ];
 })
+@analytics()
+@metasData()
 class WelcomePage extends React.Component {
 
   static propTypes = {

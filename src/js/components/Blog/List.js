@@ -20,9 +20,14 @@ export default class List extends Component {
   render() {
     const {
       props: {
-        Blog
+        Blog,children
         }
       } = this;
+
+    if (children) {
+      return children;
+    }
+
 
     let posts = Blog.get('posts');
     if (!posts) {

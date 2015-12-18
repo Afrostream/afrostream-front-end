@@ -11,7 +11,7 @@ export function getMovie(movieId, router) {
       };
     }
 
-    let readyMovie = getState().Movie.get(`/movies/${movieId}`);
+    let readyMovie = getState().Movie.get(`movies/${movieId}`);
     const user = getState().User.get('user');
 
     if (user && router) {
@@ -49,7 +49,7 @@ export function getSeason(movieId) {
         movieId
       };
     }
-    let readySeason = getState().Movie.get(`/movies/${movieId}/seasons`);
+    let readySeason = getState().Movie.get(`movies/${movieId}/seasons`);
     if (readySeason) {
       console.log('season already present in data store', movieId);
       return {

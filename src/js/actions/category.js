@@ -1,9 +1,8 @@
 import ActionTypes from '../consts/ActionTypes';
 
 export function getAllSpots() {
-  console.log('getAllSpots');
   return (dispatch, getState) => {
-    let readySpots = getState().Category.get(`/categorys/spots`);
+    let readySpots = getState().Category.get(`categorys/spots`);
     if (readySpots) {
       console.log('spots already present in data store');
       return {
@@ -21,7 +20,7 @@ export function getAllSpots() {
 export function getSpots(categoryId) {
   return (dispatch, getState) => {
 
-    let readySpot = getState().Category.get(`/categorys/${categoryId}/spots`);
+    let readySpot = getState().Category.get(`categorys/${categoryId}/spots`);
     if (readySpot) {
       console.log('spots already present in data store', categoryId);
       return {
@@ -44,7 +43,7 @@ export function getSpots(categoryId) {
 export function getCategory(categoryId) {
   return (dispatch, getState) => {
 
-    let readyCat = getState().Category.get(`/categorys/${categoryId}`);
+    let readyCat = getState().Category.get(`categorys/${categoryId}`);
     if (readyCat) {
       console.log('Category already present in data store', categoryId);
       return {

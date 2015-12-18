@@ -24,7 +24,7 @@ export function getVideo(videoId, router) {
     }
 
 
-    let readyVideo = getState().Video.get(`/videos/${videoId}`);
+    let readyVideo = getState().Video.get(`videos/${videoId}`);
     if (readyVideo) {
       console.log('video already present in data store', videoId);
       return {
