@@ -17,7 +17,8 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({ store , router, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(MovieActionCreators.getMovie(movieId, router))
+    store.dispatch(CategoryActionCreators.getAllSpots())
+    //store.dispatch(MovieActionCreators.getMovie(movieId, router))
   ];
 })
 @analytics()

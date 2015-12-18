@@ -77,7 +77,10 @@ export function getMeaList() {
     if (readyMea) {
       console.log('Meas already present in data store');
       return {
-        type: ActionTypes.Category.getMeaList
+        type: ActionTypes.Category.getMeaList,
+        res: {
+          body: readyMea.toJS()
+        }
       };
     }
 
@@ -94,7 +97,10 @@ export function getMenu() {
     if (readyMenu) {
       console.log('Menu already present in data store');
       return {
-        type: ActionTypes.Category.getMenu
+        type: ActionTypes.Category.getMenu,
+        res: {
+          body: readyMenu.toJS()
+        }
       };
     }
     return async api => ({

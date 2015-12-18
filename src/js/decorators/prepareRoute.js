@@ -23,14 +23,14 @@ export default function prepareRoute(prepareFn) {
       }
 
       componentWillReceiveProps(nextProps) {
-        //if (!shallowEqual(nextProps, this.props)) {
         const {
           context: { store ,router},
           props: { params, location }
           } = this;
 
-        prepareFn({store, router, params: params || router.state.params, location});
-        //}
+        if (!shallowEqual(nextProps, this.props)) {
+          prepareFn({store, router, params: nextProps.params, location});
+        }
       }
 
       componentDidMount() {

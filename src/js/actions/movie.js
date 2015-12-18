@@ -15,6 +15,7 @@ export function getMovie(movieId, router) {
     const user = getState().User.get('user');
 
     if (user && router) {
+      console.log('user', user)
       let planCode = user.get('planCode');
       if (!planCode) {
         router.transitionTo('/select-plan');

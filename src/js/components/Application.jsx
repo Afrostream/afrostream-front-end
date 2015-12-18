@@ -22,10 +22,10 @@ if (canUseDOM) {
 }
 @prepareRoute(async function ({ store, router, params: { movieId } }) {
   return await * [
-    store.dispatch(CategoryActionCreators.getMenu()),
-    store.dispatch(CategoryActionCreators.getMeaList()),
-    store.dispatch(CategoryActionCreators.getAllSpots()),
-    store.dispatch(MovieActionCreators.getMovie(movieId, router))
+    //store.dispatch(MovieActionCreators.getMovie(movieId, router)),
+    //store.dispatch(CategoryActionCreators.getAllSpots()),
+    //store.dispatch(CategoryActionCreators.getMenu()),
+    //store.dispatch(CategoryActionCreators.getMeaList())
   ];
 })
 @analytics()
