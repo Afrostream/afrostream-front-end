@@ -70,6 +70,21 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
+          <div className="get-help">
+            <h4>APPLICATIONS MOBILE</h4>
+            <ul className="footer-links">
+              <li>
+                <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8">
+                  IOS <i className="fa fa-apple"></i>
+                </a>
+              </li>
+              <li>
+                <a className="footer-link" href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr">
+                  Android <i className="fa fa-android"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="legal-statements">
           <div className="links">
