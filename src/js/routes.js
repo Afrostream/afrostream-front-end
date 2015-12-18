@@ -39,10 +39,10 @@ export default (
     <Route name="home" path="/" component={HomePage} scrollOnTransition={true}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
-             path="/:movieId/:movieSlug(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
+             path="/:movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
              component={PlayerPage}
              scrollOnTransition={true}/>
-      <Route name="compte" path="/compte" component={AccountPage} />
+      <Route name="compte" path="/compte" component={AccountPage}/>
       <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
       <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>
