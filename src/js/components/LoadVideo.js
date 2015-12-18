@@ -39,11 +39,7 @@ export default class LoadVideo extends Component {
     this.context.router.transitionTo(link)
   }
 
-  //TODO Connect to last video or first video of season/video
-  loadVideo(e) {
-    if (e) {
-      e.preventDefault();
-    }
+  getLink() {
     const {
       props: {
         movie,movieId,season,episode,Movie,User
@@ -88,6 +84,15 @@ export default class LoadVideo extends Component {
       videoId = videoId || videoData.get('_id');
     }
     link += `${videoId ? '/' + videoId : ''}`;
+    return link;
+  }
+
+  //TODO Connect to last video or first video of season/video
+  loadVideo(e) {
+    if (e) {
+      e.preventDefault();
+    }
+    let link = this.getLink();
     return this.context.router.transitionTo(link);
   }
 
