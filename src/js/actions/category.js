@@ -1,13 +1,15 @@
 import ActionTypes from '../consts/ActionTypes';
 
 export function getAllSpots() {
-  console.log('getAllSpots');
   return (dispatch, getState) => {
-    let readySpots = getState().Category.get(`/categorys/spots`);
+    let readySpots = getState().Category.get(`categorys/spots`);
     if (readySpots) {
       console.log('spots already present in data store');
       return {
-        type: ActionTypes.Category.getAllSpots
+        type: ActionTypes.Category.getAllSpots,
+        res: {
+          body: readySpots.toJS()
+        }
       };
     }
 
@@ -21,12 +23,15 @@ export function getAllSpots() {
 export function getSpots(categoryId) {
   return (dispatch, getState) => {
 
-    let readySpot = getState().Category.get(`/categorys/${categoryId}/spots`);
+    let readySpot = getState().Category.get(`categorys/${categoryId}/spots`);
     if (readySpot) {
       console.log('spots already present in data store', categoryId);
       return {
         type: ActionTypes.Category.getSpots,
-        categoryId
+        categoryId,
+        res: {
+          body: readySpot.toJS()
+        }
       };
     }
     //TODO recuperation de l'id top
@@ -44,12 +49,15 @@ export function getSpots(categoryId) {
 export function getCategory(categoryId) {
   return (dispatch, getState) => {
 
-    let readyCat = getState().Category.get(`/categorys/${categoryId}`);
+    let readyCat = getState().Category.get(`categorys/${categoryId}`);
     if (readyCat) {
       console.log('Category already present in data store', categoryId);
       return {
         type: ActionTypes.Category.getCategory,
-        categoryId
+        categoryId,
+        res: {
+          body: readySpot.toJS()
+        }
       };
     }
 
@@ -69,7 +77,10 @@ export function getMeaList() {
     if (readyMea) {
       console.log('Meas already present in data store');
       return {
-        type: ActionTypes.Category.getMeaList
+        type: ActionTypes.Category.getMeaList,
+        res: {
+          body: readyMea.toJS()
+        }
       };
     }
 
@@ -86,7 +97,10 @@ export function getMenu() {
     if (readyMenu) {
       console.log('Menu already present in data store');
       return {
-        type: ActionTypes.Category.getMenu
+        type: ActionTypes.Category.getMenu,
+        res: {
+          body: readyMenu.toJS()
+        }
       };
     }
     return async api => ({

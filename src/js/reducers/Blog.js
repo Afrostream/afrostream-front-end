@@ -3,11 +3,14 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 
 const initialState = Immutable.fromJS({
-  'posts': []
+  'posts': null
 });
 
 export default createReducer(initialState, {
   [ActionTypes.Blog.fetchAll](state, { res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     console.log('Blog.fetchAll', data);
     return state.merge({
@@ -15,6 +18,9 @@ export default createReducer(initialState, {
     });
   },
   [ActionTypes.Blog.fetchPost](state, { res,postId }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     console.log('Blog.fetchPost', data);
     return state.merge({

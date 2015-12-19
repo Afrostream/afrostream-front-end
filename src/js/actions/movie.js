@@ -11,10 +11,11 @@ export function getMovie(movieId, router) {
       };
     }
 
-    let readyMovie = getState().Movie.get(`/movies/${movieId}`);
+    let readyMovie = getState().Movie.get(`movies/${movieId}`);
     const user = getState().User.get('user');
 
     if (user && router) {
+      console.log('user', user)
       let planCode = user.get('planCode');
       if (!planCode) {
         router.transitionTo('/select-plan');
@@ -29,9 +30,13 @@ export function getMovie(movieId, router) {
       console.log('movie already present in data store', movieId);
       return {
         type: ActionTypes.Movie.getMovie,
-        movieId
+        movieId,
+        res: {
+          body: readyMovie.toJS()
+        }
       };
     }
+
     return async api => ({
       type: ActionTypes.Movie.getMovie,
       movieId,
@@ -49,12 +54,15 @@ export function getSeason(movieId) {
         movieId
       };
     }
-    let readySeason = getState().Movie.get(`/movies/${movieId}/seasons`);
+    let readySeason = getState().Movie.get(`movies/${movieId}/seasons`);
     if (readySeason) {
       console.log('season already present in data store', movieId);
       return {
         type: ActionTypes.Movie.getSeason,
-        movieId
+        movieId,
+        res: {
+          body: readySeason.toJS()
+        }
       };
     }
     return async api => ({

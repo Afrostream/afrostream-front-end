@@ -59,7 +59,6 @@ export default createReducer(initialState, {
       return state;
     }
     const data = res.body;
-    console.log('Category.getMeaList', data);
     return state.merge({
       ['meaList']: data
     });

@@ -1,6 +1,7 @@
 'use strict';
 import React, { PropTypes } from 'react';
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import shallowEqual from 'react-pure-render/shallowEqual';
 
 export default function prepareRoute(prepareFn) {
 
@@ -21,15 +22,14 @@ export default function prepareRoute(prepareFn) {
         );
       }
 
-      componentWillReceiveProps() {
+      componentWillReceiveProps(nextProps) {
         const {
           context: { store ,router},
           props: { params, location }
           } = this;
 
-        prepareFn({store, router, params: params || router.state.params, location});
-        if (canUseDOM) {
-          document.getElementsByTagName('BODY')[0].scrollTop = 0;
+        if (!shallowEqual(nextProps, this.props)) {
+          prepareFn({store, router, params: nextProps.params, location});
         }
       }
 
@@ -40,9 +40,6 @@ export default function prepareRoute(prepareFn) {
           } = this;
 
         prepareFn({store, router, params: params || router.state.params, location});
-        if (canUseDOM) {
-          document.getElementsByTagName('BODY')[0].scrollTop = 0;
-        }
       }
 
     };

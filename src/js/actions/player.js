@@ -8,7 +8,7 @@ export function getConfig() {
       console.log('config already present in data store');
       return {
         type: ActionTypes.Player.getConfig,
-        res: {body: readyConfig}
+        res: {body: readyConfig.toJS()}
       };
     }
 

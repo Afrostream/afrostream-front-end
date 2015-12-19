@@ -11,6 +11,7 @@ import classSet from 'classnames';
 import config from '../../../config';
 import { prepareRoute,metasData,analytics } from '../decorators';
 import * as CategoryActionCreators from '../actions/category';
+import * as MovieActionCreators from '../actions/movie';
 
 if (process.env.BROWSER) {
   require('./Application.less');
@@ -19,9 +20,12 @@ if (process.env.BROWSER) {
 if (canUseDOM) {
   var ga = require('react-ga');
 }
-@prepareRoute(async function ({ store}) {
+@prepareRoute(async function ({ store, router, params: { movieId } }) {
   return await * [
-    store.dispatch(CategoryActionCreators.getAllSpots())
+    //store.dispatch(MovieActionCreators.getMovie(movieId, router)),
+    //store.dispatch(CategoryActionCreators.getAllSpots()),
+    //store.dispatch(CategoryActionCreators.getMenu()),
+    //store.dispatch(CategoryActionCreators.getMeaList())
   ];
 })
 @analytics()

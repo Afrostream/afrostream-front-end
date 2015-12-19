@@ -2,7 +2,7 @@
 @import '../../../styles/arrow.less';
 
 @thumb-margin: 10px;
-
+@zoom-margin: 50px;
 .movies-list {
   position: relative;
   background-color: @color-indigo;
@@ -19,7 +19,7 @@
       margin: 10px;
     }
     .movies-list__container {
-      margin: 0;
+      margin: -@zoom-margin 0 -40px 0;
       position: relative;
       overflow: hidden;
       width: 100%;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { prepareRoute,analytics } from '../../decorators';
+import { metasData,prepareRoute,analytics } from '../../decorators';
 import * as MovieActionCreators from '../../actions/movie';
 import * as EventActionCreators from '../../actions/event';
 import MovieInfo from './MovieInfo';
