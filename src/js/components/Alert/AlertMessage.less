@@ -10,18 +10,20 @@
   font-size: 12px;
   font-weight: bold;
   line-height: 14px;
-  padding: 15px 0 5px 0;
-
-  @media all and (max-width: @screen-sm-min) {
-    padding: 5px 0 5px 0;
-  }
-
-  @media all and (max-width: @screen-xs-min) {
-    height: 60px;
-  }
-
   a {
     text-decoration: underline;
+  }
+  .alert-message {
+    padding: 15px 0 5px 0;
+    position: relative;
+    width: 100%;
+    @media all and (max-width: @screen-sm-min) {
+      padding: 5px 0 5px 0;
+    }
+
+    @media all and (max-width: @screen-xs-min) {
+      height: 60px;
+    }
   }
 }
 
