@@ -35,6 +35,12 @@ const mergeProfile = function (profile, data) {
 
   //remove auth0 fucking cache data
   let filteredUser = _.pick(profile, [
+    'clientID',
+    'personal_token',
+    'personal_provider',
+    'afro_token',
+    'afro_refresh_token',
+    'afro_provider',
     'picture',
     'updated_at',
     'name',
