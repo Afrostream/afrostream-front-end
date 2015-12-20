@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
-import CookieMessage from './Welcome/WelcomeComponents/CookieMessage';
+import AlertMessage from './Alert/AlertMessage';
 import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
 import Modal from './Modal/Modal'
 import {canUseDOM} from 'react/lib/ExecutionEnvironment';
@@ -58,8 +58,7 @@ class Application extends React.Component {
         <Modal />
         <Header {...this.props}/>
         <SideBar />
-        <CookieMessage />
-
+        <AlertMessage />
         <div id="page-content-wrapper" className="container-fluid">
           {children}
           <Footer />

@@ -1,30 +1,9 @@
 @import (reference) '../../../../styles/config.less';
 
 .cookie-message {
-
-  position: fixed;
-  z-index: 1500;
+  position: relative;
   bottom: 0;
-  height: 50px;
-  background-color: @color-purple-transparent;
   width: 100%;
-  text-align: center;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 14px;
-  padding: 15px 0 5px 0;
-
-  @media all and (max-width: @screen-sm-min) {
-    padding: 5px 0 5px 0;
-  }
-
-  @media all and (max-width: @screen-xs-min) {
-    height: 60px;
-  }
-
-  a {
-    text-decoration: underline;
-  }
 }
 
 .cookie-button {
