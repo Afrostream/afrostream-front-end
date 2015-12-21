@@ -113,8 +113,8 @@ const config = {
       price: '5999'
     }
   ],
-  alerts: [
-  ],
+  //add alerts to front (same as cookies)
+  alerts: [],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
   },
