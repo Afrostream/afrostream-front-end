@@ -114,7 +114,6 @@ const config = {
     }
   ],
   alerts: [
-    'L\' application android est indisponible pour le moment pour un problème indépendant de notre volonté. Nous faisons le maximum pour un retour rapide à la normale.'
   ],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
