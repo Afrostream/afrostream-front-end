@@ -34,9 +34,12 @@ class SeasonList extends React.Component {
 
     const movieData = Movie.get(`movies/${movieId}`);
     const seasons = Movie.get(`movies/${movieId}/seasons`);
-    const page = Season.get('selected') || 0;
+    let page = Season.get('selected') || 0;
 
     if (seasons && seasons.size) {
+      if ((seasons.size - 1) < page) {
+        page = 0;
+      }
       return (
         <div className="season-list">
           {this.parseSeasonTab(page, seasons)}
