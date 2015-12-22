@@ -7,7 +7,6 @@ import BrowsePage from './Browse/BrowsePage';
 import PaymentPage from './Payment/PaymentPage';
 import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
-
 import * as EventActionCreators from '../actions/event';
 import * as MovieActionCreators from '../actions/movie';
 import * as CategoryActionCreators from '../actions/category';
