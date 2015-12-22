@@ -24,7 +24,8 @@ if (canUseDOM) {
 class Application extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   };
 
   componentDidMount() {

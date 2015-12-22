@@ -1,6 +1,6 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function getMovie(movieId, router) {
+export function getMovie(movieId, location) {
   console.log('getMovie', movieId)
   return (dispatch, getState) => {
     if (!movieId) {
@@ -14,10 +14,10 @@ export function getMovie(movieId, router) {
     let readyMovie = getState().Movie.get(`movies/${movieId}`);
     const user = getState().User.get('user');
 
-    if (user && router) {
+    if (user && location) {
       let planCode = user.get('planCode');
       if (!planCode) {
-        router.transitionTo('/select-plan');
+        location.transitionTo('/select-plan');
         return {
           type: ActionTypes.Movie.getMovie,
           movieId

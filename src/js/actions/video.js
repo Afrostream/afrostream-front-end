@@ -1,7 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
-export function getVideo(videoId, router) {
+export function getVideo(videoId, location) {
   return (dispatch, getState) => {
 
     if (!videoId) {
@@ -13,10 +13,10 @@ export function getVideo(videoId, router) {
     }
 
     const user = getState().User.get('user');
-    if (user && router) {
+    if (user && location) {
       let planCode = user.get('planCode');
       if (!planCode) {
-        router.transitionTo('/select-plan');
+        location.transitionTo('/select-plan');
         return {
           type: ActionTypes.Video.getVideo,
           videoId

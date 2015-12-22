@@ -12,10 +12,6 @@ if (process.env.BROWSER) {
 @connect(({ User }) => ({User}))
 class PaymentSuccess extends React.Component {
 
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
-
   logOut() {
     const {
       props: {

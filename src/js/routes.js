@@ -27,12 +27,12 @@ export default (
     <Route name="policy" path="/policy" component={Static.Policy}/>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
-    <Route name="blog" path="/blog" component={Blog.List}>
-      <Route name="post" path="/:postId(/:postSlug)" component={Blog.View}/>
-    </Route>
-    <Route name="payment" path="/select-plan" component={PaymentPage}>
-      <Route name="plancode" path="/:planCode(/:status)" component={PaymentForm}/>
-    </Route>
+    {/*<Route name="blog" path="/blog" component={Blog.List}>
+     <Route name="post" path="/:postId(/:postSlug)" component={Blog.View}/>
+     </Route>
+     <Route name="payment" path="/select-plan" component={PaymentPage}>
+     <Route name="plancode" path="/:planCode(/:status)" component={PaymentForm}/>
+     </Route>*/}
     <Route name="home" path="/" component={HomePage}>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"

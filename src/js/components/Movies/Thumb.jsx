@@ -1,5 +1,4 @@
 import React ,{ PropTypes } from 'react';
-import Router from 'react-router';
 import ReactDOM from'react-dom';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
@@ -38,14 +37,14 @@ class Thumb extends LoadVideo {
   };
 
   triggerOver() {
-    let thumbMouse = React.findDOMNode(this);
+    let thumbMouse = ReactDOM.findDOMNode(this);
     if (thumbMouse) {
       thumbMouse.dispatchEvent(new Event('thumbover', {bubbles: true}));
     }
   }
 
   triggerOut() {
-    let thumbMouse = React.findDOMNode(this);
+    let thumbMouse = ReactDOM.findDOMNode(this);
     if (thumbMouse) {
       thumbMouse.dispatchEvent(new Event('thumbout', {bubbles: true}));
     }

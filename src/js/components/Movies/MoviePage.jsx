@@ -5,11 +5,11 @@ import * as EventActionCreators from '../../actions/event';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
 
-@prepareRoute(async function ({ store, router, params: { movieId } }) {
+@prepareRoute(async function ({ store, location, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(EventActionCreators.userActive(true)),
-    store.dispatch(MovieActionCreators.getMovie(movieId, router)),
+    store.dispatch(MovieActionCreators.getMovie(movieId, location)),
     store.dispatch(MovieActionCreators.getSeason(movieId))
   ];
 })
@@ -25,7 +25,7 @@ class MoviePage extends React.Component {
 
     return (
       <div className="row-fluid">
-        {movieId ? <MovieInfo maxLength="600" active={true} load={false} {...{movieId}}/> : ''}
+        {movieId ? <MovieInfo maxLength={600} active={true} load={false} {...{movieId}}/> : ''}
         {movieId ? <SeasonList {...{movieId}}/> : ''}
       </div>
     );

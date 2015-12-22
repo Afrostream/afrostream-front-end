@@ -11,7 +11,7 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 class HomePage extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired
   };
 
   componentDidUpdate() {
@@ -28,7 +28,7 @@ class HomePage extends React.Component {
     if (user) {
       let planCode = user.get('planCode');
       if (!planCode) {
-        this.context.router.transitionTo('/select-plan');
+        this.context.location.transitionTo('/select-plan');
       }
     }
   }
@@ -47,7 +47,7 @@ class HomePage extends React.Component {
         return (<BrowsePage/>)
       }
     } else {
-      return (<WelcomePage spinner={isPending}/>);
+      return (<WelcomePage spinner={isPending} {...this.props}/>);
     }
   }
 }

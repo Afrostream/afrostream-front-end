@@ -21,10 +21,6 @@ class PaymentError extends React.Component {
     linkMessage: React.PropTypes.string
   };
 
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
-
   static defaultProps = {
     title: 'Erreur lors de la création de l’abonnement:',
     message: '',
@@ -62,10 +58,10 @@ class PaymentError extends React.Component {
         <p className="error">
           {typeof this.props.message !== 'undefined' && this.props.message === 'Votre session a expiré, veuillez recommencer.'
             ?
-          <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
+            <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
             :
-          <a className="error-link" href={this.props.link}>{this.props.linkMessage}</a>
-            }
+            <a className="error-link" href={this.props.link}>{this.props.linkMessage}</a>
+          }
         </p>
       </div>
     );

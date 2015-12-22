@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import config from '../../../../../config';
 import Thumb from '../../../components/Movies/Thumb.jsx';
@@ -12,7 +13,7 @@ class Spots extends React.Component {
 
   componentDidMount() {
     // TODO: debounce this call
-    let element = React.findDOMNode(this);
+    let element = ReactDOM.findDOMNode(this);
     this.setState({
       viewport: {
         left: element.scrollLeft,

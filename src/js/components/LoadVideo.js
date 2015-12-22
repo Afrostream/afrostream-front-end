@@ -11,7 +11,7 @@ export default class LoadVideo extends Component {
   };
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -36,7 +36,7 @@ export default class LoadVideo extends Component {
     let movieSlug = movie.get('slug') || '';
     let link = `/${movieId}/${movieSlug}`;
 
-    this.context.router.transitionTo(link)
+    this.context.location.transitionTo(link)
   }
 
   getLink() {
@@ -93,7 +93,7 @@ export default class LoadVideo extends Component {
       e.preventDefault();
     }
     let link = this.getLink();
-    return this.context.router.transitionTo(link);
+    return this.context.location.transitionTo(link);
   }
 
 }

@@ -11,7 +11,8 @@ export default () => {
 
       static contextTypes = {
         store: PropTypes.object.isRequired,
-        router: PropTypes.object.isRequired
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
       };
 
       static defaultProps = {};
@@ -34,11 +35,11 @@ export default () => {
 
       componentWillMount() {
         const {
-          context: { store ,router},
-          props: { params, location }
+          context: { store ,location},
+          props: { params }
           } = this;
 
-        let paramsMatch = params || router.state.params;
+        let paramsMatch = params;
 
         if (paramsMatch && paramsMatch.movieId) {
           let data = this.context.store.getState().Movie.get(`movies/${paramsMatch.movieId}`);
@@ -125,7 +126,7 @@ export default () => {
         return url.format({
           protocol: config.protocol,
           host: config.host,
-          pathname: this.context.router.makePath(routeName, params)
+          pathname: this.context.location.makePath(routeName, params)
         });
       }
 

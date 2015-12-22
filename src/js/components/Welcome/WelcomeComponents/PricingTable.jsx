@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
 class PricingTable extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired
   };
 
   showLock() {
@@ -29,7 +29,7 @@ class PricingTable extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock(this.context.router));
+    dispatch(UserActionCreators.showGiftLock(this.context.location));
   }
 
   render() {

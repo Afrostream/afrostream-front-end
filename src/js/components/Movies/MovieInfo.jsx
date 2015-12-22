@@ -31,18 +31,19 @@ class MovieInfo extends LoadVideo {
   }
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired
   };
 
   static propTypes = {
-    active: PropTypes.bool.isRequired,
-    load: PropTypes.bool.isRequired,
-    maxLength: PropTypes.number.isRequired
+    active: PropTypes.bool,
+    load: PropTypes.bool,
+    maxLength: PropTypes.number
   };
 
   static defaultProps = {
     maxLength: 450,
-    load: true
+    load: true,
+    active: false
   };
 
   initTransition() {
@@ -54,11 +55,6 @@ class MovieInfo extends LoadVideo {
       return;
     }
     this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
-    //this.tlIn.add(TweenMax.fromTo(backGd, 22,
-    //  {z: 0},
-    //  {z: 5, force3D: true}
-    //), 0);
-
   }
 
   lunchTransition() {
@@ -115,14 +111,14 @@ class MovieInfo extends LoadVideo {
     let poster = movieData.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
     let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=${config.images.quality}&fm=${config.images.type})`} : {};
-
+    let link = this.getLink();
     return (
       <div ref="slContainer" className={classes}>
-        <a href="" onClick={::this.loadVideo} onTouchEnd={::this.loadVideo}>
+        <Link to={link}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
           <div className="btn-play"/>
           {movieData ? <Billboard {...{active, movieData, maxLength}} /> : ''}
-        </a>
+        </Link>
       </div>
     );
   }

@@ -20,10 +20,6 @@ if (process.env.BROWSER) {
 @connect(({ Intercom,User }) => ({Intercom, User}))
 class PaymentPage extends React.Component {
 
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
-
   componentDidMount() {
     const {
       props: {

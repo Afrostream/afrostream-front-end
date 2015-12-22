@@ -13,7 +13,8 @@ if (process.env.BROWSER) {
 class Header extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -58,7 +59,7 @@ class Header extends React.Component {
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
     const user = User.get('user');
-    let hasHistory = !this.state.isIOS && user && (this.context.router.state.location.pathname.length > 1);
+    let hasHistory = !this.state.isIOS && user && (this.context.location.pathname.length > 1);
 
     let sliderClasses = {
       'navbar': true,
@@ -66,9 +67,9 @@ class Header extends React.Component {
       'navbar-fixed-top': true,
       'navbar-hidden': hiddenMode,
       'navbar-fixed-color': pinned || this.state.pinned
-      || this.context.router.isActive('compte')
-      || this.context.router.isActive('cancel-subscription')
-      || this.context.router.isActive('select-plan')
+      || this.context.history.isActive('compte')
+      || this.context.history.isActive('cancel-subscription')
+      || this.context.history.isActive('select-plan')
     };
 
     return (

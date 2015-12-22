@@ -15,7 +15,8 @@ export default function analytics(prepareFn) {
       static prepareRoute = prepareFn;
 
       static contextTypes = {
-        router: PropTypes.object.isRequired
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
       };
 
       render() {
@@ -26,12 +27,12 @@ export default function analytics(prepareFn) {
 
       componentDidMount() {
         const {
-          context: { store },
-          props: { params, location }
+          context: { store,history },
+          props: { params }
           } = this;
 
         if (canUseDOM) {
-          ga.pageview(this.context.router.state.location.pathname);
+          ga.pageview(this.context.history.pathname);
         }
       }
 

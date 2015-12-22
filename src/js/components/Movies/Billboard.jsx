@@ -48,7 +48,16 @@ class Billboard extends React.Component {
       , 0.05), 0);
   }
 
+  isMobile() {
+    //Detect mobile
+    const ua = navigator.userAgent;
+    return /WebKit/.test(ua) && /Mobile/.test(ua);
+  }
+
   lunchTransition() {
+    if (this.isMobile()) {
+      return;
+    }
     let newId = this.props.movieData.get('_id');
     if (!this.props.active) {
       return;
@@ -106,7 +115,8 @@ class Billboard extends React.Component {
     return (
       <div className="billboard-row">
         <label> Avec : </label>
-        {casts.map((cast, i) => <span> {`${(i ? ' | ' : '')}${cast.get('firstName')} ${cast.get('lastName')}`}</span>)}
+        {casts.map((cast, i) => <span
+          key={`cast-${i}`}> {`${(i ? ' | ' : '')}${cast.get('firstName')} ${cast.get('lastName')}`}</span>)}
       </div>
     );
   }
@@ -159,8 +169,7 @@ class Billboard extends React.Component {
         {creator ? this.getCreator(creator) : ''}
         {actors && actors.size ? this.getCast(actors) : ''}
         <div ref="slSynopsis" className="billboard-synopsis billboard-row">{synopsis}</div>
-        <a href={movieData.get('link')}>{movieData.get('link')}</a>
-
+        {/*<Link to={movieData.get('link')}>{movieData.get('link')}</Link>*/}
         <div className="billboard-info__btn">
           {hasSubtiles ? <button className="btn btn-xs btn-transparent" href="#">
             <i className="fa fa-align-left"></i>Audio et sous titres

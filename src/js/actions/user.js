@@ -245,11 +245,11 @@ export function getProfile() {
   };
 }
 
-export function showGiftLock(router) {
+export function showGiftLock(location) {
   return (dispatch, getState, actionDispatcher) => {
     const lock = getState().User.get('lock');
     lock.once('signin success', function (options, context) {
-      router.transitionTo('/select-plan/afrostreamgift/checkout');
+      location.transitionTo('/select-plan/afrostreamgift/checkout');
     });
     return this.showLock('showSignup', null, config.auth0.gift);
   };

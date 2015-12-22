@@ -1,6 +1,6 @@
 import React from'react';
 import ReactDOM from'react-dom';
-import History from 'react-router/lib/BrowserHistory';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import Router from './components/Router';
 import { Provider } from 'react-redux';
 import createStore from './lib/createStore';
@@ -18,7 +18,7 @@ if (canUseDOM) {
   require('jquery.payment');
 }
 
-const history = new History;
+const history = createBrowserHistory();
 const api = createAPI(
   /**
    * Client's createRequest() method

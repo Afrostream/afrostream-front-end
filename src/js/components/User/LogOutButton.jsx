@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
 @connect(({ User }) => ({User})) class LogOutButton extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired
   };
 
   logOut() {
@@ -24,7 +24,7 @@ if (process.env.BROWSER) {
   }
 
   componentWillUnmount() {
-    this.context.router.transitionTo('/');
+    this.context.location.transitionTo('/');
   }
 
   render() {
