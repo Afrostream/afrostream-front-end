@@ -27,13 +27,13 @@ class HomePage extends React.Component {
     router: PropTypes.object.isRequired
   };
 
-  //componentDidUpdate() {
-  //  this.validateState()
-  //}
-  //
-  //componentDidMount() {
-  //  this.validateState()
-  //}
+  componentDidUpdate() {
+    this.validateState()
+  }
+
+  componentDidMount() {
+    this.validateState()
+  }
 
   validateState() {
     const { props: { User } } = this;
