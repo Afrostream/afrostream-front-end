@@ -2,10 +2,6 @@ import React ,{ PropTypes } from 'react';
 import Router from 'react-router';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
-import * as MovieActionCreators from '../../actions/movie';
-import * as VideoActionCreators from '../../actions/video';
-import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
 import LoadVideo from '../LoadVideo';
 
@@ -13,7 +9,7 @@ if (process.env.BROWSER) {
   require('./Thumb.less');
 }
 
-@connect(({ Movie, Video ,User}) => ({Movie, Video, User}))
+@connect(({ Movie, Video}) => ({Movie, Video}))
 class Thumb extends LoadVideo {
 
   constructor(props) {
@@ -41,11 +37,17 @@ class Thumb extends LoadVideo {
   };
 
   triggerOver() {
-    React.findDOMNode(this).dispatchEvent(new Event('thumbover', {bubbles: true}));
+    let thumbMouse = React.findDOMNode(this);
+    if (thumbMouse) {
+      thumbMouse.dispatchEvent(new Event('thumbover', {bubbles: true}));
+    }
   }
 
   triggerOut() {
-    React.findDOMNode(this).dispatchEvent(new Event('thumbout', {bubbles: true}));
+    let thumbMouse = React.findDOMNode(this);
+    if (thumbMouse) {
+      thumbMouse.dispatchEvent(new Event('thumbout', {bubbles: true}));
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -88,6 +90,16 @@ class Thumb extends LoadVideo {
     const {
       props: { movie }
       } = this;
+    let dateFrom = movie.get('dateFrom');
+
+    if (!dateFrom) {
+      return '';
+    }
+    let dateNow = Date.now();
+    let compare = dateNow - new Date(dateFrom).getTime();
+    if (compare <= (1000 * 3600 * 240)) {
+      return (<div className="thumb-new__item"></div>)
+    }
   }
 
   getLazyImageUrl() {

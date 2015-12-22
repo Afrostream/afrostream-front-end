@@ -34,10 +34,14 @@ export default () => {
 
       componentWillMount() {
         const {
+          context: { store ,router},
           props: { params, location }
           } = this;
-        if (params && params.movieId) {
-          let data = this.context.store.getState().Movie.get(`movies/${params.movieId}`);
+
+        let paramsMatch = params || router.state.params;
+
+        if (paramsMatch && paramsMatch.movieId) {
+          let data = this.context.store.getState().Movie.get(`movies/${paramsMatch.movieId}`);
           this.setMetadataProps(data);
         }
       }

@@ -10,6 +10,14 @@ export function createIntercom() {
         intercom: null
       };
     }
+    let ic = getState().Intercom.get('intercom');
+    if (ic) {
+      ic('show');
+      return {
+        type: ActionTypes.Intercom.createIntercom,
+        intercom: ic
+      }
+    }
     return async intercom =>(
       await new Promise(
         (resolve, reject) => {
@@ -74,8 +82,10 @@ export function removeIntercom() {
 
     var w = window;
     var ic = w.Intercom;
-    ic('shutdown');
-    ic('hide');
+    if (ic) {
+      ic('shutdown');
+      ic('hide');
+    }
 
     return {
       type: ActionTypes.Intercom.removeIntercom,

@@ -38,16 +38,22 @@ class AlertMessage extends React.Component {
     }
   }
 
+  getAlert(i, alert) {
+    if (!alert || this.state.isCookieSet === '1') {
+      return '';
+    }
+    return (
+      <div className="alert-message"><span key={`alert-${i}`}>{alert}
+        <button className="alert-button" onClick={::this.setCookieToken} onTouchEnd={::this.setCookieToken}>OK</button></span>
+      </div>
+    )
+  }
+
   render() {
 
     return (
       <div className="alerts">
-        {this.state.isCookieSet === '1' ? <div /> : <div className="alert-message">
-          {config.alerts ? config.alerts.map((alert, i) => <span
-            key={`alert-${i}`}>{alert}</span>) : ''}
-          <button className="alert-button" onClick={::this.setCookieToken} onTouchEnd={::this.setCookieToken}>OK
-          </button>
-        </div> }
+        {config.alerts ? config.alerts.map((alert, i) => this.getAlert(i, alert)) : ''}
         <CookieMessage />
       </div>
     );

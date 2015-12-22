@@ -21,7 +21,6 @@ if (process.env.BROWSER) {
   ];
 })
 @analytics()
-@metasData()
 class WelcomePage extends React.Component {
 
   static propTypes = {
@@ -29,7 +28,7 @@ class WelcomePage extends React.Component {
   };
 
   static defaultProps = {
-    spinner: null
+    spinner: false
   };
 
   state = {

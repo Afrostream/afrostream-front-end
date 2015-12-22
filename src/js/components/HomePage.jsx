@@ -7,7 +7,6 @@ import BrowsePage from './Browse/BrowsePage';
 import PaymentPage from './Payment/PaymentPage';
 import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
-
 import * as EventActionCreators from '../actions/event';
 import * as MovieActionCreators from '../actions/movie';
 import * as CategoryActionCreators from '../actions/category';
@@ -15,7 +14,7 @@ import * as CategoryActionCreators from '../actions/category';
 @prepareRoute(async function ({ store, router, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(MovieActionCreators.getMovie(movieId)),
+    store.dispatch(MovieActionCreators.getMovie(movieId, router)),
     store.dispatch(CategoryActionCreators.getAllSpots()),
     store.dispatch(CategoryActionCreators.getMenu()),
     store.dispatch(CategoryActionCreators.getMeaList())
@@ -28,12 +27,31 @@ class HomePage extends React.Component {
     router: PropTypes.object.isRequired
   };
 
+  componentDidUpdate() {
+    this.validateState()
+  }
+
+  componentDidMount() {
+    this.validateState()
+  }
+
+  validateState() {
+    const { props: { User } } = this;
+    const user = User.get('user');
+    if (user) {
+      let planCode = user.get('planCode');
+      if (!planCode) {
+        this.context.router.transitionTo('/select-plan');
+      }
+    }
+  }
+
   render() {
     const { props: { User ,children} } = this;
     const token = User.get('token');
     const pending = User.get('pending');
     const user = User.get('user');
-
+    let isPending = Boolean(token || pending);
     if (user) {
       if (children) {
         return children;
@@ -42,7 +60,7 @@ class HomePage extends React.Component {
         return (<BrowsePage/>)
       }
     } else {
-      return (<WelcomePage spinner={token || pending}/>);
+      return (<WelcomePage spinner={isPending}/>);
     }
   }
 }
