@@ -8,7 +8,6 @@ import Spinner from '../Spinner/Spinner';
 import * as EventActionCreators from '../../actions/event';
 import * as MovieActionCreators from '../../actions/movie';
 import * as CategoryActionCreators from '../../actions/category';
-import {metasData,analytics } from '../../decorators';
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less');
@@ -20,8 +19,6 @@ if (process.env.BROWSER) {
     store.dispatch(CategoryActionCreators.getAllSpots())
   ];
 })
-@analytics()
-@metasData()
 class WelcomePage extends React.Component {
 
   static propTypes = {
@@ -29,7 +26,7 @@ class WelcomePage extends React.Component {
   };
 
   static defaultProps = {
-    spinner: null
+    spinner: false
   };
 
   state = {

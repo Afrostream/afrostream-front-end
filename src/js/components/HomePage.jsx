@@ -33,7 +33,7 @@ class HomePage extends React.Component {
     const token = User.get('token');
     const pending = User.get('pending');
     const user = User.get('user');
-
+    let isPending = Boolean(token || pending);
     if (user) {
       if (children) {
         return children;
@@ -42,7 +42,7 @@ class HomePage extends React.Component {
         return (<BrowsePage/>)
       }
     } else {
-      return (<WelcomePage spinner={token || pending}/>);
+      return (<WelcomePage spinner={isPending}/>);
     }
   }
 }
