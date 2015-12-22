@@ -14,10 +14,11 @@ if (process.env.BROWSER) {
   require('./WelcomePage.less');
 }
 
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({ store, location, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(CategoryActionCreators.getAllSpots())
+    store.dispatch(CategoryActionCreators.getAllSpots()),
+    store.dispatch(MovieActionCreators.getMovie(movieId, location)),
   ];
 })
 @analytics()

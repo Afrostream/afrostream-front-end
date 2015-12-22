@@ -27,12 +27,12 @@ export default function analytics(prepareFn) {
 
       componentDidMount() {
         const {
-          context: { store,history },
+          context: { store,location },
           props: { params }
           } = this;
 
         if (canUseDOM) {
-          ga.pageview(this.context.history.pathname);
+          ga.pageview(location.pathname);
         }
       }
 
