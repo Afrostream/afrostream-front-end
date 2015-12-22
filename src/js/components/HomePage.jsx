@@ -14,7 +14,7 @@ import * as CategoryActionCreators from '../actions/category';
 @prepareRoute(async function ({ store, router, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(MovieActionCreators.getMovie(movieId)),
+    store.dispatch(MovieActionCreators.getMovie(movieId, router)),
     store.dispatch(CategoryActionCreators.getAllSpots()),
     store.dispatch(CategoryActionCreators.getMenu()),
     store.dispatch(CategoryActionCreators.getMeaList())
@@ -26,6 +26,25 @@ class HomePage extends React.Component {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
+
+  componentDidUpdate() {
+    this.validateState()
+  }
+
+  componentDidMount() {
+    this.validateState()
+  }
+
+  validateState() {
+    const { props: { User } } = this;
+    const user = User.get('user');
+    if (user) {
+      let planCode = user.get('planCode');
+      if (!planCode) {
+        this.context.router.transitionTo('/select-plan');
+      }
+    }
+  }
 
   render() {
     const { props: { User ,children} } = this;
