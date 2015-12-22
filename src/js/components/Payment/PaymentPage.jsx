@@ -6,7 +6,6 @@ import * as IntercomActionCreators from '../../actions/intercom';
 import { prepareRoute,analytics } from '../../decorators';
 import config from '../../../../config';
 import SelectPlan from './SelectPlan';
-import WelcomePage from '../Welcome/WelcomePage';
 
 if (process.env.BROWSER) {
   require('./PaymentPage.less');
@@ -50,7 +49,7 @@ class PaymentPage extends React.Component {
     const user = User.get('user');
 
     if (!user) {
-      return <WelcomePage/>
+      return <div/>
     }
 
     if (children) {
