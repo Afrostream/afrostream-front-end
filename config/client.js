@@ -23,7 +23,7 @@ const giftDict = _.merge(giftDictClone, {
     "title": "Enregistrez-vous",
     "action": "Enregistrez-vous",
     "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
-    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, cliquer sur le bouton connexion."
+    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, allez dans votre profil Afrostream."
   }
 });
 
