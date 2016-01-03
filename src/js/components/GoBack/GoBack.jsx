@@ -25,12 +25,12 @@ class GoBack extends React.Component {
   }
 
   static contextTypes = {
-    location: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   navigationGoBack(event) {
-    let location = this.context.router;
-    location.goBack()
+    let hisTory = this.context.history;
+    hisTory.goBack()
   }
 
   render() {
