@@ -18,7 +18,7 @@ if (process.env.BROWSER) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(CategoryActionCreators.getAllSpots()),
-    store.dispatch(MovieActionCreators.getMovie(movieId, location)),
+    store.dispatch(MovieActionCreators.getMovie(movieId, location))
   ];
 })
 @analytics()

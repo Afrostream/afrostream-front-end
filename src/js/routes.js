@@ -27,20 +27,21 @@ export default (
     <Route name="policy" path="/policy" component={Static.Policy}/>
     <Route name="reset" path="/reset" component={ResetPasswordPage}/>
     <Route name="login" path="/login" component={LoginPage}/>
-    {/*<Route name="blog" path="/blog" component={Blog.List}>
-     <Route name="post" path="/:postId(/:postSlug)" component={Blog.View}/>
-     </Route>
-     <Route name="payment" path="/select-plan" component={PaymentPage}>
-     <Route name="plancode" path="/:planCode(/:status)" component={PaymentForm}/>
-     </Route>*/}
+    <Route name="payment" path="/select-plan" component={PaymentPage}>
+      <Route name="plancode" path="/:planCode(/:status)" component={PaymentForm}/>
+    </Route>
     <Route name="home" path="/" component={HomePage}>
+      <Route name="compte" path="/compte" component={AccountPage}>
+        <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
+      </Route>
+      <Route name="blog" path="/blog" component={Blog.List}>
+        <Route name="post" path="/:postId(/:postSlug)" component={Blog.View}/>
+      </Route>
       <Route name="movie" path="/:movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path="/:movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
              component={PlayerPage}
              scrollOnTransition={true}/>
-      <Route name="compte" path="/compte" component={AccountPage}/>
-      <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
       <Route name="browse" path="/:category" component={BrowsePage}/>
       <Redirect from="/" to="/selection"/>
     </Route>
