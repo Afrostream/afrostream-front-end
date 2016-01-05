@@ -44,10 +44,15 @@
     bottom: 0;
     right: 0;
     overflow: hidden;
-
-    .movie-background {
-      width: 100%;
+    &:before {
+      content: '';
+      display: inline-block;
       height: 100%;
+      vertical-align: middle;
+    }
+    .movie-background {
+      position: absolute;
+      .fullHeight();
       background-image: url(../../../assets/images/default/1920x815.jpg);
       background-size: cover;
       background-position: 50% 0%;
@@ -97,7 +102,7 @@
 
 }
 
-@media @mobile,@tablet{
+@media @mobile,@tablet {
 
   .movie {
     padding: @header-height @app-padding-mobile;

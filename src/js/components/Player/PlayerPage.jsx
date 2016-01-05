@@ -18,7 +18,6 @@ import PlayerComponent from './PlayerComponent';
     store.dispatch(VideoActionCreators.getVideo(videoId, location))
   ];
 })
-//@analytics()
 class PlayerPage extends React.Component {
 
   render() {

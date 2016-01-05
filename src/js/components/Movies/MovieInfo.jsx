@@ -97,9 +97,9 @@ class MovieInfo extends LoadVideo {
 
 
     if (!movieData) {
-      //TODO gerer le 404 sur la movie
       return (<Spinner />);
     }
+
     const isSerie = movieData.get('type') === 'serie';
     const classes = classSet({
       'movie': true,

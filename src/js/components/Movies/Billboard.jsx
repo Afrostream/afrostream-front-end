@@ -21,12 +21,14 @@ class Billboard extends React.Component {
   }
 
   static propTypes = {
-    movieData: PropTypes.instanceOf(Object.List).isRequired,
+    movieData: PropTypes.instanceOf(Immutable.Object).isRequired,
     active: PropTypes.bool.isRequired,
     maxLength: PropTypes.number.isRequired
   };
 
   static defaultProps = {
+    movieData: null,
+    active: false,
     maxLength: 450
   };
 
@@ -119,6 +121,10 @@ class Billboard extends React.Component {
     const {
       props: { movieData , maxLength}
       } = this;
+
+    if (!movieData) {
+      return (<div />);
+    }
 
     let hasSubtiles = false;
     let title = movieData.get('title');

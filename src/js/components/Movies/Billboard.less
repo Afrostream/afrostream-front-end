@@ -5,10 +5,11 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  max-width: 350px;
+  max-width: 400px;
   font-family: @font-family-base;
   color: @brand-primary;
   font-size: 1.2em;
+  padding: @header-height @app-padding;
   .billboard-row {
     padding: 5px 0 5px 0;
   }
@@ -59,7 +60,7 @@
 @media @mobile,@tablet {
 
   .billboard-infos {
-    padding-top: 3em;
+    padding: @header-height @app-padding-mobile;
     .billboard-title {
       font-size: 2.3em;
     }

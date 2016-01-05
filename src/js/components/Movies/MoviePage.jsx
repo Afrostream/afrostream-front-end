@@ -13,8 +13,6 @@ import SeasonList from '../Seasons/SeasonList';
     store.dispatch(MovieActionCreators.getSeason(movieId))
   ];
 })
-//@metasData()
-//@analytics()
 class MoviePage extends React.Component {
 
   render() {
