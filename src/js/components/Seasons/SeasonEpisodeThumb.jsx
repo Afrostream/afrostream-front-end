@@ -46,7 +46,7 @@ class SeasonEpisodeThumb extends LoadVideo {
     let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=200&h=110&q=${config.images.quality}&fm=${config.images.type})`} : {};
     let title = episode.get('title');
     let synopsis = episode.get('synopsis') || '';
-
+    let link = this.getLink();
     //wrap text
     if (synopsis.length >= maxLength) {
       let cutIndex = synopsis.indexOf(' ', maxLength);
@@ -59,12 +59,12 @@ class SeasonEpisodeThumb extends LoadVideo {
     return (
       <div ref="thumbContainer" className="thumb-containter">
         <div ref="player" className="thumb">
-          <a onClick={::this.loadVideo}>
+          <Link to={link}>
             <div ref="thumbBackground" className="thumb-background" style={imagePoster}>
               <i className="btn-play"></i>
               {this.getNew()}
             </div>
-          </a>
+          </Link>
 
           <div ref="info" className="thumb-info">
             <div className="thumb-info__title">{title}</div>
