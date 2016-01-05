@@ -201,6 +201,7 @@ class WelcomeHeader extends React.Component {
         Movie,params
         }
       } = this;
+
     let { movieId } = params;
     let movieData = null;
     let data = {

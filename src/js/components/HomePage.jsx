@@ -1,12 +1,19 @@
 import React, { PropTypes }  from 'react';
 import { connect } from 'react-redux';
+import { prepareRoute } from '../decorators';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import PaymentPage from './Payment/PaymentPage';
 import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import * as CategoryActionCreators from '../actions/category';
 
+@prepareRoute(async function ({ store }) {
+  return await * [
+    store.dispatch(CategoryActionCreators.getAllSpots())
+  ];
+})
 @connect(({ User }) => ({User}))
 class HomePage extends React.Component {
 

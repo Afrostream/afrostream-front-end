@@ -3,6 +3,7 @@
 import React, { PropTypes,Component } from 'react';
 import Helmet from 'react-helmet';
 import config from '../../../config';
+import shallowEqual from 'react-pure-render/shallowEqual';
 
 export default () => {
 
@@ -25,47 +26,38 @@ export default () => {
 
       render() {
         const { props: { children} } = this;
+        let metas = this.getMetadata();
         return (
-          <MetasDataComponent>
-            <Helmet  {...this.props} {...this.state} />
+          <MetasDataComponent {...this.props} >
+            <Helmet {...metas} />
             {children}
           </MetasDataComponent>
         );
       }
 
-      componentWillMount() {
+      getMetadata() {
+
         const {
           context: { store ,location},
           props: { params }
-          } = this;
-
-        let paramsMatch = params;
-
-        if (paramsMatch && paramsMatch.movieId) {
-          let data = this.context.store.getState().Movie.get(`movies/${paramsMatch.movieId}`);
-          this.setMetadataProps(data);
-        }
-      }
-
-      setMetadataProps(data) {
-
-        const {
-          props: { params, location }
           } = this;
 
         //if (routeName !== 'default') {
         //  link.push({rel: 'canonical', href: this.getCanonical(routeName, params)});
         //}
 
-        if (!data) {
-          return false;
-        }
-
         let metas = {
           title: config.metadata.title,
           meta: [],
           link: []
         };
+
+        let paramsMatch = params;
+        let data = store.getState().Movie.get(`movies/${paramsMatch.movieId}`);
+
+        if (!data) {
+          return metas;
+        }
 
         let title = data.get('title') || config.metadata.title;
         let slug = data.get('slug');
@@ -118,8 +110,7 @@ export default () => {
           });
         }
 
-        this.setState(metas);
-
+        return metas;
       }
 
       getCanonical(routeName, params) {

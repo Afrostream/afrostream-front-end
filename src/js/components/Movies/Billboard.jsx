@@ -48,12 +48,6 @@ class Billboard extends React.Component {
       , 0.05), 0);
   }
 
-  isMobile() {
-    //Detect mobile
-    const ua = navigator.userAgent;
-    return /WebKit/.test(ua) && /Mobile/.test(ua);
-  }
-
   lunchTransition() {
     if (this.isMobile()) {
       return;

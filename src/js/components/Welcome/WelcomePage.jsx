@@ -8,7 +8,7 @@ import Spinner from '../Spinner/Spinner';
 import * as EventActionCreators from '../../actions/event';
 import * as MovieActionCreators from '../../actions/movie';
 import * as CategoryActionCreators from '../../actions/category';
-import {metasData,analytics } from '../../decorators';
+import { metasData,analytics } from '../../decorators';
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less');
@@ -21,7 +21,8 @@ if (process.env.BROWSER) {
     store.dispatch(MovieActionCreators.getMovie(movieId, location))
   ];
 })
-@analytics()
+//@metasData()
+//@analytics()
 class WelcomePage extends React.Component {
 
   static propTypes = {

@@ -2,6 +2,7 @@
 
 import React, { PropTypes } from 'react';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import shallowEqual from 'react-pure-render/shallowEqual';
 
 if (canUseDOM) {
   var ga = require('react-ga');
@@ -23,6 +24,18 @@ export default function analytics(prepareFn) {
         return (
           <AnalyticsComponent {...this.props} />
         );
+      }
+
+      componentWillReceiveProps(nextProp, nextContext) {
+        const {
+          context: { store ,location},
+          props: { params }
+          } = this;
+
+        //if (!shallowEqual(nextContext.location, location) && canUseDOM) {
+        if (nextContext.location.pathname !== location.pathname && canUseDOM) {
+          ga.pageview(nextContext.location.pathname);
+        }
       }
 
       componentDidMount() {

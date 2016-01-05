@@ -18,8 +18,8 @@ if (process.env.BROWSER) {
 if (canUseDOM) {
   var ga = require('react-ga');
 }
-@analytics()
 @metasData()
+@analytics()
 @connect(({ Event,User }) => ({Event, User}))
 class Application extends React.Component {
 

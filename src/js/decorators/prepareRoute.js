@@ -1,6 +1,5 @@
 'use strict';
 import React, { PropTypes } from 'react';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import shallowEqual from 'react-pure-render/shallowEqual';
 
 export default function prepareRoute(prepareFn) {
