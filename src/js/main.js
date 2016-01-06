@@ -1,7 +1,7 @@
 import React from'react';
 import ReactDOM from'react-dom';
 import createHistory from 'history/lib/createBrowserHistory';
-import useScroll from 'scroll-behavior/lib/useSimpleScroll'
+import useScroll from 'scroll-behavior/lib/useScrollToTop'
 import Router from './components/Router';
 import { Provider } from 'react-redux';
 import createStore from './lib/createStore';
