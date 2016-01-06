@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 export default class LoadVideo extends Component {
 
   static propTypes = {
-    movie: PropTypes.instanceOf(Immutable.Object),
+    movie: PropTypes.instanceOf(Immutable.Map),
     movieId: PropTypes.string
   };
 
@@ -37,7 +37,7 @@ export default class LoadVideo extends Component {
     let movieSlug = movie.get('slug') || '';
     let link = `/${movieId}/${movieSlug}`;
 
-    location.pushState(null,link);
+    location.pushState(null, link);
   }
 
   getLink() {
@@ -97,7 +97,7 @@ export default class LoadVideo extends Component {
       e.preventDefault();
     }
     let link = this.getLink();
-    return history.pushState(null,link);
+    return history.pushState(null, link);
   }
 
 }

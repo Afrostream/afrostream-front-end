@@ -2,20 +2,17 @@ import React ,{ PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import config from '../../../../config';
-import LoadVideo from '../LoadVideo';
+import Poster from './Poster';
 
 if (process.env.BROWSER) {
   require('./Thumb.less');
 }
 
 @connect(({ Movie, Video}) => ({Movie, Video}))
-class Thumb extends LoadVideo {
+class Thumb extends Poster {
 
   constructor(props) {
     super(props);
-    this.thumbW = 140;
-    this.thumbH = 200;
   }
 
   static propTypes = {
@@ -90,6 +87,11 @@ class Thumb extends LoadVideo {
     const {
       props: { movie }
       } = this;
+
+    if (!movie) {
+      return (<div />);
+    }
+
     let dateFrom = movie.get('dateFrom');
 
     if (!dateFrom) {
@@ -100,27 +102,6 @@ class Thumb extends LoadVideo {
     if (compare <= (1000 * 3600 * 240)) {
       return (<div className="thumb-new__item"></div>)
     }
-  }
-
-  getLazyImageUrl() {
-    const {
-      props: { movie }
-      } = this;
-
-    const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-    let imageStyles = baseUrl;
-    let thumb = movie.get('thumb');
-    if (!thumb) {
-      return {};
-    }
-    if (this.state.showImage && thumb) {
-      let imgix = thumb.get('imgix');
-      if (!imgix) {
-        return {};
-      }
-      imageStyles = `${imgix}?crop=faces&fit=crop&w=${this.thumbW}&h=${this.thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
-    }
-    return {backgroundImage: `url(${imageStyles})`};
   }
 
   render() {
