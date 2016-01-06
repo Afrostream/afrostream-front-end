@@ -1,6 +1,6 @@
 import React from'react';
 import ReactDOM from'react-dom';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useSimpleScroll'
 import Router from './components/Router';
 import { Provider } from 'react-redux';
@@ -19,7 +19,7 @@ if (canUseDOM) {
   require('jquery.payment');
 }
 
-const history = useScroll(createBrowserHistory)();
+const history = useScroll(createHistory)();
 const api = createAPI(
   /**
    * Client's createRequest() method
@@ -36,11 +36,11 @@ const api = createAPI(
 );
 
 /* global __INITIAL_STATE__:true */
-const store = createStore(api, __INITIAL_STATE__);
+const store = createStore(api, history, __INITIAL_STATE__);
 
 ReactDOM.render(
-  <Provider  {...{store}}>
-    <Router {...{history}} />
+  <Provider {...{store}}>
+    <Router />
   </Provider>,
   document.getElementById('main')
 );

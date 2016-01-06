@@ -116,6 +116,7 @@
     "react-router": "1.0.2",
     "redux": "^3.0.4",
     "redux-devtools": "^2.1.2",
+    "redux-router": "^1.0.0-beta7",
     "scroll-behavior": "^0.3.0",
     "serve-favicon": "^2.3.0",
     "sitemap-generator": "^3.0.2",

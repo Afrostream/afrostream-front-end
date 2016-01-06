@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Router, State , Navigation} from 'react-router';
+import { ReduxRouter } from 'redux-router';
 import routes from '../routes';
 
 class AppRouter extends React.Component {
@@ -13,9 +14,7 @@ class AppRouter extends React.Component {
   render() {
 
     return (
-      <Router {...this.props}>
-        {routes}
-      </Router>
+      <ReduxRouter {...this.props} routes={routes}/>
     );
   }
 }
