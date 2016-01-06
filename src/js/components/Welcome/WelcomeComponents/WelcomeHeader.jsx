@@ -14,8 +14,7 @@ if (process.env.BROWSER) {
 class WelcomeHeader extends React.Component {
 
   static contextTypes = {
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired
   };
 
   static propTypes = {
@@ -192,7 +191,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock(this.context.history));
+    dispatch(UserActionCreators.showGiftLock());
   }
 
   render() {

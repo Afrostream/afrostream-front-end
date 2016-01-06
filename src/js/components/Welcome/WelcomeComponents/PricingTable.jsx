@@ -9,10 +9,6 @@ if (process.env.BROWSER) {
 @connect(({ User }) => ({User}))
 class PricingTable extends React.Component {
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
-
   showLock() {
     const {
       props: {
@@ -29,7 +25,7 @@ class PricingTable extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock(this.context.history));
+    dispatch(UserActionCreators.showGiftLock());
   }
 
   render() {

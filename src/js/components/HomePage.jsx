@@ -21,21 +21,21 @@ class HomePage extends React.Component {
     history: PropTypes.object.isRequired
   };
 
-  componentDidUpdate() {
-    this.validateState()
+  componentWillReceiveProps() {
+    this.checkAuth()
   }
 
   componentDidMount() {
-    this.validateState()
+    this.checkAuth()
   }
 
-  validateState() {
+  checkAuth() {
     const { props: { User } } = this;
     const user = User.get('user');
     if (user) {
       let planCode = user.get('planCode');
       if (!planCode) {
-        this.context.history.pushState(null,'/select-plan');
+        this.context.history.pushState(null, '/select-plan');
       }
     }
   }

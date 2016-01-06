@@ -7,14 +7,12 @@ import routes from '../routes';
 
 class AppRouter extends React.Component {
 
-  static propTypes = {
-    history: React.PropTypes.object.isRequired
-  };
-
   render() {
 
     return (
-      <ReduxRouter {...this.props} routes={routes}/>
+      <ReduxRouter {...this.props}>
+        {routes}
+      </ReduxRouter>
     );
   }
 }

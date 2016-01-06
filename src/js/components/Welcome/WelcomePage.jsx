@@ -13,11 +13,11 @@ if (process.env.BROWSER) {
   require('./WelcomePage.less');
 }
 
-@prepareRoute(async function ({ store, location, params: { movieId } }) {
+@prepareRoute(async function ({ store, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(CategoryActionCreators.getAllSpots()),
-    store.dispatch(MovieActionCreators.getMovie(movieId, location))
+    store.dispatch(MovieActionCreators.getMovie(movieId))
   ];
 })
 class WelcomePage extends React.Component {

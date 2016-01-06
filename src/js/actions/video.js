@@ -1,8 +1,8 @@
 import ActionTypes from '../consts/ActionTypes';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import { pushState } from 'redux-router';
 
-export function getVideo(videoId, history) {
-  return (dispatch, getState) => {
+export function getVideo(videoId) {
+  return (dispatch, getState, actionDispatcher) => {
 
     if (!videoId) {
       console.log('no video id passed in action', videoId);
@@ -11,19 +11,6 @@ export function getVideo(videoId, history) {
         videoId
       };
     }
-
-    const user = getState().User.get('user');
-    if (user && location) {
-      let planCode = user.get('planCode');
-      if (!planCode) {
-        history.pushState(null,'/select-plan');
-        return {
-          type: ActionTypes.Video.getVideo,
-          videoId
-        };
-      }
-    }
-
 
     let readyVideo = getState().Video.get(`videos/${videoId}`);
     if (readyVideo) {

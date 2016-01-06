@@ -2,6 +2,7 @@ import ActionTypes from '../consts/ActionTypes';
 import * as ModalActionCreators from './modal';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../config/client';
+import { pushState } from 'redux-router';
 import _ from 'lodash';
 import {isAuthorized} from '../lib/geo';
 
@@ -15,7 +16,7 @@ if (canUseDOM) {
  * @param data
  * @returns {Function}
  */
-const logoutUser = function () {
+const logoutUser = function (actionDispatcher) {
   const storageId = config.auth0.token;
   const storageRefreshId = config.auth0.tokenRefresh;
   const storageAfroId = config.apiClient.token;
@@ -24,14 +25,10 @@ const logoutUser = function () {
   localStorage.removeItem(storageRefreshId);
   localStorage.removeItem(storageAfroId);
   localStorage.removeItem(storageAfroRefreshId);
-  if (canUseDOM) {
-    if (!~window.location.pathname !== '/') {
-      window.location = '/';
-    }
-  }
+  actionDispatcher(pushState(null, '/'))
 };
 
-const mergeProfile = function (profile, data) {
+const mergeProfile = function (profile, data, actionDispatcher) {
 
   //remove auth0 fucking cache data
   let filteredUser = _.pick(profile, [
@@ -62,13 +59,21 @@ const mergeProfile = function (profile, data) {
       const userMerged = _.merge(filteredUser, userInfos.body || {}, userSubscriptions.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
+
+      if (userMerged) {
+        let planCode = userMerged.planCode;
+        if (!planCode) {
+          actionDispatcher(pushState(null, '/select-plan'));
+        }
+      }
+
       return _.merge(data, {
         user: userMerged
       });
 
     } catch (e) {
       console.log(e, 'remove user data');
-      logoutUser();
+      logoutUser(actionDispatcher);
       return data;
     }
   }
@@ -130,8 +135,8 @@ export function createLock() {
  * @returns {Function}
  */
 export function logOut() {
-  return (dispatch, getState) => {
-    logoutUser();
+  return (dispatch, getState, actionDispatcher) => {
+    logoutUser(actionDispatcher);
     return {
       type: ActionTypes.User.logOut
     };
@@ -208,7 +213,7 @@ export function getProfile() {
               return resolve(mergeProfile(user.toJS(), {
                 type: ActionTypes.User.getProfile,
                 user: null
-              }));
+              }, actionDispatcher));
             } else {
               return resolve({
                 type: ActionTypes.User.getProfile,
@@ -236,7 +241,7 @@ export function getProfile() {
             return resolve(mergeProfile(profile, {
               type: ActionTypes.User.getProfile,
               user: null
-            }));
+            }, actionDispatcher));
           });
         }
       )
@@ -245,11 +250,11 @@ export function getProfile() {
   };
 }
 
-export function showGiftLock(history) {
+export function showGiftLock() {
   return (dispatch, getState, actionDispatcher) => {
     const lock = getState().User.get('lock');
     lock.once('signin success', function (options, context) {
-      history.pushState(null,'/select-plan/afrostreamgift/checkout');
+      actionDispatcher(pushState(null, '/select-plan/afrostreamgift/checkout'));
     });
     return this.showLock('showSignup', null, config.auth0.gift);
   };
@@ -308,7 +313,7 @@ export function showLock(type = 'show', container = null, options = {}) {
               user: null,
               token: access_token,
               refreshToken: refresh_token
-            }));
+            }, actionDispatcher));
           });
         })
     )

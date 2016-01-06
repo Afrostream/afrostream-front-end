@@ -11,9 +11,7 @@ export default function prepareRoute(prepareFn) {
       static prepareRoute = prepareFn;
 
       static contextTypes = {
-        store: PropTypes.object.isRequired,
-        history: PropTypes.object.isRequired,
-        location: PropTypes.object.isRequired
+        store: PropTypes.object.isRequired
       };
 
       render() {
@@ -24,22 +22,22 @@ export default function prepareRoute(prepareFn) {
 
       componentWillReceiveProps(nextProps) {
         const {
-          context: { store ,history,location},
+          context: { store },
           props: { params }
           } = this;
 
         if (!shallowEqual(nextProps, this.props)) {
-          prepareFn({store, location, params: nextProps.params});
+          prepareFn({store, params: nextProps.params});
         }
       }
 
       componentDidMount() {
         const {
-          context: { store ,history,location},
+          context: { store },
           props: { params }
           } = this;
 
-        prepareFn({store, location, params: params});
+        prepareFn({store, params: params});
       }
 
     };

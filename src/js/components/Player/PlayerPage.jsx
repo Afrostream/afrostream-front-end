@@ -8,14 +8,14 @@ import * as PlayerActionCreators from '../../actions/player';
 
 import PlayerComponent from './PlayerComponent';
 
-@prepareRoute(async function ({ store, location, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug, videoId } }) {
+@prepareRoute(async function ({ store, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug, videoId } }) {
   console.log(movieId, movieSlug, seasonId, seasonSlug, episodeId, episodeSlug, videoId);
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(PlayerActionCreators.getConfig()),
-    store.dispatch(MovieActionCreators.getMovie(movieId, location)),
+    store.dispatch(MovieActionCreators.getMovie(movieId)),
     store.dispatch(MovieActionCreators.getSeason(movieId)),
-    store.dispatch(VideoActionCreators.getVideo(videoId, location))
+    store.dispatch(VideoActionCreators.getVideo(videoId))
   ];
 })
 class PlayerPage extends React.Component {
