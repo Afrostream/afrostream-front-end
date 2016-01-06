@@ -15,7 +15,7 @@ class CancelSubscription extends React.Component {
   }
 
   static contextTypes = {
-    location: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   state = {
@@ -44,9 +44,9 @@ class CancelSubscription extends React.Component {
   navigateToAccountPage(event) {
     event.preventDefault();
 
-    let location = this.context.location;
-    if (!location.goBack()) {
-      location.transitionTo('/compte');
+    let history = this.context.history;
+    if (!history.goBack()) {
+      history.pushState(null,'/compte');
     }
   }
 

@@ -21,7 +21,7 @@ if (process.env.BROWSER) {
 class PaymentForm extends React.Component {
 
   static contextTypes = {
-    location: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   state = {
@@ -156,7 +156,7 @@ class PaymentForm extends React.Component {
 
       dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
         self.disableForm(false, 1);
-        self.context.location.transitionTo(`/select-plan/${planCode}/success`);
+        self.context.history.pushState(null,`/select-plan/${planCode}/success`);
       }).catch(function (err) {
         let message = '';
         if (err.response && err.response.status === 401) {
@@ -170,7 +170,7 @@ class PaymentForm extends React.Component {
         }
 
         self.disableForm(false, 2, message);
-        self.context.location.transitionTo(`/select-plan/${planCode}/error`);
+        self.context.history.pushState(null,`/select-plan/${planCode}/error`);
       });
     });
   }

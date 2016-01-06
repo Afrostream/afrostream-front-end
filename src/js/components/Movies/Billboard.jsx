@@ -3,6 +3,9 @@ import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import { Link } from 'react-router';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
+import { connect } from 'react-redux';
+import LoadVideo from '../LoadVideo';
+
 if (canUseDOM) {
   require('gsap');
   var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
@@ -12,7 +15,8 @@ if (process.env.BROWSER) {
   require('./Billboard.less');
 }
 
-class Billboard extends React.Component {
+@connect(({ Movie }) => ({Movie}))
+class Billboard extends LoadVideo {
 
   constructor(props) {
     super(props);
@@ -21,13 +25,13 @@ class Billboard extends React.Component {
   }
 
   static propTypes = {
-    movieData: PropTypes.instanceOf(Immutable.Object).isRequired,
+    movie: PropTypes.instanceOf(Immutable.Map).isRequired,
     active: PropTypes.bool.isRequired,
     maxLength: PropTypes.number.isRequired
   };
 
   static defaultProps = {
-    movieData: null,
+    movie: null,
     active: false,
     maxLength: 450
   };
@@ -51,10 +55,10 @@ class Billboard extends React.Component {
   }
 
   lunchTransition() {
-    if (this.isMobile()) {
-      return;
-    }
-    let newId = this.props.movieData.get('_id');
+    //if (this.isMobile()) {
+    return;
+    //}
+    let newId = this.props.movie.get('_id');
     if (!this.props.active) {
       return;
     }
@@ -65,7 +69,7 @@ class Billboard extends React.Component {
     if (this.oldId === newId) {
       return;
     }
-    this.oldId = this.props.movieData.get('_id');
+    this.oldId = this.props.movie.get('_id');
     this.tlIn.restart();
   }
 
@@ -119,23 +123,23 @@ class Billboard extends React.Component {
 
   render() {
     const {
-      props: { movieData , maxLength}
+      props: { movie , maxLength}
       } = this;
 
-    if (!movieData) {
+    if (!movie) {
       return (<div />);
     }
 
     let hasSubtiles = false;
-    let title = movieData.get('title');
-    let type = movieData.get('type');
-    let tags = movieData.get('tags');
-    let creator = movieData.get('creator');
-    let actors = movieData.get('actors');
-    let synopsis = movieData.get('synopsis') || '';
-    let slug = movieData.get('slug') || '';
-    let seasons = movieData.get('seasons');
-    let videoData = movieData.get('video');
+    let title = movie.get('title');
+    let type = movie.get('type');
+    let tags = movie.get('tags');
+    let creator = movie.get('creator');
+    let actors = movie.get('actors');
+    let synopsis = movie.get('synopsis') || '';
+    let slug = movie.get('slug') || '';
+    let seasons = movie.get('seasons');
+    let videoData = movie.get('video');
     if (seasons && seasons.size) {
       const season = seasons.get(0);
       const episodes = season.get('episodes');
@@ -158,18 +162,19 @@ class Billboard extends React.Component {
         synopsis = shortDescription;
       }
     }
+    let link = this.getLink();
 
     return (
       <div className="billboard-infos">
         {type ? <div ref="slTag" className="billboard-tag billboard-row">{type === 'movie' ? 'film' : type}</div> :
           <div ref="slNull"/>}
-        <div ref="slTitle" className="billboard-title billboard-row">{title}</div>
-        {seasons ? this.getSeasons(seasons, movieData) : ''}
+        <Link to={link} ref="slTitle" className="billboard-title billboard-row">{title}</Link>
+        {seasons ? this.getSeasons(seasons, movie) : ''}
         {tags ? this.getGenre(tags) : ''}
         {creator ? this.getCreator(creator) : ''}
         {actors && actors.size ? this.getCast(actors) : ''}
-        <div ref="slSynopsis" className="billboard-synopsis billboard-row">{synopsis}</div>
-        {/*<Link to={movieData.get('link')}>{movieData.get('link')}</Link>*/}
+        <Link to={link} ref="slSynopsis" className="billboard-synopsis billboard-row">{synopsis}</Link>
+        {/*<Link to={movie.get('link')}>{movie.get('link')}</Link>*/}
         <div className="billboard-info__btn">
           {hasSubtiles ? <button className="btn btn-xs btn-transparent" href="#">
             <i className="fa fa-align-left"></i>Audio et sous titres

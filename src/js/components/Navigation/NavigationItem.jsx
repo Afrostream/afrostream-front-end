@@ -9,7 +9,7 @@ import * as CategoryActionCreators from '../../actions/category';
 class NavigationItem extends React.Component {
 
   static propTypes = {
-    item: PropTypes.instanceOf(Immutable.Object).isRequired,
+    item: PropTypes.instanceOf(Immutable.Map).isRequired,
     active: React.PropTypes.bool.isRequired
   };
 

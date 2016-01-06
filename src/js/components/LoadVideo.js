@@ -11,7 +11,7 @@ export default class LoadVideo extends Component {
   };
 
   static contextTypes = {
-    location: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -27,6 +27,7 @@ export default class LoadVideo extends Component {
 
   loadMovie() {
     const {
+      context: { location},
       props: {
         movie
         }
@@ -36,7 +37,7 @@ export default class LoadVideo extends Component {
     let movieSlug = movie.get('slug') || '';
     let link = `/${movieId}/${movieSlug}`;
 
-    this.context.location.transitionTo(link)
+    location.pushState(null,link);
   }
 
   getLink() {
@@ -89,11 +90,14 @@ export default class LoadVideo extends Component {
 
   //TODO Connect to last video or first video of season/video
   loadVideo(e) {
+    const {
+      context: { history }
+      } = this;
     if (e) {
       e.preventDefault();
     }
     let link = this.getLink();
-    return this.context.location.transitionTo(link);
+    return history.pushState(null,link);
   }
 
 }

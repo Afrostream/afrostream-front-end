@@ -30,10 +30,6 @@ class MovieInfo extends LoadVideo {
     this.tlIn = null;
   }
 
-  static contextTypes = {
-    location: PropTypes.object.isRequired
-  };
-
   static propTypes = {
     active: PropTypes.bool,
     load: PropTypes.bool,
@@ -89,18 +85,17 @@ class MovieInfo extends LoadVideo {
 
   render() {
 
-    const {
+    let {
       props: { Movie, active, movieId, movie,maxLength}
       } = this;
 
-    const movieData = movie || Movie.get(`movies/${movieId}`);
+    movie = movie || Movie.get(`movies/${movieId}`);
 
-
-    if (!movieData) {
+    if (!movie) {
       return (<Spinner />);
     }
 
-    const isSerie = movieData.get('type') === 'serie';
+    const isSerie = movie.get('type') === 'serie';
     const classes = classSet({
       'movie': true,
       'serie': isSerie,
@@ -108,7 +103,7 @@ class MovieInfo extends LoadVideo {
       'movie--btn_play': !this.props.load && isSerie
     });
 
-    let poster = movieData.get('poster');
+    let poster = movie.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
     let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=${config.images.quality}&fm=${config.images.type})`} : {};
     let link = this.getLink();
@@ -117,8 +112,8 @@ class MovieInfo extends LoadVideo {
         <Link to={link}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
           <div className="btn-play"/>
-          {movieData ? <Billboard {...{active, movieData, maxLength}} /> : ''}
         </Link>
+        {movie ? <Billboard {...{active, movie, maxLength}} /> : ''}
       </div>
     );
   }

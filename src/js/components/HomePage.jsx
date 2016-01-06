@@ -18,7 +18,7 @@ import * as CategoryActionCreators from '../actions/category';
 class HomePage extends React.Component {
 
   static contextTypes = {
-    location: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   componentDidUpdate() {
@@ -35,7 +35,7 @@ class HomePage extends React.Component {
     if (user) {
       let planCode = user.get('planCode');
       if (!planCode) {
-        this.context.location.transitionTo('/select-plan');
+        this.context.history.pushState(null,'/select-plan');
       }
     }
   }

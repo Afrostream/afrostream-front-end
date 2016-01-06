@@ -12,7 +12,7 @@ if (process.env.BROWSER) {
 class MoviesCategorySlider extends React.Component {
 
   static propTypes = {
-    category: PropTypes.instanceOf(Immutable.Object).isRequired,
+    category: PropTypes.instanceOf(Immutable.Map).isRequired,
   };
 
   render() {

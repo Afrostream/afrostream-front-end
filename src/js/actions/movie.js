@@ -1,6 +1,6 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function getMovie(movieId, location) {
+export function getMovie(movieId, history) {
   console.log('getMovie', movieId)
   return (dispatch, getState) => {
     if (!movieId) {
@@ -17,7 +17,7 @@ export function getMovie(movieId, location) {
     if (user && location) {
       let planCode = user.get('planCode');
       if (!planCode) {
-        location.transitionTo('/select-plan');
+        history.pushState(null,'/select-plan');
         return {
           type: ActionTypes.Movie.getMovie,
           movieId
