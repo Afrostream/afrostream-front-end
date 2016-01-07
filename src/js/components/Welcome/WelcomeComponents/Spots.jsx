@@ -3,7 +3,6 @@ import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import config from '../../../../../config';
 import Thumb from '../../../components/Movies/Thumb.jsx';
-import createFragment from 'react-addons-create-fragment';
 if (process.env.BROWSER) {
   require('./Spots.less');
 }
