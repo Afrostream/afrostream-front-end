@@ -61,7 +61,7 @@ class SeasonList extends React.Component {
           active={page === i}
           index={i}
           seasonId={season.get('_id')}
-          {...{season}}/>) : ''}
+          {...{season}}/>).toJS() : ''}
       </div>
     );
   }
@@ -87,7 +87,7 @@ class SeasonList extends React.Component {
         <Slider>
           <div ref="slContainer" className="slider-container">
             {episodesList ? episodesList.map((episode, i) => <SeasonEpisodeThumb
-              key={`episode-${episode.get('_id')}-${i}`} {...{movie, season, episode}}/>) : ''}
+              key={`episode-${episode.get('_id')}-${i}`} {...{movie, season, episode}}/>).toJS() : ''}
           </div>
         </Slider>
       </div>

@@ -3,7 +3,7 @@ import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import config from '../../../../../config';
 import Thumb from '../../../components/Movies/Thumb.jsx';
-
+import createFragment from 'react-addons-create-fragment';
 if (process.env.BROWSER) {
   require('./Spots.less');
 }
@@ -11,19 +11,8 @@ if (process.env.BROWSER) {
 @connect(({ Category }) => ({Category}))
 class Spots extends React.Component {
 
-  componentDidMount() {
-    // TODO: debounce this call
-    let element = ReactDOM.findDOMNode(this);
-    this.setState({
-      viewport: {
-        left: element.scrollLeft,
-        width: window.innerWidth
-      }
-    });
-  }
-
   getMovies(categorie) {
-    let movies = categorie.get('adSpots') || [];
+    let movies = categorie.get('adSpots');
     return movies.map((movie, i) => <Thumb showImage={true}
                                            key={`spot-home-${movie.get('_id')}-${i}`} {...{movie}}/>);
   }
@@ -38,11 +27,10 @@ class Spots extends React.Component {
         }
       } = this;
 
-    let categories = Category.get('categorys/spots') || [];
-
+    let categories = Category.get('categorys/spots');
     return (
       <div className="spots-list">
-        {categories ? categories.map((categorie, i) => this.getMovies(categorie)) : ''}
+        {categories ? categories.map((categorie, i) => this.getMovies(categorie)).toJS() : ''}
       </div>
     );
 

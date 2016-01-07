@@ -46,11 +46,11 @@ class PaymentImages extends React.Component {
       <div>
         <div className="payment-pages__thumbs-row">
           {selectionMovies ? selectionMovies.get('movies').map((movie, i) => <Poster
-            key={`movie-payment-${i}`} {...{movie}}/>) : ''}
+            key={`movie-payment-a-${i}`} {...{movie}}/>).toJS() : ''}
         </div>
         <div className="payment-pages__thumbs-row">
           {seriesMovies ? seriesMovies.get('movies').map((movie, i) => <Poster
-            key={`movie-paymen-t-${i}`} {...{movie}}/>) : ''}
+            key={`movie-paymen-b-${i}`} {...{movie}}/>).toJS() : ''}
         </div>
       </div>
     );

@@ -22,14 +22,14 @@ class Navigation extends React.Component {
       <div className="navigation hidden-xs">
         {
           menu ?
-          <ul className="navigation-list" role="navigation">
-            {menu.map((item, i) => <NavigationItem active={categoryId == item.get('_id')}
-                                                   key={`menu-${item.get('_id')}-${i}`}
-              { ...{item}}/>)}
-          </ul>
+            <ul className="navigation-list" role="navigation">
+              {menu.map((item, i) => <NavigationItem active={categoryId == item.get('_id')}
+                                                     key={`menu-${item.get('_id')}-${i}`}
+                { ...{item}}/>).toJS()}
+            </ul>
             :
-          <div />
-          }
+            <div />
+        }
       </div>
     );
   }

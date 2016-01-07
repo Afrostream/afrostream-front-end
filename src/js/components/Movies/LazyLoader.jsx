@@ -50,7 +50,7 @@ class LazyLoader extends React.Component {
       <div className="slider-container">
         <ReactCSSTransitionGroup transitionName="thumbs" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
           {movies ? movies.map((movie, i) => <Thumb viewport={this.state.viewport}
-                                                    key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>) : ''}
+                                                    key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>).toJS() : ''}
         </ReactCSSTransitionGroup>
       </div>
     );

@@ -11,10 +11,6 @@ if (process.env.BROWSER) {
 @connect(({ Movie, Video}) => ({Movie, Video}))
 class Thumb extends Poster {
 
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     showImage: React.PropTypes.bool,
     viewport: React.PropTypes.object
@@ -87,10 +83,6 @@ class Thumb extends Poster {
     const {
       props: { movie }
       } = this;
-
-    if (!movie) {
-      return (<div />);
-    }
 
     let dateFrom = movie.get('dateFrom');
 

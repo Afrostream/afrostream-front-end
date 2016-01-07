@@ -85,7 +85,7 @@ class Billboard extends LoadVideo {
     return (
       <div className="billboard-row">
         <label> Genre : </label>
-        {tags.map((tag) => <Link to={tag}> {tag} </Link>)}
+        {tags.map((tag) => <Link to={tag}> {tag} </Link>).toJS()}
       </div>
     );
   }
@@ -116,7 +116,7 @@ class Billboard extends LoadVideo {
       <div className="billboard-row">
         <label> Avec : </label>
         {casts.map((cast, i) => <span
-          key={`cast-${i}`}> {`${(i ? ' | ' : '')}${cast.get('firstName')} ${cast.get('lastName')}`}</span>)}
+          key={`cast-${i}`}> {`${(i ? ' | ' : '')}${cast.get('firstName')} ${cast.get('lastName')}`}</span>).toJS()}
       </div>
     );
   }

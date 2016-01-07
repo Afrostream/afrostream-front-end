@@ -69,7 +69,7 @@ export default class List extends Component {
                   </section>
                 </article>
               );
-            })
+            }).toJS()
           }
         </div>
       </div>

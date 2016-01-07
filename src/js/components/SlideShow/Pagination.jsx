@@ -20,7 +20,7 @@ class Pagination extends React.Component {
           active={page === i}
           index={i}
           key={`page-${category.get('_id')}-${i}`}
-          {...{category}} />)}
+          {...{category}} />).toJS()}
       </div>
     );
   }
