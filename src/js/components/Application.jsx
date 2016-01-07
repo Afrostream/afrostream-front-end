@@ -8,16 +8,12 @@ import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
 import Modal from './Modal/Modal'
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classSet from 'classnames';
-import config from '../../../config';
 import { metasData,analytics } from '../decorators';
 
 if (process.env.BROWSER) {
   require('./Application.less');
 }
 
-if (canUseDOM) {
-  var ga = require('react-ga');
-}
 @metasData()
 @analytics()
 @connect(({ Event,User }) => ({Event, User}))
@@ -27,12 +23,6 @@ class Application extends React.Component {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
   };
-
-  componentDidMount() {
-    if (canUseDOM) {
-      ga.initialize(config.google.analyticsKey, {debug: true});
-    }
-  }
 
   render() {
 

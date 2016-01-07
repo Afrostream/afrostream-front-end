@@ -1,15 +1,13 @@
 import React from 'react';
-import { prepareRoute,analytics } from '../../decorators';
+import { prepareRoute } from '../../decorators';
 import * as VideoActionCreators from '../../actions/video';
 import * as MovieActionCreators from '../../actions/movie';
 import * as SeasonActionCreators from '../../actions/season';
 import * as EventActionCreators from '../../actions/event';
 import * as PlayerActionCreators from '../../actions/player';
-
 import PlayerComponent from './PlayerComponent';
 
 @prepareRoute(async function ({ store, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug, videoId } }) {
-  console.log(movieId, movieSlug, seasonId, seasonSlug, episodeId, episodeSlug, videoId);
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(PlayerActionCreators.getConfig()),

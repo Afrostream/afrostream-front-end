@@ -3,6 +3,7 @@
 import React, { PropTypes } from 'react';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import shallowEqual from 'react-pure-render/shallowEqual';
+import config from '../../../config';
 
 if (canUseDOM) {
   var ga = require('react-ga');
@@ -26,26 +27,25 @@ export default function analytics(prepareFn) {
         );
       }
 
-      //componentWillReceiveProps(nextProp, nextContext) {
-      //  const {
-      //    context: { store ,location},
-      //    props: { params }
-      //    } = this;
-      //
-      //  if (!shallowEqual(nextProp, this.props)) {
-      //    if (nextContext.location.pathname !== location.pathname && canUseDOM) {
-      //      ga.pageview(nextContext.location.pathname);
-      //    }
-      //  }
-      //}
-
-      componentDidMount() {
+      componentWillReceiveProps(nextProp, nextContext) {
         const {
-          context: { store,location },
+          context: { store ,location},
           props: { params }
           } = this;
 
+        //if (!shallowEqual(nextContext.location, location) && canUseDOM) {
+        if (nextContext.location.pathname !== location.pathname && canUseDOM) {
+          ga.pageview(nextContext.location.pathname);
+        }
+      }
+
+      componentDidMount() {
+        const {
+          context: { location }
+          } = this;
+
         if (canUseDOM) {
+          ga.initialize(config.google.analyticsKey, {debug: true});
           ga.pageview(location.pathname);
         }
       }

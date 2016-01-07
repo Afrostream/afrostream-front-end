@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import WelcomePage from '../Welcome/WelcomePage';
 import * as EventActionCreators from '../../actions/event';
 import * as IntercomActionCreators from '../../actions/intercom';
-import { prepareRoute,analytics } from '../../decorators';
+import { prepareRoute } from '../../decorators';
 import config from '../../../../config';
 import SelectPlan from './SelectPlan';
 
@@ -16,9 +17,12 @@ if (process.env.BROWSER) {
     store.dispatch(EventActionCreators.pinHeader(true))
   ];
 })
-@analytics()
 @connect(({ Intercom,User }) => ({Intercom, User}))
 class PaymentPage extends React.Component {
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired
+  };
 
   componentDidMount() {
     const {
@@ -45,7 +49,7 @@ class PaymentPage extends React.Component {
     const user = User.get('user');
 
     if (!user) {
-      return <div/>
+      return <WelcomePage {...this.props}/>
     }
 
     if (children) {

@@ -8,7 +8,6 @@ import routes from '../routes';
 class AppRouter extends React.Component {
 
   render() {
-
     return (
       <ReduxRouter {...this.props}>
         {routes}

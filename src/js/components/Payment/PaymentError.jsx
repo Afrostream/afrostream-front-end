@@ -5,12 +5,10 @@ import LogOutButton from '../../components/User/LogOutButton';
 import * as UserActionCreators from '../../actions/user';
 import * as IntercomActionCreators from '../../actions/intercom';
 import config from '../../../../config';
-import { analytics } from '../../decorators';
 
 if (process.env.BROWSER) {
   require('./PaymentError.less');
 }
-@analytics()
 @connect(({ User }) => ({User}))
 class PaymentError extends React.Component {
 

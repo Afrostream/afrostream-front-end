@@ -8,7 +8,6 @@ import PaymentError from './PaymentError';
 import Spinner from '../Spinner/Spinner';
 import classSet from 'classnames';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import { analytics } from '../../decorators';
 import config from '../../../../config/client';
 import _ from 'lodash';
 
@@ -16,7 +15,6 @@ if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
-@analytics()
 @connect(({ User}) => ({User}))
 class PaymentForm extends React.Component {
 
@@ -156,7 +154,7 @@ class PaymentForm extends React.Component {
 
       dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
         self.disableForm(false, 1);
-        self.context.history.pushState(null,`/select-plan/${planCode}/success`);
+        self.context.history.pushState(null, `/select-plan/${planCode}/success`);
       }).catch(function (err) {
         let message = '';
         if (err.response && err.response.status === 401) {
@@ -170,7 +168,7 @@ class PaymentForm extends React.Component {
         }
 
         self.disableForm(false, 2, message);
-        self.context.history.pushState(null,`/select-plan/${planCode}/error`);
+        self.context.history.pushState(null, `/select-plan/${planCode}/error`);
       });
     });
   }
