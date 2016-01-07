@@ -14,7 +14,7 @@ class GiftDetails extends React.Component {
           </div>
           <div className="row">
             <div className="form-group col-md-6">
-              <label className="form-label" for="first_name">Son Prénom</label>
+              <label className="form-label" htmlFor="first_name">Son Prénom</label>
               <input
                 type="text"
                 className="form-control first-name"
@@ -23,7 +23,7 @@ class GiftDetails extends React.Component {
                 placeholder="Son prénom" required/>
             </div>
             <div className="form-group col-md-6">
-              <label className="form-label" for="last_name">Son Nom</label>
+              <label className="form-label" htmlFor="last_name">Son Nom</label>
               <input
                 type="text"
                 className="form-control last-name"
@@ -34,7 +34,7 @@ class GiftDetails extends React.Component {
           </div>
           <div className="row">
             <div className="form-group col-md-6">
-              <label className="form-label" for="gift-mail">Son Mail</label>
+              <label className="form-label" htmlFor="gift-mail">Son Mail</label>
               <input
                 className="form-control card-number"
                 name="gift-email"
@@ -45,7 +45,7 @@ class GiftDetails extends React.Component {
         </div>
       );
     } else {
-      return(<div></div>);
+      return (<div />);
     }
   }
 }

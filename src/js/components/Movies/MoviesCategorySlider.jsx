@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../../config';
 import Slider from '../Slider/Slider';
 import LazyLoader from './LazyLoader';
@@ -12,7 +12,7 @@ if (process.env.BROWSER) {
 class MoviesCategorySlider extends React.Component {
 
   static propTypes = {
-    category: PropTypes.instanceOf(Immutable.Object).isRequired,
+    category: PropTypes.instanceOf(Immutable.Map).isRequired,
   };
 
   render() {

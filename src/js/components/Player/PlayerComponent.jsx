@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from'react-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import videojs from 'afrostream-player';
@@ -6,7 +7,7 @@ import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js'
 
 if (process.env.BROWSER) {
@@ -164,7 +165,7 @@ class PlayerComponent extends React.Component {
       let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537));
       let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
       let hasSubtiles = captions ? captions.size : false;
-      let wrapper = React.findDOMNode(this.refs.wrapper);
+      let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
       let video = document.createElement('video');
       video.id = 'afrostream-player';
       video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';

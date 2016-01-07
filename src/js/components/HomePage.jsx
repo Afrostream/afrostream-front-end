@@ -1,47 +1,41 @@
 import React, { PropTypes }  from 'react';
 import { connect } from 'react-redux';
-import { prepareRoute,analytics } from '../decorators';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import { prepareRoute } from '../decorators';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import PaymentPage from './Payment/PaymentPage';
 import PaymentSuccess from './Payment/PaymentSuccess';
 import Spinner from './Spinner/Spinner';
-import * as EventActionCreators from '../actions/event';
-import * as MovieActionCreators from '../actions/movie';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import * as CategoryActionCreators from '../actions/category';
 
-@prepareRoute(async function ({ store, router, params: { movieId } }) {
+@prepareRoute(async function ({ store }) {
   return await * [
-    store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(MovieActionCreators.getMovie(movieId, router)),
-    store.dispatch(CategoryActionCreators.getAllSpots()),
-    store.dispatch(CategoryActionCreators.getMenu()),
-    store.dispatch(CategoryActionCreators.getMeaList())
+    store.dispatch(CategoryActionCreators.getAllSpots())
   ];
 })
 @connect(({ User }) => ({User}))
 class HomePage extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
-  componentDidUpdate() {
-    this.validateState()
+  componentWillReceiveProps() {
+    this.checkAuth()
   }
 
   componentDidMount() {
-    this.validateState()
+    this.checkAuth()
   }
 
-  validateState() {
+  checkAuth() {
     const { props: { User } } = this;
     const user = User.get('user');
     if (user) {
       let planCode = user.get('planCode');
       if (!planCode) {
-        this.context.router.transitionTo('/select-plan');
+        this.context.history.pushState(null, '/select-plan');
       }
     }
   }
@@ -60,7 +54,7 @@ class HomePage extends React.Component {
         return (<BrowsePage/>)
       }
     } else {
-      return (<WelcomePage spinner={isPending}/>);
+      return (<WelcomePage spinner={isPending} {...this.props}/>);
     }
   }
 }

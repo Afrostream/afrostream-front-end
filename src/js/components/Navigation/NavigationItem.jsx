@@ -5,10 +5,11 @@ import { Link } from 'react-router';
 import classSet from 'classnames';
 import * as CategoryActionCreators from '../../actions/category';
 
-@connect(({ Category }) => ({Category})) class NavigationItem extends React.Component {
+@connect(({ Category }) => ({Category}))
+class NavigationItem extends React.Component {
 
   static propTypes = {
-    item: PropTypes.instanceOf(Immutable.Object).isRequired,
+    item: PropTypes.instanceOf(Immutable.Map).isRequired,
     active: React.PropTypes.bool.isRequired
   };
 
@@ -26,10 +27,9 @@ import * as CategoryActionCreators from '../../actions/category';
 
     return (
       <li className="navigation-item">
-        <Link className={classes} onClick={::this.changeSlide} to={`/${item.get('slug')}`}>{item.get('label')}</Link>
+        <Link className={classes} to={`/${item.get('slug')}`}>{item.get('label')}</Link>
       </li>
     );
-    //<Link className={classes} to={item.get('slug')}>{item.get('label')}</Link>
   }
 
   changeSlide() {

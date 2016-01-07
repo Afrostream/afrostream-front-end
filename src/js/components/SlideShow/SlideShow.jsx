@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
@@ -15,15 +16,20 @@ if (process.env.BROWSER) {
 }
 @prepareRoute(async function ({ store }) {
   return await * [
-      store.dispatch(CategoryActionCreators.getSpots())
-    ];
+    store.dispatch(CategoryActionCreators.getSpots())
+  ];
 })
-@connect(({ Category, Slides }) => ({Category, Slides})) class SlideShow extends React.Component {
+@connect(({ Category, Slides }) => ({Category, Slides}))
+class SlideShow extends React.Component {
 
   constructor(props) {
     super(props);
     this.interval = 0;
   }
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired
+  };
 
   _extendGestureObj(settings) {
     var obj = {};
@@ -63,11 +69,13 @@ if (process.env.BROWSER) {
     // Maximum number of pixels a user can move between taps
       TAP_DISTANCE = 10;
 
-    const container = React.findDOMNode(this.refs.slC);
+    const container = ReactDOM.findDOMNode(this.refs.slC);
+    let touchEvent = null;
 
     container.addEventListener('touchstart', function (e) {
       // Stop click and other mouse events from triggering also
       e.preventDefault();
+      touchEvent = e;
       var t = e.changedTouches[0],
         s = sPos;
       // Reset touch related variables
@@ -158,6 +166,9 @@ if (process.env.BROWSER) {
         delete gestureEv.dir;
         delete gestureEv.delta;
         gestureEv.type = 'tap';
+        if (touchEvent && e.target && e.target.pathname) {
+          self.context.history.pushState(null,e.target.pathname);
+        }
       }
     });
   }

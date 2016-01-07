@@ -6,32 +6,23 @@ import SideBar from './SideBar/SideBar';
 import AlertMessage from './Alert/AlertMessage';
 import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
 import Modal from './Modal/Modal'
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classSet from 'classnames';
-import config from '../../../config';
 import { metasData,analytics } from '../decorators';
 
 if (process.env.BROWSER) {
   require('./Application.less');
 }
 
-if (canUseDOM) {
-  var ga = require('react-ga');
-}
-@analytics()
 @metasData()
+@analytics()
 @connect(({ Event,User }) => ({Event, User}))
 class Application extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   };
-
-  componentDidMount() {
-    if (canUseDOM) {
-      ga.initialize(config.google.analyticsKey, {debug: true});
-    }
-  }
 
   render() {
 

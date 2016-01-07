@@ -8,19 +8,18 @@ import Spinner from '../Spinner/Spinner';
 import * as EventActionCreators from '../../actions/event';
 import * as MovieActionCreators from '../../actions/movie';
 import * as CategoryActionCreators from '../../actions/category';
-import {metasData,analytics } from '../../decorators';
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less');
 }
 
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({ store, params: { movieId } }) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(CategoryActionCreators.getAllSpots())
+    store.dispatch(CategoryActionCreators.getAllSpots()),
+    store.dispatch(MovieActionCreators.getMovie(movieId))
   ];
 })
-@analytics()
 class WelcomePage extends React.Component {
 
   static propTypes = {
@@ -59,7 +58,7 @@ class WelcomePage extends React.Component {
     return (
       <div className="welcome-page">
         {this.state.spinner ? <Spinner /> : ''}
-        <WelcomeHeader />
+        <WelcomeHeader {...this.props}/>
         <Devices />
         <PricingTable />
         <Spots />

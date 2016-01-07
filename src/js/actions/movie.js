@@ -1,7 +1,6 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function getMovie(movieId, router) {
-  console.log('getMovie', movieId)
+export function getMovie(movieId) {
   return (dispatch, getState) => {
     if (!movieId) {
       console.log('no movie id passed in action', movieId);
@@ -13,17 +12,6 @@ export function getMovie(movieId, router) {
 
     let readyMovie = getState().Movie.get(`movies/${movieId}`);
     const user = getState().User.get('user');
-
-    if (user && router) {
-      let planCode = user.get('planCode');
-      if (!planCode) {
-        router.transitionTo('/select-plan');
-        return {
-          type: ActionTypes.Movie.getMovie,
-          movieId
-        };
-      }
-    }
 
     if (readyMovie) {
       console.log('movie already present in data store', movieId);

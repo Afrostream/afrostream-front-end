@@ -7,8 +7,7 @@ import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import Spinner from '../Spinner/Spinner';
 import classSet from 'classnames';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
-import { analytics } from '../../decorators';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../../config/client';
 import _ from 'lodash';
 
@@ -16,12 +15,11 @@ if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
-@analytics()
 @connect(({ User}) => ({User}))
 class PaymentForm extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   state = {
@@ -156,7 +154,7 @@ class PaymentForm extends React.Component {
 
       dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
         self.disableForm(false, 1);
-        self.context.router.transitionTo(`/select-plan/${planCode}/success`);
+        self.context.history.pushState(null, `/select-plan/${planCode}/success`);
       }).catch(function (err) {
         let message = '';
         if (err.response && err.response.status === 401) {
@@ -170,7 +168,7 @@ class PaymentForm extends React.Component {
         }
 
         self.disableForm(false, 2, message);
-        self.context.router.transitionTo(`/select-plan/${planCode}/error`);
+        self.context.history.pushState(null, `/select-plan/${planCode}/error`);
       });
     });
   }
@@ -241,7 +239,7 @@ class PaymentForm extends React.Component {
               </div>
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label className="form-label" for="first_name">Votre Prénom</label>
+                  <label className="form-label" htmlFor="first_name">Votre Prénom</label>
                   <input
                     type="text"
                     className="form-control first-name"
@@ -251,7 +249,7 @@ class PaymentForm extends React.Component {
                     placeholder="Votre prénom" required/>
                 </div>
                 <div className="form-group col-md-6">
-                  <label className="form-label" for="last_name">Votre Nom</label>
+                  <label className="form-label" htmlFor="last_name">Votre Nom</label>
                   <input
                     type="text"
                     className="form-control last-name"
@@ -263,7 +261,7 @@ class PaymentForm extends React.Component {
               </div>
               <div className="row">
                 <div className="form-group col-md-6">
-                  <label className="form-label" for="number">Numéro de carte</label>
+                  <label className="form-label" htmlFor="number">Numéro de carte</label>
                   <input
                     type="tel"
                     className="form-control recurly-cc-number card-number"
@@ -277,22 +275,22 @@ class PaymentForm extends React.Component {
               </div>
               <div className="row">
                 <div className="form-group col-md-4">
-                  <label className="form-label" for="month">Date de validité</label>
+                  <label className="form-label" htmlFor="month">Date de validité</label>
                   <input type="tel" className="form-control recurly-cc-exp" data-recurly="month"
                          name="month" id="month"
-                         autocomplete="cc-exp"
+                         autoComplete="cc-exp"
                          placeholder="MM/AA" required/>
                 </div>
                 <div className="form-group col-md-4">
-                  <label className="form-label" for="cvv">Code sécurité</label>
+                  <label className="form-label" htmlFor="cvv">Code sécurité</label>
                   <input type="tel" className="form-control recurly-cc-cvc" data-recurly="cvv"
-                         name="cvv" id="cvv" autocomplete="off"
+                         name="cvv" id="cvv" autoComplete="off"
                          placeholder="123" required/>
                 </div>
               </div>
               <div className="row">
                 <div className="form-group col-md-4">
-                  <label className="form-label" for="coupon_code">Entrer le code promo</label>
+                  <label className="form-label" htmlFor="coupon_code">Entrer le code promo</label>
                   <input
                     type="text"
                     className="form-control coupon-code"
@@ -341,7 +339,7 @@ class PaymentForm extends React.Component {
                     type="submit"
                     form="subscription-create"
                     className="button-create-subscription"
-                  >{this.state.isGift ? 'OFFREZ' :'DÉMARREZ' } MAINTENANT
+                  >{this.state.isGift ? 'OFFREZ' : 'DÉMARREZ' } MAINTENANT
                   </button>
                 </div>
               </div>

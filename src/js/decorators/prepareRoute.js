@@ -1,6 +1,5 @@
 'use strict';
 import React, { PropTypes } from 'react';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
 import shallowEqual from 'react-pure-render/shallowEqual';
 
 export default function prepareRoute(prepareFn) {
@@ -12,8 +11,7 @@ export default function prepareRoute(prepareFn) {
       static prepareRoute = prepareFn;
 
       static contextTypes = {
-        store: PropTypes.object.isRequired,
-        router: PropTypes.object.isRequired
+        store: PropTypes.object.isRequired
       };
 
       render() {
@@ -24,22 +22,22 @@ export default function prepareRoute(prepareFn) {
 
       componentWillReceiveProps(nextProps) {
         const {
-          context: { store ,router},
-          props: { params, location }
+          context: { store },
+          props: { params }
           } = this;
 
         if (!shallowEqual(nextProps, this.props)) {
-          prepareFn({store, router, params: nextProps.params, location});
+          prepareFn({store, params: nextProps.params});
         }
       }
 
       componentDidMount() {
         const {
-          context: { store ,router},
-          props: { params, location }
+          context: { store },
+          props: { params }
           } = this;
 
-        prepareFn({store, router, params: params || router.state.params, location});
+        prepareFn({store, params: params});
       }
 
     };

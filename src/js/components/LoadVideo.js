@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 export default class LoadVideo extends Component {
 
   static propTypes = {
-    movie: PropTypes.instanceOf(Immutable.Object),
+    movie: PropTypes.instanceOf(Immutable.Map),
     movieId: PropTypes.string
   };
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -27,6 +27,7 @@ export default class LoadVideo extends Component {
 
   loadMovie() {
     const {
+      context: { location},
       props: {
         movie
         }
@@ -36,7 +37,7 @@ export default class LoadVideo extends Component {
     let movieSlug = movie.get('slug') || '';
     let link = `/${movieId}/${movieSlug}`;
 
-    this.context.router.transitionTo(link)
+    location.pushState(null, link);
   }
 
   getLink() {
@@ -89,11 +90,14 @@ export default class LoadVideo extends Component {
 
   //TODO Connect to last video or first video of season/video
   loadVideo(e) {
+    const {
+      context: { history }
+      } = this;
     if (e) {
       e.preventDefault();
     }
     let link = this.getLink();
-    return this.context.router.transitionTo(link);
+    return history.pushState(null, link);
   }
 
 }

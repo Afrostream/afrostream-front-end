@@ -7,11 +7,8 @@ if (process.env.BROWSER) {
   require('./LogOutButton.less');
 }
 
-@connect(({ User }) => ({User})) class LogOutButton extends React.Component {
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
+@connect(({ User }) => ({User}))
+class LogOutButton extends React.Component {
 
   logOut() {
     const {
@@ -21,10 +18,6 @@ if (process.env.BROWSER) {
       } = this;
 
     dispatch(UserActionCreators.logOut());
-  }
-
-  componentWillUnmount() {
-    this.context.router.transitionTo('/');
   }
 
   render() {

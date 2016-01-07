@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
 class SearchBox extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   state = {
@@ -48,7 +48,7 @@ class SearchBox extends React.Component {
     event.preventDefault();
     console.log(suggestionObj);
     let link = `/${suggestionObj._id}/${suggestionObj.slug}`;
-    this.context.router.transitionTo(link)
+    this.context.history.pushState(null,link)
   }
 
   renderSuggestion(suggestionObj) {

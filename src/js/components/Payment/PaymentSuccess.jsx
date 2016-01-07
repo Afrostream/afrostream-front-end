@@ -8,13 +8,8 @@ if (process.env.BROWSER) {
   require('./PaymentSuccess.less');
 }
 
-@analytics()
 @connect(({ User }) => ({User}))
 class PaymentSuccess extends React.Component {
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
 
   logOut() {
     const {

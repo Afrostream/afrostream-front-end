@@ -1,5 +1,4 @@
 import React,{PropTypes } from 'react';
-import { prepareRoute } from '../../decorators';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -9,18 +8,14 @@ if (process.env.BROWSER) {
   require('./CancelSubscription.less');
 }
 
-@prepareRoute(async function ({ store }) {
-  return await * [
-      store.dispatch(UserActionCreators.getProfile())
-    ];
-})
-@connect(({ User }) => ({User})) class CancelSubscription extends React.Component {
+@connect(({ User }) => ({User}))
+class CancelSubscription extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
   };
 
   state = {
@@ -32,8 +27,8 @@ if (process.env.BROWSER) {
     const {
       props: {
         dispatch
-      }
-    } = this;
+        }
+      } = this;
     let self = this;
 
     dispatch(UserActionCreators.cancelSubscription()).then(function () {
@@ -49,9 +44,9 @@ if (process.env.BROWSER) {
   navigateToAccountPage(event) {
     event.preventDefault();
 
-    let router = this.context.router;
-    if (!router.goBack()) {
-      router.transitionTo('/compte');
+    let history = this.context.history;
+    if (!history.goBack()) {
+      history.pushState(null,'/compte');
     }
   }
 
@@ -79,8 +74,12 @@ if (process.env.BROWSER) {
                   Vous n’aurez plus accès au service à la fin de la période de votre abonnement
                   (soit à partir du jour anniversaire du mois suivant)
                 </div>
-                <button className="button-cancel-subscription" onClick={::this.cancelSubscription}>Annuler l’abonnement</button>
-                <button className="button-return-mon-compte" onClick={::this.navigateToAccountPage}>Retourner à la page de mon compte</button>
+                <button className="button-cancel-subscription" onClick={::this.cancelSubscription}>Annuler
+                  l’abonnement
+                </button>
+                <button className="button-return-mon-compte" onClick={::this.navigateToAccountPage}>Retourner à la page
+                  de mon compte
+                </button>
               </div>
             </div>
           </div>
@@ -97,7 +96,9 @@ if (process.env.BROWSER) {
                   Vous n’aurez plus accès au service à la fin de la période de votre abonnement
                   (soit à partir du jour anniversaire du mois suivant)
                 </div>
-                <button className="button-return-mon-compte" onClick={::this.navigateToAccountPage}>Retourner à la page de mon compte</button>
+                <button className="button-return-mon-compte" onClick={::this.navigateToAccountPage}>Retourner à la page
+                  de mon compte
+                </button>
               </div>
             </div>
           </div>

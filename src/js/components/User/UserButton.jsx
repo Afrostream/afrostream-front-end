@@ -9,10 +9,6 @@ import config from '../../../../config';
 @connect(({ User }) => ({User}))
 class UserButton extends React.Component {
 
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  };
-
   componentDidMount() {
     this.createLock();
   }
@@ -34,7 +30,6 @@ class UserButton extends React.Component {
         }
       } = this;
     dispatch(UserActionCreators.logOut());
-    this.context.router.transitionTo('/');
   }
 
   render() {

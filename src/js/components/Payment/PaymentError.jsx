@@ -1,16 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import LogOutButton from '../../components/User/LogOutButton';
 import * as UserActionCreators from '../../actions/user';
 import * as IntercomActionCreators from '../../actions/intercom';
 import config from '../../../../config';
-import { analytics } from '../../decorators';
 
 if (process.env.BROWSER) {
   require('./PaymentError.less');
 }
-@analytics()
 @connect(({ User }) => ({User}))
 class PaymentError extends React.Component {
 
@@ -19,10 +17,6 @@ class PaymentError extends React.Component {
     message: React.PropTypes.string,
     link: React.PropTypes.string,
     linkMessage: React.PropTypes.string
-  };
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -62,10 +56,10 @@ class PaymentError extends React.Component {
         <p className="error">
           {typeof this.props.message !== 'undefined' && this.props.message === 'Votre session a expiré, veuillez recommencer.'
             ?
-          <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
+            <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
             :
-          <a className="error-link" href={this.props.link}>{this.props.linkMessage}</a>
-            }
+            <a className="error-link" href={this.props.link}>{this.props.linkMessage}</a>
+          }
         </p>
       </div>
     );

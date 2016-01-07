@@ -1,5 +1,7 @@
-import React from 'react';
-import History from 'react-router/lib/BrowserHistory';
+import React from'react';
+import ReactDOM from'react-dom';
+import createHistory from 'history/lib/createBrowserHistory';
+import useScroll from 'scroll-behavior/lib/useScrollToTop'
 import Router from './components/Router';
 import { Provider } from 'react-redux';
 import createStore from './lib/createStore';
@@ -8,7 +10,7 @@ import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient } from '../../config';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 superAgentMock(request);
 
 if (canUseDOM) {
@@ -17,7 +19,7 @@ if (canUseDOM) {
   require('jquery.payment');
 }
 
-const history = new History;
+const history = useScroll(createHistory)();
 const api = createAPI(
   /**
    * Client's createRequest() method
@@ -34,11 +36,11 @@ const api = createAPI(
 );
 
 /* global __INITIAL_STATE__:true */
-const store = createStore(api, __INITIAL_STATE__);
+const store = createStore(api, history, __INITIAL_STATE__);
 
-React.render(
-  <Provider  {...{store}}>
-    {() => <Router {...{history}} />}
+ReactDOM.render(
+  <Provider {...{store}}>
+    <Router />
   </Provider>,
   document.getElementById('main')
 );

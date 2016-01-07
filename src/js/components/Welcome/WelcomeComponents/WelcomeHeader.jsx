@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as UserActionCreators from '../../../actions/user';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../../../config';
 import _ from 'lodash';
@@ -14,7 +14,7 @@ if (process.env.BROWSER) {
 class WelcomeHeader extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired
   };
 
   static propTypes = {
@@ -167,7 +167,7 @@ class WelcomeHeader extends React.Component {
   }
 
   hasPromo() {
-    let pathName = this.context.router.state.location.pathname.split('/').join('');
+    let pathName = this.context.location.pathname.split('/').join('');
     let HasProm = _.find(config.promoCodes, function (promo) {
       return pathName === promo.code;
     });
@@ -191,17 +191,18 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock(this.context.router));
+    dispatch(UserActionCreators.showGiftLock());
   }
 
   render() {
 
     const {
       props: {
-        Movie
+        Movie,params
         }
       } = this;
-    let { movieId } = this.context.router.state.params;
+
+    let { movieId } = params;
     let movieData = null;
     let data = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
@@ -242,7 +243,8 @@ class WelcomeHeader extends React.Component {
             </div> : ''}
             <div className="afrostream-movie__subscribe">
               <div className="afrostream-statement">{data.title.split('\n').map((statement, i) => {
-                return (<span key={`statement-${i}`}>{statement}</span>)})}</div>
+                return (<span key={`statement-${i}`}>{statement}</span>)
+              })}</div>
               <button className="subscribe-button" type=" button" onClick={::this.showLock}>S'ABONNER MAINTENANT
               </button>
               <button className="gift-button" type="button" onClick={::this.showGiftLock}>OFFRIR UN ABONNEMENT</button>

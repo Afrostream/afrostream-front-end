@@ -6,7 +6,7 @@ class CountrySelect extends React.Component {
     return (
       <div className="form-group col-md-4">
         <label className="form-label" htmlFor="country">Pays</label>
-        <select className="form-control card-country" id="country" name="country" required>
+        <select className="form-control card-country" id="country" name="country" required defaultValue="FR">
           <option value="AF">Afghanistan</option>
           <option value="ZA">Afrique du Sud</option>
           <option value="AL">Albanie</option>
@@ -74,7 +74,7 @@ class CountrySelect extends React.Component {
           <option value="ET">Éthiopie</option>
           <option value="FJ">Fidji</option>
           <option value="FI">Finlande</option>
-          <option value="FR" selected>France</option>
+          <option value="FR">France</option>
           <option value="GA">Gabon</option>
           <option value="GM">Gambie</option>
           <option value="GH">Ghana</option>

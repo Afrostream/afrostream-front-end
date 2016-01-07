@@ -1,7 +1,9 @@
 'use strict';
 
 import React, { PropTypes } from 'react';
-import {canUseDOM} from 'react/lib/ExecutionEnvironment';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import shallowEqual from 'react-pure-render/shallowEqual';
+import config from '../../../config';
 
 if (canUseDOM) {
   var ga = require('react-ga');
@@ -15,7 +17,8 @@ export default function analytics(prepareFn) {
       static prepareRoute = prepareFn;
 
       static contextTypes = {
-        router: PropTypes.object.isRequired
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
       };
 
       render() {
@@ -24,14 +27,26 @@ export default function analytics(prepareFn) {
         );
       }
 
+      componentWillReceiveProps(nextProp, nextContext) {
+        const {
+          context: { store ,location},
+          props: { params }
+          } = this;
+
+        //if (!shallowEqual(nextContext.location, location) && canUseDOM) {
+        if (nextContext.location.pathname !== location.pathname && canUseDOM) {
+          ga.pageview(nextContext.location.pathname);
+        }
+      }
+
       componentDidMount() {
         const {
-          context: { store },
-          props: { params, location }
+          context: { location }
           } = this;
 
         if (canUseDOM) {
-          ga.pageview(this.context.router.state.location.pathname);
+          ga.initialize(config.google.analyticsKey, {debug: true});
+          ga.pageview(location.pathname);
         }
       }
 

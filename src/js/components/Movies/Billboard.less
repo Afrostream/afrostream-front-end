@@ -5,14 +5,19 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  max-width: 350px;
+  max-width: 400px;
   font-family: @font-family-base;
   color: @brand-primary;
   font-size: 1.2em;
+  a {
+    text-decoration: none;
+    display: block;
+  }
   .billboard-row {
     padding: 5px 0 5px 0;
   }
   .billboard-title {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
     font-family: @font-book;
     font-size: 4.5em;
     line-height: 1;
@@ -20,6 +25,7 @@
     margin-left: -3px;
   }
   .billboard-seasons {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
     font-size: 1.2em;
     color: @brand-secondary;
     font-weight: 500;
@@ -33,6 +39,7 @@
     }
   }
   .billboard-synopsis {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
     line-height: 1.5;
   }
   .billboard-infos__btn {

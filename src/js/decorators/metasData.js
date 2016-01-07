@@ -3,6 +3,7 @@
 import React, { PropTypes,Component } from 'react';
 import Helmet from 'react-helmet';
 import config from '../../../config';
+import shallowEqual from 'react-pure-render/shallowEqual';
 
 export default () => {
 
@@ -11,7 +12,8 @@ export default () => {
 
       static contextTypes = {
         store: PropTypes.object.isRequired,
-        router: PropTypes.object.isRequired
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
       };
 
       static defaultProps = {};
@@ -24,47 +26,38 @@ export default () => {
 
       render() {
         const { props: { children} } = this;
+        let metas = this.getMetadata();
         return (
-          <MetasDataComponent>
-            <Helmet  {...this.props} {...this.state} />
+          <MetasDataComponent {...this.props} >
+            <Helmet {...metas} />
             {children}
           </MetasDataComponent>
         );
       }
 
-      componentWillMount() {
-        const {
-          context: { store ,router},
-          props: { params, location }
-          } = this;
-
-        let paramsMatch = params || router.state.params;
-
-        if (paramsMatch && paramsMatch.movieId) {
-          let data = this.context.store.getState().Movie.get(`movies/${paramsMatch.movieId}`);
-          this.setMetadataProps(data);
-        }
-      }
-
-      setMetadataProps(data) {
+      getMetadata() {
 
         const {
-          props: { params, location }
+          context: { store ,location},
+          props: { params }
           } = this;
 
         //if (routeName !== 'default') {
         //  link.push({rel: 'canonical', href: this.getCanonical(routeName, params)});
         //}
 
-        if (!data) {
-          return false;
-        }
-
         let metas = {
           title: config.metadata.title,
           meta: [],
           link: []
         };
+
+        let paramsMatch = params;
+        let data = store.getState().Movie.get(`movies/${paramsMatch.movieId}`);
+
+        if (!data) {
+          return metas;
+        }
 
         let title = data.get('title') || config.metadata.title;
         let slug = data.get('slug');
@@ -117,15 +110,14 @@ export default () => {
           });
         }
 
-        this.setState(metas);
-
+        return metas;
       }
 
       getCanonical(routeName, params) {
         return url.format({
           protocol: config.protocol,
           host: config.host,
-          pathname: this.context.router.makePath(routeName, params)
+          pathname: this.context.location.makePath(routeName, params)
         });
       }
 
