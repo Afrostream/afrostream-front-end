@@ -26,17 +26,18 @@ export default function analytics(prepareFn) {
         );
       }
 
-      componentWillReceiveProps(nextProp, nextContext) {
-        const {
-          context: { store ,location},
-          props: { params }
-          } = this;
-
-        //if (!shallowEqual(nextContext.location, location) && canUseDOM) {
-        if (nextContext.location.pathname !== location.pathname && canUseDOM) {
-          ga.pageview(nextContext.location.pathname);
-        }
-      }
+      //componentWillReceiveProps(nextProp, nextContext) {
+      //  const {
+      //    context: { store ,location},
+      //    props: { params }
+      //    } = this;
+      //
+      //  if (!shallowEqual(nextProp, this.props)) {
+      //    if (nextContext.location.pathname !== location.pathname && canUseDOM) {
+      //      ga.pageview(nextContext.location.pathname);
+      //    }
+      //  }
+      //}
 
       componentDidMount() {
         const {
