@@ -9,20 +9,6 @@ import config from '../../../../config';
 @connect(({ User }) => ({User}))
 class UserButton extends React.Component {
 
-  componentDidMount() {
-    this.createLock();
-  }
-
-  createLock() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-    dispatch(UserActionCreators.createLock());
-    dispatch(UserActionCreators.getIdToken());
-  }
-
   logOut() {
     const {
       props: {
