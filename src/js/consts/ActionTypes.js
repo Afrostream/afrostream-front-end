@@ -2,6 +2,10 @@ import keyMirror from 'fbjs/lib/keyMirror';
 
 export default {
 
+  OAuth: keyMirror({
+    login: null
+  }),
+
   User: keyMirror({
     getIdToken: null,
     createLock: null,
@@ -60,11 +64,12 @@ export default {
   }),
 
   Modal: keyMirror({
-    target: null
+    open: null,
+    close: null
   }),
 
   Blog: keyMirror({
     fetchAll: null,
-    fetchPost: null,
+    fetchPost: null
   })
 };
