@@ -4,7 +4,7 @@ export function login(form) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.OAuth.login,
-      res: await api(`/posts`, 'POST', form)
+      res: await api(`/auth`, 'POST', form)
     });
   };
 }

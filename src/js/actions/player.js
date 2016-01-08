@@ -14,7 +14,7 @@ export function getConfig() {
 
     return async api => {
       try {
-        const playerConfigApi = await api(`/player/config`);
+        const playerConfigApi = await api(`/api/player/config`);
         return async api => ({
           type: ActionTypes.Player.getConfig,
           res: playerConfigApi

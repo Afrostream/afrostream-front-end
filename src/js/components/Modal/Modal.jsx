@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ModalGeoWall from './ModalGeoWall';
-import ModalOAuth from './ModalOAuth';
+import ModalLogin from './ModalLogin';
 
 if (process.env.BROWSER) {
   require('./Modal.less');
@@ -9,6 +9,7 @@ if (process.env.BROWSER) {
 
 @connect(({ Modal }) => ({Modal}))
 class Modal extends React.Component {
+
   render() {
     const {
       props: {
@@ -20,11 +21,11 @@ class Modal extends React.Component {
     switch (target) {
       case 'geoWall':
         return (
-          <ModalGeoWall dispatch={this.props.dispatch}/>
+          <ModalGeoWall {...this.props}/>
         );
       case 'login':
         return (
-          <ModalOAuth {...this.props}/>
+          <ModalLogin {...this.props}/>
         );
       default:
         return false;

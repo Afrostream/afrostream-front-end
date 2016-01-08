@@ -14,7 +14,7 @@ export function fetchAll() {
     }
     return async api => ({
       type: ActionTypes.Blog.fetchAll,
-      res: await api(`/posts`)
+      res: await api(`/api/posts`)
     });
   };
 }
@@ -36,7 +36,7 @@ export function fetchPost(postId) {
     return async api => ({
       type: ActionTypes.Blog.fetchPost,
       postId,
-      res: await api(`/posts/${postId}`)
+      res: await api(`/api/posts/${postId}`)
     });
   };
 }
