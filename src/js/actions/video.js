@@ -27,7 +27,7 @@ export function getVideo(videoId) {
     return async api => ({
       type: ActionTypes.Video.getVideo,
       videoId,
-      res: await api(`/videos/${videoId}`)
+      res: await api(`/api/videos/${videoId}`)
     });
   };
 }

@@ -93,7 +93,7 @@ export function subscribe(data, isGift = false) {
     let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/subscriptions/${isGift ? 'gift' : '' }`, 'POST', data, token, afroToken, afroRefreshToken),
+      res: await api(`/api/subscriptions/${isGift ? 'gift' : '' }`, 'POST', data, token, afroToken, afroRefreshToken),
       isGift
     });
   };
@@ -107,7 +107,7 @@ export function cancelSubscription() {
     let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
     return async api => ({
       type: ActionTypes.User.cancelSubscription,
-      res: await api(`/subscriptions/cancel`, 'GET', {}, token, afroToken, afroRefreshToken)
+      res: await api(`/api/subscriptions/cancel`, 'GET', {}, token, afroToken, afroRefreshToken)
     });
   };
 }
@@ -268,6 +268,9 @@ export function showGiftLock() {
  */
 export function showLock(type = 'show', container = null, options = {}) {
   return (dispatch, getState, actionDispatcher) => {
+
+    return actionDispatcher(ModalActionCreators.open('login'));
+
     const lock = getState().User.get('lock');
     let lockOptions = _.cloneDeep(config.auth0.signIn);
 
@@ -292,8 +295,7 @@ export function showLock(type = 'show', container = null, options = {}) {
       }
 
       if (!authorized) {
-        // FIXME: how can we call ModalActionCreators.openGeoWall with dispatch ?
-        return ModalActionCreators.openGeoWall()(dispatch, getState);
+        return actionDispatcher(ModalActionCreators.open('geoWall'));
       }
 
       return await new Promise(
