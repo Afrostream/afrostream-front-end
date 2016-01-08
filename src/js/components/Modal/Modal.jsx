@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ModalGeoWall from './ModalGeoWall';
+import ModalOAuth from './ModalOAuth';
 
 if (process.env.BROWSER) {
   require('./Modal.less');
 }
 
-@connect(({ Modal }) => ({ Modal })) class Modal extends React.Component {
+@connect(({ Modal }) => ({Modal}))
+class Modal extends React.Component {
   render() {
     const {
       props: {
         Modal
-      }
-    } = this;
+        }
+      } = this;
 
     var target = Modal.get('target');
     switch (target) {
@@ -20,8 +22,12 @@ if (process.env.BROWSER) {
         return (
           <ModalGeoWall dispatch={this.props.dispatch}/>
         );
-       default:
-          return false;
+      case 'login':
+        return (
+          <ModalOAuth {...this.props}/>
+        );
+      default:
+        return false;
     }
   }
 }

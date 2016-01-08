@@ -1,10 +1,10 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function openGeoWall() {
+export function open(target) {
   return (dispatch, getState) => {
     return {
-      type: ActionTypes.Modal.target,
-      target: 'geoWall'
+      type: ActionTypes.Modal.open,
+      target
     };
   };
 }
@@ -12,7 +12,7 @@ export function openGeoWall() {
 export function close() {
   return (dispatch, getState) => {
     return {
-      type: ActionTypes.Modal.target,
+      type: ActionTypes.Modal.close,
       target: null
     };
   };
