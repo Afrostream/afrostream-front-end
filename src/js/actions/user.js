@@ -281,8 +281,22 @@ export function showLock(type = 'show', container = null, options = {}) {
     if (options) {
       lockOptions = _.merge(lockOptions, options);
     }
-    return async auth0 => (
-      await new Promise(
+    return async () => {
+      let authorized = true;
+      if (type === 'showSignup') {
+        try {
+          authorized = await isAuthorized();
+        } catch (err) {
+          console.error('showSingupLock error requesting /auth/geo ', err);
+        }
+      }
+
+      if (!authorized) {
+        // FIXME: how can we call ModalActionCreators.openGeoWall with dispatch ?
+        return ModalActionCreators.openGeoWall()(dispatch, getState);
+      }
+
+      return await new Promise(
         (resolve, reject) => {
           actionDispatcher(pendingUser(true));
           lock.once('close', () => {
@@ -315,8 +329,8 @@ export function showLock(type = 'show', container = null, options = {}) {
               refreshToken: refresh_token
             }, actionDispatcher));
           });
-        })
-    )
+        });
+    }
   };
 }
 
