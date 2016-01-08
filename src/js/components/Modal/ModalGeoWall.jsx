@@ -1,17 +1,13 @@
 import React from 'react';
 import * as ModalActionCreators from '../../actions/modal';
 import * as WaitingUsersActionCreators from '../../actions/waitingUsers';
+import ModalComponent from './ModalComponent';
 
 if (process.env.BROWSER) {
   require('./ModalGeoWall.less');
 }
 
-class ModalGeoWall extends React.Component {
-  handleClose(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    this.props.dispatch(ModalActionCreators.close())
-  }
+class ModalGeoWall extends ModalComponent {
 
   handleSubmit(e) {
     e.stopPropagation();
@@ -31,12 +27,10 @@ class ModalGeoWall extends React.Component {
           <p className="formText">
             Enter your details below and be the first to get notified when we launch there :
           </p>
-          <p>
-            <form onSubmit={::this.handleSubmit}>
-              <input type="text" name="email" ref="email" placeholder="example@address.com"/>
-              <button type="submit" className="btn btn-ok btn-default pull-right">Notify me</button>
-            </form>
-          </p>
+          <form onSubmit={::this.handleSubmit}>
+            <input type="text" name="email" ref="email" placeholder="example@address.com"/>
+            <button type="submit" className="btn btn-ok btn-default pull-right">Notify me</button>
+          </form>
         </div>
       </div>
     );

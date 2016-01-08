@@ -27,7 +27,7 @@ export function getMovie(movieId) {
     return async api => ({
       type: ActionTypes.Movie.getMovie,
       movieId,
-      res: await api(`/movies/${movieId}`)
+      res: await api(`/api/movies/${movieId}`)
     });
   };
 }
@@ -55,7 +55,7 @@ export function getSeason(movieId) {
     return async api => ({
       type: ActionTypes.Movie.getSeason,
       movieId,
-      res: await api(`/movies/${movieId}/seasons`)
+      res: await api(`/api/movies/${movieId}/seasons`)
     });
   };
 }
