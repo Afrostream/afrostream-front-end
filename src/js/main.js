@@ -9,7 +9,7 @@ import request from 'superagent';
 import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
-import { apiClient } from '../../config';
+import { apiClient, heroku } from '../../config';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 superAgentMock(request);
 
@@ -27,6 +27,7 @@ const api = createAPI(
   ({ method, headers = {}, pathname = '', query = {}, body = {} }) => {
     pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '');
     var url = `${apiClient.urlPrefix}${pathname}`;
+    query.from = query.from || heroku.appName;
 
     return request(method, url)
       .query(qs.stringify(query))

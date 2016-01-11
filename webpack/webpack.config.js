@@ -134,6 +134,7 @@ const webpackConfig = {
         AUTH0_CONNECTION: JSON.stringify(process.env.AUTH0_CONNECTION),
         ALGOLIA_APP_ID: JSON.stringify(process.env.ALGOLIA_APP_ID),
         ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY),
+        HEROKU_APP_NAME: JSON.stringify(process.env.HEROKU_APP_NAME),
         RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY),
         CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)

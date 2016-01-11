@@ -179,6 +179,9 @@ const config = {
     appId: process.env.ALGOLIA_APP_ID || '3OKNPL7ZVA',
     apiKey: process.env.ALGOLIA_API_KEY || '3e6547172fb6d80b2ae02d6369edfc72'
   },
+  heroku: {
+    appName: process.env.HEROKU_APP_NAME || 'afrostream-dev'
+  },
   player: {
     "autoplay": true,
     "controls": true,
