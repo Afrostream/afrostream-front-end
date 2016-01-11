@@ -38,6 +38,15 @@ class ModalLogin extends ModalComponent {
     dispatch(OauthActionCreator.login(this.state));
   }
 
+  facebookAuth(event) {
+    event.preventDefault();
+    const {
+      dispatch
+      } = this.props;
+
+    dispatch(OauthActionCreator.facebook(this.state));
+  }
+
   cancelAction(event) {
     event.preventDefault();
     const {
@@ -70,6 +79,7 @@ class ModalLogin extends ModalComponent {
 
   getForm() {
     let formTemplate;
+    let social = true;
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
@@ -79,6 +89,7 @@ class ModalLogin extends ModalComponent {
         formTemplate = this.getSignUp();
         break;
       case 'showReset':
+        social = false;
         formTemplate = this.getReset();
         break;
     }
@@ -86,7 +97,7 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="notloggedin mode">
         <form noValidate="" onChange={::this.handleInputChange} onSubmit={::this.handleSubmit}>
-          {this.getSocial()}
+          {social ? this.getSocial() : ''}
           <div className="instructions">{this.getTitle('headerText')}</div>
           {formTemplate}
         </form>
@@ -98,7 +109,12 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        <div className="separator hide"><span>ou</span></div>
+        <div tabindex="0" data-strategy="facebook" title="Login with Facebook" onclick={this.facebookAuth}
+             className="zocial icon facebook "
+             dir="ltr">
+          <span>Login with Facebook</span>
+        </div>
+        <div className="separator"><span>ou</span></div>
       </div>
     );
   }
