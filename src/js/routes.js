@@ -34,9 +34,8 @@ export default (
       <Route name="post" path=":postId(/:postSlug)" component={Blog.View}/>
     </Route>
     <Route name="home" path="/" component={HomePage}>
-      <Route name="compte" path="compte" component={AccountPage}>
-        <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
-      </Route>
+      <Route name="compte" path="compte" component={AccountPage} />
+      <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
       <Route name="movie" path=":movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path=":movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
