@@ -6,10 +6,6 @@ import { pushState } from 'redux-router';
 import _ from 'lodash';
 import {isAuthorized} from '../lib/geo';
 
-if (canUseDOM) {
-  var Auth0Lock = require('auth0-lock');
-}
-
 /**
  * Merge profile return by auth0 whith afrostream api user data
  * @param profile
@@ -118,14 +114,9 @@ export function cancelSubscription() {
  */
 export function createLock() {
   return (dispatch, getState, actionDispatcher) => {
-    const options = config.auth0.assetsUrl ? {assetsUrl: config.auth0.assetsUrl} : {};
-    const lock = new Auth0Lock(config.auth0.clientId, config.auth0.domain, options);
-    lock.on('close', () => {
-      actionDispatcher(pendingUser(false));
-    });
     return {
       type: ActionTypes.User.createLock,
-      lock: lock
+      lock: null
     };
   };
 }
@@ -269,7 +260,7 @@ export function showGiftLock() {
 export function showLock(type = 'show', container = null, options = {}) {
   return (dispatch, getState, actionDispatcher) => {
 
-    return actionDispatcher(ModalActionCreators.open('login'));
+    return actionDispatcher(ModalActionCreators.open(type));
 
     const lock = getState().User.get('lock');
     let lockOptions = _.cloneDeep(config.auth0.signIn);

@@ -1,31 +1,7 @@
 'use strict';
-import dictFr from '../node_modules/auth0-lock/i18n/fr-FR.json';
+import dictFr from './i18n/fr-FR.json';
 import _ from 'lodash';
 import castlab from './player/castlab';
-
-var giftDictClone = _.cloneDeep(dictFr);
-
-const customDict = _.merge(dictFr, {
-  signin: {
-    "title": "S’identifier",
-    "action": "Se connecter"
-  },
-  signup: {
-    "title": "Abonnez vous",
-    "action": "Abonnez vous",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
-    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion."
-  }
-});
-
-const giftDict = _.merge(giftDictClone, {
-  signup: {
-    "title": "Enregistrez-vous",
-    "action": "Enregistrez-vous",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
-    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, allez dans votre profil Afrostream."
-  }
-});
 
 const protData = {
   "com.widevine.alpha": {
@@ -121,7 +97,7 @@ const config = {
   apiClient: {
     protocol: process.env.API_CLIENT_PROTOCOL || 'http',
     authority: process.env.API_CLIENT_AUTHORITY || 'localhost:3002',
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api',
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002',
     token: 'afro_token',
     tokenRefresh: 'afro_refresh_token'
   },
@@ -144,6 +120,9 @@ const config = {
     url: 'https://widget.intercom.io/widget/',
     appID: 'k3klwkxq'
   },
+  auth2: {
+    dict: dictFr
+  },
   auth0: {
     clientId: auth0ClientId,
     domain: process.env.AUTH0_DOMAIN || auth0MockDomain,
@@ -152,14 +131,13 @@ const config = {
     token: 'afroToken',
     tokenRefresh: 'afroRefreshToken',
     signIn: {
-      dict: customDict,
       icon: '',
       theme: 'default',
       //signupLink: '/signup',
       resetLink: '/reset',
       connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
       socialBigButtons: true,
-      disableSignupAction: true,
+      disableSignupAction: false,
       rememberLastLogin: true,
       disableResetAction: false,
       popup: true,
@@ -169,7 +147,6 @@ const config = {
       }
     },
     gift: {
-      dict: giftDict
     }
   },
   recurly: {
