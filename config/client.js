@@ -98,8 +98,8 @@ const config = {
     protocol: process.env.API_CLIENT_PROTOCOL || 'http',
     authority: process.env.API_CLIENT_AUTHORITY || 'localhost:3002',
     urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002',
-    token: 'afro_token',
-    tokenRefresh: 'afro_refresh_token'
+    token: 'accessToken',
+    tokenRefresh: 'refreshToken'
   },
   images: {
     quality: 65,
@@ -128,8 +128,8 @@ const config = {
     domain: process.env.AUTH0_DOMAIN || auth0MockDomain,
     callbackUrl: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback',
     assetsUrl: auth0MockAssetsUrl,
-    token: 'afroToken',
-    tokenRefresh: 'afroRefreshToken',
+    token: 'accessToken',
+    tokenRefresh: 'refreshToken',
     signIn: {
       icon: '',
       theme: 'default',
@@ -146,8 +146,7 @@ const config = {
         scope: 'openid'
       }
     },
-    gift: {
-    }
+    gift: {}
   },
   recurly: {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as UserActionCreators from '../../../actions/user';
+import * as ModalActionCreators from '../../../actions/modal';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../../../config';
@@ -163,7 +163,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showLock('showSignup'));
+    dispatch(ModalActionCreators.showLock('showSignup'));
   }
 
   hasPromo() {
@@ -181,7 +181,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showLock('showSignin'));
+    dispatch(ModalActionCreators.showLock('showSignin'));
   }
 
   showGiftLock() {
@@ -191,7 +191,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock());
+    dispatch(ModalActionCreators.showGiftLock());
   }
 
   render() {

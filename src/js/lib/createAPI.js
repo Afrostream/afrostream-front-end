@@ -17,7 +17,7 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
  * Server: /lib/render.js
  */
 export default function createAPI(createRequest) {
-  return async function api(path, method = 'GET', params = {}, tokenStore = null, tokenAfroAPI = null, refreshTokenAfroAPI = null) {
+  return async function api(path, method = 'GET', params = {}, token = null, refreshToken = null) {
     var { pathname, query: queryStr } = URL.parse(path);
     var query, headers, body;
 
@@ -29,14 +29,11 @@ export default function createAPI(createRequest) {
     query = qs.parse(queryStr);
 
     if (method === 'GET') {
-      if (tokenAfroAPI) {
-        params.afro_token = tokenAfroAPI;
+      if (token) {
+        params.afro_token = token;
       }
-      if (refreshTokenAfroAPI) {
-        params.afro_refresh_token = refreshTokenAfroAPI;
-      }
-      if (tokenStore) {
-        params.access_token = tokenStore;
+      if (refreshToken) {
+        params.afro_refresh_token = refreshToken;
       }
       if (params && _.isObject(params)) {
         _.assign(query, params);
@@ -44,14 +41,11 @@ export default function createAPI(createRequest) {
 
     } else {
       body = params;
-      if (tokenAfroAPI) {
-        body.afro_token = tokenAfroAPI;
+      if (token) {
+        body.afro_token = token;
       }
-      if (refreshTokenAfroAPI) {
-        body.afro_refresh_token = refreshTokenAfroAPI;
-      }
-      if (tokenStore) {
-        body.access_token = tokenStore;
+      if (refreshToken) {
+        body.afro_refresh_token = refreshToken;
       }
     }
     return await new Promise((resolve, reject) => {

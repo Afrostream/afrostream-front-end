@@ -13,46 +13,31 @@ import {isAuthorized} from '../lib/geo';
  * @returns {Function}
  */
 const logoutUser = function (actionDispatcher) {
-  const storageId = config.auth0.token;
-  const storageRefreshId = config.auth0.tokenRefresh;
-  const storageAfroId = config.apiClient.token;
-  const storageAfroRefreshId = config.apiClient.tokenRefresh;
+  const storageId = config.apiClient.token;
+  const storageRefreshId = config.apiClient.tokenRefresh;
   localStorage.removeItem(storageId);
   localStorage.removeItem(storageRefreshId);
-  localStorage.removeItem(storageAfroId);
-  localStorage.removeItem(storageAfroRefreshId);
   actionDispatcher(pushState(null, '/'))
 };
 
-const mergeProfile = function (profile, data, actionDispatcher) {
+const mergeProfile = function (data, getState, actionDispatcher) {
 
-  //remove auth0 fucking cache data
-  let filteredUser = _.pick(profile, [
-    'clientID',
-    'personal_token',
-    'personal_provider',
-    'afro_token',
-    'afro_refresh_token',
-    'afro_provider',
-    'picture',
-    'updated_at',
-    'name',
-    'nickname',
-    'last_ip',
-    'last_login']);
+  const token = getState().OAuth.get('token');
+  const refreshToken = getState().OAuth.get('refreshToken');
 
-  let tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-  let afroRefreshToken = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
+  if (!token) {
+    return data;
+  }
 
   return async api => {
     try {
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
-      const userInfos = await api(`/users/me`, 'GET', {}, null, tokenAfro, afroRefreshToken);
+      const userInfos = await api(`/api/users/me`, 'GET', {}, token, refreshToken);
       //TODO add subsrciptions status in user
       const userSubscriptions = {
         body: {}
-      };//await api(`/subscriptions/status`, 'GET', {}, null, tokenAfro, afroRefreshToken);
-      const userMerged = _.merge(filteredUser, userInfos.body || {}, userSubscriptions.body || {});
+      };//await api(`/subscriptions/status`, 'GET', {}, null, token, refreshToken);
+      const userMerged = _.merge(userInfos.body || {}, userSubscriptions.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
 
@@ -83,13 +68,11 @@ const mergeProfile = function (profile, data, actionDispatcher) {
  */
 export function subscribe(data, isGift = false) {
   return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const token = getState().User.get('token');
-    let afroToken = user.get(config.apiClient.token);
-    let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
+    const token = getState().OAuth.get('token');
+    const refreshToken = getState().OAuth.get('refreshToken');
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/api/subscriptions/${isGift ? 'gift' : '' }`, 'POST', data, token, afroToken, afroRefreshToken),
+      res: await api(`/api/subscriptions/${isGift ? 'gift' : '' }`, 'POST', data, token, refreshToken),
       isGift
     });
   };
@@ -97,27 +80,12 @@ export function subscribe(data, isGift = false) {
 
 export function cancelSubscription() {
   return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const token = getState().User.get('token');
-    let afroToken = user.get(config.apiClient.token);
-    let afroRefreshToken = user.get(config.apiClient.tokenRefresh);
+    const token = getState().OAuth.get('token');
+    const refreshToken = getState().OAuth.get('refreshToken');
     return async api => ({
       type: ActionTypes.User.cancelSubscription,
-      res: await api(`/api/subscriptions/cancel`, 'GET', {}, token, afroToken, afroRefreshToken)
+      res: await api(`/api/subscriptions/cancel`, 'GET', {}, token, refreshToken)
     });
-  };
-}
-
-/**
- * First call for creating lock widget component
- * @returns {Function}
- */
-export function createLock() {
-  return (dispatch, getState, actionDispatcher) => {
-    return {
-      type: ActionTypes.User.createLock,
-      lock: null
-    };
   };
 }
 
@@ -134,52 +102,6 @@ export function logOut() {
   };
 }
 
-const storeToken = function (id_token, refresh_token, afro_token, afro_refresh_token) {
-  const storageId = config.auth0.token;
-  const storageRefreshId = config.auth0.tokenRefresh;
-  const storageAfroId = config.apiClient.token;
-  const storageAfroRefreshId = config.apiClient.tokenRefresh;
-  if (id_token) {
-    localStorage.setItem(storageId, id_token);
-  }
-  if (refresh_token) {
-    localStorage.setItem(storageRefreshId, refresh_token);
-  }
-  if (storageAfroId) {
-    localStorage.setItem(storageAfroId, afro_token);
-  }
-  if (storageAfroRefreshId) {
-    localStorage.setItem(storageAfroRefreshId, afro_refresh_token);
-  }
-};
-
-/**
- * Get profile from refresh token
- * @param getState
- * @returns {Promise}
- */
-const refreshToken = function (getState) {
-  return new Promise(
-    (resolve, reject) => {
-      const lock = getState().User.get('lock');
-      const storageRefreshId = config.auth0.tokenRefresh;
-      const idToken = localStorage.getItem(storageRefreshId);
-      const refreshToken = getState().User.get('refreshToken') || idToken;
-      if (!refreshToken || !lock) {
-        return reject('no trefresh token');
-      }
-      lock.getClient().refreshToken(refreshToken, function (err) {
-        if (err) {
-          console.log('*** Error loading the refresh token ***', err);
-          localStorage.removeItem(storageRefreshId);
-          return reject(err);
-        }
-        return resolve(getProfile());
-      });
-    }
-  );
-};
-
 export function pendingUser(pending) {
   return {
     type: ActionTypes.User.pendingUser,
@@ -192,8 +114,7 @@ export function pendingUser(pending) {
  */
 export function getProfile() {
   return (dispatch, getState, actionDispatcher) => {
-    const lock = getState().User.get('lock');
-    const token = getState().User.get('token');
+    const token = getState().OAuth.get('token');
     const user = getState().User.get('user');
     return async auth0 =>(
       await new Promise(
@@ -201,10 +122,10 @@ export function getProfile() {
           //If user alwready in app
           if (user) {
             if (user.get('planCode') === undefined) {
-              return resolve(mergeProfile(user.toJS(), {
+              return resolve(mergeProfile({
                 type: ActionTypes.User.getProfile,
                 user: null
-              }, actionDispatcher));
+              }, getState, actionDispatcher));
             } else {
               return resolve({
                 type: ActionTypes.User.getProfile,
@@ -212,128 +133,13 @@ export function getProfile() {
               });
             }
           }
-          if (!lock) {
-            return resolve({
-              type: ActionTypes.User.getProfile,
-              user: null
-            });
-          }
-          //else get auth0 user and merge it
-          lock.getProfile(token, function (err, profile) {
-            profile = profile || {};
-            if (err) {
-              console.log('*** Error loading the profile - most likely the token has expired ***', err);
-              return resolve({
-                type: ActionTypes.User.getProfile,
-                token: null,
-                refreshToken: null
-              });
-            }
-            return resolve(mergeProfile(profile, {
-              type: ActionTypes.User.getProfile,
-              user: null
-            }, actionDispatcher));
-          });
+          return resolve(mergeProfile({
+            type: ActionTypes.User.getProfile,
+            user: null
+          }, getState, actionDispatcher));
         }
       )
     );
 
-  };
-}
-
-export function showGiftLock() {
-  return (dispatch, getState, actionDispatcher) => {
-    const lock = getState().User.get('lock');
-    lock.once('signin success', function (options, context) {
-      actionDispatcher(pushState(null, '/select-plan/afrostreamgift/checkout'));
-    });
-    return this.showLock('showSignup', null, config.auth0.gift);
-  };
-}
-
-/**
- * Show auth 0 lock and return tokens
- * @param type
- * @param container
- * @returns {Function}
- */
-export function showLock(type = 'show', container = null, options = {}) {
-  return (dispatch, getState, actionDispatcher) => {
-
-    return actionDispatcher(ModalActionCreators.open(type));
-
-    const lock = getState().User.get('lock');
-    let lockOptions = _.cloneDeep(config.auth0.signIn);
-
-    if (container) {
-      lockOptions = _.merge(lockOptions, {
-        popup: false,
-        closable: false,
-        container: container
-      });
-    }
-    if (options) {
-      lockOptions = _.merge(lockOptions, options);
-    }
-    return async () => {
-      let authorized = true;
-      if (type === 'showSignup') {
-        try {
-          authorized = await isAuthorized();
-        } catch (err) {
-          console.error('showSingupLock error requesting /auth/geo ', err);
-        }
-      }
-
-      if (!authorized) {
-        return actionDispatcher(ModalActionCreators.open('geoWall'));
-      }
-
-      return await new Promise(
-        (resolve, reject) => {
-          actionDispatcher(pendingUser(true));
-          lock.once('close', () => {
-            return reject('user close popup lock');
-          });
-          lock[type](lockOptions, function (err, profile, access_token, id_token, state, refresh_token) {
-            if (err) {
-              //on ne reject pas car l'action n'est psa fini, l'user est toujours en essai de connection
-              //return reject(err);
-              return;
-            }
-            // store token
-            profile = profile || {};
-            var tokenAfro = profile.hasOwnProperty(config.apiClient.token) ? profile[config.apiClient.token] : null;
-            var tokenRefreshAfro = profile.hasOwnProperty(config.apiClient.tokenRefresh) ? profile[config.apiClient.tokenRefresh] : null;
-            storeToken(access_token, refresh_token, tokenAfro, tokenRefreshAfro);
-            if (type === 'showReset' || typeof profile === 'string') {
-              return resolve({
-                type: ActionTypes.User.showLock,
-                user: null,
-                token: null,
-                refreshToken: null
-              });
-            }
-            // store refresh_token
-            return resolve(mergeProfile(profile, {
-              type: ActionTypes.User.showLock,
-              user: null,
-              token: access_token,
-              refreshToken: refresh_token
-            }, actionDispatcher));
-          });
-        });
-    }
-  };
-}
-
-export function getIdToken() {
-  return (dispatch, getState) => {
-    const storageId = config.auth0.token;
-    let idToken = localStorage.getItem(storageId);
-    return {
-      type: ActionTypes.User.getIdToken,
-      token: idToken
-    };
   };
 }
