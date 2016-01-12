@@ -35,7 +35,19 @@ class ModalLogin extends ModalComponent {
       dispatch
       } = this.props;
 
-    dispatch(OauthActionCreator.login(this.state));
+    switch (this.props.type) {
+      case 'show':
+      case 'showSignin':
+        dispatch(OauthActionCreator.signin(this.state));
+        break;
+      case 'showSignup':
+        dispatch(OauthActionCreator.signup(this.state));
+        break;
+      case 'showReset':
+        dispatch(OauthActionCreator.reset(this.state));
+        break;
+    }
+
   }
 
   facebookAuth(event) {

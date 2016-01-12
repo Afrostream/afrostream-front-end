@@ -1,10 +1,28 @@
 import ActionTypes from '../consts/ActionTypes';
 
-export function login(form) {
+export function signin(form) {
   return (dispatch, getState) => {
     return async api => ({
-      type: ActionTypes.OAuth.login,
-      res: await api(`/auth`, 'POST', form)
+      type: ActionTypes.OAuth.signin,
+      res: await api(`/auth/signin`, 'POST', form)
+    });
+  };
+}
+
+export function signup(form) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.OAuth.signup,
+      res: await api(`/auth/signup`, 'POST', form)
+    });
+  };
+}
+
+export function reset(form) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.OAuth.signup,
+      res: await api(`/auth/reset`, 'POST', form)
     });
   };
 }
