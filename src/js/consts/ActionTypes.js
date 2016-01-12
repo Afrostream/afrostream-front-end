@@ -3,7 +3,8 @@ import keyMirror from 'fbjs/lib/keyMirror';
 export default {
 
   OAuth: keyMirror({
-    login: null
+    login: null,
+    facebook: null
   }),
 
   User: keyMirror({
