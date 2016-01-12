@@ -44,7 +44,7 @@ class ModalLogin extends ModalComponent {
       dispatch
       } = this.props;
 
-    dispatch(OauthActionCreator.facebook(this.state));
+    dispatch(OauthActionCreator.facebook());
   }
 
   cancelAction(event) {

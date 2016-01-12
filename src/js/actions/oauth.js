@@ -12,7 +12,7 @@ export function login(form) {
 export function facebook() {
   return (dispatch, getState) => {
     return async api => ({
-      type: ActionTypes.OAuth.login,
+      type: ActionTypes.OAuth.facebook,
       res: await api(`/auth/facebook`, 'GET')
     });
   };
