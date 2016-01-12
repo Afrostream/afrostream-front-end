@@ -35,7 +35,8 @@ class AccountPage extends React.Component {
     const plans = {
       afrostreammonthly: 'THINK LIKE A MAN',
       afrostreamambassadeurs: 'Ambassadeurs',
-      afrostreampremium: 'DO THE RIGHT THING'
+      afrostreampremium: 'DO THE RIGHT THING',
+      afrostreamgift: 'Cadeau'
     };
 
     let cancelSubscriptionClasses = {
