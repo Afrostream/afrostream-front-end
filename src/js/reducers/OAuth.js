@@ -6,13 +6,33 @@ const initialState = Immutable.fromJS({});
 
 export default createReducer(initialState, {
 
-  [ActionTypes.OAuth.login](state, { res }) {
+  [ActionTypes.OAuth.signin](state, { res }) {
     if (!res) {
       return state;
     }
     const data = res.body;
     return state.merge({
-      [`login`]: data
+      [`user`]: data
+    });
+  },
+
+  [ActionTypes.OAuth.signup](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`user`]: data
+    });
+  },
+
+  [ActionTypes.OAuth.reset](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`user`]: data
     });
   },
 
@@ -22,7 +42,7 @@ export default createReducer(initialState, {
     }
     const data = res.body;
     return state.merge({
-      [`login`]: data
+      [`user`]: data
     });
   }
 
