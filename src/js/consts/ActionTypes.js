@@ -3,21 +3,16 @@ import keyMirror from 'fbjs/lib/keyMirror';
 export default {
 
   OAuth: keyMirror({
+    getIdToken: null,
     signin: null,
     signup: null,
     reset: null,
-    facebook: null
+    facebook: null,
+    logOut: null,
   }),
 
   User: keyMirror({
-    getIdToken: null,
-    createLock: null,
     getProfile: null,
-    showLock: null,
-    showSignupLock: null,
-    showGiftLock: null,
-    showSigninLock: null,
-    logOut: null,
     subscribe: null,
     pendingUser: null,
     cancelSubscription: null

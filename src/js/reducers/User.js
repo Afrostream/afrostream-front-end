@@ -27,47 +27,10 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.getIdToken](state, { token }) {
-    return state.merge({
-      ['token']: token
-    });
-  },
-
-  [ActionTypes.User.showLock](state, {user,token,refreshToken}) {
-    return state.merge({
-      ['user']: user,
-      ['token']: token,
-      ['refreshToken']: refreshToken,
-      ['pending']: false
-    });
-  },
-
-  [ActionTypes.User.getProfile](state, { user ,token,refreshToken}) {
-    console.log('ActionTypes.User.getProfile', user);
-    let tokenMerge = {};
-    if (token !== undefined) {
-      tokenMerge = {
-        ['token']: token,
-        ['refreshToken']: refreshToken
-      };
-    }
+  [ActionTypes.User.getProfile](state, { user}) {
     return state.merge({
       ['user']: user,
       ['pending']: false
-    }, tokenMerge);
-  },
-
-  [ActionTypes.User.createLock](state, { lock }) {
-    return state.merge({
-      ['lock']: lock
-    });
-  },
-
-  [ActionTypes.User.logOut](state, { }) {
-    return state.merge({
-      ['user']: null,
-      ['token']: null,
-      ['refreshToken']: null
     });
   },
 

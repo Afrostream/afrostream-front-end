@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as UserActionCreators from '../../../actions/user';
+import * as ModalActionCreators from '../../../actions/modal';
 import { Link } from 'react-router';
 
 if (process.env.BROWSER) {
@@ -15,7 +15,7 @@ class PricingTable extends React.Component {
         dispatch
         }
       } = this;
-    dispatch(UserActionCreators.showLock('showSignup'));
+    dispatch(ModalActionCreators.showLock('showSignup'));
   }
 
   showGiftLock() {
@@ -25,7 +25,7 @@ class PricingTable extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock());
+    dispatch(ModalActionCreators.showGiftLock());
   }
 
   render() {

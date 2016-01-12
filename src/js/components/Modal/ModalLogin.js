@@ -38,13 +38,19 @@ class ModalLogin extends ModalComponent {
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
-        dispatch(OauthActionCreator.signin(this.state));
+        dispatch(OauthActionCreator.signin(this.state)).then(function () {
+          dispatch(ModalActionCreator.close())
+        });
         break;
       case 'showSignup':
-        dispatch(OauthActionCreator.signup(this.state));
+        dispatch(OauthActionCreator.signup(this.state)).then(function () {
+          dispatch(ModalActionCreator.close())
+        });
         break;
       case 'showReset':
-        dispatch(OauthActionCreator.reset(this.state));
+        dispatch(OauthActionCreator.reset(this.state)).then(function () {
+          dispatch(ModalActionCreator.close())
+        });
         break;
     }
 
@@ -121,7 +127,7 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        <div tabindex="0" data-strategy="facebook" title="Login with Facebook" onclick={this.facebookAuth}
+        <div tabIndex="0" data-strategy="facebook" title="Login with Facebook" onclick={this.facebookAuth}
              className="zocial icon facebook "
              dir="ltr">
           <span>Login with Facebook</span>
