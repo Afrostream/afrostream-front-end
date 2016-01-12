@@ -42,10 +42,9 @@ class HomePage extends React.Component {
 
   render() {
     const { props: { User ,children} } = this;
-    const token = User.get('token');
     const pending = User.get('pending');
     const user = User.get('user');
-    let isPending = Boolean(token || pending);
+    let isPending = Boolean(pending);
     if (user) {
       if (children) {
         return children;

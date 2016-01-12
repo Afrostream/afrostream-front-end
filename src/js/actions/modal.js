@@ -1,24 +1,36 @@
 import ActionTypes from '../consts/ActionTypes';
-
-export function pendingUser(pending) {
-  return {
-    type: ActionTypes.User.pendingUser,
-    pending
-  }
-};
+import * as ModalActionCreators from './modal';
+import * as UserActionCreators from './user';
+import {isAuthorized} from '../lib/geo';
 
 export function open(target) {
   return (dispatch, getState, actionDispatcher) => {
-    return {
-      type: ActionTypes.Modal.open,
-      target
-    };
+
+    return async () => {
+      let authorized = true;
+      if (target === 'showSignup') {
+        try {
+          authorized = await isAuthorized();
+        } catch (err) {
+          console.error('showSingupLock error requesting /auth/geo ', err);
+        }
+      }
+
+      if (!authorized) {
+        return actionDispatcher(ModalActionCreators.open('geoWall'));
+      }
+
+      return {
+        type: ActionTypes.Modal.open,
+        target
+      };
+    }
   }
 }
 
 export function close() {
   return (dispatch, getState, actionDispatcher) => {
-    actionDispatcher(pendingUser(false));
+    actionDispatcher(UserActionCreators.pendingUser(false));
     return {
       type: ActionTypes.Modal.close,
       target: null

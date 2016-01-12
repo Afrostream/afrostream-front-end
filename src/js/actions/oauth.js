@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes';
+import { pushState } from 'redux-router';
 
 export function signin(form) {
   return (dispatch, getState) => {
@@ -33,5 +34,26 @@ export function facebook() {
       type: ActionTypes.OAuth.facebook,
       res: await api(`/auth/facebook`, 'GET')
     });
+  };
+}
+
+export function getIdToken() {
+  return (dispatch, getState) => {
+    return {
+      type: ActionTypes.OAuth.getIdToken
+    };
+  };
+}
+
+/**
+ * Logout user
+ * @returns {Function}
+ */
+export function logOut() {
+  return (dispatch, getState, actionDispatcher) => {
+    actionDispatcher(pushState(null, '/'));
+    return {
+      type: ActionTypes.OAuth.logOut
+    };
   };
 }
