@@ -9,7 +9,6 @@ const initialState = Immutable.fromJS({
 export default createReducer(initialState, {
 
   [ActionTypes.Event.createIntercom](state, { intercom }) {
-    debugger;
     return state.merge({
       ['intercom']: intercom
     });
