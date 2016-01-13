@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as UserActionCreators from '../../actions/user';
+import * as OAuthActionCreators from '../../actions/oauth';
 import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
 import classSet from 'classnames';
@@ -45,7 +45,8 @@ class SideBar extends React.Component {
             </a>
           </li>
           <li><Link to="/compte">Mon compte</Link></li>
-          <li><Link to="/select-plan/afrostreamgift/checkout" className="sidebar-nav_yellow">Offrir un cadeau</Link></li>
+          <li><Link to="/select-plan/afrostreamgift/checkout" className="sidebar-nav_yellow">Offrir un cadeau</Link>
+          </li>
           <li role="separator" className="divider"></li>
           <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
         </ul>
@@ -70,7 +71,7 @@ class SideBar extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.logOut());
+    dispatch(OAuthActionCreators.logOut());
   }
 }
 

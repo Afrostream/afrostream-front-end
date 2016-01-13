@@ -12,6 +12,7 @@ export default {
   }),
 
   User: keyMirror({
+    logOut: null,
     getProfile: null,
     subscribe: null,
     pendingUser: null,

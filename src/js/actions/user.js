@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes';
+import crypto from 'crypto';
 import * as ModalActionCreators from './modal';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../config/client';
@@ -6,18 +7,39 @@ import { pushState } from 'redux-router';
 import _ from 'lodash';
 import {isAuthorized} from '../lib/geo';
 
-/**
- * Merge profile return by auth0 whith afrostream api user data
- * @param profile
- * @param data
- * @returns {Function}
- */
-const logoutUser = function (actionDispatcher) {
-  const storageId = config.apiClient.token;
-  const storageRefreshId = config.apiClient.tokenRefresh;
-  localStorage.removeItem(storageId);
-  localStorage.removeItem(storageRefreshId);
-  actionDispatcher(pushState(null, '/'))
+const gravatar = function (email, options) {
+  //check to make sure you gave us something
+  var options = options || {},
+    base,
+    params = [];
+
+  //set some defaults, just in case
+  options = {
+    size: options.size || '50',
+    rating: options.rating || 'g',
+    secure: options.secure || (location.protocol === 'https:'),
+    backup: options.backup || ''
+  };
+
+  //setup the email address
+  email = email.trim().toLowerCase();
+
+  //determine which base to use
+  base = options.secure ? 'https://secure.gravatar.com/avatar/' : 'http://www.gravatar.com/avatar/';
+
+  //add the params
+  if (options.rating) {
+    params.push('r=' + options.rating)
+  }
+  if (options.backup) {
+    params.push('d=' + encodeURIComponent(options.backup))
+  }
+  if (options.size) {
+    params.push('s=' + options.size)
+  }
+
+  //now throw it all together
+  return base + crypto.createHash('md5').update(email).digest('hex') + '?' + params.join('&');
 };
 
 const mergeProfile = function (data, getState, actionDispatcher) {
@@ -48,13 +70,14 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         }
       }
 
+      userMerged.picture = gravatar(userMerged.email);
+
       return _.merge(data, {
         user: userMerged
       });
 
     } catch (e) {
       console.log(e, 'remove user data');
-      logoutUser(actionDispatcher);
       return data;
     }
   }
@@ -86,19 +109,6 @@ export function cancelSubscription() {
       type: ActionTypes.User.cancelSubscription,
       res: await api(`/api/subscriptions/cancel`, 'GET', {}, token, refreshToken)
     });
-  };
-}
-
-/**
- * Logout user
- * @returns {Function}
- */
-export function logOut() {
-  return (dispatch, getState, actionDispatcher) => {
-    logoutUser(actionDispatcher);
-    return {
-      type: ActionTypes.User.logOut
-    };
   };
 }
 
