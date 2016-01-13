@@ -8,7 +8,8 @@ import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import Raven from 'raven-js'
+import Raven from 'raven-js';
+import MobileDetect from 'mobile-detect';
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
@@ -61,6 +62,9 @@ class PlayerComponent extends React.Component {
     };
 
     return {
+      getMobile: function () {
+        return new MobileDetect(userAgent);
+      },
       getBrowser: function () {
         var data = {};
         var browser = '';
@@ -266,6 +270,7 @@ class PlayerComponent extends React.Component {
           let isLive = playerData.hasOwnProperty('live') && playerData.live;
           const ua = self.detectUA();
           let browserVersion = ua.getBrowser();
+          let mobileVersion = ua.getMobile();
 
           if (ua.isIE()) {
             playerData.html5 = {
@@ -284,8 +289,8 @@ class PlayerComponent extends React.Component {
           playerData.sources = _.sortBy(playerData.sources, function (k) {
             return k.type !== 'application/dash+xml';
           });
-          //Fix android live dash
-          if (ua.isAndroid() && isLive) {
+          //Fix android live hls only
+          if (mobileVersion.match('playstation|xbox') || (ua.isAndroid() && isLive)) {
             playerData.sources = _.sortBy(playerData.sources, function (k) {
               return k.type === 'application/dash+xml';
             });
@@ -476,14 +481,15 @@ class PlayerComponent extends React.Component {
         <div ref="wrapper" className="wrapper"/>
         {
           movieData ?
-          <div className={classSet(videoInfoClasses)}>
-            <div className=" video-infos_label">Vous regardez</div>
-            <div className=" video-infos_title">{infos.title}</div>
-            {infos.episodeNumber ? <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> :''}
-            {videoDuration ? <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
-            <div className=" video-infos_synopsys">{infos.synopsis}</div>
-          </div> : <div />
-          }
+            <div className={classSet(videoInfoClasses)}>
+              <div className=" video-infos_label">Vous regardez</div>
+              <div className=" video-infos_title">{infos.title}</div>
+              {infos.episodeNumber ?
+                <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> : ''}
+              {videoDuration ? <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
+              <div className=" video-infos_synopsys">{infos.synopsis}</div>
+            </div> : <div />
+        }
       </div>
     );
   }
