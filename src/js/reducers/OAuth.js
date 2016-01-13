@@ -3,7 +3,11 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 import config from '../../../config/client';
 
-const initialState = Immutable.fromJS({});
+const initialState = Immutable.fromJS({
+  pending: false,
+  token: null,
+  refreshToken: null
+});
 
 const storeToken = function (id_token, refresh_token) {
   const storageId = config.apiClient.token;
