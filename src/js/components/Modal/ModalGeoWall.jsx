@@ -2,10 +2,7 @@ import React from 'react';
 import * as ModalActionCreators from '../../actions/modal';
 import * as WaitingUsersActionCreators from '../../actions/waitingUsers';
 import ModalComponent from './ModalComponent';
-
-if (process.env.BROWSER) {
-  require('./ModalGeoWall.less');
-}
+import classNames from 'classnames';
 
 class ModalGeoWall extends ModalComponent {
 
@@ -18,19 +15,55 @@ class ModalGeoWall extends ModalComponent {
   }
 
   render() {
+
+    let closeClass = classNames({
+      'close': true,
+      'icon-budicon-3': true,
+      'hide': this.props.closable
+    });
+
     return (
-      <div className="modalDialog geoWall">
-        <div>
-          <a onClick={::this.handleClose} title="Close" className="close">X</a>
-          <p className="center bold">Coming Soon</p>
-          <p className="formText">We are not yet available in your country.</p>
-          <p className="formText">
-            Enter your details below and be the first to get notified when we launch there :
-          </p>
-          <form onSubmit={::this.handleSubmit}>
-            <input type="text" name="email" ref="email" placeholder="example@address.com"/>
-            <button type="submit" className="btn btn-ok btn-default pull-right">Notify me</button>
-          </form>
+      <div id="lock" className="lock theme-default geoWall">
+        <div className="signin">
+          <div className="popup">
+            <div className="overlay active">
+              <div className="centrix">
+                <div id="onestep" className="panel onestep active">
+                  {/*HEADER*/}
+                  <div className="header top-header ">
+                    <div className="bg-gradient"></div>
+                    <h1>Coming Soon</h1>
+                    <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                  </div>
+                  <div className="mode-container">
+                    <div className="mode">
+                      <form onSubmit={::this.handleSubmit}>
+                        <div className="instructions">
+                          Enter your details below and be the first to get notified when we launch there :
+                        </div>
+                        <div className="emailPassword">
+                          <div className="inputs">
+                            <div className="email">
+                              <label htmlFor="easy_email" className="sad-placeholder">
+                                Email
+                              </label>
+                              <div className="input-box">
+                                <i className="icon-budicon-5"></i>
+                                <input name="email" ref="email" id="easy_email" type="email"
+                                       placeholder="example@address.com"
+                                       title="email"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <button type="submit" className="primary next">Notify me</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
