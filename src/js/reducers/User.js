@@ -3,11 +3,7 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
-  'lock': null,
-  'user': null,
-  'token': null,
-  'refreshToken': null,
-  'pending': false
+  'user': null
 });
 
 
@@ -37,6 +33,12 @@ export default createReducer(initialState, {
   [ActionTypes.User.pendingUser](state, { pending }) {
     return state.merge({
       ['pending']: pending
+    });
+  },
+
+  [ActionTypes.OAuth.logOut](state, { }) {
+    return state.merge({
+      ['user']: null
     });
   }
 });

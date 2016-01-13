@@ -11,6 +11,7 @@ if (process.env.BROWSER) {
   require('./ModalLogin.less');
 }
 
+@connect(({ User }) => ({User}))
 class ModalLogin extends ModalComponent {
 
   constructor(props) {
@@ -127,7 +128,7 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        <div tabIndex="0" data-strategy="facebook" title="Login with Facebook" onclick={this.facebookAuth}
+        <div tabIndex="0" data-strategy="facebook" title="Login with Facebook" onclick={::this.facebookAuth}
              className="zocial icon facebook "
              dir="ltr">
           <span>Login with Facebook</span>
@@ -260,6 +261,8 @@ class ModalLogin extends ModalComponent {
       'message': true,
       'visible': this.state.loginFailed
     });
+
+    const pending = User.get('pending');
 
     return (
       <div id="lock" className="lock theme-default">
