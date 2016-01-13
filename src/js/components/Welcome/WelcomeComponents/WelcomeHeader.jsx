@@ -163,7 +163,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(ModalActionCreators.showLock('showSignup'));
+    dispatch(ModalActionCreators.open('showSignup'));
   }
 
   hasPromo() {
@@ -181,7 +181,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(ModalActionCreators.showLock('showSignin'));
+    dispatch(ModalActionCreators.open('showSignin'));
   }
 
   showGiftLock() {
@@ -191,7 +191,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(ModalActionCreators.showGiftLock());
+    dispatch(ModalActionCreators.open('showGift'));
   }
 
   render() {
