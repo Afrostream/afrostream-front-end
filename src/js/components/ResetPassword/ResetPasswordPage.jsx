@@ -19,7 +19,7 @@ class ResetPasswordPage extends React.Component {
         dispatch
         }
       } = this;
-    dispatch(ModalActionCreators.showLock('showReset', 'reset-container'));
+    dispatch(ModalActionCreators.open('showReset', false));
   }
 
   render() {

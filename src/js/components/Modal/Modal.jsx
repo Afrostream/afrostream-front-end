@@ -18,17 +18,21 @@ class Modal extends React.Component {
       } = this;
 
     var target = Modal.get('target');
+
+    var closable = Modal.get('closable');
+
     switch (target) {
       case 'geoWall':
         return (
-          <ModalGeoWall {...this.props}/>
+          <ModalGeoWall closable={closable} {...this.props}/>
         );
       case 'show':
       case 'showSignin':
       case 'showSignup':
       case 'showReset':
+      case 'showGift':
         return (
-          <ModalLogin type={target} {...this.props}/>
+          <ModalLogin type={target} closable={closable} {...this.props}/>
         );
       default:
         return false;

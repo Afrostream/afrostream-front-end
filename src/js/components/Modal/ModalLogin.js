@@ -128,7 +128,7 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        <div tabIndex="0" data-strategy="facebook" title="Login with Facebook" onclick={::this.facebookAuth}
+        <div tabIndex="0" data-strategy="facebook" title="Login with Facebook" onClick={::this.facebookAuth}
              className="zocial icon facebook "
              dir="ltr">
           <span>Login with Facebook</span>
@@ -184,7 +184,7 @@ class ModalLogin extends ModalComponent {
         <div className="action">
           <button type="submit" className="primary next">{this.getTitle('action')}</button>
           <div className="options">
-            <a href="#" onclick={::this.cancelAction}
+            <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
           </div>
         </div>
@@ -240,7 +240,7 @@ class ModalLogin extends ModalComponent {
         <div className="action">
           <button type="submit" className="primary next">{this.getTitle('action')}</button>
           <div className="options">
-            <a href="#" onclick={::this.cancelAction}
+            <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
           </div>
         </div>
@@ -250,6 +250,9 @@ class ModalLogin extends ModalComponent {
   }
 
   render() {
+
+    const { props: { User } } = this;
+
     var fieldClass = classNames({
       'field': true,
       'error': this.state.loginFailed
@@ -260,6 +263,12 @@ class ModalLogin extends ModalComponent {
       'error': true,
       'message': true,
       'visible': this.state.loginFailed
+    });
+
+    let closeClass = classNames({
+      'close': true,
+      'icon-budicon-3': true,
+      'hide': this.props.closable
     });
 
     const pending = User.get('pending');
@@ -282,7 +291,7 @@ class ModalLogin extends ModalComponent {
                     <h1>{this.getTitle()}</h1>
                     <h2 className="error hide"></h2>
                     <h2 className="success hide">&nbsp;</h2>
-                    <a className="close icon-budicon-3 " href="#" onClick={::this.handleClose}></a>
+                    <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                   </div>
                   <div className="mode-container">
                     {this.getForm()}
