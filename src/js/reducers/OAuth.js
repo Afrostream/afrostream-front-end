@@ -9,14 +9,14 @@ const initialState = Immutable.fromJS({
   refreshToken: null
 });
 
-const storeToken = function (id_token, refresh_token) {
+const storeToken = function (token, refreshToken) {
   const storageId = config.apiClient.token;
   const storageRefreshId = config.apiClient.tokenRefresh;
-  if (id_token) {
-    localStorage.setItem(storageId, id_token);
+  if (token) {
+    localStorage.setItem(storageId, token);
   }
   if (refresh_token) {
-    localStorage.setItem(storageRefreshId, refresh_token);
+    localStorage.setItem(storageRefreshId, refreshToken);
   }
 };
 
@@ -61,16 +61,15 @@ export default createReducer(initialState, {
   },
 
 
-  [ActionTypes.OAuth.facebook](state, {  res }) {
+  [ActionTypes.OAuth.facebook](state, {  res, token, accessToken}) {
     if (!res) {
       return state;
     }
-    const data = res.body;
-    storeToken(data.accessToken, data.refreshToken);
+    storeToken(token, accessToken);
 
     return state.merge({
-      [`token`]: data.accessToken,
-      ['refreshToken']: data.refreshToken
+      [`token`]: token,
+      ['refreshToken']: accessToken
     });
   },
 
