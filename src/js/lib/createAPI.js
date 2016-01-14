@@ -2,7 +2,6 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import qs from 'qs';
 import URL from 'url';
-import config from '../../../config';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 /**
  * return api function base on createRequest function
