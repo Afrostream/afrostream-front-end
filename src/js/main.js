@@ -6,13 +6,12 @@ import Router from './components/Router';
 import { Provider } from 'react-redux';
 import createStore from './lib/createStore';
 import request from 'superagent';
-import superAgentMock from '../../config/mock/superagent-mock';
+//import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient, heroku } from '../../config';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-superAgentMock(request);
-
+//superAgentMock(request);
 if (canUseDOM) {
   require('jquery');
   require('bootstrap');
