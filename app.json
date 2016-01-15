@@ -9,7 +9,7 @@
     "API_END_POINT": "https://afr-api-v1-staging.herokuapp.com",
     "API_CLIENT_END_POINT": "https://afr-api-v1-staging.herokuapp.com",
     "AUTH0_CLIENT_ID": "5RcfgoeUhoNRV4cCPokLzXmIf4sI3afZ",
-    "AUTH0_DOMAIN": "afrostream.eu.auth0.com",
+    "AUTH0_DOMAIN": "TODO REMOVE IT",
     "AUTH0_CONNECTION": "afrostream-front-staging",
     "AUTH0_CALLBACK_URL": "afrostream-staging.herokuapp.com/callback",
     "ALGOLIA_APP_ID": "3OKNPL7ZVA",

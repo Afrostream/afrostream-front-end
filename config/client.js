@@ -35,32 +35,6 @@ const protData = {
   }
 };
 
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-
-const auth0ClientId = process.env.AUTH0_CLIENT_ID || 'dev';
-
-// hack for auth0 mock.
-let auth0MockDomain, auth0MockAssetsUrl;
-if (auth0ClientId === 'dev') {
-  /*
-   dev environment
-   */
-  const auth0MockUseHttps = false;  // on any auth0 error, you can switch this to true.
-  auth0MockDomain = auth0MockUseHttps ? '127.0.0.1:3443' : '127.0.0.1:3080';
-  auth0MockAssetsUrl = auth0MockUseHttps ? undefined : 'http://' + auth0MockDomain + '/';
-
-  if (!auth0MockUseHttps && canUseDOM) {
-    // we "Override" xhr.open to rewrite https request to http requests.
-    window.XMLHttpRequest.prototype.realOpen = XMLHttpRequest.prototype.open;
-    window.XMLHttpRequest.prototype.open = function (method, url) {
-      if (arguments[1].indexOf(config.auth0.domain) !== -1) {
-        arguments[1] = arguments[1].replace(/^https/, 'http');
-      }
-      return this.realOpen.apply(this, arguments);
-    };
-  }
-}
-
 const config = {
   /**
    * Front-End Server
@@ -123,33 +97,8 @@ const config = {
     url: 'https://widget.intercom.io/widget/',
     appID: 'k3klwkxq'
   },
-  auth2: {
+  oauth2: {
     dict: dictFr
-  },
-  auth0: {
-    clientId: auth0ClientId,
-    domain: process.env.AUTH0_DOMAIN || auth0MockDomain,
-    callbackUrl: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback',
-    assetsUrl: auth0MockAssetsUrl,
-    token: 'accessToken',
-    tokenRefresh: 'refreshToken',
-    signIn: {
-      icon: '',
-      theme: 'default',
-      //signupLink: '/signup',
-      resetLink: '/reset',
-      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
-      socialBigButtons: true,
-      disableSignupAction: false,
-      rememberLastLogin: true,
-      disableResetAction: false,
-      popup: true,
-      sso: false,
-      authParams: {
-        scope: 'openid'
-      }
-    },
-    gift: {}
   },
   recurly: {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'

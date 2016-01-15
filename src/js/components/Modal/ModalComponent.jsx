@@ -5,6 +5,11 @@ import $ from 'jquery';
 
 class ModalComponent extends React.Component {
 
+  static contextTypes = {
+    location: React.PropTypes.object,
+    history: React.PropTypes.object
+  };
+
   componentWillUnmount() {
     this.closeModal();
   }
@@ -54,9 +59,7 @@ class ModalComponent extends React.Component {
 }
 
 ModalComponent.propTypes = {
-  location: React.PropTypes.object,
   dispatch: React.PropTypes.func,
-  history: React.PropTypes.object,
   closable: React.PropTypes.bool
 };
 
