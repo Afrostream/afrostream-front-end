@@ -17,9 +17,8 @@ class Modal extends React.Component {
         }
       } = this;
 
-    var target = Modal.get('target');
-
-    var closable = Modal.get('closable');
+    const target = Modal.get('target');
+    const closable = Modal.get('closable');
 
     switch (target) {
       case 'geoWall':
