@@ -10,6 +10,11 @@ if (process.env.BROWSER) {
 @connect(({ Modal }) => ({Modal}))
 class Modal extends React.Component {
 
+  static contextTypes = {
+    location: React.PropTypes.object,
+    history: React.PropTypes.object
+  };
+
   render() {
     const {
       props: {
@@ -40,9 +45,7 @@ class Modal extends React.Component {
 }
 
 Modal.propTypes = {
-  location: React.PropTypes.object,
-  dispatch: React.PropTypes.func,
-  history: React.PropTypes.object
+  dispatch: React.PropTypes.func
 };
 
 export default Modal;

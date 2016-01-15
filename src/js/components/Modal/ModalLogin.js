@@ -27,6 +27,26 @@ class ModalLogin extends ModalComponent {
     };
   }
 
+  static contextTypes = {
+    location: React.PropTypes.object,
+    history: React.PropTypes.object
+  };
+
+  componentDidMount() {
+    const {
+      props: { dispatch },
+      context: { location }
+      } = this;
+    let { query } = location;
+    let token = query && query.k;
+    if (token) {
+      dispatch(OauthActionCreator.reset({k: token})).then(function () {
+        //New password success validate, open login view
+        dispatch(ModalActionCreator.open('show'));
+      }).catch(::this.onError);
+    }
+  }
+
   handleInputChange(evt) {
     let formData = this.state.form;
     formData[evt.target.name] = evt.target.value;
@@ -38,8 +58,9 @@ class ModalLogin extends ModalComponent {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      dispatch
-      } = this.props;
+      props: { dispatch },
+      context: { history }
+      } = this;
 
     const self = this;
     this.setState({
@@ -68,6 +89,7 @@ class ModalLogin extends ModalComponent {
       if (self.props.type !== 'showReset') {
         dispatch(ModalActionCreator.close());
         dispatch(OauthActionCreator.getIdToken());
+        history.pushState(null, '/');
       }
     }).catch(::this.onError);
   }
@@ -126,7 +148,7 @@ class ModalLogin extends ModalComponent {
         break;
     }
 
-    return config.auth2.dict[keyType][key] || '';
+    return config.oauth2.dict[keyType][key] || '';
   }
 
   getForm() {
@@ -368,9 +390,7 @@ class ModalLogin extends ModalComponent {
 
 ModalLogin.propTypes = {
   type: React.PropTypes.string,
-  location: React.PropTypes.object,
-  dispatch: React.PropTypes.func,
-  history: React.PropTypes.object
+  dispatch: React.PropTypes.func
 };
 
 export default ModalLogin;

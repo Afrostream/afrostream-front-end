@@ -121,14 +121,14 @@ export function pendingUser(pending) {
   }
 };
 /**
- * Get profile from auth0/afrostream
+ * Get profile from afrostream
  * @returns {Function}
  */
 export function getProfile() {
   return (dispatch, getState, actionDispatcher) => {
     const token = getState().OAuth.get('token');
     const user = getState().User.get('user');
-    return async auth0 =>(
+    return async api =>(
       await new Promise(
         (resolve) => {
           //If user alwready in app
