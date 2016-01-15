@@ -17,6 +17,7 @@ class ModalLogin extends ModalComponent {
   constructor(props) {
     super(props);
     this.state = {
+      success: false,
       loading: false,
       form: {
         password: null,
@@ -44,28 +45,29 @@ class ModalLogin extends ModalComponent {
       loading: true,
       error: ''
     });
+
+    let typeCall = 'signin';
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
-        dispatch(OauthActionCreator.signin(this.state.form)).then(function () {
-          dispatch(ModalActionCreator.close())
-          dispatch(OauthActionCreator.getIdToken());
-        }).catch(::this.onError);
+        typeCall = 'signin';
         break;
       case 'showSignup':
-        dispatch(OauthActionCreator.signup(this.state.form)).then(function () {
-          dispatch(ModalActionCreator.close())
-          dispatch(OauthActionCreator.getIdToken());
-        }).catch(::this.onError);
+        typeCall = 'signup';
         break;
       case 'showReset':
-        dispatch(OauthActionCreator.reset(this.state.form)).then(function () {
-          dispatch(ModalActionCreator.close())
-          dispatch(OauthActionCreator.getIdToken());
-        }).catch(::this.onError);
+        typeCall = 'reset';
         break;
     }
-
+    dispatch(OauthActionCreator[typeCall](this.state.form)).then(function () {
+      this.setState({
+        success: true
+      });
+      if (this.props.type !== 'showReset') {
+        dispatch(ModalActionCreator.close());
+        dispatch(OauthActionCreator.getIdToken());
+      }
+    }).catch(::this.onError);
   }
 
   onError(err) {
@@ -122,7 +124,7 @@ class ModalLogin extends ModalComponent {
         break;
     }
 
-    return config.auth2.dict[keyType][key];
+    return config.auth2.dict[keyType][key] || '';
   }
 
   getForm() {
@@ -142,6 +144,9 @@ class ModalLogin extends ModalComponent {
           </div>
         </div>
       </div>);
+    }
+    if (this.state.success) {
+      return '';
     }
 
     let formTemplate;
@@ -318,6 +323,11 @@ class ModalLogin extends ModalComponent {
       'hide': this.props.closable
     });
 
+    let successClass = classNames({
+      'success': true,
+      'hide': this.props.success
+    });
+
     const pending = User.get('pending');
 
     return (
@@ -337,7 +347,7 @@ class ModalLogin extends ModalComponent {
                     </div>
                     <h1>{this.getTitle()}</h1>
                     <h2 className={errClass}>{this.state.error}</h2>
-                    <h2 className="success hide">&nbsp;</h2>
+                    <h2 className={successClass}>{this.getTitle('successText')}</h2>
                     <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                   </div>
                   <div className="mode-container">
