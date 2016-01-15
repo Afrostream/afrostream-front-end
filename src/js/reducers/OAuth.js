@@ -15,7 +15,7 @@ const storeToken = function (token, refreshToken) {
   if (token) {
     localStorage.setItem(storageId, token);
   }
-  if (refresh_token) {
+  if (refreshToken) {
     localStorage.setItem(storageRefreshId, refreshToken);
   }
 };
@@ -48,7 +48,6 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.OAuth.signup](state, { res }) {
-    debugger;
     if (!res) {
       return state;
     }

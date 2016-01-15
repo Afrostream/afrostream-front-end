@@ -28,7 +28,7 @@ export function reset(form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
     return async api => ({
-      type: ActionTypes.OAuth.signup,
+      type: ActionTypes.OAuth.reset,
       res: await api(`/auth/reset`, 'POST', form)
     });
   };
