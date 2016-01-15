@@ -41,6 +41,7 @@ class ModalLogin extends ModalComponent {
       dispatch
       } = this.props;
 
+    const self = this;
     this.setState({
       loading: true,
       error: ''
@@ -60,10 +61,11 @@ class ModalLogin extends ModalComponent {
         break;
     }
     dispatch(OauthActionCreator[typeCall](this.state.form)).then(function () {
-      this.setState({
-        success: true
+      self.setState({
+        success: true,
+        loading: false
       });
-      if (this.props.type !== 'showReset') {
+      if (self.props.type !== 'showReset') {
         dispatch(ModalActionCreator.close());
         dispatch(OauthActionCreator.getIdToken());
       }
@@ -145,8 +147,9 @@ class ModalLogin extends ModalComponent {
         </div>
       </div>);
     }
+
     if (this.state.success) {
-      return '';
+      return (<div/>);
     }
 
     let formTemplate;
@@ -320,7 +323,7 @@ class ModalLogin extends ModalComponent {
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
-      'hide': this.props.closable
+      'hide': !this.props.closable
     });
 
     let successClass = classNames({

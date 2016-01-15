@@ -73,14 +73,14 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.OAuth.reset](state, { res }) {
-    if (!res) {
-      return state;
-    }
-    const data = res.body;
+  [ActionTypes.OAuth.reset](state) {
+    return state.merge({
+      ['token']: null,
+      ['refreshToken']: null
+    });
   },
 
-  [ActionTypes.OAuth.logOut](state, { }) {
+  [ActionTypes.OAuth.logOut](state) {
 
     const storageId = config.apiClient.token;
     const storageRefreshId = config.apiClient.tokenRefresh;
