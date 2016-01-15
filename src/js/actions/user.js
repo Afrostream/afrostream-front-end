@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
 import crypto from 'crypto';
 import * as ModalActionCreators from './modal';
+import * as OAuthActionCreators from './oauth';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../config/client';
 import { pushState } from 'redux-router';
@@ -78,6 +79,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
     } catch (e) {
       console.log(e, 'remove user data');
+      actionDispatcher(OAuthActionCreators.logOut());
       return data;
     }
   }
