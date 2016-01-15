@@ -48,6 +48,7 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.OAuth.signup](state, { res }) {
+    debugger;
     if (!res) {
       return state;
     }

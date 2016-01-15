@@ -49,16 +49,19 @@ class ModalLogin extends ModalComponent {
       case 'showSignin':
         dispatch(OauthActionCreator.signin(this.state.form)).then(function () {
           dispatch(ModalActionCreator.close())
+          dispatch(OauthActionCreator.getIdToken());
         }).catch(::this.onError);
         break;
       case 'showSignup':
         dispatch(OauthActionCreator.signup(this.state.form)).then(function () {
           dispatch(ModalActionCreator.close())
+          dispatch(OauthActionCreator.getIdToken());
         }).catch(::this.onError);
         break;
       case 'showReset':
         dispatch(OauthActionCreator.reset(this.state.form)).then(function () {
           dispatch(ModalActionCreator.close())
+          dispatch(OauthActionCreator.getIdToken());
         }).catch(::this.onError);
         break;
     }

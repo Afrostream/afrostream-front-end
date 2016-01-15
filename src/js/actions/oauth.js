@@ -34,28 +34,6 @@ export function reset(form) {
   };
 }
 
-export function authState(event) {
-  if (event.origin == `${apiClient.urlPrefix}`) {
-    actionDispatcher(UserActionCreators.pendingUser(false));
-    let state;
-    let token;
-    switch (state) {
-      case 'success':
-        return {
-          type: ActionTypes.OAuth.facebook,
-          token
-        };
-        break;
-      case 'failure':
-        return {
-          type: ActionTypes.OAuth.facebook,
-          token
-        };
-        break;
-    }
-  }
-}
-
 /**
  * Get token from facebook oauth
  * @returns {Promise}
@@ -63,22 +41,17 @@ export function authState(event) {
 export function facebook() {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
-    return new Promise(
-      (resolve, reject) => {
+    let url = `/auth/facebook`,
+      width = 400,
+      height = 650,
+      top = (window.outerHeight - height) / 2,
+      left = (window.outerWidth - width) / 2;
 
-        let url = `/auth/facebook`,
-          width = 400,
-          height = 650,
-          top = (window.outerHeight - height) / 2,
-          left = (window.outerWidth - width) / 2;
-
-        let oauthPopup = window.open(url, 'facebook_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
-        oauthPopup.onbeforeunload = function () {
-          actionDispatcher(ModalActionCreators.close());
-          actionDispatcher(getIdToken());
-        }.bind(this);
-      }
-    );
+    let oauthPopup = window.open(url, 'facebook_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
+    oauthPopup.onbeforeunload = function () {
+      actionDispatcher(ModalActionCreators.close());
+      actionDispatcher(getIdToken());
+    }.bind(this);
   };
 }
 
