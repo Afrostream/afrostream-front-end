@@ -84,7 +84,6 @@ export function facebook() {
 
 export function getIdToken() {
   return (dispatch, getState, actionDispatcher) => {
-    actionDispatcher(UserActionCreators.pendingUser(true));
     return {
       type: ActionTypes.OAuth.getIdToken
     };

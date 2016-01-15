@@ -66,9 +66,20 @@ class ModalLogin extends ModalComponent {
   }
 
   onError(err) {
+    let errMess = err.message;
+    if (err.response) {
+      if (err.response.body) {
+        errMess = err.response.body.message;
+      } else if (err.response.text) {
+        errMess = err.response.text;
+      }
+    }
+
+    let formData = this.state.form;
+
     this.setState({
       loading: false,
-      error: err.response.body.message
+      error: this.getTitle('wrongEmailPasswordErrorText')
     });
   }
 
@@ -113,8 +124,23 @@ class ModalLogin extends ModalComponent {
 
   getForm() {
     if (this.state.loading) {
-      return '';
+      return (<div className="loading mode">
+        <div className="spinner spin-container">
+          <div className="spinner-css">
+        <span className="side sp_left">
+          <span className="fill"></span>
+        </span>
+        <span className="side sp_right">
+          <span className="fill"></span>
+        </span>
+          </div>
+          <div className="spin-message">
+            <span>&nbsp;</span>
+          </div>
+        </div>
+      </div>);
     }
+
     let formTemplate;
     let social = true;
     switch (this.props.type) {
@@ -181,7 +207,8 @@ class ModalLogin extends ModalComponent {
 
         <div className="input-box">
           <i className="icon-budicon"></i>
-          <input name="password" id="easy_password" type="password"
+          <input name="password" id="easy_password" type="password" pattern=".{6,}" required
+                 title="6 characters minimum"
                  placeholder={this.getTitle('passwordPlaceholder')} title={this.getTitle('passwordPlaceholder')}/>
 
         </div>

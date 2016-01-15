@@ -3,6 +3,9 @@ import dictFr from './i18n/fr-FR.json';
 import _ from 'lodash';
 import castlab from './player/castlab';
 
+dictFr.gift = _.merge(dictFr.gift, dictFr.signin);
+dictFr.signup = _.merge(dictFr.signup, dictFr.signin);
+
 const protData = {
   "com.widevine.alpha": {
     "drmtoday": true,
