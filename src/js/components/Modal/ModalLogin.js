@@ -149,6 +149,7 @@ class ModalLogin extends ModalComponent {
         formTemplate = this.getSignIn();
         break;
       case 'showSignup':
+      case 'showGift':
         formTemplate = this.getSignUp();
         break;
       case 'showReset':
@@ -208,8 +209,8 @@ class ModalLogin extends ModalComponent {
         <div className="input-box">
           <i className="icon-budicon"></i>
           <input name="password" id="easy_password" type="password" pattern=".{6,}" required
-                 title="6 characters minimum"
-                 placeholder={this.getTitle('passwordPlaceholder')} title={this.getTitle('passwordPlaceholder')}/>
+                 placeholder={this.getTitle('passwordPlaceholder')}
+                 title={this.getTitle('passwordPlaceholder') +' 6 characters minimum'}/>
 
         </div>
       </div>
