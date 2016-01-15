@@ -3,8 +3,8 @@ import dictFr from './i18n/fr-FR.json';
 import _ from 'lodash';
 import castlab from './player/castlab';
 
-dictFr.gift = _.merge(dictFr.gift, dictFr.signin);
-dictFr.signup = _.merge(dictFr.signup, dictFr.signin);
+dictFr.gift = _.merge(_.cloneDeep(dictFr.signin), dictFr.gift);
+dictFr.signup = _.merge(_.cloneDeep(dictFr.signin), dictFr.signup);
 
 const protData = {
   "com.widevine.alpha": {
