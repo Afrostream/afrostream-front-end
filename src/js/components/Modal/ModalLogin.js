@@ -17,16 +17,20 @@ class ModalLogin extends ModalComponent {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
-      password: null,
-      loginFailed: false,
+      loading: false,
+      form: {
+        password: null,
+        email: null
+      },
       timestamp: new Date()
     };
   }
 
   handleInputChange(evt) {
+    let formData = this.state.form;
+    formData[evt.target.name] = evt.target.value;
     this.setState({
-      [evt.target.name]: evt.target.value
+      form: formData
     });
   }
 
@@ -36,25 +40,36 @@ class ModalLogin extends ModalComponent {
       dispatch
       } = this.props;
 
+    this.setState({
+      loading: true,
+      error: ''
+    });
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
-        dispatch(OauthActionCreator.signin(this.state)).then(function () {
+        dispatch(OauthActionCreator.signin(this.state.form)).then(function () {
           dispatch(ModalActionCreator.close())
-        });
+        }).catch(::this.onError);
         break;
       case 'showSignup':
-        dispatch(OauthActionCreator.signup(this.state)).then(function () {
+        dispatch(OauthActionCreator.signup(this.state.form)).then(function () {
           dispatch(ModalActionCreator.close())
-        });
+        }).catch(::this.onError);
         break;
       case 'showReset':
-        dispatch(OauthActionCreator.reset(this.state)).then(function () {
+        dispatch(OauthActionCreator.reset(this.state.form)).then(function () {
           dispatch(ModalActionCreator.close())
-        });
+        }).catch(::this.onError);
         break;
     }
 
+  }
+
+  onError(err) {
+    this.setState({
+      loading: false,
+      error: err.response.body.message
+    });
   }
 
   facebookAuth(event) {
@@ -97,6 +112,9 @@ class ModalLogin extends ModalComponent {
   }
 
   getForm() {
+    if (this.state.loading) {
+      return '';
+    }
     let formTemplate;
     let social = true;
     switch (this.props.type) {
@@ -255,14 +273,12 @@ class ModalLogin extends ModalComponent {
 
     var fieldClass = classNames({
       'field': true,
-      'error': this.state.loginFailed
+      'error': !this.state.error
     });
 
     var errClass = classNames({
-      'ui': true,
       'error': true,
-      'message': true,
-      'visible': this.state.loginFailed
+      'hide': !this.state.error
     });
 
     let closeClass = classNames({
@@ -289,7 +305,7 @@ class ModalLogin extends ModalComponent {
                       </div>
                     </div>
                     <h1>{this.getTitle()}</h1>
-                    <h2 className="error hide"></h2>
+                    <h2 className={errClass}>{this.state.error}</h2>
                     <h2 className="success hide">&nbsp;</h2>
                     <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                   </div>
