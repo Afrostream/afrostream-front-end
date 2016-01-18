@@ -71,7 +71,11 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         }
       }
 
-      userMerged.picture = gravatar(userMerged.email);
+      if (userMerged.facebook) {
+        userMerged.picture = `http://graph.facebook.com/${userMerged.facebook.id}/picture`;
+      } else {
+        userMerged.picture = gravatar(userMerged.email);
+      }
 
       return _.merge(data, {
         user: userMerged
