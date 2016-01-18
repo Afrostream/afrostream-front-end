@@ -110,7 +110,7 @@ class ModalLogin extends ModalComponent {
 
     this.setState({
       loading: false,
-      error: this.getTitle('wrongEmailPasswordErrorText')
+      error: this.getTitle(errMess.toString()) || this.getTitle('wrongEmailPasswordErrorText')
     });
   }
 
