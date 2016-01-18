@@ -35,7 +35,8 @@ class AccountPage extends React.Component {
     const plans = {
       afrostreammonthly: 'THINK LIKE A MAN',
       afrostreamambassadeurs: 'Ambassadeurs',
-      afrostreampremium: 'DO THE RIGHT THING'
+      afrostreampremium: 'DO THE RIGHT THING',
+      afrostreamgift: 'Cadeau'
     };
 
     let cancelSubscriptionClasses = {
@@ -49,7 +50,7 @@ class AccountPage extends React.Component {
         <div className="plan-details-plan-name">
           <div className="plan-name">{plans[user.get('planCode')]}</div>
           <div className={classSet(cancelSubscriptionClasses)}>
-            <Link to="/compte/cancel-subscription">Annuler votre abonnement</Link>
+            <Link to="/cancel-subscription">Annuler votre abonnement</Link>
           </div>
         </div>
       </div>
