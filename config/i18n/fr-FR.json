@@ -38,7 +38,8 @@
       "any": {
         "empty": "est requis"
       }
-    }
+    },
+    "Error: The specified email address is already in use.": "Email déja existant"
   },
   "signup": {
     "description": "",

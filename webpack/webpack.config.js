@@ -56,11 +56,6 @@ const webpackConfig = {
   module: {
     loaders: [
       {
-        test: /\.json$/,
-        include: [path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
-        loader: 'json'
-      },
-      {
         test: /\.jsx?$/,
         loader: '',
         exclude: [node_modules_dir],
@@ -70,6 +65,11 @@ const webpackConfig = {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
+      },
+      {
+        test: /\.json$/,
+        include: [path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
+        loaders: ['json']
       },
       {
         test: /\.css$/,
