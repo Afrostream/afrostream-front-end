@@ -56,8 +56,16 @@ const webpackConfig = {
   module: {
     loaders: [
       {
+        test: /\.js$/,
+        include: path.join(__dirname, '../node_modules/auth0-lock'),
+        loaders: ['transform?brfs', 'transform?packageify']
+      }, {
+        test: /\.ejs$/,
+        include: path.join(__dirname, '../node_modules/auth0-lock'),
+        loader: 'transform?ejsify'
+      }, {
         test: /\.json$/,
-        include: [path.join(__dirname, '../config')],
+        include: [path.join(__dirname, '../node_modules/auth0-lock'), path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
         loader: 'json'
       },
       {
@@ -98,6 +106,11 @@ const webpackConfig = {
         loader: 'file-loader?name=[name].[ext]?[hash]'
       }
     ]
+  },
+  node: {
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty'
   },
   externals: {
     //used for castlab dependencys

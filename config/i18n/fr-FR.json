@@ -28,7 +28,17 @@
     "loadingMessage": "Connexion à l'aide de {connection}...",
     "popupCredentials": "Saisissez vos identifiants dans la fenêtre pop-up",
     "userClosedPopup": "La fenêtre pop-up a été fermée. Veuillez réessayer.",
-    "userConsentFailed": "L'application n'a pas été autorisée. Veuillez réessayer."
+    "userConsentFailed": "L'application n'a pas été autorisée. Veuillez réessayer.",
+    "language": {
+      "string": {
+        "email": "Doit etre un email valide",
+        "min": "doit contenir au minimum {{limit}} caracteres",
+        "max": "doit contenir au maximum {{limit}} caracteres"
+      },
+      "any": {
+        "empty": "est requis"
+      }
+    }
   },
   "signup": {
     "description": "",
