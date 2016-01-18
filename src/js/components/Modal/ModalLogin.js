@@ -181,7 +181,7 @@ class ModalLogin extends ModalComponent {
     }
 
     let formTemplate;
-    let social = true;
+    let social = config.oauth2.facebook;
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
