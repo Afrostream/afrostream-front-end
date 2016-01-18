@@ -98,6 +98,7 @@ const config = {
     appID: 'k3klwkxq'
   },
   oauth2: {
+    facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,
     dict: dictFr
   },
   recurly: {
