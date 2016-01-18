@@ -16,7 +16,10 @@ const prodConfig = merge({}, webpackConfig, {
   },
   externals: [],
   node: {
-    console: false
+    console: false,
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty'
   },
   module: {
     //noParse: [/.\/superagent-mock$/]

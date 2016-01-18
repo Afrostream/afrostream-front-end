@@ -6,12 +6,14 @@ import * as OauthActionCreator from '../../actions/oauth';
 import * as ModalActionCreator from '../../actions/modal';
 import ModalComponent from './ModalComponent';
 import config from '../../../../config';
+import {Validation, Joi} from 'react-validation-decorator';
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less');
 }
 
 @connect(({ User }) => ({User}))
+@Validation
 class ModalLogin extends ModalComponent {
 
   constructor(props) {
@@ -19,10 +21,8 @@ class ModalLogin extends ModalComponent {
     this.state = {
       success: false,
       loading: false,
-      form: {
-        password: null,
-        email: null
-      },
+      password: null,
+      email: null,
       timestamp: new Date()
     };
   }
@@ -31,6 +31,20 @@ class ModalLogin extends ModalComponent {
     location: React.PropTypes.object,
     history: React.PropTypes.object
   };
+
+  validationSchema = Joi.object().keys({
+    email: Joi.string().email().required().label('Email'),
+    password: Joi.string().min(6).max(30).required().label('Le mot de passe'),
+    repeat_password: Joi.string().valid(Joi.ref('password')).required().label('Le mot de passe de verification')
+  });
+
+  validationOptions = () => {
+    let keyType = this.getI18n();
+    let options = config.oauth2.dict[keyType];
+    return {
+      language: options.language
+    };
+  }
 
   componentDidMount() {
     const {
@@ -48,10 +62,10 @@ class ModalLogin extends ModalComponent {
   }
 
   handleInputChange(evt) {
-    let formData = this.state.form;
+    let formData = this.state;
     formData[evt.target.name] = evt.target.value;
-    this.setState({
-      form: formData
+    this.setState(formData, () => {
+      this.validate(evt.target.name);
     });
   }
 
@@ -68,20 +82,10 @@ class ModalLogin extends ModalComponent {
       error: ''
     });
 
-    let typeCall = 'signin';
-    switch (this.props.type) {
-      case 'show':
-      case 'showSignin':
-        typeCall = 'signin';
-        break;
-      case 'showSignup':
-        typeCall = 'signup';
-        break;
-      case 'showReset':
-        typeCall = 'reset';
-        break;
-    }
-    dispatch(OauthActionCreator[typeCall](this.state.form)).then(function () {
+    let typeCall = this.getI18n();
+    let postData = _.pick(this.state, ['email', 'password']);
+
+    dispatch(OauthActionCreator[typeCall](postData)).then(function () {
       self.setState({
         success: true,
         loading: false
@@ -103,8 +107,6 @@ class ModalLogin extends ModalComponent {
         errMess = err.response.text;
       }
     }
-
-    let formData = this.state.form;
 
     this.setState({
       loading: false,
@@ -130,7 +132,7 @@ class ModalLogin extends ModalComponent {
     dispatch(ModalActionCreator.open('show'));
   }
 
-  getTitle(key = 'title') {
+  getI18n() {
     let keyType = 'signin';
     switch (this.props.type) {
       case 'show':
@@ -147,7 +149,11 @@ class ModalLogin extends ModalComponent {
         keyType = 'reset';
         break;
     }
+    return keyType;
+  }
 
+  getTitle(key = 'title') {
+    let keyType = this.getI18n();
     return config.oauth2.dict[keyType][key] || '';
   }
 
@@ -224,9 +230,10 @@ class ModalLogin extends ModalComponent {
         </label>
         <div className="input-box">
           <i className="icon-budicon-5"></i>
-          <input name="email" id="easy_email" type="email"
+          <input name="email" id="easy_email" type="email" value={this.state.email}
                  placeholder={this.getTitle('emailPlaceholder')}
                  title={this.getTitle('emailPlaceholder')}/>
+          {this.renderValidationMessages('email')}
         </div>
       </div>
     );
@@ -244,7 +251,7 @@ class ModalLogin extends ModalComponent {
           <input name="password" id="easy_password" type="password" pattern=".{6,}" required
                  placeholder={this.getTitle('passwordPlaceholder')}
                  title={this.getTitle('passwordPlaceholder') +' 6 characters minimum'}/>
-
+          {this.renderValidationMessages('password')}
         </div>
       </div>
     );
@@ -286,7 +293,7 @@ class ModalLogin extends ModalComponent {
           <button type="submit" className="primary next">{this.getTitle('action')}</button>
           <div className="db-actions">
             <div className="create-account buttons-actions">
-              <Link to="/reset" className="forgot-pass btn-small">Vous avez oublié votre mot de passe ?</Link>
+              <Link to="/reset" className="forgot-pass btn-small">{this.getTitle('forgotText')}</Link>
             </div>
           </div>
         </div>
@@ -310,6 +317,7 @@ class ModalLogin extends ModalComponent {
                 <input name="repeat_password" id="reset_easy_repeat_password" type="password"
                        placeholder={this.getTitle('repeatPasswordPlaceholder')}
                        title={this.getTitle('repeatPasswordPlaceholder')}/>
+                {this.renderValidationMessages('repeat_password')}
               </div>
             </div>
 
@@ -317,7 +325,8 @@ class ModalLogin extends ModalComponent {
           <div className="password_policy"></div>
         </div>
         <div className="action">
-          <button type="submit" className="primary next">{this.getTitle('action')}</button>
+          <button type="submit" className="primary next"
+                  disabled={!this.isDirty() || !this.isValid()}>{this.getTitle('action')}</button>
           <div className="options">
             <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
@@ -350,7 +359,7 @@ class ModalLogin extends ModalComponent {
 
     let successClass = classNames({
       'success': true,
-      'hide': this.props.success
+      'hide': !this.state.success
     });
 
     const pending = User.get('pending');
