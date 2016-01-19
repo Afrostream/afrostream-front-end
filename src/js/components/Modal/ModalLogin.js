@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router';
 import * as OauthActionCreator from '../../actions/oauth';
 import * as ModalActionCreator from '../../actions/modal';
+import * as UserActionCreators from '../../actions/user';
 import ModalComponent from './ModalComponent';
 import config from '../../../../config';
 import {Validation, Joi} from 'react-validation-decorator';
@@ -72,7 +73,7 @@ class ModalLogin extends ModalComponent {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      props: { dispatch },
+      props: { dispatch, donePath, await},
       context: { history }
       } = this;
 
@@ -91,9 +92,12 @@ class ModalLogin extends ModalComponent {
         loading: false
       });
       if (self.props.type !== 'showReset') {
-        dispatch(ModalActionCreator.close());
-        dispatch(OauthActionCreator.getIdToken());
-        history.pushState(null, '/');
+        await * [
+          dispatch(ModalActionCreator.close()),
+          dispatch(OauthActionCreator.getIdToken()),
+          dispatch(UserActionCreators.getProfile()),
+          history.pushState(null, donePath || '/')
+        ];
       }
     }).catch(::this.onError);
   }
@@ -399,7 +403,8 @@ class ModalLogin extends ModalComponent {
 
 ModalLogin.propTypes = {
   type: React.PropTypes.string,
-  dispatch: React.PropTypes.func
+  dispatch: React.PropTypes.func,
+  donePath: React.PropTypes.string
 };
 
 export default ModalLogin;

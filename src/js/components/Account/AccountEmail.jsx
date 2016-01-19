@@ -9,11 +9,6 @@ if (process.env.BROWSER) {
   require('./AccountEmail.less');
 }
 
-@prepareRoute(async function ({ store }) {
-  return await * [
-      store.dispatch(UserActionCreators.getProfile())
-    ];
-})
 @connect(({ User }) => ({User})) class AccountEmail extends React.Component {
 
   getInitialState() {
