@@ -7,6 +7,7 @@ export function open(target, closable = true, donePath = null) {
   return (dispatch, getState, actionDispatcher) => {
 
     return async () => {
+      actionDispatcher(UserActionCreators.pendingUser(true));
       let authorized = true;
       if (target === 'showSignup' || target === 'showGift') {
         try {
@@ -19,6 +20,7 @@ export function open(target, closable = true, donePath = null) {
       if (!authorized) {
         return actionDispatcher(ModalActionCreators.open('geoWall', true));
       }
+
 
       return {
         type: ActionTypes.Modal.open,
