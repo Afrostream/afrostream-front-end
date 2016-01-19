@@ -54,7 +54,7 @@ class PlayerComponent extends React.Component {
   }
 
   detectUA() {
-    const userAgent = (window.navigator && navigator.userAgent) || "";
+    const userAgent = (window.navigator && navigator.userAgent) || '';
     const detect = function (pattern) {
       return function () {
         return (pattern).test(userAgent);

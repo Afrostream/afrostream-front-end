@@ -8,6 +8,7 @@ import * as UserActionCreators from '../../actions/user';
 import ModalComponent from './ModalComponent';
 import config from '../../../../config';
 import {Validation, Joi} from 'react-validation-decorator';
+import MobileDetect from 'mobile-detect';
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less');
@@ -60,6 +61,10 @@ class ModalLogin extends ModalComponent {
         dispatch(ModalActionCreator.open('show'));
       }).catch(::this.onError);
     }
+    const userAgent = (window.navigator && navigator.userAgent) || '';
+    this.setState({
+      ua: new MobileDetect(userAgent)
+    });
   }
 
   handleInputChange(evt) {
@@ -344,11 +349,6 @@ class ModalLogin extends ModalComponent {
 
     const { props: { User } } = this;
 
-    var fieldClass = classNames({
-      'field': true,
-      'error': !this.state.error
-    });
-
     var errClass = classNames({
       'error': true,
       'hide': !this.state.error
@@ -365,30 +365,39 @@ class ModalLogin extends ModalComponent {
       'hide': !this.state.success
     });
 
+    let ua = this.state.ua;
+
+    let popupClass = classNames({
+      'popup': true,
+      'ios': ua && ua.is('iOS')
+    });
+
     const pending = User.get('pending');
 
     return (
-      <div id="lock" className="lock theme-default">
-        <div className="signin">
-          <div className="popup">
-            <div className="overlay active">
-              <div className="centrix">
-                <div id="onestep" className="panel onestep active">
-                  {/*HEADER*/}
-                  <div className="header top-header ">
-                    <div className="bg-gradient"></div>
-                    <div className="icon-container">
-                      <div className="avatar">
-                        <i className="avatar-guest icon-budicon-2"></i>
+      <div className="lock-container">
+        <div id="lock" className="lock theme-default">
+          <div className="signin">
+            <div className={popupClass}>
+              <div className="overlay active">
+                <div className="centrix">
+                  <div id="onestep" className="panel onestep active">
+                    {/*HEADER*/}
+                    <div className="header top-header ">
+                      <div className="bg-gradient"></div>
+                      <div className="icon-container">
+                        <div className="avatar">
+                          <i className="avatar-guest icon-budicon-2"></i>
+                        </div>
                       </div>
+                      <h1>{this.getTitle()}</h1>
+                      <h2 className={errClass}>{this.state.error}</h2>
+                      <h2 className={successClass}>{this.getTitle('successText')}</h2>
+                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
-                    <h1>{this.getTitle()}</h1>
-                    <h2 className={errClass}>{this.state.error}</h2>
-                    <h2 className={successClass}>{this.getTitle('successText')}</h2>
-                    <a className={closeClass} href="#" onClick={::this.handleClose}></a>
-                  </div>
-                  <div className="mode-container">
-                    {this.getForm()}
+                    <div className="mode-container">
+                      {this.getForm()}
+                    </div>
                   </div>
                 </div>
               </div>
