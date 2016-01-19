@@ -19,7 +19,7 @@ class ModalGeoWall extends ModalComponent {
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
-      'hide': this.props.closable
+      'hide': !this.props.closable
     });
 
     return (
