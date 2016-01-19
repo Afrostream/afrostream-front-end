@@ -4,11 +4,11 @@ import ModalGeoWall from './ModalGeoWall';
 import ModalLogin from './ModalLogin';
 
 if (process.env.BROWSER) {
-  require('./Modal.less');
+  require('./ModalView.less');
 }
 
 @connect(({ Modal }) => ({Modal}))
-class Modal extends React.Component {
+class ModalView extends React.Component {
 
   static contextTypes = {
     location: React.PropTypes.object,
@@ -44,8 +44,8 @@ class Modal extends React.Component {
   }
 }
 
-Modal.propTypes = {
+ModalView.propTypes = {
   dispatch: React.PropTypes.func
 };
 
-export default Modal;
+export default ModalView;
