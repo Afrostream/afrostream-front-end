@@ -27,7 +27,7 @@ html, body, #main, #main > div {
 
 body {
   background-color: @background-page;
-  margin-bottom: @footer-height;
+  //margin-bottom: @footer-height;
   font-weight: 100;
   font-size: 1em;
   line-height: 1.4;
@@ -137,6 +137,9 @@ a.active {
 }
 
 @media (min-width: 768px) {
+  body {
+    margin-bottom: @footer-height;
+  }
 
   #page-content-wrapper {
     position: relative;
