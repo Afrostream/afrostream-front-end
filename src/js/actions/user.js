@@ -19,6 +19,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
   }
 
   return async api => {
+    actionDispatcher(pendingUser(true));
     try {
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
       const userInfos = await api(`/api/users/me`, 'GET', {}, token, refreshToken);
