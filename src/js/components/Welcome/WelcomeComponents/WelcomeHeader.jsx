@@ -174,16 +174,6 @@ class WelcomeHeader extends React.Component {
     return HasProm;
   }
 
-  showAfroloveLock() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(ModalActionCreators.open('showSignin'));
-  }
-
   showGiftLock() {
     const {
       props: {
@@ -191,7 +181,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(ModalActionCreators.open('showGift'));
+    dispatch(ModalActionCreators.open('showGift', true, '/select-plan/afrostreamgift/checkout'));
   }
 
   render() {

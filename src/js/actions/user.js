@@ -46,6 +46,7 @@ const gravatar = function (email, options) {
 const mergeProfile = function (data, getState, actionDispatcher) {
 
   const token = getState().OAuth.get('token');
+  const donePath = getState().Modal.get('donePath');
   const refreshToken = getState().OAuth.get('refreshToken');
 
   if (!token) {
@@ -67,7 +68,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       if (userMerged) {
         let planCode = userMerged.planCode;
         if (!planCode) {
-          actionDispatcher(pushState(null, '/select-plan'));
+          actionDispatcher(pushState(null, donePath ? donePath : '/select-plan'));
         }
       }
 
@@ -137,17 +138,10 @@ export function getProfile() {
         (resolve) => {
           //If user alwready in app
           if (user) {
-            if (user.get('planCode') === undefined) {
-              return resolve(mergeProfile({
-                type: ActionTypes.User.getProfile,
-                user: null
-              }, getState, actionDispatcher));
-            } else {
-              return resolve({
-                type: ActionTypes.User.getProfile,
-                user: user.toJS()
-              });
-            }
+            return resolve({
+              type: ActionTypes.User.getProfile,
+              user: user.toJS()
+            });
           }
           return resolve(mergeProfile({
             type: ActionTypes.User.getProfile,

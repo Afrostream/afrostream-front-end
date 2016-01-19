@@ -17,7 +17,9 @@ class UserButton extends React.Component {
         dispatch
         }
       } = this;
+    
     dispatch(OAuthActionCreators.getIdToken());
+    dispatch(UserActionCreators.getProfile());
   }
 
   logOut() {
@@ -55,7 +57,6 @@ class UserButton extends React.Component {
         );
       }
       else {
-        dispatch(UserActionCreators.getProfile());
         return this.getLoginState();
       }
     } else {

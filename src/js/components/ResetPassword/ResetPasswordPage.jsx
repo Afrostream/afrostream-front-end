@@ -10,16 +10,15 @@ if (process.env.BROWSER) {
 class ResetPasswordPage extends React.Component {
 
   componentDidMount() {
-    this.showLock();
-  }
-
-  showLock() {
     const {
       props: {
         dispatch
         }
       } = this;
     dispatch(ModalActionCreators.open('showReset', false));
+  }
+
+  showLock() {
   }
 
   render() {

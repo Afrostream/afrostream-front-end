@@ -24,6 +24,7 @@ class Modal extends React.Component {
 
     const target = Modal.get('target');
     const closable = Modal.get('closable');
+    const donePath = Modal.get('donePath');
 
     switch (target) {
       case 'geoWall':
@@ -36,7 +37,7 @@ class Modal extends React.Component {
       case 'showReset':
       case 'showGift':
         return (
-          <ModalLogin type={target} closable={closable} {...this.props}/>
+          <ModalLogin type={target} closable={closable} donePath={donePath} {...this.props}/>
         );
       default:
         return false;

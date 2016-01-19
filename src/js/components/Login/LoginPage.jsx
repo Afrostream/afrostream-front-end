@@ -10,16 +10,12 @@ if (process.env.BROWSER) {
 class LoginPage extends React.Component {
 
   componentDidMount() {
-    this.showLock();
-  }
-
-  showLock() {
     const {
       props: {
         dispatch
         }
       } = this;
-    dispatch(ModalActionCreators.showLock('show', 'login-container'));
+    dispatch(ModalActionCreators.open('show', false));
   }
 
   render() {
