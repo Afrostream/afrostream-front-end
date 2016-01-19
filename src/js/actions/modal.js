@@ -8,7 +8,7 @@ export function open(target, closable = true, donePath = null) {
 
     return async () => {
       let authorized = true;
-      if (target === 'showSignup') {
+      if (target === 'showSignup' || target === 'showGift') {
         try {
           authorized = await isAuthorized();
         } catch (err) {
