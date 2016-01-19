@@ -73,7 +73,7 @@ class ModalLogin extends ModalComponent {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      props: { dispatch, donePath, await},
+      props: { dispatch, await},
       context: { history }
       } = this;
 
@@ -96,7 +96,6 @@ class ModalLogin extends ModalComponent {
           dispatch(ModalActionCreator.close()),
           dispatch(OauthActionCreator.getIdToken()),
           dispatch(UserActionCreators.getProfile()),
-          history.pushState(null, donePath || '/')
         ];
       }
     }).catch(::this.onError);
@@ -403,8 +402,7 @@ class ModalLogin extends ModalComponent {
 
 ModalLogin.propTypes = {
   type: React.PropTypes.string,
-  dispatch: React.PropTypes.func,
-  donePath: React.PropTypes.string
+  dispatch: React.PropTypes.func
 };
 
 export default ModalLogin;
