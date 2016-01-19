@@ -43,7 +43,7 @@ class ModalComponent extends React.Component {
                   {/*HEADER*/}
                   <div className="a0-header a0-top-header ">
                     <div className="a0-bg-gradient"></div>
-                    <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                    <a className={closeClass} href="#" onClick={::this.handleClose} onTouchEnd={::this.handleClose}></a>
                   </div>
                   <div className="a0-mode-container">
                     {this.props.chidren}
