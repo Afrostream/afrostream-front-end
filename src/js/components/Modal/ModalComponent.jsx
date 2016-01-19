@@ -34,19 +34,22 @@ class ModalComponent extends React.Component {
     });
 
     return (
-      <div id="a0-lock" className="a0-lock a0-theme-default">
-        <div className="a0-signin">
-          <div className="a0-popup">
-            <div className="a0-overlay a0-active">
-              <div className="a0-centrix">
-                <div id="a0-onestep" className="a0-panel a0-onestep a0-active">
-                  {/*HEADER*/}
-                  <div className="a0-header a0-top-header ">
-                    <div className="a0-bg-gradient"></div>
-                    <a className={closeClass} href="#" onClick={::this.handleClose} onTouchEnd={::this.handleClose}></a>
-                  </div>
-                  <div className="a0-mode-container">
-                    {this.props.chidren}
+      <div className="lock-container">
+        <div id="a0-lock" className="a0-lock a0-theme-default">
+          <div className="a0-signin">
+            <div className="a0-popup">
+              <div className="a0-overlay a0-active">
+                <div className="a0-centrix">
+                  <div id="a0-onestep" className="a0-panel a0-onestep a0-active">
+                    {/*HEADER*/}
+                    <div className="a0-header a0-top-header ">
+                      <div className="a0-bg-gradient"></div>
+                      <a className={closeClass} href="#" onClick={::this.handleClose}
+                         onTouchEnd={::this.handleClose}></a>
+                    </div>
+                    <div className="a0-mode-container">
+                      {this.props.chidren}
+                    </div>
                   </div>
                 </div>
               </div>
