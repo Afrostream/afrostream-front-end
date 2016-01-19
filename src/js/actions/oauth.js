@@ -55,6 +55,7 @@ export function facebook() {
     oauthPopup.onbeforeunload = function () {
       actionDispatcher(ModalActionCreators.close());
       actionDispatcher(getIdToken());
+      actionDispatcher(UserActionCreators.getProfile());
     }.bind(this);
   };
 }
