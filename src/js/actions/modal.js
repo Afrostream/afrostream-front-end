@@ -17,7 +17,7 @@ export function open(target, closable = true, donePath = null) {
       }
 
       if (!authorized) {
-        return actionDispatcher(ModalActionCreators.open('geoWall'));
+        return actionDispatcher(ModalActionCreators.open('geoWall', true));
       }
 
       return {
