@@ -16,4 +16,5 @@ if (1 < 0) { // eslint-disable-line no-constant-condition, yoda
   require('bootstrap');
   require('raven-js');
   require('mobile-detect');
+  require('qs');
 }

@@ -17,9 +17,11 @@ class UserButton extends React.Component {
         dispatch
         }
       } = this;
-    
-    dispatch(OAuthActionCreators.getIdToken());
-    dispatch(UserActionCreators.getProfile());
+
+    await * [
+      dispatch(OAuthActionCreators.getIdToken()),
+      dispatch(UserActionCreators.getProfile()),
+    ];
   }
 
   logOut() {
