@@ -14,7 +14,6 @@ import PaymentForm from './components/Payment/PaymentForm';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 import * as Static from './components/Static';
 import * as Blog from './components/Blog';
-
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
 import NoMatch from './components/NoMatch';

@@ -37,8 +37,13 @@ class Application extends React.Component {
     return (
 
       <div className={appClasses}>
+        <ModalView />
+        <Header {...this.props}/>
+        <SideBar />
+        <AlertMessage />
         <div id="page-content-wrapper" className="container-fluid">
           {children}
+          <Footer />
         </div>
       </div>
     );

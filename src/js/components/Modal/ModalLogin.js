@@ -6,7 +6,7 @@ import * as OauthActionCreator from '../../actions/oauth';
 import * as ModalActionCreator from '../../actions/modal';
 import * as UserActionCreators from '../../actions/user';
 import ModalComponent from './ModalComponent';
-import config from '../../../../config';
+import {oauth2} from '../../../../config';
 import {Validation, Joi} from 'react-validation-decorator';
 import MobileDetect from 'mobile-detect';
 
@@ -42,11 +42,11 @@ class ModalLogin extends ModalComponent {
 
   validationOptions = () => {
     let keyType = this.getI18n();
-    let options = config.oauth2.dict[keyType];
+    let options = oauth2.dict[keyType];
     return {
       language: options.language
     };
-  }
+  };
 
   componentDidMount() {
     const {
@@ -162,7 +162,7 @@ class ModalLogin extends ModalComponent {
 
   getTitle(key = 'title') {
     let keyType = this.getI18n();
-    return config.oauth2.dict[keyType][key] || '';
+    return oauth2.dict[keyType][key] || '';
   }
 
   getForm() {
@@ -189,7 +189,7 @@ class ModalLogin extends ModalComponent {
     }
 
     let formTemplate;
-    let social = config.oauth2.facebook;
+    let social = oauth2.facebook;
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
