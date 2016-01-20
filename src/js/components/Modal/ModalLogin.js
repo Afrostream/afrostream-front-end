@@ -97,11 +97,11 @@ class ModalLogin extends ModalComponent {
         loading: false
       });
       if (self.props.type !== 'showReset') {
-        await * [
-          dispatch(ModalActionCreator.close()),
-          dispatch(OauthActionCreator.getIdToken()),
-          dispatch(UserActionCreators.getProfile()),
-        ];
+        async profile => {
+          await dispatch(ModalActionCreator.close());
+          await dispatch(OauthActionCreator.getIdToken());
+          await  dispatch(UserActionCreators.getProfile());
+        };
       }
     }).catch(::this.onError);
   }
