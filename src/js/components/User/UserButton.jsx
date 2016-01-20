@@ -14,7 +14,7 @@ class UserButton extends React.Component {
   componentDidMount() {
     const {
       props: {
-        dispatch
+        dispatch,await
         }
       } = this;
 
