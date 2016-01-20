@@ -4,9 +4,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import AlertMessage from './Alert/AlertMessage';
-import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
 import ModalView from './Modal/ModalView'
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classNames from 'classnames';
 import { metasData,analytics } from '../decorators';
 

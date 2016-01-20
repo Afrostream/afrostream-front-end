@@ -495,6 +495,4 @@ class PlayerComponent extends React.Component {
   }
 }
 
-export
-default
-PlayerComponent;
+export default PlayerComponent;
