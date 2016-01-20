@@ -4,9 +4,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import AlertMessage from './Alert/AlertMessage';
-import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
 import ModalView from './Modal/ModalView'
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classNames from 'classnames';
 import { metasData,analytics } from '../decorators';
 
@@ -39,13 +37,8 @@ class Application extends React.Component {
     return (
 
       <div className={appClasses}>
-        <ModalView />
-        <Header {...this.props}/>
-        <SideBar />
-        <AlertMessage />
         <div id="page-content-wrapper" className="container-fluid">
           {children}
-          <Footer />
         </div>
       </div>
     );

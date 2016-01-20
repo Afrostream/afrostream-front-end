@@ -9,14 +9,14 @@ class CookieMessage extends React.Component {
 
   // do not render cookie message on server-side
   state = {
-    isCookieSet: "true"
+    isCookieSet: 'true'
   };
 
   componentDidMount() {
     let isCookieAccepted = this.isCookieAccepted();
 
-    if (isCookieAccepted !== "true") {
-      this.setState({isCookieSet: "false"});
+    if (isCookieAccepted !== 'true') {
+      this.setState({isCookieSet: 'false'});
     }
   }
 
@@ -31,14 +31,14 @@ class CookieMessage extends React.Component {
 
   setCookieToken() {
     if (canUseDOM) {
-      localStorage.setItem('afrostreamAcceptedCookies', "true");
-      this.setState({isCookieSet: "true"});
+      localStorage.setItem('afrostreamAcceptedCookies', 'true');
+      this.setState({isCookieSet: 'true'});
     }
   }
 
   render() {
 
-    if (this.state.isCookieSet === "true") {
+    if (this.state.isCookieSet === 'true') {
 
       return (<div />);
 
