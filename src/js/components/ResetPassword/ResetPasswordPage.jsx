@@ -6,7 +6,7 @@ if (process.env.BROWSER) {
   require('./ResetPasswordPage.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({}) => ({}))
 class ResetPasswordPage extends React.Component {
 
   componentDidMount() {
@@ -16,9 +16,6 @@ class ResetPasswordPage extends React.Component {
         }
       } = this;
     dispatch(ModalActionCreators.open('showReset', false));
-  }
-
-  showLock() {
   }
 
   render() {
