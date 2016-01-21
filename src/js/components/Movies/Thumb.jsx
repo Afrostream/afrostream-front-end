@@ -13,10 +13,14 @@ class Thumb extends Poster {
 
   static propTypes = {
     showImage: React.PropTypes.bool,
-    viewport: React.PropTypes.object
+    viewport: React.PropTypes.object,
+    thumbW: React.PropTypes.number,
+    thumbH: React.PropTypes.number
   };
 
   static defaultProps = {
+    thumbW: 140,
+    thumbH: 200,
     showImage: false,
     viewport: {
       left: 0,

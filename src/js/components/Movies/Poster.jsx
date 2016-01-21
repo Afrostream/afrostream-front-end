@@ -5,6 +5,12 @@ import config from '../../../../config';
 
 class Poster extends LoadVideo {
 
+
+  static propTypes = {
+    thumbW: React.PropTypes.number,
+    thumbH: React.PropTypes.number
+  };
+
   static defaultProps = {
     thumbW: 140,
     thumbH: 200
