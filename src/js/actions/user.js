@@ -24,10 +24,10 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
       const userInfos = await api(`/api/users/me`, 'GET', {}, token, refreshToken);
       //TODO add subsrciptions status in user
-      //const userSubscriptions = {
-      //  body: {}
-      //};
-      const userSubscriptions = await api(`/api/subscriptions/status`, 'GET', {}, token, refreshToken);
+      const userSubscriptions = {
+        body: {}
+      };
+      //const userSubscriptions = await api(`/api/subscriptions/status`, 'GET', {}, token, refreshToken);
       const userMerged = _.merge(userInfos.body || {}, userSubscriptions.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
