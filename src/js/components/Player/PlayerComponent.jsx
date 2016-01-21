@@ -280,10 +280,21 @@ class PlayerComponent extends React.Component {
             playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
           }
           //Fix Safari < 6.2 can't play hls
-          if (ua.isSafari() && (browserVersion.version < 537 || (isLive && browserVersion.version === 537 ))) {
-            playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
-              return k !== 'dashas';
-            });
+          if (ua.isSafari()) {
+            if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
+              playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+                return k !== 'dashas';
+              });
+            }
+            //Safari 8 can't play dashjs
+            if (browserVersion.version == 600) {
+              playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+                return k !== 'html5';
+              });
+              playerData.sources = _.sortBy(playerData.sources, function (k) {
+                return k.type === 'application/dash+xml';
+              });
+            }
           }
           //on force dash en tech par default pour tous les browsers ;)
           playerData.sources = _.sortBy(playerData.sources, function (k) {
