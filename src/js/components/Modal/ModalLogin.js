@@ -7,7 +7,6 @@ import * as ModalActionCreator from '../../actions/modal';
 import * as UserActionCreators from '../../actions/user';
 import ModalComponent from './ModalComponent';
 import {oauth2} from '../../../../config';
-import {Validation, Joi} from 'react-validation-decorator';
 import MobileDetect from 'mobile-detect';
 
 if (process.env.BROWSER) {
@@ -15,7 +14,6 @@ if (process.env.BROWSER) {
 }
 
 @connect(({ User }) => ({User}))
-@Validation
 class ModalLogin extends ModalComponent {
 
   constructor(props) {
@@ -24,6 +22,7 @@ class ModalLogin extends ModalComponent {
       success: false,
       loading: false,
       password: null,
+      repeat_password: null,
       email: null,
       timestamp: new Date()
     };
@@ -32,20 +31,6 @@ class ModalLogin extends ModalComponent {
   static contextTypes = {
     location: React.PropTypes.object,
     history: React.PropTypes.object
-  };
-
-  validationSchema = Joi.object().keys({
-    email: Joi.string().email().required().label('Email'),
-    password: Joi.string().min(6).max(30).required().label('Le mot de passe'),
-    repeat_password: Joi.string().valid(Joi.ref('password')).required().label('Le mot de passe de verification')
-  });
-
-  validationOptions = () => {
-    let keyType = this.getI18n();
-    let options = oauth2.dict[keyType];
-    return {
-      language: options.language
-    };
   };
 
   componentDidMount() {
@@ -67,6 +52,47 @@ class ModalLogin extends ModalComponent {
     });
   }
 
+  validateSize(value, min = 0, max = 0) {
+    if (!value) return 'empty';
+    if (value.length < min) return 'min';
+    if (value.length > max) return 'max';
+    return null;
+  }
+
+  validate(targetName) {
+    let errors = this.state.errors;
+    errors[targetName] = null;
+    let errorType = '';
+    let valueForm = this.state[targetName];
+    let isValid = true;
+    switch (targetName) {
+      case 'email':
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        isValid = re.test(valueForm);
+        break;
+      case 'password':
+        isValid = !this.validateSize(valueForm, 6, 30) && valueForm.match();
+        break;
+      case 'repeat_password':
+        isValid = !this.validateSize(valueForm, 6, 30) && valueForm.match() && this.state['password'] === valueForm;
+        break;
+    }
+
+    if (!isValid) {
+      const i18nValidMess = this.getTitle('language');
+      let label = i18nValidMess[targetName];
+      let errMess = i18nValidMess[errorType];
+      errors[targetName] = label + ' ' + errMess;
+    }
+    this.setState({
+      errors: errors
+    });
+  }
+
+  renderValidationMessages(target) {
+    return (<div>{this.errors[target] || ''}</div>);
+  }
+
   handleInputChange(evt) {
     let formData = this.state;
     formData[evt.target.name] = evt.target.value;
@@ -78,8 +104,7 @@ class ModalLogin extends ModalComponent {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      props: { dispatch, await},
-      context: { history }
+      props: { dispatch, await}
       } = this;
 
     const self = this;
@@ -97,10 +122,10 @@ class ModalLogin extends ModalComponent {
         loading: false
       });
       if (self.props.type !== 'showReset') {
-        async profile => {
+        async () => {
           await dispatch(ModalActionCreator.close());
           await dispatch(OauthActionCreator.getIdToken());
-          await  dispatch(UserActionCreators.getProfile());
+          await dispatch(UserActionCreators.getProfile());
         };
       }
     }).catch(::this.onError);
@@ -170,12 +195,12 @@ class ModalLogin extends ModalComponent {
       return (<div className="loading mode">
         <div className="spinner spin-container">
           <div className="spinner-css">
-        <span className="side sp_left">
-          <span className="fill"></span>
-        </span>
-        <span className="side sp_right">
-          <span className="fill"></span>
-        </span>
+    <span className="side sp_left">
+    <span className="fill"></span>
+    </span>
+    <span className="side sp_right">
+    <span className="fill"></span>
+    </span>
           </div>
           <div className="spin-message">
             <span>&nbsp;</span>
@@ -258,7 +283,7 @@ class ModalLogin extends ModalComponent {
           <i className="icon-budicon"></i>
           <input name="password" id="easy_password" type="password" pattern=".{6,}" required
                  placeholder={this.getTitle('passwordPlaceholder')}
-                 title={this.getTitle('passwordPlaceholder') +' 6 characters minimum'}/>
+                 title={this.getTitle('passwordPlaceholder') + ' 6 characters minimum'}/>
           {this.renderValidationMessages('password')}
         </div>
       </div>

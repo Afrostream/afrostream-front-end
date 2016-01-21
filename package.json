@@ -117,7 +117,6 @@
     "react-pure-render": "https://registry.npmjs.org/react-pure-render/-/react-pure-render-1.0.2.tgz",
     "react-redux": "^3.1.0",
     "react-router": "1.0.2",
-    "react-validation-decorator": "^0.3.0",
     "redux": "^3.0.4",
     "redux-devtools": "^2.1.2",
     "redux-router": "^1.0.0-beta7",

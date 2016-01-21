@@ -30,14 +30,12 @@
     "userClosedPopup": "La fenêtre pop-up a été fermée. Veuillez réessayer.",
     "userConsentFailed": "L'application n'a pas été autorisée. Veuillez réessayer.",
     "language": {
-      "string": {
-        "email": "Doit etre un email valide",
-        "min": "doit contenir au minimum {{limit}} caracteres",
-        "max": "doit contenir au maximum {{limit}} caracteres"
-      },
-      "any": {
-        "empty": "est requis"
-      }
+      "email": "Doit etre un email valide",
+      "password": "Le mot de passe",
+      "repeat_password": "Le mot de passe de verification",
+      "min": "doit contenir au minimum {{limit}} caracteres",
+      "max": "doit contenir au maximum {{limit}} caracteres",
+      "empty": "est requis"
     },
     "Error: The specified email address is already in use.": "Email déja existant"
   },
