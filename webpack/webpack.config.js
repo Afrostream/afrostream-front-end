@@ -67,6 +67,11 @@ const webpackConfig = {
         exclude: [node_modules_dir]
       },
       {
+        test: /\.md/,
+        loaders: ['markdown-it'],
+        exclude: [node_modules_dir]
+      },
+      {
         test: /\.json$/,
         include: [path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
         loaders: ['json']
