@@ -50,7 +50,7 @@ class AccountPage extends React.Component {
         <div className="plan-details-plan-name">
           <div className="plan-name">{plans[user.get('planCode')]}</div>
           <div className={classSet(cancelSubscriptionClasses)}>
-            <Link to="/cancel-subscription">Annuler votre abonnement</Link>
+            <Link to="/compte/cancel-subscription">Annuler votre abonnement</Link>
           </div>
         </div>
       </div>
@@ -60,10 +60,13 @@ class AccountPage extends React.Component {
   render() {
     const {
       props: {
-        User
+        User,children
         }
       } = this;
 
+    if (children) {
+      return (children);
+    }
     const user = User.get('user');
     if (user) {
       return (

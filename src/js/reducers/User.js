@@ -3,7 +3,8 @@ import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
-  'user': null
+  'user': null,
+  'subscriptionCancelled': false
 });
 
 
@@ -19,7 +20,8 @@ export default createReducer(initialState, {
   [ActionTypes.User.cancelSubscription](state, { res }) {
     const data = res.body;
     return state.merge({
-      ['user']: _.merge(state.get('user').toJS(), data)
+      ['user']: _.merge(state.get('user').toJS(), data),
+      ['subscriptionCancelled']: true
     });
   },
 

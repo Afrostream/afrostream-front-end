@@ -24,6 +24,7 @@ class ModalLogin extends ModalComponent {
       password: null,
       repeat_password: null,
       email: null,
+      errors: [],
       timestamp: new Date()
     };
   }
@@ -52,6 +53,10 @@ class ModalLogin extends ModalComponent {
     });
   }
 
+  isValid() {
+    return !this.state.errors.length;
+  }
+
   validateSize(value, min = 0, max = 0) {
     if (!value) return 'empty';
     if (value.length < min) return 'min';
@@ -62,26 +67,28 @@ class ModalLogin extends ModalComponent {
   validate(targetName) {
     let errors = this.state.errors;
     errors[targetName] = null;
-    let errorType = '';
     let valueForm = this.state[targetName];
     let isValid = true;
+    let valitationType = targetName;
+    let regex = null;
     switch (targetName) {
       case 'email':
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        isValid = re.test(valueForm);
+        regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        isValid = 'email' && regex.test(valueForm);
         break;
       case 'password':
-        isValid = !this.validateSize(valueForm, 6, 30) && valueForm.match();
-        break;
       case 'repeat_password':
-        isValid = !this.validateSize(valueForm, 6, 30) && valueForm.match() && this.state['password'] === valueForm;
+        //Minimum 6 and Maximum 50 characters :
+        regex = /^[a-zA-Z0-9!@#$%^&*()_+=?]{6,50}$/;
+        isValid = regex.test(valueForm) && this.state['password'] === valueForm;
+        valitationType = this.validateSize(valueForm);
         break;
     }
 
     if (!isValid) {
       const i18nValidMess = this.getTitle('language');
       let label = i18nValidMess[targetName];
-      let errMess = i18nValidMess[errorType];
+      let errMess = i18nValidMess[valitationType];
       errors[targetName] = label + ' ' + errMess;
     }
     this.setState({
@@ -90,7 +97,7 @@ class ModalLogin extends ModalComponent {
   }
 
   renderValidationMessages(target) {
-    return (<div>{this.errors[target] || ''}</div>);
+    return (<div className="help-block">{ this.state.errors[target] || ''}</div>);
   }
 
   handleInputChange(evt) {
@@ -104,7 +111,7 @@ class ModalLogin extends ModalComponent {
   handleSubmit(event) {
     event.preventDefault();
     const {
-      props: { dispatch, await}
+      props: { dispatch}
       } = this;
 
     const self = this;
@@ -122,11 +129,8 @@ class ModalLogin extends ModalComponent {
         loading: false
       });
       if (self.props.type !== 'showReset') {
-        async () => {
-          await dispatch(ModalActionCreator.close());
-          await dispatch(OauthActionCreator.getIdToken());
-          await dispatch(UserActionCreators.getProfile());
-        };
+        dispatch(UserActionCreators.getProfile());
+        dispatch(ModalActionCreator.close());
       }
     }).catch(::this.onError);
   }
@@ -263,7 +267,7 @@ class ModalLogin extends ModalComponent {
         </label>
         <div className="input-box">
           <i className="icon-budicon-5"></i>
-          <input name="email" id="easy_email" type="email" value={this.state.email}
+          <input name="email" id="easy_email" type="email"
                  placeholder={this.getTitle('emailPlaceholder')}
                  title={this.getTitle('emailPlaceholder')}/>
           {this.renderValidationMessages('email')}
@@ -301,7 +305,7 @@ class ModalLogin extends ModalComponent {
           <div className="password_policy"></div>
         </div>
         <div className="action">
-          <button type="submit" className="primary next">{this.getTitle('action')}</button>
+          <button type="submit" className="primary next" disabled={!this.isValid()}>{this.getTitle('action')}</button>
           <div className="options">
             <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
@@ -323,7 +327,7 @@ class ModalLogin extends ModalComponent {
           <i className="icon-budicon"></i><span className="sso-notice">Single Sign-on enabled</span>
         </div>
         <div className="action">
-          <button type="submit" className="primary next">{this.getTitle('action')}</button>
+          <button type="submit" className="primary next" disabled={!this.isValid()}>{this.getTitle('action')}</button>
           <div className="db-actions">
             <div className="create-account buttons-actions">
               <Link to="/reset" className="forgot-pass btn-small">{this.getTitle('forgotText')}</Link>
@@ -359,7 +363,7 @@ class ModalLogin extends ModalComponent {
         </div>
         <div className="action">
           <button type="submit" className="primary next"
-                  disabled={!this.isDirty() || !this.isValid()}>{this.getTitle('action')}</button>
+                  disabled={!this.isValid()}>{this.getTitle('action')}</button>
           <div className="options">
             <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>

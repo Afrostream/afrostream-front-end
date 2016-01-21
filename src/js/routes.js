@@ -29,12 +29,12 @@ export default (
     <Route name="blog" path="blog" component={Blog.List}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.View}/>
     </Route>
+    <Route name="payment" path="select-plan" component={PaymentPage}>
+      <Route name="plancode" path=":planCode(/:status)" component={PaymentForm}/>
+    </Route>
     <Route name="home" path="/" component={HomePage}>
-      <Route name="payment" path="select-plan" component={PaymentPage}>
-        <Route name="plancode" path=":planCode(/:status)" component={PaymentForm}/>
-      </Route>
       <Route name="compte" path="compte" component={AccountPage}>
-        <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
+        <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
       </Route>
       <Route name="movie" path=":movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"

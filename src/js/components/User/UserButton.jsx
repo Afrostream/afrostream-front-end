@@ -14,14 +14,11 @@ class UserButton extends React.Component {
   componentDidMount() {
     const {
       props: {
-        dispatch,await
+        dispatch
         }
       } = this;
 
-    async profile => {
-      await dispatch(OAuthActionCreators.getIdToken());
-      await dispatch(UserActionCreators.getProfile());
-    }
+    dispatch(UserActionCreators.getProfile());
   }
 
   logOut() {

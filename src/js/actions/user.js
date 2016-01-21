@@ -24,9 +24,10 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
       const userInfos = await api(`/api/users/me`, 'GET', {}, token, refreshToken);
       //TODO add subsrciptions status in user
-      const userSubscriptions = {
-        body: {}
-      };//await api(`/subscriptions/status`, 'GET', {}, null, token, refreshToken);
+      //const userSubscriptions = {
+      //  body: {}
+      //};
+      const userSubscriptions = await api(`/api/subscriptions/status`, 'GET', {}, token, refreshToken);
       const userMerged = _.merge(userInfos.body || {}, userSubscriptions.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
@@ -97,25 +98,24 @@ export function pendingUser(pending) {
  */
 export function getProfile() {
   return (dispatch, getState, actionDispatcher) => {
-    const token = getState().OAuth.get('token');
-    const user = getState().User.get('user');
-    return async api =>(
-      await new Promise(
-        (resolve) => {
-          //If user alwready in app
-          if (user) {
-            return resolve({
-              type: ActionTypes.User.getProfile,
-              user: user.toJS()
-            });
-          }
-          return resolve(mergeProfile({
-            type: ActionTypes.User.getProfile,
-            user: null
-          }, getState, actionDispatcher));
-        }
-      )
-    );
+    return async () => {
+      await actionDispatcher(OAuthActionCreators.getIdToken());
 
+      const token = getState().OAuth.get('token');
+      const user = getState().User.get('user');
+      return async () => {
+        //If user alwready in app
+        if (user) {
+          return {
+            type: ActionTypes.User.getProfile,
+            user: user.toJS()
+          };
+        }
+        return mergeProfile({
+          type: ActionTypes.User.getProfile,
+          user: null
+        }, getState, actionDispatcher);
+      }
+    };
   };
 }

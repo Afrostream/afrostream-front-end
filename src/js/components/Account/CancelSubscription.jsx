@@ -18,10 +18,6 @@ class CancelSubscription extends React.Component {
     history: PropTypes.object.isRequired
   };
 
-  state = {
-    subscriptionCancelled: false
-  };
-
   cancelSubscription() {
 
     const {
@@ -29,25 +25,8 @@ class CancelSubscription extends React.Component {
         dispatch
         }
       } = this;
-    let self = this;
 
-    dispatch(UserActionCreators.cancelSubscription()).then(function () {
-      self.setState({
-        subscriptionCancelled: true
-      });
-    }).catch(function (err) {
-      console.log(err);
-    });
-
-  }
-
-  navigateToAccountPage(event) {
-    event.preventDefault();
-
-    let history = this.context.history;
-    if (!history.goBack()) {
-      history.pushState(null,'/compte');
-    }
+    dispatch(UserActionCreators.cancelSubscription());
   }
 
   render() {
@@ -57,58 +36,43 @@ class CancelSubscription extends React.Component {
         }
       } = this;
 
-    const user = User.get('user');
+    const cancelled = User.get('subscriptionCancelled');
 
-    if (user) {
+    if (!cancelled) {
+      return (
+        <div className="row-fluid brand-bg">
+          <div className="container brand-bg">
+            <div className="account-credit-card">
+              <h1>Annuler votre abonnement?</h1>
 
-      if (this.state.subscriptionCancelled == false) {
-
-        return (
-          <div className="row-fluid brand-bg">
-            <div className="container brand-bg">
-              <div className="account-credit-card">
-                <h1>Annuler votre abonnement?</h1>
-
-                <div className="account-credit-card-details">
-                  Cliquer sur « Annuler l’abonnement » pour suspendre votre abonnement.
-                  Vous n’aurez plus accès au service à la fin de la période de votre abonnement
-                  (soit à partir du jour anniversaire du mois suivant)
-                </div>
-                <button className="button-cancel-subscription" onClick={::this.cancelSubscription}>Annuler
-                  l’abonnement
-                </button>
-                <button className="button-return-mon-compte" onClick={::this.navigateToAccountPage}>Retourner à la page
-                  de mon compte
-                </button>
+              <div className="account-credit-card-details">
+                Cliquer sur « Annuler l’abonnement » pour suspendre votre abonnement.
+                Vous n’aurez plus accès au service à la fin de la période de votre abonnement
+                (soit à partir du jour anniversaire du mois suivant)
               </div>
+              <button className="button-cancel-subscription"
+                      onClick={::this.cancelSubscription}
+                      onTouchEnd={::this.cancelSubscription}>Annuler l’abonnement
+              </button>
+              <Link className="button-return-mon-compte" to="/compte">Retourner sur mon compte</Link>
             </div>
           </div>
-        );
-      } else {
-
-        return (
-          <div className="row-fluid brand-bg">
-            <div className="container brand-bg">
-              <div className="account-credit-card">
-                <h1>Votre abonnement été annulé.</h1>
-
-                <div className="account-credit-card-details">
-                  Vous n’aurez plus accès au service à la fin de la période de votre abonnement
-                  (soit à partir du jour anniversaire du mois suivant)
-                </div>
-                <button className="button-return-mon-compte" onClick={::this.navigateToAccountPage}>Retourner à la page
-                  de mon compte
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-      }
+        </div>
+      );
     } else {
 
       return (
-        <div className="row-fluid">
-          no user found
+        <div className="row-fluid brand-bg">
+          <div className="container brand-bg">
+            <div className="account-credit-card">
+              <h1>Votre abonnement été annulé.</h1>
+              <div className="account-credit-card-details">
+                Vous n’aurez plus accès au service à la fin de la période de votre abonnement
+                (soit à partir du jour anniversaire du mois suivant)
+              </div>
+              <Link className="button-return-mon-compte" to="/compte">Retourner sur mon compte</Link>
+            </div>
+          </div>
         </div>
       );
     }

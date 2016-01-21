@@ -53,9 +53,8 @@ export function facebook() {
 
     let oauthPopup = window.open(url, 'facebook_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
     oauthPopup.onbeforeunload = function () {
-      actionDispatcher(ModalActionCreators.close());
-      actionDispatcher(getIdToken());
       actionDispatcher(UserActionCreators.getProfile());
+      actionDispatcher(ModalActionCreators.close());
     }.bind(this);
   };
 }
