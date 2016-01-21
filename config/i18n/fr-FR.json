@@ -33,8 +33,8 @@
       "email": "Doit etre un email valide",
       "password": "Le mot de passe",
       "repeat_password": "Le mot de passe de verification",
-      "min": "doit contenir au minimum {{limit}} caracteres",
-      "max": "doit contenir au maximum {{limit}} caracteres",
+      "min": "doit contenir au minimum 6 caracteres",
+      "max": "doit contenir au maximum 50 caracteres",
       "empty": "est requis"
     },
     "Error: The specified email address is already in use.": "Email déja existant"
