@@ -9,6 +9,7 @@ import PlayerPage from './components/Player/PlayerPage';
 import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
+import SearchPage from './components/Search/SearchPage';
 import PaymentPage from './components/Payment/PaymentPage';
 import PaymentForm from './components/Payment/PaymentForm';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
@@ -33,6 +34,7 @@ export default (
       <Route name="plancode" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>
     <Route name="home" path="/" component={HomePage}>
+      <Route name="search" path="recherche" component={SearchPage}/>
       <Route name="compte" path="compte" component={AccountPage}>
         <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
       </Route>

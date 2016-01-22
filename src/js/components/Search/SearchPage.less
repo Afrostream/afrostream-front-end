@@ -1,0 +1,143 @@
+/*------------------------------------*\
+  SEARCH
+\*------------------------------------*/
+@import (reference) '../../../styles/config.less';
+
+.search-page {
+  background-color: fade(@background-color-base, 80%);
+  top: @header-height;
+  left: 0;
+}
+
+// Scale animation for search page
+.search-enter-active,
+.search-leave-active {
+  transition: all .8s ease-in-out
+}
+
+.search-enter {
+  z-index: 2;
+  transform-origin: left top;
+  transform: scale(0);
+  opacity: 0;
+
+  &.search-enter-active {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.search-leave {
+  z-index: 0;
+  opacity: 1;
+
+  &.search-leave-active {
+    opacity: 0;
+  }
+}
+
+.search__icon {
+  display: block;
+  float: right;
+  margin-top: 15px;
+  margin-right: 15px;
+  width: 18px;
+  height: 18px;
+  opacity: .5;
+  &:before {
+    position: absolute;
+    left: 15px;
+    content: '\f002';
+    font-family: 'FontAwesome';
+    font-size: 6em;
+    line-height: 2;
+    z-index: 0;
+    color: @brand-primary;
+  }
+}
+
+.search__input-font {
+  color: fade(white, 55%);
+  font-family: @font-thin;
+  -webkit-font-smoothing: antialiased;
+}
+
+.search__input {
+  background: none;
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  box-sizing: border-box !important;
+  margin-left: 19px;
+  margin-top: 9px;
+  font-size: 25px;
+  line-height: 30px;
+  .search__input-font;
+
+  &::-webkit-input-placeholder {
+    .search__input-font;
+  }
+  &:-moz-placeholder {
+    .search__input-font;
+  }
+}
+
+@media (max-height: 680px) {
+  // Folders list / header on 13" screen
+  .search {
+    top: 15px + @header-height;
+    min-height: 6.5vh;
+    height: 6.5vh;
+    width: 171px;
+  }
+
+  .search__icon {
+    margin-top: 1.5vh;
+  }
+
+  .search__input {
+    margin-top: 1.5vh;
+    font-size: 3.5vh;
+    line-height: 3.5vh;
+  }
+}
+
+.big-search {
+  position: relative;
+  margin-top: 20px + @header-height;
+  margin-bottom: 20px;
+  .isNotMobile({ margin-left: 84px; });
+  .isWideScreen({ margin-left: 113px; });
+  &:before {
+    position: absolute;
+    left: 15px;
+    content: '\f002';
+    font-family: 'FontAwesome';
+    font-size: 6em;
+    line-height: 2;
+    z-index: 0;
+    color: @brand-primary;
+  }
+}
+
+.big-search__field {
+  color: red;
+  font-family: @font-thin;
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  padding-left: 50px;
+  font-size: 37px;
+  width: 100%;
+  height: 44px;
+  .isNotMobile({ font-size: 80px; padding-left: 100px; height: 92px; });
+  .isWideScreen({ font-size: 100px; padding-left: 120px; height: 115px; });
+}
+
+.search-result {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
