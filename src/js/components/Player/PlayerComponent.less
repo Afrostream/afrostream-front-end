@@ -12,7 +12,7 @@
 // e.g. rgb(255, 255, 255) or #ffffff
 @control-bg-alpha: 0.7;
 // 1.0 = 100% opacity, 0.0 = 0% opacity
-@big-play-border-width : 0.1em;
+@big-play-border-width: 0.1em;
 @big-play-border-radius: 100%;
 @big-play-bg-color: @color-indigo;
 @big-play-bg-alpha: @control-bg-alpha;
@@ -23,15 +23,23 @@
 @big-play-height: 3em;
 @vjs-font-path: 'font/';
 
+@media @mobile,@tablet {
+  .player-page {
+    height: 100%;
+  }
+}
+
 .player {
   background-color: #000000;
-  margin: 60px auto;
+  //margin: 60px auto;
   width: 100%;
   max-height: 100%;
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 
   .wrapper {
     position: relative;
-    //display: inline-block;
     vertical-align: middle;
     width: 100%;
     height: 100%;
@@ -64,7 +72,7 @@
       font-size: 1.4em;
     }
   }
-  @media @mobile,@tablet{
+  @media @mobile,@tablet {
     .video-infos {
       margin: @app-padding-mobile;
     }
@@ -92,7 +100,7 @@
 
   .video-js.vjs-afrostream-skin {
 
-    @media @mobile,@tablet{
+    @media @mobile,@tablet {
       .vjs-control-bar {
         left: @app-padding-mobile;
         bottom: @app-padding-mobile;
