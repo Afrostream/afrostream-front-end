@@ -57,9 +57,8 @@ const webpackConfig = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loader: '',
-        exclude: [node_modules_dir],
-        loaders: ['babel-loader']
+        loaders: ['babel-loader'],
+        exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
