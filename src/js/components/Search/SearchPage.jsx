@@ -1,7 +1,6 @@
 'use strict';
 import React from 'react';
 import ReactDOM from'react-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 import * as SearchActionCreators from '../../actions/search';
 import Thumb from '../../components/Movies/Thumb';
@@ -65,7 +64,7 @@ class SearchPage extends React.Component {
 
   renderMovies(movies) {
     if (!movies || !movies.size) {
-      return search.dict['noData'];
+      return this.state.fetching ? '' : search.dict['noData'];
     }
     return movies.map((movie, i) => <Thumb showImage={true}
                                            key={`search-movie-${movie.get('_id')}-${i}`} {...{movie}}/>).toJS();
@@ -86,22 +85,20 @@ class SearchPage extends React.Component {
     }
 
     return (
-      <ReactCSSTransitionGroup transitionName="search" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-        <div className="row-fluid search-page">
-          <div className="big-search">
-            <input
-              type="text"
-              ref="inputSearch"
-              className="big-search__field"
-              placeholder="Rechercher"
-              onChange={::this.debounceSearch}/>
-          </div>
-          <div className="search-result">
-            {this.state.fetching ? <Spinner /> : ''}
-            {movies}
-          </div>
+      <div className="row-fluid search-page">
+        <div className="big-search">
+          <input
+            type="text"
+            ref="inputSearch"
+            className="big-search__field"
+            placeholder="Rechercher"
+            onChange={::this.debounceSearch}/>
         </div>
-      </ReactCSSTransitionGroup>
+        <div className="search-result">
+          {this.state.fetching ? <div className="spinner-search"><Spinner /></div> : ''}
+          {movies}
+        </div>
+      </div>
     );
   }
 }

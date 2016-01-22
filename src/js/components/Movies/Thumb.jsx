@@ -104,15 +104,13 @@ class Thumb extends Poster {
     let imageStyles = this.getLazyImageUrl();
     let link = this.getLink();
     return (
-      <div ref="thumbContainer" className="thumb-containter">
-        <div ref="thumb" className="thumb"
-             onMouseEnter={::this.triggerOver}
-             onMouseLeave={::this.triggerOut}>
-          <Link to={link}>
-            <div ref="thumbBackground" className="thumb-background" style={imageStyles}></div>
-            {this.getNew()}
-          </Link>
-        </div>
+      <div ref="thumb" className="thumb"
+           onMouseEnter={::this.triggerOver}
+           onMouseLeave={::this.triggerOut}>
+        <Link to={link}>
+          <div ref="thumbBackground" className="thumb-background" style={imageStyles}></div>
+          {this.getNew()}
+        </Link>
       </div>
     );
   }
