@@ -5,6 +5,7 @@ import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
 import Spinner from './Spinner/Spinner';
 import * as CategoryActionCreators from '../actions/category';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 @prepareRoute(async function ({ store }) {
   return await * [
@@ -37,7 +38,7 @@ class HomePage extends React.Component {
     }
   }
 
-  render() {
+  renderContent() {
     const { props: { User ,children} } = this;
     const pending = User.get('pending');
     const user = User.get('user');
@@ -52,6 +53,14 @@ class HomePage extends React.Component {
     } else {
       return (<WelcomePage spinner={isPending} {...this.props}/>);
     }
+  }
+
+  render() {
+    return (
+      <ReactCSSTransitionGroup transitionName="search" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+        {this.renderContent()}
+      </ReactCSSTransitionGroup>
+    );
   }
 }
 
