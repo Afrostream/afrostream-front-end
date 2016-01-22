@@ -45,12 +45,12 @@ class UserButton extends React.Component {
       if (user) {
         return (
           <ul className="nav navbar-nav navbar-right">
-            <li>
-              <SearchInput/>
-            </li>
             <li className="btn-user pull-right">
               <a href="#" role="button" onClick={::this.toggleSideBar}><img src={user.get('picture')} alt="50x50"
                                                                             className="icon-user img-thumbnail"/></a>
+            </li>
+            <li className="pull-right">
+              <SearchInput/>
             </li>
           </ul>
         );

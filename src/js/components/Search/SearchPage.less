@@ -117,11 +117,13 @@
 .big-search {
   position: relative;
   padding: (@app-padding + @header-height) @app-padding @app-padding @app-padding;
+  .isMobile({ position: fixed; padding: (@app-padding-mobile + @header-height) @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
   &:before {
     position: absolute;
     content: '\f002';
     font-family: 'FontAwesome';
     font-size: 6em;
+    .isMobile({ font-size: 2em });
     line-height: 2;
     z-index: 0;
     color: @brand-primary;
@@ -137,6 +139,7 @@
   outline: none;
   padding-left: 1em;
   font-size: 8em;
+  .isMobile({ font-size: 3em });
   width: 100%;
 }
 
