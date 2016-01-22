@@ -11,9 +11,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    //background-color: rgba(0, 0, 0, 0.4);
     z-index: 3;
   }
   .thumb-containter {
@@ -115,10 +114,13 @@
 }
 
 .big-search {
-  position: relative;
-  background-color: @background-color-base;
+  position: fixed;
+  z-index: 3;
+  width: 100%;
+  background-color: fade(@color-indigo, 90%);
   padding: (@app-padding + @header-height) @app-padding @app-padding @app-padding;
-  .isMobile({ position: fixed; z-index: 3; padding: (@app-padding-mobile + @header-height) @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
+  top: 0;
+  .isMobile({ padding: (@app-padding-mobile + @header-height) @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
   &:before {
     position: absolute;
     content: '\f002';
@@ -149,4 +151,6 @@
   width: 100%;
   height: 100%;
   text-align: center;
+  padding-top: 240px;
+  .isMobile({ padding-top: 130px; });
 }
