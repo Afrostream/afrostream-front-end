@@ -92,7 +92,6 @@ class SearchBox extends React.Component {
           <fieldset className={classSet(fielClass)}>
             <Autosuggest
               name="search-box"
-              value="one"
               placeholder="Rechercher"
               suggestions={::this.getOptions}
               inputAttributes={inputAttributes}
