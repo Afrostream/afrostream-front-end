@@ -13,7 +13,8 @@
     "CHROMECAST_ID": "CC1AD845",
     "GA_TRACKING_ID": "UA-xxxxxx",
     "RECURLY_PUBLIC_KEY": "sjc-ZhO4HmKNWszC5LIA8BcsMJ",
-    "OAUTH_FACEBOOK_ENABLED": true
+    "OAUTH_FACEBOOK_ENABLED": "true",
+    "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git"
   },
   "addons": []
 }
