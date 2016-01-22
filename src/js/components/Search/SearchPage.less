@@ -116,8 +116,9 @@
 
 .big-search {
   position: relative;
+  background-color: @background-color-base;
   padding: (@app-padding + @header-height) @app-padding @app-padding @app-padding;
-  .isMobile({ position: fixed; padding: (@app-padding-mobile + @header-height) @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
+  .isMobile({ position: fixed; z-index: 3; padding: (@app-padding-mobile + @header-height) @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
   &:before {
     position: absolute;
     content: '\f002';
