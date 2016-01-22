@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import config from '../../../../../config';
-import Thumb from '../../../components/Movies/Thumb.jsx';
+import Thumb from '../../../components/Movies/Thumb';
 if (process.env.BROWSER) {
   require('./Spots.less');
 }

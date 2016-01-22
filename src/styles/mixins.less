@@ -16,3 +16,38 @@
   height: 100%;
   //min-height: 100vh;
 }
+
+// If device is a mobile one
+.isMobile(@rules) {
+  @media (max-width: 750px) {
+    @rules();
+  }
+}
+
+// If device is not a mobile one
+.isNotMobile(@rules) {
+  @media (min-width: 751px) {
+    @rules();
+  }
+}
+
+// If device has small screen size
+.isSmallScreen(@rules) {
+  @media (max-width: 920px) {
+    @rules();
+  }
+}
+
+// If device has desktop size
+.isWideScreen(@rules) {
+  @media (min-width: 1025px) {
+    @rules();
+  }
+}
+
+// If device has not desktop size
+.isNotWideScreen(@rules) {
+  @media (max-width: 1024px) {
+    @rules();
+  }
+}

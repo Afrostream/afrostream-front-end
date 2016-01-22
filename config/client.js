@@ -98,6 +98,9 @@ const config = {
     url: 'https://widget.intercom.io/widget/',
     appID: 'k3klwkxq'
   },
+  search: {
+    dict: dictFr.search
+  },
   oauth2: {
     facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,
     dict: dictFr

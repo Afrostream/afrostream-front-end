@@ -7,6 +7,9 @@
   "loginSocialButton": "S'identifier avec {connection:title}",
   "signupSocialButton": "S'inscrire avec {connection:title}",
   "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
+  "search": {
+    "noData": "La recherche n'a trouvé aucuns resultat"
+  },
   "signin": {
     "title": "S’identifier",
     "action": "Se connecter",
