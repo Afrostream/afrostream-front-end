@@ -1,13 +1,13 @@
 @import (reference) '../../../styles/config.less';
 
 .search-box {
-  position: absolute;
-  right: 20px;
   width: 40px;
   height: 40px;
+  margin-right: 10px;
   color: @brand-primary;
   background-color: fade(@brand-primary, 20%);
   border-radius: 3px;
+  text-align: center;
   &:hover,
   &:focus {
     background-color: fade(@brand-primary, 30%) !important;
@@ -18,7 +18,7 @@
     font-family: 'FontAwesome';
     font-size: 1.8em;
     line-height: 2;
-    margin: -12px 0 0 -8px;
+    margin: -8px 0 0 -8px;
     color: @brand-primary;
   }
 }
