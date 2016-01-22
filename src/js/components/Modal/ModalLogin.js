@@ -97,7 +97,9 @@ class ModalLogin extends ModalComponent {
   }
 
   renderValidationMessages(target) {
-    return (<div className="help-block">{ this.state.errors[target] || ''}</div>);
+    let errorMessage = this.state.errors[target];
+    if (!errorMessage) return '';
+    return (<div className="help-block">{ errorMessage }</div>);
   }
 
   handleInputChange(evt) {
