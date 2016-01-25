@@ -157,7 +157,9 @@
     text-align: center;
     padding: @search-top @app-padding @app-padding @app-padding;
     .isMobile({ padding: @search-top-mobile @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
-    span {
+    > span {
+      top: @header-height;
+      position: relative;
       font-size: 2em;
       font-family: @font-thin;
     }
