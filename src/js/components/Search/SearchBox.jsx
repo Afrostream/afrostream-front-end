@@ -27,6 +27,10 @@ class SearchBox extends React.Component {
     return ReactDOM.findDOMNode(this.refs.inputSearchMini);
   }
 
+  goBack() {
+    this.context.history.goBack();
+  }
+
   componentDidMount() {
     var input = this.getInput();
 
@@ -62,6 +66,7 @@ class SearchBox extends React.Component {
 
     return (
       <div className="search-box">
+        <i className="fa fa-times" onClick={::this.goBack}/>
         <input
           onChange={::this.debounceSearch}
           name="search-box"
