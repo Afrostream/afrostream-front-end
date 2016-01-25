@@ -35,6 +35,7 @@ class ModalView extends React.Component {
       case 'showSignup':
       case 'showReset':
       case 'showGift':
+      case 'showRelog':
         return (
           <ModalLogin type={target} closable={closable} {...this.props}/>
         );

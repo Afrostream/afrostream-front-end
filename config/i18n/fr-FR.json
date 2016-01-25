@@ -87,5 +87,9 @@
     "action": "Enregistrez-vous",
     "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
     "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, allez dans votre profil Afrostream."
+  },
+  "relog": {
+    "title": "Reconnectez-vous",
+    "action": "Reconnectez-vous"
   }
 }

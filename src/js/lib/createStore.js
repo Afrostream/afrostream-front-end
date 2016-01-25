@@ -3,12 +3,16 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { reduxReactRouter , routerStateReducer} from 'redux-router';
 import * as middleWare from '../middleware';
 import * as reducers from '../reducers';
+import * as ModalActionCreators from '../actions/modal';
 
-function promiseMiddleware(api, { getState ,dispatch}) {
+function promiseMiddleware(api, {getState, dispatch}) {
   return next =>
     function _r(action) {
       if (action && _.isFunction(action.then)) {
-        return action.then(_r);
+        return action.then(_r).catch(function (err) {
+          if (err.response && err.response.text === 'Unauthorized')
+            dispatch(ModalActionCreators.open('showRelog'));
+        });
       }
 
       if (_.isFunction(action)) {
