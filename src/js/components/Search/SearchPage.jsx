@@ -37,12 +37,7 @@ class SearchPage extends React.Component {
     }, 800);
   }
 
-  debounceSearch() {
-    this.setState({
-      fetching: true
-    });
-    _.debounce(::this.search, 400)();
-  }
+  debounceSearch = _.debounce(this.search, 400);
 
   getInput() {
     return ReactDOM.findDOMNode(this.refs.inputSearch);
@@ -56,12 +51,12 @@ class SearchPage extends React.Component {
     let input = this.getInput().value;
 
     if (input.length < 3) {
-      this.setState({
-        fetching: false
-      });
-
       return;
     }
+
+    this.setState({
+      fetching: true
+    });
 
     dispatch(SearchActionCreators.fetchMovies(input)).then(function () {
       self.setState({
