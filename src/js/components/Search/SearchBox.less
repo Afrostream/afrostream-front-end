@@ -2,22 +2,12 @@
 
 .search-box {
   @box-size: 200px;
-  //position: absolute;
-  //right: 60px;
-  //color: @brand-primary;
-  //
-  //border: none;
-  //color: @brand-primary;
-  //padding: 1px;
-  //===
   margin-right: 10px;
   color: @brand-primary;
-  background-color: fade(@brand-primary, 20%);
   border-radius: 3px;
   text-align: center;
   &:hover,
   &:focus {
-    background-color: fade(@brand-primary, 30%) !important;
   }
   &:before {
     position: absolute;
@@ -26,26 +16,17 @@
     font-size: 1.8em;
     line-height: 2;
     left: 10px;
-    // margin: -12px 0 0 -8px;
-    //.isMobile({ margin: -8px 0 0 -8px; });
     color: @brand-primary;
   }
-  //=======
-  //&:before {
-  //  position: absolute;
-  //  left: 15px;
-  //  content: '\f002';
-  //  font-family: 'FontAwesome';
-  //  font-size: 1.8em;
-  //  line-height: 2;
-  //  z-index: 0;
-  //  color: @brand-primary;
-  //}
-  //&.has-focus {
-  //  &:before {
-  //    color: @brand-black;
-  //  }
-  //}
+
+  i {
+    margin-top: 10px;
+    margin-right: 10px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    z-index: 2;
+  }
 
   input {
     font-size: 16px;
@@ -56,18 +37,22 @@
     /*removing boder from search box*/
     border: none;
     /*defining background image as a search symbol*/
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: fade(@brand-primary, 10%);
     width: 40px;
     .transition(all 0.15s linear);
     &:focus {
       padding: 10px 10px 10px 50px;
       width: @box-size;
-      background-color: rgba(255, 255, 255, 1);
+      color: @brand-primary;
+      background-color: fade(@brand-primary, 40%);
       &::-webkit-textfield-decoration-container {
         &:before {
           margin-left: -30px;
           color: @brand-black;
         }
+      }
+      &:-webkit-autofill {
+        background-color: transparent !important;
       }
       outline: none;
     }
