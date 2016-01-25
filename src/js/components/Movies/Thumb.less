@@ -4,18 +4,17 @@
   @thumb-width: 140px;
   @thumb-height: 200px;
   @thumb-margin: 10px;
-  margin: @thumb-margin;
+  padding: @thumb-margin;
   display: inline-block;
   position: relative;
-  padding: 0;
   text-align: left;
-  border: 1px solid #FFFFFF;
   overflow: hidden;
-  height: 200px;
-  width: @thumb-width;
+  height: 200px + (@thumb-margin * 2);
+  width: @thumb-width + (@thumb-margin * 2);
   flex: 1;
 
   a {
+    border: 1px solid #FFFFFF;
     position: relative;
     display: inline-block;
     float: left;
@@ -59,7 +58,9 @@
   &:hover {
     .thumb {
       &:hover {
-        border-color: @color-yellow;
+        a {
+          border-color: @color-yellow;
+        }
         overflow: hidden;
         .thumb-background {
           .transition(opacity 0.1s linear);

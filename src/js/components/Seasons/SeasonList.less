@@ -2,15 +2,12 @@
 @import '../../../styles/arrow.less';
 
 @thumb-margin: 10px;
-@thumb-margin-hover: 50px;
-@thumb-width: 200px;
-@slider-height: 240px;
+@thumb-width: 210px;
 @zoom-margin: 0px;
 
 .season-list {
   overflow-x: hidden;
   background-color: @color-indigo;
-  min-height: @slider-height;
   width: 100%;
   .selection {
     position: relative;
@@ -28,126 +25,112 @@
       }
     }
   }
-  .season-list__container {
+  .slider {
     position: relative;
-    //overflow-x: hidden;
     width: 100%;
-    .slider {
-      position: relative;
+    .slider-container {
       width: 100%;
-      .slider-container {
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        display: inline-block;
-        white-space: nowrap;
-        .thumb-containter {
-        }
-      }
-    }
-    .thumb-containter {
-      height: 100%;
-      max-height: 100%;
-      flex-shrink: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
       display: inline-block;
-      margin: @zoom-margin @thumb-margin @zoom-margin @thumb-margin;
-      .thumb {
-        display: inline-block;
+      white-space: nowrap;
+    }
+  }
+  .thumb {
+    display: inline-block;
+    position: relative;
+    padding: 0;
+    text-align: left;
+    overflow: hidden;
+    height: 200px;
+    width: @thumb-width;
+    a {
+      border: none;
+      padding: @zoom-margin @thumb-margin @zoom-margin @thumb-margin;
+      position: relative;
+      display: inline-block;
+      float: left;
+      .thumb-background {
+        height: 60%;
         position: relative;
-        padding: 0;
-        text-align: left;
-        overflow: hidden;
-        max-height: 202px;
-        height: 200px;
-        width: @thumb-width;
-        border: none;
-        a {
-          position: relative;
-          display: inline-block;
-          float: left;
-          width: @thumb-width;
-          height: 60%;
-          .thumb-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            vertical-align: middle;
-            background-image: url(../../../assets/images/default/331x232.jpg);
-            background-size: cover;
-            background-position: center top;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        vertical-align: middle;
+        background-image: url(../../../assets/images/default/331x232.jpg);
+        background-size: cover;
+        background-position: center top;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        .transition(opacity 0.1s linear);
+        i {
+          .transition(opacity 0.1s linear);
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin-left: -40px;
+          margin-top: -40px;
+          &.btn-play {
+            background-image: url('../../../../static/images/btn-play-thumb.png');
             background-repeat: no-repeat;
-            cursor: pointer;
-            .transition(opacity 0.1s linear);
-            i {
-              .transition(opacity 0.1s linear);
-              position: absolute;
-              left: 50%;
-              top: 50%;
-              margin-left: -40px;
-              margin-top: -40px;
-              &.btn-play {
-                background-image: url('../../../../static/images/btn-play-thumb.png');
-                background-repeat: no-repeat;
-                background-size: contain;
-                background-position: center center;
-                width: 80px;
-                height: 80px;
+            background-size: contain;
+            background-position: center center;
+            width: 80px;
+            height: 80px;
 
-              }
-            }
-            &:before {
-              opacity: 0;
-              content: '';
-              .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
-              position: absolute;
-              top: 0;
-              left: 0;
-              bottom: 0;
-              right: 0;
-              z-index: 1;
-            }
-            i,
-            &:before {
-              opacity: 0;
-            }
-            &:hover {
-              i,
-              &:before {
-                .transition(opacity 0.1s linear);
-                opacity: 1;
-              }
-            }
-            .thumb-new__item {
-              position: absolute;
-              right: 0;
-              top: 0;
-              width: 50px;
-              height: 50px;
-              background-image: url(../../../assets/images/movie/label-nouveau-episode.png);
-            }
           }
         }
-        .thumb-info {
-          position: relative;
-          float: left;
-          overflow: auto;
-          white-space: normal;
-          box-sizing: inherit;
-          min-height: 100%;
-          color: @brand-primary;
+        &:before {
+          opacity: 0;
+          content: '';
+          .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          z-index: 1;
+        }
+        i,
+        &:before {
+          opacity: 0;
+        }
+        &:hover {
+          i,
+          &:before {
+            .transition(opacity 0.1s linear);
+            opacity: 1;
+          }
+        }
+        .thumb-new__item {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 50px;
+          height: 50px;
+          background-image: url(../../../assets/images/movie/label-nouveau-episode.png);
+        }
+      }
 
-          &__title,
-          &__synopsis {
-            font-family: @font-light;
-            font-size: 1.2em;
-            vertical-align: middle;
-            text-overflow: ellipsis;
-            padding: 5px 0 5px 0;
-            a {
-              font-size: 1.3em;
-            }
+      .thumb-info {
+        position: relative;
+        float: left;
+        overflow: auto;
+        white-space: normal;
+        box-sizing: inherit;
+        min-height: 100%;
+        color: @brand-primary;
+
+        &__title,
+        &__synopsis {
+          font-family: @font-light;
+          font-size: 1.2em;
+          vertical-align: middle;
+          text-overflow: ellipsis;
+          padding: 5px 0 5px 0;
+          a {
+            font-size: 1.3em;
           }
         }
       }
@@ -161,48 +144,38 @@
     .selection {
       margin: 10px @app-padding 10px @app-padding;
     }
-    .season-list__container {
-      margin: -@zoom-margin 0 -@zoom-margin 0;
-      .slider {
-        .slider-container {
-          overflow-x: auto;
-          overflow-y: hidden;
-          display: inline-block;
-          white-space: nowrap;
-          padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
-          .thumb-containter {
-            flex-shrink: 0;
-            display: inline-block;
-            margin: @zoom-margin @thumb-margin @zoom-margin @thumb-margin;
-            .thumb {
-              overflow: hidden;
-              max-height: 202px;
-              height: 200px;
-              width: @thumb-width;
-              .thumb-background {
-                border: 1px solid transparent;
-                background-color: transparent;
+    .slider {
+      .slider-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: inline-block;
+        white-space: nowrap;
+        padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+        .thumb {
+          overflow: hidden;
+          max-height: 202px;
+          height: 200px;
+          width: @thumb-width;
+          .thumb-background {
+            border: 1px solid transparent;
+            background-color: transparent;
+          }
+          .thumb-info {
+          }
+          &:hover {
+            .thumb-background {
+              border-color: @color-yellow;
+              .transition(opacity 0.1s linear);
+              i {
+                opacity: 0.6;
               }
-              .thumb-info {
+              &:before {
+                opacity: 1;
               }
-            }
-            &:hover {
-              .thumb {
-                .thumb-background {
-                  border-color: @color-yellow;
-                  .transition(opacity 0.1s linear);
-                  i {
-                    opacity: 0.6;
-                  }
-                  &:before {
-                    opacity: 1;
-                  }
-                  &:hover {
-                    i,
-                    &:before {
-                      opacity: 1;
-                    }
-                  }
+              &:hover {
+                i,
+                &:before {
+                  opacity: 1;
                 }
               }
             }
