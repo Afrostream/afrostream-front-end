@@ -12,7 +12,6 @@ import LoadVideo from '../LoadVideo';
 class SeasonEpisodeThumb extends LoadVideo {
 
   static propTypes = {
-    season: React.PropTypes.object.isRequired,
     episode: React.PropTypes.object.isRequired
   };
 
@@ -57,20 +56,18 @@ class SeasonEpisodeThumb extends LoadVideo {
     }
 
     return (
-      <div ref="thumbContainer" className="thumb-containter">
-        <div ref="player" className="thumb">
-          <Link to={link}>
-            <div ref="thumbBackground" className="thumb-background" style={imagePoster}>
-              <i className="btn-play"></i>
-              {this.getNew()}
-            </div>
-          </Link>
+      <div className="thumb">
+        <Link to={link}>
+          <div ref="thumbBackground" className="thumb-background" style={imagePoster}>
+            <i className="btn-play"></i>
+            {this.getNew()}
+          </div>
 
           <div ref="info" className="thumb-info">
             <div className="thumb-info__title">{title}</div>
             <div className="thumb-info__synopsis">{synopsis}</div>
           </div>
-        </div>
+        </Link>
       </div>
     );
   }
