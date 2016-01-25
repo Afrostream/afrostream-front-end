@@ -1,26 +1,65 @@
 @import (reference) '../../../styles/config.less';
 
 .search-box {
-  width: 40px;
-  height: 40px;
+  @box-size: 200px;
   margin-right: 10px;
   color: @brand-primary;
-  background-color: fade(@brand-primary, 20%);
   border-radius: 3px;
   text-align: center;
   &:hover,
   &:focus {
-    background-color: fade(@brand-primary, 30%) !important;
   }
-  &:after {
+  &:before {
     position: absolute;
     content: '\f002';
     font-family: 'FontAwesome';
     font-size: 1.8em;
     line-height: 2;
-    margin: -12px 0 0 -8px;
-    .isMobile({ margin: -8px 0 0 -8px; });
+    left: 10px;
     color: @brand-primary;
+  }
+
+  i {
+    margin-top: 10px;
+    margin-right: 10px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  input {
+    font-size: 16px;
+    padding: 10px 10px 10px 30px;
+    border-radius: 3px;
+    color: @brand-black;
+    position: relative;
+    /*removing boder from search box*/
+    border: none;
+    /*defining background image as a search symbol*/
+    background-color: fade(@brand-primary, 10%);
+    width: 40px;
+    .transition(all 0.15s linear);
+    &:focus {
+      padding: 10px 10px 10px 50px;
+      width: @box-size;
+      color: @brand-primary;
+      background-color: fade(@brand-primary, 40%);
+      &::-webkit-textfield-decoration-container {
+        &:before {
+          margin-left: -30px;
+          color: @brand-black;
+        }
+      }
+      &:-webkit-autofill {
+        background-color: transparent !important;
+      }
+      outline: none;
+    }
+    &[aria-expanded="true"] {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 }
 
