@@ -45,6 +45,10 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         userMerged.picture = `/avatar/${userMerged.email}`;
       }
 
+      if (donePath) {
+        actionDispatcher(pushState(null, donePath));
+      }
+
       return _.merge(data, {
         user: userMerged
       });
