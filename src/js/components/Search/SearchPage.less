@@ -155,9 +155,8 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    padding-top: @search-top;
-    margin: @app-padding;
-    .isMobile({ padding-top: @search-top-mobile; margin: @app-padding-mobile; });
+    padding: @search-top @app-padding @app-padding @app-padding;
+    .isMobile({ padding: @search-top-mobile @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
     span {
       font-size: 2em;
       font-family: @font-thin;
