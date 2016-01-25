@@ -13,11 +13,6 @@ import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
 import * as MovieActionCreators from '../../actions/movie';
 
-if (canUseDOM) {
-  require('gsap');
-  var {TimelineMax,TweenMax} = window.GreenSockGlobals;
-}
-
 if (process.env.BROWSER) {
   require('./MovieInfo.less');
 }
@@ -27,7 +22,6 @@ class MovieInfo extends LoadVideo {
 
   constructor(props) {
     super(props);
-    this.tlIn = null;
   }
 
   static propTypes = {
@@ -41,47 +35,6 @@ class MovieInfo extends LoadVideo {
     load: true,
     active: false
   };
-
-  initTransition() {
-
-    const container = ReactDOM.findDOMNode(this.refs.slContainer);
-    const backGd = ReactDOM.findDOMNode(this.refs.slBackground);
-    this.tlIn = new TimelineMax({paused: true});
-    if (!container || !backGd) {
-      return;
-    }
-    this.tlIn.add(TweenMax.fromTo(container, 2, {autoAlpha: 0}, {autoAlpha: 1}));
-  }
-
-  lunchTransition() {
-    if (this.isMobile()) {
-      return;
-    }
-    if (!this.props.active) {
-      return;
-    }
-    if (!this.tlIn) {
-      this.initTransition();
-    }
-    if (this.tlIn.isActive()) {
-      return;
-    }
-    this.tlIn.restart();
-  }
-
-  isMobile() {
-    //Detect mobile
-    const ua = navigator.userAgent;
-    return /WebKit/.test(ua) && /Mobile/.test(ua);
-  }
-
-  componentDidUpdate() {
-    this.lunchTransition();
-  }
-
-  componentDidMount() {
-    this.lunchTransition();
-  }
 
   render() {
 
