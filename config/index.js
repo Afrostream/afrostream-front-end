@@ -30,7 +30,7 @@ const config = _.merge(
      * API Server
      */
     apiServer: {
-      urlPrefix: process.env.API_END_POINT || 'http://localhost:3002'
+      urlPrefix: (process.env.API_CLIENT_PROTOCOL + '://' + process.env.API_CLIENT_AUTHORITY ) || process.env.API_END_POINT || 'http://localhost:3002'
     },
 
     /**
