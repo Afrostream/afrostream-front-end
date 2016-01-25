@@ -44,7 +44,7 @@ class ModalLogin extends ModalComponent {
     if (token) {
       dispatch(OauthActionCreator.reset({k: token})).then(function () {
         //New password success validate, open login view
-        dispatch(ModalActionCreator.open('show'));
+        dispatch(ModalActionCreator.open('show', false, '/'));
       }).catch(::this.onError);
     }
     const userAgent = (window.navigator && navigator.userAgent) || '';
