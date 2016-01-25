@@ -91,14 +91,14 @@ class SearchPage extends React.Component {
     return (
       <ReactCSSTransitionGroup transitionName="search" className="row-fluid search-page" transitionEnterTimeout={300}
                                transitionLeaveTimeout={300} component="div">
-        <div className="big-search">
-          <input
-            type="text"
-            ref="inputSearch"
-            className="big-search__field"
-            placeholder="Rechercher"
-            onChange={::this.debounceSearch}/>
-        </div>
+        {/*<div className="big-search">
+         <input
+         type="text"
+         ref="inputSearch"
+         className="big-search__field"
+         placeholder="Rechercher"
+         onChange={::this.debounceSearch}/>
+         </div>*/}
         <div className="search-result">
           {this.state.fetching ? <div className="spinner-search"><Spinner /></div> : ''}
           {movies}
