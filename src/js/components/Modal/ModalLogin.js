@@ -198,6 +198,9 @@ class ModalLogin extends ModalComponent {
       case 'showSignin':
         keyType = 'signin';
         break;
+      case 'showRelog':
+        keyType = 'relog';
+        break;
       case 'showSignup':
         keyType = 'signup';
         break;
@@ -244,6 +247,7 @@ class ModalLogin extends ModalComponent {
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
+      case 'showRelog':
         formTemplate = this.getSignIn();
         break;
       case 'showSignup':
