@@ -17,21 +17,15 @@
       text-transform: uppercase;
       margin: 10px;
     }
-    .movies-list__container {
-      margin: 0;
+    .slider {
       position: relative;
-      overflow: hidden;
       width: 100%;
-      .slider {
-        position: relative;
+      .slider-container {
         width: 100%;
-        .slider-container {
-          width: 100%;
-          overflow-x: auto;
-          overflow-y: hidden;
-          display: inline-block;
-          white-space: nowrap;
-        }
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: inline-block;
+        white-space: nowrap;
       }
     }
   }
@@ -43,11 +37,9 @@
       .movies-list__selection {
         margin: 10px @app-padding 10px @app-padding;
       }
-      .movies-list__container {
-        .slider {
-          .slider-container {
-            padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
-          }
+      .slider {
+          padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+        .slider-container {
         }
       }
     }

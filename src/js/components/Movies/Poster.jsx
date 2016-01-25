@@ -25,8 +25,6 @@ class Poster extends LoadVideo {
       props: { movie, thumbW, thumbH}
       } = this;
 
-    const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-    let imageStyles = baseUrl;
 
     if (!movie) {
       return {};
@@ -36,6 +34,8 @@ class Poster extends LoadVideo {
     if (!thumb) {
       return {};
     }
+
+    let imageStyles = '';
     if (this.state.showImage && thumb) {
       let imgix = thumb.get('imgix');
       if (!imgix) {
