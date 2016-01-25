@@ -1,26 +1,24 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import * as ModalActionCreators from '../../actions/modal';
+import * as OAuthActionCreators from '../../actions/oauth';
 import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
 import SearchInput from './../Search/SearchBox';
 import config from '../../../../config';
 
-@connect(({ User }) => ({User}))
+@connect(({ User, OAuth }) => ({User, OAuth}))
 class UserButton extends React.Component {
 
   componentDidMount() {
-    this.createLock();
-  }
-
-  createLock() {
     const {
       props: {
         dispatch
         }
       } = this;
-    dispatch(UserActionCreators.createLock());
-    dispatch(UserActionCreators.getIdToken());
+
+    dispatch(UserActionCreators.getProfile());
   }
 
   logOut() {
@@ -29,18 +27,19 @@ class UserButton extends React.Component {
         dispatch
         }
       } = this;
-    dispatch(UserActionCreators.logOut());
+    dispatch(OAuthActionCreators.logOut());
   }
 
   render() {
     const {
       props: {
         User,
+        OAuth,
         dispatch
         }
       } = this;
 
-    const token = User.get('token');
+    const token = OAuth.get('token');
     const user = User.get('user');
     if (token) {
       if (user) {
@@ -57,7 +56,6 @@ class UserButton extends React.Component {
         );
       }
       else {
-        dispatch(UserActionCreators.getProfile());
         return this.getLoginState();
       }
     } else {
@@ -80,7 +78,7 @@ class UserButton extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showLock());
+    dispatch(ModalActionCreators.open('showSignin'));
   }
 
   toggleSideBar() {
@@ -93,15 +91,6 @@ class UserButton extends React.Component {
     dispatch(EventActionCreators.toggleSideBar());
   }
 
-  logout() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(UserActionCreators.logOut());
-  }
 }
 
 export default UserButton;

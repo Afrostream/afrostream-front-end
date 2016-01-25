@@ -26,7 +26,7 @@ class PlayerPage extends React.Component {
       } = this;
 
     return (
-      <div className="row-fluid">
+      <div className="row-fluid player-page">
         {videoId && movieId ? <PlayerComponent {...{videoId, movieId, seasonId, episodeId}}/> : ''}
       </div>
     );

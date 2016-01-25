@@ -56,19 +56,6 @@ const webpackConfig = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        include: path.join(__dirname, '../node_modules/auth0-lock'),
-        loaders: ['transform?brfs', 'transform?packageify']
-      }, {
-        test: /\.ejs$/,
-        include: path.join(__dirname, '../node_modules/auth0-lock'),
-        loader: 'transform?ejsify'
-      }, {
-        test: /\.json$/,
-        include: [path.join(__dirname, '../node_modules/auth0-lock'), path.join(__dirname, '../node_modules/markdown-it')],
-        loader: 'json'
-      },
-      {
         test: /\.jsx?$/,
         loader: '',
         exclude: [node_modules_dir],
@@ -78,6 +65,11 @@ const webpackConfig = {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
+      },
+      {
+        test: /\.json$/,
+        include: [path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
+        loaders: ['json']
       },
       {
         test: /\.css$/,
@@ -107,6 +99,11 @@ const webpackConfig = {
       }
     ]
   },
+  node: {
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty'
+  },
   externals: {
     //used for castlab dependencys
     "Math/Long": "bytebuffer"
@@ -128,10 +125,6 @@ const webpackConfig = {
         API_CLIENT_AUTHORITY: JSON.stringify(process.env.API_CLIENT_AUTHORITY),
         API_CLIENT_END_POINT: JSON.stringify(process.env.API_CLIENT_END_POINT),
         API_END_POINT: JSON.stringify(process.env.API_END_POINT),
-        AUTH0_CLIENT_ID: JSON.stringify(process.env.AUTH0_CLIENT_ID),
-        AUTH0_DOMAIN: JSON.stringify(process.env.AUTH0_DOMAIN),
-        AUTH0_CALLBACK_URL: JSON.stringify(process.env.AUTH0_CALLBACK_URL),
-        AUTH0_CONNECTION: JSON.stringify(process.env.AUTH0_CONNECTION),
         ALGOLIA_APP_ID: JSON.stringify(process.env.ALGOLIA_APP_ID),
         ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY),
         HEROKU_APP_NAME: JSON.stringify(process.env.HEROKU_APP_NAME),

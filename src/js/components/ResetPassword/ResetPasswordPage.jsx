@@ -1,24 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as UserActionCreators from '../../actions/user';
+import * as ModalActionCreators from '../../actions/modal';
 
 if (process.env.BROWSER) {
   require('./ResetPasswordPage.less');
 }
 
-@connect(({ User }) => ({User})) class ResetPasswordPage extends React.Component {
+@connect(({}) => ({}))
+class ResetPasswordPage extends React.Component {
 
   componentDidMount() {
-    this.showLock();
-  }
-
-  showLock() {
     const {
       props: {
         dispatch
         }
       } = this;
-    dispatch(UserActionCreators.showLock('showReset', 'reset-container'));
+    dispatch(ModalActionCreators.open('showReset', false));
   }
 
   render() {

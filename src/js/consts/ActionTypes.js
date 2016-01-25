@@ -2,15 +2,18 @@ import keyMirror from 'fbjs/lib/keyMirror';
 
 export default {
 
-  User: keyMirror({
+  OAuth: keyMirror({
     getIdToken: null,
-    createLock: null,
-    getProfile: null,
-    showLock: null,
-    showSignupLock: null,
-    showGiftLock: null,
-    showSigninLock: null,
+    signin: null,
+    signup: null,
+    reset: null,
+    facebook: null,
     logOut: null,
+  }),
+
+  User: keyMirror({
+    logOut: null,
+    getProfile: null,
     subscribe: null,
     pendingUser: null,
     cancelSubscription: null
@@ -60,11 +63,12 @@ export default {
   }),
 
   Modal: keyMirror({
-    target: null
+    open: null,
+    close: null
   }),
 
   Blog: keyMirror({
     fetchAll: null,
-    fetchPost: null,
+    fetchPost: null
   })
 };

@@ -1,31 +1,11 @@
 'use strict';
-import dictFr from '../node_modules/auth0-lock/i18n/fr-FR.json';
+import dictFr from './i18n/fr-FR.json';
 import _ from 'lodash';
 import castlab from './player/castlab';
 
-var giftDictClone = _.cloneDeep(dictFr);
-
-const customDict = _.merge(dictFr, {
-  signin: {
-    "title": "S’identifier",
-    "action": "Se connecter"
-  },
-  signup: {
-    "title": "Abonnez vous",
-    "action": "Abonnez vous",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
-    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion."
-  }
-});
-
-const giftDict = _.merge(giftDictClone, {
-  signup: {
-    "title": "Enregistrez-vous",
-    "action": "Enregistrez-vous",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
-    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, allez dans votre profil Afrostream."
-  }
-});
+dictFr.gift = _.merge(_.cloneDeep(dictFr.signin), dictFr.gift);
+dictFr.signup = _.merge(_.cloneDeep(dictFr.signin), dictFr.signup);
+dictFr.reset = _.merge(_.cloneDeep(dictFr.signin), dictFr.reset);
 
 const protData = {
   "com.widevine.alpha": {
@@ -55,32 +35,6 @@ const protData = {
     }
   }
 };
-
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-
-const auth0ClientId = process.env.AUTH0_CLIENT_ID || 'dev';
-
-// hack for auth0 mock.
-let auth0MockDomain, auth0MockAssetsUrl;
-if (auth0ClientId === 'dev') {
-  /*
-   dev environment
-   */
-  const auth0MockUseHttps = false;  // on any auth0 error, you can switch this to true.
-  auth0MockDomain = auth0MockUseHttps ? '127.0.0.1:3443' : '127.0.0.1:3080';
-  auth0MockAssetsUrl = auth0MockUseHttps ? undefined : 'http://' + auth0MockDomain + '/';
-
-  if (!auth0MockUseHttps && canUseDOM) {
-    // we "Override" xhr.open to rewrite https request to http requests.
-    window.XMLHttpRequest.prototype.realOpen = XMLHttpRequest.prototype.open;
-    window.XMLHttpRequest.prototype.open = function (method, url) {
-      if (arguments[1].indexOf(config.auth0.domain) !== -1) {
-        arguments[1] = arguments[1].replace(/^https/, 'http');
-      }
-      return this.realOpen.apply(this, arguments);
-    };
-  }
-}
 
 const config = {
   /**
@@ -121,9 +75,9 @@ const config = {
   apiClient: {
     protocol: process.env.API_CLIENT_PROTOCOL || 'http',
     authority: process.env.API_CLIENT_AUTHORITY || 'localhost:3002',
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002/api',
-    token: 'afro_token',
-    tokenRefresh: 'afro_refresh_token'
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002',
+    token: 'accessToken',
+    tokenRefresh: 'refreshToken'
   },
   images: {
     quality: 65,
@@ -144,33 +98,9 @@ const config = {
     url: 'https://widget.intercom.io/widget/',
     appID: 'k3klwkxq'
   },
-  auth0: {
-    clientId: auth0ClientId,
-    domain: process.env.AUTH0_DOMAIN || auth0MockDomain,
-    callbackUrl: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback',
-    assetsUrl: auth0MockAssetsUrl,
-    token: 'afroToken',
-    tokenRefresh: 'afroRefreshToken',
-    signIn: {
-      dict: customDict,
-      icon: '',
-      theme: 'default',
-      //signupLink: '/signup',
-      resetLink: '/reset',
-      connections: [process.env.AUTH0_CONNECTION || 'afrostream-front-dev', 'facebook'],
-      socialBigButtons: true,
-      disableSignupAction: true,
-      rememberLastLogin: true,
-      disableResetAction: false,
-      popup: true,
-      sso: false,
-      authParams: {
-        scope: 'openid'
-      }
-    },
-    gift: {
-      dict: giftDict
-    }
+  oauth2: {
+    facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,
+    dict: dictFr
   },
   recurly: {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'

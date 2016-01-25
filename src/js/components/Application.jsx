@@ -4,10 +4,8 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import AlertMessage from './Alert/AlertMessage';
-import SubtitleMessage from './Welcome/WelcomeComponents/SubtitleMessage';
-import Modal from './Modal/Modal'
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import classSet from 'classnames';
+import ModalView from './Modal/ModalView'
+import classNames from 'classnames';
 import { metasData,analytics } from '../decorators';
 
 if (process.env.BROWSER) {
@@ -16,7 +14,7 @@ if (process.env.BROWSER) {
 
 @metasData()
 @analytics()
-@connect(({ Event,User }) => ({Event, User}))
+@connect(({ Event,User,Modal }) => ({Event, User, Modal}))
 class Application extends React.Component {
 
   static contextTypes = {
@@ -26,17 +24,20 @@ class Application extends React.Component {
 
   render() {
 
-    const { props: { children,Event,User } } = this;
+    const { props: { children,Event,User,Modal } } = this;
     const toggled = User.get('user') && Event.get('sideBarToggled');
-    let appClasses = {
+    const hasPopup = Modal.get('target');
+
+    let appClasses = classNames({
       'app': true,
-      'toggled': toggled
-    };
+      'toggled': toggled,
+      'lock-open': hasPopup
+    });
 
     return (
 
-      <div className={classSet(appClasses)}>
-        <Modal />
+      <div className={appClasses}>
+        <ModalView />
         <Header {...this.props}/>
         <SideBar />
         <AlertMessage />

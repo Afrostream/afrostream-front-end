@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as UserActionCreators from '../../../actions/user';
+import * as ModalActionCreators from '../../../actions/modal';
 import { Link } from 'react-router';
+import config from '../../../../../config'
+import _ from 'lodash'
 
 if (process.env.BROWSER) {
   require('./PricingTable.less');
@@ -9,23 +11,18 @@ if (process.env.BROWSER) {
 @connect(({ User }) => ({User}))
 class PricingTable extends React.Component {
 
-  showLock() {
+  openModal(e) {
     const {
       props: {
         dispatch
         }
       } = this;
-    dispatch(UserActionCreators.showLock('showSignup'));
-  }
-
-  showGiftLock() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(UserActionCreators.showGiftLock());
+    let plan = e.target.value;
+    let selectedPlan = _.find(config.planCodes, function (item) {
+      return item.code === plan
+    });
+    let type = selectedPlan.code === 'afrostreamgift' ? 'showGift' : 'showSignup';
+    dispatch(ModalActionCreators.open(type, true, `/select-plan/${selectedPlan.code}/checkout`));
   }
 
   render() {
@@ -62,7 +59,7 @@ class PricingTable extends React.Component {
                 <li>Films et séries illimités</li>
               </ul>
             </div>
-            <button className="plan1-button" onClick={::this.showLock}>
+            <button className="plan1-button" value="afrostreammonthly" onClick={::this.openModal}>
               S'ABONNER MAINTENANT
             </button>
 
@@ -86,7 +83,7 @@ class PricingTable extends React.Component {
                 <li>Films et séries illimités</li>
               </ul>
             </div>
-            <button className="plan2-button" onClick={::this.showLock}>
+            <button className="plan2-button" value="afrostreamambassadeurs" onClick={::this.openModal}>
               S'ABONNER MAINTENANT
             </button>
 
@@ -110,7 +107,7 @@ class PricingTable extends React.Component {
                 <li>Films et séries illimités</li>
               </ul>
             </div>
-            <button className="plan3-button" onClick={::this.showGiftLock}>
+            <button className="plan3-button" value="afrostreamgift" onClick={::this.openModal}>
               OFFRIR UN ABONNEMENT
             </button>
 

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as UserActionCreators from '../../../actions/user';
+import * as ModalActionCreators from '../../../actions/modal';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../../../config';
@@ -163,7 +163,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showLock('showSignup'));
+    dispatch(ModalActionCreators.open('showSignup'));
   }
 
   hasPromo() {
@@ -174,16 +174,6 @@ class WelcomeHeader extends React.Component {
     return HasProm;
   }
 
-  showAfroloveLock() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(UserActionCreators.showLock('showSignin'));
-  }
-
   showGiftLock() {
     const {
       props: {
@@ -191,7 +181,7 @@ class WelcomeHeader extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.showGiftLock());
+    dispatch(ModalActionCreators.open('showGift', true, '/select-plan/afrostreamgift/checkout'));
   }
 
   render() {

@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { Route, Redirect } from 'react-router';
 import Application from './components/Application';
 import MoviePage from './components/Movies/MoviePage';
@@ -9,12 +9,11 @@ import PlayerPage from './components/Player/PlayerPage';
 import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
-import PaymentPage from './components/Payment/PaymentPage.jsx';
-import PaymentForm from './components/Payment/PaymentForm.jsx';
+import PaymentPage from './components/Payment/PaymentPage';
+import PaymentForm from './components/Payment/PaymentForm';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 import * as Static from './components/Static';
 import * as Blog from './components/Blog';
-
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
 import NoMatch from './components/NoMatch';
@@ -27,15 +26,16 @@ export default (
     <Route name="policy" path="policy" component={Static.Policy}/>
     <Route name="reset" path="reset" component={ResetPasswordPage}/>
     <Route name="login" path="login" component={LoginPage}/>
-    <Route name="payment" path="select-plan" component={PaymentPage}>
-      <Route name="plancode" path=":planCode(/:status)" component={PaymentForm}/>
-    </Route>
     <Route name="blog" path="blog" component={Blog.List}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.View}/>
     </Route>
+    <Route name="payment" path="select-plan" component={PaymentPage}>
+      <Route name="plancode" path=":planCode(/:status)" component={PaymentForm}/>
+    </Route>
     <Route name="home" path="/" component={HomePage}>
-      <Route name="compte" path="compte" component={AccountPage} />
-      <Route name="cancelSubscription" path="/cancel-subscription" component={CancelSubscription}/>
+      <Route name="compte" path="compte" component={AccountPage}>
+        <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
+      </Route>
       <Route name="movie" path=":movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path=":movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
