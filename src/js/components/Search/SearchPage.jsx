@@ -56,9 +56,11 @@ class SearchPage extends React.Component {
     let input = this.getInput().value;
 
     if (input.length < 3) {
-      self.setState({
+      this.setState({
         fetching: false
       });
+
+      return;
     }
 
     dispatch(SearchActionCreators.fetchMovies(input)).then(function () {
