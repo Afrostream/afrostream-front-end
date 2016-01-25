@@ -6,6 +6,7 @@ import * as SearchActionCreators from '../../actions/search';
 import Thumb from '../../components/Movies/Thumb';
 import Spinner from '../Spinner/Spinner';
 import {search} from '../../../../config';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 if (process.env.BROWSER) {
   require('./SearchPage.less');
