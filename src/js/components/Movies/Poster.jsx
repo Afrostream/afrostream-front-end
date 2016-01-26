@@ -3,12 +3,13 @@ import Immutable from 'immutable';
 import LoadVideo from '../LoadVideo';
 import config from '../../../../config';
 import shallowEqual from 'react-pure-render/shallowEqual';
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 
 const Status = {
   PENDING: 'pending',
   LOADING: 'loading',
   LOADED: 'loaded',
-  FAILED: 'failed',
+  FAILED: 'failed'
 };
 
 class Poster extends LoadVideo {
@@ -107,7 +108,10 @@ class Poster extends LoadVideo {
   }
 
   getLazyImageUrl() {
-    let imageStyles = require('../../../assets/images/default/134x200.jpg');
+    let imageStyles;
+    if (canUseDOM) {
+      imageStyles = require('../../../assets/images/default/134x200.jpg');
+    }
     switch (this.state.status) {
       case Status.LOADED:
         imageStyles = this.state.src;

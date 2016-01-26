@@ -49,7 +49,10 @@ class SearchBox extends React.Component {
   goBack() {
     let input = this.getInput();
     input.value = '';
-    this.context.history.goBack();
+    let isInSearch = this.context.history.isActive('recherche');
+    if (isInSearch) {
+      this.context.history.goBack();
+    }
   }
 
   componentDidMount() {
