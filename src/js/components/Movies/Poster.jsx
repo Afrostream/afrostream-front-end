@@ -2,9 +2,22 @@ import React ,{ PropTypes } from 'react';
 import Immutable from 'immutable';
 import LoadVideo from '../LoadVideo';
 import config from '../../../../config';
+import shallowEqual from 'react-pure-render/shallowEqual';
+
+const Status = {
+  PENDING: 'pending',
+  LOADING: 'loading',
+  LOADED: 'loaded',
+  FAILED: 'failed',
+};
 
 class Poster extends LoadVideo {
 
+
+  constructor(props) {
+    super(props);
+    this.state = {status: props.movie ? Status.LOADING : Status.PENDING, src: ''};
+  }
 
   static propTypes = {
     thumbW: React.PropTypes.number,
@@ -16,32 +29,91 @@ class Poster extends LoadVideo {
     thumbH: 200
   };
 
-  state = {
-    showImage: true
-  };
+  componentDidMount() {
+    if (this.state.status === Status.LOADING) {
+      this.createLoader();
+    }
+  }
 
-  getLazyImageUrl() {
+  componentWillReceiveProps(nextProps) {
+    if (!shallowEqual(nextProps.movie, this.props.movie)) {
+      this.setState({
+        status: nextProps.movie ? Status.LOADING : Status.PENDING
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.state.status === Status.LOADING && !this.img) {
+      this.createLoader();
+    }
+  }
+
+  componentWillUnmount() {
+    this.destroyLoader();
+  }
+
+  createLoader() {
     const {
       props: { movie, thumbW, thumbH}
       } = this;
 
 
     if (!movie) {
-      return {};
+      return;
     }
 
     let thumb = movie.get('thumb');
     if (!thumb) {
-      return {};
+      return;
     }
 
-    let imageStyles = '';
-    if (this.state.showImage && thumb) {
-      let imgix = thumb.get('imgix');
-      if (!imgix) {
-        return {};
-      }
-      imageStyles = `${imgix}?crop=faces&fit=crop&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
+    let imgix = thumb.get('imgix');
+
+    if (!imgix) {
+      return;
+    }
+
+    let imageStyles = `${imgix}?crop=faces&fit=crop&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
+
+
+    this.destroyLoader();  // We can only have one loader at a time.
+
+    this.img = new Image();
+    this.img.onload = ::this.handleLoad;
+    this.img.onerror = ::this.handleError;
+    this.img.src = imageStyles;
+  }
+
+  destroyLoader() {
+    let imgSrouce = '';
+    if (this.img) {
+      imgSrouce = this.img.src;
+      this.img.onload = null;
+      this.img.onerror = null;
+      this.img = null;
+    }
+    return imgSrouce;
+  }
+
+  handleLoad(event) {
+    let imgSrouce = this.destroyLoader();
+    this.setState({status: Status.LOADED, src: imgSrouce});
+  }
+
+  handleError(error) {
+    let imgSrouce = this.destroyLoader();
+    this.setState({status: Status.FAILED, src: imgSrouce});
+  }
+
+  getLazyImageUrl() {
+    let imageStyles = require('../../../assets/images/default/134x200.jpg');
+    switch (this.state.status) {
+      case Status.LOADED:
+        imageStyles = this.state.src;
+        break;
+      default:
+        break;
     }
     return {backgroundImage: `url(${imageStyles})`};
   }
