@@ -35,6 +35,7 @@
       "repeat_password": "Le mot de passe de verification",
       "min": "doit contenir au minimum 6 caracteres",
       "max": "doit contenir au maximum 50 caracteres",
+      "same": "doit correspondre",
       "empty": "est requis"
     },
     "Error: The specified email address is already in use.": "Email déja existant"

@@ -8,6 +8,7 @@ import * as UserActionCreators from '../../actions/user';
 import ModalComponent from './ModalComponent';
 import {oauth2} from '../../../../config';
 import MobileDetect from 'mobile-detect';
+import _ from 'lodash';
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less');
@@ -24,7 +25,7 @@ class ModalLogin extends ModalComponent {
       password: null,
       repeat_password: null,
       email: null,
-      errors: [],
+      errors: {},
       timestamp: new Date()
     };
   }
@@ -54,7 +55,10 @@ class ModalLogin extends ModalComponent {
   }
 
   isValid() {
-    return !this.state.errors.length;
+    let valid = _.filter(this.state.errors, (value, key) => {
+      return value;
+    });
+    return !valid.length;
   }
 
   validateSize(value, min = 0, max = 0) {
@@ -81,7 +85,7 @@ class ModalLogin extends ModalComponent {
         //Minimum 6 and Maximum 50 characters :
         regex = /^[a-zA-Z0-9!@#$%^&*()_+=?]{6,50}$/;
         isValid = regex.test(valueForm) && this.state['password'] === valueForm;
-        valitationType = this.validateSize(valueForm);
+        valitationType = this.validateSize(valueForm, 6, 50) || (this.state['password'] === valueForm ? '' : 'same');
         break;
     }
 
@@ -117,13 +121,29 @@ class ModalLogin extends ModalComponent {
       } = this;
 
     const self = this;
+
+    let valitations = ['email', 'password'];
+
+    if (self.props.type === 'showReset') {
+      valitations.push('repeat_password');
+    }
+
+    let formValues = _.pick(self.state, valitations);
+    _.forIn(formValues, function (values, key) {
+      self.validate(key);
+    });
+
+    if (!self.isValid()) {
+      return;
+    }
+
     this.setState({
       loading: true,
       error: ''
     });
 
-    let typeCall = this.getI18n();
-    let postData = _.pick(this.state, ['email', 'password']);
+    let typeCall = self.getI18n();
+    let postData = _.pick(self.state, ['email', 'password']);
 
     dispatch(OauthActionCreator[typeCall](postData)).then(function () {
       self.setState({
@@ -134,7 +154,7 @@ class ModalLogin extends ModalComponent {
         dispatch(UserActionCreators.getProfile());
         dispatch(ModalActionCreator.close());
       }
-    }).catch(::this.onError);
+    }).catch(::self.onError);
   }
 
   onError(err) {
@@ -307,7 +327,7 @@ class ModalLogin extends ModalComponent {
           <div className="password_policy"></div>
         </div>
         <div className="action">
-          <button type="submit" className="primary next" disabled={!this.isValid()}>{this.getTitle('action')}</button>
+          <button type="submit" className="primary next" disabled={!::this.isValid}>{this.getTitle('action')}</button>
           <div className="options">
             <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
@@ -329,7 +349,7 @@ class ModalLogin extends ModalComponent {
           <i className="icon-budicon"></i><span className="sso-notice">Single Sign-on enabled</span>
         </div>
         <div className="action">
-          <button type="submit" className="primary next" disabled={!this.isValid()}>{this.getTitle('action')}</button>
+          <button type="submit" className="primary next" disabled={!::this.isValid}>{this.getTitle('action')}</button>
           <div className="db-actions">
             <div className="create-account buttons-actions">
               <Link to="/reset" className="forgot-pass btn-small">{this.getTitle('forgotText')}</Link>
@@ -353,7 +373,7 @@ class ModalLogin extends ModalComponent {
               </label>
               <div className="input-box">
                 <i className="icon-budicon"></i>
-                <input name="repeat_password" id="reset_easy_repeat_password" type="password"
+                <input name="repeat_password" id="reset_easy_repeat_password" type="password" required
                        placeholder={this.getTitle('repeatPasswordPlaceholder')}
                        title={this.getTitle('repeatPasswordPlaceholder')}/>
                 {this.renderValidationMessages('repeat_password')}
@@ -365,7 +385,7 @@ class ModalLogin extends ModalComponent {
         </div>
         <div className="action">
           <button type="submit" className="primary next"
-                  disabled={!this.isValid()}>{this.getTitle('action')}</button>
+                  disabled={!::this.isValid}>{this.getTitle('action')}</button>
           <div className="options">
             <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
