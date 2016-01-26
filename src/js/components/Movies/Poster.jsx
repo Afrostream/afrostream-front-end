@@ -22,12 +22,14 @@ class Poster extends LoadVideo {
 
   static propTypes = {
     thumbW: React.PropTypes.number,
-    thumbH: React.PropTypes.number
+    thumbH: React.PropTypes.number,
+    preload: React.PropTypes.bool
   };
 
   static defaultProps = {
     thumbW: 140,
-    thumbH: 200
+    thumbH: 200,
+    preload: false
   };
 
   componentDidMount() {
@@ -77,13 +79,17 @@ class Poster extends LoadVideo {
 
     let imageStyles = `${imgix}?crop=faces&fit=crop&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
 
+    if (this.props.preload) {
 
-    this.destroyLoader();  // We can only have one loader at a time.
+      this.destroyLoader();  // We can only have one loader at a time.
 
-    this.img = new Image();
-    this.img.onload = ::this.handleLoad;
-    this.img.onerror = ::this.handleError;
-    this.img.src = imageStyles;
+      this.img = new Image();
+      this.img.onload = ::this.handleLoad;
+      this.img.onerror = ::this.handleError;
+      this.img.src = imageStyles;
+    } else {
+      this.setState({status: Status.LOADED, src: imageStyles});
+    }
   }
 
   destroyLoader() {
