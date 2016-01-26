@@ -2,7 +2,6 @@
 @import '../../../styles/arrow.less';
 
 @thumb-margin: 10px;
-@zoom-margin: 50px;
 .movies-list {
   position: relative;
   background-color: @color-indigo;
@@ -18,23 +17,15 @@
       text-transform: uppercase;
       margin: 10px;
     }
-    .movies-list__container {
-      margin: -@zoom-margin 0 -40px 0;
+    .slider {
       position: relative;
-      overflow: hidden;
       width: 100%;
-      .slider {
-        position: relative;
+      .slider-container {
         width: 100%;
-        .slider-container {
-          width: 100%;
-          overflow-x: auto;
-          overflow-y: hidden;
-          display: inline-block;
-          white-space: nowrap;
-          .thumb-containter {
-          }
-        }
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: inline-block;
+        white-space: nowrap;
       }
     }
   }
@@ -46,11 +37,9 @@
       .movies-list__selection {
         margin: 10px @app-padding 10px @app-padding;
       }
-      .movies-list__container {
-        .slider {
-          .slider-container {
-            padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
-          }
+      .slider {
+          padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+        .slider-container {
         }
       }
     }

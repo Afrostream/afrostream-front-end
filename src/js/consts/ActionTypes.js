@@ -70,5 +70,9 @@ export default {
   Blog: keyMirror({
     fetchAll: null,
     fetchPost: null
+  }),
+
+  Search: keyMirror({
+    fetchMovies: null
   })
 };

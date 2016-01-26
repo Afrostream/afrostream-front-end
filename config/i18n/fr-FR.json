@@ -7,6 +7,9 @@
   "loginSocialButton": "S'identifier avec {connection:title}",
   "signupSocialButton": "S'inscrire avec {connection:title}",
   "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
+  "search": {
+    "noData": "La recherche n'a trouvé aucuns resultat"
+  },
   "signin": {
     "title": "S’identifier",
     "action": "Se connecter",
@@ -85,5 +88,9 @@
     "action": "Enregistrez-vous",
     "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
     "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, allez dans votre profil Afrostream."
+  },
+  "relog": {
+    "title": "Reconnectez-vous",
+    "action": "Reconnectez-vous"
   }
 }

@@ -6,6 +6,7 @@ import castlab from './player/castlab';
 dictFr.gift = _.merge(_.cloneDeep(dictFr.signin), dictFr.gift);
 dictFr.signup = _.merge(_.cloneDeep(dictFr.signin), dictFr.signup);
 dictFr.reset = _.merge(_.cloneDeep(dictFr.signin), dictFr.reset);
+dictFr.relog = _.merge(_.cloneDeep(dictFr.signin), dictFr.relog);
 
 const protData = {
   "com.widevine.alpha": {
@@ -97,6 +98,9 @@ const config = {
   intercom: {
     url: 'https://widget.intercom.io/widget/',
     appID: 'k3klwkxq'
+  },
+  search: {
+    dict: dictFr.search
   },
   oauth2: {
     facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,
