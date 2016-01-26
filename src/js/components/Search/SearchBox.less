@@ -6,9 +6,6 @@
   color: @brand-primary;
   border-radius: 3px;
   text-align: center;
-  &:hover,
-  &:focus {
-  }
   &:before {
     position: absolute;
     content: '\f002';
@@ -26,6 +23,14 @@
     right: 10px;
     cursor: pointer;
     z-index: 2;
+    font-size: 1.4em;
+    display: none;
+  }
+
+  &.has-focus {
+    i {
+      display: block;
+    }
   }
 
   input {

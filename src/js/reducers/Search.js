@@ -7,13 +7,19 @@ const initialState = Immutable.fromJS({
 });
 
 export default createReducer(initialState, {
+  [ActionTypes.Search.fetching](state) {
+    return state.merge({
+      [`fetching`]: true
+    });
+  },
   [ActionTypes.Search.fetchMovies](state, { res,key }) {
     if (!res) {
       return state;
     }
     const data = res.body;
     return state.merge({
-      [`search`]: data
+      [`search`]: data,
+      [`fetching`]: false
     });
   }
 });

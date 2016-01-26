@@ -73,6 +73,7 @@ export default {
   }),
 
   Search: keyMirror({
-    fetchMovies: null
+    fetchMovies: null,
+    fetching: null
   })
 };

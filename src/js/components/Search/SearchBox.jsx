@@ -13,26 +13,47 @@ if (process.env.BROWSER) {
 @connect(({ Search }) => ({Search}))
 class SearchBox extends React.Component {
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
-
   constructor(props) {
     super(props);
   }
 
+  static contextTypes = {
+    history: PropTypes.object.isRequired
+  };
+
+  state = {
+    hasFocus: false
+  };
+
   debounceSearch = _.debounce(this.search, 400);
+
+  handleFocus() {
+    this.setState({
+      hasFocus: true
+    })
+  }
+
+  handleBlur() {
+    let self = this;
+    setTimeout(function () {
+      self.setState({
+        hasFocus: false
+      })
+    }, 200);
+  }
 
   getInput() {
     return ReactDOM.findDOMNode(this.refs.inputSearchMini);
   }
 
   goBack() {
+    let input = this.getInput();
+    input.value = '';
     this.context.history.goBack();
   }
 
   componentDidMount() {
-    var input = this.getInput();
+    let input = this.getInput();
 
     // Set input to last search
     if (this.props.lastSearch) {
@@ -44,31 +65,31 @@ class SearchBox extends React.Component {
     const {
       props: { dispatch }
       } = this;
-    let self = this;
     let input = this.getInput().value;
 
     if (input.length < 3) {
       return;
     }
 
-    this.setState({
-      fetching: true
-    });
     this.context.history.pushState(null, 'recherche');
-    dispatch(SearchActionCreators.fetchMovies(input)).then(function () {
-      self.setState({
-        fetching: false
-      });
-    });
+    dispatch(SearchActionCreators.fetchMovies(input));
   }
 
   render() {
 
+
+    let fielClass = {
+      'search-box': true,
+      'has-focus': this.state.hasFocus
+    };
+
     return (
-      <div className="search-box">
-        <i className="fa fa-times" onClick={::this.goBack}/>
+      <div className={classSet(fielClass)}>
+        <i className="fa fa-times" onClick={::this.goBack} />
         <input
           onChange={::this.debounceSearch}
+          onFocus={::this.handleFocus}
+          onBlur={::this.handleBlur}
           name="search-box"
           type="text"
           ref="inputSearchMini"
