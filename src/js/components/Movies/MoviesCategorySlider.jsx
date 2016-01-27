@@ -30,6 +30,7 @@ class MoviesCategorySlider extends React.Component {
 
     return (
       <Thumb
+        preload={true}
         key={`movie-thumb-${index}`} {...{movie}} />
     );
   }

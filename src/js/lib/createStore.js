@@ -10,14 +10,16 @@ function promiseMiddleware(api, {getState, dispatch}) {
     function _r(action) {
 
       if (action && _.isFunction(action.then)) {
-        return action.then(_r).catch(function (err) {
-          if (_.isFunction(action.catch)) {
-            //action.catch(err);
-          } else if (err && err.response && err.response.text === 'Unauthorized') {
-            dispatch(ModalActionCreators.open('showRelog'));
-          }
-          return next(action);
-        });
+        return action.then(_r);
+        //TODO add popup reconnect on action error
+        /*.catch(function (err) {
+         if (_.isFunction(action.catch)) {
+         //action.catch(err);
+         } else if (err && err.response && err.response.text === 'Unauthorized') {
+         dispatch(ModalActionCreators.open('showRelog'));
+         }
+         return next(action);
+         });*/
       }
 
       if (_.isFunction(action)) {

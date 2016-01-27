@@ -14,22 +14,23 @@ const Status = {
 
 class Poster extends LoadVideo {
 
-
   constructor(props) {
     super(props);
-    this.state = {status: props.movie ? Status.LOADING : Status.PENDING, src: ''};
+    this.state = {status: (props.episode || props.movie) ? Status.LOADING : Status.PENDING, src: ''};
   }
 
   static propTypes = {
     thumbW: React.PropTypes.number,
     thumbH: React.PropTypes.number,
-    preload: React.PropTypes.bool
+    preload: React.PropTypes.bool,
+    keyMap: React.PropTypes.string
   };
 
   static defaultProps = {
     thumbW: 140,
     thumbH: 200,
-    preload: false
+    preload: false,
+    keyMap: 'thumb'
   };
 
   componentDidMount() {
@@ -39,9 +40,9 @@ class Poster extends LoadVideo {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!shallowEqual(nextProps.movie, this.props.movie)) {
+    if (!shallowEqual(nextProps, this.props)) {
       this.setState({
-        status: nextProps.movie ? Status.LOADING : Status.PENDING
+        status: (nextProps.episode || nextProps.movie) ? Status.LOADING : Status.PENDING
       });
     }
   }
@@ -58,15 +59,17 @@ class Poster extends LoadVideo {
 
   createLoader() {
     const {
-      props: { movie, thumbW, thumbH}
+      props: { movie,episode, thumbW, thumbH,keyMap}
       } = this;
 
 
-    if (!movie) {
+    let data = episode || movie;
+
+    if (!data) {
       return;
     }
 
-    let thumb = movie.get('thumb');
+    let thumb = data.get(keyMap);
     if (!thumb) {
       return;
     }

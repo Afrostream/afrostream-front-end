@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import config from '../../../../config/';
 import classSet from 'classnames';
 import { Link } from 'react-router';
-import * as SearchActionCreators from '../../actions/search';
+
+import * as EventActionCreators from '../../actions/event';
 
 if (process.env.BROWSER) {
   require('./SearchBox.less');
@@ -28,6 +29,11 @@ class SearchBox extends React.Component {
   debounceSearch = _.debounce(this.search, 400);
 
   handleFocus() {
+    const {
+      props: { dispatch }
+      } = this;
+
+    dispatch(EventActionCreators.pinHeader(true));
     this.setState({
       hasFocus: true
     })
@@ -51,7 +57,7 @@ class SearchBox extends React.Component {
     input.value = '';
     let isInSearch = this.context.history.isActive('recherche');
     if (isInSearch) {
-      this.context.history.goBack();
+      this.context.history.pushState(null, '/');
     }
   }
 
@@ -65,25 +71,18 @@ class SearchBox extends React.Component {
   }
 
   search() {
-    const {
-      props: { dispatch }
-      } = this;
     let input = this.getInput().value;
-
     if (input.length < 3) {
       return;
     }
-
-    this.context.history.pushState(null, 'recherche');
-    dispatch(SearchActionCreators.fetchMovies(input));
+    this.context.history.pushState(null, 'recherche', {search: input});
   }
 
   render() {
 
-
     let fielClass = {
       'search-box': true,
-      'has-focus': this.state.hasFocus
+      'has-focus': this.context.history.isActive('recherche') || this.state.hasFocus
     };
 
     return (

@@ -41,8 +41,8 @@ class SeasonList extends React.Component {
     const episodesList = season.get('episodes');
     let episode = episodesList.get(index);
     return (
-      <SeasonEpisodeThumb
-        key={key} {...{movie, season, episode}}/>
+      <SeasonEpisodeThumb preload={true}
+                          key={`season-thumb-${index}`} {...{movie, season, episode}} />
     );
   }
 
@@ -83,7 +83,7 @@ class SeasonList extends React.Component {
           active={page === i}
           index={i}
           seasonId={season.get('_id')}
-          {...{season}}/>).toJS() : ''}
+          {...{season}} />).toJS() : ''}
       </div>
     );
   }
@@ -101,7 +101,7 @@ class SeasonList extends React.Component {
 
     if (!season && selectedSeasonId) {
       dispatch(SeasonActionCreators.getSeason(selectedSeasonId));
-      return (<div className="slider-container"><Spinner/></div>);
+      return (<div className="slider-container"><Spinner /></div>);
     }
 
     const episodesList = season.get('episodes');

@@ -36,25 +36,7 @@
       .isMobile({ left: 20px; });
     }
     input {
-      &:focus {
-        .isMobile({ width: 100%; });
-      }
-    }
-  }
-
-  input {
-    font-size: 16px;
-    padding: 10px 10px 10px 30px;
-    border-radius: 3px;
-    color: @brand-black;
-    position: relative;
-    /*removing boder from search box*/
-    border: none;
-    /*defining background image as a search symbol*/
-    background-color: fade(@brand-primary, 10%);
-    width: 40px;
-    .transition(all 0.15s linear);
-    &:focus {
+      .isMobile({ width: 100%; });
       padding: 10px 10px 10px 50px;
       width: @box-size;
       color: @brand-primary;
@@ -70,6 +52,20 @@
       }
       outline: none;
     }
+  }
+
+  input {
+    font-size: 16px;
+    padding: 10px 10px 10px 30px;
+    border-radius: 3px;
+    color: @brand-black;
+    position: relative;
+    /*removing boder from search box*/
+    border: none;
+    /*defining background image as a search symbol*/
+    background-color: fade(@brand-primary, 10%);
+    width: 40px;
+    .transition(all 0.15s linear);
     &[aria-expanded="true"] {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;

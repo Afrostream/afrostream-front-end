@@ -11,15 +11,9 @@ if (process.env.BROWSER) {
 @connect(({ Movie, Video}) => ({Movie, Video}))
 class Thumb extends Poster {
 
-  static propTypes = {
-    thumbW: React.PropTypes.number,
-    thumbH: React.PropTypes.number
-  };
-
-  static defaultProps = {
-    thumbW: 140,
-    thumbH: 200
-  };
+  constructor(props) {
+    super(props);
+  }
 
   triggerOver() {
     let thumbMouse = ReactDOM.findDOMNode(this);

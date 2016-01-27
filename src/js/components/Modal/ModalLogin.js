@@ -142,7 +142,7 @@ class ModalLogin extends ModalComponent {
       error: ''
     });
 
-    let typeCall = self.getI18n();
+    let typeCall = self.getType();
     let postData = _.pick(self.state, ['email', 'password']);
 
     dispatch(OauthActionCreator[typeCall](postData)).then(function () {
@@ -200,6 +200,27 @@ class ModalLogin extends ModalComponent {
         break;
       case 'showRelog':
         keyType = 'relog';
+        break;
+      case 'showSignup':
+        keyType = 'signup';
+        break;
+      case 'showGift':
+        keyType = 'gift';
+        break;
+      case 'showReset':
+        keyType = 'reset';
+        break;
+    }
+    return keyType;
+  }
+
+  getType() {
+    let keyType = 'signin';
+    switch (this.props.type) {
+      case 'show':
+      case 'showSignin':
+      case 'showRelog':
+        keyType = 'signin';
         break;
       case 'showSignup':
         keyType = 'signup';

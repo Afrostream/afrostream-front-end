@@ -34,6 +34,9 @@
       overflow-y: hidden;
       display: inline-block;
       white-space: nowrap;
+      > div {
+        overflow-y: hidden;
+      }
     }
   }
   .thumb {
@@ -60,7 +63,7 @@
         vertical-align: middle;
         background-image: url(../../../assets/images/default/331x232.jpg);
         background-size: cover;
-        background-position: center top;
+        background-position: center center;
         background-repeat: no-repeat;
         cursor: pointer;
         .transition(opacity 0.1s linear);
