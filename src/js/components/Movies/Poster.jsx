@@ -23,7 +23,8 @@ class Poster extends LoadVideo {
     thumbW: React.PropTypes.number,
     thumbH: React.PropTypes.number,
     preload: React.PropTypes.bool,
-    keyMap: React.PropTypes.string
+    keyMap: React.PropTypes.string,
+    favorite: React.PropTypes.bool
   };
 
   static defaultProps = {

@@ -16,6 +16,8 @@ export default {
     getProfile: null,
     subscribe: null,
     pendingUser: null,
+    getFavoritesMovies: null,
+    setFavoriteMovies: null,
     cancelSubscription: null
   }),
 

@@ -52,6 +52,25 @@
       }
     }
   }
+  .favorite-button {
+    background-color: fade(@color-indigo, 70%);
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 3;
+    &.active {
+      color: @color-yellow;
+    }
+    &:hover {
+      color: @color-yellow;
+      &.active {
+        color: @brand-primary;
+      }
+      &.fa-heart {
+        content: '\f004';
+      }
+    }
+  }
 }
 
 @media (min-width: 768px) {

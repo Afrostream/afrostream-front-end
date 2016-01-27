@@ -90,6 +90,30 @@ export function cancelSubscription() {
   };
 }
 
+export function getFavoriteMovies() {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    const refreshToken = getState().OAuth.get('refreshToken');
+    return async api => ({
+      type: ActionTypes.User.getFavoritesMovies,
+      res: await api(`/api/users/${user.get('_id')}/favoritesMovies`, 'GET', {}, token, refreshToken)
+    });
+  };
+}
+
+export function setFavoriteMovies(active, id) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    const refreshToken = getState().OAuth.get('refreshToken');
+    return async api => ({
+      type: ActionTypes.User.setFavoriteMovies,
+      res: await api(`/api/users/${user.get('_id')}/favoritesMovies`, active ? 'POST' : 'DELETE', {_id: id}, token, refreshToken)
+    });
+  };
+}
+
 export function pendingUser(pending) {
   return {
     type: ActionTypes.User.pendingUser,

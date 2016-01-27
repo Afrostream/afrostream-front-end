@@ -38,7 +38,21 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.OAuth.logOut](state, { }) {
+  [ActionTypes.User.getFavoritesMovies](state, { res }) {
+    const data = res.body;
+    return state.merge({
+      ['favorites/movies']: data
+    });
+  },
+
+  [ActionTypes.User.setFavoriteMovies](state, { res }) {
+    const data = res.body;
+    return state.merge({
+      ['favorites/movies']: [data]
+    });
+  },
+
+  [ActionTypes.User.logOut](state, { }) {
     return state.merge({
       ['user']: null
     });
