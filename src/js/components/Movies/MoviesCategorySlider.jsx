@@ -49,6 +49,7 @@ class MoviesCategorySlider extends React.Component {
         <Slider>
           <div className="slider-container">
             <ReactList
+              useTranslate3d
               axis="x"
               itemRenderer={::this.renderItem}
               length={movies.size}

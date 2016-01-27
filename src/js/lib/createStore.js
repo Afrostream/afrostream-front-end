@@ -13,7 +13,7 @@ function promiseMiddleware(api, {getState, dispatch}) {
         return action.then(_r).catch(function (err) {
           if (_.isFunction(action.catch)) {
             //action.catch(err);
-          } else if (err.response && err.response.text === 'Unauthorized') {
+          } else if (err && err.response && err.response.text === 'Unauthorized') {
             dispatch(ModalActionCreators.open('showRelog'));
           }
           return next(action);
