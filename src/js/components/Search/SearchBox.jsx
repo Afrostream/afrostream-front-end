@@ -56,6 +56,7 @@ class SearchBox extends React.Component {
     let input = this.getInput();
     input.value = '';
     let isInSearch = this.context.history.isActive('recherche');
+    this.handleBlur();
     if (isInSearch) {
       this.context.history.pushState(null, '/');
     }
