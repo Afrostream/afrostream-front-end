@@ -8,10 +8,15 @@ import * as ModalActionCreators from '../actions/modal';
 function promiseMiddleware(api, {getState, dispatch}) {
   return next =>
     function _r(action) {
+
       if (action && _.isFunction(action.then)) {
         return action.then(_r).catch(function (err) {
-          if (err.response && err.response.text === 'Unauthorized')
+          if (_.isFunction(action.catch)) {
+            //action.catch(err);
+          } else if (err.response && err.response.text === 'Unauthorized') {
             dispatch(ModalActionCreators.open('showRelog'));
+          }
+          return next(action);
         });
       }
 
