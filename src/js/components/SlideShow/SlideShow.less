@@ -50,7 +50,7 @@
   }
 
   .pager {
-    @color-purple-alpha : rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.4);
+    @color-purple-alpha: rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.4);
     background-color: @color-purple-alpha;
     display: inline-block;
     font-family: @font-light;
@@ -85,14 +85,25 @@
   }
 }
 
-@media @mobile,@tablet{
+@media @mobile,@tablet {
 
   .SlideShow {
     min-height: 46vh;
+
+    .movie {
+      .billboard-infos {
+      }
+    }
   }
 }
 
-@media @mobile{
+@media @tablet {
+  .pagination {
+    left: @app-padding-mobile;
+  }
+}
+
+@media @mobile {
 
   .SlideShow {
     .pagination {

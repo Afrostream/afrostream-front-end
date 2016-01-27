@@ -6,14 +6,23 @@ import * as MovieActionCreators from '../../actions/movie';
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
-import LoadVideo from '../LoadVideo';
+import Poster from '../Movies/Poster';
 
 @connect(({ Movie }) => ({Movie}))
-class SeasonEpisodeThumb extends LoadVideo {
+class SeasonEpisodeThumb extends Poster {
+
+  constructor(props) {
+    super(props);
+  }
 
   static propTypes = {
-    season: React.PropTypes.object.isRequired,
-    episode: React.PropTypes.object.isRequired
+    episode: PropTypes.object.isRequired
+  };
+
+  static defaultProps = {
+    thumbW: 200,
+    thumbH: 110,
+    keyMap: 'poster'
   };
 
   getNew() {
@@ -38,15 +47,8 @@ class SeasonEpisodeThumb extends LoadVideo {
       } = this;
 
     const maxLength = 80;
-    if (!episode) {
-      return <Spinner/>
-    }
-    let poster = episode.get('poster');
-    let posterImg = poster ? poster.get('imgix') : '';
-    let imagePoster = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=200&h=110&q=${config.images.quality}&fm=${config.images.type})`} : {};
     let title = episode.get('title');
     let synopsis = episode.get('synopsis') || '';
-    let link = this.getLink();
     //wrap text
     if (synopsis.length >= maxLength) {
       let cutIndex = synopsis.indexOf(' ', maxLength);
@@ -56,21 +58,22 @@ class SeasonEpisodeThumb extends LoadVideo {
       }
     }
 
+    let imageStyles = this.getLazyImageUrl();
+    let link = this.getLink();
+
     return (
-      <div ref="thumbContainer" className="thumb-containter">
-        <div ref="player" className="thumb">
-          <Link to={link}>
-            <div ref="thumbBackground" className="thumb-background" style={imagePoster}>
-              <i className="btn-play"></i>
-              {this.getNew()}
-            </div>
-          </Link>
+      <div className="thumb">
+        <Link to={link}>
+          <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
+            <i className="btn-play"></i>
+            {this.getNew()}
+          </div>
 
           <div ref="info" className="thumb-info">
             <div className="thumb-info__title">{title}</div>
             <div className="thumb-info__synopsis">{synopsis}</div>
           </div>
-        </div>
+        </Link>
       </div>
     );
   }

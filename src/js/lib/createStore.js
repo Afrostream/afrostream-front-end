@@ -3,12 +3,23 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { reduxReactRouter , routerStateReducer} from 'redux-router';
 import * as middleWare from '../middleware';
 import * as reducers from '../reducers';
+import * as ModalActionCreators from '../actions/modal';
 
-function promiseMiddleware(api, { getState ,dispatch}) {
+function promiseMiddleware(api, {getState, dispatch}) {
   return next =>
     function _r(action) {
+
       if (action && _.isFunction(action.then)) {
         return action.then(_r);
+        //TODO add popup reconnect on action error
+        /*.catch(function (err) {
+         if (_.isFunction(action.catch)) {
+         //action.catch(err);
+         } else if (err && err.response && err.response.text === 'Unauthorized') {
+         dispatch(ModalActionCreators.open('showRelog'));
+         }
+         return next(action);
+         });*/
       }
 
       if (_.isFunction(action)) {

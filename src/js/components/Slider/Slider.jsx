@@ -52,7 +52,6 @@ class Slider extends React.Component {
     this.setState({
       scrollLeft: this.container.scrollLeft
     });
-    this.triggerLazyLoading();
   }
 
   /**
@@ -119,18 +118,6 @@ class Slider extends React.Component {
     let to = this.scrollingTo(this.container.offsetWidth);
 
     this.animateHorizontalScroll(to);
-  }
-
-  /**
-   * Alert the lazy loaded components inside the slider that something has changed.
-   */
-  triggerLazyLoading() {
-    let item = ReactDOM.findDOMNode(this).lastChild.firstChild;
-    let stepWidth = item.offsetWidth * this.props.step;
-    if (typeof this.context.lazyLoadTrigger !== 'undefined') {
-      // The overlap is set to the value of the single step scroll
-      this.context.lazyLoadTrigger(stepWidth);
-    }
   }
 
   /**

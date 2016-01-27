@@ -7,6 +7,7 @@ import Spinner from '../Spinner/Spinner';
 import SeasonTabButton from './SeasonTabButton';
 import SeasonEpisodeThumb from './SeasonEpisodeThumb';
 import * as SeasonActionCreators from '../../actions/season';
+import ReactList from 'react-list';
 
 if (process.env.BROWSER) {
   require('./SeasonList.less');
@@ -23,6 +24,28 @@ class SeasonList extends React.Component {
     movieId: PropTypes.string.isRequired
   };
 
+  renderItem(index, key) {
+    const {
+      props: {
+        Season,
+        Movie,
+        movieId
+        }
+      } = this;
+
+    const movie = Movie.get(`movies/${movieId}`);
+    const seasons = Movie.get(`movies/${movieId}/seasons`);
+    let page = Season.get('selected') || 0;
+    const selectedSeasonId = seasons.get(page).get('_id');
+    const season = Season.get(`seasons/${selectedSeasonId}`);
+    const episodesList = season.get('episodes');
+    let episode = episodesList.get(index);
+    return (
+      <SeasonEpisodeThumb preload={true}
+                          key={`season-thumb-${index}`} {...{movie, season, episode}} />
+    );
+  }
+
   render() {
     const {
       props: {
@@ -32,7 +55,6 @@ class SeasonList extends React.Component {
         }
       } = this;
 
-    const movieData = Movie.get(`movies/${movieId}`);
     const seasons = Movie.get(`movies/${movieId}/seasons`);
     let page = Season.get('selected') || 0;
 
@@ -43,12 +65,12 @@ class SeasonList extends React.Component {
       return (
         <div className="season-list">
           {this.parseSeasonTab(page, seasons)}
-          {this.parseSeasonList(page, movieData, seasons)}
+          {this.parseSeasonList(page, seasons)}
         </div>
       );
 
     } else {
-      return (<div></div>)
+      return (<div />)
     }
   }
 
@@ -61,12 +83,12 @@ class SeasonList extends React.Component {
           active={page === i}
           index={i}
           seasonId={season.get('_id')}
-          {...{season}}/>).toJS() : ''}
+          {...{season}} />).toJS() : ''}
       </div>
     );
   }
 
-  parseSeasonList(page, movie, seasons) {
+  parseSeasonList(page, seasons) {
     const {
       props: {
         dispatch,
@@ -79,18 +101,22 @@ class SeasonList extends React.Component {
 
     if (!season && selectedSeasonId) {
       dispatch(SeasonActionCreators.getSeason(selectedSeasonId));
-      return (<div className="slider-container"><Spinner/></div>);
+      return (<div className="slider-container"><Spinner /></div>);
     }
+
     const episodesList = season.get('episodes');
+
     return (
-      <div className="season-list__container">
-        <Slider>
-          <div ref="slContainer" className="slider-container">
-            {episodesList ? episodesList.map((episode, i) => <SeasonEpisodeThumb
-              key={`episode-${episode.get('_id')}-${i}`} {...{movie, season, episode}}/>).toJS() : ''}
-          </div>
-        </Slider>
-      </div>
+      <Slider>
+        <div ref="slContainer" className="slider-container">
+          <ReactList
+            axis="x"
+            itemRenderer={::this.renderItem}
+            length={episodesList.size}
+            type='uniform'
+          />
+        </div>
+      </Slider>
     );
   }
 }

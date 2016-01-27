@@ -11,27 +11,9 @@ if (process.env.BROWSER) {
 @connect(({ Movie, Video}) => ({Movie, Video}))
 class Thumb extends Poster {
 
-  static propTypes = {
-    showImage: React.PropTypes.bool,
-    viewport: React.PropTypes.object,
-    thumbW: React.PropTypes.number,
-    thumbH: React.PropTypes.number
-  };
-
-  static defaultProps = {
-    thumbW: 140,
-    thumbH: 200,
-    showImage: false,
-    viewport: {
-      left: 0,
-      width: 0
-    }
-  };
-
-  state = {
-    showImage: this.props.showImage,
-    viewport: this.props.viewport
-  };
+  constructor(props) {
+    super(props);
+  }
 
   triggerOver() {
     let thumbMouse = ReactDOM.findDOMNode(this);
@@ -44,42 +26,6 @@ class Thumb extends Poster {
     let thumbMouse = ReactDOM.findDOMNode(this);
     if (thumbMouse) {
       thumbMouse.dispatchEvent(new Event('thumbout', {bubbles: true}));
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!this.props.showImages && prevProps.viewport) {
-      let element = ReactDOM.findDOMNode(this);
-      this.updateImagePosition(element.offsetLeft, element.offsetHeight);
-    }
-  }
-
-  updateImagePosition(left, width) {
-    // image is already displayed, no need to check anything
-    if (this.state.showImage) {
-      return;
-    }
-
-    let threshold = 10;
-    // update showImage state if component element is in the viewport
-    let min = this.props.viewport.left;
-    let max = this.props.viewport.left + (this.props.viewport.width * 2);
-
-    if ((min <= (left + width) && left <= (max - threshold))) {
-      this.setShowImage(true);
-    }
-  }
-
-  setShowImage(show) {
-    this.setState({
-      showImage: !!(show)
-    });
-  }
-
-  componentWillMount() {
-    // allow image display override
-    if (this.props.showImage) {
-      this.setShowImage(true);
     }
   }
 
@@ -104,15 +50,13 @@ class Thumb extends Poster {
     let imageStyles = this.getLazyImageUrl();
     let link = this.getLink();
     return (
-      <div ref="thumbContainer" className="thumb-containter">
-        <div ref="thumb" className="thumb"
-             onMouseEnter={::this.triggerOver}
-             onMouseLeave={::this.triggerOut}>
-          <Link to={link}>
-            <div ref="thumbBackground" className="thumb-background" style={imageStyles}></div>
-            {this.getNew()}
-          </Link>
-        </div>
+      <div ref="thumb" className="thumb"
+           onMouseEnter={::this.triggerOver}
+           onMouseLeave={::this.triggerOut}>
+        <Link to={link}>
+          <div ref="thumbBackground" className="thumb-background" style={imageStyles}></div>
+          {this.getNew()}
+        </Link>
       </div>
     );
   }

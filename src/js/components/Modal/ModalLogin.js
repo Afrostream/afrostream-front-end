@@ -142,7 +142,7 @@ class ModalLogin extends ModalComponent {
       error: ''
     });
 
-    let typeCall = self.getI18n();
+    let typeCall = self.getType();
     let postData = _.pick(self.state, ['email', 'password']);
 
     dispatch(OauthActionCreator[typeCall](postData)).then(function () {
@@ -187,7 +187,7 @@ class ModalLogin extends ModalComponent {
     const {
       dispatch
       } = this.props;
-
+    this.context.history.pushState(null, '/')
     dispatch(ModalActionCreator.open('show'));
   }
 
@@ -196,6 +196,30 @@ class ModalLogin extends ModalComponent {
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
+        keyType = 'signin';
+        break;
+      case 'showRelog':
+        keyType = 'relog';
+        break;
+      case 'showSignup':
+        keyType = 'signup';
+        break;
+      case 'showGift':
+        keyType = 'gift';
+        break;
+      case 'showReset':
+        keyType = 'reset';
+        break;
+    }
+    return keyType;
+  }
+
+  getType() {
+    let keyType = 'signin';
+    switch (this.props.type) {
+      case 'show':
+      case 'showSignin':
+      case 'showRelog':
         keyType = 'signin';
         break;
       case 'showSignup':
@@ -236,7 +260,7 @@ class ModalLogin extends ModalComponent {
     }
 
     if (this.state.success) {
-      return (<div/>);
+      return (<div />);
     }
 
     let formTemplate;
@@ -244,6 +268,7 @@ class ModalLogin extends ModalComponent {
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
+      case 'showRelog':
         formTemplate = this.getSignIn();
         break;
       case 'showSignup':
@@ -291,7 +316,7 @@ class ModalLogin extends ModalComponent {
           <i className="icon-budicon-5"></i>
           <input name="email" id="easy_email" type="email"
                  placeholder={this.getTitle('emailPlaceholder')}
-                 title={this.getTitle('emailPlaceholder')}/>
+                 title={this.getTitle('emailPlaceholder')} />
           {this.renderValidationMessages('email')}
         </div>
       </div>
@@ -309,7 +334,7 @@ class ModalLogin extends ModalComponent {
           <i className="icon-budicon"></i>
           <input name="password" id="easy_password" type="password" pattern=".{6,}" required
                  placeholder={this.getTitle('passwordPlaceholder')}
-                 title={this.getTitle('passwordPlaceholder') + ' 6 characters minimum'}/>
+                 title={this.getTitle('passwordPlaceholder') + ' 6 characters minimum'} />
           {this.renderValidationMessages('password')}
         </div>
       </div>
@@ -375,7 +400,7 @@ class ModalLogin extends ModalComponent {
                 <i className="icon-budicon"></i>
                 <input name="repeat_password" id="reset_easy_repeat_password" type="password" required
                        placeholder={this.getTitle('repeatPasswordPlaceholder')}
-                       title={this.getTitle('repeatPasswordPlaceholder')}/>
+                       title={this.getTitle('repeatPasswordPlaceholder')} />
                 {this.renderValidationMessages('repeat_password')}
               </div>
             </div>

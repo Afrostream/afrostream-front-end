@@ -67,6 +67,7 @@ class Header extends React.Component {
       'navbar-fixed-top': true,
       'navbar-hidden': hiddenMode,
       'navbar-fixed-color': pinned || this.state.pinned
+      || this.context.history.isActive('recherche')
       || this.context.history.isActive('compte')
       || this.context.history.isActive('cancel-subscription')
       || this.context.history.isActive('select-plan')
@@ -78,7 +79,7 @@ class Header extends React.Component {
           <div className="navbar-header">
             { hasHistory ? <GoBack /> : ''}
             <Link className="navbar-brand" to="/">
-              <img src="/images/logo.png" alt="Afrostream.tv"/>
+              <img src="/images/logo.png" alt="Afrostream.tv" />
             </Link>
             <UserButton />
           </div>

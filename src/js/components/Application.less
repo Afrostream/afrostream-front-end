@@ -75,11 +75,13 @@ a.active {
 
 .app {
   padding-right: 0;
-  .transition(all 0.5s ease);
+  .transition(padding-right 0.5s ease);
+  ///.transform(translate3d(0, 0, 0));
 }
 
 .app.toggled {
   padding-right: @sidebar-width;
+  .transition(padding-right 0.5s ease);
 }
 
 #sidebar-wrapper {
