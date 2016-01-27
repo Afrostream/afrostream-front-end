@@ -27,7 +27,7 @@ class NavigationItem extends React.Component {
 
     return (
       <li className="navigation-item">
-        <Link className={classes} to={`/${item.get('slug')}`}>{item.get('label')}</Link>
+        <a className={classes} href={`/#${item.get('slug')}`}>{item.get('label')}</a>
       </li>
     );
   }

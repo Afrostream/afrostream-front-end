@@ -25,7 +25,7 @@ class MoviesList extends React.Component {
     return (
       <div className="movies-list">
         {categories ? categories.map((category, i) => <MoviesCategorySlider
-          key={`category-${category.get('_id')}-${i}`} {...{category}}/>).toJS() : ''}
+          key={`category-${category.get('_id')}-${i}`} {...{category}} />).toJS() : ''}
       </div>
     );
   }

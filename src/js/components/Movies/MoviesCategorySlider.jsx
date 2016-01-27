@@ -47,11 +47,13 @@ class MoviesCategorySlider extends React.Component {
         }
       } = this;
 
+    const slug = category.get('slug');
     const label = category.get('label');
     const movies = category.get('movies');
     let isMobile = this.getMobile().mobile();
     return (
       <div className="movies-category-list">
+        <div id={slug} className="movies-list__anchor" />
         <div className="movies-list__selection">{label}</div>
         <Slider>
 
