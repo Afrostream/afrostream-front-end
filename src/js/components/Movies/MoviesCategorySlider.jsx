@@ -53,15 +53,15 @@ class MoviesCategorySlider extends React.Component {
       <div className="movies-category-list">
         <div className="movies-list__selection">{label}</div>
         <Slider>
-          <div className="slider-container">
-            {!isMobile ? <ReactList
-              useTranslate3d
-              axis="x"
-              itemRenderer={::this.renderItem}
-              length={movies.size}
-              type='uniform'
-            /> : <LazyLoader ref="slContainer" {... {movies}} />}
-          </div>
+
+          {!isMobile ? <div className="slider-container"><ReactList
+            useTranslate3d
+            axis="x"
+            itemRenderer={::this.renderItem}
+            length={movies.size}
+            type='uniform'
+          /></div> : <LazyLoader ref="slContainer" {... {movies}} />}
+
         </Slider>
       </div>
     );
