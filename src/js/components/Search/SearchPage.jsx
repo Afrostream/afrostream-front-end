@@ -26,6 +26,10 @@ class SearchPage extends React.Component {
     super(props, context);
   }
 
+  componentDidMount() {
+    this.search();
+  }
+
   componentWillReceiveProps(nextProps, nextContext) {
     const {
       context: { location },
