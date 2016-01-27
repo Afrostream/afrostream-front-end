@@ -6,6 +6,7 @@ import Slider from '../Slider/Slider';
 import LazyLoader from './LazyLoader';
 import Thumb from '../Movies/Thumb';
 import ReactList from 'react-list';
+import MobileDetect from 'mobile-detect';
 
 if (process.env.BROWSER) {
   require('./MoviesList.less');
@@ -33,6 +34,11 @@ class MoviesCategorySlider extends React.Component {
     );
   }
 
+  getMobile() {
+    const userAgent = (window.navigator && navigator.userAgent) || '';
+    return new MobileDetect(userAgent);
+  }
+
   render() {
     const {
       props: {
@@ -42,19 +48,19 @@ class MoviesCategorySlider extends React.Component {
 
     const label = category.get('label');
     const movies = category.get('movies');
-
+    let isMobile = this.getMobile().mobile();
     return (
       <div className="movies-category-list">
         <div className="movies-list__selection">{label}</div>
         <Slider>
           <div className="slider-container">
-            <ReactList
+            {!isMobile ? <ReactList
               useTranslate3d
               axis="x"
               itemRenderer={::this.renderItem}
               length={movies.size}
               type='uniform'
-            />
+            /> : <LazyLoader ref="slContainer" {... {movies}} />}
           </div>
         </Slider>
       </div>
