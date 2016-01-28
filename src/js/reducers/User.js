@@ -38,19 +38,36 @@ export default createReducer(initialState, {
     });
   },
 
+  // #### FAVORITES ####
   [ActionTypes.User.getFavoritesMovies](state, { res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     return state.merge({
       ['favorites/movies']: data
     });
   },
 
-  [ActionTypes.User.setFavoriteMovies](state, { res }) {
+  [ActionTypes.User.getFavoritesEpisodes](state, { res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     return state.merge({
-      ['favorites/movies']: [data]
+      ['favorites/episodes']: data
     });
   },
+
+  [ActionTypes.User.setFavoriteMovies](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    return state.merge({
+      ['favorites/movies']: res
+    });
+  },
+  // ####
 
   [ActionTypes.User.logOut](state, { }) {
     return state.merge({

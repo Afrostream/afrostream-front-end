@@ -8,52 +8,56 @@ import Thumb from '../Movies/Thumb';
 import ReactList from 'react-list';
 
 if (process.env.BROWSER) {
-  require('./MoviesList.less');
+  require('./MoviesSlider.less');
 }
 
-class MoviesCategorySlider extends React.Component {
+class MoviesSlider extends React.Component {
 
   static propTypes = {
-    category: PropTypes.instanceOf(Immutable.Map).isRequired
+    dataList: PropTypes.instanceOf(Immutable.List).isRequired,
+    label: React.PropTypes.string,
+    slug: React.PropTypes.string
   };
 
-  renderItem(index, key) {
+  static defaultProps = {
+    label: '',
+    slug: ''
+  };
+
+  renderItem(index) {
     const {
       props: {
-        category
+        dataList
         }
       } = this;
 
-    const movies = category.get('movies');
-    let movie = movies.get(index);
+    let data = dataList.get(index);
+    let dataId = data.get('_id');
 
     return (
       <Thumb
         preload={true}
-        key={`movie-thumb-${index}`} {...{movie}} />
+        key={`data-thumb-${index}`} {...{data, dataId}} />
     );
   }
 
   render() {
     const {
       props: {
-        category
+        dataList,label,slug
         }
       } = this;
 
-    const slug = category.get('slug');
-    const label = category.get('label');
-    const movies = category.get('movies');
     return (
-      <div className="movies-category-list">
-        <div id={slug} className="movies-list__anchor" />
+      <div className="movies-data-list">
+        <div id={slug} className="movies-list__anchor"/>
         <div className="movies-list__selection">{label}</div>
         <Slider>
           <ReactList
             useTranslate3d
             axis="x"
             itemRenderer={::this.renderItem}
-            length={movies.size}
+            length={dataList.size}
             type='simple'
           />
         </Slider>
@@ -62,4 +66,4 @@ class MoviesCategorySlider extends React.Component {
   }
 }
 
-export default MoviesCategorySlider;
+export default MoviesSlider;

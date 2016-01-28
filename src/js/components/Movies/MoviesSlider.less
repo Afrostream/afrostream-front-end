@@ -1,0 +1,42 @@
+@import (reference) '../../../styles/config.less';
+@import '../../../styles/arrow.less';
+
+.movies-data-list {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  .movies-list__anchor {
+    position: absolute;
+    margin-top: -@header-height;
+  }
+  .movies-list__selection {
+    font-size: 1.8em;
+    font-family: @font-light;
+    text-transform: uppercase;
+    margin: 10px;
+  }
+  .slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+    > div {
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .movies-data-list {
+    .movies-list__selection {
+      margin: 10px @app-padding 10px @app-padding;
+    }
+    .slider {
+      > div {
+        padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
+      }
+    }
+  }
+}

@@ -95,9 +95,33 @@ export function getFavoriteMovies() {
     const user = getState().User.get('user');
     const token = getState().OAuth.get('token');
     const refreshToken = getState().OAuth.get('refreshToken');
+    if (!user) {
+      return {
+        type: ActionTypes.User.getFavoritesMovies,
+        res: null
+      }
+    }
     return async api => ({
       type: ActionTypes.User.getFavoritesMovies,
       res: await api(`/api/users/${user.get('_id')}/favoritesMovies`, 'GET', {}, token, refreshToken)
+    });
+  };
+}
+
+export function getFavoriteEpisodes() {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    const refreshToken = getState().OAuth.get('refreshToken');
+    if (!user) {
+      return {
+        type: ActionTypes.User.getFavoritesEpisodes,
+        res: null
+      }
+    }
+    return async api => ({
+      type: ActionTypes.User.getFavoritesEpisodes,
+      res: await api(`/api/users/${user.get('_id')}/favoritesEpisodes`, 'GET', {}, token, refreshToken)
     });
   };
 }
@@ -107,10 +131,36 @@ export function setFavoriteMovies(active, id) {
     const user = getState().User.get('user');
     const token = getState().OAuth.get('token');
     const refreshToken = getState().OAuth.get('refreshToken');
-    return async api => ({
-      type: ActionTypes.User.setFavoriteMovies,
-      res: await api(`/api/users/${user.get('_id')}/favoritesMovies`, active ? 'POST' : 'DELETE', {_id: id}, token, refreshToken)
-    });
+    if (!user) {
+      return {
+        type: ActionTypes.User.setFavoriteMovies,
+        res: null,
+        id
+      }
+    }
+    return async api => {
+      let list = getState().User.get('favorites/movies').toJS();
+      let dataFav;
+      if (active) {
+        dataFav = await api(`/api/users/${user.get('_id')}/favoritesMovies`, 'POST', {_id: id}, token, refreshToken);
+      } else {
+        dataFav = await api(`/api/users/${user.get('_id')}/favoritesMovies/${id}`, 'DELETE', {}, token, refreshToken);
+      }
+
+      let index = _.findIndex(list, (obj) => {
+        return obj['_id'] === id;
+      });
+
+      if (index > -1) {
+        list.splice(index, 1);
+      } else {
+        list.push(dataFav.body);
+      }
+      return {
+        type: ActionTypes.User.setFavoriteMovies,
+        res: list
+      };
+    };
   };
 }
 

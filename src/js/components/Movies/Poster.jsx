@@ -4,6 +4,9 @@ import LoadVideo from '../LoadVideo';
 import config from '../../../../config';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import * as UserActionCreators from '../../actions/user';
+import classSet from 'classnames';
+import Spinner from '../Spinner/Spinner';
 
 const Status = {
   PENDING: 'pending',
@@ -16,7 +19,7 @@ class Poster extends LoadVideo {
 
   constructor(props) {
     super(props);
-    this.state = {status: (props.episode || props.movie) ? Status.LOADING : Status.PENDING, src: ''};
+    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: '', pendingFavorite: false};
   }
 
   static propTypes = {
@@ -31,7 +34,8 @@ class Poster extends LoadVideo {
     thumbW: 140,
     thumbH: 200,
     preload: false,
-    keyMap: 'thumb'
+    keyMap: 'thumb',
+    favorite: true
   };
 
   componentDidMount() {
@@ -40,10 +44,10 @@ class Poster extends LoadVideo {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!shallowEqual(nextProps, this.props)) {
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (!shallowEqual(nextContext, this.context)) {
       this.setState({
-        status: (nextProps.episode || nextProps.movie) ? Status.LOADING : Status.PENDING
+        status: nextProps.data ? Status.LOADING : Status.PENDING
       });
     }
   }
@@ -60,11 +64,9 @@ class Poster extends LoadVideo {
 
   createLoader() {
     const {
-      props: { movie,episode, thumbW, thumbH,keyMap}
+      props: { data, thumbW, thumbH,keyMap}
       } = this;
 
-
-    let data = episode || movie;
 
     if (!data) {
       return;
@@ -130,6 +132,85 @@ class Poster extends LoadVideo {
         break;
     }
     return {backgroundImage: `url(${imageStyles})`};
+  }
+
+  setFavorite(active, dataId) {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+    let self = this;
+
+    self.setState({
+      pendingFavorite: true
+    });
+
+    dispatch(UserActionCreators.setFavoriteMovies(active, dataId))
+      .then(()=> {
+        self.setState({
+          pendingFavorite: false
+        });
+      })
+      .catch((err)=> {
+        self.setState({
+          pendingFavorite: false
+        });
+      });
+  }
+
+  getFavorite() {
+    const {
+      props: {
+        User,dataId,favorite
+        }
+      } = this;
+
+    if (!favorite) {
+      return;
+    }
+
+    const favoritesData = User.get('favorites/movies');
+    let isFavorite = false;
+    if (favoritesData) {
+      isFavorite = favoritesData.find(function (obj) {
+        return obj.get('_id') === dataId;
+      });
+    }
+
+    let favoriteClass = {
+      'fa': true,
+      'fa-heart': isFavorite,
+      'fa-heart-o': !isFavorite,
+      'pending': this.state.pending
+    };
+
+    const inputAttributes = {
+      onTouchEnd: event => ::this.setFavorite(!isFavorite, dataId),
+      onClick: event => ::this.setFavorite(!isFavorite, dataId)
+    };
+
+    return (<div className="btn favorite-button" role="button"  {...inputAttributes}>
+      <i className={classSet(favoriteClass)}></i>
+      {this.state.pendingFavorite ? <Spinner /> : ''}
+    </div>)
+  }
+
+  getNew() {
+    const {
+      props: { data }
+      } = this;
+
+    let dateFrom = data.get('dateFrom');
+
+    if (!dateFrom) {
+      return '';
+    }
+    let dateNow = Date.now();
+    let compare = dateNow - new Date(dateFrom).getTime();
+    if (compare <= (1000 * 3600 * 240)) {
+      return (<div className="thumb-new__item"></div>)
+    }
   }
 
   /**

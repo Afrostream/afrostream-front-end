@@ -15,40 +15,20 @@ class SeasonEpisodeThumb extends Poster {
     super(props);
   }
 
-  static propTypes = {
-    episode: PropTypes.object.isRequired
-  };
-
   static defaultProps = {
     thumbW: 200,
     thumbH: 110,
     keyMap: 'poster'
   };
 
-  getNew() {
-    const {
-      props: { episode }
-      } = this;
-    let dateFrom = episode.get('dateFrom');
-
-    if (!dateFrom) {
-      return '';
-    }
-    let dateNow = Date.now();
-    let compare = dateNow - new Date(dateFrom).getTime();
-    if (compare <= (1000 * 3600 * 24)) {
-      return (<div className="thumb-new__item"></div>)
-    }
-  }
-
   render() {
     const {
-      props: { episode }
+      props: { data }
       } = this;
 
     const maxLength = 80;
-    let title = episode.get('title');
-    let synopsis = episode.get('synopsis') || '';
+    let title = data.get('title');
+    let synopsis = data.get('synopsis') || '';
     //wrap text
     if (synopsis.length >= maxLength) {
       let cutIndex = synopsis.indexOf(' ', maxLength);

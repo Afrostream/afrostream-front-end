@@ -39,10 +39,10 @@ class SeasonList extends React.Component {
     const selectedSeasonId = seasons.get(page).get('_id');
     const season = Season.get(`seasons/${selectedSeasonId}`);
     const episodesList = season.get('episodes');
-    let episode = episodesList.get(index);
+    let data = episodesList.get(index);
     return (
       <SeasonEpisodeThumb preload={true}
-                          key={`season-thumb-${index}`} {...{movie, season, episode}} />
+                          key={`season-thumb-${index}`} {...{data}} />
     );
   }
 

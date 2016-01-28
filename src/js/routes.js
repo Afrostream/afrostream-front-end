@@ -9,6 +9,7 @@ import PlayerPage from './components/Player/PlayerPage';
 import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
+import FavoritesPage from './components/Favorites/FavoritesPage';
 import SearchPage from './components/Search/SearchPage';
 import PaymentPage from './components/Payment/PaymentPage';
 import PaymentForm from './components/Payment/PaymentForm';
@@ -38,6 +39,7 @@ export default (
       <Route name="compte" path="compte" component={AccountPage}>
         <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
       </Route>
+      <Route name="favorites" path="favoris" component={FavoritesPage}/>
       <Route name="movie" path=":movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path=":movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
