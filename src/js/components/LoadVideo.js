@@ -42,31 +42,31 @@ export default class LoadVideo extends Component {
   getLink() {
     const {
       props: {
-        data,Movie,User
+        data,dataId,Movie,Season
         }
       } = this;
 
-    if (!data) {
-      return '';
-    }
+    let dataValue = data || Movie.get(`movies/${dataId}`);
 
-    const user = User ? User.get('user') : null;
-    const planCode = user ? user.get('planCode') : null;
-    let movieId = data.get('_id');
-    let movieSlug = data.get('slug');
-    let dataType = data.get('type');
+    let movieId = dataValue.get('_id');
+    let movieSlug = dataValue.get('slug');
+    let dataType = dataValue.get('type');
 
-    let link = `/${movieId}/${movieSlug}/`;
+    let link = `/${movieId}/${movieSlug}`;
     let seasonId;
     let seasonSlug;
     let episodeId;
     let episodeSlug;
 
-    let videoData = data.get('video');
-    let videoId = planCode ? data.get('videoId') : null;
+    let videoData = dataValue.get('video');
+    let videoId = dataValue.get('videoId');
 
-    if (dataType === 'episode') {
-      let season = data.get('season');
+    if (dataType === 'serie') {
+      videoId = null;
+    }
+    else if (dataType === 'episode') {
+      let seasonId = dataValue.get('seasonId');
+      let season = Season.get(`seasons/${seasonId}`);//dataValue.get('season');
       if (season) {
         seasonId = season.get('_id');
         seasonSlug = season.get('slug');
@@ -74,8 +74,8 @@ export default class LoadVideo extends Component {
         const movieData = Movie.get(`movies/${movieId}`);
         movieSlug = movieData.get('slug');
       }
-      episodeId = data.get('_id');
-      episodeSlug = data.get('slug');
+      episodeId = dataValue.get('_id');
+      episodeSlug = dataValue.get('slug');
 
       link = `/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
     }

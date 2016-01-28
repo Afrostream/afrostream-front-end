@@ -8,6 +8,14 @@ nav {
     .transition(opacity 0.4s linear);
     border-radius: 0;
     z-index: @nav-z + 1;
+    .navbar-nav > li > a {
+      color: @brand-primary;
+      &:hover,
+      &:focus {
+        color: @color-indigo;
+        background-color: @color-yellow;
+      }
+    }
   }
 
   .navbar-collapse {

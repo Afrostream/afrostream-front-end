@@ -12,7 +12,7 @@ class BrowsePage extends React.Component {
 
   render() {
     return (
-      <div className="row-fluid">
+      <div className="row-fluid favorites-page">
         <FavoritesList />
       </div>
     );

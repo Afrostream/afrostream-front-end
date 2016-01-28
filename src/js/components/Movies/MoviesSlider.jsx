@@ -48,6 +48,9 @@ class MoviesSlider extends React.Component {
         }
       } = this;
 
+    if (!dataList || !dataList.size) {
+      return (<div/>);
+    }
     return (
       <div className="movies-data-list">
         <div id={slug} className="movies-list__anchor"/>

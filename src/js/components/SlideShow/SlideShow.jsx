@@ -167,7 +167,7 @@ class SlideShow extends React.Component {
         delete gestureEv.delta;
         gestureEv.type = 'tap';
         if (touchEvent && e.target && e.target.pathname) {
-          self.context.history.pushState(null,e.target.pathname);
+          self.context.history.pushState(null, e.target.pathname);
         }
       }
     });
@@ -185,7 +185,7 @@ class SlideShow extends React.Component {
     const slides = Category.get(`categorys/${categoryId}/spots`);
     const page = Slides.get('page') || 0;
     return (
-      <div className="SlideShow" ref="slC">
+      <div className="slide-show" ref="slC">
         {slides ? <SlidesContainer page={page} {...{slides}}/> : <Spinner />}
         {slides ? <Pagination page={page} {...{slides}}/> : ''}
       </div>

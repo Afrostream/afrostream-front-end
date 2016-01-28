@@ -14,6 +14,9 @@ class FavoritesList extends React.Component {
   }
 
   renderList(dataList, label, slug) {
+    if (!dataList) {
+      return;
+    }
     return <MoviesSlider key={`favorite-${slug}`} {...{dataList, label, slug}} />
   }
 
@@ -28,6 +31,7 @@ class FavoritesList extends React.Component {
     const favoritesDataEpisodes = User.get('favorites/episodes');
     return (
       <div className="favorites-list">
+        <div className="favorites-list__label">Mes Favoris</div>
         { this.renderList(favoritesDataMovies, 'Films / Series', 'movies') }
         { this.renderList(favoritesDataEpisodes, 'Episodes', 'episodes') }
       </div>

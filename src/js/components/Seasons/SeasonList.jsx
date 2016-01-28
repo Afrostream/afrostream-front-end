@@ -21,20 +21,19 @@ class SeasonList extends React.Component {
   }
 
   static propTypes = {
-    movieId: PropTypes.string.isRequired
+    dataId: PropTypes.string.isRequired
   };
 
-  renderItem(index, key) {
+  renderItem(index) {
     const {
       props: {
         Season,
         Movie,
-        movieId
+        dataId
         }
       } = this;
 
-    const movie = Movie.get(`movies/${movieId}`);
-    const seasons = Movie.get(`movies/${movieId}/seasons`);
+    const seasons = Movie.get(`movies/${dataId}/seasons`);
     let page = Season.get('selected') || 0;
     const selectedSeasonId = seasons.get(page).get('_id');
     const season = Season.get(`seasons/${selectedSeasonId}`);
@@ -51,11 +50,11 @@ class SeasonList extends React.Component {
       props: {
         Season,
         Movie,
-        movieId
+        dataId
         }
       } = this;
 
-    const seasons = Movie.get(`movies/${movieId}/seasons`);
+    const seasons = Movie.get(`movies/${dataId}/seasons`);
     let page = Season.get('selected') || 0;
 
     if (seasons && seasons.size) {

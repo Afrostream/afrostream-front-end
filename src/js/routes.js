@@ -39,7 +39,7 @@ export default (
       <Route name="compte" path="compte" component={AccountPage}>
         <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
       </Route>
-      <Route name="favorites" path="favoris" component={FavoritesPage}/>
+      <Route name="favoris" path="favoris" component={FavoritesPage}/>
       <Route name="movie" path=":movieId/:movieSlug" component={MoviePage}/>
       <Route name="player"
              path=":movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"

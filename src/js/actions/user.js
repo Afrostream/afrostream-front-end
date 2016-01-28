@@ -101,6 +101,18 @@ export function getFavoriteMovies() {
         res: null
       }
     }
+
+    let readyFavoriteMovies = getState().User.get(`favorites/movies`);
+    if (readyFavoriteMovies) {
+      console.log('favoritesMovies already present in data store');
+      return {
+        type: ActionTypes.User.getFavoritesMovies,
+        res: {
+          body: readyFavoriteMovies.toJS()
+        }
+      };
+    }
+
     return async api => ({
       type: ActionTypes.User.getFavoritesMovies,
       res: await api(`/api/users/${user.get('_id')}/favoritesMovies`, 'GET', {}, token, refreshToken)
@@ -119,6 +131,18 @@ export function getFavoriteEpisodes() {
         res: null
       }
     }
+
+    let readyFavoriteEpisodes = getState().User.get(`favorites/episodes`);
+    if (readyFavoriteEpisodes) {
+      console.log('favoritesEpisodes already present in data store');
+      return {
+        type: ActionTypes.User.getFavoritesEpisodes,
+        res: {
+          body: readyFavoriteEpisodes.toJS()
+        }
+      };
+    }
+
     return async api => ({
       type: ActionTypes.User.getFavoritesEpisodes,
       res: await api(`/api/users/${user.get('_id')}/favoritesEpisodes`, 'GET', {}, token, refreshToken)

@@ -17,7 +17,7 @@ if (process.env.BROWSER) {
   require('./MovieInfo.less');
 }
 
-@connect(({ Movie }) => ({Movie}))
+@connect(({ Movie,Season }) => ({Movie, Season}))
 class MovieInfo extends LoadVideo {
 
   constructor(props) {
@@ -39,16 +39,16 @@ class MovieInfo extends LoadVideo {
   render() {
 
     let {
-      props: { Movie, active, movieId, movie,maxLength}
+      props: { Movie, active, dataId, data,maxLength}
       } = this;
 
-    movie = movie || Movie.get(`movies/${movieId}`);
+    data = data || Movie.get(`movies/${dataId}`);
 
-    if (!movie) {
+    if (!data) {
       return (<Spinner />);
     }
 
-    const isSerie = movie.get('type') === 'serie';
+    const isSerie = data.get('type') === 'serie';
     const classes = classSet({
       'movie': true,
       'serie': isSerie,
@@ -56,17 +56,17 @@ class MovieInfo extends LoadVideo {
       'movie--btn_play': !this.props.load && isSerie
     });
 
-    let poster = movie.get('poster');
+    let poster = data.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
     let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=${config.images.quality}&fm=${config.images.type})`} : {};
-    let link = this.getLink();
+    const link = this.getLink();
     return (
       <div ref="slContainer" className={classes}>
         <Link to={link}>
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
           <div className="btn-play"/>
         </Link>
-        {movie ? <Billboard {...{active, movie, maxLength}} /> : ''}
+        {data ? <Billboard {...{active, data, maxLength}} /> : ''}
       </div>
     );
   }

@@ -8,7 +8,7 @@ import * as EventActionCreators from '../../actions/event';
 import config from '../../../../config';
 import Poster from '../Movies/Poster';
 
-@connect(({ Movie }) => ({Movie}))
+@connect(({ Movie,Season }) => ({Movie, Season}))
 class SeasonEpisodeThumb extends Poster {
 
   constructor(props) {

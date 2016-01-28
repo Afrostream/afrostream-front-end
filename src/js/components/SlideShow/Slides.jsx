@@ -14,11 +14,11 @@ class Slides extends React.Component {
       props: { slides,page }
       } = this;
 
-    const movie = slides.get(page);
+    const data = slides.get(page);
 
     return (
       <MovieInfo active={true} maxLength={200} load={true}
-                 key={`slide-${movie.get('_id')}`}  { ...{movie}}/>
+                 key={`slide-${data.get('_id')}`}  { ...{data}}/>
     );
   }
 }

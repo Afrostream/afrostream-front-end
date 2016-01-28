@@ -1,0 +1,21 @@
+import React ,{PropTypes } from 'react';
+import { Link } from 'react-router';
+
+if (process.env.BROWSER) {
+  require('./FavoritesButton.less');
+}
+
+class FavoritesButton extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Link className="btn-xs btn-favorites" to="favoris" role="button">Mes Favoris <i
+        className="fa fa-heart"></i></Link>)
+  }
+}
+
+export default FavoritesButton;

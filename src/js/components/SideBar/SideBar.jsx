@@ -47,6 +47,7 @@ class SideBar extends React.Component {
           <li><Link to="/compte">Mon compte</Link></li>
           <li><Link to="/select-plan/afrostreamgift/checkout" className="sidebar-nav_yellow">Offrir un cadeau</Link>
           </li>
+          <li><Link to="/favoris">Mes favoris</Link></li>
           <li role="separator" className="divider"></li>
           <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
         </ul>
