@@ -24,15 +24,11 @@
     .slider {
       position: relative;
       width: 100%;
-      .slider-container {
-        width: 100%;
-        overflow-x: auto;
+      overflow: hidden;
+      display: inline-block;
+      white-space: nowrap;
+      > div {
         overflow-y: hidden;
-        display: inline-block;
-        white-space: nowrap;
-        > div {
-          overflow-y: hidden;
-        }
       }
     }
   }
@@ -45,9 +41,11 @@
         margin: 10px @app-padding 10px @app-padding;
       }
       .slider {
-        .slider-container {
+        //.slider-container {
+        > div {
           padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
         }
+        //}
       }
     }
   }

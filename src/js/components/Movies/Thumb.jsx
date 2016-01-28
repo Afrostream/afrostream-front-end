@@ -42,7 +42,6 @@ class Thumb extends Poster {
   }
 
   getFavorite() {
-
     const {
       props: {
         User,movie
