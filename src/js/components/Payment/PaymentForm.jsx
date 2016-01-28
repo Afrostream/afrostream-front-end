@@ -153,6 +153,9 @@ class PaymentForm extends React.Component {
         if (err.response && err.response.status === 401) {
           message = 'Votre session a expiré, veuillez recommencer.';
 
+        } else if (err.response && err.response.status === 402) {
+          message = 'Veuillez contacter votre banque ou utilisez une autre carte.';
+
         } else if (err.response && err.response.status === 403) {
           message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
 
