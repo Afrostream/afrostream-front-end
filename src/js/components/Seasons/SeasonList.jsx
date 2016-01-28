@@ -109,7 +109,7 @@ class SeasonList extends React.Component {
 
     return (
       <Slider>
-        <div ref="slContainer" className="slider-container">
+        <div className="slider-container">
           <ReactList
             useTranslate3d
             axis="x"

@@ -18,10 +18,16 @@
   .slider {
     position: relative;
     width: 100%;
-    overflow: hidden;
+    //overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     display: inline-block;
     white-space: nowrap;
-    > div {
+    .slider-container {
+      > div {
+        overflow-y: hidden;
+      }
+      overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
     }

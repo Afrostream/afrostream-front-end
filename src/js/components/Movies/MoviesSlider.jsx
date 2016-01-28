@@ -56,13 +56,15 @@ class MoviesSlider extends React.Component {
         <div id={slug} className="movies-list__anchor"/>
         <div className="movies-list__selection">{label}</div>
         <Slider>
-          <ReactList
-            useTranslate3d
-            axis="x"
-            itemRenderer={::this.renderItem}
-            length={dataList.size}
-            type='uniform'
-          />
+          <div className="slider-container">
+            <ReactList
+              useTranslate3d
+              axis="x"
+              itemRenderer={::this.renderItem}
+              length={dataList.size}
+              type='uniform'
+            />
+          </div>
         </Slider>
       </div>
     );
