@@ -54,6 +54,7 @@ class SeasonEpisodeThumb extends Poster {
             <div className="thumb-info__synopsis">{synopsis}</div>
           </div>
         </Link>
+        {this.getFavorite()}
       </div>
     );
   }
