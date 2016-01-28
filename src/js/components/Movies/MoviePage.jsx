@@ -26,7 +26,7 @@ class MoviePage extends React.Component {
     return (
       <div className="row-fluid">
         {movieId ? <MovieInfo maxLength={600} active={true} load={false} {...{dataId}}/> : ''}
-        {movieId ? <SeasonList {...{dataId}}/> : ''}
+        {movieId ? <SeasonList {...{movieId}}/> : ''}
       </div>
     );
   }

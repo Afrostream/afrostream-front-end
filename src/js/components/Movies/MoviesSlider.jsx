@@ -61,7 +61,7 @@ class MoviesSlider extends React.Component {
             axis="x"
             itemRenderer={::this.renderItem}
             length={dataList.size}
-            type='simple'
+            type='uniform'
           />
         </Slider>
       </div>

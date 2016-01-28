@@ -6,6 +6,7 @@ import Slider from '../Slider/Slider';
 import Spinner from '../Spinner/Spinner';
 import SeasonTabButton from './SeasonTabButton';
 import SeasonEpisodeThumb from './SeasonEpisodeThumb';
+import Thumb from '../Movies/Thumb';
 import * as SeasonActionCreators from '../../actions/season';
 import ReactList from 'react-list';
 
@@ -20,28 +21,29 @@ class SeasonList extends React.Component {
     super(props);
   }
 
-  static propTypes = {
-    dataId: PropTypes.string.isRequired
-  };
-
   renderItem(index) {
     const {
       props: {
         Season,
         Movie,
-        dataId
+        movieId
         }
       } = this;
 
-    const seasons = Movie.get(`movies/${dataId}/seasons`);
+    const seasons = Movie.get(`movies/${movieId}/seasons`);
     let page = Season.get('selected') || 0;
     const selectedSeasonId = seasons.get(page).get('_id');
     const season = Season.get(`seasons/${selectedSeasonId}`);
     const episodesList = season.get('episodes');
     let data = episodesList.get(index);
+    let dataId = data.get('_id');
     return (
       <SeasonEpisodeThumb preload={true}
-                          key={`season-thumb-${index}`} {...{data}} />
+                          key={`season-thumb-${index}`} {...{data, dataId}} />
+      //<Thumb preload={true}
+      //       key={`season-thumb-${index}`} {...{data, dataId}} thumbW={200}
+      //       thumbH={110}
+      //       keyMap="poster"/>
     );
   }
 
@@ -50,11 +52,11 @@ class SeasonList extends React.Component {
       props: {
         Season,
         Movie,
-        dataId
+        movieId
         }
       } = this;
 
-    const seasons = Movie.get(`movies/${dataId}/seasons`);
+    const seasons = Movie.get(`movies/${movieId}/seasons`);
     let page = Season.get('selected') || 0;
 
     if (seasons && seasons.size) {
@@ -109,6 +111,7 @@ class SeasonList extends React.Component {
       <Slider>
         <div ref="slContainer" className="slider-container">
           <ReactList
+            useTranslate3d
             axis="x"
             itemRenderer={::this.renderItem}
             length={episodesList.size}

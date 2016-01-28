@@ -30,6 +30,7 @@ export default function ({ getState }) {
     try {
       return next(action);
     } catch (err) {
+      debugger;
       console.error('[redux-raven-middleware] Reporting error to Sentry:',
         err);
 
