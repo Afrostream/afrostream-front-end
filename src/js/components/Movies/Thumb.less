@@ -58,6 +58,9 @@
     bottom: 15px;
     right: 15px;
     z-index: 3;
+    &.pending {
+      color: fade(@color-yellow, 80%);
+    }
     &.active {
       color: @color-yellow;
     }
@@ -69,6 +72,9 @@
       &.fa-heart {
         content: '\f004';
       }
+    }
+    .spinner {
+      font-size: 1em;
     }
   }
 }

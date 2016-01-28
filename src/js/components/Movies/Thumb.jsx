@@ -3,6 +3,7 @@ import ReactDOM from'react-dom';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Poster from './Poster';
+import Spinner from '../Spinner/Spinner';
 import classSet from 'classnames';
 import * as UserActionCreators from '../../actions/user';
 
@@ -15,6 +16,9 @@ class Thumb extends Poster {
 
   constructor(props) {
     super(props);
+    this.state = {
+      pending: false
+    }
   }
 
   triggerOver() {
@@ -37,8 +41,21 @@ class Thumb extends Poster {
         dispatch
         }
       } = this;
-
-    dispatch(UserActionCreators.setFavoriteMovies(active, movieId));
+    let self = this;
+    self.setState({
+      pending: true
+    });
+    dispatch(UserActionCreators.setFavoriteMovies(active, movieId))
+      .then(()=> {
+        self.setState({
+          pending: false
+        });
+      })
+      .catch((err)=> {
+        self.setState({
+          pending: false
+        });
+      });
   }
 
   getFavorite() {
@@ -60,7 +77,8 @@ class Thumb extends Poster {
     let favoriteClass = {
       'fa': true,
       'fa-heart': isFavorite,
-      'fa-heart-o': !isFavorite
+      'fa-heart-o': !isFavorite,
+      'pending': this.state.pending
     };
 
     const inputAttributes = {
@@ -70,6 +88,7 @@ class Thumb extends Poster {
 
     return (<div className="btn favorite-button" role="button"  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>
+      {this.state.pending ? <Spinner /> : ''}
     </div>)
   }
 
