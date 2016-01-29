@@ -4,8 +4,8 @@ import * as UserActionCreators from '../../actions/user';
 import FavoritesList from './FavoritesList';
 @prepareRoute(async function ({ store }) {
   await * [
-    store.dispatch(UserActionCreators.getFavoriteMovies()),
-    store.dispatch(UserActionCreators.getFavoriteEpisodes())
+    store.dispatch(UserActionCreators.getFavorites('movies')),
+    store.dispatch(UserActionCreators.getFavorites('episodes'))
   ];
 })
 class BrowsePage extends React.Component {

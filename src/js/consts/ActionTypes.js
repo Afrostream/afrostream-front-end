@@ -18,7 +18,8 @@ export default {
     pendingUser: null,
     getFavoritesMovies: null,
     getFavoritesEpisodes: null,
-    setFavoriteMovies: null,
+    setFavoritesMovies: null,
+    setFavoritesEpisodes: null,
     cancelSubscription: null
   }),
 

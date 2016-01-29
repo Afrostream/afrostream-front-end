@@ -8,7 +8,11 @@
   "signupSocialButton": "S'inscrire avec {connection:title}",
   "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
   "search": {
-    "noData": "La recherche n'a trouvé aucuns resultat"
+    "noData": "La recherche n'a trouvé aucun resultat"
+  },
+  "favorites": {
+    "noData": "Aucun Favoris ajouté à mon profil",
+    "labelPage": "Mes Favoris"
   },
   "signin": {
     "title": "S’identifier",

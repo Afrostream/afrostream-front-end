@@ -18,7 +18,7 @@ if (process.env.BROWSER) {
 }
 
 @prepareRoute(async function ({ store }) {
-  return store.dispatch(UserActionCreators.getFavoriteMovies())
+  return store.dispatch(UserActionCreators.getFavorites('movies'))
 })
 
 @connect(({ Search }) => ({Search}))

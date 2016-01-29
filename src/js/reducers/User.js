@@ -4,7 +4,9 @@ import createReducer from '../lib/createReducer';
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
   'user': null,
-  'subscriptionCancelled': false
+  'subscriptionCancelled': false,
+  'favorites/episodes': null,
+  'favorites/movies': null
 });
 
 
@@ -59,12 +61,21 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.setFavoriteMovies](state, { res }) {
+  [ActionTypes.User.setFavoritesMovies](state, { res }) {
     if (!res) {
       return state;
     }
     return state.merge({
       ['favorites/movies']: res
+    });
+  },
+
+  [ActionTypes.User.setFavoritesEpisodes](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    return state.merge({
+      ['favorites/episodes']: res
     });
   },
   // ####

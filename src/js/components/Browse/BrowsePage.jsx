@@ -14,7 +14,7 @@ import Navigation from '../Navigation/Navigation';
     store.dispatch(CategoryActionCreators.getMenu()),
     store.dispatch(CategoryActionCreators.getMeaList())
   ];
-  return store.dispatch(UserActionCreators.getFavoriteMovies())
+  return store.dispatch(UserActionCreators.getFavorites('movies'))
 })
 class BrowsePage extends React.Component {
 

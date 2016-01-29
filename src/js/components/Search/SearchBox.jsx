@@ -76,7 +76,7 @@ class SearchBox extends React.Component {
     if (input.length < 3) {
       return;
     }
-    this.context.history.pushState(null, 'recherche', {search: input});
+    this.context.history.pushState(null, '/recherche', {search: input});
   }
 
   render() {
@@ -88,7 +88,7 @@ class SearchBox extends React.Component {
 
     return (
       <div className={classSet(fielClass)}>
-        <i className="fa fa-times" onClick={::this.goBack} onTouchEnd={::this.goBack} />
+        <i className="fa fa-times" onClick={::this.goBack} onTouchEnd={::this.goBack}/>
         <input
           onChange={::this.debounceSearch}
           onFocus={::this.handleFocus}

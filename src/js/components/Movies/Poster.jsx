@@ -26,7 +26,6 @@ class Poster extends LoadVideo {
     thumbW: React.PropTypes.number,
     thumbH: React.PropTypes.number,
     preload: React.PropTypes.bool,
-    keyMap: React.PropTypes.string,
     favorite: React.PropTypes.bool
   };
 
@@ -34,7 +33,6 @@ class Poster extends LoadVideo {
     thumbW: 140,
     thumbH: 200,
     preload: false,
-    keyMap: 'thumb',
     favorite: true
   };
 
@@ -45,10 +43,17 @@ class Poster extends LoadVideo {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (!shallowEqual(nextContext, this.context)) {
-      this.setState({
-        status: nextProps.data ? Status.LOADING : Status.PENDING
-      });
+    //if (!shallowEqual(nextContext, this.context)) {
+    //  this.setState({
+    //    status: nextProps.data ? Status.LOADING : Status.PENDING
+    //  });
+    //}
+    if (!shallowEqual(nextProps.data, this.props.data)) {
+      if (nextProps.data) {
+        this.setState({
+          status: nextProps.data ? Status.LOADING : Status.PENDING
+        });
+      }
     }
   }
 
@@ -62,6 +67,14 @@ class Poster extends LoadVideo {
     this.destroyLoader();
   }
 
+  getType() {
+    const {
+      props: { data}
+      } = this;
+
+    return data.get('type');
+  }
+
   createLoader() {
     const {
       props: { data, thumbW, thumbH,keyMap}
@@ -72,7 +85,8 @@ class Poster extends LoadVideo {
       return;
     }
 
-    let thumb = data.get(keyMap);
+    let type = this.getType();
+    let thumb = data.get(type === 'episode' ? 'poster' : 'thumb');
     if (!thumb) {
       return;
     }
@@ -109,12 +123,12 @@ class Poster extends LoadVideo {
     return imgSrouce;
   }
 
-  handleLoad(event) {
+  handleLoad() {
     let imgSrouce = this.destroyLoader();
     this.setState({status: Status.LOADED, src: imgSrouce});
   }
 
-  handleError(error) {
+  handleError() {
     let imgSrouce = this.destroyLoader();
     this.setState({status: Status.FAILED, src: imgSrouce});
   }
@@ -146,7 +160,9 @@ class Poster extends LoadVideo {
       pendingFavorite: true
     });
 
-    dispatch(UserActionCreators.setFavoriteMovies(active, dataId))
+    let type = this.getType() === 'episode' ? 'episodes' : 'movies';
+
+    dispatch(UserActionCreators[`setFavorites`](type, active, dataId))
       .then(()=> {
         self.setState({
           pendingFavorite: false
@@ -169,8 +185,8 @@ class Poster extends LoadVideo {
     if (!favorite) {
       return;
     }
-
-    const favoritesData = User.get('favorites/movies');
+    const type = this.getType();
+    const favoritesData = User.get(`favorites/${type === 'episode' ? 'episode' : 'movie'}s`);
     let isFavorite = false;
     if (favoritesData) {
       isFavorite = favoritesData.find(function (obj) {

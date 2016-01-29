@@ -48,6 +48,10 @@ export default class LoadVideo extends Component {
 
     let dataValue = data || Movie.get(`movies/${dataId}`);
 
+    if (!dataValue) {
+      return '';
+    }
+
     let movieId = dataValue.get('_id');
     let movieSlug = dataValue.get('slug');
     let dataType = dataValue.get('type');
@@ -65,8 +69,8 @@ export default class LoadVideo extends Component {
       videoId = null;
     }
     else if (dataType === 'episode') {
-      let seasonId = dataValue.get('seasonId');
-      let season = Season.get(`seasons/${seasonId}`);//dataValue.get('season');
+      seasonId = dataValue.get('seasonId');
+      const season = Season.get(`seasons/${seasonId}`);//dataValue.get('season');
       if (season) {
         seasonId = season.get('_id');
         seasonSlug = season.get('slug');

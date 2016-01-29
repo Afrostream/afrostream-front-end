@@ -102,6 +102,9 @@ const config = {
   search: {
     dict: dictFr.search
   },
+  favorites: {
+    dict: dictFr.favorites
+  },
   oauth2: {
     facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,
     dict: dictFr

@@ -90,99 +90,75 @@ export function cancelSubscription() {
   };
 }
 
-export function getFavoriteMovies() {
+export function getFavorites(type = 'movies') {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().OAuth.get('token');
     const refreshToken = getState().OAuth.get('refreshToken');
+    const capitType = _.capitalize(type);
+    const returnTypeAction = ActionTypes.User[`getFavorites${capitType}`];
     if (!user) {
       return {
-        type: ActionTypes.User.getFavoritesMovies,
+        type: returnTypeAction,
         res: null
       }
     }
 
-    let readyFavoriteMovies = getState().User.get(`favorites/movies`);
-    if (readyFavoriteMovies) {
-      console.log('favoritesMovies already present in data store');
+    let readyFavorites = getState().User.get(`favorites/${type}`);
+    if (readyFavorites) {
+      console.log(`favorites ${type} already present in data store`);
       return {
-        type: ActionTypes.User.getFavoritesMovies,
+        type: returnTypeAction,
         res: {
-          body: readyFavoriteMovies.toJS()
+          body: readyFavorites.toJS()
         }
       };
     }
 
     return async api => ({
-      type: ActionTypes.User.getFavoritesMovies,
-      res: await api(`/api/users/${user.get('_id')}/favoritesMovies`, 'GET', {}, token, refreshToken)
+      type: returnTypeAction,
+      res: await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'GET', {}, token, refreshToken)
     });
   };
 }
 
-export function getFavoriteEpisodes() {
+export function setFavorites(type, active, id) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().OAuth.get('token');
     const refreshToken = getState().OAuth.get('refreshToken');
+    const capitType = _.capitalize(type);
+    const returnTypeAction = ActionTypes.User[`setFavorites${capitType}`];
     if (!user) {
       return {
-        type: ActionTypes.User.getFavoritesEpisodes,
-        res: null
-      }
-    }
-
-    let readyFavoriteEpisodes = getState().User.get(`favorites/episodes`);
-    if (readyFavoriteEpisodes) {
-      console.log('favoritesEpisodes already present in data store');
-      return {
-        type: ActionTypes.User.getFavoritesEpisodes,
-        res: {
-          body: readyFavoriteEpisodes.toJS()
-        }
-      };
-    }
-
-    return async api => ({
-      type: ActionTypes.User.getFavoritesEpisodes,
-      res: await api(`/api/users/${user.get('_id')}/favoritesEpisodes`, 'GET', {}, token, refreshToken)
-    });
-  };
-}
-
-export function setFavoriteMovies(active, id) {
-  return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const token = getState().OAuth.get('token');
-    const refreshToken = getState().OAuth.get('refreshToken');
-    if (!user) {
-      return {
-        type: ActionTypes.User.setFavoriteMovies,
+        type: returnTypeAction,
         res: null,
         id
       }
     }
     return async api => {
-      let list = getState().User.get('favorites/movies').toJS();
+      let list = getState().User.get(`favorites/${type}`);
       let dataFav;
       if (active) {
-        dataFav = await api(`/api/users/${user.get('_id')}/favoritesMovies`, 'POST', {_id: id}, token, refreshToken);
+        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'POST', {_id: id}, token, refreshToken);
       } else {
-        dataFav = await api(`/api/users/${user.get('_id')}/favoritesMovies/${id}`, 'DELETE', {}, token, refreshToken);
+        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}/${id}`, 'DELETE', {}, token, refreshToken);
       }
 
-      let index = _.findIndex(list, (obj) => {
-        return obj['_id'] === id;
+      let index = await list.findIndex(function (obj) {
+        return obj.get('_id') === id;
       });
 
+      let newList;
       if (index > -1) {
-        list.splice(index, 1);
+        newList = list.delete(index);
       } else {
-        list.push(dataFav.body);
+        newList = list.push(dataFav.body);
       }
+
       return {
-        type: ActionTypes.User.setFavoriteMovies,
-        res: list
+        type: returnTypeAction,
+        res: newList.toJS()
       };
     };
   };
