@@ -18,9 +18,9 @@
   .slider {
     position: relative;
     width: 100%;
-    //overflow: hidden;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: hidden;
+    //overflow-x: auto;
+    //overflow-y: hidden;
     display: inline-block;
     white-space: nowrap;
     .slider-container {
@@ -29,6 +29,7 @@
       }
       overflow-x: auto;
       overflow-y: hidden;
+      -ms-overflow-style: none;
       -webkit-overflow-scrolling: touch;
     }
   }
