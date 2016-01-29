@@ -83,7 +83,7 @@ class ModalLogin extends ModalComponent {
       case 'password':
       case 'repeat_password':
         //Minimum 6 and Maximum 50 characters :
-        regex = /^[a-zA-Z0-9!@#$%^&*()_+=?]{6,50}$/;
+        regex = /^.{6,50}$/;
         isValid = regex.test(valueForm) && this.state['password'] === valueForm;
         valitationType = this.validateSize(valueForm, 6, 50) || (this.state['password'] === valueForm ? '' : 'same');
         break;
@@ -316,7 +316,7 @@ class ModalLogin extends ModalComponent {
           <i className="icon-budicon-5"></i>
           <input name="email" id="easy_email" type="email"
                  placeholder={this.getTitle('emailPlaceholder')}
-                 title={this.getTitle('emailPlaceholder')} />
+                 title={this.getTitle('emailPlaceholder')}/>
           {this.renderValidationMessages('email')}
         </div>
       </div>
@@ -334,7 +334,7 @@ class ModalLogin extends ModalComponent {
           <i className="icon-budicon"></i>
           <input name="password" id="easy_password" type="password" pattern=".{6,}" required
                  placeholder={this.getTitle('passwordPlaceholder')}
-                 title={this.getTitle('passwordPlaceholder') + ' 6 characters minimum'} />
+                 title={this.getTitle('passwordPlaceholder') + ' 6 characters minimum'}/>
           {this.renderValidationMessages('password')}
         </div>
       </div>
@@ -400,7 +400,7 @@ class ModalLogin extends ModalComponent {
                 <i className="icon-budicon"></i>
                 <input name="repeat_password" id="reset_easy_repeat_password" type="password" required
                        placeholder={this.getTitle('repeatPasswordPlaceholder')}
-                       title={this.getTitle('repeatPasswordPlaceholder')} />
+                       title={this.getTitle('repeatPasswordPlaceholder')}/>
                 {this.renderValidationMessages('repeat_password')}
               </div>
             </div>
