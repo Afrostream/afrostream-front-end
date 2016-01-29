@@ -77,7 +77,7 @@ class Poster extends LoadVideo {
 
   createLoader() {
     const {
-      props: { data, thumbW, thumbH,keyMap}
+      props: { data, thumbW, thumbH}
       } = this;
 
 
@@ -224,8 +224,10 @@ class Poster extends LoadVideo {
     }
     let dateNow = Date.now();
     let compare = dateNow - new Date(dateFrom).getTime();
-    if (compare <= (1000 * 3600 * 240)) {
-      return (<div className="thumb-new__item"></div>)
+    const type = this.getType();
+    let nbDay = config.movies.isNew[type] || 10;
+    if (compare <= ((nbDay * 1000) * 3600 * 240)) {
+      return (<div className="thumb-new__item"></div>);
     }
   }
 
