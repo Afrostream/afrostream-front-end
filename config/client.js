@@ -99,8 +99,18 @@ const config = {
     url: 'https://widget.intercom.io/widget/',
     appID: 'k3klwkxq'
   },
+  movies: {
+    isNew: {
+      episode: 2,
+      movie: 10,
+      season: 20
+    }
+  },
   search: {
     dict: dictFr.search
+  },
+  favorites: {
+    dict: dictFr.favorites
   },
   oauth2: {
     facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,

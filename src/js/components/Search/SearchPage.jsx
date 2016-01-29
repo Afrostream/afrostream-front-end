@@ -1,5 +1,6 @@
 'use strict';
 import React, { PropTypes }  from 'react';
+import { prepareRoute } from '../../decorators';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import * as SearchActionCreators from '../../actions/search';
@@ -10,10 +11,15 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import shallowEqual from 'react-pure-render/shallowEqual';
+import * as UserActionCreators from '../../actions/user';
 
 if (process.env.BROWSER) {
   require('./SearchPage.less');
 }
+
+@prepareRoute(async function ({ store }) {
+  return store.dispatch(UserActionCreators.getFavorites('movies'))
+})
 
 @connect(({ Search }) => ({Search}))
 class SearchPage extends React.Component {
@@ -58,8 +64,11 @@ class SearchPage extends React.Component {
     if (!movies || !movies.size) {
       return fetching ? '' : search.dict['noData'];
     }
-    return movies.map((movie, i) => <Thumb showImage={true}
-                                           key={`search-movie-${movie.get('_id')}-${i}`} {...{movie}} />).toJS();
+    return movies.map((data, i) => {
+      let dataId = data.get('_id');
+      return <Thumb showImage={true}
+                    key={`search-movie-${data.get('_id')}-${i}`} {...{data, dataId}} />
+    }).toJS();
   }
 
   renderActors(movies) {

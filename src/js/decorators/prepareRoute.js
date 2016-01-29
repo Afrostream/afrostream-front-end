@@ -31,6 +31,17 @@ export default function prepareRoute(prepareFn) {
         }
       }
 
+      //componentWillReceiveProps(nextProps, nextContext) {
+      //  const {
+      //    context: { store },
+      //    props: { params }
+      //    } = this;
+      //
+      //  if (!shallowEqual(nextProps, this.nextProps)) {
+      //    prepareFn({store, params: nextProps.params});
+      //  }
+      //}
+
       componentDidMount() {
         const {
           context: { store },

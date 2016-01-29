@@ -1,13 +1,12 @@
 'use strict';
 import React, { Component,PropTypes } from 'react';
 import Immutable from 'immutable';
-import { connect } from 'react-redux';
 
 export default class LoadVideo extends Component {
 
   static propTypes = {
-    movie: PropTypes.instanceOf(Immutable.Map),
-    movieId: PropTypes.string
+    data: PropTypes.instanceOf(Immutable.Map),
+    dataId: PropTypes.string
   };
 
   static contextTypes = {
@@ -15,8 +14,8 @@ export default class LoadVideo extends Component {
   };
 
   static defaultProps = {
-    movie: null,
-    movieId: null
+    data: null,
+    dataId: null
   };
 
   render() {
@@ -29,13 +28,13 @@ export default class LoadVideo extends Component {
     const {
       context: { location},
       props: {
-        movie
+        data
         }
       } = this;
 
-    let movieId = movie.get('_id');
-    let movieSlug = movie.get('slug') || '';
-    let link = `/${movieId}/${movieSlug}`;
+    let dataId = data.get('_id');
+    let dataSlug = data.get('slug') || '';
+    let link = `/${dataId}/${dataSlug}`;
 
     location.pushState(null, link);
   }
@@ -43,43 +42,46 @@ export default class LoadVideo extends Component {
   getLink() {
     const {
       props: {
-        movie,movieId,season,episode,Movie,User
+        data,dataId,Movie,Season
         }
       } = this;
-    const user = User ? User.get('user') : null;
-    let planCode = user ? user.get('planCode') : null;
-    const movieDataId = movieId ? movieId : movie.get('_id');
-    const movieData = movie || Movie.get(`movies/${movieDataId}`);
-    let type = movieData ? movieData.get('type') : '';
-    let movieSlud = movieData ? movieData.get('slug') : '';
-    let link = `/${movieDataId}/${movieSlud}`;
-    let videoData = movieData.get('video');
-    let videoId = planCode ? movieData.get('videoId') : null;
-    //let videoId = movieData.get('videoId');
-    if (type === 'serie') {
-      //videoId = null;
-      let curSeason = season;
-      //if (!curSeason) {
-      //  const seasons = movieData.get('seasons');
-      //  curSeason = seasons ? seasons.get(0) : null;
-      //}
-      if (curSeason) {
-        const seasonId = curSeason.get('_id');
-        const seasonSlug = curSeason.get('slug');
-        //TODO get last viewed episode
-        let curEpisode = episode;
-        //if (!curEpisode) {
-        //  const episodes = curSeason.get('episodes');
-        //  curEpisode = episodes ? episodes.get(0) : null;
-        //}
-        if (curEpisode) {
-          const episodeId = curEpisode.get('_id');
-          const episodeSlug = curEpisode.get('slug');
-          link += `/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
-          videoData = curEpisode.get('video');
-          videoId = curEpisode.get('videoId');
-        }
+
+    let dataValue = data || Movie.get(`movies/${dataId}`);
+
+    if (!dataValue) {
+      return '';
+    }
+
+    let movieId = dataValue.get('_id');
+    let movieSlug = dataValue.get('slug');
+    let dataType = dataValue.get('type');
+
+    let link = `/${movieId}/${movieSlug}`;
+    let seasonId;
+    let seasonSlug;
+    let episodeId;
+    let episodeSlug;
+
+    let videoData = dataValue.get('video');
+    let videoId = dataValue.get('videoId');
+
+    if (dataType === 'serie') {
+      videoId = null;
+    }
+    else if (dataType === 'episode') {
+      seasonId = dataValue.get('seasonId');
+      const season = Season.get(`seasons/${seasonId}`);//dataValue.get('season');
+      if (season) {
+        seasonId = season.get('_id');
+        seasonSlug = season.get('slug');
+        movieId = season.get('movieId');
+        const movieData = Movie.get(`movies/${movieId}`);
+        movieSlug = movieData.get('slug');
       }
+      episodeId = dataValue.get('_id');
+      episodeSlug = dataValue.get('slug');
+
+      link = `/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`;
     }
     else if (videoData) {
       videoId = videoId || videoData.get('_id');

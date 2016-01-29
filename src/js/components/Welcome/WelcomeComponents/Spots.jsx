@@ -12,8 +12,8 @@ class Spots extends React.Component {
 
   getMovies(categorie) {
     let movies = categorie.get('adSpots');
-    return movies.map((movie, i) => <Thumb showImage={true}
-                                           key={`spot-home-${movie.get('_id')}-${i}`} {...{movie}}/>);
+    return movies.map((data, i) => <Thumb favorite={false}
+                                          key={`spot-home-${data.get('_id')}-${i}`} {...{data}}/>);
   }
 
   /**

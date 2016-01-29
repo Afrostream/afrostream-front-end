@@ -1,0 +1,19 @@
+@import (reference) '../../../styles/config.less';
+
+.favorites-page {
+  padding: @header-height 0 0 0;
+}
+
+.favorites-list {
+  position: relative;
+  background-color: @color-indigo;
+  width: 100%;
+  padding: @thumb-margin 0 @thumb-margin 0;
+  .favorites-list__label {
+    font-size: 2em;
+    font-family: @font-thin;
+    text-transform: uppercase;
+    margin: 10px @app-padding 10px @app-padding;
+    .isMobile({ margin: 10px @app-padding-mobile 10px @app-padding-mobile; });
+  }
+}

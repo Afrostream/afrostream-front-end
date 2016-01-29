@@ -5,9 +5,10 @@ import config from '../../../../config';
 import Slider from '../Slider/Slider';
 import Spinner from '../Spinner/Spinner';
 import SeasonTabButton from './SeasonTabButton';
-import SeasonEpisodeThumb from './SeasonEpisodeThumb';
+import Thumb from '../Movies/Thumb';
 import * as SeasonActionCreators from '../../actions/season';
 import ReactList from 'react-list';
+import MoviesSlider from '../Movies/MoviesSlider';
 
 if (process.env.BROWSER) {
   require('./SeasonList.less');
@@ -18,32 +19,6 @@ class SeasonList extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  static propTypes = {
-    movieId: PropTypes.string.isRequired
-  };
-
-  renderItem(index, key) {
-    const {
-      props: {
-        Season,
-        Movie,
-        movieId
-        }
-      } = this;
-
-    const movie = Movie.get(`movies/${movieId}`);
-    const seasons = Movie.get(`movies/${movieId}/seasons`);
-    let page = Season.get('selected') || 0;
-    const selectedSeasonId = seasons.get(page).get('_id');
-    const season = Season.get(`seasons/${selectedSeasonId}`);
-    const episodesList = season.get('episodes');
-    let episode = episodesList.get(index);
-    return (
-      <SeasonEpisodeThumb preload={true}
-                          key={`season-thumb-${index}`} {...{movie, season, episode}} />
-    );
   }
 
   render() {
@@ -101,22 +76,14 @@ class SeasonList extends React.Component {
 
     if (!season && selectedSeasonId) {
       dispatch(SeasonActionCreators.getSeason(selectedSeasonId));
-      return (<div className="slider-container"><Spinner /></div>);
+      return (<Spinner />);
     }
 
-    const episodesList = season.get('episodes');
-
+    const dataList = season.get('episodes');
+    const thumbW = 200;
+    const thumbH = 110;
     return (
-      <Slider>
-        <div ref="slContainer" className="slider-container">
-          <ReactList
-            axis="x"
-            itemRenderer={::this.renderItem}
-            length={episodesList.size}
-            type='uniform'
-          />
-        </div>
-      </Slider>
+      <MoviesSlider key="season-list" {...{dataList, thumbW, thumbH}}/>
     );
   }
 }

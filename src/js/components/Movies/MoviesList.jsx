@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import MoviesCategorySlider from './MoviesCategorySlider';
+import MoviesSlider from './MoviesSlider';
 
 if (process.env.BROWSER) {
   require('./MoviesList.less');
@@ -24,8 +24,13 @@ class MoviesList extends React.Component {
 
     return (
       <div className="movies-list">
-        {categories ? categories.map((category, i) => <MoviesCategorySlider
-          key={`category-${category.get('_id')}-${i}`} {...{category}} />).toJS() : ''}
+        {categories ? categories.map((categorie, i) => {
+          const dataList = categorie.get('movies');
+          const label = categorie.get('label');
+          const slug = categorie.get('slug');
+          return <MoviesSlider
+            key={`categorie-${categorie.get('_id')}-${i}`} {...{dataList, label, slug}} />
+        }).toJS() : ''}
       </div>
     );
   }

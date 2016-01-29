@@ -32,6 +32,7 @@ class Slider extends React.Component {
     this.direction = null;
     this.container = null;
     this.scrollLeft = 0;
+    this.scrollTimeout = 0;
 
   }
 
@@ -49,9 +50,12 @@ class Slider extends React.Component {
    * Scroll event
    */
   handleScroll() {
-    this.setState({
-      scrollLeft: this.container.scrollLeft
-    });
+    clearTimeout(this.scrollTimeout);
+    this.scrollTimeout = setTimeout(()=> {
+      this.setState({
+        scrollLeft: this.container.scrollLeft
+      });
+    }, 200);
   }
 
   /**

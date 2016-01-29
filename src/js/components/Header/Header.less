@@ -8,6 +8,14 @@ nav {
     .transition(opacity 0.4s linear);
     border-radius: 0;
     z-index: @nav-z + 1;
+    .navbar-nav > li > a {
+      color: @brand-primary;
+      &:hover,
+      &:focus {
+        color: @color-indigo;
+        background-color: @color-yellow;
+      }
+    }
   }
 
   .navbar-collapse {
@@ -20,6 +28,10 @@ nav {
   }
   .navbar-brand {
     padding: 0;
+    .isMobile({ width: 9em; padding-top: 10px; });
+    img {
+      .isMobile({ width: 100%; });
+    }
   }
   .collapse.in {
     background-color: @color-indigo;
@@ -56,8 +68,7 @@ nav {
     font-weight: bold;
     line-height: 32px;
     padding: 2px 16px 2px 16px;
-    margin-right: 20px;
-
+    margin: 8px 20px 8px 8px;
     @media all and (max-width: @screen-xs-min) {
       font-size: 16px;
       font-weight: normal;
@@ -92,8 +103,12 @@ nav {
     }
 
     .navbar-brand {
-      float: none;
+      //float: none;
+      position: absolute;
+      left: 0;
+      right: 0;
       img {
+        margin: 0 auto;
         display: inherit;
       }
     }

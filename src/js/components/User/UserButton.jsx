@@ -6,6 +6,7 @@ import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
 import SearchInput from './../Search/SearchBox';
+import FavoritesButton from './../Favorites/FavoritesButton';
 import config from '../../../../config';
 
 @connect(({ User, OAuth }) => ({User, OAuth}))
@@ -51,6 +52,9 @@ class UserButton extends React.Component {
             </li>
             <li className="pull-right">
               <SearchInput/>
+            </li>
+            <li className="pull-right">
+              <FavoritesButton/>
             </li>
           </ul>
         );

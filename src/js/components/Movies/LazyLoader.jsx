@@ -49,7 +49,7 @@ class LazyLoader extends React.Component {
     return (
       <div className="slider-container">
         {movies ? movies.map((movie, i) => <Thumb viewport={this.state.viewport}
-                                                  key={`movie-${movie.get('_id')}-${i}`} {...{movie}}/>).toJS() : ''}
+                                                  key={`movie-${movie.get('_id')}-${i}`} {...{movie}} />).toJS() : ''}
       </div>
     );
   }

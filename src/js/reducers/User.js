@@ -4,7 +4,9 @@ import createReducer from '../lib/createReducer';
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
   'user': null,
-  'subscriptionCancelled': false
+  'subscriptionCancelled': false,
+  'favorites/episodes': null,
+  'favorites/movies': null
 });
 
 
@@ -38,7 +40,47 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.OAuth.logOut](state, { }) {
+  // #### FAVORITES ####
+  [ActionTypes.User.getFavoritesMovies](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      ['favorites/movies']: data
+    });
+  },
+
+  [ActionTypes.User.getFavoritesEpisodes](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      ['favorites/episodes']: data
+    });
+  },
+
+  [ActionTypes.User.setFavoritesMovies](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    return state.merge({
+      ['favorites/movies']: res
+    });
+  },
+
+  [ActionTypes.User.setFavoritesEpisodes](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    return state.merge({
+      ['favorites/episodes']: res
+    });
+  },
+  // ####
+
+  [ActionTypes.User.logOut](state, { }) {
     return state.merge({
       ['user']: null
     });

@@ -90,6 +90,80 @@ export function cancelSubscription() {
   };
 }
 
+export function getFavorites(type = 'movies') {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    const refreshToken = getState().OAuth.get('refreshToken');
+    const capitType = _.capitalize(type);
+    const returnTypeAction = ActionTypes.User[`getFavorites${capitType}`];
+    if (!user) {
+      return {
+        type: returnTypeAction,
+        res: null
+      }
+    }
+
+    let readyFavorites = getState().User.get(`favorites/${type}`);
+    if (readyFavorites) {
+      console.log(`favorites ${type} already present in data store`);
+      return {
+        type: returnTypeAction,
+        res: {
+          body: readyFavorites.toJS()
+        }
+      };
+    }
+
+    return async api => ({
+      type: returnTypeAction,
+      res: await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'GET', {}, token, refreshToken)
+    });
+  };
+}
+
+export function setFavorites(type, active, id) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    const refreshToken = getState().OAuth.get('refreshToken');
+    const capitType = _.capitalize(type);
+    const returnTypeAction = ActionTypes.User[`setFavorites${capitType}`];
+    if (!user) {
+      return {
+        type: returnTypeAction,
+        res: null,
+        id
+      }
+    }
+    return async api => {
+      let list = getState().User.get(`favorites/${type}`);
+      let dataFav;
+      if (active) {
+        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'POST', {_id: id}, token, refreshToken);
+      } else {
+        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}/${id}`, 'DELETE', {}, token, refreshToken);
+      }
+
+      let index = await list.findIndex(function (obj) {
+        return obj.get('_id') === id;
+      });
+
+      let newList;
+      if (index > -1) {
+        newList = list.delete(index);
+      } else {
+        newList = list.push(dataFav.body);
+      }
+
+      return {
+        type: returnTypeAction,
+        res: newList.toJS()
+      };
+    };
+  };
+}
+
 export function pendingUser(pending) {
   return {
     type: ActionTypes.User.pendingUser,

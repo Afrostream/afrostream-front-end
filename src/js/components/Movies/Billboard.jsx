@@ -15,71 +15,25 @@ if (process.env.BROWSER) {
   require('./Billboard.less');
 }
 
-@connect(({ Movie }) => ({Movie}))
+@connect(({ Movie,Season }) => ({Movie, Season}))
 class Billboard extends LoadVideo {
 
   constructor(props) {
     super(props);
-    this.tlIn = null;
     this.oldId = null;
   }
 
   static propTypes = {
-    movie: PropTypes.instanceOf(Immutable.Map).isRequired,
+    data: PropTypes.instanceOf(Immutable.Map).isRequired,
     active: PropTypes.bool.isRequired,
     maxLength: PropTypes.number.isRequired
   };
 
   static defaultProps = {
-    movie: null,
+    data: null,
     active: false,
     maxLength: 450
   };
-
-  isMobile() {
-    //Detect mobile
-    const ua = navigator.userAgent;
-    return /WebKit/.test(ua) && /Mobile/.test(ua);
-  }
-
-  initTransition() {
-    const titleEl = ReactDOM.findDOMNode(this.refs.slTitle);
-    const synopsisE = ReactDOM.findDOMNode(this.refs.slSynopsis);
-    const slTag = ReactDOM.findDOMNode(this.refs.slTag || this.refs.slNull);
-    const slSeasons = ReactDOM.findDOMNode(this.refs.slSeasons || this.refs.slSeasonNull);
-    this.tlIn = new TimelineMax({paused: true});
-    this.tlIn.add(TweenMax.staggerFromTo([synopsisE, slSeasons, titleEl, slTag], 0.3,
-      {transform: 'translateX(-200px)'},
-      {transform: 'translateX(0)', ease: Sine.easeOut}
-      , 0.05), 0);
-  }
-
-  lunchTransition() {
-    //if (this.isMobile()) {
-    return;
-    //}
-    let newId = this.props.movie.get('_id');
-    if (!this.props.active) {
-      return;
-    }
-    if (!this.tlIn) {
-      this.initTransition();
-    }
-    //SameId to animate
-    if (this.oldId === newId) {
-      return;
-    }
-    this.oldId = this.props.movie.get('_id');
-    this.tlIn.restart();
-  }
-
-  componentDidUpdate() {
-    this.lunchTransition();
-  }
-
-  componentDidMount() {
-    this.lunchTransition();
-  }
 
   getGenre(tags) {
     return (
@@ -90,9 +44,9 @@ class Billboard extends LoadVideo {
     );
   }
 
-  getSeasons(seasons, movie) {
+  getSeasons(seasons, data) {
     let label = ' saison' + (seasons.size > 1 ? 's' : '');
-    let schedule = movie.get('schedule') || '';
+    let schedule = data.get('schedule') || '';
     return (seasons.size ?
       <div ref="slSeasons" className="billboard-seasons billboard-row">
         <label>{seasons.size}</label>
@@ -123,23 +77,23 @@ class Billboard extends LoadVideo {
 
   render() {
     const {
-      props: { movie , maxLength}
+      props: { data , maxLength}
       } = this;
 
-    if (!movie) {
+    if (!data) {
       return (<div />);
     }
 
     let hasSubtiles = false;
-    let title = movie.get('title');
-    let type = movie.get('type');
-    let tags = movie.get('tags');
-    let creator = movie.get('creator');
-    let actors = movie.get('actors');
-    let synopsis = movie.get('synopsis') || '';
-    let slug = movie.get('slug') || '';
-    let seasons = movie.get('seasons');
-    let videoData = movie.get('video');
+    let title = data.get('title');
+    let type = data.get('type');
+    let tags = data.get('tags');
+    let creator = data.get('creator');
+    let actors = data.get('actors');
+    let synopsis = data.get('synopsis') || '';
+    let slug = data.get('slug') || '';
+    let seasons = data.get('seasons');
+    let videoData = data.get('video');
     if (seasons && seasons.size) {
       const season = seasons.get(0);
       const episodes = season.get('episodes');
@@ -169,12 +123,11 @@ class Billboard extends LoadVideo {
         {type ? <div ref="slTag" className="billboard-tag billboard-row">{type === 'movie' ? 'film' : type}</div> :
           <div ref="slNull"/>}
         <Link to={link} ref="slTitle" className="billboard-title billboard-row">{title}</Link>
-        {seasons ? this.getSeasons(seasons, movie) : ''}
+        {seasons ? this.getSeasons(seasons, data) : ''}
         {tags ? this.getGenre(tags) : ''}
         {creator ? this.getCreator(creator) : ''}
         {actors && actors.size ? this.getCast(actors) : ''}
         <Link to={link} ref="slSynopsis" className="billboard-synopsis billboard-row">{synopsis}</Link>
-        {/*<Link to={movie.get('link')}>{movie.get('link')}</Link>*/}
         <div className="billboard-info__btn">
           {hasSubtiles ? <button className="btn btn-xs btn-transparent" href="#">
             <i className="fa fa-align-left"></i>Audio et sous titres
