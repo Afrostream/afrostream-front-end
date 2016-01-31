@@ -4,9 +4,7 @@ import LoadVideo from '../LoadVideo';
 import config from '../../../../config';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import * as UserActionCreators from '../../actions/user';
-import classSet from 'classnames';
-import Spinner from '../Spinner/Spinner';
+import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 
 const Status = {
   PENDING: 'pending',
@@ -19,7 +17,7 @@ class Poster extends LoadVideo {
 
   constructor(props) {
     super(props);
-    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: '', pendingFavorite: false};
+    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: ''};
   }
 
   static propTypes = {
@@ -148,67 +146,19 @@ class Poster extends LoadVideo {
     return {backgroundImage: `url(${imageStyles})`};
   }
 
-  setFavorite(active, dataId) {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-    let self = this;
-
-    self.setState({
-      pendingFavorite: true
-    });
-
-    let type = this.getType() === 'episode' ? 'episodes' : 'movies';
-
-    dispatch(UserActionCreators[`setFavorites`](type, active, dataId))
-      .then(()=> {
-        self.setState({
-          pendingFavorite: false
-        });
-      })
-      .catch((err)=> {
-        self.setState({
-          pendingFavorite: false
-        });
-      });
-  }
 
   getFavorite() {
     const {
       props: {
-        User,dataId,favorite
+        favorite
         }
       } = this;
 
     if (!favorite) {
       return;
     }
-    const type = this.getType();
-    const favoritesData = User.get(`favorites/${type === 'episode' ? 'episode' : 'movie'}s`);
-    let isFavorite = false;
-    if (favoritesData) {
-      isFavorite = favoritesData.find(function (obj) {
-        return obj.get('_id') === dataId;
-      });
-    }
 
-    let favoriteClass = {
-      'fa': true,
-      'fa-heart': isFavorite,
-      'fa-heart-o': !isFavorite,
-      'pending': this.state.pending
-    };
-
-    const inputAttributes = {
-      onClick: event => ::this.setFavorite(!isFavorite, dataId)
-    };
-
-    return (<div className="btn favorite-button" role="button"  {...inputAttributes}>
-      <i className={classSet(favoriteClass)}></i>
-      {this.state.pendingFavorite ? <Spinner /> : ''}
-    </div>)
+    return (<FavoritesAddButton {...this.props}/>)
   }
 
   getNew() {

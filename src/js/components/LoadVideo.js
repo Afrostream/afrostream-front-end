@@ -70,13 +70,15 @@ export default class LoadVideo extends Component {
     }
     else if (dataType === 'episode') {
       seasonId = dataValue.get('seasonId');
-      const season = Season.get(`seasons/${seasonId}`);//dataValue.get('season');
+      const season = Season.get(`seasons/${seasonId}`) || dataValue.get('season');
       if (season) {
         seasonId = season.get('_id');
         seasonSlug = season.get('slug');
         movieId = season.get('movieId');
         const movieData = Movie.get(`movies/${movieId}`);
-        movieSlug = movieData.get('slug');
+        if (movieData) {
+          movieSlug = movieData.get('slug');
+        }
       }
       episodeId = dataValue.get('_id');
       episodeSlug = dataValue.get('slug');

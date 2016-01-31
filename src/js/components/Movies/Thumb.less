@@ -23,7 +23,7 @@
         background-image: url(../../../assets/images/movie/label-nouveau-episode.png);
       }
     }
-    .favorite-button {
+    .favorite-add_button {
       bottom: 45%;
     }
   }
@@ -115,30 +115,9 @@
       }
     }
   }
-  .favorite-button {
-    background-color: fade(@color-indigo, 70%);
-    position: absolute;
+  .favorite-add_button {
     bottom: 15px;
     right: 15px;
-    z-index: 3;
-    &.pending {
-      color: fade(@color-yellow, 80%);
-    }
-    &.active {
-      color: @color-yellow;
-    }
-    &:hover {
-      color: @color-yellow;
-      &.active {
-        color: @brand-primary;
-      }
-      &.fa-heart {
-        content: '\f004';
-      }
-    }
-    .spinner {
-      font-size: 1em;
-    }
   }
 }
 

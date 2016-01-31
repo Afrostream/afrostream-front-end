@@ -7,6 +7,7 @@ import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
+import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js';
 import MobileDetect from 'mobile-detect';
@@ -487,6 +488,7 @@ class PlayerComponent extends React.Component {
     let videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
+    let renderData = episodeData ? episodeData : movieData;
     return (
       <div className="player">
         <div ref="wrapper" className="wrapper"/>
@@ -497,6 +499,7 @@ class PlayerComponent extends React.Component {
               <div className=" video-infos_title">{infos.title}</div>
               {infos.episodeNumber ?
                 <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> : ''}
+              <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
               {videoDuration ? <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
               <div className=" video-infos_synopsys">{infos.synopsis}</div>
             </div> : <div />
