@@ -51,8 +51,7 @@ class CancelSubscription extends React.Component {
                 (soit à partir du jour anniversaire du mois suivant)
               </div>
               <button className="button-cancel-subscription"
-                      onClick={::this.cancelSubscription}
-                      onTouchEnd={::this.cancelSubscription}>Annuler l’abonnement
+                      onClick={::this.cancelSubscription}>Annuler l’abonnement
               </button>
               <Link className="button-return-mon-compte" to="/compte">Retourner sur mon compte</Link>
             </div>

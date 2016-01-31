@@ -44,7 +44,7 @@ class AlertMessage extends React.Component {
     }
     return (
       <div className="alert-message"><span key={`alert-${i}`}>{alert}
-        <button className="alert-button" onClick={::this.setCookieToken} onTouchEnd={::this.setCookieToken}>OK</button></span>
+        <button className="alert-button" onClick={::this.setCookieToken}>OK</button></span>
       </div>
     )
   }

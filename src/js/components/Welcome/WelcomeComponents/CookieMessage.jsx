@@ -50,7 +50,7 @@ class CookieMessage extends React.Component {
           adaptés à vos centres d'intérêts. <a href="/articles/cookies_policy.pdf"
                                                onClick={this.setCookieToken.bind(this)} target="_blank">En savoir
           plus</a>
-          <button className="alert-button" onClick={::this.setCookieToken} onTouchEnd={::this.setCookieToken}>OK
+          <button className="alert-button" onClick={::this.setCookieToken}>OK
           </button>
         </div>
       );

@@ -202,7 +202,6 @@ class Poster extends LoadVideo {
     };
 
     const inputAttributes = {
-      onTouchEnd: event => ::this.setFavorite(!isFavorite, dataId),
       onClick: event => ::this.setFavorite(!isFavorite, dataId)
     };
 
