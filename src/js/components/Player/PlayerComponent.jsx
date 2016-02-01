@@ -29,14 +29,16 @@ if (canUseDOM) {
 }))
 class PlayerComponent extends React.Component {
 
-  state = {
-    duration: 0
-  };
-
   constructor(props) {
     super(props);
     this.player = null;
     this.playerInit = null;
+    this.state = {
+      size: {
+        height: 1920,
+        width: 815
+      }
+    };
   }
 
   static propTypes = {
@@ -47,6 +49,12 @@ class PlayerComponent extends React.Component {
   };
 
   componentDidMount() {
+    this.setState({
+      size: {
+        height: window.innerHeight,
+        width: window.innerWidth
+      }
+    });
     this.initPlayer();
   }
 
@@ -252,7 +260,7 @@ class PlayerComponent extends React.Component {
           let poster = movie.get('poster');
           let posterImg = poster ? poster.get('imgix') : '';
           if (posterImg) {
-            posterImgImgix.poster = `${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=${config.images.quality}&fm=${config.images.type}`;
+            posterImgImgix.poster = `${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`;
             videoOptions = _.merge(videoOptions, posterImgImgix);
             videoOptions.live = movie.get('live');
           }
