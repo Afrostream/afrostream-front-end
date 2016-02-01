@@ -89,6 +89,7 @@ class PaymentForm extends React.Component {
     // Disable the submit button
     $('[data-recurly]').removeClass('has-error');
     $('.conditions-generales').removeClass('checkbox-has-error');
+    $('.droit-retractation').removeClass('checkbox-has-error');
     $('#errors').text('');
     $('input').removeClass('error');
     this.disableForm(true);
@@ -98,6 +99,13 @@ class PaymentForm extends React.Component {
       $('.conditions-generales').addClass('checkbox-has-error');
       self.disableForm(false);
       return;
+    }
+
+    if (!$('.checkbox-droit-retractation').is(':checked')) {
+        $('#errors').text("Vous devez cocher toutes les cases pour confirmer l'abonnement.");
+        $('.droit-retractation').addClass('checkbox-has-error');
+        self.disableForm(false);
+        return;
     }
 
     //Excluded cart type message
@@ -310,6 +318,20 @@ class PaymentForm extends React.Component {
                   <div className="text-conditions-generales">
                     J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf"
                                                                         target="_blank">( En savoir plus )</a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="form-group  col-md-12 droit-retractation">
+                  <input
+                    type="checkbox"
+                    className="checkbox-droit-retractation"
+                    name="droit-retractation"
+                    id="droit-retractation"/>
+                  <div className="text-droit-retractation">
+                    Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger
+                    le formulaire de rétractation</a>
                   </div>
                 </div>
               </div>
