@@ -42,16 +42,16 @@ class SearchPage extends React.Component {
       } = this;
 
     if (!shallowEqual(nextContext.location, location)) {
-      this.search();
+      this.search(nextContext.location.query.search);
     }
   }
 
-  search() {
+  search(value) {
     const {
       props: { dispatch }
       } = this;
 
-    let search = this.context.location.query.search;
+    let search = value || this.context.location.query.search;
 
     if (!search || search.length < 3) {
       return;
