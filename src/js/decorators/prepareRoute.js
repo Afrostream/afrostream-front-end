@@ -20,16 +20,16 @@ export default function prepareRoute(prepareFn) {
         );
       }
 
-      componentWillReceiveProps(nextProps, nextContext) {
-        const {
-          context: { store },
-          props: { params }
-          } = this;
-
-        if (!shallowEqual(nextContext, this.context)) {
-          prepareFn({store, params: nextContext.params});
-        }
-      }
+      //componentWillReceiveProps(nextProps, nextContext) {
+      //  const {
+      //    context: { store },
+      //    props: { params }
+      //    } = this;
+      //
+      //  if (!shallowEqual(nextContext, this.context)) {
+      //    prepareFn({store, params: nextContext.params});
+      //  }
+      //}
 
       //componentWillReceiveProps(nextProps, nextContext) {
       //  const {
@@ -42,14 +42,14 @@ export default function prepareRoute(prepareFn) {
       //  }
       //}
 
-      componentDidMount() {
-        const {
-          context: { store },
-          props: { params }
-          } = this;
-
-        prepareFn({store, params: params});
-      }
+      //componentDidMount() {
+      //  const {
+      //    context: { store },
+      //    props: { params }
+      //    } = this;
+      //
+      //  prepareFn({store, params: params});
+      //}
 
     };
 }

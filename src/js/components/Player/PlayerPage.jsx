@@ -8,8 +8,8 @@ import * as PlayerActionCreators from '../../actions/player';
 import * as UserActionCreators from '../../actions/user';
 import PlayerComponent from './PlayerComponent';
 
-@prepareRoute(async function ({ store, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug, videoId } }) {
-  await * [
+@prepareRoute(async function ({ store, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug,videoId } }) {
+  return await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(PlayerActionCreators.getConfig()),
     store.dispatch(MovieActionCreators.getMovie(movieId)),
@@ -18,7 +18,7 @@ import PlayerComponent from './PlayerComponent';
   ];
   return await * [
     store.dispatch(UserActionCreators.getFavorites('movies')),
-    store.dispatch(UserActionCreators.getFavorites('episodes')),
+    store.dispatch(UserActionCreators.getFavorites('episodes'))
   ];
 })
 class PlayerPage extends React.Component {

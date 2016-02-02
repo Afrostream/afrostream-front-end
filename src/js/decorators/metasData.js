@@ -20,7 +20,6 @@ export default () => {
 
       state = {
         title: config.metadata.title,
-        description: config.metadata.description,
         meta: config.metadata.metas,
         link: []
       };
@@ -39,30 +38,35 @@ export default () => {
       getMetadata() {
 
         const {
-          context: { store ,location},
+          context: { store },
           props: { params }
           } = this;
 
-        //if (routeName !== 'default') {
-        //  link.push({rel: 'canonical', href: this.getCanonical(routeName, params)});
-        //}
-
         let metas = {
           title: config.metadata.title,
-          meta: [],
+          meta: config.metadata.metas,
           link: []
         };
 
-        let paramsMatch = params;
-        let data = store.getState().Movie.get(`movies/${paramsMatch.movieId}`);
+        const movieData = store.getState().Movie.get(`movies/${params.movieId}`);
+        let videoData;
+        let episodeData;
+        if (params.videoId) {
+          videoData = store.getState().Video.get(`videos/${params.videoId}`);
+        }
+        if (videoData) {
+          episodeData = videoData.get('episode');
+        }
+        //si on a les données de l'episode alors, on remplace les infos affichées
+        const data = episodeData ? movieData.merge(episodeData) : movieData;
 
         if (!data) {
           return metas;
         }
 
-        let title = data.get('title') || config.metadata.title;
+        let title = data.get('title');
         let slug = data.get('slug');
-        let synopsis = data.get('synopsis') || config.metadata.description;
+        let synopsis = data.get('synopsis');
         let ogTitle = data.get('title');
         let ogDescription = data.get('synopsis');
         let poster = data.get('poster');
@@ -70,7 +74,7 @@ export default () => {
         if (poster) {
           imageStyle = poster.get('imgix');
         }
-        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1920&h=815&q=${config.images.quality}&fm=${config.images.type})`;
+        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1920&h=815&q=${config.images.quality}&fm=${config.images.type}`;
 
         if (title) {
           metas.title = title;
@@ -112,14 +116,6 @@ export default () => {
         }
 
         return metas;
-      }
-
-      getCanonical(routeName, params) {
-        return url.format({
-          protocol: config.protocol,
-          host: config.host,
-          pathname: this.context.location.makePath(routeName, params)
-        });
       }
 
     }

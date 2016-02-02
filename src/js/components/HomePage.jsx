@@ -38,7 +38,8 @@ class HomePage extends React.Component {
     }
   }
 
-  renderContent() {
+
+  render() {
     const { props: { User ,children} } = this;
     const pending = User.get('pending');
     const user = User.get('user');
@@ -53,14 +54,6 @@ class HomePage extends React.Component {
     } else {
       return (<WelcomePage spinner={isPending} {...this.props}/>);
     }
-  }
-
-  render() {
-    return (
-      <ReactCSSTransitionGroup transitionName="search" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-        {this.renderContent()}
-      </ReactCSSTransitionGroup>
-    );
   }
 }
 
