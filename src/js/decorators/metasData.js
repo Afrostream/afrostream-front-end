@@ -20,6 +20,7 @@ export default () => {
 
       state = {
         title: config.metadata.title,
+        description: config.metadata.description,
         meta: config.metadata.metas,
         link: []
       };
