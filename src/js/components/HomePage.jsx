@@ -7,6 +7,11 @@ import Spinner from './Spinner/Spinner';
 import * as CategoryActionCreators from '../actions/category';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+@prepareRoute(async function ({ store }) {
+  return await * [
+    store.dispatch(CategoryActionCreators.getAllSpots())
+  ];
+})
 @connect(({ User }) => ({User}))
 class HomePage extends React.Component {
 
