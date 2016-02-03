@@ -82,6 +82,7 @@ export default () => {
 
         let title = data.get('title');
         let slug = location.pathname;//data.get('slug');
+        //<link rel="canonical" href="http://www.6play.fr/les-princes-de-l-amour-p_3442/Episode-62-c_11545928" data-react-helmet="true">
         let synopsis = data.get('synopsis');
         let ogTitle = data.get('title');
         let ogDescription = data.get('synopsis');
@@ -125,9 +126,13 @@ export default () => {
         }
 
         if (slug) {
+          metas.link.push({
+            rel: 'canonical',
+            href: `${config.metadata.domain}${slug}`
+          });
           metas.meta.push({
             property: 'og:url',
-            content: slug
+            content: `${config.metadata.domain}${slug}`
           });
         }
 
