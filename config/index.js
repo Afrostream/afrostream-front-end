@@ -29,6 +29,10 @@ const config = _.merge(
           content: '1120'
         },
         {
+          name: 'og:image',
+          content: 'https://afrostream.imgix.net/production/poster/2015/12/ba55e2f3825608f0aabe-affichage_320x240_afrostream_wow-imp2.jpg?crop=faces&fit=clip&w=1120&h=630&q=60&fm=jpg'
+        },
+        {
           name: 'keywords',
           content: 'netflix, afro, cinema, black, series, shows, empire, cookie, webseries, musique, afrostream, viola davis, taraji p henson, blackxploitation, film, nollywood, ghana, france'
         }],

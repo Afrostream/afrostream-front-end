@@ -88,10 +88,10 @@ export default () => {
         let ogDescription = data.get('synopsis');
         let poster = data.get('poster');
         let imageStyle = config.metadata.shareImage;
+        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`;
         if (poster) {
           imageStyle = poster.get('imgix');
         }
-        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`;
 
         if (title) {
           metas.title = title;
