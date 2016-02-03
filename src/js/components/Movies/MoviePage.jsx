@@ -10,7 +10,8 @@ import SeasonList from '../Seasons/SeasonList';
 @prepareRoute(async function ({ store, params: { movieId } }) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(EventActionCreators.userActive(true))
+    store.dispatch(EventActionCreators.userActive(true)),
+    store.dispatch(CategoryActionCreators.getAllSpots())
   ];
 
   if (movieId && movieId !== 'undefined') {

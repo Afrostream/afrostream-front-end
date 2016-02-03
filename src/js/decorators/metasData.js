@@ -4,6 +4,7 @@ import React, { PropTypes,Component } from 'react';
 import Helmet from 'react-helmet';
 import config from '../../../config';
 import shallowEqual from 'react-pure-render/shallowEqual';
+import _ from 'lodash';
 
 export default () => {
 
@@ -38,13 +39,13 @@ export default () => {
       getMetadata() {
 
         const {
-          context: { store },
+          context: { store,location },
           props: { params }
           } = this;
 
         let metas = {
           title: config.metadata.title,
-          meta: config.metadata.metas,
+          meta: _.cloneDeep(config.metadata.metas),
           link: []
         };
 
@@ -80,7 +81,7 @@ export default () => {
         }
 
         let title = data.get('title');
-        let slug = data.get('slug');
+        let slug = location.pathname;//data.get('slug');
         let synopsis = data.get('synopsis');
         let ogTitle = data.get('title');
         let ogDescription = data.get('synopsis');
