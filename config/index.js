@@ -9,23 +9,23 @@ const config = _.merge(
       domain: 'https://afrostream.tv',
       metas: [
         {
-          name: 'fb:app_id',
+          property: 'fb:app_id',
           content: '828887693868980'
         },
         {
-          name: 'og:type',
+          property: 'og:type',
           content: 'website'
         },
         {
-          name: 'og:site_name',
+          property: 'og:site_name',
           content: 'Afrostream'
         },
         {
-          name: 'og:image:height',
+          property: 'og:image:height',
           content: '630'
         },
         {
-          name: 'og:image:width',
+          property: 'og:image:width',
           content: '1120'
         },
         {
