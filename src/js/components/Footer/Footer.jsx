@@ -5,6 +5,11 @@ if (process.env.BROWSER) {
 }
 
 class Footer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.year = new Date().getFullYear();
+  }
+
   render() {
     return (
       <footer className="footer">
@@ -91,7 +96,7 @@ class Footer extends React.Component {
         <div className="legal-statements">
           <div className="links">
             <div className="get-help">
-              <div className="legal-text">Copyright &copy; Afrostream 2015</div>
+              <div className="legal-text">Copyright &copy; Afrostream {this.year}</div>
             </div>
             <div className="get-help">
               &nbsp;

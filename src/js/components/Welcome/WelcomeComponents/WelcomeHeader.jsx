@@ -10,8 +10,19 @@ if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
 }
 
-@connect(({ User, Movie }) => ({User, Movie}))
+@connect(({ User, Movie,Video }) => ({User, Movie, Video}))
 class WelcomeHeader extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      size: {
+        height: 1920,
+        width: 815
+      }
+    };
+  }
+
 
   static contextTypes = {
     location: PropTypes.object.isRequired
@@ -26,6 +37,13 @@ class WelcomeHeader extends React.Component {
   };
 
   componentDidMount() {
+
+    this.setState({
+      size: {
+        height: window.innerHeight,
+        width: window.innerWidth
+      }
+    });
 
     let promoCode = this.hasPromo();
 
@@ -188,32 +206,42 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        Movie,params
+        Movie,Video,params
         }
       } = this;
 
-    let { movieId } = params;
-    let movieData = null;
-    let data = {
+    let { movieId,videoId } = params;
+    let info = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
-      poster: 'https://afrostream.imgix.net/production/poster/2015/12/ba55e2f3825608f0aabe-affichage_320x240_afrostream_wow-imp2.jpg'
+      poster: `${config.metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`
     };
 
+    let movieData;
+    let videoData;
+    let episodeData;
     if (movieId) {
       movieData = Movie.get(`movies/${movieId}`);
-      if (movieData) {
-        let poster = movieData.get('poster');
-        if (poster) {
-          data.poster = poster.get('imgix');
-        }
-        data.movie = {
-          title: movieData.get('title'),
-          synopsis: movieData.get('synopsis')
-        }
+    }
+    if (videoId) {
+      videoData = Video.get(`videos/${videoId}`);
+    }
+    if (videoData) {
+      episodeData = videoData.get('episode');
+    }
+    //si on a les données de l'episode alors, on remplace les infos affichées
+    const data = episodeData ? movieData.merge(episodeData) : movieData;
+    if (data) {
+      let poster = data.get('poster');
+      if (poster) {
+        info.poster = poster.get('imgix');
+      }
+      info.movie = {
+        title: data.get('title'),
+        synopsis: data.get('synopsis')
       }
     }
 
-    let imageStyle = {backgroundImage: `url(${data.poster}?crop=faces&fit=clip&w=1920&h=815&q=${config.images.quality}&fm=${config.images.type})`};
+    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`};
 
     let promoCode = this.hasPromo();
 
@@ -227,12 +255,12 @@ class WelcomeHeader extends React.Component {
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="afrostream-movie">
-            { data.movie ? <div className="afrostream-movie__info">
-              <h1>{data.movie.title}</h1>
-              <div className='detail-text'>{data.movie.synopsis}</div>
+            { info.movie ? <div className="afrostream-movie__info">
+              <h1>{info.movie.title}</h1>
+              <div className='detail-text'>{info.movie.synopsis}</div>
             </div> : ''}
             <div className="afrostream-movie__subscribe">
-              <div className="afrostream-statement">{data.title.split('\n').map((statement, i) => {
+              <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
                 return (<span key={`statement-${i}`}>{statement}</span>)
               })}</div>
               <button className="subscribe-button" type=" button" onClick={::this.showLock}>S'ABONNER MAINTENANT

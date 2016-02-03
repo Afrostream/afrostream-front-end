@@ -6,19 +6,29 @@ import * as SeasonActionCreators from '../../actions/season';
 import * as EventActionCreators from '../../actions/event';
 import * as PlayerActionCreators from '../../actions/player';
 import * as UserActionCreators from '../../actions/user';
+import * as CategoryActionCreators from '../../actions/category';
 import PlayerComponent from './PlayerComponent';
 
 @prepareRoute(async function ({ store, params: { movieId,movieSlug,seasonId,seasonSlug,episodeId,episodeSlug, videoId } }) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(PlayerActionCreators.getConfig()),
-    store.dispatch(MovieActionCreators.getMovie(movieId)),
-    store.dispatch(MovieActionCreators.getSeason(movieId)),
-    store.dispatch(VideoActionCreators.getVideo(videoId))
+    store.dispatch(PlayerActionCreators.getConfig())
   ];
+
+  if (movieId) {
+    await * [
+      store.dispatch(MovieActionCreators.getMovie(movieId)),
+      store.dispatch(MovieActionCreators.getSeason(movieId))
+    ];
+  }
+
+  if (videoId) {
+    await store.dispatch(VideoActionCreators.getVideo(videoId));
+  }
+  
   return await * [
     store.dispatch(UserActionCreators.getFavorites('movies')),
-    store.dispatch(UserActionCreators.getFavorites('episodes')),
+    store.dispatch(UserActionCreators.getFavorites('episodes'))
   ];
 })
 class PlayerPage extends React.Component {

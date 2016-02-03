@@ -22,6 +22,21 @@ class MovieInfo extends LoadVideo {
 
   constructor(props) {
     super(props);
+    this.state = {
+      size: {
+        height: 1920,
+        width: 815
+      }
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      size: {
+        height: window.innerHeight,
+        width: window.innerWidth
+      }
+    });
   }
 
   static propTypes = {
@@ -58,7 +73,7 @@ class MovieInfo extends LoadVideo {
 
     let poster = data.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=${config.images.quality}&fm=${config.images.type})`} : {};
+    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`} : {};
     const link = this.getLink();
     return (
       <div ref="slContainer" className={classes}>

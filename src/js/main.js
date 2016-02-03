@@ -3,6 +3,7 @@ import ReactDOM from'react-dom';
 import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll'
 import Router from './components/Router';
+import {  match } from 'react-router';
 import { Provider } from 'react-redux';
 import createStore from './lib/createStore';
 import request from 'superagent';

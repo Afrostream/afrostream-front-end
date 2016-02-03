@@ -14,11 +14,17 @@ if (process.env.BROWSER) {
 }
 
 @prepareRoute(async function ({ store, params: { movieId } }) {
-  return await * [
+  await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(CategoryActionCreators.getAllSpots()),
-    store.dispatch(MovieActionCreators.getMovie(movieId))
   ];
+
+  if (movieId) {
+    await * [
+      store.dispatch(MovieActionCreators.getMovie(movieId)),
+      store.dispatch(MovieActionCreators.getSeason(movieId))
+    ];
+  }
 })
 class WelcomePage extends React.Component {
 
