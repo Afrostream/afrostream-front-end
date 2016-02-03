@@ -9,16 +9,16 @@ const config = _.merge(
       domain: 'https://afrostream.tv',
       metas: [
         {
-          name: 'description',
-          content: 'AFROSTREAM, LES MEILLEURS FILMS ET SÉRIES AFRO EN ILLIMITÉ'
+          name: 'fb:app_id',
+          content: '828887693868980'
+        },
+        {
+          name: 'og:type',
+          content: 'website'
         },
         {
           name: 'og:site_name',
           content: 'Afrostream'
-        },
-        {
-          name: 'fb:app_id',
-          content: '828887693868980'
         },
         {
           name: 'og:image:height',
@@ -27,10 +27,6 @@ const config = _.merge(
         {
           name: 'og:image:width',
           content: '1120'
-        },
-        {
-          name: 'og:image',
-          content: 'https://afrostream.imgix.net/production/poster/2015/12/ba55e2f3825608f0aabe-affichage_320x240_afrostream_wow-imp2.jpg?crop=faces&fit=clip&w=1120&h=630&q=60&fm=jpg'
         },
         {
           name: 'keywords',

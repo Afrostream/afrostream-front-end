@@ -44,7 +44,7 @@ export default () => {
           } = this;
 
         let metas = {
-          title: config.metadata.title,
+          title: _.cloneDeep(config.metadata.title),
           meta: _.cloneDeep(config.metadata.metas),
           link: []
         };
@@ -76,22 +76,32 @@ export default () => {
         //si on a les données de l'episode alors, on remplace les infos affichées
         const data = episodeData ? movieData.merge(episodeData) : movieData;
 
-        if (!data) {
-          return metas;
+
+        let title = _.cloneDeep(config.metadata.title);
+        let ogTitle = title;
+        let slug = location.pathname !== '/' ? location.pathname : '';
+        let synopsis = _.cloneDeep(config.metadata.description);
+        let ogDescription = synopsis;
+        let poster = null;
+        let imageStyle = config.metadata.shareImage;
+
+        if (data) {
+          title = data.get('title');
+          synopsis = data.get('synopsis');
+          ogTitle = data.get('title');
+          ogDescription = data.get('synopsis');
+          poster = data.get('poster');
         }
 
-        let title = data.get('title');
-        let slug = location.pathname;//data.get('slug');
-        //<link rel="canonical" href="http://www.6play.fr/les-princes-de-l-amour-p_3442/Episode-62-c_11545928" data-react-helmet="true">
-        let synopsis = data.get('synopsis');
-        let ogTitle = data.get('title');
-        let ogDescription = data.get('synopsis');
-        let poster = data.get('poster');
-        let imageStyle = config.metadata.shareImage;
-        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`;
+
         if (poster) {
-          imageStyle = poster.get('imgix');
+          let posterImg = poster.get('imgix');
+          if (posterImg) {
+            imageStyle = posterImg;
+          }
         }
+
+        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`;
 
         if (title) {
           metas.title = title;
