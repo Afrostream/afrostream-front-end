@@ -5,6 +5,7 @@ export { default as Slides } from './Slides';
 export { default as Movie } from './Movie';
 export { default as Category } from './Category';
 export { default as Season } from './Season';
+export { default as Episode } from './Episode';
 export { default as Video } from './Video';
 export { default as Event } from './Event';
 export { default as Intercom } from './Intercom';

@@ -13,7 +13,7 @@ import SeasonList from '../Seasons/SeasonList';
     store.dispatch(EventActionCreators.userActive(true))
   ];
 
-  if (movieId) {
+  if (movieId && movieId !== 'undefined') {
     await * [
       store.dispatch(MovieActionCreators.getMovie(movieId)),
       store.dispatch(MovieActionCreators.getSeason(movieId))

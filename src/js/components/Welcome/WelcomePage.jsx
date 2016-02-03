@@ -8,23 +8,26 @@ import Spinner from '../Spinner/Spinner';
 import * as EventActionCreators from '../../actions/event';
 import * as MovieActionCreators from '../../actions/movie';
 import * as CategoryActionCreators from '../../actions/category';
+import * as EpisodeActionCreators from '../../actions/episode';
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less');
 }
 
-@prepareRoute(async function ({ store, params: { movieId } }) {
+@prepareRoute(async function ({ store, params: { movieId ,episodeId} }) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(CategoryActionCreators.getAllSpots()),
   ];
 
-  if (movieId) {
-    await * [
-      store.dispatch(MovieActionCreators.getMovie(movieId)),
-      store.dispatch(MovieActionCreators.getSeason(movieId))
-    ];
+  if (movieId && movieId !== 'undefined') {
+    await store.dispatch(MovieActionCreators.getMovie(movieId));
   }
+
+  if (episodeId && episodeId !== 'undefined') {
+    await store.dispatch(EpisodeActionCreators.getEpisode(episodeId));
+  }
+
 })
 class WelcomePage extends React.Component {
 

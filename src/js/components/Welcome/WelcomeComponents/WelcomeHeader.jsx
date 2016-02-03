@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
 }
 
-@connect(({ User, Movie,Video }) => ({User, Movie, Video}))
+@connect(({ User, Movie,Video,Season,Episode }) => ({User, Movie, Video, Season, Episode}))
 class WelcomeHeader extends React.Component {
 
   constructor(props) {
@@ -206,27 +206,44 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        Movie,Video,params
+        Movie,Video,Season,Episode,params
         }
       } = this;
 
-    let { movieId,videoId } = params;
+    let { movieId,videoId,seasonId,episodeId } = params;
     let info = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
       poster: `${config.metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`
     };
 
     let movieData;
-    let videoData;
+    //let videoData;
+    let seasonData;
     let episodeData;
     if (movieId) {
       movieData = Movie.get(`movies/${movieId}`);
     }
-    if (videoId) {
-      videoData = Video.get(`videos/${videoId}`);
+    //if (videoId) {
+    //  videoData = Video.get(`videos/${videoId}`);
+    //}
+    //if (videoData) {
+    //  episodeData = videoData.get('episode');
+    //}
+    if (seasonId) {
+      seasonData = Season.get(`seasons/${seasonId}`);
     }
-    if (videoData) {
-      episodeData = videoData.get('episode');
+    if (episodeId) {
+      if (seasonData) {
+        // episodeData = videoData.get('episode');
+        let episodesList = seasonData.get('episodes');
+        if (episodesList) {
+          episodeData = episodesList.find(function (obj) {
+            return obj.get('_id') === episodeId;
+          });
+        }
+      } else {
+        episodeData = Episode.get(`episodes/${episodeId}`);
+      }
     }
     //si on a les données de l'episode alors, on remplace les infos affichées
     const data = episodeData ? movieData.merge(episodeData) : movieData;

@@ -47,6 +47,10 @@ export default {
     getSeason: null
   }),
 
+  Episode: keyMirror({
+    getEpisode: null
+  }),
+
   Event: keyMirror({
     toggleSideBar: null,
     userActive: null,

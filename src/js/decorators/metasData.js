@@ -58,13 +58,18 @@ export default () => {
           seasonData = store.getState().Season.get(`seasons/${params.seasonId}`);
         }
 
-        if (seasonData && params.episodeId) {
-          // episodeData = videoData.get('episode');
-          let episodesList = seasonData.get('episodes');
-          if (episodesList) {
-            episodeData = episodesList.find(function (obj) {
-              return obj.get('_id') === params.episodeId;
-            });
+        if (params.episodeId) {
+          if (seasonData) {
+            // episodeData = videoData.get('episode');
+            let episodesList = seasonData.get('episodes');
+            if (episodesList) {
+              episodeData = episodesList.find(function (obj) {
+                return obj.get('_id') === params.episodeId;
+              });
+            }
+          }
+          else {
+            episodeData = store.getState().Episode.get(`episodes/${params.episodeId}`);
           }
         }
         //si on a les données de l'episode alors, on remplace les infos affichées
