@@ -154,6 +154,7 @@ const config = {
     },
     "languages": {
       "fr": {
+        "Next": "Vidéo Suivante",
         "Play": "Lecture",
         "Pause": "Pause",
         "Current Time": "Temps actuel",

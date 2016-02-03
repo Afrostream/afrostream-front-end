@@ -20,10 +20,11 @@ if (canUseDOM) {
   var base64 = require('js-base64').Base64;
 }
 
-@connect(({ Video,Movie,Episode,Event,User,Player }) => ({
+@connect(({ Video,Movie,Season,Episode,Event,User,Player }) => ({
   Video,
   Movie,
   Event,
+  Season,
   User,
   Player
 }))
@@ -146,6 +147,85 @@ class PlayerComponent extends React.Component {
       },
       isAndroid: detect(/Android/i)
     };
+  }
+
+  getNextVideo() {
+    const {
+      props: {
+        Video,
+        Movie,
+        Player,
+        User,
+        Season,
+        videoId,
+        movieId,
+        episodeId,
+        seasonId
+        }
+      } = this;
+
+    const movieData = Movie.get(`movies/${movieId}`);
+    if (!movieData) {
+      return;
+    }
+    const videoData = Video.get(`videos/${videoId}`);
+    if (!videoData) {
+      return;
+    }
+    let episodeData = videoData.get('episode');
+    if (!episodeData) {
+      return;
+    }
+    if (seasonId) {
+      //let seasonList = movieData.get('seasons');
+      //let seasonData = seasonList.find((obj)=> {
+      //  return obj.get('_id') == seasonId;
+      //});
+      let seasonData = Season.get(`seasons/${seasonId}`);
+      if (!seasonData) {
+        return;
+      }
+      let episodesList = seasonData.get('episodes');
+      if (episodesList) {
+        let episodeIndex = episodesList.findIndex((obj) => {
+          return obj.get('_id') == episodeId;
+        });
+        let nextEpisode = episodesList.get(episodeIndex + 1);
+        if (nextEpisode) {
+          return {
+            title: nextEpisode.get('title'),
+            poster: nextEpisode.get('poster').get('imgix')
+          }
+        }
+        //try to load next season
+        let seasonList = movieData.get('seasons');
+        let seasonIndex = seasonList.findIndex((obj) => {
+          return obj.get('_id') == seasonId;
+        });
+        if (seasonIndex > -1) {
+          let nextSeason = seasonList.get(seasonIndex + 1);
+          if (nextSeason) {
+            episodesList = nextSeason.get('episodes');
+            nextEpisode = episodesList.get(0);
+            return nextEpisode.toJS();
+          }
+        }
+        return;
+      }
+    }
+  }
+
+  loadNextVideo() {
+    const {
+      props: {
+        Video,
+        Movie,
+        Player,
+        User,
+        videoId,
+        movieId
+        }
+      } = this;
   }
 
   initPlayer() {
@@ -364,6 +444,9 @@ class PlayerComponent extends React.Component {
             }
           }
 
+          playerData.next = self.getNextVideo();
+          console.log('next', playerData.next);
+
           let player = videojs('afrostream-player', playerData).ready(function () {
               var allTracks = this.textTracks() || []; // get list of tracks
               _.forEach(allTracks, function (track) {
@@ -376,6 +459,7 @@ class PlayerComponent extends React.Component {
           player.on('useractive', this.triggerUserActive.bind(this));
           player.on('userinactive', this.triggerUserActive.bind(this));
           player.on('error', this.triggerError.bind(this));
+          player.on('next', this.loadNextVideo.bind(this));
 
           resolve(player);
         }).catch((err) => {
@@ -436,6 +520,7 @@ class PlayerComponent extends React.Component {
           this.player.off('useractive', this.triggerUserActive.bind(this));
           this.player.off('userinactive', this.triggerUserActive.bind(this));
           this.player.off('error', this.triggerError.bind(this));
+          this.player.off('next', this.loadNextVideo.bind(this));
           this.player = null;
           dispatch(EventActionCreators.userActive(true));
           console.log('destroyed player');
