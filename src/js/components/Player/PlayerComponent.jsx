@@ -116,6 +116,7 @@ class PlayerComponent extends Component {
       let nextVideoId;
       let nextEpisodeId;
       let episodeIndex;
+      let posterImg;
       let episodesList = seasonData.get('episodes');
       if (episodesList) {
         episodeIndex = episodesList.findIndex((obj) => {
@@ -128,10 +129,13 @@ class PlayerComponent extends Component {
           if (nextVideoId) {
             link += `/${nextVideoId}`;
           }
+
+          posterImg = nextEpisode.get('poster').get('imgix');
+
           return {
             link: link,
             title: nextEpisode.get('title'),
-            poster: nextEpisode.get('poster').get('imgix')
+            poster: `${posterImg}?crop=faces&fit=clip&w=150&h=80&q=60&fm=${config.images.type}`
           }
         }
         //try to load next season
@@ -165,14 +169,17 @@ class PlayerComponent extends Component {
                 nextEpisode = fetchEpisode;
 
                 link += `/${nextEpisode.get('_id')}/${nextEpisode.get('slug')}`;
+                posterImg = nextEpisode.get('poster').get('imgix');
                 nextVideoData = nextEpisode.get('video');
                 if (nextVideoData) {
                   link += `/${nextVideoData.get('_id')}`;
                 }
+
+
                 return {
                   link: link,
                   title: nextEpisode.get('title'),
-                  poster: nextEpisode.get('poster').get('imgix')
+                  poster: `${posterImg}?crop=faces&fit=clip&w=150&h=80&q=60&fm=${config.images.type}`
                 }
               }
               return;
