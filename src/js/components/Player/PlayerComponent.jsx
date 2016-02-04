@@ -1,10 +1,12 @@
 import React, { Component,PropTypes } from 'react';
 import ReactDOM from'react-dom';
+import Immutable from 'immutable';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import videojs from 'afrostream-player';
 import config from '../../../../config';
 import * as EventActionCreators from '../../actions/event';
+import * as EpisodeActionCreators from '../../actions/episode';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
@@ -26,6 +28,7 @@ if (canUseDOM) {
   Movie,
   Event,
   Season,
+  Episode,
   User,
   Player
 }))
@@ -72,16 +75,19 @@ class PlayerComponent extends Component {
     }
   }
 
-  getNextVideo() {
+  //TODO refactor and split method
+  async getNextVideo() {
     const {
       props: {
         Video,
         Movie,
         Season,
+        Episode,
         videoId,
         movieId,
         episodeId,
-        seasonId
+        seasonId,
+        dispatch
         }
       } = this;
 
@@ -105,15 +111,20 @@ class PlayerComponent extends Component {
         return;
       }
       link += `/${seasonData.get('_id')}/${seasonData.get('slug')}`;
+      let nextEpisode;
+      let nextVideoData;
+      let nextVideoId;
+      let nextEpisodeId;
+      let episodeIndex;
       let episodesList = seasonData.get('episodes');
       if (episodesList) {
-        let episodeIndex = episodesList.findIndex((obj) => {
+        episodeIndex = episodesList.findIndex((obj) => {
           return obj.get('_id') == episodeId;
         });
-        let nextEpisode = episodesList.get(episodeIndex + 1);
+        nextEpisode = episodesList.get(episodeIndex + 1);
         if (nextEpisode) {
           link += `/${nextEpisode.get('_id')}/${nextEpisode.get('slug')}`;
-          let nextVideoId = nextEpisode.get('videoId');
+          nextVideoId = nextEpisode.get('videoId');
           if (nextVideoId) {
             link += `/${nextVideoId}`;
           }
@@ -131,9 +142,41 @@ class PlayerComponent extends Component {
         if (seasonIndex > -1) {
           let nextSeason = seasonList.get(seasonIndex + 1);
           if (nextSeason) {
+            link = `/${movieData.get('_id')}/${movieData.get('slug')}/${nextSeason.get('_id')}/${nextSeason.get('slug')}`;
             episodesList = nextSeason.get('episodes');
             nextEpisode = episodesList.get(0);
-            return nextEpisode.toJS();
+            if (nextEpisode) {
+              nextEpisodeId = nextEpisode.get('_id');
+              let fetchEpisode = Episode.get(`episodes/${nextEpisodeId}`);
+              if (!fetchEpisode) {
+                try {
+                  //L'episode n'a jamais été chargé , on le fetch
+                  fetchEpisode = await dispatch(EpisodeActionCreators.getEpisode(nextEpisodeId)).then((result) => {
+                    if (!result || !result.res) {
+                      return null;
+                    }
+                    return Immutable.fromJS(result.res.body);
+                  });
+                } catch (err) {
+                  console.log('player : ', err)
+                }
+              }
+              if (fetchEpisode) {
+                nextEpisode = fetchEpisode;
+
+                link += `/${nextEpisode.get('_id')}/${nextEpisode.get('slug')}`;
+                nextVideoData = nextEpisode.get('video');
+                if (nextVideoData) {
+                  link += `/${nextVideoData.get('_id')}`;
+                }
+                return {
+                  link: link,
+                  title: nextEpisode.get('title'),
+                  poster: nextEpisode.get('poster').get('imgix')
+                }
+              }
+              return;
+            }
           }
         }
         return;
