@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component,PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -10,7 +10,8 @@ import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js';
-import MobileDetect from 'mobile-detect';
+import {detectUA} from './PlayerUtils';
+import shallowEqual from 'react-pure-render/shallowEqual';
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
@@ -28,7 +29,7 @@ if (canUseDOM) {
   User,
   Player
 }))
-class PlayerComponent extends React.Component {
+class PlayerComponent extends Component {
 
   constructor(props) {
     super(props);
@@ -41,6 +42,10 @@ class PlayerComponent extends React.Component {
       }
     };
   }
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired
+  };
 
   static propTypes = {
     videoId: React.PropTypes.string.isRequired,
@@ -56,97 +61,15 @@ class PlayerComponent extends React.Component {
         width: window.innerWidth
       }
     });
-    this.initPlayer();
   }
 
-  componentDidUpdate() {
-    this.initPlayer();
-  }
+  componentWillReceiveProps(nextProps) {
 
-  detectUA() {
-    const userAgent = (window.navigator && navigator.userAgent) || '';
-    const detect = function (pattern) {
-      return function () {
-        return (pattern).test(userAgent);
-      };
-    };
-
-    return {
-      getMobile: function () {
-        return new MobileDetect(userAgent);
-      },
-      getBrowser: function () {
-        var data = {};
-        var browser = '';
-        var version = '';
-        var os = '';
-        var osVersion = '';
-        var parseUserAgent, prepareData, renameOsx, cutSafariVersion;
-
-        parseUserAgent = function () {
-          var userAgent = navigator.userAgent.toLowerCase(),
-            browserParts = /(ie|firefox|chrome|safari|opera)(?:.*version)?(?:[ \/])?([\w.]+)/.exec(userAgent),
-            osParts = /(mac|win|linux|freebsd|mobile|iphone|ipod|ipad|android|blackberry|j2me|webtv)/.exec(userAgent);
-
-          if (!!userAgent.match(/trident\/7\./)) {
-            browser = 'ie';
-            version = 11;
-          } else if (browserParts && browserParts.length > 2) {
-            browser = browserParts[1];
-            version = browserParts[2];
-          }
-
-          if (osParts && osParts.length > 1) {
-            os = osParts[1];
-          }
-
-          osVersion = navigator.oscpu || navigator.appName;
-        };
-
-        prepareData = function () {
-          data.browser = browser;
-          data.version = parseInt(version, 10) || '';
-          data.os = os;
-          data.osVersion = osVersion;
-        };
-
-        renameOsx = function () {
-          if (os === 'mac') {
-            os = 'osx';
-          }
-        };
-
-        cutSafariVersion = function () {
-          if (os === 'safari') {
-            version = version.substring(0, 1);
-          }
-        };
-
-        parseUserAgent();
-
-        // exception rules
-        renameOsx();
-        cutSafariVersion();
-
-        prepareData();
-
-        return data;
-      },
-      isChrome: function () {
-        return detect(/webkit\W.*(chrome|chromium)\W/i)() && !detect(/Edge/)()
-      },
-      isFirefox: detect(/mozilla.*\Wfirefox\W/i),
-      isIE: function () {
-        return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
-      },
-      isSafari: function () {
-        return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/iPad|iPhone|iPod|CriOS/.test(navigator.platform);
-      },
-      isIOS: function () {
-        return /iPad|iPhone|iPod|CriOS/.test(navigator.platform);
-      },
-      isAndroid: detect(/Android/i)
-    };
+    if (!shallowEqual(nextProps.Video, this.props.Video)) {
+      const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`);
+      this.playerInit = false;
+      this.initPlayer(videoData);
+    }
   }
 
   getNextVideo() {
@@ -154,8 +77,6 @@ class PlayerComponent extends React.Component {
       props: {
         Video,
         Movie,
-        Player,
-        User,
         Season,
         videoId,
         movieId,
@@ -168,6 +89,8 @@ class PlayerComponent extends React.Component {
     if (!movieData) {
       return;
     }
+    let link = `/${movieData.get('_id')}/${movieData.get('slug')}`;
+
     const videoData = Video.get(`videos/${videoId}`);
     if (!videoData) {
       return;
@@ -177,14 +100,11 @@ class PlayerComponent extends React.Component {
       return;
     }
     if (seasonId) {
-      //let seasonList = movieData.get('seasons');
-      //let seasonData = seasonList.find((obj)=> {
-      //  return obj.get('_id') == seasonId;
-      //});
       let seasonData = Season.get(`seasons/${seasonId}`);
       if (!seasonData) {
         return;
       }
+      link += `/${seasonData.get('_id')}/${seasonData.get('slug')}`;
       let episodesList = seasonData.get('episodes');
       if (episodesList) {
         let episodeIndex = episodesList.findIndex((obj) => {
@@ -192,7 +112,13 @@ class PlayerComponent extends React.Component {
         });
         let nextEpisode = episodesList.get(episodeIndex + 1);
         if (nextEpisode) {
+          link += `/${nextEpisode.get('_id')}/${nextEpisode.get('slug')}`;
+          let nextVideoId = nextEpisode.get('videoId');
+          if (nextVideoId) {
+            link += `/${nextVideoId}`;
+          }
           return {
+            link: link,
             title: nextEpisode.get('title'),
             poster: nextEpisode.get('poster').get('imgix')
           }
@@ -215,266 +141,261 @@ class PlayerComponent extends React.Component {
     }
   }
 
-  loadNextVideo() {
+  async loadNextVideo() {
     const {
-      props: {
-        Video,
-        Movie,
-        Player,
-        User,
-        videoId,
-        movieId
+      context: {
+        history
         }
       } = this;
+    let next = await this.getNextVideo();
+    history.pushState(null, next.link);
   }
 
-  initPlayer() {
-    let self = this;
-    if (self.player) {
-      return false;
+  async initPlayer(videoData) {
+    //if (this.player || this.playerInit) {
+    //  return false;
+    //}
+    console.log('player : initPlayer');
+    try {
+      this.player = await this.generatePlayer(videoData);
+      console.log('player : generatePlayer complete', this.player);
+      return this.player;
+    } catch (err) {
+      console.log('player : ', err);
+      //this.destroyPlayer();
+      return this.playerInit = false;
     }
-    //initPlayer
-    this.generatePlayer()
-      .then(function (player) {
-        console.log('generatePlayer complete');
-        self.player = player;
-      }).catch(function (err) {
-      console.log(err);
-      return false;
-    });
   }
 
-  generateDomTag(videoData) {
+  async generateDomTag(videoData) {
     const {
       props: {
         movieId,Movie
         }
       } = this;
+    console.log('player : generate dom tag');
+    // initialize the player
+    const movieData = Movie.get(`movies/${movieId}`);
+    if (!movieData) {
+      throw new Error('no movie data ref');
+    }
+    const ua = detectUA();
+    let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537));
+    let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
+    let hasSubtiles = captions ? captions.size : false;
+    let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
+    let video = document.createElement('video');
+    video.id = 'afrostream-player';
+    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
+    video.crossOrigin = true;
+    video.setAttribute('crossorigin', true);
 
-    return new Promise((resolve) => {
-      // initialize the player
-      const movieData = Movie.get(`movies/${movieId}`);
-      const ua = this.detectUA();
-      let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537));
-      let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
-      let hasSubtiles = captions ? captions.size : false;
-      let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
-      let video = document.createElement('video');
-      video.id = 'afrostream-player';
-      video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
-      video.crossOrigin = true;
-      video.setAttribute('crossorigin', true);
+    var trackOptions = {
+      metadata: {
+        title: movieData.get('title'),
+        subtitle: movieData.get('synopsis')
+      },
+      tracks: []
+    };
 
-      var trackOptions = {
-        metadata: {
-          title: movieData.get('title'),
-          subtitle: movieData.get('synopsis')
-        },
-        tracks: []
-      };
+    if (hasSubtiles) {
+      captions.map((caption, i) => {
+        let track = document.createElement('track');
+        track.kind = 'captions';
+        track.src = caption.get('src');
+        track.id = `track-${caption.get('_id')}-${i}`;
+        let lang = caption.get('lang');
+        if (lang) {
+          track.srclang = lang.get('lang');
+          track.label = lang.get('label')
+        }
+        if (lang.get('lang') === 'fr') {
+          track.default = true;
+        }
+        track.mode = track.default ? 'showing' : 'hidden';
 
-      if (hasSubtiles) {
-        captions.map((caption, i) => {
-          let track = document.createElement('track');
-          track.kind = 'captions';
-          track.src = caption.get('src');
-          track.id = `track-${caption.get('_id')}-${i}`;
-          let lang = caption.get('lang');
-          if (lang) {
-            track.srclang = lang.get('lang');
-            track.label = lang.get('label')
-          }
-          if (lang.get('lang') === 'fr') {
-            track.default = true;
-          }
-          track.mode = track.default ? 'showing' : 'hidden';
-
-          trackOptions.tracks.push({
-            kind: track.kind,
-            src: track.src,
-            id: track.id,
-            language: track.srclang,
-            label: track.label,
-            type: 'text/vtt',
-            mode: track.default ? 'showing' : 'hidden'
-          });
-          video.appendChild(track);
+        trackOptions.tracks.push({
+          kind: track.kind,
+          src: track.src,
+          id: track.id,
+          language: track.srclang,
+          label: track.label,
+          type: 'text/vtt',
+          mode: track.default ? 'showing' : 'hidden'
         });
-      }
+        video.appendChild(track);
+      });
+    }
+    if (wrapper) {
       wrapper.appendChild(video);
-      resolve(trackOptions);
-    });
+    } else {
+      console.log('cant set wrapper elements');
+    }
+    return trackOptions;
   }
 
-  generatePlayer() {
+  async getPlayerData(videoData) {
     const {
       props: {
-        Video,
-        Movie,
-        Player,
-        User,
-        videoId,
-        movieId
+        Player,Movie,User,movieId
         }
       } = this;
 
-    let self = this;
+    console.log('player : Get player data');
 
-    return new Promise((resolve, reject) => {
+    let trackOpt = await this.generateDomTag(videoData);
+    let videoOptions = videoData.toJS();
 
-      const videoData = Video.get(`videos/${videoId}`);
-      const apiPlayerConfig = Player.get(`/player/config`);
-      if (!apiPlayerConfig) return reject('no player config api data');
-      if (!videoData) return reject('no video data');
+    let movie = Movie.get(`movies/${movieId}`);
+    let posterImgImgix = {};
+    if (movie) {
+      let poster = movie.get('poster');
+      let posterImg = poster ? poster.get('imgix') : '';
+      if (posterImg) {
+        posterImgImgix.poster = `${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`;
+        videoOptions = _.merge(videoOptions, posterImgImgix);
+        videoOptions.live = movie.get('live');
+      }
+    }
+    const apiPlayerConfig = Player.get(`/player/config`);
+    if (!apiPlayerConfig) throw new Error('no player config api data');
+    //initialize the player
+    let apiPlayerConfigJs = {};
+    if (apiPlayerConfig) {
+      apiPlayerConfigJs = apiPlayerConfig.toJS();
+    }
+    let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfigJs));
+    //merge all configs
+    let playerData = _.merge(videoOptions, playerConfig);
+    // ==== START hacks config
+    let isLive = playerData.hasOwnProperty('live') && playerData.live;
+    const ua = detectUA();
+    let browserVersion = ua.getBrowser();
+    let mobileVersion = ua.getMobile();
 
-      if (self.playerInit) return reject('Player init already called');
-
-      self.playerInit = true;
-
-      self.destroyPlayer().then(() => {
-        let videoOptions = videoData.toJS();
-
-        let movie = Movie.get(`movies/${movieId}`);
-        let posterImgImgix = {};
-        if (movie) {
-          let poster = movie.get('poster');
-          let posterImg = poster ? poster.get('imgix') : '';
-          if (posterImg) {
-            posterImgImgix.poster = `${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`;
-            videoOptions = _.merge(videoOptions, posterImgImgix);
-            videoOptions.live = movie.get('live');
-          }
-        }
-
-        self.generateDomTag(videoData).then((trackOpt) => {
-          //initialize the player
-          let apiPlayerConfigJs = {};
-          if (apiPlayerConfig) {
-            apiPlayerConfigJs = apiPlayerConfig.toJS();
-          }
-          let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfigJs));
-          //merge all configs
-          let playerData = _.merge(videoOptions, playerConfig);
-          // ==== START hacks config
-          let isLive = playerData.hasOwnProperty('live') && playerData.live;
-          const ua = self.detectUA();
-          let browserVersion = ua.getBrowser();
-          let mobileVersion = ua.getMobile();
-
-          if (ua.isIE()) {
-            playerData.html5 = {
-              nativeCaptions: false,
-              nativeTextTracks: false
-            };
-            playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
-          }
-          //Fix Safari < 6.2 can't play hls
-          if (ua.isSafari()) {
-            if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
-              playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
-                return k !== 'dashas';
-              });
-            }
-            //Safari 8 can't play dashjs
-            if (browserVersion.version == 600) {
-              playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
-                return k !== 'html5';
-              });
-              playerData.sources = _.sortBy(playerData.sources, function (k) {
-                return k.type === 'application/dash+xml';
-              });
-            }
-          }
-          //on force dash en tech par default pour tous les browsers ;)
-          playerData.sources = _.sortBy(playerData.sources, function (k) {
-            return k.type !== 'application/dash+xml';
-          });
-          //Fix android live hls only
-          if (mobileVersion.match('playstation|xbox') || (ua.isAndroid() && isLive)) {
-            playerData.sources = _.sortBy(playerData.sources, function (k) {
-              return k.type === 'application/dash+xml';
-            });
-            playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
-              return k !== 'html5';
-            });
-          }
-
-          // ==== END hacks config
-          playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
-          playerData.plugins = playerData.plugins || [];
-          playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
-
-          let user = User.get('user');
-          if (user) {
-            let userId = user.get('user_id');
-            let token = user.get('afro_token');
-            let splitUser = typeof userId === 'string' ? userId.split('|') : [userId];
-            userId = _.find(splitUser, function (val) {
-              return parseInt(val, 10);
-            });
-            if (playerData.metrics) {
-              playerData.metrics.user_id = userId;
-            }
-            //encode data to pass it into drmtoday
-            if (playerData.drm && playerData.dash && playerData.dash.protData) {
-              let protUser = base64.encode(JSON.stringify({
-                userId: userId,
-                sessionId: token,
-                merchant: 'afrostream'
-              }));
-
-              let protData = {
-                "com.widevine.alpha": {
-                  "httpRequestHeaders": {
-                    "dt-custom-data": protUser
-                  }
-                },
-                "com.microsoft.playready": {
-                  "httpRequestHeaders": {
-                    "http-header-CustomData": protUser
-                  }
-                },
-                "com.adobe.flashaccess": {
-                  "httpRequestHeaders": {
-                    "customData": protUser
-                  }
-                }
-              };
-              playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
-            }
-          }
-
-          playerData.next = self.getNextVideo();
-          console.log('next', playerData.next);
-
-          let player = videojs('afrostream-player', playerData).ready(function () {
-              var allTracks = this.textTracks() || []; // get list of tracks
-              _.forEach(allTracks, function (track) {
-                let lang = track.language || track.language_;
-                track.mode = (lang === 'fr' || lang === 'fra') ? 'showing' : 'hidden'; // show this track
-              });
-            }
-          );
-          player.on('loadedmetadata', this.setDurationInfo.bind(this));
-          player.on('useractive', this.triggerUserActive.bind(this));
-          player.on('userinactive', this.triggerUserActive.bind(this));
-          player.on('error', this.triggerError.bind(this));
-          player.on('next', this.loadNextVideo.bind(this));
-
-          resolve(player);
-        }).catch((err) => {
-          self.playerInit = false;
-          reject(err);
+    if (ua.isIE()) {
+      playerData.html5 = {
+        nativeCaptions: false,
+        nativeTextTracks: false
+      };
+      playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
+    }
+    console.log('player : playerData', playerData);
+    //Fix Safari < 6.2 can't play hls
+    if (ua.isSafari()) {
+      if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
+        playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+          return k !== 'dashas';
         });
-      }).catch((err) => {
-        self.playerInit = false;
-        reject(err);
-      });
+      }
+      //Safari 8 can't play dashjs
+      if (browserVersion.version == 600) {
+        playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+          return k !== 'html5';
+        });
+        playerData.sources = _.sortBy(playerData.sources, function (k) {
+          return k.type === 'application/dash+xml';
+        });
+      }
+    }
+    //on force dash en tech par default pour tous les browsers ;)
+    playerData.sources = _.sortBy(playerData.sources, function (k) {
+      return k.type !== 'application/dash+xml';
     });
+    //Fix android live hls only
+    if (mobileVersion.match('playstation|xbox') || (ua.isAndroid() && isLive)) {
+      playerData.sources = _.sortBy(playerData.sources, function (k) {
+        return k.type === 'application/dash+xml';
+      });
+      playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+        return k !== 'html5';
+      });
+    }
+
+    // ==== END hacks config
+    playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
+    playerData.plugins = playerData.plugins || [];
+    playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
+    let user = User.get('user');
+    if (user) {
+      let userId = user.get('user_id');
+      let token = user.get('afro_token');
+      let splitUser = typeof userId === 'string' ? userId.split('|') : [userId];
+      userId = _.find(splitUser, function (val) {
+        return parseInt(val, 10);
+      });
+      if (playerData.metrics) {
+        playerData.metrics.user_id = userId;
+      }
+      //encode data to pass it into drmtoday
+      if (playerData.drm && playerData.dash && playerData.dash.protData) {
+        let protUser = base64.encode(JSON.stringify({
+          userId: userId,
+          sessionId: token,
+          merchant: 'afrostream'
+        }));
+
+        let protData = {
+          "com.widevine.alpha": {
+            "httpRequestHeaders": {
+              "dt-custom-data": protUser
+            }
+          },
+          "com.microsoft.playready": {
+            "httpRequestHeaders": {
+              "http-header-CustomData": protUser
+            }
+          },
+          "com.adobe.flashaccess": {
+            "httpRequestHeaders": {
+              "customData": protUser
+            }
+          }
+        };
+        playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
+      }
+    }
+    try {
+      playerData.next = await this.getNextVideo();
+    } catch (e) {
+      console.log('player : Next video error', e);
+    }
+    return playerData;
+  }
+
+  async generatePlayer(videoData) {
+    const {
+      props: {
+        Video,
+        videoId
+        }
+      } = this;
+
+    if (this.playerInit) throw new Error('old player was already generate, destroy it before');
+    await this.destroyPlayer();
+    this.playerInit = true;
+    //const videoData = Video.get(`videos/${videoId}`);
+    if (!videoData) throw new Error(`no video data ${videoId} ${videoData}`);
+    let playerData = await this.getPlayerData(videoData);
+
+    let player = await videojs('afrostream-player', playerData).ready(function () {
+        var allTracks = this.textTracks() || []; // get list of tracks
+        _.forEach(allTracks, function (track) {
+          let lang = track.language || track.language_;
+          track.mode = (lang === 'fr' || lang === 'fra') ? 'showing' : 'hidden'; // show this track
+        });
+      }
+    );
+    player.on('loadedmetadata', this.setDurationInfo.bind(this));
+    player.on('useractive', this.triggerUserActive.bind(this));
+    player.on('userinactive', this.triggerUserActive.bind(this));
+    player.on('error', this.triggerError.bind(this));
+    player.on('next', this.loadNextVideo.bind(this));
+
+    return player;
   }
 
   setDurationInfo() {
-
     this.setState({
       duration: this.player ? this.player.duration() : 0
     })
@@ -504,36 +425,41 @@ class PlayerComponent extends React.Component {
 
   componentWillUnmount() {
     this.destroyPlayer();
+    console.log('player : componentWillUnmount', this.player)
   }
 
-  destroyPlayer() {
+  async destroyPlayer() {
     const {
       props: {
         dispatch
         }
       } = this;
 
-    return new Promise((resolve) => {
-      if (this.player) {
-        this.player.one('dispose', () => {
-          this.player.off('loadedmetadata', this.setDurationInfo.bind(this));
-          this.player.off('useractive', this.triggerUserActive.bind(this));
-          this.player.off('userinactive', this.triggerUserActive.bind(this));
-          this.player.off('error', this.triggerError.bind(this));
-          this.player.off('next', this.loadNextVideo.bind(this));
-          this.player = null;
-          dispatch(EventActionCreators.userActive(true));
-          console.log('destroyed player');
-          resolve();
-        });
-        console.log('destroy player');
-        this.player.dispose();
-      } else {
-        console.log('destroy player impossible');
-        // Player not initialized, the promise is resolved immediatly
-        resolve();
-      }
-    });
+    if (this.player) {
+      this.player.one('dispose', () => {
+        this.player.off('loadedmetadata', this.setDurationInfo.bind(this));
+        this.player.off('useractive', this.triggerUserActive.bind(this));
+        this.player.off('userinactive', this.triggerUserActive.bind(this));
+        this.player.off('error', this.triggerError.bind(this));
+        this.player.off('next', this.loadNextVideo.bind(this));
+        this.player = null;
+        this.playerInit = false;
+        dispatch(EventActionCreators.userActive(true));
+        console.log('player : destroyed player');
+      });
+      console.log('player : destroy player', this.player);
+      await this.player.dispose();
+      return null;
+    } else {
+      console.log('player : destroy player impossible');
+      //let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
+      //if (wrapper) {
+      //  let unmount = ReactDOM.unmountComponentAtNode(wrapper);
+      //}
+      //console.log('player : wrapper unmount');
+      this.playerInit = false;
+      return null;
+    }
   }
 
   formatTime(seconds) {
@@ -593,7 +519,8 @@ class PlayerComponent extends React.Component {
               {infos.episodeNumber ?
                 <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> : ''}
               <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
-              {videoDuration ? <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
+              {videoDuration ?
+                <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
               <div className=" video-infos_synopsys">{infos.synopsis}</div>
             </div> : <div />
         }

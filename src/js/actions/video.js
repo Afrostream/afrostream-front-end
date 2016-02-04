@@ -4,6 +4,7 @@ import { pushState } from 'redux-router';
 export function getVideo(videoId) {
   return (dispatch, getState, actionDispatcher) => {
 
+    console.log('player : getVideo', videoId);
     if (!videoId) {
       console.log('no video id passed in action', videoId);
       return {
