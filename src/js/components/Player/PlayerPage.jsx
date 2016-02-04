@@ -21,6 +21,10 @@ import PlayerComponent from './PlayerComponent';
     await store.dispatch(MovieActionCreators.getMovie(movieId));
   }
 
+  if (seasonId && seasonId !== 'undefined') {
+    await store.dispatch(SeasonActionCreators.getSeason(seasonId));
+  }
+
   if (episodeId && episodeId !== 'undefined') {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId));
   }

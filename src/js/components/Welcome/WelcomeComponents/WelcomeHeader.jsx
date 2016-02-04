@@ -213,7 +213,7 @@ class WelcomeHeader extends React.Component {
     let { movieId,videoId,seasonId,episodeId } = params;
     let info = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
-      poster: `${config.metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`
+      poster: `${config.metadata.shareImage}`
     };
 
     let movieData;

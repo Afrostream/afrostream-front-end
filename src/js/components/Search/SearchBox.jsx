@@ -42,9 +42,11 @@ class SearchBox extends React.Component {
   handleBlur() {
     let self = this;
     setTimeout(function () {
+      let input = self.getInput();
+      input.value = '';
       self.setState({
         hasFocus: false
-      })
+      });
     }, 200);
   }
 
