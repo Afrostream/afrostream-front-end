@@ -82,6 +82,9 @@ export function detectUA() {
     isSafari: function () {
       return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/iPad|iPhone|iPod|CriOS/.test(navigator.platform);
     },
+    isWindows: function () {
+      return navigator.appVersion.indexOf('Win') != -1;
+    },
     isIOS: function () {
       return /iPad|iPhone|iPod|CriOS/.test(navigator.platform);
     },
