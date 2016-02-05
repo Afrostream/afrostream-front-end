@@ -1,4 +1,5 @@
 import React ,{PropTypes } from 'react';
+
 import { connect } from 'react-redux';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -35,7 +36,6 @@ class Application extends React.Component {
     });
 
     return (
-
       <div className={appClasses}>
         <ModalView />
         <Header {...this.props}/>
