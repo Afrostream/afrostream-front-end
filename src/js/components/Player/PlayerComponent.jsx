@@ -230,7 +230,7 @@ class PlayerComponent extends Component {
       throw new Error('no movie data ref');
     }
     const ua = detectUA();
-    let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537));
+    let excludeSafari = (!ua.isSafari() || ua.isIOS() || (ua.isSafari() && ua.getBrowser().version === 537));
     let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
