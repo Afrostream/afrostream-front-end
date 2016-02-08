@@ -124,15 +124,17 @@ const config = {
           icon: 'fa-facebook',
           url: 'https://www.facebook.com/sharer/sharer.php',
           params: {
-            u: '{url}'
+            u: '{url}',
+            s: 'Je regarde "{title}" sur @afrostream'
           }
         },
         whatsapp: {
           enabled: true,     // Enable WhatsApp. [Default: true],
+          mobile: true,
           icon: 'fa-whatsapp',
           url: 'whatsapp://send',
           params: {
-            text: '{description} {url}'
+            text: 'Je regarde "{title}" sur @afrostream {url}'
           }
         },
         twitter: {
@@ -141,7 +143,7 @@ const config = {
           url: 'https://twitter.com/intent/tweet',
           params: {
             url: '{url}',
-            text: '{description}'
+            text: 'Je regarde "{title}" sur @afrostream'
           }
         },
         googlePlus: {
@@ -149,7 +151,8 @@ const config = {
           icon: 'fa-google-plus',
           url: 'https://plus.google.com/share',
           params: {
-            url: '{url}'
+            url: '{url}',
+            text: 'Je regarde "{title}" sur @afrostream'
           }
         },
         email: {
@@ -157,7 +160,7 @@ const config = {
           icon: 'fa-envelope',
           url: 'mailto:',
           params: {
-            subject: '{title}',
+            subject: 'Je regarde "{title}" sur @afrostream',
             body: '{description}'
           }
         }

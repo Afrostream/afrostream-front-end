@@ -3,6 +3,7 @@ import ModalComponent from './ModalComponent';
 import classNames from 'classnames';
 import {social} from '../../../../config';
 import _ from 'lodash';
+import {detectUA} from '../Player/PlayerUtils';
 
 
 if (process.env.BROWSER) {
@@ -18,14 +19,11 @@ class ModalSocial extends ModalComponent {
     let url = this.getMeta('og:url');
 
     let params = _.cloneDeep(network.params);
-    let replaceParams = _.forEach(params, (value)=> {
-      value.replace(/{title}/, title);
-      value.replace(/{description}/, description);
-      value.replace(/{url}/, url);
-      return value;
+    let updatedParams = _.mapValues(params, (value)=> {
+      return value.replace(/{title}/gm, title).replace(/{description}/gm, description).replace(/{url}/gm, url);
     });
 
-    this.updateHref(network, replaceParams);
+    this.updateHref(network, updatedParams);
   }
 
   /**
@@ -148,7 +146,13 @@ class ModalSocial extends ModalComponent {
   getShareButtons() {
     return _.map(social.networks, (network) => {
 
+      const ua = detectUA();
+
       if (!network.enabled) {
+        return '';
+      }
+
+      if (!ua.getMobile().mobile() && network.mobile) {
         return '';
       }
       const inputAttributes = {
