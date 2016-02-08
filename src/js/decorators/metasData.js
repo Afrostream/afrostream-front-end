@@ -119,6 +119,10 @@ export default () => {
             property: 'og:title',
             content: ogTitle
           });
+          metas.meta.push({
+            name: 'twitter:title',
+            content: ogTitle
+          });
         }
 
         if (ogDescription) {
@@ -126,11 +130,19 @@ export default () => {
             property: 'og:description',
             content: ogDescription
           });
+          metas.meta.push({
+            name: 'twitter:description',
+            content: ogDescription
+          });
         }
 
         if (ogImage) {
           metas.meta.push({
             property: 'og:image',
+            content: ogImage
+          });
+          metas.meta.push({
+            name: 'twitter:image:src',
             content: ogImage
           });
         }
@@ -143,6 +155,10 @@ export default () => {
           metas.meta.push({
             property: 'og:url',
             content: `${config.metadata.domain}${slug}`
+          });
+          metas.meta.push({
+            name: 'twitter:site',
+            content: ogTitle
           });
         }
 

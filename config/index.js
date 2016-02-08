@@ -13,6 +13,14 @@ const config = _.merge(
           content: '828887693868980'
         },
         {
+          name: 'twitter:card',
+          content: 'summary'
+        },
+        {
+          name: 'twitter:creator',
+          content: '@afrostream'
+        },
+        {
           property: 'og:type',
           content: 'website'
         },
