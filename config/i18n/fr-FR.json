@@ -96,5 +96,8 @@
   "relog": {
     "title": "Reconnectez-vous",
     "action": "Reconnectez-vous"
+  },
+  "social": {
+    "title": "Partager"
   }
 }

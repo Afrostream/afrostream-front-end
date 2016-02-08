@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ModalGeoWall from './ModalGeoWall';
 import ModalLogin from './ModalLogin';
+import ModalSocial from './ModalSocial';
 
 if (process.env.BROWSER) {
   require('./ModalView.less');
@@ -30,6 +31,7 @@ class ModalView extends React.Component {
         return (
           <ModalGeoWall closable={closable} {...this.props}/>
         );
+        break;
       case 'show':
       case 'showSignin':
       case 'showSignup':
@@ -39,6 +41,12 @@ class ModalView extends React.Component {
         return (
           <ModalLogin type={target} closable={closable} {...this.props}/>
         );
+        break;
+      case 'social':
+        return (
+          <ModalSocial closable={closable} {...this.props}/>
+        );
+        break;
       default:
         return false;
     }

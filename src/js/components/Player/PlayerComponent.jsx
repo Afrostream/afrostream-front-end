@@ -10,6 +10,7 @@ import * as EpisodeActionCreators from '../../actions/episode';
 import classSet from 'classnames';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
+import ShareButton from '../Share/ShareButton';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js';
 import {detectUA} from './PlayerUtils';
@@ -576,6 +577,7 @@ class PlayerComponent extends Component {
               {infos.episodeNumber ?
                 <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> : ''}
               <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
+              <ShareButton />
               {videoDuration ?
                 <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
               <div className=" video-infos_synopsys">{infos.synopsis}</div>

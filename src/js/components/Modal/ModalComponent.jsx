@@ -1,7 +1,6 @@
 import React from 'react';
 import * as ModalActionCreators from '../../actions/modal';
 import classNames from 'classnames';
-import $ from 'jquery';
 
 class ModalComponent extends React.Component {
 
