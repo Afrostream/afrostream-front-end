@@ -43,7 +43,8 @@ class PlayerComponent extends Component {
       size: {
         height: 1920,
         width: 815
-      }
+      },
+      nextReco: false
     };
   }
 
@@ -200,6 +201,14 @@ class PlayerComponent extends Component {
       } = this;
     let next = await this.getNextVideo();
     history.pushState(null, next.link);
+  }
+
+  onTimeUpdate() {
+    let currentTime = this.player.currentTime();
+    let duration = this.player.duration();
+    if (time > duration - 500) {
+      
+    }
   }
 
   async initPlayer(videoData) {
@@ -438,6 +447,7 @@ class PlayerComponent extends Component {
         });
       }
     );
+    player.on('timeupdate', this.onTimeUpdate.bind(this));
     player.on('loadedmetadata', this.setDurationInfo.bind(this));
     player.on('useractive', this.triggerUserActive.bind(this));
     player.on('userinactive', this.triggerUserActive.bind(this));
