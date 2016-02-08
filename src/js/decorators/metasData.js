@@ -65,7 +65,7 @@ export default () => {
             let episodesList = seasonData.get('episodes');
             if (episodesList) {
               episodeData = episodesList.find(function (obj) {
-                return obj.get('_id') === params.episodeId;
+                return obj.get('_id') == params.episodeId;
               });
             }
           }

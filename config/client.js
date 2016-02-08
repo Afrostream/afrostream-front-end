@@ -151,8 +151,7 @@ const config = {
           icon: 'fa-google-plus',
           url: 'https://plus.google.com/share',
           params: {
-            url: '{url}',
-            text: 'Je regarde "{title}" sur @afrostream'
+            url: '{url}'
           }
         },
         email: {
