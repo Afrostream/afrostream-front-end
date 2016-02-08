@@ -80,7 +80,7 @@
     "passwordPlaceholder": "Nouveau mot de passe",
     "repeatPasswordPlaceholder": "Confirmer le nouveau mot de passe",
     "cancelAction": "Annuler",
-    "successText": "Vous allez recevoir sous quelques minutes un courriel vous indiquant comment réinitialiser votre mot de passe.",
+    "successText": "Vous venez de recevoir un courriel vous indiquant comment réinitialiser votre mot de passe.",
     "enterSamePasswordText": "S'il vous plaît entrez le même mot de passe.",
     "headerText": "Veuillez saisir votre courriel et mot de passe. Nous vous enverrons un courriel pour confirmer le changement de mot de passe.",
     "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe.",
