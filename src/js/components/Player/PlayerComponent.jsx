@@ -230,7 +230,7 @@ class PlayerComponent extends Component {
       throw new Error('no movie data ref');
     }
     const ua = detectUA();
-    let excludeSafari = (!ua.isSafari() || ua.isIOS() || (ua.isSafari() && ua.getBrowser().version === 537));
+    let excludeSafari = ((!ua.isSafari() && !ua.isIOS()) || (ua.isSafari() && ua.getBrowser().version === 537));
     let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
@@ -348,6 +348,13 @@ class PlayerComponent extends Component {
         });
       }
     }
+    //fix windows only flash
+    if (ua.isWindows()) {
+      playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+        return k !== 'dashas';
+      });
+    }
+
     //on force dash en tech par default pour tous les browsers ;)
     playerData.sources = _.sortBy(playerData.sources, function (k) {
       return k.type !== 'application/dash+xml';
