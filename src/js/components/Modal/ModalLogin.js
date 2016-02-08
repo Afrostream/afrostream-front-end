@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from'react-dom';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import { Link } from 'react-router';
@@ -134,9 +135,15 @@ class ModalLogin extends ModalComponent {
       valitations.push('repeat_password');
     }
 
-    let formValues = _.pick(self.state, valitations);
-    _.forIn(formValues, function (values, key) {
-      self.validate(key);
+    let formData = this.state;
+    _.forEach(valitations, (name)=> {
+      let domNode = ReactDOM.findDOMNode(self.refs[name]);
+      if (domNode) {
+        formData[name] = domNode.value;
+        this.setState(formData, () => {
+          this.validate(name);
+        });
+      }
     });
 
     if (!self.isValid()) {
@@ -322,7 +329,7 @@ class ModalLogin extends ModalComponent {
         </label>
         <div className="input-box">
           <i className="icon-budicon-5"></i>
-          <input name="email" id="easy_email" type="email" required
+          <input name="email" ref="email" id="easy_email" type="email" required
                  onChange={::this.handleInputChange}
                  placeholder={this.getTitle('emailPlaceholder')}
                  title={this.getTitle('emailPlaceholder')}/>
@@ -341,7 +348,7 @@ class ModalLogin extends ModalComponent {
 
         <div className="input-box">
           <i className="icon-budicon"></i>
-          <input name="password" id="easy_password" type="password" pattern=".{6,}" required
+          <input name="password" ref="password" id="easy_password" type="password" pattern=".{6,}" required
                  onChange={::this.handleInputChange}
                  placeholder={this.getTitle('passwordPlaceholder')}
                  title={this.getTitle('passwordPlaceholder') + ' 6 characters minimum'}/>
@@ -409,7 +416,8 @@ class ModalLogin extends ModalComponent {
               </label>
               <div className="input-box">
                 <i className="icon-budicon"></i>
-                <input name="repeat_password" id="reset_easy_repeat_password" type="password" required
+                <input name="repeat_password" ref="repeat_password" id="reset_easy_repeat_password" type="password"
+                       required
                        onChange={::this.handleInputChange}
                        placeholder={this.getTitle('repeatPasswordPlaceholder')}
                        title={this.getTitle('repeatPasswordPlaceholder')}/>
