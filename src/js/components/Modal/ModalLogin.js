@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import * as OauthActionCreator from '../../actions/oauth';
 import * as ModalActionCreator from '../../actions/modal';
 import * as UserActionCreators from '../../actions/user';
+import * as IntercomActionCreators from '../../actions/intercom';
 import ModalComponent from './ModalComponent';
 import {oauth2} from '../../../../config';
 import MobileDetect from 'mobile-detect';
@@ -158,7 +159,9 @@ class ModalLogin extends ModalComponent {
       if (self.props.type !== 'showReset') {
         dispatch(UserActionCreators.getProfile());
         dispatch(ModalActionCreator.close());
+        return;
       }
+      dispatch(IntercomActionCreators.createIntercom());
     }).catch(::self.onError);
   }
 
