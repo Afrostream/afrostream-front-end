@@ -87,8 +87,11 @@ export default () => {
 
         if (data) {
           title = data.get('title');
+          if (seasonData) {
+            title = `${seasonData.get('title')} ${title}`;
+          }
           synopsis = data.get('synopsis');
-          ogTitle = data.get('title');
+          ogTitle = title;
           ogDescription = data.get('synopsis');
           poster = data.get('poster');
         }
@@ -158,7 +161,7 @@ export default () => {
           });
           metas.meta.push({
             name: 'twitter:site',
-            content: ogTitle
+            content: `${config.metadata.domain}${slug}`
           });
         }
 
