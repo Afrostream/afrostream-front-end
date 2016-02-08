@@ -49,6 +49,7 @@
     "babel-loader": "^5.3.2",
     "babel-polyfill": "^6.3.14",
     "babel-runtime": "^5.7.0",
+    "bitly": "^4.1.1",
     "bluebird": "^2.9.30",
     "body-parser": "^1.13.3",
     "bootstrap": "^3.3.5",

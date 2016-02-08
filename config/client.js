@@ -125,7 +125,7 @@ const config = {
           url: 'https://www.facebook.com/sharer/sharer.php',
           params: {
             u: '{url}',
-            s: 'Je regarde "{title}" sur @afrostream'
+            s: 'En ce moment je regarde "{title}" sur @afrostream'
           }
         },
         whatsapp: {
@@ -134,7 +134,7 @@ const config = {
           icon: 'fa-whatsapp',
           url: 'whatsapp://send',
           params: {
-            text: 'Je regarde "{title}" sur @afrostream {url}'
+            text: 'En ce moment je regarde "{title}" sur @afrostream {url}'
           }
         },
         twitter: {
@@ -143,7 +143,7 @@ const config = {
           url: 'https://twitter.com/intent/tweet',
           params: {
             url: '{url}',
-            text: 'Je regarde "{title}" sur @afrostream'
+            text: 'En ce moment je regarde "{title}" sur @afrostream'
           }
         },
         googlePlus: {
@@ -159,8 +159,8 @@ const config = {
           icon: 'fa-envelope',
           url: 'mailto:',
           params: {
-            subject: 'Je regarde "{title}" sur @afrostream',
-            body: '{description}'
+            subject: 'À voir: "{title}" sur @afrostream',
+            body: 'En ce moment je regarde "{title}" et tu vas aimer {description} <br />Tu peux aussi télécharger l’application Afrostream : <a href ="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=en">Pour Androïd</a> <a href ="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8">Iphone / Ipad</a>
           }
         }
       }

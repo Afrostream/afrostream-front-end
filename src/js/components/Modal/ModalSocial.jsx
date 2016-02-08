@@ -15,7 +15,7 @@ class ModalSocial extends ModalComponent {
   sharePopup(network) {
 
     let title = this.getMeta('og:title');
-    let description = this.getMeta('og:description');
+    let description = this.getMeta('og:description') || '';
     let url = this.getMeta('og:url');
 
     let params = _.cloneDeep(network.params);
