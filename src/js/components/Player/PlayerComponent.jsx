@@ -14,6 +14,7 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js';
 import {detectUA} from './PlayerUtils';
 import shallowEqual from 'react-pure-render/shallowEqual';
+import { FacebookButton, FacebookCount, TwitterButton } from 'react-social';
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
@@ -47,7 +48,8 @@ class PlayerComponent extends Component {
   }
 
   static contextTypes = {
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired
   };
 
   static propTypes = {
@@ -545,6 +547,9 @@ class PlayerComponent extends Component {
         videoId,
         movieId,
         Event
+        },
+      context:{
+        location
         }
       } = this;
 
@@ -565,6 +570,7 @@ class PlayerComponent extends Component {
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
     let renderData = episodeData ? episodeData : movieData;
+    let url = `${config.metadata.domain}${location.pathname}`
     return (
       <div className="player">
         <div ref="wrapper" className="wrapper"/>
@@ -576,6 +582,10 @@ class PlayerComponent extends Component {
               {infos.episodeNumber ?
                 <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> : ''}
               <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
+              <FacebookButton url={url}>
+                <FacebookCount url={url}/>
+                {" Share " + url}
+              </FacebookButton>
               {videoDuration ?
                 <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
               <div className=" video-infos_synopsys">{infos.synopsis}</div>

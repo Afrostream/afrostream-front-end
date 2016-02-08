@@ -108,9 +108,14 @@ class ModalLogin extends ModalComponent {
 
   handleInputChange(evt) {
     let formData = this.state;
-    formData[evt.target.name] = evt.target.value;
+    if (!evt.target) {
+      return;
+    }
+    let name = evt.target.getAttribute('name');
+    let value = evt.target.value;
+    formData[name] = value;
     this.setState(formData, () => {
-      this.validate(evt.target.name);
+      this.validate(name);
     });
   }
 
@@ -283,7 +288,7 @@ class ModalLogin extends ModalComponent {
 
     return (
       <div className="notloggedin mode">
-        <form noValidate="" onChange={::this.handleInputChange} onSubmit={::this.handleSubmit}>
+        <form noValidate="" onSubmit={::this.handleSubmit}>
           {social ? this.getSocial() : ''}
           <div className="instructions">{this.getTitle('headerText')}</div>
           {formTemplate}
@@ -314,7 +319,8 @@ class ModalLogin extends ModalComponent {
         </label>
         <div className="input-box">
           <i className="icon-budicon-5"></i>
-          <input name="email" id="easy_email" type="email"
+          <input name="email" id="easy_email" type="email" required
+                 onChange={::this.handleInputChange}
                  placeholder={this.getTitle('emailPlaceholder')}
                  title={this.getTitle('emailPlaceholder')}/>
           {this.renderValidationMessages('email')}
@@ -333,6 +339,7 @@ class ModalLogin extends ModalComponent {
         <div className="input-box">
           <i className="icon-budicon"></i>
           <input name="password" id="easy_password" type="password" pattern=".{6,}" required
+                 onChange={::this.handleInputChange}
                  placeholder={this.getTitle('passwordPlaceholder')}
                  title={this.getTitle('passwordPlaceholder') + ' 6 characters minimum'}/>
           {this.renderValidationMessages('password')}
@@ -352,7 +359,8 @@ class ModalLogin extends ModalComponent {
           <div className="password_policy"></div>
         </div>
         <div className="action">
-          <button type="submit" className="primary next" disabled={!::this.isValid}>{this.getTitle('action')}</button>
+          <button name="submit-btn" type="submit" className="primary next"
+                  disabled={!::this.isValid}>{this.getTitle('action')}</button>
           <div className="options">
             <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
@@ -399,6 +407,7 @@ class ModalLogin extends ModalComponent {
               <div className="input-box">
                 <i className="icon-budicon"></i>
                 <input name="repeat_password" id="reset_easy_repeat_password" type="password" required
+                       onChange={::this.handleInputChange}
                        placeholder={this.getTitle('repeatPasswordPlaceholder')}
                        title={this.getTitle('repeatPasswordPlaceholder')}/>
                 {this.renderValidationMessages('repeat_password')}
@@ -448,12 +457,14 @@ class ModalLogin extends ModalComponent {
       'ios': ua && ua.is('iOS')
     });
 
+    const classType = this.getType();
+
     const pending = User.get('pending');
 
     return (
       <div className="lock-container">
         <div id="lock" className="lock theme-default">
-          <div className="signin">
+          <div className={classType}>
             <div className={popupClass}>
               <div className="overlay active">
                 <div className="centrix">
