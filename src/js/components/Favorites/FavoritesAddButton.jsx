@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
   require('./FavoritesAddButton.less');
 }
 
-@connect(({ User}) => ({User}))
+@connect(({User}) => ({User}))
 class FavoritesAddButton extends React.Component {
 
   constructor(props) {
@@ -19,7 +19,10 @@ class FavoritesAddButton extends React.Component {
 
   static propTypes = {
     data: PropTypes.instanceOf(Immutable.Map),
-    dataId: PropTypes.string
+    dataId: PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number
+    ])
   };
 
   static defaultProps = {
@@ -73,8 +76,8 @@ class FavoritesAddButton extends React.Component {
     const favoritesData = User.get(`favorites/${type === 'episode' ? 'episode' : 'movie'}s`);
     let isFavorite = false;
     if (favoritesData) {
-      isFavorite = favoritesData.find(function (obj) {
-        return obj.get('_id') === dataId;
+      isFavorite = favoritesData.find((obj) => {
+        return obj.get('_id') == dataId;
       });
     }
 

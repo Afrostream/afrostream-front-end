@@ -31,7 +31,10 @@ class Billboard extends LoadVideo {
   };
 
   getFavorite() {
-    return (<FavoritesAddButton {...this.props}/>)
+    const {
+      props: { data, dataId }
+      } = this;
+    return (<FavoritesAddButton {...{data, dataId}}/>)
   }
 
   getShareButton() {
