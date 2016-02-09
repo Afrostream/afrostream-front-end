@@ -12,12 +12,6 @@ const config = {
   }
 };
 
-const headers =
-{
-  'content-type': 'application/x-www-form-urlencoded',
-  'X-Accept': 'application/json'
-};
-
 export async function shorten(optional) {
 
   let options = _.merge({
@@ -26,18 +20,21 @@ export async function shorten(optional) {
     domain: bitly.domain
   }, optional);
 
-  let body = {};
-
   return await new Promise((resolve, reject) => {
-    request('GET', config.bitUrl.shorten)
-      .query(qs.stringify(options))
-      .set(headers)
-      .send(body)
-      .end((err, res) => {
-        if (err) {
-          return reject(err);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', config.bitUrl.shorten + '/?' + qs.stringify(options));
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          console.log('CORS works!', xhr.responseText);
+          return resolve(JSON.parse(xhr.responseText));
+
+        } else {
+          console.log('Oops', xhr);
+          return reject(xhr);
         }
-        return resolve(res);
-      });
+      }
+    }
+    xhr.send();
   });
 }

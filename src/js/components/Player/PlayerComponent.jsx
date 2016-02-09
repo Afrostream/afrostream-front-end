@@ -5,16 +5,16 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import videojs from 'afrostream-player';
 import config from '../../../../config';
-import * as EventActionCreators from '../../actions/event';
-import * as EpisodeActionCreators from '../../actions/episode';
 import classSet from 'classnames';
-import Spinner from '../Spinner/Spinner';
-import FavoritesAddButton from '../Favorites/FavoritesAddButton';
-import ShareButton from '../Share/ShareButton';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js';
 import {detectUA} from './PlayerUtils';
 import shallowEqual from 'react-pure-render/shallowEqual';
+import * as EpisodeActionCreators from '../../actions/episode';
+import * as EventActionCreators from '../../actions/event';
+import Spinner from '../Spinner/Spinner';
+import FavoritesAddButton from '../Favorites/FavoritesAddButton';
+import ShareButton from '../Share/ShareButton';
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');

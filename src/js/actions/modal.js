@@ -3,7 +3,7 @@ import * as ModalActionCreators from './modal';
 import * as UserActionCreators from './user';
 import {isAuthorized} from '../lib/geo';
 
-export function open(target, closable = true, donePath = null) {
+export function open(target, closable = true, donePath = null, data = null) {
   return (dispatch, getState, actionDispatcher) => {
 
     return async () => {
@@ -26,6 +26,7 @@ export function open(target, closable = true, donePath = null) {
         type: ActionTypes.Modal.open,
         target,
         donePath,
+        data,
         closable
       };
     }

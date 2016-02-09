@@ -25,6 +25,7 @@ class ModalView extends React.Component {
 
     const target = Modal.get('target');
     const closable = Modal.get('closable');
+    const data = Modal.get('data');
 
     switch (target) {
       case 'geoWall':
@@ -44,7 +45,7 @@ class ModalView extends React.Component {
         break;
       case 'social':
         return (
-          <ModalSocial closable={closable} {...this.props}/>
+          <ModalSocial closable={closable} {...this.props} data={data}/>
         );
         break;
       default:

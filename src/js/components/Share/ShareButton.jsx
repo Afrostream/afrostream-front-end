@@ -14,14 +14,15 @@ class ShareButton extends React.Component {
     super(props);
   }
 
+
   sharePopup() {
     const {
       props: {
-        dispatch
+        dispatch,link,description,title
         }
       } = this;
 
-    dispatch(ModalActionCreators.open('social'));
+    dispatch(ModalActionCreators.open('social', true, null, {link, description, title}));
   }
 
   render() {
@@ -40,5 +41,17 @@ class ShareButton extends React.Component {
     </div>)
   }
 }
+
+ShareButton.propTypes = {
+  link: React.PropTypes.string,
+  description: React.PropTypes.string,
+  title: React.PropTypes.string
+};
+
+ShareButton.defaultProps = {
+  link: null,
+  description: null,
+  title: null
+};
 
 export default ShareButton;

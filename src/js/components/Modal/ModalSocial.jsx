@@ -1,7 +1,7 @@
 import React from 'react';
 import ModalComponent from './ModalComponent';
 import classNames from 'classnames';
-import {social,bitly} from '../../../../config';
+import {social,bitly,metadata} from '../../../../config';
 import _ from 'lodash';
 import {detectUA} from '../Player/PlayerUtils';
 import {shorten} from '../../lib/bitly';
@@ -13,22 +13,48 @@ if (process.env.BROWSER) {
 class ModalSocial extends ModalComponent {
 
   async sharePopup(network) {
+    const {
+      props: {
+        data
+        }
+      } = this;
 
     let title = this.getMeta('og:title');
     let description = this.getMeta('og:description') || '';
     let url = this.getMeta('og:url');
-    try {
-      let shortenData = await shorten({longUrl: url});
-      url = shortenData.body.data.url;
-    } catch (err) {
-      console.log('bitly shorten error ', err);
+    let popupOpener;
+    let updatedParams;
+    if (data) {
+      if (data.get('title')) {
+        title = data.get('title');
+      }
+      if (data.get('description')) {
+        description = data.get('description');
+      }
+      if (data.get('link')) {
+        url = `${metadata.domain}${data.get('link')}`;
+      }
     }
+    let self = this;
+    shorten({longUrl: url}).then((shortenData)=> {
+      url = shortenData.data.url;
+      updatedParams = self.cloneParams(network, url, title, description);
+      self.updateHref(network, updatedParams, popupOpener);
+    }).catch((err)=> {
+      console.log('bitly shorten error ', err);
+      updatedParams = self.cloneParams(network, url, title, description);
+      self.updateHref(network, updatedParams, popupOpener);
+    });
+
+    return popupOpener = this.updateHref();
+  }
+
+  cloneParams(network, url, title, description) {
     let params = _.cloneDeep(network.params);
     let updatedParams = _.mapValues(params, (value)=> {
       return value.replace(/{title}/gm, title).replace(/{description}/gm, description).replace(/{url}/gm, url);
     });
-
-    return this.updateHref(network, updatedParams);
+    return updatedParams;
   }
 
   /**
@@ -69,7 +95,7 @@ class ModalSocial extends ModalComponent {
   toRFC3986(val) {
     let tmp = encodeURIComponent(val);
     tmp.replace(/[!'()*]/g, function (c) {
-      return `%${c.charCodeAt(0).toString(16)}`;
+      return ` % ${c.charCodeAt(0).toString(16)}`;
     });
   };
 
@@ -109,9 +135,13 @@ class ModalSocial extends ModalComponent {
    * @param {String} url
    * @param {Object} params
    */
-  updateHref(data, params) {
-    let encode = data.url.indexOf('mailto:') >= 0;
-    let shareUrl = this.getUrl(data.url, !encode, params);
+  updateHref(data = null, params = null, popupOpener = null) {
+    let shareUrl = '';
+    if (popupOpener) {
+      let encode = data.url.indexOf('mailto:') >= 0;
+      shareUrl = this.getUrl(data.url, !encode, params);
+      return popupOpener.location = shareUrl;
+    }
 
     let popup = {
       width: 500,
@@ -120,21 +150,19 @@ class ModalSocial extends ModalComponent {
 
     popup.top = (screen.height / 2) - (popup.height / 2);
     popup.left = (screen.width / 2) - (popup.width / 2);
-
-    window.open(
+    return window.open(
       shareUrl,
       'targetWindow', `
-          toolbar=no,
-          location=no,
-          status=no,
-          menubar=no,
-          scrollbars=yes,
-          resizable=yes,
-          left=${popup.left},
-          top=${popup.top},
-          width=${popup.width},
-          height=${popup.height}
-        `
+        toolbar = no,
+        location = no,
+        status = no,
+        menubar = no,
+        scrollbars = yes,
+        resizable = yes,
+        left =${popup.left},
+        top =${popup.top},
+        width =${popup.width},
+        height = ${popup.height}`
     );
   }
 
@@ -170,7 +198,8 @@ class ModalSocial extends ModalComponent {
 
       shareClass[network.icon] = true;
 
-      return (<div className="btn share_button" role="button" key={`share-btn-${network.icon}`} {...inputAttributes}>
+      return (<div className="btn share_button" role="button" key={`
+        share - btn - ${network.icon}`} {...inputAttributes}>
         <i className={classNames(shareClass)}></i>
       </div>)
     });
@@ -213,5 +242,13 @@ class ModalSocial extends ModalComponent {
     );
   }
 }
+
+ModalSocial.propTypes = {
+  data: React.PropTypes.object
+};
+
+ModalSocial.defaultProps = {
+  data: null
+};
 
 export default ModalSocial;
