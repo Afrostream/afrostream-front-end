@@ -81,7 +81,7 @@ class MovieInfo extends LoadVideo {
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
           <div className="btn-play"/>
         </Link>
-        {data ? <Billboard {...{active, data, maxLength}} /> : ''}
+        {data ? <Billboard {...{active, data, dataId, maxLength}} /> : ''}
       </div>
     );
   }

@@ -65,7 +65,7 @@ export default () => {
             let episodesList = seasonData.get('episodes');
             if (episodesList) {
               episodeData = episodesList.find(function (obj) {
-                return obj.get('_id') === params.episodeId;
+                return obj.get('_id') == params.episodeId;
               });
             }
           }
@@ -87,8 +87,11 @@ export default () => {
 
         if (data) {
           title = data.get('title');
+          if (seasonData) {
+            title = `${seasonData.get('title')} ${title}`;
+          }
           synopsis = data.get('synopsis');
-          ogTitle = data.get('title');
+          ogTitle = title;
           ogDescription = data.get('synopsis');
           poster = data.get('poster');
         }
@@ -119,6 +122,10 @@ export default () => {
             property: 'og:title',
             content: ogTitle
           });
+          metas.meta.push({
+            name: 'twitter:title',
+            content: ogTitle
+          });
         }
 
         if (ogDescription) {
@@ -126,11 +133,19 @@ export default () => {
             property: 'og:description',
             content: ogDescription
           });
+          metas.meta.push({
+            name: 'twitter:description',
+            content: ogDescription
+          });
         }
 
         if (ogImage) {
           metas.meta.push({
             property: 'og:image',
+            content: ogImage
+          });
+          metas.meta.push({
+            name: 'twitter:image:src',
             content: ogImage
           });
         }
@@ -142,6 +157,10 @@ export default () => {
           });
           metas.meta.push({
             property: 'og:url',
+            content: `${config.metadata.domain}${slug}`
+          });
+          metas.meta.push({
+            name: 'twitter:site',
             content: `${config.metadata.domain}${slug}`
           });
         }

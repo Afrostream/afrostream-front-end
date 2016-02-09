@@ -5,11 +5,8 @@ import { Link } from 'react-router';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
 import { connect } from 'react-redux';
 import LoadVideo from '../LoadVideo';
-
-if (canUseDOM) {
-  require('gsap');
-  var {TimelineMax,TweenMax,Sine} = window.GreenSockGlobals;
-}
+import ShareButton from '../Share/ShareButton';
+import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 
 if (process.env.BROWSER) {
   require('./Billboard.less');
@@ -20,11 +17,9 @@ class Billboard extends LoadVideo {
 
   constructor(props) {
     super(props);
-    this.oldId = null;
   }
 
   static propTypes = {
-    data: PropTypes.instanceOf(Immutable.Map).isRequired,
     active: PropTypes.bool.isRequired,
     maxLength: PropTypes.number.isRequired
   };
@@ -34,6 +29,23 @@ class Billboard extends LoadVideo {
     active: false,
     maxLength: 450
   };
+
+  getFavorite() {
+    const {
+      props: { data, dataId }
+      } = this;
+    return (<FavoritesAddButton {...{data, dataId}}/>)
+  }
+
+  getShareButton() {
+    const {
+      props: { data }
+      } = this;
+
+    let link = this.getLink();
+
+    return <ShareButton link={link} title={data.get('title')} description={data.get('synopsis')}/>
+  }
 
   getGenre(tags) {
     return (
@@ -132,9 +144,8 @@ class Billboard extends LoadVideo {
           {hasSubtiles ? <button className="btn btn-xs btn-transparent" href="#">
             <i className="fa fa-align-left"></i>Audio et sous titres
           </button> : <div />}
-          {/* <button className=" btn btn-xs btn-transparent" href="#">
-           <i className="fa fa-heart"></i>Ajouter à ma liste
-           </button> */}
+          {this.getFavorite()}
+          {this.getShareButton()}
         </div>
       </div>
     );

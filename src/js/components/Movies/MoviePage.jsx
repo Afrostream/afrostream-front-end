@@ -21,7 +21,10 @@ import SeasonList from '../Seasons/SeasonList';
     ];
   }
 
-  return store.dispatch(UserActionCreators.getFavorites('episodes'));
+  return await * [
+    store.dispatch(UserActionCreators.getFavorites('movies')),
+    store.dispatch(UserActionCreators.getFavorites('episodes'))
+  ];
 })
 class MoviePage extends React.Component {
 

@@ -145,8 +145,8 @@ export function setFavorites(type, active, id) {
         dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}/${id}`, 'DELETE', {}, token, refreshToken);
       }
 
-      let index = await list.findIndex(function (obj) {
-        return obj.get('_id') === id;
+      let index = await list.findIndex((obj)=> {
+        return obj.get('_id') == id;
       });
 
       let newList;

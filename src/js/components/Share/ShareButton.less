@@ -1,25 +1,13 @@
 @import (reference) '../../../styles/config.less';
 
-.favorite-add_button {
+.share_button {
   background-color: fade(@color-indigo, 70%);
   position: relative;
   margin: 5px 5px 5px 0px;
-  &.pending {
-    color: fade(@color-yellow, 80%);
-  }
   &.active {
     color: @color-yellow;
   }
   &:hover {
     color: @color-yellow;
-    &.active {
-      color: @brand-primary;
-    }
-    &.fa-heart {
-      content: '\f004';
-    }
-  }
-  .spinner {
-    font-size: 1em;
   }
 }

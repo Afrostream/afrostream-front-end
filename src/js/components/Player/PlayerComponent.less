@@ -55,17 +55,27 @@
       font-family: @font-book;
       font-size: 1.5em;
     }
-    .video-infos_title, .video-infos_episode {
+    .video-infos_title,
+    .video-infos_season,
+    .video-infos_episode {
       font-family: @font-roman;
       font-size: 2em;
-      line-height: 1;
+      line-height: 1.3;
+    }
+    .video-infos_title {
       text-transform: uppercase;
     }
-    .video-infos_episode {
-      font-size: 1.4em;
+    .video-infos_season {
+      font-size: 1.5em;
     }
-    .favorite-add_button {
-      position: relative;
+    .video-infos_episode {
+      font-size: 1.2em;
+    }
+    .btn {
+      margin: 5px 5px 5px 0px;
+    }
+    .share_button {
+      color: @color-mea;
     }
   }
   @media @mobile,@tablet {

@@ -5,15 +5,16 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import videojs from 'afrostream-player';
 import config from '../../../../config';
-import * as EventActionCreators from '../../actions/event';
-import * as EpisodeActionCreators from '../../actions/episode';
 import classSet from 'classnames';
-import Spinner from '../Spinner/Spinner';
-import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js';
 import {detectUA} from './PlayerUtils';
 import shallowEqual from 'react-pure-render/shallowEqual';
+import * as EpisodeActionCreators from '../../actions/episode';
+import * as EventActionCreators from '../../actions/event';
+import Spinner from '../Spinner/Spinner';
+import FavoritesAddButton from '../Favorites/FavoritesAddButton';
+import ShareButton from '../Share/ShareButton';
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
@@ -540,15 +541,22 @@ class PlayerComponent extends Component {
   render() {
     const {
       props: {
-        Video,
+        Event,
+        Season,
         Movie,
-        videoId,
+        Video,
+        seasonId,
         movieId,
-        Event
+        videoId
         }
       } = this;
 
     const hiddenMode = !Event.get('userActive');
+    let playerClasses = {
+      'player': true,
+      'player-next-reco': this.state.nextReco
+    };
+
     let videoInfoClasses = {
       'video-infos': true,
       'video-infos-hidden': hiddenMode
@@ -561,21 +569,28 @@ class PlayerComponent extends Component {
     let captions = videoData.get('captions');
     let movieData = Movie.get(`movies/${movieId}`);
     let episodeData = videoData.get('episode');
+    let seasonData = Season.get(`seasons/${seasonId}`);
     let videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
+    if (seasonData) {
+      infos.seasonNumber = seasonData.get('seasonNumber');
+    }
     let renderData = episodeData ? episodeData : movieData;
     return (
-      <div className="player">
+      <div className={classSet(playerClasses)}>
         <div ref="wrapper" className="wrapper"/>
         {
           movieData ?
             <div className={classSet(videoInfoClasses)}>
               <div className=" video-infos_label">Vous regardez</div>
               <div className=" video-infos_title">{infos.title}</div>
+              {infos.seasonNumber ?
+                <div className=" video-infos_episode">{`Saison ${infos.seasonNumber}`}</div> : ''}
               {infos.episodeNumber ?
                 <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> : ''}
               <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
+              <ShareButton />
               {videoDuration ?
                 <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
               <div className=" video-infos_synopsys">{infos.synopsis}</div>
