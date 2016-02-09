@@ -19,7 +19,7 @@ class FavoritesAddButton extends React.Component {
 
   static propTypes = {
     data: PropTypes.instanceOf(Immutable.Map),
-    dataId: PropTypes.number
+    dataId: PropTypes.string
   };
 
   static defaultProps = {

@@ -12,6 +12,34 @@ const config = {
   }
 };
 
+const Xhr = function () { /* returns cross-browser XMLHttpRequest, or null if unable */
+  try {
+    return new XMLHttpRequest();
+  } catch (e) {
+  }
+  try {
+    return new ActiveXObject('Msxml3.XMLHTTP');
+  } catch (e) {
+  }
+  try {
+    return new ActiveXObject('Msxml2.XMLHTTP.6.0');
+  } catch (e) {
+  }
+  try {
+    return new ActiveXObject('Msxml2.XMLHTTP.3.0');
+  } catch (e) {
+  }
+  try {
+    return new ActiveXObject('Msxml2.XMLHTTP');
+  } catch (e) {
+  }
+  try {
+    return new ActiveXObject('Microsoft.XMLHTTP');
+  } catch (e) {
+  }
+  return null;
+};
+
 export async function shorten(optional) {
 
   let options = _.merge({
@@ -21,9 +49,18 @@ export async function shorten(optional) {
   }, optional);
 
   return await new Promise((resolve, reject) => {
-    var xhr = new XMLHttpRequest();
+    var xhr;
+
+    try {
+      xhr = new Xhr();
+    } catch (err) {
+      reject(err);
+    }
+    if (!xhr) {
+      return reject('no xhr valid');
+    }
     xhr.open('GET', config.bitUrl.shorten + '/?' + qs.stringify(options));
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
       if (xhr.readyState == 4) {
         if (xhr.status == 200) {
           console.log('CORS works!', xhr.responseText);
@@ -34,7 +71,8 @@ export async function shorten(optional) {
           return reject(xhr);
         }
       }
-    }
+    };
+
     xhr.send();
   });
 }

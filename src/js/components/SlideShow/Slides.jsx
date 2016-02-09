@@ -15,10 +15,10 @@ class Slides extends React.Component {
       } = this;
 
     const data = slides.get(page);
-
+    const dataId = data.get('_id');
     return (
       <MovieInfo active={true} maxLength={200} load={true}
-                 key={`slide-${data.get('_id')}`}  { ...{data}}/>
+                 key={`slide-${data.get('_id')}`}  { ...{data, dataId}}/>
     );
   }
 }
