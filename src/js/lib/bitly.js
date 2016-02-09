@@ -3,6 +3,7 @@ import request from 'superagent';
 import Promise from 'bluebird';
 import _ from 'lodash';
 import qs from 'qs';
+import xhr from 'xhr';
 import {bitly} from '../../../config';
 
 const config = {
@@ -12,33 +13,6 @@ const config = {
   }
 };
 
-const Xhr = function () { /* returns cross-browser XMLHttpRequest, or null if unable */
-  try {
-    return new XMLHttpRequest();
-  } catch (e) {
-  }
-  try {
-    return new ActiveXObject('Msxml3.XMLHTTP');
-  } catch (e) {
-  }
-  try {
-    return new ActiveXObject('Msxml2.XMLHTTP.6.0');
-  } catch (e) {
-  }
-  try {
-    return new ActiveXObject('Msxml2.XMLHTTP.3.0');
-  } catch (e) {
-  }
-  try {
-    return new ActiveXObject('Msxml2.XMLHTTP');
-  } catch (e) {
-  }
-  try {
-    return new ActiveXObject('Microsoft.XMLHTTP');
-  } catch (e) {
-  }
-  return null;
-};
 
 export async function shorten(optional) {
 
@@ -49,30 +23,13 @@ export async function shorten(optional) {
   }, optional);
 
   return await new Promise((resolve, reject) => {
-    var xhr;
-
-    try {
-      xhr = new Xhr();
-    } catch (err) {
-      reject(err);
-    }
-    if (!xhr) {
-      return reject('no xhr valid');
-    }
-    xhr.open('GET', config.bitUrl.shorten + '/?' + qs.stringify(options));
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          console.log('CORS works!', xhr.responseText);
-          return resolve(JSON.parse(xhr.responseText));
-
-        } else {
-          console.log('Oops', xhr);
-          return reject(xhr);
-        }
+    xhr({
+      uri: `${config.bitUrl.shorten}/?${qs.stringify(options)}`
+    }, function (err, resp, body) {
+      if (err) {
+        return reject(xhr);
       }
-    };
-
-    xhr.send();
+      return resolve(JSON.parse(body));
+    });
   });
 }
