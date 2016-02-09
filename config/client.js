@@ -160,7 +160,7 @@ const config = {
           url: 'mailto:',
           params: {
             subject: 'À voir: "{title}" sur @afrostream',
-            body: 'En ce moment je regarde "{title}" et tu vas aimer {description} <br />Tu peux aussi télécharger l’application Afrostream : <a href ="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=en">Pour Androïd</a> <a href ="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8">Iphone / Ipad</a>
+            body: 'En ce moment je regarde "{title}" et tu vas aimer {description} Tu peux aussi télécharger l’application Afrostream : https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=en pour Androïd et https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8 pour Iphone / Ipad'
           }
         }
       }
@@ -174,6 +174,13 @@ const config = {
     },
     heroku: {
       appName: process.env.HEROKU_APP_NAME || 'afrostream-dev'
+    },
+    bitly: {
+      apiKey: process.env.BITLY_API_KEY || 'none',
+      clientId: process.env.BITLY_CLIENT_ID || 'none',
+      apiSecret: process.env.BITLY_API_SECRET || 'none',
+      accessToken: process.env.BITLY_ACCESS_TOKEN || '3f7014f52dd257e8e502a3682835721020713736',
+      domain: 'see.onafro.tv'
     },
     player: {
       "autoplay": true,

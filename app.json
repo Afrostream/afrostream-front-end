@@ -14,7 +14,10 @@
     "GA_TRACKING_ID": "UA-xxxxxx",
     "RECURLY_PUBLIC_KEY": "sjc-ZhO4HmKNWszC5LIA8BcsMJ",
     "OAUTH_FACEBOOK_ENABLED": "true",
-    "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git"
+    "BUILDPACK_URL": "https://github.com/ddollar/heroku-buildpack-multi.git",
+    "BITLY_API_KEY": "R_8199c11a3938481aa8fdd538530b9137",
+    "BITLY_CLIENT_ID": "6919ad7c69fc680e8c1746e329ce06ebf4528640",
+    "BITLY_ACCESS_TOKEN": "3f7014f52dd257e8e502a3682835721020713736"
   },
   "addons": []
 }

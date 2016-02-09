@@ -1,10 +1,10 @@
 import React from 'react';
 import ModalComponent from './ModalComponent';
 import classNames from 'classnames';
-import {social} from '../../../../config';
+import {social,bitly} from '../../../../config';
 import _ from 'lodash';
 import {detectUA} from '../Player/PlayerUtils';
-
+import {shorten} from '../../lib/bitly';
 
 if (process.env.BROWSER) {
   require('./ModalSocial.less');
@@ -12,18 +12,23 @@ if (process.env.BROWSER) {
 
 class ModalSocial extends ModalComponent {
 
-  sharePopup(network) {
+  async sharePopup(network) {
 
     let title = this.getMeta('og:title');
     let description = this.getMeta('og:description') || '';
     let url = this.getMeta('og:url');
-
+    try {
+      let shortenData = await shorten({longUrl: url});
+      url = shortenData.body.data.url;
+    } catch (err) {
+      console.log('bitly shorten error ', err);
+    }
     let params = _.cloneDeep(network.params);
     let updatedParams = _.mapValues(params, (value)=> {
       return value.replace(/{title}/gm, title).replace(/{description}/gm, description).replace(/{url}/gm, url);
     });
 
-    this.updateHref(network, updatedParams);
+    return this.updateHref(network, updatedParams);
   }
 
   /**
