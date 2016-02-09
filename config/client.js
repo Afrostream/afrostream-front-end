@@ -159,7 +159,7 @@ const config = {
           icon: 'fa-envelope',
           url: 'mailto:',
           params: {
-            subject: 'À voir: "{title}" sur @afrostream',
+            subject: 'À voir: "{title}" sur afrostream',
             body: 'En ce moment je regarde "{title}" et tu vas aimer {description} Tu peux aussi télécharger l’application Afrostream : https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=en pour Androïd et https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8 pour Iphone / Ipad'
           }
         }
