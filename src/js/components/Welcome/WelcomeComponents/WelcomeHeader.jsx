@@ -247,13 +247,25 @@ class WelcomeHeader extends React.Component {
     }
     //si on a les données de l'episode alors, on remplace les infos affichées
     const data = episodeData ? movieData.merge(episodeData) : movieData;
+
+    let title = movieData.get('title');
+
+    if (seasonData) {
+      let seasonNumber = seasonData.get('seasonNumber');
+      title = `${title} Saison ${seasonNumber}`;
+    }
+    if (episodeData) {
+      let episodeNumber = episodeData.get('episodeNumber');
+      title = `${title} Épisode ${episodeNumber}`;
+    }
+
     if (data) {
       let poster = data.get('poster');
       if (poster) {
         info.poster = poster.get('imgix');
       }
       info.movie = {
-        title: data.get('title'),
+        title: title,
         synopsis: data.get('synopsis')
       }
     }

@@ -82,13 +82,20 @@ export default () => {
         let slug = location.pathname !== '/' ? location.pathname : '';
         let synopsis = _.cloneDeep(config.metadata.description);
         let ogDescription = synopsis;
-        let poster = null;
         let imageStyle = config.metadata.shareImage;
+        let seasonNumber = null;
+        let poster = null;
+        let episodeNumber = null;
 
         if (data) {
-          title = data.get('title');
+          title = movieData.get('title');
           if (seasonData) {
-            title = `${seasonData.get('title')} ${title}`;
+            seasonNumber = seasonData.get('seasonNumber');
+            title = `${title} Saison ${seasonNumber}`;
+          }
+          if (episodeData) {
+            episodeNumber = episodeData.get('episodeNumber');
+            title = `${title} Épisode ${episodeNumber}`;
           }
           synopsis = data.get('synopsis');
           ogTitle = title;
