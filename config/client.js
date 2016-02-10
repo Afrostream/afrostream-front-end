@@ -45,7 +45,7 @@ const config = {
       {
         code: 'AFROLOVER',
         date: '2016/02/15',
-        promoHeader: 'OFFRIR 1 AN À 39,99 EUROS',
+        promoHeader: 'Offrez 1 an de film pour 39,99 EUROS',
         promoConditions1: '* Valable sur la formule cadeau.',
         promoConditions2: '12 mois d\'abonnement inclus dans le prix'
       },
