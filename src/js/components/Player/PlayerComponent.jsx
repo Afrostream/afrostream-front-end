@@ -15,6 +15,7 @@ import * as EventActionCreators from '../../actions/event';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import ShareButton from '../Share/ShareButton';
+import RecommendationList from '../Recommendation/RecommendationList';
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
@@ -205,9 +206,12 @@ class PlayerComponent extends Component {
 
   onTimeUpdate() {
     let currentTime = this.player.currentTime();
-    let duration = this.player.duration();
-    if (time > duration - 500) {
-      
+    let duration = this.state.duration - 450;
+    let nextReco = currentTime > duration;
+    if (nextReco !== this.state.nextReco) {
+      this.setState({
+        nextReco: nextReco
+      });
     }
   }
 
@@ -421,6 +425,7 @@ class PlayerComponent extends Component {
     } catch (e) {
       console.log('player : Next video error', e);
     }
+    playerData.starttime = 6000;
     return playerData;
   }
 
@@ -602,6 +607,7 @@ class PlayerComponent extends Component {
               <div className=" video-infos_synopsys">{infos.synopsis}</div>
             </div> : <div />
         }
+        {this.state.nextReco ? <RecommendationList {...{videoId}}/> : ''}
       </div>
     );
   }

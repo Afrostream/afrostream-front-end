@@ -40,6 +40,16 @@ export default createReducer(initialState, {
     });
   },
 
+  // #### RECOMMENDATIONS ####
+  [ActionTypes.User.getRecommendations](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      ['favorites/movies']: data
+    });
+  },
   // #### FAVORITES ####
   [ActionTypes.User.getFavoritesMovies](state, { res }) {
     if (!res) {
@@ -47,7 +57,7 @@ export default createReducer(initialState, {
     }
     const data = res.body;
     return state.merge({
-      ['favorites/movies']: data
+      ['recommendations']: data
     });
   },
 

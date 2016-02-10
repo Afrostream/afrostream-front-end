@@ -1,0 +1,43 @@
+@import (reference) '../../../styles/config.less';
+
+.recommendation-list {
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  background-color: @color-indigo;
+  padding: @thumb-margin 0 @thumb-margin 0;
+  &:before {
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .recommendation-list__content {
+    display: inline-block;
+    vertical-align: middle;
+    .recommendation-list__label {
+      margin: 10px @app-padding 10px @app-padding;
+      .isMobile({ margin: 10px @app-padding-mobile 10px @app-padding-mobile; });
+      font-size: 2em;
+      font-family: @font-thin;
+      text-transform: uppercase;
+    }
+    .recommendation-list__thumbs {
+      margin: 10px @app-padding 10px (@app-padding - @thumb-margin);
+      .isMobile({ margin: 10px @app-padding-mobile 10px (@app-padding-mobile -  @thumb-margin); });
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-content: flex-start;
+      align-items: flex-start;
+      .thumb {
+        order: 0;
+        flex: 0 1 auto;
+        align-self: auto;
+      }
+    }
+  }
+}

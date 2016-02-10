@@ -13,3 +13,4 @@ export { default as Modal } from './Modal';
 export { default as Player } from './Player';
 export { default as OAuth } from './OAuth';
 export { default as Search } from './Search';
+export { default as Reco } from './Reco';

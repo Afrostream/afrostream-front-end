@@ -34,6 +34,10 @@ export default {
     getSeason: null
   }),
 
+  Reco: keyMirror({
+    getRecommendations: null
+  }),
+
   Video: keyMirror({
     getVideo: null
   }),

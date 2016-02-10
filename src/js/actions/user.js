@@ -90,6 +90,11 @@ export function cancelSubscription() {
   };
 }
 
+/**
+ * Get favorites movies/episodes for user
+ * @param type
+ * @returns {Function}
+ */
 export function getFavorites(type = 'movies') {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
