@@ -33,8 +33,9 @@ class AccountPage extends React.Component {
     }
 
     const plans = {
-      afrostreammonthly: 'THINK LIKE A MAN',
+      afrostreammonthly: 'MENSUEL',
       afrostreamambassadeurs: 'Ambassadeurs',
+      afrostreamambassadeurs2: 'Ambassadeurs',
       afrostreampremium: 'DO THE RIGHT THING',
       afrostreamgift: 'Cadeau'
     };

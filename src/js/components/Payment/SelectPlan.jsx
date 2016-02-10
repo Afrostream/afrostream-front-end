@@ -29,7 +29,7 @@ class SelectPlan extends React.Component {
           <div className="formule-row-no-decoration">
             <div className="row-element-left-header"></div>
             <div className="blue-background">
-              THINK LIKE A MAN
+              MENSUEL
             </div>
             <div className="yellow-background">
               AMBASSADEUR

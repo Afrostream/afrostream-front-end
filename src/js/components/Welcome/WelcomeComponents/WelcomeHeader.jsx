@@ -202,6 +202,16 @@ class WelcomeHeader extends React.Component {
     dispatch(ModalActionCreators.open('showGift', true, '/select-plan/afrostreamgift/checkout'));
   }
 
+  showPromoGiftLock() {
+    const {
+      props: {
+        dispatch
+        }
+      } = this;
+
+    dispatch(ModalActionCreators.open('showSignin', true, '/select-plan/afrostreamgift/checkout'));
+  }
+
   render() {
 
     const {
@@ -287,12 +297,14 @@ class WelcomeHeader extends React.Component {
           </div>
         </section>
       );
-    } else {
+    }
+    else if (promoCode && promoCode.code == 'SENEGALSERIE') {
+
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="promo-content">
             <div className="promo-message">
-              <h2>PROFITEZ DES 2 PREMIERS MOIS À -50%</h2>
+              <h2>{promoCode.promoHeader}</h2>
               <h3>avec le code promo: <span>{promoCode.code}</span></h3>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
@@ -300,8 +312,27 @@ class WelcomeHeader extends React.Component {
                 MAINTENANT
               </button>
             </div>
-            <h6>* Valable sur la formule mensuelle sans engagement.</h6>
-            <h6>Soit 3,50 euros au lieu de 6,99 euros les 2 premiers mois, puis 6,99 euros par mois sans engagement</h6>
+            <h6>{promoCode.promoConditions1}</h6>
+            <h6>{promoCode.promoConditions2}</h6>
+          </div>
+        </section>
+      );
+    } else {
+
+      return (
+        <section className={classSet(welcomeClassesSet)} style={imageStyle}>
+          <div className="promo-content">
+            <div className="promo-message">
+              <h2>{promoCode.promoHeader}</h2>
+              <h3>avec le code promo: <span>{promoCode.code}</span></h3>
+              <h5>Fin de l'offre promotionnelle dans</h5>
+              <div id="countdown"></div>
+              <button className="subscribe-button-promo" type=" button" onClick={::this.showPromoGiftLock}>OFFRIR
+                MAINTENANT
+              </button>
+            </div>
+            <h6>{promoCode.promoConditions1}</h6>
+            <h6>{promoCode.promoConditions2}</h6>
           </div>
         </section>
       );
