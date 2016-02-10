@@ -48,7 +48,10 @@ const webpackConfig = {
     vendor: './src/js/vendor'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['', '.js', '.jsx', '.json'],
+    alias: {
+      'jquery': path.join(__dirname, '../node_modules/jquery/dist/jquery')
+    }
   },
   stats: {
     colors: true
@@ -64,6 +67,11 @@ const webpackConfig = {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
+      },
+      {
+        test: /\.js$/, // include .js files
+        loaders: ['babel-loader'],
+        include: [path.join(__dirname, '../node_modules/bootstrap')]
       },
       {
         test: /\.json$/,
@@ -112,7 +120,9 @@ const webpackConfig = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
+      '$.fn': 'jquery.fn',
       'window.$': 'jquery',
+      'window.$.fn': 'jquery.fn',
       'window.jQuery': 'jquery',
       'root.jQuery': 'jquery',
       'Math/Long': 'long'

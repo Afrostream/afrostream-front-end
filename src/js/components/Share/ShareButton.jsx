@@ -29,16 +29,17 @@ class ShareButton extends React.Component {
 
     let favoriteClass = {
       'fa': true,
-      'fa-share-alt': true
+      'fa-share': true
     };
 
     const inputAttributes = {
       onClick: event => ::this.sharePopup()
     };
-
-    return (<div className="btn share_button" role="button"  {...inputAttributes}>
+    return (<button className="btn share_button" type="button" data-toggle="tooltip"
+                    data-placement="top"
+                    title="Partager"  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>
-    </div>)
+    </button>)
   }
 }
 

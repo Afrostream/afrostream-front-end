@@ -5,6 +5,7 @@ import {social,bitly,metadata} from '../../../../config';
 import _ from 'lodash';
 import {detectUA} from '../Player/PlayerUtils';
 import {shorten} from '../../lib/bitly';
+import qs from 'qs';
 
 if (process.env.BROWSER) {
   require('./ModalSocial.less');
@@ -19,9 +20,14 @@ class ModalSocial extends ModalComponent {
         }
       } = this;
 
+    //add share tracking
+    let shareParams = qs.stringify({
+      utm: 'share'
+    });
+
     let title = this.getMeta('og:title');
     let description = this.getMeta('og:description') || '';
-    let url = this.getMeta('og:url');
+    let url = `${this.getMeta('og:url')}?${shareParams}`;
     let popupOpener;
     let updatedParams;
     if (data) {
@@ -32,9 +38,10 @@ class ModalSocial extends ModalComponent {
         description = data.get('description');
       }
       if (data.get('link')) {
-        url = `${metadata.domain}${data.get('link')}`;
+        url = `${metadata.domain}${data.get('link')}?${shareParams}`;
       }
     }
+
     let self = this;
     shorten({longUrl: url}).then((shortenData)=> {
       url = shortenData.data.url;
@@ -185,22 +192,25 @@ class ModalSocial extends ModalComponent {
         return '';
       }
 
-      if (!ua.getMobile().mobile() && network.mobile) {
+      if (!ua.getMobile().is('iPhone') && network.mobile) {
         return '';
       }
       const inputAttributes = {
         onClick: event => ::this.sharePopup(network)
       };
 
-      let shareClass = {
-        'fa': true
+      let shareButtonClass = {
+        'btn': true,
+        'fa': true,
+        'share_button': true
       };
 
-      shareClass[network.icon] = true;
+      shareButtonClass[network.icon] = true;
 
-      return (<div className="btn share_button" role="button" key={`
-        share - btn - ${network.icon}`} {...inputAttributes}>
-        <i className={classNames(shareClass)}></i>
+      return (<div className={classNames(shareButtonClass)} type="button" data-toggle="tooltip"
+                   data-placement="top"
+                   title={network.title}
+                   key={`share - btn - ${network.icon}`} {...inputAttributes}>
       </div>)
     });
   }

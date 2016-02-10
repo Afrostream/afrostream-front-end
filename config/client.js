@@ -123,6 +123,7 @@ const config = {
           enabled: true,      // Enable Facebook. [Default: true]
           icon: 'fa-facebook',
           url: 'https://www.facebook.com/sharer/sharer.php',
+          title: 'Facebook',
           params: {
             u: '{url}',
             s: 'En ce moment je regarde "{title}" sur @afrostream'
@@ -132,6 +133,7 @@ const config = {
           enabled: true,     // Enable WhatsApp. [Default: true],
           mobile: true,
           icon: 'fa-whatsapp',
+          title: 'Whatsapp',
           url: 'whatsapp://send',
           params: {
             text: 'En ce moment je regarde "{title}" sur @afrostream {url}'
@@ -141,6 +143,7 @@ const config = {
           enabled: true,      // Enable Twitter. [Default: true]
           icon: 'fa-twitter',
           url: 'https://twitter.com/intent/tweet',
+          title: 'Twitter',
           params: {
             url: '{url}',
             text: 'En ce moment je regarde "{title}" sur @afrostream'
@@ -149,6 +152,7 @@ const config = {
         googlePlus: {
           enabled: true, // Enable Google+. [Default: true]
           icon: 'fa-google-plus',
+          title: 'Google +',
           url: 'https://plus.google.com/share',
           params: {
             url: '{url}'
@@ -157,6 +161,7 @@ const config = {
         email: {
           enabled: true,     // Enable Email. [Default: true]
           icon: 'fa-envelope',
+          title: 'email',
           url: 'mailto:',
           params: {
             subject: 'À voir: "{title}" sur afrostream',
