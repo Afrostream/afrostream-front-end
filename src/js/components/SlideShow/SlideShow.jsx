@@ -74,6 +74,9 @@ class SlideShow extends React.Component {
 
     container.addEventListener('touchstart', function (e) {
       // Stop click and other mouse events from triggering also
+      if (e.target.type && e.targe.type === 'button') {
+        return;
+      }
       e.preventDefault();
       touchEvent = e;
       var t = e.changedTouches[0],
@@ -166,8 +169,10 @@ class SlideShow extends React.Component {
         delete gestureEv.dir;
         delete gestureEv.delta;
         gestureEv.type = 'tap';
-        if (touchEvent && e.target && e.target.pathname) {
-          self.context.history.pushState(null, e.target.pathname);
+        if (touchEvent && e.target) {
+          if (e.target.pathname) {
+            return self.context.history.pushState(null, e.target.pathname);
+          }
         }
       }
     });
