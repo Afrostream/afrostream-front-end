@@ -304,8 +304,7 @@ class WelcomeHeader extends React.Component {
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="promo-content">
             <div className="promo-message">
-              <h2>{promoCode.promoHeader}</h2>
-              <h3>avec le code promo: <span>{promoCode.code}</span></h3>
+              <h2>{promoCode.promoHeader} <div>avec le code promo: {promoCode.code}</div></h2>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN
@@ -323,8 +322,7 @@ class WelcomeHeader extends React.Component {
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="promo-content">
             <div className="promo-message">
-              <h2>{promoCode.promoHeader}</h2>
-              <h3>avec le code promo: <span>{promoCode.code}</span></h3>
+              <h2>{promoCode.promoHeader} <div>avec le code promo: {promoCode.code}</div></h2>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showPromoGiftLock}>OFFRIR
