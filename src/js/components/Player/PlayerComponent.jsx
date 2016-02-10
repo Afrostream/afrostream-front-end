@@ -586,11 +586,13 @@ class PlayerComponent extends Component {
               <div className=" video-infos_label">Vous regardez</div>
               <div className=" video-infos_title">{infos.title}</div>
               {infos.seasonNumber ?
-                <div className=" video-infos_episode">{`Saison ${infos.seasonNumber}`}</div> : ''}
+                <label className="tag video-infos_episode">{`Saison ${infos.seasonNumber}`}</label> : ''}
               {infos.episodeNumber ?
-                <div className=" video-infos_episode">{`Episode ${infos.episodeNumber}`}</div> : ''}
-              <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
-              <ShareButton />
+                <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
+              <div className="player-buttons">
+                <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
+                <ShareButton />
+              </div>
               {videoDuration ?
                 <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
               <div className=" video-infos_synopsys">{infos.synopsis}</div>
