@@ -223,43 +223,44 @@ class WelcomeHeader extends React.Component {
     if (movieId) {
       movieData = Movie.get(`movies/${movieId}`);
     }
-    //if (videoId) {
-    //  videoData = Video.get(`videos/${videoId}`);
-    //}
-    //if (videoData) {
-    //  episodeData = videoData.get('episode');
-    //}
-    if (seasonId) {
-      seasonData = Season.get(`seasons/${seasonId}`);
-    }
-    if (episodeId) {
-      if (seasonData) {
-        // episodeData = videoData.get('episode');
-        let episodesList = seasonData.get('episodes');
-        if (episodesList) {
-          episodeData = episodesList.find(function (obj) {
-            return obj.get('_id') == episodeId;
-          });
-        }
-      } else {
-        episodeData = Episode.get(`episodes/${episodeId}`);
+    if (movieData) {
+      //if (videoId) {
+      //  videoData = Video.get(`videos/${videoId}`);
+      //}
+      //if (videoData) {
+      //  episodeData = videoData.get('episode');
+      //}
+      if (seasonId) {
+        seasonData = Season.get(`seasons/${seasonId}`);
       }
-    }
-    //si on a les données de l'episode alors, on remplace les infos affichées
-    const data = episodeData ? movieData.merge(episodeData) : movieData;
+      if (episodeId) {
+        if (seasonData) {
+          // episodeData = videoData.get('episode');
+          let episodesList = seasonData.get('episodes');
+          if (episodesList) {
+            episodeData = episodesList.find(function (obj) {
+              return obj.get('_id') == episodeId;
+            });
+          }
+        } else {
+          episodeData = Episode.get(`episodes/${episodeId}`);
+        }
+      }
+      //si on a les données de l'episode alors, on remplace les infos affichées
+      const data = episodeData ? movieData.merge(episodeData) : movieData;
 
-    let title = movieData.get('title');
+      let title = movieData.get('title');
 
-    if (seasonData) {
-      let seasonNumber = seasonData.get('seasonNumber');
-      title = `${title} Saison ${seasonNumber}`;
-    }
-    if (episodeData) {
-      let episodeNumber = episodeData.get('episodeNumber');
-      title = `${title} Épisode ${episodeNumber}`;
-    }
+      if (seasonData) {
+        let seasonNumber = seasonData.get('seasonNumber');
+        title = `${title} Saison ${seasonNumber}`;
+      }
+      if (episodeData) {
+        let episodeNumber = episodeData.get('episodeNumber');
+        title = `${title} Épisode ${episodeNumber}`;
+      }
 
-    if (data) {
+
       let poster = data.get('poster');
       if (poster) {
         info.poster = poster.get('imgix');

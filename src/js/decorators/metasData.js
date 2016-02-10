@@ -88,7 +88,7 @@ export default () => {
         let episodeNumber = null;
 
         if (data) {
-          title = movieData.get('title');
+          title = data.get('title');
           if (seasonData) {
             seasonNumber = seasonData.get('seasonNumber');
             title = `${title} Saison ${seasonNumber}`;
