@@ -43,12 +43,18 @@ const config = {
      */
     promoCodes: [
       {
-        code: 'afroyoutube',
-        date: '2016/01/03'
+        code: 'AFROLOVER',
+        date: '2016/02/15',
+        promoHeader: 'Offrez 1 an de film pour 39,99 EUROS',
+        promoConditions1: '* Valable sur la formule cadeau.',
+        promoConditions2: '12 mois d\'abonnement inclus dans le prix'
       },
       {
-        code: 'orangeisthenewblack',
-        date: '2016/01/03'
+        code: 'SENEGALSERIE',
+        date: '2016/02/15',
+        promoHeader: 'PROFITEZ D\'UN MOIS À -50%',
+        promoConditions1: '* Valable sur la formule mensuelle sans engagement.',
+        promoConditions2: 'Soit 3,50 euros au lieu de 6,99 euros le premier mois, puis 6,99 euros par mois sans engagement'
       }
     ],
     planCodes: [
