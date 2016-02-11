@@ -1,5 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
 import Immutable from 'immutable';
+import {reco} from '../../../config';
+import _ from 'lodash';
 
 const _immu = {};
 
@@ -29,29 +31,59 @@ _immu.random = function (min, max) {
 };
 
 /**
- * Get recommendation movies for user
+ * Like or not for video recommendation algo
  * TODO connecter a l'api une fois celle ci disponible
  * @returns {Function}
  */
-export function getRecommendations(route = 'player', videoId) {
+export function likeVideoOrNot(value, videoId) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().OAuth.get('token');
     if (!user) {
       return {
-        type: ActionTypes.Reco.getRecommendations,
-        route,
+        type: ActionTypes.User.likeVideoOrNot,
         videoId,
         res: null
       }
     }
 
-    let readyReco = getState().Reco.get(`${route}/${videoId}`);
+    return {
+      type: ActionTypes.User.likeVideoOrNot,
+      videoId,
+      res: {
+        body: {like: value}
+      }
+    };
+
+    //TODO connecter une fois l'api reco presente
+    //return async api => ({
+    //  type: ActionTypes.Reco.getRecommendations,
+    //  res: await api(`/api/users/me/videos`, 'POST', {value:value videoId: videoId}, token)
+    //});
+  };
+}
+/**
+ * Get recommendation movies for user
+ * TODO connecter a l'api une fois celle ci disponible
+ * @returns {Function}
+ */
+export function getRecommendations(route = 'player', videoId = 'home') {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    if (!user) {
+      return {
+        type: ActionTypes.User.getRecommendations,
+        videoId,
+        res: null
+      }
+    }
+
+    let readyReco = getState().User.get(`reco/${videoId}`);
     if (readyReco) {
       console.log(`Recos ${route} ${videoId} already present in data store`);
       return {
-        type: ActionTypes.Reco.getRecommendations,
-        route,
+        type: ActionTypes.User.getRecommendations,
         videoId,
         res: {
           body: readyReco.toJS()
@@ -62,19 +94,21 @@ export function getRecommendations(route = 'player', videoId) {
     let recoList = [];
     let categories = getState().Category.get(`categorys/spots`);
     categories.map((categorie)=> {
-      if (recoList.length > 6) {
-        return;
-      }
       let catMovies = categorie.get('adSpots');
       if (catMovies) {
         let addedMovies = _immu.sample(catMovies, 2);
-        recoList.push(addedMovies.toJS());
+        recoList = recoList.concat(addedMovies.toJS());
       }
     });
-
+    recoList = _.filter(recoList, (o)=> {
+      return o['_id'] != videoId;
+    });
+    recoList = _.uniq(recoList, (o)=> {
+      return o['_id'];
+    });
+    recoList = _.slice(recoList, 0, reco.limit);
     return {
-      type: ActionTypes.Reco.getRecommendations,
-      route,
+      type: ActionTypes.User.getRecommendations,
       videoId,
       res: {
         body: recoList
@@ -83,7 +117,7 @@ export function getRecommendations(route = 'player', videoId) {
     //TODO connecter une fois l'api reco presente
     //return async api => ({
     //  type: ActionTypes.Reco.getRecommendations,
-    //  res: await api(`/api/recommendations`, 'POST', {page: route, videoId: videoId}, token)
+    //  res: await api(`/api/users/me/recommendations`, 'POST', {page: route, videoId: videoId,limit:reco.limit}, token)
     //});
   };
 }

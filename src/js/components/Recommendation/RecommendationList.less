@@ -17,16 +17,19 @@
   .recommendation-list__content {
     display: inline-block;
     vertical-align: middle;
+    margin: @thumb-margin @app-padding @thumb-margin @app-padding;
+    .isMobile({ margin: @thumb-margin @app-padding-mobile @thumb-margin @app-padding-mobile; });
     .recommendation-list__label {
-      margin: 10px @app-padding 10px @app-padding;
-      .isMobile({ margin: 10px @app-padding-mobile 10px @app-padding-mobile; });
       font-size: 2em;
-      font-family: @font-thin;
+      font-family: @font-family-base;
       text-transform: uppercase;
     }
+    .recommendation-list__info {
+      font-size: 1.4em;
+      font-family: @font-book;
+    }
     .recommendation-list__thumbs {
-      margin: 10px @app-padding 10px (@app-padding - @thumb-margin);
-      .isMobile({ margin: 10px @app-padding-mobile 10px (@app-padding-mobile -  @thumb-margin); });
+      margin-left: -@thumb-margin;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -39,5 +42,21 @@
         align-self: auto;
       }
     }
+
+    .reco-buttons {
+      .reco_button {
+        background-color: fade(@color-indigo, 70%);
+        position: relative;
+        margin: 5px 5px 5px 0px;
+        &.active {
+          color: @color-yellow;
+        }
+        &:hover {
+          color: @color-yellow;
+        }
+      }
+
+    }
+
   }
 }

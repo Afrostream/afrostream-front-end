@@ -16,6 +16,8 @@ export default {
     getProfile: null,
     subscribe: null,
     pendingUser: null,
+    likeVideoOrNot: null,
+    getRecommendations: null,
     getFavoritesMovies: null,
     getFavoritesEpisodes: null,
     setFavoritesMovies: null,
@@ -32,10 +34,6 @@ export default {
   Movie: keyMirror({
     getMovie: null,
     getSeason: null
-  }),
-
-  Reco: keyMirror({
-    getRecommendations: null
   }),
 
   Video: keyMirror({

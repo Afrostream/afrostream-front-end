@@ -36,6 +36,8 @@
       .vjs-control-bar {
         display: none;
       }
+      box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7),
+      -1px 2px 20px rgba(255, 255, 255, 0.6) inset;
     }
   }
   .wrapper {
@@ -150,6 +152,8 @@
       vertical-align: middle;
       width: 300px;
       max-width: 50%;
+      max-height: 50%;
+      overflow: hidden;
       &.video-infos-hidden {
         opacity: 0;
         .transition(opacity 0.2s linear);

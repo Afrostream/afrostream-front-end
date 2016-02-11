@@ -112,6 +112,10 @@ const config = {
     favorites: {
       dict: dictFr.favorites
     },
+    reco: {
+      limit: 3,
+      time: 45
+    },
     dict: dictFr,
     oauth2: {
       facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,

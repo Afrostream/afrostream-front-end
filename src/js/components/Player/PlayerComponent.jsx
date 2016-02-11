@@ -14,6 +14,7 @@ import * as EpisodeActionCreators from '../../actions/episode';
 import * as EventActionCreators from '../../actions/event';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
+import NextEpisode from './NextEpisode';
 import ShareButton from '../Share/ShareButton';
 import RecommendationList from '../Recommendation/RecommendationList';
 
@@ -40,6 +41,7 @@ class PlayerComponent extends Component {
     super(props);
     this.player = null;
     this.playerInit = null;
+    this.nextEpisode = null;
     this.state = {
       size: {
         height: 1920,
@@ -70,16 +72,79 @@ class PlayerComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
       const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`);
       this.playerInit = false;
+      this.setState({nextReco: false});
       this.initPlayer(videoData);
     }
   }
 
+  getLazyImageUrl(data, type = 'poster') {
+    let imgData = data.get(type);
+    if (!imgData) {
+      return;
+    }
+
+    return imgData.get('imgix');
+  }
+
+  getNextComponent() {
+    const {
+      props: {
+        videoId
+        }
+      } = this;
+
+    if (!this.state.nextReco) {
+      return;
+    }
+
+    let nextEpisode = this.nextEpisode;
+    let time = this.state.nextReco;
+    if (nextEpisode) {
+      if (time === 0) {
+        this.loadNextVideo();
+        return;
+      }
+      let episode = nextEpisode.episode;
+      return (<NextEpisode {...{episode, time}}/>)
+    }
+    return (<RecommendationList {...{videoId}}/>)
+  }
+
+  getNextLink() {
+    let nextVideo = this.nextEpisode.episode;
+    return nextVideo && nextVideo.link;
+  }
+
   //TODO refactor and split method
   async getNextVideo() {
+    const {
+      props: {
+        Movie,
+        videoId,
+        movieId
+        }
+      } = this;
+
+    const movieData = Movie.get(`movies/${movieId}`);
+    this.nextEpisode = await this.getNextEpisode();
+    if (this.nextEpisode) {
+      let season = this.nextEpisode.season;
+      let episode = this.nextEpisode.episode;
+      let nextVideo = episode.get('videoId') || episode.get('video').get('_id');
+      let posterImg = this.getLazyImageUrl(episode);
+      let link = `/${movieData.get('_id')}/${movieData.get('slug')}/${season.get('_id')}/${season.get('slug')}/${episode.get('_id')}/${episode.get('slug')}/${nextVideo}`;
+      return {
+        link: link,
+        title: episode.get('title'),
+        poster: `${posterImg}?crop=faces&fit=clip&w=150&h=80&q=60&fm=${config.images.type}`
+      }
+    }
+  }
+
+  async getNextEpisode() {
     const {
       props: {
         Video,
@@ -98,8 +163,6 @@ class PlayerComponent extends Component {
     if (!movieData) {
       return;
     }
-    let link = `/${movieData.get('_id')}/${movieData.get('slug')}`;
-
     const videoData = Video.get(`videos/${videoId}`);
     if (!videoData) {
       return;
@@ -108,109 +171,96 @@ class PlayerComponent extends Component {
     if (!episodeData) {
       return;
     }
-    if (seasonId) {
-      let seasonData = Season.get(`seasons/${seasonId}`);
-      if (!seasonData) {
-        return;
-      }
-      link += `/${seasonData.get('_id')}/${seasonData.get('slug')}`;
-      let nextEpisode;
-      let nextVideoData;
-      let nextVideoId;
-      let nextEpisodeId;
-      let episodeIndex;
-      let posterImg;
-      let episodesList = seasonData.get('episodes');
-      if (episodesList) {
-        episodeIndex = episodesList.findIndex((obj) => {
-          return obj.get('_id') == episodeId;
+    if (!seasonId) {
+      return;
+    }
+    let seasonData = Season.get(`seasons/${seasonId}`);
+    if (!seasonData) {
+      return;
+    }
+    let nextEpisode;
+    let nextEpisodeId;
+    let episodeIndex;
+    let episodesList = seasonData.get('episodes');
+
+    if (!episodesList) {
+      return;
+    }
+    episodeIndex = await episodesList.findIndex((obj) => {
+      return obj.get('_id') == episodeId;
+    });
+
+    nextEpisode = episodesList.get(episodeIndex + 1);
+    if (nextEpisode) {
+      return {
+        season: seasonData,
+        episode: nextEpisode
+      };
+    }
+    //try to load next season
+    let seasonList = movieData.get('seasons');
+    let seasonIndex = await seasonList.findIndex((obj) => {
+      return obj.get('_id') == seasonId;
+    });
+    if (seasonIndex < 0) {
+      return;
+    }
+    let nextSeason = await seasonList.get(seasonIndex + 1);
+    if (!nextSeason) {
+      return;
+    }
+
+    episodesList = nextSeason.get('episodes');
+    nextEpisode = episodesList.get(0);
+    if (nextEpisode) {
+      return {
+        season: nextSeason,
+        episode: nextEpisode
+      };
+    }
+
+    //Try to fetch next episode
+    nextEpisodeId = nextEpisode.get('_id');
+    let fetchEpisode = Episode.get(`episodes/${nextEpisodeId}`);
+    if (!fetchEpisode) {
+      try {
+        //L'episode n'a jamais été chargé , on le fetch
+        fetchEpisode = await dispatch(EpisodeActionCreators.getEpisode(nextEpisodeId)).then((result) => {
+          if (!result || !result.res) {
+            return null;
+          }
+          return Immutable.fromJS(result.res.body);
         });
-        nextEpisode = episodesList.get(episodeIndex + 1);
-        if (nextEpisode) {
-          link += `/${nextEpisode.get('_id')}/${nextEpisode.get('slug')}`;
-          nextVideoId = nextEpisode.get('videoId');
-          if (nextVideoId) {
-            link += `/${nextVideoId}`;
-          }
-
-          posterImg = nextEpisode.get('poster').get('imgix');
-
-          return {
-            link: link,
-            title: nextEpisode.get('title'),
-            poster: `${posterImg}?crop=faces&fit=clip&w=150&h=80&q=60&fm=${config.images.type}`
-          }
-        }
-        //try to load next season
-        let seasonList = movieData.get('seasons');
-        let seasonIndex = seasonList.findIndex((obj) => {
-          return obj.get('_id') == seasonId;
-        });
-        if (seasonIndex > -1) {
-          let nextSeason = seasonList.get(seasonIndex + 1);
-          if (nextSeason) {
-            link = `/${movieData.get('_id')}/${movieData.get('slug')}/${nextSeason.get('_id')}/${nextSeason.get('slug')}`;
-            episodesList = nextSeason.get('episodes');
-            nextEpisode = episodesList.get(0);
-            if (nextEpisode) {
-              nextEpisodeId = nextEpisode.get('_id');
-              let fetchEpisode = Episode.get(`episodes/${nextEpisodeId}`);
-              if (!fetchEpisode) {
-                try {
-                  //L'episode n'a jamais été chargé , on le fetch
-                  fetchEpisode = await dispatch(EpisodeActionCreators.getEpisode(nextEpisodeId)).then((result) => {
-                    if (!result || !result.res) {
-                      return null;
-                    }
-                    return Immutable.fromJS(result.res.body);
-                  });
-                } catch (err) {
-                  console.log('player : ', err)
-                }
-              }
-              if (fetchEpisode) {
-                nextEpisode = fetchEpisode;
-
-                link += `/${nextEpisode.get('_id')}/${nextEpisode.get('slug')}`;
-                posterImg = nextEpisode.get('poster').get('imgix');
-                nextVideoData = nextEpisode.get('video');
-                if (nextVideoData) {
-                  link += `/${nextVideoData.get('_id')}`;
-                }
-
-
-                return {
-                  link: link,
-                  title: nextEpisode.get('title'),
-                  poster: `${posterImg}?crop=faces&fit=clip&w=150&h=80&q=60&fm=${config.images.type}`
-                }
-              }
-              return;
-            }
-          }
-        }
-        return;
+      } catch (err) {
+        console.log('player : ', err)
       }
     }
+
+    return {
+      season: nextSeason,
+      episode: fetchEpisode,
+    };
   }
 
-  async loadNextVideo() {
+  loadNextVideo() {
     const {
       context: {
         history
         }
       } = this;
-    let next = await this.getNextVideo();
-    history.pushState(null, next.link);
+
+    let nextLink = this.getNextLink();
+    this.setState({nextReco: false});
+    history.pushState(null, nextLink);
   }
 
   onTimeUpdate() {
     let currentTime = this.player.currentTime();
-    let duration = this.state.duration - 450;
+    let duration = this.state.duration - config.reco.time;
     let nextReco = currentTime > duration;
     if (nextReco !== this.state.nextReco) {
       this.setState({
-        nextReco: nextReco
+        nextReco: Math.round(this.state.duration - currentTime, 10)
       });
     }
   }
@@ -425,14 +475,13 @@ class PlayerComponent extends Component {
     } catch (e) {
       console.log('player : Next video error', e);
     }
-    playerData.starttime = 6000;
+    //playerData.starttime = 6000;
     return playerData;
   }
 
   async generatePlayer(videoData) {
     const {
       props: {
-        Video,
         videoId
         }
       } = this;
@@ -607,7 +656,7 @@ class PlayerComponent extends Component {
               <div className=" video-infos_synopsys">{infos.synopsis}</div>
             </div> : <div />
         }
-        {this.state.nextReco ? <RecommendationList {...{videoId}}/> : ''}
+        {this.getNextComponent()}
       </div>
     );
   }

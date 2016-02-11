@@ -1,0 +1,52 @@
+@import (reference) '../../../styles/config.less';
+
+.next-episode {
+  position: absolute;
+  right: 0;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  padding: @thumb-margin 0 @thumb-margin 0;
+  .next-episode__background {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: @color-indigo;
+    background-image: url(../../../assets/images/default/1050x580.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    &:before {
+      position: absolute;
+      content: '';
+      height: 100%;
+      width: 100%;
+      background: fade(@color-indigo, 70%);
+    }
+  }
+  &:before {
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    background: fade(@color-indigo, 70%);
+  }
+  .next-episode__content {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: @thumb-margin @app-padding @thumb-margin @app-padding;
+    .isMobile({ margin: @thumb-margin @app-padding-mobile @thumb-margin @app-padding-mobile; });
+    .next-episode__label {
+      font-size: 2em;
+      font-family: @font-family-base;
+      text-transform: uppercase;
+    }
+    .thumb {
+      margin-left: -@thumb-margin;
+      max-width: 100%;
+    }
+  }
+}

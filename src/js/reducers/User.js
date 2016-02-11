@@ -41,15 +41,26 @@ export default createReducer(initialState, {
   },
 
   // #### RECOMMENDATIONS ####
-  [ActionTypes.User.getRecommendations](state, { res }) {
+  [ActionTypes.User.getRecommendations](state, { videoId, res }) {
     if (!res) {
       return state;
     }
     const data = res.body;
     return state.merge({
-      ['favorites/movies']: data
+      [`reco/${videoId}`]: data
     });
   },
+
+  [ActionTypes.User.likeVideoOrNot](state, { videoId, res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`video/${videoId}`]: data
+    });
+  },
+
   // #### FAVORITES ####
   [ActionTypes.User.getFavoritesMovies](state, { res }) {
     if (!res) {
@@ -57,7 +68,7 @@ export default createReducer(initialState, {
     }
     const data = res.body;
     return state.merge({
-      ['recommendations']: data
+      ['favorites/movies']: data
     });
   },
 

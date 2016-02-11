@@ -14,9 +14,16 @@
     "noData": "Aucun Favoris ajouté à mon profil",
     "labelPage": "Mes Favoris"
   },
+  "next": {
+    "label": "Épisode suivant dans"
+  },
   "recommendation": {
     "noData": "Aucune Recommandation",
-    "labelPage": "Nous vous recommandons :"
+    "labelTitle": "Vous voulez en voir plus ?",
+    "labelPage": "Nous vous recommandons :",
+    "labelLike": "Avez vous aimé cette vidéo ?",
+    "like": "J'ai aimé",
+    "dislike": "Je n'ai pas aimé"
   },
   "signin": {
     "title": "S’identifier",
