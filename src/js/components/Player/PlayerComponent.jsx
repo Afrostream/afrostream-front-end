@@ -75,6 +75,7 @@ class PlayerComponent extends Component {
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
       const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`);
       this.playerInit = false;
+      this.nextEpisode = false;
       this.setState({nextReco: false});
       this.initPlayer(videoData);
     }
@@ -132,18 +133,23 @@ class PlayerComponent extends Component {
 
     const movieData = Movie.get(`movies/${movieId}`);
     this.nextEpisode = await this.getNextEpisode();
-    if (this.nextEpisode) {
-      let season = this.nextEpisode.season;
-      let episode = this.nextEpisode.episode;
-      let nextVideo = episode.get('videoId') || episode.get('video').get('_id');
-      let posterImg = this.getLazyImageUrl(episode);
-      let link = `/${movieData.get('_id')}/${movieData.get('slug')}/${season.get('_id')}/${season.get('slug')}/${episode.get('_id')}/${episode.get('slug')}/${nextVideo}`;
-      return {
-        link: link,
-        title: episode.get('title'),
-        poster: `${posterImg}?crop=faces&fit=clip&w=150&h=80&q=60&fm=${config.images.type}`
-      }
+    if (!this.nextEpisode) {
+      return null;
     }
+    let season = this.nextEpisode.season;
+    let episode = this.nextEpisode.episode;
+    if (!episode) {
+      return null;
+    }
+    let nextVideo = episode.get('videoId') || episode.get('video').get('_id');
+    let posterImg = this.getLazyImageUrl(episode);
+    let link = `/${movieData.get('_id')}/${movieData.get('slug')}/${season.get('_id')}/${season.get('slug')}/${episode.get('_id')}/${episode.get('slug')}/${nextVideo}`;
+    return {
+      link: link,
+      title: episode.get('title'),
+      poster: `${posterImg}?crop=faces&fit=clip&w=150&h=80&q=60&fm=${config.images.type}`
+    }
+
   }
 
   async getNextEpisode() {
@@ -214,11 +220,8 @@ class PlayerComponent extends Component {
 
     episodesList = nextSeason.get('episodes');
     nextEpisode = episodesList.get(0);
-    if (nextEpisode) {
-      return {
-        season: nextSeason,
-        episode: nextEpisode
-      };
+    if (!nextEpisode) {
+      return;
     }
 
     //Try to fetch next episode
@@ -237,7 +240,6 @@ class PlayerComponent extends Component {
         console.log('player : ', err)
       }
     }
-
     return {
       season: nextSeason,
       episode: fetchEpisode
@@ -484,6 +486,7 @@ class PlayerComponent extends Component {
     try {
       playerData.next = await this.getNextVideo();
     } catch (e) {
+      playerData.next = null;
       console.log('player : Next video error', e);
     }
     //playerData.starttime = 6000;
@@ -512,7 +515,6 @@ class PlayerComponent extends Component {
         });
       }
     );
-    console.log('player : addHandler');
     player.on('timeupdate', ::this.onTimeUpdate);
     player.on('loadedmetadata', ::this.setDurationInfo);
     player.on('useractive', ::this.triggerUserActive);
