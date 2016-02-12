@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {dict} from '../../../../config';
 import Thumb from '../../components/Movies/Thumb';
+import NextGoBack from '../Player/NextGoBack';
 import classSet from 'classnames';
 import * as RecoActionCreators from '../../actions/reco';
 const dictReco = dict.recommendation;
@@ -114,6 +115,7 @@ class RecommendationList extends React.Component {
           <div className="recommendation-list__thumbs">
             { this.renderList() }
           </div>
+          <NextGoBack />
         </div>
       </div>
     );

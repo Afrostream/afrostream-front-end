@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import {dict,images} from '../../../../config';
 import classSet from 'classnames';
 import Thumb from '../../components/Movies/Thumb';
+import NextGoBack from './NextGoBack';
 const dictNext = dict.next;
 if (process.env.BROWSER) {
   require('./NextEpisode.less');
@@ -47,6 +48,7 @@ class NextEpisode extends React.Component {
         <div className="next-episode__content">
           <div className="next-episode__label">{`${dictNext.label} ${this.props.time}`}</div>
           <Thumb {...{dataId, data}} favorite={false} share={false}/>
+          <NextGoBack />
         </div>
       </div>
     );

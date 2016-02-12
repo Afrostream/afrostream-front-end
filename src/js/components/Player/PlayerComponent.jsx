@@ -89,6 +89,13 @@ class PlayerComponent extends Component {
     return imgData.get('imgix');
   }
 
+  backNextHandler() {
+    this.player.off('timeupdate');
+    this.setState({
+      nextReco: false
+    });
+  }
+
   getNextComponent() {
     const {
       props: {
@@ -114,8 +121,7 @@ class PlayerComponent extends Component {
   }
 
   getNextLink() {
-    let nextVideo = this.nextEpisode.episode;
-    return nextVideo && nextVideo.link;
+    return this.player && this.player.options().next.link;
   }
 
   //TODO refactor and split method
@@ -250,7 +256,7 @@ class PlayerComponent extends Component {
       } = this;
 
     let nextLink = this.getNextLink();
-    this.setState({nextReco: false});
+    this.backNextHandler();
     history.pushState(null, nextLink);
   }
 
@@ -272,6 +278,9 @@ class PlayerComponent extends Component {
     console.log('player : initPlayer');
     try {
       this.player = await this.generatePlayer(videoData);
+      //On ajoute l'ecouteur au nextvideo automatique
+      this.container = ReactDOM.findDOMNode(this);
+      this.container.addEventListener('gobacknext', ::this.backNextHandler);
       console.log('player : generatePlayer complete', this.player);
       return this.player;
     } catch (err) {
@@ -501,12 +510,13 @@ class PlayerComponent extends Component {
         });
       }
     );
-    player.on('timeupdate', this.onTimeUpdate.bind(this));
-    player.on('loadedmetadata', this.setDurationInfo.bind(this));
-    player.on('useractive', this.triggerUserActive.bind(this));
-    player.on('userinactive', this.triggerUserActive.bind(this));
-    player.on('error', this.triggerError.bind(this));
-    player.on('next', this.loadNextVideo.bind(this));
+    console.log('player : addHandler');
+    player.on('timeupdate', ::this.onTimeUpdate);
+    player.on('loadedmetadata', ::this.setDurationInfo);
+    player.on('useractive', ::this.triggerUserActive);
+    player.on('userinactive', ::this.triggerUserActive);
+    player.on('error', ::this.triggerError);
+    player.on('next', ::this.loadNextVideo);
 
     return player;
   }
@@ -553,11 +563,12 @@ class PlayerComponent extends Component {
 
     if (this.player) {
       this.player.one('dispose', () => {
-        this.player.off('loadedmetadata', this.setDurationInfo.bind(this));
-        this.player.off('useractive', this.triggerUserActive.bind(this));
-        this.player.off('userinactive', this.triggerUserActive.bind(this));
-        this.player.off('error', this.triggerError.bind(this));
-        this.player.off('next', this.loadNextVideo.bind(this));
+        this.player.off('timeupdate');
+        this.player.off('loadedmetadata');
+        this.player.off('useractive');
+        this.player.off('userinactive');
+        this.player.off('error');
+        this.player.off('next');
         this.player = null;
         this.playerInit = false;
         dispatch(EventActionCreators.userActive(true));
