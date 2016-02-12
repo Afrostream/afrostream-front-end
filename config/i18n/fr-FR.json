@@ -16,7 +16,8 @@
   },
   "next": {
     "label": "Épisode suivant dans {seconds} secondes",
-    "goBackBtn": "Retour à la navigation"
+    "goBackBtn": "Retour à la navigation",
+    "labelLike": "Avez vous aimé cette vidéo ?"
   },
   "recommendation": {
     "noData": "Aucune Recommandation",

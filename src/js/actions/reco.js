@@ -35,20 +35,20 @@ _immu.random = function (min, max) {
  * TODO connecter a l'api une fois celle ci disponible
  * @returns {Function}
  */
-export function likeVideoOrNot(value, videoId) {
+export function rateVideo(value, videoId) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().OAuth.get('token');
     if (!user) {
       return {
-        type: ActionTypes.User.likeVideoOrNot,
+        type: ActionTypes.User.rateVideo,
         videoId,
         res: null
       }
     }
 
     return {
-      type: ActionTypes.User.likeVideoOrNot,
+      type: ActionTypes.User.rateVideo,
       videoId,
       res: {
         body: {like: value}

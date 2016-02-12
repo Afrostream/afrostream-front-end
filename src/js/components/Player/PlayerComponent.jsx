@@ -117,7 +117,7 @@ class PlayerComponent extends Component {
   }
 
   getNextLink() {
-    return this.player && this.player.options().next.link;
+    return this.player && this.player.options().next && this.player.options().next.link;
   }
 
   //TODO refactor and split method
@@ -250,6 +250,8 @@ class PlayerComponent extends Component {
         history
         }
       } = this;
+
+    if (!this.nextEpisode) return;
 
     let nextLink = this.getNextLink();
     this.backNextHandler();

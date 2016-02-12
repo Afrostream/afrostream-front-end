@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {dict} from '../../../../config';
 import Thumb from '../../components/Movies/Thumb';
 import NextGoBack from '../Player/NextGoBack';
+import RateComponent from './RateComponent';
 import classSet from 'classnames';
 import * as RecoActionCreators from '../../actions/reco';
 const dictReco = dict.recommendation;
@@ -25,65 +26,6 @@ class RecommendationList extends React.Component {
       } = this;
 
     dispatch(RecoActionCreators.getRecommendations('player', videoId));
-  }
-
-  like(value) {
-    const {
-      props: {dispatch, videoId}
-      } = this;
-    dispatch(RecoActionCreators.likeVideoOrNot(value, videoId));
-  }
-
-  getLike() {
-    const {
-      props: {
-        User,
-        videoId
-        }
-      } = this;
-
-    const videoData = User.get(`video/${videoId}`);
-
-    const likeAttributes = {
-      onClick: event => ::this.like(true)
-    };
-    const dislikeAttributes = {
-      onClick: event => ::this.like(false)
-    };
-    let likeThis
-    if (videoData) {
-      likeThis = videoData.get('like');
-    }
-    if (likeThis === undefined) {
-      return (
-        <div className="reco-buttons">
-          <button className="btn reco_button" type="button" data-toggle="tooltip"
-                  data-placement="top"
-                  title={dictReco.like} {...likeAttributes}>
-            <i className="fa fa-thumbs-up"></i>
-          </button>
-          <button className="btn reco_button" type="button" data-toggle="tooltip"
-                  data-placement="top"
-                  title={dictReco.dislike}  {...dislikeAttributes}>
-            <i className="fa fa-thumbs-down"></i>
-          </button>
-        </div>
-      );
-    }
-    else {
-      let likeClass = {
-        'fa': true,
-        'fa-thumbs-up': likeThis,
-        'fa-thumbs-down': !likeThis
-      };
-
-      return (
-        <div className="reco-buttons">
-          <div className="btn reco_button active">
-            <i className={classSet(likeClass)}></i>
-          </div>
-        </div>)
-    }
   }
 
   renderList() {
@@ -109,7 +51,7 @@ class RecommendationList extends React.Component {
       <div className="recommendation-list">
         <div className="recommendation-list__content">
           <div className="recommendation-list__label">{dictReco.labelLike}</div>
-          {this.getLike()}
+          <RateComponent />
           <div className="recommendation-list__label">{dictReco.labelTitle}</div>
           <div className="recommendation-list__info">{dictReco.labelPage}</div>
           <div className="recommendation-list__thumbs">

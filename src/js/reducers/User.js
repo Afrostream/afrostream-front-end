@@ -51,7 +51,7 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.likeVideoOrNot](state, { videoId, res }) {
+  [ActionTypes.User.rateVideo](state, { videoId, res }) {
     if (!res) {
       return state;
     }
