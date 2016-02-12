@@ -2,8 +2,8 @@
 
 .next-episode {
   position: absolute;
-  right: 0;
   left: 50%;
+  right: 0;
   top: 0;
   bottom: 0;
   padding: @thumb-margin 0 @thumb-margin 0;
@@ -13,7 +13,6 @@
     left: 0;
     top: 0;
     bottom: 0;
-    background-color: @color-indigo;
     background-image: url(../../../assets/images/default/1050x580.jpg);
     background-size: cover;
     background-position: center center;
@@ -23,7 +22,8 @@
       content: '';
       height: 100%;
       width: 100%;
-      background: fade(@color-indigo, 70%);
+      .horizontal-gradient(@color-indigo, 0%, rgba(0, 0, 0, 0.6), 60%);
+      background-color: transparent;
     }
   }
   &:before {
@@ -44,9 +44,20 @@
       font-family: @font-family-base;
       text-transform: uppercase;
     }
-    .thumb {
+    .next-episode__thumbs {
       margin-left: -@thumb-margin;
-      max-width: 100%;
+      .thumb {
+        &.episode {
+          width: 100%;
+          height: auto;
+        }
+        .thumb-background {
+          height: 220px;
+        }
+        .thumb-info__title {
+          font-size: 1.8em;
+        }
+      }
     }
   }
 }

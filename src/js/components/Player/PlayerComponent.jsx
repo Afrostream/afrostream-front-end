@@ -110,10 +110,6 @@ class PlayerComponent extends Component {
     let nextEpisode = this.nextEpisode;
     let time = this.state.nextReco;
     if (nextEpisode) {
-      if (time === 0) {
-        this.loadNextVideo();
-        return;
-      }
       let episode = nextEpisode.episode;
       return (<NextEpisode {...{episode, time}}/>)
     }
@@ -244,7 +240,7 @@ class PlayerComponent extends Component {
 
     return {
       season: nextSeason,
-      episode: fetchEpisode,
+      episode: fetchEpisode
     };
   }
 
@@ -265,9 +261,13 @@ class PlayerComponent extends Component {
     let duration = this.state.duration - config.reco.time;
     let nextReco = currentTime > duration;
     if (nextReco !== this.state.nextReco) {
+      let time = Math.round(this.state.duration - currentTime, 10);
       this.setState({
-        nextReco: Math.round(this.state.duration - currentTime, 10)
+        nextReco: time
       });
+      if (time === 0) {
+        this.loadNextVideo();
+      }
     }
   }
 

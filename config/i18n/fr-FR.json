@@ -15,7 +15,7 @@
     "labelPage": "Mes Favoris"
   },
   "next": {
-    "label": "Épisode suivant dans",
+    "label": "Épisode suivant dans {seconds} secondes",
     "goBackBtn": "Retour à la navigation"
   },
   "recommendation": {

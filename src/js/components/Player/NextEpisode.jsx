@@ -46,8 +46,10 @@ class NextEpisode extends React.Component {
       <div className="next-episode">
         <div className="next-episode__background" style={imageStyles}/>
         <div className="next-episode__content">
-          <div className="next-episode__label">{`${dictNext.label} ${this.props.time}`}</div>
-          <Thumb {...{dataId, data}} favorite={false} share={false}/>
+          <div className="next-episode__label">{`${dictNext.label.replace('{seconds}', this.props.time)}`}</div>
+          <div className="next-episode__thumbs">
+            <Thumb {...{dataId, data}} favorite={false} share={false}/>
+          </div>
           <NextGoBack />
         </div>
       </div>
