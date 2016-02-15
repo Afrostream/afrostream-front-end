@@ -37,7 +37,6 @@ class Application extends React.Component {
 
     return (
       <div className={appClasses}>
-        <ModalView />
         <Header {...this.props}/>
         <SideBar />
         <AlertMessage />
@@ -45,6 +44,7 @@ class Application extends React.Component {
           {children}
           <Footer />
         </div>
+        <ModalView />
       </div>
     );
   }

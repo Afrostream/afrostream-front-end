@@ -5,6 +5,7 @@ import classSet from 'classnames';
 import Thumb from '../../components/Movies/Thumb';
 import NextGoBack from './NextGoBack';
 import RateComponent from '../Recommendation/RateComponent';
+import ShareButton from '../Share/ShareButton';
 const dictNext = dict.next;
 if (process.env.BROWSER) {
   require('./NextEpisode.less');
@@ -47,8 +48,10 @@ class NextEpisode extends React.Component {
       <div className="next-episode">
         <div className="next-episode__background" style={imageStyles}/>
         <div className="next-episode__content">
+          <div className="next-episode__label">{dict.share.label}</div>
+          <ShareButton />
           <div className="next-episode__label">{dictNext.labelLike}</div>
-          <RateComponent />
+          <RateComponent videoId={dataId}/>
           <div className="next-episode__label">{`${dictNext.label.replace('{seconds}', this.props.time)}`}</div>
           <div className="next-episode__thumbs">
             <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135}/>

@@ -47,6 +47,7 @@ class PlayerComponent extends Component {
         height: 1920,
         width: 815
       },
+      fullScreen: false,
       nextReco: false
     };
   }
@@ -518,6 +519,7 @@ class PlayerComponent extends Component {
         });
       }
     );
+    player.on('fullscreenchange', ::this.onFullScreenHandler);
     player.on('timeupdate', ::this.onTimeUpdate);
     player.on('loadedmetadata', ::this.setDurationInfo);
     player.on('useractive', ::this.triggerUserActive);
@@ -526,6 +528,13 @@ class PlayerComponent extends Component {
     player.on('next', ::this.loadNextVideo);
 
     return player;
+  }
+
+  onFullScreenHandler() {
+    let isFullScreen = this.player.isFullScreen;
+    this.setState({
+      fullScreen: isFullScreen
+    })
   }
 
   setDurationInfo() {
@@ -570,6 +579,8 @@ class PlayerComponent extends Component {
 
     if (this.player) {
       this.player.one('dispose', () => {
+        this.player.off('enterfullscreen');
+        this.player.off('exitfullscreen');
         this.player.off('timeupdate');
         this.player.off('loadedmetadata');
         this.player.off('useractive');
@@ -628,15 +639,6 @@ class PlayerComponent extends Component {
       } = this;
 
     const hiddenMode = !Event.get('userActive');
-    let playerClasses = {
-      'player': true,
-      'player-next-reco': this.state.nextReco
-    };
-
-    let videoInfoClasses = {
-      'video-infos': true,
-      'video-infos-hidden': hiddenMode
-    };
 
     const videoData = Video.get(`videos/${videoId}`);
     if (!videoData) {
@@ -653,14 +655,38 @@ class PlayerComponent extends Component {
       infos.seasonNumber = seasonData.get('seasonNumber');
     }
     let renderData = episodeData ? episodeData : movieData;
+
+    let playerClasses = {
+      'player': true,
+      'player-next-reco': this.state.nextReco,
+      'player-fullScreen': this.state.fullScreen
+    };
+
+    const textLength = infos.title.length;
+    let titleStyle;
+    if (textLength < 20) {
+      titleStyle = 'small';
+    } else if (textLength < 70) {
+      titleStyle = 'medium';
+    } else if (textLength >= 70) {
+      titleStyle = 'large';
+    }
+
+    let videoInfoClasses = {
+      'video-infos': true,
+      'video-infos-hidden': hiddenMode,
+      [`video-infos-${titleStyle}`]: true
+    };
+
+
     return (
       <div className={classSet(playerClasses)}>
         <div ref="wrapper" className="wrapper"/>
         {
           movieData ?
             <div className={classSet(videoInfoClasses)}>
-              <div className=" video-infos_label">Vous regardez</div>
-              <div className=" video-infos_title">{infos.title}</div>
+              <div className="video-infos_label">Vous regardez</div>
+              <div className="video-infos_title">{infos.title}</div>
               {infos.seasonNumber ?
                 <label className="tag video-infos_episode">{`Saison ${infos.seasonNumber}`}</label> : ''}
               {infos.episodeNumber ?

@@ -4,6 +4,7 @@ import {dict} from '../../../../config';
 import Thumb from '../../components/Movies/Thumb';
 import NextGoBack from '../Player/NextGoBack';
 import RateComponent from './RateComponent';
+import ShareButton from '../Share/ShareButton';
 import classSet from 'classnames';
 import * as RecoActionCreators from '../../actions/reco';
 const dictReco = dict.recommendation;
@@ -84,6 +85,8 @@ class RecommendationList extends React.Component {
     return (
       <div className="recommendation-list">
         <div className="recommendation-list__content">
+          <div className="recommendation-list__label">{dict.share.label}</div>
+          <ShareButton/>
           <div className="recommendation-list__label">{this.renderLabel()}</div>
           <RateComponent {...{videoId}}/>
           <div className="recommendation-list__label">{dictReco.labelPage}</div>

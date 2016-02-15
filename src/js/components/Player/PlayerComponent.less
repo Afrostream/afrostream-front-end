@@ -62,8 +62,6 @@
       font-size: 2em;
       line-height: 1.3;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-    }
-    .video-infos_title {
       text-transform: uppercase;
     }
 
@@ -139,8 +137,15 @@
     }
     margin: 0;
     height: 100%;
+    &.player-fullScreen {
+      .video-infos,
+      .next-episode,
+      .recommendation-list {
+        z-index: 2147483647;
+      }
+    }
+
     .video-infos {
-      z-index: 2147483647;
       display: inline-block;
       vertical-align: middle;
       text-align: left;
@@ -158,6 +163,16 @@
       }
       .video-infos_title {
         font-size: 4.5em;
+      }
+      &.video-infos-medium {
+        .video-infos_title {
+          font-size: 2.5em;
+        }
+      }
+      &.video-infos-large {
+        .video-infos_title {
+          font-size: 1.7em;
+        }
       }
     }
 

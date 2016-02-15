@@ -42,7 +42,10 @@ class RateComponent extends React.Component {
 }
 
 RateComponent.propTypes = {
-  videoId: PropTypes.string
+  videoId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
 };
 
 RateComponent.defaultProps = {
