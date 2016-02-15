@@ -99,7 +99,7 @@ export default () => {
           }
           synopsis = data.get('synopsis');
           ogTitle = title;
-          ogDescription = data.get('synopsis');
+          ogDescription = synopsis;
           poster = data.get('poster');
         }
 
