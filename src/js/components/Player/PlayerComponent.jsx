@@ -104,7 +104,7 @@ class PlayerComponent extends Component {
         }
       } = this;
 
-    if (!this.state.nextReco) {
+    if (!this.state.nextReco || !config.reco.enabled) {
       return;
     }
 
@@ -261,6 +261,9 @@ class PlayerComponent extends Component {
   }
 
   onTimeUpdate() {
+    if (!config.reco.enabled) {
+      return;
+    }
     let currentTime = this.player.currentTime();
     let duration = this.state.duration - config.reco.time;
     let nextReco = currentTime > duration;

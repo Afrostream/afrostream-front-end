@@ -119,6 +119,7 @@ const config = {
       dict: dictFr.favorites
     },
     reco: {
+      enabled: true,
       limit: 3,
       time: 45
     },
