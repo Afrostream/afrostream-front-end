@@ -25,7 +25,8 @@ class Poster extends LoadVideo {
     thumbH: React.PropTypes.number,
     preload: React.PropTypes.bool,
     favorite: React.PropTypes.bool,
-    share: React.PropTypes.bool
+    share: React.PropTypes.bool,
+    type: React.PropTypes.string
   };
 
   static defaultProps = {
@@ -33,7 +34,8 @@ class Poster extends LoadVideo {
     thumbH: 200,
     preload: false,
     favorite: true,
-    share: true
+    share: true,
+    type: 'episode'
   };
 
   componentDidMount() {
@@ -69,10 +71,10 @@ class Poster extends LoadVideo {
 
   getType() {
     const {
-      props: { data}
+      props: { data,type}
       } = this;
 
-    return data.get('type');
+    return data.get('type') || type;
   }
 
   createLoader() {

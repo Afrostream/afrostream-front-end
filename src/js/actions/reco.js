@@ -3,33 +3,6 @@ import Immutable from 'immutable';
 import {reco} from '../../../config';
 import _ from 'lodash';
 
-const _immu = {};
-
-_immu.sample = function (list, n) {
-  if (n === undefined) return list.get(_immu.random(list.size - 1));
-  return _immu.shuffle(list).slice(0, Math.max(0, n));
-};
-
-_immu.shuffle = function (list) {
-  var set = list;
-  var size = set.size;
-  var shuffled = Immutable.List(Array(size));
-  for (var index = 0, rand; index < size; index++) {
-    rand = _immu.random(0, index);
-    if (rand !== index) shuffled = shuffled.set(index, shuffled.get(rand));
-    shuffled = shuffled.set(rand, set.get(index));
-  }
-  return shuffled;
-};
-
-_immu.random = function (min, max) {
-  if (max == null) {
-    max = min;
-    min = 0;
-  }
-  return min + Math.floor(Math.random() * (max - min + 1));
-};
-
 /**
  * Like or not for video recommendation algo
  * TODO connecter a l'api une fois celle ci disponible
@@ -96,17 +69,18 @@ export function getRecommendations(route = 'player', videoId = 'home') {
     categories.map((categorie)=> {
       let catMovies = categorie.get('adSpots');
       if (catMovies) {
-        let addedMovies = _immu.sample(catMovies, 2);
-        recoList = recoList.concat(addedMovies.toJS());
+        recoList = recoList.concat(catMovies.toJS());
       }
     });
+
     recoList = _.filter(recoList, (o)=> {
       return o['_id'] != videoId;
     });
     recoList = _.uniq(recoList, (o)=> {
       return o['_id'];
     });
-    recoList = _.slice(recoList, 0, reco.limit);
+    recoList = _.sample(recoList, reco.limit);
+
     return {
       type: ActionTypes.User.getRecommendations,
       videoId,

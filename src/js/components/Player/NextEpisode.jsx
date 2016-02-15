@@ -40,7 +40,7 @@ class NextEpisode extends React.Component {
     const {
       props: { episode }
       } = this;
-    let imageStyles = this.getLazyImageUrl('poster');
+    let imageStyles = this.getLazyImageUrl('thumb');
     let data = episode;
     let dataId = episode.get('_id');
     return (
@@ -51,7 +51,7 @@ class NextEpisode extends React.Component {
           <RateComponent />
           <div className="next-episode__label">{`${dictNext.label.replace('{seconds}', this.props.time)}`}</div>
           <div className="next-episode__thumbs">
-            <Thumb {...{dataId, data}} favorite={false} share={false}/>
+            <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135}/>
           </div>
           <NextGoBack />
         </div>

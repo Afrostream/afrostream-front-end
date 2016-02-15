@@ -266,12 +266,12 @@ class PlayerComponent extends Component {
     let nextReco = currentTime > duration;
     if (nextReco !== this.state.nextReco) {
       let time = Math.round(this.state.duration - currentTime, 10);
+      if (time === 0) {
+        return this.loadNextVideo();
+      }
       this.setState({
         nextReco: time
       });
-      if (time === 0) {
-        this.loadNextVideo();
-      }
     }
   }
 

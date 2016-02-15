@@ -16,14 +16,16 @@
   },
   "next": {
     "label": "Épisode suivant dans {seconds} secondes",
-    "goBackBtn": "Retour à la navigation",
+    "goBackBtn": "Retour à la video",
     "labelLike": "Avez vous aimé cette vidéo ?"
   },
   "recommendation": {
     "noData": "Aucune Recommandation",
-    "labelTitle": "Vous voulez en voir plus ?",
     "labelPage": "Nous vous recommandons :",
-    "labelLike": "Avez vous aimé cette vidéo ?",
+    "labelLike": "Avez vous aimé {movieType} ?",
+    "typeEpisode": "cet épisode",
+    "typeMovie": "ce film",
+    "typeSerie": "cette serie",
     "like": "J'ai aimé",
     "dislike": "Je n'ai pas aimé"
   },

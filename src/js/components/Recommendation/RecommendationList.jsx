@@ -13,7 +13,7 @@ if (process.env.BROWSER) {
 }
 
 
-@connect(({ User }) => ({User}))
+@connect(({ User,Video }) => ({User, Video}))
 class RecommendationList extends React.Component {
 
   constructor(props) {
@@ -26,6 +26,35 @@ class RecommendationList extends React.Component {
       } = this;
 
     dispatch(RecoActionCreators.getRecommendations('player', videoId));
+  }
+
+  renderLabel() {
+    const {
+      props: {
+        Video,
+        videoId
+        }
+      } = this;
+    const video = Video.get(`videos/${videoId}`);
+    const movie = video.get('movie');
+    let type = 'serie';
+    if (movie) {
+      type = movie.get('type');
+    }
+    let labelMovie = '';
+    switch (type) {
+      case 'movie':
+        labelMovie = dictReco.typeMovie;
+        break;
+      case 'serie':
+        labelMovie = dictReco.typeSerie;
+        break;
+      default:
+        labelMovie = dictReco.typeEpisode;
+        break;
+    }
+
+    return dictReco.labelLike.replace('{movieType}', labelMovie);
   }
 
   renderList() {
@@ -46,14 +75,18 @@ class RecommendationList extends React.Component {
   }
 
   render() {
+    const {
+      props: {
+        videoId
+        }
+      } = this;
 
     return (
       <div className="recommendation-list">
         <div className="recommendation-list__content">
-          <div className="recommendation-list__label">{dictReco.labelLike}</div>
-          <RateComponent />
-          <div className="recommendation-list__label">{dictReco.labelTitle}</div>
-          <div className="recommendation-list__info">{dictReco.labelPage}</div>
+          <div className="recommendation-list__label">{this.renderLabel()}</div>
+          <RateComponent {...{videoId}}/>
+          <div className="recommendation-list__label">{dictReco.labelPage}</div>
           <div className="recommendation-list__thumbs">
             { this.renderList() }
           </div>
