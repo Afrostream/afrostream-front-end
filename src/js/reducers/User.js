@@ -40,6 +40,27 @@ export default createReducer(initialState, {
     });
   },
 
+  // #### RECOMMENDATIONS ####
+  [ActionTypes.User.getRecommendations](state, { videoId, res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`reco/${videoId}`]: data
+    });
+  },
+
+  [ActionTypes.User.rateVideo](state, { videoId, res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`video/${videoId}`]: data
+    });
+  },
+
   // #### FAVORITES ####
   [ActionTypes.User.getFavoritesMovies](state, { res }) {
     if (!res) {

@@ -1,0 +1,59 @@
+@import (reference) '../../../styles/config.less';
+
+.recommendation-list {
+  position: relative;
+  padding: @thumb-margin 0 @thumb-margin 0;
+  &:before {
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .recommendation-list__content {
+    display: inline-block;
+    vertical-align: middle;
+    margin: @thumb-margin @app-padding @thumb-margin @app-padding;
+    .isMobile({ margin: @thumb-margin @app-padding-mobile @thumb-margin @app-padding-mobile; });
+    .recommendation-list__label {
+      font-size: 2em;
+      font-family: @font-family-base;
+      text-transform: uppercase;
+    }
+    .recommendation-list__info {
+      font-size: 1.4em;
+      font-family: @font-book;
+    }
+    .recommendation-list__thumbs {
+      margin-left: -@thumb-margin;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-content: flex-start;
+      align-items: flex-start;
+      .thumb {
+        order: 0;
+        flex: 0 1 auto;
+        align-self: auto;
+      }
+    }
+
+    .rsr-container {
+      display: inline-block;
+      margin: 1em 0 1em 0;
+      cursor: pointer;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .recommendation-list {
+    z-index: 2147483647;
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    .horizontal-gradient(transparent, 0%, @color-indigo, 30%);
+  }
+}

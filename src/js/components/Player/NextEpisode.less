@@ -1,0 +1,74 @@
+@import (reference) '../../../styles/config.less';
+
+.next-episode {
+  position: relative;
+  padding: @thumb-margin 0 @thumb-margin 0;
+  .next-episode__background {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url(../../../assets/images/default/1050x580.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    &:before {
+      position: absolute;
+      content: '';
+      height: 100%;
+      width: 100%;
+      .horizontal-gradient(@color-indigo, 0%, rgba(0, 0, 0, 0.6), 60%);
+      background-color: transparent;
+    }
+  }
+  &:before {
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    background: fade(@color-indigo, 70%);
+  }
+  .next-episode__content {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: @thumb-margin @app-padding @thumb-margin @app-padding;
+    .isMobile({ margin: @thumb-margin @app-padding-mobile @thumb-margin @app-padding-mobile; });
+    .next-episode__label {
+      font-size: 2em;
+      font-family: @font-family-base;
+      text-transform: uppercase;
+    }
+    .next-episode__thumbs {
+      margin-left: -@thumb-margin;
+      .thumb {
+        &.episode {
+          width: 100%;
+          height: auto;
+        }
+        .thumb-background {
+          background: @color-indigo;
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat;
+          height: 220px;
+        }
+        .thumb-info__title {
+          font-size: 1.8em;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .next-episode {
+    z-index: 2147483647;
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}

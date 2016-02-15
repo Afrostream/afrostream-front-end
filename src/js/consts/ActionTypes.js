@@ -16,6 +16,8 @@ export default {
     getProfile: null,
     subscribe: null,
     pendingUser: null,
+    rateVideo: null,
+    getRecommendations: null,
     getFavoritesMovies: null,
     getFavoritesEpisodes: null,
     setFavoritesMovies: null,

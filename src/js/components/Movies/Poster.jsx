@@ -1,10 +1,10 @@
 import React ,{ PropTypes } from 'react';
-import Immutable from 'immutable';
 import LoadVideo from '../LoadVideo';
 import config from '../../../../config';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
+import ShareButton from '../Share/ShareButton';
 
 const Status = {
   PENDING: 'pending',
@@ -24,14 +24,18 @@ class Poster extends LoadVideo {
     thumbW: React.PropTypes.number,
     thumbH: React.PropTypes.number,
     preload: React.PropTypes.bool,
-    favorite: React.PropTypes.bool
+    favorite: React.PropTypes.bool,
+    share: React.PropTypes.bool,
+    type: React.PropTypes.string
   };
 
   static defaultProps = {
     thumbW: 140,
     thumbH: 200,
     preload: false,
-    favorite: true
+    favorite: true,
+    share: true,
+    type: 'episode'
   };
 
   componentDidMount() {
@@ -67,10 +71,10 @@ class Poster extends LoadVideo {
 
   getType() {
     const {
-      props: { data}
+      props: { data,type}
       } = this;
 
-    return data.get('type');
+    return data.get('type') || type;
   }
 
   createLoader() {
@@ -146,6 +150,19 @@ class Poster extends LoadVideo {
     return {backgroundImage: `url(${imageStyles})`};
   }
 
+  getShareButton() {
+    const {
+      props: { data,share }
+      } = this;
+
+    if (!share) {
+      return;
+    }
+
+    let link = this.getLink();
+
+    return <ShareButton link={link} title={data.get('title')} description={data.get('synopsis')}/>
+  }
 
   getFavorite() {
     const {
