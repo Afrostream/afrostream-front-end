@@ -1,13 +1,8 @@
 @import (reference) '../../../styles/config.less';
 
 .recommendation-list {
-  position: absolute;
-  left: 50%;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  position: relative;
   padding: @thumb-margin 0 @thumb-margin 0;
-  .horizontal-gradient(transparent, 0%, @color-indigo, 30%);
   &:before {
     content: '';
     height: 100%;
@@ -48,5 +43,17 @@
       margin: 1em 0 1em 0;
       cursor: pointer;
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .recommendation-list {
+    z-index: 2147483647;
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    .horizontal-gradient(transparent, 0%, @color-indigo, 30%);
   }
 }

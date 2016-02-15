@@ -30,14 +30,6 @@
   width: 100%;
   max-height: 100%;
   &.player-next-reco {
-    .wrapper {
-      .vjs-tech {
-        .transition(width 0.5s ease);
-      }
-      .vjs-control-bar {
-        display: none;
-      }
-    }
     .video-infos {
       display: none;
     }
@@ -148,6 +140,7 @@
     margin: 0;
     height: 100%;
     .video-infos {
+      z-index: 2147483647;
       display: inline-block;
       vertical-align: middle;
       text-align: left;
@@ -168,6 +161,7 @@
         font-size: 4.5em;
       }
     }
+
     &.player-next-reco {
       .wrapper {
         .vjs-tech {
@@ -177,12 +171,19 @@
           display: inline-block;
           vertical-align: middle;
           z-index: 3;
+          .transition(width 0.5s ease);
+        }
+        .vjs-control-bar {
+          display: none;
         }
         .vjs-poster {
           display: block;
           background-position: 0% 50%;
           //background-size: cover;
         }
+      }
+      .video-infos {
+        display: none;
       }
     }
     .wrapper {

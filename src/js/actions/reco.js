@@ -24,14 +24,14 @@ export function rateVideo(value, videoId) {
       type: ActionTypes.User.rateVideo,
       videoId,
       res: {
-        body: {like: value}
+        body: {rate: value}
       }
     };
 
     //TODO connecter une fois l'api reco presente
     //return async api => ({
     //  type: ActionTypes.Reco.getRecommendations,
-    //  res: await api(`/api/users/me/videos`, 'POST', {value:value videoId: videoId}, token)
+    //  res: await api(`/api/users/me/videos`, 'PUT', {rate:value, videoId: videoId}, token)
     //});
   };
 }

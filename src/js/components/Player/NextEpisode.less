@@ -1,11 +1,7 @@
 @import (reference) '../../../styles/config.less';
 
 .next-episode {
-  position: absolute;
-  left: 50%;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  position: relative;
   padding: @thumb-margin 0 @thumb-margin 0;
   .next-episode__background {
     position: absolute;
@@ -63,5 +59,16 @@
         }
       }
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .next-episode {
+    z-index: 2147483647;
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 0;
+    bottom: 0;
   }
 }

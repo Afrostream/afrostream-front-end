@@ -17,7 +17,7 @@
   "next": {
     "label": "Épisode suivant dans {seconds} secondes",
     "goBackBtn": "Retour à la video",
-    "labelLike": "Avez vous aimé cette vidéo ?"
+    "labelLike": "Avez vous aimé cet épisode ?"
   },
   "recommendation": {
     "noData": "Aucune Recommandation",
