@@ -18,6 +18,7 @@ class GiftDetails extends React.Component {
               <input
                 type="text"
                 className="form-control first-name"
+                ref="giftFirstName"
                 id="gift_first_name"
                 name="first-name"
                 placeholder="Son prénom" required/>
@@ -27,6 +28,7 @@ class GiftDetails extends React.Component {
               <input
                 type="text"
                 className="form-control last-name"
+                ref="giftLastName"
                 id="gift_last_name"
                 name="last-name"
                 placeholder="Son nom" required/>
@@ -38,6 +40,7 @@ class GiftDetails extends React.Component {
               <input
                 className="form-control card-number"
                 name="gift-email"
+                ref="giftEmail"
                 id="gift_email"
                 placeholder="le-mail-du-destinataire@courriel.com" required/>
             </div>

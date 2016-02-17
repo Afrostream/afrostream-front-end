@@ -40,7 +40,7 @@ class Application extends React.Component {
         <Header {...this.props}/>
         <SideBar />
         <AlertMessage />
-        <div id="page-content-wrapper" className="container-fluid">
+        <div id="page-content-wrapper" className="container">
           {children}
           <Footer />
         </div>

@@ -1,14 +1,16 @@
 import React, { PropTypes } from 'react';
-import * as UserActionCreators from '../../actions/user';
+import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
-import CountrySelect from './CountrySelect';
+import classSet from 'classnames';
+import config from '../../../../config/client';
+import * as UserActionCreators from '../../actions/user';
+import Spinner from '../Spinner/Spinner';
 import GiftDetails from './GiftDetails';
 import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
-import Spinner from '../Spinner/Spinner';
-import classSet from 'classnames';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import config from '../../../../config/client';
+import PaymentMethod from './PaymentMethod';
+import {RecurlyForm,GocardlessForm} from './Forms';
+
 import _ from 'lodash';
 
 if (process.env.BROWSER) {
@@ -23,7 +25,7 @@ class PaymentForm extends React.Component {
   };
 
   state = {
-    hasRecurly: true,
+    hasLib: true,
     subscriptionStatus: 0,
     loading: false,
     isGift: 0,
@@ -56,174 +58,299 @@ class PaymentForm extends React.Component {
     }
   }
 
-  componentDidMount() {
-    $('.recurly-cc-number').payment('formatCardNumber');
-    $('.recurly-cc-exp').payment('formatCardExpiry');
-    $('.recurly-cc-cvc').payment('formatCardCVC');
-
-    //Detect si le payment via la lib recurly est dispo
-    this.setState({
-      hasRecurly: recurly
-    });
-
-    if (recurly && !recurly.configured) {
-      recurly.configure(config.recurly.key);
-    }
+  renderUserForm() {
+    return (<div className="row">
+      <div className="form-group col-md-6">
+        <label className="form-label" htmlFor="first_name">Votre Prénom</label>
+        <input
+          type="text"
+          className="form-control first-name"
+          data-billing="first_name"
+          ref="firstName"
+          id="first_name"
+          name="first-name"
+          placeholder="Votre prénom" required
+          disabled={this.state.disabledForm}/>
+      </div>
+      <div className="form-group col-md-6">
+        <label className="form-label" htmlFor="last_name">Votre Nom</label>
+        <input
+          type="text"
+          className="form-control last-name"
+          data-billing="last_name"
+          ref="lastName"
+          id="last_name"
+          name="last-name"
+          placeholder="Votre nom" required
+          disabled={this.state.disabledForm}/>
+      </div>
+    </div>);
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  renderPromoCode() {
+    return (<div className="row">
+      <div className="form-group col-md-4">
+        <label className="form-label" htmlFor="coupon_code">Code promo</label>
+        <input
+          type="text"
+          className="form-control coupon-code"
+          data-billing="coupon_code"
+          name="coupon_code"
+          id="coupon_code"
+          placeholder="Entrez votre code"
+          disabled={this.state.disabledForm}/>
+      </div>
+    </div>);
+  }
 
+  renderSubmit() {
+    return (<div className="row">
+      <div className="form-group  col-md-12">
+        <button
+          id="subscribe"
+          type="submit"
+          form="subscription-create"
+          className="button-create-subscription"
+          disabled={this.state.disabledForm}
+        >{this.state.isGift ? 'OFFREZ' : 'DÉMARREZ' } MAINTENANT
+        </button>
+      </div>
+    </div>);
+  }
+
+  renderDroits() {
+
+    let checkClass = {
+      'form-group': true,
+      'col-md-12': true,
+      'checkbox': true,
+      'checkbox-has-error': this.state.error ? this.state.error.fields.indexOf('droits') : false
+    };
+
+    return (<div className="row">
+      <div className={classSet(checkClass)}>
+        <input
+          type="checkbox"
+          className="checkbox"
+          name="droit-retractation"
+          id="droit-retractation"
+          ref="droits"
+          disabled={this.state.disabledForm}/>
+        <div className="checkbox-label">
+          Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger
+          le formulaire de rétractation</a>
+        </div>
+      </div>
+    </div>);
+  }
+
+  renderCGU() {
+
+    let checkClass = {
+      'form-group': true,
+      'col-md-12': true,
+      'checkbox': true,
+      'checkbox-has-error': this.state.error ? this.state.error.fields.indexOf('cgu') : false
+    };
+
+    return (<div className="row">
+      <div className={classSet(checkClass)}>
+        <input
+          type="checkbox"
+          className="checkbox-conditions-generales"
+          ref="cgu"
+          name="accept-conditions-generales"
+          id="accept-conditions-generales"
+          disabled={this.state.disabledForm}/>
+
+        <div className="checkbox-label">
+          J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf"
+                                                              target="_blank">( En savoir plus )</a>
+        </div>
+      </div>
+    </div>);
+  }
+
+  async onSubmit(e) {
     const {
       props: {
         User,
+        params: { planCode }
+        }
+      } = this;
+
+    e.preventDefault();
+
+    const self = this;
+    const user = User.get('user');
+    const currentPlan = this.hasPlan();
+
+    // Disable the submit button
+    //$('[data-billing]').removeClass('has-error');
+    //$('.conditions-generales').removeClass('checkbox-has-error');
+    //$('.droit-retractation').removeClass('checkbox-has-error');
+
+    this.setState({
+      error: null
+    });
+
+    this.disableForm(true);
+
+    if (!this.refs.cgu.checked || !this.refs.droits.checked) {
+      //$('.conditions-generales').addClass('checkbox-has-error');
+      return this.error({
+        message: 'Vous devez cocher toutes les cases pour confirmer l‘abonnement.',
+        fields: ['cgu', 'droits']
+      });
+    }
+
+    let billingInfo = {
+      'plan-code': planCode,
+      'first_name': this.refs.firstName.value,
+      'last_name': this.refs.lastName.value,
+      'email': user.get('email'),
+      'unit-amount-in-cents': currentPlan.price
+    };
+
+    if (self.state.isGift) {
+      billingInfo = _.merge(billingInfo, {
+        'gift_first_name': this.refs.giftFirstName.value,
+        'gift_last_name': this.refs.giftLastName.value,
+        'gift_email': this.refs.giftEmail.value
+      })
+    }
+
+    try {
+      let subBillingInfo = await this.refs.methodForm.submit(billingInfo, currentPlan);
+      billingInfo = _.merge(billingInfo, subBillingInfo);
+      await this.submitSubscription(billingInfo);
+    } catch (err) {
+      self.error({
+        message: err
+      });
+    }
+  }
+
+  async submitSubscription(formData) {
+    const {
+      props: {
         dispatch,
         params: { planCode }
         }
       } = this;
 
     const self = this;
-    const user = User.get('user');
-    const cardNumber = $('.recurly-cc-number').val();
-    const excludedCards = ['visaelectron', 'maestro'];
-    // Disable the submit button
-    $('[data-recurly]').removeClass('has-error');
-    $('.conditions-generales').removeClass('checkbox-has-error');
-    $('#errors').text('');
-    $('input').removeClass('error');
-    this.disableForm(true);
 
-    if (!$('.checkbox-conditions-generales').is(':checked')) {
-      $('#errors').text("Vous devez cocher toutes les cases pour confirmer l'abonnement.");
-      $('.conditions-generales').addClass('checkbox-has-error');
-      self.disableForm(false);
-      return;
-    }
+    return await dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
+      self.disableForm(false, 1);
+      self.context.history.pushState(null, `/select-plan/${planCode}/success`);
+    }).catch(function (err) {
+      let message = '';
+      let errorMessage = '';
 
-    //Excluded cart type message
-    if (~excludedCards.indexOf($.payment.cardType(cardNumber))) {
-      $('#errors').text("Ce type ne carte n'est pas pris en charge actuellement");
-      $('.recurly-cc-number').addClass('has-error');
-      self.disableForm(false);
-      return;
-    }
+      if (err.response.status === 400) {
+        errorMessage = JSON.parse(err.response.text);
 
-    let currentPlan = this.hasPlan();
+        if (errorMessage.name === 'RecurlyError' &&
+          typeof errorMessage.errors !== 'undefined' &&
+          typeof errorMessage.errors[0] !== 'undefined' &&
+          errorMessage.errors[0].field === 'subscription.account.base' &&
+          errorMessage.errors[0].symbol === 'declined') {
 
-    let billingInfo = {
-      'plan-code': planCode,
-      // required attributes
-      'number': $('.recurly-cc-number').val(),
+          message = 'Veuillez contacter votre banque ou utilisez une autre carte.';
 
-      'month': $('.recurly-cc-exp').payment('cardExpiryVal').month,
-      'year': $('.recurly-cc-exp').payment('cardExpiryVal').year,
+        } else if (errorMessage.name === 'RecurlyError' &&
+          typeof errorMessage.errors !== 'undefined' &&
+          typeof errorMessage.errors[0] !== 'undefined' &&
+          errorMessage.errors[0].field === 'subscription.coupon_code' &&
+          errorMessage.errors[0].symbol === 'invalid') {
 
-      'cvv': $('.recurly-cc-cvc').val(),
-      'first_name': $('#first_name').val(),
-      'last_name': $('#last_name').val(),
-      'email': user.get('email'),
-      'unit-amount-in-cents': currentPlan.price,
-      // optional attributes
-      'starts_at': currentPlan.date,
-      'coupon_code': $('#coupon_code').val(),
-      'country': $('#country').val(),
-      'is_gift': '0'
-    };
-    recurly.token(billingInfo, function (err, token) {
-      // send any errors to the error function below
-      if (err) {
-        return self.error(err);
-      }
-      // Otherwise we continue with the form submission
-      let formData = $.extend(billingInfo, {
-        'recurly-token': token.id
-      });
+          message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
 
-      if (self.state.isGift) {
-        billingInfo['gift_first_name'] = $('#gift_first_name').val();
-        billingInfo['gift_last_name'] = $('#gift_last_name').val();
-        billingInfo['gift_email'] = $('#gift_email').val();
-      }
+        } else if (errorMessage.name === 'SelfGiftError') {
 
-      dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
-        self.disableForm(false, 1);
-        self.context.history.pushState(null, `/select-plan/${planCode}/success`);
-      }).catch(function (err) {
-        let message = '';
-        let errorMessage = '';
+          message = 'Les courriels de l\'offrant et de destination sont identiques. ' +
+            'Vérifiez le courriel de destination de votre cadeau';
 
-        if (err.response.status === 400) {
-          errorMessage = JSON.parse(err.response.text);
-
-          if (errorMessage.name === 'RecurlyError' &&
-            typeof errorMessage.errors !== 'undefined' &&
-            typeof errorMessage.errors[0] !== 'undefined' &&
-            errorMessage.errors[0].field === 'subscription.account.base' &&
-            errorMessage.errors[0].symbol === 'declined') {
-
-            message = 'Veuillez contacter votre banque ou utilisez une autre carte.';
-
-          } else if (errorMessage.name === 'RecurlyError' &&
-            typeof errorMessage.errors !== 'undefined' &&
-            typeof errorMessage.errors[0] !== 'undefined' &&
-            errorMessage.errors[0].field === 'subscription.coupon_code' &&
-            errorMessage.errors[0].symbol === 'invalid') {
-
-            message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
-
-          } else if (errorMessage.name === 'SelfGiftError') {
-
-            message = 'Les courriels de l\'offrant et de destination sont identiques. ' +
-              'Vérifiez le courriel de destination de votre cadeau';
-
-          } else {
-
-            message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
-          }
-        }  else {
+        } else {
 
           message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
         }
+      }  else {
 
-        self.disableForm(false, 2, message);
-        self.context.history.pushState(null, `/select-plan/${planCode}/error`);
-      });
+        message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
+      }
+
+      self.disableForm(false, 2, message);
+      self.context.history.pushState(null, `/select-plan/${planCode}/error`);
     });
   }
 
   // A simple error handling function to expose errors to the customer
   error(err) {
-    $('#errors').text('Les champs indiqués semblent invalides: ');
-    $.each(err.fields, function (i, field) {
-      $('[data-recurly=' + field + ']').addClass('has-error');
-    });
     this.disableForm(false);
+    this.setState({
+      error: {
+        message: err.message || 'Les champs indiqués semblent invalides: ',
+        fields: err.fields || []
+      }
+    });
   }
 
   disableForm(disabled, status = 0, message = '') {
-    $('button').prop('disabled', disabled);
-    $('input').prop('disabled', disabled);
     this.setState({
+      disabledForm: disabled,
       message: message,
       subscriptionStatus: status,
       loading: disabled
     });
   }
 
-  render() {
-
-    const {
-      props: {
-        params: { status }
-        }
-      } = this;
+  renderForm() {
 
     var spinnerClasses = {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
 
-    if (!this.state.hasRecurly) {
+    return (
+      <div className="payment-wrapper">
+        <div className="enter-payment-details">{this.state.pageHeader}</div>
+        <div className="payment-form">
+          <div className={classSet(spinnerClasses)}>
+            <Spinner />
+          </div>
+          <form ref="form" onSubmit={::this.onSubmit} id="subscription-create"
+                data-async>
+
+            <section id="error" ref="error">{this.state.error ? this.state.error.message : ''}</section>
+
+            {this.renderUserForm()}
+
+            <PaymentMethod ref="methodForm"/>
+
+            {this.renderPromoCode()}
+
+            <GiftDetails isVisible={this.state.isGift}/>
+
+            {this.renderCGU()}
+            {this.renderDroits()}
+            {this.renderSubmit()}
+
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    const {
+      props: {
+        params: { status }
+        }
+      } = this;
+
+    if (!this.state.hasLib) {
       return (<PaymentError
         title="Paiement indisponible"
         message="Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
@@ -231,166 +358,13 @@ class PaymentForm extends React.Component {
         linkMessage="Si le probleme persiste, veuillez contacter notre support technique"
       />);
     }
+
     if (status === 'success') {
-      return (<PaymentSuccess isGift={this.state.isGift}/>);
+      return (<PaymentSuccess />);
     } else if (status === 'error') {
       return (<PaymentError message={this.state.message}/>);
     } else {
-      return (
-        <div className="payment-wrapper">
-          <div className="enter-payment-details">{this.state.pageHeader}</div>
-          <div className="payment-form">
-            <div className={classSet(spinnerClasses)}>
-              <Spinner />
-            </div>
-            <form ref="form" onSubmit={::this.onSubmit} id="subscription-create"
-                  data-async>
-              <section id="errors"></section>
-
-              <div className="row">
-                <div className="card-details">
-                  <div className="card-details-text">CARTE BANCAIRE</div>
-                  <div className="card-details-img">
-                    <img src="/images/bank-cards.png"/>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="form-group col-md-6">
-                  <label className="form-label" htmlFor="first_name">Votre Prénom</label>
-                  <input
-                    type="text"
-                    className="form-control first-name"
-                    data-recurly="first_name"
-                    id="first_name"
-                    name="first-name"
-                    placeholder="Votre prénom" required/>
-                </div>
-                <div className="form-group col-md-6">
-                  <label className="form-label" htmlFor="last_name">Votre Nom</label>
-                  <input
-                    type="text"
-                    className="form-control last-name"
-                    data-recurly="last_name"
-                    id="last_name"
-                    name="last-name"
-                    placeholder="Votre nom" required/>
-                </div>
-              </div>
-              <div className="row">
-                <div className="form-group col-md-6">
-                  <label className="form-label" htmlFor="number">Numéro de carte</label>
-                  <input
-                    type="tel"
-                    className="form-control recurly-cc-number card-number"
-                    data-recurly="number"
-                    name="number"
-                    id="number"
-                    autoComplete="cc-number"
-                    placeholder="1234 5678 8901 1234" required/>
-                </div>
-                <CountrySelect />
-              </div>
-              <div className="row">
-                <div className="form-group col-md-4">
-                  <label className="form-label" htmlFor="month">Date de validité</label>
-                  <input type="tel" className="form-control recurly-cc-exp" data-recurly="month"
-                         name="month" id="month"
-                         autoComplete="cc-exp"
-                         placeholder="MM/AA" required/>
-                </div>
-                <div className="form-group col-md-4">
-                  <label className="form-label" htmlFor="cvv">Code sécurité</label>
-                  <input type="tel" className="form-control recurly-cc-cvc" data-recurly="cvv"
-                         name="cvv" id="cvv" autoComplete="off"
-                         placeholder="123" required/>
-                </div>
-              </div>
-              <div className="row">
-                <div className="form-group col-md-4">
-                  <label className="form-label" htmlFor="coupon_code">Entrer le code promo</label>
-                  <input
-                    type="text"
-                    className="form-control coupon-code"
-                    data-recurly="coupon_code"
-                    name="coupon_code"
-                    id="coupon_code"
-                    placeholder="Entrez votre code"/>
-                </div>
-              </div>
-
-              <GiftDetails isVisible={this.state.isGift}/>
-
-              <div className="row">
-                <div className="form-group col-md-12 conditions-generales">
-                  <input
-                    type="checkbox"
-                    className="checkbox-conditions-generales"
-                    name="accept-conditions-generales"
-                    id="accept-conditions-generales"/>
-
-                  <div className="text-conditions-generales">
-                    J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf"
-                                                                        target="_blank">( En savoir plus )</a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="form-group  col-md-12">
-                  <button
-                    id="subscribe"
-                    type="submit"
-                    form="subscription-create"
-                    className="button-create-subscription"
-                  >{this.state.isGift ? 'OFFREZ' : 'DÉMARREZ' } MAINTENANT
-                  </button>
-                </div>
-              </div>
-              <input
-                type="hidden"
-                data-recurly="token"
-                name="recurly-token"/>
-
-              <input
-                type="hidden"
-                id="is_gift"
-                name="is-gift"/>
-
-              <input
-                type="hidden"
-                id="plan_code"
-                data-recurly="plan_code"
-                name="plan-code"/>
-
-              <input
-                type="hidden"
-                id="plan_name"
-                data-recurly="plan_name"
-                name="plan-name"/>
-
-              <input
-                type="hidden"
-                id="unit_amount_in_cents"
-                data-recurly="unit_amount_in_cents"
-                name="unit-amount-in-cents"/>
-
-              <input
-                type="hidden"
-                id="starts_at"
-                data-recurly="starts_at"
-                name="starts-at"/>
-
-              <div id="recurly-form-footer">
-                <span className="price" id="recurly-price"></span>
-                <span className="term" id="recurly-term"></span>
-
-                <div className="recurly-note"></div>
-              </div>
-            </form>
-          </div>
-        </div >
-      );
+      return this.renderForm();
     }
   }
 }

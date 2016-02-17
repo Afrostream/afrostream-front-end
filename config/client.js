@@ -185,6 +185,9 @@ const config = {
     recurly: {
       key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
     },
+    gocardless: {
+      key: process.env.GOCARDLESS_PUBLIC_KEY || 'sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL'
+    },
     algolia: {
       appId: process.env.ALGOLIA_APP_ID || '3OKNPL7ZVA',
       apiKey: process.env.ALGOLIA_API_KEY || '3e6547172fb6d80b2ae02d6369edfc72'

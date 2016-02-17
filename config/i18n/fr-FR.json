@@ -10,6 +10,11 @@
   "search": {
     "noData": "La recherche n'a trouvé aucun resultat"
   },
+  "payment": {
+    "methodHeader": "Choisissez votre methode de payment",
+    "virement": "Virement bancaire",
+    "creditCard": "Carte de credit"
+  },
   "favorites": {
     "noData": "Aucun Favoris ajouté à mon profil",
     "labelPage": "Mes Favoris"

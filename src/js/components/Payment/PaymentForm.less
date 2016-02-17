@@ -31,51 +31,25 @@
   }
 }
 
-.conditions-generales {
-  width: 100%;
-  margin: 20px 0 0 0;
+.checkbox {
   text-align: left;
-
-  .checkbox-conditions-generales {
-    width: 20px;
+  input[type='checkbox'] {
+    margin-left: 0;
   }
-  .text-conditions-generales {
-    color: #281430;
+  .checkbox-label {
+    margin-left: 20px;
+    color: @color-indigo;
     font-weight: bold;
     text-align: left;
-    line-height: 16px;
+    line-height: 1.5;
     display: inline;
-
     a {
-      color: #9800B4;
-    }
-  }
-}
-
-.droit-retractation {
-  width: 100%;
-  margin: 20px 0 0 0;
-  text-align: left;
-
-  .checkbox-droit-retractation {
-    width: 20px;
-  }
-
-  .text-droit-retractation {
-    color: #281430;
-    font-weight: bold;
-    text-align: left;
-    line-height: 16px;
-    display: inline;
-
-    a {
-      color: #9800B4;
+      color: @color-purple-1;
     }
   }
 }
 
 .payment-form {
-
   //recreate local variables
   @input-height-base: 34px;
   @input-height-small: 30px;
@@ -85,7 +59,7 @@
   @screen-sm-min: 768px;
 
   background-color: #ffffff;
-  color: #6F248B;
+  color: @color-purple-1;
   position: relative;
   display: block;
   margin-left: auto;
@@ -116,37 +90,46 @@
   .subscription-form {
     height: 100%;
   }
-
-  .card-details {
-    width: 100%;
-    color: @gray;
-    font-size: 16px;
-    line-height: 32px;
-    display: -webkit-flex;
-    padding: 0 0 15px 0;
-    margin-bottom: 15px;
-    border-bottom: @gray-lighter solid 1px;
-
-    @media all and (max-width: @screen-xs-min) {
-      display: inline-block;
-    }
-
-    .card-details-img {
-      margin-left: 20px;
-
-      @media all and (max-width: @screen-xs-min) {
-        margin-left: 0px;
+  .pannel {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  }
+  .payment-method-details {
+    line-height: 2;
+    padding: 5px 0 5px 0;
+    text-align: left;
+    .accordion-toggle {
+      label {
+        color: @color-purple-1;
+        cursor: pointer;
+      }
+      &:hover {
+        label {
+          color: @color-purple-2;
+        }
+      }
+      &:before {
+        /* symbol for "opening" panels */
+        font: normal normal normal 14px/1 FontAwesome; /* essential for enabling glyphicon */
+        content: "\f078"; /* adjust as needed, taken from bootstrap.css */
+        float: left; /* adjust as needed */
+        color: @color-indigo; /* adjust as needed */
+        margin-right: 10px;
+        font-size: 1.3em;
+      }
+      &.collapsed:before {
+        /* symbol for "collapsed" panels */
+        content: "\f054"; /* adjust as needed, taken from bootstrap.css */
       }
 
       img {
-        max-height: 32px;
+        margin-left: 20px;
       }
     }
   }
 
   .form-label {
     float: left;
-    color: #6F248B;
+    color: @color-purple-1;
     font-size: 12px;
     font-weight: bold;
   }
@@ -154,7 +137,7 @@
   .button-create-subscription {
     font-weight: bold;
     background-color: #F0C530;
-    color: #000000;
+    color: @brand-black;
     padding: 10px 20px 10px 20px;
     border-radius: 20px;
     border: none;
@@ -167,14 +150,14 @@
   }
 
   .has-error {
-    border-color: #a94442;
+    border-color: @brand-error;
   }
 
   .checkbox-has-error {
-    border: 1px solid #a94442;
+    border: 1px solid @brand-error;
   }
 
-  #errors {
-    color: #a94442;
+  #error {
+    color: @brand-error;
   }
 }
