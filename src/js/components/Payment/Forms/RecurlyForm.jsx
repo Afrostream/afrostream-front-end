@@ -79,7 +79,7 @@ class RecurlyForm extends React.Component {
             //NEW BILLING API
             billingProvider: 'recurly',
             subOpts: {
-              accountToken: token.id
+              customerBankAccountToken: token.id
             }
           });
         });

@@ -59,7 +59,7 @@ class GocardlessForm extends React.Component {
             resolve({
               billingProvider: 'gocardless',
               subOpts: {
-                accountToken: response.customer_bank_account_tokens.id
+                customerBankAccountToken: response.customer_bank_account_tokens.id
               }
             })
           }
