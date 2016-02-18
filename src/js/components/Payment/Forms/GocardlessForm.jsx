@@ -57,7 +57,8 @@ class GocardlessForm extends React.Component {
             reject(error);
           } else {
             resolve({
-              'customer_bank_account_token': response.customer_bank_account_tokens.id
+              'providerName': 'gocardless',
+              'accountToken': response.customer_bank_account_tokens.id
             })
           }
         });

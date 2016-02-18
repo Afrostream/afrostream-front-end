@@ -214,7 +214,15 @@ class PaymentForm extends React.Component {
       'first_name': this.refs.firstName.value,
       'last_name': this.refs.lastName.value,
       'email': user.get('email'),
-      'unit-amount-in-cents': currentPlan.price
+      'unit-amount-in-cents': currentPlan.price,
+      'coupon_code': this.refs.couponCode.value,
+      //NEW BILLING API
+      internalPlanUuid: planCode,
+      userOpts: {
+        email: user.get('email'),
+        firstName: this.refs.firstName.value,
+        lastName: this.refs.lastName.value
+      }
     };
 
     if (self.state.isGift) {

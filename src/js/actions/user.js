@@ -72,9 +72,16 @@ export function subscribe(data, isGift = false) {
   return (dispatch, getState) => {
     const token = getState().OAuth.get('token');
     const refreshToken = getState().OAuth.get('refreshToken');
+    if (isGift) {
+      return async api => ({
+        type: ActionTypes.User.subscribe,
+        res: await api(`/api/subscriptions/gift`, 'POST', data, token, refreshToken),
+        isGift
+      });
+    }
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/api/subscriptions/${isGift ? 'gift' : '' }`, 'POST', data, token, refreshToken),
+      res: await api(`/api/billings/subscriptions`, 'POST', data, token, refreshToken),
       isGift
     });
   };

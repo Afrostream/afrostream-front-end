@@ -64,7 +64,6 @@ class RecurlyForm extends React.Component {
       'cvv': this.refs.cvc.value,
       // optional attributes
       'starts_at': currentPlan.date,
-      'coupon_code': this.refs.couponCode.value,
       'country': this.refs.country.value()
     }, billingInfo);
 
@@ -76,7 +75,10 @@ class RecurlyForm extends React.Component {
             reject(err);
           }
           resolve({
-            'recurly-token': token.id
+            'recurly-token': token.id,
+            //NEW BILLING API
+            'providerName': 'recurly',
+            'accountToken': token.id
           });
         });
       });
