@@ -18,7 +18,21 @@ class PaymentMethod extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {method: Methods.GOCARDLESS};
+    this.state = {method: props.isGift ? Methods.CARD : Methods.GOCARDLESS};
+  }
+
+  static propTypes = {
+    isGift: React.PropTypes.number
+  };
+
+  static defaultProps = {
+    isGift: 0
+  };
+
+  static methods = Methods;
+
+  method() {
+    return this.state.method;
   }
 
   componentDidMount() {
@@ -27,7 +41,6 @@ class PaymentMethod extends React.Component {
   }
 
   async submit(billingInfo, currentPlan) {
-    let billings;
     switch (this.state.method) {
       case  Methods.GOCARDLESS:
         return await this.refs.gocardless.submit(billingInfo);
@@ -36,10 +49,12 @@ class PaymentMethod extends React.Component {
         return await this.refs.card.submit(billingInfo, currentPlan);
         break;
     }
-    return billings;
   }
 
   switchMethod() {
+    if (this.props.isGift) {
+      return;
+    }
     let newMethod = this.state.method === Methods.GOCARDLESS ? Methods.CARD : Methods.GOCARDLESS;
     this.setState({
       method: newMethod
@@ -50,8 +65,8 @@ class PaymentMethod extends React.Component {
 
     return (
       <div className="panel-group">
-        <GocardlessForm ref="gocardless"
-                        selected={this.state.method === Methods.GOCARDLESS}/>
+        {!this.props.isGift ? <GocardlessForm ref="gocardless"
+                                              selected={this.state.method === Methods.GOCARDLESS}/> : ''}
         <RecurlyForm ref="card"
                      selected={this.state.method === Methods.CARD}/>
       </div>

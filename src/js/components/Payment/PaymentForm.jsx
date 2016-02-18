@@ -87,21 +87,11 @@ class PaymentForm extends React.Component {
     </div>);
   }
 
-  renderPromoCode() {
-    return (<div className="row">
-      <div className="form-group col-md-4">
-        <label className="form-label" htmlFor="coupon_code">Code promo</label>
-        <input
-          type="text"
-          className="form-control coupon-code"
-          data-billing="coupon_code"
-          name="coupon_code"
-          id="coupon_code"
-          ref="couponCode"
-          placeholder="Entrez votre code"
-          disabled={this.state.disabledForm}/>
-      </div>
-    </div>);
+  renderGift() {
+    if (!this.state.isGift) {
+      return;
+    }
+    return <GiftDetails isVisible={this.state.isGift}/>;
   }
 
   renderSubmit() {
@@ -214,8 +204,6 @@ class PaymentForm extends React.Component {
       'first_name': this.refs.firstName.value,
       'last_name': this.refs.lastName.value,
       'email': user.get('email'),
-      'unit-amount-in-cents': currentPlan.price,
-      'coupon_code': this.refs.couponCode.value,
       //NEW BILLING API
       internalPlanUuid: planCode,
       firstName: this.refs.firstName.value,
@@ -339,11 +327,7 @@ class PaymentForm extends React.Component {
 
             {this.renderUserForm()}
 
-            <PaymentMethod ref="methodForm"/>
-
-            {this.renderPromoCode()}
-
-            <GiftDetails isVisible={this.state.isGift}/>
+            <PaymentMethod ref="methodForm" isGift={this.state.isGift}/>
 
             {this.renderCGU()}
             {this.renderDroits()}

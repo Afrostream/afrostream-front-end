@@ -64,6 +64,8 @@ class RecurlyForm extends React.Component {
       'cvv': this.refs.cvc.value,
       // optional attributes
       'starts_at': currentPlan.date,
+      'unit-amount-in-cents': currentPlan.price,
+      'coupon_code': this.refs.couponCode.value,
       'country': this.refs.country.value()
     }, billingInfo);
 
@@ -91,6 +93,23 @@ class RecurlyForm extends React.Component {
     if (clickHeader) {
       clickHeader.dispatchEvent(new Event('changemethod', {bubbles: true}));
     }
+  }
+
+  renderPromoCode() {
+    return (
+      <div className="form-group col-md-6">
+        <label className="form-label" htmlFor="coupon_code">Code promo</label>
+        <input
+          type="text"
+          className="form-control coupon-code"
+          data-billing="coupon_code"
+          name="coupon_code"
+          id="coupon_code"
+          ref="couponCode"
+          placeholder="Entrez votre code"
+          disabled={this.state.disabledForm}/>
+      </div>
+    );
   }
 
   getForm() {
@@ -125,6 +144,9 @@ class RecurlyForm extends React.Component {
                  name="cvv" id="cvv" autoComplete="off"
                  placeholder="123" required/>
         </div>
+
+        {this.renderPromoCode()}
+
       </div>
     );
   }
