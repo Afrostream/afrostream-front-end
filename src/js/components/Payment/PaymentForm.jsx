@@ -97,6 +97,7 @@ class PaymentForm extends React.Component {
           data-billing="coupon_code"
           name="coupon_code"
           id="coupon_code"
+          ref="couponCode"
           placeholder="Entrez votre code"
           disabled={this.state.disabledForm}/>
       </div>
@@ -124,7 +125,7 @@ class PaymentForm extends React.Component {
       'form-group': true,
       'col-md-12': true,
       'checkbox': true,
-      'checkbox-has-error': this.state.error ? this.state.error.fields.indexOf('droits') : false
+      'checkbox-has-error': this.state.error ? ~this.state.error.fields.indexOf('droits') : false
     };
 
     return (<div className="row">
@@ -135,7 +136,9 @@ class PaymentForm extends React.Component {
           name="droit-retractation"
           id="droit-retractation"
           ref="droits"
-          disabled={this.state.disabledForm}/>
+          disabled={this.state.disabledForm}
+          required
+        />
         <div className="checkbox-label">
           Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger
           le formulaire de rétractation</a>
@@ -150,7 +153,7 @@ class PaymentForm extends React.Component {
       'form-group': true,
       'col-md-12': true,
       'checkbox': true,
-      'checkbox-has-error': this.state.error ? this.state.error.fields.indexOf('cgu') : false
+      'checkbox-has-error': this.state.error ? ~this.state.error.fields.indexOf('cgu') : false
     };
 
     return (<div className="row">
@@ -161,7 +164,9 @@ class PaymentForm extends React.Component {
           ref="cgu"
           name="accept-conditions-generales"
           id="accept-conditions-generales"
-          disabled={this.state.disabledForm}/>
+          disabled={this.state.disabledForm}
+          required
+        />
 
         <div className="checkbox-label">
           J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf"
@@ -225,9 +230,7 @@ class PaymentForm extends React.Component {
       billingInfo = _.merge(billingInfo, subBillingInfo);
       await this.submitSubscription(billingInfo);
     } catch (err) {
-      self.error({
-        message: err
-      });
+      self.error(err);
     }
   }
 
@@ -288,11 +291,15 @@ class PaymentForm extends React.Component {
 
   // A simple error handling function to expose errors to the customer
   error(err) {
+    let formatError = err;
+    if (err instanceof Array) {
+      formatError = err[0];
+    }
     this.disableForm(false);
     this.setState({
       error: {
-        message: err.message || 'Les champs indiqués semblent invalides: ',
-        fields: err.fields || []
+        message: formatError.message || 'Les champs indiqués semblent invalides: ',
+        fields: formatError.fields || []
       }
     });
   }

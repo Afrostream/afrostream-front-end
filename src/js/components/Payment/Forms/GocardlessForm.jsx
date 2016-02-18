@@ -3,8 +3,14 @@ import ReactDOM from'react-dom';
 import classSet from 'classnames';
 import config from '../../../../../config/client';
 import CountrySelect from './../CountrySelect';
+import iban from './iban-validator';
 
 class GocardlessForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {hasLib: false};
+  }
 
   static propTypes = {
     selected: React.PropTypes.bool
@@ -13,6 +19,18 @@ class GocardlessForm extends React.Component {
   static defaultProps = {
     selected: false
   };
+
+  componentDidMount() {
+    //Detect si le payment via la lib recurly est dispo
+    this.setState({
+      hasLib: GoCardless
+    });
+  }
+
+  validate() {
+    this.refs.iban.value = iban.printFormat(this.refs.iban.value, ' ');
+    return iban.isValid(this.refs.iban.value);
+  }
 
   async submit(billingInfo) {
 
@@ -27,7 +45,15 @@ class GocardlessForm extends React.Component {
           }
         }, (response) => {
           if (response.error) {
-            reject(response.error.errors);
+            let error = {
+              message: '',
+              fields: []
+            };
+            _.forEach(response.error.errors, (value)=> {
+              error.fields.push(value.field);
+              error.message += `${value.field} ${value.message}`;
+            });
+            reject(error);
           } else {
             resolve({
               'customer_bank_account_token': response.customer_bank_account_tokens.id
@@ -57,6 +83,8 @@ class GocardlessForm extends React.Component {
               data-billing="iban"
               name="iban"
               id="iban"
+              ref="iban"
+              onChange={::this.validate}
               placeholder="ex. FR14 2004 1010 0505 0001 3M02 606" required/>
           </div>
           <CountrySelect />
@@ -66,6 +94,11 @@ class GocardlessForm extends React.Component {
   }
 
   render() {
+
+    if (!this.state.hasLib) {
+      return (<div />);
+    }
+
     let classHeader = {
       'accordion-toggle': true,
       'collapsed': !this.props.selected

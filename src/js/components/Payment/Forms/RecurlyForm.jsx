@@ -8,6 +8,11 @@ import config from '../../../../../config/client';
 
 class RecurlyForm extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {hasLib: false};
+  }
+
   static propTypes = {
     selected: React.PropTypes.bool
   };
@@ -58,8 +63,8 @@ class RecurlyForm extends React.Component {
       'cvv': this.refs.cvc.value,
       // optional attributes
       'starts_at': currentPlan.date,
-      'coupon_code': $('#coupon_code').val(),
-      'country': $('#country').val()
+      'coupon_code': this.refs.couponCode.value,
+      'country': this.refs.country.value
     }, billingInfo);
 
     return await new Promise(
@@ -122,6 +127,10 @@ class RecurlyForm extends React.Component {
   }
 
   render() {
+
+    if (!this.state.hasLib) {
+      return (<div />);
+    }
 
     let classHeader = {
       'accordion-toggle': true,
