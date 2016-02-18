@@ -57,8 +57,10 @@ class GocardlessForm extends React.Component {
             reject(error);
           } else {
             resolve({
-              'providerName': 'gocardless',
-              'accountToken': response.customer_bank_account_tokens.id
+              billingProvider: 'gocardless',
+              subOpts: {
+                accountToken: response.customer_bank_account_tokens.id
+              }
             })
           }
         });
