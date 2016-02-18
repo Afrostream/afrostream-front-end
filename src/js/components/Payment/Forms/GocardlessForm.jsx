@@ -39,8 +39,8 @@ class GocardlessForm extends React.Component {
         GoCardless.customerBankAccountTokens.create({
           publishable_access_token: config.gocardless.key,
           customer_bank_account_tokens: {
-            iban: $('#iban').val(),
-            country_code: $('#country').val(),
+            iban: this.refs.iban.value,
+            country_code: this.refs.country.value(),
             account_holder_name: `${billingInfo.first_name} ${billingInfo.last_name}`
           }
         }, (response) => {
@@ -73,7 +73,7 @@ class GocardlessForm extends React.Component {
   getForm() {
     if (!this.props.selected) return;
     return (
-      <div>
+      <div className="panel-collapse collapse in" role="tabpanel">
         <div className="row">
           <div className="form-group col-md-6">
             <label className="form-label" htmlFor="number">IBAN</label>
@@ -87,7 +87,7 @@ class GocardlessForm extends React.Component {
               onChange={::this.validate}
               placeholder="ex. FR14 2004 1010 0505 0001 3M02 606" required/>
           </div>
-          <CountrySelect />
+          <CountrySelect ref="country"/>
         </div>
       </div>
     );

@@ -64,7 +64,7 @@ class RecurlyForm extends React.Component {
       // optional attributes
       'starts_at': currentPlan.date,
       'coupon_code': this.refs.couponCode.value,
-      'country': this.refs.country.value
+      'country': this.refs.country.value()
     }, billingInfo);
 
     return await new Promise(
@@ -92,7 +92,7 @@ class RecurlyForm extends React.Component {
     if (!this.props.selected) return;
 
     return (
-      <div>
+      <div className="panel-collapse collapse in" role="tabpanel">
         <div className="row">
           <div className="form-group col-md-6">
             <label className="form-label" htmlFor="number">Numéro de carte</label>
@@ -106,7 +106,7 @@ class RecurlyForm extends React.Component {
               autoComplete="cc-number"
               placeholder="1234 5678 8901 1234" required/>
           </div>
-          <CountrySelect />
+          <CountrySelect ref="country"/>
           <div className="form-group col-md-4">
             <label className="form-label" htmlFor="month">Date de validité</label>
             <input type="tel" className="form-control recurly-cc-exp" data-billing="month"

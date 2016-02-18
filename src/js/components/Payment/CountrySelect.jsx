@@ -1,6 +1,10 @@
 import React from 'react';
 
 class CountrySelect extends React.Component {
+  value() {
+    return this.refs.country.value;
+  }
+
   render() {
 
     return (
