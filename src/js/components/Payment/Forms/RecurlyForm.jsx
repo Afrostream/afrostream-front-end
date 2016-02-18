@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import CountrySelect from './../CountrySelect';
 import classSet from 'classnames';
 import config from '../../../../../config/client';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class RecurlyForm extends React.Component {
 
@@ -92,35 +93,33 @@ class RecurlyForm extends React.Component {
     if (!this.props.selected) return;
 
     return (
-      <div className="panel-collapse collapse in" role="tabpanel">
-        <div className="row">
-          <div className="form-group col-md-6">
-            <label className="form-label" htmlFor="number">Numéro de carte</label>
-            <input
-              type="tel"
-              className="form-control recurly-cc-number card-number"
-              ref="cardNumber"
-              data-billing="number"
-              name="number"
-              id="number"
-              autoComplete="cc-number"
-              placeholder="1234 5678 8901 1234" required/>
-          </div>
-          <CountrySelect ref="country"/>
-          <div className="form-group col-md-4">
-            <label className="form-label" htmlFor="month">Date de validité</label>
-            <input type="tel" className="form-control recurly-cc-exp" data-billing="month"
-                   name="month" id="month"
-                   autoComplete="cc-exp"
-                   placeholder="MM/AA" required/>
-          </div>
-          <div className="form-group col-md-4">
-            <label className="form-label" htmlFor="cvv">Code sécurité</label>
-            <input type="tel" className="form-control recurly-cc-cvc" data-billing="cvv"
-                   ref="cvc"
-                   name="cvv" id="cvv" autoComplete="off"
-                   placeholder="123" required/>
-          </div>
+      <div className="row" ref="goCardlessForm">
+        <div className="form-group col-md-6">
+          <label className="form-label" htmlFor="number">Numéro de carte</label>
+          <input
+            type="tel"
+            className="form-control recurly-cc-number card-number"
+            ref="cardNumber"
+            data-billing="number"
+            name="number"
+            id="number"
+            autoComplete="cc-number"
+            placeholder="1234 5678 8901 1234" required/>
+        </div>
+        <CountrySelect ref="country"/>
+        <div className="form-group col-md-4">
+          <label className="form-label" htmlFor="month">Date de validité</label>
+          <input type="tel" className="form-control recurly-cc-exp" data-billing="month"
+                 name="month" id="month"
+                 autoComplete="cc-exp"
+                 placeholder="MM/AA" required/>
+        </div>
+        <div className="form-group col-md-4">
+          <label className="form-label" htmlFor="cvv">Code sécurité</label>
+          <input type="tel" className="form-control recurly-cc-cvc" data-billing="cvv"
+                 ref="cvc"
+                 name="cvv" id="cvv" autoComplete="off"
+                 placeholder="123" required/>
         </div>
       </div>
     );
@@ -137,16 +136,25 @@ class RecurlyForm extends React.Component {
       'collapsed': !this.props.selected
     };
 
+    let classPanel = {
+      'panel': true,
+      'collapsed': !this.props.selected
+    };
+
     return (
-      <div className="panel">
+      <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
             <label className="form-label">Payment par carte bancaire</label>
             <img src="/images/payment/bank-cards.png"/>
           </div>
         </div>
-
-        {this.getForm()}
+        <ReactCSSTransitionGroup transitionName="accordion" className="panel-collapse collapse in"
+                                 transitionEnter={true} transitionLeave={false}
+                                 transitionEnterTimeout={300}
+                                 transitionLeaveTimeout={300} component="div">
+          {this.getForm()}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

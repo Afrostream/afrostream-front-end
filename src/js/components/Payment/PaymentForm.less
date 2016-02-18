@@ -90,8 +90,12 @@
   .subscription-form {
     height: 100%;
   }
-  .pannel {
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  .panel {
+    border-radius: 0;
+    border-bottom: @gray-lighter solid 1px;
+    &.collapsed {
+      border-bottom: fade(@gray-lighter, 30%) solid 1px;
+    }
   }
   .payment-method-details {
     line-height: 2;
@@ -116,9 +120,15 @@
         margin-right: 10px;
         font-size: 1.3em;
       }
-      &.collapsed:before {
-        /* symbol for "collapsed" panels */
-        content: "\f054"; /* adjust as needed, taken from bootstrap.css */
+      &.collapsed {
+        label {
+          color: fade(@color-purple-1, 40%); /* adjust as needed */
+        }
+        &:before {
+          /* symbol for "collapsed" panels */
+          color: fade(@color-indigo, 40%); /* adjust as needed */
+          content: "\f054"; /* adjust as needed, taken from bootstrap.css */
+        }
       }
 
       img {

@@ -4,6 +4,7 @@ import classSet from 'classnames';
 import config from '../../../../../config/client';
 import CountrySelect from './../CountrySelect';
 import iban from './iban-validator';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class GocardlessForm extends React.Component {
 
@@ -73,22 +74,21 @@ class GocardlessForm extends React.Component {
   getForm() {
     if (!this.props.selected) return;
     return (
-      <div className="panel-collapse collapse in" role="tabpanel">
-        <div className="row">
-          <div className="form-group col-md-6">
-            <label className="form-label" htmlFor="number">IBAN</label>
-            <input
-              type="tel"
-              className="form-control"
-              data-billing="iban"
-              name="iban"
-              id="iban"
-              ref="iban"
-              onChange={::this.validate}
-              placeholder="ex. FR14 2004 1010 0505 0001 3M02 606" required/>
-          </div>
-          <CountrySelect ref="country"/>
+
+      <div className="row" ref="goCardlessForm">
+        <div className="form-group col-md-6">
+          <label className="form-label" htmlFor="number">IBAN</label>
+          <input
+            type="tel"
+            className="form-control"
+            data-billing="iban"
+            name="iban"
+            id="iban"
+            ref="iban"
+            onChange={::this.validate}
+            placeholder="ex. FR14 2004 1010 0505 0001 3M02 606" required/>
         </div>
+        <CountrySelect ref="country"/>
       </div>
     );
   }
@@ -104,17 +104,25 @@ class GocardlessForm extends React.Component {
       'collapsed': !this.props.selected
     };
 
+    let classPanel = {
+      'panel': true,
+      'collapsed': !this.props.selected
+    };
+
     return (
-      <div className="panel">
+      <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
             <label className="form-label">Payment par virement</label>
             <img src="/images/payment/virement.jpg"/>
           </div>
         </div>
-
-        {this.getForm()}
-
+        <ReactCSSTransitionGroup transitionName="accordion" className="panel-collapse collapse in"
+                                 transitionEnter={true} transitionLeave={false}
+                                 transitionEnterTimeout={300}
+                                 transitionLeaveTimeout={300} component="div">
+          {this.getForm()}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }
