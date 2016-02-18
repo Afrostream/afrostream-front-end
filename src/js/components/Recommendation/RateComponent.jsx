@@ -30,13 +30,13 @@ class RateComponent extends React.Component {
 
     const videoData = User.get(`video/${videoId}`);
 
-    let likeThis = 3;
+    let rating = 3;
     if (videoData) {
-      likeThis = videoData.get('like');
+      rating = videoData.get('rating');
     }
     return (
       <StarRating name="react-star-rating" totalStars={5} size={30} editing onRatingClick={::this.handleRatingClick}
-                  rating={likeThis}/>
+                  rating={rating}/>
     );
   }
 }

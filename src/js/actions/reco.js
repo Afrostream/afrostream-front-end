@@ -4,8 +4,36 @@ import {reco} from '../../../config';
 import _ from 'lodash';
 
 /**
+ * Start track video
+ * @returns {Function}
+ */
+export function startTrackVideo(data, videoId) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    if (!user) {
+      return {
+        type: ActionTypes.User.startTrackVideo,
+        videoId,
+        res: null
+      }
+    }
+
+    let postData = _.merge({
+      dateLastRead: Date.now(),
+      playerPosition: 0,
+      playerAudio: 'fra',
+      playerCaption: 'fra'
+    }, data);
+
+    return async api => ({
+      type: ActionTypes.User.startTrackVideo,
+      res: await api(`/api/users/${user.get('_id')}/videos`, 'PUT', postData)
+    });
+  };
+}
+/**
  * Like or not for video recommendation algo
- * TODO connecter a l'api une fois celle ci disponible
  * @returns {Function}
  */
 export function rateVideo(value, videoId) {
@@ -19,19 +47,10 @@ export function rateVideo(value, videoId) {
       }
     }
 
-    return {
+    return async api => ({
       type: ActionTypes.User.rateVideo,
-      videoId,
-      res: {
-        body: {rate: value}
-      }
-    };
-
-    //TODO connecter une fois l'api reco presente
-    //return async api => ({
-    //  type: ActionTypes.Reco.getRecommendations,
-    //  res: await api(`/api/users/me/videos`, 'PUT', {rate:value, videoId: videoId})
-    //});
+      res: await api(`/api/users/${user.get('_id')}/videos`, 'PUT', {rating: value})
+    });
   };
 }
 /**

@@ -12,6 +12,7 @@ import {detectUA} from './PlayerUtils';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import * as EpisodeActionCreators from '../../actions/episode';
 import * as EventActionCreators from '../../actions/event';
+import * as RecoActionCreators from '../../actions/reco';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import NextEpisode from './NextEpisode';
@@ -97,6 +98,21 @@ class PlayerComponent extends Component {
     this.setState({
       nextReco: false
     });
+  }
+
+  onFirstPlay() {
+    const {
+      props: {dispatch, videoId}
+      } = this;
+
+    //TODO add and ping for saving player position ,
+    //playerAudio
+    //playerCaption
+    let data ={
+      playerPosition:parseInt(this.player().currentTime(), 10)
+    };
+
+    dispatch(RecoActionCreators.rateVideo(data.rating, videoId));
   }
 
   getNextComponent() {
@@ -520,6 +536,7 @@ class PlayerComponent extends Component {
         });
       }
     );
+    player.on('firstplay', ::this.onFirstPlay);
     player.on('fullscreenchange', ::this.onFullScreenHandler);
     player.on('timeupdate', ::this.onTimeUpdate);
     player.on('loadedmetadata', ::this.setDurationInfo);
@@ -580,8 +597,8 @@ class PlayerComponent extends Component {
 
     if (this.player) {
       this.player.one('dispose', () => {
-        this.player.off('enterfullscreen');
-        this.player.off('exitfullscreen');
+        this.player.off('firstplay');
+        this.player.off('fullscreenchange');
         this.player.off('timeupdate');
         this.player.off('loadedmetadata');
         this.player.off('useractive');

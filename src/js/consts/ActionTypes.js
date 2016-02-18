@@ -16,6 +16,7 @@ export default {
     getProfile: null,
     subscribe: null,
     pendingUser: null,
+    startTrackVideo: null,
     rateVideo: null,
     getRecommendations: null,
     getFavoritesMovies: null,
@@ -37,7 +38,8 @@ export default {
   }),
 
   Video: keyMirror({
-    getVideo: null
+    getVideo: null,
+    trackVideo: null
   }),
 
   Player: keyMirror({

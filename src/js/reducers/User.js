@@ -61,6 +61,16 @@ export default createReducer(initialState, {
     });
   },
 
+  [ActionTypes.User.startTrackVideo](state, { videoId, res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`video/${videoId}`]: data
+    });
+  },
+
   // #### FAVORITES ####
   [ActionTypes.User.getFavoritesMovies](state, { res }) {
     if (!res) {
