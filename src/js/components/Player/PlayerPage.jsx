@@ -31,10 +31,7 @@ import PlayerComponent from './PlayerComponent';
   }
 
   if (videoId && videoId !== 'undefined') {
-    await * [
-      store.dispatch(VideoActionCreators.getVideo(videoId)),
-      store.dispatch(RecoActionCreators.getVideoTracking(videoId))
-    ]
+    await store.dispatch(VideoActionCreators.getVideo(videoId));
   }
 
   return await * [

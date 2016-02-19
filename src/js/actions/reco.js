@@ -42,12 +42,10 @@ export function trackVideo(data, videoId) {
       }
     }
 
-    const now = new Date;
-    const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(),
-      now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+    const now = new Date().toISOString();
 
     let postData = _.merge({
-      dateLastRead: utc_timestamp,
+      dateLastRead: now,
       playerPosition: 0,
       playerAudio: 'fra',
       playerCaption: 'fra'
@@ -55,7 +53,8 @@ export function trackVideo(data, videoId) {
 
     return async api => ({
       type: ActionTypes.User.trackVideo,
-      res: await api(`/api/users/${user.get('_id')}/videos`, 'PUT', postData)
+      videoId,
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', postData, token)
     });
   };
 }
@@ -76,7 +75,8 @@ export function rateVideo(value, videoId) {
 
     return async api => ({
       type: ActionTypes.User.rateVideo,
-      res: await api(`/api/users/${user.get('_id')}/videos`, 'PUT', {rating: value})
+      videoId,
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', {rating: value}, token)
     });
   };
 }

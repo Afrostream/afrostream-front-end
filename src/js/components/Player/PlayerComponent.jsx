@@ -49,6 +49,7 @@ class PlayerComponent extends Component {
         height: 1920,
         width: 815
       },
+      showStartTimeAlert: false,
       fullScreen: false,
       nextReco: false
     };
@@ -554,6 +555,11 @@ class PlayerComponent extends Component {
         };
         playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
       }
+      //Tracking
+      let videoTracking = User.get(`video/${videoId}`);
+      if (videoTracking) {
+        playerData.starttime = videoTracking.get('playerPosition');
+      }
     }
     try {
       playerData.next = await this.getNextVideo();
@@ -562,11 +568,6 @@ class PlayerComponent extends Component {
       console.log('player : Next video error', e);
     }
 
-    //Tracking
-    let videoTracking = User.get(`video/${videoId}`);
-    if (videoTracking) {
-      playerData.starttime = videoTracking.get('playerPosition');
-    }
     return playerData;
   }
 
