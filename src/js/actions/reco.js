@@ -42,8 +42,12 @@ export function trackVideo(data, videoId) {
       }
     }
 
+    const now = new Date;
+    const utc_timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(),
+      now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+
     let postData = _.merge({
-      dateLastRead: Date.now(),
+      dateLastRead: utc_timestamp,
       playerPosition: 0,
       playerAudio: 'fra',
       playerCaption: 'fra'

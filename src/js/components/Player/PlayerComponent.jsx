@@ -436,7 +436,7 @@ class PlayerComponent extends Component {
   async getPlayerData(videoData) {
     const {
       props: {
-        OAuth,Player,Movie,User,movieId
+        OAuth,Player,Movie,User,movieId,videoId
         }
       } = this;
 
