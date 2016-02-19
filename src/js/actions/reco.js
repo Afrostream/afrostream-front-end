@@ -4,6 +4,29 @@ import {reco} from '../../../config';
 import _ from 'lodash';
 
 /**
+ * Get user video params
+ * @returns {Function}
+ */
+export function getVideoTracking(videoId) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+
+    if (!user) {
+      return {
+        type: ActionTypes.User.getVideoTracking,
+        videoId,
+        res: null
+      }
+    }
+
+    return async api => ({
+      type: ActionTypes.User.getVideoTracking,
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {})
+    });
+  };
+
+}
+/**
  * Start track video
  * @returns {Function}
  */

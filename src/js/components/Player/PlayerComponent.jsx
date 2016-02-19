@@ -561,7 +561,12 @@ class PlayerComponent extends Component {
       playerData.next = null;
       console.log('player : Next video error', e);
     }
-    //playerData.starttime = 6000;
+
+    //Tracking
+    let videoTracking = User.get(`video/${videoId}`);
+    if (videoTracking) {
+      playerData.starttime = videoTracking.get('playerPosition');
+    }
     return playerData;
   }
 
@@ -774,7 +779,7 @@ class PlayerComponent extends Component {
               {videoDuration ?
                 <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
               <div className=" video-infos_synopsys">{infos.synopsis}</div>
-            </div> : <div />
+            </div> : ''
         }
         {this.getNextComponent()}
       </div>
