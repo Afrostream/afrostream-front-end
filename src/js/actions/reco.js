@@ -7,13 +7,13 @@ import _ from 'lodash';
  * Start track video
  * @returns {Function}
  */
-export function startTrackVideo(data, videoId) {
+export function trackVideo(data, videoId) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().OAuth.get('token');
     if (!user) {
       return {
-        type: ActionTypes.User.startTrackVideo,
+        type: ActionTypes.User.trackVideo,
         videoId,
         res: null
       }
@@ -27,7 +27,7 @@ export function startTrackVideo(data, videoId) {
     }, data);
 
     return async api => ({
-      type: ActionTypes.User.startTrackVideo,
+      type: ActionTypes.User.trackVideo,
       res: await api(`/api/users/${user.get('_id')}/videos`, 'PUT', postData)
     });
   };

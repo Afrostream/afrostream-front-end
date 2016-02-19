@@ -61,7 +61,7 @@ export default createReducer(initialState, {
     });
   },
 
-  [ActionTypes.User.startTrackVideo](state, { videoId, res }) {
+  [ActionTypes.User.trackVideo](state, { videoId, res }) {
     if (!res) {
       return state;
     }

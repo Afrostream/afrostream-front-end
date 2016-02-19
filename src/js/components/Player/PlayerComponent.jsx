@@ -100,19 +100,70 @@ class PlayerComponent extends Component {
     });
   }
 
+  getPlayerTracks(type) {
+    let tracks = [];
+    let audioIndex = this.player.tech['featuresAudioIndex'];
+    let metrics = this.player.getPlaybackStatistics();
+    let bitrateIndex = metrics.video.bitrateIndex || this.player.tech['featuresBitrateIndex'];
+
+    let key;
+    switch (type) {
+      case 'caption' :
+        tracks = this.player.textTracks() || [];
+        key = 'language';
+        break;
+      case 'audio' :
+        tracks = this.player.audioTracks() || [];
+        key = 'lang';
+        break;
+      case 'video' :
+        tracks = this.player.videoTracks() || [];
+        key = 'bitrate';
+        break;
+    }
+
+    const selectedTrack = _.find(tracks, (track)=> {
+      switch (type) {
+        case 'caption' :
+          return track.mode === 'showing';
+          break;
+        case 'audio' :
+          return track.index === audioIndex;
+          break;
+        case 'video' :
+          return track.qualityIndex === bitrateIndex;
+          break;
+      }
+    });
+
+    return selectedTrack ? selectedTrack[key] : '';
+  }
+
   onFirstPlay() {
+    this.trackVideo();
+    this.trackTimeout = setTimeout(::this.trackVideo, 60000);
+  }
+
+  trackVideo() {
     const {
       props: {dispatch, videoId}
       } = this;
 
-    //TODO add and ping for saving player position ,
-    //playerAudio
-    //playerCaption
-    let data ={
-      playerPosition:parseInt(this.player().currentTime(), 10)
+    clearTimeout(this.trackTimeout);
+
+    const playerAudio = this.getPlayerTracks('audio');
+    const playerCaption = this.getPlayerTracks('caption');
+    const playerBitrate = this.getPlayerTracks('video');
+    const playerPosition = parseInt(this.player.currentTime(), 10);
+
+    let data = {
+      playerAudio: playerAudio,
+      playerCaption: playerCaption,
+      playerBitrate: playerBitrate,
+      playerPosition: playerPosition
     };
 
-    dispatch(RecoActionCreators.rateVideo(data.rating, videoId));
+    dispatch(RecoActionCreators.trackVideo(data, videoId));
   }
 
   getNextComponent() {
@@ -537,6 +588,8 @@ class PlayerComponent extends Component {
       }
     );
     player.on('firstplay', ::this.onFirstPlay);
+    player.on('ended', ::this.trackVideo);
+    player.on('seeked', ::this.trackVideo);
     player.on('fullscreenchange', ::this.onFullScreenHandler);
     player.on('timeupdate', ::this.onTimeUpdate);
     player.on('loadedmetadata', ::this.setDurationInfo);
@@ -598,6 +651,8 @@ class PlayerComponent extends Component {
     if (this.player) {
       this.player.one('dispose', () => {
         this.player.off('firstplay');
+        this.player.off('ended');
+        this.player.off('seeked');
         this.player.off('fullscreenchange');
         this.player.off('timeupdate');
         this.player.off('loadedmetadata');
@@ -611,6 +666,9 @@ class PlayerComponent extends Component {
         console.log('player : destroyed player');
       });
       console.log('player : destroy player', this.player);
+      //Tracking Finalise tracking video
+      this.trackVideo();
+      //Tracking Finalise tracking video
       await this.player.dispose();
       return null;
     } else {
