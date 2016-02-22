@@ -53,7 +53,13 @@ class PaymentPage extends React.Component {
     }
 
     if (children) {
-      return children;
+      return (
+        <div className="row-fluid brand-bg">
+          <div className="container brand-bg">
+            {children}
+          </div>
+        </div>
+      )
     }
     else {
       return (<SelectPlan/>)

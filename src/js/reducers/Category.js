@@ -47,6 +47,9 @@ export default createReducer(initialState, {
     if (!res) {
       return state;
     }
+    if (!res.body) {
+      return state;
+    }
     const data = res.body;
     const categoryId = data[0]._id;
     return state.merge({

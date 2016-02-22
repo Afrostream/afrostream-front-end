@@ -11,7 +11,6 @@ import _ from 'lodash';
 export function rateVideo(value, videoId) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
-    const token = getState().OAuth.get('token');
     if (!user) {
       return {
         type: ActionTypes.User.rateVideo,
@@ -31,7 +30,7 @@ export function rateVideo(value, videoId) {
     //TODO connecter une fois l'api reco presente
     //return async api => ({
     //  type: ActionTypes.Reco.getRecommendations,
-    //  res: await api(`/api/users/me/videos`, 'PUT', {rate:value, videoId: videoId}, token)
+    //  res: await api(`/api/users/me/videos`, 'PUT', {rate:value, videoId: videoId})
     //});
   };
 }
@@ -43,7 +42,6 @@ export function rateVideo(value, videoId) {
 export function getRecommendations(route = 'player', videoId = 'home') {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
-    const token = getState().OAuth.get('token');
     if (!user) {
       return {
         type: ActionTypes.User.getRecommendations,
@@ -91,7 +89,7 @@ export function getRecommendations(route = 'player', videoId = 'home') {
     //TODO connecter une fois l'api reco presente
     //return async api => ({
     //  type: ActionTypes.Reco.getRecommendations,
-    //  res: await api(`/api/users/me/recommendations`, 'POST', {page: route, videoId: videoId,limit:reco.limit}, token)
+    //  res: await api(`/api/users/me/recommendations`, 'POST', {page: route, videoId: videoId,limit:reco.limit})
     //});
   };
 }

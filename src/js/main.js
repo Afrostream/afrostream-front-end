@@ -33,13 +33,17 @@ const api = createAPI(
     const storageId = apiClient.token;
     const storageRefreshId = apiClient.tokenRefresh;
 
-    let token = localStorage.getItem(storageId);
-    let refreshToken = localStorage.getItem(storageRefreshId);
+    let storedData = localStorage.getItem(storageId);
 
-    if (token) {
-      headers = _.merge(headers, {
-        'Access-Token': token
-      });
+    if (storedData) {
+      try {
+        let tokenData = JSON.parse(storedData);
+        headers = _.merge(headers, {
+          'Access-Token': tokenData.accessToken
+        });
+      } catch (err) {
+        console.log('set header accesstoken impossible');
+      }
     }
 
     return request(method, url)

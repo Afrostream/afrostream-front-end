@@ -187,8 +187,12 @@ class SlideShow extends React.Component {
       } = this;
 
     const categoryId = Category.get(`categoryId`);
+    if (!categoryId) {
+      return (<div />)
+    }
     const slides = Category.get(`categorys/${categoryId}/spots`);
     const page = Slides.get('page') || 0;
+
     return (
       <div className="slide-show" ref="slC">
         {slides ? <SlidesContainer page={page} {...{slides}}/> : <Spinner />}

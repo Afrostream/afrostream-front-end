@@ -13,7 +13,6 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
   const token = getState().OAuth.get('token');
   const donePath = getState().Modal.get('donePath');
-  const refreshToken = getState().OAuth.get('refreshToken');
 
   if (!token) {
     return data;
@@ -23,12 +22,12 @@ const mergeProfile = function (data, getState, actionDispatcher) {
     actionDispatcher(pendingUser(true));
     try {
       //FIXMEget user infos from afrostream api when get recurly api data has merge into user
-      const userInfos = await api(`/api/users/me`, 'GET', {}, token, refreshToken);
+      const userInfos = await api(`/api/users/me`, 'GET', {});
       //TODO add subsrciptions status in user
       const userSubscriptions = {
         body: {}
       };
-      //const userSubscriptions = await api(`/api/subscriptions/status`, 'GET', {}, token, refreshToken);
+      //const userSubscriptions = await api(`/api/subscriptions/status`, 'GET', {});
       const userMerged = _.merge(userInfos.body || {}, userSubscriptions.body || {});
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
@@ -70,18 +69,16 @@ const mergeProfile = function (data, getState, actionDispatcher) {
  */
 export function subscribe(data, isGift = false) {
   return (dispatch, getState) => {
-    const token = getState().OAuth.get('token');
-    const refreshToken = getState().OAuth.get('refreshToken');
     if (isGift) {
       return async api => ({
         type: ActionTypes.User.subscribe,
-        res: await api(`/api/subscriptions/gift`, 'POST', data, token, refreshToken),
+        res: await api(`/api/subscriptions/gift`, 'POST', data),
         isGift
       });
     }
     return async api => ({
       type: ActionTypes.User.subscribe,
-      res: await api(`/api/billings/subscriptions`, 'POST', data, token, refreshToken),
+      res: await api(`/api/billings/subscriptions`, 'POST', data),
       isGift
     });
   };
@@ -89,11 +86,9 @@ export function subscribe(data, isGift = false) {
 
 export function cancelSubscription() {
   return (dispatch, getState) => {
-    const token = getState().OAuth.get('token');
-    const refreshToken = getState().OAuth.get('refreshToken');
     return async api => ({
       type: ActionTypes.User.cancelSubscription,
-      res: await api(`/api/subscriptions/cancel`, 'GET', {}, token, refreshToken)
+      res: await api(`/api/subscriptions/cancel`, 'GET', {})
     });
   };
 }
@@ -106,8 +101,6 @@ export function cancelSubscription() {
 export function getFavorites(type = 'movies') {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
-    const token = getState().OAuth.get('token');
-    const refreshToken = getState().OAuth.get('refreshToken');
     const capitType = _.capitalize(type);
     const returnTypeAction = ActionTypes.User[`getFavorites${capitType}`];
     if (!user) {
@@ -130,7 +123,7 @@ export function getFavorites(type = 'movies') {
 
     return async api => ({
       type: returnTypeAction,
-      res: await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'GET', {}, token, refreshToken)
+      res: await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'GET', {})
     });
   };
 }
@@ -138,8 +131,6 @@ export function getFavorites(type = 'movies') {
 export function setFavorites(type, active, id) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
-    const token = getState().OAuth.get('token');
-    const refreshToken = getState().OAuth.get('refreshToken');
     const capitType = _.capitalize(type);
     const returnTypeAction = ActionTypes.User[`setFavorites${capitType}`];
     if (!user) {
@@ -153,9 +144,9 @@ export function setFavorites(type, active, id) {
       let list = getState().User.get(`favorites/${type}`);
       let dataFav;
       if (active) {
-        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'POST', {_id: id}, token, refreshToken);
+        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'POST', {_id: id});
       } else {
-        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}/${id}`, 'DELETE', {}, token, refreshToken);
+        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}/${id}`, 'DELETE', {});
       }
 
       let index = await list.findIndex((obj)=> {
@@ -191,8 +182,6 @@ export function getProfile() {
   return (dispatch, getState, actionDispatcher) => {
     return async () => {
       await actionDispatcher(OAuthActionCreators.getIdToken());
-
-      const token = getState().OAuth.get('token');
       const user = getState().User.get('user');
       return async () => {
         //If user alwready in app

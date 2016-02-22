@@ -14,6 +14,9 @@ class Slides extends React.Component {
       props: { slides,page }
       } = this;
 
+    if (!slides) {
+      return (<div />)
+    }
     const data = slides.get(page);
     const dataId = data.get('_id');
     return (

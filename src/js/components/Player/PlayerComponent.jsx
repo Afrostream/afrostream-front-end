@@ -26,7 +26,8 @@ if (canUseDOM) {
   var base64 = require('js-base64').Base64;
 }
 
-@connect(({ Video,Movie,Season,Episode,Event,User,Player }) => ({
+@connect(({ Oauth,Video,Movie,Season,Episode,Event,User,Player }) => ({
+  Oauth,
   Video,
   Movie,
   Event,
@@ -368,7 +369,7 @@ class PlayerComponent extends Component {
   async getPlayerData(videoData) {
     const {
       props: {
-        Player,Movie,User,movieId
+        Oauth,Player,Movie,User,movieId
         }
       } = this;
 
@@ -451,7 +452,7 @@ class PlayerComponent extends Component {
     let user = User.get('user');
     if (user) {
       let userId = user.get('user_id');
-      let token = user.get('afro_token');
+      let token = Oauth.get('token');
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId];
       userId = _.find(splitUser, function (val) {
         return parseInt(val, 10);
@@ -463,7 +464,7 @@ class PlayerComponent extends Component {
       if (playerData.drm && playerData.dash && playerData.dash.protData) {
         let protUser = base64.encode(JSON.stringify({
           userId: userId,
-          sessionId: token,
+          sessionId: token.accessToken,
           merchant: 'afrostream'
         }));
 

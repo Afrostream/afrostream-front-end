@@ -83,8 +83,7 @@ const config = {
       protocol: process.env.API_CLIENT_PROTOCOL || 'http',
       authority: process.env.API_CLIENT_AUTHORITY || 'localhost:3002',
       urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002',
-      token: 'accessToken',
-      tokenRefresh: 'refreshToken'
+      token: 'accessToken'
     },
     images: {
       quality: 65,

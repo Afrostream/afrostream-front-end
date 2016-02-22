@@ -24,7 +24,7 @@ class GocardlessForm extends React.Component {
   componentDidMount() {
     //Detect si le payment via la lib gocardless est dispo
     this.setState({
-      hasLib: GoCardless
+      hasLib: window['GoCardless']
     });
   }
 
@@ -37,7 +37,7 @@ class GocardlessForm extends React.Component {
 
     return await new Promise(
       (resolve, reject) => {
-        GoCardless.customerBankAccountTokens.create({
+        window['GoCardless'].customerBankAccountTokens.create({
           publishable_access_token: config.gocardless.key,
           customer_bank_account_tokens: {
             iban: this.refs.iban.value,
