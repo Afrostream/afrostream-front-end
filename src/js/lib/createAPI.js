@@ -16,7 +16,7 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
  * Server: /lib/render.js
  */
 export default function createAPI(createRequest) {
-  return async function api(path, method = 'GET', params = {}, token = null, refreshToken = null) {
+  return async function api(path, method = 'GET', params = {}) {
     let { pathname, query: queryStr } = URL.parse(path);
     let query, headers, body;
 
@@ -27,30 +27,13 @@ export default function createAPI(createRequest) {
 
     query = qs.parse(queryStr);
 
-    if (token) {
-      headers = {
-        'Access-Token': token
-      };
-    }
     if (method === 'GET') {
-      if (token) {
-        params.afro_token = token;
-      }
-      if (refreshToken) {
-        params.afro_refresh_token = refreshToken;
-      }
       if (params && _.isObject(params)) {
         _.assign(query, params);
       }
 
     } else {
       body = params;
-      if (token) {
-        body.afro_token = token;
-      }
-      if (refreshToken) {
-        body.afro_refresh_token = refreshToken;
-      }
     }
 
     return await new Promise((resolve, reject) => {

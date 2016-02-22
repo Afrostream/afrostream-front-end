@@ -12,6 +12,7 @@ import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient, heroku } from '../../config';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import _ from 'lodash';
 //superAgentMock(request);
 if (canUseDOM) {
   require('jquery');
@@ -28,6 +29,18 @@ const api = createAPI(
     pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '');
     var url = `${apiClient.urlPrefix}${pathname}`;
     query.from = query.from || heroku.appName;
+
+    const storageId = apiClient.token;
+    const storageRefreshId = apiClient.tokenRefresh;
+
+    let token = localStorage.getItem(storageId);
+    let refreshToken = localStorage.getItem(storageRefreshId);
+
+    if (token) {
+      headers = _.merge(headers, {
+        'Access-Token': token
+      });
+    }
 
     return request(method, url)
       .query(qs.stringify(query))
