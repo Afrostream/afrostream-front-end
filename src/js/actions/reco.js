@@ -19,10 +19,20 @@ export function getVideoTracking(videoId) {
       }
     }
 
-    return async api => ({
-      type: ActionTypes.User.getVideoTracking,
-      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {})
-    });
+    let videoUserData = null;
+    return async api => {
+      try {
+        videoUserData = await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {})
+      } catch (e) {
+        console.log(`didn’t find any video user data for videoId : ${videoId}`);
+      }
+      return {
+
+        type: ActionTypes.User.getVideoTracking,
+        videoId,
+        res: videoUserData
+      };
+    };
   };
 
 }

@@ -140,11 +140,16 @@ class PlayerComponent extends Component {
     return selectedTrack ? selectedTrack[key] : '';
   }
 
+  /**
+   * Start track video on start
+   */
   onFirstPlay() {
     this.trackVideo();
-    this.trackTimeout = setTimeout(::this.trackVideo, 60000);
   }
 
+  /**
+   * Track User video playing
+   */
   trackVideo() {
     const {
       props: {dispatch, videoId}
@@ -165,6 +170,7 @@ class PlayerComponent extends Component {
     };
 
     dispatch(RecoActionCreators.trackVideo(data, videoId));
+    this.trackTimeout = setTimeout(::this.trackVideo, 60000);
   }
 
   getNextComponent() {
