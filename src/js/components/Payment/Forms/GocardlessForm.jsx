@@ -22,7 +22,7 @@ class GocardlessForm extends React.Component {
   };
 
   componentDidMount() {
-    //Detect si le payment via la lib recurly est dispo
+    //Detect si le payment via la lib gocardless est dispo
     this.setState({
       hasLib: GoCardless
     });
