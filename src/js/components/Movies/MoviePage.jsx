@@ -7,7 +7,7 @@ import * as CategoryActionCreators from '../../actions/category';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
 
-@prepareRoute(async function ({ store, params: { movieId } }) {
+@prepareRoute(async function ({ store, params: { movieId, seasonId, episodeId} }) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(EventActionCreators.userActive(true)),
@@ -31,7 +31,7 @@ class MoviePage extends React.Component {
   render() {
     const {
       props: {
-        params: { movieId }
+        params: { movieId, seasonId, episodeId }
         }
       } = this;
 
@@ -39,7 +39,7 @@ class MoviePage extends React.Component {
     return (
       <div className="row-fluid">
         {movieId ? <MovieInfo maxLength={600} active={true} load={false} {...{dataId}}/> : ''}
-        {movieId ? <SeasonList {...{movieId}}/> : ''}
+        {movieId ? <SeasonList {...this.props}/> : ''}
       </div>
     );
   }

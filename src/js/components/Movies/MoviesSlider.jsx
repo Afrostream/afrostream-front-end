@@ -15,6 +15,7 @@ class MoviesSlider extends React.Component {
 
   static propTypes = {
     dataList: PropTypes.instanceOf(Immutable.List).isRequired,
+    selectedId: React.PropTypes.string,
     label: React.PropTypes.string,
     slug: React.PropTypes.string,
     thumbW: React.PropTypes.number,
@@ -38,6 +39,7 @@ class MoviesSlider extends React.Component {
 
     return (
       <Thumb
+        id={dataId}
         preload={true}
         key={`data-thumb-${index}`} {...{data, dataId, thumbW, thumbH}}  />
     );
@@ -46,13 +48,25 @@ class MoviesSlider extends React.Component {
   render() {
     const {
       props: {
-        dataList,label,slug
-        }
+        dataList,
+        selectedId,
+        label,
+        slug}
       } = this;
 
     if (!dataList || !dataList.size) {
       return (<div/>);
     }
+
+    let index = 0;
+
+    //Si on a un episode ou movie dans les params url, on scroll to this point
+    if (selectedId) {
+      index = dataList.findIndex((obj) => {
+        return obj.get('_id') == selectedId;
+      });
+    }
+
     return (
       <div className="movies-data-list">
         {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
@@ -60,7 +74,9 @@ class MoviesSlider extends React.Component {
         <Slider>
           <div className="slider-container">
             <ReactList
+              ref="react-list"
               useTranslate3d
+              initialIndex={index}
               axis="x"
               itemRenderer={::this.renderItem}
               length={dataList.size}
