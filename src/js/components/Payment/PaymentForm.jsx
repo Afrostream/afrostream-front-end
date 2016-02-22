@@ -165,17 +165,17 @@ class PaymentForm extends React.Component {
 
           if (errorMessage.name === 'RecurlyError' &&
             typeof errorMessage.errors !== 'undefined' &&
-            typeof errorMessage.errors[1] !== 'undefined' &&
-            errorMessage.errors[1].field === 'subscription.account.base' &&
-            errorMessage.errors[1].symbol === 'declined') {
+            typeof errorMessage.errors[0] !== 'undefined' &&
+            errorMessage.errors[0].field === 'subscription.account.base' &&
+            errorMessage.errors[0].symbol === 'declined') {
 
             message = 'Veuillez contacter votre banque ou utilisez une autre carte.';
 
           } else if (errorMessage.name === 'RecurlyError' &&
             typeof errorMessage.errors !== 'undefined' &&
-            typeof errorMessage.errors[1] !== 'undefined' &&
-            errorMessage.errors[1].field === 'subscription.coupon_code' &&
-            errorMessage.errors[1].symbol === 'invalid') {
+            typeof errorMessage.errors[0] !== 'undefined' &&
+            errorMessage.errors[0].field === 'subscription.coupon_code' &&
+            errorMessage.errors[0].symbol === 'invalid') {
 
             message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
 
