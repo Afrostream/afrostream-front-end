@@ -13,7 +13,6 @@ const config = {
   }
 };
 
-
 export async function shorten(optional) {
 
   let options = _.merge({

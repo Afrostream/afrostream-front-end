@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
+import { storeToken } from '../lib/storage';
 import config from '../../../config/client';
 
 const initialState = Immutable.fromJS({
@@ -8,28 +9,18 @@ const initialState = Immutable.fromJS({
   token: null
 });
 
-const storeToken = function (oauthData) {
-  const storageId = config.apiClient.token;
-
-  if (oauthData.accessToken) {
-    localStorage.setItem(storageId, JSON.stringify(oauthData));
-  }
-  return oauthData;
-};
-
 export default createReducer(initialState, {
 
   [ActionTypes.OAuth.getIdToken](state) {
 
     const storageId = config.apiClient.token;
-
     let storedData = localStorage.getItem(storageId);
     let tokenData = null;
     if (storedData) {
       try {
         tokenData = JSON.parse(storedData);
       } catch (err) {
-        console.log('set header accesstoken impossible');
+        console.log('deserialize oauth data error');
       }
     }
 
