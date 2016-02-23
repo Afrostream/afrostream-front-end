@@ -158,16 +158,38 @@ class PaymentForm extends React.Component {
         self.context.history.pushState(null, `/select-plan/${planCode}/success`);
       }).catch(function (err) {
         let message = '';
-        if (err.response && err.response.status === 401) {
-          message = 'Votre session a expiré, veuillez recommencer.';
+        let errorMessage = '';
 
-        } else if (err.response && err.response.status === 402) {
-          message = 'Veuillez contacter votre banque ou utilisez une autre carte.';
+        if (err.response.status === 400) {
+          errorMessage = JSON.parse(err.response.text);
 
-        } else if (err.response && err.response.status === 403) {
-          message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
+          if (errorMessage.name === 'RecurlyError' &&
+            typeof errorMessage.errors !== 'undefined' &&
+            typeof errorMessage.errors[0] !== 'undefined' &&
+            errorMessage.errors[0].field === 'subscription.account.base' &&
+            errorMessage.errors[0].symbol === 'declined') {
 
-        } else {
+            message = 'Veuillez contacter votre banque ou utilisez une autre carte.';
+
+          } else if (errorMessage.name === 'RecurlyError' &&
+            typeof errorMessage.errors !== 'undefined' &&
+            typeof errorMessage.errors[0] !== 'undefined' &&
+            errorMessage.errors[0].field === 'subscription.coupon_code' &&
+            errorMessage.errors[0].symbol === 'invalid') {
+
+            message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
+
+          } else if (errorMessage.name === 'SelfGiftError') {
+
+            message = 'Les courriels de l\'offrant et de destination sont identiques. ' +
+              'Vérifiez le courriel de destination de votre cadeau';
+
+          } else {
+
+            message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
+          }
+        }  else {
+
           message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
         }
 
