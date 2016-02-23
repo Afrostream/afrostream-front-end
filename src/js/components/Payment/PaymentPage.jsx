@@ -52,18 +52,13 @@ class PaymentPage extends React.Component {
       return <WelcomePage {...this.props}/>
     }
 
-    if (children) {
-      return (
-        <div className="row-fluid brand-bg">
-          <div className="container brand-bg">
-            {children}
-          </div>
+    return (
+      <div className="row-fluid brand-bg">
+        <div className="container brand-bg">
+          {children ? children : <SelectPlan/>}
         </div>
-      )
-    }
-    else {
-      return (<SelectPlan/>)
-    }
+      </div>
+    )
   }
 }
 

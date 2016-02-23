@@ -1,345 +1,323 @@
 @import (reference) '../../../styles/config.less';
 
-@thumb-margin: 10px;
-@thumb-margin-hover: 50px;
-@thumb-width: 140px;
-@thumb-height: 200px;
-@zoom-margin: 50px;
-
 .plan-container {
-  width: 100%;
-  min-height: 95%;
-  background-color: #d4d0d6;
-  padding-top: 160px;
-  padding-bottom: 30px;
 
-  @media all and (max-width: @screen-sm-min) {
-    padding-top: 120px;
-  }
-
-  @media all and (max-width: @screen-xs-min) {
-    padding-top: 100px;
-  }
-}
-.choose-plan {
-  color: #452F50;
-  position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 10px;
-  width: 80%;
-  font-size: 24px;
-  background-color: #d4d0d6;
-  text-align: left;
-  font-weight: bold;
-
-  @media all and (max-width: @screen-lg-min) {
-    width: 95%;
-    text-align: center
-  }
-
-  @media all and (max-width: @screen-md-min) {
-    width: 100%;
-    margin: 0 0 0 0;
-    padding: 5px 0 10px 0;
-    font-size: 18px;
-    text-align: center;
-  }
-
-  @media all and (max-width: @screen-xs-min) {
-
-  }
-}
-
-.select-plan {
-  background-color: @white-base;
-  color: #6F248B;
-  position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 30px 30px 30px 45px;
-  width: 80%;
-  font-size: 12px;
-  text-align: center;
-
-  @media all and (max-width: @screen-lg-min) {
-    width: 95%;
-  }
-
-  @media all and (max-width: @screen-md-min) {
-    width: 95%;
-    padding: 30px 30px 45px 45px;
-  }
-
-  @media all and (max-width: @screen-sm-min) {
-    width: 100%;
-    padding: 2px 2px 45px 4px;
-  }
-
-  .row-element-left {
+  .choose-plan {
+    color: #452F50;
     position: relative;
-    float: left;
-    width: 40%;
-    height: 30px;
-    white-space: normal;
-    top: 50%;
-    transform: translateY(31%);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10px;
+    font-size: 24px;
     text-align: left;
     font-weight: bold;
 
+    @media all and (max-width: @screen-lg-min) {
+      width: 95%;
+      text-align: center
+    }
+
     @media all and (max-width: @screen-md-min) {
       width: 100%;
+      margin: 0 0 0 0;
+      padding: 5px 0 10px 0;
+      font-size: 18px;
       text-align: center;
     }
-  }
 
-  .row-element-top-left {
-    @media all and (max-width: @screen-md-min) {
-      height: 0px;
+    @media all and (max-width: @screen-xs-min) {
+
     }
   }
 
-  .row-element-left-header {
+  .select-plan {
+    background-color: @white-base;
+    color: @color-purple-1;
     position: relative;
-    float: left;
-    width: 40%;
-    height: 30px;
-    white-space: normal;
-    top: 50%;
-    //transform: translateY(31%);
-    text-align: left;
-    padding: 8px 12px 8px 12px;
-    margin-bottom: 5px;
-
-    @media all and (max-width: @screen-md-min) {
-      width: 100%;
-      height: 1px;
-    }
-  }
-
-  .row-element-left-header-shim {
-    position: relative;
-    float: left;
-    width: 2%;
-    height: 30px;
-    white-space: normal;
-    top: 50%;
-    //transform: translateY(31%);
-    text-align: left;
-    padding: 8px 12px 8px 12px;
-    margin-bottom: 5px;
-  }
-
-  .row-element-left-twolines {
-    position: relative;
-    float: left;
-    width: 40%;
-    height: 30px;
-    white-space: normal;
-    top: 50%;
-    transform: translateY(31%);
-    text-align: left;
-    font-weight: bold;
-
-    @media all and (max-width: @screen-md-min) {
-      width: 100%;
-      text-align: center;
-    }
-  }
-
-  .row-element {
-    position: relative;
-    float: left;
-    width: 20%;
-    height: 30px;
-    white-space: normal;
-    top: 50%;
-    transform: translateY(31%);
-    color: #76757F;
-
-    @media all and (max-width: @screen-md-min) {
-      width:33%;
-    }
-  }
-
-  .row-element-prices {
-    position: relative;
-    float: left;
-    width: 20%;
-    height: 30px;
-    white-space: normal;
-    top: 50%;
-    transform: translateY(20%);
-    color: #76757F;
-
-    @media all and (max-width: @screen-md-min) {
-      width: 33%;
-    }
-  }
-
-  .formule-row-no-decoration {
-    position: relative;
-    display: inline-block;
-    min-width: 100%;
-    margin: -1px -1px -1px -1px;
-    //min-height: 12px;
-    top: 50%;
-    transform: translateY(31%);
-  }
-
-  .formule-row-decorated {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    margin: -1px -1px -1px -1px;
-    border-bottom: 1px solid @gray-lighter;
-    top: 50%;
-    transform: translateY(31%);
-  }
-
-  .formule-row-decorated-prices {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    margin: 10px -1px -1px -1px;
-    border-bottom: 1px solid @gray-lighter;
-    top: 50%;
-    transform: translateY(22%);
-  }
-
-  .blue-text {
-    color: #759CA7;
-    letter-spacing: 4px;
-    font-size: 10px;
-  }
-
-  .blue-background {
-    background-color: #759CA7;
-    color: @white-base;
-    position: relative;
-    float: left;
-    width: 20%;
-    height: 30px;
-    padding: 8px 12px 8px 12px;
-    margin-bottom: 5px;
-
-    @media all and (max-width: @screen-md-min) {
-      width: 33%;
-    }
-  }
-
-  .yellow-text {
-    color: #EDB62D;
-    letter-spacing: 4px;
-    font-size: 10px;
-  }
-
-  .yellow-background {
-    background-color: #EDB62D;
-    color: @white-base;
-    position: relative;
-    float: left;
-    width: 20%;
-    height: 30px;
-    padding: 8px 12px 8px 12px;
-    margin-bottom: 5px;
-
-    @media all and (max-width: @screen-md-min) {
-      width: 33%;
-    }
-  }
-
-  .purple-text {
-    color: #6F248B;
-    letter-spacing: 4px;
-    font-size: 10px;
-  }
-
-  .purple-background {
-    background-color: #6F248B;
-    color: @white-base;
-    position: relative;
-    float: left;
-    width: 20%;
-    height: 30px;
-    padding: 8px 12px 8px 12px;
-    margin-bottom: 5px;
-
-    @media all and (max-width: @screen-md-min) {
-      //padding: 5px 12px 8px 12px;
-      width: 33%;
-    }
-  }
-
-  .fa-times {
-    color: #C5C6C7;
-  }
-
-  .fa-check {
-    color: #76757F;
-  }
-  .plan-period {
-    color: #6F248B;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 12px;
-    transform: translateY(31%);
-  }
+    text-align: center;
 
-  .plan-price {
-    color: #6F248B;
-    font-size: 18px;
-    transform: translateY(31%);
-  }
-
-  .button-blue {
-    font-weight: bold;
-    color: #759CA7;
-    background-color: #eeeeee;
-    padding: 5px 20px 5px 20px;
-    border-radius: 20px;
-    border: 1px solid #C5C6C7;
+    @media all and (max-width: @screen-lg-min) {
+      width: 95%;
+    }
 
     @media all and (max-width: @screen-md-min) {
-      padding: 5px 15px 5px 15px;
+      width: 95%;
+      padding: 30px 30px 45px 45px;
     }
 
     @media all and (max-width: @screen-sm-min) {
-      padding: 5px 12px 5px 12px;
-    }
-  }
-
-  .button-yellow {
-    font-weight: bold;
-    color: #EDB62D;
-    background-color: #eeeeee;
-    padding: 5px 20px 5px 20px;
-    border-radius: 20px;
-    border: 1px solid #C5C6C7;
-
-    @media all and (max-width: @screen-md-min) {
-      padding: 5px 15px 5px 15px;
+      width: 100%;
+      padding: 2px 2px 45px 4px;
     }
 
-    @media all and (max-width: @screen-sm-min) {
-      padding: 5px 12px 5px 12px;
+    .row-element-left {
+      position: relative;
+      float: left;
+      width: 40%;
+      height: 30px;
+      white-space: normal;
+      top: 50%;
+      transform: translateY(31%);
+      text-align: left;
+      font-weight: bold;
+
+      @media all and (max-width: @screen-md-min) {
+        width: 100%;
+        text-align: center;
+      }
     }
-  }
 
-  .button-purple {
-    font-weight: bold;
-    color: #6F248B;
-    background-color: #eeeeee;
-    padding: 5px 20px 5px 20px;
-    border-radius: 20px;
-    border: 1px solid #C5C6C7;
-
-    @media all and (max-width: @screen-md-min) {
-      padding: 5px 15px 5px 15px;
+    .row-element-top-left {
+      @media all and (max-width: @screen-md-min) {
+        height: 0px;
+      }
     }
 
-    @media all and (max-width: @screen-sm-min) {
-      padding: 5px 12px 5px 12px;
+    .row-element-left-header {
+      position: relative;
+      float: left;
+      width: 40%;
+      height: 30px;
+      white-space: normal;
+      top: 50%;
+      //transform: translateY(31%);
+      text-align: left;
+      padding: 8px 12px 8px 12px;
+      margin-bottom: 5px;
+
+      @media all and (max-width: @screen-md-min) {
+        width: 100%;
+        height: 1px;
+      }
+    }
+
+    .row-element-left-header-shim {
+      position: relative;
+      float: left;
+      width: 2%;
+      height: 30px;
+      white-space: normal;
+      top: 50%;
+      //transform: translateY(31%);
+      text-align: left;
+      padding: 8px 12px 8px 12px;
+      margin-bottom: 5px;
+    }
+
+    .row-element-left-twolines {
+      position: relative;
+      float: left;
+      width: 40%;
+      height: 30px;
+      white-space: normal;
+      top: 50%;
+      transform: translateY(31%);
+      text-align: left;
+      font-weight: bold;
+
+      @media all and (max-width: @screen-md-min) {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .row-element {
+      position: relative;
+      float: left;
+      width: 20%;
+      height: 30px;
+      white-space: normal;
+      top: 50%;
+      transform: translateY(31%);
+      color: #76757F;
+
+      @media all and (max-width: @screen-md-min) {
+        width: 33%;
+      }
+    }
+
+    .row-element-prices {
+      position: relative;
+      float: left;
+      width: 20%;
+      height: 30px;
+      white-space: normal;
+      top: 50%;
+      transform: translateY(20%);
+      color: #76757F;
+
+      @media all and (max-width: @screen-md-min) {
+        width: 33%;
+      }
+    }
+
+    .formule-row-no-decoration {
+      position: relative;
+      display: inline-block;
+      min-width: 100%;
+      margin: -1px -1px -1px -1px;
+      //min-height: 12px;
+      top: 50%;
+      transform: translateY(31%);
+    }
+
+    .formule-row-decorated {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin: -1px -1px -1px -1px;
+      border-bottom: 1px solid @gray-lighter;
+      top: 50%;
+      transform: translateY(31%);
+    }
+
+    .formule-row-decorated-prices {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      margin: 10px -1px -1px -1px;
+      border-bottom: 1px solid @gray-lighter;
+      top: 50%;
+      transform: translateY(22%);
+    }
+
+    .blue-text {
+      color: #759CA7;
+      letter-spacing: 4px;
+      font-size: 10px;
+    }
+
+    .blue-background {
+      background-color: #759CA7;
+      color: @white-base;
+      position: relative;
+      float: left;
+      width: 20%;
+      height: 30px;
+      padding: 8px 12px 8px 12px;
+      margin-bottom: 5px;
+
+      @media all and (max-width: @screen-md-min) {
+        width: 33%;
+      }
+    }
+
+    .yellow-text {
+      color: #EDB62D;
+      letter-spacing: 4px;
+      font-size: 10px;
+    }
+
+    .yellow-background {
+      background-color: #EDB62D;
+      color: @white-base;
+      position: relative;
+      float: left;
+      width: 20%;
+      height: 30px;
+      padding: 8px 12px 8px 12px;
+      margin-bottom: 5px;
+
+      @media all and (max-width: @screen-md-min) {
+        width: 33%;
+      }
+    }
+
+    .purple-text {
+      color: #6F248B;
+      letter-spacing: 4px;
+      font-size: 10px;
+    }
+
+    .purple-background {
+      background-color: #6F248B;
+      color: @white-base;
+      position: relative;
+      float: left;
+      width: 20%;
+      height: 30px;
+      padding: 8px 12px 8px 12px;
+      margin-bottom: 5px;
+
+      @media all and (max-width: @screen-md-min) {
+        //padding: 5px 12px 8px 12px;
+        width: 33%;
+      }
+    }
+
+    .fa-times {
+      color: #C5C6C7;
+    }
+
+    .fa-check {
+      color: #76757F;
+    }
+    .plan-period {
+      color: #6F248B;
+      font-size: 12px;
+      transform: translateY(31%);
+    }
+
+    .plan-price {
+      color: #6F248B;
+      font-size: 18px;
+      transform: translateY(31%);
+    }
+
+    .button-blue {
+      font-weight: bold;
+      color: #759CA7;
+      background-color: #eeeeee;
+      padding: 5px 20px 5px 20px;
+      border-radius: 20px;
+      border: 1px solid #C5C6C7;
+
+      @media all and (max-width: @screen-md-min) {
+        padding: 5px 15px 5px 15px;
+      }
+
+      @media all and (max-width: @screen-sm-min) {
+        padding: 5px 12px 5px 12px;
+      }
+    }
+
+    .button-yellow {
+      font-weight: bold;
+      color: #EDB62D;
+      background-color: #eeeeee;
+      padding: 5px 20px 5px 20px;
+      border-radius: 20px;
+      border: 1px solid #C5C6C7;
+
+      @media all and (max-width: @screen-md-min) {
+        padding: 5px 15px 5px 15px;
+      }
+
+      @media all and (max-width: @screen-sm-min) {
+        padding: 5px 12px 5px 12px;
+      }
+    }
+
+    .button-purple {
+      font-weight: bold;
+      color: #6F248B;
+      background-color: #eeeeee;
+      padding: 5px 20px 5px 20px;
+      border-radius: 20px;
+      border: 1px solid #C5C6C7;
+
+      @media all and (max-width: @screen-md-min) {
+        padding: 5px 15px 5px 15px;
+      }
+
+      @media all and (max-width: @screen-sm-min) {
+        padding: 5px 12px 5px 12px;
+      }
     }
   }
 }

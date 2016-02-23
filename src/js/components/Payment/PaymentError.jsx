@@ -6,9 +6,6 @@ import * as UserActionCreators from '../../actions/user';
 import * as IntercomActionCreators from '../../actions/intercom';
 import config from '../../../../config';
 
-if (process.env.BROWSER) {
-  require('./PaymentError.less');
-}
 @connect(({ User }) => ({User}))
 class PaymentError extends React.Component {
 

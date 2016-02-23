@@ -4,10 +4,6 @@ import * as UserActionCreators from '../../actions/user';
 import { Link } from 'react-router';
 import { analytics } from '../../decorators';
 
-if (process.env.BROWSER) {
-  require('./PaymentSuccess.less');
-}
-
 @connect(({ User }) => ({User}))
 class PaymentSuccess extends React.Component {
 

@@ -3,161 +3,196 @@
 .payment-wrapper {
   width: 100%;
   min-height: 100%;
-}
-
-.enter-payment-details {
-  color: #452F50;
-  margin-top: 20px;
-  position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 20px;
-  font-size: 24px;
-  text-align: left;
-  font-weight: bold;
-
-  @media all and (max-width: @screen-xs-min) {
-    font-size: 20px;
-    text-align: center;
-  }
-}
-
-.checkbox {
-  text-align: left;
-  input[type='checkbox'] {
-    margin-left: 0;
-  }
-  .checkbox-label {
-    margin-left: 20px;
-    color: @color-indigo;
-    font-weight: bold;
-    text-align: left;
-    line-height: 1.5;
-    display: inline;
-    a {
-      color: @color-purple-1;
-    }
-  }
-}
-
-.payment-form {
-  //recreate local variables
-  @input-height-base: 34px;
-  @input-height-small: 30px;
-  @input-height-large: 46px;
-  @padding-base-horizontal: 12px;
-  @grid-gutter-width: 30px;
-  @screen-sm-min: 768px;
-
-  background-color: #ffffff;
-  color: @color-purple-1;
-  position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 12px;
-  text-align: center;
-
-  @media all and (max-width: @screen-xs-min) {
-    padding: 30px 30px 30px 30px;
-  }
-
-  .spinner-payment {
-    position: fixed;
-    display: none;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 3;
-    &.spinner-loading {
-      display: block;
-    }
-  }
-
-  .subscription-form {
+  .payment-error,
+  .payment-success {
+    color: @color-purple;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
     height: 100%;
-  }
-  .panel {
-    border-radius: 0;
-    border-bottom: @gray-lighter solid 1px;
-    &.collapsed {
-      border-bottom: fade(@gray-lighter, 30%) solid 1px;
-    }
-  }
-  .payment-method-details {
-    line-height: 2;
-    padding: 5px 0 5px 0;
-    text-align: left;
-    .accordion-toggle {
-      label {
-        color: @color-purple-1;
-        cursor: pointer;
-      }
-      &:hover {
-        label {
-          color: @color-purple-2;
-        }
-      }
-      &:before {
-        /* symbol for "opening" panels */
-        font: normal normal normal 14px/1 FontAwesome; /* essential for enabling glyphicon */
-        content: "\f078"; /* adjust as needed, taken from bootstrap.css */
-        float: left; /* adjust as needed */
-        color: @color-indigo; /* adjust as needed */
-        margin-right: 10px;
-        font-size: 1.3em;
-      }
-      &.collapsed {
-        label {
-          color: fade(@color-purple-1, 40%); /* adjust as needed */
-        }
-        &:before {
-          /* symbol for "collapsed" panels */
-          color: fade(@color-indigo, 40%); /* adjust as needed */
-          content: "\f054"; /* adjust as needed, taken from bootstrap.css */
-        }
-      }
-
-      img {
-        margin-left: 20px;
-      }
-    }
-  }
-  .card-details-text,
-  .form-label {
-    float: left;
-    color: @color-purple-1;
     font-size: 12px;
-    font-weight: bold;
+    text-align: center;
+
+    h3 {
+      margin-bottom: 20px;
+    }
+
+    .error {
+      margin-top: 30px;
+    }
+
+    .error-link {
+      color: @color-purple-1;
+      text-decoration: underline;
+      font-size: 20px;
+    }
+
+    .error-button {
+      color: @color-purple-1;
+      font-weight: bold;
+      background-color: #F0C530;
+      padding: 10px 20px 10px 20px;
+      border-radius: 20px;
+      border: none;
+    }
   }
 
-  .button-create-subscription {
-    font-weight: bold;
-    background-color: #F0C530;
-    color: @brand-black;
-    padding: 10px 20px 10px 20px;
-    border-radius: 20px;
-    border: none;
+  .enter-payment-details {
+    color: #452F50;
     margin-top: 20px;
-    float: left;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+    font-size: 24px;
+    text-align: left;
+    font-weight: bold;
 
     @media all and (max-width: @screen-xs-min) {
-      float: inherit;
+      font-size: 20px;
+      text-align: center;
     }
   }
 
-  .has-error {
-    border-color: @brand-error;
+  .checkbox {
+    text-align: left;
+    input[type='checkbox'] {
+      margin-left: 0;
+    }
+    .checkbox-label {
+      margin-left: 20px;
+      color: @color-indigo;
+      font-weight: bold;
+      text-align: left;
+      line-height: 1.5;
+      display: inline;
+      a {
+        color: @color-purple-1;
+      }
+    }
   }
 
-  .checkbox-has-error {
-    border: 1px solid @brand-error;
-  }
+  .payment-form {
+    //recreate local variables
+    @input-height-base: 34px;
+    @input-height-small: 30px;
+    @input-height-large: 46px;
+    @padding-base-horizontal: 12px;
+    @grid-gutter-width: 30px;
+    @screen-sm-min: 768px;
 
-  #error {
-    color: @brand-error;
+    background-color: #ffffff;
+    color: @color-purple-1;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    text-align: center;
+
+    @media all and (max-width: @screen-xs-min) {
+      padding: 30px 30px 30px 30px;
+    }
+
+    .spinner-payment {
+      position: fixed;
+      display: none;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 3;
+      &.spinner-loading {
+        display: block;
+      }
+    }
+
+    .subscription-form {
+      height: 100%;
+    }
+    .panel {
+      border-radius: 0;
+      border-bottom: @gray-lighter solid 1px;
+      &.collapsed {
+        border-bottom: fade(@gray-lighter, 30%) solid 1px;
+      }
+    }
+    .payment-method-details {
+      line-height: 2;
+      padding: 5px 0 5px 0;
+      text-align: left;
+      .accordion-toggle {
+        label {
+          color: @color-purple-1;
+          cursor: pointer;
+        }
+        &:hover {
+          label {
+            color: @color-purple-2;
+          }
+        }
+        &:before {
+          /* symbol for "opening" panels */
+          font: normal normal normal 14px/1 FontAwesome; /* essential for enabling glyphicon */
+          content: "\f078"; /* adjust as needed, taken from bootstrap.css */
+          float: left; /* adjust as needed */
+          color: @color-indigo; /* adjust as needed */
+          margin-right: 10px;
+          font-size: 1.3em;
+        }
+        &.collapsed {
+          label {
+            color: fade(@color-purple-1, 40%); /* adjust as needed */
+          }
+          &:before {
+            /* symbol for "collapsed" panels */
+            color: fade(@color-indigo, 40%); /* adjust as needed */
+            content: "\f054"; /* adjust as needed, taken from bootstrap.css */
+          }
+        }
+
+        img {
+          margin-left: 20px;
+        }
+      }
+    }
+    .card-details-text,
+    .form-label {
+      float: left;
+      color: @color-purple-1;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .button-create-subscription {
+      font-weight: bold;
+      background-color: #F0C530;
+      color: @brand-black;
+      padding: 10px 20px 10px 20px;
+      border-radius: 20px;
+      border: none;
+      margin-top: 20px;
+      float: left;
+
+      @media all and (max-width: @screen-xs-min) {
+        float: inherit;
+      }
+    }
+
+    .has-error {
+      border-color: @brand-error;
+    }
+
+    .checkbox-has-error {
+      border: 1px solid @brand-error;
+    }
+
+    #error {
+      color: @brand-error;
+    }
   }
 }
