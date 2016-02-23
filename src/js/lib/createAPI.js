@@ -18,6 +18,7 @@ async function getToken(tokenData) {
   if (!tokenData || !tokenData.refreshToken) {
     return tokenData;
   }
+  return tokenData;
 
   let url = `${apiClient.urlPrefix}/auth/refresh`;
   let body = {
