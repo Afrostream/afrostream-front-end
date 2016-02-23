@@ -26,8 +26,8 @@ if (canUseDOM) {
   var base64 = require('js-base64').Base64;
 }
 
-@connect(({ Oauth,Video,Movie,Season,Episode,Event,User,Player }) => ({
-  Oauth,
+@connect(({ OAuth,Video,Movie,Season,Episode,Event,User,Player }) => ({
+  OAuth,
   Video,
   Movie,
   Event,
@@ -369,7 +369,7 @@ class PlayerComponent extends Component {
   async getPlayerData(videoData) {
     const {
       props: {
-        Oauth,Player,Movie,User,movieId
+        OAuth,Player,Movie,User,movieId
         }
       } = this;
 
@@ -452,7 +452,7 @@ class PlayerComponent extends Component {
     let user = User.get('user');
     if (user) {
       let userId = user.get('user_id');
-      let token = Oauth.get('token');
+      let token = OAuth.get('token');
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId];
       userId = _.find(splitUser, function (val) {
         return parseInt(val, 10);
@@ -461,7 +461,7 @@ class PlayerComponent extends Component {
         playerData.metrics.user_id = userId;
       }
       //encode data to pass it into drmtoday
-      if (playerData.drm && playerData.dash && playerData.dash.protData) {
+      if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
         let protUser = base64.encode(JSON.stringify({
           userId: userId,
           sessionId: token.accessToken,
