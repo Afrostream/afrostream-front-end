@@ -54,13 +54,7 @@ class FAQ extends React.Component {
               </ul>
             </p>
 
-            <h4>2/ J’ai souscrit à un abonnement, Comment accéder immédiatement aux films ?</h4>
-
-            <p>Les abonnements « Ambassadeurs » et « Do the Right Think » démarrent le 1er septembre.
-              L’abonnement « Think Like a Man » démarre le 1 Octobre.
-              Avant ces dates, les films et séries ne sont pas accessibles.</p>
-
-            <h4>3/ Quand serais- je prélevé ?</h4>
+            <h4>2/ Quand serais- je prélevé ?</h4>
 
             <p>Le premier prélèvement a lieu au moment de la commande le l’abonnement.
 
@@ -70,13 +64,13 @@ class FAQ extends React.Component {
               novembre. Cet abonnement mensuel est sans engagement. Vous pouvez vous désabonner à tout
               moment.</p>
 
-            <h4>4/ Pourquoi prélever maintenant alors que je n’ai pas encore accès au service ?</h4>
+            <h4>3/ Pourquoi prélever maintenant alors que je n’ai pas encore accès au service ?</h4>
 
             <p>Nous sommes une startup composée de jeunes entrepreneurs. Les pré-abonnements renforcent nos
               capacités d’achat de séries et de films aux studios américains et africains.
               En commandant un abonnement annuel à l’avance vous soutenez le développement d’Afrostream.</p>
 
-            <h4>5/ Comment accéder au service ?</h4>
+            <h4>4/ Comment accéder au service ?</h4>
 
             <p>Quelques jours avant la date de démarrage de votre abonnement à Afrostream, vous recevrez par
               email
@@ -85,7 +79,7 @@ class FAQ extends React.Component {
               L’abonnement « Think Like a Man » démarre le 1 Octobre.</p>
 
 
-            <h4>6/ Comment accéder aux films sur ma télé ?</h4>
+            <h4>5/ Comment accéder aux films sur ma télé ?</h4>
 
             <p>Grâce à une petite clé multimédia ChromeCast.
               Elle se branche sur un port HDMI de votre téléviseur. Elle vous permet de diffuser facilement
@@ -97,23 +91,23 @@ class FAQ extends React.Component {
             </p>
 
 
-            <h4>7/ Quel est le catalogue du service ?</h4>
+            <h4>6/ Quel est le catalogue du service ?</h4>
 
             <p>Le catalogue d’Afrostream est composé des séries, films, documentaires et concerts
               afro-américains
               et africains. Il y a également des dessins animés pour les enfants.</p>
 
-            <h4>8/ Puis je essayer le service avant de l’utiliser ?</h4>
+            <h4>7/ Puis je essayer le service avant de l’utiliser ?</h4>
 
             <p>Il y a pas de période d’essai gratuit pour Afrostream car le seul moyen de soutenir la créativité
               afro est de rémunérer le travail des artistes.</p>
 
-            <h4>9/ Le service est-il disponible en Grande Bretagne/Allemagne/Canada ?</h4>
+            <h4>8/ Le service est-il disponible en Grande Bretagne/Allemagne/Canada ?</h4>
 
             <p>Pour le moment Afrostream est uniquement disponible en France, DOM-TOM, Belgique, Luxembourg,
               Suisse, Sénégal, Côte d’Ivoire.</p>
 
-            <h4>10/ Quand recevrais-je mes identifiants ?</h4>
+            <h4>9/ Quand recevrais-je mes identifiants ?</h4>
 
             <p>Quelques jours avant la date de démarrage de votre abonnement à Afrostream, vous recevrez par
               email
