@@ -91,7 +91,7 @@ class PaymentForm extends React.Component {
     if (!this.state.isGift) {
       return;
     }
-    return <GiftDetails isVisible={this.state.isGift}/>;
+    return <GiftDetails ref="giftDetails" isVisible={this.state.isGift}/>;
   }
 
   renderSubmit() {
@@ -211,11 +211,7 @@ class PaymentForm extends React.Component {
     };
 
     if (self.state.isGift) {
-      billingInfo = _.merge(billingInfo, {
-        'gift_first_name': this.refs.giftFirstName.value,
-        'gift_last_name': this.refs.giftLastName.value,
-        'gift_email': this.refs.giftEmail.value
-      })
+      billingInfo = _.merge(billingInfo, this.refs.giftDetails.value())
     }
 
     try {
@@ -272,7 +268,7 @@ class PaymentForm extends React.Component {
 
           message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
         }
-      }  else {
+      } else {
 
         message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
       }
@@ -328,6 +324,8 @@ class PaymentForm extends React.Component {
             {this.renderUserForm()}
 
             <PaymentMethod ref="methodForm" isGift={this.state.isGift}/>
+
+            {this.renderGift()}
 
             {this.renderCGU()}
             {this.renderDroits()}
