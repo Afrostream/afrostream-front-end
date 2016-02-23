@@ -19,16 +19,18 @@ class PaymentSuccess extends React.Component {
 
   render() {
     return (
-      <div className="payment-success">
-        <h3>{this.props.isGift ? 'Votre cadeau a bien été enregistré' : 'Votre abonnement a bien été enregistré'}</h3>
+      <div className="payment-wrapper">
+        <div className="payment-success">
+          <h3>{this.props.isGift ? 'Votre cadeau a bien été enregistré' : 'Votre abonnement a bien été enregistré'}</h3>
 
-        <h3>merci pour votre {this.props.isGift ? 'support' : 'inscription'}</h3>
+          <h3>merci pour votre {this.props.isGift ? 'support' : 'inscription'}</h3>
 
-        <p className="success">
-          <Link className="success-button"
-                to="/">{this.props.isGift ? 'Continuer' : 'Commencez'} la visite sur le site
-          </Link>
-        </p>
+          <p className="success">
+            <Link className="success-button"
+                  to="/">{this.props.isGift ? 'Continuer' : 'Commencez'} la visite sur le site
+            </Link>
+          </p>
+        </div>
       </div>
     );
   }

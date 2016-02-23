@@ -45,19 +45,21 @@ class PaymentError extends React.Component {
   render() {
 
     return (
-      <div className="payment-error">
-        <h3>{this.props.title}</h3>
+      <div className="payment-wrapper">
+        <div className="payment-error">
+          <h3>{this.props.title}</h3>
 
-        <h4>{this.props.message}</h4>
+          <h4>{this.props.message}</h4>
 
-        <p className="error">
-          {typeof this.props.message !== 'undefined' && this.props.message === 'Votre session a expiré, veuillez recommencer.'
-            ?
-            <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
-            :
-            <a className="error-link" href={this.props.link}>{this.props.linkMessage}</a>
-          }
-        </p>
+          <p className="error">
+            {typeof this.props.message !== 'undefined' && this.props.message === 'Votre session a expiré, veuillez recommencer.'
+              ?
+              <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
+              :
+              <a className="error-link" href={this.props.link}>{this.props.linkMessage}</a>
+            }
+          </p>
+        </div>
       </div>
     );
   }
