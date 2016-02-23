@@ -71,6 +71,16 @@ export default createReducer(initialState, {
     });
   },
 
+  [ActionTypes.User.getHistory](state, { res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`history`]: data
+    });
+  },
+
   [ActionTypes.User.getVideoTracking](state, { videoId, res }) {
     if (!res) {
       return state;

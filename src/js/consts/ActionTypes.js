@@ -18,6 +18,7 @@ export default {
     pendingUser: null,
     trackVideo: null,
     rateVideo: null,
+    getHistory: null,
     getVideoTracking: null,
     getRecommendations: null,
     getFavoritesMovies: null,

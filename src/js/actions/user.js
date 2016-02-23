@@ -95,6 +95,28 @@ export function cancelSubscription() {
 }
 
 /**
+ * Get history movies/episodes for user
+ * @returns {Function}
+ */
+export function getHistory() {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    const refreshToken = getState().OAuth.get('refreshToken');
+    if (!user) {
+      return {
+        type: ActionTypes.User.getHistory,
+        res: null
+      }
+    }
+
+    return async api => ({
+      type: ActionTypes.User.getHistory,
+      res: await api(`/api/users/${user.get('_id')}/history`, 'GET', {}, token, refreshToken)
+    });
+  };
+}
+/**
  * Get favorites movies/episodes for user
  * @param type
  * @returns {Function}

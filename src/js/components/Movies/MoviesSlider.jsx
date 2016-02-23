@@ -58,7 +58,7 @@ class MoviesSlider extends React.Component {
       return (<div/>);
     }
 
-    let index = 0;
+    let index = null;
 
     //Si on a un episode ou movie dans les params url, on scroll to this point
     if (selectedId) {
