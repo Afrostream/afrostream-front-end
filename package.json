@@ -124,7 +124,6 @@
     "request": "^2.67.0",
     "scroll-behavior": "^0.3.0",
     "serve-favicon": "^2.3.0",
-    "sitemap-generator": "^3.0.2",
     "stats-webpack-plugin": "^0.2.1",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.12.3",
