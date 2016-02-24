@@ -269,6 +269,9 @@ class PaymentForm extends React.Component {
         }
       }
       // === TODO refactor this === ^
+      if (err.response && err.response.body) {
+        message = err.response.body.error;
+      }
 
       self.disableForm(false, 2, message);
       self.context.history.pushState(null, `/select-plan/${planCode}/error`);
