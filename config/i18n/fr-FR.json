@@ -57,7 +57,7 @@
       "global": "Une erreur inconnue s’ est produite, veuillez recommencer.",
       "fields": "Les champs indiqués semblent invalides : ",
       "abo": "Erreur lors de la création de l’abonnement : ",
-      "retry": "merci de réessayer"
+      "retry": "Merci de réessayer"
     },
     "cgu": {
       "label": "J'accepte les Conditions Générales d'Utilisation",

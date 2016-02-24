@@ -185,13 +185,6 @@ export function getProfile() {
       await actionDispatcher(OAuthActionCreators.getIdToken());
       const user = getState().User.get('user');
       return async () => {
-        //If user alwready in app
-        if (user) {
-          return {
-            type: ActionTypes.User.getProfile,
-            user: user.toJS()
-          };
-        }
         return mergeProfile({
           type: ActionTypes.User.getProfile,
           user: null

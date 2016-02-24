@@ -43,8 +43,8 @@ class PaymentForm extends React.Component {
     });
   }
 
-  componentDidUpdate() {
-    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : false;
+  componentWillReceiveProps() {
+    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
     this.setState({
       hasLib: hasOneLib
     });
@@ -238,7 +238,9 @@ class PaymentForm extends React.Component {
 
     return await dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
       self.disableForm(false, 1);
+      dispatch(UserActionCreators.getProfile());
       self.context.history.pushState(null, `/select-plan/${planCode}/success`);
+      //On merge les infos en faisait un new call a getProfile
     }).catch(function (err) {
       let message = '';
       let errorMessage = '';
