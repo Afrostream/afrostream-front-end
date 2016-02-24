@@ -57,10 +57,14 @@ class RecurlyForm extends React.Component {
     if (~excludedCards.indexOf($.payment.cardType(cardNumber))) {
       //$('#errors').text('Ce type ne carte n‘est pas pris en charge actuellement');
       $('.recurly-cc-number').addClass('has-error');
-      throw new Error('Ce type ne carte n‘est pas pris en charge actuellement');
+      throw new Error(config.dict.payment.errors.exludedCard);
     }
 
-    let recurlyInfo = _.merge({
+    let recurlyInfo = {
+      'plan-code': billingInfo.internalPlanUuid,
+      'first_name': billingInfo.firstName,
+      'last_name': billingInfo.lastName,
+      'email': billingInfo.email,
       // required attributes
       'number': this.refs.cardNumber.value,
 
@@ -73,7 +77,7 @@ class RecurlyForm extends React.Component {
       'unit-amount-in-cents': currentPlan.price,
       'coupon_code': this.refs.couponCode.value,
       'country': this.refs.country.value()
-    }, billingInfo);
+    };
 
     return await new Promise(
       (resolve, reject) => {

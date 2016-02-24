@@ -46,7 +46,7 @@ class GocardlessForm extends React.Component {
           customer_bank_account_tokens: {
             iban: this.refs.iban.value,
             country_code: this.refs.country.value(),
-            account_holder_name: `${billingInfo.first_name} ${billingInfo.last_name}`
+            account_holder_name: `${billingInfo.firstName} ${billingInfo.lastName}`
           }
         }, (response) => {
           if (response.error) {

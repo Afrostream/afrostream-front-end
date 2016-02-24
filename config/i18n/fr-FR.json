@@ -58,6 +58,7 @@
       "global": "Une erreur inconnue s’ est produite, veuillez recommencer.",
       "fields": "Les champs indiqués semblent invalides : ",
       "abo": "Erreur lors de la création de l’abonnement : ",
+      "exludedCard": "Ce type ne carte n‘est pas pris en charge actuellement",
       "retry": "Merci de réessayer"
     },
     "cgu": {

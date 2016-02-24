@@ -204,9 +204,6 @@ class PaymentForm extends React.Component {
     }
 
     let billingInfo = {
-      'plan-code': planCode,
-      'first_name': this.refs.firstName.value,
-      'last_name': this.refs.lastName.value,
       'email': user.get('email'),
       //NEW BILLING API
       internalPlanUuid: planCode,
