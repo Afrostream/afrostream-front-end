@@ -89,7 +89,6 @@ class PaymentForm extends React.Component {
     // Disable the submit button
     $('[data-recurly]').removeClass('has-error');
     $('.conditions-generales').removeClass('checkbox-has-error');
-    $('.droit-retractation').removeClass('checkbox-has-error');
     $('#errors').text('');
     $('input').removeClass('error');
     this.disableForm(true);
@@ -99,13 +98,6 @@ class PaymentForm extends React.Component {
       $('.conditions-generales').addClass('checkbox-has-error');
       self.disableForm(false);
       return;
-    }
-
-    if (!$('.checkbox-droit-retractation').is(':checked')) {
-        $('#errors').text("Vous devez cocher toutes les cases pour confirmer l'abonnement.");
-        $('.droit-retractation').addClass('checkbox-has-error');
-        self.disableForm(false);
-        return;
     }
 
     //Excluded cart type message
