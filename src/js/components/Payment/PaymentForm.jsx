@@ -10,7 +10,8 @@ import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import PaymentMethod from './PaymentMethod';
 import {RecurlyForm,GocardlessForm} from './Forms';
-
+import Query from 'dom-helpers/query';
+import DomClass from 'dom-helpers/class';
 import _ from 'lodash';
 
 if (process.env.BROWSER) {
@@ -291,6 +292,14 @@ class PaymentForm extends React.Component {
         fields: formatError.fields || []
       }
     });
+
+    const containerDom = ReactDOM.findDOMNode(this);
+    _.forEach(formatError.fields, (errorField)=> {
+      let fields = Query.querySelectorAll(containerDom, `[data-billing=${errorField}]`);
+      _.forEach(fields, (field)=> {
+        DomClass.addClass(field, 'has-error');
+      });
+    });
   }
 
   disableForm(disabled, status = 0, message = '') {
@@ -299,6 +308,11 @@ class PaymentForm extends React.Component {
       message: message,
       subscriptionStatus: status,
       loading: disabled
+    });
+    const containerDom = ReactDOM.findDOMNode(this);
+    let fields = Query.querySelectorAll(containerDom, '[data-billing]');
+    _.forEach(fields, (field)=> {
+      DomClass.removeClass(field, 'has-error');
     });
   }
 
@@ -319,7 +333,7 @@ class PaymentForm extends React.Component {
           <form ref="form" onSubmit={::this.onSubmit} id="subscription-create"
                 data-async>
 
-            <section id="error" ref="error">{this.state.error ? this.state.error.message : ''}</section>
+            {this.state.error ? <section id="error" ref="error">{this.state.error.message}</section> : ''}
 
             {this.renderUserForm()}
 
