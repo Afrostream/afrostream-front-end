@@ -50,6 +50,7 @@ class RecurlyForm extends React.Component {
 
   async submit(billingInfo, currentPlan) {
 
+    const self = this;
     const cardNumber = $('.recurly-cc-number').val();
     const excludedCards = ['visaelectron', 'maestro'];
 
@@ -59,29 +60,28 @@ class RecurlyForm extends React.Component {
       $('.recurly-cc-number').addClass('has-error');
       throw new Error(config.dict.payment.errors.exludedCard);
     }
-
     let recurlyInfo = {
       'plan-code': billingInfo.internalPlanUuid,
       'first_name': billingInfo.firstName,
       'last_name': billingInfo.lastName,
       'email': billingInfo.email,
       // required attributes
-      'number': this.refs.cardNumber.value,
+      'number': self.refs.cardNumber.value,
 
       'month': $('.recurly-cc-exp').payment('cardExpiryVal').month,
       'year': $('.recurly-cc-exp').payment('cardExpiryVal').year,
 
-      'cvv': this.refs.cvc.value,
+      'cvv': self.refs.cvc.value,
       // optional attributes
       'starts_at': currentPlan.date,
       'unit-amount-in-cents': currentPlan.price,
-      'coupon_code': this.refs.couponCode.value,
-      'country': this.refs.country.value()
+      'coupon_code': self.refs.couponCode.value,
+      'country': self.refs.country.value()
     };
 
     return await new Promise(
       (resolve, reject) => {
-        let recurlyLib = this.state.hasLib;
+        let recurlyLib = self.state.hasLib;
 
         recurlyLib.token(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
@@ -93,7 +93,8 @@ class RecurlyForm extends React.Component {
             //NEW BILLING API
             billingProvider: 'recurly',
             subOpts: {
-              customerBankAccountToken: token.id
+              customerBankAccountToken: token.id,
+              couponCode: self.refs.couponCode.value
             }
           }, recurlyInfo));
         });
