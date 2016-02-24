@@ -31,11 +31,15 @@ class MoviePage extends React.Component {
   render() {
     const {
       props: {
-        params: { movieId, seasonId, episodeId }
+        params: { movieId, seasonId, episodeId },
+        children
         }
       } = this;
 
     const dataId = movieId;
+    if (children) {
+      return children;
+    }
     return (
       <div className="row-fluid">
         {movieId ? <MovieInfo maxLength={600} active={true} load={false} {...{dataId}}/> : ''}

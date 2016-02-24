@@ -39,11 +39,12 @@ export default (
         <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
       </Route>
       <Route name="favoris" path="favoris" component={FavoritesPage}/>
-      <Route name="movie" path=":movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)"
-             component={MoviePage}/>
-      <Route name="player"
-             path=":movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)/:videoId"
-             component={PlayerPage}/>
+      <Route name="movie" path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
+             component={MoviePage}>
+        <Route name="player"
+               path=":videoId"
+               component={PlayerPage}/>
+      </Route>
       <Redirect from="/" to="/selection"/>
     </Route>
     <Route path="*" component={NoMatch}/>

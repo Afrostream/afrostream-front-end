@@ -97,12 +97,13 @@ class SeasonList extends React.Component {
     const dataList = season.get('episodes');
     const thumbW = 200;
     const thumbH = 110;
+    const type = 'episode';
 
     if (episodeId) {
       selectedId = episodeId
     }
     return (
-      <MoviesSlider key="season-list" {...this.props} {...{dataList, thumbW, thumbH, selectedId}}/>
+      <MoviesSlider key="season-list" {...this.props} {...{dataList, thumbW, thumbH, selectedId, type}}/>
     );
   }
 }
