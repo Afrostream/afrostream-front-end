@@ -243,11 +243,10 @@ class PaymentForm extends React.Component {
       //On merge les infos en faisait un new call a getProfile
     }).catch(function (err) {
       let message = '';
-      let errorMessage = '';
 
-      if (err.response.status === 400) {
-        errorMessage = JSON.parse(err.response.text);
-        // === TODO refactor this ===
+      // === TODO refactor this ===
+      if (err.response && err.response.status === 400) {
+        let errorMessage = JSON.parse(err.response.text);
         if (errorMessage.name === 'RecurlyError' &&
           typeof errorMessage.errors !== 'undefined' &&
           typeof errorMessage.errors[0] !== 'undefined' &&
@@ -265,10 +264,10 @@ class PaymentForm extends React.Component {
         } else {
           message = dict.payment.errors.global;
         }
-        // === TODO refactor this === ^
       } else {
         message = dict.payment.errors.global;
       }
+      // === TODO refactor this === ^
 
       self.disableForm(false, 2, message);
       self.context.history.pushState(null, `/select-plan/${planCode}/error`);
