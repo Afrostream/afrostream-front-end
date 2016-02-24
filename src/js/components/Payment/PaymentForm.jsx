@@ -345,20 +345,6 @@ class PaymentForm extends React.Component {
               </div>
 
               <div className="row">
-                <div className="form-group  col-md-12 droit-retractation">
-                  <input
-                    type="checkbox"
-                    className="checkbox-droit-retractation"
-                    name="droit-retractation"
-                    id="droit-retractation"/>
-                  <div className="text-droit-retractation">
-                    Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger
-                    le formulaire de rétractation</a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
                 <div className="form-group  col-md-12">
                   <button
                     id="subscribe"
