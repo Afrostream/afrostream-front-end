@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import classSet from 'classnames';
-import config from '../../../../config/client';
+import {planCodes,dict} from '../../../../config/client';
 import * as UserActionCreators from '../../actions/user';
 import Spinner from '../Spinner/Spinner';
 import GiftDetails from './GiftDetails';
@@ -28,8 +28,8 @@ class PaymentForm extends React.Component {
     hasLib: true,
     subscriptionStatus: 0,
     loading: false,
-    isGift: 0,
-    pageHeader: 'Commencez votre abonnement'
+    isGift: false,
+    pageHeader: dict.payment.header
   };
 
   hasPlan() {
@@ -38,8 +38,15 @@ class PaymentForm extends React.Component {
         params: { planCode }
         }
       } = this;
-    return _.find(config.planCodes, function (plan) {
+    return _.find(planCodes, function (plan) {
       return planCode === plan.code;
+    });
+  }
+
+  componentDidUpdate() {
+    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : false;
+    this.setState({
+      hasLib: hasOneLib
     });
   }
 
@@ -49,19 +56,17 @@ class PaymentForm extends React.Component {
         params: { planCode }
         }
       } = this;
-
-    if (planCode === 'afrostreamgift') {
-      this.setState({
-        isGift: 1,
-        pageHeader: 'Formule Cadeau - 1 an de films et séries afro pour 59,99€'
-      });
-    }
+    let currentPlan = this.hasPlan();
+    this.setState({
+      isGift: currentPlan && currentPlan.code === 'afrostreamgift',
+      currentPlan: currentPlan
+    });
   }
 
   renderUserForm() {
     return (<div className="row">
       <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="first_name">Votre Prénom</label>
+        <label className="form-label" htmlFor="first_name">{dict.payment.name}</label>
         <input
           type="text"
           className="form-control first-name"
@@ -69,11 +74,11 @@ class PaymentForm extends React.Component {
           ref="firstName"
           id="first_name"
           name="first-name"
-          placeholder="Votre prénom" required
+          placeholder={dict.payment.name} required
           disabled={this.state.disabledForm}/>
       </div>
       <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="last_name">Votre Nom</label>
+        <label className="form-label" htmlFor="last_name">{dict.payment.lastName}</label>
         <input
           type="text"
           className="form-control last-name"
@@ -81,7 +86,7 @@ class PaymentForm extends React.Component {
           ref="lastName"
           id="last_name"
           name="last-name"
-          placeholder="Votre nom" required
+          placeholder={dict.payment.lastName} required
           disabled={this.state.disabledForm}/>
       </div>
     </div>);
@@ -103,7 +108,7 @@ class PaymentForm extends React.Component {
           form="subscription-create"
           className="button-create-subscription"
           disabled={this.state.disabledForm}
-        >{this.state.isGift ? 'OFFREZ' : 'DÉMARREZ' } MAINTENANT
+        >{this.state.isGift ? dict.payment.gift.sublit : dict.payment.sublit }
         </button>
       </div>
     </div>);
@@ -129,9 +134,8 @@ class PaymentForm extends React.Component {
           disabled={this.state.disabledForm}
           required
         />
-        <div className="checkbox-label">
-          Je renonce au droit de rétractation <a href="/pdfs/formulaire-retractation.pdf" target="_blank">Télécharger
-          le formulaire de rétractation</a>
+        <div className="checkbox-label">{dict.payment.droits.label} <a href="/pdfs/formulaire-retractation.pdf"
+                                                                       target="_blank">{dict.payment.droits.link}</a>
         </div>
       </div>
     </div>);
@@ -158,9 +162,8 @@ class PaymentForm extends React.Component {
           required
         />
 
-        <div className="checkbox-label">
-          J'accepte les Conditions Générales d'Utilisation <a href="/pdfs/conditions-utilisation.pdf"
-                                                              target="_blank">( En savoir plus )</a>
+        <div className="checkbox-label">{dict.payment.cgu.label} <a href="/pdfs/conditions-utilisation.pdf"
+                                                                    target="_blank">{dict.payment.cgu.link}</a>
         </div>
       </div>
     </div>);
@@ -194,7 +197,7 @@ class PaymentForm extends React.Component {
     if (!this.refs.cgu.checked || !this.refs.droits.checked) {
       //$('.conditions-generales').addClass('checkbox-has-error');
       return this.error({
-        message: 'Vous devez cocher toutes les cases pour confirmer l‘abonnement.',
+        message: dict.payment.errors.checkbox,
         fields: ['cgu', 'droits']
       });
     }
@@ -242,35 +245,27 @@ class PaymentForm extends React.Component {
 
       if (err.response.status === 400) {
         errorMessage = JSON.parse(err.response.text);
-
+        // === TODO refactor this ===
         if (errorMessage.name === 'RecurlyError' &&
           typeof errorMessage.errors !== 'undefined' &&
           typeof errorMessage.errors[0] !== 'undefined' &&
           errorMessage.errors[0].field === 'subscription.account.base' &&
           errorMessage.errors[0].symbol === 'declined') {
-
-          message = 'Veuillez contacter votre banque ou utilisez une autre carte.';
-
+          message = dict.payment.errors.card;
         } else if (errorMessage.name === 'RecurlyError' &&
           typeof errorMessage.errors !== 'undefined' &&
           typeof errorMessage.errors[0] !== 'undefined' &&
           errorMessage.errors[0].field === 'subscription.coupon_code' &&
           errorMessage.errors[0].symbol === 'invalid') {
-
-          message = 'Le code promo n\'est pas ou plus valide pour cette formule.';
-
+          message = dict.payment.errors.coupon;
         } else if (errorMessage.name === 'SelfGiftError') {
-
-          message = 'Les courriels de l\'offrant et de destination sont identiques. ' +
-            'Vérifiez le courriel de destination de votre cadeau';
-
+          message = dict.payment.errors.gift;
         } else {
-
-          message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
+          message = dict.payment.errors.global;
         }
+        // === TODO refactor this === ^
       } else {
-
-        message = 'une erreur inconnue s\'est produite, veuillez recommencer.';
+        message = dict.payment.errors.global;
       }
 
       self.disableForm(false, 2, message);
@@ -287,7 +282,7 @@ class PaymentForm extends React.Component {
     this.disableForm(false);
     this.setState({
       error: {
-        message: formatError.message || 'Les champs indiqués semblent invalides: ',
+        message: formatError.message || dict.payment.errors.fields,
         fields: formatError.fields || []
       }
     });
@@ -311,7 +306,7 @@ class PaymentForm extends React.Component {
 
     return (
       <div className="payment-wrapper">
-        <div className="enter-payment-details">{this.state.pageHeader}</div>
+        <div className="enter-payment-details">{dict.payment.planCodes[this.state.currentPlan.code]}</div>
         <div className="payment-form">
           <div className={classSet(spinnerClasses)}>
             <Spinner />
@@ -346,10 +341,10 @@ class PaymentForm extends React.Component {
 
     if (!this.state.hasLib) {
       return (<PaymentError
-        title="Paiement indisponible"
-        message="Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
-        link="mailto:support@afrostream.tv"
-        linkMessage="Si le probleme persiste, veuillez contacter notre support technique"
+        title={dict.payment.errors.noLib.title}
+        message={dict.payment.errors.noLib.message}
+        link={dict.payment.errors.noLib.message}
+        linkMessage={dict.payment.errors.noLib.linkMessage}
       />);
     }
 

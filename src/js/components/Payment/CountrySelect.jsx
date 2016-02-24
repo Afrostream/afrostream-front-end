@@ -1,4 +1,5 @@
 import React from 'react';
+import {dict} from '../../../../config/client';
 
 class CountrySelect extends React.Component {
   value() {
@@ -9,9 +10,9 @@ class CountrySelect extends React.Component {
 
     return (
       <div className="form-group col-md-4">
-        <label className="form-label" htmlFor="country">Pays</label>
+        <label className="form-label" htmlFor="country">{dict.payment.country.label}</label>
         <select className="form-control card-country" ref="country" id="country" name="country" required
-                defaultValue="FR">
+                defaultValue={dict.payment.country.defaultValue}>
           <option value="AF">Afghanistan</option>
           <option value="ZA">Afrique du Sud</option>
           <option value="AL">Albanie</option>

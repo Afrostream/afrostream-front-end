@@ -4,7 +4,7 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import LogOutButton from '../../components/User/LogOutButton';
 import * as UserActionCreators from '../../actions/user';
 import * as IntercomActionCreators from '../../actions/intercom';
-import config from '../../../../config';
+import {dict} from '../../../../config';
 
 @connect(({ User }) => ({User}))
 class PaymentError extends React.Component {
@@ -17,10 +17,10 @@ class PaymentError extends React.Component {
   };
 
   static defaultProps = {
-    title: 'Erreur lors de la création de l’abonnement:',
+    title: dict.payment.errors.abo,
     message: '',
     link: '/',
-    linkMessage: 'merci de réessayer'
+    linkMessage: dict.payment.errors.retry
   };
 
   componentWillUnmount() {
@@ -48,16 +48,9 @@ class PaymentError extends React.Component {
       <div className="payment-wrapper">
         <div className="payment-error">
           <h3>{this.props.title}</h3>
-
           <h4>{this.props.message}</h4>
-
           <p className="error">
-            {typeof this.props.message !== 'undefined' && this.props.message === 'Votre session a expiré, veuillez recommencer.'
-              ?
-              <button className="error-button" onClick={::this.logOut}>merci de réessayer</button>
-              :
-              <a className="error-link" href={this.props.link}>{this.props.linkMessage}</a>
-            }
+            <a className="error-link" href={this.props.link}>{this.props.linkMessage}</a>
           </p>
         </div>
       </div>

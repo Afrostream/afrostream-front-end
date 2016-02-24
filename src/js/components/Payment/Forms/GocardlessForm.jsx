@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import classSet from 'classnames';
-import config from '../../../../../config/client';
+import {gocardless,dict} from '../../../../../config/client';
 import CountrySelect from './../CountrySelect';
 import iban from './iban-validator';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -11,6 +11,10 @@ class GocardlessForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {hasLib: false};
+  }
+
+  hasLib() {
+    return this.state.hasLib;
   }
 
   static propTypes = {
@@ -38,7 +42,7 @@ class GocardlessForm extends React.Component {
     return await new Promise(
       (resolve, reject) => {
         window['GoCardless'].customerBankAccountTokens.create({
-          publishable_access_token: config.gocardless.key,
+          publishable_access_token: gocardless.key,
           customer_bank_account_tokens: {
             iban: this.refs.iban.value,
             country_code: this.refs.country.value(),
@@ -116,7 +120,7 @@ class GocardlessForm extends React.Component {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">Payment par virement</label>
+            <label className="form-label">{dict.payment.virement.label}</label>
             <img src="/images/payment/virement.jpg"/>
           </div>
         </div>

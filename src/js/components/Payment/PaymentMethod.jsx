@@ -22,14 +22,25 @@ class PaymentMethod extends React.Component {
   }
 
   static propTypes = {
-    isGift: React.PropTypes.number
+    isGift: React.PropTypes.bool
   };
 
   static defaultProps = {
-    isGift: 0
+    isGift: false
   };
 
   static methods = Methods;
+
+  hasLib() {
+    switch (this.state.method) {
+      case  Methods.GOCARDLESS:
+        return this.refs.gocardless.hasLib();
+        break;
+      case  Methods.CARD:
+        return this.refs.card.hasLib();
+        break;
+    }
+  }
 
   method() {
     return this.state.method;

@@ -15,7 +15,7 @@ class GiftDetails extends React.Component {
       <div>
         <div className="row">
           <div className="card-details">
-            <div className="card-details-text">COORDONNEES DU BENEFICIAIRE DU CADEAU</div>
+            COORDONNEES DU BENEFICIAIRE DU CADEAU
           </div>
         </div>
         <div className="row">

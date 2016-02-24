@@ -14,6 +14,10 @@ class RecurlyForm extends React.Component {
     this.state = {hasLib: false};
   }
 
+  hasLib() {
+    return this.state.hasLib;
+  }
+
   static propTypes = {
     selected: React.PropTypes.bool
   };
@@ -33,12 +37,14 @@ class RecurlyForm extends React.Component {
     $('.recurly-cc-exp').payment('formatCardExpiry');
     $('.recurly-cc-cvc').payment('formatCardCVC');
     //Detect si le payment via la lib recurly est dispo
+    let recurlyLib = window['recurly'];
+
     this.setState({
-      hasLib: recurly
+      hasLib: recurlyLib
     });
 
-    if (recurly && !recurly.configured) {
-      recurly.configure(config.recurly.key);
+    if (recurlyLib && !recurlyLib.configured) {
+      recurlyLib.configure(config.recurly.key);
     }
   }
 
@@ -71,7 +77,9 @@ class RecurlyForm extends React.Component {
 
     return await new Promise(
       (resolve, reject) => {
-        recurly.token(recurlyInfo, (err, token)=> {
+        let recurlyLib = self.state.hasLib;
+
+        recurlyLib.token(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
           if (err) {
             reject(err);
@@ -98,7 +106,7 @@ class RecurlyForm extends React.Component {
   renderPromoCode() {
     return (
       <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="coupon_code">Code promo</label>
+        <label className="form-label" htmlFor="coupon_code">{config.dict.payment.promo.label}</label>
         <input
           type="text"
           className="form-control coupon-code"
@@ -106,7 +114,7 @@ class RecurlyForm extends React.Component {
           name="coupon_code"
           id="coupon_code"
           ref="couponCode"
-          placeholder="Entrez votre code"
+          placeholder={config.dict.payment.promo.placeHolder}
           disabled={this.state.disabledForm}/>
       </div>
     );
@@ -118,7 +126,7 @@ class RecurlyForm extends React.Component {
     return (
       <div className="row" ref="goCardlessForm">
         <div className="form-group col-md-6">
-          <label className="form-label" htmlFor="number">Numéro de carte</label>
+          <label className="form-label" htmlFor="number">{config.dict.payment.creditCard.number}</label>
           <input
             type="tel"
             className="form-control recurly-cc-number card-number"
@@ -127,22 +135,22 @@ class RecurlyForm extends React.Component {
             name="number"
             id="number"
             autoComplete="cc-number"
-            placeholder="1234 5678 8901 1234" required/>
+            placeholder={config.dict.payment.creditCard.placeHolder} required/>
         </div>
         <CountrySelect ref="country"/>
         <div className="form-group col-md-4">
-          <label className="form-label" htmlFor="month">Date de validité</label>
+          <label className="form-label" htmlFor="month">{config.dict.payment.creditCard.exp}</label>
           <input type="tel" className="form-control recurly-cc-exp" data-billing="month"
                  name="month" id="month"
                  autoComplete="cc-exp"
-                 placeholder="MM/AA" required/>
+                 placeholder={config.dict.payment.creditCard.expPlaceHolder} required/>
         </div>
         <div className="form-group col-md-4">
-          <label className="form-label" htmlFor="cvv">Code sécurité</label>
+          <label className="form-label" htmlFor="cvv">{config.dict.payment.creditCard.cvv}</label>
           <input type="tel" className="form-control recurly-cc-cvc" data-billing="cvv"
                  ref="cvc"
                  name="cvv" id="cvv" autoComplete="off"
-                 placeholder="123" required/>
+                 placeholder={config.dict.payment.creditCard.cvcPlaceHolder} required/>
         </div>
 
         {this.renderPromoCode()}
@@ -171,7 +179,7 @@ class RecurlyForm extends React.Component {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">Payment par carte bancaire</label>
+            <label className="form-label">{config.dict.payment.creditCard.label}</label>
             <img src="/images/payment/bank-cards.png"/>
           </div>
         </div>
