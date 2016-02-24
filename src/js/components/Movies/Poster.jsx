@@ -20,24 +20,6 @@ class Poster extends LoadVideo {
     this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: ''};
   }
 
-  static propTypes = {
-    thumbW: React.PropTypes.number,
-    thumbH: React.PropTypes.number,
-    preload: React.PropTypes.bool,
-    favorite: React.PropTypes.bool,
-    share: React.PropTypes.bool,
-    type: React.PropTypes.string
-  };
-
-  static defaultProps = {
-    thumbW: 140,
-    thumbH: 200,
-    preload: false,
-    favorite: true,
-    share: true,
-    type: 'episode'
-  };
-
   componentDidMount() {
     if (this.state.status === Status.LOADING) {
       this.createLoader();
@@ -74,7 +56,7 @@ class Poster extends LoadVideo {
       props: { data,type}
       } = this;
 
-    return data.get('type') || type;
+    return type || data.get('type');
   }
 
   createLoader() {
@@ -209,5 +191,23 @@ class Poster extends LoadVideo {
 
   }
 }
+
+Poster.propTypes = {
+  thumbW: React.PropTypes.number,
+  thumbH: React.PropTypes.number,
+  preload: React.PropTypes.bool,
+  favorite: React.PropTypes.bool,
+  share: React.PropTypes.bool,
+  type: React.PropTypes.string
+};
+
+Poster.defaultProps = {
+  thumbW: 140,
+  thumbH: 200,
+  preload: false,
+  favorite: true,
+  share: true,
+  type: 'movie'
+};
 
 export default Poster;

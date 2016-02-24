@@ -28,8 +28,9 @@ class MoviesList extends React.Component {
           const dataList = categorie.get('movies');
           const label = categorie.get('label');
           const slug = categorie.get('slug');
+
           return <MoviesSlider
-            key={`categorie-${categorie.get('_id')}-${i}`} {...{dataList, label, slug}} />
+            key={`categorie-${categorie.get('_id')}-${i}`} {...this.props} {...{dataList, label, slug}} />
         }).toJS() : ''}
       </div>
     );

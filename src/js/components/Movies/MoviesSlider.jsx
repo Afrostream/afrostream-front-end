@@ -17,12 +17,11 @@ class MoviesSlider extends React.Component {
     dataList: PropTypes.instanceOf(Immutable.List).isRequired,
     selectedId: React.PropTypes.string,
     label: React.PropTypes.string,
-    slug: React.PropTypes.string,
-    thumbW: React.PropTypes.number,
-    thumbH: React.PropTypes.number
+    slug: React.PropTypes.string
   };
 
   static defaultProps = {
+    selectedId: null,
     label: '',
     slug: ''
   };
@@ -30,7 +29,7 @@ class MoviesSlider extends React.Component {
   renderItem(index) {
     const {
       props: {
-        dataList,thumbW,thumbH
+        dataList,thumbW,thumbH,type
         }
       } = this;
 
@@ -41,7 +40,7 @@ class MoviesSlider extends React.Component {
       <Thumb
         id={dataId}
         preload={true}
-        key={`data-thumb-${index}`} {...{data, dataId, thumbW, thumbH}}  />
+        key={`data-thumb-${index}`} {...this.props} {...{data, dataId}}  />
     );
   }
 
