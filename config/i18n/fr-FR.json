@@ -53,6 +53,7 @@
       "checkbox": "Vous devez cocher toutes les cases pour confirmer l‘abonnement.",
       "card": "Veuillez contacter votre banque ou utilisez une autre carte.",
       "coupon": "Le code promo n’ est pas ou plus valide pour cette formule.",
+      "already": "Vous avez deja souscrit à cette formule.",
       "gift": "Les courriels de l’ offrant et de destination sont identiques.Vérifiez le courriel de destination de votre cadeau",
       "global": "Une erreur inconnue s’ est produite, veuillez recommencer.",
       "fields": "Les champs indiqués semblent invalides : ",

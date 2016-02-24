@@ -77,21 +77,21 @@ class RecurlyForm extends React.Component {
 
     return await new Promise(
       (resolve, reject) => {
-        let recurlyLib = self.state.hasLib;
+        let recurlyLib = this.state.hasLib;
 
         recurlyLib.token(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
           if (err) {
             reject(err);
           }
-          resolve({
+          resolve(_.merge({
             'recurly-token': token.id,
             //NEW BILLING API
             billingProvider: 'recurly',
             subOpts: {
               customerBankAccountToken: token.id
             }
-          });
+          }, recurlyInfo));
         });
       });
   }

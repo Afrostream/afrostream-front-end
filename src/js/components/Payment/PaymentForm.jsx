@@ -38,7 +38,7 @@ class PaymentForm extends React.Component {
         params: { planCode }
         }
       } = this;
-    return _.find(planCodes, function (plan) {
+    return _.find(planCodes, (plan) => {
       return planCode === plan.code;
     });
   }
@@ -236,36 +236,37 @@ class PaymentForm extends React.Component {
 
     const self = this;
 
-    return await dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(function () {
+    return await dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(() => {
       self.disableForm(false, 1);
       dispatch(UserActionCreators.getProfile());
       self.context.history.pushState(null, `/select-plan/${planCode}/success`);
       //On merge les infos en faisait un new call a getProfile
-    }).catch(function (err) {
-      let message = '';
+    }).catch((err) => {
+      let message = dict.payment.errors.global;
 
       // === TODO refactor this ===
       if (err.response && err.response.status === 400) {
         let errorMessage = JSON.parse(err.response.text);
-        if (errorMessage.name === 'RecurlyError' &&
-          typeof errorMessage.errors !== 'undefined' &&
-          typeof errorMessage.errors[0] !== 'undefined' &&
-          errorMessage.errors[0].field === 'subscription.account.base' &&
-          errorMessage.errors[0].symbol === 'declined') {
-          message = dict.payment.errors.card;
-        } else if (errorMessage.name === 'RecurlyError' &&
-          typeof errorMessage.errors !== 'undefined' &&
-          typeof errorMessage.errors[0] !== 'undefined' &&
-          errorMessage.errors[0].field === 'subscription.coupon_code' &&
-          errorMessage.errors[0].symbol === 'invalid') {
-          message = dict.payment.errors.coupon;
-        } else if (errorMessage.name === 'SelfGiftError') {
-          message = dict.payment.errors.gift;
-        } else {
-          message = dict.payment.errors.global;
+        let errorField;
+        switch (errorMessage.name) {
+          case 'RecurlyError':
+            errorField = errorMessage.errors && errorMessage.errors.length && errorMessage.errors[0];
+            if (errorField) {
+              if (errorField.field === 'subscription.account' && errorField.symbol === 'declined') {
+                message = dict.payment.errors.card;
+              }
+              else if (errorField.field === 'subscription.base' && errorField.symbol === 'already_subscribed') {
+                message = dict.payment.errors.already;
+              }
+              else if (errorField.field === 'subscription.coupon_code' && errorField.symbol === 'invalid') {
+                message = dict.payment.errors.coupon;
+              }
+            }
+            break;
+          case 'SelfGiftError':
+            message = dict.payment.errors.gift;
+            break;
         }
-      } else {
-        message = dict.payment.errors.global;
       }
       // === TODO refactor this === ^
 
