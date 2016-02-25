@@ -9,7 +9,7 @@ import SearchInput from './../Search/SearchBox';
 import FavoritesButton from './../Favorites/FavoritesButton';
 import config from '../../../../config';
 
-@connect(({ User, OAuth }) => ({User, OAuth}))
+@connect(({ User, OAuth, Event }) => ({User, OAuth, Event}))
 class UserButton extends React.Component {
 
   componentDidMount() {
@@ -35,8 +35,7 @@ class UserButton extends React.Component {
     const {
       props: {
         User,
-        OAuth,
-        dispatch
+        OAuth
         }
       } = this;
 
@@ -47,8 +46,10 @@ class UserButton extends React.Component {
         return (
           <ul className="nav navbar-nav navbar-right">
             <li className="btn-user pull-right">
-              <a href="#" role="button" onClick={::this.toggleSideBar}><img src={user.get('picture')} alt="50x50"
-                                                                            className="icon-user img-thumbnail"/></a>
+              <a href="#" role="button" onClick={::this.toggleSideBar} id="userButton"><img src={user.get('picture')}
+                                                                                            alt="50x50"
+                                                                                            id="userButtonImg"
+                                                                                            className="icon-user img-thumbnail"/></a>
             </li>
             <li className="pull-right">
               <SearchInput/>
@@ -88,7 +89,7 @@ class UserButton extends React.Component {
   toggleSideBar() {
     const {
       props: {
-        dispatch
+        dispatch,Event
         }
       } = this;
 

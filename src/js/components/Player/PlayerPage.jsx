@@ -8,6 +8,7 @@ import * as PlayerActionCreators from '../../actions/player';
 import * as UserActionCreators from '../../actions/user';
 import * as CategoryActionCreators from '../../actions/category';
 import * as EpisodeActionCreators from '../../actions/episode';
+import * as RecoActionCreators from '../../actions/reco';
 import PlayerComponent from './PlayerComponent';
 
 @prepareRoute(async function ({ store, params: { movieId, seasonId, episodeId, videoId } }) {
@@ -30,7 +31,7 @@ import PlayerComponent from './PlayerComponent';
   }
 
   if (videoId && videoId !== 'undefined') {
-    await store.dispatch(VideoActionCreators.getVideo(videoId))
+    await store.dispatch(VideoActionCreators.getVideo(videoId));
   }
 
   return await * [

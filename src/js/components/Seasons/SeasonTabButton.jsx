@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { Component,PropTypes } from 'react';
+import Immutable from 'immutable';
+
 import { connect } from 'react-redux';
 import classSet from 'classnames';
 import * as SeasonActionCreators from '../../actions/season';
+import { Link } from 'react-router';
 
-@connect(({ Season }) => ({Season})) class SeasonTabButton extends React.Component {
+@connect(({ Season }) => ({Season}))
+class SeasonTabButton extends Component {
 
   static propTypes = {
+    active: React.PropTypes.bool.isRequired,
     index: React.PropTypes.number.isRequired,
-    seasonId: React.PropTypes.number.isRequired
+    season: PropTypes.instanceOf(Immutable.Map),
   };
 
   render() {
     const {
       props: {
-        active,index
+        active,index,season,
+        params:{
+          movieId,
+          movieSlug
+          }
         }
       } = this;
 
@@ -22,8 +31,12 @@ import * as SeasonActionCreators from '../../actions/season';
       'season--active': active
     });
 
+    const seasonId = season.get('_id');
+    const seasonSlug = season.get('slug');
+
+    //:movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)
     return (
-      <span className={classes} onClick={::this.toggleSeason}>SAISON {index + 1}</span>
+      <Link className={classes} to={`/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}`}>SAISON {index + 1}</Link>
     );
   }
 

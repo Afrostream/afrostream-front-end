@@ -16,6 +16,28 @@ class Thumb extends Poster {
     super(props);
   }
 
+  static propTypes = {
+    thumbW: React.PropTypes.number,
+    thumbH: React.PropTypes.number,
+    preload: React.PropTypes.bool,
+    favorite: React.PropTypes.bool,
+    share: React.PropTypes.bool,
+    showDescription: React.PropTypes.bool,
+    showTitle: React.PropTypes.bool,
+    type: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    thumbW: 140,
+    thumbH: 200,
+    preload: false,
+    favorite: true,
+    share: true,
+    showDescription: true,
+    showTitle: true,
+    type: 'movie'
+  };
+
   triggerOver() {
     let thumbMouse = ReactDOM.findDOMNode(this);
     if (thumbMouse) {
@@ -32,7 +54,7 @@ class Thumb extends Poster {
 
   getInfos() {
     const {
-      props: { data }
+      props: { data,showTitle,showDescription }
       } = this;
 
     const type = this.getType();
@@ -53,8 +75,8 @@ class Thumb extends Poster {
     }
 
     return (<div ref="info" className="thumb-info">
-      <div className="thumb-info__title">{title}</div>
-      <div className="thumb-info__synopsis">{synopsis}</div>
+      {showTitle ? <div className="thumb-info__title">{title}</div> : '' }
+      {showDescription ? <div className="thumb-info__synopsis">{synopsis}</div> : '' }
     </div>)
   }
 

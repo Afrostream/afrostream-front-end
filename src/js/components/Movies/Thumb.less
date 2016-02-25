@@ -3,28 +3,29 @@
 .thumb {
   @thumb-width: 140px;
   @thumb-height: 200px;
+  @thumb-height-episode: 120px;
   @thumb-margin: 10px;
   padding: @thumb-margin;
   display: inline-block;
   position: relative;
   text-align: left;
   overflow: hidden;
-  height: 200px + (@thumb-margin * 2);
+  //height: @thumb-height + (@thumb-margin * 2);
   width: @thumb-width + (@thumb-margin * 2);
   flex: 1;
   &.episode {
     width: 210px;
     a {
       .thumb-background {
-        height: 60%;
-        position: relative;
+        height: @thumb-height-episode;
       }
       .thumb-new__item {
         background-image: url(../../../assets/images/movie/label-nouveau-episode.png);
       }
     }
     .thumb-buttons {
-      bottom: 45%;
+      top: 85px;
+      right: 13px;
     }
   }
   a {
@@ -62,11 +63,12 @@
     }
     .thumb-background {
       border: 1px solid #FFFFFF;
-      position: absolute;
+      position: relative;
       top: 0;
       left: 0;
       bottom: 0;
       right: 0;
+      height: @thumb-height;
       vertical-align: middle;
       background-image: url(../../../assets/images/default/134x200.jpg);
       background-size: cover;
@@ -117,8 +119,8 @@
   .thumb-buttons {
     position: absolute;
     z-index: 3;
-    bottom: 15px;
-    right: 15px;
+    top: 165px;
+    right: 11px;
     .btn {
       margin: 5px 5px 5px 0px;
     }

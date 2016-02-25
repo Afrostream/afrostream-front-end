@@ -20,7 +20,7 @@ class SideBar extends React.Component {
     $(document).off('mouseup', this.toggleSideBar.bind(this));
   }
 
-  toggleSideBar() {
+  toggleSideBar(e) {
     const {
       props: {
         dispatch,
@@ -29,8 +29,9 @@ class SideBar extends React.Component {
       } = this;
 
     const toggled = Event.get('sideBarToggled');
-    if (toggled) {
-      dispatch(EventActionCreators.toggleSideBar());
+    let userBtn = (e.target.id == 'userButton' || e.target.id == 'userButtonImg')
+    if (toggled && !userBtn) {
+      this.close();
     }
   }
 

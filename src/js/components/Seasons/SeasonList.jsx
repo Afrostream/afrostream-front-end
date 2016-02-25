@@ -24,16 +24,25 @@ class SeasonList extends React.Component {
   render() {
     const {
       props: {
-        Season,
         Movie,
-        movieId
+        Season,
+        params:{
+          movieId,
+          seasonId
+          }
         }
       } = this;
 
     const seasons = Movie.get(`movies/${movieId}/seasons`);
     let page = Season.get('selected') || 0;
 
+
     if (seasons && seasons.size) {
+      if (seasonId) {
+        page = seasons.findIndex((obj) => {
+          return obj.get('_id') == seasonId;
+        });
+      }
       if ((seasons.size - 1) < page) {
         page = 0;
       }
@@ -57,8 +66,9 @@ class SeasonList extends React.Component {
           key={`season-${season.get('_id')}-${i}`}
           active={page === i}
           index={i}
-          seasonId={season.get('_id')}
-          {...{season}} />).toJS() : ''}
+          {...this.props}
+          {...{season}}
+        />).toJS() : ''}
       </div>
     );
   }
@@ -67,23 +77,33 @@ class SeasonList extends React.Component {
     const {
       props: {
         dispatch,
-        Season
+        Season,
+        params:{
+          episodeId
+          }
         }
       } = this;
 
     const selectedSeasonId = seasons.get(page).get('_id');
     const season = Season.get(`seasons/${selectedSeasonId}`);
+    let selectedId = null;
 
     if (!season && selectedSeasonId) {
       dispatch(SeasonActionCreators.getSeason(selectedSeasonId));
       return (<Spinner />);
     }
 
+
     const dataList = season.get('episodes');
     const thumbW = 200;
     const thumbH = 110;
+    const type = 'episode';
+
+    if (episodeId) {
+      selectedId = episodeId
+    }
     return (
-      <MoviesSlider key="season-list" {...{dataList, thumbW, thumbH}}/>
+      <MoviesSlider key="season-list" {...this.props} {...{dataList, thumbW, thumbH, selectedId, type}}/>
     );
   }
 }

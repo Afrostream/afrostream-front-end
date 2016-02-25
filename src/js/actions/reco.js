@@ -4,8 +4,72 @@ import {reco} from '../../../config';
 import _ from 'lodash';
 
 /**
+ * Get user video params
+ * @returns {Function}
+ */
+export function getVideoTracking(videoId) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+
+    if (!user) {
+      return {
+        type: ActionTypes.User.getVideoTracking,
+        videoId,
+        res: null
+      }
+    }
+
+    let videoUserData = null;
+    return async api => {
+      try {
+        videoUserData = await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {})
+      } catch (e) {
+        console.log(`didn’t find any video user data for videoId : ${videoId}`);
+      }
+      return {
+
+        type: ActionTypes.User.getVideoTracking,
+        videoId,
+        res: videoUserData
+      };
+    };
+  };
+
+}
+/**
+ * Start track video
+ * @returns {Function}
+ */
+export function trackVideo(data, videoId) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    const token = getState().OAuth.get('token');
+    if (!user) {
+      return {
+        type: ActionTypes.User.trackVideo,
+        videoId,
+        res: null
+      }
+    }
+
+    const now = new Date().toISOString();
+
+    let postData = _.merge({
+      dateLastRead: now,
+      playerPosition: 0,
+      playerAudio: 'fra',
+      playerCaption: 'fra'
+    }, data);
+
+    return async api => ({
+      type: ActionTypes.User.trackVideo,
+      videoId,
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', postData, token)
+    });
+  };
+}
+/**
  * Like or not for video recommendation algo
- * TODO connecter a l'api une fois celle ci disponible
  * @returns {Function}
  */
 export function rateVideo(value, videoId) {
@@ -19,19 +83,11 @@ export function rateVideo(value, videoId) {
       }
     }
 
-    return {
+    return async api => ({
       type: ActionTypes.User.rateVideo,
       videoId,
-      res: {
-        body: {rate: value}
-      }
-    };
-
-    //TODO connecter une fois l'api reco presente
-    //return async api => ({
-    //  type: ActionTypes.Reco.getRecommendations,
-    //  res: await api(`/api/users/me/videos`, 'PUT', {rate:value, videoId: videoId})
-    //});
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', {rating: value}, token)
+    });
   };
 }
 /**

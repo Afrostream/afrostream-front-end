@@ -5,8 +5,10 @@ import client from './client';
 const config = _.merge(
   {
     metadata: {
-      title: 'Afrostream.tv',
       domain: 'https://afrostream.tv',
+      title: 'Afrostream.tv',
+      description: 'AFROSTREAM, LES MEILLEURS FILMS ET SÉRIES AFRO EN ILLIMITÉ',
+      shareImage: 'https://afrostream.imgix.net/production/poster/2015/12/ba55e2f3825608f0aabe-affichage_320x240_afrostream_wow-imp2.jpg'
       metas: [
         {
           property: 'fb:app_id',
@@ -39,8 +41,7 @@ const config = _.merge(
         {
           name: 'keywords',
           content: 'netflix, afro, cinema, black, series, shows, empire, cookie, webseries, musique, afrostream, viola davis, taraji p henson, blackxploitation, film, nollywood, ghana, france'
-        }],
-      shareImage: 'https://afrostream.imgix.net/production/poster/2015/12/ba55e2f3825608f0aabe-affichage_320x240_afrostream_wow-imp2.jpg'
+        }]
     },
     /**
      * Front-End Server

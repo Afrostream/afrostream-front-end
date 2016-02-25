@@ -12,6 +12,7 @@ import {detectUA} from './PlayerUtils';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import * as EpisodeActionCreators from '../../actions/episode';
 import * as EventActionCreators from '../../actions/event';
+import * as RecoActionCreators from '../../actions/reco';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import NextEpisode from './NextEpisode';
@@ -48,6 +49,7 @@ class PlayerComponent extends Component {
         height: 1920,
         width: 815
       },
+      showStartTimeAlert: false,
       fullScreen: false,
       nextReco: false
     };
@@ -97,6 +99,78 @@ class PlayerComponent extends Component {
     this.setState({
       nextReco: false
     });
+  }
+
+  getPlayerTracks(type) {
+    let tracks = [];
+    let audioIndex = this.player.tech['featuresAudioIndex'];
+    let metrics = this.player.getPlaybackStatistics();
+    let bitrateIndex = metrics.video.bitrateIndex || this.player.tech['featuresBitrateIndex'];
+
+    let key;
+    switch (type) {
+      case 'caption' :
+        tracks = this.player.textTracks() || [];
+        key = 'language';
+        break;
+      case 'audio' :
+        tracks = this.player.audioTracks() || [];
+        key = 'lang';
+        break;
+      case 'video' :
+        tracks = this.player.videoTracks() || [];
+        key = 'bitrate';
+        break;
+    }
+
+    const selectedTrack = _.find(tracks, (track)=> {
+      switch (type) {
+        case 'caption' :
+          return track.mode === 'showing';
+          break;
+        case 'audio' :
+          return track.index === audioIndex;
+          break;
+        case 'video' :
+          return track.qualityIndex === bitrateIndex;
+          break;
+      }
+    });
+
+    return selectedTrack ? selectedTrack[key] : '';
+  }
+
+  /**
+   * Start track video on start
+   */
+  onFirstPlay() {
+    this.trackVideo();
+  }
+
+  /**
+   * Track User video playing
+   */
+  trackVideo() {
+    const {
+      props: {dispatch, videoId}
+      } = this;
+
+    clearTimeout(this.trackTimeout);
+
+    const playerAudio = this.getPlayerTracks('audio');
+    const playerCaption = this.getPlayerTracks('caption');
+    const playerBitrate = this.getPlayerTracks('video');
+    const playerPosition = parseInt(this.player.currentTime(), 10);
+
+    let data = {
+      playerAudio: playerAudio,
+      playerCaption: playerCaption,
+      playerBitrate: playerBitrate,
+      playerPosition: playerPosition
+    };
+
+    dispatch(RecoActionCreators.trackVideo(data, videoId));
+    this.trackTimeout = setTimeout(::this.trackVideo, 60000);
   }
 
   getNextComponent() {
@@ -369,7 +443,7 @@ class PlayerComponent extends Component {
   async getPlayerData(videoData) {
     const {
       props: {
-        OAuth,Player,Movie,User,movieId
+        OAuth,Player,Movie,User,movieId,videoId
         }
       } = this;
 
@@ -487,6 +561,11 @@ class PlayerComponent extends Component {
         };
         playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData);
       }
+      //Tracking
+      let videoTracking = User.get(`video/${videoId}`);
+      if (videoTracking) {
+        playerData.starttime = videoTracking.get('playerPosition');
+      }
     }
     try {
       playerData.next = await this.getNextVideo();
@@ -494,7 +573,7 @@ class PlayerComponent extends Component {
       playerData.next = null;
       console.log('player : Next video error', e);
     }
-    //playerData.starttime = 6000;
+
     return playerData;
   }
 
@@ -520,6 +599,9 @@ class PlayerComponent extends Component {
         });
       }
     );
+    player.on('firstplay', ::this.onFirstPlay);
+    player.on('ended', ::this.trackVideo);
+    player.on('seeked', ::this.trackVideo);
     player.on('fullscreenchange', ::this.onFullScreenHandler);
     player.on('timeupdate', ::this.onTimeUpdate);
     player.on('loadedmetadata', ::this.setDurationInfo);
@@ -580,8 +662,10 @@ class PlayerComponent extends Component {
 
     if (this.player) {
       this.player.one('dispose', () => {
-        this.player.off('enterfullscreen');
-        this.player.off('exitfullscreen');
+        this.player.off('firstplay');
+        this.player.off('ended');
+        this.player.off('seeked');
+        this.player.off('fullscreenchange');
         this.player.off('timeupdate');
         this.player.off('loadedmetadata');
         this.player.off('useractive');
@@ -594,6 +678,9 @@ class PlayerComponent extends Component {
         console.log('player : destroyed player');
       });
       console.log('player : destroy player', this.player);
+      //Tracking Finalise tracking video
+      this.trackVideo();
+      //Tracking Finalise tracking video
       await this.player.dispose();
       return null;
     } else {
@@ -699,7 +786,7 @@ class PlayerComponent extends Component {
               {videoDuration ?
                 <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
               <div className=" video-infos_synopsys">{infos.synopsis}</div>
-            </div> : <div />
+            </div> : ''
         }
         {this.getNextComponent()}
       </div>
