@@ -158,7 +158,7 @@ class ModalLogin extends ModalComponent {
     let typeCall = self.getType();
     let postData = _.pick(self.state, ['email', 'password']);
 
-    dispatch(OauthActionCreator[typeCall](postData)).then(function () {
+    dispatch(OauthActionCreator[typeCall](postData)).then(() => {
       self.setState({
         success: true,
         loading: false

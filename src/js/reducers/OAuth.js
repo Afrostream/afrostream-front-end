@@ -1,37 +1,31 @@
 import Immutable from 'immutable';
 import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
+import { storeToken } from '../lib/storage';
 import config from '../../../config/client';
 
 const initialState = Immutable.fromJS({
   pending: false,
-  token: null,
-  refreshToken: null
+  token: null
 });
-
-const storeToken = function (token, refreshToken) {
-  const storageId = config.apiClient.token;
-  const storageRefreshId = config.apiClient.tokenRefresh;
-  if (token) {
-    localStorage.setItem(storageId, token);
-  }
-  if (refreshToken) {
-    localStorage.setItem(storageRefreshId, refreshToken);
-  }
-};
 
 export default createReducer(initialState, {
 
   [ActionTypes.OAuth.getIdToken](state) {
 
     const storageId = config.apiClient.token;
-    const storageRefreshId = config.apiClient.tokenRefresh;
-    let token = localStorage.getItem(storageId);
-    let refreshToken = localStorage.getItem(storageRefreshId);
+    let storedData = localStorage.getItem(storageId);
+    let tokenData = null;
+    if (storedData) {
+      try {
+        tokenData = JSON.parse(storedData);
+      } catch (err) {
+        console.log('deserialize oauth data error');
+      }
+    }
 
     return state.merge({
-      ['token']: token,
-      ['refreshToken']: refreshToken
+      ['token']: tokenData
     });
   },
 
@@ -40,10 +34,9 @@ export default createReducer(initialState, {
       return state;
     }
     const data = res.body;
-    storeToken(data.accessToken, data.refreshToken);
+    storeToken(data);
     return state.merge({
-      [`token`]: data.accessToken,
-      ['refreshToken']: data.refreshToken
+      [`token`]: data
     });
   },
 
@@ -52,44 +45,39 @@ export default createReducer(initialState, {
       return state;
     }
     const data = res.body;
-    storeToken(data.accessToken, data.refreshToken);
+    storeToken(data);
 
     return state.merge({
-      [`token`]: data.accessToken,
-      ['refreshToken']: data.refreshToken
+      [`token`]: data
     });
   },
 
 
-  [ActionTypes.OAuth.facebook](state, {  res, token, accessToken}) {
+  [ActionTypes.OAuth.facebook](state, { res }) {
     if (!res) {
       return state;
     }
-    storeToken(token, accessToken);
+    const data = res.body;
+    storeToken(data);
 
     return state.merge({
-      [`token`]: token,
-      ['refreshToken']: accessToken
+      [`token`]: data
     });
   },
 
   [ActionTypes.OAuth.reset](state) {
     return state.merge({
-      ['token']: null,
-      ['refreshToken']: null
+      ['token']: null
     });
   },
 
   [ActionTypes.OAuth.logOut](state) {
 
     const storageId = config.apiClient.token;
-    const storageRefreshId = config.apiClient.tokenRefresh;
     localStorage.removeItem(storageId);
-    localStorage.removeItem(storageRefreshId);
 
     return state.merge({
-      ['token']: null,
-      ['refreshToken']: null
+      ['token']: null
     });
   }
 

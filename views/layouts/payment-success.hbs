@@ -14,10 +14,15 @@
             window.opener.focus();
 
         var storageId = '{{storageId}}';
-        var tokenData = '{{tokenData}}';
+        var storageRefreshId = '{{storageRefreshId}}';
+        var token = '{{token}}';
+        var refreshToken = '{{refreshToken}}';
 
-        if (tokenData) {
-            localStorage.setItem(storageId, tokenData);
+        if (token) {
+            localStorage.setItem(storageId, token);
+        }
+        if (refreshToken) {
+            localStorage.setItem(storageRefreshId, refreshToken);
         }
 
         window.close();

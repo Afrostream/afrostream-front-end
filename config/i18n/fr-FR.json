@@ -10,6 +10,66 @@
   "search": {
     "noData": "La recherche n'a trouvé aucun resultat"
   },
+  "payment": {
+    "methodHeader": "Choisissez votre methode de payment",
+    "sublit": "DÉMARREZ MAINTENANT",
+    "name": "Votre Prénom",
+    "lastName": "Votre Nom",
+    "planCodes": {
+      "afrostreammonthly": "Formule Mensuel - 6,99€ par mois sans engagement",
+      "afrostreamambassadeurs": "Formule Ambassadeurs - 1 an de films et séries afro pour 59,99€",
+      "afrostreamgift": "Formule Cadeau - 1 an de films et séries afro pour 59,99€"
+    },
+    "country": {
+      "label": "Pays",
+      "defaultValue": "FR"
+    },
+    "gift": {
+      "sublit": "OFFREZ MAINTENANT"
+    },
+    "promo": {
+      "label": "Code promo",
+      "placeHolder": "Entrez votre code"
+    },
+    "virement": {
+      "label": "Paiement par virement bancaire"
+    },
+    "creditCard": {
+      "label": "Paiement par carte bancaire",
+      "cvv": "Code sécurité",
+      "cvcPlaceHolder": "123",
+      "exp": "Date de validité",
+      "expPlaceHolder": "MM/AA",
+      "number": "Numéro de carte",
+      "placeHolder": "1234 5678 8901 1234"
+    },
+    "errors": {
+      "noLib": {
+        "title": "Paiement indisponible",
+        "link": "mailto:support@afrostream.tv",
+        "linkMessage": "Si le probleme persiste, veuillez contacter notre support technique",
+        "message": "Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
+      },
+      "checkbox": "Vous devez cocher toutes les cases pour confirmer l‘abonnement.",
+      "card": "Veuillez contacter votre banque ou utilisez une autre carte.",
+      "coupon": "Le code promo n’ est pas ou plus valide pour cette formule.",
+      "already": "Vous avez deja souscrit à cette formule.",
+      "gift": "Les courriels de l’ offrant et de destination sont identiques.Vérifiez le courriel de destination de votre cadeau",
+      "global": "Une erreur inconnue s’ est produite, veuillez recommencer.",
+      "fields": "Les champs indiqués semblent invalides : ",
+      "abo": "Erreur lors de la création de l’abonnement : ",
+      "exludedCard": "Ce type ne carte n‘est pas pris en charge actuellement",
+      "retry": "Merci de réessayer"
+    },
+    "cgu": {
+      "label": "J'accepte les Conditions Générales d'Utilisation",
+      "link": "(En savoir plus)"
+    },
+    "droits": {
+      "label": "Je renonce au droit de rétractation",
+      "link": "Télécharger le formulaire de rétractation"
+    }
+  },
   "favorites": {
     "noData": "Aucun Favoris ajouté à mon profil",
     "labelPage": "Mes Favoris"

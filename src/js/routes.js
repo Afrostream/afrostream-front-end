@@ -11,8 +11,7 @@ import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
 import FavoritesPage from './components/Favorites/FavoritesPage';
 import SearchPage from './components/Search/SearchPage';
-import PaymentPage from './components/Payment/PaymentPage';
-import PaymentForm from './components/Payment/PaymentForm';
+import {PaymentPage,PaymentMethod,PaymentForm} from './components/Payment/';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
 import * as Static from './components/Static';
 import * as Blog from './components/Blog';
@@ -32,7 +31,7 @@ export default (
       <Route name="post" path=":postId(/:postSlug)" component={Blog.View}/>
     </Route>
     <Route name="payment" path="select-plan" component={PaymentPage}>
-      <Route name="plancode" path=":planCode(/:status)" component={PaymentForm}/>
+      <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>
     <Route name="home" path="/" component={HomePage}>
       <Route name="search" path="recherche" component={SearchPage}/>

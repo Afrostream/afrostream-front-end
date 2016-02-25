@@ -2,179 +2,205 @@
 
 .payment-wrapper {
   width: 100%;
-  min-height: 95%;
-  background-color: #d4d0d6;
-  padding-top: 140px;
-  padding-bottom: 30px;
-
-  @media all and (max-width: @screen-sm-min) {
-    padding-top: 100px;
-  }
-}
-
-.enter-payment-details {
-  color: #452F50;
-  margin-top: 20px;
-  position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 20px;
-  font-size: 24px;
-  text-align: left;
-  font-weight: bold;
-  width: 80%;
-
-  @media all and (max-width: @screen-xs-min) {
-    font-size: 20px;
-    text-align: center;
-  }
-}
-
-.conditions-generales {
-  width: 100%;
-  margin: 20px 0 0 0;
-  text-align: left;
-
-  .checkbox-conditions-generales {
-    width: 20px;
-  }
-  .text-conditions-generales {
-    color: #281430;
-    font-weight: bold;
-    text-align: left;
-    line-height: 16px;
-    display: inline;
-
-    a {
-      color: #9800B4;
-    }
-  }
-}
-
-.droit-retractation {
-  width: 100%;
-  margin: 20px 0 0 0;
-  text-align: left;
-
-  .checkbox-droit-retractation {
-    width: 20px;
-  }
-
-  .text-droit-retractation {
-    color: #281430;
-    font-weight: bold;
-    text-align: left;
-    line-height: 16px;
-    display: inline;
-
-    a {
-      color: #9800B4;
-    }
-  }
-}
-
-.payment-form {
-
-  //recreate local variables
-  @input-height-base: 34px;
-  @input-height-small: 30px;
-  @input-height-large: 46px;
-  @padding-base-horizontal: 12px;
-  @grid-gutter-width: 30px;
-  @screen-sm-min: 768px;
-
-  background-color: #ffffff;
-  color: #6F248B;
-  position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 30px 30px 30px 45px;
-  font-size: 12px;
-  text-align: center;
-  width: 80%;
-
-  @media all and (max-width: @screen-xs-min) {
-    padding: 30px 30px 30px 30px;
-  }
-
-  .spinner-payment {
-    position: absolute;
-    display: none;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 3;
-    &.spinner-loading {
-      display: block;
-    }
-  }
-
-  .subscription-form {
-    height: 100%;
-  }
-
-  .card-details {
+  min-height: 100%;
+  .payment-error,
+  .payment-success {
+    color: @color-purple;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
-    color: @gray;
-    font-size: 16px;
-    line-height: 32px;
-    display: -webkit-flex;
-    padding: 0 0 15px 0;
-    margin-bottom: 15px;
-    border-bottom: @gray-lighter solid 1px;
+    height: 100%;
+    font-size: 12px;
+    text-align: center;
+
+    h3 {
+      margin-bottom: 20px;
+    }
+
+    .error {
+      margin-top: 30px;
+    }
+
+    .error-link {
+      color: @color-purple-1;
+      text-decoration: underline;
+      font-size: 20px;
+    }
+
+    .error-button,
+    .success-button {
+      color: @color-purple-1;
+      font-weight: bold;
+      background-color: @color-yellow;
+      padding: 10px 20px 10px 20px;
+      border-radius: 20px;
+      border: none;
+    }
+  }
+
+  .enter-payment-details {
+    color: @color-purple;
+    margin-top: 20px;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+    font-size: 24px;
+    text-align: left;
+    font-weight: bold;
 
     @media all and (max-width: @screen-xs-min) {
-      display: inline-block;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
+  .checkbox {
+    text-align: left;
+    input[type='checkbox'] {
+      margin-left: 0;
+    }
+    .checkbox-label {
+      margin-left: 20px;
+      color: @color-indigo;
+      font-weight: bold;
+      text-align: left;
+      line-height: 1.5;
+      display: inline;
+      a {
+        color: @color-purple-1;
+      }
+    }
+  }
+
+  .payment-form {
+    //recreate local variables
+    @input-height-base: 34px;
+    @input-height-small: 30px;
+    @input-height-large: 46px;
+    @padding-base-horizontal: 12px;
+    @grid-gutter-width: 30px;
+    @screen-sm-min: 768px;
+
+    background-color: #ffffff;
+    color: @color-purple-1;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    text-align: center;
+
+    @media all and (max-width: @screen-xs-min) {
+      padding: 30px 30px 30px 30px;
     }
 
-    .card-details-img {
-      margin-left: 20px;
+    .spinner-payment {
+      position: fixed;
+      display: none;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 3;
+      &.spinner-loading {
+        display: block;
+      }
+    }
+
+    .subscription-form {
+      height: 100%;
+    }
+    .panel {
+      border-radius: 0;
+      border-bottom: @gray-lighter solid 1px;
+      &.collapsed {
+        border-bottom: fade(@gray-lighter, 30%) solid 1px;
+      }
+    }
+    .payment-method-details {
+      line-height: 2;
+      padding: 5px 0 5px 0;
+      text-align: left;
+      .accordion-toggle {
+        label {
+          color: @color-purple-1;
+          cursor: pointer;
+        }
+        &:hover {
+          label {
+            color: @color-purple-2;
+          }
+        }
+        &:before {
+          /* symbol for "opening" panels */
+          font: normal normal normal 14px/1 FontAwesome; /* essential for enabling glyphicon */
+          content: "\f078"; /* adjust as needed, taken from bootstrap.css */
+          float: left; /* adjust as needed */
+          color: @color-indigo; /* adjust as needed */
+          margin-right: 10px;
+          font-size: 1.3em;
+        }
+        &.collapsed {
+          label {
+            color: fade(@color-purple-1, 40%); /* adjust as needed */
+          }
+          &:before {
+            /* symbol for "collapsed" panels */
+            color: fade(@color-indigo, 40%); /* adjust as needed */
+            content: "\f054"; /* adjust as needed, taken from bootstrap.css */
+          }
+        }
+
+        img {
+          margin-left: 20px;
+        }
+      }
+    }
+    .card-details,
+    .form-label {
+      float: left;
+      color: @color-purple-1;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .card-details {
+      padding: 15px 0 15px 0;
+    }
+
+    .button-create-subscription {
+      font-weight: bold;
+      background-color: #F0C530;
+      color: @brand-black;
+      padding: 10px 20px 10px 20px;
+      border-radius: 20px;
+      border: none;
+      margin-top: 20px;
+      float: left;
 
       @media all and (max-width: @screen-xs-min) {
-        margin-left: 0px;
-      }
-
-      img {
-        max-height: 32px;
+        float: inherit;
       }
     }
-  }
 
-  .form-label {
-    float: left;
-    color: #6F248B;
-    font-size: 12px;
-    font-weight: bold;
-  }
-
-  .button-create-subscription {
-    font-weight: bold;
-    background-color: #F0C530;
-    color: #000000;
-    padding: 10px 20px 10px 20px;
-    border-radius: 20px;
-    border: none;
-    margin-top: 20px;
-    float: left;
-
-    @media all and (max-width: @screen-xs-min) {
-      float: inherit;
+    .has-error {
+      border-color: @brand-error;
     }
-  }
 
-  .has-error {
-    border-color: #a94442;
-  }
+    .checkbox-has-error {
+      border: 1px solid @brand-error;
+    }
 
-  .checkbox-has-error {
-    border: 1px solid #a94442;
-  }
-
-  #errors {
-    color: #a94442;
+    #error {
+      color: @brand-error;
+      padding: 10px;
+      margin: 10px 0 10px 0;
+      border: 1px solid @brand-error;
+      background-color: fade(@brand-error, 15%)
+    }
   }
 }

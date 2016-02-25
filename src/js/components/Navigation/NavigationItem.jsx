@@ -25,6 +25,9 @@ class NavigationItem extends React.Component {
       'active': active
     });
 
+    if (!item) {
+      return (<div />);
+    }
     return (
       <li className="navigation-item">
         <a className={classes} href={`/#${item.get('slug')}`}>{item.get('label')}</a>
@@ -35,11 +38,14 @@ class NavigationItem extends React.Component {
   changeSlide() {
     const {
       props: {
-        dispatch
+        dispatch,
+        item
         }
       } = this;
 
-    dispatch(CategoryActionCreators.getSpots(this.props.item.get('_id')));
+    if (item) {
+      dispatch(CategoryActionCreators.getSpots(item.get('_id')));
+    }
   }
 }
 

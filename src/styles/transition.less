@@ -16,6 +16,33 @@
   transition: opacity 300ms ease-in;
 }
 
+.accordion-enter {
+  opacity: 0;
+  //transform: translate(0, -25px);
+  //transform: translate3d(0, -25px, 0);
+  &.accordion-enter-active {
+    opacity: 1;
+    //transform: translate(0, 0);
+    //transform: translate3d(0, 0, 0);
+    transition-property: transform, opacity;
+    transition-duration: 100ms;
+    transition-timing-function: cubic-bezier(0.175, 0.665, 0.320, 1), linear;
+  }
+}
+
+.accordion-leave {
+  opacity: 1;
+  //transform: translate(0, 0);
+  //transform: translate3d(0, 0, 0);
+  &.accordion-leave-active {
+    opacity: 0;
+    //transform: translate(0, -25px);
+    //transform: translate3d(0, -25px, 0);
+    transition-property: transform, opacity;
+    transition-duration: 100ms;
+  }
+}
+
 //==== page-transition
 .animation-container {
   //display: inline-block;
