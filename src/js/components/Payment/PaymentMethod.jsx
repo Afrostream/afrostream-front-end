@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
-import {dict} from '../../../../config';
+import {dict,payment} from '../../../../config';
 import { Link } from 'react-router';
 
 import {RecurlyForm,GocardlessForm} from './Forms';
@@ -18,7 +18,7 @@ class PaymentMethod extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {method: props.isGift ? Methods.CARD : Methods.GOCARDLESS};
+    this.state = {method: props.isGift ? Methods.CARD : payment.default};
   }
 
   static propTypes = {

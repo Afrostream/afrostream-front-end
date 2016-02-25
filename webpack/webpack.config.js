@@ -139,6 +139,7 @@ const webpackConfig = {
         HEROKU_APP_NAME: JSON.stringify(process.env.HEROKU_APP_NAME),
         RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY),
         CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
+        GOCARDLESS_PUBLIC_KEY: JSON.stringify(process.env.GOCARDLESS_PUBLIC_KEY),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)
       }
     }),

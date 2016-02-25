@@ -80,6 +80,9 @@ const config = {
       price: '5999'
     }
   ],
+  payment: {
+    default: 'gocardless' //gocardless/card
+  },
   //add alerts to front (same as cookies)
   alerts: [],
   google: {
@@ -191,7 +194,7 @@ const config = {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
   },
   gocardless: {
-    key: process.env.GOCARDLESS_PUBLIC_KEY || 'sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL'
+    key: process.env.GOCARDLESS_PUBLIC_KEY || 'none'
   },
   algolia: {
     appId: process.env.ALGOLIA_APP_ID || '3OKNPL7ZVA',
