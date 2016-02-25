@@ -1,5 +1,4 @@
 import React ,{PropTypes } from 'react';
-
 import { connect } from 'react-redux';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -8,7 +7,6 @@ import AlertMessage from './Alert/AlertMessage';
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames';
 import { metasData,analytics } from '../decorators';
-
 if (process.env.BROWSER) {
   require('./Application.less');
 }

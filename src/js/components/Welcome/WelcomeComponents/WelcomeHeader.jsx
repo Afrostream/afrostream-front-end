@@ -5,6 +5,7 @@ import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../../../config';
 import _ from 'lodash';
+import MobileDetect from 'mobile-detect';
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
@@ -16,6 +17,7 @@ class WelcomeHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isMobile: false,
       size: {
         height: 1920,
         width: 815
@@ -37,8 +39,15 @@ class WelcomeHeader extends React.Component {
   };
 
   componentDidMount() {
+    let isMobile = false;
+    if (canUseDOM) {
+      const userAgent = (window.navigator && navigator.userAgent) || '';
+      let agent = new MobileDetect(userAgent);
+      isMobile = agent.mobile();
+    }
 
     this.setState({
+      isMobile: isMobile,
       size: {
         height: window.innerHeight,
         width: window.innerWidth
@@ -216,11 +225,11 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        Movie,Video,Season,Episode,params
+        Movie,Season,Episode,params
         }
       } = this;
 
-    let { movieId,videoId,seasonId,episodeId } = params;
+    let { movieId,seasonId,episodeId } = params;
     let info = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
       poster: `${config.metadata.shareImage}`
@@ -234,18 +243,11 @@ class WelcomeHeader extends React.Component {
       movieData = Movie.get(`movies/${movieId}`);
     }
     if (movieData) {
-      //if (videoId) {
-      //  videoData = Video.get(`videos/${videoId}`);
-      //}
-      //if (videoData) {
-      //  episodeData = videoData.get('episode');
-      //}
       if (seasonId) {
         seasonData = Season.get(`seasons/${seasonId}`);
       }
       if (episodeId) {
         if (seasonData) {
-          // episodeData = videoData.get('episode');
           let episodesList = seasonData.get('episodes');
           if (episodesList) {
             episodeData = episodesList.find(function (obj) {
@@ -281,7 +283,7 @@ class WelcomeHeader extends React.Component {
       }
     }
 
-    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`};
+    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}${this.state.isMobile ? '&blur=25' : ''})`};
 
     let promoCode = this.hasPromo();
 
@@ -317,7 +319,9 @@ class WelcomeHeader extends React.Component {
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="promo-content">
             <div className="promo-message">
-              <h2>{promoCode.promoHeader} <div>avec le code promo: {promoCode.code}</div></h2>
+              <h2>{promoCode.promoHeader}
+                <div>avec le code promo: {promoCode.code}</div>
+              </h2>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN
@@ -335,7 +339,9 @@ class WelcomeHeader extends React.Component {
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="promo-content">
             <div className="promo-message">
-              <h2>{promoCode.promoHeader} <div>avec le code promo: {promoCode.code}</div></h2>
+              <h2>{promoCode.promoHeader}
+                <div>avec le code promo: {promoCode.code}</div>
+              </h2>
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showPromoGiftLock}>OFFRIR

@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import UserButton from './../User/UserButton';
 import GoBack from './../GoBack/GoBack';
+import SmartBanner from './SmartBanner';
 import classSet from 'classnames';
-
+import {apps} from '../../../../config';
 if (process.env.BROWSER) {
   require('./Header.less');
 }
@@ -75,11 +76,12 @@ class Header extends React.Component {
 
     return (
       <nav className={classSet(sliderClasses)} role="navigation">
+        <SmartBanner {...apps.params}/>
         <div className="container-fluid">
           <div className="navbar-header">
             { hasHistory ? <GoBack /> : ''}
             <Link className="navbar-brand" to="/">
-              <img src="/images/logo.png" alt="Afrostream.tv" />
+              <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
             <UserButton />
           </div>
