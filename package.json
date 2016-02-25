@@ -117,6 +117,7 @@
     "react-pure-render": "https://registry.npmjs.org/react-pure-render/-/react-pure-render-1.0.2.tgz",
     "react-redux": "^3.1.0",
     "react-router": "1.0.2",
+    "react-smartbanner": "^1.0.1",
     "react-social": "^1.0.4",
     "react-star-rating": "^1.4.2",
     "redux": "^3.0.4",

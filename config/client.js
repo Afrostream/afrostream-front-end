@@ -40,6 +40,13 @@ let gocarlessApi = `//pay${process.env.NODE_ENV !== 'production' ? '-sandbox' : 
 
 const config = {
   /**
+   * APPS
+   */
+  apps: {
+    iosAppId: 'app-id=1066377914',
+    androidAppId: 'app-id=tv.afrostream.app'
+  },
+  /**
    * Front-End Server
    */
   externalsJs: [
