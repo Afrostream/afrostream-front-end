@@ -19,6 +19,7 @@
     background-color: fade(#000, 30%);
   }
   .afrostream-movie {
+
     display: inline-block;
     vertical-align: bottom;
     text-align: left;
@@ -31,9 +32,9 @@
     .afrostream-movie__info {
 
       h1 {
+        font-family: @font-thin;
         color: @white-base;
         text-transform: uppercase;
-        font-family: @font-thin;
         font-size: 3em;
         text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.6);
       }
@@ -57,29 +58,39 @@
       left: @app-padding-mobile;
     }
     .afrostream-statement {
+      font-family: @font-thin;
       font-size: 3.5em;
       line-height: 1.2em;
       margin: 1em 0 1em 0;
+      text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
       span {
         display: block;
       }
     }
 
     .subscribe-button, .gift-button {
-      color: #000000;
-      background-color: #74C3D0;
-      border: none;
-      border-radius: 20px;
+      font-family: @font-thin;
+      color: #FFFFFF;
+      background-color: fade(#74C3D0, 90%);
+      border: 1px solid #74C3D0;
+      border-radius: 5px;
       font-size: 16px;
       font-weight: bold;
       line-height: 36px;
       padding-left: 20px;
       padding-right: 20px;
+      text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.6);
+      &:hover {
+        background-color: fade(#74C3D0, 100%);
+      }
+      .isMobile({ width: 100%; border-radius: 2px; });
     }
 
     .gift-button {
       display: block;
+      .isMobile({ display: none });
       margin-top: 10px;
+      border: none;
       color: #000000;
       background-image: url('../../../../../static/images/gold-texture.png');
     }

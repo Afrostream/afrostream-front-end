@@ -76,6 +76,9 @@ class SmartBanner extends Component {
   }
 
   setType(deviceType) {
+    if (!canUseDOM || !localStorage || !navigator) {
+      return true;
+    }
     let appStoreLanguage = this.props.appStoreLanguage || navigator.language.slice(-2) || navigator.userLanguage.slice(-2);
     let mixins = {
       ios: {
@@ -123,7 +126,7 @@ class SmartBanner extends Component {
     let disabled = this.hasCookies() || this.parseAppId() === '';
     this.setState({
       disabled: disabled
-    })
+    });
 
     if (disabled) {
       this.hide();
@@ -154,9 +157,7 @@ class SmartBanner extends Component {
   }
 
   hasCookies() {
-    if (!canUseDOM || !localStorage) {
-      return true;
-    }
+
     let closed;
     let installed;
     let closedExpire;
@@ -192,7 +193,7 @@ class SmartBanner extends Component {
     // Don't show banner if device isn't iOS or Android, website is loaded in app,
     // user dismissed banner, or we have no app id in meta
     if (this.state.disabled) {
-      return false;
+      return (<div />);
     }
 
     let link = this.settings.getStoreLink();
