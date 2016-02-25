@@ -44,7 +44,12 @@ const config = {
    */
   apps: {
     iosAppId: 'app-id=1066377914',
-    androidAppId: 'app-id=tv.afrostream.app'
+    androidAppId: 'app-id=tv.afrostream.app',
+    params: {
+      button: 'Voir',
+      price: {ios: 'FREE', android: 'FREE'},
+      storeText: {ios: 'Sur l’ App Store', android: 'Sur Google Play'}
+    }
   },
   /**
    * Front-End Server

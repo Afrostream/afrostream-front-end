@@ -31,8 +31,7 @@ export default () => {
         let metas = this.getMetadata();
         return (
           <MetasDataComponent {...this.props} >
-            <SmartBanner button={'Voir'} price={ios: 'FREE', android: 'FREE'}
-                         storeText={ios: 'Sur l’ App Store', android: 'Sur Google Play' }/>
+            <SmartBanner {...config.apps.params}/>
             <Helmet {...metas} />
             {children}
           </MetasDataComponent>
