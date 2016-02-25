@@ -8,7 +8,7 @@ const config = _.merge(
       domain: 'https://afrostream.tv',
       title: 'Afrostream.tv',
       description: 'AFROSTREAM, LES MEILLEURS FILMS ET SÉRIES AFRO EN ILLIMITÉ',
-      shareImage: 'https://afrostream.imgix.net/production/poster/2015/12/ba55e2f3825608f0aabe-affichage_320x240_afrostream_wow-imp2.jpg'
+      shareImage: 'https://afrostream.imgix.net/production/poster/2015/12/ba55e2f3825608f0aabe-affichage_320x240_afrostream_wow-imp2.jpg',
       metas: [
         {
           property: 'fb:app_id',
