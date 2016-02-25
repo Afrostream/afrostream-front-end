@@ -46,8 +46,9 @@ const config = {
     iosAppId: 'app-id=1066377914',
     androidAppId: 'app-id=tv.afrostream.app',
     params: {
+      title: 'Application Afrostream',
       button: 'Voir',
-      price: {ios: 'FREE', android: 'FREE'},
+      price: {ios: 'GRATUITE', android: 'GRATUITE'},
       storeText: {ios: 'Sur l’ App Store', android: 'Sur Google Play'}
     }
   },

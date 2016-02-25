@@ -3,7 +3,6 @@
 import React, { PropTypes,Component } from 'react';
 import Helmet from 'react-helmet';
 import config from '../../../config';
-import SmartBanner from 'react-smartbanner';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import _ from 'lodash';
 
@@ -31,7 +30,6 @@ export default () => {
         let metas = this.getMetadata();
         return (
           <MetasDataComponent {...this.props} >
-            <SmartBanner {...config.apps.params}/>
             <Helmet {...metas} />
             {children}
           </MetasDataComponent>
