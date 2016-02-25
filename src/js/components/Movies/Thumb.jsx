@@ -22,6 +22,8 @@ class Thumb extends Poster {
     preload: React.PropTypes.bool,
     favorite: React.PropTypes.bool,
     share: React.PropTypes.bool,
+    showDescription: React.PropTypes.bool,
+    showTitle: React.PropTypes.bool,
     type: React.PropTypes.string
   };
 
@@ -31,6 +33,8 @@ class Thumb extends Poster {
     preload: false,
     favorite: true,
     share: true,
+    showDescription: true,
+    showTitle: true,
     type: 'movie'
   };
 
@@ -50,12 +54,12 @@ class Thumb extends Poster {
 
   getInfos() {
     const {
-      props: { data,showDescription }
+      props: { data,showTitle,showDescription }
       } = this;
 
     const type = this.getType();
 
-    if (!showDescription && type !== 'episode') {
+    if (type !== 'episode') {
       return '';
     }
     const maxLength = 80;
@@ -71,8 +75,8 @@ class Thumb extends Poster {
     }
 
     return (<div ref="info" className="thumb-info">
-      <div className="thumb-info__title">{title}</div>
-      <div className="thumb-info__synopsis">{synopsis}</div>
+      {showTitle ? <div className="thumb-info__title">{title}</div> : '' }
+      {showDescription ? <div className="thumb-info__synopsis">{synopsis}</div> : '' }
     </div>)
   }
 

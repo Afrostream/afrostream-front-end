@@ -9,7 +9,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 @prepareRoute(async function ({ store }) {
   return await * [
-    store.dispatch(CategoryActionCreators.getAllSpots())
+    store.dispatch(CategoryActionCreators.getAllSpots()),
+    store.dispatch(CategoryActionCreators.getMeaList())
   ];
 })
 @connect(({ User }) => ({User}))

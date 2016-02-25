@@ -12,8 +12,7 @@ import Navigation from '../Navigation/Navigation';
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(EventActionCreators.userActive(true)),
-    store.dispatch(CategoryActionCreators.getMenu()),
-    store.dispatch(CategoryActionCreators.getMeaList()),
+    store.dispatch(CategoryActionCreators.getMenu())
   ];
   return await * [
     store.dispatch(UserActionCreators.getHistory()),

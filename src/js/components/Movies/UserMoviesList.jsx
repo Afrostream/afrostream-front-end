@@ -27,14 +27,15 @@ class UserMoviesList extends React.Component {
     }
     const label = dict.history.label;
     const slug = 'history';
-    const showDescription = true;
+    const showTitle = true;
+    const showDescription = false;
     const thumbW = 200;
     const thumbH = 110;
     const type = 'episode';
     return (
       <div className="movies-list">
         <MoviesSlider
-          key={`user-movie-history`} {...{dataList, label, slug, showDescription, type, thumbW, thumbH}} />
+          key={`user-movie-history`} {...{dataList, label, slug, showTitle, showDescription, type, thumbW, thumbH}} />
       </div>
     );
   }
