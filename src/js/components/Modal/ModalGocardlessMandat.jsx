@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from'react-dom';
 import ModalComponent from './ModalComponent';
+import moment from 'moment';
 import classNames from 'classnames';
 import {dict,gocardless} from '../../../../config';
 
@@ -36,7 +37,8 @@ class ModalGocardlessMandat extends ModalComponent {
       'hide': !this.props.closable
     });
 
-    let dateNow = new Date().toLocaleDateString();
+    moment.locale('fr');
+    let dateNow = moment().format('L');
 
     return (
       <div className="lock-container">

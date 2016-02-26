@@ -45,11 +45,11 @@
         "ibanLabel": "IBAN",
         "ibanDetent": "Détenteur",
         "ibanRef": "Référence",
-        "ibanRefDispo": "Disponible après confirmation",
+        "ibanRefDispo": "Disponible par mail après confirmation",
         "ibanDate": "Date",
         "submit": "Confirmer",
         "cancel": "Annuler",
-        "cgu": "GoCardless apparaîtra sur votre relevé bancaire.Nous vous informerons par email 3 jours avant la date du prélèvement.En signant ce mandat de prélèvement, vous autorisez (A) GoCardless à envoyer des instructions à votre banque pour débiter votre compte, et (B) votre banque à débiter votre compte conformément aux instructions de GoCardless.Vous bénéficiez d’un droit de remboursement par votre banque selon les conditions décrites dans la convention que vous avez passée avec elle. Toute demande de remboursement doit être présentée dans les 8 semaines suivant la date de débit de votre compte.Vos droits concernant le mandat ci-dessus sont expliqués dans un document que vous pouvez obtenir auprès de votre banque."
+        "cgu": "Afrostream apparaîtra sur votre relevé bancaire.\n Nous vous informerons par email 3 jours avant la date du prélèvement.\nEn signant ce mandat de prélèvement, vous autorisez (A) GC re Afrostream à envoyer des instructions à votre banque pour débiter votre compte, et (B) votre banque à débiter votre compte conformément aux instructions de GC re Afrostream.\nVous bénéficiez d’un droit de remboursement par votre banque selon les conditions décrites dans la convention que vous avez passée avec elle. Toute demande de remboursement doit être présentée dans les 8 semaines suivant la date de débit de votre compte.\nVos droits concernant le mandat ci-dessus sont expliqués dans un document que vous pouvez obtenir auprès de votre banque."
       }
     },
     "creditCard": {
