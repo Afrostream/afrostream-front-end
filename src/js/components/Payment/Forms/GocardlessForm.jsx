@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import classSet from 'classnames';
+import { connect } from 'react-redux';
 import {gocardless,dict} from '../../../../../config/client';
 import CountrySelect from './../CountrySelect';
+import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat';
 import iban from './iban-validator';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -10,20 +12,12 @@ class GocardlessForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {hasLib: false};
+    this.state = {
+      modal: false,
+      modalData: null,
+      hasLib: false
+    };
   }
-
-  hasLib() {
-    return this.state.hasLib;
-  }
-
-  static propTypes = {
-    selected: React.PropTypes.bool
-  };
-
-  static defaultProps = {
-    selected: false
-  };
 
   componentDidMount() {
     //Detect si le payment via la lib gocardless est dispo
@@ -32,43 +26,88 @@ class GocardlessForm extends React.Component {
     });
   }
 
-  validate() {
-    this.refs.iban.value = iban.printFormat(this.refs.iban.value, ' ');
-    return iban.isValid(this.refs.iban.value);
+  hasLib() {
+    return this.state.hasLib;
   }
 
   async submit(billingInfo) {
 
+    let self = this;
+
     return await new Promise(
       (resolve, reject) => {
-        window['GoCardless'].customerBankAccountTokens.create({
+        const gcLib = self.state.hasLib;
+        const tokenData = {
+          iban: self.refs.iban.value,
+          country_code: self.refs.country.value(),
+          account_holder_name: `${billingInfo.firstName} ${billingInfo.lastName}`
+        };
+        let error = {
+          message: '',
+          fields: []
+        };
+        gcLib.customerBankAccountTokens.create({
           publishable_access_token: gocardless.key,
-          customer_bank_account_tokens: {
-            iban: this.refs.iban.value,
-            country_code: this.refs.country.value(),
-            account_holder_name: `${billingInfo.firstName} ${billingInfo.lastName}`
-          }
+          customer_bank_account_tokens: tokenData
         }, (response) => {
           if (response.error) {
-            let error = {
-              message: '',
-              fields: []
-            };
             _.forEach(response.error.errors, (value)=> {
               error.fields.push(value.field);
               error.message += `${value.field} ${value.message}`;
             });
+
+            self.setState({
+              modal: false
+            });
+
             reject(error);
+
           } else {
-            resolve({
-              billingProvider: 'gocardless',
-              subOpts: {
-                customerBankAccountToken: response.customer_bank_account_tokens.id
-              }
-            })
+            self.setState({
+              modal: true,
+              modalData: tokenData
+            });
+            let element = ReactDOM.findDOMNode(this);
+            element.addEventListener('acceptmandat', function () {
+              self.setState({
+                modal: false
+              });
+              resolve({
+                billingProvider: 'gocardless',
+                subOpts: {
+                  customerBankAccountToken: response.customer_bank_account_tokens.id
+                }
+              })
+            });
+            element.addEventListener('cancelmandat', function () {
+              self.setState({
+                modal: false
+              });
+              error.message = 'Transaction annulée';
+              reject(error);
+            });
           }
         });
       });
+  }
+
+  static propTypes = {
+    selected: React.PropTypes.bool,
+    isGift: React.PropTypes.bool,
+    planCode: React.PropTypes.string,
+    planLabel: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    selected: false,
+    isGift: false,
+    planCode: null,
+    planLabel: null
+  };
+
+  validate() {
+    this.refs.iban.value = iban.printFormat(this.refs.iban.value, ' ');
+    return iban.isValid(this.refs.iban.value);
   }
 
   onHeaderClick() {
@@ -81,7 +120,6 @@ class GocardlessForm extends React.Component {
   getForm() {
     if (!this.props.selected) return;
     return (
-
       <div className="row" ref="goCardlessForm">
         <div className="form-group col-md-6">
           <label className="form-label" htmlFor="number">IBAN</label>
@@ -116,8 +154,11 @@ class GocardlessForm extends React.Component {
       'collapsed': !this.props.selected
     };
 
+
     return (
       <div className={classSet(classPanel)}>
+        {this.state.modal ?
+          <ModalGocardlessMandat ref="modal" {...this.props} data={this.state.modalData}/> : ''}
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
             <label className="form-label">{dict.payment.virement.label}</label>
@@ -131,7 +172,8 @@ class GocardlessForm extends React.Component {
           {this.getForm()}
         </ReactCSSTransitionGroup>
       </div>
-    );
+    )
+      ;
   }
 }
 

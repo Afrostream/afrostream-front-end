@@ -260,12 +260,12 @@ class ModalLogin extends ModalComponent {
       return (<div className="loading mode">
         <div className="spinner spin-container">
           <div className="spinner-css">
-    <span className="side sp_left">
-    <span className="fill"></span>
-    </span>
-    <span className="side sp_right">
-    <span className="fill"></span>
-    </span>
+            <span className="side sp_left">
+            <span className="fill"/>
+            </span>
+            <span className="side sp_right">
+            <span className="fill"/>
+            </span>
           </div>
           <div className="spin-message">
             <span>&nbsp;</span>

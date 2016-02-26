@@ -35,7 +35,7 @@
       font-weight: bold;
       background-color: @color-yellow;
       padding: 10px 20px 10px 20px;
-      border-radius: 20px;
+      border-radius: 5px;
       border: none;
     }
   }
@@ -93,10 +93,6 @@
     margin-right: auto;
     font-size: 12px;
     text-align: center;
-
-    @media all and (max-width: @screen-xs-min) {
-      padding: 30px 30px 30px 30px;
-    }
 
     .spinner-payment {
       position: fixed;
@@ -182,9 +178,7 @@
       margin-top: 20px;
       float: left;
 
-      @media all and (max-width: @screen-xs-min) {
-        float: inherit;
-      }
+      .isMobile({ float: inherit; });
     }
 
     .has-error {

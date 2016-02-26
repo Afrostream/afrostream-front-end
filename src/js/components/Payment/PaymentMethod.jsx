@@ -22,11 +22,15 @@ class PaymentMethod extends React.Component {
   }
 
   static propTypes = {
-    isGift: React.PropTypes.bool
+    isGift: React.PropTypes.bool,
+    planCode: React.PropTypes.string,
+    planLabel: React.PropTypes.string
   };
 
   static defaultProps = {
-    isGift: false
+    isGift: false,
+    planCode: null,
+    planLabel: null
   };
 
   static methods = Methods;

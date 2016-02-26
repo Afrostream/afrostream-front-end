@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html data-cast-api-enabled="true">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title data-react-helmet="true">Afrostream.tv Mandat Popup</title>
+</head>
+<body>
+
+<div id="main">
+    <h1>Afrostream Application Gocardless - Mandat Success</h1>
+    <script type="text/javascript">
+        if (window.opener)
+            window.opener.focus();
+
+        var redirect_flows = {{{json redirect_flows}}};
+
+        if (redirect_flows) {
+            localStorage.setItem('gocardlessRedirectFlow', JSON.stringify(redirect_flows));
+        }
+
+        window.close();
+    </script>
+</div>
+</body>
+</html>
