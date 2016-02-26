@@ -55,61 +55,61 @@ class ModalGocardlessMandat extends ModalComponent {
                     </div>
                     <div className="mode-container">
                       <div className="mode">
-                        <div className="row-fluid">
-                          <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-md-12">
                             <label>{this.i18n('creancierLabel')}</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-12">
                             {gocardless.creancier.id}
                           </div>
                         </div>
-                        <div className="row-fluid">
-                          <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-md-12">
                             <label> {this.i18n('creancierName')}</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-12">
                             {gocardless.creancier.name}
                           </div>
                         </div>
-                        <div className="row-fluid">
-                          <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-md-12">
                             <label> {this.i18n('creancierAdress')}</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-12">
                             {gocardless.creancier.adress}
                           </div>
                         </div>
                         <div className="divider"/>
-                        <div className="row-fluid">
-                          <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-md-12">
                             <label>{this.i18n('ibanLabel')}</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-12">
                             {this.props.data.iban}
                           </div>
                         </div>
-                        <div className="row-fluid">
-                          <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-md-12">
                             <label> {this.i18n('ibanDetent')}</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-12">
                             {this.props.data.account_holder_name}
                           </div>
                         </div>
-                        <div className="row-fluid">
-                          <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-md-12">
                             <label>{this.i18n('ibanRef')}</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-12">
                             {this.i18n('ibanRefDispo')}
                           </div>
                         </div>
                         <div className="divider"/>
-                        <div className="row-fluid">
-                          <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-md-12">
                             <label>{this.i18n('ibanDate')}</label>
                           </div>
-                          <div className="col-md-6">
+                          <div className="col-md-12">
                             {dateNow}
                           </div>
                         </div>
