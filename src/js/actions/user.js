@@ -59,9 +59,37 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       return data;
     }
   }
-
 };
 
+export function gocardless(planCode, planLabel) {
+  return (dispatch, getState, actionDispatcher) => {
+    const token = getState().OAuth.get('token');
+    let url = `/billing/gocardless/${planCode}?access_token=${token.get('accessToken')}&title=${planLabel}`;
+    let width = 800;
+    let height = 650;
+    let top = (window.outerHeight - height) / 2;
+    let left = (window.outerWidth - width) / 2;
+    return async () => {
+      return await new Promise((resolve, reject) => {
+        const redirectFlowPopup = window.open(encodeURI(url), 'gocardless', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
+        redirectFlowPopup.onbeforeunload = function () {
+          try {
+            let redirectFlows = localStorage.getItem('gocardlessRedirectFlow');
+            let redirectFlowsData = JSON.parse(redirectFlows);
+            localStorage.removeItem('gocardlessRedirectFlow');
+            if (redirectFlowsData) {
+              resolve(redirectFlowsData);
+            } else {
+              throw new Error('get gocardless data redirect impossible');
+            }
+          } catch (err) {
+            reject(err);
+          }
+        }
+      });
+    };
+  };
+}
 /**
  * Subscribe to afrostream plan
  * @param data

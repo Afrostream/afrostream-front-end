@@ -207,7 +207,13 @@ const config = {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
   },
   gocardless: {
-    key: process.env.GOCARDLESS_PUBLIC_KEY || 'none'
+    key: process.env.GOCARDLESS_PUBLIC_KEY || 'sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL',
+    version: '2015-07-06',
+    creancier: {
+      id: 'GB27ZZZSDDBARC0000007495895',
+      name: 'Afrostream',
+      adress: '18 RUE SCRIBE 44000 NANTES'
+    }
   },
   algolia: {
     appId: process.env.ALGOLIA_APP_ID || '3OKNPL7ZVA',

@@ -9,7 +9,6 @@ import GiftDetails from './GiftDetails';
 import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import PaymentMethod from './PaymentMethod';
-import {RecurlyForm,GocardlessForm} from './Forms';
 import Query from 'dom-helpers/query';
 import DomClass from 'dom-helpers/class';
 import _ from 'lodash';
@@ -320,9 +319,11 @@ class PaymentForm extends React.Component {
       'spinner-loading': this.state.loading
     };
 
+    const planLabel = dict.payment.planCodes[this.state.currentPlan.code];
+
     return (
       <div className="payment-wrapper">
-        <div className="enter-payment-details">{dict.payment.planCodes[this.state.currentPlan.code]}</div>
+        <div className="enter-payment-details">{planLabel}</div>
         <div className="payment-form">
           <div className={classSet(spinnerClasses)}>
             <Spinner />
@@ -334,7 +335,8 @@ class PaymentForm extends React.Component {
 
             {this.renderUserForm()}
 
-            <PaymentMethod ref="methodForm" isGift={this.state.isGift}/>
+            <PaymentMethod ref="methodForm" isGift={this.state.isGift} planCode={this.state.currentPlan.code}
+                           planLabel={planLabel}/>
 
             {this.renderGift()}
 

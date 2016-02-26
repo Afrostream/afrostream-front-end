@@ -14,7 +14,9 @@ class ModalComponent extends React.Component {
   }
 
   closeModal() {
-    this.props.dispatch(ModalActionCreators.close());
+    if (this.props.dispatch) {
+      this.props.dispatch(ModalActionCreators.close());
+    }
   }
 
   handleClose(e) {

@@ -25,7 +25,8 @@ export default {
     getFavoritesEpisodes: null,
     setFavoritesMovies: null,
     setFavoritesEpisodes: null,
-    cancelSubscription: null
+    cancelSubscription: null,
+    gocardless: null
   }),
 
   Slides: keyMirror({
