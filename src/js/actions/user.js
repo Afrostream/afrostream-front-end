@@ -98,11 +98,10 @@ export function gocardless(planCode, planLabel) {
 export function subscribe(data, isGift = false) {
   return (dispatch, getState) => {
     //FIXME use only billings route when all recurly dependency was removed from bo to billing project
-    //if (isGift && data.billingProvider === 'recurly') {
-    if (data.billingProvider === 'recurly') {
+    if (isGift && data.billingProvider === 'recurly') {
       return async api => ({
         type: ActionTypes.User.subscribe,
-        res: await api(`/api/subscriptions${isGift ? '/gift' : ''}`, 'POST', data),
+        res: await api(`/api/subscriptions/gift`, 'POST', data),
         isGift
       });
     }
