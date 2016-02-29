@@ -109,6 +109,7 @@ class RecurlyForm extends React.Component {
   }
 
   renderPromoCode() {
+
     return (
       <div className="form-group col-md-6">
         <label className="form-label" htmlFor="coupon_code">{config.dict.payment.promo.label}</label>
