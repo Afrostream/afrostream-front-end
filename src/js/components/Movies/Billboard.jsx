@@ -34,6 +34,11 @@ class Billboard extends LoadVideo {
     const {
       props: { data, dataId }
       } = this;
+
+    if (!this.isValid()) {
+      return;
+    }
+
     return (<FavoritesAddButton {...{data, dataId}}/>)
   }
 
@@ -42,12 +47,21 @@ class Billboard extends LoadVideo {
       props: { data }
       } = this;
 
+    if (!this.isValid()) {
+      return;
+    }
+
     let link = this.getLink();
 
     return <ShareButton link={link} title={data.get('title')} description={data.get('synopsis')}/>
   }
 
   getGenre(tags) {
+
+    if (!this.isValid()) {
+      return;
+    }
+
     return (
       <div className="billboard-row">
         <label> Genre : </label>
@@ -57,6 +71,11 @@ class Billboard extends LoadVideo {
   }
 
   getSeasons(seasons, data) {
+
+    if (!this.isValid()) {
+      return;
+    }
+
     let label = ' saison' + (seasons.size > 1 ? 's' : '');
     let schedule = data.get('schedule') || '';
     return (seasons.size ?
@@ -70,6 +89,11 @@ class Billboard extends LoadVideo {
   }
 
   getCreator(creator) {
+
+    if (!this.isValid()) {
+      return;
+    }
+
     return (
       <div className="billboard-row">
         <label> Création : </label> {creator}

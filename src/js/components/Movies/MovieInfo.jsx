@@ -63,12 +63,13 @@ class MovieInfo extends LoadVideo {
       return (<Spinner />);
     }
 
-    const isSerie = data.get('type') === 'serie';
+    const isSerie = data.get('type') === 'serie' || data.get('type') === 'error';
+    const showBtn = isSerie || data.get('type') === 'error';
     const classes = classSet({
       'movie': true,
       'serie': isSerie,
       'movie--active': this.props.active,
-      'movie--btn_play': !this.props.load && isSerie
+      'movie--btn_play': !this.props.load && showBtn
     });
 
     let poster = data.get('poster');

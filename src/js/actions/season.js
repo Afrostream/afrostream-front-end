@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes';
+import {notFound} from './notFoundAction';
 
 export function toggleSeason(index) {
   return (dispatch, getState) => {
@@ -32,7 +33,7 @@ export function getSeason(seasonId) {
     return async api => ({
       type: ActionTypes.Season.getSeason,
       seasonId,
-      res: await api(`/api/seasons/${seasonId}`)
+      res: await api(`/api/seasons/${seasonId}`).catch(notFound)
     });
   };
 }

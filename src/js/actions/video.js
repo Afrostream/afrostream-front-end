@@ -1,6 +1,6 @@
 import ActionTypes from '../consts/ActionTypes';
-import { pushState } from 'redux-router';
 import * as RecoActionCreators from './reco';
+import {notFoundVideo} from './notFoundAction';
 
 export function getVideo(videoId) {
   return (dispatch, getState, actionDispatcher) => {
@@ -14,21 +14,13 @@ export function getVideo(videoId) {
       };
     }
 
-    //let readyVideo = getState().Video.get(`videos/${videoId}`);
-    //if (readyVideo) {
-    //  console.log('video already present in data store', videoId);
-    //  return {
-    //    type: ActionTypes.Video.getVideo,
-    //    videoId,
-    //    res: {
-    //      body: readyVideo.toJS()
-    //    }
-    //  };
-    //}
-
     return async api => {
-      let videoUserData = await actionDispatcher(RecoActionCreators.getVideoTracking(videoId));
-      let videoData = await api(`/api/videos/${videoId}`);
+      try {
+        let videoUserData = await actionDispatcher(RecoActionCreators.getVideoTracking(videoId));
+      } catch (err) {
+        console.log('impossible de touver les information videos utilisateur', videoId)
+      }
+      let videoData = await api(`/api/videos/${videoId}`).catch(notFoundVideo);
       return async api => ({
         type: ActionTypes.Video.getVideo,
         videoId,

@@ -1,5 +1,5 @@
 import ActionTypes from '../consts/ActionTypes';
-
+import {notFound,notFoundArray} from './notFoundAction';
 export function getMovie(movieId) {
   return (dispatch, getState) => {
     if (!movieId) {
@@ -27,7 +27,7 @@ export function getMovie(movieId) {
     return async api => ({
       type: ActionTypes.Movie.getMovie,
       movieId,
-      res: await api(`/api/movies/${movieId}`)
+      res: await api(`/api/movies/${movieId}`).catch(notFound)
     });
   };
 }
@@ -55,7 +55,7 @@ export function getSeason(movieId) {
     return async api => ({
       type: ActionTypes.Movie.getSeason,
       movieId,
-      res: await api(`/api/movies/${movieId}/seasons`)
+      res: await api(`/api/movies/${movieId}/seasons`).catch(notFoundArray)
     });
   };
 }

@@ -15,6 +15,7 @@ import * as EventActionCreators from '../../actions/event';
 import * as RecoActionCreators from '../../actions/reco';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
+import Billboard from '../Movies/Billboard';
 import NextEpisode from './NextEpisode';
 import ShareButton from '../Share/ShareButton';
 import RecommendationList from '../Recommendation/RecommendationList';
@@ -83,6 +84,14 @@ class PlayerComponent extends Component {
       this.setState({nextReco: false});
       this.initPlayer(videoData);
     }
+  }
+
+  getType(data) {
+    return data && data.get('type');
+  }
+
+  isValid(data) {
+    return data && this.getType(data) !== 'error';
   }
 
   getLazyImageUrl(data, type = 'poster') {
@@ -732,6 +741,11 @@ class PlayerComponent extends Component {
     if (!videoData) {
       return (<Spinner />)
     }
+
+    if (!this.isValid(videoData)) {
+      return (<div className="player"><Billboard data={videoData}/></div>);
+    }
+
     let captions = videoData.get('captions');
     let movieData = Movie.get(`movies/${movieId}`);
     let episodeData = videoData.get('episode');

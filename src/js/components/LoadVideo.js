@@ -39,12 +39,32 @@ export default class LoadVideo extends Component {
     location.pushState(null, link);
   }
 
+  getType() {
+    const {
+      props: { data}
+      } = this;
+
+    return data && data.get('type');
+  }
+
+  isValid() {
+    const {
+      props: { data}
+      } = this;
+
+    return data && this.getType() !== 'error';
+  }
+
   getLink() {
     const {
       props: {
         data,dataId,Movie,Season
         }
       } = this;
+
+    if (!this.isValid()) {
+      return '';
+    }
 
     let dataValue = data || Movie.get(`movies/${dataId}`);
 
