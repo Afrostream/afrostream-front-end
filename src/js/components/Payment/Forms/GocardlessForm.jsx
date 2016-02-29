@@ -60,7 +60,7 @@ class GocardlessForm extends React.Component {
               modal: false
             });
 
-            reject(error);
+            return reject(error);
 
           } else {
             self.setState({
@@ -72,7 +72,7 @@ class GocardlessForm extends React.Component {
               self.setState({
                 modal: false
               });
-              resolve({
+              return resolve({
                 billingProvider: 'gocardless',
                 subOpts: {
                   customerBankAccountToken: response.customer_bank_account_tokens.id
@@ -84,7 +84,7 @@ class GocardlessForm extends React.Component {
                 modal: false
               });
               error.message = 'Transaction annulée';
-              reject(error);
+              return reject(error);
             });
           }
         });

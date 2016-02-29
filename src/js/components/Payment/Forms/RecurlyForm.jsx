@@ -86,9 +86,9 @@ class RecurlyForm extends React.Component {
         recurlyLib.token(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
           if (err) {
-            reject(err);
+            return reject(err);
           }
-          resolve(_.merge({
+          return resolve(_.merge({
             'recurly-token': token.id,
             //NEW BILLING API
             billingProvider: 'recurly',
