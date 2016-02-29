@@ -39,6 +39,9 @@ const protData = {
 let gocarlessApi = `//pay${process.env.NODE_ENV !== 'production' ? '-sandbox' : ''}.gocardless.com/js/beta`;
 
 const config = {
+  featuresFlip: {
+    gocardless: false
+  },
   /**
    * APPS
    */

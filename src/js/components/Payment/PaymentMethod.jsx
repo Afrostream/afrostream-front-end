@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
-import {dict,payment} from '../../../../config';
+import {dict,payment,featuresFlip} from '../../../../config';
 import { Link } from 'react-router';
 
 import {RecurlyForm,GocardlessForm} from './Forms';
@@ -18,7 +18,8 @@ class PaymentMethod extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {method: props.isGift ? Methods.CARD : payment.default};
+    let canUseMultiple = this.multipleMethods();
+    this.state = {method: canUseMultiple ? payment.default : Methods.CARD};
   }
 
   static propTypes = {
@@ -34,6 +35,10 @@ class PaymentMethod extends React.Component {
   };
 
   static methods = Methods;
+
+  multipleMethods() {
+    return !this.props.isGif && featuresFlip.gocardless
+  }
 
   hasLib() {
     switch (this.state.method) {
@@ -67,7 +72,7 @@ class PaymentMethod extends React.Component {
   }
 
   switchMethod() {
-    if (this.props.isGift) {
+    if (!this.multipleMethods()) {
       return;
     }
     let newMethod = this.state.method === Methods.GOCARDLESS ? Methods.CARD : Methods.GOCARDLESS;
@@ -80,8 +85,8 @@ class PaymentMethod extends React.Component {
 
     return (
       <div className="panel-group">
-        {!this.props.isGift ? <GocardlessForm ref="gocardless"
-                                              selected={this.state.method === Methods.GOCARDLESS}/> : ''}
+        {!this.props.isGift && featuresFlip.gocardless ? <GocardlessForm ref="gocardless"
+                                                                         selected={this.state.method === Methods.GOCARDLESS}/> : ''}
         <RecurlyForm ref="card"
                      selected={this.state.method === Methods.CARD}/>
       </div>
