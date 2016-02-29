@@ -27,7 +27,6 @@ export function getVideoTracking(videoId) {
         console.log(`didn’t find any video user data for videoId : ${videoId}`);
       }
       return {
-
         type: ActionTypes.User.getVideoTracking,
         videoId,
         res: videoUserData
@@ -43,7 +42,6 @@ export function getVideoTracking(videoId) {
 export function trackVideo(data, videoId) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
-    const token = getState().OAuth.get('token');
     if (!user) {
       return {
         type: ActionTypes.User.trackVideo,
@@ -51,6 +49,8 @@ export function trackVideo(data, videoId) {
         res: null
       }
     }
+
+    let dataUserVideo = getState().User.get(`video/${videoId}`);
 
     const now = new Date().toISOString();
 
@@ -61,10 +61,24 @@ export function trackVideo(data, videoId) {
       playerCaption: 'fra'
     }, data);
 
+    if (dataUserVideo) {
+      let pickData = dataUserVideo.toJS();
+      //postData = _.merge(_.pick(pickData, [
+      //  'dateLastRead',
+      //  'playerPosition',
+      //  'playerAudio',
+      //  'playerCaption',
+      //  'rating'
+      //]), postData);
+      postData = _.merge(postData, {rating: dataUserVideo.get('rating') || 3});
+    }
+
     return async api => ({
       type: ActionTypes.User.trackVideo,
       videoId,
-      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', postData, token)
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', postData).then(()=> {
+        return {body: postData}
+      })
     });
   };
 }
@@ -83,10 +97,21 @@ export function rateVideo(value, videoId) {
       }
     }
 
+    let dataUserVideo = getState().User.get(`video/${videoId}`);
+    let mergedDataUserVideo = {
+      rating: value
+    };
+
+    if (dataUserVideo) {
+      mergedDataUserVideo = _.merge(dataUserVideo.toJS(), mergedDataUserVideo);
+    }
+
     return async api => ({
       type: ActionTypes.User.rateVideo,
       videoId,
-      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', {rating: value}, token)
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', {rating: value}).then(()=> {
+        return {body: mergedDataUserVideo}
+      })
     });
   };
 }

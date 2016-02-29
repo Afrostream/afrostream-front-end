@@ -14,11 +14,11 @@ class FavoritesList extends React.Component {
     super(props);
   }
 
-  renderList(dataList, label, slug, thumbW, thumbH) {
+  renderList(dataList, label, slug, type, thumbW, thumbH) {
     if (!dataList) {
       return;
     }
-    return <MoviesSlider key={`favorite-${slug}`} {...{dataList, label, slug, thumbW, thumbH}} />
+    return <MoviesSlider key={`favorite-${slug}`} {...{dataList, label, slug, type, thumbW, thumbH}} />
   }
 
   render() {
@@ -38,7 +38,7 @@ class FavoritesList extends React.Component {
       <div className="favorites-list">
         <div className="favorites-list__label">{labelPage}</div>
         { this.renderList(favoritesDataMovies, 'Films / Series', 'movies') }
-        { this.renderList(favoritesDataEpisodes, 'Episodes', 'episodes', 200, 110) }
+        { this.renderList(favoritesDataEpisodes, 'Episodes', 'episodes', 'episode', 200, 110) }
       </div>
     );
   }

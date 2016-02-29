@@ -39,7 +39,7 @@ class NextEpisode extends React.Component {
 
   render() {
     const {
-      props: { episode }
+      props: { episode, videoId }
       } = this;
     let imageStyles = this.getLazyImageUrl('thumb');
     let data = episode;
@@ -51,10 +51,10 @@ class NextEpisode extends React.Component {
           <div className="next-episode__label">{dict.share.label}</div>
           <ShareButton />
           <div className="next-episode__label">{dictNext.labelLike}</div>
-          <RateComponent videoId={dataId}/>
+          <RateComponent {...{videoId}}/>
           <div className="next-episode__label">{`${dictNext.label.replace('{seconds}', this.props.time)}`}</div>
           <div className="next-episode__thumbs">
-            <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135}/>
+            <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135} type="episode"/>
           </div>
           <NextGoBack />
         </div>
@@ -66,11 +66,13 @@ class NextEpisode extends React.Component {
 
 NextEpisode.propTypes = {
   episode: PropTypes.instanceOf(Immutable.Map),
+  videoId: React.PropTypes.string,
   time: PropTypes.number
 };
 
 NextEpisode.defaultProps = {
   episode: null,
+  videoId: null,
   time: 0
 };
 

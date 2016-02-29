@@ -31,9 +31,11 @@ class RateComponent extends React.Component {
     const videoData = User.get(`video/${videoId}`);
 
     let rating = 3;
+
     if (videoData) {
       rating = videoData.get('rating');
     }
+
     return (
       <StarRating name="react-star-rating" totalStars={5} size={30} editing onRatingClick={::this.handleRatingClick}
                   rating={rating}/>

@@ -197,7 +197,7 @@ class PlayerComponent extends Component {
     let time = this.state.nextReco;
     if (nextEpisode) {
       let episode = nextEpisode.episode;
-      return (<NextEpisode {...{episode, time}}/>)
+      return (<NextEpisode {...{episode, videoId, time}}/>)
     }
     return (<RecommendationList {...{videoId}}/>)
   }
