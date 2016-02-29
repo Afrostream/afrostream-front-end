@@ -33,7 +33,7 @@ class RateComponent extends React.Component {
     let rating = 3;
 
     if (videoData) {
-      rating = videoData.get('rating');
+      rating = videoData.get('rating') || 3;
     }
 
     return (

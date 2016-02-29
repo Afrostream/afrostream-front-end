@@ -43,17 +43,7 @@ class PlayerComponent extends Component {
   constructor(props) {
     super(props);
     this.player = null;
-    this.playerInit = null;
-    this.nextEpisode = null;
-    this.state = {
-      size: {
-        height: 1920,
-        width: 815
-      },
-      showStartTimeAlert: false,
-      fullScreen: false,
-      nextReco: false
-    };
+    this.initState()
   }
 
   static contextTypes = {
@@ -67,7 +57,27 @@ class PlayerComponent extends Component {
     episodeId: React.PropTypes.string
   };
 
+  initState() {
+    this.playerInit = false;
+    this.nextEpisode = false;
+    clearInterval(this.promiseLoadNextTimeout);
+    this.promiseLoadNextTimeout = 0;
+    this.state = {
+      size: {
+        height: 1920,
+        width: 815
+      },
+      showStartTimeAlert: false,
+      fullScreen: false,
+      nextReco: false
+    };
+  }
+
   componentDidMount() {
+
+    this.container = ReactDOM.findDOMNode(this);
+    this.container.addEventListener('gobacknext', ::this.backNextHandler);
+
     this.setState({
       size: {
         height: window.innerHeight,
@@ -79,10 +89,10 @@ class PlayerComponent extends Component {
   componentWillReceiveProps(nextProps) {
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
       const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`);
-      this.playerInit = false;
-      this.nextEpisode = false;
-      this.setState({nextReco: false});
-      this.initPlayer(videoData);
+      this.initState();
+      this.destroyPlayer().then(()=> {
+        this.initPlayer(videoData);
+      });
     }
   }
 
@@ -105,6 +115,7 @@ class PlayerComponent extends Component {
 
   backNextHandler() {
     this.player.off('timeupdate');
+    clearInterval(this.promiseLoadNextTimeout);
     this.setState({
       nextReco: false
     });
@@ -331,6 +342,21 @@ class PlayerComponent extends Component {
     };
   }
 
+
+  promiseLoadNextVideo(time = 9) {
+    this.player.off('timeupdate');
+    clearInterval(this.promiseLoadNextTimeout);
+    this.promiseLoadNextTimeout = setInterval(function () {
+      let loadNextTime = time--;
+      this.setState({
+        nextReco: loadNextTime
+      });
+      if (loadNextTime === 0) {
+        this.loadNextVideo();
+      }
+    }.bind(this), 1000);
+  }
+
   loadNextVideo() {
     const {
       context: {
@@ -340,9 +366,11 @@ class PlayerComponent extends Component {
 
     if (!this.nextEpisode) return;
 
+    clearInterval(this.promiseLoadNextTimeout);
     let nextLink = this.getNextLink();
     this.backNextHandler();
     history.pushState(null, nextLink);
+
   }
 
   onTimeUpdate() {
@@ -351,28 +379,27 @@ class PlayerComponent extends Component {
     }
     let currentTime = this.player.currentTime();
     let duration = this.state.duration - config.reco.time;
-    let nextReco = currentTime > duration;
+    //Si l'episode est trop court on attends la fin de episode et on switch au bout de 10 sec
+    let time = Math.round(this.state.duration - currentTime, 10);
+    if (duration < 200) {
+      duration = this.state.duration - 1;
+    }
+    let nextReco = currentTime >= duration;
     if (nextReco !== this.state.nextReco) {
-      let time = Math.round(this.state.duration - currentTime, 10);
       if (time === 0) {
-        return this.loadNextVideo();
+        return this.promiseLoadNextVideo(9);
       }
       this.setState({
-        nextReco: time
+        nextReco: time + 9
       });
     }
   }
 
   async initPlayer(videoData) {
-    //if (this.player || this.playerInit) {
-    //  return false;
-    //}
     console.log('player : initPlayer');
     try {
       this.player = await this.generatePlayer(videoData);
       //On ajoute l'ecouteur au nextvideo automatique
-      this.container = ReactDOM.findDOMNode(this);
-      this.container.addEventListener('gobacknext', ::this.backNextHandler);
       console.log('player : generatePlayer complete', this.player);
       return this.player;
     } catch (err) {
@@ -608,8 +635,9 @@ class PlayerComponent extends Component {
         });
       }
     );
+
     player.on('firstplay', ::this.onFirstPlay);
-    player.on('ended', ::this.trackVideo);
+    //player.on('ended', ::this.trackVideo);
     player.on('seeked', ::this.trackVideo);
     player.on('fullscreenchange', ::this.onFullScreenHandler);
     player.on('timeupdate', ::this.onTimeUpdate);
@@ -670,9 +698,15 @@ class PlayerComponent extends Component {
       } = this;
 
     if (this.player) {
-      this.player.one('dispose', () => {
+
+      console.log('player : destroy player', this.player);
+      //Tracking Finalise tracking video
+      this.trackVideo();
+      this.initState();
+      //Tracking Finalise tracking video
+      return await new Promise((resolve) => {
         this.player.off('firstplay');
-        this.player.off('ended');
+        //this.player.off('ended');
         this.player.off('seeked');
         this.player.off('fullscreenchange');
         this.player.off('timeupdate');
@@ -681,17 +715,15 @@ class PlayerComponent extends Component {
         this.player.off('userinactive');
         this.player.off('error');
         this.player.off('next');
-        this.player = null;
-        this.playerInit = false;
         dispatch(EventActionCreators.userActive(true));
-        console.log('player : destroyed player');
+        this.player.one('dispose', () => {
+          this.player = null;
+          this.playerInit = false;
+          console.log('player : destroyed player');
+          resolve(null)
+        });
+        this.player.dispose();
       });
-      console.log('player : destroy player', this.player);
-      //Tracking Finalise tracking video
-      this.trackVideo();
-      //Tracking Finalise tracking video
-      await this.player.dispose();
-      return null;
     } else {
       console.log('player : destroy player impossible');
       //let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
