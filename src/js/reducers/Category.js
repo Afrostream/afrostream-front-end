@@ -4,7 +4,7 @@ import createReducer from '../lib/createReducer';
 import _ from 'lodash';
 
 const initialState = Immutable.fromJS({
-  'categoryId': '1'
+  'categoryId': 1
 });
 
 export default createReducer(initialState, {
@@ -14,7 +14,16 @@ export default createReducer(initialState, {
       return state;
     }
     const data = res.body;
+    let categoryId = state.get('categoryId');
+    const categoryBase = _.find(data, (category)=> {
+      return category._id == categoryId;
+    })
+    if (categoryBase) {
+      categoryId = categoryBase['_id'];
+    }
+
     return state.merge({
+      ['categoryId']: categoryId,
       [`categorys/spots__res`]: res,
       [`categorys/spots`]: data
     });
@@ -51,9 +60,7 @@ export default createReducer(initialState, {
       return state;
     }
     const data = res.body;
-    const categoryId = data[0]._id;
     return state.merge({
-      ['categoryId']: categoryId,
       ['menu']: data
     });
   },

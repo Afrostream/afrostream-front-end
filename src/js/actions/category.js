@@ -23,6 +23,11 @@ export function getAllSpots() {
 export function getSpots(categoryId) {
   return (dispatch, getState) => {
 
+    //TODO recuperation de l'id top
+    const defaultCategory = getState().Category.get('categoryId');
+    console.log('defaultCategory', defaultCategory);
+    categoryId = categoryId || defaultCategory;
+
     let readySpot = getState().Category.get(`categorys/${categoryId}/spots`);
     if (readySpot) {
       console.log('spots already present in data store', categoryId);
@@ -34,10 +39,7 @@ export function getSpots(categoryId) {
         }
       };
     }
-    //TODO recuperation de l'id top
-    const defaultCategory = getState().Category.get('categoryId');
-    console.log('defaultCategory', defaultCategory)
-    categoryId = categoryId || defaultCategory;
+
     return async api => ({
       type: ActionTypes.Category.getSpots,
       categoryId,

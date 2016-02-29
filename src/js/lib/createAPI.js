@@ -72,19 +72,21 @@ export default function createAPI(createRequest) {
       body = params;
     }
 
-    try {
-      const storageId = apiClient.token;
-      let storedData = localStorage.getItem(storageId);
-      let tokenDataStore = JSON.parse(storedData);
-      let tokenData = await getToken(tokenDataStore);
-      if (tokenData) {
-        headers = _.merge(headers, {
-          'Access-Token': tokenData.accessToken
-        });
+    if (canUseDOM) {
+      try {
+        const storageId = apiClient.token;
+        let storedData = localStorage.getItem(storageId);
+        let tokenDataStore = JSON.parse(storedData);
+        let tokenData = await getToken(tokenDataStore);
+        if (tokenData) {
+          headers = _.merge(headers, {
+            'Access-Token': tokenData.accessToken
+          });
+        }
       }
-    }
-    catch (err) {
-      console.log('set AccessToken in header fail', err)
+      catch (err) {
+        console.log('set AccessToken in header fail', err)
+      }
     }
 
     return await new Promise((resolve, reject) => {
