@@ -33,10 +33,11 @@ class SeasonTabButton extends Component {
 
     const seasonId = season.get('_id');
     const seasonSlug = season.get('slug');
+    const seasonNumber = season.get('seasonNumber');
 
     //:movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)
     return (
-      <Link className={classes} to={`/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}`}>SAISON {index + 1}</Link>
+      <Link className={classes} to={`/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}`}>SAISON {seasonNumber}</Link>
     );
   }
 
