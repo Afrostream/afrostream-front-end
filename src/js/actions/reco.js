@@ -62,15 +62,10 @@ export function trackVideo(data, videoId) {
     }, data);
 
     if (dataUserVideo) {
-      let pickData = dataUserVideo.toJS();
-      //postData = _.merge(_.pick(pickData, [
-      //  'dateLastRead',
-      //  'playerPosition',
-      //  'playerAudio',
-      //  'playerCaption',
-      //  'rating'
-      //]), postData);
-      postData = _.merge(postData, {rating: dataUserVideo.get('rating') || 3});
+      let rating = dataUserVideo.get('rating');
+      if (rating) {
+        postData = _.merge(postData, {rating: rating});
+      }
     }
 
     return async api => ({
