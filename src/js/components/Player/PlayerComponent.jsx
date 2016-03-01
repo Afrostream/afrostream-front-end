@@ -75,15 +75,17 @@ class PlayerComponent extends Component {
 
   componentDidMount() {
 
-    this.container = ReactDOM.findDOMNode(this);
-    this.container.addEventListener('gobacknext', ::this.backNextHandler);
-
     this.setState({
       size: {
         height: window.innerHeight,
         width: window.innerWidth
       }
     });
+  }
+
+  componentWillUnmount() {
+    this.destroyPlayer();
+    console.log('player : componentWillUnmount', this.player)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -401,6 +403,9 @@ class PlayerComponent extends Component {
       this.player = await this.generatePlayer(videoData);
       //On ajoute l'ecouteur au nextvideo automatique
       console.log('player : generatePlayer complete', this.player);
+      this.container = ReactDOM.findDOMNode(this);
+      this.container.removeEventListener('gobacknext', ::this.backNextHandler);
+      this.container.addEventListener('gobacknext', ::this.backNextHandler);
       return this.player;
     } catch (err) {
       console.log('player : ', err);
@@ -685,11 +690,6 @@ class PlayerComponent extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.destroyPlayer();
-    console.log('player : componentWillUnmount', this.player)
-  }
-
   async destroyPlayer() {
     const {
       props: {
@@ -703,6 +703,8 @@ class PlayerComponent extends Component {
       //Tracking Finalise tracking video
       this.trackVideo();
       this.initState();
+      this.container = ReactDOM.findDOMNode(this);
+      this.container.removeEventListener('gobacknext', ::this.backNextHandler);
       //Tracking Finalise tracking video
       return await new Promise((resolve) => {
         this.player.off('firstplay');
