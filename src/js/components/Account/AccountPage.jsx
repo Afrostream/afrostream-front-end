@@ -188,9 +188,21 @@ class AccountPage extends React.Component {
       return;
     }
 
+    const subscriptionsList = user.get('subscriptions');
+
+    if (!subscriptionsList) {
+      return;
+    }
+
+    let currentSubscription = subscriptionsList.find((obj)=> {
+      return obj.get('isActive') === 'yes';// && obj.get('subStatus') !== 'canceled'
+    });
+    //let currentSubscription = subscriptionsList.get(0);
+
     let cancelSubscriptionClasses = {
-      'cancel-plan': true,
-      'cancel-plan-hidden': (planCode === 'afrostreammonthly' ? false : true)
+      'btn': true,
+      'btn-default': true,
+      'cancel-plan-hidden': !currentSubscription || (currentSubscription.get('subStatus') === 'canceled')
     };
 
     const planLabel = dict.planCodes[planCode];
@@ -204,7 +216,8 @@ class AccountPage extends React.Component {
               <span>{planLabel}</span>
             </div>
             <div className="col-md-4">
-              <Link className="btn btn-default" to="/compte/cancel-subscription">{dict.account.plan.cancelPlan}</Link>
+              <Link className={classSet(cancelSubscriptionClasses)}
+                    to="/compte/cancel-subscription">{dict.account.plan.cancelPlan}</Link>
             </div>
           </div>
         </div>

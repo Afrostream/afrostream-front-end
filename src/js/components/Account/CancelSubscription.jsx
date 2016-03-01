@@ -27,9 +27,13 @@ class CancelSubscription extends React.Component {
         }
       } = this;
 
-    if (!subscription) return;
+    if (!subscription) {
+      return;
+    }
 
-    dispatch(UserActionCreators.cancelSubscription(subscription));
+    dispatch(UserActionCreators.cancelSubscription(subscription)).then(()=> {
+      dispatch(UserActionCreators.getSubscriptions());
+    });
   }
 
   render() {
@@ -51,10 +55,11 @@ class CancelSubscription extends React.Component {
       );
     }
     let currentSubscription = subscriptionsList.find((obj)=> {
-      return obj.get('isActive') === 'yes' && obj.get('subStatus') !== 'canceled'
+      return obj.get('isActive') === 'yes';// && obj.get('subStatus') !== 'canceled'
     });
 
-    let dictData = dict.account.cancel[currentSubscription ? 'active' : 'canceled'];
+    let activeSubscription = currentSubscription && currentSubscription.get('subStatus') !== 'canceled';
+    let dictData = dict.account.cancel[activeSubscription ? 'active' : 'canceled'];
 
     let header = dictData.header;
     let endDate;
@@ -70,17 +75,23 @@ class CancelSubscription extends React.Component {
     return (
       <div className="account-credit-card">
         <div className="row account-details">
-          <h1>{header}</h1>
+          <div className="col-md-12">
+            <h1>{header}</h1>
+          </div>
         </div>
-        <div className="row account-details__info">
-          {infos}
+        <div className="col-md-12">
+          <div className="row account-details__info">
+            {infos}
+          </div>
         </div>
         <div className="row">
-          { currentSubscription ?
-            <button className="btn btn-default button-cancel__subscription" {...inputAttributes}>
-              {dict.account.cancel.submitBtn}
-            </button> : ''}
-          <Link className="btn btn-default btn-return__account" to="/compte">{dict.account.cancel.cancelBtn}</Link>
+          <div className="col-md-12">
+            { activeSubscription ?
+              <button className="btn btn-default button-cancel__subscription" {...inputAttributes}>
+                {dict.account.cancel.submitBtn}
+              </button> : ''}
+            <Link className="btn btn-default btn-return__account" to="/compte">{dict.account.cancel.cancelBtn}</Link>
+          </div>
         </div>
       </div>
     );
