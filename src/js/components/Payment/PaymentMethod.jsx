@@ -60,7 +60,6 @@ class PaymentMethod extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
     this.container = ReactDOM.findDOMNode(this);
     this.container.addEventListener('changemethod', this.switchMethod.bind(this));
   }
@@ -80,7 +79,6 @@ class PaymentMethod extends React.Component {
   }
 
   switchMethod() {
-    debugger;
     let newMethod = Methods.GOCARDLESS;
 
     if (!this.multipleMethods()) {
@@ -97,13 +95,10 @@ class PaymentMethod extends React.Component {
     this.setState({
       method: newMethod
     });
-
-    debugger;
   }
 
   render() {
 
-    debugger;
     return (
       <div className="panel-group">
         {!this.props.isGift && featuresFlip.gocardless ? <GocardlessForm ref="gocardless"

@@ -42,24 +42,18 @@ class PaypalForm extends React.Component {
   async submit(billingInfo, currentPlan) {
 
     const self = this;
-    let priceString = (currentPlan.price / 100).toFixed(2).toLocaleString() + ' €';
-    debugger;
       let recurlyInfo = {
-        'description': billingInfo.internalPlanUuid,
-        'Prix' : priceString
+        'description': billingInfo.internalPlanUuid
       };
 
     return await new Promise(
       (resolve, reject) => {
         let recurlyLib = self.state.hasLib;
-        debugger;
         recurlyLib.paypal(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
           if (err) {
-            debugger;
             reject(err);
           }
-          debugger;
           resolve(_.merge({
             'recurly-token': token.id,
             //NEW BILLING API
