@@ -40,7 +40,7 @@ let gocarlessApi = `//pay${process.env.NODE_ENV !== 'production' ? '-sandbox' : 
 
 const config = {
   featuresFlip: {
-    gocardless: true,
+    gocardless: false,
     paypal: true
   },
   /**
