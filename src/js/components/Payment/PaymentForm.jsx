@@ -319,7 +319,7 @@ class PaymentForm extends React.Component {
       'spinner-loading': this.state.loading
     };
 
-    const planLabel = dict.payment.planCodes[this.state.currentPlan.code];
+    const planLabel = dict.planCodes[this.state.currentPlan.code];
 
     return (
       <div className="payment-wrapper">

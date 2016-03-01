@@ -21,14 +21,8 @@ const mergeProfile = function (data, getState, actionDispatcher) {
   return async api => {
     actionDispatcher(pendingUser(true));
     try {
-      //FIXMEget user infos from afrostream api when get recurly api data has merge into user
       const userInfos = await api(`/api/users/me`, 'GET', {});
-      //TODO add subsrciptions status in user
-      const userSubscriptions = {
-        body: {}
-      };
-      //const userSubscriptions = await api(`/api/subscriptions/status`, 'GET', {});
-      const userMerged = _.merge(userInfos.body || {}, userSubscriptions.body || {});
+      const userMerged = userInfos.body || {};
 
       userMerged.user_id = userMerged._id || userMerged.user_id;
 
@@ -60,6 +54,28 @@ const mergeProfile = function (data, getState, actionDispatcher) {
     }
   }
 };
+
+/**
+ * Get subscriptions list for user
+ * @returns {Function}
+ */
+export function getSubscriptions() {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user');
+    if (!user) {
+      return {
+        type: ActionTypes.User.getSubscriptions,
+        res: null
+      }
+    }
+    return async api => {
+      return {
+        type: ActionTypes.User.getSubscriptions,
+        res: await api(`/api/subscriptions/status`)
+      };
+    };
+  };
+}
 
 export function gocardless(planCode, planLabel) {
   return (dispatch, getState, actionDispatcher) => {
@@ -113,11 +129,12 @@ export function subscribe(data, isGift = false) {
   };
 }
 
-export function cancelSubscription() {
+export function cancelSubscription(subscription) {
   return (dispatch, getState) => {
+    let uuid = subscription.get('subscriptionBillingUuid');
     return async api => ({
       type: ActionTypes.User.cancelSubscription,
-      res: await api(`/api/subscriptions/cancel`, 'GET', {})
+      res: await api(`/api/billings/subscriptions/${uuid}/cancel`, 'PUT', {})
     });
   };
 }

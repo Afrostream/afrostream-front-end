@@ -12,6 +12,10 @@ import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient, heroku } from '../../config';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import moment from 'moment';
+//Set locale date //TODO une fois le site multilingue formater au pays courant
+moment.locale('fr');
+
 //superAgentMock(request);
 if (canUseDOM) {
   require('jquery');
