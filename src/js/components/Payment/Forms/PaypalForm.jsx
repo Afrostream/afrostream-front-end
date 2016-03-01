@@ -79,7 +79,7 @@ class PaypalForm extends React.Component {
 
     return (
       <div className="row" ref="goCardlessForm">
-        <div><div>{config.dict.payment.paypal.paypalText}</div></div>
+        <h5>{config.dict.payment.paypal.paypalText}</h5>
       </div>
     );
   }
