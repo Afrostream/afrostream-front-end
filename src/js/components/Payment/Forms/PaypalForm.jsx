@@ -26,16 +26,7 @@ class PaypalForm extends React.Component {
     selected: false
   };
 
-  componentDidUpdate() {
-    $('.recurly-cc-number').payment('formatCardNumber');
-    $('.recurly-cc-exp').payment('formatCardExpiry');
-    $('.recurly-cc-cvc').payment('formatCardCVC');
-  }
-
   componentDidMount() {
-    $('.recurly-cc-number').payment('formatCardNumber');
-    $('.recurly-cc-exp').payment('formatCardExpiry');
-    $('.recurly-cc-cvc').payment('formatCardCVC');
     //Detect si le payment via la lib recurly est dispo
     let recurlyLib = window['recurly'];
 
@@ -51,8 +42,12 @@ class PaypalForm extends React.Component {
   async submit(billingInfo, currentPlan) {
 
     const self = this;
-
-    let recurlyInfo = {description: 'afrostreamambassadeurs'};
+    let priceString = (currentPlan.price / 100).toFixed(2).toLocaleString() + ' €';
+    debugger;
+      let recurlyInfo = {
+        'description': billingInfo.internalPlanUuid,
+        'Prix' : priceString
+      };
 
     return await new Promise(
       (resolve, reject) => {
@@ -70,8 +65,7 @@ class PaypalForm extends React.Component {
             //NEW BILLING API
             billingProvider: 'recurly',
             subOpts: {
-              customerBankAccountToken: token.id//,
-              //couponCode: self.refs.couponCode.value
+              customerBankAccountToken: token.id
             }
           }, recurlyInfo));
         });
@@ -80,28 +74,10 @@ class PaypalForm extends React.Component {
   }
 
   onHeaderClick() {
-    debugger;
     let clickHeader = ReactDOM.findDOMNode(this);
     if (clickHeader) {
       clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'paypal', bubbles: true}));
     }
-  }
-
-  renderPromoCode() {
-    return (
-      <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="coupon_code">{config.dict.payment.promo.label}</label>
-        <input
-          type="text"
-          className="form-control coupon-code"
-          data-billing="coupon_code"
-          name="coupon_code"
-          id="coupon_code"
-          ref="couponCode"
-          placeholder={config.dict.payment.promo.placeHolder}
-          disabled={this.state.disabledForm}/>
-      </div>
-    );
   }
 
   getForm() {
