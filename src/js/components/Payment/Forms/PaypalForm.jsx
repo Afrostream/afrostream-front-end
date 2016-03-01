@@ -85,7 +85,7 @@ class PaypalForm extends React.Component {
 
     return (
       <div className="row" ref="goCardlessForm">
-        <button>Click here to pay via paypal</button>
+        <div><div>{config.dict.payment.paypal.paypalText}</div></div>
       </div>
     );
   }
@@ -110,7 +110,7 @@ class PaypalForm extends React.Component {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{config.dict.payment.creditCard.label}</label>
+            <label className="form-label">{config.dict.payment.paypal.label}</label>
             <img src="/images/payment/paypal.png"/>
           </div>
         </div>

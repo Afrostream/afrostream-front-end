@@ -111,8 +111,9 @@ class PaymentMethod extends React.Component {
         <RecurlyForm ref="card"
                      selected={this.state.method === Methods.CARD}/>
 
-        <PaypalForm ref="paypal"
-                     selected={this.state.method === Methods.PAYPAL}/>
+
+        {!this.props.isGift ? <PaypalForm ref="paypal"
+                                          selected={this.state.method === Methods.PAYPAL}/> : ''}
       </div>
     );
   }

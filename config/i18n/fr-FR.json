@@ -61,6 +61,10 @@
       "number": "Numéro de carte",
       "placeHolder": "1234 5678 8901 1234"
     },
+    "paypal": {
+      "label": "Paiement par Paypal",
+      "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"DÉMARREZ MAINTENANT\" et utiliser votre compte Paypal"
+    },
     "errors": {
       "noLib": {
         "title": "Paiement indisponible",
