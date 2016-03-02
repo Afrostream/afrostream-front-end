@@ -178,7 +178,9 @@ class PlayerComponent extends Component {
       } = this;
 
     clearTimeout(this.trackTimeout);
-
+    if (!this.player) {
+      return;
+    }
     const playerAudio = this.getPlayerTracks('audio');
     const playerCaption = this.getPlayerTracks('caption');
     const playerBitrate = this.getPlayerTracks('video');
