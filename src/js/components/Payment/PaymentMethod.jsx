@@ -78,7 +78,7 @@ class PaymentMethod extends React.Component {
     }
   }
 
-  switchMethod() {
+  switchMethod(event) {
     if (!this.multipleMethods()) {
       return;
     }
