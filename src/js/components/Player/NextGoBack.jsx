@@ -18,7 +18,7 @@ class NextGoBack extends React.Component {
   goBackHandler() {
     let component = ReactDOM.findDOMNode(this);
     if (component) {
-      component.dispatchEvent(new Event('gobacknext', {bubbles: true}));
+      component.dispatchEvent(new CustomEvent('gobacknext', {bubbles: true}));
     }
   }
 

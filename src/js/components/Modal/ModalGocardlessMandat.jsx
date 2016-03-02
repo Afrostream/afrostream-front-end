@@ -14,14 +14,14 @@ class ModalGocardlessMandat extends ModalComponent {
   submit() {
     let element = ReactDOM.findDOMNode(this);
     if (element) {
-      element.dispatchEvent(new Event('acceptmandat', {bubbles: true}));
+      element.dispatchEvent(new CustomEvent('acceptmandat', {bubbles: true}));
     }
   }
 
   cancel() {
     let element = ReactDOM.findDOMNode(this);
     if (element) {
-      element.dispatchEvent(new Event('cancelmandat', {bubbles: true}));
+      element.dispatchEvent(new CustomEvent('cancelmandat', {bubbles: true}));
     }
   }
 

@@ -41,14 +41,14 @@ class Thumb extends Poster {
   triggerOver() {
     let thumbMouse = ReactDOM.findDOMNode(this);
     if (thumbMouse) {
-      thumbMouse.dispatchEvent(new Event('thumbover', {bubbles: true}));
+      thumbMouse.dispatchEvent(new CustomEvent('thumbover', {bubbles: true}));
     }
   }
 
   triggerOut() {
     let thumbMouse = ReactDOM.findDOMNode(this);
     if (thumbMouse) {
-      thumbMouse.dispatchEvent(new Event('thumbout', {bubbles: true}));
+      thumbMouse.dispatchEvent(new CustomEvent('thumbout', {bubbles: true}));
     }
   }
 
