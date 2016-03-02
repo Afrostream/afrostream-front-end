@@ -123,7 +123,6 @@ class GocardlessForm extends React.Component {
         <div className="form-group col-md-6">
           <label className="form-label" htmlFor="number">IBAN</label>
           <input
-            type="tel"
             className="form-control"
             data-billing="iban"
             name="iban"
