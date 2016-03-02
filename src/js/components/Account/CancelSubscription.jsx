@@ -13,6 +13,9 @@ if (process.env.BROWSER) {
 class CancelSubscription extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      pending: false
+    }
   }
 
   static contextTypes = {
@@ -31,9 +34,19 @@ class CancelSubscription extends React.Component {
       return;
     }
 
-    dispatch(UserActionCreators.cancelSubscription(subscription)).then(()=> {
-      dispatch(UserActionCreators.getSubscriptions());
+    this.setState({
+      pending: true
     });
+
+    dispatch(UserActionCreators.cancelSubscription(subscription))
+      .then(()=> {
+        dispatch(UserActionCreators.getSubscriptions());
+      })
+      .catch((err)=> {
+        this.setState({
+          pending: false
+        });
+      });
   }
 
   render() {
@@ -87,7 +100,8 @@ class CancelSubscription extends React.Component {
         <div className="row">
           <div className="col-md-12">
             { activeSubscription ?
-              <button className="btn btn-default button-cancel__subscription" {...inputAttributes}>
+              <button className="btn btn-default button-cancel__subscription" {...inputAttributes}
+                      disabled={this.state.pending}>
                 {dict.account.cancel.submitBtn}
               </button> : ''}
             <Link className="btn btn-default btn-return__account" to="/compte">{dict.account.cancel.cancelBtn}</Link>

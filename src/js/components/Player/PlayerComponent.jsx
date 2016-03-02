@@ -170,6 +170,14 @@ class PlayerComponent extends Component {
   }
 
   /**
+   * Stop track video on ended
+   */
+  clearTrackVideo() {
+    this.trackVideo();
+    clearTimeout(this.trackTimeout);
+  }
+
+  /**
    * Track User video playing
    */
   trackVideo() {
@@ -644,7 +652,7 @@ class PlayerComponent extends Component {
     );
 
     player.on('firstplay', ::this.onFirstPlay);
-    //player.on('ended', ::this.trackVideo);
+    player.on('ended', ::this.clearTrackVideo);
     player.on('seeked', ::this.trackVideo);
     player.on('fullscreenchange', ::this.onFullScreenHandler);
     player.on('timeupdate', ::this.onTimeUpdate);
@@ -710,7 +718,7 @@ class PlayerComponent extends Component {
       //Tracking Finalise tracking video
       return await new Promise((resolve) => {
         this.player.off('firstplay');
-        //this.player.off('ended');
+        this.player.off('ended');
         this.player.off('seeked');
         this.player.off('fullscreenchange');
         this.player.off('timeupdate');
