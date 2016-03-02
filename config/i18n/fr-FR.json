@@ -7,6 +7,12 @@
   "loginSocialButton": "S'identifier avec {connection:title}",
   "signupSocialButton": "S'inscrire avec {connection:title}",
   "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
+  "planCodes": {
+    "afrostreammonthly": "Formule Mensuel - 6,99€ par mois sans engagement",
+    "afrostreamambassadeurs2": "Formule Ambassadeurs - 1 an de films et séries afro pour 59,99€",
+    "afrostreamambassadeurs": "Formule Ambassadeurs - 1 an de films et séries afro pour 59,99€",
+    "afrostreamgift": "Formule Cadeau - 1 an de films et séries afro pour 59,99€"
+  },
   "history": {
     "label": "Reprendre la lecture"
   },
@@ -18,11 +24,6 @@
     "sublit": "DÉMARREZ MAINTENANT",
     "name": "Votre Prénom",
     "lastName": "Votre Nom",
-    "planCodes": {
-      "afrostreammonthly": "Formule Mensuel - 6,99€ par mois sans engagement",
-      "afrostreamambassadeurs": "Formule Ambassadeurs - 1 an de films et séries afro pour 59,99€",
-      "afrostreamgift": "Formule Cadeau - 1 an de films et séries afro pour 59,99€"
-    },
     "country": {
       "label": "Pays",
       "defaultValue": "FR"
@@ -63,7 +64,7 @@
     },
     "paypal": {
       "label": "Paiement par Paypal",
-      "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"DÉMARREZ MAINTENANT\" et utiliser votre compte Paypal"
+      "paypalText": "Pour finaliser la souscription, cliquez sur le bouton \"DÉMARREZ MAINTENANT\" et utilisez votre compte Paypal"
     },
     "errors": {
       "noLib": {
@@ -90,6 +91,52 @@
     "droits": {
       "label": "Je renonce au droit de rétractation",
       "link": "Télécharger le formulaire de rétractation"
+    }
+  },
+  "account": {
+    "header": "Mon compte",
+    "user": {
+      "header": "MES INFORMATIONS PERSONNELLES",
+      "password": "Mot de passe",
+      "updatePassword": "Modifier le mot de passe"
+    },
+    "plan": {
+      "header": "DÉTAIL DU FORFAIT",
+      "updatePlan": "Changer de forfait",
+      "cancelPlan": "Annuler votre abonnement"
+    },
+    "cancel": {
+      "active": {
+        "header": "Annuler votre abonnement ?",
+        "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
+      },
+      "canceled": {
+        "header": "Votre abonnement été annulé.",
+        "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
+      },
+      "submitBtn": "Annuler l’abonnement",
+      "cancelBtn": "Retourner sur mon compte"
+    },
+    "billing": {
+      "header": "Détails de facturation",
+      "dateLabel": "Date",
+      "decriptionLabel": "Description",
+      "periodLabel": "Période de service",
+      "methodLabel": "Mode de paiement",
+      "taxLabel": "Sous-total",
+      "totalLabel": "Total",
+      "statusLabel": "Status",
+      "periods": {
+        "year": "An",
+        "month": "Mois"
+      },
+      "status": {
+        "canceled": "Annulé",
+        "active": "En cours",
+        "expired": "Expiré",
+        "future": "Future",
+        "pending": "En attente"
+      }
     }
   },
   "favorites": {

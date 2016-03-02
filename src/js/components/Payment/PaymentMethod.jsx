@@ -79,18 +79,10 @@ class PaymentMethod extends React.Component {
   }
 
   switchMethod() {
-    let newMethod = Methods.GOCARDLESS;
-
     if (!this.multipleMethods()) {
       return;
     }
-
-    if (typeof event !== 'undefined' &&
-      typeof event.detail !=='undefined' &&
-      event.type === 'changemethod') {
-
-      newMethod = event.detail;
-    }
+    let newMethod = event.detail || Methods.GOCARDLESS;
 
     this.setState({
       method: newMethod

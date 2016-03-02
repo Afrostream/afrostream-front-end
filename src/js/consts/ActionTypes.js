@@ -19,6 +19,7 @@ export default {
     trackVideo: null,
     rateVideo: null,
     getHistory: null,
+    getSubscriptions: null,
     getVideoTracking: null,
     getRecommendations: null,
     getFavoritesMovies: null,

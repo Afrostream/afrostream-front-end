@@ -4,7 +4,6 @@ import createReducer from '../lib/createReducer';
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
   'user': null,
-  'subscriptionCancelled': false,
   'favorites/episodes': null,
   'favorites/movies': null
 });
@@ -13,6 +12,9 @@ const initialState = Immutable.fromJS({
 export default createReducer(initialState, {
 
   [ActionTypes.User.subscribe](state, { res, isGift}) {
+    if (!res) {
+      return state;
+    }
     const data = isGift ? {} : res.body;
     return state.merge({
       ['user']: _.merge(state.get('user').toJS(), data)
@@ -20,10 +22,12 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.User.cancelSubscription](state, { res }) {
+    if (!res) {
+      return state;
+    }
     const data = res.body;
     return state.merge({
-      ['user']: _.merge(state.get('user').toJS(), data),
-      ['subscriptionCancelled']: true
+      ['user']: _.merge(state.get('user').toJS(), data)
     });
   },
 
@@ -40,6 +44,16 @@ export default createReducer(initialState, {
     });
   },
 
+  // #### SUBSCRIPTIONS ####
+  [ActionTypes.User.getSubscriptions](state, { videoId, res }) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`user`]: _.merge(state.get('user').toJS(), data)
+    });
+  },
   // #### RECOMMENDATIONS ####
   [ActionTypes.User.getRecommendations](state, { videoId, res }) {
     if (!res) {

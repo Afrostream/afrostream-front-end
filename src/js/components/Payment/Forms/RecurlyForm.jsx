@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
-import * as UserActionCreators from '../../../actions/user';
-import { connect } from 'react-redux';
 import CountrySelect from './../CountrySelect';
 import classSet from 'classnames';
-import config from '../../../../../config/client';
+import config from '../../../../../config';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class RecurlyForm extends React.Component {
@@ -26,16 +24,17 @@ class RecurlyForm extends React.Component {
     selected: false
   };
 
-  componentDidUpdate() {
+  formatCard() {
     $('.recurly-cc-number').payment('formatCardNumber');
     $('.recurly-cc-exp').payment('formatCardExpiry');
     $('.recurly-cc-cvc').payment('formatCardCVC');
   }
 
-  componentDidMount() {
-    $('.recurly-cc-number').payment('formatCardNumber');
-    $('.recurly-cc-exp').payment('formatCardExpiry');
-    $('.recurly-cc-cvc').payment('formatCardCVC');
+  componentDidUpdate() {
+    this.formatCard();
+  }
+
+  initLib() {
     //Detect si le payment via la lib recurly est dispo
     let recurlyLib = window['recurly'];
 
@@ -46,6 +45,12 @@ class RecurlyForm extends React.Component {
     if (recurlyLib && !recurlyLib.configured) {
       recurlyLib.configure(config.recurly.key);
     }
+  }
+
+  componentDidMount() {
+    this.formatCard();
+    this.initLib();
+
   }
 
   async submit(billingInfo, currentPlan) {

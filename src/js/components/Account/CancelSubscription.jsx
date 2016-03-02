@@ -2,7 +2,8 @@ import React,{PropTypes } from 'react';
 import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import config from '../../../../config/client';
+import {dict} from '../../../../config';
+import moment from 'moment';
 
 if (process.env.BROWSER) {
   require('./CancelSubscription.less');
@@ -18,7 +19,7 @@ class CancelSubscription extends React.Component {
     history: PropTypes.object.isRequired
   };
 
-  cancelSubscription() {
+  cancelSubscription(subscription) {
 
     const {
       props: {
@@ -26,7 +27,13 @@ class CancelSubscription extends React.Component {
         }
       } = this;
 
-    dispatch(UserActionCreators.cancelSubscription());
+    if (!subscription) {
+      return;
+    }
+
+    dispatch(UserActionCreators.cancelSubscription(subscription)).then(()=> {
+      dispatch(UserActionCreators.getSubscriptions());
+    });
   }
 
   render() {
@@ -36,45 +43,58 @@ class CancelSubscription extends React.Component {
         }
       } = this;
 
-    const cancelled = User.get('subscriptionCancelled');
+    const user = User.get('user');
+    if (!user) {
+      return;
+    }
+    const subscriptionsList = user.get('subscriptions');
 
-    if (!cancelled) {
+    if (!subscriptionsList) {
       return (
-        <div className="row-fluid brand-bg">
-          <div className="container brand-bg">
-            <div className="account-credit-card">
-              <h1>Annuler votre abonnement?</h1>
-
-              <div className="account-credit-card-details">
-                Cliquer sur « Annuler l’abonnement » pour suspendre votre abonnement.
-                Vous n’aurez plus accès au service à la fin de la période de votre abonnement
-                (soit à partir du jour anniversaire du mois suivant)
-              </div>
-              <button className="button-cancel-subscription"
-                      onClick={::this.cancelSubscription}>Annuler l’abonnement
-              </button>
-              <Link className="button-return-mon-compte" to="/compte">Retourner sur mon compte</Link>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-
-      return (
-        <div className="row-fluid brand-bg">
-          <div className="container brand-bg">
-            <div className="account-credit-card">
-              <h1>Votre abonnement été annulé.</h1>
-              <div className="account-credit-card-details">
-                Vous n’aurez plus accès au service à la fin de la période de votre abonnement
-                (soit à partir du jour anniversaire du mois suivant)
-              </div>
-              <Link className="button-return-mon-compte" to="/compte">Retourner sur mon compte</Link>
-            </div>
-          </div>
-        </div>
+        <div />
       );
     }
+    let currentSubscription = subscriptionsList.find((obj)=> {
+      return obj.get('isActive') === 'yes';// && obj.get('subStatus') !== 'canceled'
+    });
+
+    let activeSubscription = currentSubscription && currentSubscription.get('subStatus') !== 'canceled';
+    let dictData = dict.account.cancel[activeSubscription ? 'active' : 'canceled'];
+
+    let header = dictData.header;
+    let endDate;
+    if (currentSubscription) {
+      endDate = moment(currentSubscription.get('subPeriodEndsDate')).format('LLL');
+    }
+    let infos = dictData.info.replace(/{endDate}/gm, endDate);
+
+    const inputAttributes = {
+      onClick: event => ::this.cancelSubscription(currentSubscription)
+    };
+
+    return (
+      <div className="account-credit-card">
+        <div className="row account-details">
+          <div className="col-md-12">
+            <h1>{header}</h1>
+          </div>
+        </div>
+        <div className="col-md-12">
+          <div className="row account-details__info">
+            {infos}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            { activeSubscription ?
+              <button className="btn btn-default button-cancel__subscription" {...inputAttributes}>
+                {dict.account.cancel.submitBtn}
+              </button> : ''}
+            <Link className="btn btn-default btn-return__account" to="/compte">{dict.account.cancel.cancelBtn}</Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 

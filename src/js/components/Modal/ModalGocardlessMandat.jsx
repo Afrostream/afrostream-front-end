@@ -37,7 +37,6 @@ class ModalGocardlessMandat extends ModalComponent {
       'hide': !this.props.closable
     });
 
-    moment.locale('fr');
     let dateNow = moment().format('L');
 
     return (

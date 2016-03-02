@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import classSet from 'classnames';
-import { connect } from 'react-redux';
 import {gocardless,dict} from '../../../../../config/client';
 import CountrySelect from './../CountrySelect';
 import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat';
