@@ -6,191 +6,320 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://afrostream.tv/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.00</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/compte</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/select-plan/afrostreamgift/checkout</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/favoris</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/faq</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/251/wild-wild-west/cf2f2ce0-9550-416b-95f8-62c111be1b92</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/246/new-jack-city/81eb87f4-e784-4b53-98f7-29c75058eaec</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/256/Celebration-Of-Gospel-2016/f08e70d1-ae02-4672-804a-4bb5835b629e</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/23/for-better-or-worse</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/34/windeck</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/221/sexless</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/109/note-to-self/8ca58e08-95bd-4bab-bfef-1d050816d62a</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/199/last-night/917f6794-18e8-4c10-8df9-0d7e01486f62</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/160/two-can-play-that-game/72b38f15-04fd-44eb-9d6b-e6f25f1cc714</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/42/the-last-letter/f7bd39f3-2903-4c0e-bac6-9dc2523e794c</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/47/my-other-mother/2f1e4097-2951-4f27-986a-4b5a60806e0e</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/141/boyzn-the-hood/a1a9945b-798c-42d8-910d-6a6c77556db6</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/173/hitch/158af8e3-e401-4d6c-a954-2dde22b05ec8</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/150/first-sunday/7b9ddcbd-1516-41fc-b337-90d0a07ae53c</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/136/are-we-done-yet/1a6f9304-ff9b-4c9b-83aa-f2007addf6a4</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/190/hustle-and-heat/249494a1-b107-446d-aa0b-f15b9138d1cb</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/139/bad-boys-2/156869da-2f06-47e1-be33-fcabab36594d</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/191/xxx-2-the-next-level/6b93374b-a7f0-4fe5-a7f7-c7f43f0b4d30</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/157/you-got-served/32404dcf-b99d-41fa-97e5-7d89673f2809</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/178/the-gospel/1a2f3da7-34f4-4b6c-a583-fc8dae72a9ce</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/131/hear-me-move/2d4e366c-7383-4640-84c6-c2580adc7281</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/225/brooklyn-boheme/8751d8aa-997b-4bc9-beef-5d90a67a73b6</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/210/trop-noire-pour-etre-francaise/1b420bdd-868b-4dfa-80bf-2e34f4bf53cd</loc>
-  </url>
-  <url>
-    <loc>https://afrostream.tv/219/lautre-face-du-kilimandjaro/9af8093b-e711-4b1a-bcd3-c1e775bc6c5e</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/204/bet-en-direct/fce62656-81c8-4d42-b54f-726ad8bdc005</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/23/for-better-or-worse</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/259/Lets-Stay-Together</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/34/windeck</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/221/sexless</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/109/note-to-self/8ca58e08-95bd-4bab-bfef-1d050816d62a</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/199/last-night/917f6794-18e8-4c10-8df9-0d7e01486f62</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/160/two-can-play-that-game/72b38f15-04fd-44eb-9d6b-e6f25f1cc714</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/42/the-last-letter/f7bd39f3-2903-4c0e-bac6-9dc2523e794c</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/47/my-other-mother/2f1e4097-2951-4f27-986a-4b5a60806e0e</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/141/boyzn-the-hood/a1a9945b-798c-42d8-910d-6a6c77556db6</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/173/hitch/158af8e3-e401-4d6c-a954-2dde22b05ec8</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/150/first-sunday/7b9ddcbd-1516-41fc-b337-90d0a07ae53c</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/136/are-we-done-yet/1a6f9304-ff9b-4c9b-83aa-f2007addf6a4</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/191/xxx-2-the-next-level/6b93374b-a7f0-4fe5-a7f7-c7f43f0b4d30</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/139/bad-boys-2/156869da-2f06-47e1-be33-fcabab36594d</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/190/hustle-and-heat/249494a1-b107-446d-aa0b-f15b9138d1cb</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/157/you-got-served/32404dcf-b99d-41fa-97e5-7d89673f2809</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/178/the-gospel/1a2f3da7-34f4-4b6c-a583-fc8dae72a9ce</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/131/hear-me-move/2d4e366c-7383-4640-84c6-c2580adc7281</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/219/lautre-face-du-kilimandjaro/9af8093b-e711-4b1a-bcd3-c1e775bc6c5e</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/210/trop-noire-pour-etre-francaise/1b420bdd-868b-4dfa-80bf-2e34f4bf53cd</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/225/brooklyn-boheme/8751d8aa-997b-4bc9-beef-5d90a67a73b6</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/120/njinga-reine-dangola/6bf0ea77-855a-4b68-ac78-3a371c3d2920</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/234/gone-too-far/5bf8f7d8-3f81-40f4-b0fe-8e2658d9db41</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://afrostream.tv/200/inumber-number/994526a0-7ed1-445b-b0f3-dbd79c838ca0</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/41/hes-mine-not-yours/a58f7a12-b23a-43fc-8a84-195636e9f7d4</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/48/lyfes-journey/e45e01a3-ee59-4e47-a5f8-8184e7c9e60f</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/50/the-dempsey-sisters/0a3cbce6-7546-499a-9bd7-4e4391e0a94d</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/27/mouk</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/29/les-gnoufs</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/124/diego-et-ziggy</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/cgu</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/policy</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/legals</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/110d1a68-3560-4fcc-9c4d-b597c1967ae7/Afrostream-Four-Of-Hearts</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/1ab35b60-b99d-47f2-a925-04718af52332/Afrostream-Hello-Cupid</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/2513fc43-6c02-4cae-99c9-90cf9e8c1bc6/Afrostream-Roomieloverfriends</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/26b52987-9534-46b7-8dc7-c5273e2ce7e7/Afrostream-for-better-or-worse-tyler-perry
     </loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/287a134b-e10c-4adb-b21d-4800c6208350/Afrostream-Film-serie-afro</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/3f6b8339-936d-4f38-8add-e8d8a9d59697/Afrostream-Njinga-reine-d-angola</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/4ae7b3d6-d5a9-4a08-95fa-27be2a1128e0/Afrostream-Hear-me-move</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/5b863c53-fdd5-406e-8f60-25b05d83f31f/windeck</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/64aa20f9-b397-4f55-8948-351fc425d19d/Afrostream-5-Cinema-Dope-rick-famuyiwa</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/761b1042-7d0a-40a9-83ac-1b2ee5918b24/Afrostream-24-hour-love</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/7c261243-68fa-4c93-9d4a-0f1d665de954/Afrostream-Last-flight-to-abuja</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/7e853caa-ce0c-4664-8c6b-0d0ee5fde709/Afrostream-Rush</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/999ef6c4-e02f-44f3-97fc-8e53b08a994e/Afrostream-the-divorce</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/9a7f5bdd-e061-4e1d-9b6c-1698090d74c2/Afrostream-mann-and-wife</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/a639bb36-295b-4dc7-9694-afc6b26af208/Afrostream-Venus-vs-Mars</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/a7c81a85-03a2-46ad-ab94-a236476bb2d1/Afrostream-Note-to-self</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/ac425818-2947-42e1-ad65-7bc1d9119aab/Afrostream-Higher-ground-voices</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/c962b1df-41a9-48e8-a233-d69bac92e7a6/Afrostream-Family-time</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/d27385a9-3bd6-4d30-884f-91c3a197715e/Afrostream-black-coffee</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>
       https://afrostream.tv/blog/d8fd376a-e4af-4daa-b5f3-caff75280521/7-lecons-qui-changeront-votre-vie-selon-taraji-p-henson-empire
     </loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/e4410e1e-5349-4c76-b6e8-ad9f82c7ac9c/Afrostream-Brothers-with-no-game</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
   <url>
     <loc>https://afrostream.tv/blog/fbd06f9b-0618-42b0-99b0-981a0e72cf6c/Afrostream-Adam-s-Apples</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.64</priority>
   </url>
 </urlset>
