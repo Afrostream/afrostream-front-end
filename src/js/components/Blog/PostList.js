@@ -15,7 +15,7 @@ if (process.env.BROWSER) {
   ];
 })
 @connect(({ Blog }) => ({Blog}))
-export default class List extends Component {
+export default class PostList extends Component {
 
   render() {
     const {

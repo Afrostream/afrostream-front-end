@@ -1,2 +1,2 @@
-export List from './List';
-export View from './View';
+export PostList from './PostList';
+export PostView from './PostView';

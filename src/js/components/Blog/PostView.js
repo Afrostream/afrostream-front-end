@@ -23,7 +23,7 @@ if (process.env.BROWSER) {
   ];
 })
 @connect(({ Blog }) => ({Blog}))
-export default class View extends Component {
+export default class PostView extends Component {
 
   render() {
     const {

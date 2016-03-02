@@ -27,8 +27,8 @@ export default (
     <Route name="policy" path="policy" component={Static.Policy}/>
     <Route name="reset" path="reset" component={ResetPasswordPage}/>
     <Route name="login" path="login" component={LoginPage}/>
-    <Route name="blog" path="blog" component={Blog.List}>
-      <Route name="post" path=":postId(/:postSlug)" component={Blog.View}/>
+    <Route name="blog" path="blog" component={Blog.PostList}>
+      <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
     </Route>
     <Route name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>

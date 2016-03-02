@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes';
+import {notFoundPost} from './notFoundAction';
 
 export function fetchAll() {
   return (dispatch, getState) => {
@@ -36,7 +37,7 @@ export function fetchPost(postId) {
     return async api => ({
       type: ActionTypes.Blog.fetchPost,
       postId,
-      res: await api(`/api/posts/${postId}`)
+      res: await api(`/api/posts/${postId}`).catch(notFoundPost)
     });
   };
 }
