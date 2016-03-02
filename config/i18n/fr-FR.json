@@ -64,7 +64,7 @@
     },
     "paypal": {
       "label": "Paiement par Paypal",
-      "paypalText": "Pour finaliser la souscription, cliquez sur le bouton \"DÉMARREZ MAINTENANT\" et utilisez votre compte Paypal"
+      "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"DÉMARREZ MAINTENANT\" et utiliser votre compte Paypal"
     },
     "errors": {
       "noLib": {
