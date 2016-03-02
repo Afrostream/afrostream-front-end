@@ -117,7 +117,7 @@ class AccountPage extends React.Component {
           <tbody>
           {subscriptionsList.map((subscription, i) => {
 
-              let subscriptionDate = moment(subscription.get('creationDate')).format('L');
+              let subscriptionDate = moment(subscription.get('subActivatedDate')).format('L');
               let internalPlan = subscription.get('internalPlan');
               let providerPlan = subscription.get('provider');
               //PERIOD
