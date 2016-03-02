@@ -214,7 +214,7 @@ const config = {
     key: process.env.GOCARDLESS_PUBLIC_KEY || 'sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL',
     version: '2015-07-06',
     creancier: {
-      id: 'GB27ZZZSDDBARC0000007495895',
+      id: 'GB31ZZZSDDBARC0000007495895067',
       name: 'Afrostream',
       adress: '18 RUE SCRIBE 44000 NANTES'
     }
