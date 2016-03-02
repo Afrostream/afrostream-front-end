@@ -113,7 +113,7 @@ class GocardlessForm extends React.Component {
   onHeaderClick() {
     let clickHeader = ReactDOM.findDOMNode(this);
     if (clickHeader) {
-      clickHeader.dispatchEvent(new Event('changemethod', {bubbles: true}));
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'gocardless', bubbles: true}));
     }
   }
 

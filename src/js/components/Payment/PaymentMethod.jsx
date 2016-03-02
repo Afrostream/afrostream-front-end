@@ -3,7 +3,7 @@ import ReactDOM from'react-dom';
 import {dict,payment,featuresFlip} from '../../../../config';
 import { Link } from 'react-router';
 
-import {RecurlyForm,GocardlessForm} from './Forms';
+import {RecurlyForm,GocardlessForm, PaypalForm} from './Forms';
 
 if (process.env.BROWSER) {
   require('./PaymentMethod.less');
@@ -11,7 +11,8 @@ if (process.env.BROWSER) {
 
 const Methods = {
   GOCARDLESS: 'gocardless',
-  CARD: 'card'
+  CARD: 'card',
+  PAYPAL: 'paypal'
 };
 
 class PaymentMethod extends React.Component {
@@ -37,7 +38,7 @@ class PaymentMethod extends React.Component {
   static methods = Methods;
 
   multipleMethods() {
-    return !this.props.isGif && featuresFlip.gocardless
+    return !this.props.isGift && (featuresFlip.gocardless || featuresFlip.paypal)
   }
 
   hasLib() {
@@ -47,6 +48,9 @@ class PaymentMethod extends React.Component {
         break;
       case  Methods.CARD:
         return this.refs.card.hasLib();
+        break;
+      case  Methods.PAYPAL:
+        return this.refs.paypal.hasLib();
         break;
     }
   }
@@ -68,14 +72,26 @@ class PaymentMethod extends React.Component {
       case  Methods.CARD:
         return await this.refs.card.submit(billingInfo, currentPlan);
         break;
+      case  Methods.PAYPAL:
+        return await this.refs.paypal.submit(billingInfo, currentPlan);
+        break;
     }
   }
 
   switchMethod() {
+    let newMethod = Methods.GOCARDLESS;
+
     if (!this.multipleMethods()) {
       return;
     }
-    let newMethod = this.state.method === Methods.GOCARDLESS ? Methods.CARD : Methods.GOCARDLESS;
+
+    if (typeof event !== 'undefined' &&
+      typeof event.detail !=='undefined' &&
+      event.type === 'changemethod') {
+
+      newMethod = event.detail;
+    }
+
     this.setState({
       method: newMethod
     });
@@ -89,6 +105,10 @@ class PaymentMethod extends React.Component {
                                                                          selected={this.state.method === Methods.GOCARDLESS}/> : ''}
         <RecurlyForm ref="card"
                      selected={this.state.method === Methods.CARD}/>
+
+
+        {!this.props.isGift ? <PaypalForm ref="paypal"
+                                          selected={this.state.method === Methods.PAYPAL}/> : ''}
       </div>
     );
   }
