@@ -183,11 +183,6 @@ class PaymentForm extends React.Component {
     const user = User.get('user');
     const currentPlan = this.hasPlan();
 
-    // Disable the submit button
-    //$('[data-billing]').removeClass('has-error');
-    //$('.conditions-generales').removeClass('checkbox-has-error');
-    //$('.droit-retractation').removeClass('checkbox-has-error');
-
     this.setState({
       error: null
     });
@@ -195,7 +190,6 @@ class PaymentForm extends React.Component {
     this.disableForm(true);
 
     if (!this.refs.cgu.checked || !this.refs.droits.checked) {
-      //$('.conditions-generales').addClass('checkbox-has-error');
       return this.error({
         message: dict.payment.errors.checkbox,
         fields: ['cgu', 'droits']

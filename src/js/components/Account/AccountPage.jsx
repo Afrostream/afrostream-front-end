@@ -92,7 +92,8 @@ class AccountPage extends React.Component {
     const subscriptionsList = user.get('subscriptions');
 
     const providerLogos = {
-      'recurly': '/images/payment/bank-cards.png',
+      'celery': '/images/payment/bank-cards-paypal.png',
+      'recurly': '/images/payment/bank-cards-paypal.png',
       'gocardless': '/images/payment/virement.jpg'
     };
 
@@ -142,8 +143,22 @@ class AccountPage extends React.Component {
                 'fa-toggle-on': subscriptionStatus == 'active'
               };
 
-              let statusLabel = dict.account.billing.status[subscriptionStatus];
-
+              let statusLabel;
+              switch (subscriptionStatus) {
+                case 'active':
+                case 'expired':
+                case 'future':
+                case 'canceled':
+                  statusLabel = dict.account.billing.status[subscriptionStatus];
+                  break;
+                case 'pending':
+                case 'pending_active':
+                case 'pending_canceled':
+                case 'pending_expired':
+                case 'requesting_canceled':
+                  statusLabel = dict.account.billing.status['pending'];
+                  break;
+              }
               return (
                 <tr key={`subscription-${i}-info`}>
                   <th scope="row">{subscriptionDate}</th>
@@ -197,12 +212,11 @@ class AccountPage extends React.Component {
     let currentSubscription = subscriptionsList.find((obj)=> {
       return obj.get('isActive') === 'yes';// && obj.get('subStatus') !== 'canceled'
     });
-    //let currentSubscription = subscriptionsList.get(0);
 
     let cancelSubscriptionClasses = {
       'btn': true,
       'btn-default': true,
-      'cancel-plan-hidden': !currentSubscription || (currentSubscription.get('subStatus') === 'canceled')
+      'cancel-plan-hidden': !currentSubscription || (currentSubscription.get('subStatus') === 'canceled') || (currentSubscription.get('provider').get('providerName') === 'celery')
     };
 
     const planLabel = dict.planCodes[planCode];
