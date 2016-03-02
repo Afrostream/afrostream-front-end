@@ -1,5 +1,5 @@
 export async function notFound(err) {
-  if (err.status && err.status === 404) {
+  if (err.status && err.status === 404 || err.status === 500) {
     return {
       body: {
         type: 'error',
@@ -15,7 +15,7 @@ export async function notFound(err) {
 }
 
 export async function notFoundArray(err) {
-  if (err.status && err.status === 404) {
+  if (err.status && err.status === 404 || err.status === 500) {
     return {
       body: []
     }
@@ -44,8 +44,8 @@ export async function notFoundPost(err) {
     return {
       body: {
         type: 'error',
-        title: 'Non trouvé',
-        description: '',
+        title: 'Post non trouvé',
+        description: 'Désolé, ce contenu n’est plus disponible',
         body: 'Désolé, ce contenu n’est plus disponible',
         poster: {
           imgix: 'https://afrostream.imgix.net/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
