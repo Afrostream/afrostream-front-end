@@ -109,8 +109,6 @@ class AccountPage extends React.Component {
             <th>{dict.account.billing.decriptionLabel}</th>
             <th>{dict.account.billing.periodLabel}</th>
             <th>{dict.account.billing.methodLabel}</th>
-            <th>{dict.account.billing.taxLabel}</th>
-            <th>{dict.account.billing.totalLabel}</th>
             <th>{dict.account.billing.statusLabel}</th>
           </tr>
           </thead>
@@ -172,8 +170,6 @@ class AccountPage extends React.Component {
                     </div>
                   </td>
                   <td><img src={providerLogo} alt={providerName} className="img-responsive"/></td>
-                  <td>{amountInCentsExclTax}</td>
-                  <td>{amountInCents}</td>
                   <td><i className={classSet(statusClasses)} title={statusLabel}
                          data-toggle="tooltip"
                          data-placement="top"></i> {statusLabel}</td>

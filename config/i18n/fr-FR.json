@@ -123,8 +123,6 @@
       "decriptionLabel": "Description",
       "periodLabel": "Période de service",
       "methodLabel": "Mode de paiement",
-      "taxLabel": "Sous-total",
-      "totalLabel": "Total",
       "statusLabel": "Status",
       "periods": {
         "year": "An",
