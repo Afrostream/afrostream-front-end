@@ -15,8 +15,6 @@ const mergeProfile = function (data, getState, actionDispatcher) {
   const donePath = getState().Modal.get('donePath');
   const coupon = getState().Coupon.get('coupon');
 
-  console.log('mergeProfile', token);
-
   if (!token) {
     return data;
   }

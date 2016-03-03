@@ -30,12 +30,16 @@ class HomePage extends React.Component {
   }
 
   checkAuth() {
-    const { props: { User } } = this;
+    const {
+      context : {location,history},
+      props: { User }
+      } = this;
+
     const user = User.get('user');
     if (user) {
       let planCode = user.get('planCode');
-      if (!planCode) {
-        this.context.history.pushState(null, '/select-plan');
+      if (!planCode && location.pathname !== '/compte') {
+        history.pushState(null, '/select-plan');
       }
     }
   }
