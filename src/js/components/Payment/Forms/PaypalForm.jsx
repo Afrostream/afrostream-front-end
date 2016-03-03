@@ -15,7 +15,8 @@ class PaypalForm extends RecurlyForm {
 
     const self = this;
     let recurlyInfo = {
-      'description': billingInfo.internalPlanUuid
+      'description': billingInfo.internalPlanUuid,
+      'coupon_code': self.refs.couponCode.value
     };
 
     return await new Promise(
@@ -30,7 +31,8 @@ class PaypalForm extends RecurlyForm {
             //NEW BILLING API
             billingProvider: 'recurly',
             subOpts: {
-              customerBankAccountToken: token.id
+              customerBankAccountToken: token.id,
+              couponCode: self.refs.couponCode.value
             }
           }, recurlyInfo));
         });
