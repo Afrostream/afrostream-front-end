@@ -127,17 +127,16 @@ class ModalLogin extends ModalComponent {
       props: { dispatch}
       } = this;
 
-    const self = this;
 
     let valitations = ['email', 'password'];
 
-    if (self.props.type === 'showReset') {
+    if (this.props.type === 'showReset') {
       valitations.push('repeat_password');
     }
 
     let formData = this.state;
     _.forEach(valitations, (name)=> {
-      let domNode = ReactDOM.findDOMNode(self.refs[name]);
+      let domNode = ReactDOM.findDOMNode(this.refs[name]);
       if (domNode) {
         formData[name] = domNode.value;
         this.setState(formData, () => {
@@ -146,7 +145,7 @@ class ModalLogin extends ModalComponent {
       }
     });
 
-    if (!self.isValid()) {
+    if (!this.isValid()) {
       return;
     }
 
@@ -155,10 +154,10 @@ class ModalLogin extends ModalComponent {
       error: ''
     });
 
-    let typeCall = self.getType();
-    let postData = _.pick(self.state, ['email', 'password']);
+    let typeCall = this.getType();
+    let postData = _.pick(this.state, ['email', 'password']);
 
-    dispatch(OauthActionCreator[typeCall](postData)).then(::self.onSuccess).catch(::self.onError);
+    dispatch(OauthActionCreator[typeCall](postData)).then(::this.onSuccess).catch(::this.onError);
   }
 
   facebookAuth(event) {
@@ -167,13 +166,10 @@ class ModalLogin extends ModalComponent {
       dispatch
       } = this.props;
 
-    const self = this;
-
-    dispatch(OauthActionCreator.facebook()).then(::self.onSuccess);
+    dispatch(OauthActionCreator.facebook()).then(::this.onSuccess).catch(::this.onError);
   }
 
   onSuccess() {
-
     const {
       dispatch
       } = this.props;
@@ -185,11 +181,16 @@ class ModalLogin extends ModalComponent {
     if (this.props.type !== 'showReset') {
       dispatch(UserActionCreators.getProfile());
       dispatch(ModalActionCreator.close());
+    } else {
       dispatch(IntercomActionCreators.createIntercom());
     }
   }
 
   onError(err) {
+    const {
+      dispatch
+      } = this.props;
+
     let errMess = err.message;
     if (err.response) {
       if (err.response.body) {
@@ -203,6 +204,8 @@ class ModalLogin extends ModalComponent {
       loading: false,
       error: this.getTitle(errMess.toString()) || this.getTitle('wrongEmailPasswordErrorText')
     });
+
+    dispatch(IntercomActionCreators.createIntercom());
   }
 
   cancelAction(event) {

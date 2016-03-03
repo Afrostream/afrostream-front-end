@@ -107,6 +107,7 @@
     },
     "social": {
       "header": "Profils liés",
+      "facebook": "Lier mon profil <b>Facebook</b> à mon compte Afrostream",
       "on": "Lier mon profil",
       "off": "Ne plus lier mon profil"
     },
