@@ -65,14 +65,13 @@ class AccountSocial extends React.Component {
 
     return (
       <div className="row account-details">
-        <div className="account-details__header col-md-4">{dict.account.social.header}</div>
-        <div className="account-details__container col-md-8">
+        <div className="account-details__container col-md-12">
           <div className="row">
             <div className="col-md-2">
               <i className="fa fa-facebook-official"/>
             </div>
-            <div className="col-md-4" dangerouslySetInnerHTML={{__html:dict.account.social.facebook}}/>
-            <div className="col-md-6">
+            <div className="col-md-6" dangerouslySetInnerHTML={{__html:dict.account.social.facebook}}/>
+            <div className="col-md-4">
               <SwitchButton label={checkLabel} name="switch-3" checked={checked}
                 {...inputAttributes} disabled={this.state.fetching}/>
             </div>
