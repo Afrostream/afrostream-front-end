@@ -49,6 +49,7 @@ class PaypalForm extends RecurlyForm {
     if (!this.props.selected) return;
 
     return (
+
       <div className="row" ref="goCardlessForm">
         {this.renderPromoCode()}
         <h5 className="col-md-12">{dict.payment.paypal.paypalText}</h5>
