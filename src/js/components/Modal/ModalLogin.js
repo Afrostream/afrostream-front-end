@@ -158,18 +158,35 @@ class ModalLogin extends ModalComponent {
     let typeCall = self.getType();
     let postData = _.pick(self.state, ['email', 'password']);
 
-    dispatch(OauthActionCreator[typeCall](postData)).then(() => {
-      self.setState({
-        success: true,
-        loading: false
-      });
-      if (self.props.type !== 'showReset') {
-        dispatch(UserActionCreators.getProfile());
-        dispatch(ModalActionCreator.close());
-        return;
-      }
+    dispatch(OauthActionCreator[typeCall](postData)).then(::self.onSuccess).catch(::self.onError);
+  }
+
+  facebookAuth(event) {
+    event.preventDefault();
+    const {
+      dispatch
+      } = this.props;
+
+    const self = this;
+
+    dispatch(OauthActionCreator.facebook()).then(::self.onSuccess);
+  }
+
+  onSuccess() {
+
+    const {
+      dispatch
+      } = this.props;
+
+    this.setState({
+      success: true,
+      loading: false
+    });
+    if (this.props.type !== 'showReset') {
+      dispatch(UserActionCreators.getProfile());
+      dispatch(ModalActionCreator.close());
       dispatch(IntercomActionCreators.createIntercom());
-    }).catch(::self.onError);
+    }
   }
 
   onError(err) {
@@ -186,15 +203,6 @@ class ModalLogin extends ModalComponent {
       loading: false,
       error: this.getTitle(errMess.toString()) || this.getTitle('wrongEmailPasswordErrorText')
     });
-  }
-
-  facebookAuth(event) {
-    event.preventDefault();
-    const {
-      dispatch
-      } = this.props;
-
-    dispatch(OauthActionCreator.facebook());
   }
 
   cancelAction(event) {

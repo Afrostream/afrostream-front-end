@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import ActionTypes from '../consts/ActionTypes';
 import createReducer from '../lib/createReducer';
-import { storeToken } from '../lib/storage';
+import { storeToken,getToken } from '../lib/storage';
 import config from '../../../config/client';
 
 const initialState = Immutable.fromJS({
@@ -13,16 +13,7 @@ export default createReducer(initialState, {
 
   [ActionTypes.OAuth.getIdToken](state) {
 
-    const storageId = config.apiClient.token;
-    let storedData = localStorage.getItem(storageId);
-    let tokenData = null;
-    if (storedData) {
-      try {
-        tokenData = JSON.parse(storedData);
-      } catch (err) {
-        console.log('deserialize oauth data error');
-      }
-    }
+    let tokenData = getToken();
 
     return state.merge({
       ['token']: tokenData
@@ -53,15 +44,11 @@ export default createReducer(initialState, {
   },
 
 
-  [ActionTypes.OAuth.facebook](state, { res }) {
-    if (!res) {
-      return state;
-    }
-    const data = res.body;
-    storeToken(data);
-
+  [ActionTypes.OAuth.facebook](state, {}) {
+    const tokenData = getToken();
+    console.log('ActionTypes.OAuth.facebook', tokenData);
     return state.merge({
-      [`token`]: data
+      ['token']: tokenData
     });
   },
 

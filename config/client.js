@@ -151,7 +151,7 @@ const config = {
   },
   dict: dictFr,
   oauth2: {
-    facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,
+    facebook: process.env.OAUTH_FACEBOOK_ENABLED || true,
     dict: dictFr
   },
   social: {

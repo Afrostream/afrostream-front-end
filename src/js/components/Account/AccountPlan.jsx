@@ -1,22 +1,15 @@
 import React from 'react';
-import { prepareRoute } from '../../decorators';
-import * as UserActionCreators from '../../actions/user';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import config from '../../../../config/client';
+import {dict} from '../../../../config';
+import classSet from 'classnames';
 
 if (process.env.BROWSER) {
   require('./AccountPlan.less');
 }
 
-@connect(({ User }) => ({User})) class AccountPlan extends React.Component {
-
-  getInitialState() {
-
-    return {
-      cardNumber: null
-    }
-  };
+@connect(({ User }) => ({User}))
+class AccountPlan extends React.Component {
 
   render() {
     const {
@@ -26,30 +19,49 @@ if (process.env.BROWSER) {
       } = this;
 
     const user = User.get('user');
+    if (!user) {
+      return <div />;
+    }
+    const planCode = user.get('planCode');
 
-    if (user) {
-      return (
-        <div className="row-fluid">
-          <div className="container">
-            <div className="account-plan">
-              <h1>Changer de forfait</h1>
-              <div className="account-plan-details">
-                Cette page n’est pas encore active. Pour changer de forfait, veuillez contacter notre
-                service client a l’adresse suivante:
-                <a href="mailto:support@afrostream.tv?Subject=Changer%20mail" target="_top"> support@afrostream.tv</a>
-              </div>
+    if (!planCode) {
+      return <div />;
+    }
+
+    const subscriptionsList = user.get('subscriptions');
+
+    if (!subscriptionsList) {
+      return <div />;
+    }
+
+    let currentSubscription = subscriptionsList.find((obj)=> {
+      return obj.get('isActive') === 'yes';// && obj.get('subStatus') !== 'canceled'
+    });
+
+    let cancelSubscriptionClasses = {
+      'btn': true,
+      'btn-default': true,
+      'cancel-plan-hidden': !currentSubscription || (currentSubscription.get('subStatus') === 'canceled') || (currentSubscription.get('provider').get('providerName') === 'celery')
+    };
+
+    const planLabel = dict.planCodes[planCode];
+
+    return (
+      <div className="row account-details">
+        <div className="account-details__header col-md-4">{dict.account.plan.header}</div>
+        <div className="account-details__container col-md-8">
+          <div className="row">
+            <div className="col-md-8">
+              <span>{planLabel}</span>
+            </div>
+            <div className="col-md-4">
+              <Link className={classSet(cancelSubscriptionClasses)}
+                    to="/compte/cancel-subscription">{dict.account.plan.cancelPlan}</Link>
             </div>
           </div>
         </div>
-      );
-    } else {
-
-      return (
-        <div className="row-fluid">
-        no user found
       </div>
-    );
-    }
+    )
   }
 }
 

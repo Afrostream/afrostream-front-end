@@ -9,3 +9,17 @@ export function storeToken(oauthData) {
   }
   return oauthData;
 };
+
+export function getToken() {
+  const storageId = apiClient.token;
+  let storedData = localStorage.getItem(storageId);
+  let tokenData = null;
+  if (storedData) {
+    try {
+      tokenData = JSON.parse(storedData);
+    } catch (err) {
+      console.log('deserialize oauth data error');
+    }
+  }
+  return tokenData;
+};

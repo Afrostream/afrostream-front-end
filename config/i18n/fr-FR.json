@@ -105,6 +105,11 @@
       "updatePlan": "Changer de forfait",
       "cancelPlan": "Interrompre votre abonnement"
     },
+    "social": {
+      "header": "Profils liés",
+      "on": "Lier mon profil",
+      "off": "Ne plus lier mon profil"
+    },
     "cancel": {
       "active": {
         "header": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",

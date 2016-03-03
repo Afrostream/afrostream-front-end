@@ -37,32 +37,52 @@ export function reset(form) {
     });
   };
 }
-
 /**
- * Get token from facebook oauth
+ * Get token from localStorage and set in store
  * @returns {Promise}
  */
-export function facebook() {
+export function getIdToken() {
+  return (dispatch, getState, actionDispatcher) => {
+    return {
+      type: ActionTypes.OAuth.getIdToken
+    };
+  };
+}
+/**
+ * Get token from facebook oauth
+ * @param isSynchro
+ * @returns {Function}
+ */
+export function facebook(isSynchro) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
-    let url = `/auth/facebook`,
+
+    const token = getState().OAuth.get('token');
+    let unlinkUri = '';
+    //Si il y a un user et qu'on veut desynchro le social account, on passe le token en parametre
+    if (isSynchro && token) {
+      unlinkUri = `/unlink?access_token=${token.get('accessToken')}`;
+    }
+
+    let url = `/auth/facebook${unlinkUri}`,
       width = 400,
       height = 650,
       top = (window.outerHeight - height) / 2,
       left = (window.outerWidth - width) / 2;
 
-    let oauthPopup = window.open(url, 'facebook_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
-    oauthPopup.onbeforeunload = function () {
-      actionDispatcher(UserActionCreators.getProfile());
-      actionDispatcher(ModalActionCreators.close());
-    }.bind(this);
-  };
-}
-
-export function getIdToken() {
-  return (dispatch, getState, actionDispatcher) => {
-    return {
-      type: ActionTypes.OAuth.getIdToken
+    return async () => {
+      return await new Promise((resolve, reject) => {
+        let oauthPopup = window.open(url, 'facebook_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
+        oauthPopup.onbeforeunload = function () {
+          try {
+            resolve({
+              type: ActionTypes.OAuth.facebook
+            });
+          } catch (err) {
+            reject(err);
+          }
+        }
+      });
     };
   };
 }
