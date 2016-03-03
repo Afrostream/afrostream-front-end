@@ -14,9 +14,6 @@ class PaypalForm extends RecurlyForm {
   async submit(billingInfo, currentPlan) {
 
     const self = this;
-    console.log('** about to log the billing infor ***');
-
-
     let recurlyInfo = {
       'description': billingInfo.internalPlanUuid,
       'coupon_code': self.refs.couponCode.value
