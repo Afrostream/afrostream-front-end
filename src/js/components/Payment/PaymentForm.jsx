@@ -218,6 +218,8 @@ class PaymentForm extends React.Component {
   }
 
   async submitSubscription(formData) {
+    console.log('*** calling our backend to create subscription ***');
+    console.log(formData);
     const {
       props: {
         dispatch,

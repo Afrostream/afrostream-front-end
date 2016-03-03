@@ -14,6 +14,9 @@ class PaypalForm extends RecurlyForm {
   async submit(billingInfo, currentPlan) {
 
     const self = this;
+    console.log('** about to log the billing infor ***');
+
+
     let recurlyInfo = {
       'description': billingInfo.internalPlanUuid,
       'coupon_code': self.refs.couponCode.value
@@ -28,6 +31,7 @@ class PaypalForm extends RecurlyForm {
             return reject(err);
           }
           return resolve(_.merge({
+            'recurly-token': token.id,
             //NEW BILLING API
             billingProvider: 'recurly',
             subOpts: {
