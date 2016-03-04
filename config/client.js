@@ -62,7 +62,7 @@ const config = {
   externalsJs: [
     '//www.gstatic.com/cv/js/sender/v1/cast_sender.js',
     '//js.recurly.com/v3/recurly.js',
-    '//www.easybroadcast.fr/libs/65/EB.js&s2member_file_download_key=dbb00d0abec8ccb2295b7d2df5325f6b',
+    //'//www.easybroadcast.fr/libs/65/EB.js&s2member_file_download_key=dbb00d0abec8ccb2295b7d2df5325f6b',
     gocarlessApi
   ],
   promoCodes: [
