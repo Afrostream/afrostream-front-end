@@ -62,6 +62,7 @@ const config = {
   externalsJs: [
     '//www.gstatic.com/cv/js/sender/v1/cast_sender.js',
     '//js.recurly.com/v3/recurly.js',
+    '//www.easybroadcast.fr/libs/65/EB.js&s2member_file_download_key=dbb00d0abec8ccb2295b7d2df5325f6b',
     gocarlessApi
   ],
   promoCodes: [
@@ -293,7 +294,7 @@ const config = {
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
     "dasheverywhere": castlab,
-    "techOrder": ["dash", "html5", "dashas"],
+    "techOrder": ["easyBroadcast", "dash", "html5", "dashas"],
     "plugins": {
       "chromecast": {
         "appId": process.env.CHROMECAST_ID || '',
