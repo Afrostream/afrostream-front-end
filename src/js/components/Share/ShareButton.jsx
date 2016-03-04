@@ -14,6 +14,17 @@ class ShareButton extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.attachTooltip();
+  }
+
+  componentDidUpdate() {
+    this.attachTooltip();
+  }
+
+  attachTooltip() {
+    $(this.refs.data).tooltip();
+  }
 
   sharePopup() {
     const {
@@ -35,7 +46,7 @@ class ShareButton extends React.Component {
     const inputAttributes = {
       onClick: event => ::this.sharePopup()
     };
-    return (<button className="btn share_button" type="button" data-toggle="tooltip"
+    return (<button className="btn share_button" type="button" data-toggle="tooltip" ref="data"
                     data-placement="top"
                     title={this.props.label}  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>

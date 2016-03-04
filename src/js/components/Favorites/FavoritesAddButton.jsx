@@ -17,6 +17,18 @@ class FavoritesAddButton extends React.Component {
     this.state = {pendingFavorite: false};
   }
 
+  componentDidMount() {
+    this.attachTooltip();
+  }
+
+  componentDidUpdate() {
+    this.attachTooltip();
+  }
+
+  attachTooltip() {
+    $(this.refs.data).tooltip();
+  }
+
   static propTypes = {
     data: PropTypes.instanceOf(Immutable.Map),
     dataId: PropTypes.oneOfType([
@@ -93,7 +105,7 @@ class FavoritesAddButton extends React.Component {
     };
 
     return (<div className="btn favorite-add_button" type="button" data-toggle="tooltip"
-                 data-placement="top"
+                 data-placement="top" ref="data"
                  title="Ajouter à mes favoris"  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>
       {this.state.pendingFavorite ? <Spinner /> : ''}
