@@ -294,7 +294,7 @@ const config = {
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
     "dasheverywhere": castlab,
-    "techOrder": ["easyBroadcast", "dash", "html5", "dashas"],
+    "techOrder": ["dash", "html5", "dashas"],
     "plugins": {
       "chromecast": {
         "appId": process.env.CHROMECAST_ID || '',
