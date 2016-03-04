@@ -50,7 +50,7 @@ const webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
-      'jquery': path.join(__dirname, '../node_modules/jquery/dist/jquery')
+      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery')
     }
   },
   stats: {
@@ -103,7 +103,10 @@ const webpackConfig = {
       {
         test: /.eot([\?]?.*)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]'
-      }
+      },
+      //expose jquery
+      {test: /jquery\.js$/, loader: 'expose?$'},
+      {test: /jquery\.js$/, loader: 'expose?jQuery'}
     ]
   },
   node: {
@@ -120,11 +123,7 @@ const webpackConfig = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      '$.fn': 'jquery.fn',
       'window.$': 'jquery',
-      'window.$.fn': 'jquery.fn',
-      'window.jQuery': 'jquery',
-      'root.jQuery': 'jquery',
       'Math/Long': 'long'
     }),
     new webpack.DefinePlugin({
