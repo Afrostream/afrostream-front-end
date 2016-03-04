@@ -76,7 +76,6 @@ class PaymentForm extends React.Component {
           name="first-name"
           placeholder={dict.payment.name} required
           disabled={this.state.disabledForm}/>
-          disabled={this.state.disabledForm}/>
       </div>
       <div className="form-group col-md-6">
         <label className="form-label" htmlFor="last_name">{dict.payment.lastName}</label>
@@ -208,7 +207,7 @@ class PaymentForm extends React.Component {
     if (self.state.isGift) {
       billingInfo = _.merge(billingInfo, this.refs.giftDetails.value())
     }
-    
+
     try {
       let subBillingInfo = await this.refs.methodForm.submit(billingInfo, currentPlan);
       billingInfo = _.merge(billingInfo, subBillingInfo);
