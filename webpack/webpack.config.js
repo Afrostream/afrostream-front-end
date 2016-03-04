@@ -107,7 +107,7 @@ const webpackConfig = {
       //expose jquery
       {test: /jquery\.js$/, loader: 'expose?$'},
       {test: /jquery\.js$/, loader: 'expose?jQuery'},
-      {test: /jquery\.js$/, loader: 'expose?jquery'},
+      {test: /jquery\.js$/, loader: 'expose?jquery'}
     ]
   },
   node: {
@@ -124,7 +124,6 @@ const webpackConfig = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      jquery: 'jquery',
       'window.$': 'jquery',
       'Math/Long': 'long'
     }),
