@@ -18,7 +18,6 @@ moment.locale('fr');
 
 //superAgentMock(request);
 if (canUseDOM) {
-  require('jquery');
   require('bootstrap');
   require('jquery.payment');
   require('./lib/customEventPolyfill');
