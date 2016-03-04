@@ -15,7 +15,7 @@ class PaypalForm extends RecurlyForm {
 
     const self = this;
     let recurlyInfo = {
-      'description': billingInfo.internalPlanUuid,
+      'description': self.props.planLabel,
       'coupon_code': self.refs.couponCode.value
     };
 
