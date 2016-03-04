@@ -50,7 +50,7 @@ const webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
-      'jquery': path.join(__dirname, '../node_modules/jquery/dist/jquery')
+      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery')
     }
   },
   stats: {
@@ -125,8 +125,6 @@ const webpackConfig = {
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery',
-      'window.jQuery': 'jquery',
-      'root.jQuery': 'jquery',
       'Math/Long': 'long'
     }),
     new webpack.DefinePlugin({
