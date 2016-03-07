@@ -15,7 +15,8 @@ class PaypalForm extends RecurlyForm {
 
     const self = this;
     let recurlyInfo = {
-      'description': billingInfo.internalPlanUuid
+      'description': self.props.planLabel,
+      'coupon_code': self.refs.couponCode.value
     };
 
     return await new Promise(
@@ -27,10 +28,12 @@ class PaypalForm extends RecurlyForm {
             return reject(err);
           }
           return resolve(_.merge({
+            'recurly-token': token.id,
             //NEW BILLING API
             billingProvider: 'recurly',
             subOpts: {
-              customerBankAccountToken: token.id
+              customerBankAccountToken: token.id,
+              couponCode: self.refs.couponCode.value
             }
           }, recurlyInfo));
         });
@@ -49,8 +52,10 @@ class PaypalForm extends RecurlyForm {
     if (!this.props.selected) return;
 
     return (
+
       <div className="row" ref="goCardlessForm">
-        <h5>{dict.payment.paypal.paypalText}</h5>
+        {this.renderPromoCode()}
+        <h5 className="col-md-12">{dict.payment.paypal.paypalText}</h5>
       </div>
     );
   }
