@@ -4,9 +4,13 @@ class GiftDetails extends React.Component {
 
   value() {
     return {
-      'gift_first_name': this.refs.giftFirstName.value,
-      'gift_last_name': this.refs.giftLastName.value,
-      'gift_email': this.refs.giftEmail.value
+      subOpts: {
+        gift: {
+          firstName: this.refs.giftFirstName.value,
+          lastName: this.refs.giftLastName.value,
+          email: this.refs.giftEmail.value
+        }
+      }
     }
   }
 
