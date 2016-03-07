@@ -615,7 +615,11 @@ class PlayerComponent extends Component {
       //Tracking
       let videoTracking = User.get(`video/${videoId}`);
       if (videoTracking) {
-        playerData.starttime = videoTracking.get('playerPosition');
+        const position = videoTracking.get('playerPosition');
+        const duration = videoData.get('duration');
+        if (position > 30 && position < (duration - 30)) {
+          playerData.starttime = videoTracking.get('playerPosition');
+        }
       }
     }
     try {
@@ -656,7 +660,6 @@ class PlayerComponent extends Component {
     player.on('seeked', ::this.trackVideo);
     player.on('fullscreenchange', ::this.onFullScreenHandler);
     player.on('timeupdate', ::this.onTimeUpdate);
-    player.on('loadedmetadata', ::this.setDurationInfo);
     player.on('useractive', ::this.triggerUserActive);
     player.on('userinactive', ::this.triggerUserActive);
     player.on('error', ::this.triggerError);
@@ -669,12 +672,6 @@ class PlayerComponent extends Component {
     let isFullScreen = this.player.isFullScreen;
     this.setState({
       fullScreen: isFullScreen
-    })
-  }
-
-  setDurationInfo() {
-    this.setState({
-      duration: this.player ? this.player.duration() : 0
     })
   }
 
@@ -794,7 +791,7 @@ class PlayerComponent extends Component {
     let movieData = Movie.get(`movies/${movieId}`);
     let episodeData = videoData.get('episode');
     let seasonData = Season.get(`seasons/${seasonId}`);
-    let videoDuration = this.formatTime(this.state.duration || (movieData ? movieData.get('duration') : 0));
+    let videoDuration = this.formatTime(videoData.get('duration'));
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
     if (seasonData) {
