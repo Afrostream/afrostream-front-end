@@ -233,6 +233,13 @@
     "userDoesNotExistErrorText": "Utilisateur introuvable.",
     "invalidPassword": "Le mot de passe n'est pas valide."
   },
+  "coupon": {
+    "title": "Utilisez votre coupon",
+    "action": "Validez",
+    "couponPlaceholder": "Coupon",
+    "headerText": "Entrez le code du coupon pour commencer votre abonnement Afrostream.",
+    "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe."
+  },
   "gift": {
     "title": "Enregistrez-vous",
     "action": "Enregistrez-vous",
