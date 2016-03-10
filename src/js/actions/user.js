@@ -13,6 +13,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
   const token = getState().OAuth.get('token');
   const donePath = getState().Modal.get('donePath');
+  const coupon = getState().Coupon.get('coupon');
 
   if (!token) {
     return data;
@@ -28,7 +29,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
       if (userMerged) {
         let planCode = userMerged.planCode;
-        if (!planCode) {
+        if (!planCode && !coupon.get('coupon')) {
           actionDispatcher(pushState(null, donePath ? donePath : '/select-plan'));
         }
       }

@@ -76,6 +76,7 @@ class Header extends React.Component {
       || this.context.history.isActive('compte')
       || this.context.history.isActive('cancel-subscription')
       || this.context.history.isActive('select-plan')
+      || this.context.history.isActive('couponregister')
     };
 
     return (

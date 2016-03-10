@@ -1,0 +1,93 @@
+@import (reference) '../../../styles/config.less';
+
+.create-account-coupon, .signin-account-coupon{
+  width: 50%;
+  margin: 40px 5px 0 0;
+  border-right: 1px solid;
+  float: left;
+
+  @media all and (max-width: @screen-sm-min) {
+    width: 100%;
+    margin: 40px 10px 10px 10px;
+    border-right: 0px;
+    float: none;
+    padding: 0 20% 0 20%;
+  }
+
+  @media all and (max-width: @screen-xs-min) {
+    padding: 0 5% 0 5%;
+  }
+
+  .email-label {
+    width: 100%;
+    color: @color-yellow-darker;
+  }
+
+  .password-label {
+    margin: 15px 5px 0 0;
+    width: 100%;
+    color: @color-yellow-darker;
+  }
+
+  .button-change-email {
+    display: block;
+    margin-top:25px;
+  }
+}
+
+.signin-account-coupon {
+  float: right;
+  border-right: 0px;
+  padding-left: 20px;
+  width: 45%;
+
+  @media all and (max-width: @screen-sm-min) {
+    width: 100%;
+    margin: 40px 10px 10px 10px;
+    border-right: 0px;
+    padding: 0 20% 0 20%;
+    float: none;
+  }
+
+  @media all and (max-width: @screen-xs-min) {
+    padding: 0 5% 0 5%;
+  }
+}
+
+.coupon-register-page {
+  @media all and (max-width: @screen-sm-min) {
+    padding: 0 10% 0 10%;
+  }
+}
+
+.coupon-or {
+  display: none;
+
+  @media all and (max-width: @screen-sm-min) {
+    display: block;
+    text-align: center;
+    margin-top: 40px;
+  }
+}
+
+.spinner-payment {
+  position: fixed;
+  display: none;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 3;
+  &.spinner-loading {
+    display: block;
+  }
+}
+
+#error {
+  color: @brand-error;
+  padding: 10px;
+  margin: 10px 0 10px 0;
+  border: 1px solid @brand-error;
+  background-color: fade(@brand-error, 15%)
+}
