@@ -26,7 +26,8 @@ export default (
     <Route name="faq" path="faq" component={Static.FAQ}/>
     <Route name="policy" path="policy" component={Static.Policy}/>
     <Route name="reset" path="reset" component={ResetPasswordPage}/>
-    <Route name="login" path="login" component={LoginPage}/>
+    <Route name="signin" path="signin" component={LoginPage}/>
+    <Route name="signup" path="signup" component={LoginPage}/>
     <Route name="blog" path="blog" component={Blog.PostList}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
     </Route>
