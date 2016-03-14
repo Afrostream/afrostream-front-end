@@ -12,6 +12,7 @@ const initialState = Immutable.fromJS({
 export default createReducer(initialState, {
 
   [ActionTypes.User.subscribe](state, { res, isGift}) {
+    debugger;
     if (!res) {
       return state;
     }

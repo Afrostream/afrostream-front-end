@@ -3,10 +3,8 @@ import ReactDOM from'react-dom';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import { Link } from 'react-router';
-import * as OauthActionCreator from '../../actions/oauth';
 import * as ModalActionCreator from '../../actions/modal';
-import * as UserActionCreators from '../../actions/user';
-import * as IntercomActionCreators from '../../actions/intercom';
+import * as CouponActionCreators from '../../actions/coupon';
 import ModalComponent from './ModalComponent';
 import {oauth2} from '../../../../config';
 import MobileDetect from 'mobile-detect';
@@ -16,7 +14,7 @@ if (process.env.BROWSER) {
   require('./ModalLogin.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({ Coupon }) => ({Coupon}))
 class ModalCoupon extends ModalComponent {
 
   constructor(props) {
@@ -39,29 +37,37 @@ class ModalCoupon extends ModalComponent {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
+    debugger;
     const {
-      props: { dispatch}
+      props: { dispatch,
+        Coupon
+        }
       } = this;
 
     const self = this;
-
     debugger;
-    let formData = this.state;
-    _.forEach(valitations, (name)=> {
-      let domNode = ReactDOM.findDOMNode(self.refs[name]);
-      if (domNode) {
-        formData[name] = domNode.value;
-        this.setState(formData, () => {
-          this.validate(name);
-        });
-      }
-    });
+
+    let formData = {
+      coupon: this.refs.email.value
+    };
+    debugger;
+
 
     this.setState({
       loading: true,
       error: ''
+    });
+
+    return await dispatch(CouponActionCreators.validate(formData)).then(() => {
+
+      console.log('*** call made successfully ***');
+      //dispatch(UserActionCreators.getProfile());
+      self.context.history.pushState(null, `/select-plan/`);
+    }).catch((err) => {
+      console.log('*** there was an error ***');
+      console.log(err);
     });
   }
 
@@ -153,8 +159,8 @@ class ModalCoupon extends ModalComponent {
   }
 
   render() {
-    debugger;
-    const { props: { User } } = this;
+
+    const { props: { Coupon } } = this;
 
     var errClass = classNames({
       'error': true,
