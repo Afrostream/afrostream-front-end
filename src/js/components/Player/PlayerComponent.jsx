@@ -570,6 +570,10 @@ class PlayerComponent extends Component {
       });
     }
 
+    if (!mobileVersion.mobile() && ua.isChrome() && movieId == 204) {
+      playerData.techOrder.unshift('easyBroadcast');
+    }
+
     // ==== END hacks config
     playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
     playerData.plugins = playerData.plugins || [];
