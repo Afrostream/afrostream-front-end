@@ -39,7 +39,7 @@ class ModalCoupon extends ModalComponent {
 
   async handleSubmit(event) {
     event.preventDefault();
-    debugger;
+
     const {
       props: { dispatch,
         Coupon
@@ -47,24 +47,26 @@ class ModalCoupon extends ModalComponent {
       } = this;
 
     const self = this;
+    const coupon = Coupon.get('coupon');
     debugger;
 
     let formData = {
       coupon: this.refs.email.value
     };
-    debugger;
-
 
     this.setState({
       loading: true,
       error: ''
     });
 
-    return await dispatch(CouponActionCreators.validate(formData)).then(() => {
+    return await dispatch(CouponActionCreators.validate(formData)).then((result) => {
 
       console.log('*** call made successfully ***');
+      console.log(result)
+      console.log('*** end of coupon result ***');
+      debugger;
       //dispatch(UserActionCreators.getProfile());
-      self.context.history.pushState(null, `/select-plan/`);
+      self.context.history.pushState(null, `/cgu/`);
     }).catch((err) => {
       console.log('*** there was an error ***');
       console.log(err);

@@ -14,7 +14,26 @@ export function validate(data) {
 
     return async api => ({
       type: ActionTypes.Coupon.validate,
-      res: await api(`/api/billings/coupons`, 'GET', data).catch(notFound)
+      res: await api(`/api/billings/coupons`, 'GET', data)
     });
+  };
+}
+
+
+/**
+ * Get profile from afrostream
+ * @returns {Function}
+ */
+export function getCoupon() {
+  return (dispatch, getState, actionDispatcher) => {
+    return async () => {
+      const coupon = getState().Coupon.get('coupon');
+      return async () => {
+        return mergeCoupon({
+          type: ActionTypes.Coupon.getCoupon,
+          user: null
+        }, getState, actionDispatcher);
+      }
+    };
   };
 }
