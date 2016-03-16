@@ -93,15 +93,13 @@ class RecurlyForm extends React.Component {
           if (err) {
             return reject(err);
           }
-          return resolve(_.merge({
-            'recurly-token': token.id,
-            //NEW BILLING API
+          return resolve({
             billingProvider: 'recurly',
             subOpts: {
               customerBankAccountToken: token.id,
               couponCode: self.refs.couponCode.value
             }
-          }, recurlyInfo));
+          });
         });
       });
   }

@@ -197,8 +197,6 @@ class PaymentForm extends React.Component {
     }
 
     let billingInfo = {
-      'email': user.get('email'),
-      //NEW BILLING API
       internalPlanUuid: planCode,
       firstName: this.refs.firstName.value,
       lastName: this.refs.lastName.value
@@ -236,31 +234,6 @@ class PaymentForm extends React.Component {
     }).catch((err) => {
       let message = dict.payment.errors.global;
 
-      // === TODO refactor this ===
-      if (err.response && err.response.status === 400) {
-        let errorMessage = JSON.parse(err.response.text);
-        let errorField;
-        switch (errorMessage.name) {
-          case 'RecurlyError':
-            errorField = errorMessage.errors && errorMessage.errors.length && errorMessage.errors[0];
-            if (errorField) {
-              if (errorField.field === 'subscription.account' && errorField.symbol === 'declined') {
-                message = dict.payment.errors.card;
-              }
-              else if (errorField.field === 'subscription.base' && errorField.symbol === 'already_subscribed') {
-                message = dict.payment.errors.already;
-              }
-              else if (errorField.field === 'subscription.coupon_code' && errorField.symbol === 'invalid') {
-                message = dict.payment.errors.coupon;
-              }
-            }
-            break;
-          case 'SelfGiftError':
-            message = dict.payment.errors.gift;
-            break;
-        }
-      }
-      // === TODO refactor this === ^
       if (err.response && err.response.body) {
         message = err.response.body.error;
       }
@@ -362,7 +335,7 @@ class PaymentForm extends React.Component {
     }
 
     if (status === 'success') {
-      return (<PaymentSuccess />);
+      return (<PaymentSuccess isGift={this.state.isGift}/>);
     } else if (status === 'error') {
       return (<PaymentError message={this.state.message}/>);
     } else {
