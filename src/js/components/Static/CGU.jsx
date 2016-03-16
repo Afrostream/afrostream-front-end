@@ -403,7 +403,7 @@ class CGU extends React.Component {
             </ol>
           </section>
           <section id="last_updated">Dernière mise à
-            jour&nbsp;: 16 octobre 2015
+            jour&nbsp;: 16 Mars 2016
           </section>
         </article>
       </div >

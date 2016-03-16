@@ -30,10 +30,9 @@ class Legals extends React.Component {
 
             <p>Afrostream<br />
               Afrostream Inc C/ Orrick Law firm 1000 Marsh Road, CA Menlo Park 94025, Etats-Unis<br />
-              Tel (US): 1(415) 823-8086<br />
-              Tel (FR): +336 84 43 87 79<br />
+              Tel (FR): +33 (0)9 82 20 30 30<br />
               adresse électronique : <a
-                href="mailto:tonjebakang@afrostream.tv">tonjebakang@afrostream.tv</a>
+                href="mailto:support@afrostream.tv">support@afrostream.tv</a>
             </p>
           </section>
           <section>
