@@ -52,7 +52,8 @@ class NextEpisode extends React.Component {
           <ShareButton />
           <div className="next-episode__label">{dictNext.labelLike}</div>
           <RateComponent {...{videoId}}/>
-          <div className="next-episode__label">{`${dictNext.label.replace('{seconds}', this.props.time)}`}</div>
+          {this.props.auto ? <div
+            className="next-episode__label">{`${dictNext.label.replace('{seconds}', this.props.time)}`}</div> : '' }
           <div className="next-episode__thumbs">
             <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135} type="episode"/>
           </div>
@@ -66,14 +67,16 @@ class NextEpisode extends React.Component {
 
 NextEpisode.propTypes = {
   episode: PropTypes.instanceOf(Immutable.Map),
-  videoId: React.PropTypes.string,
-  time: PropTypes.number
+  videoId: PropTypes.string,
+  time: PropTypes.number,
+  auto: PropTypes.bool
 };
 
 NextEpisode.defaultProps = {
   episode: null,
   videoId: null,
-  time: 0
+  time: 0,
+  auto: false
 };
 
 export default NextEpisode;

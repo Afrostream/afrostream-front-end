@@ -43,6 +43,10 @@ class PlayerComponent extends Component {
   constructor(props) {
     super(props);
     this.player = null;
+    this.state = {
+      numLoad: 0
+    };
+
     this.initState()
   }
 
@@ -62,6 +66,8 @@ class PlayerComponent extends Component {
     this.nextEpisode = false;
     clearInterval(this.promiseLoadNextTimeout);
     this.promiseLoadNextTimeout = 0;
+    let numLoad = this.state.numLoad;
+    numLoad++;
     this.state = {
       size: {
         height: 1920,
@@ -69,7 +75,9 @@ class PlayerComponent extends Component {
       },
       showStartTimeAlert: false,
       fullScreen: false,
-      nextReco: false
+      numLoad: numLoad,
+      nextReco: false,
+      nextAuto: Boolean(numLoad % 3)
     };
   }
 
@@ -89,6 +97,14 @@ class PlayerComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
+    if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
+      this.setState({
+        nextAuto: true,
+        numLoad: 0
+      });
+    }
+
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
       const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`);
       this.initState();
@@ -215,12 +231,12 @@ class PlayerComponent extends Component {
     if (!this.state.nextReco || !config.reco.enabled) {
       return;
     }
-
     let nextEpisode = this.nextEpisode;
     let time = this.state.nextReco;
+    let auto = this.state.nextAuto;
     if (nextEpisode) {
       let episode = nextEpisode.episode;
-      return (<NextEpisode {...{episode, videoId, time}}/>)
+      return (<NextEpisode {...{episode, videoId, time, auto}}/>)
     }
     return (<RecommendationList {...{videoId}}/>)
   }
@@ -390,15 +406,16 @@ class PlayerComponent extends Component {
       return;
     }
     let currentTime = this.player.currentTime();
-    let duration = this.state.duration - config.reco.time;
+    let currentDuration = this.player.duration() || 0;
+    let duration = currentDuration - config.reco.time;
     //Si l'episode est trop court on attends la fin de episode et on switch au bout de 10 sec
-    let time = Math.round(this.state.duration - currentTime, 10);
+    let time = Math.round(currentDuration - currentTime, 10);
     if (duration < 200) {
-      duration = this.state.duration - 1;
+      duration = currentDuration - 1;
     }
     let nextReco = currentTime >= duration;
     if (nextReco !== this.state.nextReco) {
-      if (time === 0) {
+      if (time === 0 && this.state.nextAuto) {
         return this.promiseLoadNextVideo(9);
       }
       this.setState({
@@ -719,7 +736,6 @@ class PlayerComponent extends Component {
         this.player.off('seeked');
         this.player.off('fullscreenchange');
         this.player.off('timeupdate');
-        this.player.off('loadedmetadata');
         this.player.off('useractive');
         this.player.off('userinactive');
         this.player.off('error');
