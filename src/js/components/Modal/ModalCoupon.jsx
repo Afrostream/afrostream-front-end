@@ -3,7 +3,7 @@ import ReactDOM from'react-dom';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import { Link } from 'react-router';
-import * as ModalActionCreator from '../../actions/modal';
+import * as ModalActionCreators from '../../actions/modal';
 import * as CouponActionCreators from '../../actions/coupon';
 import ModalComponent from './ModalComponent';
 import {oauth2} from '../../../../config';
@@ -62,30 +62,32 @@ class ModalCoupon extends ModalComponent {
     return await dispatch(CouponActionCreators.validate(formData)).then((result) => {
 
       console.log('*** call made successfully ***');
-      console.log(result)
+      console.log(result.res.body);
       console.log('*** end of coupon result ***');
       debugger;
-      //dispatch(UserActionCreators.getProfile());
-      self.context.history.pushState(null, `/cgu/`);
-    }).catch((err) => {
-      console.log('*** there was an error ***');
-      console.log(err);
-    });
-  }
 
-  onError(err) {
-    let errMess = err.message;
-    if (err.response) {
-      if (err.response.body) {
-        errMess = err.response.body.message;
-      } else if (err.response.text) {
-        errMess = err.response.text;
+      if (typeof result.res.body.coupon !== 'undefined') {
+
+        dispatch(ModalActionCreators.close());
+        self.context.history.pushState(null, `/couponregister`);
       }
-    }
 
-    this.setState({
-      loading: false,
-      error: this.getTitle(errMess.toString()) || 'il y a une erreur'
+    }).catch((err) => {
+      let errorText = 'il y a une erreur';
+      console.log('*** there was an error ***');
+      debugger;
+
+      if (err.response.body.error === 'NOT FOUND') {
+
+        errorText = 'Le coupon que vous avez soumis est incorrect ou a déjà été utilisé. ' +
+          'Veuillez réessayer avec un autre coupon.';
+      }
+
+      this.setState({
+        loading: false,
+        error: errorText
+      });
+
     });
   }
 
