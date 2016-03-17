@@ -407,6 +407,9 @@ class PlayerComponent extends Component {
     }
     let currentTime = this.player.currentTime();
     let currentDuration = this.player.duration() || 0;
+    if (!currentDuration) {
+      return;
+    }
     let duration = currentDuration - config.reco.time;
     //Si l'episode est trop court on attends la fin de episode et on switch au bout de 10 sec
     let time = Math.round(currentDuration - currentTime, 10);
