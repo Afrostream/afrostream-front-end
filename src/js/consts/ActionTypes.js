@@ -11,6 +11,10 @@ export default {
     logOut: null,
   }),
 
+  Coupon: keyMirror({
+    validate: null
+  }),
+
   User: keyMirror({
     logOut: null,
     getProfile: null,
