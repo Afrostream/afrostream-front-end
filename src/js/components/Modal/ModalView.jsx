@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ModalGeoWall from './ModalGeoWall';
 import ModalLogin from './ModalLogin';
 import ModalSocial from './ModalSocial';
+import ModalCoupon from './ModalCoupon';
 
 if (process.env.BROWSER) {
   require('./ModalView.less');
@@ -41,6 +42,11 @@ class ModalView extends React.Component {
       case 'showRelog':
         return (
           <ModalLogin type={target} closable={closable} {...this.props}/>
+        );
+        break;
+      case 'redeemCoupon':
+        return (
+          <ModalCoupon type={target} closable={closable} {...this.props}/>
         );
         break;
       case 'social':
