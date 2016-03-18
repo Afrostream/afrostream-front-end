@@ -124,6 +124,7 @@ class PaymentForm extends React.Component {
     };
 
     return (<div className="row">
+      
       <div className={classSet(checkClass)}>
         <input
           type="checkbox"
