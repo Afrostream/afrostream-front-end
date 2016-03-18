@@ -9,7 +9,7 @@ import PaymentSuccess from '../Payment/PaymentSuccess';
 import {oauth2} from '../../../../config';
 
 if (process.env.BROWSER) {
-  require('./RedeemCoupon.less');
+  require('./CouponRegister.less');
 }
 
 @connect(({ Coupon,User }) => ({Coupon, User}))
@@ -59,7 +59,7 @@ class CouponRegister extends React.Component {
     let validations = ['email', 'password'];
     debugger;
 
-    let formData = this.state;
+    /*let formData = this.state;
     _.forEach(validations, (name)=> {
       let domNode = ReactDOM.findDOMNode(self.refs[name]);
       debugger;
@@ -69,7 +69,7 @@ class CouponRegister extends React.Component {
           this.validate(name);
         });
       }
-    });
+    });*/
     debugger;
 
     if (!self.isValid()) {
@@ -204,43 +204,81 @@ class CouponRegister extends React.Component {
   render() {
     debugger;
     if (this.state.success === true) {
-      return(<PaymentSuccess />);
+      return(
+        <div className="row-fluid brand-bg">
+          <div className="container brand-bg account-page">
+            <PaymentSuccess />
+            </div>
+          </div>
+      );
     } else {
 
       return (
-        <div className="row-fluid">
-          <h2>Félicitations ! Votre compte est activé !</h2>
-          <h3>Vous pouvez voir les détails de votre abonnement dans la rubrique "mon compte"</h3>
+        <div className="row-fluid brand-bg coupon-register-page">
+          <div className="container brand-bg account-page">
+            <h2>Félicitations !</h2>
+            <h4>Vous pouvez activer votre abonnement par:</h4>
 
-          <form id="change-email" className="change-email">
-            Enregistrez-vous
-            <label className="email-label" htmlFor="email">Votre e-mail</label>
-            <input
-              type="text"
-              className="email"
-              ref="email"
-              id="email"
-              name="email"
-              onChange={::this.handleInputChange}
-              placeholder="" required />
-            <label className="password-label" htmlFor="password">Mot de pass actuel</label>
-            <input
-              type="text"
-              className="password"
-              ref="password"
-              id="password"
-              name="password"
-              onChange={::this.handleInputChange}
-              placeholder="" required />
-            <button
-              id="button-change-email"
-              type="submit"
-              form="change-email"
-              className="button-change-email"
-              onClick={::this.redeemCoupon}>ENREGISTRER
-            </button>
-          </form>
-
+            <form id="create-account" className="create-account">
+              <h3>Créez votre compte</h3>
+              <h5>Vous pouvez commencer par la création d'un compte.</h5>
+              <label className="email-label" htmlFor="email">Votre e-mail:</label>
+              <input
+                type="text"
+                className="email"
+                ref="email"
+                id="email"
+                name="email"
+                onChange={::this.handleInputChange}
+                placeholder="" required />
+              <label className="password-label" htmlFor="password">Creer un mot de passe:</label>
+              <input
+                type="text"
+                className="password"
+                ref="password"
+                id="password"
+                name="password"
+                onChange={::this.handleInputChange}
+                placeholder="" required />
+              <button
+                id="button-change-email"
+                type="submit"
+                form="change-email"
+                className="button-change-email btn btn-default"
+                onClick={::this.redeemCoupon}>ENREGISTRER
+              </button>
+            </form>
+            <h3 className="coupon-or">** OU **</h3>
+            <form id="signin-account" className="signin-account">
+              <h3>Déjà enregistré ?</h3>
+              <h5>Veuillez entrer votre courriel et un mot de passe.</h5>
+              <label className="email-label" htmlFor="email">Votre e-mail:</label>
+              <input
+                type="text"
+                className="email"
+                ref="email"
+                id="email"
+                name="email"
+                onChange={::this.handleInputChange}
+                placeholder="" required />
+              <label className="password-label" htmlFor="password">Creer un mot de passe:</label>
+              <input
+                type="text"
+                className="password"
+                ref="password"
+                id="password"
+                name="password"
+                onChange={::this.handleInputChange}
+                placeholder="" required />
+              <button
+                id="button-change-email"
+                type="submit"
+                form="change-email"
+                className="button-change-email btn btn-default"
+                onClick={::this.redeemCoupon}>CONNEXION
+              </button>
+            </form>
+          </div>
         </div>
       );
     }
