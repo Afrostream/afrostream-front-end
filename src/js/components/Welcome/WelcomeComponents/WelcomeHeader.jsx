@@ -283,7 +283,7 @@ class WelcomeHeader extends React.Component {
       }
     }
 
-    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}${this.state.isMobile ? '&blur=25' : ''})`};
+    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`};
 
     let promoCode = this.hasPromo();
 
@@ -296,6 +296,7 @@ class WelcomeHeader extends React.Component {
     if (!promoCode) {
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
+          <div className="afrostream-movie__mask"/>
           <div className="afrostream-movie">
             { info.movie ? <div className="afrostream-movie__info">
               <h1>{info.movie.title}</h1>

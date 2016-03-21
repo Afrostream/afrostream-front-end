@@ -34,7 +34,7 @@ class PricingTable extends React.Component {
             <span className="pricing-header-purple">Choisissez la formule </span>
             <span className="pricing-header-gray">qui vous ressemble</span>
             <span
-              className="pricing-header-gray pricing-header-bolder">profitez <b>GRATUITEMENT</b> de 7 jours
+              className="pricing-header-gray pricing-header-bolder">et profitez <b>GRATUITEMENT</b> de 7 jours
               d'essais</span>
           </h1>
 

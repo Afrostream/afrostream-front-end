@@ -12,7 +12,7 @@ class SelectPlan extends React.Component {
   render() {
     return (
       <div className="plan-container">
-        <div className="choose-plan">Choisissez la formule qui vous ressemble et profitez
+        <div className="choose-plan">Choisissez votre formule et profitez
           <span className="choose-plan__bolder"> GRATUITEMENT</span> de 7 jours d'essais
         </div>
         <div className="select-plan">
