@@ -71,17 +71,17 @@
     .subscribe-button, .gift-button {
       font-family: @font-thin;
       color: #FFFFFF;
-      background-color: fade(#74C3D0, 90%);
-      border: 1px solid #74C3D0;
+      background-color: fade(@subscriber-color, 90%);
+      border: 1px solid @subscriber-color;
       border-radius: 5px;
       font-size: 16px;
       font-weight: bold;
-      line-height: 36px;
+      line-height: 26px;
       padding-left: 20px;
       padding-right: 20px;
       text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.6);
       &:hover {
-        background-color: fade(#74C3D0, 100%);
+        background-color: fade(@subscriber-color, 100%);
       }
       .isMobile({ width: 100%; border-radius: 2px; });
     }

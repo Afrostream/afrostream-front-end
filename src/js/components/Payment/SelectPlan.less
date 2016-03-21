@@ -3,64 +3,29 @@
 .plan-container {
 
   .choose-plan {
-    color: #452F50;
+    color: @color-indigo;
     position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     padding-bottom: 10px;
-    font-size: 24px;
-    text-align: left;
-    font-weight: bold;
-
-    @media all and (max-width: @screen-lg-min) {
-      width: 95%;
-      text-align: center
+    font-size: 2.5em;
+    text-align: center;
+    //font-family: @font-heavy;
+    .choose-plan__bolder {
+      font-family: @font-black;
     }
 
-    @media all and (max-width: @screen-md-min) {
-      width: 100%;
-      margin: 0 0 0 0;
-      padding: 5px 0 10px 0;
-      font-size: 18px;
-      text-align: center;
-    }
-
-    @media all and (max-width: @screen-xs-min) {
-
-    }
   }
 
   .select-plan {
     background-color: @white-base;
     color: @color-purple-1;
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     font-size: 12px;
     text-align: center;
-    margin: 20px 0 20px 0;
-
-    @media all and (max-width: @screen-lg-min) {
-      width: 95%;
-    }
-
-    @media all and (max-width: @screen-md-min) {
-      width: 95%;
-      padding: 30px 30px 45px 45px;
-    }
-
-    @media all and (max-width: @screen-sm-min) {
-      width: 100%;
-      padding: 2px 2px 45px 4px;
-    }
 
     .row-element-left {
       position: relative;
       float: left;
       width: 40%;
-      height: 30px;
+      min-height: 30px;
       white-space: normal;
       top: 50%;
       transform: translateY(31%);
@@ -86,7 +51,7 @@
       height: 30px;
       white-space: normal;
       top: 50%;
-      //transform: translateY(31%);
+      transform: translateY(31%);
       text-align: left;
       padding: 8px 12px 8px 12px;
       margin-bottom: 5px;
@@ -104,7 +69,7 @@
       height: 30px;
       white-space: normal;
       top: 50%;
-      //transform: translateY(31%);
+      transform: translateY(31%);
       text-align: left;
       padding: 8px 12px 8px 12px;
       margin-bottom: 5px;
@@ -131,7 +96,7 @@
       position: relative;
       float: left;
       width: 20%;
-      height: 30px;
+      min-height: 30px;
       white-space: normal;
       top: 50%;
       transform: translateY(31%);
@@ -164,6 +129,9 @@
       margin: 10px 0 10px 0;
       top: 50%;
       transform: translateY(31%);
+      .row-element-left {
+        min-height: 1px;
+      }
     }
 
     .formule-row-decorated {
@@ -186,68 +154,51 @@
       transform: translateY(22%);
     }
 
-    .blue-text {
-      color: #759CA7;
+    @plan-blue-color: #759CA7;
+    @plan-yellow-color: #EDB62D;
+    @plan-purple-color: #6F248B;
+
+    .plan-background {
+      color: @white-base;
+      position: relative;
+      float: left;
+      width: 20%;
+      height: 30px;
+      padding: 8px 12px 8px 12px;
+      margin-bottom: 5px;
+
+      @media all and (max-width: @screen-md-min) {
+        width: 33%;
+      }
+    }
+
+    .plan-text {
       letter-spacing: 4px;
       font-size: 10px;
+    }
+
+    .blue-text {
+      color: @plan-blue-color;
     }
 
     .blue-background {
-      background-color: #759CA7;
-      color: @white-base;
-      position: relative;
-      float: left;
-      width: 20%;
-      height: 30px;
-      padding: 8px 12px 8px 12px;
-      margin-bottom: 5px;
-
-      @media all and (max-width: @screen-md-min) {
-        width: 33%;
-      }
+      background-color: @plan-blue-color;
     }
 
     .yellow-text {
-      color: #EDB62D;
-      letter-spacing: 4px;
-      font-size: 10px;
+      color: @plan-yellow-color;
     }
 
     .yellow-background {
-      background-color: #EDB62D;
-      color: @white-base;
-      position: relative;
-      float: left;
-      width: 20%;
-      height: 30px;
-      padding: 8px 12px 8px 12px;
-      margin-bottom: 5px;
-
-      @media all and (max-width: @screen-md-min) {
-        width: 33%;
-      }
+      background-color: @plan-yellow-color;
     }
 
     .purple-text {
-      color: #6F248B;
-      letter-spacing: 4px;
-      font-size: 10px;
+      color: @plan-purple-color;
     }
 
     .purple-background {
-      background-color: #6F248B;
-      color: @white-base;
-      position: relative;
-      float: left;
-      width: 20%;
-      height: 30px;
-      padding: 8px 12px 8px 12px;
-      margin-bottom: 5px;
-
-      @media all and (max-width: @screen-md-min) {
-        //padding: 5px 12px 8px 12px;
-        width: 33%;
-      }
+      background-color: @plan-purple-color;
     }
 
     .fa-times {
@@ -258,65 +209,46 @@
       color: #76757F;
     }
     .plan-period {
-      color: #6F248B;
+      color: @color-purple-1;
       font-size: 12px;
       transform: translateY(31%);
     }
 
     .plan-price {
-      color: #6F248B;
+      color: @color-purple-1;
       font-size: 18px;
       transform: translateY(31%);
     }
 
-    .button-blue {
+    .plan-button {
       font-weight: bold;
-      color: #759CA7;
       background-color: #eeeeee;
-      padding: 5px 20px 5px 20px;
       border-radius: 20px;
       border: 1px solid #C5C6C7;
+      text-align: center;
+      min-height: 35px;
+      padding: 5px 5px 5px 5px;
+      margin-left: 1%;
+      margin-right: 1%;
+      width: 18%;
+    }
 
-      @media all and (max-width: @screen-md-min) {
-        padding: 5px 15px 5px 15px;
-      }
-
-      @media all and (max-width: @screen-sm-min) {
-        padding: 5px 12px 5px 12px;
+    .button-blue {
+      a {
+        color: @plan-blue-color;
       }
     }
 
     .button-yellow {
-      font-weight: bold;
-      color: #EDB62D;
-      background-color: #eeeeee;
-      padding: 5px 20px 5px 20px;
-      border-radius: 20px;
-      border: 1px solid #C5C6C7;
-
-      @media all and (max-width: @screen-md-min) {
-        padding: 5px 15px 5px 15px;
-      }
-
-      @media all and (max-width: @screen-sm-min) {
-        padding: 5px 12px 5px 12px;
+      a {
+        color: @plan-yellow-color;
       }
     }
 
     .button-purple {
-      font-weight: bold;
-      color: #6F248B;
-      background-color: #eeeeee;
-      padding: 5px 20px 5px 20px;
-      border-radius: 20px;
-      border: 1px solid #C5C6C7;
-
-      @media all and (max-width: @screen-md-min) {
-        padding: 5px 15px 5px 15px;
-      }
-
-      @media all and (max-width: @screen-sm-min) {
-        padding: 5px 12px 5px 12px;
+      padding: 10px 5px 10px 5px;
+      a {
+        color: @plan-purple-color;
       }
     }
   }

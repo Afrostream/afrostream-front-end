@@ -33,6 +33,9 @@ class PricingTable extends React.Component {
           <h1>
             <span className="pricing-header-purple">Choisissez la formule </span>
             <span className="pricing-header-gray">qui vous ressemble</span>
+            <span
+              className="pricing-header-gray pricing-header-bolder">profitez <b>GRATUITEMENT</b> de 7 jours
+              d'essais</span>
           </h1>
 
           <div className="pricing-header-text">Service uniquement disponible en France, DOM-TOM,
@@ -60,7 +63,7 @@ class PricingTable extends React.Component {
               </ul>
             </div>
             <button className="plan1-button" value="afrostreammonthly" onClick={::this.openModal}>
-              S'ABONNER MAINTENANT
+              DÉMARREZ L’ESSAI GRATUIT
             </button>
 
           </div>
@@ -84,7 +87,7 @@ class PricingTable extends React.Component {
               </ul>
             </div>
             <button className="plan2-button" value="afrostreamambassadeurs" onClick={::this.openModal}>
-              S'ABONNER MAINTENANT
+              DÉMARREZ L’ESSAI GRATUIT
             </button>
 
           </div>

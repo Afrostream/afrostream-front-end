@@ -305,9 +305,9 @@ class WelcomeHeader extends React.Component {
               <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
                 return (<span key={`statement-${i}`}>{statement}</span>)
               })}</div>
-              <button className="subscribe-button" type=" button" onClick={::this.showLock}>S'ABONNER MAINTENANT
+              <button className="subscribe-button" type=" button" onClick={::this.showLock}>TESTER GRATUITEMENT <br />
+                PENDANT UNE SEMAINE
               </button>
-              <button className="gift-button" type="button" onClick={::this.showGiftLock}>OFFRIR UN ABONNEMENT</button>
             </div>
           </div>
         </section>

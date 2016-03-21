@@ -12,29 +12,31 @@ class SelectPlan extends React.Component {
   render() {
     return (
       <div className="plan-container">
-        <div className="choose-plan">Choissisez la formule qui vous ressemble</div>
+        <div className="choose-plan">Choisissez la formule qui vous ressemble et profitez
+          <span className="choose-plan__bolder"> GRATUITEMENT</span> de 7 jours d'essais
+        </div>
         <div className="select-plan">
           <div className="formule-row-no-decoration">
             <div className="row-element-left row-element-top-left"></div>
             <div className="row-element">
-              <span className="blue-text">FORMULE</span>
+              <span className="plan-text blue-text">FORMULE</span>
             </div>
             <div className="row-element">
-              <span className="yellow-text">FORMULE</span>
+              <span className="plan-text yellow-text">FORMULE</span>
             </div>
             <div className="row-element">
-              <span className="purple-text">FORMULE</span>
+              <span className="plan-text purple-text">FORMULE</span>
             </div>
           </div>
           <div className="formule-row-no-decoration">
             <div className="row-element-left-header"></div>
-            <div className="blue-background">
+            <div className="plan-background blue-background">
               MENSUEL
             </div>
-            <div className="yellow-background">
+            <div className="plan-background yellow-background">
               AMBASSADEUR
             </div>
-            <div className="purple-background">
+            <div className="plan-background purple-background">
               CADEAU
             </div>
           </div>
@@ -92,21 +94,21 @@ class SelectPlan extends React.Component {
           <div className="formule-row-no-decoration">
             <div className="row-element-left"></div>
 
-            <div className="row-element">
-              <Link className="button-blue"
-                    to='/select-plan/afrostreammonthly/checkout'>
-                S'ABONNER
+            <div className="row-element plan-button button-blue">
+              <Link
+                to='/select-plan/afrostreammonthly/checkout'>
+                DÉMARREZ VOTRE<br/> ESSAI GRATUIT
               </Link>
             </div>
-            <div className="row-element">
-              <Link className="button-yellow"
-                    to="/select-plan/afrostreamambassadeurs/checkout">
-                S'ABONNER
+            <div className="row-element plan-button button-yellow">
+              <Link
+                to="/select-plan/afrostreamambassadeurs/checkout">
+                DÉMARREZ VOTRE<br/> ESSAI GRATUIT
               </Link>
             </div>
-            <div className="row-element">
-              <Link className="button-purple"
-                    to="/select-plan/afrostreamgift/checkout">
+            <div className="row-element plan-button button-purple">
+              <Link
+                to="/select-plan/afrostreamgift/checkout">
                 OFFRIR
               </Link>
             </div>
