@@ -56,10 +56,10 @@ class SelectPlan extends React.Component {
             </div>
           </div>
           <div className="formule-row-decorated">
-            <div className="row-element-left">HD disponible</div>
+            <div className="row-element-left">7 jours d'essai gratuit</div>
             <div className="row-element"><i className="fa fa-check"></i></div>
             <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
+            <div className="row-element"><i className="fa fa-times"></i></div>
           </div>
           <div className="formule-row-decorated">
             <div className="row-element-left">Écrans disponibles en simultané</div>

@@ -232,7 +232,11 @@ class WelcomeHeader extends React.Component {
     let { movieId,seasonId,episodeId } = params;
     let info = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
-      poster: `${config.metadata.shareImage}`
+      poster: `${config.metadata.shareImage}`,
+      movie: {
+        title: '',
+        synopsis: ''
+      }
     };
 
     let movieData;
@@ -298,15 +302,15 @@ class WelcomeHeader extends React.Component {
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
           <div className="afrostream-movie__mask"/>
           <div className="afrostream-movie">
-            { info.movie ? <div className="afrostream-movie__info">
+            <div className="afrostream-movie__info">
               <h1>{info.movie.title}</h1>
               <div className='detail-text'>{info.movie.synopsis}</div>
-            </div> : ''}
+            </div>
             <div className="afrostream-movie__subscribe">
               <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
                 return (<span key={`statement-${i}`}>{statement}</span>)
               })}</div>
-              <button className="subscribe-button" type=" button" onClick={::this.showLock}>TESTER GRATUITEMENT <br />
+              <button className="subscribe-button" type=" button" onClick={::this.showLock}>TESTEZ GRATUITEMENT <br />
                 PENDANT UNE SEMAINE
               </button>
             </div>
