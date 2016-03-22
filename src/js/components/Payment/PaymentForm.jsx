@@ -10,6 +10,7 @@ import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import PaymentMethod from './PaymentMethod';
 import Query from 'dom-helpers/query';
+
 import DomClass from 'dom-helpers/class';
 import _ from 'lodash';
 
