@@ -15,11 +15,6 @@
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://afrostream.tv/select-plan/afrostreamgift/checkout</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>https://afrostream.tv/favoris</loc>
     <changefreq>daily</changefreq>
     <priority>0.80</priority>
