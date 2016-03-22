@@ -212,6 +212,7 @@ class AccountPage extends React.Component {
     let cancelSubscriptionClasses = {
       'btn': true,
       'btn-default': true,
+      'btn-danger': true,
       'cancel-plan-hidden': !currentSubscription || (currentSubscription.get('subStatus') === 'canceled') || (currentSubscription.get('provider').get('providerName') === 'celery')
     };
 

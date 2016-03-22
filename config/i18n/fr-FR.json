@@ -103,19 +103,19 @@
     "plan": {
       "header": "DÉTAIL DU FORFAIT",
       "updatePlan": "Changer de forfait",
-      "cancelPlan": "Annuler votre abonnement"
+      "cancelPlan": "Interrompre immédiatement votre abonnement"
     },
     "cancel": {
       "active": {
-        "header": "Annuler votre abonnement ?",
+        "header": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",
         "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
       },
       "canceled": {
         "header": "Votre abonnement été annulé.",
         "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
       },
-      "submitBtn": "Annuler l’abonnement",
-      "cancelBtn": "Retourner sur mon compte"
+      "submitBtn": "Interrompre l’abonnement",
+      "cancelBtn": "Continuer l'abonnement"
     },
     "billing": {
       "header": "Détails de facturation",

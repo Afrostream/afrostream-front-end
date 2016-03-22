@@ -100,11 +100,12 @@ class CancelSubscription extends React.Component {
         <div className="row">
           <div className="col-md-12">
             { activeSubscription ?
-              <button className="btn btn-default button-cancel__subscription" {...inputAttributes}
+              <button className="btn btn-default btn-danger button-cancel__subscription" {...inputAttributes}
                       disabled={this.state.pending}>
                 {dict.account.cancel.submitBtn}
               </button> : ''}
-            <Link className="btn btn-default btn-return__account" to="/compte">{dict.account.cancel.cancelBtn}</Link>
+            <Link className="btn btn-default btn-success btn-return__account"
+                  to="/compte">{dict.account.cancel.cancelBtn}</Link>
           </div>
         </div>
       </div>
