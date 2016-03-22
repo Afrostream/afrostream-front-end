@@ -4,8 +4,6 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
   <url>
     <loc>https://afrostream.tv/</loc>
     <changefreq>weekly</changefreq>
@@ -199,7 +197,8 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://afrostream.tv/blog/26b52987-9534-46b7-8dc7-c5273e2ce7e7/Afrostream-for-better-or-worse-tyler-perry</loc>
+    <loc>https://afrostream.tv/blog/26b52987-9534-46b7-8dc7-c5273e2ce7e7/Afrostream-for-better-or-worse-tyler-perry
+    </loc>
     <changefreq>weekly</changefreq>
   </url>
   <url>
@@ -263,7 +262,9 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://afrostream.tv/blog/d8fd376a-e4af-4daa-b5f3-caff75280521/7-lecons-qui-changeront-votre-vie-selon-taraji-p-henson-empire</loc>
+    <loc>
+      https://afrostream.tv/blog/d8fd376a-e4af-4daa-b5f3-caff75280521/7-lecons-qui-changeront-votre-vie-selon-taraji-p-henson-empire
+    </loc>
     <changefreq>weekly</changefreq>
   </url>
   <url>
