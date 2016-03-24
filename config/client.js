@@ -237,7 +237,7 @@ const config = {
   player: {
     "autoplay": true,
     "controls": true,
-    "aspectRatio": "16:9",
+    //"aspectRatio": "16:9",
     "language": "fr",
     "dashas": {
       "protData": protData
