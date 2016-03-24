@@ -31,6 +31,36 @@ class UserButton extends React.Component {
     dispatch(OAuthActionCreators.logOut());
   }
 
+  getUserConnectedButtons(user, type) {
+
+    let planCode;
+    if (user) {
+      planCode = user.get('planCode');
+    }
+
+    if (!planCode) {
+      return '';
+    }
+    let el;
+    switch (type) {
+      case 'search':
+        el = (<li className="pull-right">
+          <SearchInput/>
+        </li>);
+        break;
+      case 'favorites':
+        el = (<li className="pull-right">
+          <FavoritesButton/>
+        </li>);
+        break;
+      default:
+        el = '';
+        break;
+    }
+
+    return el;
+  }
+
   render() {
     const {
       props: {
@@ -41,6 +71,7 @@ class UserButton extends React.Component {
 
     const token = OAuth.get('token');
     const user = User.get('user');
+
     if (token) {
       if (user) {
         return (
@@ -51,12 +82,9 @@ class UserButton extends React.Component {
                                                                                             id="userButtonImg"
                                                                                             className="icon-user img-thumbnail"/></a>
             </li>
-            <li className="pull-right">
-              <SearchInput/>
-            </li>
-            <li className="pull-right">
-              <FavoritesButton/>
-            </li>
+            {this.getUserConnectedButtons(user, 'search')}
+            {this.getUserConnectedButtons(user, 'favorites')}
+
           </ul>
         );
       }
