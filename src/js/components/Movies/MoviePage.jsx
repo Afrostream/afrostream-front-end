@@ -43,7 +43,7 @@ class MoviePage extends React.Component {
     }
     return (
       <div className="row-fluid">
-        {movieId ? <MovieInfo maxLength={600} active={true} load={true} {...{dataId}}/> : ''}
+        {movieId ? <MovieInfo maxLength={600} active={true} load={true} showBtn={false} {...{dataId}}/> : ''}
         {movieId ? <SeasonList {...this.props}/> : ''}
       </div>
     );

@@ -20,7 +20,7 @@ class Slides extends React.Component {
     const data = slides.get(page);
     const dataId = data.get('_id');
     return (
-      <MovieInfo active={true} maxLength={200} load={true}
+      <MovieInfo active={true} maxLength={200} load={true} showBtn={true}
                  key={`slide-${data.get('_id')}`}  { ...{data, dataId}}/>
     );
   }

@@ -41,12 +41,14 @@ class MovieInfo extends LoadVideo {
 
   static propTypes = {
     active: PropTypes.bool,
+    showBtn: PropTypes.bool,
     load: PropTypes.bool,
     maxLength: PropTypes.number
   };
 
   static defaultProps = {
     maxLength: 450,
+    showBtn: true,
     load: true,
     active: false
   };
@@ -54,7 +56,7 @@ class MovieInfo extends LoadVideo {
   render() {
 
     let {
-      props: { Movie, active, dataId, data,maxLength,load}
+      props: { Movie, active, dataId, data,maxLength,load,showBtn}
       } = this;
 
     data = data || Movie.get(`movies/${dataId}`);
@@ -64,12 +66,11 @@ class MovieInfo extends LoadVideo {
     }
 
     const isSerie = data.get('type') === 'serie' || data.get('type') === 'error';
-    const showBtn = isSerie || data.get('type') === 'error';
     const classes = classSet({
       'movie': true,
       'serie': isSerie,
       'movie--active': this.props.active,
-      'movie--btn_play': !this.props.load && showBtn
+      'movie--btn_play': showBtn === true || !isSerie
     });
 
     let poster = data.get('poster');
