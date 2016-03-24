@@ -223,7 +223,7 @@
     .plan-button {
       font-weight: bold;
       background-color: #eeeeee;
-      border-radius: 20px;
+      border-radius: @btn-radius;
       border: 1px solid #C5C6C7;
       text-align: center;
       min-height: 35px;
@@ -231,28 +231,27 @@
       margin-left: 1%;
       margin-right: 1%;
       width: 18%;
+      &:hover {
+        background-color: @subscriber-color;
+        color: @brand-primary;
+        text-decoration: none;
+      }
       @media all and (max-width: @screen-md-min) {
         width: 30%;
       }
     }
 
     .button-blue {
-      a {
-        color: @plan-blue-color;
-      }
+      color: @plan-blue-color;
     }
 
     .button-yellow {
-      a {
-        color: @plan-yellow-color;
-      }
+      color: @plan-yellow-color;
     }
 
     .button-purple {
       padding: 10px 5px 10px 5px;
-      a {
-        color: @plan-purple-color;
-      }
+      color: @plan-purple-color;
     }
   }
 }

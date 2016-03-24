@@ -93,25 +93,18 @@ class SelectPlan extends React.Component {
           </div>
           <div className="formule-row-no-decoration">
             <div className="row-element-left"></div>
-
-            <div className="row-element plan-button button-blue">
-              <Link
-                to='/select-plan/afrostreammonthly/checkout'>
-                DÉMARREZ VOTRE<br/> ESSAI GRATUIT
-              </Link>
-            </div>
-            <div className="row-element plan-button button-yellow">
-              <Link
-                to="/select-plan/afrostreamambassadeurs/checkout">
-                DÉMARREZ VOTRE<br/> ESSAI GRATUIT
-              </Link>
-            </div>
-            <div className="row-element plan-button button-purple">
-              <Link
-                to="/select-plan/afrostreamgift/checkout">
-                OFFRIR
-              </Link>
-            </div>
+            <Link className="row-element plan-button button-blue"
+                  to='/select-plan/afrostreammonthly/checkout'>
+              DÉMARREZ VOTRE<br/> ESSAI GRATUIT
+            </Link>
+            <Link className="row-element plan-button button-yellow"
+                  to="/select-plan/afrostreamambassadeurs/checkout">
+              DÉMARREZ VOTRE<br/> ESSAI GRATUIT
+            </Link>
+            <Link className="row-element plan-button button-purple"
+                  to="/select-plan/afrostreamgift/checkout">
+              OFFRIR
+            </Link>
           </div>
         </div>
         <PaymentImages />
