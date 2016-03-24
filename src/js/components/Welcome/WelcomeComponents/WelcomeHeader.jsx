@@ -288,7 +288,7 @@ class WelcomeHeader extends React.Component {
       }
     }
 
-    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=min&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`};
+    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`};
 
     let promoCode = this.hasPromo();
 

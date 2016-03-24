@@ -8,6 +8,7 @@ import Billboard from './Billboard'
 import Spinner from '../Spinner/Spinner';
 import config from '../../../../config';
 import LoadVideo from '../LoadVideo';
+import MobileDetect from 'mobile-detect';
 
 import * as VideoActionCreators from '../../actions/video';
 import * as EventActionCreators from '../../actions/event';
@@ -23,6 +24,7 @@ class MovieInfo extends LoadVideo {
   constructor(props) {
     super(props);
     this.state = {
+      isMobile: false,
       size: {
         height: 1920,
         width: 815
@@ -31,7 +33,15 @@ class MovieInfo extends LoadVideo {
   }
 
   componentDidMount() {
+    let isMobile = false;
+    if (canUseDOM) {
+      const userAgent = (window.navigator && navigator.userAgent) || '';
+      let agent = new MobileDetect(userAgent);
+      isMobile = agent.mobile();
+    }
+
     this.setState({
+      isMobile: isMobile,
       size: {
         height: window.innerHeight,
         width: window.innerWidth
@@ -75,7 +85,7 @@ class MovieInfo extends LoadVideo {
 
     let poster = data.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=min&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`} : {};
+    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`} : {};
     const link = this.getLink();
     return (
       <div ref="slContainer" className={classes}>

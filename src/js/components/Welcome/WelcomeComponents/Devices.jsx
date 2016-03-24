@@ -23,9 +23,6 @@ class Devices extends React.Component {
             <h2>Vos films et séries afro préférés quand vous voulez où vous voulez en illimité</h2>
             <ul className="features-list">
               <li className="features-item">
-                Visionnez en streaming illimité
-              </li>
-              <li className="features-item">
                 En versions sous-titrées ou vost
               </li>
               <li className="features-item">
