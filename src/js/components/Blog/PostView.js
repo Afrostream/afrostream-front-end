@@ -41,7 +41,7 @@ export default class PostView extends Component {
 
     let poster = post.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=clamp&w=1280&h=720&q=70)`} : {};
+    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=min&w=1280&h=720&q=70)`} : {};
     return (
       <div className="row-fluid">
         <div className="blog">

@@ -272,7 +272,7 @@ class PlayerComponent extends Component {
     return {
       link: link,
       title: episode.get('title'),
-      poster: `${posterImg}?crop=faces&fit=clip&w=150&h=80&q=60&fm=${config.images.type}`
+      poster: `${posterImg}?crop=faces&fit=min&w=150&h=80&q=60&fm=${config.images.type}`
     }
 
   }

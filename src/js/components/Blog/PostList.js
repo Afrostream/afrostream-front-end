@@ -46,7 +46,7 @@ export default class PostList extends Component {
               if (thumb) {
                 let imgix = thumb.get('imgix');
                 if (imgix) {
-                  imageStyles = `${imgix}?crop=faces&fit=clamp&w=250&h=120&q=${config.images.quality}&fm=${config.images.type}`;
+                  imageStyles = `${imgix}?crop=faces&fit=min&w=250&h=120&q=${config.images.quality}&fm=${config.images.type}`;
                 }
               }
 

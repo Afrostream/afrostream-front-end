@@ -81,7 +81,7 @@ class Poster extends LoadVideo {
       return;
     }
 
-    let imageStyles = `${imgix}?crop=faces&fit=crop&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
+    let imageStyles = `${imgix}?crop=faces&fit=min&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
 
     if (this.props.preload) {
 

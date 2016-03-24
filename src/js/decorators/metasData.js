@@ -111,7 +111,7 @@ export default () => {
           }
         }
 
-        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`;
+        let ogImage = `${imageStyle}?crop=faces&fit=min&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`;
 
         if (title) {
           metas.title = title;
