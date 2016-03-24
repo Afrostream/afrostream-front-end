@@ -12,8 +12,8 @@ class SelectPlan extends React.Component {
   render() {
     return (
       <div className="plan-container">
-        <div className="choose-plan">Choisissez votre formule et profitez
-          <span className="choose-plan__bolder"> GRATUITEMENT</span> de 7 jours d'essais
+        <div className="choose-plan">Choisissez votre formule et profitez de
+          <span className="choose-plan__bolder"> 7 jours d'essais</span>
         </div>
         <div className="select-plan">
           <div className="formule-row-no-decoration">
