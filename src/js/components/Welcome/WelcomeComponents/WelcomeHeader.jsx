@@ -20,8 +20,8 @@ class WelcomeHeader extends React.Component {
     this.state = {
       isMobile: false,
       size: {
-        height: 560,
-        width: 400
+        height: 1280,
+        width: 500
       }
     };
   }
