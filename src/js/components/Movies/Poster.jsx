@@ -174,7 +174,7 @@ class Poster extends LoadVideo {
     let compare = dateNow - new Date(dateFrom).getTime();
     const type = this.getType();
     let nbDay = config.movies.isNew[type] || 10;
-    if (compare <= (nbDay * 24 * 3600 * 1000) {
+    if (compare <= (nbDay * 24 * 3600 * 1000)) {
       return (<div className="thumb-new__item"></div>);
     }
   }
