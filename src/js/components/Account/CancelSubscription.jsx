@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import {dict} from '../../../../config';
 import moment from 'moment';
+import PaymentImages from '../Payment/PaymentImages';
 
 if (process.env.BROWSER) {
   require('./CancelSubscription.less');
@@ -67,6 +68,7 @@ class CancelSubscription extends React.Component {
         <div />
       );
     }
+
     let currentSubscription = subscriptionsList.find((obj)=> {
       return obj.get('isActive') === 'yes';// && obj.get('subStatus') !== 'canceled'
     });
@@ -97,17 +99,21 @@ class CancelSubscription extends React.Component {
             {infos}
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12">
-            { activeSubscription ?
+        { activeSubscription ?
+          <div className="row">
+            <div className="col-md-12">
               <button className="btn btn-default btn-danger button-cancel__subscription" {...inputAttributes}
                       disabled={this.state.pending}>
                 {dict.account.cancel.submitBtn}
-              </button> : ''}
-            <Link className="btn btn-default btn-success btn-return__account"
-                  to="/compte">{dict.account.cancel.cancelBtn}</Link>
+              </button>
+              <Link className="btn btn-default btn-success btn-return__account"
+                    to="/">{dict.account.cancel.cancelBtn}</Link>
+            </div>
           </div>
-        </div>
+          : ''}
+
+        <PaymentImages catIds={[18,17]}/>
+
       </div>
     );
   }

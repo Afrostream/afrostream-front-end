@@ -31,6 +31,9 @@ class Spots extends React.Component {
 
     let categories = Category.get('categorys/spots');
 
+    if (!categories) {
+      return (<div />);
+    }
     let recoList = [];
     categories.map((categorie)=> {
       let catMovies = categorie.get('adSpots');

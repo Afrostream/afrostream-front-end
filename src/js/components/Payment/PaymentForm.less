@@ -114,9 +114,6 @@
     .panel {
       border-radius: 0;
       border-bottom: @gray-lighter solid 1px;
-      &.collapsed {
-        border-bottom: fade(@gray-lighter, 30%) solid 1px;
-      }
     }
     .payment-method-details {
       line-height: 2;
@@ -142,18 +139,8 @@
           font-size: 1.3em;
         }
         &.collapsed {
-          label {
-            color: fade(@color-purple-1, 40%); /* adjust as needed */
-          }
           &:before {
-            /* symbol for "collapsed" panels */
-            color: fade(@color-indigo, 40%); /* adjust as needed */
             content: "\f054"; /* adjust as needed, taken from bootstrap.css */
-          }
-          img {
-            opacity: 0.4;
-            -webkit-filter: grayscale(100%);
-            filter: grayscale(100%);
           }
         }
 

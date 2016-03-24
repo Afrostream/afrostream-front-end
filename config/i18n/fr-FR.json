@@ -103,7 +103,7 @@
     "plan": {
       "header": "DÉTAIL DU FORFAIT",
       "updatePlan": "Changer de forfait",
-      "cancelPlan": "Interrompre immédiatement votre abonnement"
+      "cancelPlan": "Interrompre votre abonnement"
     },
     "cancel": {
       "active": {
@@ -114,7 +114,7 @@
         "header": "Votre abonnement été annulé.",
         "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
       },
-      "submitBtn": "Interrompre l’abonnement",
+      "submitBtn": "Confirmer l'interruption",
       "cancelBtn": "Continuer l'abonnement"
     },
     "billing": {

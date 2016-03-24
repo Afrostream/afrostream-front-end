@@ -1,10 +1,12 @@
 import React from 'react';
+import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
 import * as CategoryActionCreators from '../../actions/category';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../../config';
 import Poster from '../Movies/Poster';
+import _ from 'lodash';
 
 if (process.env.BROWSER) {
   require('./PaymentImages.less');
@@ -24,7 +26,7 @@ class PaymentImages extends React.Component {
   render() {
     const {
       props: {
-        Category
+        Category,catIds
         }
       } = this;
 
@@ -34,28 +36,35 @@ class PaymentImages extends React.Component {
       return (<div/>);
     }
 
-    let selectionMovies = categories.find(function (obj) {
-      return obj.get('_id') === 1;
-    });
+    let selectionMovies = Immutable.fromJS([]);
 
-    let seriesMovies = categories.find(function (obj) {
-      return obj.get('_id') === 3;
+    _.forEach(catIds, (id)=> {
+      let categorie = categories.find(function (obj) {
+        return obj.get('_id') === id;
+      });
+      if (categorie) {
+        selectionMovies = selectionMovies.concat(categorie.get('movies'));
+      }
     });
 
     return (
       <div>
         <div className="payment-pages__thumbs-row">
-          {selectionMovies ? selectionMovies.get('movies').map((data, i) => <Poster
+          {selectionMovies ? selectionMovies.map((data, i) => <Poster
             key={`movie-payment-a-${i}`} {...{data}}/>).toJS() : ''}
-        </div>
-        <div className="payment-pages__thumbs-row">
-          {seriesMovies ? seriesMovies.get('movies').map((data, i) => <Poster
-            key={`movie-paymen-b-${i}`} {...{data}}/>).toJS() : ''}
         </div>
       </div>
     );
 
   }
 }
+
+PaymentImages.propTypes = {
+  catIds: React.PropTypes.array
+};
+
+PaymentImages.defaultProps = {
+  catIds: [1, 3]
+};
 
 export default PaymentImages;
