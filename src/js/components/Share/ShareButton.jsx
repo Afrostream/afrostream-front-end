@@ -48,8 +48,9 @@ class ShareButton extends React.Component {
     };
     return (<button className="btn share_button" type="button" data-toggle="tooltip" ref="data"
                     data-placement="top"
-                    title={this.props.label}  {...inputAttributes}>
+                    title={this.props.tooltip}  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>
+      {this.props.label}
     </button>)
   }
 }
@@ -58,6 +59,7 @@ ShareButton.propTypes = {
   link: React.PropTypes.string,
   description: React.PropTypes.string,
   title: React.PropTypes.string,
+  tooltip: React.PropTypes.string,
   label: React.PropTypes.string
 };
 
@@ -65,7 +67,8 @@ ShareButton.defaultProps = {
   link: null,
   description: null,
   title: null,
-  label: 'Partager'
+  label: '',
+  tooltip: 'Recommander'
 };
 
 export default ShareButton;

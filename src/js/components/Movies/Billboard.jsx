@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import LoadVideo from '../LoadVideo';
 import ShareButton from '../Share/ShareButton';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
+import RateComponent from '../Recommendation/RateComponent';
 
 if (process.env.BROWSER) {
   require('./Billboard.less');
@@ -130,6 +131,7 @@ class Billboard extends LoadVideo {
     let slug = data.get('slug') || '';
     let seasons = data.get('seasons');
     let videoData = data.get('video');
+    let videoId = data.get('videoId');
     if (seasons && seasons.size) {
       const season = seasons.get(0);
       const episodes = season.get('episodes');
@@ -139,6 +141,7 @@ class Billboard extends LoadVideo {
         videoData = episode.get('video');
       }
     }
+
     if (videoData) {
       let subtitles = videoData.get('captions');
       hasSubtiles = subtitles ? subtitles.size : false;
@@ -155,11 +158,13 @@ class Billboard extends LoadVideo {
 
     let link = this.getLink();
 
+
     return (
       <div className="billboard-infos">
         {type ? <div ref="slTag" className="billboard-tag billboard-row">{type === 'movie' ? 'film' : type}</div> :
           <div ref="slNull"/>}
         <Link to={link} ref="slTitle" className="billboard-title billboard-row">{title}</Link>
+        {<RateComponent {...{videoId}}/>}
         {seasons ? this.getSeasons(seasons, data) : ''}
         {tags ? this.getGenre(tags) : ''}
         {creator ? this.getCreator(creator) : ''}

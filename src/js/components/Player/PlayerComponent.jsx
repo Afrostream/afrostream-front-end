@@ -19,6 +19,7 @@ import Billboard from '../Movies/Billboard';
 import NextEpisode from './NextEpisode';
 import ShareButton from '../Share/ShareButton';
 import RecommendationList from '../Recommendation/RecommendationList';
+import RateComponent from '../Recommendation/RateComponent';
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less');
@@ -637,7 +638,7 @@ class PlayerComponent extends Component {
       if (videoTracking) {
         const position = videoTracking.get('playerPosition');
         const duration = videoData.get('duration');
-        if (position > 30 && position < (duration - 30)) {
+        if (position > 300 && position < (duration - 300)) {
           playerData.starttime = videoTracking.get('playerPosition');
         }
       }
@@ -849,13 +850,16 @@ class PlayerComponent extends Component {
             <div className={classSet(videoInfoClasses)}>
               <div className="video-infos_label">Vous regardez</div>
               <div className="video-infos_title">{infos.title}</div>
-              {infos.seasonNumber ?
-                <label className="tag video-infos_episode">{`Saison ${infos.seasonNumber}`}</label> : ''}
-              {infos.episodeNumber ?
-                <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
+              <div>
+                {infos.seasonNumber ?
+                  <label className="tag video-infos_episode">{`Saison ${infos.seasonNumber}`}</label> : ''}
+                {infos.episodeNumber ?
+                  <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
+              </div>
+              {<RateComponent {...{videoId}}/>}
               <div className="player-buttons">
                 <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
-                <ShareButton />
+                <ShareButton label="Recommander"/>
               </div>
               {videoDuration ?
                 <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
