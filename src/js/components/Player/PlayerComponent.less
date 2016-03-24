@@ -1,22 +1,6 @@
 @import '../../../../node_modules/afrostream-player/dist/afrostream-player.css';
 @import '../../../styles/config.less';
 
-@slider-bar-pattern: ~'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAP0lEQVQIHWWMAQoAIAgDR/QJ/Ub//04+w7ZICBwcOg5FZi5iBB82AGzixEglJrd4TVK5XUJpskSTEvpdFzX9AB2pGziSQcvAAAAAAElFTkSuQmCC';
-@control-bg-color: #07141E;
-// e.g. rgb(255, 255, 255) or #ffffff
-@control-bg-alpha: 0.7;
-// 1.0 = 100% opacity, 0.0 = 0% opacity
-@big-play-border-width: 0.1em;
-@big-play-border-radius: 100%;
-@big-play-bg-color: @color-indigo;
-@big-play-bg-alpha: @control-bg-alpha;
-@big-play-border-color: @brand-primary;
-@big-play-font-size: 3em;
-@base-font-size: 1.3em;
-@big-play-width: 3em;
-@big-play-height: 3em;
-@vjs-font-path: 'font/';
-
 .player {
   background-color: #000000;
   margin: 60px auto;
@@ -104,11 +88,6 @@
       margin: 0 0 0 -100%;
       visibility: hidden;
     }
-  }
-
-  .video-js .vjs-text-track {
-    background-color: transparent;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   }
 
   .video-js.vjs-afrostream-skin {

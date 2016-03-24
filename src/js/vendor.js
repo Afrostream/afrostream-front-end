@@ -17,4 +17,7 @@ if (1 < 0) { // eslint-disable-line no-constant-condition, yoda
   require('raven-js');
   require('mobile-detect');
   require('qs');
+  require('afrostream-player/node_modules/dashjs/dist/dash.all.debug.js');
+  require('afrostream-player/libs/video.js');
+  require('afrostream-player/dist/afrostream-player.js');
 }

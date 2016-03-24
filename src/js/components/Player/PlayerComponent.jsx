@@ -3,7 +3,6 @@ import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import videojs from 'afrostream-player';
 import config from '../../../../config';
 import classSet from 'classnames';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
@@ -27,6 +26,9 @@ if (process.env.BROWSER) {
 
 if (canUseDOM) {
   var base64 = require('js-base64').Base64;
+  var dashjs = require('afrostream-player/node_modules/dashjs/dist/dash.all.debug.js');
+  var videojs = require('afrostream-player/libs/video.js');
+  var afrostream = require('afrostream-player/dist/afrostream-player.js');
 }
 
 @connect(({ OAuth,Video,Movie,Season,Episode,Event,User,Player }) => ({
@@ -593,8 +595,7 @@ class PlayerComponent extends Component {
 
     // ==== END hacks config
     playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
-    playerData.plugins = playerData.plugins || [];
-    playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
+    playerData.chromecast = _.merge(playerData.chromecast || {}, trackOpt);
     let user = User.get('user');
     if (user) {
       let userId = user.get('user_id');
@@ -661,15 +662,23 @@ class PlayerComponent extends Component {
       } = this;
 
     if (this.playerInit) throw new Error('old player was already generate, destroy it before');
+
     await this.destroyPlayer();
     this.playerInit = true;
     //const videoData = Video.get(`videos/${videoId}`);
     if (!videoData) throw new Error(`no video data ${videoId} ${videoData}`);
     let playerData = await this.getPlayerData(videoData);
 
-    let player = await videojs('afrostream-player', playerData).ready(function () {
-        var allTracks = this.textTracks() || []; // get list of tracks
-        _.forEach(allTracks, function (track) {
+    playerData.sources = [
+      {
+        src: "https://hw.cdn.afrostream.net/vod/tylerperry_fbow_s01ep01/45f6eb0ff24ab110.ism/45f6eb0ff24ab110.mpd",
+        type: "application/dash+xml"
+      }
+    ];
+
+    let player = await videojs('afrostream-player', playerData).ready(()=> {
+        var allTracks = player.textTracks() || []; // get list of tracks
+        _.forEach(allTracks, (track) => {
           let lang = track.language || track.language_;
           track.mode = (lang === 'fr' || lang === 'fra') ? 'showing' : 'hidden'; // show this track
         });

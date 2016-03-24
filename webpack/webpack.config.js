@@ -71,7 +71,7 @@ const webpackConfig = {
       {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
-        include: [path.join(__dirname, '../node_modules/bootstrap')]
+        include: [path.join(__dirname, '../node_modules/bootstrap'), path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
         test: /\.json$/,
@@ -104,6 +104,18 @@ const webpackConfig = {
         test: /.eot([\?]?.*)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]'
       },
+      //expose videojs
+      //{
+      //  test: /video\.js$/,
+      //  loader: 'imports-loader?this=>global',
+      //  include: [path.join(__dirname, '../node_modules/afrostream-player')]
+      //},
+      {
+        test: /video\.js$/,
+        loader: 'expose?videojs',
+        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+      },
+      //{test: /video\.js$/, loader: 'expose?videojs'},
       //expose jquery
       {test: /jquery\.js$/, loader: 'expose?$'},
       {test: /jquery\.js$/, loader: 'expose?jQuery'},
@@ -115,17 +127,15 @@ const webpackConfig = {
     tls: 'empty',
     dns: 'empty'
   },
-  externals: {
-    //used for castlab dependencys
-    "Math/Long": "bytebuffer"
-  },
+  externals: {},
   plugins: [
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
+      //videojs: 'video.js',
+      //'window.videojs': 'video.js',
       $: 'jquery',
       jQuery: 'jquery',
-      'window.$': 'jquery',
-      'Math/Long': 'long'
+      'window.$': 'jquery'
     }),
     new webpack.DefinePlugin({
       'process.env': {

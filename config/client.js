@@ -237,8 +237,7 @@ const config = {
   player: {
     "autoplay": true,
     "controls": true,
-    "width": "100%",
-    "height": "100%",
+    "aspectRatio": "16:9",
     "language": "fr",
     "dashas": {
       "protData": protData
@@ -293,18 +292,14 @@ const config = {
       "ID_CLIENT": process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
-    "dasheverywhere": castlab,
-    "techOrder": ["dash", "html5", "dashas"],
-    "plugins": {
-      "chromecast": {
-        "appId": process.env.CHROMECAST_ID || '',
-        "metadata": {
-          "title": "Title",
-          "subtitle": "Subtitle"
-        }
-      },
-      "ga": {}
-    }
+    "chromecast": {
+      "appId": process.env.CHROMECAST_ID || '',
+      "metadata": {
+        "title": "Title",
+        "subtitle": "Subtitle"
+      }
+    },
+    "techOrder": ["dash", "html5", "dashas"]
   }
 };
 
