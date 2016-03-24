@@ -60,6 +60,10 @@ class Header extends React.Component {
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
     const user = User.get('user');
+    let planCode;
+    if (user) {
+      planCode = user.get('planCode');
+    }
     let hasHistory = !this.state.isIOS && user && (this.context.location.pathname.length > 1);
 
     let sliderClasses = {
@@ -76,8 +80,8 @@ class Header extends React.Component {
 
     return (
       <nav className={classSet(sliderClasses)} role="navigation">
-        <SmartBanner {...apps.params}/>
-        <div className="container-fluid">
+        {planCode ? <SmartBanner {...apps.params}/> : ''}
+        < div className="container-fluid">
           <div className="navbar-header">
             { hasHistory ? <GoBack /> : ''}
             <Link className="navbar-brand" to="/">

@@ -15,11 +15,11 @@ class Footer extends React.Component {
       <footer className="footer">
         <div className="links">
           <div className="get-help">
-            <h4>OBTENIR DE L'AIDE</h4>
+            <h4>SUPPORT TECHNIQUE</h4>
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="mailto:support@afrostream.tv">
-                  Support
+                  Aide en ligne
                 </a>
               </li>
               <li>
@@ -40,7 +40,7 @@ class Footer extends React.Component {
             </ul>
           </div>
           <div className="get-help">
-            <h4>AFROSTREAM</h4>
+            <h4>PRO</h4>
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="https://afrostream.tv/blog">
@@ -61,6 +61,24 @@ class Footer extends React.Component {
             </ul>
           </div>
           <div className="get-help">
+            <h4>APPLICATIONS MOBILE</h4>
+            <ul className="footer-links">
+              <li>
+                <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
+                   target="_blank">
+                  IOS <i className="fa fa-apple"></i>
+                </a>
+              </li>
+              <li>
+                <a className="footer-link"
+                   href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
+                   target="_blank">
+                  Android <i className="fa fa-android"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="get-help">
             <h4>SUIVEZ-NOUS</h4>
             <ul className="footer-links">
               <li>
@@ -75,28 +93,12 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help">
-            <h4>APPLICATIONS MOBILE</h4>
-            <ul className="footer-links">
-              <li>
-                <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
-                   target="_blank">
-                  IOS <i className="fa fa-apple"></i>
-                </a>
-              </li>
-              <li>
-                <a className="footer-link" href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
-                   target="_blank">
-                  Android <i className="fa fa-android"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
+
         <div className="legal-statements">
           <div className="links">
             <div className="get-help">
-              <div className="legal-text">Copyright &copy; Afrostream {this.year}</div>
+              <div className="legal-text">Copyright &copy; Afrostream Inc. {this.year}</div>
             </div>
             <div className="get-help">
               &nbsp;
