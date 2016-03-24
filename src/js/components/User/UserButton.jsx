@@ -71,7 +71,7 @@ class UserButton extends React.Component {
   getLoginState() {
     return (
       <div className="nav navbar-nav navbar-right">
-        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.showLock}>connexion
+        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.showLock}>Se connecter
         </button>
       </div>);
   }

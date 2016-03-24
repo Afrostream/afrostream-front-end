@@ -3,8 +3,12 @@
 .spots-list {
   width: 100%;
   margin: 0;
-  .isMobile({ padding: @app-padding-mobile; });
-  .isNotMobile({ padding: @app-padding; });
+  h2 {
+    width: 100%;
+    margin: 30px;
+  }
+  .isMobile({ padding: 0 @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
+  .isNotMobile({ padding: 0 @app-padding @app-padding @app-padding; });
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -16,5 +20,8 @@
     order: 0;
     flex: 0 1 auto;
     align-self: auto;
+  }
+  .sign-up__container {
+    margin: @app-padding;
   }
 }

@@ -8,7 +8,6 @@
 @line-separator-color: #c6c6c6;
 @popup-radius: 1px;
 @popup-bg-alpha: 50%;
-@btn-radius: 2px;
 @pannel-padding: 0px;
 
 #lock.theme-default,
@@ -59,14 +58,14 @@
     }
 
     button.primary {
-      background: fade(@color-yellow, 80%);
+      background: fade(@subscriber-color, 80%);
       border-radius: @btn-radius;
       width: 80%;
-      color: @color-indigo;
+      color: @brand-primary;
       font-family: @font-family-base;
       padding: 12px 10px;
       &:hover {
-        background: @color-yellow;
+        background: @subscriber-color;
       }
     }
 

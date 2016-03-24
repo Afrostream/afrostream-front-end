@@ -69,8 +69,8 @@ class WelcomePage extends React.Component {
         {this.state.spinner ? <Spinner /> : ''}
         <WelcomeHeader {...this.props}/>
         <Devices />
-        <PricingTable />
         <Spots />
+        <PricingTable />
       </div>
     );
   }

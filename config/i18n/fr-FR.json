@@ -196,7 +196,7 @@
   "signup": {
     "description": "",
     "title": "Créez votre compte",
-    "action": "Créez votre compte",
+    "action": "Démarrez",
     "emailPlaceholder": "Courriel",
     "passwordPlaceholder": "Créer un mot de passe",
     "cancelAction": "Annuler",

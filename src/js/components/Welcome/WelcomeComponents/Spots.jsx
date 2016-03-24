@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from'react-dom';
+import Immutable from 'immutable';
 import { connect } from 'react-redux';
 import config from '../../../../../config';
 import Thumb from '../../../components/Movies/Thumb';
+import SignUpButton from '../../User/SignUpButton';
+import _ from 'lodash';
+
 if (process.env.BROWSER) {
   require('./Spots.less');
 }
@@ -10,10 +14,9 @@ if (process.env.BROWSER) {
 @connect(({ Category }) => ({Category}))
 class Spots extends React.Component {
 
-  getMovies(categorie) {
-    let movies = categorie.get('adSpots');
-    return movies.map((data, i) => <Thumb favorite={false}
-                                          key={`spot-home-${data.get('_id')}-${i}`} {...{data}}/>);
+  getMovies(data) {
+    return <Thumb favorite={false}
+                  key={`spot-home-${data.get('_id')}`} {...{data}}/>;
   }
 
   /**
@@ -27,9 +30,28 @@ class Spots extends React.Component {
       } = this;
 
     let categories = Category.get('categorys/spots');
+
+    let recoList = [];
+    categories.map((categorie)=> {
+      let catMovies = categorie.get('adSpots');
+      if (catMovies) {
+        recoList = recoList.concat(catMovies.toJS());
+      }
+    });
+
+    let uniqSpots = _.uniq(recoList, (o)=> {
+      return o['_id'];
+    });
+
+    let categoriesList = Immutable.fromJS(uniqSpots);
+
     return (
       <div className="spots-list">
-        {categories ? categories.map((categorie, i) => this.getMovies(categorie)).toJS() : ''}
+        <h2>Aperçu de notre catalogue</h2>
+        {categoriesList ? categoriesList.map((movie, i) => this.getMovies(movie)).toJS() : ''}
+        <div className="container sign-up__container">
+          <SignUpButton />
+        </div>
       </div>
     );
 

@@ -6,6 +6,7 @@ import classSet from 'classnames';
 import config from '../../../../../config';
 import _ from 'lodash';
 import MobileDetect from 'mobile-detect';
+import SignUpButton from '../../User/SignUpButton';
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
@@ -310,9 +311,7 @@ class WelcomeHeader extends React.Component {
               <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
                 return (<span key={`statement-${i}`}>{statement}</span>)
               })}</div>
-              <button className="subscribe-button" type=" button" onClick={::this.showLock}>TESTEZ GRATUITEMENT <br />
-                PENDANT UNE SEMAINE
-              </button>
+              <SignUpButton />
             </div>
           </div>
         </section>

@@ -1,4 +1,5 @@
 import React from 'react';
+import SignUpButton from '../../User/SignUpButton';
 
 if (process.env.BROWSER) {
   require('./Devices.less');
@@ -14,7 +15,8 @@ class Devices extends React.Component {
         <div className="container">
           <div className="device-element-image">
             <div className="visual">
-              <img className="hidden-phone" src="https://afrostream.imgix.net/production/poster/2016/01/545c04d6467812742e29-ecrans.gif"/>
+              <img className="hidden-phone"
+                   src="https://afrostream.imgix.net/production/poster/2016/01/545c04d6467812742e29-ecrans.gif"/>
             </div>
           </div>
           <div className="device-element-text">
@@ -24,7 +26,7 @@ class Devices extends React.Component {
                 Visionnez en streaming illimité
               </li>
               <li className="features-item">
-                En versions sous-titrées ou versions françaises
+                En versions sous-titrées ou vost
               </li>
               <li className="features-item">
                 Aucune publicité, aucune interruption
@@ -33,6 +35,7 @@ class Devices extends React.Component {
                 Profitez d'une image haute qualité
               </li>
             </ul>
+            <SignUpButton label="J'en profite !"/>
           </div>
         </div>
       </section>
