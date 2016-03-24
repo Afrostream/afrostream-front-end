@@ -26,6 +26,13 @@ class ShareButton extends React.Component {
     $(this.refs.data).tooltip();
   }
 
+  getLabel() {
+    if (!this.props.label) {
+      return;
+    }
+    return this.props.label;
+  }
+
   sharePopup() {
     const {
       props: {
@@ -50,7 +57,7 @@ class ShareButton extends React.Component {
                     data-placement="top"
                     title={this.props.tooltip}  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>
-      {this.props.label}
+      {this.getLabel()}
     </button>)
   }
 }
