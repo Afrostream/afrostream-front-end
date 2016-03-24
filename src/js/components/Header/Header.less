@@ -10,11 +10,20 @@ nav {
     z-index: @nav-z + 1;
     .navbar-nav > li > a {
       color: @brand-primary;
-      &:hover,
+      background-color: fade(@brand-primary, 10%);
+      color: @brand-primary;
       &:focus {
+        background-color: fade(@brand-primary, 10%);
+        color: @brand-primary;
+      }
+      &:hover {
         color: @color-indigo;
         background-color: @color-yellow;
       }
+    }
+    .navbar-right {
+      margin-right: 15px;
+      .isMobile({ margin-right: @app-padding-mobile; });
     }
   }
 
@@ -36,21 +45,7 @@ nav {
   .collapse.in {
     background-color: @color-indigo;
   }
-  .btn-user {
-    width: 40px;
-    height: 40px;
-    margin-right: 25px;
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    a {
-      padding: 0 !important;
-    }
-    .icon-user {
-      width: 40px;
-      height: 40px;
-    }
-  }
+
   .label-user {
     vertical-align: middle;
     padding-left: 15px;

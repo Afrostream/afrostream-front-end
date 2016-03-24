@@ -9,6 +9,10 @@ import SearchInput from './../Search/SearchBox';
 import FavoritesButton from './../Favorites/FavoritesButton';
 import config from '../../../../config';
 
+if (process.env.BROWSER) {
+  require('./UserButton.less');
+}
+
 @connect(({ User, OAuth, Event }) => ({User, OAuth, Event}))
 class UserButton extends React.Component {
 
@@ -76,14 +80,18 @@ class UserButton extends React.Component {
       if (user) {
         return (
           <ul className="nav navbar-nav navbar-right">
-            <li className="btn-user pull-right">
-              <a href="#" role="button" onClick={::this.toggleSideBar} id="userButton"><img src={user.get('picture')}
-                                                                                            alt="50x50"
-                                                                                            id="userButtonImg"
-                                                                                            className="icon-user img-thumbnail"/></a>
+            <li className="pull-right">
+              <a href="#" role="button" onClick={::this.toggleSideBar} id="userButton"
+                 className="btn-xs btn-user">
+                <span>Mon profil</span>
+                <img src={user.get('picture')}
+                     alt="50x50"
+                     id="userButtonImg"
+                     className="icon-user"/>
+              </a>
             </li>
-            {this.getUserConnectedButtons(user, 'search')}
             {this.getUserConnectedButtons(user, 'favorites')}
+            {this.getUserConnectedButtons(user, 'search')}
 
           </ul>
         );

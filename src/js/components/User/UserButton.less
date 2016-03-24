@@ -1,0 +1,29 @@
+@import (reference) '../../../styles/config.less';
+
+.btn-user {
+  background-color: fade(@brand-primary, 10%);
+  color: @brand-primary;
+  text-transform: uppercase;
+  font-size: 1em;
+  border-radius: 2px;
+  padding: 9px !important;
+  margin: 2px;
+  font-weight: 400;
+  line-height: 2;
+  display: inline-block;
+  border: none;
+  &:hover,
+  &:active {
+    background-color: @color-yellow;
+    color: @color-indigo;
+    text-decoration: none;
+  }
+  span {
+    padding-right: 10px;
+    .isMobile({ display: none; });
+  }
+  .icon-user {
+    width: 20px;
+    height: 20px;
+  }
+}

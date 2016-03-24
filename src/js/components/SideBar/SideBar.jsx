@@ -40,11 +40,6 @@ class SideBar extends React.Component {
     return (
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
-          <li className="sidebar-brand">
-            <a href="#">
-              Menu
-            </a>
-          </li>
           <li><Link to="/compte">Mon compte</Link></li>
           <li><Link to="/select-plan/afrostreamgift/checkout" className="sidebar-nav_yellow">Offrir un cadeau</Link>
           </li>

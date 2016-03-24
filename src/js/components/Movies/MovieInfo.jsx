@@ -54,7 +54,7 @@ class MovieInfo extends LoadVideo {
   render() {
 
     let {
-      props: { Movie, active, dataId, data,maxLength}
+      props: { Movie, active, dataId, data,maxLength,load}
       } = this;
 
     data = data || Movie.get(`movies/${dataId}`);
@@ -82,7 +82,7 @@ class MovieInfo extends LoadVideo {
           <div ref="slBackground" className="movie-background" style={imageStyles}/>
           <div className="btn-play"/>
         </Link>
-        {data ? <Billboard {...{active, data, dataId, maxLength}} /> : ''}
+        {data ? <Billboard {...{active, data, dataId, maxLength, load}} /> : ''}
       </div>
     );
   }

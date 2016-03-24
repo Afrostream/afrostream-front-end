@@ -6,7 +6,8 @@ export default class LoadVideo extends Component {
 
   static propTypes = {
     data: PropTypes.instanceOf(Immutable.Map),
-    dataId: PropTypes.string
+    dataId: PropTypes.string,
+    load: PropTypes.bool
   };
 
   static contextTypes = {
@@ -15,7 +16,8 @@ export default class LoadVideo extends Component {
 
   static defaultProps = {
     data: null,
-    dataId: null
+    dataId: null,
+    load: false
   };
 
   render() {
@@ -41,24 +43,25 @@ export default class LoadVideo extends Component {
 
   getType() {
     const {
-      props: { data}
+      props: { Movie,data,dataId}
       } = this;
 
-    return data && data.get('type');
+    let dataValue = data || Movie.get(`movies/${dataId}`);
+    return dataValue && dataValue.get('type');
   }
 
   isValid() {
     const {
-      props: { data}
+      props: { data, dataId}
       } = this;
 
-    return data && this.getType() !== 'error';
+    return (data || dataId) && this.getType() !== 'error';
   }
 
   getLink() {
     const {
       props: {
-        data,dataId,Movie,Season
+        data,dataId,Movie,Season,load
         }
       } = this;
 
@@ -83,7 +86,11 @@ export default class LoadVideo extends Component {
     let episodeSlug;
 
     let videoData = dataValue.get('video');
-    let videoId = dataValue.get('videoId');
+    let videoId = null;
+
+    if (load) {
+      videoId = dataValue.get('videoId');
+    }
 
     if (dataType === 'serie') {
       videoId = null;

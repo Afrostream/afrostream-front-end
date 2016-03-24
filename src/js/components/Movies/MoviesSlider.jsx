@@ -35,11 +35,9 @@ class MoviesSlider extends React.Component {
 
     let data = dataList.get(index);
     let dataId = data.get('_id');
-
     return (
       <Thumb
         id={dataId}
-        preload={true}
         key={`data-thumb-${index}`} {...this.props} {...{data, dataId}}  />
     );
   }

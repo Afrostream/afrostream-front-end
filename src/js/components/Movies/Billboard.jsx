@@ -152,6 +152,7 @@ class Billboard extends LoadVideo {
         synopsis = shortDescription;
       }
     }
+
     let link = this.getLink();
 
     return (
