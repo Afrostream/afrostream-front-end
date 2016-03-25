@@ -15,7 +15,7 @@ import * as EventActionCreators from '../../actions/event';
 import * as RecoActionCreators from '../../actions/reco';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
-import Billboard from '../Movies/Billboard';
+import {Billboard,CsaIcon} from '../Movies';
 import NextEpisode from './NextEpisode';
 import ShareButton from '../Share/ShareButton';
 import RecommendationList from '../Recommendation/RecommendationList';
@@ -812,6 +812,7 @@ class PlayerComponent extends Component {
     let episodeData = videoData.get('episode');
     let seasonData = Season.get(`seasons/${seasonId}`);
     let videoDuration = this.formatTime(videoData.get('duration'));
+    let csa = movieData.get('CSA');
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
     if (seasonData) {
@@ -845,27 +846,26 @@ class PlayerComponent extends Component {
     return (
       <div className={classSet(playerClasses)}>
         <div ref="wrapper" className="wrapper"/>
-        {
-          movieData ?
-            <div className={classSet(videoInfoClasses)}>
-              <div className="video-infos_label">Vous regardez</div>
-              <div className="video-infos_title">{infos.title}</div>
-              <div>
-                {infos.seasonNumber ?
-                  <label className="tag video-infos_episode">{`Saison ${infos.seasonNumber}`}</label> : ''}
-                {infos.episodeNumber ?
-                  <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
-              </div>
-              {<RateComponent {...{videoId}}/>}
-              <div className="player-buttons">
-                <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
-                <ShareButton label="Recommander"/>
-              </div>
-              {videoDuration ?
-                <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
-              <div className=" video-infos_synopsys">{infos.synopsis}</div>
-            </div> : ''
-        }
+        <div className={classSet(videoInfoClasses)}>
+          <div className="video-infos_label">Vous regardez</div>
+          <div className="video-infos_title">{infos.title}
+            {<CsaIcon {...{csa}}/>}
+          </div>
+          <div>
+            {infos.seasonNumber ?
+              <label className="tag video-infos_episode">{`Saison ${infos.seasonNumber}`}</label> : ''}
+            {infos.episodeNumber ?
+              <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
+          </div>
+          {<RateComponent disabled={true} {...{videoId}}/>}
+          <div className="player-buttons">
+            <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
+            <ShareButton label="Recommander"/>
+          </div>
+          {videoDuration ?
+            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
+          <div className=" video-infos_synopsys">{infos.synopsis}</div>
+        </div>
         {this.getNextComponent()}
       </div>
     );

@@ -167,7 +167,7 @@ class Billboard extends LoadVideo {
           <div ref="slNull"/>}
         {<CsaIcon {...{csa}}/>}
         <Link to={link} ref="slTitle" className="billboard-title billboard-row">{title}</Link>
-        {<RateComponent {...{videoId}}/>}
+        {<RateComponent disabled={true} {...{videoId}}/>}
         {seasons ? this.getSeasons(seasons, data) : ''}
         {tags ? this.getGenre(tags) : ''}
         {creator ? this.getCreator(creator) : ''}

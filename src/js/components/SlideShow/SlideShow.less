@@ -6,16 +6,22 @@
   .fullHeight();
   padding: @header-height @app-padding;
   margin-top: -10px;
-  min-height: 56vh;
+  min-height: 66vh;
   .movie {
     min-height: 100% !important;
     height: 100% !important;
   }
 
   .movie {
-    //.trans3d();
     position: absolute;
     .fullHeight();
+
+    .rsr-container {
+      margin: 0;
+      .rsr__star {
+        height: 20px !important;
+      }
+    }
   }
 
   .controls {
@@ -88,24 +94,28 @@
 @media @mobile,@tablet {
 
   .slide-show {
-    min-height: 46vh;
-
     .movie {
       .billboard-infos {
+        .billboard-info__btn {
+          display: none;
+        }
       }
     }
   }
 }
 
 @media @tablet {
-  .pagination {
-    left: @app-padding-mobile;
+  .slide-show {
+    min-height: 56vh;
+    .pagination {
+      left: @app-padding-mobile;
+    }
   }
 }
 
 @media @mobile {
-
   .slide-show {
+    min-height: 46vh;
     .pagination {
       right: 0;
     }

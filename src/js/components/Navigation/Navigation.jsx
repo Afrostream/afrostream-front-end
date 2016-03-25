@@ -16,7 +16,11 @@ class Navigation extends React.Component {
         }
       } = this;
 
-    const menu = Category.get('menu');
+    let menu = Category.get('menu');
+    if (menu) {
+      menu = menu.slice(0, Math.min(menu.size, 10));
+    }
+
     const categoryId = Category.get('categoryId');
     return (
       <div className="navigation hidden-xs">
