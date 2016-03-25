@@ -20,7 +20,7 @@ export function validate(data) {
 
 
 /**
- * Get profile from afrostream
+ * Get coupon from afrostream
  * @returns {Function}
  */
 export function getCoupon() {

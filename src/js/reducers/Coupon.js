@@ -16,7 +16,7 @@ export default createReducer(initialState, {
     }
     const data = res.body;
     return state.merge({
-      ['coupon']: _.merge(state.get('coupon').toJS(), data)
+      ['coupon']: data
     });
   }
 });

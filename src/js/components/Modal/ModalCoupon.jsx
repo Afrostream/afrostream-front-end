@@ -47,7 +47,7 @@ class ModalCoupon extends ModalComponent {
       } = this;
 
     const self = this;
-    let errorText = 'il y a une erreur';
+    let errorText = self.getTitle('global');
     const coupon = Coupon.get('coupon');
 
     let formData = {
@@ -72,8 +72,7 @@ class ModalCoupon extends ModalComponent {
         typeof result.res.body.coupon.status !== 'undefined' &&
         result.res.body.coupon.status !== 'waiting') {
 
-        errorText = 'Le coupon que vous avez soumis est incorrect ou a déjà été utilisé. ' +
-          'Veuillez réessayer avec un autre coupon.';
+        errorText = self.getTitle('couponInvalid');
       }
 
       this.setState({
@@ -82,11 +81,9 @@ class ModalCoupon extends ModalComponent {
       });
 
     }).catch((err) => {
-
       if (err.response.body.error === 'NOT FOUND') {
 
-        errorText = 'Le coupon que vous avez soumis est incorrect ou a déjà été utilisé. ' +
-          'Veuillez réessayer avec un autre coupon.';
+        errorText = self.getTitle('couponInvalid');
 
         this.setState({
           loading: false,

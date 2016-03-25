@@ -11,6 +11,7 @@ class RedeemCoupon extends React.Component {
 
   componentDidMount() {
     const {
+
       props: {
         dispatch
         }
@@ -21,7 +22,7 @@ class RedeemCoupon extends React.Component {
   render() {
     return (
       <div className="row-fluid">
-        <div className="reset-page">
+        <div className="redeem-coupon-page">
           <div className="auth-container">
             <div id="reset-container">
             </div>

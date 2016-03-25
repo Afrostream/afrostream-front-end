@@ -7,7 +7,6 @@ import * as UserActionCreators from '../../actions/user';
 import * as OauthActionCreator from '../../actions/oauth';
 import PaymentSuccess from '../Payment/PaymentSuccess';
 import Spinner from '../Spinner/Spinner';
-
 import {oauth2} from '../../../../config';
 
 if (process.env.BROWSER) {
@@ -28,17 +27,6 @@ class CouponRegister extends React.Component {
       signinError: null,
       timestamp: new Date()
     };
-  }
-
-  componentDidMount() {
-    const {
-      props: {
-        Coupon,
-        User,
-        dispatch
-        }
-      } = this;
-
   }
 
   redeemCoupon(e) {
@@ -273,7 +261,7 @@ class CouponRegister extends React.Component {
                 onChange={::this.handleInputChange}
                 placeholder="" required />
               {this.renderValidationMessages('email-signin-account-coupon')}
-              <label className="password-label" htmlFor="password">Creer un mot de passe:</label>
+              <label className="password-label" htmlFor="password">{this.getTitle('passwordPlaceholder')}</label>
               <input
                 type="password"
                 className="password"
