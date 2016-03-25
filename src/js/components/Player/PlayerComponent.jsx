@@ -466,7 +466,7 @@ class PlayerComponent extends Component {
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
     let video = document.createElement('video');
     video.id = 'afrostream-player';
-    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
+    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered vjs-controls-enabled afrostream-player-dimensions';
     video.crossOrigin = true;
     video.setAttribute('crossorigin', true);
 
@@ -647,12 +647,11 @@ class PlayerComponent extends Component {
     try {
       let nextButton = await this.getNextVideo();
       if (nextButton) {
-        playerData.constolBar = _.merge(playerData.constolBar, {
+        playerData.controlBar = _.merge(playerData.controlBar, {
           nextVideoButton: nextButton
         });
       }
 
-      playerData.nextVideoButton = await this.getNextVideo();
     } catch (e) {
       console.log('player : Next video error', e);
     }

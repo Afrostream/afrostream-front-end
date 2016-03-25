@@ -242,9 +242,9 @@ const config = {
     "dashas": {
       "protData": protData
     },
-    controlBar: {
-      volumeMenuButton: {
-        inline: false
+    "controlBar": {
+      "volumeMenuButton": {
+        "inline": false
       }
     },
     "metrics": {
