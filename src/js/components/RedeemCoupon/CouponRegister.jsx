@@ -198,7 +198,7 @@ class CouponRegister extends React.Component {
       );
     } else {
 
-      var spinnerClasses = {
+      let spinnerClasses = {
         'spinner-payment': true,
         'spinner-loading': this.state.loading
       };
