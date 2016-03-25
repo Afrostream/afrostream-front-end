@@ -140,7 +140,7 @@ class ModalCoupon extends ModalComponent {
           {this.getTitle('emailPlaceholder')}
         </label>
         <div className="input-box">
-          <i className="icon-budicon-5"></i>
+          <i className=""></i>
           <input name="email" ref="email" id="easy_email" type="text" required
                  placeholder={this.getTitle('couponPlaceholder')}
                  title={this.getTitle('couponPlaceholder')}/>
