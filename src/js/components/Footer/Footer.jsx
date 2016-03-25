@@ -1,18 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, {PropTypes} from 'react';
+import {Link} from 'react-router';
+import classSet from 'classnames';
+
 if (process.env.BROWSER) {
   require('./Footer.less');
 }
 
 class Footer extends React.Component {
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.year = new Date().getFullYear();
   }
 
   render() {
+
+    let footerClasses = {
+      'footer': true,
+      'footer-hidden': this.context.history.isActive('player')
+    };
+
     return (
-      <footer className="footer">
+      <footer className={classSet(footerClasses)}>
         <div className="links">
           <div className="get-help">
             <h4>SUPPORT TECHNIQUE</h4>

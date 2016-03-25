@@ -1,4 +1,4 @@
-import webpack, { DefinePlugin, BannerPlugin } from 'webpack';
+import webpack, {DefinePlugin, BannerPlugin} from 'webpack';
 import autoprefixer from 'autoprefixer-core';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -31,7 +31,7 @@ if (process.env.LOAD_STAGING) {
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
 // -----------------------------------------------------------------------------
-const { webpackDevServer: { host, port } } = config;
+const {webpackDevServer: {host, port}} = config;
 const webpackDevServerUrl = `http://${host}:${port}`;
 
 const webpackConfig = {
@@ -120,7 +120,8 @@ const webpackConfig = {
       {test: /jquery\.js$/, loader: 'expose?$'},
       {test: /jquery\.js$/, loader: 'expose?jQuery'},
       {test: /jquery\.js$/, loader: 'expose?jquery'}
-    ]
+    ],
+    exprContextCritical: false
   },
   node: {
     net: 'empty',

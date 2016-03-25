@@ -1,8 +1,8 @@
-import React, { Component,PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import _ from 'lodash';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import config from '../../../../config';
 import classSet from 'classnames';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
@@ -14,7 +14,7 @@ import * as EventActionCreators from '../../actions/event';
 import * as RecoActionCreators from '../../actions/reco';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
-import {Billboard,CsaIcon} from '../Movies';
+import {Billboard, CsaIcon} from '../Movies';
 import NextEpisode from './NextEpisode';
 import ShareButton from '../Share/ShareButton';
 import RecommendationList from '../Recommendation/RecommendationList';
@@ -31,7 +31,7 @@ if (canUseDOM) {
   var afrostream = require('afrostream-player/dist/afrostream-player.js');
 }
 
-@connect(({ OAuth,Video,Movie,Season,Episode,Event,User,Player }) => ({
+@connect(({OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
   OAuth,
   Video,
   Movie,
@@ -202,7 +202,7 @@ class PlayerComponent extends Component {
   trackVideo() {
     const {
       props: {dispatch, videoId}
-      } = this;
+    } = this;
 
     clearTimeout(this.trackTimeout);
     if (!this.player) {
@@ -228,8 +228,8 @@ class PlayerComponent extends Component {
     const {
       props: {
         videoId
-        }
-      } = this;
+      }
+    } = this;
 
     if (!this.state.nextReco || !config.reco.enabled) {
       return;
@@ -245,7 +245,7 @@ class PlayerComponent extends Component {
   }
 
   getNextLink() {
-    return this.player && this.player.options().next && this.player.options().next.link;
+    return this.player && this.player.options().controlBar.nextVideoButton && this.player.options().controlBar.nextVideoButton.link;
   }
 
   //TODO refactor and split method
@@ -255,8 +255,8 @@ class PlayerComponent extends Component {
         Movie,
         videoId,
         movieId
-        }
-      } = this;
+      }
+    } = this;
 
     const movieData = Movie.get(`movies/${movieId}`);
     this.nextEpisode = await this.getNextEpisode();
@@ -291,8 +291,8 @@ class PlayerComponent extends Component {
         episodeId,
         seasonId,
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     const movieData = Movie.get(`movies/${movieId}`);
     if (!movieData) {
@@ -392,8 +392,8 @@ class PlayerComponent extends Component {
     const {
       context: {
         history
-        }
-      } = this;
+      }
+    } = this;
 
     if (!this.nextEpisode) return;
 
@@ -450,9 +450,9 @@ class PlayerComponent extends Component {
   async generateDomTag(videoData) {
     const {
       props: {
-        movieId,Movie
-        }
-      } = this;
+        movieId, Movie
+      }
+    } = this;
     console.log('player : generate dom tag');
     // initialize the player
     const movieData = Movie.get(`movies/${movieId}`);
@@ -517,9 +517,9 @@ class PlayerComponent extends Component {
   async getPlayerData(videoData) {
     const {
       props: {
-        OAuth,Player,Movie,User,movieId,videoId
-        }
-      } = this;
+        OAuth, Player, Movie, User, movieId, videoId
+      }
+    } = this;
 
     console.log('player : Get player data');
 
@@ -645,9 +645,15 @@ class PlayerComponent extends Component {
       }
     }
     try {
-      playerData.next = await this.getNextVideo();
+      let nextButton = await this.getNextVideo();
+      if (nextButton) {
+        playerData.constolBar = _.merge(playerData.constolBar, {
+          nextVideoButton: nextButton
+        });
+      }
+
+      playerData.nextVideoButton = await this.getNextVideo();
     } catch (e) {
-      playerData.next = null;
       console.log('player : Next video error', e);
     }
 
@@ -658,8 +664,8 @@ class PlayerComponent extends Component {
     const {
       props: {
         videoId
-        }
-      } = this;
+      }
+    } = this;
 
     if (this.playerInit) throw new Error('old player was already generate, destroy it before');
 
@@ -668,13 +674,6 @@ class PlayerComponent extends Component {
     //const videoData = Video.get(`videos/${videoId}`);
     if (!videoData) throw new Error(`no video data ${videoId} ${videoData}`);
     let playerData = await this.getPlayerData(videoData);
-
-    playerData.sources = [
-      {
-        src: "https://hw.cdn.afrostream.net/vod/tylerperry_fbow_s01ep01/45f6eb0ff24ab110.ism/45f6eb0ff24ab110.mpd",
-        type: "application/dash+xml"
-      }
-    ];
 
     let player = await videojs('afrostream-player', playerData).ready(()=> {
         var allTracks = player.textTracks() || []; // get list of tracks
@@ -709,8 +708,8 @@ class PlayerComponent extends Component {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(EventActionCreators.userActive(this.player ? (this.player.paused() || this.player.userActive()) : true))
   }
@@ -731,8 +730,8 @@ class PlayerComponent extends Component {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     if (this.player) {
 
@@ -802,8 +801,8 @@ class PlayerComponent extends Component {
         seasonId,
         movieId,
         videoId
-        }
-      } = this;
+      }
+    } = this;
 
     const hiddenMode = !Event.get('userActive');
 
