@@ -24,20 +24,23 @@ class RateComponent extends React.Component {
     const {
       props: {
         User,
-        videoId
+        videoId,
+        defaultValue
         }
       } = this;
 
     const videoData = User.get(`video/${videoId}`);
 
-    let rating = 3;
+    let rating = defaultValue;
 
     if (videoData) {
-      rating = videoData.get('rating') || 3;
+      rating = videoData.get('rating') || defaultValue;
     }
 
     return (
-      <StarRating name="react-star-rating" totalStars={5} size={30} editing onRatingClick={::this.handleRatingClick}
+      <StarRating name="react-star-rating" totalStars={5} size={30} editing={!this.props.disabled}
+                  disabled={this.props.disabled}
+                  onRatingClick={::this.handleRatingClick}
                   rating={rating}/>
     );
   }
@@ -47,11 +50,15 @@ RateComponent.propTypes = {
   videoId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
-  ])
+  ]),
+  disabled: PropTypes.bool,
+  defaultValue: PropTypes.number
 };
 
 RateComponent.defaultProps = {
-  videoId: null
+  videoId: null,
+  disabled: false,
+  defaultValue: 3
 };
 
 export default RateComponent;

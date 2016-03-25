@@ -134,6 +134,7 @@ class Billboard extends LoadVideo {
     let videoData = data.get('video');
     let videoId = data.get('videoId');
     let csa = data.get('CSA');
+    let rating = data.get('rating') || 3;
     if (seasons && seasons.size) {
       const season = seasons.get(0);
       const episodes = season.get('episodes');
@@ -167,7 +168,7 @@ class Billboard extends LoadVideo {
           <div ref="slNull"/>}
         {<CsaIcon {...{csa}}/>}
         <Link to={link} ref="slTitle" className="billboard-title billboard-row">{title}</Link>
-        {<RateComponent disabled={true} {...{videoId}}/>}
+        {<RateComponent defaultValue={rating} disabled={true} {...{videoId}}/>}
         {seasons ? this.getSeasons(seasons, data) : ''}
         {tags ? this.getGenre(tags) : ''}
         {creator ? this.getCreator(creator) : ''}
