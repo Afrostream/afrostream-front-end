@@ -92,15 +92,13 @@ class PaymentMethod extends React.Component {
   render() {
     return (
       <div className="panel-group">
-        {!this.props.isGift && featuresFlip.gocardless ? <GocardlessForm ref="gocardless"
-                                                                         selected={this.state.method === Methods.GOCARDLESS}/> : ''}
         <RecurlyForm ref="card"
                      selected={this.state.method === Methods.CARD}/>
-
-
         {!this.props.isGift ? <PaypalForm ref="paypal"
                                           selected={this.state.method === Methods.PAYPAL}
                                           planLabel={this.props.planLabel}/> : ''}
+        {!this.props.isGift && featuresFlip.gocardless ? <GocardlessForm ref="gocardless"
+                                                                         selected={this.state.method === Methods.GOCARDLESS}/> : ''}
       </div>
     );
   }

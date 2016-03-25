@@ -8,6 +8,7 @@ import LoadVideo from '../LoadVideo';
 import ShareButton from '../Share/ShareButton';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import RateComponent from '../Recommendation/RateComponent';
+import CsaIcon from './CsaIcon';
 
 if (process.env.BROWSER) {
   require('./Billboard.less');
@@ -132,6 +133,7 @@ class Billboard extends LoadVideo {
     let seasons = data.get('seasons');
     let videoData = data.get('video');
     let videoId = data.get('videoId');
+    let csa = data.get('CSA');
     if (seasons && seasons.size) {
       const season = seasons.get(0);
       const episodes = season.get('episodes');
@@ -163,6 +165,7 @@ class Billboard extends LoadVideo {
       <div className="billboard-infos">
         {type ? <div ref="slTag" className="billboard-tag billboard-row">{type === 'movie' ? 'film' : type}</div> :
           <div ref="slNull"/>}
+        {<CsaIcon {...{csa}}/>}
         <Link to={link} ref="slTitle" className="billboard-title billboard-row">{title}</Link>
         {<RateComponent {...{videoId}}/>}
         {seasons ? this.getSeasons(seasons, data) : ''}

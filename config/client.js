@@ -99,7 +99,7 @@ const config = {
     }
   ],
   payment: {
-    default: 'gocardless' //paypal/gocardless/card
+    default: 'card' //paypal/gocardless/card
   },
   //add alerts to front (same as cookies)
   alerts: [],

@@ -32,7 +32,7 @@
       "sublit": "OFFREZ MAINTENANT"
     },
     "promo": {
-      "label": "Code promo",
+      "label": "Code promo (optionnel)",
       "placeHolder": "Entrez votre code"
     },
     "virement": {
