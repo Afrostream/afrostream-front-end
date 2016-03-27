@@ -80,8 +80,7 @@ const webpackConfig = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
-        exclude: [node_modules_dir]
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
       },
       {
         test: /\.less$/,
@@ -132,8 +131,6 @@ const webpackConfig = {
   plugins: [
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
-      //videojs: 'video.js',
-      //'window.videojs': 'video.js',
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery'
