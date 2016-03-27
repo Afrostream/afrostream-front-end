@@ -131,6 +131,7 @@
     "scroll-behavior": "^0.3.0",
     "serve-favicon": "^2.3.0",
     "stats-webpack-plugin": "^0.2.1",
+    "string-replace-webpack-plugin": "0.0.3",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.12.3",
     "superagent": "^1.2.0",
