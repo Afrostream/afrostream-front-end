@@ -80,11 +80,12 @@ const webpackConfig = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1'),
+        include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1!less-loader')
       },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
