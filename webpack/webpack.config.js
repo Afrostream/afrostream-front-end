@@ -86,7 +86,13 @@ const webpackConfig = {
               replacements: [
                 {
                   pattern: /�screen/ig,
-                  replacement: function (match, p1, offset, string) {
+                  replacement: function () {
+                    return 'screen';
+                  }
+                },
+                {
+                  pattern: /\\0screen/ig,
+                  replacement: function () {
                     return 'screen';
                   }
                 }
