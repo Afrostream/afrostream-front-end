@@ -2,7 +2,6 @@ import webpack, {DefinePlugin, BannerPlugin} from 'webpack';
 import autoprefixer from 'autoprefixer-core';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import StringReplacePlugin from 'string-replace-webpack-plugin';
 import HashPlugin from 'hash-webpack-plugin';
 import config from '../config';
 import merge from 'lodash/object/merge';
@@ -81,74 +80,40 @@ const webpackConfig = {
         },
         {
           test: /\.css$/,
-          loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader'),
-            StringReplacePlugin.replace({
-              replacements: [
-                {
-                  pattern: /�screen/ig,
-                  replacement: function () {
-                    return 'screen';
-                  }
-                },
-                {
-                  pattern: /\\0screen/ig,
-                  replacement: function () {
-                    return 'screen';
-                  }
-                }
-              ]
-            })
-          ],
+          loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
           include: [path.join(__dirname, '../node_modules/afrostream-player')]
         },
         {
           test: /\.less$/,
           loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
-        }
-        ,
+        },
         {
           test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
           loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
-        }
-        ,
+        },
         {
           test: /.(woff|woff2)([\?]?.*)$/,
           loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
-        }
-        ,
-
+        },
         {
           test: /.ttf([\?]?.*)$/,
           loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
-        }
-        ,
+        },
         {
           test: /.eot([\?]?.*)$/,
           loader: 'file-loader?name=[name].[ext]?[hash]'
-        }
-        ,
-//expose videojs
-//{
-//  test: /video\.js$/,
-//  loader: 'imports-loader?this=>global',
-//  include: [path.join(__dirname, '../node_modules/afrostream-player')]
-//},
+        },
         {
           test: /video\.js$/,
           loader: 'expose?videojs',
           include: [path.join(__dirname, '../node_modules/afrostream-player')]
-        }
-        ,
-//{test: /video\.js$/, loader: 'expose?videojs'},
-//expose jquery
+        },
         {
           test: /jquery\.js$/, loader: 'expose?$'
-        }
-        ,
+        },
         {
           test: /jquery\.js$/, loader: 'expose?jQuery'
-        }
-        ,
+        },
         {
           test: /jquery\.js$/, loader: 'expose?jquery'
         }
@@ -164,7 +129,6 @@ const webpackConfig = {
     externals: {}
     ,
     plugins: [
-      new StringReplacePlugin(),
       new ExtractTextPlugin('[name].css', {allChunks: true}),
       new webpack.ProvidePlugin({
         $: 'jquery',
