@@ -22,7 +22,8 @@ export function getVideoTracking(videoId) {
     let videoUserData = null;
     return async api => {
       try {
-        videoUserData = await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {})
+        videoUserData = await
+        api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {},true)
       } catch (e) {
         console.log(`didn’t find any video user data for videoId : ${videoId}`);
       }
@@ -71,7 +72,7 @@ export function trackVideo(data, videoId) {
     return async api => ({
       type: ActionTypes.User.trackVideo,
       videoId,
-      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', postData).then(()=> {
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', postData, true).then(()=> {
         return {body: postData}
       })
     });
@@ -104,10 +105,11 @@ export function rateVideo(value, videoId) {
     return async api => ({
       type: ActionTypes.User.rateVideo,
       videoId,
-      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', {rating: value}).then(()=> {
-        return {body: mergedDataUserVideo}
-      })
-    });
+      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', {rating: value},true).then(()=> {
+      return {body: mergedDataUserVideo}
+    })
+  })
+    ;
   };
 }
 /**

@@ -3,9 +3,9 @@ import _ from 'lodash';
 import qs from 'qs';
 import URL from 'url';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import { apiClient } from '../../../config';
+import {apiClient} from '../../../config';
 import request from 'superagent';
-import { storeToken } from '../lib/storage';
+import {storeToken} from '../lib/storage';
 
 const isTokenValid = function (tokenData) {
   return tokenData && new Date(tokenData.expiresAt).getTime() > Date.now();
@@ -52,13 +52,17 @@ async function getToken(tokenData) {
  * Server: /lib/render.js
  */
 export default function createAPI(createRequest) {
-  return async function api(path, method = 'GET', params = {}) {
-    let { pathname, query: queryStr } = URL.parse(path);
+  return async function api(path, method = 'GET', params = {}, legacy) {
+    let {pathname, query: queryStr} = URL.parse(path);
     let query, headers = {}, body;
 
     if (_.isObject(method)) {
       params = method;
       method = 'GET';
+    }
+
+    if (legacy) {
+      pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), `${apiClient.protocol}://${apiClient.authority}`);
     }
 
     query = qs.parse(queryStr);

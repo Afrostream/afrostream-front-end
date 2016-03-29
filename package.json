@@ -12,7 +12,7 @@
     "watch-client-webpack": "./node_modules/.bin/babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/dev.config.js --devtool --hot --progress --colors --inline  --port 8081 --host localhost --content-base dist/js",
     "dev": "echo 'requiring node v4.2.4' && . ~/.nvm/nvm.sh && nvm use 4.2.4 && node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client-dev-server\"  \"nodemon --exec npm run express\"",
     "mock": "npm run dev --mock",
-    "staging": "export LOAD_STAGING=true export API_END_POINT=https://afr-api-v1-staging.herokuapp.com && npm run dev",
+    "staging": "export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig export LOAD_STAGING=true export API_END_POINT=https://afr-api-v1-staging.herokuapp.com && npm run dev",
     "prod": "export NODE_ENV=production export LOAD_STAGING=true export API_END_POINT=https://afr-api-v1-staging.herokuapp.com && npm run dev",
     "start": "./node_modules/.bin/babel-node lib/server",
     "postinstall": "npm run deploy"
