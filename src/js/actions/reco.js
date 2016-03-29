@@ -22,8 +22,7 @@ export function getVideoTracking(videoId) {
     let videoUserData = null;
     return async api => {
       try {
-        videoUserData = await
-        api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {},true)
+        videoUserData = await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {},true)
       } catch (e) {
         console.log(`didn’t find any video user data for videoId : ${videoId}`);
       }
