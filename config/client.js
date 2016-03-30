@@ -308,7 +308,7 @@ const config = {
         "subtitle": "Subtitle"
       }
     },
-    "techOrder": ["dashas"]
+    "techOrder": ["dash", "html5", "dashas"]
   }
 };
 
