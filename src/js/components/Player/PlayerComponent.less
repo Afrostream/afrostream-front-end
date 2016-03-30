@@ -102,12 +102,31 @@
 
   .video-js.vjs-afrostream-skin {
 
+    .vjs-control-bar {
+      margin-bottom: @app-padding;
+    }
+
+    .vjs-fullscreen-control {
+      margin-right: @app-padding;
+    }
+
+    .vjs-play-control {
+      margin-left: @app-padding;
+    }
+
     @media @mobile,@tablet {
       .vjs-control-bar {
-        left: @app-padding-mobile;
-        bottom: @app-padding-mobile;
-        right: @app-padding-mobile;
+        margin-bottom: @app-padding-mobile;
       }
+
+      .vjs-fullscreen-control {
+        margin-right: @app-padding-mobile;
+      }
+
+      .vjs-play-control {
+        margin-left: @app-padding-mobile;
+      }
+
     }
   }
 }
