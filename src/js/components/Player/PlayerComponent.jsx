@@ -86,12 +86,19 @@ class PlayerComponent extends Component {
 
   componentDidMount() {
 
+    const {
+      props: {Video, videoId}
+    } = this;
+
     this.setState({
       size: {
         height: window.innerHeight,
         width: window.innerWidth
       }
     });
+
+    const videoData = Video.get(`videos/${videoId}`);
+    this.initPlayer(videoData);
   }
 
   componentWillUnmount() {

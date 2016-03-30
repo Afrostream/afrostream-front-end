@@ -254,14 +254,14 @@ const config = {
       "protData": protData,
       "autoSwitch": true,
       "buffer": {
-        "minBufferTime": 12,
-        "lowBufferThreshold": 4,
+        "bufferToKeep": 30,
+        "minBufferTime": 8,
+        "bufferPruningInterval": 30,
+        "bandwidthSafetyFactor": 0.9,
         "bufferTimeAtTopQuality": 30,
-        "bufferTimeAtTopQualityLongForm": 300,
+        "bufferTimeAtTopQualityLongForm": 60,
         "longFormContentDurationThreshold": 600,
-        "richBufferThreshold": 20,
-        "bufferToKeep": 8,
-        "bufferPruningInterval": 8
+        "richBufferThreshold": 20
       }
     },
     "languages": {
