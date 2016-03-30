@@ -579,23 +579,15 @@ class PlayerComponent extends Component {
       }
     }
 
-    //Fix ios hls only
-    if (ua.isIOS()) {
-      playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
-        return k !== 'html5';
-      });
-      
-      playerData.sources = _.sortBy(playerData.sources, function (k) {
-        return k.type === 'application/dash+xml';
-      });
-    }
 
     //on force dash en tech par default pour tous les browsers ;)
     playerData.sources = _.sortBy(playerData.sources, function (k) {
       return k.type !== 'application/dash+xml';
     });
+    
     //Fix android live hls only
-    if (mobileVersion.match('playstation|xbox') || (ua.isAndroid() && isLive)) {
+    //Fix ios hls only
+    if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (ua.isAndroid() && isLive)) {
       playerData.sources = _.sortBy(playerData.sources, function (k) {
         return k.type === 'application/dash+xml';
       });
