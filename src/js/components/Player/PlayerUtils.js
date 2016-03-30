@@ -87,10 +87,6 @@ export function detectUA() {
     },
     isWindows: function () {
       return navigator.appVersion.indexOf('Win') != -1;
-    },
-    isIOS: function () {
-      return /iPad|iPhone|iPod|CriOS/.test(navigator.platform);
-    },
-    isAndroid: detect(/Android/i)
+    }
   };
 };

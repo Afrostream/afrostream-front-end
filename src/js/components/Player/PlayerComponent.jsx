@@ -460,7 +460,8 @@ class PlayerComponent extends Component {
       throw new Error('no movie data ref');
     }
     const ua = detectUA();
-    let excludeSafari = ((!ua.isSafari() && !ua.isIOS()) || (ua.isSafari() && ua.getBrowser().version === 537));
+    const mobileVersion = ua.getMobile();
+    let excludeSafari = ((!ua.isSafari() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
     let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
@@ -587,7 +588,7 @@ class PlayerComponent extends Component {
 
     //Fix android live hls only
     //Fix ios hls only
-    if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (ua.isAndroid() && isLive)) {
+    if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (mobileVersion.is('AndroidOS') && isLive)) {
       playerData.sources = _.sortBy(playerData.sources, function (k) {
         return k.type === 'application/dash+xml';
       });
