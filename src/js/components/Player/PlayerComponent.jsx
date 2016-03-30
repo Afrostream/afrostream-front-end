@@ -556,8 +556,8 @@ class PlayerComponent extends Component {
 
     if (ua.isIE()) {
       playerData.html5 = {
-        nativeCaptions: ua.isEdge(),
-        nativeTextTracks: ua.isEdge()
+        nativeCaptions: false,
+        nativeTextTracks: false
       };
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
     }
