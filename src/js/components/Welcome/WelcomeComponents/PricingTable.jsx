@@ -68,7 +68,7 @@ class PricingTable extends React.Component {
             <div className="pricing-plan">
               <img className="plan-image" src="/images/titre_abo_2.png" alt="Formule"/>
 
-              <h3 className="plan-heading plan2-heading">AMBASSADEURS</h3>
+              <h3 className="plan-heading plan2-heading">SERENITE</h3>
 
               <div className="plan-details-2">
                 <div className="prices">
