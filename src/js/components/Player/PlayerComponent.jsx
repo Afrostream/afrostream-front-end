@@ -579,6 +579,17 @@ class PlayerComponent extends Component {
       }
     }
 
+    //Fix ios hls only
+    if (ua.isIOS()) {
+      playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+        return k !== 'html5';
+      });
+      
+      playerData.sources = _.sortBy(playerData.sources, function (k) {
+        return k.type === 'application/dash+xml';
+      });
+    }
+
     //on force dash en tech par default pour tous les browsers ;)
     playerData.sources = _.sortBy(playerData.sources, function (k) {
       return k.type !== 'application/dash+xml';
