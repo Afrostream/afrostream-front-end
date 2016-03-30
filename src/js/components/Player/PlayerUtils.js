@@ -79,6 +79,9 @@ export function detectUA() {
     isIE: function () {
       return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
     },
+    isEdge: function () {
+      return /(Edge\/)/i.test(navigator.userAgent);
+    },
     isSafari: function () {
       return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/iPad|iPhone|iPod|CriOS/.test(navigator.platform);
     },

@@ -555,8 +555,8 @@ class PlayerComponent extends Component {
 
     if (ua.isIE()) {
       playerData.html5 = {
-        nativeCaptions: false,
-        nativeTextTracks: false
+        nativeCaptions: ua.isEdge(),
+        nativeTextTracks: ua.isEdge()
       };
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
     }
@@ -584,7 +584,7 @@ class PlayerComponent extends Component {
     playerData.sources = _.sortBy(playerData.sources, function (k) {
       return k.type !== 'application/dash+xml';
     });
-    
+
     //Fix android live hls only
     //Fix ios hls only
     if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (ua.isAndroid() && isLive)) {
