@@ -61,10 +61,6 @@ export default function createAPI(createRequest) {
       method = 'GET';
     }
 
-    if (legacy) {
-      pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), `${apiClient.protocol}://${apiClient.authority}`);
-    }
-
     query = qs.parse(queryStr);
 
     if (method === 'GET') {
@@ -94,7 +90,7 @@ export default function createAPI(createRequest) {
     }
 
     return await new Promise((resolve, reject) => {
-      createRequest({method, headers, pathname, query, body})
+      createRequest({method, headers, pathname, query, body, legacy})
         .end((err, res) => {
           if (err) {
             return reject(err);
