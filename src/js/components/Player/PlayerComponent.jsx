@@ -86,10 +86,6 @@ class PlayerComponent extends Component {
 
   componentDidMount() {
 
-    const {
-      props: {Video, videoId}
-    } = this;
-
     this.setState({
       size: {
         height: window.innerHeight,
@@ -97,8 +93,6 @@ class PlayerComponent extends Component {
       }
     });
 
-    const videoData = Video.get(`videos/${videoId}`);
-    this.initPlayer(videoData);
   }
 
   componentWillUnmount() {
@@ -569,12 +563,13 @@ class PlayerComponent extends Component {
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
 
       if (ui.isEdge()) {
+        //FIXME On edge dash is use natif html5 tech, caption are not enabled
         playerData.techOrder = _.remove(playerData.techOrder, (k)=> {
-          return k === 'html5';
+          return k !== 'html5';
         });
       }
     }
-    console.log('player : playerData', playerData);
+    debugger;
     //Fix Safari < 6.2 can't play hls
     if (ua.isSafari()) {
       if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
@@ -674,6 +669,8 @@ class PlayerComponent extends Component {
     } catch (e) {
       console.log('player : Next video error', e);
     }
+
+    console.log('player : playerData', playerData);
 
     return playerData;
   }
