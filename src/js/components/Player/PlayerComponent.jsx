@@ -462,8 +462,8 @@ class PlayerComponent extends Component {
     }
     const ua = detectUA();
     const mobileVersion = ua.getMobile();
-    let excludeSafari = ((!ua.isSafari() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
-    let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
+    let excludeBrowser = ((!ua.isSafari() && !ua.isEdge() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
+    let captions = !ua.isChrome() && excludeBrowser && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
     let video = document.createElement('video');
@@ -557,19 +557,12 @@ class PlayerComponent extends Component {
 
     if (ua.isIE()) {
       playerData.html5 = {
-        nativeCaptions: false,
-        nativeTextTracks: false
+        nativeCaptions: ua.isEdge(),
+        nativeTextTracks: ua.isEdge()
       };
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
 
-      if (ui.isEdge()) {
-        //FIXME On edge dash is use natif html5 tech, caption are not enabled
-        playerData.techOrder = _.remove(playerData.techOrder, (k)=> {
-          return k !== 'html5';
-        });
-      }
     }
-    debugger;
     //Fix Safari < 6.2 can't play hls
     if (ua.isSafari()) {
       if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
@@ -606,7 +599,8 @@ class PlayerComponent extends Component {
     }
 
     //VTT flash vtt.js
-    playerData['vtt.js'] = require('../../../../node_modules/afrostream-player/node_modules/video.js/node_modules/videojs-vtt.js/dist/vtt.js');
+    playerData['vtt.js'] = '';
+    //playerData['vtt.js'] = require('../../../../node_modules/afrostream-player/node_modules/video.js/node_modules/videojs-vtt.js/dist/vtt.js');
     // ==== END hacks config
     playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
     playerData.chromecast = _.merge(playerData.chromecast || {}, trackOpt);

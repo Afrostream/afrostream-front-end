@@ -24,8 +24,7 @@ export function detectUA() {
       var parseUserAgent, prepareData, renameOsx, cutSafariVersion;
 
       parseUserAgent = function () {
-        var userAgent = navigator.userAgent.toLowerCase(),
-          browserParts = /(ie|firefox|chrome|safari|opera)(?:.*version)?(?:[ \/])?([\w.]+)/.exec(userAgent),
+        var browserParts = /(ie|firefox|chrome|safari|opera)(?:.*version)?(?:[ \/])?([\w.]+)/.exec(userAgent),
           osParts = /(mac|win|linux|freebsd|mobile|iphone|ipod|ipad|android|blackberry|j2me|webtv)/.exec(userAgent);
 
         if (!!userAgent.match(/trident\/7\./)) {
@@ -77,10 +76,10 @@ export function detectUA() {
     },
     isFirefox: detect(/mozilla.*\Wfirefox\W/i),
     isIE: function () {
-      return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
+      return /(MSIE|Trident\/|Edge\/)/i.test(userAgent);
     },
     isEdge: function () {
-      return /(Edge\/)/i.test(navigator.userAgent);
+      return /(Edge\/)/i.test(userAgent);
     },
     isSafari: function () {
       return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/iPad|iPhone|iPod|CriOS/.test(navigator.platform);
