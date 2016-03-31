@@ -56,7 +56,7 @@ class SelectPlan extends React.Component {
             </div>
           </div>
           <div className="formule-row-decorated">
-            <div className="row-element-left">7 jours d'essai gratuit</div>
+            <div className="row-element-left">7 jours d'essai offert</div>
             <div className="row-element"><i className="fa fa-check"></i></div>
             <div className="row-element"><i className="fa fa-check"></i></div>
             <div className="row-element"><i className="fa fa-times"></i></div>
@@ -95,11 +95,11 @@ class SelectPlan extends React.Component {
             <div className="row-element-left"></div>
             <Link className="row-element plan-button button-blue"
                   to='/select-plan/afrostreammonthly/checkout'>
-              DÉMARREZ VOTRE<br/> ESSAI GRATUIT
+              DÉMARREZ VOTRE<br/> ESSAI
             </Link>
             <Link className="row-element plan-button button-yellow"
                   to="/select-plan/afrostreamambassadeurs/checkout">
-              DÉMARREZ VOTRE<br/> ESSAI GRATUIT
+              DÉMARREZ VOTRE<br/> ESSAI
             </Link>
             <Link className="row-element plan-button button-purple"
                   to="/select-plan/afrostreamgift/checkout">

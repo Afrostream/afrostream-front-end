@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import * as ModalActionCreators from '../../actions/modal';
 
 if (process.env.BROWSER) {
@@ -18,8 +18,8 @@ class SignUpButton extends React.Component {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(ModalActionCreators.open('showSignup'));
   }
@@ -31,7 +31,7 @@ SignUpButton.propTypes = {
 };
 
 SignUpButton.defaultProps = {
-  label: 'DÉMARREZ VOTRE SEMAINE<br />D’ESSAI GRATUIT'
+  label: 'DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE'
 };
 
 export default SignUpButton;

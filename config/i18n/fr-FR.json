@@ -21,7 +21,7 @@
   },
   "payment": {
     "methodHeader": "Choisissez votre methode de payment",
-    "sublit": "DÉMARREZ VOTRE ESSAI GRATUIT",
+    "sublit": "DÉMARREZ VOTRE ESSAI",
     "name": "Votre Prénom",
     "lastName": "Votre Nom",
     "country": {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { prepareRoute } from '../../decorators';
+import {prepareRoute} from '../../decorators';
 import * as EventActionCreators from '../../actions/event';
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true))
   ];
@@ -62,7 +62,7 @@ class CGU extends React.Component {
                   sur les pages du site Web Afrostream.
                 </p>
               </li>
-              <li><h3>Essais gratuits</h3>
+              <li><h3>Essais offert</h3>
                 Votre abonnement à Afrostream peut inclure un ou plusieurs mois offerts inclus.
                 La période offerte inclus correspond au(x) dernier(s) mois de la période de l’abonnement
                 annuelle.

@@ -1,7 +1,7 @@
 import React from 'react';
-import { prepareRoute } from '../../decorators';
+import {prepareRoute} from '../../decorators';
 import * as EventActionCreators from '../../actions/event';
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true))
   ];
@@ -99,19 +99,13 @@ class FAQ extends React.Component {
 
             <h4>7/ Puis je essayer le service avant de l’utiliser ?</h4>
 
-            <p>Il y a pas de période d’essai gratuit pour Afrostream car le seul moyen de soutenir la créativité
-              afro est de rémunérer le travail des artistes.</p>
+            <p>Vous disposez d'une periode d'essai de 7 jours, vous permettant de tester le service</p>
 
             <h4>8/ Le service est-il disponible en Grande Bretagne/Allemagne/Canada ?</h4>
 
             <p>Pour le moment Afrostream est uniquement disponible en France, DOM-TOM, Belgique, Luxembourg,
               Suisse, Sénégal, Côte d’Ivoire.</p>
 
-            <h4>9/ Quand recevrais-je mes identifiants ?</h4>
-
-            <p>Quelques jours avant la date de démarrage de votre abonnement à Afrostream, vous recevrez par
-              email
-              les informations nécessaires pour paramétrer votre profil et votre mot de passe.</p>
           </section>
         </article>
       </div>
