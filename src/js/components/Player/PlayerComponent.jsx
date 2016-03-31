@@ -567,21 +567,27 @@ class PlayerComponent extends Component {
         nativeTextTracks: false
       };
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
+
+      if (ui.isEdge()) {
+        playerData.techOrder = _.remove(playerData.techOrder, (k)=> {
+          return k === 'html5';
+        });
+      }
     }
     console.log('player : playerData', playerData);
     //Fix Safari < 6.2 can't play hls
     if (ua.isSafari()) {
       if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
-        playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+        playerData.techOrder = _.sortBy(playerData.techOrder, (k) => {
           return k !== 'dashas';
         });
       }
       //Safari 8 can't play dashjs
       if (browserVersion.version == 600) {
-        playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+        playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
           return k !== 'html5';
         });
-        playerData.sources = _.sortBy(playerData.sources, function (k) {
+        playerData.sources = _.sortBy(playerData.sources, (k)=> {
           return k.type === 'application/dash+xml';
         });
       }
@@ -589,17 +595,17 @@ class PlayerComponent extends Component {
 
 
     //on force dash en tech par default pour tous les browsers ;)
-    playerData.sources = _.sortBy(playerData.sources, function (k) {
+    playerData.sources = _.sortBy(playerData.sources, (k)=> {
       return k.type !== 'application/dash+xml';
     });
 
     //Fix android live hls only
     //Fix ios hls only
     if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (mobileVersion.is('AndroidOS') && isLive)) {
-      playerData.sources = _.sortBy(playerData.sources, function (k) {
+      playerData.sources = _.sortBy(playerData.sources, (k)=> {
         return k.type === 'application/dash+xml';
       });
-      playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+      playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
         return k !== 'html5';
       });
     }
@@ -614,7 +620,7 @@ class PlayerComponent extends Component {
       let userId = user.get('user_id');
       let token = OAuth.get('token');
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId];
-      userId = _.find(splitUser, function (val) {
+      userId = _.find(splitUser, (val) => {
         return parseInt(val, 10);
       });
       if (playerData.metrics) {
