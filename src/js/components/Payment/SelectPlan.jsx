@@ -34,7 +34,7 @@ class SelectPlan extends React.Component {
               MENSUEL
             </div>
             <div className="plan-background yellow-background">
-              SERENITE
+              SÉRÉNITÉ
             </div>
             <div className="plan-background purple-background">
               CADEAU
