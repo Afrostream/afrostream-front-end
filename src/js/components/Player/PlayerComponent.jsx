@@ -449,21 +449,12 @@ class PlayerComponent extends Component {
   }
 
   async generateDomTag(videoData) {
-    const {
-      props: {
-        movieId, Movie
-      }
-    } = this;
     console.log('player : generate dom tag');
-    // initialize the player
-    const movieData = Movie.get(`movies/${movieId}`);
-    if (!movieData) {
-      throw new Error('no movie data ref');
-    }
     const ua = detectUA();
     const mobileVersion = ua.getMobile();
-    let excludeBrowser = ((!ua.isSafari() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
-    let captions = !ua.isChrome() && excludeBrowser && videoData.get('captions');
+    let excludeSafari = ((!ua.isSafari() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
+    let excludeBrowser = !ua.isChrome() && excludeSafari;
+    let captions = excludeBrowser && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
     let video = document.createElement('video');
@@ -472,39 +463,23 @@ class PlayerComponent extends Component {
     video.crossOrigin = true;
     video.setAttribute('crossorigin', true);
 
-    var trackOptions = {
-      metadata: {
-        title: movieData.get('title'),
-        subtitle: movieData.get('synopsis')
-      },
-      tracks: []
-    };
-
     if (hasSubtiles) {
-      captions.map((caption, i) => {
+      captions.map((caption) => {
         let track = document.createElement('track');
-        track.kind = 'captions';
-        track.src = caption.get('src');
-        track.id = `track-${caption.get('_id')}-${i}`;
+        track.setAttribute('kind', 'captions');
+        track.setAttribute('src', caption.get('src'));
+        track.setAttribute('id', caption.get('_id'));
         let lang = caption.get('lang');
         if (lang) {
-          track.srclang = lang.get('lang');
-          track.label = lang.get('label')
+          track.setAttribute('srclang', lang.get('lang'));
+          track.setAttribute('label', lang.get('label'));
         }
+        let isDefault = false;
         if (lang.get('lang') === 'fr') {
-          track.default = true;
+          isDefault = true;
+          track.setAttribute('default', isDefault);
         }
-        track.mode = track.default ? 'showing' : 'hidden';
-
-        trackOptions.tracks.push({
-          kind: track.kind,
-          src: track.src,
-          id: track.id,
-          language: track.srclang,
-          label: track.label,
-          type: 'text/vtt',
-          mode: track.default ? 'showing' : 'hidden'
-        });
+        track.setAttribute('mode', isDefault ? 'showing' : 'hidden');
         video.appendChild(track);
       });
     }
@@ -513,7 +488,7 @@ class PlayerComponent extends Component {
     } else {
       console.log('cant set wrapper elements');
     }
-    return trackOptions;
+    return video;
   }
 
   async getPlayerData(videoData) {
@@ -525,11 +500,17 @@ class PlayerComponent extends Component {
 
     console.log('player : Get player data');
 
-    let trackOpt = await this.generateDomTag(videoData);
+    let videoEl = await this.generateDomTag(videoData);
+
     let videoOptions = videoData.toJS();
 
-    let movie = Movie.get(`movies/${movieId}`);
+    const movie = Movie.get(`movies/${movieId}`);
+    if (!movie) {
+      throw new Error('no movie data ref');
+    }
+
     let posterImgImgix = {};
+
     if (movie) {
       let poster = movie.get('poster');
       let posterImg = poster ? poster.get('imgix') : '';
@@ -561,7 +542,6 @@ class PlayerComponent extends Component {
         nativeTextTracks: false
       };
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
-
     }
     //Fix Safari < 6.2 can't play hls
     if (ua.isSafari()) {
@@ -599,11 +579,20 @@ class PlayerComponent extends Component {
     }
 
     //VTT flash vtt.js
-    playerData['vtt.js'] = '';
-    //playerData['vtt.js'] = require('../../../../node_modules/afrostream-player/node_modules/video.js/node_modules/videojs-vtt.js/dist/vtt.js');
+    //playerData['vtt.js'] = '';
+    //playerData['vtt.js'] = require('afrostream-player/node_modules/video.js/node_modules/videojs-vtt.js/dist/vtt.js');
     // ==== END hacks config
-    playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
-    playerData.chromecast = _.merge(playerData.chromecast || {}, trackOpt);
+    playerData.dashas.swf = require('afrostream-player/dist/dashas.swf');
+
+    let chromecastOptions = {
+      metadata: {
+        title: movie.get('title'),
+        subtitle: movie.get('synopsis')
+      }
+    };
+
+    playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions);
+
     let user = User.get('user');
     if (user) {
       let userId = user.get('user_id');
@@ -680,14 +669,16 @@ class PlayerComponent extends Component {
 
     await this.destroyPlayer();
     this.playerInit = true;
-    //const videoData = Video.get(`videos/${videoId}`);
     if (!videoData) throw new Error(`no video data ${videoId} ${videoData}`);
     let playerData = await this.getPlayerData(videoData);
 
     let player = await videojs('afrostream-player', playerData).ready(()=> {
-        var allTracks = player.textTracks() || []; // get list of tracks
-        _.forEach(allTracks, (track) => {
-          let lang = track.language || track.language_;
+        let tracks = player.textTracks(); // get list of tracks
+        if (!tracks) {
+          return;
+        }
+        _.forEach(tracks, (track) => {
+          let lang = track.language;
           track.mode = (lang === 'fr' || lang === 'fra') ? 'showing' : 'hidden'; // show this track
         });
       }
