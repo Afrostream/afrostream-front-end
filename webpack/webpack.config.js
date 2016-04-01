@@ -104,6 +104,11 @@ const webpackConfig = {
           loader: 'file-loader?name=[name].[ext]?[hash]'
         },
         {
+          test: /vtt\.js$/,
+          loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000',
+          include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        },
+        {
           test: /video\.js$/,
           loader: 'expose?videojs',
           include: [path.join(__dirname, '../node_modules/afrostream-player')]

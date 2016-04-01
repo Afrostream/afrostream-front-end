@@ -53,7 +53,7 @@ class PricingTable extends React.Component {
                 </div>
                 <div className="plan-highlight plan1-highlight">Prélèvement mensuel</div>
                 <ul className="plan-benefits-1">
-                  <li>Une semaine d' éssai</li>
+                  <li>Une semaine d'éssai</li>
                   <li>Sans engagement</li>
                   <li>1 seul écran connecté</li>
                   <li>Films et séries illimités</li>
@@ -76,7 +76,7 @@ class PricingTable extends React.Component {
                   <span className="period">/AN</span>
                 </div>
                 <ul className="plan-benefits-2">
-                  <li>Une semaine d' éssai</li>
+                  <li>Une semaine d'éssai</li>
                   <li>2 écrans connectés simultanément</li>
                   <li>Invitations VIP aux avant-premières de films</li>
                   <li>12 mois inclus</li>
