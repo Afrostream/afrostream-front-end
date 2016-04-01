@@ -462,7 +462,7 @@ class PlayerComponent extends Component {
     }
     const ua = detectUA();
     const mobileVersion = ua.getMobile();
-    let excludeBrowser = ((!ua.isSafari() && !ua.isEdge() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
+    let excludeBrowser = ((!ua.isSafari() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
     let captions = !ua.isChrome() && excludeBrowser && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
@@ -557,8 +557,8 @@ class PlayerComponent extends Component {
 
     if (ua.isIE()) {
       playerData.html5 = {
-        nativeCaptions: ua.isEdge(),
-        nativeTextTracks: ua.isEdge()
+        nativeCaptions: false,
+        nativeTextTracks: false
       };
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
 
