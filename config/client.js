@@ -251,8 +251,14 @@ const config = {
       "user_id": ""
     },
     "dash": {
-      "protData": protData,
+      "inititalMediaSettings": {
+        "lang": "fr"
+      },
       "autoSwitch": true,
+      "bolaEnabled": true,
+      "scheduleWhilePaused": false,
+      "initialBitrate": 400,
+      "liveFragmentCount": 4,
       "buffer": {
         "bufferToKeep": 30,
         "minBufferTime": 8,
@@ -261,8 +267,12 @@ const config = {
         "bufferTimeAtTopQuality": 30,
         "bufferTimeAtTopQualityLongForm": 60,
         "longFormContentDurationThreshold": 600,
-        "richBufferThreshold": 20
-      }
+        "richBufferThreshold": 20,
+        "abandonLoadTimeout": 10,
+        "fragmentLoaderRetryAttempts": 3,
+        "fragmentLoaderRetryInterval": 1000
+      },
+      "protData": protData
     },
     "languages": {
       "fr": {

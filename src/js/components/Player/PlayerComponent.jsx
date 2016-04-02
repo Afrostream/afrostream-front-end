@@ -453,7 +453,7 @@ class PlayerComponent extends Component {
     const ua = detectUA();
     const mobileVersion = ua.getMobile();
     let excludeSafari = ((!ua.isSafari() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
-    let excludeBrowser = !ua.isChrome() && excludeSafari;
+    let excludeBrowser = excludeSafari;
     let captions = excludeBrowser && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
