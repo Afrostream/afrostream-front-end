@@ -276,6 +276,12 @@ const config = {
     },
     "languages": {
       "fr": {
+        "French": "Francais",
+        "fra": "Francais",
+        "fr": "Francais",
+        "English": "Anglais",
+        "eng": "Anglais",
+        "en": "Anglais",
         "Next": "Vidéo Suivante",
         "Play": "Lecture",
         "Pause": "Pause",
