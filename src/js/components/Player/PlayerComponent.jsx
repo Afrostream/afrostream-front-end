@@ -477,6 +477,7 @@ class PlayerComponent extends Component {
         let isDefault = false;
         if (lang.get('lang') === 'fr' || lang.get('lang') === 'fra') {
           isDefault = true;
+          track.setAttribute('default', isDefault);
           track.default = isDefault;
         }
         track.setAttribute('mode', isDefault ? 'showing' : 'hidden');
@@ -672,7 +673,17 @@ class PlayerComponent extends Component {
     if (!videoData) throw new Error(`no video data ${videoId} ${videoData}`);
     let playerData = await this.getPlayerData(videoData);
 
-    let player = await videojs('afrostream-player', playerData);
+    let player = await videojs('afrostream-player', playerData).ready(()=> {
+        let tracks = player.textTracks(); // get list of tracks
+        if (!tracks) {
+          return;
+        }
+        _.forEach(tracks, (track) => {
+          let lang = track.language;
+          track.mode = (lang === 'fr' || lang === 'fra') ? 'showing' : 'hidden'; // show this track
+        });
+      }
+    );
 
     player.on('firstplay', ::this.onFirstPlay);
     player.on('ended', ::this.clearTrackVideo);
