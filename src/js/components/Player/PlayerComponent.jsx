@@ -688,7 +688,7 @@ class PlayerComponent extends Component {
   }
 
   onFullScreenHandler() {
-    let isFullScreen = this.player.isFullScreen();
+    let isFullScreen = this.player.isFullscreen();
     this.setState({
       fullScreen: isFullScreen
     })
