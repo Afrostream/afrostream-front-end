@@ -1,20 +1,20 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import _ from 'lodash';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import config from '../../../../config';
 import classSet from 'classnames';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js';
-import {detectUA} from './PlayerUtils';
+import { detectUA } from './PlayerUtils';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import * as EpisodeActionCreators from '../../actions/episode';
 import * as EventActionCreators from '../../actions/event';
 import * as RecoActionCreators from '../../actions/reco';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
-import {Billboard, CsaIcon} from '../Movies';
+import { Billboard, CsaIcon } from '../Movies';
 import NextEpisode from './NextEpisode';
 import ShareButton from '../Share/ShareButton';
 import RecommendationList from '../Recommendation/RecommendationList';
@@ -43,7 +43,7 @@ if (canUseDOM) {
 }))
 class PlayerComponent extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.player = null;
     this.state = {
@@ -64,7 +64,7 @@ class PlayerComponent extends Component {
     episodeId: React.PropTypes.string
   };
 
-  initState() {
+  initState () {
     this.playerInit = false;
     this.nextEpisode = false;
     clearInterval(this.promiseLoadNextTimeout);
@@ -84,7 +84,7 @@ class PlayerComponent extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount () {
 
     this.setState({
       size: {
@@ -95,12 +95,12 @@ class PlayerComponent extends Component {
 
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.destroyPlayer();
     console.log('player : componentWillUnmount', this.player)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
 
     if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
       this.setState({
@@ -118,15 +118,15 @@ class PlayerComponent extends Component {
     }
   }
 
-  getType(data) {
+  getType (data) {
     return data && data.get('type');
   }
 
-  isValid(data) {
+  isValid (data) {
     return data && this.getType(data) !== 'error';
   }
 
-  getLazyImageUrl(data, type = 'poster') {
+  getLazyImageUrl (data, type = 'poster') {
     let imgData = data.get(type);
     if (!imgData) {
       return;
@@ -135,7 +135,7 @@ class PlayerComponent extends Component {
     return imgData.get('imgix');
   }
 
-  backNextHandler() {
+  backNextHandler () {
     this.player.off('timeupdate');
     clearInterval(this.promiseLoadNextTimeout);
     this.setState({
@@ -143,7 +143,7 @@ class PlayerComponent extends Component {
     });
   }
 
-  getPlayerTracks(type) {
+  getPlayerTracks (type) {
     let tracks = [];
     let audioIndex = this.player.tech['featuresAudioIndex'];
     let metrics = this.player.getPlaybackStatistics();
@@ -185,14 +185,14 @@ class PlayerComponent extends Component {
   /**
    * Start track video on start
    */
-  onFirstPlay() {
+  onFirstPlay () {
     this.trackVideo();
   }
 
   /**
    * Stop track video on ended
    */
-  clearTrackVideo() {
+  clearTrackVideo () {
     this.trackVideo();
     clearTimeout(this.trackTimeout);
   }
@@ -200,7 +200,7 @@ class PlayerComponent extends Component {
   /**
    * Track User video playing
    */
-  trackVideo() {
+  trackVideo () {
     const {
       props: {dispatch, videoId}
     } = this;
@@ -225,7 +225,7 @@ class PlayerComponent extends Component {
     this.trackTimeout = setTimeout(::this.trackVideo, 60000);
   }
 
-  getNextComponent() {
+  getNextComponent () {
     const {
       props: {
         videoId
@@ -245,12 +245,12 @@ class PlayerComponent extends Component {
     return (<RecommendationList {...{videoId}}/>)
   }
 
-  getNextLink() {
+  getNextLink () {
     return this.player && this.player.options().controlBar.nextVideoButton && this.player.options().controlBar.nextVideoButton.link;
   }
 
   //TODO refactor and split method
-  async getNextVideo() {
+  async getNextVideo () {
     const {
       props: {
         Movie,
@@ -280,7 +280,7 @@ class PlayerComponent extends Component {
 
   }
 
-  async getNextEpisode() {
+  async getNextEpisode () {
     const {
       props: {
         Video,
@@ -375,7 +375,7 @@ class PlayerComponent extends Component {
   }
 
 
-  promiseLoadNextVideo(time = 9) {
+  promiseLoadNextVideo (time = 9) {
     this.player.off('timeupdate');
     clearInterval(this.promiseLoadNextTimeout);
     this.promiseLoadNextTimeout = setInterval(function () {
@@ -389,7 +389,7 @@ class PlayerComponent extends Component {
     }.bind(this), 1000);
   }
 
-  loadNextVideo() {
+  loadNextVideo () {
     const {
       context: {
         history
@@ -405,7 +405,7 @@ class PlayerComponent extends Component {
 
   }
 
-  onTimeUpdate() {
+  onTimeUpdate () {
     if (!config.reco.enabled) {
       return;
     }
@@ -431,7 +431,7 @@ class PlayerComponent extends Component {
     }
   }
 
-  async initPlayer(videoData) {
+  async initPlayer (videoData) {
     console.log('player : initPlayer');
     try {
       this.player = await this.generatePlayer(videoData);
@@ -448,11 +448,11 @@ class PlayerComponent extends Component {
     }
   }
 
-  async generateDomTag(videoData) {
+  async generateDomTag (videoData) {
     console.log('player : generate dom tag');
     const ua = detectUA();
     const mobileVersion = ua.getMobile();
-    let excludeSafari = ((!ua.isSafari() && !mobileVersion.is('iOS')) || (ua.isSafari() && ua.getBrowser().version === 537));
+    let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537));
     let excludeBrowser = excludeSafari;
     let captions = excludeBrowser && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
@@ -478,7 +478,6 @@ class PlayerComponent extends Component {
         if (lang.get('lang') === 'fr' || lang.get('lang') === 'fra') {
           isDefault = true;
           track.setAttribute('default', isDefault);
-          track.default = isDefault;
         }
         track.setAttribute('mode', isDefault ? 'showing' : 'hidden');
         video.appendChild(track);
@@ -492,7 +491,7 @@ class PlayerComponent extends Component {
     return video;
   }
 
-  async getPlayerData(videoData) {
+  async getPlayerData (videoData) {
     const {
       props: {
         OAuth, Player, Movie, User, movieId, videoId
@@ -659,7 +658,7 @@ class PlayerComponent extends Component {
     return playerData;
   }
 
-  async generatePlayer(videoData) {
+  async generatePlayer (videoData) {
     const {
       props: {
         videoId
@@ -698,14 +697,14 @@ class PlayerComponent extends Component {
     return player;
   }
 
-  onFullScreenHandler() {
+  onFullScreenHandler () {
     let isFullScreen = this.player.isFullscreen();
     this.setState({
       fullScreen: isFullScreen
     })
   }
 
-  triggerUserActive() {
+  triggerUserActive () {
     const {
       props: {
         dispatch
@@ -715,7 +714,7 @@ class PlayerComponent extends Component {
     dispatch(EventActionCreators.userActive(this.player ? (this.player.paused() || this.player.userActive()) : true))
   }
 
-  triggerError(e) {
+  triggerError (e) {
     if (Raven && Raven.isSetup()) {
       // Send the report.
       Raven.captureException(e, {
@@ -727,7 +726,7 @@ class PlayerComponent extends Component {
     }
   }
 
-  async destroyPlayer() {
+  async destroyPlayer () {
     const {
       props: {
         dispatch
@@ -774,7 +773,7 @@ class PlayerComponent extends Component {
     }
   }
 
-  formatTime(seconds) {
+  formatTime (seconds) {
     if (!isFinite(seconds)) {
       return null;
     }
@@ -792,7 +791,7 @@ class PlayerComponent extends Component {
     return ' ' + time;
   }
 
-  render() {
+  render () {
     const {
       props: {
         Event,

@@ -65,7 +65,7 @@ const config = _.merge(
      * WebpackDevServer
      */
     webpackDevServer: {
-      host: 'localhost',
+      host: '192.168.1.90',
       port: 8081
     },
 
@@ -73,7 +73,7 @@ const config = _.merge(
      * browserSync
      */
     browserSyncServer: {
-      host: 'localhost',
+      host: '192.168.1.90',
       port: 8082
     }
   }, client);
