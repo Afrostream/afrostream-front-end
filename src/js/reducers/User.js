@@ -8,6 +8,12 @@ const initialState = Immutable.fromJS({
   'favorites/movies': null
 });
 
+function mergeUser(user, data) {
+  if (!user) {
+    return data;
+  }
+  return _.merge(user.toJS(), data);
+}
 
 export default createReducer(initialState, {
 
@@ -17,7 +23,7 @@ export default createReducer(initialState, {
     }
     const data = isGift ? {} : res.body;
     return state.merge({
-      ['user']: _.merge(state.get('user').toJS(), data)
+      ['user']: mergeUser(state.get('user'), data)
     });
   },
 
@@ -27,13 +33,13 @@ export default createReducer(initialState, {
     }
     const data = res.body;
     return state.merge({
-      ['user']: _.merge(state.get('user').toJS(), data)
+      ['user']: mergeUser(state.get('user'), data)
     });
   },
 
   [ActionTypes.User.getProfile](state, { user}) {
     return state.merge({
-      ['user']: user,
+      ['user']: mergeUser(state.get('user'), user),
       ['pending']: false
     });
   },
@@ -45,13 +51,13 @@ export default createReducer(initialState, {
   },
 
   // #### SUBSCRIPTIONS ####
-  [ActionTypes.User.getSubscriptions](state, { videoId, res }) {
+  [ActionTypes.User.getSubscriptions](state, { res }) {
     if (!res) {
       return state;
     }
     const data = res.body;
     return state.merge({
-      [`user`]: _.merge(state.get('user').toJS(), data)
+      [`user`]: mergeUser(state.get('user'), data)
     });
   },
   // #### RECOMMENDATIONS ####

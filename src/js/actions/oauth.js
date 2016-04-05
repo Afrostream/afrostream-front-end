@@ -1,10 +1,10 @@
 import ActionTypes from '../consts/ActionTypes';
 import * as UserActionCreators from './user';
-import * as ModalActionCreators from './modal';
 import { pushState } from 'redux-router';
 import { apiClient } from '../../../config';
+import { getToken } from '../lib/storage';
 
-export function signin(form) {
+export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
     return async api => ({
@@ -14,11 +14,11 @@ export function signin(form) {
   };
 }
 
-export function gift(form) {
+export function gift (form) {
   return signup(form);
 }
 
-export function signup(form) {
+export function signup (form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
     return async api => ({
@@ -28,7 +28,7 @@ export function signup(form) {
   };
 }
 
-export function reset(form) {
+export function reset (form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
     return async api => ({
@@ -37,32 +37,67 @@ export function reset(form) {
     });
   };
 }
-
 /**
- * Get token from facebook oauth
+ * Get token from localStorage and set in store
  * @returns {Promise}
  */
-export function facebook() {
+export function getIdToken () {
+  return (dispatch, getState, actionDispatcher) => {
+    return {
+      type: ActionTypes.OAuth.getIdToken
+    };
+  };
+}
+/**
+ * Get token from facebook oauth
+ * @param isSynchro
+ * @returns {Function}
+ */
+export function facebook (path = 'signin') {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
-    let url = `/auth/facebook`,
-      width = 400,
+
+    const token = getState().OAuth.get('token');
+    let url = `/auth/facebook/${path}`;
+    //Si il y a un user et qu'on veut desynchro le social account, on passe le token en parametre
+    if (token) {
+      url = `${url}?access_token=${token.get('accessToken')}`;
+    }
+
+    let width = 400,
       height = 650,
       top = (window.outerHeight - height) / 2,
       left = (window.outerWidth - width) / 2;
 
-    let oauthPopup = window.open(url, 'facebook_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
-    oauthPopup.onbeforeunload = function () {
-      actionDispatcher(UserActionCreators.getProfile());
-      actionDispatcher(ModalActionCreators.close());
-    }.bind(this);
-  };
-}
-
-export function getIdToken() {
-  return (dispatch, getState, actionDispatcher) => {
-    return {
-      type: ActionTypes.OAuth.getIdToken
+    return async () => {
+      return await new Promise((resolve, reject) => {
+        let oauthPopup = window.open(url, 'facebook_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
+        oauthPopup.onbeforeunload = function () {
+          try {
+            const tokenData = getToken();
+            if (tokenData && tokenData.error) {
+              let message = '';
+              switch (path) {
+                case 'signin':
+                  message = 'Error: No user found, please associate your profile with facebook after being connected';
+                  break;
+                case 'link':
+                  message = 'Error: Your profile is already linked to another user';
+                  break;
+                default:
+                  message = tokenData.error;
+                  break;
+              }
+              return reject({message: message});
+            }
+            return resolve({
+              type: ActionTypes.OAuth.facebook
+            });
+          } catch (err) {
+            return reject(err);
+          }
+        }
+      });
     };
   };
 }
@@ -71,9 +106,8 @@ export function getIdToken() {
  * Logout user
  * @returns {Function}
  */
-export function logOut() {
+export function logOut () {
   return (dispatch, getState, actionDispatcher) => {
-    actionDispatcher(pushState(null, '/'));
     actionDispatcher({
       type: ActionTypes.User.logOut
     });

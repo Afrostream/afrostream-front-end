@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title data-react-helmet="true">Afrostream.tv OAuth Popup</title>
+    <title data-react-helmet="true">Afrostream.tv OAuth Social</title>
 </head>
 <body>
 
 <div id="main">
-    <h1>Afrostream Application Authentication - Auth Success</h1>
+    <h1>Afrostream Application Social - Synchronisation de compte desactivé</h1>
     <script type="text/javascript">
         if (window.opener) {
             window.opener.focus();
-        }
-        var storageId = '{{storageId}}';
-        var tokenData = {{{json tokenData}}};
-
-        if (tokenData) {
-            localStorage.setItem(storageId, JSON.stringify(tokenData));
         }
 
         window.close();
