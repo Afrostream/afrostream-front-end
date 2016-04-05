@@ -1,6 +1,5 @@
 import ActionTypes from '../consts/ActionTypes';
 import * as UserActionCreators from './user';
-import * as ModalActionCreators from './modal';
 import { pushState } from 'redux-router';
 import { apiClient } from '../../../config';
 import { getToken } from '../lib/storage';
@@ -59,13 +58,13 @@ export function facebook (path = 'signin') {
     actionDispatcher(UserActionCreators.pendingUser(true));
 
     const token = getState().OAuth.get('token');
+    let url = `/auth/facebook/${path}`;
     //Si il y a un user et qu'on veut desynchro le social account, on passe le token en parametre
     if (token) {
-      path = `${path}?access_token=${token.get('accessToken')}`;
+      url = `${url}?access_token=${token.get('accessToken')}`;
     }
 
-    let url = `/auth/facebook/${path}`,
-      width = 400,
+    let width = 400,
       height = 650,
       top = (window.outerHeight - height) / 2,
       left = (window.outerWidth - width) / 2;
@@ -76,13 +75,24 @@ export function facebook (path = 'signin') {
         oauthPopup.onbeforeunload = function () {
           try {
             const tokenData = getToken();
-            if (tokenData && tokenData.token) {
-              return resolve({
-                type: ActionTypes.OAuth.facebook
-              });
-            } else {
-              return reject('err');
+            if (tokenData && tokenData.error) {
+              let message = '';
+              switch (path) {
+                case 'signin':
+                  message = 'Error: No user found, please associate your profile with facebook after being connected';
+                  break;
+                case 'link':
+                  message = 'Error: Your profile is already linked to another user';
+                  break;
+                default:
+                  message = tokenData.error;
+                  break;
+              }
+              return reject({message: message});
             }
+            return resolve({
+              type: ActionTypes.OAuth.facebook
+            });
           } catch (err) {
             return reject(err);
           }
