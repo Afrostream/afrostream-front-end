@@ -3,8 +3,9 @@ import * as UserActionCreators from './user';
 import * as ModalActionCreators from './modal';
 import { pushState } from 'redux-router';
 import { apiClient } from '../../../config';
+import { getToken } from '../lib/storage';
 
-export function signin(form) {
+export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
     return async api => ({
@@ -14,11 +15,11 @@ export function signin(form) {
   };
 }
 
-export function gift(form) {
+export function gift (form) {
   return signup(form);
 }
 
-export function signup(form) {
+export function signup (form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
     return async api => ({
@@ -28,7 +29,7 @@ export function signup(form) {
   };
 }
 
-export function reset(form) {
+export function reset (form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
     return async api => ({
@@ -41,7 +42,7 @@ export function reset(form) {
  * Get token from localStorage and set in store
  * @returns {Promise}
  */
-export function getIdToken() {
+export function getIdToken () {
   return (dispatch, getState, actionDispatcher) => {
     return {
       type: ActionTypes.OAuth.getIdToken
@@ -53,18 +54,17 @@ export function getIdToken() {
  * @param isSynchro
  * @returns {Function}
  */
-export function facebook(isSynchro) {
+export function facebook (path = 'signin') {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true));
 
     const token = getState().OAuth.get('token');
-    let unlinkUri = '';
     //Si il y a un user et qu'on veut desynchro le social account, on passe le token en parametre
-    if (isSynchro && token) {
-      unlinkUri = `/unlink?access_token=${token.get('accessToken')}`;
+    if (token) {
+      path = `${path}?access_token=${token.get('accessToken')}`;
     }
 
-    let url = `/auth/facebook${unlinkUri}`,
+    let url = `/auth/facebook/${path}`,
       width = 400,
       height = 650,
       top = (window.outerHeight - height) / 2,
@@ -75,11 +75,16 @@ export function facebook(isSynchro) {
         let oauthPopup = window.open(url, 'facebook_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
         oauthPopup.onbeforeunload = function () {
           try {
-            resolve({
-              type: ActionTypes.OAuth.facebook
-            });
+            const tokenData = getToken();
+            if (tokenData && tokenData.token) {
+              return resolve({
+                type: ActionTypes.OAuth.facebook
+              });
+            } else {
+              return reject('err');
+            }
           } catch (err) {
-            reject(err);
+            return reject(err);
           }
         }
       });
@@ -91,9 +96,8 @@ export function facebook(isSynchro) {
  * Logout user
  * @returns {Function}
  */
-export function logOut() {
+export function logOut () {
   return (dispatch, getState, actionDispatcher) => {
-    actionDispatcher(pushState(null, '/'));
     actionDispatcher({
       type: ActionTypes.User.logOut
     });

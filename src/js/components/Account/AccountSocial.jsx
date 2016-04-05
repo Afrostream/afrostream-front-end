@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import {connect} from 'react-redux';
+import {Link} from 'react-router';
 import {dict} from '../../../../config';
 import classSet from 'classnames';
 import SwitchButton from '../SwitchButton/SwitchButton';
@@ -11,7 +11,7 @@ if (process.env.BROWSER) {
   require('./AccountSocial.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({User}) => ({User}))
 class AccountSocial extends React.Component {
 
   constructor(props) {
@@ -24,14 +24,14 @@ class AccountSocial extends React.Component {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     this.setState({
       fetching: true
     });
 
-    dispatch(OAuthActionCreators.facebook(isSynchro))
+    dispatch(OAuthActionCreators.facebook(isSynchro ? 'unlink' : 'link'))
       .then(()=> {
         dispatch(UserActionCreators.getProfile());
         this.setState({
@@ -48,8 +48,8 @@ class AccountSocial extends React.Component {
     const {
       props: {
         User
-        }
-      } = this;
+      }
+    } = this;
 
     const user = User.get('user');
     if (!user) {

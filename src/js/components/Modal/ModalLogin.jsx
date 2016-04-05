@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from'react-dom';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { Link } from 'react-router';
 import * as OauthActionCreator from '../../actions/oauth';
@@ -8,7 +8,7 @@ import * as ModalActionCreator from '../../actions/modal';
 import * as UserActionCreators from '../../actions/user';
 import * as IntercomActionCreators from '../../actions/intercom';
 import ModalComponent from './ModalComponent';
-import {oauth2} from '../../../../config';
+import { oauth2 } from '../../../../config';
 import MobileDetect from 'mobile-detect';
 import _ from 'lodash';
 
@@ -16,10 +16,10 @@ if (process.env.BROWSER) {
   require('./ModalLogin.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({User}) => ({User}))
 class ModalLogin extends ModalComponent {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       success: false,
@@ -37,12 +37,12 @@ class ModalLogin extends ModalComponent {
     history: React.PropTypes.object
   };
 
-  componentDidMount() {
+  componentDidMount () {
     const {
-      props: { dispatch },
-      context: { location }
-      } = this;
-    let { query } = location;
+      props: {dispatch},
+      context: {location}
+    } = this;
+    let {query} = location;
     let token = query && query.k;
     if (token) {
       dispatch(OauthActionCreator.reset({k: token})).then(function () {
@@ -56,21 +56,21 @@ class ModalLogin extends ModalComponent {
     });
   }
 
-  isValid() {
+  isValid () {
     let valid = _.filter(this.state.errors, (value, key) => {
       return value;
     });
     return !valid.length;
   }
 
-  validateSize(value, min = 0, max = 0) {
+  validateSize (value, min = 0, max = 0) {
     if (!value) return 'empty';
     if (value.length < min) return 'min';
     if (value.length > max) return 'max';
     return null;
   }
 
-  validate(targetName) {
+  validate (targetName) {
     let errors = this.state.errors;
     errors[targetName] = null;
     let valueForm = this.state[targetName];
@@ -102,13 +102,13 @@ class ModalLogin extends ModalComponent {
     });
   }
 
-  renderValidationMessages(target) {
+  renderValidationMessages (target) {
     let errorMessage = this.state.errors[target];
     if (!errorMessage) return '';
     return (<div className="help-block">{ errorMessage }</div>);
   }
 
-  handleInputChange(evt) {
+  handleInputChange (evt) {
     let formData = this.state;
     if (!evt.target) {
       return;
@@ -121,11 +121,11 @@ class ModalLogin extends ModalComponent {
     });
   }
 
-  handleSubmit(event) {
+  handleSubmit (event) {
     event.preventDefault();
     const {
-      props: { dispatch}
-      } = this;
+      props: {dispatch}
+    } = this;
 
 
     let valitations = ['email', 'password'];
@@ -160,19 +160,21 @@ class ModalLogin extends ModalComponent {
     dispatch(OauthActionCreator[typeCall](postData)).then(::this.onSuccess).catch(::this.onError);
   }
 
-  facebookAuth(event) {
+  facebookAuth (event) {
     event.preventDefault();
     const {
       dispatch
-      } = this.props;
+    } = this.props;
 
-    dispatch(OauthActionCreator.facebook()).then(::this.onSuccess).catch(::this.onError);
+    const method = this.getType();
+
+    dispatch(OauthActionCreator.facebook(method)).then(::this.onSuccess).catch(::this.onError);
   }
 
-  onSuccess() {
+  onSuccess () {
     const {
       dispatch
-      } = this.props;
+    } = this.props;
 
     this.setState({
       success: true,
@@ -186,10 +188,10 @@ class ModalLogin extends ModalComponent {
     }
   }
 
-  onError(err) {
+  onError (err) {
     const {
       dispatch
-      } = this.props;
+    } = this.props;
 
     let errMess = err.message;
     if (err.response) {
@@ -208,16 +210,16 @@ class ModalLogin extends ModalComponent {
     dispatch(IntercomActionCreators.createIntercom());
   }
 
-  cancelAction(event) {
+  cancelAction (event) {
     event.preventDefault();
     const {
       dispatch
-      } = this.props;
+    } = this.props;
     this.context.history.pushState(null, '/')
     dispatch(ModalActionCreator.open('show'));
   }
 
-  getI18n() {
+  getI18n () {
     let keyType = 'signin';
     switch (this.props.type) {
       case 'show':
@@ -240,7 +242,7 @@ class ModalLogin extends ModalComponent {
     return keyType;
   }
 
-  getType() {
+  getType () {
     let keyType = 'signin';
     switch (this.props.type) {
       case 'show':
@@ -261,12 +263,12 @@ class ModalLogin extends ModalComponent {
     return keyType;
   }
 
-  getTitle(key = 'title') {
+  getTitle (key = 'title') {
     let keyType = this.getI18n();
     return oauth2.dict[keyType][key] || '';
   }
 
-  getForm() {
+  getForm () {
     if (this.state.loading) {
       return (<div className="loading mode">
         <div className="spinner spin-container">
@@ -318,21 +320,21 @@ class ModalLogin extends ModalComponent {
     );
   }
 
-  getSocial() {
+  getSocial () {
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        <div tabIndex="0" data-strategy="facebook" title="Login with Facebook" onClick={::this.facebookAuth}
-             className="zocial icon facebook "
+        <div tabIndex="0" data-strategy="facebook" title={this.getTitle('loginFacebook')} onClick={::this.facebookAuth}
+             className="zocial facebook "
              dir="ltr">
-          <span>Login with Facebook</span>
+          <span>{this.getTitle('loginFacebook')}</span>
         </div>
         <div className="separator"><span>ou</span></div>
       </div>
     );
   }
 
-  getEmail() {
+  getEmail () {
     return (
       <div className="email">
         <label htmlFor="easy_email" className="sad-placeholder">
@@ -350,7 +352,7 @@ class ModalLogin extends ModalComponent {
     );
   }
 
-  getPassword() {
+  getPassword () {
     return (
       <div className="password">
         <label htmlFor="easy_password" className="sad-placeholder">
@@ -369,7 +371,7 @@ class ModalLogin extends ModalComponent {
     );
   }
 
-  getSignUp() {
+  getSignUp () {
     return (
       <div className="emailPassword">
         <div className="inputs-wrapper">
@@ -392,7 +394,7 @@ class ModalLogin extends ModalComponent {
     );
   }
 
-  getSignIn() {
+  getSignIn () {
     return (
       <div className="emailPassword">
         <div className="inputs">
@@ -414,7 +416,7 @@ class ModalLogin extends ModalComponent {
     );
   }
 
-  getReset() {
+  getReset () {
     return (
       <div className="emailPassword">
         <div className="inputs-wrapper">
@@ -452,9 +454,9 @@ class ModalLogin extends ModalComponent {
     );
   }
 
-  render() {
+  render () {
 
-    const { props: { User } } = this;
+    const {props: {User}} = this;
 
     var errClass = classNames({
       'error': true,
