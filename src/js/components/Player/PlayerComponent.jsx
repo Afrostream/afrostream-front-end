@@ -1,21 +1,20 @@
-import React, { Component,PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import videojs from 'afrostream-player';
 import config from '../../../../config';
 import classSet from 'classnames';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import Raven from 'raven-js';
-import {detectUA} from './PlayerUtils';
+import { detectUA } from './PlayerUtils';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import * as EpisodeActionCreators from '../../actions/episode';
 import * as EventActionCreators from '../../actions/event';
 import * as RecoActionCreators from '../../actions/reco';
 import Spinner from '../Spinner/Spinner';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
-import {Billboard,CsaIcon} from '../Movies';
+import { Billboard, CsaIcon } from '../Movies';
 import NextEpisode from './NextEpisode';
 import ShareButton from '../Share/ShareButton';
 import RecommendationList from '../Recommendation/RecommendationList';
@@ -27,9 +26,12 @@ if (process.env.BROWSER) {
 
 if (canUseDOM) {
   var base64 = require('js-base64').Base64;
+  var dashjs = require('afrostream-player/node_modules/dashjs/dist/dash.all.debug.js');
+  var videojs = require('afrostream-player/libs/video.js');
+  var afrostream = require('afrostream-player/dist/afrostream-player.js');
 }
 
-@connect(({ OAuth,Video,Movie,Season,Episode,Event,User,Player }) => ({
+@connect(({OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
   OAuth,
   Video,
   Movie,
@@ -41,7 +43,7 @@ if (canUseDOM) {
 }))
 class PlayerComponent extends Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.player = null;
     this.state = {
@@ -62,7 +64,7 @@ class PlayerComponent extends Component {
     episodeId: React.PropTypes.string
   };
 
-  initState() {
+  initState () {
     this.playerInit = false;
     this.nextEpisode = false;
     clearInterval(this.promiseLoadNextTimeout);
@@ -82,7 +84,7 @@ class PlayerComponent extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount () {
 
     this.setState({
       size: {
@@ -90,14 +92,15 @@ class PlayerComponent extends Component {
         width: window.innerWidth
       }
     });
+
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.destroyPlayer();
     console.log('player : componentWillUnmount', this.player)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
 
     if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
       this.setState({
@@ -115,15 +118,15 @@ class PlayerComponent extends Component {
     }
   }
 
-  getType(data) {
+  getType (data) {
     return data && data.get('type');
   }
 
-  isValid(data) {
+  isValid (data) {
     return data && this.getType(data) !== 'error';
   }
 
-  getLazyImageUrl(data, type = 'poster') {
+  getLazyImageUrl (data, type = 'poster') {
     let imgData = data.get(type);
     if (!imgData) {
       return;
@@ -132,7 +135,7 @@ class PlayerComponent extends Component {
     return imgData.get('imgix');
   }
 
-  backNextHandler() {
+  backNextHandler () {
     this.player.off('timeupdate');
     clearInterval(this.promiseLoadNextTimeout);
     this.setState({
@@ -140,7 +143,7 @@ class PlayerComponent extends Component {
     });
   }
 
-  getPlayerTracks(type) {
+  getPlayerTracks (type) {
     let tracks = [];
     let audioIndex = this.player.tech['featuresAudioIndex'];
     let metrics = this.player.getPlaybackStatistics();
@@ -182,14 +185,14 @@ class PlayerComponent extends Component {
   /**
    * Start track video on start
    */
-  onFirstPlay() {
+  onFirstPlay () {
     this.trackVideo();
   }
 
   /**
    * Stop track video on ended
    */
-  clearTrackVideo() {
+  clearTrackVideo () {
     this.trackVideo();
     clearTimeout(this.trackTimeout);
   }
@@ -197,10 +200,10 @@ class PlayerComponent extends Component {
   /**
    * Track User video playing
    */
-  trackVideo() {
+  trackVideo () {
     const {
       props: {dispatch, videoId}
-      } = this;
+    } = this;
 
     clearTimeout(this.trackTimeout);
     if (!this.player) {
@@ -222,12 +225,12 @@ class PlayerComponent extends Component {
     this.trackTimeout = setTimeout(::this.trackVideo, 60000);
   }
 
-  getNextComponent() {
+  getNextComponent () {
     const {
       props: {
         videoId
-        }
-      } = this;
+      }
+    } = this;
 
     if (!this.state.nextReco || !config.reco.enabled) {
       return;
@@ -242,19 +245,19 @@ class PlayerComponent extends Component {
     return (<RecommendationList {...{videoId}}/>)
   }
 
-  getNextLink() {
-    return this.player && this.player.options().next && this.player.options().next.link;
+  getNextLink () {
+    return this.player && this.player.options().controlBar.nextVideoButton && this.player.options().controlBar.nextVideoButton.link;
   }
 
   //TODO refactor and split method
-  async getNextVideo() {
+  async getNextVideo () {
     const {
       props: {
         Movie,
         videoId,
         movieId
-        }
-      } = this;
+      }
+    } = this;
 
     const movieData = Movie.get(`movies/${movieId}`);
     this.nextEpisode = await this.getNextEpisode();
@@ -277,7 +280,7 @@ class PlayerComponent extends Component {
 
   }
 
-  async getNextEpisode() {
+  async getNextEpisode () {
     const {
       props: {
         Video,
@@ -289,8 +292,8 @@ class PlayerComponent extends Component {
         episodeId,
         seasonId,
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     const movieData = Movie.get(`movies/${movieId}`);
     if (!movieData) {
@@ -372,7 +375,7 @@ class PlayerComponent extends Component {
   }
 
 
-  promiseLoadNextVideo(time = 9) {
+  promiseLoadNextVideo (time = 9) {
     this.player.off('timeupdate');
     clearInterval(this.promiseLoadNextTimeout);
     this.promiseLoadNextTimeout = setInterval(function () {
@@ -386,12 +389,12 @@ class PlayerComponent extends Component {
     }.bind(this), 1000);
   }
 
-  loadNextVideo() {
+  loadNextVideo () {
     const {
       context: {
         history
-        }
-      } = this;
+      }
+    } = this;
 
     if (!this.nextEpisode) return;
 
@@ -402,7 +405,7 @@ class PlayerComponent extends Component {
 
   }
 
-  onTimeUpdate() {
+  onTimeUpdate () {
     if (!config.reco.enabled) {
       return;
     }
@@ -428,7 +431,7 @@ class PlayerComponent extends Component {
     }
   }
 
-  async initPlayer(videoData) {
+  async initPlayer (videoData) {
     console.log('player : initPlayer');
     try {
       this.player = await this.generatePlayer(videoData);
@@ -445,62 +448,38 @@ class PlayerComponent extends Component {
     }
   }
 
-  async generateDomTag(videoData) {
-    const {
-      props: {
-        movieId,Movie
-        }
-      } = this;
+  async generateDomTag (videoData) {
     console.log('player : generate dom tag');
-    // initialize the player
-    const movieData = Movie.get(`movies/${movieId}`);
-    if (!movieData) {
-      throw new Error('no movie data ref');
-    }
     const ua = detectUA();
-    let excludeSafari = ((!ua.isSafari() && !ua.isIOS()) || (ua.isSafari() && ua.getBrowser().version === 537));
-    let captions = !ua.isChrome() && excludeSafari && videoData.get('captions');
+    const mobileVersion = ua.getMobile();
+    let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537));
+    let excludeBrowser = excludeSafari;
+    let captions = excludeBrowser && videoData.get('captions');
     let hasSubtiles = captions ? captions.size : false;
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper);
     let video = document.createElement('video');
     video.id = 'afrostream-player';
-    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered';
+    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered vjs-controls-enabled afrostream-player-dimensions';
     video.crossOrigin = true;
     video.setAttribute('crossorigin', true);
 
-    var trackOptions = {
-      metadata: {
-        title: movieData.get('title'),
-        subtitle: movieData.get('synopsis')
-      },
-      tracks: []
-    };
-
     if (hasSubtiles) {
-      captions.map((caption, i) => {
+      captions.map((caption) => {
         let track = document.createElement('track');
-        track.kind = 'captions';
-        track.src = caption.get('src');
-        track.id = `track-${caption.get('_id')}-${i}`;
+        track.setAttribute('kind', 'captions');
+        track.setAttribute('src', caption.get('src'));
+        track.setAttribute('id', caption.get('_id'));
         let lang = caption.get('lang');
         if (lang) {
-          track.srclang = lang.get('lang');
-          track.label = lang.get('label')
+          track.setAttribute('srclang', lang.get('lang'));
+          track.setAttribute('label', lang.get('label'));
         }
-        if (lang.get('lang') === 'fr') {
-          track.default = true;
+        let isDefault = false;
+        if (lang.get('lang') === 'fr' || lang.get('lang') === 'fra') {
+          isDefault = true;
+          track.setAttribute('default', isDefault);
         }
-        track.mode = track.default ? 'showing' : 'hidden';
-
-        trackOptions.tracks.push({
-          kind: track.kind,
-          src: track.src,
-          id: track.id,
-          language: track.srclang,
-          label: track.label,
-          type: 'text/vtt',
-          mode: track.default ? 'showing' : 'hidden'
-        });
+        track.setAttribute('mode', isDefault ? 'showing' : 'hidden');
         video.appendChild(track);
       });
     }
@@ -509,23 +488,29 @@ class PlayerComponent extends Component {
     } else {
       console.log('cant set wrapper elements');
     }
-    return trackOptions;
+    return video;
   }
 
-  async getPlayerData(videoData) {
+  async getPlayerData (videoData) {
     const {
       props: {
-        OAuth,Player,Movie,User,movieId,videoId
-        }
-      } = this;
+        OAuth, Player, Movie, User, movieId, videoId
+      }
+    } = this;
 
     console.log('player : Get player data');
 
-    let trackOpt = await this.generateDomTag(videoData);
+    let videoEl = await this.generateDomTag(videoData);
+
     let videoOptions = videoData.toJS();
 
-    let movie = Movie.get(`movies/${movieId}`);
+    const movie = Movie.get(`movies/${movieId}`);
+    if (!movie) {
+      throw new Error('no movie data ref');
+    }
+
     let posterImgImgix = {};
+
     if (movie) {
       let poster = movie.get('poster');
       let posterImg = poster ? poster.get('imgix') : '';
@@ -558,49 +543,62 @@ class PlayerComponent extends Component {
       };
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
     }
-    console.log('player : playerData', playerData);
     //Fix Safari < 6.2 can't play hls
     if (ua.isSafari()) {
       if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
-        playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+        playerData.techOrder = _.sortBy(playerData.techOrder, (k) => {
           return k !== 'dashas';
         });
       }
       //Safari 8 can't play dashjs
       if (browserVersion.version == 600) {
-        playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+        playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
           return k !== 'html5';
         });
-        playerData.sources = _.sortBy(playerData.sources, function (k) {
+        playerData.sources = _.sortBy(playerData.sources, (k)=> {
           return k.type === 'application/dash+xml';
         });
       }
     }
 
+
     //on force dash en tech par default pour tous les browsers ;)
-    playerData.sources = _.sortBy(playerData.sources, function (k) {
+    playerData.sources = _.sortBy(playerData.sources, (k)=> {
       return k.type !== 'application/dash+xml';
     });
+
     //Fix android live hls only
-    if (mobileVersion.match('playstation|xbox') || (ua.isAndroid() && isLive)) {
-      playerData.sources = _.sortBy(playerData.sources, function (k) {
+    //Fix ios hls only
+    if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (mobileVersion.is('AndroidOS') && isLive)) {
+      playerData.sources = _.sortBy(playerData.sources, (k)=> {
         return k.type === 'application/dash+xml';
       });
-      playerData.techOrder = _.sortBy(playerData.techOrder, function (k) {
+      playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
         return k !== 'html5';
       });
     }
 
+    //VTT flash vtt.js
+    //playerData['vtt.js'] = '';
+    playerData['vtt.js'] = require('afrostream-player/node_modules/video.js/node_modules/videojs-vtt.js/dist/vtt.js');
     // ==== END hacks config
-    playerData.dashas.swf = require('../../../../node_modules/afrostream-player/dist/dashas.swf');
-    playerData.plugins = playerData.plugins || [];
-    playerData.plugins.chromecast = _.merge(playerData.plugins.chromecast || {}, trackOpt);
+    playerData.dashas.swf = require('afrostream-player/dist/dashas.swf');
+
+    let chromecastOptions = {
+      metadata: {
+        title: movie.get('title'),
+        subtitle: movie.get('synopsis')
+      }
+    };
+
+    playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions);
+
     let user = User.get('user');
     if (user) {
       let userId = user.get('user_id');
       let token = OAuth.get('token');
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId];
-      userId = _.find(splitUser, function (val) {
+      userId = _.find(splitUser, (val) => {
         return parseInt(val, 10);
       });
       if (playerData.metrics) {
@@ -644,33 +642,43 @@ class PlayerComponent extends Component {
       }
     }
     try {
-      playerData.next = await this.getNextVideo();
+      let nextButton = await this.getNextVideo();
+      if (nextButton) {
+        playerData.controlBar = _.merge(playerData.controlBar, {
+          nextVideoButton: nextButton
+        });
+      }
+
     } catch (e) {
-      playerData.next = null;
       console.log('player : Next video error', e);
     }
+
+    console.log('player : playerData', playerData);
 
     return playerData;
   }
 
-  async generatePlayer(videoData) {
+  async generatePlayer (videoData) {
     const {
       props: {
         videoId
-        }
-      } = this;
+      }
+    } = this;
 
     if (this.playerInit) throw new Error('old player was already generate, destroy it before');
+
     await this.destroyPlayer();
     this.playerInit = true;
-    //const videoData = Video.get(`videos/${videoId}`);
     if (!videoData) throw new Error(`no video data ${videoId} ${videoData}`);
     let playerData = await this.getPlayerData(videoData);
 
-    let player = await videojs('afrostream-player', playerData).ready(function () {
-        var allTracks = this.textTracks() || []; // get list of tracks
-        _.forEach(allTracks, function (track) {
-          let lang = track.language || track.language_;
+    let player = await videojs('afrostream-player', playerData).ready(()=> {
+        let tracks = player.textTracks(); // get list of tracks
+        if (!tracks) {
+          return;
+        }
+        _.forEach(tracks, (track) => {
+          let lang = track.language;
           track.mode = (lang === 'fr' || lang === 'fra') ? 'showing' : 'hidden'; // show this track
         });
       }
@@ -689,24 +697,24 @@ class PlayerComponent extends Component {
     return player;
   }
 
-  onFullScreenHandler() {
-    let isFullScreen = this.player.isFullScreen;
+  onFullScreenHandler () {
+    let isFullScreen = this.player.isFullscreen();
     this.setState({
       fullScreen: isFullScreen
     })
   }
 
-  triggerUserActive() {
+  triggerUserActive () {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(EventActionCreators.userActive(this.player ? (this.player.paused() || this.player.userActive()) : true))
   }
 
-  triggerError(e) {
+  triggerError (e) {
     if (Raven && Raven.isSetup()) {
       // Send the report.
       Raven.captureException(e, {
@@ -718,12 +726,12 @@ class PlayerComponent extends Component {
     }
   }
 
-  async destroyPlayer() {
+  async destroyPlayer () {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     if (this.player) {
 
@@ -765,7 +773,7 @@ class PlayerComponent extends Component {
     }
   }
 
-  formatTime(seconds) {
+  formatTime (seconds) {
     if (!isFinite(seconds)) {
       return null;
     }
@@ -783,7 +791,7 @@ class PlayerComponent extends Component {
     return ' ' + time;
   }
 
-  render() {
+  render () {
     const {
       props: {
         Event,
@@ -793,8 +801,8 @@ class PlayerComponent extends Component {
         seasonId,
         movieId,
         videoId
-        }
-      } = this;
+      }
+    } = this;
 
     const hiddenMode = !Event.get('userActive');
 

@@ -24,7 +24,7 @@ export function detectUA() {
       var parseUserAgent, prepareData, renameOsx, cutSafariVersion;
 
       parseUserAgent = function () {
-        var userAgent = navigator.userAgent.toLowerCase(),
+        var userAgent = (window.navigator && navigator.userAgent) || '',
           browserParts = /(ie|firefox|chrome|safari|opera)(?:.*version)?(?:[ \/])?([\w.]+)/.exec(userAgent),
           osParts = /(mac|win|linux|freebsd|mobile|iphone|ipod|ipad|android|blackberry|j2me|webtv)/.exec(userAgent);
 
@@ -77,17 +77,16 @@ export function detectUA() {
     },
     isFirefox: detect(/mozilla.*\Wfirefox\W/i),
     isIE: function () {
-      return /(MSIE|Trident\/|Edge\/)/i.test(navigator.userAgent);
+      return /(MSIE|Trident\/|Edge\/)/i.test(userAgent);
+    },
+    isEdge: function () {
+      return /(Edge\/)/i.test(userAgent);
     },
     isSafari: function () {
       return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/iPad|iPhone|iPod|CriOS/.test(navigator.platform);
     },
     isWindows: function () {
       return navigator.appVersion.indexOf('Win') != -1;
-    },
-    isIOS: function () {
-      return /iPad|iPhone|iPod|CriOS/.test(navigator.platform);
-    },
-    isAndroid: detect(/Android/i)
+    }
   };
 };

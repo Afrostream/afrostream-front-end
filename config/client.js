@@ -237,31 +237,51 @@ const config = {
   player: {
     "autoplay": true,
     "controls": true,
-    "width": "100%",
-    "height": "100%",
+    // "aspectRatio": "16:9",
     "language": "fr",
     "dashas": {
       "protData": protData
+    },
+    "controlBar": {
+      "volumeMenuButton": {
+        "inline": false
+      }
     },
     "metrics": {
       "user_id": ""
     },
     "dash": {
-      "protData": protData,
+      "inititalMediaSettings": {
+        "lang": "fr"
+      },
       "autoSwitch": true,
+      "bolaEnabled": true,
+      "scheduleWhilePaused": false,
+      "initialBitrate": 400,
+      "liveFragmentCount": 4,
       "buffer": {
-        "minBufferTime": 12,
-        "lowBufferThreshold": 4,
+        "bufferToKeep": 30,
+        "minBufferTime": 8,
+        "bufferPruningInterval": 30,
+        "bandwidthSafetyFactor": 0.9,
         "bufferTimeAtTopQuality": 30,
-        "bufferTimeAtTopQualityLongForm": 300,
+        "bufferTimeAtTopQualityLongForm": 60,
         "longFormContentDurationThreshold": 600,
         "richBufferThreshold": 20,
-        "bufferToKeep": 8,
-        "bufferPruningInterval": 8
-      }
+        "abandonLoadTimeout": 10,
+        "fragmentLoaderRetryAttempts": 3,
+        "fragmentLoaderRetryInterval": 1000
+      },
+      "protData": protData
     },
     "languages": {
       "fr": {
+        "French": "Francais",
+        "fra": "Francais",
+        "fr": "Francais",
+        "English": "Anglais",
+        "eng": "Anglais",
+        "en": "Anglais",
         "Next": "Vidéo Suivante",
         "Play": "Lecture",
         "Pause": "Pause",
@@ -281,10 +301,14 @@ const config = {
         "subtitles off": "Sous-titres désactivés",
         "Captions": "Sous-titres",
         "captions off": "Sous-titres désactivés",
+        "Audio Selection": "Audio",
+        "audio off": "Audio désactivé",
+        "Quality Selection": "Qualité",
+        "Quality": "Qualité",
         "Chapters": "Chapitres",
         "You aborted the media playback": "Vous avez interrompu la lecture de la vidéo.",
         "A network error caused the media download to fail part-way.": "Une erreur de réseau a interrompu le téléchargement de la vidéo.",
-        "The media could not be loaded, either because the server or network failed or because the format is not supported.": "Cette vidéo n'a pas pu être chargée, soit parce que le serveur ou le réseau a échoué ou parce que le format n'est pas reconnu.",
+        "The media could not be loaded, either because the server or network failed or because the format is not supported.": "Cette vidéo n'a pas pu être chargée, soit parce que le serveur ou le réseau a échoué ou parce que le format n'est pas reconnu. Essayez de mettre à jour votre navigateur ou telechargez le plugin flash player : https://get.adobe.com/fr/flashplayer/",
         "The media playback was aborted due to a corruption problem or because the media used features your browser did not support.": "La lecture de la vidéo a été interrompue à cause d'un problème de corruption ou parce que la vidéo utilise des fonctionnalités non prises en charge par votre navigateur.",
         "No compatible source was found for this media.": "Aucune source compatible n'a été trouvée pour cette vidéo."
       }
@@ -293,18 +317,14 @@ const config = {
       "ID_CLIENT": process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
       "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
     },
-    "dasheverywhere": castlab,
-    "techOrder": ["dash", "html5", "dashas"],
-    "plugins": {
-      "chromecast": {
-        "appId": process.env.CHROMECAST_ID || '',
-        "metadata": {
-          "title": "Title",
-          "subtitle": "Subtitle"
-        }
-      },
-      "ga": {}
-    }
+    "chromecast": {
+      "appId": process.env.CHROMECAST_ID || '',
+      "metadata": {
+        "title": "Title",
+        "subtitle": "Subtitle"
+      }
+    },
+    "techOrder": ["dash", "html5", "dashas"]
   }
 };
 
