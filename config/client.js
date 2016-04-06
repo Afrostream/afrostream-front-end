@@ -245,6 +245,11 @@ const config = {
     "controlBar": {
       "volumeMenuButton": {
         "inline": false
+      },
+      "progressControl": {
+        "mouseThumbnailDisplay": {
+          "host": "hw.cdn.afrostream.net"
+        }
       }
     },
     "metrics": {
