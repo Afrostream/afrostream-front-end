@@ -262,7 +262,7 @@ const config = {
         "lang": "fr"
       },
       "autoSwitch": true,
-      "bolaEnabled": true,
+      "bolaEnabled": false,
       "scheduleWhilePaused": true,
       "initialBitrate": 400,
       "liveFragmentCount": 4,
