@@ -275,7 +275,7 @@ const config = {
         "bufferTimeAtTopQualityLongForm": 60,
         "longFormContentDurationThreshold": 600,
         "richBufferThreshold": 20,
-        "abandonLoadTimeout": 10,
+        "abandonLoadTimeout": 4,
         "fragmentLoaderRetryAttempts": 3,
         "fragmentLoaderRetryInterval": 1000
       },
