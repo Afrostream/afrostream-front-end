@@ -43,7 +43,7 @@ const prodConfig = merge({}, webpackConfig, {
         unused: true,
         if_return: true,
         join_vars: true,
-        drop_console: process.env.NODE_ENV === 'production',
+        drop_console: process.env.NODE_ENV === 'production' ? true : false,
         pure_funcs: process.env.NODE_ENV === 'production' ? ['vjs.log', 'videojs.log'] : []
       },
       minimize: true,
