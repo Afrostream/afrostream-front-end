@@ -153,6 +153,7 @@ const webpackConfig = {
           RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY),
           CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
           GOCARDLESS_PUBLIC_KEY: JSON.stringify(process.env.GOCARDLESS_PUBLIC_KEY),
+          OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
           GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)
         }
       }),
