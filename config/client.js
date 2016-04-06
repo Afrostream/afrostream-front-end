@@ -281,9 +281,9 @@ const config = {
     },
     "languages": {
       "fr": {
-        "French": "Francais",
-        "fra": "Francais",
-        "fr": "Francais",
+        "French": "Français",
+        "fra": "Français",
+        "fr": "Français",
         "English": "Anglais",
         "eng": "Anglais",
         "en": "Anglais",
