@@ -3,8 +3,8 @@
  */
 import MobileDetect from 'mobile-detect';
 
-export function detectUA() {
-  const userAgent = (window.navigator && navigator.userAgent) || '';
+export function detectUA () {
+  const userAgent = (navigator && navigator.userAgent.toLowerCase()) || '';
   const detect = function (pattern) {
     return function () {
       return (pattern).test(userAgent);
@@ -24,8 +24,7 @@ export function detectUA() {
       var parseUserAgent, prepareData, renameOsx, cutSafariVersion;
 
       parseUserAgent = function () {
-        var userAgent = (window.navigator && navigator.userAgent) || '',
-          browserParts = /(ie|firefox|chrome|safari|opera)(?:.*version)?(?:[ \/])?([\w.]+)/.exec(userAgent),
+        var browserParts = /(ie|firefox|chrome|safari|opera)(?:.*version)?(?:[ \/])?([\w.]+)/.exec(userAgent),
           osParts = /(mac|win|linux|freebsd|mobile|iphone|ipod|ipad|android|blackberry|j2me|webtv)/.exec(userAgent);
 
         if (!!userAgent.match(/trident\/7\./)) {
