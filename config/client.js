@@ -263,11 +263,11 @@ const config = {
       },
       "autoSwitch": true,
       "bolaEnabled": true,
-      "scheduleWhilePaused": false,
+      "scheduleWhilePaused": true,
       "initialBitrate": 400,
       "liveFragmentCount": 4,
       "buffer": {
-        "bufferToKeep": 30,
+        "bufferToKeep": 60,
         "minBufferTime": 8,
         "bufferPruningInterval": 30,
         "bandwidthSafetyFactor": 0.9,
