@@ -247,8 +247,10 @@ const config = {
         "inline": false
       },
       "progressControl": {
-        "mouseThumbnailDisplay": {
-          "host": "hw.cdn.afrostream.net"
+        "seekBar": {
+          "mouseThumbnailDisplay": {
+            "host": "hw.cdn.afrostream.net"
+          }
         }
       }
     },
