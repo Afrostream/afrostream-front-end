@@ -72,7 +72,12 @@ export function facebook (path = 'signin') {
     return async () => {
       return await new Promise((resolve, reject) => {
         let oauthPopup = window.open(url, 'facebook_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
-        oauthPopup.onbeforeunload = function () {
+        let intervalCheck = 0;
+        let beforeUnload = () => {
+          oauthPopup = null;
+          if (intervalCheck) {
+            clearInterval(intervalCheck);
+          }
           try {
             const tokenData = getToken();
             if (tokenData && tokenData.error) {
@@ -96,7 +101,14 @@ export function facebook (path = 'signin') {
           } catch (err) {
             return reject(err);
           }
-        }
+
+        };
+        oauthPopup.onbeforeunload = beforeUnload;
+        intervalCheck = setInterval(function () {
+          if (!oauthPopup.onbeforeunload) {
+            beforeUnload();
+          }
+        }, 1000);
       });
     };
   };

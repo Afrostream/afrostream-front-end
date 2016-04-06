@@ -88,7 +88,7 @@ export function gocardless(planCode, planLabel) {
     let left = (window.outerWidth - width) / 2;
     return async () => {
       return await new Promise((resolve, reject) => {
-        const redirectFlowPopup = window.open(encodeURI(url), 'gocardless', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
+        let redirectFlowPopup = window.open(encodeURI(url), 'gocardless', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
         redirectFlowPopup.onbeforeunload = function () {
           try {
             let redirectFlows = localStorage.getItem('gocardlessRedirectFlow');
