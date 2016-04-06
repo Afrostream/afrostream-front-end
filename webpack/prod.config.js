@@ -16,7 +16,7 @@ const prodConfig = merge({}, webpackConfig, {
   },
   externals: [],
   node: {
-    console: process.env.NODE_ENV === 'production',
+    console: process.env.NODE_ENV === 'production' ? false : true,
     net: 'empty',
     tls: 'empty',
     dns: 'empty'
