@@ -237,7 +237,6 @@ const config = {
   player: {
     "autoplay": true,
     "controls": true,
-    // "aspectRatio": "16:9",
     "language": "fr",
     "dashas": {
       "protData": protData
@@ -268,7 +267,7 @@ const config = {
       "liveFragmentCount": 4,
       "buffer": {
         "bufferToKeep": 60,
-        "minBufferTime": 8,
+        "minBufferTime": 24,
         "bufferPruningInterval": 30,
         "bandwidthSafetyFactor": 0.9,
         "bufferTimeAtTopQuality": 30,
