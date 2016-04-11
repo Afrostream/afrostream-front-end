@@ -543,8 +543,8 @@ class PlayerComponent extends Component {
       };
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5));
     }
-    //Fix Safari < 6.2 can't play hls
     if (ua.isSafari()) {
+      //Fix Safari < 6.2 can't play hls
       if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
         playerData.techOrder = _.sortBy(playerData.techOrder, (k) => {
           return k !== 'dashas';
@@ -576,6 +576,8 @@ class PlayerComponent extends Component {
       playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
         return k !== 'html5';
       });
+      debugger;
+
     }
 
     //VTT flash vtt.js
