@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as ModalActionCreators from '../../../actions/modal';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import classSet from 'classnames';
 import config from '../../../../../config';
 import _ from 'lodash';
@@ -12,10 +12,10 @@ if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
 }
 
-@connect(({ User, Movie,Video,Season,Episode }) => ({User, Movie, Video, Season, Episode}))
+@connect(({User, Movie, Video, Season, Episode}) => ({User, Movie, Video, Season, Episode}))
 class WelcomeHeader extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       isMobile: false,
@@ -39,7 +39,7 @@ class WelcomeHeader extends React.Component {
     promoCode: ''
   };
 
-  componentDidMount() {
+  componentDidMount () {
     let isMobile = false;
     if (canUseDOM) {
       const userAgent = (window.navigator && navigator.userAgent) || '';
@@ -63,18 +63,18 @@ class WelcomeHeader extends React.Component {
         "function" == typeof define && define.amd ? define(["jquery"], a) : a(jQuery)
       }(function (a) {
         "use strict";
-        function b(a) {
+        function b (a) {
           if (a instanceof Date)return a;
           if (String(a).match(g))return String(a).match(/^[0-9]*$/) && (a = Number(a)), String(a).match(/\-/) && (a = String(a).replace(/\-/g, "/")), new Date(a);
           throw new Error("Couldn't cast `" + a + "` to a date object.")
         }
 
-        function c(a) {
+        function c (a) {
           var b = a.toString().replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
           return new RegExp(b)
         }
 
-        function d(a) {
+        function d (a) {
           return function (b) {
             var d = b.match(/%(-|!)?[A-Z]{1}(:[^;]+;)?/gi);
             if (d)for (var f = 0, g = d.length; g > f; ++f) {
@@ -85,7 +85,7 @@ class WelcomeHeader extends React.Component {
           }
         }
 
-        function e(a, b) {
+        function e (a, b) {
           var c = "s", d = "";
           return a && (a = a.replace(/(:|;|\s)/gi, "").split(/\,/), 1 === a.length ? c = a[0] : (d = a[0], c = a[1])), 1 === Math.abs(b) ? d : c
         }
@@ -184,17 +184,17 @@ class WelcomeHeader extends React.Component {
     }
   }
 
-  showLock() {
+  showLock () {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(ModalActionCreators.open('showSignup'));
   }
 
-  hasPromo() {
+  hasPromo () {
     let pathName = this.context.location.pathname.split('/').join('');
     let HasProm = _.find(config.promoCodes, function (promo) {
       return pathName === promo.code;
@@ -202,35 +202,15 @@ class WelcomeHeader extends React.Component {
     return HasProm;
   }
 
-  showGiftLock() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(ModalActionCreators.open('showGift', true, '/select-plan/afrostreamgift/checkout'));
-  }
-
-  showPromoGiftLock() {
-    const {
-      props: {
-        dispatch
-        }
-      } = this;
-
-    dispatch(ModalActionCreators.open('showSignin', true, '/select-plan/afrostreamgift/checkout'));
-  }
-
-  render() {
+  render () {
 
     const {
       props: {
-        Movie,Season,Episode,params
-        }
-      } = this;
+        Movie, Season, Episode, params
+      }
+    } = this;
 
-    let { movieId,seasonId,episodeId } = params;
+    let {movieId, seasonId, episodeId} = params;
     let info = {
       title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
       poster: `${config.metadata.shareImage}`,
@@ -288,20 +268,25 @@ class WelcomeHeader extends React.Component {
       }
     }
 
-    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`};
+    //&h=${this.state.size.height}
+    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`};
 
     let promoCode = this.hasPromo();
 
     let welcomeClassesSet = {
       'welcome-header': true,
+      'welcome-header_movie': Boolean(movieData),
       'promo': promoCode
     };
 
 
     if (!promoCode) {
       return (
-        <section className={classSet(welcomeClassesSet)} style={imageStyle}>
-          <div className="afrostream-movie__mask"/>
+        <section className={classSet(welcomeClassesSet)}>
+          <div className="afrostream-movie__poster" style={imageStyle}>
+            <div className="afrostream-movie__mask"/>
+          </div>
+          {this.state.isMobile ? <SignUpButton /> : ''}
           <div className="afrostream-movie">
             <div className="afrostream-movie__info">
               <h1>{info.movie.title}</h1>
@@ -317,7 +302,7 @@ class WelcomeHeader extends React.Component {
         </section>
       );
     }
-    else if (promoCode && promoCode.code == 'SENEGALSERIE') {
+    else {
 
       return (
         <section className={classSet(welcomeClassesSet)} style={imageStyle}>
@@ -329,26 +314,6 @@ class WelcomeHeader extends React.Component {
               <h5>Fin de l'offre promotionnelle dans</h5>
               <div id="countdown"></div>
               <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN
-                MAINTENANT
-              </button>
-            </div>
-            <h6>{promoCode.promoConditions1}</h6>
-            <h6>{promoCode.promoConditions2}</h6>
-          </div>
-        </section>
-      );
-    } else {
-
-      return (
-        <section className={classSet(welcomeClassesSet)} style={imageStyle}>
-          <div className="promo-content">
-            <div className="promo-message">
-              <h2>{promoCode.promoHeader}
-                <div>avec le code promo: {promoCode.code}</div>
-              </h2>
-              <h5>Fin de l'offre promotionnelle dans</h5>
-              <div id="countdown"></div>
-              <button className="subscribe-button-promo" type=" button" onClick={::this.showPromoGiftLock}>OFFRIR
                 MAINTENANT
               </button>
             </div>
