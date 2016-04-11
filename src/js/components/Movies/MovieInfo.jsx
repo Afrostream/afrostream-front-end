@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 import Billboard from './Billboard'
 import Spinner from '../Spinner/Spinner';
@@ -18,10 +18,10 @@ if (process.env.BROWSER) {
   require('./MovieInfo.less');
 }
 
-@connect(({ Movie,Season }) => ({Movie, Season}))
+@connect(({Movie, Season}) => ({Movie, Season}))
 class MovieInfo extends LoadVideo {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       isMobile: false,
@@ -32,7 +32,7 @@ class MovieInfo extends LoadVideo {
     };
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let isMobile = false;
     if (canUseDOM) {
       const userAgent = (window.navigator && navigator.userAgent) || '';
@@ -63,11 +63,11 @@ class MovieInfo extends LoadVideo {
     active: false
   };
 
-  render() {
+  render () {
 
     let {
-      props: { Movie, active, dataId, data,maxLength,load,showBtn}
-      } = this;
+      props: {Movie, active, dataId, data, maxLength, load, showBtn}
+    } = this;
 
     data = data || Movie.get(`movies/${dataId}`);
 
@@ -85,12 +85,14 @@ class MovieInfo extends LoadVideo {
 
     let poster = data.get('poster');
     let posterImg = poster ? poster.get('imgix') : '';
-    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type})`} : {};
+    //&h=${this.state.size.height}
+    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`} : {};
     const link = this.getLink();
     return (
       <div ref="slContainer" className={classes}>
+        <div ref="slBackground" className="movie-background" style={imageStyles}>
+        </div>
         <Link to={link}>
-          <div ref="slBackground" className="movie-background" style={imageStyles}/>
           <div className="btn-play"/>
         </Link>
         {data ? <Billboard {...{active, data, dataId, maxLength, load}} /> : ''}

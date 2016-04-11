@@ -576,8 +576,6 @@ class PlayerComponent extends Component {
       playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
         return k !== 'html5';
       });
-      debugger;
-
     }
 
     //VTT flash vtt.js
