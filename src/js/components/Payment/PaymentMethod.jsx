@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
-import {dict,payment,featuresFlip} from '../../../../config';
+import { dict, payment, featuresFlip } from '../../../../config';
 import { Link } from 'react-router';
 
-import {RecurlyForm,GocardlessForm, PaypalForm} from './Forms';
+import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm } from './Forms';
 
 if (process.env.BROWSER) {
   require('./PaymentMethod.less');
@@ -12,15 +12,20 @@ if (process.env.BROWSER) {
 const Methods = {
   GOCARDLESS: 'gocardless',
   CARD: 'card',
-  PAYPAL: 'paypal'
+  PAYPAL: 'paypal',
+  CASHWAY: 'cashway'
 };
 
 class PaymentMethod extends React.Component {
 
-  constructor(props) {
+  static contextTypes = {
+    location: PropTypes.object.isRequired
+  };
+
+  constructor (props) {
     super(props);
-    let canUseMultiple = this.multipleMethods();
-    this.state = {method: canUseMultiple ? payment.default : Methods.CARD};
+    let method = payment.default;
+    this.state = {method: method};
   }
 
   static propTypes = {
@@ -37,11 +42,11 @@ class PaymentMethod extends React.Component {
 
   static methods = Methods;
 
-  multipleMethods() {
-    return !this.props.isGift && (featuresFlip.gocardless || featuresFlip.paypal)
+  multipleMethods () {
+    return !this.props.isGift && (featuresFlip.gocardless || featuresFlip.paypal || featuresFlip.cashway)
   }
 
-  hasLib() {
+  hasLib () {
     switch (this.state.method) {
       case  Methods.GOCARDLESS:
         return this.refs.gocardless.hasLib();
@@ -51,20 +56,38 @@ class PaymentMethod extends React.Component {
         break;
       case  Methods.PAYPAL:
         return this.refs.paypal.hasLib();
+
+      case  Methods.CASHWAY:
+        return this.refs.cashway.hasLib();
         break;
     }
   }
 
-  method() {
+  method () {
     return this.state.method;
   }
 
-  componentDidMount() {
+  componentDidMount () {
+    let {query} = this.context.location;
+
     this.container = ReactDOM.findDOMNode(this);
     this.container.addEventListener('changemethod', this.switchMethod.bind(this));
+
+    let canUseMultiple = this.multipleMethods();
+    let method = this.method();
+
+    if (!canUseMultiple) {
+      method = Methods.CARD;
+    }
+    if (query.method) {
+      method = query.method;
+    }
+    this.setState({
+      method: method
+    });
   }
 
-  async submit(billingInfo, currentPlan) {
+  async submit (billingInfo, currentPlan) {
     switch (this.state.method) {
       case  Methods.GOCARDLESS:
         return await this.refs.gocardless.submit(billingInfo);
@@ -75,10 +98,13 @@ class PaymentMethod extends React.Component {
       case  Methods.PAYPAL:
         return await this.refs.paypal.submit(billingInfo, currentPlan);
         break;
+      case  Methods.CASHWAY:
+        return await this.refs.cashway.submit(billingInfo, currentPlan);
+        break;
     }
   }
 
-  switchMethod(event) {
+  switchMethod (event) {
     if (!this.multipleMethods()) {
       return;
     }
@@ -89,16 +115,47 @@ class PaymentMethod extends React.Component {
     });
   }
 
-  render() {
+  renderMethods () {
+
+    let {query} = this.context.location;
+
+    let recurly = <RecurlyForm ref="card"
+                               selected={this.state.method === Methods.CARD}/>;
+    let paypal = <PaypalForm ref="paypal"
+                             selected={this.state.method === Methods.PAYPAL}
+                             planLabel={this.props.planLabel}/>;
+    let gocardless = <GocardlessForm ref="gocardless"
+                                     selected={this.state.method === Methods.GOCARDLESS}/>;
+
+    let cashway = <CashwayForm ref="cashway"/>;
+
+
+    let methods = [];
+    switch (query.method) {
+      case 'cashway':
+        methods.push(cashway);
+        break;
+      default:
+        methods.push(recurly);
+        if (!this.props.isGift) {
+          if (featuresFlip.paypal) {
+            methods.push(paypal);
+          }
+          if (featuresFlip.gocardless) {
+            methods.push(gocardless);
+          }
+        }
+        break;
+    }
+
+    return methods;
+  }
+
+
+  render () {
     return (
       <div className="panel-group">
-        <RecurlyForm ref="card"
-                     selected={this.state.method === Methods.CARD}/>
-        {!this.props.isGift ? <PaypalForm ref="paypal"
-                                          selected={this.state.method === Methods.PAYPAL}
-                                          planLabel={this.props.planLabel}/> : ''}
-        {!this.props.isGift && featuresFlip.gocardless ? <GocardlessForm ref="gocardless"
-                                                                         selected={this.state.method === Methods.GOCARDLESS}/> : ''}
+        {this.renderMethods()}
       </div>
     );
   }

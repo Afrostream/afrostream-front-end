@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import classSet from 'classnames';
-import {planCodes,dict} from '../../../../config/client';
+import { planCodes, dict } from '../../../../config/client';
 import * as UserActionCreators from '../../actions/user';
 import Spinner from '../Spinner/Spinner';
 import GiftDetails from './GiftDetails';
@@ -17,9 +17,13 @@ if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
-@connect(({ User}) => ({User}))
+@connect(({User}) => ({User}))
 class PaymentForm extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+  
   static contextTypes = {
     history: PropTypes.object.isRequired
   };
@@ -32,30 +36,18 @@ class PaymentForm extends React.Component {
     pageHeader: dict.payment.header
   };
 
-  hasPlan() {
+  hasPlan () {
     const {
       props: {
-        params: { planCode }
-        }
-      } = this;
+        params: {planCode}
+      }
+    } = this;
     return _.find(planCodes, (plan) => {
       return planCode === plan.code;
     });
   }
 
-  componentWillReceiveProps() {
-    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
-    this.setState({
-      hasLib: hasOneLib
-    });
-  }
-
-  componentWillMount() {
-    const {
-      props: {
-        params: { planCode }
-        }
-      } = this;
+  setupPlan () {
     let currentPlan = this.hasPlan();
     this.setState({
       isGift: currentPlan && currentPlan.code === 'afrostreamgift',
@@ -63,7 +55,22 @@ class PaymentForm extends React.Component {
     });
   }
 
-  renderUserForm() {
+  setupLib () {
+    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
+    this.setState({
+      hasLib: hasOneLib
+    });
+  }
+
+  componentWillReceiveProps () {
+    this.setupLib();
+  }
+
+  componentWillMount () {
+    this.setupPlan();
+  }
+
+  renderUserForm () {
     return (<div className="row">
       <div className="form-group col-md-6">
         <label className="form-label" htmlFor="first_name">{dict.payment.name}</label>
@@ -92,14 +99,14 @@ class PaymentForm extends React.Component {
     </div>);
   }
 
-  renderGift() {
+  renderGift () {
     if (!this.state.isGift) {
       return;
     }
     return <GiftDetails ref="giftDetails" isVisible={this.state.isGift}/>;
   }
 
-  renderSubmit() {
+  renderSubmit () {
     return (<div className="row">
       <div className="form-group  col-md-12">
         <button
@@ -114,7 +121,7 @@ class PaymentForm extends React.Component {
     </div>);
   }
 
-  renderDroits() {
+  renderDroits () {
 
     let checkClass = {
       'form-group': true,
@@ -141,7 +148,7 @@ class PaymentForm extends React.Component {
     </div>);
   }
 
-  renderCGU() {
+  renderCGU () {
 
     let checkClass = {
       'form-group': true,
@@ -169,13 +176,13 @@ class PaymentForm extends React.Component {
     </div>);
   }
 
-  async onSubmit(e) {
+  async onSubmit (e) {
     const {
       props: {
         User,
-        params: { planCode }
-        }
-      } = this;
+        params: {planCode}
+      }
+    } = this;
 
     e.preventDefault();
 
@@ -216,13 +223,13 @@ class PaymentForm extends React.Component {
   }
 
 
-  async submitSubscription(formData) {
+  async submitSubscription (formData) {
     const {
       props: {
         dispatch,
-        params: { planCode }
-        }
-      } = this;
+        params: {planCode}
+      }
+    } = this;
 
     const self = this;
 
@@ -244,7 +251,7 @@ class PaymentForm extends React.Component {
   }
 
   // A simple error handling function to expose errors to the customer
-  error(err) {
+  error (err) {
     let formatError = err;
     if (err instanceof Array) {
       formatError = err[0];
@@ -266,7 +273,7 @@ class PaymentForm extends React.Component {
     });
   }
 
-  disableForm(disabled, status = 0, message = '') {
+  disableForm (disabled, status = 0, message = '') {
     this.setState({
       disabledForm: disabled,
       message: message,
@@ -280,7 +287,12 @@ class PaymentForm extends React.Component {
     });
   }
 
-  renderForm() {
+  renderPaymentMethod (planLabel) {
+    return (<PaymentMethod ref="methodForm" isGift={this.state.isGift} planCode={this.state.currentPlan.code}
+                           planLabel={planLabel}/>);
+  }
+
+  renderForm () {
 
     var spinnerClasses = {
       'spinner-payment': true,
@@ -303,8 +315,7 @@ class PaymentForm extends React.Component {
 
             {this.renderUserForm()}
 
-            <PaymentMethod ref="methodForm" isGift={this.state.isGift} planCode={this.state.currentPlan.code}
-                           planLabel={planLabel}/>
+            {this.renderPaymentMethod(planLabel)}
 
             {this.renderGift()}
 
@@ -318,12 +329,12 @@ class PaymentForm extends React.Component {
     );
   }
 
-  render() {
+  render () {
     const {
       props: {
-        params: { status }
-        }
-      } = this;
+        params: {status}
+      }
+    } = this;
 
     if (!this.state.hasLib) {
       return (<PaymentError
