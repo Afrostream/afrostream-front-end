@@ -1,16 +1,16 @@
-import React ,{PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import UserButton from './../User/UserButton';
 import GoBack from './../GoBack/GoBack';
 import SmartBanner from './SmartBanner';
 import classSet from 'classnames';
-import {apps} from '../../../../config';
+import { apps } from '../../../../config';
 if (process.env.BROWSER) {
   require('./Header.less');
 }
 
-@connect(({ Event,User }) => ({Event, User}))
+@connect(({Event, User}) => ({Event, User}))
 class Header extends React.Component {
 
   static contextTypes = {
@@ -27,7 +27,7 @@ class Header extends React.Component {
     isIOS: false
   };
 
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('scroll', this.updatePin.bind(this));
     this.setState({
       isIOS: window.navigator.userAgent.match(/(iPod|iPhone|iPad)/i)
@@ -35,11 +35,11 @@ class Header extends React.Component {
     this.updatePin();
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('scroll', this.updatePin.bind(this));
   }
 
-  updatePin() {
+  updatePin () {
     let pin = window.pageYOffset;
     if (pin !== this.state.pinned) {
       this.setState({
@@ -48,14 +48,14 @@ class Header extends React.Component {
     }
   }
 
-  render() {
+  render () {
 
     const {
       props: {
         Event,
         User
-        }
-      } = this;
+      }
+    } = this;
 
     const hiddenMode = !Event.get('userActive');
     const pinned = Event.get('pinHeader');
@@ -74,8 +74,6 @@ class Header extends React.Component {
       'navbar-fixed-color': pinned || this.state.pinned
       || this.context.history.isActive('recherche')
       || this.context.history.isActive('compte')
-      || this.context.history.isActive('cancel-subscription')
-      || this.context.history.isActive('select-plan')
       || this.context.history.isActive('couponregister')
     };
 

@@ -8,10 +8,21 @@
   "signupSocialButton": "S'inscrire avec {connection:title}",
   "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
   "planCodes": {
+    "cashway-coupon-2months": "Formule 2 Mois - soit 5,00€ par mois sans engagement",
+    "cashway-coupon-oneyear": "Formule Sérénité - 59,99€ pour 1 an de films et séries afro",
     "afrostreammonthly": "Formule Mensuel - 7 jours d’essai puis 6,99€ par mois sans engagement",
     "afrostreamambassadeurs2": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "afrostreamambassadeurs": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
-    "afrostreamgift": "Formule Cadeau - 1 an de films et séries afro pour 59,99€"
+    "afrostreamgift": "Formule Cadeau - 1 an de films et séries afro pour 59,99€",
+    "infos": {
+      "price": "Tarif",
+      "internalFreePeriod": "7 jours d'essai offert",
+      "internalMaxScreens": "Écrans disponibles en simultané",
+      "internalMobile": "Sur votre ordinateur, TV, smartphone et tablette",
+      "internalUnlimited": "Films et séries TV en illimité",
+      "internalEngagment": "Sans engagement",
+      "internalVip": "Invitations avant première film"
+    }
   },
   "history": {
     "label": "Reprendre la lecture"

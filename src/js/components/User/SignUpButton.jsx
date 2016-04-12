@@ -21,19 +21,21 @@ class SignUpButton extends React.Component {
       }
     } = this;
 
-    dispatch(ModalActionCreators.open('showSignup'));
+    dispatch(ModalActionCreators.open('showSignup', true, this.props.to));
   }
 
 }
 
 SignUpButton.propTypes = {
   label: React.PropTypes.string,
-  className: React.PropTypes.string
+  className: React.PropTypes.string,
+  to: React.PropTypes.string
 };
 
 SignUpButton.defaultProps = {
   label: 'DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE',
-  className: 'subscribe-button'
+  className: 'subscribe-button',
+  to: ''
 };
 
 export default SignUpButton;
