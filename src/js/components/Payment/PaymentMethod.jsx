@@ -19,13 +19,17 @@ const Methods = {
 class PaymentMethod extends React.Component {
 
   static contextTypes = {
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   };
 
   constructor (props) {
     super(props);
     let method = payment.default;
-    this.state = {method: method};
+    this.state = {
+      isCash: false,
+      method: method
+    };
   }
 
   static propTypes = {
@@ -82,8 +86,10 @@ class PaymentMethod extends React.Component {
     if (query.method) {
       method = query.method;
     }
+
     this.setState({
-      method: method
+      method: method,
+      isCash: this.context.history.isActive('cash')
     });
   }
 
@@ -117,7 +123,6 @@ class PaymentMethod extends React.Component {
 
   renderMethods () {
 
-    let {query} = this.context.location;
 
     let recurly = <RecurlyForm ref="card"
                                selected={this.state.method === Methods.CARD}/>;
@@ -131,8 +136,8 @@ class PaymentMethod extends React.Component {
 
 
     let methods = [];
-    switch (query.method) {
-      case 'cashway':
+    switch (true) {
+      case this.state.isCash === true:
         methods.push(cashway);
         break;
       default:

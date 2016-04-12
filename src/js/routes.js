@@ -33,9 +33,13 @@ export default (
     <Route name="coupon" path="coupon" component={RedeemCoupon}/>
     <Route name="couponregister" path="couponregister" component={CouponRegister}/>
     <Route name="login" path="login" component={LoginPage}/>
-    <Route name="cashway" path="cashway" component={CashwayPage}/>
     <Route name="blog" path="blog" component={Blog.PostList}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
+    </Route>
+    <Route name="cash" path="cash" component={CashwayPage}>
+      <Route name="cashPayment" path="select-plan" component={PaymentPage}>
+        <Route name="cashPaymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
+      </Route>
     </Route>
     <Route name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
