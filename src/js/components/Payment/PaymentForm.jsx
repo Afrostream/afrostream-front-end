@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
+import { prepareRoute } from '../../decorators';
 import classSet from 'classnames';
 import { planCodes, dict } from '../../../../config/client';
 import * as UserActionCreators from '../../actions/user';
+import * as EventActionCreators from '../../actions/event';
 import Spinner from '../Spinner/Spinner';
 import GiftDetails from './GiftDetails';
 import PaymentSuccess from './PaymentSuccess';
@@ -12,18 +14,22 @@ import PaymentMethod from './PaymentMethod';
 import Query from 'dom-helpers/query';
 import DomClass from 'dom-helpers/class';
 import _ from 'lodash';
-
 if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
 @connect(({User}) => ({User}))
+@prepareRoute(async function ({store}) {
+  return await * [
+    store.dispatch(EventActionCreators.pinHeader(true))
+  ];
+})
 class PaymentForm extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
-  
+
   static contextTypes = {
     history: PropTypes.object.isRequired
   };
@@ -43,14 +49,14 @@ class PaymentForm extends React.Component {
       }
     } = this;
     return _.find(planCodes, (plan) => {
-      return planCode === plan.code;
+      return planCode === plan.internalPlanUuid;
     });
   }
 
   setupPlan () {
     let currentPlan = this.hasPlan();
     this.setState({
-      isGift: currentPlan && currentPlan.code === 'afrostreamgift',
+      isGift: currentPlan && currentPlan.internalPlanUuid === 'afrostreamgift',
       currentPlan: currentPlan
     });
   }
@@ -288,8 +294,9 @@ class PaymentForm extends React.Component {
   }
 
   renderPaymentMethod (planLabel) {
-    return (<PaymentMethod ref="methodForm" isGift={this.state.isGift} planCode={this.state.currentPlan.code}
-                           planLabel={planLabel}/>);
+    return (
+      <PaymentMethod ref="methodForm" isGift={this.state.isGift} planCode={this.state.currentPlan.internalPlanUuid}
+                     planLabel={planLabel}/>);
   }
 
   renderForm () {
@@ -299,7 +306,7 @@ class PaymentForm extends React.Component {
       'spinner-loading': this.state.loading
     };
 
-    const planLabel = dict.planCodes[this.state.currentPlan.code];
+    const planLabel = dict.planCodes[this.state.currentPlan.internalPlanUuid];
 
     return (
       <div className="payment-wrapper">

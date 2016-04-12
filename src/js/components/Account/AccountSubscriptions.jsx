@@ -1,44 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {dict} from '../../../../config';
+import { dict } from '../../../../config';
 import classSet from 'classnames';
 import moment from 'moment';
+import { formatPrice } from '../../lib/utils';
 
 if (process.env.BROWSER) {
   require('./AccountSubscriptions.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({User}) => ({User}))
 class AccountSubscriptions extends React.Component {
 
-  formatPrice(price, currency) {
-    const currencySymbols = {
-      'USD': '$', // US Dollar
-      'EUR': '€', // Euro
-      'CRC': '₡', // Costa Rican Colón
-      'GBP': '£', // British Pound Sterling
-      'ILS': '₪', // Israeli New Sheqel
-      'INR': '₹', // Indian Rupee
-      'JPY': '¥', // Japanese Yen
-      'KRW': '₩', // South Korean Won
-      'NGN': '₦', // Nigerian Naira
-      'PHP': '₱', // Philippine Peso
-      'PLN': 'zł', // Polish Zloty
-      'PYG': '₲', // Paraguayan Guarani
-      'THB': '฿', // Thai Baht
-      'UAH': '₴', // Ukrainian Hryvnia
-      'VND': '₫' // Vietnamese Dong
-    };
-
-    return `${price / 100} ${currencySymbols[currency]}`;
-  }
-
-  render() {
+  render () {
     const {
       props: {
         User
-        }
-      } = this;
+      }
+    } = this;
 
     const user = User.get('user');
     if (!user) {
@@ -84,8 +63,8 @@ class AccountSubscriptions extends React.Component {
               let periodPercent = {width: `${percentComplete}%`};
               //PRICE
               let currencyPlan = internalPlan.get('currency');
-              let amountInCentsExclTax = this.formatPrice(internalPlan.get('amountInCentsExclTax'), currencyPlan);
-              let amountInCents = this.formatPrice(internalPlan.get('amountInCents'), currencyPlan);
+              let amountInCentsExclTax = formatPrice(internalPlan.get('amountInCentsExclTax'), currencyPlan);
+              let amountInCents = formatPrice(internalPlan.get('amountInCents'), currencyPlan);
               //PROVIDER
               let providerName = providerPlan.get('providerName');
               let providerLogo = providerLogos.hasOwnProperty(providerName) ? providerLogos[providerName] : '';

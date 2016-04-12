@@ -85,19 +85,99 @@ const config = {
   ],
   planCodes: [
     {
-      code: 'afrostreammonthly',
-      date: '2015-10-01T00:00:00:00Z',
-      price: '699'
+      cash: true,
+      internalPlanUuid: 'cashway-coupon-2months',
+      name: '2 MOIS',
+      description: '2 MOIS',
+      amount_in_cents: '1000',
+      currency: 'EUR',
+      cycle: 'once',
+      periodUnit: 'month',
+      periodLength: 2,
+      internalPlanOpts: {
+        internalMaxScreens: 1,
+        internalFreePeriod: true,
+        internalMobile: true,
+        internalUnlimited: true,
+        internalVip: false,
+        internalActionLabel: 'OPTENIR MON COUPON'
+      }
     },
     {
-      code: 'afrostreamambassadeurs',
-      date: '2015-09-01T00:00:00:00Z',
-      price: '5999'
+      cash: true,
+      internalPlanUuid: 'cashway-coupon-oneyear',
+      name: 'Sérenité',
+      description: 'Sérenité',
+      amount_in_cents: '5999',
+      currency: 'EUR',
+      cycle: 'once',
+      periodUnit: 'year',
+      periodLength: 1,
+      internalPlanOpts: {
+        internalMaxScreens: 2,
+        internalFreePeriod: true,
+        internalMobile: true,
+        internalUnlimited: true,
+        internalVip: true,
+        internalActionLabel: 'OPTENIR MON COUPON'
+      }
     },
     {
-      code: 'afrostreamgift',
-      date: '2015-09-01T00:00:00:00Z',
-      price: '5999'
+      cash: false,
+      internalPlanUuid: 'afrostreammonthly',
+      name: 'Mensuel',
+      description: 'Mensuel',
+      amount_in_cents: '699',
+      currency: 'EUR',
+      cycle: 'once',
+      periodUnit: 'month',
+      periodLength: 1,
+      internalPlanOpts: {
+        internalMaxScreens: 1,
+        internalFreePeriod: true,
+        internalMobile: true,
+        internalUnlimited: true,
+        internalVip: false,
+        internalActionLabel: 'DÉMARREZ VOTRE ESSAI'
+      }
+    },
+    {
+      cash: false,
+      internalPlanUuid: 'afrostreamambassadeurs',
+      name: 'Sérenité',
+      description: 'Sérenité',
+      amount_in_cents: '5999',
+      currency: 'EUR',
+      cycle: 'once',
+      periodUnit: 'year',
+      periodLength: 1,
+      internalPlanOpts: {
+        internalMaxScreens: 2,
+        internalFreePeriod: true,
+        internalMobile: true,
+        internalUnlimited: true,
+        internalVip: true,
+        internalActionLabel: 'DÉMARREZ VOTRE ESSAI'
+      }
+    },
+    {
+      cash: false,
+      internalPlanUuid: 'afrostreamgift',
+      name: 'Cadeau',
+      description: 'Cadeau',
+      amount_in_cents: '5999',
+      currency: 'EUR',
+      cycle: 'once',
+      periodUnit: 'year',
+      periodLength: 1,
+      internalPlanOpts: {
+        internalMaxScreens: 2,
+        internalFreePeriod: false,
+        internalMobile: true,
+        internalUnlimited: true,
+        internalVip: true,
+        internalActionLabel: 'OFFRIR CETTE FORMULE'
+      }
     }
   ],
   payment: {
