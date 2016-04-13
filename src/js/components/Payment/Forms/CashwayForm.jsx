@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { dict } from '../../../../../config/client';
-import * as CouponActionCreators from '../../../actions/coupon';
 
 class CashwayForm extends React.Component {
 
@@ -33,7 +32,7 @@ class CashwayForm extends React.Component {
         });
 
         if (!couponCampaign) {
-          throw new Error('Coupon campaign not found');
+          throw new Error('Billing campaign not found');
         }
 
         return dispatch(CouponActionCreators.create({

@@ -17,26 +17,6 @@ function mergeUser(user, data) {
 
 export default createReducer(initialState, {
 
-  [ActionTypes.User.subscribe](state, { res, isGift}) {
-    if (!res) {
-      return state;
-    }
-    const data = isGift ? {} : res.body;
-    return state.merge({
-      ['user']: mergeUser(state.get('user'), data)
-    });
-  },
-
-  [ActionTypes.User.cancelSubscription](state, { res }) {
-    if (!res) {
-      return state;
-    }
-    const data = res.body;
-    return state.merge({
-      ['user']: mergeUser(state.get('user'), data)
-    });
-  },
-
   [ActionTypes.User.getProfile](state, { user}) {
     return state.merge({
       ['user']: mergeUser(state.get('user'), user),
@@ -50,16 +30,6 @@ export default createReducer(initialState, {
     });
   },
 
-  // #### SUBSCRIPTIONS ####
-  [ActionTypes.User.getSubscriptions](state, { res }) {
-    if (!res) {
-      return state;
-    }
-    const data = res.body;
-    return state.merge({
-      [`user`]: mergeUser(state.get('user'), data)
-    });
-  },
   // #### RECOMMENDATIONS ####
   [ActionTypes.User.getRecommendations](state, { videoId, res }) {
     if (!res) {
