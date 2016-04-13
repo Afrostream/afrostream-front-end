@@ -6,8 +6,12 @@ if (process.env.BROWSER) {
   require('./SignUpButton.less');
 }
 
-@connect(({}) => ({}))
+@connect(({User}) => ({User}))
 class SignUpButton extends React.Component {
+
+  static contextTypes = {
+    history: PropTypes.object.isRequired
+  };
 
   render () {
     return (<button className={this.props.className} type=" button" onClick={::this.showLock}
@@ -17,9 +21,16 @@ class SignUpButton extends React.Component {
   showLock () {
     const {
       props: {
+        User,
         dispatch
       }
     } = this;
+
+    const user = User.get('user');
+
+    if (user) {
+      return this.context.history.pushState(null, this.props.to);
+    }
 
     dispatch(ModalActionCreators.open('showSignup', true, this.props.to));
   }
@@ -35,7 +46,7 @@ SignUpButton.propTypes = {
 SignUpButton.defaultProps = {
   label: 'DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE',
   className: 'subscribe-button',
-  to: ''
+  to: '/'
 };
 
 export default SignUpButton;

@@ -77,6 +77,19 @@ class PaymentForm extends React.Component {
   }
 
   renderUserForm () {
+
+    const {
+      props: {
+        User
+      }
+    } = this;
+
+
+    const user = User.get('user').toJS();
+
+    let firstName = user && user.facebook && user.facebook.first_name || user && user.first_name;
+    let lastName = user && user.facebook && user.facebook.last_name || user && user.last_name;
+
     return (<div className="row">
       <div className="form-group col-md-6">
         <label className="form-label" htmlFor="first_name">{dict.payment.name}</label>
@@ -87,6 +100,7 @@ class PaymentForm extends React.Component {
           ref="firstName"
           id="first_name"
           name="first-name"
+          defaultValue={firstName}
           placeholder={dict.payment.name} required
           disabled={this.state.disabledForm}/>
       </div>
@@ -99,6 +113,7 @@ class PaymentForm extends React.Component {
           ref="lastName"
           id="last_name"
           name="last-name"
+          defaultValue={lastName}
           placeholder={dict.payment.lastName} required
           disabled={this.state.disabledForm}/>
       </div>
@@ -295,7 +310,8 @@ class PaymentForm extends React.Component {
 
   renderPaymentMethod (planLabel) {
     return (
-      <PaymentMethod ref="methodForm" isGift={this.state.isGift} planCode={this.state.currentPlan.internalPlanUuid}
+      <PaymentMethod ref="methodForm" isGift={this.state.isGift}
+                     planCode={this.state.currentPlan.internalPlanUuid} {...this.props}
                      planLabel={planLabel}/>);
   }
 
