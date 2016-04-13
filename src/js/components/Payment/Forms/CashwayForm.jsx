@@ -22,12 +22,37 @@ class CashwayForm extends React.Component {
         dispatch
       }
     } = this;
+
+    const providerName = 'cashway';
+
     return await dispatch(CouponActionCreators.getCouponCampaigns('cashway'))
-      .then((result) => {
+      .then(({res: {body: {couponsCampaigns = []}}}) => {
+
+        const couponCampaign = _.find(couponsCampaigns, ({internalPlan : {internalPlanUuid}})=> {
+          return internalPlanUuid === currentPlan.internalPlanUuid;
+        });
+
+        if (!couponCampaign) {
+          throw new Error('Coupon campaign not found');
+        }
+
         return dispatch(CouponActionCreators.create({
-          userBillingUuid: 'toto',
-          couponCampaignBillingUuid: 'toto'
-        }))
+          billingProvider: providerName,
+          lastName: billingInfo.lastName,
+          firstName: billingInfo.firstName,
+          couponsCampaignBillingUuid: couponCampaign.couponsCampaignBillingUuid
+        }));
+      })
+      .then(({res: {body: {coupon = {}}}}) => {
+        if (!coupon.code) {
+          throw new Error('Error on create coupon')
+        }
+        return {
+          billingProvider: providerName,
+          subOpts: {
+            couponCode: coupon.code
+          }
+        }
       });
   }
 

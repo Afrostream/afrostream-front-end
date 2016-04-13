@@ -28,7 +28,8 @@ class AccountSubscriptions extends React.Component {
     const providerLogos = {
       'celery': '/images/payment/bank-cards-paypal.png',
       'recurly': '/images/payment/bank-cards-paypal.png',
-      'gocardless': '/images/payment/virement.jpg'
+      'gocardless': '/images/payment/virement.jpg',
+      'cashway': '/images/payment/cashway-inline.png'
     };
 
     if (!subscriptionsList) {
@@ -51,7 +52,7 @@ class AccountSubscriptions extends React.Component {
           <tbody>
           {subscriptionsList.map((subscription, i) => {
 
-              let subscriptionDate = moment(subscription.get('subActivatedDate')).format('L');
+              let subscriptionDate = moment(subscription.get('subActivatedDate') || subscription.get('creationDate')).format('L');
               let internalPlan = subscription.get('internalPlan');
               let providerPlan = subscription.get('provider');
               //PERIOD

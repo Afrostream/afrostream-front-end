@@ -32,15 +32,11 @@
   },
   "payment": {
     "methodHeader": "Choisissez votre methode de payment",
-    "sublit": "DÉMARREZ VOTRE ESSAI",
     "name": "Votre Prénom",
     "lastName": "Votre Nom",
     "country": {
       "label": "Pays",
       "defaultValue": "FR"
-    },
-    "gift": {
-      "sublit": "OFFREZ MAINTENANT"
     },
     "promo": {
       "label": "Code promo (optionnel)",
