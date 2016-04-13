@@ -31,5 +31,33 @@ export function formatPrice (price, currency, coma = false) {
     formatPrice = numberWithCommas(formatPrice);
   }
 
-  return `${formatPrice} ${currencySymbols[currency]}`;
+  return `${formatPrice}${currencySymbols[currency]}`;
 }
+
+export function isBoolean (val) {
+  if (val == null)
+    return false;
+
+  if (typeof val === 'boolean') {
+    if (val === true)
+      return true;
+
+    return false;
+  }
+
+  if (typeof val === 'string') {
+    if (val === '')
+      return false;
+
+    val = val.replace(/^\s+|\s+$/g, '').toLowerCase();
+    if (val === 'true' || val === 'yes')
+      return true;
+
+    val = val.replace(/,/g, '.').replace(/^\s*\-\s*/g, '-');
+  }
+
+  if (!isNaN(val))
+    return (parseFloat(val) !== 0);
+
+  return false;
+};

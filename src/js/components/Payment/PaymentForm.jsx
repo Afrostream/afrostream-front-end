@@ -14,6 +14,7 @@ import PaymentError from './PaymentError';
 import PaymentMethod from './PaymentMethod';
 import Query from 'dom-helpers/query';
 import DomClass from 'dom-helpers/class';
+
 import _ from 'lodash';
 if (process.env.BROWSER) {
   require('./PaymentForm.less');
@@ -23,7 +24,7 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans('afr'))
+    store.dispatch(BillingActionCreators.getInternalplans())
   ];
 })
 class PaymentForm extends React.Component {
@@ -52,12 +53,15 @@ class PaymentForm extends React.Component {
       }
     } = this;
 
-    let billingPlans = Billing.get('internalPlans');
-
-    debugger;
-    return _.find(planCodes, (plan) => {
-      return planCode === plan.internalPlanUuid;
+    let planCodes = Billing.get('internalPlans');
+    if (!planCodes) {
+      return false;
+    }
+    let plan = planCodes.find((plan) => {
+      return planCode === plan.get('internalPlanUuid');
     });
+
+    return plan && plan.toJS();
   }
 
   setupPlan () {
