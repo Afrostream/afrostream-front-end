@@ -55,7 +55,7 @@ class SelectPlan extends React.Component {
                          to={`${isCash ? '/cash' : ''}/select-plan/${plan.internalPlanUuid}/checkout`}>{`${objVal}`}</Link>);
           break;
         case 'price':
-          value = `${formatPrice(plan['amount_in_cents'], plan.currency, true)}/${dict.account.billing.periods[plan.periodUnit]}`;
+          value = `${formatPrice(plan['amount_in_cents'], plan.currency, true)} / ${plan.periodLength}${dict.account.billing.periods[plan.periodUnit]}`;
           break;
         default :
           value = objVal;
