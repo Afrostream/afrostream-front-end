@@ -9,7 +9,29 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Coupon.validate](state, { res}) {
+  [ActionTypes.Coupon.validate](state, {res}) {
+
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      ['coupon']: data
+    });
+  },
+
+  [ActionTypes.Coupon.getCouponCampaigns](state, {res}) {
+
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      ['couponcampaigns']: data
+    });
+  },
+
+  [ActionTypes.Coupon.create](state, {res}) {
 
     if (!res) {
       return state;

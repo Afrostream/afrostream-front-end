@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { dict } from '../../../../../config/client';
+import * as CouponActionCreators from '../../../actions/coupon';
 
 class CashwayForm extends React.Component {
 
@@ -14,11 +15,19 @@ class CashwayForm extends React.Component {
     return this.state.hasLib;
   }
 
-  async submit (billingInfo) {
+  async submit (billingInfo, currentPlan) {
 
-    return await new Promise(
-      (resolve, reject) => {
-        return reject('Transaction annulée');
+    const {
+      props: {
+        dispatch
+      }
+    } = this;
+    return await dispatch(CouponActionCreators.getCouponCampaigns('cashway'))
+      .then((result) => {
+        return dispatch(CouponActionCreators.create({
+          userBillingUuid: 'toto',
+          couponCampaignBillingUuid: 'toto'
+        }))
       });
   }
 
