@@ -1,20 +1,24 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import PaymentImages from './PaymentImages';
 import { planCodes, dict } from '../../../../config/client';
 import _ from 'lodash';
-import { formatPrice } from '../../lib/utils';
+import { formatPrice, isBoolean } from '../../lib/utils';
 import { prepareRoute } from '../../decorators';
 import * as EventActionCreators from '../../actions/event';
+import * as BillingActionCreators from '../../actions/billing';
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less');
 }
 @prepareRoute(async function ({store}) {
   return await * [
-    store.dispatch(EventActionCreators.pinHeader(true))
+    store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(BillingActionCreators.getInternalplans())
   ];
 })
+@connect(({Billing}) => ({Billing}))
 class SelectPlan extends React.Component {
 
   static contextTypes = {
@@ -22,13 +26,24 @@ class SelectPlan extends React.Component {
   };
 
   getPlans () {
+    const {
+      props: {
+        Billing
+      }
+    } = this;
+
     let isCash = this.context.history.isActive('cash');
 
-    let validPlans = _.filter(planCodes, function (o) {
-      return o.cash == isCash;
-    });
+    let validPlans = Billing.get('internalPlans');
 
-    return validPlans;
+    // let validPlans = _.filter(planCodes, function (o) {
+    //   return o.cash == isCash;
+    // });
+
+    if (!validPlans) {
+      return [];
+    }
+    return validPlans.toJS();
   }
 
   getPlanRow (label) {
@@ -52,18 +67,19 @@ class SelectPlan extends React.Component {
           break;
         case 'internalActionLabel':
           value = (<Link className="btn btn-plan"
-                         to={`${isCash ? '/cash' : ''}/select-plan/${plan.internalPlanUuid}/checkout`}>{`${objVal}`}</Link>);
+                         to={`${isCash ? '/cash' : ''}/select-plan/${plan.internalPlanUuid}/checkout`}>{`${dict.planCodes.action}`}</Link>);
           break;
         case 'price':
-          value = `${formatPrice(plan['amount_in_cents'], plan.currency, true)} / ${plan.periodLength}${dict.account.billing.periods[plan.periodUnit]}`;
+          value = `${formatPrice(plan['amountInCents'], plan.currency, true)}/${plan.periodLength}${dict.account.billing.periods[plan.periodUnit]}`;
           break;
         default :
           value = objVal;
           break;
       }
 
-      if (typeof value === 'boolean') {
-        value = value ? <i className="fa fa-check"></i> : <i className="fa fa-times"></i>;
+      let isBool = (value === 'true' || value === 'false' || typeof value === 'boolean' ) && typeof isBoolean(value) === 'boolean';
+      if (isBool) {
+        value = isBoolean(value) ? <i className="fa fa-check"></i> : <i className="fa fa-times"></i>;
       }
       return (
         <div key={`col-plan-${label}-${key}`} className="col col-xs-4 col-sm-4 col-md-2">

@@ -61,23 +61,26 @@
           &:nth-child(4) {
             color: @plan-purple-color;
           }
+          color: @plan-purple-color;
         }
       }
 
       //La seconde lgne
       &:nth-child(2) {
         .col {
+          background-color: @plan-purple-color;
+          color: @white-base;
+          &:nth-child(1) {
+            background-color: transparent;
+          }
           &:nth-child(2) {
             background-color: @plan-blue-color;
-            color: @white-base;
           }
           &:nth-child(3) {
             background-color: @plan-yellow-color;
-            color: @white-base;
           }
           &:nth-child(4) {
             background-color: @plan-purple-color;
-            color: @white-base;
           }
         }
       }
@@ -132,6 +135,7 @@
     max-width: 100%;
     white-space: normal !important;
     word-wrap: break-word;
+    text-transform: uppercase;
     &:hover {
       background-color: @subscriber-color;
       color: @brand-primary !important;
