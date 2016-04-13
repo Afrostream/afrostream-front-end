@@ -123,15 +123,15 @@ class PaymentMethod extends React.Component {
   renderMethods () {
 
 
-    let recurly = <RecurlyForm ref="card"
+    let recurly = <RecurlyForm key="method-card" ref="card"
                                selected={this.state.method === Methods.CARD}/>;
-    let paypal = <PaypalForm ref="paypal"
+    let paypal = <PaypalForm key="method-paypal" ref="paypal"
                              selected={this.state.method === Methods.PAYPAL}
                              planLabel={this.props.planLabel}/>;
-    let gocardless = <GocardlessForm ref="gocardless"
+    let gocardless = <GocardlessForm key="method-gocardless" ref="gocardless"
                                      selected={this.state.method === Methods.GOCARDLESS}/>;
 
-    let cashway = <CashwayForm ref="cashway" {...this.props}/>;
+    let cashway = <CashwayForm key="method-cashway" ref="cashway" {...this.props}/>;
 
 
     let methods = [];
