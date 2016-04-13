@@ -37,7 +37,7 @@ class SelectPlan extends React.Component {
 
     let validPlans = this.getPlans();
 
-    return _.map(validPlans, (plan)=> {
+    return _.map(validPlans, (plan, key)=> {
 
       let objVal = plan[label] || plan.internalPlanOpts[label];
 
@@ -66,7 +66,7 @@ class SelectPlan extends React.Component {
         value = value ? <i className="fa fa-check"></i> : <i className="fa fa-times"></i>;
       }
       return (
-        <div className="col col-xs-4 col-sm-4 col-md-2">
+        <div key={`col-plan-${label}-${key}`} className="col col-xs-4 col-sm-4 col-md-2">
           {value}
         </div>
       )
@@ -77,9 +77,10 @@ class SelectPlan extends React.Component {
 
     let validPlans = this.getPlans();
 
-    return (<div className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.length * 2)}`}>
-      {dict.planCodes.infos[label] || ''}
-    </div>);
+    return (
+      <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.length * 2)}`}>
+        {dict.planCodes.infos[label] || ''}
+      </div>);
   }
 
   getHeader () {
@@ -88,7 +89,7 @@ class SelectPlan extends React.Component {
     if (isCash) {
       return <div className="choose-plan">Choisissez votre formule</div>
     }
-    
+
     return <div className="choose-plan">Choisissez votre formule et profitez de
       <span className="choose-plan__bolder"> 7 jours d'essai</span>
     </div>
@@ -116,8 +117,8 @@ class SelectPlan extends React.Component {
 
         <div className="select-plan">
           {_.map(cols, (value, key) =>
-            <div key={key} className="row">
-              {this.getLabel(value)}
+            <div key={`line-plan-${key}`} className="row">
+              {this.getLabel(value)}{}
               {this.getPlanRow(value)}
             </div>
           )}

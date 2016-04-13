@@ -86,9 +86,9 @@ const config = {
   planCodes: [
     {
       cash: true,
-      internalPlanUuid: 'cashway-coupon-2months',
-      name: '2 MOIS',
-      description: '2 MOIS',
+      internalPlanUuid: 'cashway-coupon-3months',
+      name: '3 MOIS',
+      description: '3 MOIS',
       amount_in_cents: '1000',
       currency: 'EUR',
       cycle: 'once',
@@ -176,7 +176,7 @@ const config = {
         internalMobile: true,
         internalUnlimited: true,
         internalVip: true,
-        internalActionLabel: 'OFFRIR CETTE FORMULE'
+        internalActionLabel: 'OFFREZ MAINTENANT'
       }
     }
   ],

@@ -3,17 +3,17 @@ import crypto from 'crypto';
 import * as ModalActionCreators from './modal';
 import * as OAuthActionCreators from './oauth';
 import * as RecoActionCreators from './reco';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../config/client';
 import { pushState } from 'redux-router';
 import _ from 'lodash';
-import {isAuthorized} from '../lib/geo';
+import { isAuthorized } from '../lib/geo';
 
 const mergeProfile = function (data, getState, actionDispatcher) {
 
   const token = getState().OAuth.get('token');
-  const donePath = getState().Modal.get('donePath');
   const coupon = getState().Coupon.get('coupon');
+  let donePath = getState().Modal.get('donePath');
 
   if (!token) {
     return data;
@@ -29,8 +29,15 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
       if (userMerged) {
         let planCode = userMerged.planCode;
-        if (!planCode && !coupon.get('coupon')) {
-          actionDispatcher(pushState(null, donePath ? donePath : '/select-plan'));
+        let subscriptionsStatus = userMerged.subscriptionsStatus;
+        let status = subscriptionsStatus.subStatus;
+
+        if ((!planCode && !coupon.get('coupon')) || status) {
+          donePath = donePath || '/select-plan';
+          if (status) {
+            donePath = `${planCode}/${status}`;
+          }
+          actionDispatcher(pushState(null, donePath));
         }
       }
 
@@ -60,7 +67,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
  * Get subscriptions list for user
  * @returns {Function}
  */
-export function getSubscriptions() {
+export function getSubscriptions () {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     if (!user) {
@@ -78,7 +85,7 @@ export function getSubscriptions() {
   };
 }
 
-export function gocardless(planCode, planLabel) {
+export function gocardless (planCode, planLabel) {
   return (dispatch, getState, actionDispatcher) => {
     const token = getState().OAuth.get('token');
     let url = `/billing/gocardless/${planCode}?access_token=${token.get('accessToken')}&title=${planLabel}`;
@@ -112,7 +119,7 @@ export function gocardless(planCode, planLabel) {
  * @param data
  * @returns {Function}
  */
-export function subscribe(data, isGift = false) {
+export function subscribe (data, isGift = false) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.User.subscribe,
@@ -122,7 +129,7 @@ export function subscribe(data, isGift = false) {
   };
 }
 
-export function cancelSubscription(subscription) {
+export function cancelSubscription (subscription) {
   return (dispatch, getState) => {
     let uuid = subscription.get('subscriptionBillingUuid');
     return async api => ({
@@ -136,7 +143,7 @@ export function cancelSubscription(subscription) {
  * Get history movies/episodes for user
  * @returns {Function}
  */
-export function getHistory() {
+export function getHistory () {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const token = getState().OAuth.get('token');
@@ -159,7 +166,7 @@ export function getHistory() {
  * @param type
  * @returns {Function}
  */
-export function getFavorites(type = 'movies') {
+export function getFavorites (type = 'movies') {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const capitType = _.capitalize(type);
@@ -189,7 +196,7 @@ export function getFavorites(type = 'movies') {
   };
 }
 
-export function setFavorites(type, active, id) {
+export function setFavorites (type, active, id) {
   return (dispatch, getState) => {
     const user = getState().User.get('user');
     const capitType = _.capitalize(type);
@@ -229,7 +236,7 @@ export function setFavorites(type, active, id) {
   };
 }
 
-export function pendingUser(pending) {
+export function pendingUser (pending) {
   return {
     type: ActionTypes.User.pendingUser,
     pending
@@ -239,7 +246,7 @@ export function pendingUser(pending) {
  * Get profile from afrostream
  * @returns {Function}
  */
-export function getProfile() {
+export function getProfile () {
   return (dispatch, getState, actionDispatcher) => {
     return async () => {
       await actionDispatcher(OAuthActionCreators.getIdToken());

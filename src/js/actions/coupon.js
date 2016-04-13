@@ -43,7 +43,7 @@ export function getCouponCampaigns (providerName) {
     return async api => ({
       type: ActionTypes.Coupon.getCouponCampaigns,
       res: await api(`/api/billings/couponscampaigns`, 'GET', {
-        providerName: providerName
+        billingProvider: providerName
       })
     });
   };

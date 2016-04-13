@@ -136,7 +136,7 @@ class PaymentForm extends React.Component {
           form="subscription-create"
           className="button-create-subscription"
           disabled={this.state.disabledForm}
-        >{this.state.isGift ? dict.payment.gift.sublit : dict.payment.sublit }
+        >{this.state.currentPlan.internalPlanOpts.internalActionLabel }
         </button>
       </div>
     </div>);
@@ -368,7 +368,7 @@ class PaymentForm extends React.Component {
       />);
     }
 
-    if (status === 'success') {
+    if (status === 'success' || status === 'future') {
       return (<PaymentSuccess isGift={this.state.isGift}/>);
     } else if (status === 'error') {
       return (<PaymentError message={this.state.message}/>);
