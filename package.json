@@ -129,6 +129,7 @@
     "request": "^2.67.0",
     "script-loader": "^0.6.1",
     "scroll-behavior": "^0.3.0",
+    "sendbird": "^2.3.0",
     "serve-favicon": "^2.3.0",
     "stats-webpack-plugin": "^0.2.1",
     "strip-loader": "^0.1.0",
