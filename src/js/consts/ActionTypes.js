@@ -14,6 +14,7 @@ export default {
   Billing: keyMirror({
     subscribe: null,
     getSubscriptions: null,
+    getInternalplans: null,
     validate: null,
     create: null,
     cancelSubscription: null,

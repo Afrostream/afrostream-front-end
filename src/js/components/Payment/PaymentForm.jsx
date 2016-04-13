@@ -19,10 +19,11 @@ if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
-@connect(({User}) => ({User}))
+@connect(({User, Billing}) => ({User, Billing}))
 @prepareRoute(async function ({store}) {
   return await * [
-    store.dispatch(EventActionCreators.pinHeader(true))
+    store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(BillingActionCreators.getInternalplans('afr'))
   ];
 })
 class PaymentForm extends React.Component {
@@ -46,9 +47,14 @@ class PaymentForm extends React.Component {
   hasPlan () {
     const {
       props: {
+        Billing,
         params: {planCode}
       }
     } = this;
+
+    let billingPlans = Billing.get('internalPlans');
+
+    debugger;
     return _.find(planCodes, (plan) => {
       return planCode === plan.internalPlanUuid;
     });

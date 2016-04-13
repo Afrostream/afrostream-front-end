@@ -7,6 +7,13 @@ const initialState = Immutable.fromJS({
 });
 
 
+function mergeData (origin, data) {
+  if (!origin) {
+    return data;
+  }
+  return _.merge(origin.toJS(), data);
+}
+
 export default createReducer(initialState, {
 
   // #### SUBSCRIPTIONS ####
@@ -16,7 +23,17 @@ export default createReducer(initialState, {
     }
     const data = res.body;
     return state.merge({
-      [`subscriptions`]: mergeUser(state.get('subscriptions'), data)
+      [`subscriptions`]: mergeData(state.get('subscriptions'), data.subscriptions)
+    });
+  },
+  // #### INTERNAL PLANS ####
+  [ActionTypes.Billing.getInternalplans](state, {res}) {
+    if (!res) {
+      return state;
+    }
+    const data = res.body;
+    return state.merge({
+      [`internalPlans`]: mergeData(state.get('internalPlans'), data)
     });
   },
 
@@ -26,7 +43,7 @@ export default createReducer(initialState, {
     }
     const data = isGift ? {} : res.body;
     return state.merge({
-      ['subscriptions']: mergeUser(state.get('subscriptions'), data)
+      ['subscriptions']: mergeData(state.get('subscriptions'), data)
     });
   },
 
@@ -36,7 +53,7 @@ export default createReducer(initialState, {
     }
     const data = res.body;
     return state.merge({
-      ['subscriptions']: mergeUser(state.get('subscriptions'), data)
+      ['subscriptions']: mergeData(state.get('subscriptions'), data)
     });
   },
 
