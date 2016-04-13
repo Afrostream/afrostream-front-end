@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
 import classSet from 'classnames';
 import { planCodes, dict } from '../../../../config/client';
+import * as BillingActionCreators from '../../actions/billing';
 import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
 import Spinner from '../Spinner/Spinner';
@@ -255,7 +256,7 @@ class PaymentForm extends React.Component {
     const self = this;
     let isCash = this.context.history.isActive('cash');
 
-    return await dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(() => {
+    return await dispatch(BillingActionCreators.subscribe(formData, self.state.isGift)).then(() => {
         self.disableForm(false, 1);
         //On merge les infos en faisant un new call a getProfile
         return dispatch(UserActionCreators.getProfile());
