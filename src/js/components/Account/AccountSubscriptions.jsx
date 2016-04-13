@@ -9,21 +9,17 @@ if (process.env.BROWSER) {
   require('./AccountSubscriptions.less');
 }
 
-@connect(({User}) => ({User}))
+@connect(({User, Billing}) => ({User, Billing}))
 class AccountSubscriptions extends React.Component {
 
   render () {
     const {
       props: {
-        User
+        Billing
       }
     } = this;
 
-    const user = User.get('user');
-    if (!user) {
-      return <div />;
-    }
-    const subscriptionsList = user.get('subscriptions');
+    const subscriptionsList = Billing.get('subscriptions');
 
     const providerLogos = {
       'celery': '/images/payment/bank-cards-paypal.png',

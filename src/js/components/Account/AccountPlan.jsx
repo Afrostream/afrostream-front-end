@@ -1,22 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import {dict} from '../../../../config';
+import { dict } from '../../../../config';
 import classSet from 'classnames';
 
 if (process.env.BROWSER) {
   require('./AccountPlan.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({User, Billing}) => ({User, Billing}))
 class AccountPlan extends React.Component {
 
-  render() {
+  render () {
     const {
       props: {
-        User
-        }
-      } = this;
+        User, Billing
+      }
+    } = this;
 
     const user = User.get('user');
     if (!user) {
@@ -28,7 +28,7 @@ class AccountPlan extends React.Component {
       return <div />;
     }
 
-    const subscriptionsList = user.get('subscriptions');
+    const subscriptionsList = Billing.get('subscriptions');
 
     if (!subscriptionsList) {
       return <div />;
