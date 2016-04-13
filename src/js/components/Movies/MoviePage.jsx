@@ -6,8 +6,10 @@ import * as UserActionCreators from '../../actions/user';
 import * as CategoryActionCreators from '../../actions/category';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
+import ReactDisqusThread from 'react-disqus-thread';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
-@prepareRoute(async function ({ store, params: { movieId, seasonId, episodeId} }) {
+@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(EventActionCreators.userActive(true)),
@@ -28,15 +30,21 @@ import SeasonList from '../Seasons/SeasonList';
 })
 class MoviePage extends React.Component {
 
-  render() {
+  render () {
     const {
       props: {
-        params: { movieId, seasonId, episodeId },
+        params: {movieId, seasonId, episodeId},
         children
-        }
-      } = this;
+      }
+    } = this;
 
     const dataId = movieId;
+    const discusId = `${movieId}${seasonId ? '-' + seasonId : ''}${episodeId ? '-' + episodeId : ''}`;
+    let discusTitle = '';
+
+    if (canUseDOM) {
+      discusTitle = document.title;
+    }
 
     if (children) {
       return children;
@@ -45,6 +53,11 @@ class MoviePage extends React.Component {
       <div className="row-fluid">
         {movieId ? <MovieInfo maxLength={600} active={true} load={true} showBtn={false} {...{dataId}}/> : ''}
         {movieId ? <SeasonList {...this.props}/> : ''}
+        <ReactDisqusThread
+          shortname="afrostream"
+          identifier={discusId}
+          title={discusTitle}
+        />
       </div>
     );
   }
