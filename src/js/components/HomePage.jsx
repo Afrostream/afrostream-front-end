@@ -37,13 +37,14 @@ class HomePage extends React.Component {
 
     const user = User.get('user');
     if (user) {
+      let isCash = this.context.history.isActive('cash');
       let planCode = user.get('planCode');
       let subscriptionsStatus = user.get('subscriptionsStatus');
-      let status = subscriptionsStatus ? subscriptionsStatus.get('subStatus') : null;
-      if ((!planCode || status) && location.pathname !== '/compte') {
-        let donePath = '/select-plan';
-        if (status) {
-          donePath = `${planCode}/${status}`;
+      let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null;
+      if ((!planCode) && location.pathname !== '/compte') {
+        let donePath = `${isCash ? '/cash' : ''}/select-plan`;
+        if (status && status != 'active') {
+          donePath = `${donePath}/none/${status}`;
         }
         history.pushState(null, donePath);
       }

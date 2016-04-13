@@ -5,7 +5,7 @@ import * as OAuthActionCreators from './oauth';
 import * as RecoActionCreators from './reco';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import config from '../../../config/client';
-import { pushState } from 'redux-router';
+import { pushState, isActive } from 'redux-router';
 import _ from 'lodash';
 import { isAuthorized } from '../lib/geo';
 
@@ -30,12 +30,12 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       if (userMerged) {
         let planCode = userMerged.planCode;
         let subscriptionsStatus = userMerged.subscriptionsStatus;
-        let status = subscriptionsStatus.subStatus;
-
-        if ((!planCode && !coupon.get('coupon')) || status) {
-          donePath = donePath || '/select-plan';
-          if (status) {
-            donePath = `${planCode}/${status}`;
+        let status = subscriptionsStatus.status;
+        if ((!planCode && !coupon.get('coupon'))) {
+          let isCash = isActive('cash');
+          donePath = donePath || `${isCash ? '/cash' : ''}/select-plan`;
+          if (status && status !== 'active') {
+            donePath = `${donePath}/none/${status}`;
           }
           actionDispatcher(pushState(null, donePath));
         }

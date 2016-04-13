@@ -73,6 +73,12 @@
       "label": "Paiement par Paypal",
       "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"DÉMARREZ MAINTENANT\" et utiliser votre compte Paypal"
     },
+    "future": {
+      "title": "Vous y êtes presque !",
+      "link": "mailto:support@afrostream.tv",
+      "linkMessage": "Pour toutes questions, veuillez contacter notre support technique",
+      "message": "Plus qu'une étape pour accéder à Afrostream. Dès réception du paiement, vous aurez accès immediatement à la totalité du catalogue !"
+    },
     "errors": {
       "noLib": {
         "title": "Paiement indisponible",
