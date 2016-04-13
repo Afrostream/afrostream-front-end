@@ -51,6 +51,7 @@ class ModalCoupon extends ModalComponent {
     const coupon = Coupon.get('coupon');
 
     let formData = {
+      providerName:'afr',
       coupon: this.refs.email.value
     };
 
