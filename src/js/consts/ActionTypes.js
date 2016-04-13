@@ -12,7 +12,9 @@ export default {
   }),
 
   Coupon: keyMirror({
-    validate: null
+    validate: null,
+    create: null,
+    getCouponCampaigns: null
   }),
 
   User: keyMirror({

@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { dict, payment, featuresFlip } from '../../../../config';
 import { Link } from 'react-router';
-
 import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm } from './Forms';
 
 if (process.env.BROWSER) {
@@ -72,24 +71,24 @@ class PaymentMethod extends React.Component {
   }
 
   componentDidMount () {
-    let {query} = this.context.location;
 
     this.container = ReactDOM.findDOMNode(this);
     this.container.addEventListener('changemethod', this.switchMethod.bind(this));
 
     let canUseMultiple = this.multipleMethods();
     let method = this.method();
+    let isCash = this.context.history.isActive('cash');
 
     if (!canUseMultiple) {
       method = Methods.CARD;
     }
-    if (query.method) {
-      method = query.method;
+    if (isCash) {
+      method = Methods.CASHWAY;
     }
 
     this.setState({
       method: method,
-      isCash: this.context.history.isActive('cash')
+      isCash: isCash
     });
   }
 
@@ -132,7 +131,7 @@ class PaymentMethod extends React.Component {
     let gocardless = <GocardlessForm ref="gocardless"
                                      selected={this.state.method === Methods.GOCARDLESS}/>;
 
-    let cashway = <CashwayForm ref="cashway"/>;
+    let cashway = <CashwayForm ref="cashway" {...this.props}/>;
 
 
     let methods = [];
