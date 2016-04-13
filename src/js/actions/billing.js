@@ -94,3 +94,18 @@ export function getCouponCampaigns (providerName) {
     });
   };
 }
+
+/**
+ * Get internalplans billing api
+ * @returns {Function}
+ */
+export function getInternalplans (providerName) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Billing.getInternalplans,
+      res: await api(`/api/billings/internalplans`, 'GET', {
+        providerName: providerName
+      })
+    });
+  };
+}
