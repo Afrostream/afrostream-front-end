@@ -253,22 +253,25 @@ class PaymentForm extends React.Component {
     } = this;
 
     const self = this;
+    let isCash = this.context.history.isActive('cash');
 
     return await dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(() => {
-      self.disableForm(false, 1);
-      dispatch(UserActionCreators.getProfile());
-      self.context.history.pushState(null, `/select-plan/${planCode}/success`);
-      //On merge les infos en faisait un new call a getProfile
-    }).catch((err) => {
-      let message = dict.payment.errors.global;
+        self.disableForm(false, 1);
+        //On merge les infos en faisant un new call a getProfile
+        return dispatch(UserActionCreators.getProfile());
+      })
+      .then(()=> {
+        self.context.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`);
+      }).catch((err) => {
+        let message = dict.payment.errors.global;
 
-      if (err.response && err.response.body) {
-        message = err.response.body.error;
-      }
+        if (err.response && err.response.body) {
+          message = err.response.body.error;
+        }
 
-      self.disableForm(false, 2, message);
-      self.context.history.pushState(null, `/select-plan/${planCode}/error`);
-    });
+        self.disableForm(false, 2, message);
+        self.context.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/error`);
+      });
   }
 
   // A simple error handling function to expose errors to the customer
@@ -368,12 +371,22 @@ class PaymentForm extends React.Component {
       />);
     }
 
-    if (status === 'success' || status === 'future') {
-      return (<PaymentSuccess isGift={this.state.isGift}/>);
-    } else if (status === 'error') {
-      return (<PaymentError message={this.state.message}/>);
-    } else {
-      return this.renderForm();
+    switch (status) {
+      case 'success':
+        return (<PaymentSuccess isGift={this.state.isGift}/>);
+        break;
+      case 'future':
+        return (<PaymentError title={dict.payment.future.title}
+                              message={dict.payment.future.message}
+                              link={dict.payment.future.message}
+                              linkMessage={dict.payment.future.linkMessage}/>);
+        break;
+      case 'error':
+        return (<PaymentError message={this.state.message}/>);
+        break;
+      default:
+        return this.renderForm();
+        break;
     }
   }
 }
