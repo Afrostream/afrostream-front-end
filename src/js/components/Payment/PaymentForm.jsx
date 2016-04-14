@@ -3,7 +3,7 @@ import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
 import classSet from 'classnames';
-import { planCodes, dict } from '../../../../config/client';
+import { dict } from '../../../../config/client';
 import * as BillingActionCreators from '../../actions/billing';
 import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
@@ -25,7 +25,7 @@ if (process.env.BROWSER) {
   let isCash = store.history.isActive('cash');
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans((isCash ? 'cashway' : 'recurly'))
+    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
   ];
 })
 class PaymentForm extends React.Component {
