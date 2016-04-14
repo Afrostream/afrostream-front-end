@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { prepareRoute } from '../../../decorators';
 import * as ModalActionCreators from '../../../actions/modal';
-import * as BillingActionCreators from '../../../actions/billing';
 import { Link } from 'react-router';
 import { dict } from '../../../../../config/client';
 import { formatPrice, isBoolean } from '../../../lib/utils';
@@ -12,11 +10,6 @@ if (process.env.BROWSER) {
   require('./PricingTable.less');
 }
 @connect(({User, Billing}) => ({User, Billing}))
-@prepareRoute(async function ({store}) {
-  return await * [
-    store.dispatch(BillingActionCreators.getInternalplans('recurly'))
-  ];
-})
 class PricingTable extends React.Component {
 
   getPlans () {

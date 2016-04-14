@@ -22,10 +22,10 @@ if (process.env.BROWSER) {
 
 @connect(({User, Billing}) => ({User, Billing}))
 @prepareRoute(async function ({store}) {
-  let isCash = store.history.isActive('cash');
+  // let isCash = store.history.isActive('cash');
   return await * [
-    store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
+    store.dispatch(EventActionCreators.pinHeader(true))
+    // store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
   ];
 })
 class PaymentForm extends React.Component {
