@@ -125,7 +125,7 @@
     "react-star-rating": "^1.4.2",
     "redux": "^3.0.4",
     "redux-devtools": "^2.1.2",
-    "redux-router": "^1.0.0-beta7",
+    "redux-router": "^1.0.0-beta6",
     "request": "^2.67.0",
     "script-loader": "^0.6.1",
     "scroll-behavior": "^0.3.0",

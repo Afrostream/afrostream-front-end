@@ -1,0 +1,50 @@
+@import (reference) '../../../styles/config.less';
+
+.cashway-page {
+
+  padding-top: @header-height;
+  background-image: url(../../../assets/images/login/login-bg.jpg);
+  background-position: center top;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  .container {
+    margin-top: @app-padding;
+    background-color: fade(@brand-primary, 97%) !important;
+    color: @color-indigo;
+    // Center responsive images
+    .img-responsive.img-center {
+      margin: 0 auto;
+    }
+
+    .number {
+      font-family: @font-black;
+      background: @color-yellow;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 3em;
+      padding: 0.2em;
+      width: 1.7em;
+      height: 1.7em;
+      border: 4px solid #fff;
+      box-shadow: 1px 1px 1px rgba(50, 50, 50, .4);
+      text-shadow: 1px 1px 1px rgba(50, 50, 50, .1);
+    }
+
+    .subscribe-button {
+      padding: @app-padding-mobile;
+      margin: @app-padding-mobile;
+    }
+
+    .container_title {
+      font-size: 1.4em;
+      margin: 1em;
+    }
+
+    .cashway-map-canvas {
+      width: 100%;
+      height: 350px;
+    }
+  }
+}

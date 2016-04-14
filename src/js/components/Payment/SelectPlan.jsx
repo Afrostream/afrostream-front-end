@@ -1,111 +1,146 @@
-import React from 'react';
-import PaymentForm from './PaymentForm';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { prepareRoute } from '../../decorators';
 import PaymentImages from './PaymentImages';
+import { dict } from '../../../../config/client';
+import _ from 'lodash';
+import { formatPrice, isBoolean } from '../../lib/utils';
+import * as EventActionCreators from '../../actions/event';
+import * as BillingActionCreators from '../../actions/billing';
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less');
 }
-
+@prepareRoute(async function ({store}) {
+  let isCash = store.history.isActive('cash');
+  return await * [
+    store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
+  ];
+})
+@connect(({Billing}) => ({Billing}))
 class SelectPlan extends React.Component {
 
-  render() {
+  static contextTypes = {
+    history: PropTypes.object.isRequired
+  };
+
+  getPlans () {
+    const {
+      props: {
+        Billing
+      }
+    } = this;
+
+    let validPlans = Billing.get('internalPlans');
+
+    if (!validPlans) {
+      return;
+    }
+
+    return validPlans.sort((a, b)=> a.get('amountInCents').localeCompare(b.get('amountInCents')));
+  }
+
+  getPlanCol (label) {
+
+    let isCash = this.context.history.isActive('cash');
+
+    let validPlans = this.getPlans();
+
+    if (!validPlans) {
+      return;
+    }
+    return validPlans.map((plan, key)=> {
+
+      let objVal = plan.get(label) || plan.get('internalPlanOpts').get(label);
+
+      if (objVal === undefined) {
+        objVal = true;
+      }
+
+      let value = '';
+      switch (label) {
+        case 'formule':
+          value = 'Formule';
+          break;
+        case 'internalActionLabel':
+          value = (<Link className="btn btn-plan"
+                         to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout`}>{`${dict.planCodes.action}`}</Link>);
+          break;
+        case 'price':
+          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`;
+          break;
+        default :
+          value = objVal;
+          let isBool = (value === 'true' || value === 'false' || typeof value === 'boolean' ) && typeof isBoolean(value) === 'boolean';
+          if (isBool) {
+            value = isBoolean(value) ? <i className="fa fa-check"></i> : <i className="fa fa-times"></i>;
+          }
+          break;
+      }
+
+      return (
+        <div key={`col-plan-${label}-${key}`} className="col col-xs-4 col-sm-4 col-md-2">
+          {value}
+        </div>
+      )
+    });
+  }
+
+  getLabel (label) {
+
+    let validPlans = this.getPlans();
+
+    if (!validPlans) {
+      return;
+    }
+
+    return (
+      <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
+        {dict.planCodes.infos[label] || ''}
+      </div>);
+  }
+
+  getHeader () {
+    let isCash = this.context.history.isActive('cash');
+
+    if (isCash) {
+      return <div className="choose-plan">{dict.planCodes.cash.selectTitle}</div>
+    }
+
+    return <div className="choose-plan">{dict.planCodes.selectTitle}
+      <span className="choose-plan__bolder"> {dict.planCodes.freePeriodLabel}</span>
+    </div>
+  }
+
+  render () {
+
+    let cols = [
+      'formule',
+      'name',
+      'price',
+      'internalFreePeriod',
+      'internalMaxScreens',
+      'internalMobile',
+      'internalUnlimited',
+      'internalEngagment',
+      'internalVip',
+      'internalActionLabel'
+    ];
+
     return (
       <div className="plan-container">
-        <div className="choose-plan">Choisissez votre formule et profitez de
-          <span className="choose-plan__bolder"> 7 jours d'essai</span>
-        </div>
+
+        {this.getHeader()}
+
         <div className="select-plan">
-          <div className="formule-row-no-decoration">
-            <div className="row-element-left row-element-top-left"></div>
-            <div className="row-element">
-              <span className="plan-text blue-text">FORMULE</span>
+          {_.map(cols, (value, key) =>
+            <div key={`line-plan-${key}`} className="row">
+              {this.getLabel(value)}
+              {this.getPlanCol(value)}
             </div>
-            <div className="row-element">
-              <span className="plan-text yellow-text">FORMULE</span>
-            </div>
-            <div className="row-element">
-              <span className="plan-text purple-text">FORMULE</span>
-            </div>
-          </div>
-          <div className="formule-row-no-decoration">
-            <div className="row-element-left-header"></div>
-            <div className="plan-background blue-background">
-              MENSUEL
-            </div>
-            <div className="plan-background yellow-background">
-              SÉRÉNITÉ
-            </div>
-            <div className="plan-background purple-background">
-              CADEAU
-            </div>
-          </div>
-          <div className="formule-row-decorated-prices">
-            <div className="row-element-left">Tarif</div>
-            <div className="row-element-prices">
-              <span className="plan-price">6,99€</span>
-              <span className="plan-period">/MOIS</span>
-            </div>
-            <div className="row-element-prices">
-              <span className="plan-price">59,99€</span>
-              <span className="plan-period">/AN</span>
-            </div>
-            <div className="row-element-prices">
-              <span className="plan-price">59,99€</span>
-              <span className="plan-period">/AN</span>
-            </div>
-          </div>
-          <div className="formule-row-decorated">
-            <div className="row-element-left">7 jours d'essai offert</div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-times"></i></div>
-          </div>
-          <div className="formule-row-decorated">
-            <div className="row-element-left">Écrans disponibles en simultané</div>
-            <div className="row-element"><strong>1</strong></div>
-            <div className="row-element"><strong>2</strong></div>
-            <div className="row-element"><strong>2</strong></div>
-          </div>
-          <div className="formule-row-decorated">
-            <div className="row-element-left-twolines">Sur votre ordinateur, TV, smartphone et tablette</div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-          </div>
-          <div className="formule-row-decorated">
-            <div className="row-element-left">Films et séries TV en illimité</div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-          </div>
-          <div className="formule-row-decorated">
-            <div className="row-element-left">Sans engagement</div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-          </div>
-          <div className="formule-row-decorated">
-            <div className="row-element-left">Invitations avant première film</div>
-            <div className="row-element"><i className="fa fa-times"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-            <div className="row-element"><i className="fa fa-check"></i></div>
-          </div>
-          <div className="formule-row-no-decoration">
-            <div className="row-element-left"></div>
-            <Link className="row-element plan-button button-blue"
-                  to='/select-plan/afrostreammonthly/checkout'>
-              DÉMARREZ VOTRE<br/> ESSAI
-            </Link>
-            <Link className="row-element plan-button button-yellow"
-                  to="/select-plan/afrostreamambassadeurs/checkout">
-              DÉMARREZ VOTRE<br/> ESSAI
-            </Link>
-            <Link className="row-element plan-button button-purple"
-                  to="/select-plan/afrostreamgift/checkout">
-              OFFRIR
-            </Link>
-          </div>
+          )}
         </div>
         <PaymentImages />
       </div>

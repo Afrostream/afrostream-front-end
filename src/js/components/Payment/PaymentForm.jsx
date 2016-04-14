@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
+import { prepareRoute } from '../../decorators';
 import classSet from 'classnames';
-import {planCodes,dict} from '../../../../config/client';
+import { dict } from '../../../../config/client';
+import * as BillingActionCreators from '../../actions/billing';
 import * as UserActionCreators from '../../actions/user';
+import * as EventActionCreators from '../../actions/event';
 import Spinner from '../Spinner/Spinner';
 import GiftDetails from './GiftDetails';
 import PaymentSuccess from './PaymentSuccess';
@@ -11,14 +14,25 @@ import PaymentError from './PaymentError';
 import PaymentMethod from './PaymentMethod';
 import Query from 'dom-helpers/query';
 import DomClass from 'dom-helpers/class';
-import _ from 'lodash';
 
+import _ from 'lodash';
 if (process.env.BROWSER) {
   require('./PaymentForm.less');
 }
 
-@connect(({ User}) => ({User}))
+@connect(({User, Billing}) => ({User, Billing}))
+@prepareRoute(async function ({store}) {
+  let isCash = store.history.isActive('cash');
+  return await * [
+    store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
+  ];
+})
 class PaymentForm extends React.Component {
+
+  constructor (props) {
+    super(props);
+  }
 
   static contextTypes = {
     history: PropTypes.object.isRequired
@@ -32,38 +46,65 @@ class PaymentForm extends React.Component {
     pageHeader: dict.payment.header
   };
 
-  hasPlan() {
+  hasPlan () {
     const {
       props: {
-        params: { planCode }
-        }
-      } = this;
-    return _.find(planCodes, (plan) => {
-      return planCode === plan.code;
+        Billing,
+        params: {planCode}
+      }
+    } = this;
+
+    let planCodes = Billing.get('internalPlans');
+    if (!planCodes) {
+      return false;
+    }
+
+    let plan = planCodes.find((plan) => {
+      return planCode === plan.get('internalPlanUuid');
+    });
+
+    return plan && plan;
+  }
+
+  setupPlan () {
+    let currentPlan = this.hasPlan();
+    let internalPlanUuid = currentPlan.get('internalPlanUuid');
+    this.setState({
+      isGift: internalPlanUuid === 'afrostreamgift',
+      internalPlanUuid: internalPlanUuid,
+      currentPlan: currentPlan
     });
   }
 
-  componentWillReceiveProps() {
+  setupLib () {
     let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
     this.setState({
       hasLib: hasOneLib
     });
   }
 
-  componentWillMount() {
-    const {
-      props: {
-        params: { planCode }
-        }
-      } = this;
-    let currentPlan = this.hasPlan();
-    this.setState({
-      isGift: currentPlan && currentPlan.code === 'afrostreamgift',
-      currentPlan: currentPlan
-    });
+  componentWillReceiveProps () {
+    this.setupLib();
   }
 
-  renderUserForm() {
+  componentWillMount () {
+    this.setupPlan();
+  }
+
+  renderUserForm () {
+
+    const {
+      props: {
+        User
+      }
+    } = this;
+
+
+    const user = User.get('user').toJS();
+
+    let firstName = user && user.facebook && user.facebook.first_name || user && user.first_name;
+    let lastName = user && user.facebook && user.facebook.last_name || user && user.last_name;
+
     return (<div className="row">
       <div className="form-group col-md-6">
         <label className="form-label" htmlFor="first_name">{dict.payment.name}</label>
@@ -74,6 +115,7 @@ class PaymentForm extends React.Component {
           ref="firstName"
           id="first_name"
           name="first-name"
+          defaultValue={firstName}
           placeholder={dict.payment.name} required
           disabled={this.state.disabledForm}/>
       </div>
@@ -86,20 +128,21 @@ class PaymentForm extends React.Component {
           ref="lastName"
           id="last_name"
           name="last-name"
+          defaultValue={lastName}
           placeholder={dict.payment.lastName} required
           disabled={this.state.disabledForm}/>
       </div>
     </div>);
   }
 
-  renderGift() {
+  renderGift () {
     if (!this.state.isGift) {
       return;
     }
     return <GiftDetails ref="giftDetails" isVisible={this.state.isGift}/>;
   }
 
-  renderSubmit() {
+  renderSubmit () {
     return (<div className="row">
       <div className="form-group  col-md-12">
         <button
@@ -108,13 +151,13 @@ class PaymentForm extends React.Component {
           form="subscription-create"
           className="button-create-subscription"
           disabled={this.state.disabledForm}
-        >{this.state.isGift ? dict.payment.gift.sublit : dict.payment.sublit }
+        >{dict.planCodes.action}
         </button>
       </div>
     </div>);
   }
 
-  renderDroits() {
+  renderDroits () {
 
     let checkClass = {
       'form-group': true,
@@ -141,7 +184,7 @@ class PaymentForm extends React.Component {
     </div>);
   }
 
-  renderCGU() {
+  renderCGU () {
 
     let checkClass = {
       'form-group': true,
@@ -169,19 +212,17 @@ class PaymentForm extends React.Component {
     </div>);
   }
 
-  async onSubmit(e) {
+  async onSubmit (e) {
     const {
       props: {
-        User,
-        params: { planCode }
-        }
-      } = this;
+        User
+      }
+    } = this;
 
     e.preventDefault();
 
     const self = this;
     const user = User.get('user');
-    const currentPlan = this.hasPlan();
 
     this.setState({
       error: null
@@ -197,7 +238,7 @@ class PaymentForm extends React.Component {
     }
 
     let billingInfo = {
-      internalPlanUuid: planCode,
+      internalPlanUuid: this.state.internalPlanUuid,
       firstName: this.refs.firstName.value,
       lastName: this.refs.lastName.value
     };
@@ -207,7 +248,7 @@ class PaymentForm extends React.Component {
     }
 
     try {
-      let subBillingInfo = await this.refs.methodForm.submit(billingInfo, currentPlan);
+      let subBillingInfo = await this.refs.methodForm.submit(billingInfo, this.state.currentPlan);
       billingInfo = _.merge(billingInfo, subBillingInfo);
       await this.submitSubscription(billingInfo);
     } catch (err) {
@@ -216,35 +257,38 @@ class PaymentForm extends React.Component {
   }
 
 
-  async submitSubscription(formData) {
+  async submitSubscription (formData) {
     const {
       props: {
         dispatch,
-        params: { planCode }
-        }
-      } = this;
+        params: {planCode}
+      }
+    } = this;
 
     const self = this;
+    let isCash = this.context.history.isActive('cash');
 
-    return await dispatch(UserActionCreators.subscribe(formData, self.state.isGift)).then(() => {
-      self.disableForm(false, 1);
-      dispatch(UserActionCreators.getProfile());
-      self.context.history.pushState(null, `/select-plan/${planCode}/success`);
-      //On merge les infos en faisait un new call a getProfile
-    }).catch((err) => {
-      let message = dict.payment.errors.global;
+    return await dispatch(BillingActionCreators.subscribe(formData, self.state.isGift)).then(() => {
+        self.disableForm(false, 1);
+        //On merge les infos en faisant un new call a getProfile
+        return dispatch(UserActionCreators.getProfile());
+      })
+      .then(()=> {
+        self.context.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`);
+      }).catch((err) => {
+        let message = dict.payment.errors.global;
 
-      if (err.response && err.response.body) {
-        message = err.response.body.error;
-      }
+        if (err.response && err.response.body) {
+          message = err.response.body.error;
+        }
 
-      self.disableForm(false, 2, message);
-      self.context.history.pushState(null, `/select-plan/${planCode}/error`);
-    });
+        self.disableForm(false, 2, message);
+        self.context.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/error`);
+      });
   }
 
   // A simple error handling function to expose errors to the customer
-  error(err) {
+  error (err) {
     let formatError = err;
     if (err instanceof Array) {
       formatError = err[0];
@@ -266,7 +310,7 @@ class PaymentForm extends React.Component {
     });
   }
 
-  disableForm(disabled, status = 0, message = '') {
+  disableForm (disabled, status = 0, message = '') {
     this.setState({
       disabledForm: disabled,
       message: message,
@@ -280,14 +324,21 @@ class PaymentForm extends React.Component {
     });
   }
 
-  renderForm() {
+  renderPaymentMethod (planLabel) {
+    return (
+      <PaymentMethod ref="methodForm" isGift={this.state.isGift}
+                     planCode={this.state.internalPlanUuid} {...this.props}
+                     planLabel={planLabel}/>);
+  }
+
+  renderForm () {
 
     var spinnerClasses = {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
 
-    const planLabel = dict.planCodes[this.state.currentPlan.code];
+    const planLabel = `${dict.planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`;
 
     return (
       <div className="payment-wrapper">
@@ -303,8 +354,7 @@ class PaymentForm extends React.Component {
 
             {this.renderUserForm()}
 
-            <PaymentMethod ref="methodForm" isGift={this.state.isGift} planCode={this.state.currentPlan.code}
-                           planLabel={planLabel}/>
+            {this.renderPaymentMethod(planLabel)}
 
             {this.renderGift()}
 
@@ -318,12 +368,12 @@ class PaymentForm extends React.Component {
     );
   }
 
-  render() {
+  render () {
     const {
       props: {
-        params: { status }
-        }
-      } = this;
+        params: {status}
+      }
+    } = this;
 
     if (!this.state.hasLib) {
       return (<PaymentError
@@ -334,12 +384,22 @@ class PaymentForm extends React.Component {
       />);
     }
 
-    if (status === 'success') {
-      return (<PaymentSuccess isGift={this.state.isGift}/>);
-    } else if (status === 'error') {
-      return (<PaymentError message={this.state.message}/>);
-    } else {
-      return this.renderForm();
+    switch (status) {
+      case 'success':
+        return (<PaymentSuccess isGift={this.state.isGift}/>);
+        break;
+      case 'future':
+        return (<PaymentError title={dict.payment.future.title}
+                              message={dict.payment.future.message}
+                              link={dict.payment.future.message}
+                              linkMessage={dict.payment.future.linkMessage}/>);
+        break;
+      case 'error':
+        return (<PaymentError message={this.state.message}/>);
+        break;
+      default:
+        return this.renderForm();
+        break;
     }
   }
 }

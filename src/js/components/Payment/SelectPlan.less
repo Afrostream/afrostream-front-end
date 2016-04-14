@@ -21,238 +21,123 @@
     font-size: 12px;
     text-align: center;
 
-    .row-element-left {
-      position: relative;
-      float: left;
-      width: 40%;
-      min-height: 30px;
-      white-space: normal;
-      top: 50%;
-      transform: translateY(31%);
-      text-align: left;
-      font-weight: bold;
+    .row {
+      line-height: 3;
 
-      @media all and (max-width: @screen-md-min) {
-        width: 100%;
-        text-align: center;
+      //Toutes les lignes a partir de la 3eme
+      &:nth-child(n+3) {
+        border-bottom: 1px solid @gray-lighter;
+      }
+      //Seulement la premiere colonne
+      .col:first-child {
+        font-weight: bold;
+        @media all and (min-width: @screen-md-min) {
+          text-align: left;
+        }
+      }
+
+      //Les 2 premieres lignes
+      &:first-child {
+        letter-spacing: 4px;
+      }
+
+      &:nth-child(-n+2) {
+        text-transform: uppercase;
+      }
+
+      //La premiere lgne
+      &:nth-child(1) {
+        .col {
+          &:nth-child(3n+2) {
+            color: @plan-blue-color;
+          }
+          &:nth-child(3n+3) {
+            color: @plan-yellow-color;
+          }
+          &:nth-child(3n+4) {
+            color: @plan-purple-color;
+          }
+          color: @plan-purple-color;
+        }
+      }
+
+      //La seconde lgne
+      &:nth-child(2) {
+        .col {
+          background-color: @plan-purple-color;
+          color: @white-base;
+          &:nth-child(1) {
+            background-color: transparent;
+          }
+          &:nth-child(3n+2) {
+            background-color: @plan-blue-color;
+          }
+          &:nth-child(3n+3) {
+            background-color: @plan-yellow-color;
+          }
+          &:nth-child(3n+4) {
+            background-color: @plan-purple-color;
+          }
+        }
+      }
+
+      //La 3eme ligne (prices)
+      &:nth-child(3) {
+        .col {
+          &:nth-child(n+2) {
+            font-size: 1.3em;
+            color: @color-purple-1;
+            text-transform: uppercase;
+            font-family: @font-book;
+          }
+        }
+      }
+
+      &:nth-last-child(2),
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:last-child {
+        .col {
+          //padding-left: 0;
+          //padding-right: 0;
+          &:nth-child(2) {
+            .btn-plan {
+              color: @plan-blue-color;
+            }
+          }
+          &:nth-child(3) {
+            .btn-plan {
+              color: @plan-yellow-color;
+            }
+          }
+          &:nth-child(4) {
+            .btn-plan {
+              color: @plan-purple-color;
+            }
+          }
+        }
       }
     }
-
-    .row-element-top-left {
-      @media all and (max-width: @screen-md-min) {
-        height: 0px;
-      }
-    }
-
-    .row-element-left-header {
-      position: relative;
-      float: left;
-      width: 40%;
-      height: 30px;
-      white-space: normal;
-      top: 50%;
-      transform: translateY(31%);
-      text-align: left;
-      padding: 8px 12px 8px 12px;
-      margin-bottom: 5px;
-
-      @media all and (max-width: @screen-md-min) {
-        width: 100%;
-        height: 1px;
-      }
-    }
-
-    .row-element-left-header-shim {
-      position: relative;
-      float: left;
-      width: 2%;
-      height: 30px;
-      white-space: normal;
-      top: 50%;
-      transform: translateY(31%);
-      text-align: left;
-      padding: 8px 12px 8px 12px;
-      margin-bottom: 5px;
-    }
-
-    .row-element-left-twolines {
-      position: relative;
-      float: left;
-      width: 40%;
-      height: 30px;
-      white-space: normal;
-      top: 50%;
-      transform: translateY(31%);
-      text-align: left;
-      font-weight: bold;
-
-      @media all and (max-width: @screen-md-min) {
-        width: 100%;
-        text-align: center;
-      }
-    }
-
-    .row-element {
-      position: relative;
-      float: left;
-      width: 20%;
-      min-height: 30px;
-      white-space: normal;
-      top: 50%;
-      transform: translateY(31%);
-      color: #76757F;
-
-      @media all and (max-width: @screen-md-min) {
-        width: 33%;
-      }
-    }
-
-    .row-element-prices {
-      position: relative;
-      float: left;
-      width: 20%;
-      height: 30px;
-      white-space: normal;
-      top: 50%;
-      transform: translateY(20%);
-      color: #76757F;
-
-      @media all and (max-width: @screen-md-min) {
-        width: 33%;
-      }
-    }
-
-    .formule-row-no-decoration {
-      position: relative;
-      display: inline-block;
-      min-width: 100%;
-      margin: 10px 0 10px 0;
-      top: 50%;
-      transform: translateY(31%);
-      .row-element-left {
-        min-height: 1px;
-      }
-    }
-
-    .formule-row-decorated {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-      margin: -1px -1px -1px -1px;
-      border-bottom: 1px solid @gray-lighter;
-      top: 50%;
-      transform: translateY(31%);
-    }
-
-    .formule-row-decorated-prices {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-      margin: 10px -1px -1px -1px;
-      border-bottom: 1px solid @gray-lighter;
-      top: 50%;
-      transform: translateY(22%);
-    }
-
-    @plan-blue-color: #759CA7;
-    @plan-yellow-color: #EDB62D;
-    @plan-purple-color: #6F248B;
-
-    .plan-background {
-      color: @white-base;
-      position: relative;
-      float: left;
-      width: 20%;
-      height: 30px;
-      padding: 8px 12px 8px 12px;
-      margin-bottom: 5px;
-
-      @media all and (max-width: @screen-md-min) {
-        width: 33%;
-      }
-    }
-
-    .plan-text {
-      letter-spacing: 4px;
-      font-size: 10px;
-    }
-
-    .blue-text {
-      color: @plan-blue-color;
-    }
-
-    .blue-background {
-      background-color: @plan-blue-color;
-    }
-
-    .yellow-text {
-      color: @plan-yellow-color;
-    }
-
-    .yellow-background {
-      background-color: @plan-yellow-color;
-    }
-
-    .purple-text {
-      color: @plan-purple-color;
-    }
-
-    .purple-background {
-      background-color: @plan-purple-color;
-    }
-
-    .fa-times {
-      color: #C5C6C7;
-    }
-
-    .fa-check {
-      color: #76757F;
-    }
-    .plan-period {
-      color: @color-purple-1;
-      font-size: 12px;
-      transform: translateY(31%);
-    }
-
-    .plan-price {
-      color: @color-purple-1;
-      font-size: 18px;
-      transform: translateY(31%);
-    }
-
-    .plan-button {
-      font-weight: bold;
-      background-color: #eeeeee;
-      border-radius: @btn-radius;
-      border: 1px solid #C5C6C7;
-      text-align: center;
-      min-height: 35px;
-      padding: 5px 5px 5px 5px;
-      margin-left: 1%;
-      margin-right: 1%;
-      width: 18%;
-      &:hover {
-        background-color: @subscriber-color;
-        color: @brand-primary;
-        text-decoration: none;
-      }
-      @media all and (max-width: @screen-md-min) {
-        width: 30%;
-      }
-    }
-
-    .button-blue {
-      color: @plan-blue-color;
-    }
-
-    .button-yellow {
-      color: @plan-yellow-color;
-    }
-
-    .button-purple {
-      padding: 10px 5px 10px 5px;
-      color: @plan-purple-color;
-      .isMobile({ padding-top: 17px; padding-bottom: 17px; });
+  }
+  .btn-plan {
+    font-weight: bold;
+    font-size: 1em;
+    background-color: #eeeeee;
+    border-radius: @btn-radius;
+    border: 1px solid #C5C6C7;
+    text-align: center;
+    max-width: 100%;
+    white-space: normal !important;
+    word-wrap: break-word;
+    text-transform: uppercase;
+    &:hover {
+      background-color: @subscriber-color;
+      color: @brand-primary !important;
+      text-decoration: none;
     }
   }
 }
+
+

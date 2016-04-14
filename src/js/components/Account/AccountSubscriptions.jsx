@@ -1,55 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {dict} from '../../../../config';
+import { dict } from '../../../../config';
 import classSet from 'classnames';
 import moment from 'moment';
+import { formatPrice } from '../../lib/utils';
 
 if (process.env.BROWSER) {
   require('./AccountSubscriptions.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({User, Billing}) => ({User, Billing}))
 class AccountSubscriptions extends React.Component {
 
-  formatPrice(price, currency) {
-    const currencySymbols = {
-      'USD': '$', // US Dollar
-      'EUR': '€', // Euro
-      'CRC': '₡', // Costa Rican Colón
-      'GBP': '£', // British Pound Sterling
-      'ILS': '₪', // Israeli New Sheqel
-      'INR': '₹', // Indian Rupee
-      'JPY': '¥', // Japanese Yen
-      'KRW': '₩', // South Korean Won
-      'NGN': '₦', // Nigerian Naira
-      'PHP': '₱', // Philippine Peso
-      'PLN': 'zł', // Polish Zloty
-      'PYG': '₲', // Paraguayan Guarani
-      'THB': '฿', // Thai Baht
-      'UAH': '₴', // Ukrainian Hryvnia
-      'VND': '₫' // Vietnamese Dong
-    };
-
-    return `${price / 100} ${currencySymbols[currency]}`;
-  }
-
-  render() {
+  render () {
     const {
       props: {
-        User
-        }
-      } = this;
+        Billing
+      }
+    } = this;
 
-    const user = User.get('user');
-    if (!user) {
-      return <div />;
-    }
-    const subscriptionsList = user.get('subscriptions');
+    const subscriptionsList = Billing.get('subscriptions');
 
     const providerLogos = {
       'celery': '/images/payment/bank-cards-paypal.png',
       'recurly': '/images/payment/bank-cards-paypal.png',
-      'gocardless': '/images/payment/virement.jpg'
+      'gocardless': '/images/payment/virement.jpg',
+      'cashway': '/images/payment/cashway-inline.png'
     };
 
     if (!subscriptionsList) {
@@ -72,7 +48,7 @@ class AccountSubscriptions extends React.Component {
           <tbody>
           {subscriptionsList.map((subscription, i) => {
 
-              let subscriptionDate = moment(subscription.get('subActivatedDate')).format('L');
+              let subscriptionDate = moment(subscription.get('subActivatedDate') || subscription.get('creationDate')).format('L');
               let internalPlan = subscription.get('internalPlan');
               let providerPlan = subscription.get('provider');
               //PERIOD
@@ -84,8 +60,8 @@ class AccountSubscriptions extends React.Component {
               let periodPercent = {width: `${percentComplete}%`};
               //PRICE
               let currencyPlan = internalPlan.get('currency');
-              let amountInCentsExclTax = this.formatPrice(internalPlan.get('amountInCentsExclTax'), currencyPlan);
-              let amountInCents = this.formatPrice(internalPlan.get('amountInCents'), currencyPlan);
+              let amountInCentsExclTax = formatPrice(internalPlan.get('amountInCentsExclTax'), currencyPlan);
+              let amountInCents = formatPrice(internalPlan.get('amountInCents'), currencyPlan);
               //PROVIDER
               let providerName = providerPlan.get('providerName');
               let providerLogo = providerLogos.hasOwnProperty(providerName) ? providerLogos[providerName] : '';
