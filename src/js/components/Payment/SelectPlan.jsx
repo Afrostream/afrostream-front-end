@@ -106,11 +106,11 @@ class SelectPlan extends React.Component {
     let isCash = this.context.history.isActive('cash');
 
     if (isCash) {
-      return <div className="choose-plan">{dict.planCode.cash.selectTitle}</div>
+      return <div className="choose-plan">{dict.planCodes.cash.selectTitle}</div>
     }
 
-    return <div className="choose-plan">{dict.planCode.selectTitle}
-      <span className="choose-plan__bolder"> {dict.planCode.freePeriodLabel}</span>
+    return <div className="choose-plan">{dict.planCodes.selectTitle}
+      <span className="choose-plan__bolder"> {dict.planCodes.freePeriodLabel}</span>
     </div>
   }
 
