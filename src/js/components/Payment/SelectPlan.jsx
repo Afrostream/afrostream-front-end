@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { prepareRoute } from '../../decorators';
 import PaymentImages from './PaymentImages';
-import { planCodes, dict } from '../../../../config/client';
+import { dict } from '../../../../config/client';
 import _ from 'lodash';
 import { formatPrice, isBoolean } from '../../lib/utils';
-import { prepareRoute } from '../../decorators';
 import * as EventActionCreators from '../../actions/event';
 import * as BillingActionCreators from '../../actions/billing';
 
@@ -33,8 +33,6 @@ class SelectPlan extends React.Component {
       }
     } = this;
 
-    let isCash = this.context.history.isActive('cash');
-
     let validPlans = Billing.get('internalPlans');
 
     if (!validPlans) {
@@ -44,7 +42,7 @@ class SelectPlan extends React.Component {
     return validPlans.sort((a, b)=> a.get('amountInCents').localeCompare(b.get('amountInCents')));
   }
 
-  getPlanRow (label) {
+  getPlanCol (label) {
 
     let isCash = this.context.history.isActive('cash');
 
@@ -75,13 +73,13 @@ class SelectPlan extends React.Component {
           break;
         default :
           value = objVal;
+          let isBool = (value === 'true' || value === 'false' || typeof value === 'boolean' ) && typeof isBoolean(value) === 'boolean';
+          if (isBool) {
+            value = isBoolean(value) ? <i className="fa fa-check"></i> : <i className="fa fa-times"></i>;
+          }
           break;
       }
 
-      let isBool = (value === 'true' || value === 'false' || typeof value === 'boolean' ) && typeof isBoolean(value) === 'boolean';
-      if (isBool) {
-        value = isBoolean(value) ? <i className="fa fa-check"></i> : <i className="fa fa-times"></i>;
-      }
       return (
         <div key={`col-plan-${label}-${key}`} className="col col-xs-4 col-sm-4 col-md-2">
           {value}
@@ -139,8 +137,8 @@ class SelectPlan extends React.Component {
         <div className="select-plan">
           {_.map(cols, (value, key) =>
             <div key={`line-plan-${key}`} className="row">
-              {this.getLabel(value)}{}
-              {this.getPlanRow(value)}
+              {this.getLabel(value)}
+              {this.getPlanCol(value)}
             </div>
           )}
         </div>

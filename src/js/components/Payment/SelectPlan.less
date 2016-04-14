@@ -15,10 +15,6 @@
 
   }
 
-  @plan-blue-color: #759CA7;
-  @plan-yellow-color: #EDB62D;
-  @plan-purple-color: #6F248B;
-
   .select-plan {
     background-color: @white-base;
     color: @color-purple-1;
@@ -52,13 +48,13 @@
       //La premiere lgne
       &:nth-child(1) {
         .col {
-          &:nth-child(2) {
+          &:nth-child(3n+2) {
             color: @plan-blue-color;
           }
-          &:nth-child(3) {
+          &:nth-child(3n+3) {
             color: @plan-yellow-color;
           }
-          &:nth-child(4) {
+          &:nth-child(3n+4) {
             color: @plan-purple-color;
           }
           color: @plan-purple-color;
@@ -73,13 +69,13 @@
           &:nth-child(1) {
             background-color: transparent;
           }
-          &:nth-child(2) {
+          &:nth-child(3n+2) {
             background-color: @plan-blue-color;
           }
-          &:nth-child(3) {
+          &:nth-child(3n+3) {
             background-color: @plan-yellow-color;
           }
-          &:nth-child(4) {
+          &:nth-child(3n+4) {
             background-color: @plan-purple-color;
           }
         }
