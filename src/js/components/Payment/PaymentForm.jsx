@@ -57,17 +57,20 @@ class PaymentForm extends React.Component {
     if (!planCodes) {
       return false;
     }
+
     let plan = planCodes.find((plan) => {
       return planCode === plan.get('internalPlanUuid');
     });
 
-    return plan && plan.toJS();
+    return plan && plan;
   }
 
   setupPlan () {
     let currentPlan = this.hasPlan();
+    let internalPlanUuid = currentPlan.get('internalPlanUuid');
     this.setState({
-      isGift: currentPlan && currentPlan.internalPlanUuid === 'afrostreamgift',
+      isGift: internalPlanUuid === 'afrostreamgift',
+      internalPlanUuid: internalPlanUuid,
       currentPlan: currentPlan
     });
   }
@@ -147,7 +150,7 @@ class PaymentForm extends React.Component {
           form="subscription-create"
           className="button-create-subscription"
           disabled={this.state.disabledForm}
-        >{this.state.currentPlan.internalPlanOpts.internalActionLabel }
+        >{dict.planCodes.action}
         </button>
       </div>
     </div>);
@@ -211,8 +214,7 @@ class PaymentForm extends React.Component {
   async onSubmit (e) {
     const {
       props: {
-        User,
-        params: {planCode}
+        User
       }
     } = this;
 
@@ -220,7 +222,6 @@ class PaymentForm extends React.Component {
 
     const self = this;
     const user = User.get('user');
-    const currentPlan = this.hasPlan();
 
     this.setState({
       error: null
@@ -236,7 +237,7 @@ class PaymentForm extends React.Component {
     }
 
     let billingInfo = {
-      internalPlanUuid: planCode,
+      internalPlanUuid: this.state.internalPlanUuid,
       firstName: this.refs.firstName.value,
       lastName: this.refs.lastName.value
     };
@@ -246,7 +247,7 @@ class PaymentForm extends React.Component {
     }
 
     try {
-      let subBillingInfo = await this.refs.methodForm.submit(billingInfo, currentPlan);
+      let subBillingInfo = await this.refs.methodForm.submit(billingInfo, this.state.currentPlan);
       billingInfo = _.merge(billingInfo, subBillingInfo);
       await this.submitSubscription(billingInfo);
     } catch (err) {
@@ -325,7 +326,7 @@ class PaymentForm extends React.Component {
   renderPaymentMethod (planLabel) {
     return (
       <PaymentMethod ref="methodForm" isGift={this.state.isGift}
-                     planCode={this.state.currentPlan.internalPlanUuid} {...this.props}
+                     planCode={this.state.internalPlanUuid} {...this.props}
                      planLabel={planLabel}/>);
   }
 
@@ -336,7 +337,7 @@ class PaymentForm extends React.Component {
       'spinner-loading': this.state.loading
     };
 
-    const planLabel = dict.planCodes[this.state.currentPlan.internalPlanUuid];
+    const planLabel = `${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`;
 
     return (
       <div className="payment-wrapper">
