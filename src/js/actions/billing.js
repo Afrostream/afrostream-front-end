@@ -1,5 +1,4 @@
 import ActionTypes from '../consts/ActionTypes';
-import { pushState, isActive } from 'redux-router';
 /**
  * Get subscriptions list for user
  * @returns {Function}
@@ -100,16 +99,11 @@ export function getCouponCampaigns (providerName) {
  * @returns {Function}
  */
 export function getInternalplans (providerName = null) {
-  return (dispatch, getState) => {
 
-    // providerName = providerName || (isActive('cash') ? 'cashway' : 'recurly');
-    providerName = providerName || 'recurly';
-
-    return async api => ({
-      type: ActionTypes.Billing.getInternalplans,
-      res: await api(`/api/billings/internalplans`, 'GET', {
-        providerName: providerName
-      })
-    });
-  };
+  return async api => ({
+    type: ActionTypes.Billing.getInternalplans,
+    res: await api(`/api/billings/internalplans`, 'GET', {
+      providerName: providerName
+    })
+  });
 }

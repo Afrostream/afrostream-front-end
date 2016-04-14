@@ -13,9 +13,10 @@ if (process.env.BROWSER) {
   require('./SelectPlan.less');
 }
 @prepareRoute(async function ({store}) {
+  let isCash = store.history.isActive('cash');
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans())
+    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
   ];
 })
 @connect(({Billing}) => ({Billing}))
@@ -107,11 +108,11 @@ class SelectPlan extends React.Component {
     let isCash = this.context.history.isActive('cash');
 
     if (isCash) {
-      return <div className="choose-plan">Choisissez votre formule</div>
+      return <div className="choose-plan">{dict.planCode.cash.selectTitle}</div>
     }
 
-    return <div className="choose-plan">Choisissez votre formule et profitez de
-      <span className="choose-plan__bolder"> 7 jours d'essai</span>
+    return <div className="choose-plan">{dict.planCode.selectTitle}
+      <span className="choose-plan__bolder"> {dict.planCode.freePeriodLabel}</span>
     </div>
   }
 
