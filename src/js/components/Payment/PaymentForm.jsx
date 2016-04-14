@@ -22,9 +22,10 @@ if (process.env.BROWSER) {
 
 @connect(({User, Billing}) => ({User, Billing}))
 @prepareRoute(async function ({store}) {
+  let isCash = store.history.isActive('cash');
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans())
+    store.dispatch(BillingActionCreators.getInternalplans((isCash ? 'cashway' : 'recurly'))
   ];
 })
 class PaymentForm extends React.Component {
@@ -337,7 +338,7 @@ class PaymentForm extends React.Component {
       'spinner-loading': this.state.loading
     };
 
-    const planLabel = `${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`;
+    const planLabel = `${dict.planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`;
 
     return (
       <div className="payment-wrapper">

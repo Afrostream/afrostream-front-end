@@ -8,6 +8,12 @@
   "signupSocialButton": "S'inscrire avec {connection:title}",
   "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
   "planCodes": {
+    "cash": {
+      "selectTitle": "Choisissez votre formule",
+    },
+    "selectTitle": "Choisissez votre formule et profitez de",
+    "freePeriodLabel": "7 jours d'essai",
+    "title": "Formule",
     "action": "Choisir cette offre",
     "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",
     "cashway-coupon-oneyear": "Formule Sérénité - 59,99€ pour 1 an de films et séries afro",
