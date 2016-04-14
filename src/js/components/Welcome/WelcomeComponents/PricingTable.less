@@ -6,6 +6,13 @@
   padding-left: 15px;
   background-color: @white-base;
 
+  .pricing-header-purple {
+    font-size: 36px;
+    line-height: 42px;
+    text-align: left;
+    color: @color-indigo;
+  }
+
   .pricing-baseline {
     margin-top: 32px;
     line-height: 20px;
@@ -14,6 +21,107 @@
     a {
       color: @color-indigo;
       text-decoration: underline;
+    }
+  }
+
+  > .row {
+    display: table;
+    padding: 20px 0 20px 0;
+    .col {
+      display: table-cell;
+      float: none;
+      vertical-align: middle;
+
+      &:nth-child(n+2) {
+        border: 10px solid transparent;
+        vertical-align: bottom;
+        background-color: @plan-background-color;
+      }
+    }
+  }
+  .col {
+    padding-top: 70px;
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
+    color: @color-indigo;
+    font-size: 11px;
+    //NAME
+    .row:first-child {
+      font-size: 1.6em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    //PRICE
+    .row:nth-child(2) {
+      font-size: 2em;
+      text-transform: uppercase;
+    }
+
+    .row:nth-child(-n+2) {
+      margin: 10px 0 10px 0;
+    }
+
+    .row:nth-child(n+3) {
+      display: list-item;
+      margin: 0 20px 0 20px;
+      margin: 5px 0 5px 0;
+    }
+    .row:last-child {
+      display: block;
+    }
+
+    &:nth-child(3n+2) {
+      background-image: url(../../../../assets/images/billing/plans/titre_abo_1.jpg);
+      .row:first-child {
+        color: @plan-blue-color;
+      }
+      .btn-plan {
+        background-color: @plan-blue-color;
+      }
+    }
+    &:nth-child(3n+3) {
+      background-image: url(../../../../assets/images/billing/plans/titre_abo_2.jpg);
+      .row:first-child {
+        color: @plan-yellow-color;
+      }
+      .btn-plan {
+        background-color: @plan-yellow-color;
+      }
+    }
+
+    &:nth-child(3n+4) {
+      background-image: url(../../../../assets/images/billing/plans/titre_abo_3.jpg);
+      .row:first-child {
+        color: @plan-purple-color;
+      }
+      .btn-plan {
+        background-color: @plan-purple-color;
+      }
+    }
+
+    .row {
+      &:nth-child(-n+2) {
+        text-align: center;
+      }
+    }
+
+    .btn-plan {
+      color: @white-base;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 28px;
+      border-radius: @btn-radius;
+      padding-left: 15px;
+      padding-right: 15px;
+      margin: 20px 0 20px 0;
+      padding-bottom: 0px;
+      text-transform: uppercase;
+      border: none;
+      &:hover {
+        background-color: @subscriber-color;
+      }
     }
   }
 
