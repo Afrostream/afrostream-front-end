@@ -36,14 +36,11 @@ class SelectPlan extends React.Component {
 
     let validPlans = Billing.get('internalPlans');
 
-    // let validPlans = _.filter(planCodes, function (o) {
-    //   return o.cash == isCash;
-    // });
-
     if (!validPlans) {
-      return [];
+      return;
     }
-    return validPlans.toJS();
+
+    return validPlans.sort((a, b)=> a.get('amountInCents').localeCompare(b.get('amountInCents')));
   }
 
   getPlanRow (label) {
@@ -52,9 +49,12 @@ class SelectPlan extends React.Component {
 
     let validPlans = this.getPlans();
 
-    return _.map(validPlans, (plan, key)=> {
+    if (!validPlans) {
+      return;
+    }
+    return validPlans.map((plan, key)=> {
 
-      let objVal = plan[label] || plan.internalPlanOpts[label];
+      let objVal = plan.get(label) || plan.get('internalPlanOpts').get(label);
 
       if (objVal === undefined) {
         objVal = true;
@@ -67,10 +67,10 @@ class SelectPlan extends React.Component {
           break;
         case 'internalActionLabel':
           value = (<Link className="btn btn-plan"
-                         to={`${isCash ? '/cash' : ''}/select-plan/${plan.internalPlanUuid}/checkout`}>{`${dict.planCodes.action}`}</Link>);
+                         to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout`}>{`${dict.planCodes.action}`}</Link>);
           break;
         case 'price':
-          value = `${formatPrice(plan['amountInCents'], plan.currency, true)}/${plan.periodLength}${dict.account.billing.periods[plan.periodUnit]}`;
+          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`;
           break;
         default :
           value = objVal;
@@ -93,8 +93,12 @@ class SelectPlan extends React.Component {
 
     let validPlans = this.getPlans();
 
+    if (!validPlans) {
+      return;
+    }
+
     return (
-      <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.length * 2)}`}>
+      <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
         {dict.planCodes.infos[label] || ''}
       </div>);
   }

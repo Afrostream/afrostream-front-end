@@ -78,8 +78,7 @@ class RecurlyForm extends React.Component {
 
       'cvv': self.refs.cvc.value,
       // optional attributes
-      'starts_at': currentPlan.date,
-      'unit-amount-in-cents': currentPlan.params.price,
+      'unit-amount-in-cents': currentPlan.get('amountInCents'),
       'coupon_code': self.refs.couponCode.value,
       'country': self.refs.country.value()
     };

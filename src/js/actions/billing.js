@@ -102,7 +102,8 @@ export function getCouponCampaigns (providerName) {
 export function getInternalplans (providerName = null) {
   return (dispatch, getState) => {
 
-    providerName = providerName || (isActive('cash') ? 'cashway' : 'recurly');
+    // providerName = providerName || (isActive('cash') ? 'cashway' : 'recurly');
+    providerName = providerName || 'recurly';
 
     return async api => ({
       type: ActionTypes.Billing.getInternalplans,
