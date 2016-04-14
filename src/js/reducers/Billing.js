@@ -33,7 +33,7 @@ export default createReducer(initialState, {
     }
     const data = res.body;
     return state.merge({
-      [`internalPlans`]: mergeData(state.get('internalPlans'), data)
+      [`internalPlans`]: data
     });
   },
 
