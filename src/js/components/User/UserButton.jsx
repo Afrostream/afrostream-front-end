@@ -115,7 +115,7 @@ class UserButton extends React.Component {
 
     return (
       <div className="nav navbar-nav navbar-right">
-        <li className="pull-right">
+        <li className="pull-right hidden-xs">
           <a href="#" role="button" className="btn-xs btn-signup pull-right" {...inputSignupAction}>
             <span>{dict.signup.title}</span>
           </a>

@@ -16,7 +16,7 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({ store, params: { movieId ,episodeId} }) {
   await * [
-    store.dispatch(EventActionCreators.pinHeader(false)),
+    store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(CategoryActionCreators.getAllSpots())
   ];
 
