@@ -28,13 +28,12 @@ class PricingTable extends React.Component {
     return validPlans.sort((a, b)=> a.get('amountInCents').localeCompare(b.get('amountInCents')));
   }
 
-  openModal (e) {
+  openModal (internalPlanUuid) {
     const {
       props: {
         dispatch
       }
     } = this;
-    let internalPlanUuid = e.target.value;
     let type = (internalPlanUuid === 'afrostreamgift') ? 'showGift' : 'showSignup';
     dispatch(ModalActionCreators.open(type, true, `/select-plan/${internalPlanUuid}/checkout`));
   }
@@ -54,6 +53,7 @@ class PricingTable extends React.Component {
     ];
 
     return _.map(cols, (label)=> {
+      let internalPlanUuid = plan.get('internalPlanUuid');
       let objVal = plan.get(label) || plan.get('internalPlanOpts').get(label);
       if (objVal === undefined) {
         objVal = true;
@@ -62,7 +62,10 @@ class PricingTable extends React.Component {
       let value = '';
       switch (label) {
         case 'internalActionLabel':
-          value = (<button className="btn-plan" onClick={::this.openModal}>{`${dict.planCodes.action}`}</button>);
+          const inputSignupAction = {
+            onClick: event => ::this.openModal(internalPlanUuid)
+          };
+          value = (<button className="btn-plan" {...inputSignupAction}>{`${dict.planCodes.action}`}</button>);
           break;
         case 'price':
           value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`;
