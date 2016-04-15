@@ -286,7 +286,7 @@ class WelcomeHeader extends React.Component {
           <div className="afrostream-movie__poster" style={imageStyle}>
             <div className="afrostream-movie__mask"/>
           </div>
-          {this.state.isMobile ? <SignUpButton /> : ''}
+          <SignUpButton className="subscribe-button subscribe-button-mobile"/>
           <div className="afrostream-movie">
             <div className="afrostream-movie__info">
               <h1>{info.movie.title}</h1>

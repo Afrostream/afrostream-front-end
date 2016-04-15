@@ -7,35 +7,35 @@ import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
 import SearchInput from './../Search/SearchBox';
 import FavoritesButton from './../Favorites/FavoritesButton';
-import config from '../../../../config';
+import { dict } from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./UserButton.less');
 }
 
-@connect(({ User, OAuth, Event }) => ({User, OAuth, Event}))
+@connect(({User, OAuth, Event}) => ({User, OAuth, Event}))
 class UserButton extends React.Component {
 
-  componentDidMount() {
+  componentDidMount () {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(UserActionCreators.getProfile());
   }
 
-  logOut() {
+  logOut () {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
     dispatch(OAuthActionCreators.logOut());
   }
 
-  getUserConnectedButtons(user, type) {
+  getUserConnectedButtons (user, type) {
 
     let planCode;
     if (user) {
@@ -65,13 +65,13 @@ class UserButton extends React.Component {
     return el;
   }
 
-  render() {
+  render () {
     const {
       props: {
         User,
         OAuth
-        }
-      } = this;
+      }
+    } = this;
 
     const token = OAuth.get('token');
     const user = User.get('user');
@@ -104,30 +104,46 @@ class UserButton extends React.Component {
     }
   }
 
-  getLoginState() {
+  getLoginState () {
+
+    const inputSigninAction = {
+      onClick: event => ::this.showLock('showSignin')
+    };
+    const inputSignupAction = {
+      onClick: event => ::this.showLock('showSignup')
+    };
+
     return (
       <div className="nav navbar-nav navbar-right">
-        <button type="button" className="btn btn-login btn-default pull-right" onClick={::this.showLock}>Se connecter
-        </button>
+        <li className="pull-right">
+          <a href="#" role="button" className="btn-xs btn-signup pull-right" {...inputSignupAction}>
+            <span>{dict.signup.title}</span>
+          </a>
+        </li>
+        <li className="pull-right">
+          <a href="#" role="button" className="btn-xs btn-signin pull-right"  {...inputSigninAction}>
+            <span>{dict.signin.action}</span>
+          </a>
+        </li>
       </div>);
   }
 
-  showLock() {
+  showLock (mode) {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
-    dispatch(ModalActionCreators.open('showSignin'));
+    dispatch(ModalActionCreators.open(mode));
   }
 
-  toggleSideBar() {
+  toggleSideBar () {
     const {
       props: {
-        dispatch,Event
-        }
-      } = this;
+        dispatch
+      }
+    } = this;
 
     dispatch(EventActionCreators.toggleSideBar());
   }

@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import * as ModalActionCreators from '../../actions/modal';
 
 if (process.env.BROWSER) {
@@ -9,12 +9,12 @@ if (process.env.BROWSER) {
 @connect(({}) => ({}))
 class SignUpButton extends React.Component {
 
-  render() {
-    return (<button className="subscribe-button" type=" button" onClick={::this.showLock}
+  render () {
+    return (<button className={this.props.className} type=" button" onClick={::this.showLock}
                     dangerouslySetInnerHTML={{__html:  this.props.label}}/>);
   }
 
-  showLock() {
+  showLock () {
     const {
       props: {
         dispatch
@@ -27,11 +27,13 @@ class SignUpButton extends React.Component {
 }
 
 SignUpButton.propTypes = {
-  label: React.PropTypes.string
+  label: React.PropTypes.string,
+  className: React.PropTypes.string
 };
 
 SignUpButton.defaultProps = {
-  label: 'DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE'
+  label: 'DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE',
+  className: 'subscribe-button'
 };
 
 export default SignUpButton;
