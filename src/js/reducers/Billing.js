@@ -27,12 +27,14 @@ export default createReducer(initialState, {
     });
   },
   // #### INTERNAL PLANS ####
-  [ActionTypes.Billing.getInternalplans](state, {res}) {
+  [ActionTypes.Billing.getInternalplans](state, {providerName, res}) {
     if (!res) {
       return state;
     }
     const data = res.body;
     return state.merge({
+      [`internalPlans/${providerName}/plans__res`]: res,
+      [`internalPlans/${providerName}`]: data,
       [`internalPlans`]: data
     });
   },
