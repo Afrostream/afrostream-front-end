@@ -22,10 +22,10 @@ if (process.env.BROWSER) {
 
 @connect(({User, Billing}) => ({User, Billing}))
 @prepareRoute(async function ({store}) {
-  // let isCash = store.history.isActive('cash');
+  let isCash = store.history.isActive('cash');
   return await * [
-    store.dispatch(EventActionCreators.pinHeader(true))
-    // store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
+    store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
   ];
 })
 class PaymentForm extends React.Component {
@@ -67,24 +67,19 @@ class PaymentForm extends React.Component {
   }
 
   setupPlan () {
+    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
     let currentPlan = this.hasPlan();
     let internalPlanUuid = currentPlan.get('internalPlanUuid');
     this.setState({
       isGift: internalPlanUuid === 'afrostreamgift',
       internalPlanUuid: internalPlanUuid,
-      currentPlan: currentPlan
-    });
-  }
-
-  setupLib () {
-    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
-    this.setState({
+      currentPlan: currentPlan,
       hasLib: hasOneLib
     });
   }
 
   componentWillReceiveProps () {
-    this.setupLib();
+    // this.setupLib();
   }
 
   componentWillMount () {

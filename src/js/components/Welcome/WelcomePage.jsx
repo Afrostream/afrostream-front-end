@@ -29,7 +29,7 @@ if (process.env.BROWSER) {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId));
   }
 
-  //await store.dispatch(BillingActionCreators.getInternalplans('recurly'))
+  await store.dispatch(BillingActionCreators.getInternalplans('recurly'))
 })
 class WelcomePage extends React.Component {
 

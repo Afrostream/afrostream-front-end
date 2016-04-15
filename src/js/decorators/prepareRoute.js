@@ -26,7 +26,7 @@ export default function prepareRoute(prepareFn) {
           props: { params }
           } = this;
 
-        if (!shallowEqual(nextProps, this.props)) {
+        if (!shallowEqual(nextProps.params, this.props.params)) {
           prepareFn({store, params: nextProps.params});
         }
       }

@@ -28,6 +28,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         let status = subscriptionsStatus.status;
         if ((!planCode && !coupon.get('coupon'))) {
           let isCash = isActive('cash');
+          // donePath = donePath || `${isCash ? '/cash' : ''}/select-plan`;
           donePath = donePath || `${isCash ? '/cash' : ''}/select-plan`;
           if (status && status !== 'active') {
             donePath = `${donePath}/none/${status}`;
