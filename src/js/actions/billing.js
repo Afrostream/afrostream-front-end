@@ -98,16 +98,16 @@ export function getCouponCampaigns (providerName) {
  * Get internalplans billing api
  * @returns {Function}
  */
-export function getInternalplans (providerName = 'recurly') {
+export function getInternalplans (contextBillingUuid = 'common') {
 
   return (dispatch, getState) => {
-    let readyPlans = getState().Billing.get(`internalPlans/${providerName}`);
+    let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`);
 
     if (readyPlans) {
       console.log('plans already present in data store');
       return {
         type: ActionTypes.Billing.getInternalplans,
-        providerName,
+        contextBillingUuid,
         res: {
           body: readyPlans.toJS()
         }
@@ -116,10 +116,9 @@ export function getInternalplans (providerName = 'recurly') {
 
     return async api => ({
       type: ActionTypes.Billing.getInternalplans,
-      providerName,
+      contextBillingUuid,
       res: await api(`/api/billings/internalplans`, 'GET', {
-        providerName: providerName,
-        contextBillingUuid: 'common'
+        contextBillingUuid: contextBillingUuid
       })
     });
   }

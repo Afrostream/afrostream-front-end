@@ -16,7 +16,7 @@ if (process.env.BROWSER) {
   let isCash = store.history.isActive('cash');
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'recurly'))
+    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'common'))
   ];
 })
 @connect(({Billing}) => ({Billing}))
@@ -28,12 +28,13 @@ class SelectPlan extends React.Component {
 
   getPlans () {
     const {
-      props: {
-        Billing
-      }
+      context : {history},
+      props: {Billing}
     } = this;
 
-    let validPlans = Billing.get('internalPlans');
+    let isCash = history.isActive('cash');
+
+    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : 'common'}`);
 
     if (!validPlans) {
       return;
@@ -44,7 +45,11 @@ class SelectPlan extends React.Component {
 
   getPlanCol (label) {
 
-    let isCash = this.context.history.isActive('cash');
+    const {
+      context : {history}
+    } = this;
+
+    let isCash = history.isActive('cash');
 
     let validPlans = this.getPlans();
 

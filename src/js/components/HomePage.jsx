@@ -37,7 +37,7 @@ class HomePage extends React.Component {
 
     const user = User.get('user');
     if (user) {
-      let isCash = this.context.history.isActive('cash');
+      let isCash = history.isActive('cash');
       let planCode = user.get('planCode');
       let subscriptionsStatus = user.get('subscriptionsStatus');
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null;

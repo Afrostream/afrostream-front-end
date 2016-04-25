@@ -19,7 +19,7 @@ class PricingTable extends React.Component {
       }
     } = this;
 
-    let validPlans = Billing.get(`internalPlans/recurly`);
+    let validPlans = Billing.get(`internalPlans/common`);
 
     if (!validPlans) {
       return;
