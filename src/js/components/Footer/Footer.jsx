@@ -52,7 +52,8 @@ class Footer extends React.Component {
               </li>
               <li>
                 <Link className="footer-link" to="/cash">
-                  Paiement en espèces
+                  Paiement en espèces avec <img src="/images/payment/cashway-inline-white.png" width="60"
+                                                className="img-responsive"/>
                 </Link>
               </li>
             </ul>

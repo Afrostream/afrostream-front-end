@@ -51,7 +51,7 @@ class CashwayPage extends React.Component {
       <div className="cashway-page">
         <div className="container brand-bg-alpha">
           <section className="cashway-info">
-            <h2>Paiement en espèces</h2>
+            <h2>Paiement en espèces avec <img src="/images/payment/cashway-inline.png" width="100"/></h2>
             <h3>Comment ça marche</h3>
             <div className="row">
               <div className="col-md-4">
