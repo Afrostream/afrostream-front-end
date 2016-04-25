@@ -410,7 +410,7 @@ class PlayerComponent extends Component {
       return;
     }
     let currentTime = this.player.currentTime();
-    let currentDuration = this.player.duration() || 0;
+    let currentDuration = this.state.duration || this.player.duration() || 0;
     if (!currentDuration) {
       return;
     }
@@ -636,6 +636,11 @@ class PlayerComponent extends Component {
       if (videoTracking) {
         const position = videoTracking.get('playerPosition');
         const duration = videoData.get('duration');
+        //Store duration
+        this.setState({
+          duration: duration
+        });
+
         if (position > 300 && position < (duration - 300)) {
           playerData.starttime = videoTracking.get('playerPosition');
         }
@@ -820,6 +825,7 @@ class PlayerComponent extends Component {
     let episodeData = videoData.get('episode');
     let seasonData = Season.get(`seasons/${seasonId}`);
     let videoDuration = this.formatTime(videoData.get('duration'));
+
     let csa = movieData.get('CSA');
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS();
