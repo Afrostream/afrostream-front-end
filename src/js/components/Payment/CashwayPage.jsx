@@ -55,6 +55,8 @@ class CashwayPage extends React.Component {
             <h3>Comment ça marche</h3>
             <div className="row">
               <div className="col-md-4">
+                <img className="img-responsive img-center"
+                     src="/images/payment/cashway/step-1.png" alt="code_bare_ccm"/>
                 <div className="row">
                   <div className="col-md-2">
                     <div className='number'>1</div>
@@ -63,11 +65,11 @@ class CashwayPage extends React.Component {
                     <div className="container_title">Le commerçant scanne votre code-barre</div>
                   </div>
                 </div>
-                <img className="img-responsive img-center"
-                     src="http://cw2.mo.772424.com/wp-content/uploads/2015/04/code_bare_ccm.png" alt="code_bare_ccm"/>
 
               </div>
               <div className="col-md-4">
+                <img className="img-responsive img-center"
+                     src="/images/payment/cashway/step-2.png" alt="money_ccm"/>
                 <div className="row">
                   <div className="col-md-2">
                     <div className='number'>2</div>
@@ -76,11 +78,11 @@ class CashwayPage extends React.Component {
                     <div className="container_title">Vous payez en espèces</div>
                   </div>
                 </div>
-                <img className="img-responsive img-center"
-                     src="http://cw2.mo.772424.com/wp-content/uploads/2015/04/money_ccm.png" alt="money_ccm"/>
 
               </div>
               <div className="col-md-4">
+                <img className="img-responsive img-center"
+                     src="/images/payment/cashway/step-3.png" alt="validate_ccm"/>
                 <div className="row">
                   <div className="col-md-2">
                     <div className='number'>3</div>
@@ -93,8 +95,6 @@ class CashwayPage extends React.Component {
                     </div>
                   </div>
                 </div>
-                <img className="img-responsive img-center"
-                     src="http://cw2.mo.772424.com/wp-content/uploads/2015/04/validate_ccm.png" alt="validate_ccm"/>
 
               </div>
             </div>
