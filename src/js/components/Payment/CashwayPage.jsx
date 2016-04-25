@@ -53,41 +53,35 @@ class CashwayPage extends React.Component {
           <section className="cashway-info">
             <h2>Paiement en espèces avec <img src="/images/payment/cashway-inline.png" width="100"/></h2>
             <h3>Comment ça marche</h3>
-            <div className="row">
-              <div className="col-md-4">
+            <div className="row-fluid">
+              <div className="col-xs-12 col-md-4">
+                <div className='number'>1</div>
                 <img className="img-responsive img-center"
                      src="/images/payment/cashway/step-1.png" alt="code_bare_ccm"/>
-                <div className="row">
-                  <div className="col-md-2">
-                    <div className='number'>1</div>
-                  </div>
-                  <div className="col-md-10">
+                <div className="row-fluid">
+                  <div className="col-md-12">
                     <div className="container_title">Le commerçant scanne votre code-barre</div>
                   </div>
                 </div>
 
               </div>
-              <div className="col-md-4">
+              <div className="col-xs-12 col-md-4">
+                <div className='number'>2</div>
                 <img className="img-responsive img-center"
                      src="/images/payment/cashway/step-2.png" alt="money_ccm"/>
-                <div className="row">
-                  <div className="col-md-2">
-                    <div className='number'>2</div>
-                  </div>
-                  <div className="col-md-10">
+                <div className="row-fluid">
+                  <div className="col-md-12">
                     <div className="container_title">Vous payez en espèces</div>
                   </div>
                 </div>
 
               </div>
-              <div className="col-md-4">
+              <div className="col-xs-12 col-md-4">
+                <div className='number'>3</div>
                 <img className="img-responsive img-center"
                      src="/images/payment/cashway/step-3.png" alt="validate_ccm"/>
-                <div className="row">
-                  <div className="col-md-2">
-                    <div className='number'>3</div>
-                  </div>
-                  <div className="col-md-10">
+                <div className="row-fluid">
+                  <div className="col-md-12">
                     <div className="container_title">Votre commande est validée ! Vous recevez un message de
                       confirmation,
                       et

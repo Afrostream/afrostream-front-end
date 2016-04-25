@@ -30,6 +30,9 @@
       border: 4px solid #fff;
       box-shadow: 1px 1px 1px rgba(50, 50, 50, .4);
       text-shadow: 1px 1px 1px rgba(50, 50, 50, .1);
+      position: absolute;
+      left: 20px;
+      top: 20px;
     }
 
     .subscribe-button {
@@ -38,8 +41,10 @@
     }
 
     .container_title {
-      font-size: 1.4em;
       margin: 1em;
+      font-family: @font-book;
+      font-size: 1.8em;
+      .isMobile({ font-size: 2.5em; });
     }
 
     .cashway-map-canvas {
