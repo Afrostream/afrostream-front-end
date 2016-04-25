@@ -66,7 +66,7 @@ class SelectPlan extends React.Component {
       let value = '';
       switch (label) {
         case 'formule':
-          value = 'Formule';
+          value = dict.planCodes.infos[label] || '';
           break;
         case 'internalActionLabel':
           value = (<Link className="btn btn-plan"

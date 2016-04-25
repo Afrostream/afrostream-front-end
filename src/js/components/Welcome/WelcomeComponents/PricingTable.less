@@ -52,9 +52,6 @@
             position: absolute;
           }
         }
-        .row:nth-child(2) {
-          padding: 20px;
-        }
       }
       &:first-child {
         align-self: center;
@@ -116,38 +113,40 @@
       color: @color-indigo;
       font-size: 11px;
       //NAME
-      .row:first-child {
+      .row:nth-child(2) {
         font-size: 1.6em;
         text-transform: uppercase;
         font-weight: 500;
+        padding: 20px;
       }
 
       //PRICE
-      .row:nth-child(2) {
+      .row:nth-child(3) {
         font-size: 2em;
         text-transform: uppercase;
+        padding-bottom: 20px;
       }
 
       .row {
         margin: 10px 0 10px 0;
+        text-align: center;
       }
 
-      .row:nth-child(n+3) {
-        display: list-item;
-        list-style-position: inside;
-        padding: 5px 10px 5px 10px;
+      .row:nth-child(n+4) {
+        &:not(:last-child) {
+          span {
+            display: list-item;
+            list-style-position: inside;
+            padding-left: 15px;
+            padding-right: 15px;
+            text-align: left;
+          }
+        }
       }
 
       .row:last-child {
         display: block;
         margin: 0;
-        text-align: center;
-      }
-
-      .row {
-        &:nth-child(-n+2) {
-          text-align: center;
-        }
       }
 
       .btn-plan {
@@ -165,6 +164,19 @@
         &:hover {
           background-color: @subscriber-color;
         }
+      }
+
+      .plan-highlight {
+        display: inline-block;
+        color: #84a7b2;
+        background-color: #fff;
+        border-radius: 10px;
+        border: 1px solid #eee;
+        font-size: 1em;
+        padding-left: 15px;
+        padding-right: 15px;
+        line-height: 1.7;
+        font-weight: 600;
       }
     }
   }

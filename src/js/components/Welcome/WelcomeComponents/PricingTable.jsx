@@ -44,6 +44,7 @@ class PricingTable extends React.Component {
       'formule',
       'name',
       'price',
+      'prelevementMensuel',
       'trialEnabled',
       'internalMaxScreens',
       'internalMobile',
@@ -68,7 +69,12 @@ class PricingTable extends React.Component {
       let value = '';
       switch (label) {
         case 'formule':
-          value = 'Formule';
+          value = dict.planCodes.infos[label] || '';
+          break;
+        case 'prelevementMensuel':
+          if (plan.get('periodUnit') === 'month') {
+            value = <div className="plan-highlight">{dict.planCodes.infos[label]}</div>;
+          }
           break;
         case 'internalActionLabel':
           const inputSignupAction = {
@@ -80,13 +86,13 @@ class PricingTable extends React.Component {
           value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`;
           break;
         case 'internalMaxScreens':
-          value = `${objVal} ${dict.planCodes.infos[label]}`;
+          value = <span>{`${objVal} ${dict.planCodes.infos[label]}`}</span>;
           break;
         default :
           let isBool = (objVal === 'true' || objVal === 'false' || typeof objVal === 'boolean' ) && typeof isBoolean(objVal) === 'boolean';
           if (isBool) {
             if (isBoolean(objVal)) {
-              value = dict.planCodes.infos[label] || '';
+              value = <span>{ dict.planCodes.infos[label] || ''}</span>;
             }
           }
           else {
