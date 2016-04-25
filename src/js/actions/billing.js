@@ -118,7 +118,8 @@ export function getInternalplans (providerName = 'recurly') {
       type: ActionTypes.Billing.getInternalplans,
       providerName,
       res: await api(`/api/billings/internalplans`, 'GET', {
-        providerName: providerName
+        providerName: providerName,
+        contextBillingUuid: 'common'
       })
     });
   }

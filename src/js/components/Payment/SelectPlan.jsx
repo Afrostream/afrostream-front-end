@@ -39,7 +39,7 @@ class SelectPlan extends React.Component {
       return;
     }
 
-    return validPlans.sort((a, b)=> a.get('amountInCents').localeCompare(b.get('amountInCents')));
+    return validPlans.sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')));
   }
 
   getPlanCol (label) {
@@ -53,7 +53,11 @@ class SelectPlan extends React.Component {
     }
     return validPlans.map((plan, key)=> {
 
-      let objVal = plan.get(label) || plan.get('internalPlanOpts').get(label);
+      let objVal = plan.get(label);
+
+      if (objVal === undefined) {
+        objVal = plan.get('internalPlanOpts').get(label);
+      }
 
       if (objVal === undefined) {
         objVal = true;
@@ -120,7 +124,7 @@ class SelectPlan extends React.Component {
       'formule',
       'name',
       'price',
-      'internalFreePeriod',
+      'trialEnabled',
       'internalMaxScreens',
       'internalMobile',
       'internalUnlimited',
