@@ -145,11 +145,11 @@ class SelectPlan extends React.Component {
     ];
 
     return (
-      <div className=" plan-container">
+      <div className="plan-container">
 
         {this.getHeader()}
 
-        <div className=" select-plan">
+        <div className="select-plan">
           {_.map(cols, (value, key) =>
             <div key={`line-plan-${key}`} className=" row">
               {this.getLabel(value)}
