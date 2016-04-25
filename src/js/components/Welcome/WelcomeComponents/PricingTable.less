@@ -1,9 +1,7 @@
 @import (reference) '../../../../styles/config.less';
 
 .pricing {
-  padding-bottom: 50px;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding: 50px 15px 50px 15px;
   background-color: @white-base;
 
   .pricing-header-purple {
@@ -25,27 +23,54 @@
   }
 
   > .row {
-    //display: table;
     padding: 20px 0 20px 0;
     margin-left: 0;
     margin-right: 0;
+    @media all and (min-width: @screen-sm-min) {
+      display: flex;
+      align-items: flex-end;
+    }
     .col {
-      //display: table-cell;
-      //float: none;
-      vertical-align: middle;
       .plan-container {
+        margin-top: 50px;
         background-color: @plan-background-color;
-        &:nth-child(n+2) {
-          vertical-align: bottom;
+        .row:first-child {
+          font-size: 1em;
+          text-align: left;
+          color: #FFF;
+          padding: 2px 2px 2px 5px;
+          margin: 0;
+          &:after {
+            content: '';
+            right: 15px;
+            width: 100%;
+            height: 75px;
+            top: -25px;
+            background-size: contain;
+            background-position: right bottom;
+            background-repeat: no-repeat;
+            position: absolute;
+          }
         }
+        .row:nth-child(2) {
+          padding: 20px;
+        }
+      }
+      &:first-child {
+        align-self: center;
       }
     }
   }
   .col {
     &:nth-child(3n+2) {
       .plan-container {
-        background-image: url(../../../../assets/images/billing/plans/titre_abo_1.jpg);
         .row:first-child {
+          &:after {
+            background-image: url(../../../../assets/images/billing/plans/titre_abo_light_1.png);
+          }
+          background-color: @plan-blue-color;
+        }
+        .row:nth-child(2) {
           color: @plan-blue-color;
         }
         .btn-plan {
@@ -55,8 +80,13 @@
     }
     &:nth-child(3n+3) {
       .plan-container {
-        background-image: url(../../../../assets/images/billing/plans/titre_abo_2.jpg);
         .row:first-child {
+          &:after {
+            background-image: url(../../../../assets/images/billing/plans/titre_abo_light_2.png);
+          }
+          background-color: @plan-yellow-color;
+        }
+        .row:nth-child(2) {
           color: @plan-yellow-color;
         }
         .btn-plan {
@@ -67,8 +97,13 @@
 
     &:nth-child(3n+4) {
       .plan-container {
-        background-image: url(../../../../assets/images/billing/plans/titre_abo_3.jpg);
         .row:first-child {
+          &:after {
+            background-image: url(../../../../assets/images/billing/plans/titre_abo_light_3.png);
+          }
+          background-color: @plan-purple-color;
+        }
+        .row:nth-child(2) {
           color: @plan-purple-color;
         }
         .btn-plan {
@@ -78,13 +113,6 @@
     }
 
     .plan-container {
-      padding-top: 70px;
-      @media all and (max-width: @screen-md-min) {
-        padding-top: 12em;
-      }
-      background-size: contain;
-      background-position: center top;
-      background-repeat: no-repeat;
       color: @color-indigo;
       font-size: 11px;
       //NAME
@@ -100,15 +128,16 @@
         text-transform: uppercase;
       }
 
-      .row:nth-child(-n+2) {
+      .row {
         margin: 10px 0 10px 0;
       }
 
       .row:nth-child(n+3) {
         display: list-item;
-        margin: 0 20px 0 20px;
-        padding: 5px;
+        list-style-position: inside;
+        padding: 5px 10px 5px 10px;
       }
+
       .row:last-child {
         display: block;
         margin: 0;

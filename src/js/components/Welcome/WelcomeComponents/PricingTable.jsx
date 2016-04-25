@@ -25,7 +25,7 @@ class PricingTable extends React.Component {
       return;
     }
 
-    return validPlans.sort((a, b)=> a.get('amountInCents').localeCompare(b.get('amountInCents')));
+    return validPlans.sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')));
   }
 
   openModal (internalPlanUuid) {
@@ -41,9 +41,10 @@ class PricingTable extends React.Component {
   getPlanRow (plan) {
 
     let cols = [
+      'formule',
       'name',
       'price',
-      'internalFreePeriod',
+      'trialEnabled',
       'internalMaxScreens',
       'internalMobile',
       'internalUnlimited',
@@ -54,13 +55,21 @@ class PricingTable extends React.Component {
 
     return _.map(cols, (label)=> {
       let internalPlanUuid = plan.get('internalPlanUuid');
-      let objVal = plan.get(label) || plan.get('internalPlanOpts').get(label);
+      let objVal = plan.get(label);
+
+      if (objVal === undefined) {
+        objVal = plan.get('internalPlanOpts').get(label);
+      }
+
       if (objVal === undefined) {
         objVal = true;
       }
 
       let value = '';
       switch (label) {
+        case 'formule':
+          value = 'Formule';
+          break;
         case 'internalActionLabel':
           const inputSignupAction = {
             onClick: event => ::this.openModal(internalPlanUuid)
@@ -111,7 +120,7 @@ class PricingTable extends React.Component {
       let key = plan.get('internalPlanUuid');
 
       return (
-        <div key={`col-plan-${key}`} className="col col-xs-12 col-sm-12 col-md-2">
+        <div key={`col-plan-${key}`} className="col col-xs-12 col-sm-12 col-md-3">
           <div className="plan-container">
             {this.getPlanRow(plan)}
           </div>
@@ -128,7 +137,7 @@ class PricingTable extends React.Component {
     }
 
     return (
-      <div key={`line-plan-baseline`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
+      <div key={`line-plan-baseline`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 3)}`}>
         <h1>
           <span className="pricing-header-purple">Nos formules </span>
         </h1>
