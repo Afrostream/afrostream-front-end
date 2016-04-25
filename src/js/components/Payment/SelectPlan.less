@@ -22,8 +22,9 @@
     text-align: center;
 
     .row {
+      margin-left: 0;
+      margin-right: 0;
       line-height: 3;
-
       //Toutes les lignes a partir de la 3eme
       &:nth-child(n+3) {
         border-bottom: 1px solid @gray-lighter;
@@ -85,7 +86,13 @@
       &:nth-child(3) {
         .col {
           &:nth-child(n+2) {
-            font-size: 1.3em;
+            .select-plan_price {
+              font-size: 1.3em;
+              .select-plan_period {
+                font-size: 0.7em;
+                font-family: @font-light;
+              }
+            }
             color: @color-purple-1;
             text-transform: uppercase;
             font-family: @font-book;

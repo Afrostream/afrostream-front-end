@@ -108,13 +108,13 @@ a.active {
 
 #page-content-wrapper {
   width: 100%;
-  //position: absolute;
   &.container,
   &.container-fluid {
     height: 100%;
     min-height: 100%;
     width: 100%;
     padding: 0;
+
     .row,
     .row-fluid {
       &:before {
@@ -130,6 +130,10 @@ a.active {
         padding: 40px;
         background: @background-page;
         min-height: 100%;
+        padding-left: @app-padding;
+        padding-right: @app-padding;
+        .isMobile({ padding-left: @app-padding-mobile; padding-right: @app-padding-mobile; });
+
         &.brand-bg {
           background-color: @brand-bg;
         }
@@ -174,6 +178,7 @@ article {
   margin: 0;
   //.fullHeight();
   padding: @header-height * 2  @app-padding;
+  .isMobile({ padding: @header-height * 2  @app-padding-mobile; });
   section {
     a,
     a:hover,

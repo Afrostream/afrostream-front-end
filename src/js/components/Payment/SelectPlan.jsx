@@ -78,7 +78,12 @@ class SelectPlan extends React.Component {
                          to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout`}>{`${dict.planCodes.action}`}</Link>);
           break;
         case 'price':
-          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`;
+          value = (<div className="select-plan_price">
+            {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
+            <span className="select-plan_period">
+              {`/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`}
+            </span>
+          </div>);
           break;
         default :
           value = objVal;
@@ -90,7 +95,8 @@ class SelectPlan extends React.Component {
       }
 
       return (
-        <div key={`col-plan-${label}-${key}`} className="col col-xs-4 col-sm-4 col-md-2">
+        <div key={`col-plan-${label}-${key}`}
+             className={`col col-xs-${(12/validPlans.size)} col-sm-${(12/validPlans.size)} col-md-2`}>
           {value}
         </div>
       )
@@ -107,7 +113,7 @@ class SelectPlan extends React.Component {
 
     return (
       <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
-        {dict.planCodes.infos[label] || ''}
+        {label !== 'formule' && dict.planCodes.infos[label] || ''}
       </div>);
   }
 
@@ -115,11 +121,11 @@ class SelectPlan extends React.Component {
     let isCash = this.context.history.isActive('cash');
 
     if (isCash) {
-      return <div className="choose-plan">{dict.planCodes.cash.selectTitle}</div>
+      return <div className=" choose-plan">{dict.planCodes.cash.selectTitle}</div>
     }
 
-    return <div className="choose-plan">{dict.planCodes.selectTitle}
-      <span className="choose-plan__bolder"> {dict.planCodes.freePeriodLabel}</span>
+    return <div className=" choose-plan">{dict.planCodes.selectTitle}
+      <span className=" choose-plan__bolder"> {dict.planCodes.freePeriodLabel}</span>
     </div>
   }
 
@@ -139,13 +145,13 @@ class SelectPlan extends React.Component {
     ];
 
     return (
-      <div className="plan-container">
+      <div className=" plan-container">
 
         {this.getHeader()}
 
-        <div className="select-plan">
+        <div className=" select-plan">
           {_.map(cols, (value, key) =>
-            <div key={`line-plan-${key}`} className="row">
+            <div key={`line-plan-${key}`} className=" row">
               {this.getLabel(value)}
               {this.getPlanCol(value)}
             </div>
