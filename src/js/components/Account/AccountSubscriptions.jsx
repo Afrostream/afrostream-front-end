@@ -46,6 +46,7 @@ class AccountSubscriptions extends React.Component {
           </tr>
           </thead>
           <tbody>
+
           {subscriptionsList.map((subscription, i) => {
 
               let subscriptionDate = moment(subscription.get('subActivatedDate') || subscription.get('creationDate')).format('L');

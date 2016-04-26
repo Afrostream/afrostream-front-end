@@ -45,14 +45,19 @@ class PaymentForm extends React.Component {
   };
 
   hasPlan () {
+
     const {
+      context : {history},
       props: {
         Billing,
         params: {planCode}
       }
     } = this;
 
-    let planCodes = Billing.get('internalPlans');
+    let isCash = history.isActive('cash');
+
+    let planCodes = Billing.get(`internalPlans/${isCash ? 'cashway' : 'common'}`);
+
     if (!planCodes) {
       return false;
     }
@@ -67,6 +72,9 @@ class PaymentForm extends React.Component {
   setupPlan () {
     let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
     let currentPlan = this.hasPlan();
+    if (!currentPlan) {
+      return;
+    }
     let internalPlanUuid = currentPlan.get('internalPlanUuid');
     this.setState({
       isGift: internalPlanUuid === 'afrostreamgift',
