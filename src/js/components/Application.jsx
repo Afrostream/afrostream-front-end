@@ -1,19 +1,20 @@
-import React ,{PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import AlertMessage from './Alert/AlertMessage';
 import ModalView from './Modal/ModalView'
+import SendBird from './SendBird/SendBird'
 import classNames from 'classnames';
-import { metasData,analytics } from '../decorators';
+import { metasData, analytics } from '../decorators';
 if (process.env.BROWSER) {
   require('./Application.less');
 }
 
 @metasData()
 @analytics()
-@connect(({ Event,User,Modal }) => ({Event, User, Modal}))
+@connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
 
   static contextTypes = {
@@ -21,9 +22,9 @@ class Application extends React.Component {
     location: PropTypes.object.isRequired
   };
 
-  render() {
+  render () {
 
-    const { props: { children,Event,User,Modal } } = this;
+    const {props: {children, Event, User, Modal}} = this;
     const toggled = User.get('user') && Event.get('sideBarToggled');
     const hasPopup = Modal.get('target');
 
@@ -43,6 +44,7 @@ class Application extends React.Component {
           <Footer />
         </div>
         <ModalView />
+        <SendBird />
       </div>
     );
   }
