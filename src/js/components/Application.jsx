@@ -5,6 +5,7 @@ import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import AlertMessage from './Alert/AlertMessage';
 import ModalView from './Modal/ModalView'
+import SendBird from './SendBird/SendBird'
 import classNames from 'classnames';
 import { metasData, analytics } from '../decorators';
 if (process.env.BROWSER) {
@@ -43,6 +44,7 @@ class Application extends React.Component {
           <Footer />
         </div>
         <ModalView {...this.props}/>
+        <SendBird />
       </div>
     );
   }
