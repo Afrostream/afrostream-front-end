@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import { prepareRoute } from '../decorators';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
-import Spinner from './Spinner/Spinner';
 import * as CategoryActionCreators from '../actions/category';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 @prepareRoute(async function ({store}) {
   return await * [

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import SignUpButton from '../User/SignUpButton';
 import { prepareRoute } from '../../decorators';
 import * as EventActionCreators from '../../actions/event';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 
 if (process.env.BROWSER) {
   require('./CashwayPage.less');
@@ -36,6 +37,9 @@ class CashwayPage extends React.Component {
           location: position.coords.latitude + ' ' + position.coords.longitude
         });
       });
+    }
+    if (canUseDOM && window.cashwayMapInit) {
+      window.cashwayMapInit();
     }
   }
 
