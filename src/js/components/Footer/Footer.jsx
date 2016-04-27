@@ -26,8 +26,8 @@ class Footer extends React.Component {
 
     return (
       <footer className={classSet(footerClasses)}>
-        <div className="links">
-          <div className="get-help">
+        <div className="links row">
+          <div className="get-help col-xs-12 col-md-2">
             <h4>SUPPORT TECHNIQUE</h4>
             <ul className="footer-links">
               <li>
@@ -50,15 +50,25 @@ class Footer extends React.Component {
                   Politique de confidentialité
                 </Link>
               </li>
+            </ul>
+          </div>
+          <div className="get-help col-xs-12 col-md-2">
+            <h4>S'ABONNER</h4>
+            <ul className="footer-links">
               <li>
                 <Link className="footer-link" to="/cash">
                   Paiement en espèces avec <img src="/images/payment/cashway-inline-white.png" width="60"
                                                 className="img-responsive"/>
                 </Link>
               </li>
+              <li>
+                <Link className="footer-link" to="/coupons">
+                  Coupons
+                </Link>
+              </li>
             </ul>
           </div>
-          <div className="get-help">
+          <div className="get-help col-xs-12 col-md-2">
             <h4>PRO</h4>
             <ul className="footer-links">
               <li>
@@ -79,7 +89,7 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help">
+          <div className="get-help col-xs-12 col-md-2">
             <h4>APPLICATIONS MOBILE</h4>
             <ul className="footer-links">
               <li>
@@ -97,7 +107,7 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help">
+          <div className="get-help col-xs-12 col-md-2">
             <h4>SUIVEZ-NOUS</h4>
             <ul className="footer-links">
               <li>
@@ -115,17 +125,12 @@ class Footer extends React.Component {
         </div>
 
         <div className="legal-statements">
-          <div className="links">
-            <div className="get-help">
-              <div className="legal-text">Copyright &copy; Afrostream Inc. {this.year}</div>
+          <div className="links row">
+            <div className="get-help col-md-6">
+              Copyright &copy; Afrostream Inc. {this.year}
             </div>
-            <div className="get-help">
-              &nbsp;
-            </div>
-            <div className="get-help">
-              <div className="legal-text">
-                <Link to="/legals">Mentions légales</Link>
-              </div>
+            <div className="get-help col-md-6">
+              <Link to="/legals">Mentions légales</Link>
             </div>
           </div>
         </div>

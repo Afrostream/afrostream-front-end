@@ -22,26 +22,20 @@
     display: none;
   }
 
-  @media all and (max-width: @screen-sm-min) {
-    text-align: center;
-  }
-
   .links {
     width: 100%;
     position: relative;
     display: inline-block;
+    text-align: center;
 
     .get-help {
-      position: relative;
-      float: left;
-      width: 25%;
-      padding-left: 8%;
+      text-align: left;
+      display: inline-block;
+      float: none;
+      vertical-align: top;
 
       @media all and (max-width: @screen-sm-min) {
-        width: 100%;
-        padding-left: 0px;
-        float: none;
-        padding-top: 5px;
+        text-align: center;
       }
 
       h4 {
@@ -59,36 +53,20 @@
   .footer-link {
     color: #A39EA7;
     line-height: 16px;
-  }
-  .legal-statements {
-    width: 100%;
-    min-height: 30px;
-    background-color: #442E4F;
-    position: relative;
-    display: inline-block;
-
-    .links {
-      width: 100%;
-      position: relative;
+    img {
       display: inline-block;
-
-      .get-help {
-        position: relative;
-        float: left;
-        width: 32%;
-        padding-left: 14%;
-
-        @media all and (max-width: @screen-sm-min) {
-          width: 100%;
-          padding-left: 0px;
-          float: none;
-          padding-bottom: 5px;
-        }
-      }
     }
   }
 
-  .legal-text {
-    padding: 10px 0 0 0;
+  .legal-statements {
+    width: 100%;
+    min-height: 30px;
+    line-height: 30px;
+    background-color: #442E4F;
+    position: relative;
+    display: inline-block;
+    .get-help {
+      text-align: center;
+    }
   }
 }
