@@ -23,6 +23,8 @@ class SendBird extends React.Component {
 
   state = {
     init: false,
+    open: false,
+    options: false,
     messages: [],
     channelList: []
   };
@@ -86,8 +88,8 @@ class SendBird extends React.Component {
     });
 
     sendBirdClient.events.onMessageReceived = ::this.setChatMessage;
-    sendBirdClient.events.onSystemMessageReceived = ::this.setSysMessage;
-    sendBirdClient.events.onBroadcastMessageReceived = ::this.setBroadcastMessage;
+    sendBirdClient.events.onSystemMessageReceived = ::this.setChatMessage;
+    sendBirdClient.events.onBroadcastMessageReceived = ::this.setChatMessage;
   }
 
   sendBirdInitSuccessHandler () {
@@ -245,18 +247,11 @@ class SendBird extends React.Component {
   }
 
   enterChatHandler () {
-    let valueMess = $.trim(this.refs.chatSend.value);
+    let valueMess = this.refs.chatSend.value.trim();
     if (!this.isEmpty(valueMess)) {
+      this.refs.chatSend.calue = '';
       sendBirdClient.message(valueMess);
     }
-  }
-
-  setSysMessage (obj) {
-    this.sysSend(obj['message']);
-  }
-
-  setBroadcastMessage (obj) {
-    this.sysSend(obj['message']);
   }
 
   setChatMessage (obj) {
@@ -271,7 +266,7 @@ class SendBird extends React.Component {
   }
 
   scrollPositionBottom () {
-    $('.chat_converse').scrollTop($('.chat_converse')[0].scrollHeight);
+    this.refs.chatConverse.scrollTop = this.refs.chatConverse.scrollHeight
   }
 
 
@@ -280,7 +275,6 @@ class SendBird extends React.Component {
    **********************************************/
 
   toggleFab () {
-
     let toggle = !this.state.open;
     this.setState({
       open: toggle
@@ -288,11 +282,16 @@ class SendBird extends React.Component {
   }
 
   loadBeat (beat) {
-    beat ? $('.chat_loader').addClass('is-loading') : $('.chat_loader').removeClass('is-loading');
+    this.setState({
+      loading: beat
+    });
   }
 
   toggleOptions () {
-    $('.chat_option').toggleClass('is-dropped');
+    let toggle = !this.state.options;
+    this.setState({
+      options: toggle
+    });
   }
 
   render () {
@@ -327,6 +326,12 @@ class SendBird extends React.Component {
       'chat': true,
       'is-visible': this.state.open
     };
+
+    let optionsClasses = {
+      'chat_option': true,
+      'is-dropped': this.state.options
+    };
+
     let converseClasses = {
       'chat_converse': true,
       'is-visible': this.state.currentChannel
@@ -352,6 +357,11 @@ class SendBird extends React.Component {
       'is-visible': this.state.currentChannel
     };
 
+    let loaderClasses = {
+      'chat_loader': true,
+      'is-loading': this.state.loading
+    };
+
     if (!user) {
       return <div />;
     }
@@ -361,8 +371,9 @@ class SendBird extends React.Component {
         <div className={classSet(chatClasses)}>
           <div className="chat_header">
             <span id="chat_head">{this.state.currentChannel ? this.state.currentChannel.name : 'Live Chat'}</span>
-            <div className="chat_loader"></div>
-            <div className="chat_option" onClick={::this.toggleOptions}><i className="zmdi zmdi-more-vert"></i>
+            <div className={classSet(loaderClasses)}/>
+            <div className={classSet(optionsClasses)} onClick={::this.toggleOptions}>
+              <i className="zmdi zmdi-more-vert"/>
               <ul className="channel_list">
                 {
                   _.map(this.state.channelList, (channel)=> {
@@ -392,7 +403,7 @@ class SendBird extends React.Component {
               })
             }
           </div>
-          <div id="chat_converse" className={classSet(converseClasses)}>
+          <div ref="chatConverse" id="chat_converse" className={classSet(converseClasses)}>
             {
               _.map(this.state.messages, (obj)=> {
 
