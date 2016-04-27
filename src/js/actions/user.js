@@ -37,7 +37,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       }
 
       if (userMerged.facebook) {
-        userMerged.picture = `http://graph.facebook.com/${userMerged.facebook.id}/picture`;
+        userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`;
       } else {
         userMerged.picture = `/avatar/${userMerged.email}`;
       }
