@@ -3,6 +3,7 @@ import React, { PropTypes }  from 'react';
 import { connect } from 'react-redux';
 import SB from 'sendbird';
 import { sendBird } from '../../../../config';
+import classSet from 'classnames';
 import _ from 'lodash';
 
 const sendBirdClient = SB.getInstance();
@@ -11,11 +12,12 @@ if (process.env.BROWSER) {
   require('./SendBird.less');
 }
 
-@connect(({User}) => ({User}))
+@connect(({User, Movie, Event}) => ({User, Movie, Event}))
 class SendBird extends React.Component {
 
   static contextTypes = {
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
   };
 
   state = {
@@ -45,14 +47,23 @@ class SendBird extends React.Component {
 
     let guestId = user.get('_id');
     let nickName = user.get('email');
+    let avatar = user.get('picture');
 
-    this.hideChat(true);
+    this.setState({
+      open: true,
+      currentChannel: false,
+      guestId: guestId,
+      nickName: nickName,
+      userAvatar: avatar
+    });
+
     this.loadBeat(true);
 
     sendBirdClient.init({
       'app_id': sendBird.appId,
       'guest_id': guestId,
       'user_name': nickName,
+      'image_url': avatar,
       'successFunc': ::this.sendBirdInitSuccessHandler,
       'errorFunc': ::this.sendBirdErrorHandler
     });
@@ -60,22 +71,25 @@ class SendBird extends React.Component {
     sendBirdClient.events.onMessageReceived = ::this.setChatMessage;
     sendBirdClient.events.onSystemMessageReceived = ::this.setSysMessage;
     sendBirdClient.events.onBroadcastMessageReceived = ::this.setBroadcastMessage;
-
-//Listen user voice
-    $('#fab_listen').click(function () {
-      var recognition = new webkitSpeechRecognition();
-      recognition.onresult = function (event) {
-        this.userSend(event.results[0][0].transcript);
-      }
-      recognition.start();
-    });
   }
 
   sendBirdInitSuccessHandler () {
+    const {
+      props: {
+        params:{
+          movieId
+        }
+      }
+    } = this;
+
     this.loadBeat(false);
     this.getMessagingChannelList();
     this.getChannelList(1);
-    sendBirdClient.connect();
+    if (movieId) {
+      this.joinChannel(`2b0a2.movie${movieId}`);
+    } else {
+      sendBirdClient.connect();
+    }
   }
 
   sendBirdErrorHandler (status, error) {
@@ -130,7 +144,11 @@ class SendBird extends React.Component {
     );
   }
 
-  onJoinChannelSuccess () {
+  onJoinChannelSuccess (data) {
+    this.setState({
+      currentChannel: data
+    });
+
     sendBirdClient.connect({
       'successFunc': ::this.onJoinChannelConnected,
       'errorFunc': ::this.sendBirdErrorHandler
@@ -138,8 +156,8 @@ class SendBird extends React.Component {
   }
 
   onJoinChannelConnected () {
+    this.loadMoreChatMessage();
     this.loadBeat(false);
-    this.hideChat(false);
   }
 
   createChannelList (obj) {
@@ -147,6 +165,37 @@ class SendBird extends React.Component {
       channelList: obj['channels']
     });
   }
+
+
+  loadMoreChatMessage () {
+    sendBirdClient.getMessageLoadMore({
+      'limit': 50,
+      'successFunc': ::this.lodMoreChatCompleteHandler,
+      'errorFunc': ::this.sendBirdErrorHandler
+    });
+  }
+
+  lodMoreChatCompleteHandler (data) {
+    let moreMessage = data['messages'];
+    _.map(moreMessage.reverse(), (msg)=> {
+      if (sendBirdClient.isMessage(msg.cmd)) {
+        this.setChatMessage(msg.payload);
+      }
+      // TODO make file compatibility
+      // else if (sendBirdClient.isFileMessage(msg.cmd)) {
+      //   if (!sendBirdClient.hasImage(msg.payload)) {
+      //     msgList += this.fileMessageList(msg.payload);
+      //   } else {
+      //     msgList += this.imageMessageList(msg.payload);
+      //   }
+      // }
+    });
+    this.scrollPositionBottom();
+  }
+
+  /***********************************************
+   *            SendBird Actions messaging
+   **********************************************/
 
   onListenMessage (e) {
     var recognition = new webkitSpeechRecognition();
@@ -169,7 +218,7 @@ class SendBird extends React.Component {
   }
 
   isEmpty (value) {
-    return !!(this == null || this == undefined || this.length == 0);
+    return !!(value == null || value == undefined || value.length == 0);
   }
 
   enterChatHandler () {
@@ -188,15 +237,17 @@ class SendBird extends React.Component {
   }
 
   setChatMessage (obj) {
+    if (this.isEmpty(obj['message'])) return;
+
     if (this.isCurrentUser(obj['user']['guest_id'])) {
-      this.userSend(obj['message']);
+      this.userSend(obj['message'], obj['user']);
     } else {
-      this.otherSend(obj['message']);
+      this.otherSend(obj['message'], obj['user']);
     }
   }
 
   userSend (text) {
-    var img = '<i class="zmdi zmdi-account"></i>';
+    var img = !this.state.userAvatar ? '<i class="zmdi zmdi-account"></i>' : `<img src='${this.state.userAvatar}'/>`;
     $('#chat_converse').append('<div class="chat_msg_item chat_msg_item_user"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
     this.refs.chatSend.value = '';
     if ($('.chat_converse').height() >= 256) {
@@ -213,8 +264,10 @@ class SendBird extends React.Component {
     this.scrollPositionBottom();
   }
 
-  otherSend (text) {
-    $('#chat_converse').append('<div class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><i class="zmdi zmdi-headset-mic"></i></div>' + text + '</div>');
+  otherSend (text, user) {
+    var img = !user || !user['image_url'] ? '<i class="zmdi zmdi-account"></i>' : `<img src='${user['image_url']}'/>`;
+
+    $('#chat_converse').append('<div class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
     if ($('.chat_converse').height() >= 256) {
       $('.chat_converse').addClass('is-max');
     }
@@ -231,13 +284,15 @@ class SendBird extends React.Component {
    **********************************************/
 
   toggleFab () {
-    $('.prime').toggleClass('fa-comments-o');
-    $('.prime').toggleClass('zmdi-close');
-    $('.prime').toggleClass('is-active');
-    $('#prime').toggleClass('is-float');
-    $('.chat').toggleClass('is-visible');
-    $('.fab').toggleClass('is-visible');
-    this.startSendBird();
+
+    let toggle = !this.state.open;
+    this.setState({
+      open: toggle
+    });
+
+    if (toggle) {
+      this.startSendBird();
+    }
   }
 
   hideChat (hide) {
@@ -253,25 +308,9 @@ class SendBird extends React.Component {
       $('.chat_converse').css('display', 'none');
       $('.fab_field').css('display', 'none');
     } else {
-      $('#chat_head').html(user.get('email'));
-      // Help
-      $('#fab_help').click(function () {
-        this.userSend('Help!');
-      });
-      $('.chat_login').css('display', 'none');
       $('.chat_converse').css('display', 'block');
       $('.fab_field').css('display', 'inline-block');
     }
-  }
-
-  userSend (text) {
-    let img = '<i class="zmdi zmdi-account"></i>';
-    $('#chat_converse').append('<div class="chat_msg_item chat_msg_item_user"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
-    this.refs.chatSend.value = '';
-    if ($('.chat_converse').height() >= 256) {
-      $('.chat_converse').addClass('is-max');
-    }
-    $('.chat_converse').scrollTop($('.chat_converse')[0].scrollHeight);
   }
 
   loadBeat (beat) {
@@ -285,21 +324,57 @@ class SendBird extends React.Component {
   render () {
     const {
       props: {
-        User
+        User, Event
       }
     } = this;
 
-    let user = User.get('user');
+    const hiddenMode = !Event.get('userActive');
+    const user = User.get('user');
+    let fabsClasses = {
+      'fabs': true,
+      'yellow': true,
+      'fab-hidden': hiddenMode
+    };
+
+    let primeClasses = {
+      'prime': true,
+      'fa': true,
+      'fa-comments': !this.state.open,
+      'fa-comments-o': this.state.open,
+      'zmdi-close': this.state.open,
+      'is-active': this.state.open
+    };
+
+    let chatClasses = {
+      'chat': true,
+      'is-visible': this.state.open
+    };
+
+    let fabClasses = {
+      'fab': true,
+      'is-float': true,
+      'is-visible': this.state.currentChannel
+    };
+
+    let channelListClasses = {
+      'channel_list': true,
+      'is-visible': !this.state.currentChannel
+    };
+
+    let inputsFieldsClasses = {
+      'fab_field': true,
+      'is-visible': this.state.currentChannel
+    };
 
     if (!user) {
       return <div />;
     }
 
     return (
-      <div className="fabs yellow">
-        <div className="chat">
+      <div className={classSet(fabsClasses)}>
+        <div className={classSet(chatClasses)}>
           <div className="chat_header">
-            <span id="chat_head">Live Chat</span>
+            <span id="chat_head">{this.state.currentChannel ? this.state.currentChannel.name : 'Live Chat'}</span>
             <div className="chat_loader"></div>
             <div className="chat_option" onClick={::this.toggleOptions}><i className="zmdi zmdi-more-vert"></i>
               <ul className="modal-open-chat-list">
@@ -318,7 +393,7 @@ class SendBird extends React.Component {
             </div>
 
           </div>
-          <div className="chat_login">
+          <div className={classSet(channelListClasses)}>
             {
               _.map(this.state.channelList, (channel)=> {
 
@@ -326,23 +401,27 @@ class SendBird extends React.Component {
                   onClick: event => ::this.joinChannel(channel.channel_url)
                 };
 
-                return <a key={channel.name}><span className="chat_channel"  {...onAction}>{channel.name}</span>
+                return <a key={channel.name}><span className="chat_channel"  {...onAction}>#{channel.name}</span>
                 </a>;
               })
             }
           </div>
-          <div id="chat_converse" className="chat_converse">
-          </div>
-          <div className="fab_field">
-            <a id="fab_listen" className="fab" onClick={::this.onListenMessage}><i
-              className="zmdi zmdi-mic-outline"></i></a>
-            <a id="fab_send" className="fab" onClick={::this.onSendMessageClick}><i className="zmdi zmdi-mail-send"></i></a>
-            <textarea ref="chatSend" id="chatSend" name="chat_message" placeholder="Write a message"
+          <div id="chat_converse" className="chat_converse"/>
+          <div className={classSet(inputsFieldsClasses)}>
+            <a id="fab_listen" className={classSet(fabClasses)} onClick={::this.onListenMessage}>
+              <i className="zmdi zmdi-mic-outline"></i>
+            </a>
+            <a id="fab_send" className={classSet(fabClasses)} onClick={::this.onSendMessageClick}>
+              <i className="zmdi zmdi-mail-send"></i>
+            </a>
+            <textarea ref="chatSend" id="chatSend" name="chat_message" placeholder="Votre message ..."
                       className="chat_field chat_message"
                       onKeyPress={::this.onKeyPressHandler}></textarea>
           </div>
         </div>
-        <a id="prime" className="fab" onClick={::this.toggleFab}><i className="prime fa fa-comments"></i></a>
+        <a id="prime" className={classSet(fabClasses)} onClick={::this.toggleFab}>
+          <i className={classSet(primeClasses)}></i>
+        </a>
       </div>
     );
   }

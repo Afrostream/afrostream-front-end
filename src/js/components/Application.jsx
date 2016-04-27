@@ -44,7 +44,7 @@ class Application extends React.Component {
           <Footer />
         </div>
         <ModalView />
-        <SendBird />
+        <SendBird {...this.props}/>
       </div>
     );
   }
