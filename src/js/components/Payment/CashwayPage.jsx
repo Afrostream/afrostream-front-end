@@ -97,6 +97,13 @@ class CashwayPage extends React.Component {
               </div>
             </div>
           </section>
+          <section className="cashway-signup ">
+            <div className="row-fluid">
+              <div className="col-md-12 text-center">
+                <SignUpButton label="RECEVOIR MON CODE" to="/cash/select-plan"/>
+              </div>
+            </div>
+          </section>
           <section className="cashway-plan">
             <h3> Où payer en espèces ?</h3>
             <div className="form-group col-md-12">
@@ -109,13 +116,6 @@ class CashwayPage extends React.Component {
               <button className="btn btn-default" id="cashway-map-search-btn">Verifier</button>
             </div>
             <div id="cashway-map-canvas" className="cashway-map-canvas"></div>
-          </section>
-          <section className="cashway-signup ">
-            <div className="row-fluid">
-              <div className="col-md-12 text-center">
-                <SignUpButton label="RECEVOIR MON CODE" to="/cash/select-plan"/>
-              </div>
-            </div>
           </section>
         </div>
       </div>
