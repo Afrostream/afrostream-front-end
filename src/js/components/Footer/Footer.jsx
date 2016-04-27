@@ -62,8 +62,8 @@ class Footer extends React.Component {
                 </Link>
               </li>
               <li>
-                <Link className="footer-link" to="/coupons">
-                  Coupons
+                <Link className="footer-link" to="/coupon">
+                  Coupon
                 </Link>
               </li>
             </ul>
