@@ -11,7 +11,7 @@ import HomePage from './components/HomePage';
 import BrowsePage from './components/Browse/BrowsePage';
 import FavoritesPage from './components/Favorites/FavoritesPage';
 import SearchPage from './components/Search/SearchPage';
-import {PaymentPage,PaymentMethod,PaymentForm} from './components/Payment/';
+import {PaymentPage,PaymentMethod,PaymentForm,CashwayPage} from './components/Payment/';
 import RedeemCoupon from './components/RedeemCoupon/RedeemCoupon';
 import CouponRegister from './components/RedeemCoupon/CouponRegister';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
@@ -35,6 +35,11 @@ export default (
     <Route name="login" path="login" component={LoginPage}/>
     <Route name="blog" path="blog" component={Blog.PostList}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
+    </Route>
+    <Route name="cash" path="cash" component={CashwayPage}>
+      <Route name="cashPayment" path="select-plan" component={PaymentPage}>
+        <Route name="cashPaymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
+      </Route>
     </Route>
     <Route name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>

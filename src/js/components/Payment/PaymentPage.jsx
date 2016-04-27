@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import WelcomePage from '../Welcome/WelcomePage';
 import * as EventActionCreators from '../../actions/event';
 import * as IntercomActionCreators from '../../actions/intercom';
@@ -12,39 +12,39 @@ if (process.env.BROWSER) {
   require('./PaymentPage.less');
 }
 
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true))
   ];
 })
-@connect(({ Intercom,User }) => ({Intercom, User}))
+@connect(({Intercom, User}) => ({Intercom, User}))
 class PaymentPage extends React.Component {
 
   static contextTypes = {
     history: PropTypes.object.isRequired
   };
 
-  componentDidMount() {
+  componentDidMount () {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(IntercomActionCreators.createIntercom());
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
     dispatch(IntercomActionCreators.removeIntercom());
   }
 
-  render() {
-    const { props: { User, children} } = this;
+  render () {
+    const {props: {User, children}} = this;
 
     const user = User.get('user');
 

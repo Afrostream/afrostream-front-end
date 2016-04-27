@@ -1,9 +1,9 @@
 import React from 'react';
 import { prepareRoute } from '../../decorators';
-import * as UserActionCreators from '../../actions/user';
+import * as BillingActionCreators from '../../actions/billing';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import {dict} from '../../../../config';
+import { dict } from '../../../../config';
 import classSet from 'classnames';
 
 import AccountPlan from './AccountPlan';
@@ -14,23 +14,23 @@ if (process.env.BROWSER) {
   require('./AccountPage.less');
 }
 
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return await * [
-    store.dispatch(UserActionCreators.getSubscriptions())
+    store.dispatch(BillingActionCreators.getSubscriptions())
   ];
 })
-@connect(({ User }) => ({User}))
+@connect(({User}) => ({User}))
 class AccountPage extends React.Component {
 
   state = {cardNumber: null};
 
-  getUserInfos() {
+  getUserInfos () {
 
     const {
       props: {
         User
-        }
-      } = this;
+      }
+    } = this;
 
     const user = User.get('user');
     if (!user) {
@@ -59,12 +59,12 @@ class AccountPage extends React.Component {
     )
   }
 
-  renderChilds() {
+  renderChilds () {
     const {
       props: {
-        User,children
-        }
-      } = this;
+        User, children
+      }
+    } = this;
 
     const user = User.get('user');
     if (!user) {
@@ -88,7 +88,7 @@ class AccountPage extends React.Component {
     )
   }
 
-  render() {
+  render () {
     return (
       <div className="row-fluid brand-bg">
         <div className="container brand-bg account-page">

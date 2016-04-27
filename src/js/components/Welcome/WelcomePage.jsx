@@ -9,12 +9,13 @@ import * as EventActionCreators from '../../actions/event';
 import * as MovieActionCreators from '../../actions/movie';
 import * as CategoryActionCreators from '../../actions/category';
 import * as EpisodeActionCreators from '../../actions/episode';
+import * as BillingActionCreators from '../../actions/billing';
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less');
 }
 
-@prepareRoute(async function ({ store, params: { movieId ,episodeId} }) {
+@prepareRoute(async function ({store, params: {movieId, episodeId}}) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(CategoryActionCreators.getAllSpots())
@@ -28,6 +29,7 @@ if (process.env.BROWSER) {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId));
   }
 
+  return await store.dispatch(BillingActionCreators.getInternalplans('common'));
 })
 class WelcomePage extends React.Component {
 
@@ -43,13 +45,13 @@ class WelcomePage extends React.Component {
     spinner: this.props.spinner
   };
 
-  componentDidMount() {
+  componentDidMount () {
     this.setState({
       spinner: this.props.spinner
     });
   }
 
-  componentDidUpdate(params) {
+  componentDidUpdate (params) {
     if (params.spinner !== this.props.spinner) {
       this.setState({
         spinner: this.props.spinner
@@ -57,13 +59,13 @@ class WelcomePage extends React.Component {
     }
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps () {
     this.setState({
       spinner: this.props.spinner
     });
   }
 
-  render() {
+  render () {
     return (
       <div className="welcome-page">
         {this.state.spinner ? <Spinner /> : ''}

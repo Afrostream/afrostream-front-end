@@ -108,13 +108,13 @@ a.active {
 
 #page-content-wrapper {
   width: 100%;
-  //position: absolute;
   &.container,
   &.container-fluid {
     height: 100%;
     min-height: 100%;
     width: 100%;
     padding: 0;
+
     .row,
     .row-fluid {
       &:before {
@@ -125,17 +125,28 @@ a.active {
       }
       min-height: 100%;
       width: 100%;
+
+      .isMobile({ margin: 0px; });
+
       .container {
         margin-top: @header-height;
         padding: 40px;
         background: @background-page;
         min-height: 100%;
+        padding-left: @app-padding;
+        padding-right: @app-padding;
+        .isMobile({ padding-left: @app-padding-mobile; padding-right: @app-padding-mobile; });
+
         &.brand-bg {
           background-color: @brand-bg;
         }
       }
       &.brand-bg {
         background-color: @brand-bg;
+        color: @color-purple;
+      }
+      &.brand-bg-alpha {
+        background-color: fade(@brand-bg, 60%);
         color: @color-purple;
       }
     }
@@ -170,6 +181,7 @@ article {
   margin: 0;
   //.fullHeight();
   padding: @header-height * 2  @app-padding;
+  .isMobile({ padding: @header-height * 2  @app-padding-mobile; });
   section {
     a,
     a:hover,

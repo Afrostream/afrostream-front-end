@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import classSet from 'classnames';
 
 if (process.env.BROWSER) {
@@ -12,12 +12,12 @@ class Footer extends React.Component {
     history: PropTypes.object.isRequired
   };
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.year = new Date().getFullYear();
   }
 
-  render() {
+  render () {
 
     let footerClasses = {
       'footer': true,
@@ -48,6 +48,12 @@ class Footer extends React.Component {
               <li>
                 <Link className="footer-link" to="/policy">
                   Politique de confidentialité
+                </Link>
+              </li>
+              <li>
+                <Link className="footer-link" to="/cash">
+                  Paiement en espèces avec <img src="/images/payment/cashway-inline-white.png" width="60"
+                                                className="img-responsive"/>
                 </Link>
               </li>
             </ul>

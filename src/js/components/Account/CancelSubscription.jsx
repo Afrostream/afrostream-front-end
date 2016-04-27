@@ -1,8 +1,8 @@
-import React,{PropTypes } from 'react';
-import * as UserActionCreators from '../../actions/user';
+import React, { PropTypes } from 'react';
+import * as BillingActionCreators from '../../actions/billing';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import {dict} from '../../../../config';
+import { dict } from '../../../../config';
 import moment from 'moment';
 import PaymentImages from '../Payment/PaymentImages';
 
@@ -10,9 +10,9 @@ if (process.env.BROWSER) {
   require('./CancelSubscription.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({Billing}) => ({Billing}))
 class CancelSubscription extends React.Component {
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context);
     this.state = {
       pending: false
@@ -23,13 +23,13 @@ class CancelSubscription extends React.Component {
     history: PropTypes.object.isRequired
   };
 
-  cancelSubscription(subscription) {
+  cancelSubscription (subscription) {
 
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     if (!subscription) {
       return;
@@ -39,9 +39,9 @@ class CancelSubscription extends React.Component {
       pending: true
     });
 
-    dispatch(UserActionCreators.cancelSubscription(subscription))
+    dispatch(BillingActionCreators.cancelSubscription(subscription))
       .then(()=> {
-        dispatch(UserActionCreators.getSubscriptions());
+        dispatch(BillingActionCreators.getSubscriptions());
       })
       .catch((err)=> {
         this.setState({
@@ -50,18 +50,14 @@ class CancelSubscription extends React.Component {
       });
   }
 
-  render() {
+  render () {
     const {
       props: {
-        User
-        }
-      } = this;
+        Billing
+      }
+    } = this;
 
-    const user = User.get('user');
-    if (!user) {
-      return;
-    }
-    const subscriptionsList = user.get('subscriptions');
+    const subscriptionsList = Billing.get('subscriptions');
 
     if (!subscriptionsList) {
       return (

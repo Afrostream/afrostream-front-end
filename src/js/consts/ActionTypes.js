@@ -8,30 +8,32 @@ export default {
     signup: null,
     reset: null,
     facebook: null,
-    logOut: null,
+    logOut: null
   }),
 
-  Coupon: keyMirror({
-    validate: null
+  Billing: keyMirror({
+    subscribe: null,
+    getSubscriptions: null,
+    getInternalplans: null,
+    validate: null,
+    create: null,
+    cancelSubscription: null,
+    getCouponCampaigns: null
   }),
 
   User: keyMirror({
     logOut: null,
     getProfile: null,
-    subscribe: null,
     pendingUser: null,
     trackVideo: null,
     rateVideo: null,
     getHistory: null,
-    getSubscriptions: null,
     getVideoTracking: null,
     getRecommendations: null,
     getFavoritesMovies: null,
     getFavoritesEpisodes: null,
     setFavoritesMovies: null,
-    setFavoritesEpisodes: null,
-    cancelSubscription: null,
-    gocardless: null
+    setFavoritesEpisodes: null
   }),
 
   Slides: keyMirror({

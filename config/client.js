@@ -41,7 +41,8 @@ let gocarlessApi = `//pay${process.env.NODE_ENV !== 'production' ? '-sandbox' : 
 const config = {
   featuresFlip: {
     gocardless: true,
-    paypal: true
+    paypal: true,
+    cashway: true
   },
   /**
    * APPS
@@ -63,6 +64,7 @@ const config = {
     '//www.gstatic.com/cv/js/sender/v1/cast_sender.js',
     '//js.recurly.com/v3/recurly.js',
     //'//www.easybroadcast.fr/libs/65/EB.js&s2member_file_download_key=dbb00d0abec8ccb2295b7d2df5325f6b',
+    '//maps.cashway.fr/js/cwm.min.js',
     gocarlessApi
   ],
   promoCodes: [
@@ -79,23 +81,6 @@ const config = {
       promoHeader: 'PROFITEZ D\'UN MOIS À -50%',
       promoConditions1: '* Valable sur la formule mensuelle sans engagement.',
       promoConditions2: 'Soit 3,50 euros au lieu de 6,99 euros le premier mois, puis 6,99 euros par mois sans engagement'
-    }
-  ],
-  planCodes: [
-    {
-      code: 'afrostreammonthly',
-      date: '2015-10-01T00:00:00:00Z',
-      price: '699'
-    },
-    {
-      code: 'afrostreamambassadeurs',
-      date: '2015-09-01T00:00:00:00Z',
-      price: '5999'
-    },
-    {
-      code: 'afrostreamgift',
-      date: '2015-09-01T00:00:00:00Z',
-      price: '5999'
     }
   ],
   payment: {

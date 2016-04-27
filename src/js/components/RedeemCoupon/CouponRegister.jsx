@@ -1,22 +1,21 @@
 import React from 'react';
-import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import classSet from 'classnames';
-import * as ModalActionCreators from '../../actions/modal';
+import * as BillingActionCreators from '../../actions/billing';
 import * as UserActionCreators from '../../actions/user';
 import * as OauthActionCreator from '../../actions/oauth';
 import PaymentSuccess from '../Payment/PaymentSuccess';
 import Spinner from '../Spinner/Spinner';
-import {oauth2} from '../../../../config';
+import { oauth2 } from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./CouponRegister.less');
 }
 
-@connect(({ Coupon,User }) => ({Coupon, User}))
+@connect(({Billing, User}) => ({Billing, User}))
 class CouponRegister extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       success: false,
@@ -29,7 +28,7 @@ class CouponRegister extends React.Component {
     };
   }
 
-  redeemCoupon(e) {
+  redeemCoupon (e) {
     e.preventDefault();
 
     let loginType = (e.target.id == 'create-account-coupon') ? 'signup' : 'signin';
@@ -37,12 +36,12 @@ class CouponRegister extends React.Component {
     const {
       props: {
         dispatch,
-        Coupon,
+        Billing,
         User
-        }
-      } = this;
+      }
+    } = this;
 
-    const coupon = Coupon.get('coupon');
+    const coupon = Billing.get('coupon');
     const user = User.get('user');
 
     const self = this;
@@ -66,17 +65,17 @@ class CouponRegister extends React.Component {
         let billingInfo = {
           email: getProfileResult.user.email,
           id: getProfileResult.user._id,
-          internalPlanUuid: self.props.Coupon.get('coupon').get('coupon').get('internalPlan').get('internalPlanUuid'),
-          billingProvider: self.props.Coupon.get('coupon').get('coupon').get('campaign').get('provider').get('providerName'),
+          internalPlanUuid: self.props.Billing.get('coupon').get('coupon').get('internalPlan').get('internalPlanUuid'),
+          billingProvider: self.props.Billing.get('coupon').get('coupon').get('campaign').get('provider').get('providerName'),
           firstName: null,
           lastName: null,
           subOpts: {
-            couponCode: self.props.Coupon.get('coupon').get('coupon').get('code')
+            couponCode: self.props.Billing.get('coupon').get('coupon').get('code')
           }
-        }
+        };
 
-        dispatch(UserActionCreators.subscribe(billingInfo)).then((subscribeResult) => {
-          var planCode = self.props.Coupon.get('coupon').get('coupon').get('internalPlan').get('internalPlanUuid');
+        dispatch(BillingActionCreators.subscribe(billingInfo)).then((subscribeResult) => {
+          var planCode = self.props.Billing.get('coupon').get('coupon').get('internalPlan').get('internalPlanUuid');
           dispatch(UserActionCreators.getProfile());
           self.setState({
             signinError: false,
@@ -99,7 +98,7 @@ class CouponRegister extends React.Component {
     });
   }
 
-  validate(targetName) {
+  validate (targetName) {
     let errors = this.state.errors;
     errors[targetName] = null;
     let isValid = true;
@@ -134,14 +133,14 @@ class CouponRegister extends React.Component {
     });
   }
 
-  validateSize(value, min = 0, max = 0) {
+  validateSize (value, min = 0, max = 0) {
     if (!value) return 'empty';
     if (value.length < min) return 'min';
     if (value.length > max) return 'max';
     return null;
   }
 
-  handleInputChange(evt) {
+  handleInputChange (evt) {
     let formData = this.state;
     if (!evt.target) {
       return;
@@ -155,12 +154,12 @@ class CouponRegister extends React.Component {
     });
   }
 
-  getTitle(key = 'title') {
+  getTitle (key = 'title') {
     let keyType = this.getI18n();
     return oauth2.dict[keyType][key] || '';
   }
 
-  getI18n() {
+  getI18n () {
     let keyType = 'signin';
     switch (this.props.type) {
       case 'show':
@@ -174,27 +173,27 @@ class CouponRegister extends React.Component {
     return keyType;
   }
 
-  isValid() {
+  isValid () {
     let valid = _.filter(this.state.errors, (value, key) => {
       return value;
     });
     return !valid.length;
   }
 
-  renderValidationMessages(target) {
+  renderValidationMessages (target) {
     let errorMessage = this.state.errors[target];
     if (!errorMessage) return '';
     return (<div className="help-block">{ errorMessage }</div>);
   }
 
-  render() {
+  render () {
     if (this.state.success === true) {
-      return(
+      return (
         <div className="row-fluid brand-bg">
           <div className="container brand-bg account-page">
             <PaymentSuccess />
-            </div>
           </div>
+        </div>
       );
     } else {
 
@@ -226,7 +225,7 @@ class CouponRegister extends React.Component {
                 id="email-create-account-coupon"
                 name="email-create-account-coupon"
                 onChange={::this.handleInputChange}
-                placeholder="" required />
+                placeholder="" required/>
               {this.renderValidationMessages('email-create-account-coupon')}
 
               <label className="password-label" htmlFor="password">Creer un mot de passe:</label>
@@ -238,7 +237,7 @@ class CouponRegister extends React.Component {
                 name="password-create-account-coupon"
                 onChange={::this.handleInputChange}
                 placeholder=""
-                required />
+                required/>
               {this.renderValidationMessages('password-create-account-coupon')}
               <button
                 id="button-create-account-coupon"
@@ -259,7 +258,7 @@ class CouponRegister extends React.Component {
                 id="email-signin-account-coupon"
                 name="email-signin-account-coupon"
                 onChange={::this.handleInputChange}
-                placeholder="" required />
+                placeholder="" required/>
               {this.renderValidationMessages('email-signin-account-coupon')}
               <label className="password-label" htmlFor="password">{this.getTitle('passwordPlaceholder')}</label>
               <input
@@ -269,7 +268,7 @@ class CouponRegister extends React.Component {
                 id="password-signin-account-coupon"
                 name="password-signin-account-coupon"
                 onChange={::this.handleInputChange}
-                placeholder="" required />
+                placeholder="" required/>
               {this.renderValidationMessages('password-signin-account-coupon')}
               <button
                 id="button-signin-account-coupon"

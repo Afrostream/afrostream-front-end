@@ -3,17 +3,15 @@ import { connect } from 'react-redux';
 import { prepareRoute } from '../decorators';
 import WelcomePage from './Welcome/WelcomePage';
 import BrowsePage from './Browse/BrowsePage';
-import Spinner from './Spinner/Spinner';
 import * as CategoryActionCreators from '../actions/category';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(CategoryActionCreators.getAllSpots()),
     store.dispatch(CategoryActionCreators.getMeaList())
   ];
 })
-@connect(({ User }) => ({User}))
+@connect(({User}) => ({User}))
 class HomePage extends React.Component {
 
   static contextTypes = {
@@ -21,31 +19,38 @@ class HomePage extends React.Component {
     location: PropTypes.object.isRequired
   };
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps () {
     this.checkAuth()
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.checkAuth()
   }
 
-  checkAuth() {
+  checkAuth () {
     const {
-      context : {location,history},
-      props: { User }
-      } = this;
+      context : {location, history},
+      props: {User}
+    } = this;
 
     const user = User.get('user');
     if (user) {
+      let isCash = history.isActive('cash');
       let planCode = user.get('planCode');
-      if (!planCode && location.pathname !== '/compte') {
-        history.pushState(null, '/select-plan');
+      let subscriptionsStatus = user.get('subscriptionsStatus');
+      let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null;
+      if ((!planCode) && (location.pathname !== '/compte')) {
+        let donePath = `${isCash ? '/cash' : ''}/select-plan`;
+        if (status && status != 'active') {
+          donePath = `${donePath}/none/${status}`;
+        }
+        history.pushState(null, donePath);
       }
     }
   }
 
-  renderChildren() {
-    const { props: { children } } = this;
+  renderChildren () {
+    const {props: {children}} = this;
     return React.Children.map(children, (child) => {
       let path = this.props.location.pathname;
       let key = path.split('/')[1] || 'root';
@@ -56,8 +61,8 @@ class HomePage extends React.Component {
     });
   }
 
-  renderContent() {
-    const { props: { User ,children} } = this;
+  renderContent () {
+    const {props: {User, children}} = this;
     const pending = User.get('pending');
     const user = User.get('user');
     let isPending = Boolean(pending);
@@ -74,7 +79,7 @@ class HomePage extends React.Component {
     }
   }
 
-  render() {
+  render () {
     //TODO FIX animation transition
     //return (
     //  <ReactCSSTransitionGroup transitionName="page-transition" transitionEnter={true} transitionLeave={true}
