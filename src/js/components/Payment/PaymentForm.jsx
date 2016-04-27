@@ -392,8 +392,11 @@ class PaymentForm extends React.Component {
       case 'future':
         return (<PaymentError title={dict.payment.future.title}
                               message={dict.payment.future.message}
-                              link={dict.payment.future.message}
-                              linkMessage={dict.payment.future.linkMessage}/>);
+                              link={dict.payment.future.link}
+                              linkMessage={dict.payment.future.linkMessage}
+                              to="/select-plan"
+                              toMessage={dict.payment.future.toMessage}
+        />);
         break;
       case 'error':
         return (<PaymentError message={this.state.message}/>);

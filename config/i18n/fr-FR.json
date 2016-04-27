@@ -86,7 +86,8 @@
       "title": "Vous y êtes presque !",
       "link": "mailto:support@afrostream.tv",
       "linkMessage": "Pour toutes questions, veuillez contacter notre support technique",
-      "message": "Plus qu’une dernière étape. Dès reception de votre paiement, nous vous donnerons accès à tous les films et séries en illimité."
+      "message": "Plus qu’une dernière étape. Dès reception de votre paiement, nous vous donnerons accès à tous les films et séries en illimité.",
+      "toMessage": "Choisir un autre mode de paiement"
     },
     "errors": {
       "noLib": {
@@ -160,7 +161,7 @@
         "canceled": "Annulé",
         "active": "En cours",
         "expired": "Expiré",
-        "future": "Future",
+        "future": "En attente de paiement",
         "pending": "En attente"
       }
     }
