@@ -3,12 +3,25 @@
 @import url(http://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css);
 /*Floating Action Button*/
 
+.fabs:not(.is-visible) {
+  display: none;
+}
+
 .fabs {
-  bottom: 0;
+  bottom: -2em;
+  right: -2em;
   position: fixed;
   margin: 1em;
-  right: 0;
-  z-index: 998;
+  z-index: 99800;
+  display: block;
+}
+
+#prime:not(.is-visible) {
+  display: none;
+}
+
+#prime {
+  display: block;
 }
 
 .fab {
@@ -25,9 +38,6 @@
   position: relative;
   z-index: 998;
   overflow: hidden;
-  &.fab-hidden {
-    display: none;
-  }
 }
 
 .fab > i {
@@ -303,7 +313,12 @@
   color: #263238;
 }
 
+.chat_converse:not(.is-visible) {
+  display: none;
+}
+
 .chat_converse {
+  display: block;
   position: relative;
   background: inherit;
   margin: 6px 0 0 0;
@@ -383,6 +398,12 @@
 .chat .chat_converse .chat_msg_item_user .chat_avatar > img {
   width: inherit;
   height: inherit;
+  border-radius: 50%;
+}
+
+.chat .chat_converse .chat_avatar > img {
+  max-width: 40px;
+  max-height: 40px;
   border-radius: 50%;
 }
 

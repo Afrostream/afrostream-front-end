@@ -103,7 +103,11 @@ const config = {
   },
   sendBird: {
     appId: process.env.SENDBIRD_APP_ID || '',
-    apiToken: process.env.SENDBIRD_API_TOKEN || ''
+    apiToken: process.env.SENDBIRD_API_TOKEN || '',
+    channels: [
+      295,
+      204
+    ]
   },
   sentry: {
     dns: process.env.SENTRY_DSN || 'https://24502de12b75437cb3783c395bd466f0@app.getsentry.com/59853',

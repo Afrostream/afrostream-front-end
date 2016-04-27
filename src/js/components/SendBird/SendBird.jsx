@@ -5,6 +5,7 @@ import SB from 'sendbird';
 import { sendBird } from '../../../../config';
 import classSet from 'classnames';
 import _ from 'lodash';
+import shallowEqual from 'react-pure-render/shallowEqual';
 
 const sendBirdClient = SB.getInstance();
 
@@ -21,11 +22,27 @@ class SendBird extends React.Component {
   };
 
   state = {
+    init: false,
+    messages: [],
     channelList: []
   };
 
   constructor (props, context) {
     super(props, context);
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const {
+      props: {
+        params:{
+          movieId
+        }
+      }
+    } = this;
+
+    if ((!shallowEqual(nextProps.params.movieId, movieId) || !this.state.init) && nextProps.params.movieId) {
+      this.startSendBird();
+    }
   }
 
   /***********************************************
@@ -50,8 +67,8 @@ class SendBird extends React.Component {
     let avatar = user.get('picture');
 
     this.setState({
-      open: true,
       currentChannel: false,
+      messages: [],
       guestId: guestId,
       nickName: nickName,
       userAvatar: avatar
@@ -82,12 +99,17 @@ class SendBird extends React.Component {
       }
     } = this;
 
+    this.setState({
+      init: true
+    });
+
     this.loadBeat(false);
     this.getMessagingChannelList();
     this.getChannelList(1);
     if (movieId) {
       this.joinChannel(`2b0a2.movie${movieId}`);
-    } else {
+    }
+    else {
       sendBirdClient.connect();
     }
   }
@@ -244,11 +266,16 @@ class SendBird extends React.Component {
     } else {
       this.otherSend(obj['message'], obj['user']);
     }
+    let messages = this.state.messages;
+    messages.push(obj);
+    this.setState({
+      messages: messages
+    });
   }
 
   userSend (text) {
     var img = !this.state.userAvatar ? '<i class="zmdi zmdi-account"></i>' : `<img src='${this.state.userAvatar}'/>`;
-    $('#chat_converse').append('<div class="chat_msg_item chat_msg_item_user"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
+    //$('#chat_converse').append('<div class="chat_msg_item chat_msg_item_user"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
     this.refs.chatSend.value = '';
     if ($('.chat_converse').height() >= 256) {
       $('.chat_converse').addClass('is-max');
@@ -257,7 +284,7 @@ class SendBird extends React.Component {
   }
 
   sysSend (text) {
-    $('#chat_converse').append('<div class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><i class="zmdi zmdi-headset-mic"></i></div>' + text + '</div>');
+    //$('#chat_converse').append('<div class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><i class="zmdi zmdi-headset-mic"></i></div>' + text + '</div>');
     if ($('.chat_converse').height() >= 256) {
       $('.chat_converse').addClass('is-max');
     }
@@ -267,7 +294,7 @@ class SendBird extends React.Component {
   otherSend (text, user) {
     var img = !user || !user['image_url'] ? '<i class="zmdi zmdi-account"></i>' : `<img src='${user['image_url']}'/>`;
 
-    $('#chat_converse').append('<div class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
+    //$('#chat_converse').append('<div class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
     if ($('.chat_converse').height() >= 256) {
       $('.chat_converse').addClass('is-max');
     }
@@ -289,28 +316,6 @@ class SendBird extends React.Component {
     this.setState({
       open: toggle
     });
-
-    if (toggle) {
-      this.startSendBird();
-    }
-  }
-
-  hideChat (hide) {
-    const {
-      props: {
-        User
-      }
-    } = this;
-
-    const user = User.get('user');
-
-    if (hide || !user) {
-      $('.chat_converse').css('display', 'none');
-      $('.fab_field').css('display', 'none');
-    } else {
-      $('.chat_converse').css('display', 'block');
-      $('.fab_field').css('display', 'inline-block');
-    }
   }
 
   loadBeat (beat) {
@@ -324,16 +329,20 @@ class SendBird extends React.Component {
   render () {
     const {
       props: {
-        User, Event
+        User, Event,
+        params:{
+          movieId
+        }
       }
     } = this;
 
     const hiddenMode = !Event.get('userActive');
     const user = User.get('user');
+
     let fabsClasses = {
       'fabs': true,
       'yellow': true,
-      'fab-hidden': hiddenMode
+      'is-visible': ~sendBird.channels.indexOf(parseInt(movieId))
     };
 
     let primeClasses = {
@@ -349,12 +358,20 @@ class SendBird extends React.Component {
       'chat': true,
       'is-visible': this.state.open
     };
+    let converseClasses = {
+      'chat_converse': true,
+      'is-visible': this.state.currentChannel
+    };
 
     let fabClasses = {
       'fab': true,
-      'is-float': true,
       'is-visible': this.state.currentChannel
     };
+
+    let chatButtonClasses = _.extend(fabClasses, {
+      'is-float': this.state.open,
+      'is-visible': hiddenMode ? this.state.open : true
+    });
 
     let channelListClasses = {
       'channel_list': true,
@@ -406,7 +423,27 @@ class SendBird extends React.Component {
               })
             }
           </div>
-          <div id="chat_converse" className="chat_converse"/>
+          <div id="chat_converse" className={classSet(converseClasses)}>
+            {
+              _.map(this.state.messages, (obj)=> {
+
+                let isUser = this.isCurrentUser(obj.user.guest_id);
+                let img = obj.user.image;
+
+                let avatarClasses = {
+                  'chat_msg_item': true,
+                  'chat_msg_item_user': isUser,
+                  'chat_msg_item_admin': !isUser
+                };
+                return (
+                  <div key={obj.msg_id} className={classSet(avatarClasses)}>
+                    <div className="chat_avatar">{img ? <img src={img}/> : <i class="zmdi zmdi-account"/>}</div>
+                    {obj.message}
+                  </div>
+                );
+              })
+            }
+          </div>
           <div className={classSet(inputsFieldsClasses)}>
             <a id="fab_listen" className={classSet(fabClasses)} onClick={::this.onListenMessage}>
               <i className="zmdi zmdi-mic-outline"></i>
@@ -419,7 +456,7 @@ class SendBird extends React.Component {
                       onKeyPress={::this.onKeyPressHandler}></textarea>
           </div>
         </div>
-        <a id="prime" className={classSet(fabClasses)} onClick={::this.toggleFab}>
+        <a id="prime" className={classSet(chatButtonClasses)} onClick={::this.toggleFab}>
           <i className={classSet(primeClasses)}></i>
         </a>
       </div>
