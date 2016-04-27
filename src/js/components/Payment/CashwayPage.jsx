@@ -117,6 +117,13 @@ class CashwayPage extends React.Component {
             </div>
             <div id="cashway-map-canvas" className="cashway-map-canvas"></div>
           </section>
+          <section className="cashway-signup ">
+            <div className="row-fluid">
+              <div className="col-md-12 text-center">
+                <SignUpButton label="RECEVOIR MON CODE" to="/cash/select-plan"/>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     );
