@@ -262,43 +262,11 @@ class SendBird extends React.Component {
   setChatMessage (obj) {
     if (this.isEmpty(obj['message'])) return;
 
-    if (this.isCurrentUser(obj['user']['guest_id'])) {
-      this.userSend(obj['message'], obj['user']);
-    } else {
-      this.otherSend(obj['message'], obj['user']);
-    }
     let messages = this.state.messages;
     messages.push(obj);
     this.setState({
       messages: messages
     });
-  }
-
-  userSend (text) {
-    var img = !this.state.userAvatar ? '<i class="zmdi zmdi-account"></i>' : `<img src='${this.state.userAvatar}'/>`;
-    //$('#chat_converse').append('<div class="chat_msg_item chat_msg_item_user"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
-    this.refs.chatSend.value = '';
-    if ($('.chat_converse').height() >= 256) {
-      $('.chat_converse').addClass('is-max');
-    }
-    this.scrollPositionBottom();
-  }
-
-  sysSend (text) {
-    //$('#chat_converse').append('<div class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar"><i class="zmdi zmdi-headset-mic"></i></div>' + text + '</div>');
-    if ($('.chat_converse').height() >= 256) {
-      $('.chat_converse').addClass('is-max');
-    }
-    this.scrollPositionBottom();
-  }
-
-  otherSend (text, user) {
-    var img = !user || !user['image_url'] ? '<i class="zmdi zmdi-account"></i>' : `<img src='${user['image_url']}'/>`;
-
-    //$('#chat_converse').append('<div class="chat_msg_item chat_msg_item_admin"><div class="chat_avatar">' + img + '</div>' + text + '</div>');
-    if ($('.chat_converse').height() >= 256) {
-      $('.chat_converse').addClass('is-max');
-    }
     this.scrollPositionBottom();
   }
 
