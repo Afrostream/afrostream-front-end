@@ -168,6 +168,7 @@ class SendBird extends React.Component {
 
   onJoinChannelSuccess (data) {
     this.setState({
+      messages: [],
       currentChannel: data
     });
 
@@ -394,7 +395,7 @@ class SendBird extends React.Component {
             <span id="chat_head">{this.state.currentChannel ? this.state.currentChannel.name : 'Live Chat'}</span>
             <div className="chat_loader"></div>
             <div className="chat_option" onClick={::this.toggleOptions}><i className="zmdi zmdi-more-vert"></i>
-              <ul className="modal-open-chat-list">
+              <ul className="channel_list">
                 {
                   _.map(this.state.channelList, (channel)=> {
 
