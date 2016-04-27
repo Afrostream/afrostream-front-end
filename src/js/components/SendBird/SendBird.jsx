@@ -225,7 +225,7 @@ class SendBird extends React.Component {
   onListenMessage (e) {
     var recognition = new webkitSpeechRecognition();
     recognition.onresult = function (event) {
-      this.userSend(event.results[0][0].transcript);
+      sendBirdClient.message(event.results[0][0].transcript);
     }.bind(this);
     recognition.start();
   }
@@ -249,7 +249,7 @@ class SendBird extends React.Component {
   enterChatHandler () {
     let valueMess = this.refs.chatSend.value.trim();
     if (!this.isEmpty(valueMess)) {
-      this.refs.chatSend.calue = '';
+      this.refs.chatSend.value = '';
       sendBirdClient.message(valueMess);
     }
   }
