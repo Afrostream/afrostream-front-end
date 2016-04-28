@@ -1,0 +1,109 @@
+@import (reference) '../../../styles/config.less';
+
+.btn-browse {
+  &:extend(.btn-user);
+}
+
+.open > .dropdown-menu.mega-menu {
+  display: flex;
+}
+
+/* MEGA MENU STYLE
+********************************/
+.dropdown-menu.mega-menu {
+  border-radius: 0;
+  padding: 10px 0px !important;
+  box-shadow: 0 3px 3px fade(@color-indigo, 10%);
+  background-color: fade(@color-indigo, 85%);
+  ul {
+    list-style: none;
+  }
+  li.mega-menu-column {
+    padding: 5px;
+    min-width: 150px;
+    li {
+      font-size: 0.9em;
+      padding: 3px;
+      list-style: none;
+      a {
+        color: @brand-primary;
+      }
+    }
+  }
+}
+
+/* Disable Toggle style
+********************************/
+
+.dropdown-menu:before {
+  position: absolute;
+  top: -7px;
+  right: 9px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-left: 7px solid transparent;
+  border-bottom-color: fade(@color-indigo, 20%);
+  content: '';
+}
+
+.dropdown-menu:after {
+  position: absolute;
+  top: -6px;
+  right: 10px;
+  display: inline-block;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid @color-indigo;
+  border-left: 6px solid transparent;
+  content: '';
+}
+
+/* Dropdown Toggle on style */
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.active > .dropdown-toggle,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background-color: @color-yellow;
+  color: @color-indigo;
+}
+
+/* Toggle off style */
+.navbar .nav li.dropdown.open.active > .dropdown-toggle,
+.navbar .nav > li.dropdown > a:focus {
+  background-color: @color-yellow;
+  color: @color-indigo;
+}
+
+/* Toggle hover */
+.navbar .nav li.dropdown > .dropdown-toggle:hover,
+.navbar .nav li.dropdown.open > .dropdown-toggle:hover {
+
+}
+
+/* Toggle caret*/
+.navbar .nav li.dropdown > .dropdown-toggle .caret {
+}
+
+/* Toggle caret hover */
+.navbar .nav li.dropdown > a:hover .caret,
+.navbar .nav li.dropdown > a:focus .caret {
+  border-bottom-color: @color-indigo;
+  border-top-color: @color-indigo;
+}
+
+/* Toggle caret active */
+.navbar .nav li.dropdown.open > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.active > .dropdown-toggle .caret,
+.navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  border-bottom-color: @color-indigo;
+  border-top-color: @color-indigo;
+}
+
+/* Hover style
+********************************/
+.navbar .nav > li > a, .mega-menu a {
+  transition: all 200ms ease;
+
+  /* -webkit-transform: translate3d(0, 0, 0); Webkit Hardware Acceleration*/
+  -webkit-backface-visibility: hidden; /* Safari Flicker Fix #2 */
+  -webkit-transform: translateZ(0);
+}

@@ -1,8 +1,8 @@
-import React ,{ PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import LoadVideo from '../LoadVideo';
 import config from '../../../../config';
 import shallowEqual from 'react-pure-render/shallowEqual';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import ShareButton from '../Share/ShareButton';
 
@@ -15,18 +15,18 @@ const Status = {
 
 class Poster extends LoadVideo {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: ''};
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.state.status === Status.LOADING) {
       this.createLoader();
     }
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps (nextProps, nextContext) {
     //if (!shallowEqual(nextContext, this.context)) {
     //  this.setState({
     //    status: nextProps.data ? Status.LOADING : Status.PENDING
@@ -41,28 +41,28 @@ class Poster extends LoadVideo {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     if (this.state.status === Status.LOADING && !this.img) {
       this.createLoader();
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.destroyLoader();
   }
 
-  getType() {
+  getType () {
     const {
-      props: { data,type}
-      } = this;
+      props: {data, type}
+    } = this;
 
     return type || data.get('type');
   }
 
-  createLoader() {
+  createLoader () {
     const {
-      props: { data, thumbW, thumbH}
-      } = this;
+      props: {data, thumbW, thumbH}
+    } = this;
 
 
     if (!data) {
@@ -70,7 +70,7 @@ class Poster extends LoadVideo {
     }
 
     let type = this.getType();
-    let thumb = data.get(type === 'episode' ? 'poster' : 'thumb');
+    let thumb = data.get(type === 'movie' ? 'thumb' : 'poster');
     if (!thumb) {
       return;
     }
@@ -81,7 +81,7 @@ class Poster extends LoadVideo {
       return;
     }
 
-    let imageStyles = `${imgix}?crop=faces&fit=min&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}`;
+    let imageStyles = `${imgix}?crop=${this.props.crop}&fit=${this.props.fit}&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5`;
 
     if (this.props.preload) {
 
@@ -96,7 +96,7 @@ class Poster extends LoadVideo {
     }
   }
 
-  destroyLoader() {
+  destroyLoader () {
     let imgSrouce = '';
     if (this.img) {
       imgSrouce = this.img.src;
@@ -107,17 +107,17 @@ class Poster extends LoadVideo {
     return imgSrouce;
   }
 
-  handleLoad() {
+  handleLoad () {
     let imgSrouce = this.destroyLoader();
     this.setState({status: Status.LOADED, src: imgSrouce});
   }
 
-  handleError() {
+  handleError () {
     let imgSrouce = this.destroyLoader();
     this.setState({status: Status.FAILED, src: imgSrouce});
   }
 
-  getLazyImageUrl() {
+  getLazyImageUrl () {
     let imageStyles;
     if (canUseDOM) {
       imageStyles = require('../../../assets/images/default/134x200.jpg');
@@ -132,10 +132,10 @@ class Poster extends LoadVideo {
     return {backgroundImage: `url(${imageStyles})`};
   }
 
-  getShareButton() {
+  getShareButton () {
     const {
-      props: { data,share }
-      } = this;
+      props: {data, share}
+    } = this;
 
     if (!share) {
       return;
@@ -146,12 +146,12 @@ class Poster extends LoadVideo {
     return <ShareButton link={link} title={data.get('title')} description={data.get('synopsis')}/>
   }
 
-  getFavorite() {
+  getFavorite () {
     const {
       props: {
         favorite
-        }
-      } = this;
+      }
+    } = this;
 
     if (!favorite) {
       return;
@@ -160,10 +160,10 @@ class Poster extends LoadVideo {
     return (<FavoritesAddButton {...this.props}/>)
   }
 
-  getNew() {
+  getNew () {
     const {
-      props: { data }
-      } = this;
+      props: {data}
+    } = this;
 
     let dateFrom = data.get('dateFrom');
 
@@ -182,7 +182,7 @@ class Poster extends LoadVideo {
   /**
    * render two rows of thumbnails for the payment pages
    */
-  render() {
+  render () {
     let imageStyles = this.getLazyImageUrl();
 
     return (
@@ -198,7 +198,10 @@ Poster.propTypes = {
   preload: React.PropTypes.bool,
   favorite: React.PropTypes.bool,
   share: React.PropTypes.bool,
-  type: React.PropTypes.string
+  type: React.PropTypes.string,
+  crop: React.PropTypes.string,
+  fit: React.PropTypes.string,
+  facepad: React.PropTypes.string
 };
 
 Poster.defaultProps = {
@@ -207,7 +210,10 @@ Poster.defaultProps = {
   preload: false,
   favorite: true,
   share: true,
-  type: 'movie'
+  type: 'movie',
+  crop: 'faces',
+  fit: 'min',
+  facepad: '1'
 };
 
 export default Poster;

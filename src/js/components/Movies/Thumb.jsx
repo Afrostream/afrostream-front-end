@@ -1,4 +1,4 @@
-import React ,{ PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { Link } from 'react-router';
 import Poster from './Poster';
@@ -9,10 +9,10 @@ if (process.env.BROWSER) {
   require('./Thumb.less');
 }
 
-@connect(({ Movie,Season, Video, User}) => ({Movie, Season, Video, User}))
+@connect(({Movie, Season, Video, User}) => ({Movie, Season, Video, User}))
 class Thumb extends Poster {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
 
@@ -24,7 +24,8 @@ class Thumb extends Poster {
     share: React.PropTypes.bool,
     showDescription: React.PropTypes.bool,
     showTitle: React.PropTypes.bool,
-    type: React.PropTypes.string
+    type: React.PropTypes.string,
+    fit: React.PropTypes.string
   };
 
   static defaultProps = {
@@ -35,31 +36,32 @@ class Thumb extends Poster {
     share: true,
     showDescription: true,
     showTitle: true,
-    type: 'movie'
+    type: 'movie',
+    fit: 'min'
   };
 
-  triggerOver() {
+  triggerOver () {
     let thumbMouse = ReactDOM.findDOMNode(this);
     if (thumbMouse) {
       thumbMouse.dispatchEvent(new CustomEvent('thumbover', {bubbles: true}));
     }
   }
 
-  triggerOut() {
+  triggerOut () {
     let thumbMouse = ReactDOM.findDOMNode(this);
     if (thumbMouse) {
       thumbMouse.dispatchEvent(new CustomEvent('thumbout', {bubbles: true}));
     }
   }
 
-  getInfos() {
+  getInfos () {
     const {
-      props: { data,showTitle,showDescription }
-      } = this;
+      props: {data, showTitle, showDescription}
+    } = this;
 
     const type = this.getType();
 
-    if (type !== 'episode') {
+    if (type === 'movie') {
       return '';
     }
     const maxLength = 80;
@@ -80,19 +82,20 @@ class Thumb extends Poster {
     </div>)
   }
 
-  getBtnPlay() {
+  getBtnPlay () {
     const type = this.getType();
     return type === 'episode' ? <i className="btn-play"></i> : '';
   }
 
-  render() {
+  render () {
     let imageStyles = this.getLazyImageUrl();
     let link = this.getLink();
     const type = this.getType();
 
     let thumbClass = {
       'thumb': true,
-      'episode': type === 'episode'
+      'episode': type === 'episode',
+      'adspot': type === 'adspot'
     };
 
     return (

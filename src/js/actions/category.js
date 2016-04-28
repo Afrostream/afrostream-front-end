@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
+import { notFoundCategory } from './notFoundAction';
 
-export function getAllSpots() {
+export function getAllSpots () {
   return (dispatch, getState) => {
     let readySpots = getState().Category.get(`categorys/spots`);
     if (readySpots) {
@@ -20,7 +21,7 @@ export function getAllSpots() {
   }
 }
 
-export function getSpots(categoryId) {
+export function getSpots (categoryId) {
   return (dispatch, getState) => {
 
     //TODO recuperation de l'id top
@@ -48,32 +49,32 @@ export function getSpots(categoryId) {
   };
 }
 
-export function getCategory(categoryId) {
+export function getCategory (categoryId) {
   return (dispatch, getState) => {
 
-    let readyCat = getState().Category.get(`categorys/${categoryId}`);
-    if (readyCat) {
-      console.log('Category already present in data store', categoryId);
-      return {
-        type: ActionTypes.Category.getCategory,
-        categoryId,
-        res: {
-          body: readySpot.toJS()
-        }
-      };
-    }
+    // let readyCat = getState().Category.get(`categorys/${categoryId}`);
+    // if (readyCat) {
+    //   console.log('Category already present in data store', categoryId);
+    //   return {
+    //     type: ActionTypes.Category.getCategory,
+    //     categoryId,
+    //     res: {
+    //       body: readyCat.toJS()
+    //     }
+    //   };
+    // }
 
     const defaultCategory = getState().Category.get('categoryId');
     categoryId = categoryId || defaultCategory;
     return async api => ({
       type: ActionTypes.Category.getCategory,
       categoryId,
-      res: await api(`/api/categorys/${categoryId}`)
+      res: await api(`/api/categorys/${categoryId}`).catch(notFoundCategory)
     });
   };
 }
 
-export function getMeaList() {
+export function getMeaList () {
   return (dispatch, getState) => {
     let readyMea = getState().Category.get(`meaList`);
     if (readyMea) {
@@ -93,7 +94,7 @@ export function getMeaList() {
   }
 }
 
-export function getMenu() {
+export function getMenu () {
   return (dispatch, getState) => {
     let readyMenu = getState().Category.get(`menu`);
     if (readyMenu) {

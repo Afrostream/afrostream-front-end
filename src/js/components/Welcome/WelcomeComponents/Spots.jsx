@@ -49,7 +49,7 @@ class Spots extends React.Component {
     let categoriesList = Immutable.fromJS(uniqSpots);
 
     return (
-      <div className="spots-list">
+      <div className="categorie-list">
         <h2>Aperçu de notre catalogue</h2>
         {categoriesList ? categoriesList.map((movie, i) => this.getMovies(movie)).toJS() : ''}
         <div className="container sign-up__container">
