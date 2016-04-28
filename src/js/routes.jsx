@@ -32,6 +32,7 @@ export default (
     <Route name="coupon" path="coupon" component={RedeemCoupon}/>
     <Route name="couponregister" path="couponregister" component={CouponRegister}/>
     <Route name="login" path="login" component={LoginPage}/>
+    <Route name="newsletter" path="newsletter" component={LoginPage}/>
     <Route name="blog" path="blog" component={Blog.PostList}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
     </Route>
