@@ -78,7 +78,7 @@ class Footer extends React.Component {
               </li>
               <li>
                 <a className="footer-link"
-                   href="mailto:christina@afrostream.tv?subject=Contact&cc=presse@afrostream.tv">
+                   href="mailto:presse@afrostream.tv?subject=Contact">
                   Presse
                 </a>
               </li>
