@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import config from '../../../../config';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import Slider from '../Slider/Slider';
-import LazyLoader from './LazyLoader';
 import Thumb from '../Movies/Thumb';
 import ReactList from 'react-list';
 
@@ -17,21 +15,25 @@ class MoviesSlider extends React.Component {
     dataList: PropTypes.instanceOf(Immutable.List).isRequired,
     selectedId: React.PropTypes.string,
     label: React.PropTypes.string,
-    slug: React.PropTypes.string
+    slug: React.PropTypes.string,
+    axis: React.PropTypes.string,
+    className: React.PropTypes.string
   };
 
   static defaultProps = {
     selectedId: null,
     label: '',
-    slug: ''
+    slug: '',
+    axis: 'x',
+    className: 'movies-data-list'
   };
 
-  renderItem(index) {
+  renderItem (index) {
     const {
       props: {
-        dataList,thumbW,thumbH,type
-        }
-      } = this;
+        dataList, thumbW, thumbH, type
+      }
+    } = this;
 
     let data = dataList.get(index);
     let dataId = data.get('_id');
@@ -42,14 +44,15 @@ class MoviesSlider extends React.Component {
     );
   }
 
-  render() {
+  render () {
     const {
       props: {
         dataList,
         selectedId,
         label,
-        slug}
-      } = this;
+        slug
+      }
+    } = this;
 
     if (!dataList || !dataList.size) {
       return (<div/>);
@@ -65,16 +68,16 @@ class MoviesSlider extends React.Component {
     }
 
     return (
-      <div className="movies-data-list">
+      <div className={this.props.className}>
         {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
         {label ? <div className="movies-list__selection">{label}</div> : ''}
-        <Slider>
+        <Slider {...this.props}>
           <div className="slider-container">
             <ReactList
               ref="react-list"
               useTranslate3d
               initialIndex={index}
-              axis="x"
+              axis={this.props.axis}
               itemRenderer={::this.renderItem}
               length={dataList.size}
               type='uniform'

@@ -88,7 +88,6 @@ class Header extends React.Component {
             </Link>
             <UserButton />
           </div>
-          {/* User Account button */}
         </div>
       </nav>
     );
