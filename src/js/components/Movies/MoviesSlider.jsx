@@ -68,6 +68,9 @@ class MoviesSlider extends React.Component {
     } = this;
 
     let data = dataList.get(index);
+    if (data instanceof Immutable.Map) {
+      return this.renderBlock(data);
+    }
     return (
       <div className="block" key={`data-block-${index}`}>{data.map((item)=>this.renderBlock(item))}</div>
     );
@@ -109,7 +112,7 @@ class MoviesSlider extends React.Component {
               axis={this.props.axis}
               itemRenderer={::this.renderItem}
               length={dataList.size}
-              type='variable'
+              type={this.props.axis === 'x' ? 'variable' : 'uniform' }
             />
           </div>
         </Slider>
