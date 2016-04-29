@@ -6,6 +6,7 @@ import GoBack from './../GoBack/GoBack';
 import SmartBanner from './SmartBanner';
 import classSet from 'classnames';
 import { apps } from '../../../../config';
+
 if (process.env.BROWSER) {
   require('./Header.less');
 }
@@ -78,18 +79,18 @@ class Header extends React.Component {
     };
 
     return (
-      <nav className={classSet(sliderClasses)} role="navigation">
+      <div className={classSet(sliderClasses)}>
         {planCode ? <SmartBanner {...apps.params}/> : ''}
-        < div className="container-fluid">
-          <div className="navbar-header">
+        <div className="container-fluid">
+          <nav className="nav-collapse" role="navigation">
             { hasHistory ? <GoBack /> : ''}
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
             <UserButton />
-          </div>
+          </nav>
         </div>
-      </nav>
+      </div>
     );
   }
 }

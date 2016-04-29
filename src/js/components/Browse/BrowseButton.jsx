@@ -1,58 +1,14 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import _ from 'lodash';
+import React from 'react';
+import BrowseMenu from './BrowseMenu';
 
 if (process.env.BROWSER) {
   require('./BrowseButton.less');
 }
 
-@connect(({Category}) => ({Category}))
 class BrowseButton extends React.Component {
 
   constructor (props) {
     super(props);
-  }
-
-  componentDidMount () {
-    $('.dropdown').hover(
-      ()=> {
-        $('.dropdown-menu', this).fadeIn('fast');
-      },
-      () => {
-        $('.dropdown-menu', this).fadeOut('fast');
-      });
-  }
-
-  renderCategories () {
-    const {
-      props: {
-        Category
-      }
-    } = this;
-
-    const categories = Category.get('meaList');
-    if (!categories) {
-      return;
-    }
-
-    const jsCat = categories.toJS();
-    const splitSize = 5;
-    const colSize = Math.floor(9 / (jsCat.length / splitSize));
-
-    return _.chunk(jsCat, splitSize).map((splitedCategorie, key) => <li key={`menu-${key}`}
-                                                                        className={`mega-menu-column col-md-${colSize}`}>
-      <ul>
-        {_.map(splitedCategorie, (categorie)=>
-          <li
-            key={`menu-${categorie._id}`}>
-            <Link to={`/browse/genre/${categorie._id}/${categorie.slug}`}>
-              {categorie.label}
-            </Link>
-          </li>
-        )}
-      </ul>
-    </li>);
   }
 
   render () {
@@ -61,18 +17,7 @@ class BrowseButton extends React.Component {
         <a href="#" className="btn-xs btn-browse dropdown-toggle" data-toggle="dropdown"
            role="button"><span>PARCOURIR </span><b className="caret"></b>
         </a>
-        <ul className="dropdown-menu mega-menu row-fluid">
-          <li className="mega-menu-column col-md-3">
-            <ul>
-              <li><Link to="/">Accueil <i className="fa fa-home"/></Link></li>
-              <li><Link to="/favoris">Mes Favoris <i className="fa fa-heart"/></Link></li>
-              <li><Link to="/last">Derniers ajouts</Link></li>
-              <li><Link to="/viewed">Ma liste</Link></li>
-              <li><Link to="/compte">Mon compte</Link></li>
-            </ul>
-          </li>
-          {this.renderCategories()}
-        </ul>
+        <BrowseMenu />
       </li>)
   }
 }
