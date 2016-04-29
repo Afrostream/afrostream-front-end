@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ModalNewsletter from './ModalNewsletter';
 import ModalGeoWall from './ModalGeoWall';
 import ModalLogin from './ModalLogin';
 import ModalSocial from './ModalSocial';
@@ -9,7 +10,7 @@ if (process.env.BROWSER) {
   require('./ModalView.less');
 }
 
-@connect(({ Modal }) => ({Modal}))
+@connect(({Modal}) => ({Modal}))
 class ModalView extends React.Component {
 
   static contextTypes = {
@@ -17,18 +18,26 @@ class ModalView extends React.Component {
     history: React.PropTypes.object
   };
 
-  render() {
+  render () {
     const {
       props: {
         Modal
-        }
-      } = this;
+      }
+    } = this;
 
     const target = Modal.get('target');
     const closable = Modal.get('closable');
     const data = Modal.get('data');
 
     switch (target) {
+      case 'newsletter':
+        return (
+          <ModalNewsletter closable={closable} {...this.props}
+                           header="Newsletter"
+                           instructions="Me tenir informé par email"
+                           action="Envoyer"/>
+        );
+        break;
       case 'geoWall':
         return (
           <ModalGeoWall closable={closable} {...this.props}/>
