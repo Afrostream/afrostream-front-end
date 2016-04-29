@@ -4,6 +4,7 @@ import * as ModalActionCreators from '../../../actions/modal';
 import { Link } from 'react-router';
 import { dict } from '../../../../../config/client';
 import { formatPrice, isBoolean } from '../../../lib/utils';
+import ModalCoupon from '../../Modal/ModalCoupon';
 import _ from 'lodash'
 
 if (process.env.BROWSER) {
@@ -25,7 +26,7 @@ class PricingTable extends React.Component {
       return;
     }
 
-    return validPlans.sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')));
+    return validPlans.filter((a) => a.get('internalPlanUuid') !== 'afrostreamgift').sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')));
   }
 
   openModal (internalPlanUuid) {
@@ -134,6 +135,20 @@ class PricingTable extends React.Component {
     });
   }
 
+  getCouponCol () {
+    return (
+      <div key={`col-plan-coupon`} className="col col-xs-12 col-sm-12 col-md-3">
+        <div className="plan-container">
+          <div className="row">
+            Coupon
+          </div>
+          <div className="row">
+            <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
+          </div>
+        </div>
+      </div>);
+  }
+
   getFirstCol () {
 
     let validPlans = this.getPlans();
@@ -143,7 +158,7 @@ class PricingTable extends React.Component {
     }
 
     return (
-      <div key={`line-plan-baseline`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 3)}`}>
+      <div key={`line-plan-baseline`} className={`col col-xs-12 col-sm-12 col-md-${(12 - (validPlans.size + 1) * 3)}`}>
         <h1>
           <span className="pricing-header-purple">Nos formules </span>
         </h1>
@@ -160,6 +175,7 @@ class PricingTable extends React.Component {
         <div className="row">
           {this.getFirstCol()}
           {this.getPlanCol()}
+          {this.getCouponCol()}
         </div>
       </section>
     );

@@ -63,11 +63,13 @@ class ModalComponent extends React.Component {
 
 ModalComponent.propTypes = {
   dispatch: React.PropTypes.func,
-  closable: React.PropTypes.bool
+  closable: React.PropTypes.bool,
+  modal: React.PropTypes.bool
 };
 
 ModalComponent.defaultProps = {
-  closable: true
+  closable: true,
+  modal: true
 };
 
 export default ModalComponent;

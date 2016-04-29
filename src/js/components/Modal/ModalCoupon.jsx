@@ -130,13 +130,13 @@ class ModalCoupon extends ModalComponent {
 
   getCoupon () {
     return (
-      <div className="coupon">
-        <label htmlFor="easy_coupon" className="sad-placeholder">
+      <div className="email">
+        <label htmlFor="easy_email" className="sad-placeholder">
           {this.getTitle('emailPlaceholder')}
         </label>
         <div className="input-box">
-          <i className=""></i>
-          <input name="coupon" ref="coupon" id="easy_coupon" type="text" required
+          <i className="icon-barcode"></i>
+          <input name="email" ref="coupon" id="easy_email" type="text" required
                  placeholder={this.getTitle('couponPlaceholder')}
                  title={this.getTitle('couponPlaceholder')}/>
         </div>
@@ -169,8 +169,14 @@ class ModalCoupon extends ModalComponent {
     let ua = this.state.ua;
 
     let popupClass = classNames({
-      'popup': true,
+      'popup': this.props.modal,
       'ios': ua && ua.is('iOS')
+    });
+
+    let overlayClass = classNames({
+      'overlay': this.props.modal,
+      'widget': !this.props.modal,
+      'active': true
     });
 
     const classType = 'redeemCoupon';
@@ -180,17 +186,12 @@ class ModalCoupon extends ModalComponent {
         <div id="lock" className="lock theme-default">
           <div className={classType}>
             <div className={popupClass}>
-              <div className="overlay active">
+              <div className={overlayClass}>
                 <div className="centrix">
                   <div id="onestep" className="panel onestep active">
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <div className="icon-container">
-                        <div className="avatar">
-                          <i className="avatar-guest icon-budicon-2"></i>
-                        </div>
-                      </div>
                       <h1>{this.getTitle()}</h1>
                       <h2 className={errClass}>{this.state.error}</h2>
                     </div>
