@@ -28,19 +28,48 @@ class MoviesSlider extends React.Component {
     className: 'movies-data-list'
   };
 
-  renderItem (index) {
+  itemSizeGetter (index) {
     const {
       props: {
-        dataList, thumbW, thumbH, type
+        dataList
       }
     } = this;
 
     let data = dataList.get(index);
+    let isAdSpot = data.get('adSpot');
+    return isAdSpot ? 239 : 160;
+  }
+
+  renderBlock (data) {
+    let isAdSpot = data.get('adSpot');
     let dataId = data.get('_id');
+    if (isAdSpot) {
+      return (
+        <Thumb
+          id={dataId}
+          thumbW={239} thumbH={465} type="adspot"
+          fit="facearea" crop="faces"
+          key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
+      );
+    }
+
     return (
       <Thumb
         id={dataId}
-        key={`data-thumb-${index}`} {...this.props} {...{data, dataId}}  />
+        key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
+    );
+  }
+
+  renderItem (index) {
+    const {
+      props: {
+        dataList
+      }
+    } = this;
+
+    let data = dataList.get(index);
+    return (
+      <div className="block" key={`data-block-${index}`}>{data.map((item)=>this.renderBlock(item))}</div>
     );
   }
 
@@ -75,12 +104,12 @@ class MoviesSlider extends React.Component {
           <div className="slider-container">
             <ReactList
               ref="react-list"
-              useTranslate3d
+              useTranslate3d={true}
               initialIndex={index}
               axis={this.props.axis}
               itemRenderer={::this.renderItem}
               length={dataList.size}
-              type='uniform'
+              type='variable'
             />
           </div>
         </Slider>

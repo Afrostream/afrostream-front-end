@@ -110,8 +110,8 @@ class Thumb extends Poster {
           {this.getInfos()}
         </Link>
         <div className="thumb-buttons">
-          {this.getFavorite()}
-          {this.getShareButton()}
+          {/*this.getFavorite()*/}
+          {/*this.getShareButton()*/}
         </div>
       </div>
     );
