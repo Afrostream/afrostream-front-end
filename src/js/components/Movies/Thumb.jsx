@@ -95,7 +95,7 @@ class Thumb extends Poster {
     let thumbClass = {
       'thumb': true,
       'episode': type === 'episode',
-      'adspot': type === 'adspot'
+      'spot': type === 'spot'
     };
 
     return (

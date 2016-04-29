@@ -47,7 +47,7 @@ class MoviesSlider extends React.Component {
       return (
         <Thumb
           id={dataId}
-          thumbW={239} thumbH={465} type="adspot"
+          thumbW={239} thumbH={465} type="spot"
           fit="facearea" crop="faces"
           key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
       );
