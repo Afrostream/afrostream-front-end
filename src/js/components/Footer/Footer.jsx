@@ -53,7 +53,7 @@ class Footer extends React.Component {
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2">
-            <h4>S'ABONNER</h4>
+            <h4>RECHARGE</h4>
             <ul className="footer-links">
               <li>
                 <Link className="footer-link" to="/cash">
