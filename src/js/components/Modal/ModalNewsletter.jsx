@@ -50,7 +50,7 @@ class ModalNewsletter extends ModalGeoWall {
                     <div className="mode-container">
                       <div className="mode">
                         <div className="instructions">
-                          Merci, vous êtes désormais insrit à nos newsletters
+                          Merci, vous êtes désormais inscrits à nos newsletters
                         </div>
                       </div>
                     </div>
