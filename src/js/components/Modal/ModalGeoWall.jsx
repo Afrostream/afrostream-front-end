@@ -6,15 +6,15 @@ import classNames from 'classnames';
 
 class ModalGeoWall extends ModalComponent {
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.stopPropagation();
     e.preventDefault();
-    const email = this.refs.email.getDOMNode().value;
+    const email = this.refs.email.value;
     this.props.dispatch(WaitingUsersActionCreators.create(email));
     this.props.dispatch(ModalActionCreators.close());
   }
 
-  render() {
+  render () {
 
     let closeClass = classNames({
       'close': true,
@@ -33,14 +33,14 @@ class ModalGeoWall extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>Coming Soon</h1>
+                      <h1>{this.props.header}</h1>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">
                         <form onSubmit={::this.handleSubmit}>
                           <div className="instructions">
-                            Enter your details below and be the first to get notified when we launch there :
+                            {this.props.instructions}
                           </div>
                           <div className="emailPassword">
                             <div className="inputs">
@@ -57,7 +57,7 @@ class ModalGeoWall extends ModalComponent {
                               </div>
                             </div>
                           </div>
-                          <button type="submit" className="primary next">Notify me</button>
+                          <button type="submit" className="primary next">{this.props.action}</button>
                         </form>
                       </div>
                     </div>
@@ -71,5 +71,19 @@ class ModalGeoWall extends ModalComponent {
     );
   }
 }
+
+ModalGeoWall.propTypes = {
+  header: React.PropTypes.string,
+  instructions: React.PropTypes.string,
+  action: React.PropTypes.string,
+  dispatch: React.PropTypes.func,
+  closable: React.PropTypes.bool
+};
+
+ModalGeoWall.defaultProps = {
+  header: 'Coming Soon',
+  instructons: 'Enter your details below and be the first to get notified when we launch there :',
+  action: 'Notify me'
+};
 
 export default ModalGeoWall;
