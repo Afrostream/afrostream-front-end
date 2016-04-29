@@ -80,7 +80,7 @@ class MoviesList extends React.Component {
           const slug = categorie.get('slug');
 
           return <MoviesSlider
-            className="movies-data-list ad-spots"
+            className="movies-data-list spots"
             key={`categorie-${categorie.get('_id')}-${i}`} {...this.props} {...{dataList, label, slug}} />
         }).toJS() : ''}
       </div>
