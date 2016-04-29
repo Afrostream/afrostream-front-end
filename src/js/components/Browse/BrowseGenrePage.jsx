@@ -50,13 +50,8 @@ class BrowseGenrePage extends React.Component {
 
     return (<div className="browse-categorie_list">
 
-      <MoviesSlider axis="x" className="movies-data-list spots" thumbW={239} thumbH={465} type="spot"
-                    fit="facearea" crop="faces"
-                    key={`genre-spot-${categorie.get('_id')}`}
-                    dataList={adSpots} {...this.props} {...{label}}/>
-
       <MoviesSlider axis="y"
-                    key={`genre-${categorie.get('_id')}`} {...this.props} {...{dataList}} />
+                    key={`genre-${categorie.get('_id')}`} {...this.props} {...{dataList, label}} />
     </div>);
   }
 
