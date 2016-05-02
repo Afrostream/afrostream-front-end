@@ -1,37 +1,34 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import Immutable from 'immutable';
-import { connect } from 'react-redux';
-import { prepareRoute } from '../../decorators';
-import SlidesContainer from './Slides';
-import Pagination from './Pagination';
-import Controls from './Controls';
-import Spinner from '../Spinner/Spinner';
-import * as SlidesActionCreators from '../../actions/slides';
-import * as CategoryActionCreators from '../../actions/category';
-import config from '../../../../config';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import Immutable from 'immutable'
+import { connect } from 'react-redux'
+import { prepareRoute } from '../../decorators'
+import SlidesContainer from './Slides'
+import Pagination from './Pagination'
+import Controls from './Controls'
+import Spinner from '../Spinner/Spinner'
+import * as SlidesActionCreators from '../../actions/slides'
+import * as CategoryActionCreators from '../../actions/category'
+import config from '../../../../config'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./SlideShow.less');
 }
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(CategoryActionCreators.getSpots())
   ];
 })
-@connect(({ Category, Slides }) => ({Category, Slides}))
+@connect(({Category, Slides}) => ({Category, Slides}))
 class SlideShow extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.interval = 0;
   }
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
-
-  _extendGestureObj(settings) {
+  _extendGestureObj (settings) {
     var obj = {};
 
     obj.dir = settings.dir;
@@ -44,7 +41,7 @@ class SlideShow extends React.Component {
     return obj;
   }
 
-  initTouch() {
+  initTouch () {
 
     const self = this,
     // touchPosition
@@ -171,20 +168,20 @@ class SlideShow extends React.Component {
         gestureEv.type = 'tap';
         if (touchEvent && e.target) {
           if (e.target.pathname) {
-            return self.context.history.pushState(null, e.target.pathname);
+            return self.props.router.pushState(null, e.target.pathname);
           }
         }
       }
     });
   }
 
-  render() {
+  render () {
     const {
       props: {
         Category,
         Slides
-        }
-      } = this;
+      }
+    } = this;
 
     const categoryId = Category.get(`categoryId`);
     if (!categoryId) {
@@ -204,20 +201,20 @@ class SlideShow extends React.Component {
   //Next prev button
   //<Controls />
 
-  componentDidMount() {
+  componentDidMount () {
     this.initTouch();
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     clearTimeout(this.interval);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     clearTimeout(this.interval);
     this.interval = setTimeout(() => this.toggleNext(), config.carousel.interval);
   }
 
-  onSwipe(e) {
+  onSwipe (e) {
     clearTimeout(this.interval);
     if (e.dir === -1) {
       this.togglePrev();
@@ -227,27 +224,31 @@ class SlideShow extends React.Component {
     }
   }
 
-  toggleNext() {
+  toggleNext () {
 
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(SlidesActionCreators.toggleNext());
   }
 
-  togglePrev() {
+  togglePrev () {
 
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(SlidesActionCreators.togglePrev());
   }
 }
 
-export default SlideShow;
+SlideShow.propTypes = {
+  history: React.PropTypes.object
+};
+
+export default withRouter(SlideShow)

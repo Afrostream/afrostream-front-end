@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import * as ModalActionCreators from '../../../actions/modal';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import classSet from 'classnames';
-import config from '../../../../../config';
-import _ from 'lodash';
-import MobileDetect from 'mobile-detect';
-import SignUpButton from '../../User/SignUpButton';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../../actions/modal'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import classSet from 'classnames'
+import config from '../../../../../config'
+import _ from 'lodash'
+import MobileDetect from 'mobile-detect'
+import SignUpButton from '../../User/SignUpButton'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less');
@@ -26,10 +27,6 @@ class WelcomeHeader extends React.Component {
     };
   }
 
-
-  static contextTypes = {
-    location: PropTypes.object.isRequired
-  };
 
   static propTypes = {
     promoCode: React.PropTypes.string
@@ -195,11 +192,12 @@ class WelcomeHeader extends React.Component {
   }
 
   hasPromo () {
-    let pathName = this.context.location.pathname.split('/').join('');
-    let HasProm = _.find(config.promoCodes, function (promo) {
-      return pathName === promo.code;
-    });
-    return HasProm;
+    // let pathName = this.props.router.pathname.split('/').join('');
+    // let HasProm = _.find(config.promoCodes, function (promo) {
+    //   return pathName === promo.code;
+    // });
+    // return HasProm;
+    return false;
   }
 
   render () {
@@ -326,4 +324,8 @@ class WelcomeHeader extends React.Component {
   }
 }
 
-export default WelcomeHeader;
+WelcomeHeader.propTypes = {
+  location: React.PropTypes.object.isRequired
+};
+
+export default withRouter(WelcomeHeader)

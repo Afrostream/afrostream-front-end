@@ -49,18 +49,6 @@ class HomePage extends React.Component {
     }
   }
 
-  renderChildren () {
-    const {props: {children}} = this;
-    return React.Children.map(children, (child) => {
-      let path = this.props.location.pathname;
-      let key = path.split('/')[1] || 'root';
-      console.log('child', key);
-      return React.cloneElement(child, {
-        key
-      });
-    });
-  }
-
   renderContent () {
     const {props: {User, children}} = this;
     const pending = User.get('pending');
@@ -68,7 +56,6 @@ class HomePage extends React.Component {
     let isPending = Boolean(pending);
     if (user) {
       if (children) {
-        //return this.renderChildren();
         return children;
       }
       else {
@@ -80,13 +67,6 @@ class HomePage extends React.Component {
   }
 
   render () {
-    //TODO FIX animation transition
-    //return (
-    //  <ReactCSSTransitionGroup transitionName="page-transition" transitionEnter={true} transitionLeave={true}
-    //                           transitionEnterTimeout={3000} transitionLeaveTimeout={3000}>
-    //    {this.renderContent()}
-    //  </ReactCSSTransitionGroup>
-    //);
     return (
       this.renderContent()
     );

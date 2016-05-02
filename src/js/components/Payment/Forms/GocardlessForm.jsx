@@ -1,15 +1,16 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import classSet from 'classnames';
-import {gocardless,dict} from '../../../../../config/client';
-import CountrySelect from './../CountrySelect';
-import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat';
-import iban from './iban-validator';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import classSet from 'classnames'
+import { gocarlessApi, gocardless, dict } from '../../../../../config/client'
+import CountrySelect from './../CountrySelect'
+import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat'
+import iban from './iban-validator'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import scriptLoader from 'react-async-script-loader'
 
 class GocardlessForm extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       modal: false,
@@ -18,18 +19,18 @@ class GocardlessForm extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount () {
     //Detect si le payment via la lib gocardless est dispo
     this.setState({
       hasLib: window['GoCardless']
     });
   }
 
-  hasLib() {
+  hasLib () {
     return this.state.hasLib;
   }
 
-  async submit(billingInfo) {
+  async submit (billingInfo) {
 
     let self = this;
 
@@ -104,19 +105,19 @@ class GocardlessForm extends React.Component {
     planLabel: null
   };
 
-  validate() {
+  validate () {
     this.refs.iban.value = iban.printFormat(this.refs.iban.value, ' ');
     return iban.isValid(this.refs.iban.value);
   }
 
-  onHeaderClick() {
+  onHeaderClick () {
     let clickHeader = ReactDOM.findDOMNode(this);
     if (clickHeader) {
       clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'gocardless', bubbles: true}));
     }
   }
 
-  getForm() {
+  getForm () {
     if (!this.props.selected) return;
     return (
       <div className="row" ref="goCardlessForm">
@@ -136,7 +137,7 @@ class GocardlessForm extends React.Component {
     );
   }
 
-  render() {
+  render () {
 
     if (!this.state.hasLib) {
       return (<div />);
@@ -175,4 +176,8 @@ class GocardlessForm extends React.Component {
   }
 }
 
-export default GocardlessForm;
+export default scriptLoader(
+  [
+    gocarlessApi
+  ]
+)(GocardlessForm)

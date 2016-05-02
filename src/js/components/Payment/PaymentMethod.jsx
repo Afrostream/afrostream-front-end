@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import { dict, payment, featuresFlip } from '../../../../config';
-import { Link } from 'react-router';
-import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm } from './Forms';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import { dict, payment, featuresFlip } from '../../../../config'
+import { Link } from 'react-router'
+import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm } from './Forms'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./PaymentMethod.less');
@@ -16,11 +17,6 @@ const Methods = {
 };
 
 class PaymentMethod extends React.Component {
-
-  static contextTypes = {
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
-  };
 
   constructor (props) {
     super(props);
@@ -77,7 +73,7 @@ class PaymentMethod extends React.Component {
 
     let canUseMultiple = this.multipleMethods();
     let method = this.method();
-    let isCash = this.context.history.isActive('cash');
+    let isCash = this.props.router.isActive('cash');
 
     if (!canUseMultiple) {
       method = Methods.CARD;
@@ -165,4 +161,9 @@ class PaymentMethod extends React.Component {
   }
 }
 
-export default PaymentMethod;
+PaymentMethod.propTypes = {
+  location: React.PropTypes.object,
+  history: React.PropTypes.object
+};
+
+export default withRouter(PaymentMethod)

@@ -1,26 +1,22 @@
-import React ,{ PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import { connect } from 'react-redux';
-import config from '../../../../config/';
-import classSet from 'classnames';
-import { Link } from 'react-router';
-
-import * as EventActionCreators from '../../actions/event';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import { connect } from 'react-redux'
+import config from '../../../../config/'
+import classSet from 'classnames'
+import { Link } from 'react-router'
+import { withRouter } from 'react-router'
+import * as EventActionCreators from '../../actions/event'
 
 if (process.env.BROWSER) {
   require('./SearchBox.less');
 }
 
-@connect(({ Search }) => ({Search}))
+@connect(({Search}) => ({Search}))
 class SearchBox extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
-
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
 
   state = {
     hasFocus: false
@@ -28,10 +24,10 @@ class SearchBox extends React.Component {
 
   debounceSearch = _.debounce(this.search, 400);
 
-  handleFocus() {
+  handleFocus () {
     const {
-      props: { dispatch }
-      } = this;
+      props: {dispatch}
+    } = this;
 
     dispatch(EventActionCreators.pinHeader(true));
     this.setState({
@@ -39,7 +35,7 @@ class SearchBox extends React.Component {
     })
   }
 
-  handleBlur() {
+  handleBlur () {
     let self = this;
     setTimeout(function () {
       let input = self.getInput();
@@ -50,21 +46,21 @@ class SearchBox extends React.Component {
     }, 200);
   }
 
-  getInput() {
+  getInput () {
     return ReactDOM.findDOMNode(this.refs.inputSearchMini);
   }
 
-  goBack() {
+  goBack () {
     let input = this.getInput();
     input.value = '';
-    let isInSearch = this.context.history.isActive('recherche');
+    let isInSearch = this.props.router.isActive('recherche');
     this.handleBlur();
     if (isInSearch) {
-      this.context.history.pushState(null, '/');
+      this.props.router.pushState(null, '/');
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let input = this.getInput();
 
     // Set input to last search
@@ -73,19 +69,19 @@ class SearchBox extends React.Component {
     }
   }
 
-  search() {
+  search () {
     let input = this.getInput().value;
     if (input.length < 3) {
       return;
     }
-    this.context.history.pushState(null, '/recherche', {search: input});
+    this.props.router.pushState(null, '/recherche', {search: input});
   }
 
-  render() {
+  render () {
 
     let fielClass = {
       'search-box': true,
-      'has-focus': this.context.history.isActive('recherche') || this.state.hasFocus
+      'has-focus': this.props.router.isActive('recherche') || this.state.hasFocus
     };
 
     return (
@@ -104,4 +100,8 @@ class SearchBox extends React.Component {
   }
 }
 
-export default SearchBox;
+SearchBox.propTypes = {
+  history: React.PropTypes.object
+};
+
+export default withRouter(SearchBox)

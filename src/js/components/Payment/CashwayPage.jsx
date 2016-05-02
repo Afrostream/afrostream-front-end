@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
-import SignUpButton from '../User/SignUpButton';
-import { prepareRoute } from '../../decorators';
-import * as EventActionCreators from '../../actions/event';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import React, { PropTypes } from 'react'
+import SignUpButton from '../User/SignUpButton'
+import { prepareRoute } from '../../decorators'
+import * as EventActionCreators from '../../actions/event'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import scriptLoader from 'react-async-script-loader'
 
 if (process.env.BROWSER) {
   require('./CashwayPage.less');
@@ -130,4 +131,8 @@ class CashwayPage extends React.Component {
   }
 }
 
-export default CashwayPage;
+export default scriptLoader(
+  [
+    '//maps.cashway.fr/js/cwm.min.js'
+  ]
+)(CashwayPage)

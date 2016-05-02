@@ -1,16 +1,17 @@
-import React from 'react';
-import ReactDOM from'react-dom';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import { Link } from 'react-router';
-import * as OauthActionCreator from '../../actions/oauth';
-import * as ModalActionCreator from '../../actions/modal';
-import * as UserActionCreators from '../../actions/user';
-import * as IntercomActionCreators from '../../actions/intercom';
-import ModalComponent from './ModalComponent';
-import { oauth2 } from '../../../../config';
-import MobileDetect from 'mobile-detect';
-import _ from 'lodash';
+import React from 'react'
+import ReactDOM from'react-dom'
+import { connect } from 'react-redux'
+import classNames from 'classnames'
+import { Link } from 'react-router'
+import * as OauthActionCreator from '../../actions/oauth'
+import * as ModalActionCreator from '../../actions/modal'
+import * as UserActionCreators from '../../actions/user'
+import * as IntercomActionCreators from '../../actions/intercom'
+import ModalComponent from './ModalComponent'
+import { oauth2 } from '../../../../config'
+import MobileDetect from 'mobile-detect'
+import _ from 'lodash'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less');
@@ -19,23 +20,19 @@ if (process.env.BROWSER) {
 @connect(({User}) => ({User}))
 class ModalLogin extends ModalComponent {
 
-  constructor (props) {
-    super(props);
-    this.state = {
-      success: false,
-      loading: false,
-      password: null,
-      repeat_password: null,
-      email: null,
-      errors: {},
-      timestamp: new Date()
-    };
+  state = {
+    success: false,
+    loading: false,
+    password: null,
+    repeat_password: null,
+    email: null,
+    errors: {},
+    timestamp: new Date()
   }
 
-  static contextTypes = {
-    location: React.PropTypes.object,
-    history: React.PropTypes.object
-  };
+  constructor (props) {
+    super(props);
+  }
 
   componentDidMount () {
     const {
@@ -215,7 +212,7 @@ class ModalLogin extends ModalComponent {
     const {
       dispatch
     } = this.props;
-    this.context.history.pushState(null, '/')
+    this.props.history.pushState(null, '/')
     dispatch(ModalActionCreator.open('show'));
   }
 
@@ -521,8 +518,10 @@ class ModalLogin extends ModalComponent {
 }
 
 ModalLogin.propTypes = {
+  location: React.PropTypes.object,
+  history: React.PropTypes.object,
   type: React.PropTypes.string,
   dispatch: React.PropTypes.func
 };
 
-export default ModalLogin;
+export default withRouter(ModalLogin)

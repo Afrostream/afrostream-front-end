@@ -61,12 +61,10 @@ const config = {
    * Front-End Server
    */
   externalsJs: [
-    '//www.gstatic.com/cv/js/sender/v1/cast_sender.js',
-    '//js.recurly.com/v3/recurly.js',
+    '//www.gstatic.com/cv/js/sender/v1/cast_sender.js'
     //'//www.easybroadcast.fr/libs/65/EB.js&s2member_file_download_key=dbb00d0abec8ccb2295b7d2df5325f6b',
-    '//maps.cashway.fr/js/cwm.min.js',
-    gocarlessApi
   ],
+  gocarlessApi: gocarlessApi,
   promoCodes: [
     {
       code: 'AFROLOVER',

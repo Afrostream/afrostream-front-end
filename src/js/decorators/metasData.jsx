@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { PropTypes,Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import Helmet from 'react-helmet';
 import config from '../../../config';
 import shallowEqual from 'react-pure-render/shallowEqual';
@@ -12,7 +12,10 @@ export default () => {
     class MetasDataDecorator extends Component {
 
       static contextTypes = {
-        store: PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired
+      };
+
+      static propsTypes = {
         location: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired
       };
@@ -25,8 +28,8 @@ export default () => {
         link: []
       };
 
-      render() {
-        const { props: { children} } = this;
+      render () {
+        const {props: {children}} = this;
         let metas = this.getMetadata();
         return (
           <MetasDataComponent {...this.props} >
@@ -36,12 +39,12 @@ export default () => {
         );
       }
 
-      getMetadata() {
+      getMetadata () {
 
         const {
-          context: { store,location },
-          props: { params }
-          } = this;
+          context: {store},
+          props: {params, location}
+        } = this;
 
         let metas = {
           title: _.cloneDeep(config.metadata.title),
@@ -79,6 +82,7 @@ export default () => {
 
         let title = _.cloneDeep(config.metadata.title);
         let ogTitle = title;
+
         let slug = location.pathname !== '/' ? location.pathname : '';
         let synopsis = _.cloneDeep(config.metadata.description);
         let ogDescription = synopsis;

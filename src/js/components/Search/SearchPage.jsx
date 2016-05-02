@@ -1,57 +1,53 @@
-'use strict';
-import React, { PropTypes }  from 'react';
-import { prepareRoute } from '../../decorators';
-import ReactDOM from'react-dom';
-import { connect } from 'react-redux';
-import * as SearchActionCreators from '../../actions/search';
-import Thumb from '../../components/Movies/Thumb';
-import Spinner from '../Spinner/Spinner';
-import {search} from '../../../../config';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import _ from 'lodash';
-import { Link } from 'react-router';
-import shallowEqual from 'react-pure-render/shallowEqual';
-import * as UserActionCreators from '../../actions/user';
+import React, { PropTypes }  from 'react'
+import { prepareRoute } from '../../decorators'
+import ReactDOM from'react-dom'
+import { connect } from 'react-redux'
+import * as SearchActionCreators from '../../actions/search'
+import Thumb from '../../components/Movies/Thumb'
+import Spinner from '../Spinner/Spinner'
+import { search } from '../../../../config'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import _ from 'lodash'
+import { Link } from 'react-router'
+import { withRouter } from 'react-router'
+import shallowEqual from 'react-pure-render/shallowEqual'
+import * as UserActionCreators from '../../actions/user'
 
 if (process.env.BROWSER) {
   require('./SearchPage.less');
 }
 
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return store.dispatch(UserActionCreators.getFavorites('movies'))
 })
 
-@connect(({ Search }) => ({Search}))
+@connect(({Search}) => ({Search}))
 class SearchPage extends React.Component {
 
-  static contextTypes = {
-    location: PropTypes.object.isRequired
-  };
-
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.search();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps (nextProps) {
     const {
-      context: { location },
-      } = this;
+      props: {location},
+    } = this;
 
-    if (!shallowEqual(nextContext.location, location)) {
-      this.search(nextContext.location.query.search);
+    if (!shallowEqual(nextProps.location,location)) {
+      this.search(nextProps.location.query.search);
     }
   }
 
-  search(value) {
+  search (value) {
     const {
-      props: { dispatch }
-      } = this;
+      props: {dispatch, router}
+    } = this;
 
-    let search = value || this.context.location.query.search;
+    let search = value || router.query.search;
 
     if (!search || search.length < 3) {
       return;
@@ -60,7 +56,7 @@ class SearchPage extends React.Component {
     dispatch(SearchActionCreators.fetchMovies(search));
   }
 
-  renderMovies(movies, fetching) {
+  renderMovies (movies, fetching) {
     if (!movies || !movies.size) {
       return fetching ? '' : search.dict['noData'];
     }
@@ -71,7 +67,7 @@ class SearchPage extends React.Component {
     }).toJS();
   }
 
-  renderActors(movies) {
+  renderActors (movies) {
     if (!movies || !movies.size) {
       return '';
     }
@@ -94,10 +90,10 @@ class SearchPage extends React.Component {
     )
   }
 
-  render() {
+  render () {
     const {
-      props: { Search}
-      } = this;
+      props: {Search}
+    } = this;
 
     const moviesFetched = Search.get(`search`);
     const moviesFetching = Search.get(`fetching`);
@@ -124,4 +120,8 @@ class SearchPage extends React.Component {
   }
 }
 
-export default SearchPage;
+SearchPage.propTypes = {
+  location: React.PropTypes.object
+};
+
+export default withRouter(SearchPage)

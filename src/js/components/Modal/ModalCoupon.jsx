@@ -1,12 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import { Link } from 'react-router';
-import * as ModalActionCreators from '../../actions/modal';
-import * as BillingActionCreators from '../../actions/billing';
-import ModalComponent from './ModalComponent';
-import { oauth2 } from '../../../../config';
-import MobileDetect from 'mobile-detect';
+import React from 'react'
+import { connect } from 'react-redux'
+import classNames from 'classnames'
+import { Link } from 'react-router'
+import * as ModalActionCreators from '../../actions/modal'
+import * as BillingActionCreators from '../../actions/billing'
+import ModalComponent from './ModalComponent'
+import { oauth2 } from '../../../../config'
+import MobileDetect from 'mobile-detect'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less');
@@ -22,11 +23,6 @@ class ModalCoupon extends ModalComponent {
       loading: false
     };
   }
-
-  static contextTypes = {
-    location: React.PropTypes.object,
-    history: React.PropTypes.object
-  };
 
   componentDidMount () {
     const userAgent = (window.navigator && navigator.userAgent) || '';
@@ -63,7 +59,7 @@ class ModalCoupon extends ModalComponent {
 
       if (coupon && coupon.status === 'waiting') {
         dispatch(ModalActionCreators.close());
-        self.context.history.pushState(null, `/couponregister`);
+        self.props.history.pushState(null, `/couponregister`);
       }
       else if (coupon && coupon.status !== 'waiting') {
 
@@ -210,8 +206,10 @@ class ModalCoupon extends ModalComponent {
 }
 
 ModalCoupon.propTypes = {
+  location: React.PropTypes.object,
+  history: React.PropTypes.object,
   type: React.PropTypes.string,
   dispatch: React.PropTypes.func
 };
 
-export default ModalCoupon;
+export default withRouter(ModalCoupon)

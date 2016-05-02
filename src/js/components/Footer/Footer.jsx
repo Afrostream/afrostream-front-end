@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
-import classSet from 'classnames';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
+import classSet from 'classnames'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./Footer.less');
@@ -8,20 +9,15 @@ if (process.env.BROWSER) {
 
 class Footer extends React.Component {
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
-
   constructor (props) {
     super(props);
     this.year = new Date().getFullYear();
   }
 
   render () {
-
     let footerClasses = {
       'footer': true,
-      'footer-hidden': this.context.history.isActive('player')
+      'footer-hidden': this.props.router.isActive('player')
     };
 
     return (
@@ -139,4 +135,8 @@ class Footer extends React.Component {
   }
 }
 
-export default Footer;
+Footer.propTypes = {
+  history: React.PropTypes.object
+};
+
+export default withRouter(Footer)

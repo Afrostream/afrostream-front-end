@@ -1,19 +1,20 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import { connect } from 'react-redux';
-import { prepareRoute } from '../../decorators';
-import classSet from 'classnames';
-import { dict } from '../../../../config/client';
-import * as BillingActionCreators from '../../actions/billing';
-import * as UserActionCreators from '../../actions/user';
-import * as EventActionCreators from '../../actions/event';
-import Spinner from '../Spinner/Spinner';
-import GiftDetails from './GiftDetails';
-import PaymentSuccess from './PaymentSuccess';
-import PaymentError from './PaymentError';
-import PaymentMethod from './PaymentMethod';
-import Query from 'dom-helpers/query';
-import DomClass from 'dom-helpers/class';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import { connect } from 'react-redux'
+import { prepareRoute } from '../../decorators'
+import classSet from 'classnames'
+import { dict } from '../../../../config/client'
+import * as BillingActionCreators from '../../actions/billing'
+import * as UserActionCreators from '../../actions/user'
+import * as EventActionCreators from '../../actions/event'
+import Spinner from '../Spinner/Spinner'
+import GiftDetails from './GiftDetails'
+import PaymentSuccess from './PaymentSuccess'
+import PaymentError from './PaymentError'
+import PaymentMethod from './PaymentMethod'
+import Query from 'dom-helpers/query'
+import DomClass from 'dom-helpers/class'
+import { withRouter } from 'react-router'
 
 import _ from 'lodash';
 if (process.env.BROWSER) {
@@ -31,10 +32,6 @@ class PaymentForm extends React.Component {
   constructor (props) {
     super(props);
   }
-
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
 
   state = {
     hasLib: true,
@@ -267,7 +264,7 @@ class PaymentForm extends React.Component {
     } = this;
 
     const self = this;
-    let isCash = this.context.history.isActive('cash');
+    let isCash = this.props.router.isActive('cash');
 
     return await dispatch(BillingActionCreators.subscribe(formData, self.state.isGift)).then(() => {
         self.disableForm(false, 1);
@@ -275,7 +272,7 @@ class PaymentForm extends React.Component {
         return dispatch(UserActionCreators.getProfile());
       })
       .then(()=> {
-        self.context.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`);
+        self.props.router.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`);
       }).catch((err) => {
         let message = dict.payment.errors.global;
 
@@ -284,7 +281,7 @@ class PaymentForm extends React.Component {
         }
 
         self.disableForm(false, 2, message);
-        self.context.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/error`);
+        self.props.router.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/error`);
       });
   }
 
@@ -408,4 +405,8 @@ class PaymentForm extends React.Component {
   }
 }
 
-export default PaymentForm;
+PaymentForm.propTypes = {
+  history: React.PropTypes.object
+};
+
+export default withRouter(PaymentForm)

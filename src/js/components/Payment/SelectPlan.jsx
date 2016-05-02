@@ -1,13 +1,14 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { prepareRoute } from '../../decorators';
-import PaymentImages from './PaymentImages';
-import { dict } from '../../../../config/client';
-import _ from 'lodash';
-import { formatPrice, isBoolean } from '../../lib/utils';
-import * as EventActionCreators from '../../actions/event';
-import * as BillingActionCreators from '../../actions/billing';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { prepareRoute } from '../../decorators'
+import PaymentImages from './PaymentImages'
+import { dict } from '../../../../config/client'
+import _ from 'lodash'
+import { formatPrice, isBoolean } from '../../lib/utils'
+import * as EventActionCreators from '../../actions/event'
+import * as BillingActionCreators from '../../actions/billing'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less');
@@ -22,9 +23,6 @@ if (process.env.BROWSER) {
 @connect(({Billing}) => ({Billing}))
 class SelectPlan extends React.Component {
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
 
   getPlans () {
     const {
@@ -118,7 +116,7 @@ class SelectPlan extends React.Component {
   }
 
   getHeader () {
-    let isCash = this.context.history.isActive('cash');
+    let isCash = this.props.router.isActive('cash');
 
     if (isCash) {
       return <div className=" choose-plan">{dict.planCodes.cash.selectTitle}</div>
@@ -163,4 +161,8 @@ class SelectPlan extends React.Component {
   }
 }
 
-export default SelectPlan;
+SelectPlan.propTypes = {
+  history: React.PropTypes.object
+};
+
+export default withRouter(SelectPlan)
