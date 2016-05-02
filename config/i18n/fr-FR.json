@@ -26,8 +26,8 @@
       "prelevementMensuel": "Prélèvement mensuel",
       "price": "Tarif",
       "trialEnabled": "7 jours d'essai offert",
-      "internalMaxScreens": "Écrans disponibles en simultané",
-      "internalMobile": "Sur votre ordinateur, TV, smartphone et tablette",
+      "internalMaxScreens": "Écran{s} disponibles en simultané",
+      "internalMobile": "Sur votre ordinateur, smartphone et tablette",
       "internalUnlimited": "Films et séries TV en illimité",
       "internalEngagment": "Sans engagement",
       "internalVip": "Invitations VIP aux avant-premières de films"

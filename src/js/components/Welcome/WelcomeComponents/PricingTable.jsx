@@ -87,7 +87,8 @@ class PricingTable extends React.Component {
           value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`;
           break;
         case 'internalMaxScreens':
-          value = <span>{`${objVal} ${dict.planCodes.infos[label]}`}</span>;
+          value =
+            <span>{`${objVal} ${dict.planCodes.infos[label].replace('{s}', parseInt(objVal) > 1 ? 's' : '')}`}</span>;
           break;
         default :
           let isBool = (objVal === 'true' || objVal === 'false' || typeof objVal === 'boolean' ) && typeof isBoolean(objVal) === 'boolean';

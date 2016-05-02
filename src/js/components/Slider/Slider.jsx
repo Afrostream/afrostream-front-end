@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from'react-dom';
-import penner from 'penner';
 import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 

@@ -120,6 +120,11 @@ class Footer extends React.Component {
                   Twitter <i className="fa fa-twitter"></i>
                 </a>
               </li>
+              <li>
+                <Link className="footer-link" to="/newsletter">
+                  Newsletter
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
