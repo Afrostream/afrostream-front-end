@@ -8,8 +8,8 @@
 }
 
 .fabs {
-  bottom: -2em;
-  right: -2em;
+  bottom: 0;
+  right: 0;
   position: fixed;
   margin: 1em;
   z-index: 99800;
@@ -97,9 +97,10 @@
 
 .chat {
   position: fixed;
-  right: 85px;
+  right: 0;
   bottom: 0;
-  width: 400px;
+  top: @app-padding;
+  width: 30%;
   font-size: 12px;
   line-height: 22px;
   font-family: 'Roboto';
@@ -108,13 +109,11 @@
   font-smoothing: antialiased;
   opacity: 0;
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
   transition: all .2s ease-in-out;
 }
 
 .chat_header {
-  margin: 10px;
+  padding: 10px;
   font-size: 14px;
   font-family: 'Roboto';
   font-weight: 500;
@@ -322,8 +321,8 @@
   position: relative;
   background: inherit;
   margin: 6px 0 0 0;
-  max-height: 256px;
-  min-height: 0;
+  max-height: 78%;
+  min-height: 78%;
   font-size: 12px;
   line-height: 18px;
   overflow-y: auto;
@@ -547,7 +546,7 @@ strong.chat_time {
 
 @media only screen and (min-width: 1024px) {
   .chat {
-    width: 400px;
+    width: 30%;
   }
 
   .chat_field {
@@ -557,64 +556,9 @@ strong.chat_time {
 
 /*Color Options*/
 
-.red .fab {
-  background: #F44336;
-  color: #eceff1;
-}
-
-.pink .fab {
-  background: #E91E63;
-  color: #eceff1;
-}
-
-.purple .fab {
-  background: #9C27B0;
-  color: #eceff1;
-}
-
-.deep-purple .fab {
-  background: #673AB7;
-  color: #eceff1;
-}
-
-.indigo .fab {
-  background: #3F51B5;
-  color: #eceff1;
-}
-
-.blue .fab {
-  background: #2196F3;
-  color: #eceff1;
-}
-
-.light-blue .fab {
-  background: #03A9F4;
-  color: #263238;
-}
-
-.cyan .fab {
-  background: #00BCD4;
-  color: #263238;
-}
-
-.teal .fab {
-  background: #009688;
-  color: #eceff1;
-}
-
-.green .fab {
-  background: #4CAF50;
-  color: #263238;
-}
-
-.light-green .fab {
-  background: #8BC34A;
-  color: #263238;
-}
-
-.lime .fab {
-  background: #CDDC39;
-  color: #263238;
+.black .fab {
+  background: #000000;
+  color: #FFFFFF;
 }
 
 .yellow .fab {
@@ -622,129 +566,19 @@ strong.chat_time {
   color: @color-indigo;
 }
 
-.amber .fab {
-  background: #FFC107;
-  color: #263238;
+.black .chat_header {
+  background: #000000;
+  color: #FFFFFF;
 }
 
-.orange .fab {
-  background: #FF9800;
-  color: #eceff1;
+.black .chat {
+  background: fade(#FFFFFF, 90%);
+  color: #000000;
 }
 
-.deep-orange .fab {
-  background: #FF5722;
-  color: #eceff1;
-}
-
-.brown .fab {
-  background: #795548;
-  color: #eceff1;
-}
-
-.grey .fab {
-  background: #9E9E9E;
-  color: #eceff1;
-}
-
-.blue-grey .fab {
-  background: #607D8B;
-  color: #eceff1;
-}
-
-.red .chat {
-  background: #F44336;
-  color: #eceff1;
-}
-
-.pink .chat {
-  background: #E91E63;
-  color: #eceff1;
-}
-
-.purple .chat {
-  background: #9C27B0;
-  color: #eceff1;
-}
-
-.deep-purple .chat {
-  background: #673AB7;
-  color: #eceff1;
-}
-
-.indigo .chat {
-  background: #3F51B5;
-  color: #eceff1;
-}
-
-.blue .chat {
-  background: #2196F3;
-  color: #eceff1;
-}
-
-.light-blue .chat {
-  background: #03A9F4;
-  color: #263238;
-}
-
-.cyan .chat {
-  background: #00BCD4;
-  color: #263238;
-}
-
-.teal .chat {
-  background: #009688;
-  color: #eceff1;
-}
-
-.green .chat {
-  background: #4CAF50;
-  color: #263238;
-}
-
-.light-green .chat {
-  background: #8BC34A;
-  color: #263238;
-}
-
-.lime .chat {
-  background: #CDDC39;
-  color: #263238;
-}
-
-.yellow .chat {
+.yellow .chat_header {
   background: @color-yellow;
   color: @color-indigo;
-}
-
-.amber .chat {
-  background: #FFC107;
-  color: #263238;
-}
-
-.orange .chat {
-  background: #FF9800;
-  color: #eceff1;
-}
-
-.deep-orange .chat {
-  background: #FF5722;
-  color: #eceff1;
-}
-
-.brown .chat {
-  background: #795548;
-  color: #eceff1;
-}
-
-.grey .chat {
-  background: #9E9E9E;
-  color: #eceff1;
-}
-
-.blue-grey .chat {
-  background: #607D8B;
-  color: #eceff1;
 }
 
 /* Ripple */
