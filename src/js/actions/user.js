@@ -19,7 +19,6 @@ const mergeProfile = function (data, getState, actionDispatcher) {
     try {
       const userInfos = await api(`/api/users/me`, 'GET', {});
       const userMerged = userInfos.body || {};
-
       userMerged.user_id = userMerged._id || userMerged.user_id;
 
       if (userMerged) {
