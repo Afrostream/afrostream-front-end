@@ -4,8 +4,8 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import SideBar from './SideBar/SideBar';
 import AlertMessage from './Alert/AlertMessage';
-import ModalView from './Modal/ModalView'
-import SendBird from './SendBird/SendBird'
+import ModalView from './Modal/ModalView';
+import SendBird from './SendBird/SendBird';
 import classNames from 'classnames';
 import { metasData, analytics } from '../decorators';
 if (process.env.BROWSER) {
@@ -27,11 +27,13 @@ class Application extends React.Component {
     const {props: {children, Event, User, Modal}} = this;
     const toggled = User.get('user') && Event.get('sideBarToggled');
     const hasPopup = Modal.get('target');
+    const chatMode = Event.get('showChat');
 
     let appClasses = classNames({
       'app': true,
       'toggled': toggled,
-      'lock-open': hasPopup
+      'lock-open': hasPopup,
+      'chat-open': chatMode
     });
 
     return (

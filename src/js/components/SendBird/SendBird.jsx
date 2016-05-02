@@ -6,6 +6,7 @@ import { sendBird } from '../../../../config';
 import classSet from 'classnames';
 import _ from 'lodash';
 import shallowEqual from 'react-pure-render/shallowEqual';
+import * as EventActionCreators from '../../actions/event';
 
 const sendBirdClient = SB.getInstance();
 
@@ -41,8 +42,7 @@ class SendBird extends React.Component {
         }
       }
     } = this;
-
-    if ((!shallowEqual(nextProps.params.movieId, movieId) || !this.state.init) && nextProps.params.movieId) {
+    if ((!shallowEqual(nextProps.params.movieId, movieId) || !this.state.init) && movieId) {
       this.startSendBird();
     }
   }
@@ -275,10 +275,18 @@ class SendBird extends React.Component {
    **********************************************/
 
   toggleFab () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this;
+
     let toggle = !this.state.open;
     this.setState({
       open: toggle
     });
+
+    dispatch(EventActionCreators.showChat(toggle));
   }
 
   loadBeat (beat) {
@@ -309,7 +317,7 @@ class SendBird extends React.Component {
 
     let fabsClasses = {
       'fabs': true,
-      'yellow': true,
+      'black': true,
       'is-visible': ~sendBird.channels.indexOf(parseInt(movieId))
     };
 
@@ -429,7 +437,7 @@ class SendBird extends React.Component {
               <i className="zmdi zmdi-mic-outline"></i>
             </a>
             <a id="fab_send" className={classSet(fabClasses)} onClick={::this.onSendMessageClick}>
-              <i className="zmdi zmdi-mail-send"></i>
+              <i className="material-icons"></i>
             </a>
             <textarea ref="chatSend" id="chatSend" name="chat_message" placeholder="Votre message ..."
                       className="chat_field chat_message"
