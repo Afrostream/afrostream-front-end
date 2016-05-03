@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
+import shallowEqual from 'react-pure-render/shallowEqual';
 import classSet from 'classnames';
 import { dict } from '../../../../config/client';
 import * as BillingActionCreators from '../../actions/billing';
@@ -75,6 +76,7 @@ class PaymentForm extends React.Component {
     if (!currentPlan) {
       return;
     }
+
     let internalPlanUuid = currentPlan.get('internalPlanUuid');
     this.setState({
       isGift: internalPlanUuid === 'afrostreamgift',
@@ -84,12 +86,20 @@ class PaymentForm extends React.Component {
     });
   }
 
-  componentWillReceiveProps () {
-    // this.setupLib();
+  componentDidMount () {
+    this.setupPlan();
   }
 
-  componentWillMount () {
-    this.setupPlan();
+  componentWillReceiveProps (nextProps) {
+    const {
+      props: {
+        Billing
+      }
+    } = this;
+
+    if (!shallowEqual(nextProps.Billing, Billing)) {
+      this.setupPlan();
+    }
   }
 
   renderUserForm () {
@@ -338,6 +348,10 @@ class PaymentForm extends React.Component {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
     };
+
+    if (!this.state.currentPlan) {
+      return <div />;
+    }
 
     const planLabel = `${dict.planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`;
 

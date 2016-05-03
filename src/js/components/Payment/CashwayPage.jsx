@@ -1,12 +1,15 @@
-import React, { PropTypes } from 'react';
-import SignUpButton from '../User/SignUpButton';
-import { prepareRoute } from '../../decorators';
-import * as EventActionCreators from '../../actions/event';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import React, { PropTypes } from 'react'
+import SignUpButton from '../User/SignUpButton'
+import { prepareRoute } from '../../decorators'
+import { cashwayApi } from '../../../../config'
+import * as EventActionCreators from '../../actions/event'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import scriptLoader from '../../lib/script-loader'
 
 if (process.env.BROWSER) {
   require('./CashwayPage.less');
 }
+
 
 @prepareRoute(async function ({store}) {
   return await * [
@@ -15,11 +18,12 @@ if (process.env.BROWSER) {
 })
 class CashwayPage extends React.Component {
 
+  state = {
+    location: ''
+  };
+
   constructor (props) {
     super(props);
-    this.state = {
-      location: ''
-    };
   }
 
   static contextTypes = {
@@ -28,18 +32,18 @@ class CashwayPage extends React.Component {
 
   componentDidMount () {
     const {
-      props: {}
+      props: {isScriptLoaded, isScriptLoadSucceed}
     } = this;
-    if (navigator.geolocation) {
-      let self = this;
-      navigator.geolocation.getCurrentPosition((position)=> {
-        self.setState({
-          location: position.coords.latitude + ' ' + position.coords.longitude
-        });
-      });
-    }
-    if (canUseDOM && window.cashwayMapInit) {
+    if (isScriptLoaded && isScriptLoadSucceed) {
       window.cashwayMapInit();
+    }
+  }
+
+  componentWillReceiveProps ({isScriptLoaded, isScriptLoadSucceed}) {
+    if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
+      if (isScriptLoadSucceed) {
+        window.cashwayMapInit();
+      }
     }
   }
 
@@ -129,5 +133,6 @@ class CashwayPage extends React.Component {
     );
   }
 }
-
-export default CashwayPage;
+export default scriptLoader(
+  cashwayApi
+)(CashwayPage)

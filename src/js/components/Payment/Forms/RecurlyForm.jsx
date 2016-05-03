@@ -1,19 +1,16 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import CountrySelect from './../CountrySelect';
-import classSet from 'classnames';
-import config from '../../../../../config';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import CountrySelect from './../CountrySelect'
+import classSet from 'classnames'
+import config from '../../../../../config'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { recurlyApi } from '../../../../../config/client'
+import scriptLoader from '../../../lib/script-loader'
 
 class RecurlyForm extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
-    this.state = {hasLib: false};
-  }
-
-  hasLib() {
-    return this.state.hasLib;
   }
 
   static propTypes = {
@@ -24,37 +21,44 @@ class RecurlyForm extends React.Component {
     selected: false
   };
 
-  formatCard() {
+  formatCard () {
     $('.recurly-cc-number').payment('formatCardNumber');
     $('.recurly-cc-exp').payment('formatCardExpiry');
     $('.recurly-cc-cvc').payment('formatCardCVC');
   }
 
-  componentDidUpdate() {
-    this.formatCard();
-  }
 
-  initLib() {
+  initLib () {
     //Detect si le payment via la lib recurly est dispo
     let recurlyLib = window['recurly'];
-
-    this.setState({
-      hasLib: recurlyLib
-    });
-
     if (recurlyLib && !recurlyLib.configured) {
       recurlyLib.configure(config.recurly.key);
     }
   }
 
-  componentDidMount() {
+  componentDidUpdate () {
     this.formatCard();
-    this.initLib();
-
   }
 
-  async submit(billingInfo, currentPlan) {
+  componentDidMount () {
+    this.formatCard();
+    this.initLib();
+  }
 
+  componentWillReceiveProps ({isScriptLoaded, isScriptLoadSucceed}) {
+    if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
+      if (!isScriptLoadSucceed) {
+        this.setState({
+          hasLib: isScriptLoadSucceed
+        });
+      } else {
+        this.formatCard();
+        this.initLib();
+      }
+    }
+  }
+
+  async submit (billingInfo, currentPlan) {
     const self = this;
     const cardNumber = $('.recurly-cc-number').val();
     const excludedCards = ['visaelectron', 'maestro'];
@@ -85,7 +89,7 @@ class RecurlyForm extends React.Component {
 
     return await new Promise(
       (resolve, reject) => {
-        let recurlyLib = self.state.hasLib;
+        let recurlyLib = window['recurly'];
 
         recurlyLib.token(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
@@ -103,14 +107,14 @@ class RecurlyForm extends React.Component {
       });
   }
 
-  onHeaderClick() {
+  onHeaderClick () {
     let clickHeader = ReactDOM.findDOMNode(this);
     if (clickHeader) {
       clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'card', bubbles: true}));
     }
   }
 
-  renderPromoCode() {
+  renderPromoCode () {
     return (
       <div className="form-group col-md-6">
         <label className="form-label" htmlFor="coupon_code">{config.dict.payment.promo.label}</label>
@@ -122,12 +126,12 @@ class RecurlyForm extends React.Component {
           id="coupon_code"
           ref="couponCode"
           placeholder={config.dict.payment.promo.placeHolder}
-          disabled={this.state.disabledForm}/>
+        />
       </div>
     );
   }
 
-  getForm() {
+  getForm () {
     if (!this.props.selected) return;
 
     return (
@@ -166,11 +170,7 @@ class RecurlyForm extends React.Component {
     );
   }
 
-  render() {
-
-    if (!this.state.hasLib) {
-      return (<div />);
-    }
+  render () {
 
     let classHeader = {
       'accordion-toggle': true,
@@ -201,4 +201,6 @@ class RecurlyForm extends React.Component {
   }
 }
 
-export default RecurlyForm;
+export default scriptLoader(
+  recurlyApi
+)(RecurlyForm)

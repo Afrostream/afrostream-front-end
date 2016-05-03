@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import classSet from 'classnames';
-import {dict} from '../../../../../config';
+import { dict } from '../../../../../config';
 import RecurlyForm from './RecurlyForm'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class PaypalForm extends RecurlyForm {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
 
-  async submit(billingInfo, currentPlan) {
+  async submit (billingInfo, currentPlan) {
 
     const self = this;
     let recurlyInfo = {
@@ -21,7 +21,7 @@ class PaypalForm extends RecurlyForm {
 
     return await new Promise(
       (resolve, reject) => {
-        let recurlyLib = self.state.hasLib;
+        let recurlyLib = window['recurly'];
         recurlyLib.paypal(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
           if (err) {
@@ -41,16 +41,19 @@ class PaypalForm extends RecurlyForm {
     );
   }
 
-  onHeaderClick() {
+  onHeaderClick () {
     let clickHeader = ReactDOM.findDOMNode(this);
     if (clickHeader) {
       clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'paypal', bubbles: true}));
     }
   }
 
-  getForm() {
-    if (!this.props.selected) return;
+  renderPromoCode () {
+    return super.renderPromoCode();
+  }
 
+  getForm () {
+    if (!this.props.selected) return;
     return (
 
       <div className="row" ref="goCardlessForm">
@@ -60,11 +63,7 @@ class PaypalForm extends RecurlyForm {
     );
   }
 
-  render() {
-
-    if (!this.state.hasLib) {
-      return (<div />);
-    }
+  render () {
 
     let classHeader = {
       'accordion-toggle': true,
