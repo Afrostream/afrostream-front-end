@@ -1,24 +1,15 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { prepareRoute } from '../../decorators';
 import PaymentImages from './PaymentImages';
 import { dict } from '../../../../config/client';
 import _ from 'lodash';
 import { formatPrice, isBoolean } from '../../lib/utils';
 import * as EventActionCreators from '../../actions/event';
-import * as BillingActionCreators from '../../actions/billing';
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less');
 }
-@prepareRoute(async function ({store}) {
-  let isCash = store.history.isActive('cash');
-  return await * [
-    store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'common'))
-  ];
-})
 @connect(({Billing}) => ({Billing}))
 class SelectPlan extends React.Component {
 

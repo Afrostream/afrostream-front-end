@@ -85,9 +85,38 @@
     "future": {
       "title": "Vous y êtes presque !",
       "link": "mailto:support@afrostream.tv",
-      "linkMessage": "Pour toutes questions, veuillez contacter notre support technique",
-      "message": "Plus qu’une dernière étape. Dès reception de votre paiement, nous vous donnerons accès à tous les films et séries en illimité.",
-      "toMessage": "Choisir un autre mode de paiement"
+      "linkMessage": "Pour toute questions, veuillez contacter notre support technique",
+      "message": "Plus qu’une dernière étape. Dès réception de votre paiement, nous vous donnerons accès à tous les films et séries en illimité.",
+      "links": [
+        {
+          "label": "Choisir un autre mode de paiement",
+          "target": "/select-plan"
+        }
+      ]
+    },
+    "expired": {
+      "title": "Votre abonnement à expiré",
+      "link": "mailto:support@afrostream.tv",
+      "linkMessage": "Pour toute questions, veuillez contacter notre support technique",
+      "message": "",
+      "links": [
+        {
+          "label": "Vous pouvez à tout moment vous réabonner en allant ici",
+          "target": "/select-plan"
+        },
+        {
+          "label": "Vous pouvez aussi payer chez un buraliste ! cliquez ici",
+          "image": "/images/payment/cashway-inline.png",
+          "target": "/cash"
+        }
+      ]
+    },
+    "cashway": {
+      "recupCode": "Récuperez votre code barre (envoyé par mail) ou ",
+      "recupCodeAction": "cliquez ici",
+      "rdv": "RDV chez un partenaire CASHWAY ",
+      "showMap": "voir la carte",
+      "partner": "Présentez votre code-barre et payez pour valider votre abonnement"
     },
     "errors": {
       "noLib": {

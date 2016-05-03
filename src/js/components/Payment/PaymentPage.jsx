@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import WelcomePage from '../Welcome/WelcomePage';
+import { prepareRoute } from '../../decorators';
 import * as EventActionCreators from '../../actions/event';
 import * as IntercomActionCreators from '../../actions/intercom';
-import { prepareRoute } from '../../decorators';
-import config from '../../../../config';
+import * as BillingActionCreators from '../../actions/billing';
+import WelcomePage from '../Welcome/WelcomePage';
 import SelectPlan from './SelectPlan';
 
 if (process.env.BROWSER) {
@@ -13,8 +13,10 @@ if (process.env.BROWSER) {
 }
 
 @prepareRoute(async function ({store}) {
+  let isCash = store.history.isActive('cash');
   return await * [
-    store.dispatch(EventActionCreators.pinHeader(true))
+    store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'common'))
   ];
 })
 @connect(({Intercom, User}) => ({Intercom, User}))

@@ -2,18 +2,21 @@ import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
+import shallowEqual from 'react-pure-render/shallowEqual';
 import classSet from 'classnames';
-import { dict } from '../../../../config/client';
+import { dict, gocarlessApi, recurlyApi } from '../../../../config/client';
 import * as BillingActionCreators from '../../actions/billing';
 import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
 import Spinner from '../Spinner/Spinner';
 import GiftDetails from './GiftDetails';
+import CashwayEndPage from '../Cashway/CashwayEndPage';
 import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import PaymentMethod from './PaymentMethod';
 import Query from 'dom-helpers/query';
 import DomClass from 'dom-helpers/class';
+import scriptLoader from '../../lib/script-loader'
 
 import _ from 'lodash';
 if (process.env.BROWSER) {
@@ -70,26 +73,39 @@ class PaymentForm extends React.Component {
   }
 
   setupPlan () {
-    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
     let currentPlan = this.hasPlan();
     if (!currentPlan) {
       return;
     }
+
     let internalPlanUuid = currentPlan.get('internalPlanUuid');
     this.setState({
       isGift: internalPlanUuid === 'afrostreamgift',
       internalPlanUuid: internalPlanUuid,
-      currentPlan: currentPlan,
-      hasLib: hasOneLib
+      currentPlan: currentPlan
     });
   }
 
-  componentWillReceiveProps () {
-    // this.setupLib();
+  componentDidMount () {
+    this.setupPlan();
   }
 
-  componentWillMount () {
-    this.setupPlan();
+  componentWillReceiveProps (nextProps) {
+    const {
+      props: {
+        Billing
+      }
+    } = this;
+
+    if (nextProps.isScriptLoaded && !this.props.isScriptLoaded) { // load finished
+      this.setState({
+        hasLib: nextProps.isScriptLoadSucceed
+      });
+    }
+
+    if (!shallowEqual(nextProps.Billing, Billing)) {
+      this.setupPlan();
+    }
   }
 
   renderUserForm () {
@@ -339,6 +355,10 @@ class PaymentForm extends React.Component {
       'spinner-loading': this.state.loading
     };
 
+    if (!this.state.currentPlan) {
+      return <div />;
+    }
+
     const planLabel = `${dict.planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`;
 
     return (
@@ -389,17 +409,34 @@ class PaymentForm extends React.Component {
       case 'success':
         return (<PaymentSuccess isGift={this.state.isGift}/>);
         break;
+      case 'expired':
+        return (
+          <div className="payment-wrapper">
+            <PaymentError title={dict.payment.expired.title}
+                          message={dict.payment.expired.message}
+                          link={dict.payment.expired.link}
+                          linkMessage={dict.payment.expired.linkMessage}
+                          links={dict.payment.expired.links}
+            />
+          </div>);
+        break;
       case 'future':
-        return (<PaymentError title={dict.payment.future.title}
-                              message={dict.payment.future.message}
-                              link={dict.payment.future.link}
-                              linkMessage={dict.payment.future.linkMessage}
-                              to="/select-plan"
-                              toMessage={dict.payment.future.toMessage}
-        />);
+        return (
+          <div className="payment-wrapper">
+            <PaymentError title={dict.payment.future.title}
+                          message={dict.payment.future.message}
+                          link={dict.payment.future.link}
+                          linkMessage={dict.payment.future.linkMessage}
+                          links={dict.payment.future.links}
+            />
+            <CashwayEndPage />
+          </div>);
         break;
       case 'error':
-        return (<PaymentError message={this.state.message}/>);
+        return (
+          <div className="payment-wrapper">
+            <PaymentError message={this.state.message}/>
+          </div>);
         break;
       default:
         return this.renderForm();
@@ -408,4 +445,6 @@ class PaymentForm extends React.Component {
   }
 }
 
-export default PaymentForm;
+export default scriptLoader(
+  [recurlyApi, gocarlessApi]
+)(PaymentForm)
