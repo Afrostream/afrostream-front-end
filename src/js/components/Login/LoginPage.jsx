@@ -31,6 +31,7 @@ class LoginPage extends React.Component {
       }
     } = this;
     let method;
+    let closable = false;
 
     let isMobile = false;
     if (canUseDOM) {
@@ -55,12 +56,13 @@ class LoginPage extends React.Component {
         break;
       case '/newsletter':
         method = 'newsletter';
+        closable = true;
         break;
       default :
         method = 'show';
         break;
     }
-    dispatch(ModalActionCreators.open(method, false));
+    dispatch(ModalActionCreators.open(method, closable));
   }
 
   render () {
