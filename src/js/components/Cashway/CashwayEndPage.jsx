@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import { dict } from '../../../../config'
 import * as EventActionCreators from '../../actions/event'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
@@ -75,9 +76,9 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-1.png" alt="code_bare_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">Récuperez votre code barre (envoyé par mail) ou <a target="_blank"
-                                                                                                        href={subOpts.get('couponCodeUrl')}>cliquez
-                      ici</a></div>
+                    <div className="container_title">{dict.payment.cashway.recupCode}
+                      <a target="_blank" href={subOpts.get('couponCodeUrl')}>
+                        {dict.payment.cashway.recupCodeAction}</a></div>
                   </div>
                 </div>
 
@@ -87,10 +88,8 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-4.png" alt="money_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">RDV chez un partenaire CASHWAY (<a href="#"
-                                                                                        onClick={::this.showPlan}>voir
-                      la
-                      carte</a>)
+                    <div className="container_title">{dict.payment.cashway.rdv}(<a href="#"
+                                                                           onClick={::this.showPlan}>{dict.payment.cashway.showMap}</a>)
                     </div>
                   </div>
                 </div>
@@ -101,7 +100,7 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-2.png" alt="validate_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">Présentez votre code-barre et payez pour valider votre abonnement
+                    <div className="container_title">{dict.payment.cashway.partner}
                     </div>
                   </div>
                 </div>

@@ -89,6 +89,13 @@
       "message": "Plus qu’une dernière étape. Dès réception de votre paiement, nous vous donnerons accès à tous les films et séries en illimité.",
       "toMessage": "Choisir un autre mode de paiement"
     },
+    "cashway": {
+      "recupCode": "Récuperez votre code barre (envoyé par mail) ou ",
+      "recupCodeAction": "cliquez ici",
+      "rdv": "RDV chez un partenaire CASHWAY ",
+      "showMap": "voir la carte",
+      "partner": "Présentez votre code-barre et payez pour valider votre abonnement"
+    },
     "errors": {
       "noLib": {
         "title": "Paiement indisponible",
