@@ -5,6 +5,7 @@ import * as UserActionCreators from '../../actions/user';
 import * as IntercomActionCreators from '../../actions/intercom';
 import { dict } from '../../../../config';
 import { Link } from 'react-router';
+import _ from 'lodash';
 
 @connect(({User}) => ({User}))
 class PaymentError extends React.Component {
@@ -14,8 +15,7 @@ class PaymentError extends React.Component {
     message: React.PropTypes.string,
     link: React.PropTypes.string,
     linkMessage: React.PropTypes.string,
-    to: React.PropTypes.string,
-    toMessage: React.PropTypes.string
+    links: React.PropTypes.array
   };
 
   static defaultProps = {
@@ -23,8 +23,7 @@ class PaymentError extends React.Component {
     message: '',
     link: '/',
     linkMessage: dict.payment.errors.retry,
-    to: null,
-    toMessage: null
+    links: []
   };
 
   componentWillUnmount () {
@@ -34,6 +33,16 @@ class PaymentError extends React.Component {
       }
     } = this;
     dispatch(IntercomActionCreators.removeIntercom());
+  }
+
+  renderLinks () {
+    const {
+      props: {
+        links
+      }
+    } = this;
+    return _.map(links, (link) => <Link to={link.target}>{link.label} {link.image ?
+      <img src={link.image} width="60" className="img-responsive"/> : ''}</Link>);
   }
 
   logOut () {
@@ -53,9 +62,9 @@ class PaymentError extends React.Component {
         <h3>{this.props.title}</h3>
         <h4>{this.props.message}</h4>
         <p className="error">
+          {this.renderLinks()}
           <a href={this.props.link}>{this.props.linkMessage}</a>
-        </p>{this.props.toMessage ?
-        <Link to={this.props.to}>{this.props.toMessage}</Link> : ''}
+        </p>
       </div>
     );
   }

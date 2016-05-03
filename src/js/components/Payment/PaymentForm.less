@@ -25,12 +25,15 @@
 
     .error {
       margin-top: 30px;
-    }
-
-    .error-link {
-      color: @color-purple-1;
-      text-decoration: underline;
-      font-size: 20px;
+      a {
+        color: @color-purple-1;
+        text-decoration: underline;
+        display: block;
+        padding: 5px;
+        img {
+          display: inline;
+        }
+      }
     }
 
     .error-button,

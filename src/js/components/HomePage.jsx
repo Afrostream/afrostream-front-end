@@ -41,7 +41,7 @@ class HomePage extends React.Component {
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null;
       if ((!planCode) && (location.pathname !== '/compte')) {
         let donePath = `${isCash ? '/cash' : ''}/select-plan`;
-        if (status && status != 'active') {
+        if (status && status !== 'active') {
           donePath = `${donePath}/none/${status}`;
         }
         history.pushState(null, donePath);

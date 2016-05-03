@@ -65,7 +65,7 @@ class CashwayPage extends React.Component {
               <div className="col-xs-12 col-md-4">
                 <div className='number'>1</div>
                 <img className="img-responsive img-center"
-                     src="/images/payment/cashway/step-1.png" alt="code_bare_ccm"/>
+                     src="/images/payment/cashway/step-1.jpg" alt="code_bare_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
                     <div className="container_title">Le commerçant scanne votre code-barre</div>
@@ -76,7 +76,7 @@ class CashwayPage extends React.Component {
               <div className="col-xs-12 col-md-4">
                 <div className='number'>2</div>
                 <img className="img-responsive img-center"
-                     src="/images/payment/cashway/step-2.png" alt="money_ccm"/>
+                     src="/images/payment/cashway/step-2.jpg" alt="money_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
                     <div className="container_title">Vous payez en espèces</div>
@@ -87,7 +87,7 @@ class CashwayPage extends React.Component {
               <div className="col-xs-12 col-md-4">
                 <div className='number'>3</div>
                 <img className="img-responsive img-center"
-                     src="/images/payment/cashway/step-3.png" alt="validate_ccm"/>
+                     src="/images/payment/cashway/step-3.jpg" alt="validate_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
                     <div className="container_title">Votre commande est validée ! Vous recevez un message de

@@ -409,6 +409,17 @@ class PaymentForm extends React.Component {
       case 'success':
         return (<PaymentSuccess isGift={this.state.isGift}/>);
         break;
+      case 'expired':
+        return (
+          <div className="payment-wrapper">
+            <PaymentError title={dict.payment.expired.title}
+                          message={dict.payment.expired.message}
+                          link={dict.payment.expired.link}
+                          linkMessage={dict.payment.expired.linkMessage}
+                          links={dict.payment.expired.links}
+            />
+          </div>);
+        break;
       case 'future':
         return (
           <div className="payment-wrapper">
@@ -416,14 +427,16 @@ class PaymentForm extends React.Component {
                           message={dict.payment.future.message}
                           link={dict.payment.future.link}
                           linkMessage={dict.payment.future.linkMessage}
-                          to="/select-plan"
-                          toMessage={dict.payment.future.toMessage}
+                          links={dict.payment.future.links}
             />
             <CashwayEndPage />
           </div>);
         break;
       case 'error':
-        return (<PaymentError message={this.state.message}/>);
+        return (
+          <div className="payment-wrapper">
+            <PaymentError message={this.state.message}/>
+          </div>);
         break;
       default:
         return this.renderForm();

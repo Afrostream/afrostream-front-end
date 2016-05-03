@@ -73,7 +73,7 @@ class CashwayEndPage extends React.Component {
             <div className="row-fluid">
               <div className="col-xs-12 col-md-4">
                 <img className="img-responsive img-center"
-                     src="/images/payment/cashway/step-1.png" alt="code_bare_ccm"/>
+                     src="/images/payment/cashway/step-1.jpg" alt="code_bare_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
                     <div className="container_title">{dict.payment.cashway.recupCode}
@@ -85,11 +85,11 @@ class CashwayEndPage extends React.Component {
               </div>
               <div className="col-xs-12 col-md-4">
                 <img className="img-responsive img-center"
-                     src="/images/payment/cashway/step-4.png" alt="money_ccm"/>
+                     src="/images/payment/cashway/step-4.jpg" alt="money_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
                     <div className="container_title">{dict.payment.cashway.rdv}(<a href="#"
-                                                                           onClick={::this.showPlan}>{dict.payment.cashway.showMap}</a>)
+                                                                                   onClick={::this.showPlan}>{dict.payment.cashway.showMap}</a>)
                     </div>
                   </div>
                 </div>
@@ -97,7 +97,7 @@ class CashwayEndPage extends React.Component {
               </div>
               <div className="col-xs-12 col-md-4">
                 <img className="img-responsive img-center"
-                     src="/images/payment/cashway/step-2.png" alt="validate_ccm"/>
+                     src="/images/payment/cashway/step-2.jpg" alt="validate_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
                     <div className="container_title">{dict.payment.cashway.partner}
