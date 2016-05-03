@@ -80,14 +80,6 @@ const scriptLoader = (...scripts) => (WrappedComponent) => {
       return this.state.isScriptLoadSucceed;
     }
 
-    renderPromoCode () {
-      return this.refs.wrapped.renderPromoCode();
-    }
-
-    async submit (billingInfo, currentPlan) {
-      return this.refs.wrapped.submit(billingInfo, currentPlan);
-    }
-
     constructor (props, context) {
       super(props, context)
 

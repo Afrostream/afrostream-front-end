@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import classSet from 'classnames'
-import { gocarlessApi, gocardless, dict } from '../../../../../config/client'
+import { gocardless, dict } from '../../../../../config/client'
 import CountrySelect from './../CountrySelect'
 import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat'
 import iban from './iban-validator'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import scriptLoader from '../../../lib/script-loader'
 
 class GocardlessForm extends React.Component {
 
@@ -155,9 +154,7 @@ class GocardlessForm extends React.Component {
         </ReactCSSTransitionGroup>
       </div>
     )
-      ;
   }
 }
-export default scriptLoader(
-  gocarlessApi
-)(GocardlessForm)
+
+export default GocardlessForm

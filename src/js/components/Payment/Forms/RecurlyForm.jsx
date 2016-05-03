@@ -4,8 +4,6 @@ import CountrySelect from './../CountrySelect'
 import classSet from 'classnames'
 import config from '../../../../../config'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { recurlyApi } from '../../../../../config/client'
-import scriptLoader from '../../../lib/script-loader'
 
 class RecurlyForm extends React.Component {
 
@@ -26,7 +24,6 @@ class RecurlyForm extends React.Component {
     $('.recurly-cc-exp').payment('formatCardExpiry');
     $('.recurly-cc-cvc').payment('formatCardCVC');
   }
-
 
   initLib () {
     //Detect si le payment via la lib recurly est dispo
@@ -201,6 +198,4 @@ class RecurlyForm extends React.Component {
   }
 }
 
-export default scriptLoader(
-  recurlyApi
-)(RecurlyForm)
+export default RecurlyForm

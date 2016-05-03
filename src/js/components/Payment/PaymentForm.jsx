@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { prepareRoute } from '../../decorators';
 import shallowEqual from 'react-pure-render/shallowEqual';
 import classSet from 'classnames';
-import { dict } from '../../../../config/client';
+import { dict, gocarlessApi, recurlyApi } from '../../../../config/client';
 import * as BillingActionCreators from '../../actions/billing';
 import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
@@ -15,6 +15,7 @@ import PaymentError from './PaymentError';
 import PaymentMethod from './PaymentMethod';
 import Query from 'dom-helpers/query';
 import DomClass from 'dom-helpers/class';
+import scriptLoader from '../../lib/script-loader'
 
 import _ from 'lodash';
 if (process.env.BROWSER) {
@@ -71,7 +72,6 @@ class PaymentForm extends React.Component {
   }
 
   setupPlan () {
-    let hasOneLib = this.refs.methodForm ? this.refs.methodForm.hasLib() : true;
     let currentPlan = this.hasPlan();
     if (!currentPlan) {
       return;
@@ -81,8 +81,7 @@ class PaymentForm extends React.Component {
     this.setState({
       isGift: internalPlanUuid === 'afrostreamgift',
       internalPlanUuid: internalPlanUuid,
-      currentPlan: currentPlan,
-      hasLib: hasOneLib
+      currentPlan: currentPlan
     });
   }
 
@@ -96,6 +95,12 @@ class PaymentForm extends React.Component {
         Billing
       }
     } = this;
+
+    if (nextProps.isScriptLoaded && !this.props.isScriptLoaded) { // load finished
+      this.setState({
+        hasLib: nextProps.isScriptLoadSucceed
+      });
+    }
 
     if (!shallowEqual(nextProps.Billing, Billing)) {
       this.setupPlan();
@@ -422,4 +427,6 @@ class PaymentForm extends React.Component {
   }
 }
 
-export default PaymentForm;
+export default scriptLoader(
+  [recurlyApi, gocarlessApi]
+)(PaymentForm)
