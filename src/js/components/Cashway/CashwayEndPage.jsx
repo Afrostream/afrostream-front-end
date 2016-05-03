@@ -75,8 +75,8 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-1.png" alt="code_bare_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">Récuperez votre code barre (envoyé par mail ou <a target="_blank"
-                                                                                                       href={subOpts.get('couponCodeUrl')}>cliquez
+                    <div className="container_title">Récuperez votre code barre (envoyé par mail) ou <a target="_blank"
+                                                                                                        href={subOpts.get('couponCodeUrl')}>cliquez
                       ici</a></div>
                   </div>
                 </div>
@@ -101,7 +101,7 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-2.png" alt="validate_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">Presentez votre code-barre et payez pour valider votre abonnement
+                    <div className="container_title">Présentez votre code-barre et payez pour valider votre abonnement
                     </div>
                   </div>
                 </div>
