@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { dict } from '../../../../config';
-import classSet from 'classnames';
 import moment from 'moment';
 import { formatPrice } from '../../lib/utils';
 

@@ -10,6 +10,7 @@ import * as UserActionCreators from '../../actions/user';
 import * as EventActionCreators from '../../actions/event';
 import Spinner from '../Spinner/Spinner';
 import GiftDetails from './GiftDetails';
+import CashwayEndPage from '../Cashway/CashwayEndPage';
 import PaymentSuccess from './PaymentSuccess';
 import PaymentError from './PaymentError';
 import PaymentMethod from './PaymentMethod';
@@ -409,13 +410,17 @@ class PaymentForm extends React.Component {
         return (<PaymentSuccess isGift={this.state.isGift}/>);
         break;
       case 'future':
-        return (<PaymentError title={dict.payment.future.title}
-                              message={dict.payment.future.message}
-                              link={dict.payment.future.link}
-                              linkMessage={dict.payment.future.linkMessage}
-                              to="/select-plan"
-                              toMessage={dict.payment.future.toMessage}
-        />);
+        return (
+          <div className="payment-wrapper">
+            <PaymentError title={dict.payment.future.title}
+                          message={dict.payment.future.message}
+                          link={dict.payment.future.link}
+                          linkMessage={dict.payment.future.linkMessage}
+                          to="/select-plan"
+                          toMessage={dict.payment.future.toMessage}
+            />
+            <CashwayEndPage />
+          </div>);
         break;
       case 'error':
         return (<PaymentError message={this.state.message}/>);

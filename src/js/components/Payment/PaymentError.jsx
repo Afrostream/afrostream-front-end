@@ -49,15 +49,13 @@ class PaymentError extends React.Component {
   render () {
 
     return (
-      <div className="payment-wrapper">
-        <div className="payment-error">
-          <h3>{this.props.title}</h3>
-          <h4>{this.props.message}</h4>
-          <p className="error">
-            <a href={this.props.link}>{this.props.linkMessage}</a>
-          </p>{this.props.toMessage ?
-          <Link to={this.props.to}>{this.props.toMessage}</Link> : ''}
-        </div>
+      <div className="payment-error">
+        <h3>{this.props.title}</h3>
+        <h4>{this.props.message}</h4>
+        <p className="error">
+          <a href={this.props.link}>{this.props.linkMessage}</a>
+        </p>{this.props.toMessage ?
+        <Link to={this.props.to}>{this.props.toMessage}</Link> : ''}
       </div>
     );
   }

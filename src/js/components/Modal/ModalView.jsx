@@ -5,6 +5,7 @@ import ModalGeoWall from './ModalGeoWall';
 import ModalLogin from './ModalLogin';
 import ModalSocial from './ModalSocial';
 import ModalCoupon from './ModalCoupon';
+import ModalCashwayPlan from './ModalCashwayPlan';
 
 if (process.env.BROWSER) {
   require('./ModalView.less');
@@ -41,6 +42,11 @@ class ModalView extends React.Component {
       case 'geoWall':
         return (
           <ModalGeoWall closable={closable} {...this.props}/>
+        );
+        break;
+      case 'cashway':
+        return (
+          <ModalCashwayPlan closable={closable} {...this.props}/>
         );
         break;
       case 'show':
