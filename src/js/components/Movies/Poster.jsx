@@ -66,14 +66,15 @@ class Poster extends LoadVideo {
     }
     var rect;
     var profiles = image.get('profiles');
-    if (profiles) {
-      try {
-        rect = profiles.get(ratio);
-      } catch (e) {
-        console.log(e);
-      }
+    if (!profiles) {
+      return `&crop=${this.props.crop}&fit=${this.props.fit}`
     }
-    return rect && `&rect=${_.values(rect.toJS()).join()};`
+    try {
+      rect = profiles.get(ratio);
+    } catch (e) {
+      console.log(e);
+    }
+    return rect && `&rect=${_.values(rect.toJS()).join()}`
   }
 
   createLoader () {
@@ -93,13 +94,13 @@ class Poster extends LoadVideo {
     }
 
     let imgix = thumb.get('imgix');
-    let rect = this.extractProfile(thumb, '16:31');
 
     if (!imgix) {
       return;
     }
 
-    let imageStyles = `${imgix}?crop=${this.props.crop}&fit=${this.props.fit}&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5${type === 'spot' ? rect : ''}`;
+    let rect = this.extractProfile(thumb, '16:31');
+    let imageStyles = `${imgix}?w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5${rect}`;
 
     if (this.props.preload) {
 
