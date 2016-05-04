@@ -35,6 +35,7 @@ class RecurlyForm extends React.Component {
 
   componentDidUpdate () {
     this.formatCard();
+    this.initLib();
   }
 
   componentDidMount () {
