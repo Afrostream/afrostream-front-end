@@ -5,6 +5,7 @@ import shallowEqual from 'react-pure-render/shallowEqual';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import FavoritesAddButton from '../Favorites/FavoritesAddButton';
 import ShareButton from '../Share/ShareButton';
+import _ from 'lodash';
 
 const Status = {
   PENDING: 'pending',
@@ -59,6 +60,22 @@ class Poster extends LoadVideo {
     return type || data.get('type');
   }
 
+  extractProfile (image, ratio = '16:31') {
+    if (!image) {
+      return;
+    }
+    var rect;
+    var profiles = image.get('profiles');
+    if (profiles) {
+      try {
+        rect = profiles.get(ratio);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    return rect && `&rect=${_.values(rect.toJS()).join()};`
+  }
+
   createLoader () {
     const {
       props: {data, thumbW, thumbH}
@@ -76,12 +93,13 @@ class Poster extends LoadVideo {
     }
 
     let imgix = thumb.get('imgix');
+    let rect = this.extractProfile(thumb, '16:31');
 
     if (!imgix) {
       return;
     }
 
-    let imageStyles = `${imgix}?crop=${this.props.crop}&fit=${this.props.fit}&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5`;
+    let imageStyles = `${imgix}?crop=${this.props.crop}&fit=${this.props.fit}&w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5${type === 'spot' ? rect : ''}`;
 
     if (this.props.preload) {
 

@@ -44,6 +44,7 @@ export default {
 
   Movie: keyMirror({
     getMovie: null,
+    getLast: null,
     getSeason: null
   }),
 

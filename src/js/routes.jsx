@@ -7,6 +7,7 @@ import MoviePage from './components/Movies/MoviePage';
 import PlayerPage from './components/Player/PlayerPage';
 import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
+import BrowseLastPage from './components/Browse/BrowseLastPage';
 import BrowseGenrePage from './components/Browse/BrowseGenrePage';
 import FavoritesPage from './components/Favorites/FavoritesPage';
 import SearchPage from './components/Search/SearchPage';
@@ -50,6 +51,7 @@ export default (
         <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
       </Route>
       <Route name="browse" path="browse/genre(/:categoryId)(/:categorySlug)" component={BrowseGenrePage}/>
+      <Route name="last" path="last" component={BrowseLastPage}/>
       <Route name="favoris" path="favoris" component={FavoritesPage}/>
       <Route name="movie" path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
              component={MoviePage}>

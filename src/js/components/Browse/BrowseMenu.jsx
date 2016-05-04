@@ -66,7 +66,6 @@ class BrowseMenu extends React.Component {
             <li><Link to="/">Accueil <i className="fa fa-home"/></Link></li>
             <li><Link to="/favoris">Mes Favoris <i className="fa fa-heart"/></Link></li>
             <li><Link to="/last">Derniers ajouts</Link></li>
-            <li><Link to="/viewed">Ma liste</Link></li>
             <li><Link to="/compte">Mon compte</Link></li>
           </ul>
         </li>

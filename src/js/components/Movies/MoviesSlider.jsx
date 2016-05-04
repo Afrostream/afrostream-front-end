@@ -37,7 +37,7 @@ class MoviesSlider extends React.Component {
 
     let data = dataList.get(index);
     let isAdSpot = data.get('adSpot');
-    return isAdSpot ? 239 : 160;
+    return isAdSpot ? 240 : 160;
   }
 
   renderBlock (data) {
@@ -47,7 +47,7 @@ class MoviesSlider extends React.Component {
       return (
         <Thumb
           id={dataId}
-          thumbW={239} thumbH={465} type="spot"
+          thumbW={240} thumbH={465} type="spot"
           fit="facearea" crop="faces"
           key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
       );
