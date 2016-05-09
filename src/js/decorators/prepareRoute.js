@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react';
 import shallowEqual from 'react-pure-render/shallowEqual';
 
-export default function prepareRoute(prepareFn) {
+export default function prepareRoute (prepareFn) {
 
   return DecoratedComponent =>
 
@@ -25,24 +25,24 @@ export default function prepareRoute(prepareFn) {
         );
       }
 
-      componentWillReceiveProps(nextProps) {
+      componentWillReceiveProps (nextProps) {
         const {
-          context: { store },
-          props: { params }
-          } = this;
+          context: {store},
+          props: {params, router}
+        } = this;
 
         if (!shallowEqual(nextProps.params, params)) {
-          prepareFn({store, params: nextProps.params});
+          prepareFn({store, params: nextProps.params, router});
         }
       }
 
-      componentDidMount() {
+      componentDidMount () {
         const {
-          context: { store },
-          props: { params }
-          } = this;
+          context: {store},
+          props: {params, router}
+        } = this;
 
-        prepareFn({store, params: params});
+        prepareFn({store, params: params, router});
       }
 
     };

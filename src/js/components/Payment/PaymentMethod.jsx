@@ -3,7 +3,6 @@ import ReactDOM from'react-dom'
 import { dict, payment, featuresFlip } from '../../../../config'
 import { Link } from 'react-router'
 import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm } from './Forms'
-import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./PaymentMethod.less')
@@ -150,8 +149,6 @@ class PaymentMethod extends React.Component {
 }
 
 PaymentMethod.propTypes = {
-  location: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
   isGift: React.PropTypes.bool,
   planCode: React.PropTypes.string,
   planLabel: React.PropTypes.string
@@ -163,4 +160,4 @@ PaymentMethod.defaultProps = {
   planLabel: null
 }
 
-export default withRouter(PaymentMethod)
+export default PaymentMethod
