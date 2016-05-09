@@ -1,4 +1,4 @@
-export async function notFound(err) {
+export async function notFound (err) {
   if (err.status && err.status === 404 || err.status === 500) {
     return {
       body: {
@@ -14,7 +14,7 @@ export async function notFound(err) {
   return null;
 }
 
-export async function notFoundArray(err) {
+export async function notFoundArray (err) {
   if (err.status && err.status === 404 || err.status === 500) {
     return {
       body: []
@@ -23,7 +23,7 @@ export async function notFoundArray(err) {
   return null;
 }
 
-export async function notFoundVideo(err) {
+export async function notFoundVideo (err) {
   if (err.status && (err.status === 404 || err.status === 500)) {
     return {
       body: {
@@ -39,7 +39,7 @@ export async function notFoundVideo(err) {
   return null;
 }
 
-export async function notFoundPost(err) {
+export async function notFoundPost (err) {
   if (err.status && (err.status === 404 || err.status === 500)) {
     return {
       body: {
@@ -47,6 +47,23 @@ export async function notFoundPost(err) {
         title: 'Post non trouvé',
         description: 'Désolé, ce contenu n’est plus disponible',
         body: 'Désolé, ce contenu n’est plus disponible',
+        poster: {
+          imgix: 'https://afrostream.imgix.net/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
+        }
+      }
+    }
+  }
+  return null;
+}
+
+export async function notFoundCategory (err) {
+  if (err.status && (err.status === 404 || err.status === 500)) {
+    return {
+      body: {
+        type: 'error',
+        label: 'Désolé, ce contenu n’est plus disponible',
+        adSpots: [],
+        movies: [],
         poster: {
           imgix: 'https://afrostream.imgix.net/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
         }

@@ -1,7 +1,7 @@
-'use strict';
-import React ,{PropTypes } from 'react';
-import { connect } from 'react-redux';
-import classSet from 'classnames';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import classSet from 'classnames'
+import { withRouter } from 'react-router'
 /**
  * GoBack component
  * Simple history back button
@@ -24,13 +24,8 @@ class GoBack extends React.Component {
     super(props, context);
   }
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
-
-  navigationGoBack(event) {
-    let hisTory = this.context.history;
-    hisTory.goBack()
+  navigationGoBack (event) {
+    this.props.router.goBack()
   }
 
   render() {
@@ -50,4 +45,9 @@ class GoBack extends React.Component {
   }
 }
 
-export default GoBack;
+GoBack.propTypes = {
+  history: React.PropTypes.object.isRequired
+};
+
+
+export default withRouter(GoBack)

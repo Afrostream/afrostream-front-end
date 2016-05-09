@@ -11,7 +11,7 @@ import * as EpisodeActionCreators from '../../actions/episode';
 import * as RecoActionCreators from '../../actions/reco';
 import PlayerComponent from './PlayerComponent';
 
-@prepareRoute(async function ({ store, params: { movieId, seasonId, episodeId, videoId } }) {
+@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId, videoId}}) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(PlayerActionCreators.getConfig()),
@@ -41,16 +41,16 @@ import PlayerComponent from './PlayerComponent';
 })
 class PlayerPage extends React.Component {
 
-  render() {
+  render () {
     const {
       props: {
-        params: { videoId,movieId,seasonId,episodeId }
-        }
-      } = this;
+        params: {videoId, movieId, seasonId, episodeId}
+      }
+    } = this;
 
     return (
       <div className="row-fluid player-page">
-        {videoId && movieId ? <PlayerComponent {...{videoId, movieId, seasonId, episodeId}}/> : ''}
+        {videoId && movieId ? <PlayerComponent {...{videoId, movieId, seasonId, episodeId}} {...this.props}/> : ''}
       </div>
     );
   }

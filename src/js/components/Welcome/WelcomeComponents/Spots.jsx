@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from'react-dom';
 import Immutable from 'immutable';
 import { connect } from 'react-redux';
-import config from '../../../../../config';
 import Thumb from '../../../components/Movies/Thumb';
 import SignUpButton from '../../User/SignUpButton';
 import _ from 'lodash';
@@ -11,10 +9,10 @@ if (process.env.BROWSER) {
   require('./Spots.less');
 }
 
-@connect(({ Category }) => ({Category}))
+@connect(({Category}) => ({Category}))
 class Spots extends React.Component {
 
-  getMovies(data) {
+  getMovies (data) {
     return <Thumb favorite={false}
                   key={`spot-home-${data.get('_id')}`} {...{data}}/>;
   }
@@ -22,12 +20,12 @@ class Spots extends React.Component {
   /**
    * render two rows of thumbnails for the payment pages
    */
-  render() {
+  render () {
     const {
       props: {
         Category
-        }
-      } = this;
+      }
+    } = this;
 
     let categories = Category.get('categorys/spots');
 

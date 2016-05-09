@@ -33,11 +33,11 @@ class SwitchButton extends React.Component {
     onChange: this.handleChange
   };
   // Handle change
-  handleChange() {
+  handleChange () {
     // Override
   }
 
-  render() {
+  render () {
     let id, label, labelRight;
 
     if (this.props.id == '' && this.props.name != '') {
@@ -59,7 +59,7 @@ class SwitchButton extends React.Component {
     return (
       <div className={'rsbc-switch-button ' + this.props.theme }>
         {label}
-        <input onChange={this.props.onChange} checked={this.props.checked} defaultChecked={this.props.defaultChecked}
+        <input onChange={this.props.onChange} checked={this.props.checked}
                disabled={this.props.disabled}
                id={id} name={this.props.name} type="checkbox" value="1"/>
         <label htmlFor={id}></label>

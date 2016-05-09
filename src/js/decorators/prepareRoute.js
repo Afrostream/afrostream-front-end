@@ -14,7 +14,12 @@ export default function prepareRoute(prepareFn) {
         store: PropTypes.object.isRequired
       };
 
-      render() {
+      static propsTypes = {
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
+      };
+
+      render () {
         return (
           <DecoratedComponent {...this.props} />
         );

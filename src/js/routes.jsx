@@ -4,14 +4,14 @@ import React from 'react';
 import { Route, Redirect } from 'react-router';
 import Application from './components/Application';
 import MoviePage from './components/Movies/MoviePage';
-import MoviesList from './components/Movies/MoviesList';
 import PlayerPage from './components/Player/PlayerPage';
 import LoginPage from './components/Login/LoginPage';
 import HomePage from './components/HomePage';
-import BrowsePage from './components/Browse/BrowsePage';
+import BrowseLastPage from './components/Browse/BrowseLastPage';
+import BrowseGenrePage from './components/Browse/BrowseGenrePage';
 import FavoritesPage from './components/Favorites/FavoritesPage';
 import SearchPage from './components/Search/SearchPage';
-import { PaymentPage, PaymentMethod, PaymentForm, CashwayPage } from './components/Payment/';
+import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/';
 import RedeemCoupon from './components/RedeemCoupon/RedeemCoupon';
 import CouponRegister from './components/RedeemCoupon/CouponRegister';
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
@@ -50,6 +50,8 @@ export default (
       <Route name="compte" path="compte" component={AccountPage}>
         <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
       </Route>
+      <Route name="browse" path="browse/genre(/:categoryId)(/:categorySlug)" component={BrowseGenrePage}/>
+      <Route name="last" path="last" component={BrowseLastPage}/>
       <Route name="favoris" path="favoris" component={FavoritesPage}/>
       <Route name="movie" path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
              component={MoviePage}>

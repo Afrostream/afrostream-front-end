@@ -1,29 +1,31 @@
 import React from 'react';
 import ReactDOM from'react-dom';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames';
 
 if (canUseDOM) {
   require('gsap');
-  var {TweenMax,Expo} = window.GreenSockGlobals;
+  var {TweenMax, Expo} = window.GreenSockGlobals;
 }
 
 class Slider extends React.Component {
 
   static propTypes = {
     step: React.PropTypes.number,
-    duration: React.PropTypes.number
+    duration: React.PropTypes.number,
+    axis: React.PropTypes.string
   };
 
   static defaultProps = {
-    duration: null
+    duration: null,
+    axis: 'x'
   };
 
   static contextTypes = {
     lazyLoadTrigger: React.PropTypes.func
   };
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.clickTimer = 0;
     this.clickDelay = 250;
@@ -35,20 +37,20 @@ class Slider extends React.Component {
 
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.container = ReactDOM.findDOMNode(this).lastChild;
     this.container.addEventListener('scroll', this.handleScroll.bind(this));
     this.handleScroll();
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.container.removeEventListener('scroll', this.handleScroll.bind(this));
   }
 
   /**
    * Scroll event
    */
-  handleScroll() {
+  handleScroll () {
     clearTimeout(this.scrollTimeout);
     this.scrollTimeout = setTimeout(()=> {
       this.setState({
@@ -62,7 +64,7 @@ class Slider extends React.Component {
    *
    * @param e {Object} Event
    */
-  handleClick(event) {
+  handleClick (event) {
     return event.preventDefault();
   }
 
@@ -72,7 +74,7 @@ class Slider extends React.Component {
    *
    * @param direction {String} Left|Right scroll direction
    */
-  handleMouseDown(direction) {
+  handleMouseDown (direction) {
     this.direction = direction;
     this.clickTimer = setTimeout(() => this.continueScroll(), this.clickDelay);
   }
@@ -81,7 +83,7 @@ class Slider extends React.Component {
    * Listen the click mode on mouseUp event
    * and reset all the default properties
    */
-  handleMouseUp() {
+  handleMouseUp () {
     if (this.continueClick) {
       // Stop continue animation on mouse up
       this.scrolling = false;
@@ -100,14 +102,14 @@ class Slider extends React.Component {
    *
    * @param stepWidth {Number} Step transition size
    */
-  scrollingTo(stepWidth) {
+  scrollingTo (stepWidth) {
     return this.direction === 'left' ? -Math.abs(stepWidth) : stepWidth;
   }
 
   /**
    * Start Continue Scroll mode animation
    */
-  continueScroll() {
+  continueScroll () {
 
     let to = this.scrollingTo(this.container.scrollWidth);
 
@@ -117,7 +119,7 @@ class Slider extends React.Component {
   /**
    * Start Single Scroll mode animation
    */
-  singleScroll() {
+  singleScroll () {
     let to = this.scrollingTo(this.container.offsetWidth);
 
     this.animateHorizontalScroll(to);
@@ -130,11 +132,11 @@ class Slider extends React.Component {
    * @param to       {Number} Position to scroll in pixel
    * @param duration {Number} Duration of the animation
    */
-  animateHorizontalScroll(to) {
+  animateHorizontalScroll (to) {
     TweenMax.to(this.container, 0.8, {scrollLeft: (this.container.scrollLeft + to), ease: Expo.easeInOut})
   }
 
-  render() {
+  render () {
 
     //sliderClasses[this.props.className] = this.props.className !== undefined;
 
@@ -162,7 +164,8 @@ class Slider extends React.Component {
     };
 
     let sliderClasses = {
-      'slider': true
+      'slider': true,
+      'axis-x': this.props.axis === 'x'
     };
 
     return (

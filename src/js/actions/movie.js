@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
-import {notFound,notFoundArray} from './notFoundAction';
-export function getMovie(movieId) {
+import { notFound, notFoundArray } from './notFoundAction';
+
+export function getMovie (movieId) {
   return (dispatch, getState) => {
     if (!movieId) {
       console.log('no movie id passed in action', movieId);
@@ -11,7 +12,6 @@ export function getMovie(movieId) {
     }
 
     let readyMovie = getState().Movie.get(`movies/${movieId}`);
-    const user = getState().User.get('user');
 
     if (readyMovie) {
       console.log('movie already present in data store', movieId);
@@ -32,7 +32,28 @@ export function getMovie(movieId) {
   };
 }
 
-export function getSeason(movieId) {
+export function getLast () {
+  return (dispatch, getState) => {
+    let readyMovies = getState().Movie.get(`movies/last`);
+
+    if (readyMovies) {
+      console.log('last movies already present in data store');
+      return {
+        type: ActionTypes.Movie.getLast,
+        res: {
+          body: readyMovies.toJS()
+        }
+      };
+    }
+
+    return async api => ({
+      type: ActionTypes.Movie.getLast,
+      res: await api(`/api/movies?order=_id&sort=DESC&limit=20`).catch(notFound)
+    });
+  };
+}
+
+export function getSeason (movieId) {
   return (dispatch, getState) => {
     if (!movieId) {
       console.log('no movie id passed in action', movieId);

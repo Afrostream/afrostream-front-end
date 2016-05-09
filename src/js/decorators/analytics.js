@@ -27,22 +27,20 @@ export default function analytics(prepareFn) {
         );
       }
 
-      componentWillReceiveProps(nextProp, nextContext) {
+      componentWillReceiveProps (nextProps) {
         const {
-          context: { store ,location},
-          props: { params }
-          } = this;
+          props: {location}
+        } = this;
 
-        //if (!shallowEqual(nextContext.location, location) && canUseDOM) {
-        if (nextContext.location.pathname !== location.pathname && canUseDOM) {
-          ga.pageview(nextContext.location.pathname);
+        if (!shallowEqual(nextProps.location.pathname, location.pathname && canUseDOM)) {
+          ga.pageview(nextProps.location.pathname);
         }
       }
 
       componentDidMount() {
         const {
-          context: { location }
-          } = this;
+          props: {location}
+        } = this;
 
         if (canUseDOM) {
           ga.initialize(config.google.analyticsKey, {debug: true});

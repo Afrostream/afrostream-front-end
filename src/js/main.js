@@ -3,7 +3,7 @@ import ReactDOM from'react-dom';
 import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll'
 import Router from './components/Router';
-import {  match } from 'react-router';
+import { match } from 'react-router';
 import { Provider } from 'react-redux';
 import createStore from './lib/createStore';
 import request from 'superagent';
@@ -11,7 +11,7 @@ import request from 'superagent';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient, heroku } from '../../config';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import moment from 'moment';
 //Set locale date //TODO une fois le site multilingue formater au pays courant
 moment.locale('fr');
@@ -28,7 +28,7 @@ const api = createAPI(
   /**
    * Client's createRequest() method
    */
-  ({ method, headers = {}, pathname = '', query = {}, body = {} ,legacy = false}) => {
+  ({method, headers = {}, pathname = '', query = {}, body = {}, legacy = false}) => {
     pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '');
     var url = `${apiClient.urlPrefix}${pathname}`;
     query.from = query.from || heroku.appName;

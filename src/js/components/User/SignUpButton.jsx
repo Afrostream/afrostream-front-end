@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import * as ModalActionCreators from '../../actions/modal';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../actions/modal'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./SignUpButton.less');
@@ -8,10 +9,6 @@ if (process.env.BROWSER) {
 
 @connect(({User}) => ({User}))
 class SignUpButton extends React.Component {
-
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
 
   render () {
     return (<button className={this.props.className} type=" button" onClick={::this.showLock}
@@ -22,14 +19,16 @@ class SignUpButton extends React.Component {
     const {
       props: {
         User,
-        dispatch
+        history,
+        dispatch,
+        router
       }
     } = this;
 
     const user = User.get('user');
 
     if (user) {
-      return this.context.history.pushState(null, this.props.to);
+      return history.push(this.props.to);
     }
 
     dispatch(ModalActionCreators.open('showSignup', true, this.props.to));
@@ -49,4 +48,8 @@ SignUpButton.defaultProps = {
   to: '/'
 };
 
-export default SignUpButton;
+SignUpButton.propTypes = {
+  history: React.PropTypes.object
+};
+
+export default withRouter(SignUpButton)
