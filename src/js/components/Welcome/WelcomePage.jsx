@@ -1,18 +1,19 @@
-import React from 'react';
-import { prepareRoute } from '../../decorators';
-import WelcomeHeader from './WelcomeComponents/WelcomeHeader';
-import Spots from './WelcomeComponents/Spots';
-import Devices from './WelcomeComponents/Devices';
-import PricingTable from './WelcomeComponents/PricingTable';
-import Spinner from '../Spinner/Spinner';
-import * as EventActionCreators from '../../actions/event';
-import * as MovieActionCreators from '../../actions/movie';
-import * as CategoryActionCreators from '../../actions/category';
-import * as EpisodeActionCreators from '../../actions/episode';
-import * as BillingActionCreators from '../../actions/billing';
+import React from 'react'
+import { prepareRoute } from '../../decorators'
+import WelcomeHeader from './WelcomeComponents/WelcomeHeader'
+import Spots from './WelcomeComponents/Spots'
+import Devices from './WelcomeComponents/Devices'
+import PricingTable from './WelcomeComponents/PricingTable'
+import Spinner from '../Spinner/Spinner'
+import * as EventActionCreators from '../../actions/event'
+import * as MovieActionCreators from '../../actions/movie'
+import * as CategoryActionCreators from '../../actions/category'
+import * as EpisodeActionCreators from '../../actions/episode'
+import * as BillingActionCreators from '../../actions/billing'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
-  require('./WelcomePage.less');
+  require('./WelcomePage.less')
 }
 
 @prepareRoute(async function ({store, params: {movieId, episodeId}}) {
@@ -22,47 +23,39 @@ if (process.env.BROWSER) {
   ];
 
   if (movieId && movieId !== 'undefined') {
-    await store.dispatch(MovieActionCreators.getMovie(movieId));
+    await store.dispatch(MovieActionCreators.getMovie(movieId))
   }
 
   if (episodeId && episodeId !== 'undefined') {
-    await store.dispatch(EpisodeActionCreators.getEpisode(episodeId));
+    await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 
-  return await store.dispatch(BillingActionCreators.getInternalplans('common'));
+  return await store.dispatch(BillingActionCreators.getInternalplans('common'))
 })
 class WelcomePage extends React.Component {
 
-  static propTypes = {
-    spinner: React.PropTypes.bool
-  };
-
-  static defaultProps = {
-    spinner: false
-  };
-
   state = {
     spinner: this.props.spinner
-  };
+  }
 
   componentDidMount () {
     this.setState({
       spinner: this.props.spinner
-    });
+    })
   }
 
   componentDidUpdate (params) {
     if (params.spinner !== this.props.spinner) {
       this.setState({
         spinner: this.props.spinner
-      });
+      })
     }
   }
 
   componentWillReceiveProps () {
     this.setState({
       spinner: this.props.spinner
-    });
+    })
   }
 
   render () {
@@ -72,10 +65,20 @@ class WelcomePage extends React.Component {
         <WelcomeHeader {...this.props}/>
         <Devices />
         <Spots />
-        <PricingTable />
+        <PricingTable {...this.props}/>
       </div>
-    );
+    )
   }
 }
 
-export default WelcomePage;
+WelcomePage.propTypes = {
+  history: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired,
+  spinner: React.PropTypes.bool
+}
+
+WelcomePage.defaultProps = {
+  spinner: false
+}
+
+export default withRouter(WelcomePage)

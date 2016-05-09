@@ -1,96 +1,92 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import { Link } from 'react-router';
-import * as ModalActionCreators from '../../actions/modal';
-import * as BillingActionCreators from '../../actions/billing';
-import ModalComponent from './ModalComponent';
-import { oauth2 } from '../../../../config';
-import MobileDetect from 'mobile-detect';
+import React from 'react'
+import { connect } from 'react-redux'
+import classNames from 'classnames'
+import { Link } from 'react-router'
+import * as ModalActionCreators from '../../actions/modal'
+import * as BillingActionCreators from '../../actions/billing'
+import ModalComponent from './ModalComponent'
+import { oauth2 } from '../../../../config'
+import MobileDetect from 'mobile-detect'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
-  require('./ModalLogin.less');
+  require('./ModalLogin.less')
 }
 
 @connect(({Billing}) => ({Billing}))
 class ModalCoupon extends ModalComponent {
 
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       success: false,
       loading: false
-    };
+    }
   }
 
-  static contextTypes = {
-    location: React.PropTypes.object,
-    history: React.PropTypes.object
-  };
-
   componentDidMount () {
-    const userAgent = (window.navigator && navigator.userAgent) || '';
+    const userAgent = (window.navigator && navigator.userAgent) || ''
     this.setState({
       ua: new MobileDetect(userAgent)
-    });
+    })
   }
 
   async handleSubmit (event) {
-    event.preventDefault();
+    event.preventDefault()
 
     const {
       props: {
         dispatch,
         Billing
       }
-    } = this;
+    } = this
 
-    const self = this;
-    let errorText = self.getTitle('global');
-    const coupon = Billing.get('coupon');
+    const self = this
+    let errorText = self.getTitle('global')
+    const coupon = Billing.get('coupon')
 
     let formData = {
       providerName: 'afr',
       coupon: this.refs.coupon.value
-    };
+    }
 
     this.setState({
       loading: true,
       error: ''
-    });
+    })
 
     return await dispatch(BillingActionCreators.validate(formData)).then(({res:{body:{coupon = {}}}}) => {
 
       if (coupon && coupon.status === 'waiting') {
-        dispatch(ModalActionCreators.close());
-        self.context.history.pushState(null, `/couponregister`);
+        dispatch(ModalActionCreators.close())
+        self.props.history.push(`/couponregister`)
       }
       else if (coupon && coupon.status !== 'waiting') {
 
-        errorText = self.getTitle('couponInvalid');
+        errorText = self.getTitle('couponInvalid')
       }
 
       this.setState({
         loading: false,
         error: errorText
-      });
+      })
 
     }).catch(({response:{body:{error}}}) => {
       if (error === 'NOT FOUND') {
 
-        errorText = self.getTitle('couponInvalid');
+        errorText = self.getTitle('couponInvalid')
 
         this.setState({
           loading: false,
           error: errorText
-        });
+        })
       }
-    });
+    })
   }
 
   getTitle (key = 'title') {
-    let keyType = 'coupon';
-    return oauth2.dict[keyType][key] || '';
+    let keyType = 'coupon'
+    return oauth2.dict[keyType][key] || ''
   }
 
   getForm () {
@@ -106,17 +102,17 @@ class ModalCoupon extends ModalComponent {
             </span>
           </div>
           <div className="spin-message">
-            <span>&nbsp;</span>
+            <span>&nbsp</span>
           </div>
         </div>
-      </div>);
+      </div>)
     }
 
     if (this.state.success) {
-      return (<div />);
+      return (<div />)
     }
 
-    let formTemplate = this.getRedeemCoupon();
+    let formTemplate = this.getRedeemCoupon()
 
     return (
       <div className="notloggedin mode">
@@ -125,7 +121,7 @@ class ModalCoupon extends ModalComponent {
           {formTemplate}
         </form>
       </div>
-    );
+    )
   }
 
   getCoupon () {
@@ -141,7 +137,7 @@ class ModalCoupon extends ModalComponent {
                  title={this.getTitle('couponPlaceholder')}/>
         </div>
       </div>
-    );
+    )
   }
 
   getRedeemCoupon () {
@@ -156,7 +152,7 @@ class ModalCoupon extends ModalComponent {
           <button type="submit" className="primary next">{this.getTitle('action')}</button>
         </div>
       </div>
-    );
+    )
   }
 
   render () {
@@ -164,22 +160,22 @@ class ModalCoupon extends ModalComponent {
     var errClass = classNames({
       'error': true,
       'hide': !this.state.error
-    });
+    })
 
-    let ua = this.state.ua;
+    let ua = this.state.ua
 
     let popupClass = classNames({
       'popup': this.props.modal,
       'ios': ua && ua.is('iOS')
-    });
+    })
 
     let overlayClass = classNames({
       'overlay': this.props.modal,
       'widget': !this.props.modal,
       'active': true
-    });
+    })
 
-    const classType = 'redeemCoupon';
+    const classType = 'redeemCoupon'
 
     return (
       <div className="lock-container">
@@ -211,7 +207,9 @@ class ModalCoupon extends ModalComponent {
 
 ModalCoupon.propTypes = {
   type: React.PropTypes.string,
-  dispatch: React.PropTypes.func
-};
+  dispatch: React.PropTypes.func,
+  location: React.PropTypes.object.isRequired,
+  history: React.PropTypes.object.isRequired
+}
 
-export default ModalCoupon;
+export default withRouter(ModalCoupon)

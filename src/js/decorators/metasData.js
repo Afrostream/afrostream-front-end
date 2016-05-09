@@ -12,7 +12,10 @@ export default () => {
     class MetasDataDecorator extends Component {
 
       static contextTypes = {
-        store: PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired
+      };
+
+      static propsTypes = {
         location: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired
       };
@@ -39,9 +42,9 @@ export default () => {
       getMetadata() {
 
         const {
-          context: { store,location },
-          props: { params }
-          } = this;
+          context: {store},
+          props: {params, location}
+        } = this;
 
         let metas = {
           title: _.cloneDeep(config.metadata.title),

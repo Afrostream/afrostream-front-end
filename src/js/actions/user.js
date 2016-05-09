@@ -1,7 +1,7 @@
 import ActionTypes from '../consts/ActionTypes';
 import * as OAuthActionCreators from './oauth';
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import { pushState, isActive } from 'redux-router';
+import { push, isActive } from 'redux-router';
 import _ from 'lodash';
 
 const mergeProfile = function (data, getState, actionDispatcher) {
@@ -26,13 +26,11 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         let subscriptionsStatus = userMerged.subscriptionsStatus;
         let status = subscriptionsStatus.status;
         if ((!planCode && !coupon.get('coupon'))) {
-          // let isCash = isActive('cash');
-          // donePath = donePath || `${isCash ? '/cash' : ''}/select-plan`;
           donePath = donePath || `/select-plan`;
           if (status && status !== 'active') {
             donePath = `${donePath}/none/${status}`;
           }
-          actionDispatcher(pushState(null, donePath));
+          actionDispatcher(push(donePath));
         }
       }
 
@@ -43,7 +41,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       }
 
       if (donePath) {
-        actionDispatcher(pushState(null, donePath));
+        actionDispatcher(push(donePath));
       }
 
       return _.merge(data, {

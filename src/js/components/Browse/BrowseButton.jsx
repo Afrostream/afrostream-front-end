@@ -15,7 +15,12 @@ class BrowseButton extends React.Component {
     return (
       <li className="pull-right dropdown">
         <a href="#" className="btn-xs btn-browse dropdown-toggle" data-toggle="dropdown"
-           role="button"><span>PARCOURIR </span><b className="caret"></b>
+           role="button">
+          <span>PARCOURIR </span>
+          <b className="caret"/>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
         </a>
         <BrowseMenu />
       </li>)

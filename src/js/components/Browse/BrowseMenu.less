@@ -1,7 +1,10 @@
 @import (reference) '../../../styles/config.less';
 
-.open > .dropdown-menu.mega-menu {
-  display: flex;
+.dropdown.open {
+  .dropdown-menu.mega-menu {
+    display: flex;
+    .isMobile({ display: block; position: fixed; width: 100%; left: 0; top: @header-height - 8px; right: 0; background: fade(@color-indigo, 90%); margin: 0; });
+  }
 }
 
 /* MEGA MENU STYLE
@@ -52,12 +55,6 @@
   border-bottom: 6px solid @color-indigo;
   border-left: 6px solid transparent;
   content: '';
-}
-
-@media (max-width: 767px) {
-  .navbar-nav .open .dropdown-menu {
-    background-color: fade(@color-indigo, 85%);
-  }
 }
 
 /* Dropdown Toggle on style */

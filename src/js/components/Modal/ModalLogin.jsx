@@ -1,26 +1,27 @@
-import React from 'react';
-import ReactDOM from'react-dom';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
-import { Link } from 'react-router';
-import * as OauthActionCreator from '../../actions/oauth';
-import * as ModalActionCreator from '../../actions/modal';
-import * as UserActionCreators from '../../actions/user';
-import * as IntercomActionCreators from '../../actions/intercom';
-import ModalComponent from './ModalComponent';
-import { oauth2 } from '../../../../config';
-import MobileDetect from 'mobile-detect';
-import _ from 'lodash';
+import React from 'react'
+import ReactDOM from'react-dom'
+import { connect } from 'react-redux'
+import classNames from 'classnames'
+import { Link } from 'react-router'
+import * as OauthActionCreator from '../../actions/oauth'
+import * as ModalActionCreator from '../../actions/modal'
+import * as UserActionCreators from '../../actions/user'
+import * as IntercomActionCreators from '../../actions/intercom'
+import ModalComponent from './ModalComponent'
+import { oauth2 } from '../../../../config'
+import MobileDetect from 'mobile-detect'
+import _ from 'lodash'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
-  require('./ModalLogin.less');
+  require('./ModalLogin.less')
 }
 
 @connect(({User}) => ({User}))
 class ModalLogin extends ModalComponent {
 
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       success: false,
       loading: false,
@@ -29,243 +30,237 @@ class ModalLogin extends ModalComponent {
       email: null,
       errors: {},
       timestamp: new Date()
-    };
+    }
   }
-
-  static contextTypes = {
-    location: React.PropTypes.object,
-    history: React.PropTypes.object
-  };
 
   componentDidMount () {
     const {
-      props: {dispatch},
-      context: {location}
-    } = this;
-    let {query} = location;
-    let token = query && query.k;
+      props: {dispatch, location}
+    } = this
+    let {query} = location
+    let token = query && query.k
     if (token) {
       dispatch(OauthActionCreator.reset({k: token})).then(function () {
         //New password success validate, open login view
-        dispatch(ModalActionCreator.open('show', false, '/'));
-      }).catch(::this.onError);
+        dispatch(ModalActionCreator.open('show', false, '/'))
+      }).catch(::this.onError)
     }
-    const userAgent = (window.navigator && navigator.userAgent) || '';
+    const userAgent = (window.navigator && navigator.userAgent) || ''
     this.setState({
       ua: new MobileDetect(userAgent)
-    });
+    })
   }
 
   isValid () {
     let valid = _.filter(this.state.errors, (value, key) => {
-      return value;
-    });
-    return !valid.length;
+      return value
+    })
+    return !valid.length
   }
 
   validateSize (value, min = 0, max = 0) {
-    if (!value) return 'empty';
-    if (value.length < min) return 'min';
-    if (value.length > max) return 'max';
-    return null;
+    if (!value) return 'empty'
+    if (value.length < min) return 'min'
+    if (value.length > max) return 'max'
+    return null
   }
 
   validate (targetName) {
-    let errors = this.state.errors;
-    errors[targetName] = null;
-    let valueForm = this.state[targetName];
-    let isValid = true;
-    let valitationType = targetName;
-    let regex = null;
+    let errors = this.state.errors
+    errors[targetName] = null
+    let valueForm = this.state[targetName]
+    let isValid = true
+    let valitationType = targetName
+    let regex = null
     switch (targetName) {
       case 'email':
-        regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        isValid = 'email' && regex.test(valueForm);
-        break;
+        regex = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        isValid = 'email' && regex.test(valueForm)
+        break
       case 'password':
       case 'repeat_password':
         //Minimum 6 and Maximum 50 characters :
-        regex = /^.{6,50}$/;
-        isValid = regex.test(valueForm) && this.state['password'] === valueForm;
-        valitationType = this.validateSize(valueForm, 6, 50) || (this.state['password'] === valueForm ? '' : 'same');
-        break;
+        regex = /^.{6,50}$/
+        isValid = regex.test(valueForm) && this.state['password'] === valueForm
+        valitationType = this.validateSize(valueForm, 6, 50) || (this.state['password'] === valueForm ? '' : 'same')
+        break
     }
 
     if (!isValid) {
-      const i18nValidMess = this.getTitle('language');
-      let label = i18nValidMess[targetName];
-      let errMess = i18nValidMess[valitationType];
-      errors[targetName] = label + ' ' + errMess;
+      const i18nValidMess = this.getTitle('language')
+      let label = i18nValidMess[targetName]
+      let errMess = i18nValidMess[valitationType]
+      errors[targetName] = label + ' ' + errMess
     }
     this.setState({
       errors: errors
-    });
+    })
   }
 
   renderValidationMessages (target) {
-    let errorMessage = this.state.errors[target];
-    if (!errorMessage) return '';
-    return (<div className="help-block">{ errorMessage }</div>);
+    let errorMessage = this.state.errors[target]
+    if (!errorMessage) return ''
+    return (<div className="help-block">{ errorMessage }</div>)
   }
 
   handleInputChange (evt) {
-    let formData = this.state;
+    let formData = this.state
     if (!evt.target) {
-      return;
+      return
     }
-    let name = evt.target.getAttribute('name');
-    let value = evt.target.value;
-    formData[name] = value;
+    let name = evt.target.getAttribute('name')
+    let value = evt.target.value
+    formData[name] = value
     this.setState(formData, () => {
-      this.validate(name);
-    });
+      this.validate(name)
+    })
   }
 
   handleSubmit (event) {
-    event.preventDefault();
+    event.preventDefault()
     const {
       props: {dispatch}
-    } = this;
+    } = this
 
 
-    let valitations = ['email', 'password'];
+    let valitations = ['email', 'password']
 
     if (this.props.type === 'showReset') {
-      valitations.push('repeat_password');
+      valitations.push('repeat_password')
     }
 
-    let formData = this.state;
+    let formData = this.state
     _.forEach(valitations, (name)=> {
-      let domNode = ReactDOM.findDOMNode(this.refs[name]);
+      let domNode = ReactDOM.findDOMNode(this.refs[name])
       if (domNode) {
-        formData[name] = domNode.value;
+        formData[name] = domNode.value
         this.setState(formData, () => {
-          this.validate(name);
-        });
+          this.validate(name)
+        })
       }
-    });
+    })
 
     if (!this.isValid()) {
-      return;
+      return
     }
 
     this.setState({
       loading: true,
       error: ''
-    });
+    })
 
-    let typeCall = this.getType();
-    let postData = _.pick(this.state, ['email', 'password']);
+    let typeCall = this.getType()
+    let postData = _.pick(this.state, ['email', 'password'])
 
-    dispatch(OauthActionCreator[typeCall](postData)).then(::this.onSuccess).catch(::this.onError);
+    dispatch(OauthActionCreator[typeCall](postData)).then(::this.onSuccess).catch(::this.onError)
   }
 
   facebookAuth (event) {
-    event.preventDefault();
+    event.preventDefault()
     const {
       dispatch
-    } = this.props;
+    } = this.props
 
-    const method = this.getType();
+    const method = this.getType()
 
-    dispatch(OauthActionCreator.facebook(method)).then(::this.onSuccess).catch(::this.onError);
+    dispatch(OauthActionCreator.facebook(method)).then(::this.onSuccess).catch(::this.onError)
   }
 
   onSuccess () {
     const {
       dispatch
-    } = this.props;
+    } = this.props
 
     this.setState({
       success: true,
       loading: false
-    });
+    })
     if (this.props.type !== 'showReset') {
-      dispatch(UserActionCreators.getProfile());
-      dispatch(ModalActionCreator.close());
+      dispatch(UserActionCreators.getProfile())
+      dispatch(ModalActionCreator.close())
     } else {
-      dispatch(IntercomActionCreators.createIntercom());
+      dispatch(IntercomActionCreators.createIntercom())
     }
   }
 
   onError (err) {
     const {
       dispatch
-    } = this.props;
+    } = this.props
 
-    let errMess = err.message;
+    let errMess = err.message
     if (err.response) {
       if (err.response.body) {
-        errMess = err.response.body.message;
+        errMess = err.response.body.message
       } else if (err.response.text) {
-        errMess = err.response.text;
+        errMess = err.response.text
       }
     }
 
     this.setState({
       loading: false,
       error: this.getTitle(errMess.toString()) || this.getTitle('wrongEmailPasswordErrorText')
-    });
+    })
 
-    dispatch(IntercomActionCreators.createIntercom());
+    dispatch(IntercomActionCreators.createIntercom())
   }
 
   cancelAction (event) {
-    event.preventDefault();
+    event.preventDefault()
     const {
-      dispatch
-    } = this.props;
-    this.context.history.pushState(null, '/')
-    dispatch(ModalActionCreator.open('show'));
+      dispatch, history
+    } = this.props
+    history.push('/')
+    dispatch(ModalActionCreator.open('show'))
   }
 
   getI18n () {
-    let keyType = 'signin';
+    let keyType = 'signin'
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
-        keyType = 'signin';
-        break;
+        keyType = 'signin'
+        break
       case 'showRelog':
-        keyType = 'relog';
-        break;
+        keyType = 'relog'
+        break
       case 'showSignup':
-        keyType = 'signup';
-        break;
+        keyType = 'signup'
+        break
       case 'showGift':
-        keyType = 'gift';
-        break;
+        keyType = 'gift'
+        break
       case 'showReset':
-        keyType = 'reset';
-        break;
+        keyType = 'reset'
+        break
     }
-    return keyType;
+    return keyType
   }
 
   getType () {
-    let keyType = 'signin';
+    let keyType = 'signin'
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
       case 'showRelog':
-        keyType = 'signin';
-        break;
+        keyType = 'signin'
+        break
       case 'showSignup':
-        keyType = 'signup';
-        break;
+        keyType = 'signup'
+        break
       case 'showGift':
-        keyType = 'gift';
-        break;
+        keyType = 'gift'
+        break
       case 'showReset':
-        keyType = 'reset';
-        break;
+        keyType = 'reset'
+        break
     }
-    return keyType;
+    return keyType
   }
 
   getTitle (key = 'title') {
-    let keyType = this.getI18n();
-    return oauth2.dict[keyType][key] || '';
+    let keyType = this.getI18n()
+    return oauth2.dict[keyType][key] || ''
   }
 
   getForm () {
@@ -281,32 +276,32 @@ class ModalLogin extends ModalComponent {
             </span>
           </div>
           <div className="spin-message">
-            <span>&nbsp;</span>
+            <span />
           </div>
         </div>
-      </div>);
+      </div>)
     }
 
     if (this.state.success) {
-      return (<div />);
+      return (<div />)
     }
 
-    let formTemplate;
-    let social = oauth2.facebook;
+    let formTemplate
+    let social = oauth2.facebook
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
       case 'showRelog':
-        formTemplate = this.getSignIn();
-        break;
+        formTemplate = this.getSignIn()
+        break
       case 'showSignup':
       case 'showGift':
-        formTemplate = this.getSignUp();
-        break;
+        formTemplate = this.getSignUp()
+        break
       case 'showReset':
-        social = false;
-        formTemplate = this.getReset();
-        break;
+        social = false
+        formTemplate = this.getReset()
+        break
     }
 
     return (
@@ -317,7 +312,7 @@ class ModalLogin extends ModalComponent {
           {formTemplate}
         </form>
       </div>
-    );
+    )
   }
 
   getSocial () {
@@ -331,7 +326,7 @@ class ModalLogin extends ModalComponent {
         </div>
         <div className="separator"><span>ou</span></div>
       </div>
-    );
+    )
   }
 
   getEmail () {
@@ -349,7 +344,7 @@ class ModalLogin extends ModalComponent {
           {this.renderValidationMessages('email')}
         </div>
       </div>
-    );
+    )
   }
 
   getPassword () {
@@ -368,7 +363,7 @@ class ModalLogin extends ModalComponent {
           {this.renderValidationMessages('password')}
         </div>
       </div>
-    );
+    )
   }
 
   getSignUp () {
@@ -391,7 +386,7 @@ class ModalLogin extends ModalComponent {
         </div>
 
       </div>
-    );
+    )
   }
 
   getSignIn () {
@@ -413,7 +408,7 @@ class ModalLogin extends ModalComponent {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   getReset () {
@@ -451,39 +446,39 @@ class ModalLogin extends ModalComponent {
         </div>
 
       </div>
-    );
+    )
   }
 
   render () {
 
-    const {props: {User}} = this;
+    const {props: {User}} = this
 
     var errClass = classNames({
       'error': true,
       'hide': !this.state.error
-    });
+    })
 
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
       'hide': !this.props.closable
-    });
+    })
 
     let successClass = classNames({
       'success': true,
       'hide': !this.state.success
-    });
+    })
 
-    let ua = this.state.ua;
+    let ua = this.state.ua
 
     let popupClass = classNames({
       'popup': true,
       'ios': ua && ua.is('iOS')
-    });
+    })
 
-    const classType = this.getType();
+    const classType = this.getType()
 
-    const pending = User.get('pending');
+    const pending = User.get('pending')
 
     return (
       <div className="lock-container">
@@ -521,8 +516,9 @@ class ModalLogin extends ModalComponent {
 }
 
 ModalLogin.propTypes = {
+  location: React.PropTypes.object.isRequired,
   type: React.PropTypes.string,
   dispatch: React.PropTypes.func
-};
+}
 
-export default ModalLogin;
+export default withRouter(ModalLogin)
