@@ -16,7 +16,7 @@ class ModalNewsletter extends ModalGeoWall {
       props : {history}
     } = this
 
-    history.pushState(null, '/')
+    history.push('/')
     super.handleClose(e)
   }
 

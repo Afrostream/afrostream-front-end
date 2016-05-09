@@ -19,6 +19,7 @@ class SignUpButton extends React.Component {
     const {
       props: {
         User,
+        history,
         dispatch,
         router
       }
@@ -27,7 +28,7 @@ class SignUpButton extends React.Component {
     const user = User.get('user');
 
     if (user) {
-      return router.pushState(null, this.props.to);
+      return history.push(this.props.to);
     }
 
     dispatch(ModalActionCreators.open('showSignup', true, this.props.to));

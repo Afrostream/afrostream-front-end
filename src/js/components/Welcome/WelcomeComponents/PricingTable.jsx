@@ -1,14 +1,15 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import * as ModalActionCreators from '../../../actions/modal';
-import { Link } from 'react-router';
-import { dict } from '../../../../../config/client';
-import { formatPrice, isBoolean } from '../../../lib/utils';
-import ModalCoupon from '../../Modal/ModalCoupon';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../../actions/modal'
+import { Link } from 'react-router'
+import { dict } from '../../../../../config/client'
+import { formatPrice, isBoolean } from '../../../lib/utils'
+import ModalCoupon from '../../Modal/ModalCoupon'
 import _ from 'lodash'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
-  require('./PricingTable.less');
+  require('./PricingTable.less')
 }
 @connect(({User, Billing}) => ({User, Billing}))
 class PricingTable extends React.Component {
@@ -18,15 +19,15 @@ class PricingTable extends React.Component {
       props: {
         Billing
       }
-    } = this;
+    } = this
 
-    let validPlans = Billing.get(`internalPlans/common`);
+    let validPlans = Billing.get(`internalPlans/common`)
 
     if (!validPlans) {
-      return;
+      return
     }
 
-    return validPlans.filter((a) => a.get('internalPlanUuid') !== 'afrostreamgift').sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')));
+    return validPlans.filter((a) => a.get('internalPlanUuid') !== 'afrostreamgift').sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')))
   }
 
   openModal (internalPlanUuid) {
@@ -34,9 +35,9 @@ class PricingTable extends React.Component {
       props: {
         dispatch
       }
-    } = this;
-    let type = (internalPlanUuid === 'afrostreamgift') ? 'showGift' : 'showSignup';
-    dispatch(ModalActionCreators.open(type, true, `/select-plan/${internalPlanUuid}/checkout`));
+    } = this
+    let type = (internalPlanUuid === 'afrostreamgift') ? 'showGift' : 'showSignup'
+    dispatch(ModalActionCreators.open(type, true, `/select-plan/${internalPlanUuid}/checkout`))
   }
 
   getPlanRow (plan) {
@@ -53,87 +54,87 @@ class PricingTable extends React.Component {
       'internalEngagment',
       'internalVip',
       'internalActionLabel'
-    ];
+    ]
 
     return _.map(cols, (label)=> {
-      let internalPlanUuid = plan.get('internalPlanUuid');
-      let objVal = plan.get(label);
+      let internalPlanUuid = plan.get('internalPlanUuid')
+      let objVal = plan.get(label)
 
       if (objVal === undefined) {
-        objVal = plan.get('internalPlanOpts').get(label);
+        objVal = plan.get('internalPlanOpts').get(label)
       }
 
       if (objVal === undefined) {
-        objVal = true;
+        objVal = true
       }
 
-      let value = '';
+      let value = ''
       switch (label) {
         case 'formule':
-          value = dict.planCodes.infos[label] || '';
-          break;
+          value = dict.planCodes.infos[label] || ''
+          break
         case 'prelevementMensuel':
           if (plan.get('periodUnit') === 'month') {
-            value = <div className="plan-highlight">{dict.planCodes.infos[label]}</div>;
+            value = <div className="plan-highlight">{dict.planCodes.infos[label]}</div>
           }
-          break;
+          break
         case 'internalActionLabel':
           const inputSignupAction = {
             onClick: event => ::this.openModal(internalPlanUuid)
-          };
-          value = (<button className="btn-plan" {...inputSignupAction}>{`${dict.planCodes.action}`}</button>);
-          break;
+          }
+          value = (<button className="btn-plan" {...inputSignupAction}>{`${dict.planCodes.action}`}</button>)
+          break
         case 'price':
-          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`;
-          break;
+          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`
+          break
         case 'internalMaxScreens':
           value =
-            <span>{`${objVal} ${dict.planCodes.infos[label].replace('{s}', parseInt(objVal) > 1 ? 's' : '')}`}</span>;
-          break;
+            <span>{`${objVal} ${dict.planCodes.infos[label].replace('{s}', parseInt(objVal) > 1 ? 's' : '')}`}</span>
+          break
         default :
-          let isBool = (objVal === 'true' || objVal === 'false' || typeof objVal === 'boolean' ) && typeof isBoolean(objVal) === 'boolean';
+          let isBool = (objVal === 'true' || objVal === 'false' || typeof objVal === 'boolean' ) && typeof isBoolean(objVal) === 'boolean'
           if (isBool) {
             if (isBoolean(objVal)) {
-              value = <span>{ dict.planCodes.infos[label] || ''}</span>;
+              value = <span>{ dict.planCodes.infos[label] || ''}</span>
             }
           }
           else {
-            value = objVal;
+            value = objVal
           }
-          break;
+          break
       }
 
       if (!value) {
-        return '';
+        return ''
       }
 
       return (
         <div key={`row-plan-${label}`} className="row">
           {value}
         </div>
-      );
+      )
 
-    });
+    })
   }
 
   getPlanCol () {
 
-    let validPlans = this.getPlans();
+    let validPlans = this.getPlans()
 
     if (!validPlans) {
-      return;
+      return
     }
 
     return validPlans.map((plan)=> {
-      let key = plan.get('internalPlanUuid');
+      let key = plan.get('internalPlanUuid')
 
       return (
         <div key={`col-plan-${key}`} className="col col-xs-12 col-sm-12 col-md-3">
           <div className="plan-container">
             {this.getPlanRow(plan)}
           </div>
-        </div>);
-    });
+        </div>)
+    })
   }
 
   getCouponCol () {
@@ -147,15 +148,15 @@ class PricingTable extends React.Component {
             <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
           </div>
         </div>
-      </div>);
+      </div>)
   }
 
   getFirstCol () {
 
-    let validPlans = this.getPlans();
+    let validPlans = this.getPlans()
 
     if (!validPlans) {
-      return;
+      return
     }
 
     return (
@@ -167,7 +168,7 @@ class PricingTable extends React.Component {
           Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.
           <Link to="/faq">Les réponses à vos questions</Link>
         </div>
-      </div>);
+      </div>)
   }
 
   render () {
@@ -179,8 +180,13 @@ class PricingTable extends React.Component {
           {this.getCouponCol()}
         </div>
       </section>
-    );
+    )
   }
 }
 
-export default PricingTable;
+PricingTable.propTypes = {
+  history: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired
+}
+
+export default withRouter(PricingTable)

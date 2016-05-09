@@ -65,13 +65,14 @@ class WelcomePage extends React.Component {
         <WelcomeHeader {...this.props}/>
         <Devices />
         <Spots />
-        <PricingTable />
+        <PricingTable {...this.props}/>
       </div>
     )
   }
 }
 
 WelcomePage.propTypes = {
+  history: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired,
   spinner: React.PropTypes.bool
 }
@@ -80,4 +81,4 @@ WelcomePage.defaultProps = {
   spinner: false
 }
 
-export default withRouter(WelcomeHeader)
+export default withRouter(WelcomePage)

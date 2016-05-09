@@ -59,7 +59,7 @@ class ModalCoupon extends ModalComponent {
 
       if (coupon && coupon.status === 'waiting') {
         dispatch(ModalActionCreators.close())
-        self.props.history.pushState(null, `/couponregister`)
+        self.props.history.push(`/couponregister`)
       }
       else if (coupon && coupon.status !== 'waiting') {
 
@@ -209,7 +209,7 @@ ModalCoupon.propTypes = {
   type: React.PropTypes.string,
   dispatch: React.PropTypes.func,
   location: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
+  history: React.PropTypes.object.isRequired
 }
 
 export default withRouter(ModalCoupon)

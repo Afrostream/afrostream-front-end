@@ -210,7 +210,7 @@ class ModalLogin extends ModalComponent {
     const {
       dispatch, history
     } = this.props
-    history.pushState(null, '/')
+    history.push('/')
     dispatch(ModalActionCreator.open('show'))
   }
 
@@ -276,7 +276,7 @@ class ModalLogin extends ModalComponent {
             </span>
           </div>
           <div className="spin-message">
-            <span>&nbsp</span>
+            <span />
           </div>
         </div>
       </div>)

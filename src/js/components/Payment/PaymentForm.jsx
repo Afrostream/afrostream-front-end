@@ -291,7 +291,7 @@ class PaymentForm extends React.Component {
         return dispatch(UserActionCreators.getProfile())
       })
       .then(()=> {
-        self.props.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
+        self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch((err) => {
         let message = dict.payment.errors.global
 
@@ -300,7 +300,7 @@ class PaymentForm extends React.Component {
         }
 
         self.disableForm(false, 2, message)
-        self.props.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/error`)
+        self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/error`)
       })
   }
 

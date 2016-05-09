@@ -40,7 +40,7 @@ class HomePage extends React.Component {
         if (status && status !== 'active') {
           donePath = `${donePath}/none/${status}`;
         }
-        history.pushState(null, donePath);
+        history.push(donePath);
       }
     }
   }

@@ -168,7 +168,7 @@ class SlideShow extends React.Component {
         gestureEv.type = 'tap';
         if (touchEvent && e.target) {
           if (e.target.pathname) {
-            return self.props.router.pushState(null, e.target.pathname);
+            return self.props.history.push(e.target.pathname);
           }
         }
       }

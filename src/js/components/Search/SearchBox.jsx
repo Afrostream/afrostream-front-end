@@ -1,4 +1,4 @@
-import React ,{ PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from'react-dom';
 import { connect } from 'react-redux';
 import config from '../../../../config/';
@@ -11,10 +11,10 @@ if (process.env.BROWSER) {
   require('./SearchBox.less');
 }
 
-@connect(({ Search }) => ({Search}))
+@connect(({Search}) => ({Search}))
 class SearchBox extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
 
@@ -22,12 +22,12 @@ class SearchBox extends React.Component {
     hasFocus: false
   };
 
-  debounceSearch = _.debounce(this.search, 400);
+  debounceSearch = _.debounce(::this.search, 400);
 
-  handleFocus() {
+  handleFocus () {
     const {
-      props: { dispatch }
-      } = this;
+      props: {dispatch}
+    } = this;
 
     dispatch(EventActionCreators.pinHeader(true));
     this.setState({
@@ -35,7 +35,7 @@ class SearchBox extends React.Component {
     })
   }
 
-  handleBlur() {
+  handleBlur () {
     let self = this;
     setTimeout(function () {
       let input = self.getInput();
@@ -46,21 +46,21 @@ class SearchBox extends React.Component {
     }, 200);
   }
 
-  getInput() {
-    return ReactDOM.findDOMNode(this.refs.inputSearchMini);
+  getInput () {
+    return this.refs.inputSearchMini;
   }
 
-  goBack() {
+  goBack () {
     let input = this.getInput();
     input.value = '';
     let isInSearch = this.props.router.isActive('recherche');
     this.handleBlur();
     if (isInSearch) {
-      this.props.router.pushState(null, '/');
+      this.props.router.push('/');
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let input = this.getInput();
 
     // Set input to last search
@@ -69,15 +69,15 @@ class SearchBox extends React.Component {
     }
   }
 
-  search() {
+  search () {
     let input = this.getInput().value;
     if (input.length < 3) {
       return;
     }
-    this.props.router.pushState(null, '/recherche', {search: input});
+    this.props.router.push({pathname: '/recherche', query: {search: input}});
   }
 
-  render() {
+  render () {
 
     let fielClass = {
       'search-box': true,

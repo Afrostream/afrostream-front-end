@@ -389,7 +389,8 @@ class PlayerComponent extends Component {
   loadNextVideo () {
     const {
       props: {
-        history
+        history,
+        router
       }
     } = this
 
@@ -398,7 +399,7 @@ class PlayerComponent extends Component {
     clearInterval(this.promiseLoadNextTimeout)
     let nextLink = this.getNextLink()
     this.backNextHandler()
-    history.pushState(null, nextLink)
+    router.push(nextLink)
 
   }
 
