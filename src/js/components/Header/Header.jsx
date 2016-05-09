@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import UserButton from './../User/UserButton';
-import GoBack from './../GoBack/GoBack';
-import SmartBanner from './SmartBanner';
-import classSet from 'classnames';
-import { apps } from '../../../../config';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import UserButton from './../User/UserButton'
+import GoBack from './../GoBack/GoBack'
+import SmartBanner from './SmartBanner'
+import classSet from 'classnames'
+import { apps } from '../../../../config'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./Header.less');
@@ -13,15 +14,6 @@ if (process.env.BROWSER) {
 
 @connect(({Event, User}) => ({Event, User}))
 class Header extends React.Component {
-
-  static contextTypes = {
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired
-  };
-
-  static defaultProps = {
-    pinned: false
-  };
 
   state = {
     pinned: this.props.pinned,
@@ -54,7 +46,9 @@ class Header extends React.Component {
     const {
       props: {
         Event,
-        User
+        User,
+        router,
+        location
       }
     } = this;
 
@@ -65,7 +59,8 @@ class Header extends React.Component {
     if (user) {
       planCode = user.get('planCode');
     }
-    let hasHistory = !this.state.isIOS && user && (this.context.location.pathname.length > 1);
+
+    let hasHistory = !this.state.isIOS && user && (location.pathname.length > 1);
 
     let sliderClasses = {
       'navbar': true,
@@ -73,9 +68,9 @@ class Header extends React.Component {
       'navbar-fixed-top': true,
       'navbar-hidden': hiddenMode,
       'navbar-fixed-color': pinned || this.state.pinned
-      || this.context.history.isActive('recherche')
-      || this.context.history.isActive('compte')
-      || this.context.history.isActive('couponregister')
+      || router.isActive('recherche')
+      || router.isActive('compte')
+      || router.isActive('couponregister')
     };
 
     return (
@@ -95,4 +90,15 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  location: React.PropTypes.object.isRequired,
+  history: React.PropTypes.object.isRequired,
+  pinned: React.PropTypes.bool
+};
+
+Header.defaultProps = {
+  pinned: false
+};
+
+
+export default withRouter(Header)

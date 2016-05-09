@@ -580,7 +580,7 @@ class PlayerComponent extends Component {
 
     //VTT flash vtt.js
     //playerData['vtt.js'] = '';
-    playerData['vtt.js'] = require('afrostream-player/node_modules/video.js/node_modules/videojs-vtt.js/dist/vtt.js');
+    playerData['vtt.js'] = require('../../../../node_modules/videojs-vtt.js/dist/vtt.js');
     // ==== END hacks config
     playerData.dashas.swf = require('afrostream-player/dist/dashas.swf');
 

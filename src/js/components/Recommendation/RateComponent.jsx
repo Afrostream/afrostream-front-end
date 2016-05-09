@@ -1,33 +1,33 @@
-import React ,{ PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import StarRating from 'react-star-rating';
+import StarRating from '../StarRating/StarRating';
 import * as RecoActionCreators from '../../actions/reco';
 if (process.env.BROWSER) {
   require('./RateComponent.less');
 }
 
-@connect(({ User }) => ({User}))
+@connect(({User}) => ({User}))
 class RateComponent extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
   }
 
-  handleRatingClick(e, data) {
+  handleRatingClick (e, data) {
     const {
       props: {dispatch, videoId}
-      } = this;
+    } = this;
     dispatch(RecoActionCreators.rateVideo(data.rating, videoId));
   }
 
-  render() {
+  render () {
     const {
       props: {
         User,
         videoId,
         defaultValue
-        }
-      } = this;
+      }
+    } = this;
 
     const videoData = User.get(`video/${videoId}`);
 

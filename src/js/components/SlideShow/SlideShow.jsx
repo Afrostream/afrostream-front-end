@@ -1,15 +1,16 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import Immutable from 'immutable';
-import { connect } from 'react-redux';
-import { prepareRoute } from '../../decorators';
-import SlidesContainer from './Slides';
-import Pagination from './Pagination';
-import Controls from './Controls';
-import Spinner from '../Spinner/Spinner';
-import * as SlidesActionCreators from '../../actions/slides';
-import * as CategoryActionCreators from '../../actions/category';
-import config from '../../../../config';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import Immutable from 'immutable'
+import { connect } from 'react-redux'
+import { prepareRoute } from '../../decorators'
+import SlidesContainer from './Slides'
+import Pagination from './Pagination'
+import Controls from './Controls'
+import Spinner from '../Spinner/Spinner'
+import * as SlidesActionCreators from '../../actions/slides'
+import * as CategoryActionCreators from '../../actions/category'
+import config from '../../../../config'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./SlideShow.less');
@@ -27,11 +28,7 @@ class SlideShow extends React.Component {
     this.interval = 0;
   }
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
-
-  _extendGestureObj(settings) {
+  _extendGestureObj (settings) {
     var obj = {};
 
     obj.dir = settings.dir;
@@ -171,7 +168,7 @@ class SlideShow extends React.Component {
         gestureEv.type = 'tap';
         if (touchEvent && e.target) {
           if (e.target.pathname) {
-            return self.context.history.pushState(null, e.target.pathname);
+            return self.props.router.pushState(null, e.target.pathname);
           }
         }
       }
@@ -250,4 +247,8 @@ class SlideShow extends React.Component {
   }
 }
 
-export default SlideShow;
+SlideShow.propTypes = {
+  history: React.PropTypes.object
+};
+
+export default withRouter(SlideShow)
