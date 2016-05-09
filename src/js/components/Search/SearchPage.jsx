@@ -1,92 +1,85 @@
-'use strict';
-import React, { PropTypes }  from 'react';
-import { prepareRoute } from '../../decorators';
-import ReactDOM from'react-dom';
-import { connect } from 'react-redux';
-import * as SearchActionCreators from '../../actions/search';
-import Thumb from '../../components/Movies/Thumb';
-import Spinner from '../Spinner/Spinner';
-import {search} from '../../../../config';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import _ from 'lodash';
-import { Link } from 'react-router';
-import shallowEqual from 'react-pure-render/shallowEqual';
-import * as UserActionCreators from '../../actions/user';
+import React, { PropTypes }  from 'react'
+import { prepareRoute } from '../../decorators'
+import { connect } from 'react-redux'
+import { search } from '../../../../config'
+import { Link } from 'react-router'
+import _ from 'lodash'
+import * as SearchActionCreators from '../../actions/search'
+import * as UserActionCreators from '../../actions/user'
+import Spinner from '../Spinner/Spinner'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import shallowEqual from 'react-pure-render/shallowEqual'
+import MoviesSlider from '../Movies/MoviesSlider'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
-  require('./SearchPage.less');
+  require('./SearchPage.less')
 }
 
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return store.dispatch(UserActionCreators.getFavorites('movies'))
 })
 
-@connect(({ Search }) => ({Search}))
+@connect(({Search}) => ({Search}))
 class SearchPage extends React.Component {
 
-  static contextTypes = {
-    location: PropTypes.object.isRequired
-  };
-
-  constructor(props, context) {
-    super(props, context);
+  constructor (props, context) {
+    super(props, context)
   }
 
-  componentDidMount() {
-    this.search();
+  componentDidMount () {
+    this.search()
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps (nextProps) {
     const {
-      context: { location },
-      } = this;
+      props: {location},
+    } = this
 
-    if (!shallowEqual(nextContext.location, location)) {
-      this.search(nextContext.location.query.search);
+    if (!shallowEqual(nextProps.location, location)) {
+      this.search(nextProps.location.query.search)
     }
   }
 
-  search(value) {
+  search (value) {
     const {
-      props: { dispatch }
-      } = this;
+      props: {dispatch, location}
+    } = this
 
-    let search = value || this.context.location.query.search;
+    let search = value || location.query.search
 
     if (!search || search.length < 3) {
-      return;
+      return
     }
 
-    dispatch(SearchActionCreators.fetchMovies(search));
+    dispatch(SearchActionCreators.fetchMovies(search))
   }
 
-  renderMovies(movies, fetching) {
+  renderMovies (movies, fetching) {
     if (!movies || !movies.size) {
-      return fetching ? '' : search.dict['noData'];
+      return fetching ? '' : search.dict['noData']
     }
-    return movies.map((data, i) => {
-      let dataId = data.get('_id');
-      return <Thumb showImage={true}
-                    key={`search-movie-${data.get('_id')}-${i}`} {...{data, dataId}} />
-    }).toJS();
+
+    return <MoviesSlider key={`search-movie`} dataList={movies} axis="y"/>
+
   }
 
-  renderActors(movies) {
+  renderActors (movies) {
     if (!movies || !movies.size) {
-      return '';
+      return ''
     }
 
-    let moviesJs = movies.toJS();
+    let moviesJs = movies.toJS()
     let flatActors = _.flatten(_.map(moviesJs, (movie) => {
-      return movie.actors;
-    }));
+      return movie.actors
+    }))
     let uniqActors = _.uniq(_.map(flatActors, (actor) => {
-      return `${actor.firstName} ${actor.lastName}`;
-    }));
+      return `${actor.firstName} ${actor.lastName}`
+    }))
 
     let actors = _.take(_.map(uniqActors, ((actor, i) =><Link key={`search-actor-${i}`} to="recherche"
                                                               query={{search:actor}}
-                                                              className="actors">{`${actor}`}</Link>)), 10);
+                                                              className="actors">{`${actor}`}</Link>)), 10)
     return (
       <div>
         {actors}
@@ -94,21 +87,21 @@ class SearchPage extends React.Component {
     )
   }
 
-  render() {
+  render () {
     const {
-      props: { Search}
-      } = this;
+      props: {Search}
+    } = this
 
-    const moviesFetched = Search.get(`search`);
-    const moviesFetching = Search.get(`fetching`);
+    const moviesFetched = Search.get(`search`)
+    const moviesFetching = Search.get(`fetching`)
 
-    let hits;
-    let movies;
-    let actors;
+    let hits
+    let movies
+    let actors
     if (moviesFetched) {
-      hits = moviesFetched.get('hits');
-      movies = this.renderMovies(hits, moviesFetching);
-      actors = this.renderActors(hits);
+      hits = moviesFetched.get('hits')
+      movies = this.renderMovies(hits, moviesFetching)
+      actors = this.renderActors(hits)
     }
 
     return (
@@ -120,8 +113,12 @@ class SearchPage extends React.Component {
           {movies}
         </div>
       </ReactCSSTransitionGroup>
-    );
+    )
   }
 }
 
-export default SearchPage;
+SearchPage.propTypes = {
+  location: React.PropTypes.object.isRequired
+}
+
+export default withRouter(SearchPage)

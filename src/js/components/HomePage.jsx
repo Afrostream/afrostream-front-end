@@ -1,9 +1,10 @@
-import React, { PropTypes }  from 'react';
-import { connect } from 'react-redux';
-import { prepareRoute } from '../decorators';
-import WelcomePage from './Welcome/WelcomePage';
-import BrowsePage from './Browse/BrowsePage';
-import * as CategoryActionCreators from '../actions/category';
+import React, { PropTypes }  from 'react'
+import { connect } from 'react-redux'
+import { prepareRoute } from '../decorators'
+import WelcomePage from './Welcome/WelcomePage'
+import BrowsePage from './Browse/BrowsePage'
+import * as CategoryActionCreators from '../actions/category'
+import { withRouter } from 'react-router'
 
 @prepareRoute(async function ({store}) {
   return await * [
@@ -14,10 +15,6 @@ import * as CategoryActionCreators from '../actions/category';
 @connect(({User}) => ({User}))
 class HomePage extends React.Component {
 
-  static contextTypes = {
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired
-  };
 
   componentWillReceiveProps () {
     this.checkAuth()
@@ -29,13 +26,12 @@ class HomePage extends React.Component {
 
   checkAuth () {
     const {
-      context : {location, history},
-      props: {User}
+      props: {location, history, router, User}
     } = this;
 
     const user = User.get('user');
     if (user) {
-      let isCash = history.isActive('cash');
+      let isCash = router.isActive('cash');
       let planCode = user.get('planCode');
       let subscriptionsStatus = user.get('subscriptionsStatus');
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null;
@@ -50,11 +46,10 @@ class HomePage extends React.Component {
   }
 
   renderChildren () {
-    const {props: {children}} = this;
+    const {props: {children, location}} = this;
     return React.Children.map(children, (child) => {
-      let path = this.props.location.pathname;
+      let path = location.pathname;
       let key = path.split('/')[1] || 'root';
-      console.log('child', key);
       return React.cloneElement(child, {
         key
       });
@@ -93,4 +88,10 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+
+HomePage.propTypes = {
+  history: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired
+};
+
+export default withRouter(HomePage)

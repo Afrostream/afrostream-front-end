@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import config from '../../../../config';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import Slider from '../Slider/Slider';
-import LazyLoader from './LazyLoader';
 import Thumb from '../Movies/Thumb';
 import ReactList from 'react-list';
 
@@ -17,39 +15,76 @@ class MoviesSlider extends React.Component {
     dataList: PropTypes.instanceOf(Immutable.List).isRequired,
     selectedId: React.PropTypes.string,
     label: React.PropTypes.string,
-    slug: React.PropTypes.string
+    slug: React.PropTypes.string,
+    axis: React.PropTypes.string,
+    className: React.PropTypes.string
   };
 
   static defaultProps = {
     selectedId: null,
     label: '',
-    slug: ''
+    slug: '',
+    axis: 'x',
+    className: 'movies-data-list'
   };
 
-  renderItem(index) {
+  itemSizeGetter (index) {
     const {
       props: {
-        dataList,thumbW,thumbH,type
-        }
-      } = this;
+        dataList
+      }
+    } = this;
 
     let data = dataList.get(index);
+    let isAdSpot = data.get('adSpot');
+    return isAdSpot ? 240 : 160;
+  }
+
+  renderBlock (data) {
+    let isAdSpot = data.get('adSpot');
     let dataId = data.get('_id');
+    if (isAdSpot) {
+      return (
+        <Thumb
+          id={dataId}
+          thumbW={240} thumbH={465} type="spot"
+          fit="min" crop="faces"
+          key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
+      );
+    }
+
     return (
       <Thumb
         id={dataId}
-        key={`data-thumb-${index}`} {...this.props} {...{data, dataId}}  />
+        key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
     );
   }
 
-  render() {
+  renderItem (index) {
+    const {
+      props: {
+        dataList
+      }
+    } = this;
+
+    let data = dataList.get(index);
+    if (data instanceof Immutable.Map) {
+      return this.renderBlock(data);
+    }
+    return (
+      <div className="block" key={`data-block-${index}`}>{data.map((item)=>this.renderBlock(item))}</div>
+    );
+  }
+
+  render () {
     const {
       props: {
         dataList,
         selectedId,
         label,
-        slug}
-      } = this;
+        slug
+      }
+    } = this;
 
     if (!dataList || !dataList.size) {
       return (<div/>);
@@ -65,19 +100,19 @@ class MoviesSlider extends React.Component {
     }
 
     return (
-      <div className="movies-data-list">
+      <div className={this.props.className}>
         {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
         {label ? <div className="movies-list__selection">{label}</div> : ''}
-        <Slider>
+        <Slider {...this.props}>
           <div className="slider-container">
             <ReactList
               ref="react-list"
-              useTranslate3d
+              useTranslate3d={true}
               initialIndex={index}
-              axis="x"
+              axis={this.props.axis}
               itemRenderer={::this.renderItem}
               length={dataList.size}
-              type='uniform'
+              type={this.props.axis === 'x' ? 'variable' : 'uniform' }
             />
           </div>
         </Slider>

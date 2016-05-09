@@ -1,0 +1,34 @@
+@import (reference) '../../styles/config.less';
+
+.no-match {
+  display: inline-block;
+  position: relative;
+  background-color: @background-color-base;
+  .fullHeight();
+  padding: @header-height @app-padding @app-padding @app-padding;
+  float: none;
+  height: 100%;
+  width: 100%;
+  vertical-align: middle;
+  min-height: 100vh;
+  //Firefox fix
+  height: 100vh;
+  .movie-background {
+    position: absolute;
+    .fullHeight();
+    background-image: url(../../assets/images/default/1920x815.jpg);
+    background-size: cover;
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+  }
+
+  .label-center {
+    position: relative;
+    text-align: center;
+    font-family: @font-heavy;
+    font-size: 2.5em;
+    width: 100%;
+    padding-top: 150px;
+  }
+
+}

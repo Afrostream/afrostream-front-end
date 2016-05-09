@@ -1,43 +1,40 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import { connect } from 'react-redux';
-import { prepareRoute } from '../../decorators';
-import shallowEqual from 'react-pure-render/shallowEqual';
-import classSet from 'classnames';
-import { dict, gocarlessApi, recurlyApi } from '../../../../config/client';
-import * as BillingActionCreators from '../../actions/billing';
-import * as UserActionCreators from '../../actions/user';
-import * as EventActionCreators from '../../actions/event';
-import Spinner from '../Spinner/Spinner';
-import GiftDetails from './GiftDetails';
-import CashwayEndPage from '../Cashway/CashwayEndPage';
-import PaymentSuccess from './PaymentSuccess';
-import PaymentError from './PaymentError';
-import PaymentMethod from './PaymentMethod';
-import Query from 'dom-helpers/query';
-import DomClass from 'dom-helpers/class';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import { connect } from 'react-redux'
+import { prepareRoute } from '../../decorators'
+import shallowEqual from 'react-pure-render/shallowEqual'
+import classSet from 'classnames'
+import { dict, gocarlessApi, recurlyApi } from '../../../../config/client'
+import * as BillingActionCreators from '../../actions/billing'
+import * as UserActionCreators from '../../actions/user'
+import * as EventActionCreators from '../../actions/event'
+import Spinner from '../Spinner/Spinner'
+import GiftDetails from './GiftDetails'
+import CashwayEndPage from '../Cashway/CashwayEndPage'
+import PaymentSuccess from './PaymentSuccess'
+import PaymentError from './PaymentError'
+import PaymentMethod from './PaymentMethod'
+import Query from 'dom-helpers/query'
+import DomClass from 'dom-helpers/class'
 import scriptLoader from '../../lib/script-loader'
+import { withRouter } from 'react-router'
 
-import _ from 'lodash';
+import _ from 'lodash'
 if (process.env.BROWSER) {
-  require('./PaymentForm.less');
+  require('./PaymentForm.less')
 }
 
 @connect(({User, Billing}) => ({User, Billing}))
 @prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true))
-  ];
+  ]
 })
 class PaymentForm extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
-
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
 
   state = {
     hasLib: true,
@@ -45,49 +42,50 @@ class PaymentForm extends React.Component {
     loading: false,
     isGift: false,
     pageHeader: dict.payment.header
-  };
+  }
 
   hasPlan () {
 
     const {
-      context : {history},
       props: {
+        history,
+        router,
         Billing,
         params: {planCode}
       }
-    } = this;
+    } = this
 
-    let isCash = history.isActive('cash');
+    let isCash = router.isActive('cash')
 
-    let planCodes = Billing.get(`internalPlans/${isCash ? 'cashway' : 'common'}`);
+    let planCodes = Billing.get(`internalPlans/${isCash ? 'cashway' : 'common'}`)
 
     if (!planCodes) {
-      return false;
+      return false
     }
 
     let plan = planCodes.find((plan) => {
-      return planCode === plan.get('internalPlanUuid');
-    });
+      return planCode === plan.get('internalPlanUuid')
+    })
 
-    return plan && plan;
+    return plan && plan
   }
 
   setupPlan () {
-    let currentPlan = this.hasPlan();
+    let currentPlan = this.hasPlan()
     if (!currentPlan) {
-      return;
+      return
     }
 
-    let internalPlanUuid = currentPlan.get('internalPlanUuid');
+    let internalPlanUuid = currentPlan.get('internalPlanUuid')
     this.setState({
       isGift: internalPlanUuid === 'afrostreamgift',
       internalPlanUuid: internalPlanUuid,
       currentPlan: currentPlan
-    });
+    })
   }
 
   componentDidMount () {
-    this.setupPlan();
+    this.setupPlan()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -95,16 +93,16 @@ class PaymentForm extends React.Component {
       props: {
         Billing
       }
-    } = this;
+    } = this
 
     if (nextProps.isScriptLoaded && !this.props.isScriptLoaded) { // load finished
       this.setState({
         hasLib: nextProps.isScriptLoadSucceed
-      });
+      })
     }
 
     if (!shallowEqual(nextProps.Billing, Billing)) {
-      this.setupPlan();
+      this.setupPlan()
     }
   }
 
@@ -114,13 +112,13 @@ class PaymentForm extends React.Component {
       props: {
         User
       }
-    } = this;
+    } = this
 
 
-    const user = User.get('user').toJS();
+    const user = User.get('user').toJS()
 
-    let firstName = user && user.facebook && user.facebook.first_name || user && user.first_name;
-    let lastName = user && user.facebook && user.facebook.last_name || user && user.last_name;
+    let firstName = user && user.facebook && user.facebook.first_name || user && user.first_name
+    let lastName = user && user.facebook && user.facebook.last_name || user && user.last_name
 
     return (<div className="row">
       <div className="form-group col-md-6">
@@ -149,14 +147,14 @@ class PaymentForm extends React.Component {
           placeholder={dict.payment.lastName} required
           disabled={this.state.disabledForm}/>
       </div>
-    </div>);
+    </div>)
   }
 
   renderGift () {
     if (!this.state.isGift) {
-      return;
+      return
     }
-    return <GiftDetails ref="giftDetails" isVisible={this.state.isGift}/>;
+    return <GiftDetails ref="giftDetails" isVisible={this.state.isGift}/>
   }
 
   renderSubmit () {
@@ -171,7 +169,7 @@ class PaymentForm extends React.Component {
         >{dict.planCodes.action}
         </button>
       </div>
-    </div>);
+    </div>)
   }
 
   renderDroits () {
@@ -181,7 +179,7 @@ class PaymentForm extends React.Component {
       'col-md-12': true,
       'checkbox': true,
       'checkbox-has-error': this.state.error ? ~this.state.error.fields.indexOf('droits') : false
-    };
+    }
 
     return (<div className="row">
       <div className={classSet(checkClass)}>
@@ -198,7 +196,7 @@ class PaymentForm extends React.Component {
                                                                        target="_blank">{dict.payment.droits.link}</a>
         </div>
       </div>
-    </div>);
+    </div>)
   }
 
   renderCGU () {
@@ -208,7 +206,7 @@ class PaymentForm extends React.Component {
       'col-md-12': true,
       'checkbox': true,
       'checkbox-has-error': this.state.error ? ~this.state.error.fields.indexOf('cgu') : false
-    };
+    }
 
     return (<div className="row">
       <div className={classSet(checkClass)}>
@@ -226,7 +224,7 @@ class PaymentForm extends React.Component {
                                                                     target="_blank">{dict.payment.cgu.link}</a>
         </div>
       </div>
-    </div>);
+    </div>)
   }
 
   async onSubmit (e) {
@@ -234,42 +232,42 @@ class PaymentForm extends React.Component {
       props: {
         User
       }
-    } = this;
+    } = this
 
-    e.preventDefault();
+    e.preventDefault()
 
-    const self = this;
-    const user = User.get('user');
+    const self = this
+    const user = User.get('user')
 
     this.setState({
       error: null
-    });
+    })
 
-    this.disableForm(true);
+    this.disableForm(true)
 
     if (!this.refs.cgu.checked || !this.refs.droits.checked) {
       return this.error({
         message: dict.payment.errors.checkbox,
         fields: ['cgu', 'droits']
-      });
+      })
     }
 
     let billingInfo = {
       internalPlanUuid: this.state.internalPlanUuid,
       firstName: this.refs.firstName.value,
       lastName: this.refs.lastName.value
-    };
+    }
 
     if (self.state.isGift) {
       billingInfo = _.merge(billingInfo, this.refs.giftDetails.value())
     }
 
     try {
-      let subBillingInfo = await this.refs.methodForm.submit(billingInfo, this.state.currentPlan);
-      billingInfo = _.merge(billingInfo, subBillingInfo);
-      await this.submitSubscription(billingInfo);
+      let subBillingInfo = await this.refs.methodForm.submit(billingInfo, this.state.currentPlan)
+      billingInfo = _.merge(billingInfo, subBillingInfo)
+      await this.submitSubscription(billingInfo)
     } catch (err) {
-      self.error(err);
+      self.error(err)
     }
   }
 
@@ -278,53 +276,55 @@ class PaymentForm extends React.Component {
     const {
       props: {
         dispatch,
+        history,
+        router,
         params: {planCode}
       }
-    } = this;
+    } = this
 
-    const self = this;
-    let isCash = this.context.history.isActive('cash');
+    const self = this
+    let isCash = router.isActive('cash')
 
     return await dispatch(BillingActionCreators.subscribe(formData, self.state.isGift)).then(() => {
-        self.disableForm(false, 1);
+        self.disableForm(false, 1)
         //On merge les infos en faisant un new call a getProfile
-        return dispatch(UserActionCreators.getProfile());
+        return dispatch(UserActionCreators.getProfile())
       })
       .then(()=> {
-        self.context.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`);
+        self.props.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch((err) => {
-        let message = dict.payment.errors.global;
+        let message = dict.payment.errors.global
 
         if (err.response && err.response.body) {
-          message = err.response.body.error;
+          message = err.response.body.error
         }
 
-        self.disableForm(false, 2, message);
-        self.context.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/error`);
-      });
+        self.disableForm(false, 2, message)
+        self.props.history.pushState(null, `${isCash ? '/cash' : ''}/select-plan/${planCode}/error`)
+      })
   }
 
   // A simple error handling function to expose errors to the customer
   error (err) {
-    let formatError = err;
+    let formatError = err
     if (err instanceof Array) {
-      formatError = err[0];
+      formatError = err[0]
     }
-    this.disableForm(false);
+    this.disableForm(false)
     this.setState({
       error: {
         message: formatError.message || dict.payment.errors.fields,
         fields: formatError.fields || []
       }
-    });
+    })
 
-    const containerDom = ReactDOM.findDOMNode(this);
+    const containerDom = ReactDOM.findDOMNode(this)
     _.forEach(formatError.fields, (errorField)=> {
-      let fields = Query.querySelectorAll(containerDom, `[data-billing=${errorField}]`);
+      let fields = Query.querySelectorAll(containerDom, `[data-billing=${errorField}]`)
       _.forEach(fields, (field)=> {
-        DomClass.addClass(field, 'has-error');
-      });
-    });
+        DomClass.addClass(field, 'has-error')
+      })
+    })
   }
 
   disableForm (disabled, status = 0, message = '') {
@@ -333,19 +333,19 @@ class PaymentForm extends React.Component {
       message: message,
       subscriptionStatus: status,
       loading: disabled
-    });
-    const containerDom = ReactDOM.findDOMNode(this);
-    let fields = Query.querySelectorAll(containerDom, '[data-billing]');
+    })
+    const containerDom = ReactDOM.findDOMNode(this)
+    let fields = Query.querySelectorAll(containerDom, '[data-billing]')
     _.forEach(fields, (field)=> {
-      DomClass.removeClass(field, 'has-error');
-    });
+      DomClass.removeClass(field, 'has-error')
+    })
   }
 
   renderPaymentMethod (planLabel) {
     return (
       <PaymentMethod ref="methodForm" isGift={this.state.isGift}
                      planCode={this.state.internalPlanUuid} {...this.props}
-                     planLabel={planLabel}/>);
+                     planLabel={planLabel}/>)
   }
 
   renderForm () {
@@ -353,13 +353,13 @@ class PaymentForm extends React.Component {
     var spinnerClasses = {
       'spinner-payment': true,
       'spinner-loading': this.state.loading
-    };
-
-    if (!this.state.currentPlan) {
-      return <div />;
     }
 
-    const planLabel = `${dict.planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`;
+    if (!this.state.currentPlan) {
+      return <div />
+    }
+
+    const planLabel = `${dict.planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
 
     return (
       <div className="payment-wrapper">
@@ -386,7 +386,7 @@ class PaymentForm extends React.Component {
           </form>
         </div>
       </div>
-    );
+    )
   }
 
   render () {
@@ -394,7 +394,7 @@ class PaymentForm extends React.Component {
       props: {
         params: {status}
       }
-    } = this;
+    } = this
 
     if (!this.state.hasLib) {
       return (<PaymentError
@@ -402,13 +402,13 @@ class PaymentForm extends React.Component {
         message={dict.payment.errors.noLib.message}
         link={dict.payment.errors.noLib.message}
         linkMessage={dict.payment.errors.noLib.linkMessage}
-      />);
+      />)
     }
 
     switch (status) {
       case 'success':
-        return (<PaymentSuccess isGift={this.state.isGift}/>);
-        break;
+        return (<PaymentSuccess isGift={this.state.isGift}/>)
+        break
       case 'expired':
         return (
           <div className="payment-wrapper">
@@ -418,8 +418,8 @@ class PaymentForm extends React.Component {
                           linkMessage={dict.payment.expired.linkMessage}
                           links={dict.payment.expired.links}
             />
-          </div>);
-        break;
+          </div>)
+        break
       case 'future':
         return (
           <div className="payment-wrapper">
@@ -430,21 +430,25 @@ class PaymentForm extends React.Component {
                           links={dict.payment.future.links}
             />
             <CashwayEndPage />
-          </div>);
-        break;
+          </div>)
+        break
       case 'error':
         return (
           <div className="payment-wrapper">
             <PaymentError message={this.state.message}/>
-          </div>);
-        break;
+          </div>)
+        break
       default:
-        return this.renderForm();
-        break;
+        return this.renderForm()
+        break
     }
   }
 }
 
-export default scriptLoader(
+PaymentForm.propTypes = {
+  history: React.PropTypes.object.isRequired
+}
+
+export default  scriptLoader(
   [recurlyApi, gocarlessApi]
-)(PaymentForm)
+)(withRouter(PaymentForm))

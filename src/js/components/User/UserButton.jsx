@@ -7,6 +7,7 @@ import * as EventActionCreators from '../../actions/event';
 import { Link } from 'react-router';
 import SearchInput from './../Search/SearchBox';
 import FavoritesButton from './../Favorites/FavoritesButton';
+import BrowseButton from './../Browse/BrowseButton';
 import { dict } from '../../../../config';
 
 if (process.env.BROWSER) {
@@ -57,6 +58,11 @@ class UserButton extends React.Component {
           <FavoritesButton/>
         </li>);
         break;
+      case 'browse':
+        el = (
+          <BrowseButton/>
+        );
+        break;
       default:
         el = '';
         break;
@@ -90,7 +96,7 @@ class UserButton extends React.Component {
                      className="icon-user"/>
               </a>
             </li>
-            {this.getUserConnectedButtons(user, 'favorites')}
+            {this.getUserConnectedButtons(user, 'browse')}
             {this.getUserConnectedButtons(user, 'search')}
 
           </ul>

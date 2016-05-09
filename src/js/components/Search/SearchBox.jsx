@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import config from '../../../../config/';
 import classSet from 'classnames';
 import { Link } from 'react-router';
-
+import { withRouter } from 'react-router'
 import * as EventActionCreators from '../../actions/event';
 
 if (process.env.BROWSER) {
@@ -17,10 +17,6 @@ class SearchBox extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  static contextTypes = {
-    history: PropTypes.object.isRequired
-  };
 
   state = {
     hasFocus: false
@@ -57,10 +53,10 @@ class SearchBox extends React.Component {
   goBack() {
     let input = this.getInput();
     input.value = '';
-    let isInSearch = this.context.history.isActive('recherche');
+    let isInSearch = this.props.router.isActive('recherche');
     this.handleBlur();
     if (isInSearch) {
-      this.context.history.pushState(null, '/');
+      this.props.router.pushState(null, '/');
     }
   }
 
@@ -78,14 +74,14 @@ class SearchBox extends React.Component {
     if (input.length < 3) {
       return;
     }
-    this.context.history.pushState(null, '/recherche', {search: input});
+    this.props.router.pushState(null, '/recherche', {search: input});
   }
 
   render() {
 
     let fielClass = {
       'search-box': true,
-      'has-focus': this.context.history.isActive('recherche') || this.state.hasFocus
+      'has-focus': this.props.router.isActive('recherche') || this.state.hasFocus
     };
 
     return (
@@ -104,4 +100,8 @@ class SearchBox extends React.Component {
   }
 }
 
-export default SearchBox;
+SearchBox.propTypes = {
+  history: React.PropTypes.object
+};
+
+export default withRouter(SearchBox)

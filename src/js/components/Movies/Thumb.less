@@ -1,21 +1,15 @@
 @import (reference) '../../../styles/config.less';
 
 .thumb {
-  @thumb-width: 140px;
-  @thumb-height: 200px;
-  @thumb-height-episode: 120px;
-  @thumb-margin: 10px;
   padding: @thumb-margin;
-  display: inline-block;
   position: relative;
   text-align: left;
   vertical-align: top;
   overflow: hidden;
-  //height: @thumb-height + (@thumb-margin * 2);
   width: @thumb-width + (@thumb-margin * 2);
   flex: 1;
   &.episode {
-    width: 210px;
+    width: @thumb-width-episode;
     a {
       .thumb-background {
         height: @thumb-height-episode;
@@ -27,6 +21,27 @@
     .thumb-buttons {
       top: 85px;
       right: 13px;
+    }
+  }
+  &.spot {
+    width: @thumb-width-adspot;
+    a {
+      .thumb-background {
+        height: @thumb-height-adspot;
+      }
+      .thumb-info {
+        position: absolute;
+        bottom: 0;
+        padding: 10px;
+        .thumb-info__title {
+          font-family: @font-heavy;
+          font-size: 4em;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+    .thumb-buttons {
+      display: none;
     }
   }
   a {
@@ -63,7 +78,7 @@
       }
     }
     .thumb-background {
-      border: 1px solid #FFFFFF;
+      //border: 1px solid #FFFFFF;
       position: relative;
       top: 0;
       left: 0;
@@ -109,7 +124,7 @@
         opacity: 0;
       }
       &:hover {
-        border: 1px solid #FFFFFF;
+        //border: 1px solid #FFFFFF;
         &:before {
           .transition(opacity 0.1s linear);
           opacity: 1;
@@ -120,7 +135,7 @@
   .thumb-buttons {
     position: absolute;
     z-index: 3;
-    top: 165px;
+    bottom: 10px;
     right: 11px;
     .btn {
       margin: 5px 5px 5px 0px;
@@ -134,7 +149,7 @@
       &:hover {
         a {
           .thumb-background {
-            border-color: @color-yellow;
+            //border-color: @color-yellow;
             .transition(opacity 0.1s linear);
             i {
               opacity: 0.6;
