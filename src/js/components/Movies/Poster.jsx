@@ -27,12 +27,7 @@ class Poster extends LoadVideo {
     }
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
-    //if (!shallowEqual(nextContext, this.context)) {
-    //  this.setState({
-    //    status: nextProps.data ? Status.LOADING : Status.PENDING
-    //  });
-    //}
+  componentWillReceiveProps (nextProps) {
     if (!shallowEqual(nextProps.data, this.props.data)) {
       if (nextProps.data) {
         this.setState({

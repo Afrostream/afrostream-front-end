@@ -1,54 +1,55 @@
-import React from 'react';
-import ModalGeoWall from './ModalGeoWall';
-import * as WaitingUsersActionCreators from '../../actions/waitingUsers';
-import classNames from 'classnames';
+import React from 'react'
+import ModalGeoWall from './ModalGeoWall'
+import * as WaitingUsersActionCreators from '../../actions/waitingUsers'
+import classNames from 'classnames'
+import { withRouter } from 'react-router'
 
 class ModalNewsletter extends ModalGeoWall {
 
   state = {
     sended: false,
     email: ''
-  };
+  }
 
   handleClose (e) {
     const {
-      context : {history}
-    } = this;
+      props : {history}
+    } = this
 
-    history.pushState(null, '/');
-    super.handleClose(e);
+    history.pushState(null, '/')
+    super.handleClose(e)
   }
 
   initState () {
     this.setState({
       sended: false,
       email: ''
-    });
+    })
   }
 
   handleSubmit (e) {
-    e.stopPropagation();
-    e.preventDefault();
-    const email = this.refs.email.value;
+    e.stopPropagation()
+    e.preventDefault()
+    const email = this.refs.email.value
     this.props.dispatch(WaitingUsersActionCreators.create(email)).then(()=> {
       this.setState({
         sended: true,
         email: email
-      });
-      setTimeout(::this.initState, 10000);
-    });
+      })
+      setTimeout(::this.initState, 10000)
+    })
   }
 
   render () {
     if (!this.state.sended) {
-      return super.render();
+      return super.render()
     }
 
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
       'hide': !this.props.closable
-    });
+    })
 
     return (
       <div className="lock-container">
@@ -78,9 +79,13 @@ class ModalNewsletter extends ModalGeoWall {
           </div>
         </div>
       </div>
-    );
+    )
 
   }
 }
 
-export default ModalNewsletter;
+ModalNewsletter.propTypes = {
+  history: React.PropTypes.object.isRequired
+}
+
+export default withRouter(ModalNewsletter)

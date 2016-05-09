@@ -9,7 +9,7 @@ import { apps } from '../../../../config'
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
-  require('./Header.less');
+  require('./Header.less')
 }
 
 @connect(({Event, User}) => ({Event, User}))
@@ -18,26 +18,26 @@ class Header extends React.Component {
   state = {
     pinned: this.props.pinned,
     isIOS: false
-  };
+  }
 
   componentDidMount () {
-    window.addEventListener('scroll', this.updatePin.bind(this));
+    window.addEventListener('scroll', this.updatePin.bind(this))
     this.setState({
       isIOS: window.navigator.userAgent.match(/(iPod|iPhone|iPad)/i)
-    });
-    this.updatePin();
+    })
+    this.updatePin()
   }
 
   componentWillUnmount () {
-    window.removeEventListener('scroll', this.updatePin.bind(this));
+    window.removeEventListener('scroll', this.updatePin.bind(this))
   }
 
   updatePin () {
-    let pin = window.pageYOffset;
+    let pin = window.pageYOffset
     if (pin !== this.state.pinned) {
       this.setState({
         pinned: !!(pin)
-      });
+      })
     }
   }
 
@@ -50,17 +50,17 @@ class Header extends React.Component {
         router,
         location
       }
-    } = this;
+    } = this
 
-    const hiddenMode = !Event.get('userActive');
-    const pinned = Event.get('pinHeader');
-    const user = User.get('user');
-    let planCode;
+    const hiddenMode = !Event.get('userActive')
+    const pinned = Event.get('pinHeader')
+    const user = User.get('user')
+    let planCode
     if (user) {
-      planCode = user.get('planCode');
+      planCode = user.get('planCode')
     }
 
-    let hasHistory = !this.state.isIOS && user && (location.pathname.length > 1);
+    let hasHistory = !this.state.isIOS && user && (location.pathname.length > 1)
 
     let sliderClasses = {
       'navbar': true,
@@ -71,14 +71,14 @@ class Header extends React.Component {
       || router.isActive('recherche')
       || router.isActive('compte')
       || router.isActive('couponregister')
-    };
+    }
 
     return (
       <div className={classSet(sliderClasses)}>
         {planCode ? <SmartBanner {...apps.params}/> : ''}
         <div className="container-fluid">
           <nav className="nav-collapse" role="navigation">
-            { hasHistory ? <GoBack /> : ''}
+            { hasHistory ? <GoBack {...this.props}/> : ''}
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
@@ -86,7 +86,7 @@ class Header extends React.Component {
           </nav>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -94,11 +94,10 @@ Header.propTypes = {
   location: React.PropTypes.object.isRequired,
   history: React.PropTypes.object.isRequired,
   pinned: React.PropTypes.bool
-};
+}
 
 Header.defaultProps = {
   pinned: false
-};
-
+}
 
 export default withRouter(Header)

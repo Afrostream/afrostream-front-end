@@ -1,19 +1,19 @@
-'use strict';
-import React, { PropTypes }  from 'react';
-import { prepareRoute } from '../../decorators';
-import { connect } from 'react-redux';
-import { search } from '../../../../config';
-import { Link } from 'react-router';
-import _ from 'lodash';
-import * as SearchActionCreators from '../../actions/search';
-import * as UserActionCreators from '../../actions/user';
-import Spinner from '../Spinner/Spinner';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import shallowEqual from 'react-pure-render/shallowEqual';
-import MoviesSlider from '../Movies/MoviesSlider';
+import React, { PropTypes }  from 'react'
+import { prepareRoute } from '../../decorators'
+import { connect } from 'react-redux'
+import { search } from '../../../../config'
+import { Link } from 'react-router'
+import _ from 'lodash'
+import * as SearchActionCreators from '../../actions/search'
+import * as UserActionCreators from '../../actions/user'
+import Spinner from '../Spinner/Spinner'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import shallowEqual from 'react-pure-render/shallowEqual'
+import MoviesSlider from '../Movies/MoviesSlider'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
-  require('./SearchPage.less');
+  require('./SearchPage.less')
 }
 
 @prepareRoute(async function ({store}) {
@@ -23,45 +23,41 @@ if (process.env.BROWSER) {
 @connect(({Search}) => ({Search}))
 class SearchPage extends React.Component {
 
-  static contextTypes = {
-    location: PropTypes.object.isRequired
-  };
-
   constructor (props, context) {
-    super(props, context);
+    super(props, context)
   }
 
   componentDidMount () {
-    this.search();
+    this.search()
   }
 
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps (nextProps) {
     const {
-      context: {location},
-    } = this;
+      props: {location},
+    } = this
 
-    if (!shallowEqual(nextContext.location, location)) {
-      this.search(nextContext.location.query.search);
+    if (!shallowEqual(nextProps.location, location)) {
+      this.search(nextProps.location.query.search)
     }
   }
 
   search (value) {
     const {
-      props: {dispatch}
-    } = this;
+      props: {dispatch, location}
+    } = this
 
-    let search = value || this.context.location.query.search;
+    let search = value || location.query.search
 
     if (!search || search.length < 3) {
-      return;
+      return
     }
 
-    dispatch(SearchActionCreators.fetchMovies(search));
+    dispatch(SearchActionCreators.fetchMovies(search))
   }
 
   renderMovies (movies, fetching) {
     if (!movies || !movies.size) {
-      return fetching ? '' : search.dict['noData'];
+      return fetching ? '' : search.dict['noData']
     }
 
     return <MoviesSlider key={`search-movie`} dataList={movies} axis="y"/>
@@ -70,20 +66,20 @@ class SearchPage extends React.Component {
 
   renderActors (movies) {
     if (!movies || !movies.size) {
-      return '';
+      return ''
     }
 
-    let moviesJs = movies.toJS();
+    let moviesJs = movies.toJS()
     let flatActors = _.flatten(_.map(moviesJs, (movie) => {
-      return movie.actors;
-    }));
+      return movie.actors
+    }))
     let uniqActors = _.uniq(_.map(flatActors, (actor) => {
-      return `${actor.firstName} ${actor.lastName}`;
-    }));
+      return `${actor.firstName} ${actor.lastName}`
+    }))
 
     let actors = _.take(_.map(uniqActors, ((actor, i) =><Link key={`search-actor-${i}`} to="recherche"
                                                               query={{search:actor}}
-                                                              className="actors">{`${actor}`}</Link>)), 10);
+                                                              className="actors">{`${actor}`}</Link>)), 10)
     return (
       <div>
         {actors}
@@ -94,18 +90,18 @@ class SearchPage extends React.Component {
   render () {
     const {
       props: {Search}
-    } = this;
+    } = this
 
-    const moviesFetched = Search.get(`search`);
-    const moviesFetching = Search.get(`fetching`);
+    const moviesFetched = Search.get(`search`)
+    const moviesFetching = Search.get(`fetching`)
 
-    let hits;
-    let movies;
-    let actors;
+    let hits
+    let movies
+    let actors
     if (moviesFetched) {
-      hits = moviesFetched.get('hits');
-      movies = this.renderMovies(hits, moviesFetching);
-      actors = this.renderActors(hits);
+      hits = moviesFetched.get('hits')
+      movies = this.renderMovies(hits, moviesFetching)
+      actors = this.renderActors(hits)
     }
 
     return (
@@ -117,8 +113,12 @@ class SearchPage extends React.Component {
           {movies}
         </div>
       </ReactCSSTransitionGroup>
-    );
+    )
   }
 }
 
-export default SearchPage;
+SearchPage.propTypes = {
+  location: React.PropTypes.object.isRequired
+}
+
+export default withRouter(SearchPage)

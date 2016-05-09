@@ -26,12 +26,12 @@ class HomePage extends React.Component {
 
   checkAuth () {
     const {
-      props: {location, history, User}
+      props: {location, history, router, User}
     } = this;
 
     const user = User.get('user');
     if (user) {
-      let isCash = history.isActive('cash');
+      let isCash = router.isActive('cash');
       let planCode = user.get('planCode');
       let subscriptionsStatus = user.get('subscriptionsStatus');
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null;
