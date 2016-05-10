@@ -175,7 +175,7 @@
   box-shadow: 0 0 2px rgba(0, 0, 0, .16), 0 2px 4px rgba(0, 0, 0, .32);
   padding: 0;
   z-index: 1000;
-  width: 150px;
+  width: 165px;
 }
 
 .chat_option ul li {
@@ -371,7 +371,16 @@
   z-index: 999;
 }
 
-.chat .chat_converse .chat_msg_item .chat_avatar {
+.chat .user_list .chat_msg_item {
+  position: relative;
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  float: left;
+}
+
+.chat .chat_msg_item .chat_avatar {
   position: absolute;
   top: 0;
   box-shadow: 0 0 2px rgba(0, 0, 0, .14), 0 2px 4px rgba(0, 0, 0, .28);
@@ -387,38 +396,52 @@
   background: rgba(0, 0, 0, 0.6);
 }
 
-.chat .chat_converse .chat_msg_item .chat_avatar {
+.chat .chat_msg_item .chat_avatar {
   width: 40px;
   height: 40px;
   text-align: center;
   border-radius: 50%;
 }
 
-.chat .chat_converse .chat_msg_item .chat_avatar > i {
+.chat .user_list .chat_msg_item .chat_avatar {
+  width: 30px;
+  height: 30px;
+}
+
+.chat .chat_msg_item .chat_avatar > i {
   font-size: 22px;
   line-height: 40px;
   transition: all .3s ease-in-out;
 }
 
-.chat .chat_converse .chat_msg_item_user .chat_avatar > img {
+.chat .chat_msg_item_user .chat_avatar > img {
   width: inherit;
   height: inherit;
   border-radius: 50%;
 }
 
-.chat .chat_converse .chat_msg_item_user .chat_avatar > img {
+.chat .chat_msg_item_user .chat_avatar > img {
   width: inherit;
   height: inherit;
   border-radius: 50%;
 }
 
-.chat .chat_converse .chat_avatar > img {
+.chat .chat_avatar > img {
   max-width: 40px;
   max-height: 40px;
   border-radius: 50%;
 }
 
-.chat .chat_converse .chat_msg_item.chat_msg_item_admin {
+.chat .user_list .chat_avatar > img {
+  max-width: 30px;
+  max-height: 30px;
+  width: inherit;
+  height: inherit;
+  vertical-align: top;
+  border-radius: 50%;
+}
+
+.chat .chat_msg_item.chat_msg_item_admin {
   margin-left: 60px;
   float: left;
   background: rgba(255, 255, 255, 0.4);
