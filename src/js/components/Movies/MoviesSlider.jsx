@@ -28,7 +28,7 @@ class MoviesSlider extends React.Component {
     className: 'movies-data-list'
   };
 
-  itemSizeGetter (index) {
+  renderSize (index) {
     const {
       props: {
         dataList
@@ -47,6 +47,7 @@ class MoviesSlider extends React.Component {
       return (
         <Thumb
           id={dataId}
+          preload={true}
           thumbW={240} thumbH={465} type="spot"
           fit="min" crop="faces"
           key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
@@ -55,6 +56,7 @@ class MoviesSlider extends React.Component {
 
     return (
       <Thumb
+        preload={true}
         id={dataId}
         key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
     );

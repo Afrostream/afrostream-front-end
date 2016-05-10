@@ -18,17 +18,17 @@ if (process.env.BROWSER) {
 }
 
 
-@connect(({ Event }) => ({Event}))
+@connect(({Event}) => ({Event}))
 class GoBack extends React.Component {
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context);
   }
 
-  navigationGoBack (event) {
+  navigationGoBack () {
     this.props.router.goBack()
   }
 
-  render() {
+  render () {
     let returnClassesSet = {
       'return-btn': true,
       'btn': true,

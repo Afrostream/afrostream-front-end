@@ -27,15 +27,15 @@ class Poster extends LoadVideo {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (!shallowEqual(nextProps.data, this.props.data)) {
-      if (nextProps.data) {
-        this.setState({
-          status: nextProps.data ? Status.LOADING : Status.PENDING
-        });
-      }
-    }
-  }
+  // componentWillReceiveProps (nextProps) {
+  //   if (!shallowEqual(nextProps.data, this.props.data)) {
+  //     if (nextProps.data) {
+  //       this.setState({
+  //         status: nextProps.data ? Status.LOADING : Status.PENDING
+  //       });
+  //     }
+  //   }
+  // }
 
   componentDidUpdate () {
     if (this.state.status === Status.LOADING && !this.img) {

@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
   require('./Thumb.less');
 }
 
-@connect(({Movie, Season, Video, User}) => ({Movie, Season, Video, User}))
+@connect(({Movie, Season}) => ({Movie, Season}))
 class Thumb extends Poster {
 
   constructor (props) {

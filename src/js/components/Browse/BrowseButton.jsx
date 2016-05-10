@@ -18,9 +18,6 @@ class BrowseButton extends React.Component {
            role="button">
           <span>PARCOURIR </span>
           <b className="caret"/>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
         </a>
         <BrowseMenu />
       </li>)

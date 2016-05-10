@@ -33,6 +33,10 @@ class MoviesList extends React.Component {
     return finalResult;
   }
 
+  renderSize () {
+    return 478;
+  }
+
   renderList (index) {
     const {
       props: {
@@ -61,11 +65,15 @@ class MoviesList extends React.Component {
       adSpotList = adSpot.get('adSpots');
       let filteredList = [];
       let spots = adSpotList.toJS() || [];
+      let jsList = dataList.toJS() || [];
       spots = _.map(spots, (spot) => {
         spot.adSpot = true;
         return spot;
       });
-      filteredList = filteredList.concat(spots).concat(dataList.toJS());
+
+      // filteredList = _.concat(filteredList, spots)
+      // filteredList = _.concat(filteredList, jsList)
+      filteredList = filteredList.concat(spots).concat(jsList);
 
       let uniqSpots = _.uniq(filteredList, (o)=> {
         return o['_id'];
@@ -93,17 +101,17 @@ class MoviesList extends React.Component {
     } = this;
 
     const categories = Category.get('meaList');
-    const adSpots = Category.get(`categorys/spots`);
 
     return (
       <div className="movies-list">
         <ReactList
-          ref="react-movies-list"
           useTranslate3d={true}
+          ref="react-movies-list"
           axis="y"
           itemRenderer={::this.renderList}
           length={categories.size}
-          type={'uniform'}
+          type={'simple'}
+          pageSize={4}
         />
       </div>
     );

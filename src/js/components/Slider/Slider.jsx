@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from'react-dom';
+import React from 'react'
+import ReactDOM from'react-dom'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import classSet from 'classnames';
+import classSet from 'classnames'
 
 if (canUseDOM) {
-  require('gsap');
-  var {TweenMax, Expo} = window.GreenSockGlobals;
+  require('gsap')
+  var {TweenMax, Expo} = window.GreenSockGlobals
 }
 
 class Slider extends React.Component {
@@ -14,49 +14,50 @@ class Slider extends React.Component {
     step: React.PropTypes.number,
     duration: React.PropTypes.number,
     axis: React.PropTypes.string
-  };
+  }
 
   static defaultProps = {
     duration: null,
     axis: 'x'
-  };
+  }
 
   static contextTypes = {
     lazyLoadTrigger: React.PropTypes.func
-  };
+  }
 
   constructor (props) {
-    super(props);
-    this.clickTimer = 0;
-    this.clickDelay = 250;
-    this.continueClick = false;
-    this.direction = null;
-    this.container = null;
-    this.scrollLeft = 0;
-    this.scrollTimeout = 0;
+    super(props)
+    this.clickTimer = 0
+    this.clickDelay = 250
+    this.continueClick = false
+    this.direction = null
+    this.container = null
+    this.scrollLeft = 0
+    this.scrollTimeout = 0
 
   }
 
   componentDidMount () {
-    this.container = ReactDOM.findDOMNode(this).lastChild;
-    this.container.addEventListener('scroll', this.handleScroll.bind(this));
-    this.handleScroll();
+    this.container = ReactDOM.findDOMNode(this).lastChild
+    this.container.addEventListener('scroll', ::this.handleScroll)
+    this.handleScroll()
   }
 
   componentWillUnmount () {
-    this.container.removeEventListener('scroll', this.handleScroll.bind(this));
+    clearTimeout(this.scrollTimeout)
+    this.container.removeEventListener('scroll', ::this.handleScroll)
   }
 
   /**
    * Scroll event
    */
   handleScroll () {
-    clearTimeout(this.scrollTimeout);
+    clearTimeout(this.scrollTimeout)
     this.scrollTimeout = setTimeout(()=> {
       this.setState({
         scrollLeft: this.container.scrollLeft
-      });
-    }, 200);
+      })
+    }, 200)
   }
 
   /**
@@ -65,7 +66,7 @@ class Slider extends React.Component {
    * @param e {Object} Event
    */
   handleClick (event) {
-    return event.preventDefault();
+    return event.preventDefault()
   }
 
   /**
@@ -75,8 +76,8 @@ class Slider extends React.Component {
    * @param direction {String} Left|Right scroll direction
    */
   handleMouseDown (direction) {
-    this.direction = direction;
-    this.clickTimer = setTimeout(() => this.continueScroll(), this.clickDelay);
+    this.direction = direction
+    this.clickTimer = setTimeout(() => this.continueScroll(), this.clickDelay)
   }
 
   /**
@@ -86,15 +87,15 @@ class Slider extends React.Component {
   handleMouseUp () {
     if (this.continueClick) {
       // Stop continue animation on mouse up
-      this.scrolling = false;
+      this.scrolling = false
     } else {
       // Start single scroll mode
-      this.singleScroll();
+      this.singleScroll()
     }
 
     // Reset properties
-    this.direction = null;
-    clearTimeout(this.clickTimer);
+    this.direction = null
+    clearTimeout(this.clickTimer)
   }
 
   /**
@@ -103,7 +104,7 @@ class Slider extends React.Component {
    * @param stepWidth {Number} Step transition size
    */
   scrollingTo (stepWidth) {
-    return this.direction === 'left' ? -Math.abs(stepWidth) : stepWidth;
+    return this.direction === 'left' ? -Math.abs(stepWidth) : stepWidth
   }
 
   /**
@@ -111,18 +112,18 @@ class Slider extends React.Component {
    */
   continueScroll () {
 
-    let to = this.scrollingTo(this.container.scrollWidth);
+    let to = this.scrollingTo(this.container.scrollWidth)
 
-    this.animateHorizontalScroll(to);
+    this.animateHorizontalScroll(to)
   }
 
   /**
    * Start Single Scroll mode animation
    */
   singleScroll () {
-    let to = this.scrollingTo(this.container.offsetWidth);
+    let to = this.scrollingTo(this.container.offsetWidth)
 
-    this.animateHorizontalScroll(to);
+    this.animateHorizontalScroll(to)
   }
 
   /**
@@ -138,16 +139,16 @@ class Slider extends React.Component {
 
   render () {
 
-    //sliderClasses[this.props.className] = this.props.className !== undefined;
+    //sliderClasses[this.props.className] = this.props.className !== undefined
 
     // Display arrows
-    let scrollLeft = this.state ? (this.state.scrollLeft || 0) : 0;
-    let maxScroll = 0;
+    let scrollLeft = this.state ? (this.state.scrollLeft || 0) : 0
+    let maxScroll = 0
     if (this.container) {
-      maxScroll = this.container.scrollWidth - this.container.clientWidth;
+      maxScroll = this.container.scrollWidth - this.container.clientWidth
       // Reset scrollLeft state when footer is closed and reopened
       if (this.container.scrollLeft === 0 && this.state) {
-        this.state.scrollLeft = 0;
+        this.state.scrollLeft = 0
       }
     }
 
@@ -155,18 +156,18 @@ class Slider extends React.Component {
       'arrow': true,
       'arrow--left': true,
       'arrow--hidden': scrollLeft <= 0
-    };
+    }
 
     let rightArrowClasses = {
       'arrow': true,
       'arrow--right': true,
       'arrow--hidden': (scrollLeft === maxScroll)
-    };
+    }
 
     let sliderClasses = {
       'slider': true,
       'axis-x': this.props.axis === 'x'
-    };
+    }
 
     return (
 
@@ -191,8 +192,8 @@ class Slider extends React.Component {
         </a>
         {this.props.children}
       </div>
-    );
+    )
   }
 }
 
-export default Slider;
+export default Slider
