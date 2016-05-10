@@ -1,19 +1,19 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import { Link } from 'react-router';
-import Poster from './Poster';
-import { connect } from 'react-redux';
-import classSet from 'classnames';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import { Link } from 'react-router'
+import Poster from './Poster'
+import { connect } from 'react-redux'
+import classSet from 'classnames'
 
 if (process.env.BROWSER) {
-  require('./Thumb.less');
+  require('./Thumb.less')
 }
 
 @connect(({Movie, Season}) => ({Movie, Season}))
 class Thumb extends Poster {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   static propTypes = {
@@ -26,7 +26,7 @@ class Thumb extends Poster {
     showTitle: React.PropTypes.bool,
     type: React.PropTypes.string,
     fit: React.PropTypes.string
-  };
+  }
 
   static defaultProps = {
     thumbW: 140,
@@ -38,41 +38,41 @@ class Thumb extends Poster {
     showTitle: true,
     type: 'movie',
     fit: 'min'
-  };
+  }
 
   triggerOver () {
-    let thumbMouse = ReactDOM.findDOMNode(this);
+    let thumbMouse = ReactDOM.findDOMNode(this)
     if (thumbMouse) {
-      thumbMouse.dispatchEvent(new CustomEvent('thumbover', {bubbles: true}));
+      thumbMouse.dispatchEvent(new CustomEvent('thumbover', {bubbles: true}))
     }
   }
 
   triggerOut () {
-    let thumbMouse = ReactDOM.findDOMNode(this);
+    let thumbMouse = ReactDOM.findDOMNode(this)
     if (thumbMouse) {
-      thumbMouse.dispatchEvent(new CustomEvent('thumbout', {bubbles: true}));
+      thumbMouse.dispatchEvent(new CustomEvent('thumbout', {bubbles: true}))
     }
   }
 
   getInfos () {
     const {
       props: {data, showTitle, showDescription}
-    } = this;
+    } = this
 
-    const type = this.getType();
+    const type = this.getType()
 
     if (type === 'movie') {
-      return '';
+      return ''
     }
-    const maxLength = 80;
-    let title = data.get('title');
-    let synopsis = data.get('synopsis') || '';
+    const maxLength = 80
+    let title = data.get('title')
+    let synopsis = data.get('synopsis') || ''
     //wrap text
     if (synopsis.length >= maxLength) {
-      let cutIndex = synopsis.indexOf(' ', maxLength);
+      let cutIndex = synopsis.indexOf(' ', maxLength)
       if (cutIndex !== -1) {
-        let shortDescription = synopsis.substring(0, cutIndex) + '...';
-        synopsis = shortDescription;
+        let shortDescription = synopsis.substring(0, cutIndex) + '...'
+        synopsis = shortDescription
       }
     }
 
@@ -83,20 +83,20 @@ class Thumb extends Poster {
   }
 
   getBtnPlay () {
-    const type = this.getType();
-    return type === 'episode' ? <i className="btn-play"></i> : '';
+    const type = this.getType()
+    return type === 'episode' ? <i className="btn-play"></i> : ''
   }
 
   render () {
-    let imageStyles = this.getLazyImageUrl();
-    let link = this.getLink();
-    const type = this.getType();
+    let imageStyles = this.getLazyImageUrl()
+    let link = this.getLink()
+    const type = this.getType()
 
     let thumbClass = {
       'thumb': true,
       'episode': type === 'episode',
       'spot': type === 'spot'
-    };
+    }
 
     return (
       <div ref="thumb" className={classSet(thumbClass)}
@@ -114,8 +114,8 @@ class Thumb extends Poster {
           {/*this.getShareButton()*/}
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Thumb;
+export default Thumb
