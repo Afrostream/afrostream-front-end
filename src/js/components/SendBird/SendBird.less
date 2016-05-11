@@ -8,12 +8,15 @@
 }
 
 .fabs {
+  position: absolute;
+  display: block;
+  vertical-align: top;
   bottom: 0;
   right: 0;
-  position: fixed;
-  margin: 1em;
-  z-index: 99800;
-  display: block;
+  top: 0;
+  //margin: 1em;
+  //z-index: 99800;
+  width: 40%;
 }
 
 #prime:not(.is-visible) {
@@ -21,7 +24,11 @@
 }
 
 #prime {
-  display: block;
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  .isMobile({ display: block; });
 }
 
 .fab {
@@ -32,7 +39,7 @@
   text-align: center;
   color: #263238;
   margin: 25px auto 0;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .14), 0 1px 2px rgba(0, 0, 0, .28);
   cursor: pointer;
   transition: all .1s ease-out;
   position: relative;
@@ -90,17 +97,17 @@
 .fab:not(:last-child):active,
 .fab:not(:last-child):focus,
 .fab:not(:last-child):hover {
-  box-shadow: 0 0 6px rgba(0, 0, 0, .16), 0 6px 12px rgba(0, 0, 0, .32);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .16), 0 2px 3px rgba(0, 0, 0, .32);
 }
 
 /*Chatbox*/
 
 .chat {
-  position: fixed;
+  position: relative;
   right: 0;
   bottom: 0;
-  top: @app-padding;
-  width: 30%;
+  top: 0;
+  height: 100%;
   font-size: 12px;
   line-height: 22px;
   font-family: 'Roboto';
@@ -108,7 +115,7 @@
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
   opacity: 0;
-  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24), 0 1.5px 3px rgba(0, 0, 0, 0.12);
   transition: all .2s ease-in-out;
 }
 
@@ -117,10 +124,13 @@
   font-size: 14px;
   font-family: 'Roboto';
   font-weight: 500;
+  height: @header-height;
+  line-height: 2;
 }
 
 .chat_header .span {
   float: right;
+  line-height: 3;
 }
 
 .chat_loader {
@@ -162,7 +172,7 @@
   left: 0;
   background: #eceff1;
   border-radius: 5px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, .16), 0 6px 12px rgba(0, 0, 0, .32);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .16), 0 2px 4px rgba(0, 0, 0, .32);
   padding: 0;
   z-index: 1000;
   width: 150px;
@@ -240,7 +250,7 @@
   padding: 5px;
   border-radius: 3px;
   border-radius: 3px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, .16), 0 6px 12px rgba(0, 0, 0, .32);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .16), 0 2px 4px rgba(0, 0, 0, .32);
   margin: 10px 0 0 0;
 }
 
@@ -253,7 +263,7 @@
 
 .chat_field {
   position: relative;
-  margin: 5px 0 5px 0;
+  margin: 10px 0 5px 0;
   width: 50%;
   font-family: 'Roboto';
   font-size: 12px;
@@ -277,11 +287,13 @@
 }
 
 .fab_field {
+  position: absolute;
+  bottom: 0;
   width: 100%;
   display: inline-block;
   text-align: center;
   background: #eceff1;
-  box-shadow: 0 0 6px rgba(0, 0, 0, .16), 0 6px 12px rgba(0, 0, 0, .32);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .16), 0 2px 4px rgba(0, 0, 0, .32);
 }
 
 .fab_field a {
@@ -318,16 +330,16 @@
 
 .chat_converse {
   display: block;
-  position: relative;
+  position: absolute;
   background: inherit;
-  margin: 6px 0 0 0;
-  max-height: 78%;
-  min-height: 78%;
+  //margin: @header-height 0 @header-height 0;
+  //min-height: 100%;
   font-size: 12px;
   line-height: 18px;
   overflow-y: auto;
+  top: @header-height;
+  bottom: @header-height;
   width: 100%;
-  float: right;
 }
 
 .chat_channel {
@@ -352,7 +364,7 @@
   max-width: 40%;
   display: block;
   word-wrap: break-word;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, .28);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .28);
   border-radius: 3px;
   animation: zoomIn .5s cubic-bezier(.42, 0, .58, 1);
   clear: both;
@@ -362,7 +374,7 @@
 .chat .chat_converse .chat_msg_item .chat_avatar {
   position: absolute;
   top: 0;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .14), 0 2px 4px rgba(0, 0, 0, .28);
 }
 
 .chat .chat_converse .chat_msg_item.chat_msg_item_admin .chat_avatar {
@@ -546,7 +558,7 @@ strong.chat_time {
 
 @media only screen and (min-width: 1024px) {
   .chat {
-    width: 30%;
+    width: 100%;
   }
 
   .chat_field {
@@ -555,15 +567,10 @@ strong.chat_time {
 }
 
 /*Color Options*/
-
+//BLACK
 .black .fab {
   background: #000000;
   color: #FFFFFF;
-}
-
-.yellow .fab {
-  background: @color-yellow;
-  color: @color-indigo;
 }
 
 .black .chat_header {
@@ -572,8 +579,67 @@ strong.chat_time {
 }
 
 .black .chat {
-  background: fade(#FFFFFF, 90%);
-  color: #000000;
+  background: #000000;
+  color: #FFFFFF;
+}
+
+.black .chat .chat_converse .chat_msg_item.chat_msg_item_admin {
+  background: rgba(255, 255, 255, 0.9);
+  color: #263238;
+}
+
+.black .chat .chat_converse .chat_msg_item.chat_msg_item_user {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+//WHITE
+.white .chat_header,
+.white .fab {
+  background: fade(#000000, 90%);
+  color: #FFFFFF;
+}
+
+.white .chat {
+  background: fade(#000000, 90%);
+  color: #FFFFFF;
+}
+
+.white .chat .chat_converse .chat_msg_item.chat_msg_item_admin {
+  background: rgba(255, 255, 255, 0.7);
+  color: #263238;
+}
+
+.white .chat .chat_converse .chat_msg_item.chat_msg_item_user {
+  background: rgba(255, 255, 255, 0.9);
+  color: #222222;
+}
+
+//INDIGO
+.indigo .chat_header,
+.indigo .fab {
+  background: fade(@color-indigo, 90%);
+  color: @brand-primary;
+}
+
+.indigo .chat {
+  background: fade(@color-indigo, 90%);
+  color: @brand-primary;
+}
+
+.indigo .chat .chat_converse .chat_msg_item.chat_msg_item_admin {
+  background: rgba(255, 255, 255, 0.7);
+  color: #263238;
+}
+
+.indigo .chat .chat_converse .chat_msg_item.chat_msg_item_user {
+  background: rgba(255, 255, 255, 0.9);
+  color: #222222;
+}
+
+//YELLOW
+.yellow .fab {
+  background: @color-yellow;
+  color: @color-indigo;
 }
 
 .yellow .chat_header {

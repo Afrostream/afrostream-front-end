@@ -1,26 +1,21 @@
-'use strict';
-import React, { PropTypes }  from 'react';
-import { connect } from 'react-redux';
-import SB from 'sendbird';
-import { sendBird } from '../../../../config';
-import classSet from 'classnames';
-import _ from 'lodash';
-import shallowEqual from 'react-pure-render/shallowEqual';
-import * as EventActionCreators from '../../actions/event';
+import React, { PropTypes }  from 'react'
+import { connect } from 'react-redux'
+import SB from 'sendbird'
+import { sendBird } from '../../../../config'
+import classSet from 'classnames'
+import _ from 'lodash'
+import shallowEqual from 'react-pure-render/shallowEqual'
+import * as EventActionCreators from '../../actions/event'
+import { withRouter } from 'react-router'
 
-const sendBirdClient = SB.getInstance();
+const sendBirdClient = SB.getInstance()
 
 if (process.env.BROWSER) {
-  require('./SendBird.less');
+  require('./SendBird.less')
 }
 
 @connect(({User, Movie, Event}) => ({User, Movie, Event}))
 class SendBird extends React.Component {
-
-  static contextTypes = {
-    location: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired
-  };
 
   state = {
     init: false,
@@ -28,10 +23,10 @@ class SendBird extends React.Component {
     options: false,
     messages: [],
     channelList: []
-  };
+  }
 
   constructor (props, context) {
-    super(props, context);
+    super(props, context)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -41,9 +36,9 @@ class SendBird extends React.Component {
           movieId
         }
       }
-    } = this;
+    } = this
     if ((!shallowEqual(nextProps.params.movieId, movieId) || !this.state.init) && movieId) {
-      this.startSendBird();
+      this.startSendBird()
     }
   }
 
@@ -57,16 +52,16 @@ class SendBird extends React.Component {
       props: {
         User
       }
-    } = this;
+    } = this
 
-    let user = User.get('user');
+    let user = User.get('user')
     if (!user) {
-      return;
+      return
     }
 
-    let guestId = user.get('_id');
-    let nickName = user.get('email');
-    let avatar = user.get('picture');
+    let guestId = user.get('_id')
+    let nickName = user.get('email')
+    let avatar = user.get('picture')
 
     this.setState({
       currentChannel: false,
@@ -74,9 +69,9 @@ class SendBird extends React.Component {
       guestId: guestId,
       nickName: nickName,
       userAvatar: avatar
-    });
+    })
 
-    this.loadBeat(true);
+    this.loadBeat(true)
 
     sendBirdClient.init({
       'app_id': sendBird.appId,
@@ -85,11 +80,11 @@ class SendBird extends React.Component {
       'image_url': avatar,
       'successFunc': ::this.sendBirdInitSuccessHandler,
       'errorFunc': ::this.sendBirdErrorHandler
-    });
+    })
 
-    sendBirdClient.events.onMessageReceived = ::this.setChatMessage;
-    sendBirdClient.events.onSystemMessageReceived = ::this.setChatMessage;
-    sendBirdClient.events.onBroadcastMessageReceived = ::this.setChatMessage;
+    sendBirdClient.events.onMessageReceived = ::this.setChatMessage
+    sendBirdClient.events.onSystemMessageReceived = ::this.setChatMessage
+    sendBirdClient.events.onBroadcastMessageReceived = ::this.setChatMessage
   }
 
   sendBirdInitSuccessHandler () {
@@ -99,25 +94,25 @@ class SendBird extends React.Component {
           movieId
         }
       }
-    } = this;
+    } = this
 
     this.setState({
       init: true
-    });
+    })
 
-    this.loadBeat(false);
-    this.getMessagingChannelList();
-    this.getChannelList(1);
+    this.loadBeat(false)
+    this.getMessagingChannelList()
+    this.getChannelList(1)
     if (movieId) {
-      this.joinChannel(`2b0a2.movie${movieId}`);
+      this.joinChannel(`2b0a2.movie${movieId}`)
     }
     else {
-      sendBirdClient.connect();
+      sendBirdClient.connect()
     }
   }
 
   sendBirdErrorHandler (status, error) {
-    console.log(status, error);
+    console.log(status, error)
   }
 
   isCurrentUser (guestId) {
@@ -125,16 +120,16 @@ class SendBird extends React.Component {
       props: {
         User
       }
-    } = this;
+    } = this
 
-    let user = User.get('user');
+    let user = User.get('user')
     if (!user) {
-      return;
+      return
     }
 
-    let userId = user.get('_id');
+    let userId = user.get('_id')
 
-    return (userId == guestId) ? true : false;
+    return (userId == guestId) ? true : false
   }
 
   getChannelList (page) {
@@ -143,52 +138,52 @@ class SendBird extends React.Component {
       'limit': 20,
       'successFunc': ::this.createChannelList,
       'errorFunc': ::this.sendBirdErrorHandler
-    });
+    })
   }
 
   getMessagingChannelList () {
     sendBirdClient.getMessagingChannelList({
       'successFunc': (data)=> {
         _.map(data['channels'], (channel) => {
-          console.log(channel);
-        });
+          console.log(channel)
+        })
       },
       'errorFunc': ::this.sendBirdErrorHandler
-    });
+    })
   }
 
   joinChannel (channelUrl) {
-    this.loadBeat(true);
+    this.loadBeat(true)
     sendBirdClient.joinChannel(
       channelUrl,
       {
         'successFunc': ::this.onJoinChannelSuccess,
         'errorFunc': ::this.sendBirdErrorHandler
       }
-    );
+    )
   }
 
   onJoinChannelSuccess (data) {
     this.setState({
       messages: [],
       currentChannel: data
-    });
+    })
 
     sendBirdClient.connect({
       'successFunc': ::this.onJoinChannelConnected,
       'errorFunc': ::this.sendBirdErrorHandler
-    });
+    })
   }
 
   onJoinChannelConnected () {
-    this.loadMoreChatMessage();
-    this.loadBeat(false);
+    this.loadMoreChatMessage()
+    this.loadBeat(false)
   }
 
   createChannelList (obj) {
     this.setState({
       channelList: obj['channels']
-    });
+    })
   }
 
 
@@ -197,25 +192,25 @@ class SendBird extends React.Component {
       'limit': 50,
       'successFunc': ::this.lodMoreChatCompleteHandler,
       'errorFunc': ::this.sendBirdErrorHandler
-    });
+    })
   }
 
   lodMoreChatCompleteHandler (data) {
-    let moreMessage = data['messages'];
+    let moreMessage = data['messages']
     _.map(moreMessage.reverse(), (msg)=> {
       if (sendBirdClient.isMessage(msg.cmd)) {
-        this.setChatMessage(msg.payload);
+        this.setChatMessage(msg.payload)
       }
       // TODO make file compatibility
       // else if (sendBirdClient.isFileMessage(msg.cmd)) {
       //   if (!sendBirdClient.hasImage(msg.payload)) {
-      //     msgList += this.fileMessageList(msg.payload);
+      //     msgList += this.fileMessageList(msg.payload)
       //   } else {
-      //     msgList += this.imageMessageList(msg.payload);
+      //     msgList += this.imageMessageList(msg.payload)
       //   }
       // }
-    });
-    this.scrollPositionBottom();
+    })
+    this.scrollPositionBottom()
   }
 
   /***********************************************
@@ -223,46 +218,46 @@ class SendBird extends React.Component {
    **********************************************/
 
   onListenMessage (e) {
-    var recognition = new webkitSpeechRecognition();
+    var recognition = new webkitSpeechRecognition()
     recognition.onresult = function (event) {
-      sendBirdClient.message(event.results[0][0].transcript);
-    }.bind(this);
-    recognition.start();
+      sendBirdClient.message(event.results[0][0].transcript)
+    }.bind(this)
+    recognition.start()
   }
 
   onSendMessageClick (e) {
-    e.preventDefault();
-    this.enterChatHandler();
+    e.preventDefault()
+    this.enterChatHandler()
   }
 
   onKeyPressHandler (e) {
     if ((e.keyCode === 13 || e.charCode === 13) && !e.shiftKey) {
-      e.preventDefault();
-      this.enterChatHandler();
+      e.preventDefault()
+      this.enterChatHandler()
     }
   }
 
   isEmpty (value) {
-    return !!(value == null || value == undefined || value.length == 0);
+    return !!(value == null || value == undefined || value.length == 0)
   }
 
   enterChatHandler () {
-    let valueMess = this.refs.chatSend.value.trim();
+    let valueMess = this.refs.chatSend.value.trim()
     if (!this.isEmpty(valueMess)) {
-      this.refs.chatSend.value = '';
-      sendBirdClient.message(valueMess);
+      this.refs.chatSend.value = ''
+      sendBirdClient.message(valueMess)
     }
   }
 
   setChatMessage (obj) {
-    if (this.isEmpty(obj['message'])) return;
+    if (this.isEmpty(obj['message'])) return
 
-    let messages = this.state.messages;
-    messages.push(obj);
+    let messages = this.state.messages
+    messages.push(obj)
     this.setState({
       messages: messages
-    });
-    this.scrollPositionBottom();
+    })
+    this.scrollPositionBottom()
   }
 
   scrollPositionBottom () {
@@ -277,29 +272,28 @@ class SendBird extends React.Component {
   toggleFab () {
     const {
       props: {
+        Event,
         dispatch
       }
-    } = this;
+    } = this
 
-    let toggle = !this.state.open;
-    this.setState({
-      open: toggle
-    });
+    const chatMode = Event.get('showChat')
+    let toggle = !chatMode
 
-    dispatch(EventActionCreators.showChat(toggle));
+    dispatch(EventActionCreators.showChat(toggle))
   }
 
   loadBeat (beat) {
     this.setState({
       loading: beat
-    });
+    })
   }
 
   toggleOptions () {
-    let toggle = !this.state.options;
+    let toggle = !this.state.options
     this.setState({
       options: toggle
-    });
+    })
   }
 
   render () {
@@ -310,68 +304,69 @@ class SendBird extends React.Component {
           movieId
         }
       }
-    } = this;
+    } = this
 
-    const hiddenMode = !Event.get('userActive');
-    const user = User.get('user');
+    const hiddenMode = !Event.get('userActive')
+    const user = User.get('user')
+    const chatMode = Event.get('showChat')
 
     let fabsClasses = {
       'fabs': true,
-      'black': true,
+      'indigo': true,
       'is-visible': ~sendBird.channels.indexOf(parseInt(movieId))
-    };
+    }
 
     let primeClasses = {
       'prime': true,
       'fa': true,
-      'fa-comments': !this.state.open,
-      'fa-comments-o': this.state.open,
-      'zmdi-close': this.state.open,
-      'is-active': this.state.open
-    };
+      'fa-comments': !chatMode,
+      'fa-comments-o': chatMode,
+      'zmdi-close': chatMode,
+      'is-active': chatMode
+    }
 
     let chatClasses = {
       'chat': true,
-      'is-visible': this.state.open
-    };
+      'is-visible': chatMode
+    }
 
     let optionsClasses = {
       'chat_option': true,
       'is-dropped': this.state.options
-    };
+    }
 
     let converseClasses = {
       'chat_converse': true,
       'is-visible': this.state.currentChannel
-    };
+    }
 
     let fabClasses = {
       'fab': true,
       'is-visible': this.state.currentChannel
-    };
+    }
 
     let chatButtonClasses = _.extend(fabClasses, {
-      'is-float': this.state.open,
-      'is-visible': hiddenMode ? this.state.open : true
-    });
+      'is-float': chatMode,
+      'is-visible': hiddenMode ? chatMode : true
+    })
 
     let channelListClasses = {
       'channel_list': true,
       'is-visible': !this.state.currentChannel
-    };
+    }
 
     let inputsFieldsClasses = {
       'fab_field': true,
       'is-visible': this.state.currentChannel
-    };
+    }
 
     let loaderClasses = {
       'chat_loader': true,
       'is-loading': this.state.loading
-    };
+    }
 
     if (!user) {
-      return <div />;
+      return <div />
     }
 
     return (
@@ -388,10 +383,10 @@ class SendBird extends React.Component {
 
                     const onAction = {
                       onClick: event => ::this.joinChannel(channel.channel_url)
-                    };
+                    }
 
                     return <li key={channel.name}><span className="chat_channel"  {...onAction}>{channel.name}</span>
-                    </li>;
+                    </li>
                   })
                 }
               </ul>
@@ -404,10 +399,10 @@ class SendBird extends React.Component {
 
                 const onAction = {
                   onClick: event => ::this.joinChannel(channel.channel_url)
-                };
+                }
 
                 return <a key={channel.name}><span className="chat_channel"  {...onAction}>#{channel.name}</span>
-                </a>;
+                </a>
               })
             }
           </div>
@@ -415,20 +410,20 @@ class SendBird extends React.Component {
             {
               _.map(this.state.messages, (obj)=> {
 
-                let isUser = this.isCurrentUser(obj.user.guest_id);
-                let img = obj.user.image;
+                let isUser = this.isCurrentUser(obj.user.guest_id)
+                let img = obj.user.image
 
                 let avatarClasses = {
                   'chat_msg_item': true,
                   'chat_msg_item_user': isUser,
                   'chat_msg_item_admin': !isUser
-                };
+                }
                 return (
                   <div key={obj.msg_id} className={classSet(avatarClasses)}>
                     <div className="chat_avatar">{img ? <img src={img}/> : <i class="zmdi zmdi-account"/>}</div>
                     {obj.message}
                   </div>
-                );
+                )
               })
             }
           </div>
@@ -437,7 +432,7 @@ class SendBird extends React.Component {
               <i className="zmdi zmdi-mic-outline"></i>
             </a>
             <a id="fab_send" className={classSet(fabClasses)} onClick={::this.onSendMessageClick}>
-              <i className="material-icons"></i>
+              <i className="zmdi zmdi-mail-send"></i>
             </a>
             <textarea ref="chatSend" id="chatSend" name="chat_message" placeholder="Votre message ..."
                       className="chat_field chat_message"
@@ -448,8 +443,13 @@ class SendBird extends React.Component {
           <i className={classSet(primeClasses)}></i>
         </a>
       </div>
-    );
+    )
   }
 }
 
-export default SendBird;
+SendBird.propTypes = {
+  history: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired
+};
+
+export default withRouter(SendBird)

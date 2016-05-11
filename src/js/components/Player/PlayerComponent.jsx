@@ -17,9 +17,11 @@ import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import { Billboard, CsaIcon } from '../Movies'
 import NextEpisode from './NextEpisode'
 import ShareButton from '../Share/ShareButton'
+import SendBirdButton from '../SendBird/SendBirdButton'
 import RecommendationList from '../Recommendation/RecommendationList'
 import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
+import SendBird from '../SendBird/SendBird'
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less')
@@ -823,7 +825,6 @@ class PlayerComponent extends Component {
     let episodeData = videoData.get('episode')
     let seasonData = Season.get(`seasons/${seasonId}`)
     let videoDuration = this.formatTime(videoData.get('duration'))
-
     let csa = movieData.get('CSA')
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS()
@@ -832,10 +833,13 @@ class PlayerComponent extends Component {
     }
     let renderData = episodeData ? episodeData : movieData
 
+    const chatMode = Event.get('showChat')
+
     let playerClasses = {
       'player': true,
       'player-next-reco': this.state.nextReco,
-      'player-fullScreen': this.state.fullScreen
+      'player-fullScreen': this.state.fullScreen,
+      'chat-on': chatMode
     }
 
     const textLength = infos.title.length
@@ -872,13 +876,15 @@ class PlayerComponent extends Component {
           {<RateComponent disabled={true} {...{videoId}}/>}
           <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
-            <ShareButton label="Recommander"/>
+            <ShareButton />
+            <SendBirdButton />
           </div>
           {videoDuration ?
             <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
           <div className=" video-infos_synopsys">{infos.synopsis}</div>
         </div>
         {this.getNextComponent()}
+        <SendBird {...this.props}/>
       </div>
     )
   }
