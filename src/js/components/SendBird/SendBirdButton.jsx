@@ -10,15 +10,11 @@ if (process.env.BROWSER) {
 @connect(({Event}) => ({Event}))
 class SendBirdButton extends React.Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount () {
     this.attachTooltip()
   }
 
-  componentWillReceivedProps () {
+  componentWillReceiveProps () {
     this.attachTooltip()
   }
 
@@ -30,10 +26,10 @@ class SendBirdButton extends React.Component {
     if (!this.props.label) {
       return
     }
-    return this.props.label
+    return <span>{this.props.label}</span>
   }
 
-  sharePopup () {
+  action () {
     const {
       props: {
         dispatch, Event
@@ -55,13 +51,14 @@ class SendBirdButton extends React.Component {
     const chatMode = Event.get('showChat')
 
     let chatClass = {
-      'fa': true,
-      'fa-comments': !chatMode,
-      'fa-comments-o': chatMode
+      'fa': true
     }
 
+    chatClass[this.props.tipClass] = !chatMode
+    chatClass[this.props.tipClassToggle] = chatMode
+
     const inputAttributes = {
-      onClick: event => ::this.sharePopup()
+      onClick: event => ::this.action()
     }
     return (<button className="btn sendbird_button" type="button" data-toggle="tooltip" ref="data"
                     data-placement="top"
@@ -73,21 +70,19 @@ class SendBirdButton extends React.Component {
 }
 
 SendBirdButton.propTypes = {
-  link: React.PropTypes.string,
-  description: React.PropTypes.string,
-  title: React.PropTypes.string,
+  tipClass: React.PropTypes.string,
+  tipClassToggle: React.PropTypes.string,
   tooltip: React.PropTypes.string,
   tooltipToggle: React.PropTypes.string,
   label: React.PropTypes.string
 }
 
 SendBirdButton.defaultProps = {
-  link: null,
-  description: null,
-  title: null,
   label: '',
-  tooltip: 'Ouvrir messenger',
-  tooltipToggle: 'Fermer messenger',
+  tipClass: 'fa-comments',
+  tipClassToggle: 'fa-comments-o',
+  tooltip: 'Ouvrir le chat',
+  tooltipToggle: 'Fermer le chat'
 }
 
 export default SendBirdButton

@@ -7,6 +7,7 @@ import _ from 'lodash'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import * as EventActionCreators from '../../actions/event'
 import { withRouter } from 'react-router'
+import SendBirdButton from './SendBirdButton'
 
 const sendBirdClient = SB.getInstance()
 
@@ -196,9 +197,16 @@ class SendBird extends React.Component {
   }
 
   onJoinChannelConnected () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
     this.loadMoreChatMessage()
     this.getUserList()
     this.loadBeat(false)
+    dispatch(EventActionCreators.showChat(true))
   }
 
   createChannelList (obj) {
@@ -396,52 +404,25 @@ class SendBird extends React.Component {
         <div className={classSet(chatClasses)}>
           <div className="chat_header">
             <span id="chat_head">{this.state.currentChannel ? this.state.currentChannel.name : 'Live Chat'}</span>
+            <SendBirdButton tipClass="fa-sign-out" tipClassToggle="fa-sign-out" tooltip="Quitter le chat"/>
             <div className={classSet(loaderClasses)}/>
             <div className={classSet(optionsClasses)} onClick={::this.toggleOptions}>
               <i className="zmdi zmdi-more-vert"/>
-              <ul className="user_list">
-                {
-                  _.map(this.state.users, (user)=> {
-
-                    let isUser = this.isCurrentUser(user.guest_id)
-
-                    if (isUser) {
-                      return;
-                    }
-
-                    let img = user.picture
-
-                    const onAction = {
-                      onClick: event => ::this.joinChannel(channel.channel_url)
-                    }
-
-                    let avatarClasses = {
-                      'chat_msg_item': true
-                    }
-
-                    return (
-                      <div key={user.id} className={classSet(avatarClasses)} {...onAction}>
-                        <div className="chat_avatar">{img ? <img src={img}/> : <i className="zmdi zmdi-account"/>}</div>
-                      </div>
-                    )
-                  })
-                }
-              </ul>
             </div>
           </div>
           <div className={classSet(menuClasses)}>
-            <span className="channel-list_title">Rooms</span>
-            {
-              _.map(this.state.channelList, (channel)=> {
+            {/*<span className="channel-list_title">Rooms</span>
+             {
+             _.map(this.state.channelList, (channel)=> {
 
-                const onAction = {
-                  onClick: event => ::this.joinChannel(channel.channel_url)
-                }
+             const onAction = {
+             onClick: event => ::this.joinChannel(channel.channel_url)
+             }
 
-                return <a key={channel.name}><span className="chat_channel"  {...onAction}>#{channel.name}</span>
-                </a>
-              })
-            }
+             return <a key={channel.name}><span className="chat_channel"  {...onAction}>#{channel.name}</span>
+             </a>
+             })
+             }*/}
             <span className="channel-list_title">Utilisateurs</span>
             <div className="user_list">
               {_.map(this.state.users, (user)=> {
@@ -465,9 +446,9 @@ class SendBird extends React.Component {
                 return (
                   <div key={user.id} className={classSet(avatarClasses)} {...onAction}>
                     <div className="chat_avatar">{img ? <img src={img}/> : <i className="zmdi zmdi-account"/>}</div>
-                    <div className="chat_username">
-                      {(user.nickname.length > 25 ? user.nickname.substring(0, 22) + '...' : user.nickname)}
-                    </div>
+                    {/*<div className="chat_username">
+                     {(user.nickname.length > 25 ? user.nickname.substring(0, 22) + '...' : user.nickname)}
+                     </div>*/}
                   </div>
                 )
               })

@@ -834,6 +834,7 @@ class PlayerComponent extends Component {
     let renderData = episodeData ? episodeData : movieData
 
     const chatMode = Event.get('showChat')
+    const sendBirdOn = config.sendBird.channels.indexOf(parseInt(movieId));
 
     let playerClasses = {
       'player': true,
@@ -873,18 +874,18 @@ class PlayerComponent extends Component {
             {infos.episodeNumber ?
               <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
           </div>
-          {<RateComponent disabled={true} {...{videoId}}/>}
+          {<RateComponent {...{videoId}}/>}
           <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
             <ShareButton />
-            <SendBirdButton />
+            {sendBirdOn ? <SendBirdButton label="Live Chat"/> : null}
           </div>
           {videoDuration ?
             <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
           <div className=" video-infos_synopsys">{infos.synopsis}</div>
         </div>
         {this.getNextComponent()}
-        <SendBird {...this.props}/>
+        <SendBird {...this.props} />
       </div>
     )
   }
