@@ -353,11 +353,12 @@ class SendBird extends React.Component {
 
     let optionsClasses = {
       'chat_option': true,
-      'is-dropped': this.state.options
+      'is-dropped': false//this.state.options
     }
 
     let converseClasses = {
       'chat_converse': true,
+      'splited': this.state.options,
       'is-visible': this.state.currentChannel
     }
 
@@ -371,9 +372,9 @@ class SendBird extends React.Component {
       'is-visible': hiddenMode ? chatMode : true
     })
 
-    let channelListClasses = {
-      'channel_list': true,
-      'is-visible': !this.state.currentChannel
+    let menuClasses = {
+      'menu': true,
+      'is-visible': this.state.options
     }
 
     let inputsFieldsClasses = {
@@ -427,7 +428,51 @@ class SendBird extends React.Component {
                 }
               </ul>
             </div>
+          </div>
+          <div className={classSet(menuClasses)}>
+            <span className="channel-list_title">Rooms</span>
+            {
+              _.map(this.state.channelList, (channel)=> {
 
+                const onAction = {
+                  onClick: event => ::this.joinChannel(channel.channel_url)
+                }
+
+                return <a key={channel.name}><span className="chat_channel"  {...onAction}>#{channel.name}</span>
+                </a>
+              })
+            }
+            <span className="channel-list_title">Utilisateurs</span>
+            <div className="user_list">
+              {_.map(this.state.users, (user)=> {
+
+                let isUser = this.isCurrentUser(user.guest_id)
+
+                if (isUser) {
+                  return;
+                }
+
+                let img = user.picture
+
+                const onAction = {
+                  onClick: event => ::this.joinChannel(channel.channel_url)
+                }
+
+                let avatarClasses = {
+                  'chat_msg_item': true
+                }
+
+                return (
+                  <div key={user.id} className={classSet(avatarClasses)} {...onAction}>
+                    <div className="chat_avatar">{img ? <img src={img}/> : <i className="zmdi zmdi-account"/>}</div>
+                    <div className="chat_username">
+                      {(user.nickname.length > 25 ? user.nickname.substring(0, 22) + '...' : user.nickname)}
+                    </div>
+                  </div>
+                )
+              })
+              }
+            </div>
           </div>
           <div ref="chatConverse" id="chat_converse" className={classSet(converseClasses)}>
             {

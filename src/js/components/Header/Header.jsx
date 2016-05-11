@@ -53,6 +53,7 @@ class Header extends React.Component {
     } = this
 
     const hiddenMode = !Event.get('userActive')
+    const chatMode = Event.get('showChat')
     const pinned = Event.get('pinHeader')
     const user = User.get('user')
     let planCode
@@ -66,8 +67,8 @@ class Header extends React.Component {
       'navbar': true,
       'navbar-default': true,
       'navbar-fixed-top': true,
-      'navbar-hidden': hiddenMode,
-      'navbar-fixed-color': pinned || this.state.pinned
+      'navbar-hidden': !chatMode && hiddenMode,
+      'navbar-fixed-color': chatMode || pinned || this.state.pinned
       || router.isActive('recherche')
       || router.isActive('compte')
       || router.isActive('couponregister')
