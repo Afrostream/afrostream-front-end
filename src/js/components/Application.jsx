@@ -7,7 +7,7 @@ import AlertMessage from './Alert/AlertMessage'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
 import { metasData, analytics } from '../decorators'
-import chardinJs from 'chardin.js'
+//import chardinJs from 'chardin.js'
 
 if (process.env.BROWSER) {
   require('./Application.less')
@@ -21,6 +21,10 @@ class Application extends React.Component {
   static contextTypes = {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
+  }
+
+  componentDidMount () {
+    require('chardin.js')
   }
 
   render () {

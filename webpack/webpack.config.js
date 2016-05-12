@@ -117,6 +117,9 @@ const webpackConfig = {
           test: /sendbird\.js$/, loader: 'expose?sendbird'
         },
         {
+          test: /chardin\.js$/, loader: 'expose?chardinJs'
+        },
+        {
           test: /jquery\.js$/, loader: 'expose?$'
         },
         {
@@ -132,10 +135,8 @@ const webpackConfig = {
       net: 'empty',
       tls: 'empty',
       dns: 'empty'
-    }
-    ,
-    externals: {}
-    ,
+    },
+    externals: {'window': 'Window'},
     plugins: [
       new ExtractTextPlugin('[name].css', {allChunks: true}),
       new webpack.ProvidePlugin({

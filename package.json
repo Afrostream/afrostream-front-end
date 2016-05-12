@@ -89,6 +89,7 @@
     "js-base64": "^2.1.9",
     "jshint-loader": "^0.8.3",
     "json-loader": "^0.5.2",
+    "legacy-loader": "0.0.2",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
     "lesshat": "^3.0.2",
