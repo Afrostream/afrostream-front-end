@@ -35,7 +35,7 @@ const {webpackDevServer: {host, port}} = config;
 const webpackDevServerUrl = `http://${host}:${port}`;
 
 const webpackConfig = {
-    devtool: '#inline-source-map',
+    devtool: '#inline-eval-cheap-source-map',
     output: {
       path: assetsPath,
       publicPath: `${webpackDevServerUrl}/static/`,
@@ -114,6 +114,12 @@ const webpackConfig = {
           include: [path.join(__dirname, '../node_modules/afrostream-player')]
         },
         {
+          test: /sendbird\.js$/, loader: 'expose?sendbird'
+        },
+        {
+          test: /chardin\.js$/, loader: 'expose?chardinJs'
+        },
+        {
           test: /jquery\.js$/, loader: 'expose?$'
         },
         {
@@ -129,10 +135,8 @@ const webpackConfig = {
       net: 'empty',
       tls: 'empty',
       dns: 'empty'
-    }
-    ,
-    externals: {}
-    ,
+    },
+    externals: {'window': 'Window'},
     plugins: [
       new ExtractTextPlugin('[name].css', {allChunks: true}),
       new webpack.ProvidePlugin({
@@ -154,7 +158,8 @@ const webpackConfig = {
           CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
           GOCARDLESS_PUBLIC_KEY: JSON.stringify(process.env.GOCARDLESS_PUBLIC_KEY),
           OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
-          GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID)
+          GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
+          SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
         }
       }),
       new HashPlugin({path: assetsPath, fileName: 'hash.txt'})

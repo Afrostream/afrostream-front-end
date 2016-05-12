@@ -17,9 +17,11 @@ import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import { Billboard, CsaIcon } from '../Movies'
 import NextEpisode from './NextEpisode'
 import ShareButton from '../Share/ShareButton'
+import SendBirdButton from '../SendBird/SendBirdButton'
 import RecommendationList from '../Recommendation/RecommendationList'
 import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
+import SendBird from '../SendBird/SendBird'
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less')
@@ -43,6 +45,8 @@ if (canUseDOM) {
   Player
 }))
 class PlayerComponent extends Component {
+
+  static displayName = 'PlayerComponent'  //  This is important for production mode
 
   constructor (props) {
     super(props)
@@ -82,7 +86,6 @@ class PlayerComponent extends Component {
   }
 
   componentDidMount () {
-
     this.setState({
       size: {
         height: window.innerHeight,
@@ -90,6 +93,21 @@ class PlayerComponent extends Component {
       }
     })
 
+  }
+
+  isTourShowed () {
+    let isTourShow = null
+
+    if (canUseDOM) {
+      isTourShow = parseInt(localStorage.getItem('afrTourChat'))
+    }
+    return isTourShow;
+  }
+
+  setTourShowed () {
+    if (canUseDOM) {
+      localStorage.setItem('afrTourChat', 1);
+    }
   }
 
   componentWillUnmount () {
@@ -438,12 +456,40 @@ class PlayerComponent extends Component {
       this.container = ReactDOM.findDOMNode(this)
       this.container.removeEventListener('gobacknext', ::this.backNextHandler)
       this.container.addEventListener('gobacknext', ::this.backNextHandler)
+      this.makeTour()
       return this.player
     } catch (err) {
       console.log('player : ', err)
       //this.destroyPlayer()
       return this.playerInit = false
     }
+  }
+
+  hasSendBirdRoom () {
+    const {
+      props: {
+        movieId
+      }
+    } = this
+
+    return ~config.sendBird.channels.indexOf(parseInt(movieId));
+  }
+
+  makeTour () {
+    const hasRoom = this.hasSendBirdRoom()
+    let isTourShow = this.isTourShowed()
+    if (!hasRoom || isTourShow === 1) {
+      return
+    }
+    //SendbirdTour
+    $('body').chardinJs('start')
+    this.player.off('userinactive')
+    $('body').on('chardinJs:stop', ::this.handleUserActive)
+  }
+
+  handleUserActive () {
+    this.player.on('userinactive', ::this.triggerUserActive)
+    this.setTourShowed()
   }
 
   async generateDomTag (videoData) {
@@ -578,7 +624,7 @@ class PlayerComponent extends Component {
 
     //VTT flash vtt.js
     //playerData['vtt.js'] = ''
-    playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
+    //playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
     // ==== END hacks config
     playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
 
@@ -823,7 +869,6 @@ class PlayerComponent extends Component {
     let episodeData = videoData.get('episode')
     let seasonData = Season.get(`seasons/${seasonId}`)
     let videoDuration = this.formatTime(videoData.get('duration'))
-
     let csa = movieData.get('CSA')
     //si on a les données de l'episode alors, on remplace les infos affichées
     let infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS()
@@ -832,10 +877,14 @@ class PlayerComponent extends Component {
     }
     let renderData = episodeData ? episodeData : movieData
 
+    const chatMode = Event.get('showChat')
+    const sendBirdOn = this.hasSendBirdRoom();
+
     let playerClasses = {
       'player': true,
       'player-next-reco': this.state.nextReco,
-      'player-fullScreen': this.state.fullScreen
+      'player-fullScreen': this.state.fullScreen,
+      'chat-on': chatMode
     }
 
     const textLength = infos.title.length
@@ -869,16 +918,20 @@ class PlayerComponent extends Component {
             {infos.episodeNumber ?
               <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
           </div>
-          {<RateComponent disabled={true} {...{videoId}}/>}
+          {<RateComponent {...{videoId}}/>}
           <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
-            <ShareButton label="Recommander"/>
+            <ShareButton />
+            {sendBirdOn ? <SendBirdButton label="Live Chat" ref="sendbird"
+                                          sendBirdIntro="Vous pouvez desormais chatter avec les autres utilisateurs regardant la même video que vous"
+                                          sendBirdPosition="right"/> : null}
           </div>
           {videoDuration ?
             <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
           <div className=" video-infos_synopsys">{infos.synopsis}</div>
         </div>
         {this.getNextComponent()}
+        <SendBird {...this.props} />
       </div>
     )
   }

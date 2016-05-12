@@ -7,6 +7,30 @@
   margin: 60px auto;
   width: 100%;
   max-height: 100%;
+  &.chat-on {
+    .wrapper {
+      width: 70%;
+      .video-js.vjs-afrostream-skin {
+        .vjs-control-bar {
+          margin-bottom: 0;
+        }
+
+        .vjs-fullscreen-control {
+          margin-right: 0;
+        }
+
+        .vjs-play-control {
+          margin-left: 0;
+        }
+      }
+      /* SMARTPHONES  */
+      .isMobile({ width: 100%; position: relative; });
+
+      /* TABLETS  */
+      .isSmallScreen({ width: 100%; position: relative; });
+    }
+
+  }
   &.player-next-reco {
     .video-infos {
       display: none;
@@ -28,9 +52,18 @@
       width: 100%;
       height: 100%;
     }
+
+    .vjs-error .vjs-error-display .vjs-modal-dialog-content {
+      .isMobile({ font-size: 0.7em; });
+      padding: @app-padding;
+      &:before {
+        content: none;
+      }
+    }
   }
   .video-infos {
-    position: relative;
+    //OVERLA FIX
+    //position: relative;
     display: inline-block;
     vertical-align: middle;
     left: 0;
@@ -41,6 +74,11 @@
     font-size: 1em;
     line-height: 1;
     margin: @app-padding;
+
+    > div {
+      //OVERLA FIX
+      position: relative;
+    }
 
     .video-infos_label {
       font-family: @font-book;
@@ -69,6 +107,9 @@
       position: relative;
     }
     .rsr-container {
+      .rsr .rating-gly-star {
+        margin: 5px 0 5px 0;
+      }
     }
     .csa-icon {
       margin: 0;

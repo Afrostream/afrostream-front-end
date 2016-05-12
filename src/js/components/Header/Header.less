@@ -1,6 +1,13 @@
 @import (reference) '../../../styles/config.less';
 
+#nprogress .bar {
+  background: @color-yellow !important;
+}
+
 .navbar.navbar-default {
+  margin: 0;
+  padding: 0;
+
   background-color: transparent;
   border-color: transparent;
   .transition(background 0.2s linear);
@@ -10,6 +17,9 @@
   &.navbar-fixed-color {
     background-color: @color-indigo;
     background-color: fade(@color-indigo, 90%);
+  }
+  .container-fluid {
+    padding: 0;
   }
   .navbar-nav > li > a {
     color: @brand-primary;

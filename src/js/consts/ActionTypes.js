@@ -69,6 +69,7 @@ export default {
   Event: keyMirror({
     toggleSideBar: null,
     userActive: null,
+    showChat: null,
     pinHeader: null
   }),
 

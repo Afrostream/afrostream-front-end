@@ -2,16 +2,19 @@ import Promise from 'bluebird';
 import _ from 'lodash';
 import qs from 'qs';
 import URL from 'url';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import {apiClient} from '../../../config';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import { apiClient } from '../../../config';
 import request from 'superagent';
-import {storeToken} from '../lib/storage';
+import NProgress from 'nprogress';
+import { storeToken } from '../lib/storage';
+
+NProgress.configure({showSpinner: false});
 
 const isTokenValid = function (tokenData) {
   return tokenData && new Date(tokenData.expiresAt).getTime() > Date.now();
 };
 
-async function getToken(tokenData) {
+async function getToken (tokenData) {
   if (isTokenValid(tokenData)) {
     return tokenData;
   }
@@ -26,10 +29,12 @@ async function getToken(tokenData) {
     refresh_token: tokenData.refreshToken
   };
 
+
   return await new Promise((resolve, reject) => {
     request('POST', url)
       .send(body)
       .end((err, res) => {
+
         if (err) {
           return reject(err);
         }
@@ -51,8 +56,8 @@ async function getToken(tokenData) {
  * Client: ../main.js
  * Server: /lib/render.js
  */
-export default function createAPI(createRequest) {
-  return async function api(path, method = 'GET', params = {}, legacy) {
+export default function createAPI (createRequest) {
+  return async function api (path, method = 'GET', params = {}, legacy = false, showLoader = true) {
     let {pathname, query: queryStr} = URL.parse(path);
     let query, headers = {}, body;
 
@@ -73,6 +78,9 @@ export default function createAPI(createRequest) {
     }
 
     if (canUseDOM) {
+      if (showLoader) {
+        NProgress.start();
+      }
       try {
         const storageId = apiClient.token;
         let storedData = localStorage.getItem(storageId);
@@ -92,6 +100,9 @@ export default function createAPI(createRequest) {
     return await new Promise((resolve, reject) => {
       createRequest({method, headers, pathname, query, body, legacy})
         .end((err, res) => {
+          if (showLoader) {
+            NProgress.done();
+          }
           if (err) {
             return reject(err);
           }

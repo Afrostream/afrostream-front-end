@@ -1,14 +1,16 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import Header from './Header/Header';
-import Footer from './Footer/Footer';
-import SideBar from './SideBar/SideBar';
-import AlertMessage from './Alert/AlertMessage';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import Header from './Header/Header'
+import Footer from './Footer/Footer'
+import SideBar from './SideBar/SideBar'
+import AlertMessage from './Alert/AlertMessage'
 import ModalView from './Modal/ModalView'
-import classNames from 'classnames';
-import { metasData, analytics } from '../decorators';
+import classNames from 'classnames'
+import { metasData, analytics } from '../decorators'
+//import chardinJs from 'chardin.js'
+
 if (process.env.BROWSER) {
-  require('./Application.less');
+  require('./Application.less')
 }
 
 @metasData()
@@ -19,19 +21,23 @@ class Application extends React.Component {
   static contextTypes = {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
-  };
+  }
+
+  componentDidMount () {
+    require('chardin.js')
+  }
 
   render () {
 
-    const {props: {children, Event, User, Modal}} = this;
-    const toggled = User.get('user') && Event.get('sideBarToggled');
-    const hasPopup = Modal.get('target');
+    const {props: {children, Event, User, Modal}} = this
+    const toggled = User.get('user') && Event.get('sideBarToggled')
+    const hasPopup = Modal.get('target')
 
     let appClasses = classNames({
       'app': true,
       'toggled': toggled,
       'lock-open': hasPopup
-    });
+    })
 
     return (
       <div className={appClasses}>
@@ -44,8 +50,8 @@ class Application extends React.Component {
         </div>
         <ModalView {...this.props}/>
       </div>
-    );
+    )
   }
 }
 
-export default Application;
+export default Application

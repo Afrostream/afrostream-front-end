@@ -1,10 +1,9 @@
 import ActionTypes from '../consts/ActionTypes';
 import * as RecoActionCreators from './reco';
-import {notFoundVideo} from './notFoundAction';
+import { notFoundVideo } from './notFoundAction';
 
-export function getVideo(videoId) {
+export function getVideo (videoId) {
   return (dispatch, getState, actionDispatcher) => {
-
     console.log('player : getVideo', videoId);
     if (!videoId) {
       console.log('no video id passed in action', videoId);

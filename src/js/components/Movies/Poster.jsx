@@ -61,7 +61,8 @@ class Poster extends LoadVideo {
     }
     var rect;
     var profiles = image.get('profiles');
-    if (!profiles) {
+    let type = this.getType();
+    if (!profiles || type !== 'adspot') {
       return `&crop=${this.props.crop}&fit=${this.props.fit}`
     }
     try {
