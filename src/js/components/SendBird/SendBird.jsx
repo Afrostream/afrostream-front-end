@@ -342,6 +342,7 @@ class SendBird extends React.Component {
     let fabsClasses = {
       'fabs': true,
       'indigo': true,
+      'is-enabled': chatMode,
       'is-visible': ~sendBird.channels.indexOf(parseInt(movieId))
     }
 
