@@ -8,6 +8,8 @@ import request from 'superagent';
 import NProgress from 'nprogress';
 import { storeToken } from '../lib/storage';
 
+NProgress.configure({showSpinner: false});
+
 const isTokenValid = function (tokenData) {
   return tokenData && new Date(tokenData.expiresAt).getTime() > Date.now();
 };
@@ -27,13 +29,12 @@ async function getToken (tokenData) {
     refresh_token: tokenData.refreshToken
   };
 
-  NProgress.start();
 
   return await new Promise((resolve, reject) => {
     request('POST', url)
       .send(body)
       .end((err, res) => {
-        NProgress.done();
+
         if (err) {
           return reject(err);
         }
@@ -77,6 +78,7 @@ export default function createAPI (createRequest) {
     }
 
     if (canUseDOM) {
+      NProgress.start();
       try {
         const storageId = apiClient.token;
         let storedData = localStorage.getItem(storageId);
@@ -96,6 +98,7 @@ export default function createAPI (createRequest) {
     return await new Promise((resolve, reject) => {
       createRequest({method, headers, pathname, query, body, legacy})
         .end((err, res) => {
+          NProgress.done();
           if (err) {
             return reject(err);
           }
