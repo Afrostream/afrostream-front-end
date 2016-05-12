@@ -37,6 +37,7 @@ class SendBirdButton extends React.Component {
     } = this
 
     const chatMode = Event.get('showChat')
+    $('body').chardinJs('stop')
     dispatch(EventActionCreators.showChat(!chatMode))
   }
 
