@@ -23,7 +23,13 @@
           margin-left: 0;
         }
       }
+      /* SMARTPHONES  */
+      .isMobile({ width: 100%; position: relative; });
+
+      /* TABLETS  */
+      .isSmallScreen({ width: 100%; position: relative; });
     }
+
   }
   &.player-next-reco {
     .video-infos {
@@ -45,6 +51,14 @@
       //resize player vertically
       width: 100%;
       height: 100%;
+    }
+
+    .vjs-error .vjs-error-display .vjs-modal-dialog-content {
+      .isMobile({ font-size: 0.7em; });
+      padding: @app-padding;
+      &:before {
+        content: none;
+      }
     }
   }
   .video-infos {

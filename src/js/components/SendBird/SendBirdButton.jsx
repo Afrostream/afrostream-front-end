@@ -54,8 +54,11 @@ class SendBirdButton extends React.Component {
       'zmdi': true
     }
 
-    chatClass[this.props.tipClass] = !chatMode
-    chatClass[this.props.tipClassToggle] = chatMode
+    chatClass[this.props.tipClass] = true
+    if (this.props.tipClassToggle && this.props.tipClassToggle !== this.props.tipClass) {
+      chatClass[this.props.tipClass] = !chatMode
+      chatClass[this.props.tipClassToggle] = chatMode
+    }
 
     const inputAttributes = {
       onClick: event => ::this.action()

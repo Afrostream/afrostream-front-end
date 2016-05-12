@@ -14,6 +14,7 @@ import PlayerComponent from './PlayerComponent';
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId, videoId}}) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
+    store.dispatch(EventActionCreators.showChat(false)),
     store.dispatch(PlayerActionCreators.getConfig()),
     store.dispatch(CategoryActionCreators.getAllSpots())
   ];

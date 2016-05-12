@@ -834,7 +834,7 @@ class PlayerComponent extends Component {
     let renderData = episodeData ? episodeData : movieData
 
     const chatMode = Event.get('showChat')
-    const sendBirdOn = config.sendBird.channels.indexOf(parseInt(movieId));
+    const sendBirdOn = ~config.sendBird.channels.indexOf(parseInt(movieId));
 
     let playerClasses = {
       'player': true,

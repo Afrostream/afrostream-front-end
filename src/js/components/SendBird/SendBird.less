@@ -13,10 +13,16 @@
   vertical-align: top;
   bottom: 0;
   right: 0;
+  width: 30%;
   top: @header-height;
   //margin: 1em;
   //z-index: 99800;
-  width: 30%;
+
+  /* SMARTPHONES  */
+  .isMobile({ width: 100%; position: relative; top: 0; });
+
+  /* TABLETS  */
+  .isSmallScreen({ width: 100%; position: relative; top: 0; });
 
   #prime:not(.is-visible) {
     display: none;
@@ -107,6 +113,7 @@
     bottom: 0;
     top: 0;
     height: 100%;
+    min-height: 350px;
     font-size: 12px;
     line-height: 22px;
     font-family: 'Roboto';
@@ -575,50 +582,6 @@
     100% {
       transform: scale(1);
       opacity: 0;
-    }
-  }
-
-  /* SMARTPHONES PORTRAIT */
-
-  @media only screen and (min-width: 300px) {
-    .chat {
-      width: 200px;
-    }
-  }
-
-  /* SMARTPHONES LANDSCAPE */
-
-  @media only screen and (min-width: 480px) {
-    .chat {
-      width: 300px;
-    }
-
-    .chat_field {
-      width: 65%;
-    }
-  }
-
-  /* TABLETS PORTRAIT */
-
-  @media only screen and (min-width: 768px) {
-    .chat {
-      width: 300px;
-    }
-
-    .chat_field {
-      width: 65%;
-    }
-  }
-
-  /* TABLET LANDSCAPE / DESKTOP */
-
-  @media only screen and (min-width: 1024px) {
-    .chat {
-      width: 100%;
-    }
-
-    .chat_field {
-      width: 65%;
     }
   }
 
