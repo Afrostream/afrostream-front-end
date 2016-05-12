@@ -50,9 +50,7 @@ class SendBirdButton extends React.Component {
 
     const chatMode = Event.get('showChat')
 
-    let chatClass = {
-      'fa': true
-    }
+    let chatClass = {}
 
     chatClass[this.props.tipClass] = !chatMode
     chatClass[this.props.tipClassToggle] = chatMode
@@ -79,8 +77,8 @@ SendBirdButton.propTypes = {
 
 SendBirdButton.defaultProps = {
   label: '',
-  tipClass: 'fa-comments',
-  tipClassToggle: 'fa-comments-o',
+  tipClass: 'zmdi zmdi-comment-text',
+  tipClassToggle: 'zmdi zmdi-comment-text',
   tooltip: 'Ouvrir le chat',
   tooltipToggle: 'Fermer le chat'
 }

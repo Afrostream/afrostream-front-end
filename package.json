@@ -98,6 +98,7 @@
     "moment": "^2.11.2",
     "node-libs-browser": "^0.5.2",
     "normalize.css": "^3.0.3",
+    "nprogress": "^0.2.0",
     "optimist": "^0.6.1",
     "packageify": "^0.2.2",
     "parse-link-header": "^0.2.0",
