@@ -46,6 +46,8 @@ if (canUseDOM) {
 }))
 class PlayerComponent extends Component {
 
+  static displayName = 'PlayerComponent'  //  This is important for production mode
+
   constructor (props) {
     super(props)
     this.player = null
@@ -84,7 +86,6 @@ class PlayerComponent extends Component {
   }
 
   componentDidMount () {
-
     this.setState({
       size: {
         height: window.innerHeight,
@@ -92,6 +93,21 @@ class PlayerComponent extends Component {
       }
     })
 
+  }
+
+  isTourShowed () {
+    let isTourShow = null
+
+    if (canUseDOM) {
+      isTourShow = parseInt(localStorage.getItem('afrTourChat'))
+    }
+    return isTourShow;
+  }
+
+  setTourShowed () {
+    if (canUseDOM) {
+      localStorage.setItem('afrTourChat', 1);
+    }
   }
 
   componentWillUnmount () {
@@ -440,12 +456,40 @@ class PlayerComponent extends Component {
       this.container = ReactDOM.findDOMNode(this)
       this.container.removeEventListener('gobacknext', ::this.backNextHandler)
       this.container.addEventListener('gobacknext', ::this.backNextHandler)
+      this.makeTour()
       return this.player
     } catch (err) {
       console.log('player : ', err)
       //this.destroyPlayer()
       return this.playerInit = false
     }
+  }
+
+  hasSendBirdRoom () {
+    const {
+      props: {
+        movieId
+      }
+    } = this
+
+    return ~config.sendBird.channels.indexOf(parseInt(movieId));
+  }
+
+  makeTour () {
+    const hasRoom = this.hasSendBirdRoom()
+    let isTourShow = this.isTourShowed()
+    if (!hasRoom || isTourShow === 1) {
+      return
+    }
+    //SendbirdTour
+    $('body').chardinJs('start')
+    this.player.off('userinactive')
+    $('body').on('chardinJs:stop', ::this.handleUserActive)
+  }
+
+  handleUserActive () {
+    this.player.on('userinactive', ::this.triggerUserActive)
+    this.setTourShowed()
   }
 
   async generateDomTag (videoData) {
@@ -580,7 +624,7 @@ class PlayerComponent extends Component {
 
     //VTT flash vtt.js
     //playerData['vtt.js'] = ''
-    playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
+    //playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
     // ==== END hacks config
     playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
 
@@ -834,7 +878,7 @@ class PlayerComponent extends Component {
     let renderData = episodeData ? episodeData : movieData
 
     const chatMode = Event.get('showChat')
-    const sendBirdOn = ~config.sendBird.channels.indexOf(parseInt(movieId));
+    const sendBirdOn = this.hasSendBirdRoom();
 
     let playerClasses = {
       'player': true,
@@ -878,7 +922,9 @@ class PlayerComponent extends Component {
           <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
             <ShareButton />
-            {sendBirdOn ? <SendBirdButton label="Live Chat"/> : null}
+            {sendBirdOn ? <SendBirdButton label="Live Chat" ref="sendbird"
+                                          sendBirdIntro="Vous pouvez desormais chatter avec les autres utilisateurs regardant la même video que vous"
+                                          sendBirdPosition="right"/> : null}
           </div>
           {videoDuration ?
             <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}

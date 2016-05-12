@@ -62,7 +62,8 @@
     }
   }
   .video-infos {
-    position: relative;
+    //OVERLA FIX
+    //position: relative;
     display: inline-block;
     vertical-align: middle;
     left: 0;
@@ -73,6 +74,11 @@
     font-size: 1em;
     line-height: 1;
     margin: @app-padding;
+
+    > div {
+      //OVERLA FIX
+      position: relative;
+    }
 
     .video-infos_label {
       font-family: @font-book;

@@ -57,7 +57,7 @@ async function getToken (tokenData) {
  * Server: /lib/render.js
  */
 export default function createAPI (createRequest) {
-  return async function api (path, method = 'GET', params = {}, legacy) {
+  return async function api (path, method = 'GET', params = {}, legacy = false, showLoader = true) {
     let {pathname, query: queryStr} = URL.parse(path);
     let query, headers = {}, body;
 
@@ -78,7 +78,9 @@ export default function createAPI (createRequest) {
     }
 
     if (canUseDOM) {
-      NProgress.start();
+      if (showLoader) {
+        NProgress.start();
+      }
       try {
         const storageId = apiClient.token;
         let storedData = localStorage.getItem(storageId);
@@ -98,7 +100,9 @@ export default function createAPI (createRequest) {
     return await new Promise((resolve, reject) => {
       createRequest({method, headers, pathname, query, body, legacy})
         .end((err, res) => {
-          NProgress.done();
+          if (showLoader) {
+            NProgress.done();
+          }
           if (err) {
             return reject(err);
           }

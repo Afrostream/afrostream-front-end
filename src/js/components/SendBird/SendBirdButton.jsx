@@ -37,7 +37,6 @@ class SendBirdButton extends React.Component {
     } = this
 
     const chatMode = Event.get('showChat')
-
     dispatch(EventActionCreators.showChat(!chatMode))
   }
 
@@ -65,6 +64,8 @@ class SendBirdButton extends React.Component {
     }
     return (<button className="btn sendbird_button" type="button" data-toggle="tooltip" ref="data"
                     data-placement="top"
+                    data-position={this.props.sendBirdPosition}
+                    data-intro={this.props.sendBirdIntro}
                     title={chatMode ? this.props.tooltipToggle : this.props.tooltip}  {...inputAttributes}>
       <i className={classSet(chatClass)}></i>
       {this.getLabel()}
@@ -77,6 +78,8 @@ SendBirdButton.propTypes = {
   tipClassToggle: React.PropTypes.string,
   tooltip: React.PropTypes.string,
   tooltipToggle: React.PropTypes.string,
+  sendBirdPosition: React.PropTypes.string,
+  sendBirdIntro: React.PropTypes.string,
   label: React.PropTypes.string
 }
 
@@ -85,6 +88,8 @@ SendBirdButton.defaultProps = {
   tipClass: 'zmdi-comment-text',
   tipClassToggle: 'zmdi-comment-text',
   tooltip: 'Ouvrir le chat',
+  sendBirdPosition: 'left',
+  sendBirdIntro: null,
   tooltipToggle: 'Fermer le chat'
 }
 

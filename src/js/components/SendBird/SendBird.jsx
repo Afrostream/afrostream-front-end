@@ -404,7 +404,9 @@ class SendBird extends React.Component {
         <div className={classSet(chatClasses)}>
           <div className="chat_header">
             <span id="chat_head">{this.state.currentChannel ? this.state.currentChannel.name : 'Live Chat'}</span>
-            <SendBirdButton tipClass="zmdi zmdi-close" tipClassToggle="zmdi-close" tooltip="Quitter le chat"/>
+            <SendBirdButton tipClass="zmdi zmdi-close" tipClassToggle="zmdi-close" tooltip="Quitter le chat"
+                            sendBirdPosition="left"
+                            sendBirdIntro="Fermez le chat"/>
             <div className={classSet(loaderClasses)}/>
             <div className={classSet(optionsClasses)} onClick={::this.toggleOptions}>
               <i className="zmdi zmdi-more-vert"/>
@@ -476,7 +478,9 @@ class SendBird extends React.Component {
               })
             }
           </div>
-          <div className={classSet(inputsFieldsClasses)}>
+          <div className={classSet(inputsFieldsClasses)}
+               data-intro="Ecrivez votre texte"
+               data-position="left">
             <a id="fab_listen" className={classSet(fabClasses)} onClick={::this.onListenMessage}>
               <i className="zmdi zmdi-mic-outline"></i>
             </a>
