@@ -1,14 +1,24 @@
-import React from 'react';
-import SignUpButton from '../../User/SignUpButton';
+import React from 'react'
+import SignUpButton from '../../User/SignUpButton'
+import { dict } from '../../../../../config'
+import _ from 'lodash'
 
 if (process.env.BROWSER) {
-  require('./Devices.less');
+  require('./Devices.less')
 }
 
 class Devices extends React.Component {
 
 
-  render() {
+  render () {
+
+    const {
+      props: {
+        params
+      }
+    } = this
+
+    let info = dict(params.lang).home.devices;
 
     return (
       <section className="devices">
@@ -20,24 +30,18 @@ class Devices extends React.Component {
             </div>
           </div>
           <div className="device-element-text">
-            <h2>Vos films et séries afro préférés quand vous voulez où vous voulez en illimité</h2>
+            <h2>{info.title}</h2>
             <ul className="features-list">
-              <li className="features-item">
-                En versions sous-titrées ou vost
-              </li>
-              <li className="features-item">
-                Aucune publicité, aucune interruption
-              </li>
-              <li className="features-item">
-                Profitez d'une image haute qualité
-              </li>
+              {
+                _.map(info.features, (feature, key)=>( <li key={key} className="features-item">{feature}</li>))
+              }
             </ul>
-            <SignUpButton label="J'en profite !"/>
+            <SignUpButton label={info.action}/>
           </div>
         </div>
       </section>
-    );
+    )
   }
 }
 
-export default Devices;
+export default Devices

@@ -26,7 +26,7 @@ class ModalGocardlessMandat extends ModalComponent {
   }
 
   i18n(key = 'title') {
-    return dict.payment.virement.mandat[key] || '';
+    return dict().payment.virement.mandat[key] || '';
   }
 
   render() {

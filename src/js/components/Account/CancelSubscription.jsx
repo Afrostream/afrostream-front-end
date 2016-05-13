@@ -70,7 +70,7 @@ class CancelSubscription extends React.Component {
     });
 
     let activeSubscription = currentSubscription && currentSubscription.get('subStatus') !== 'canceled';
-    let dictData = dict.account.cancel[activeSubscription ? 'active' : 'canceled'];
+    let dictData = dict().account.cancel[activeSubscription ? 'active' : 'canceled'];
 
     let header = dictData.header;
     let endDate;
@@ -100,10 +100,10 @@ class CancelSubscription extends React.Component {
             <div className="col-md-12">
               <button className="btn btn-default btn-danger button-cancel__subscription" {...inputAttributes}
                       disabled={this.state.pending}>
-                {dict.account.cancel.submitBtn}
+                {dict().account.cancel.submitBtn}
               </button>
               <Link className="btn btn-default btn-success btn-return__account"
-                    to="/">{dict.account.cancel.cancelBtn}</Link>
+                    to="/">{dict().account.cancel.cancelBtn}</Link>
             </div>
           </div>
           : ''}

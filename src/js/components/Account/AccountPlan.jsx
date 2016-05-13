@@ -44,11 +44,11 @@ class AccountPlan extends React.Component {
       'cancel-plan-hidden': !currentSubscription || (currentSubscription.get('subStatus') === 'canceled') || (currentSubscription.get('provider').get('providerName') === 'celery')
     };
 
-    const planLabel = dict.planCodes[planCode];
+    const planLabel = dict().planCodes[planCode];
 
     return (
       <div className="row account-details">
-        <div className="account-details__header col-md-4">{dict.account.plan.header}</div>
+        <div className="account-details__header col-md-4">{dict().account.plan.header}</div>
         <div className="account-details__container col-md-8">
           <div className="row">
             <div className="col-md-8">
@@ -56,7 +56,7 @@ class AccountPlan extends React.Component {
             </div>
             <div className="col-md-4">
               <Link className={classSet(cancelSubscriptionClasses)}
-                    to="/compte/cancel-subscription">{dict.account.plan.cancelPlan}</Link>
+                    to="/compte/cancel-subscription">{dict().account.plan.cancelPlan}</Link>
             </div>
           </div>
         </div>

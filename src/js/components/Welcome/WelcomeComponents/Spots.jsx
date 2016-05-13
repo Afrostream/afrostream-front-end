@@ -1,12 +1,13 @@
-import React from 'react';
-import Immutable from 'immutable';
-import { connect } from 'react-redux';
-import Thumb from '../../../components/Movies/Thumb';
-import SignUpButton from '../../User/SignUpButton';
-import _ from 'lodash';
+import React from 'react'
+import Immutable from 'immutable'
+import { connect } from 'react-redux'
+import Thumb from '../../../components/Movies/Thumb'
+import SignUpButton from '../../User/SignUpButton'
+import { dict } from '../../../../../config'
+import _ from 'lodash'
 
 if (process.env.BROWSER) {
-  require('./Spots.less');
+  require('./Spots.less')
 }
 
 @connect(({Category}) => ({Category}))
@@ -14,7 +15,7 @@ class Spots extends React.Component {
 
   getMovies (data) {
     return <Thumb favorite={false}
-                  key={`spot-home-${data.get('_id')}`} {...{data}}/>;
+                  key={`spot-home-${data.get('_id')}`} {...{data}}/>
   }
 
   /**
@@ -23,40 +24,43 @@ class Spots extends React.Component {
   render () {
     const {
       props: {
-        Category
+        Category,
+        params
       }
-    } = this;
+    } = this
 
-    let categories = Category.get('categorys/spots');
+    let categories = Category.get('categorys/spots')
 
     if (!categories) {
-      return (<div />);
+      return (<div />)
     }
-    let recoList = [];
+    let recoList = []
     categories.map((categorie)=> {
-      let catMovies = categorie.get('adSpots');
+      let catMovies = categorie.get('adSpots')
       if (catMovies) {
-        recoList = recoList.concat(catMovies.toJS());
+        recoList = recoList.concat(catMovies.toJS())
       }
-    });
+    })
 
     let uniqSpots = _.uniq(recoList, (o)=> {
-      return o['_id'];
-    });
+      return o['_id']
+    })
 
-    let categoriesList = Immutable.fromJS(uniqSpots);
+    let categoriesList = Immutable.fromJS(uniqSpots)
+
+    let info = dict(params.lang).home.spots;
 
     return (
       <div className="spots-list">
-        <h2>Aperçu de notre catalogue</h2>
+        <h2>{info.title}</h2>
         {categoriesList ? categoriesList.map((movie, i) => this.getMovies(movie)).toJS() : ''}
         <div className="container sign-up__container">
-          <SignUpButton />
+          <SignUpButton label={info.action}/>
         </div>
       </div>
-    );
+    )
 
   }
 }
 
-export default Spots;
+export default Spots

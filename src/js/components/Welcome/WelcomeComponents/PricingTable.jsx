@@ -42,6 +42,13 @@ class PricingTable extends React.Component {
 
   getPlanRow (plan) {
 
+    const {
+      props: {
+        params
+      }
+    } = this
+
+    let dictionnary = dict(params.lang);
     let cols = [
       'formule',
       'name',
@@ -71,31 +78,31 @@ class PricingTable extends React.Component {
       let value = ''
       switch (label) {
         case 'formule':
-          value = dict.planCodes.infos[label] || ''
+          value = dictionnary.planCodes.infos[label] || ''
           break
         case 'prelevementMensuel':
           if (plan.get('periodUnit') === 'month') {
-            value = <div className="plan-highlight">{dict.planCodes.infos[label]}</div>
+            value = <div className="plan-highlight">{dictionnary.planCodes.infos[label]}</div>
           }
           break
         case 'internalActionLabel':
           const inputSignupAction = {
             onClick: event => ::this.openModal(internalPlanUuid)
           }
-          value = (<button className="btn-plan" {...inputSignupAction}>{`${dict.planCodes.action}`}</button>)
+          value = (<button className="btn-plan" {...inputSignupAction}>{`${dictionnary.planCodes.action}`}</button>)
           break
         case 'price':
-          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dict.account.billing.periods[plan.get('periodUnit')]}`
+          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dictionnary.account.billing.periods[plan.get('periodUnit')]}`
           break
         case 'internalMaxScreens':
           value =
-            <span>{`${objVal} ${dict.planCodes.infos[label].replace('{s}', parseInt(objVal) > 1 ? 's' : '')}`}</span>
+            <span>{`${objVal} ${dictionnary.planCodes.infos[label].replace('{s}', parseInt(objVal) > 1 ? 's' : '')}`}</span>
           break
         default :
           let isBool = (objVal === 'true' || objVal === 'false' || typeof objVal === 'boolean' ) && typeof isBoolean(objVal) === 'boolean'
           if (isBool) {
             if (isBoolean(objVal)) {
-              value = <span>{ dict.planCodes.infos[label] || ''}</span>
+              value = <span>{ dictionnary.planCodes.infos[label] || ''}</span>
             }
           }
           else {
@@ -153,6 +160,14 @@ class PricingTable extends React.Component {
 
   getFirstCol () {
 
+    const {
+      props: {
+        params
+      }
+    } = this
+
+    let info = dict(params.lang).home.plans;
+
     let validPlans = this.getPlans()
 
     if (!validPlans) {
@@ -162,11 +177,10 @@ class PricingTable extends React.Component {
     return (
       <div key={`line-plan-baseline`} className={`col col-xs-12 col-sm-12 col-md-${(12 - (validPlans.size + 1) * 3)}`}>
         <h1>
-          <span className="pricing-header-purple">Nos formules </span>
+          <span className="pricing-header-purple">{info.title}</span>
         </h1>
-        <div className="pricing-baseline">Service uniquement disponible en France, DOM-TOM,
-          Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.
-          <Link to="/faq">Les réponses à vos questions</Link>
+        <div className="pricing-baseline">{info.baseline}
+          <Link to="/faq">{info.link}</Link>
         </div>
       </div>)
   }

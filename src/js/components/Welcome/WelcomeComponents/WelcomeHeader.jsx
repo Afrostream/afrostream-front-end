@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../../actions/modal'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames'
-import config from '../../../../../config'
+import { dict, promoCodes, metadata, images }from '../../../../../config'
 import _ from 'lodash'
 import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
@@ -67,7 +67,7 @@ class WelcomeHeader extends React.Component {
       }
     } = this
     let pathName = location.pathname.split('/').join('')
-    let HasProm = _.find(config.promoCodes, function (promo) {
+    let HasProm = _.find(promoCodes, function (promo) {
       return pathName === promo.code
     })
     return HasProm
@@ -77,14 +77,15 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        Movie, Season, Episode, params
+        Movie, Season, Episode, params, routes
       }
     } = this
+    let {movieId, seasonId, episodeId, lang} = params
 
-    let {movieId, seasonId, episodeId} = params
     let info = {
-      title: 'Les meilleurs films et séries \n afro-américains et africains \n en illimité',
-      poster: `${config.metadata.shareImage}`,
+      title: dict(lang).home.title,
+      action: dict(lang).home.action,
+      poster: `${metadata.shareImage}`,
       movie: {
         title: '',
         synopsis: ''
@@ -140,7 +141,7 @@ class WelcomeHeader extends React.Component {
     }
 
     //&h=${this.state.size.height}
-    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`}
+    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${images.quality}&fm=${images.type})`}
 
     let promoCode = this.hasPromo()
 
@@ -167,7 +168,7 @@ class WelcomeHeader extends React.Component {
               <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
                 return (<span key={`statement-${i}`}>{statement}</span>)
               })}</div>
-              <SignUpButton />
+              <SignUpButton label={info.action}/>
             </div>
           </div>
         </section>

@@ -1,48 +1,48 @@
 {
   "home": {
-    "title": "Les meilleurs films et séries \n afro-américains et africains \n en illimité",
-    "action": "DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE",
+    "title": "The Best Black Films and TV Series",
+    "action": "START YOUR FIRST <br /> WEEK FREE",
     "devices": {
-      "title": "Vos films et séries afro préférés quand vous voulez où vous voulez en illimité",
-      "action": "J’en profite !",
+      "title": "Your favorite Black films and series in unlimited access when you want and where you want.",
+      "action": "Sign up now !",
       "features": [
-        "En versions sous-titrées ou vost",
-        "Aucune publicité, aucune interruption",
-        "Profitez d'une image haute qualité"
+        "In French or Subtitled in French",
+        "No publicity, No interruptions",
+        "Enjoy a high quality image"
       ]
     },
     "spots": {
-      "title": "Aperçu de notre catalogue",
-      "action": "DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE"
+      "title": "Preview our catalog",
+      "action": "START YOUR FIRST <br /> WEEK FREE"
     },
     "plans": {
-      "title": "Nos formules",
-      "baseline": "Service uniquement disponible en France, DOM-TOM,Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.",
-      "link": "Les réponses à vos questions"
+      "title": "Our Plans",
+      "baseline": "Service is only available in France, French overseas territories, Belgium, Luxembourg, Switzerland, Senegal, Ivory Coast.",
+      "link": "The answers to your questions."
     }
   },
   "footer": {
-    "legals": "Mentions légales",
+    "legals": "Legal",
     "support": {
-      "title": "SUPPORT TECHNIQUE",
-      "help": "Aide en ligne",
-      "faq": "Les réponses à vos questions",
-      "cgu": "Conditions d'utilisation",
-      "policy": "Politique de confidentialité"
+      "title": "TECHNICAL SUPPORT",
+      "help": "Online help",
+      "faq": "The answers to your questions",
+      "cgu": "Terms of use",
+      "policy": "Privacy policy"
     },
     "recharge": {
       "title": "RECHARGE",
-      "cashway": "Paiement en espèces avec ",
+      "cashway": "Payment in cash with ",
       "coupon": "Coupon"
     },
     "pro": {
       "title": "PRO",
       "blog": "Blog",
-      "press": "Presse",
-      "investissor": "Investisseurs"
+      "press": "Press",
+      "investissor": "Investors"
     },
     "apps": {
-      "title": "APPLICATIONS MOBILE",
+      "title": "MOBILE APPLICATIONS",
       "ios": "IOS",
       "android": "Andoid"
     },
@@ -68,7 +68,7 @@
     "selectTitle": "Choisissez votre formule et profitez de",
     "freePeriodLabel": "7 jours d'essai",
     "title": "Formule",
-    "action": "Choisir cette offre",
+    "action": "Choose this offer",
     "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",
     "cashway-coupon-oneyear": "Formule Sérénité - 59,99€ pour 1 an de films et séries afro",
     "afrostreammonthly": "Formule Mensuel - 7 jours d’essai puis 6,99€ par mois sans engagement",
@@ -77,14 +77,14 @@
     "afrostreamgift": "Formule Cadeau - 1 an de films et séries afro pour 59,99€",
     "infos": {
       "formule": "Formule",
-      "prelevementMensuel": "Prélèvement mensuel",
+      "prelevementMensuel": "Automatic debit payment",
       "price": "Tarif",
-      "trialEnabled": "7 jours d'essai offert",
-      "internalMaxScreens": "Écran{s} disponibles en simultané",
-      "internalMobile": "Sur votre ordinateur, smartphone et tablette",
-      "internalUnlimited": "Films et séries TV en illimité",
-      "internalEngagment": "Sans engagement",
-      "internalVip": "Invitations VIP aux avant-premières de films"
+      "trialEnabled": "7 day free trial",
+      "internalMaxScreens": "Available simultaneously screen{s}",
+      "internalMobile": "Watch on your computer, smartphone and tablet",
+      "internalUnlimited": "Unlimited movies and TV shows",
+      "internalEngagment": "Cancel Anytime",
+      "internalVip": "Invitations to VIP film screenings and special events"
     }
   },
   "history": {
@@ -273,28 +273,36 @@
     "dislike": "Je n'ai pas aimé"
   },
   "signin": {
-    "title": "Se connecter",
-    "action": "Se connecter",
-    "all": "Afficher tout",
-    "strategyEmailEmpty": "Le courriel est vide.",
-    "strategyEmailInvalid": "Le courriel n'est pas valide.",
-    "strategyDomainInvalid": "Le domaine {domain} n'a pas été configuré.",
-    "signupText": "Inscrivez-vous",
-    "forgotText": "Vous avez oublié votre mot de passe ?",
-    "emailPlaceholder": "Courriel",
-    "usernamePlaceholder": "Nom d'utilisateur",
-    "passwordPlaceholder": "Mot de passe",
-    "separatorText": "ou",
-    "serverErrorText": "Erreur lors de la connexion.",
-    "returnUserLabel": "Lors de votre dernière connexion vous avez utilisé...",
-    "domainUserLabel": "Vous êtes connecté depuis le réseau de votre entreprise...",
-    "wrongEmailPasswordErrorText": "Courriel ou mot de passe incorrect.",
-    "or": "... ou connectez-vous à l'aide de",
-    "loadingMessage": "Connexion à l'aide de {connection}...",
-    "popupCredentials": "Saisissez vos identifiants dans la fenêtre pop-up",
-    "userClosedPopup": "La fenêtre pop-up a été fermée. Veuillez réessayer.",
-    "userConsentFailed": "L'application n'a pas été autorisée. Veuillez réessayer.",
-    "loginFacebook": "Connexion avec facebook",
+    "title": "Sign in",
+    "action": "Sign In",
+    "actionDomain": "Log in to {domain}",
+    "all": "Not your account?",
+    "strategyEmailEmpty": "The email is empty.",
+    "strategyEmailInvalid": "The email is invalid.",
+    "strategyDomainInvalid": "The domain {domain} has not been set up.",
+    "signinText": "Log In",
+    "signupText": "Sign Up",
+    "forgotText": "Don't remember your password?",
+    "cancelAction": "Cancel",
+    "footerText": "",
+    "emailPlaceholder": "Email",
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Password",
+    "separatorText": "or",
+    "serverErrorText": "There was an error processing the login.",
+    "returnUserLabel": "Last time you signed in using...",
+    "domainUserLabel": "You are connected from your corporate network...",
+    "wrongEmailPasswordErrorText": "Wrong email or password.",
+    "passwordChangeRequiredErrorText": "You need to update your password because this is the first time you are signing in, or because your password has expired.",
+    "passwordLeakedErrorText": "This login attempt has been blocked because your password has been leaked in a third party website. We've sent you an email with instructions on how to unblock it.",
+    "unauthorizedErrorText": "Access denied.",
+    "userBlockedErrorText": "",
+    "or": "... or log in using",
+    "loadingMessage": "Logging In with {connection}...",
+    "popupCredentials": "Enter your credentials in the pop-up window",
+    "userClosedPopup": "Popup window closed. Try again.",
+    "userConsentFailed": "Permissions were not granted. Try again.",
+    "loginFacebook": "Connect with facebook",
     "language": {
       "email": "Doit etre un email valide",
       "password": "Le mot de passe",
@@ -310,18 +318,21 @@
   },
   "signup": {
     "description": "",
-    "title": "Nouveau compte",
-    "action": "Démarrez",
-    "emailPlaceholder": "Courriel",
-    "passwordPlaceholder": "Créer un mot de passe",
-    "cancelAction": "Annuler",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
+    "title": "Sign Up",
+    "action": "Sign Up",
+    "signinText": "Log In",
+    "signupText": "Sign Up",
+    "emailPlaceholder": "Email",
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Create a Password",
+    "cancelAction": "Cancel",
+    "headerText": "Please enter your email and password",
     "footerText": "",
-    "signupOnSSODomainErrorText": "Ce domaine {domain} a été configuré pour le Single Sign On et vous ne pouvez pas créer de compte. Essayez de vous connecter à un compte existant.",
-    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion.",
-    "userExistsErrorText": "Cet utilisateur existe déjà.",
-    "usernameInUseErrorText": "Ce nom d'utilisateur est déjà pris.",
-    "invalidPassword": "Le mot de passe n'est pas valide.",
+    "serverErrorText": "There was an error processing the signup.",
+    "userExistsErrorText": "The user already exists.",
+    "signupOnSSODomainErrorText": "This domain {domain} has been configured for Single Sign On and you can't create an account. Try signing in instead.",
+    "usernameInUseErrorText": "The username is already in use.",
+    "invalidPassword": "Password is too weak.",
     "passwordStrength": {
       "nonEmpty": "Un mot de passe non vide est requis",
       "lengthAtLeast": "Au moins %d caractères",
@@ -349,11 +360,11 @@
     "invalidPassword": "Le mot de passe n'est pas valide."
   },
   "coupon": {
-    "title": "Utilisez votre coupon",
-    "action": "Validez",
+    "title": "Use your coupon",
+    "action": "Submit",
     "couponPlaceholder": "Coupon",
-    "headerText": "Entrez le code du coupon pour commencer votre abonnement Afrostream.",
-    "couponInvalid": "Le coupon que vous avez soumis est incorrect ou a déjà été utilisé. Veuillez réessayer avec un autre coupon.",
+    "headerText": "Enter coupon code to start your Afrostream subscription.",
+    "couponInvalid": "The coupon that you submitted is incorrect or has already been used. Please try again with another coupon.",
     "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe."
   },
   "gift": {

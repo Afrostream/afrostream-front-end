@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from'react-dom';
 import classSet from 'classnames';
 import {dict} from '../../../../config';
-const dictNext = dict.next;
+const dictNext = dict().next;
 
 if (process.env.BROWSER) {
   require('./NextGoBack.less');

@@ -46,7 +46,7 @@ class Application extends React.Component {
         <AlertMessage />
         <div id="page-content-wrapper" className="container-fluid">
           {children}
-          <Footer />
+          <Footer {...this.props}/>
         </div>
         <ModalView {...this.props}/>
       </div>

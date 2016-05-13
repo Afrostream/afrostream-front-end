@@ -58,7 +58,7 @@ class PaypalForm extends RecurlyForm {
 
       <div className="row" ref="goCardlessForm">
         {this.renderPromoCode()}
-        <h5 className="col-md-12">{dict.payment.paypal.paypalText}</h5>
+        <h5 className="col-md-12">{dict().payment.paypal.paypalText}</h5>
       </div>
     );
   }
@@ -79,7 +79,7 @@ class PaypalForm extends RecurlyForm {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{dict.payment.paypal.label}</label>
+            <label className="form-label">{dict().payment.paypal.label}</label>
             <img src="/images/payment/paypal.png"/>
           </div>
         </div>

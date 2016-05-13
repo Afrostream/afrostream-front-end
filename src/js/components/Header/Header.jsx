@@ -83,7 +83,7 @@ class Header extends React.Component {
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>
-            <UserButton />
+            <UserButton {...this.props}/>
           </nav>
         </div>
       </div>

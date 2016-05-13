@@ -19,10 +19,10 @@ class PaymentError extends React.Component {
   };
 
   static defaultProps = {
-    title: dict.payment.errors.abo,
+    title: dict().payment.errors.abo,
     message: '',
     link: '/',
-    linkMessage: dict.payment.errors.retry,
+    linkMessage: dict().payment.errors.retry,
     links: []
   };
 

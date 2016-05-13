@@ -39,7 +39,7 @@ class AccountPage extends React.Component {
 
     return (
       <div className="row account-details">
-        <div className="account-details__header col-md-4">{dict.account.user.header}</div>
+        <div className="account-details__header col-md-4">{dict().account.user.header}</div>
         <div className="account-details__container col-md-8">
           <div className="row">
             <div className="col-md-6">
@@ -48,10 +48,10 @@ class AccountPage extends React.Component {
           </div>
           <div className="row">
             <div className="col-md-8">
-              <span>{`${dict.account.user.password} : ******`}</span>
+              <span>{`${dict().account.user.password} : ******`}</span>
             </div>
             <div className="col-md-4">
-              <Link className="btn btn-default" to="/reset">{dict.account.user.updatePassword}</Link>
+              <Link className="btn btn-default" to="/reset">{dict().account.user.updatePassword}</Link>
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@ class AccountPage extends React.Component {
     return (
       <div>
         <div className="row account-details">
-          <h1>{dict.account.header}</h1>
+          <h1>{dict().account.header}</h1>
         </div>
         {this.getUserInfos()}
         <AccountPlan />

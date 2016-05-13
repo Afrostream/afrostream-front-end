@@ -41,7 +41,7 @@ class PaymentForm extends React.Component {
     subscriptionStatus: 0,
     loading: false,
     isGift: false,
-    pageHeader: dict.payment.header
+    pageHeader: dict().payment.header
   }
 
   hasPlan () {
@@ -122,7 +122,7 @@ class PaymentForm extends React.Component {
 
     return (<div className="row">
       <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="first_name">{dict.payment.name}</label>
+        <label className="form-label" htmlFor="first_name">{dict().payment.name}</label>
         <input
           type="text"
           className="form-control first-name"
@@ -131,11 +131,11 @@ class PaymentForm extends React.Component {
           id="first_name"
           name="first-name"
           defaultValue={firstName}
-          placeholder={dict.payment.name} required
+          placeholder={dict().payment.name} required
           disabled={this.state.disabledForm}/>
       </div>
       <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="last_name">{dict.payment.lastName}</label>
+        <label className="form-label" htmlFor="last_name">{dict().payment.lastName}</label>
         <input
           type="text"
           className="form-control last-name"
@@ -144,7 +144,7 @@ class PaymentForm extends React.Component {
           id="last_name"
           name="last-name"
           defaultValue={lastName}
-          placeholder={dict.payment.lastName} required
+          placeholder={dict().payment.lastName} required
           disabled={this.state.disabledForm}/>
       </div>
     </div>)
@@ -166,7 +166,7 @@ class PaymentForm extends React.Component {
           form="subscription-create"
           className="button-create-subscription"
           disabled={this.state.disabledForm}
-        >{dict.planCodes.action}
+        >{dict().planCodes.action}
         </button>
       </div>
     </div>)
@@ -192,8 +192,8 @@ class PaymentForm extends React.Component {
           disabled={this.state.disabledForm}
           required
         />
-        <div className="checkbox-label">{dict.payment.droits.label} <a href="/pdfs/formulaire-retractation.pdf"
-                                                                       target="_blank">{dict.payment.droits.link}</a>
+        <div className="checkbox-label">{dict().payment.droits.label} <a href="/pdfs/formulaire-retractation.pdf"
+                                                                       target="_blank">{dict().payment.droits.link}</a>
         </div>
       </div>
     </div>)
@@ -220,8 +220,8 @@ class PaymentForm extends React.Component {
           required
         />
 
-        <div className="checkbox-label">{dict.payment.cgu.label} <a href="/pdfs/conditions-utilisation.pdf"
-                                                                    target="_blank">{dict.payment.cgu.link}</a>
+        <div className="checkbox-label">{dict().payment.cgu.label} <a href="/pdfs/conditions-utilisation.pdf"
+                                                                    target="_blank">{dict().payment.cgu.link}</a>
         </div>
       </div>
     </div>)
@@ -247,7 +247,7 @@ class PaymentForm extends React.Component {
 
     if (!this.refs.cgu.checked || !this.refs.droits.checked) {
       return this.error({
-        message: dict.payment.errors.checkbox,
+        message: dict().payment.errors.checkbox,
         fields: ['cgu', 'droits']
       })
     }
@@ -293,7 +293,7 @@ class PaymentForm extends React.Component {
       .then(()=> {
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch((err) => {
-        let message = dict.payment.errors.global
+        let message = dict().payment.errors.global
 
         if (err.response && err.response.body) {
           message = err.response.body.error
@@ -313,7 +313,7 @@ class PaymentForm extends React.Component {
     this.disableForm(false)
     this.setState({
       error: {
-        message: formatError.message || dict.payment.errors.fields,
+        message: formatError.message || dict().payment.errors.fields,
         fields: formatError.fields || []
       }
     })
@@ -359,7 +359,7 @@ class PaymentForm extends React.Component {
       return <div />
     }
 
-    const planLabel = `${dict.planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
+    const planLabel = `${dict().planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
 
     return (
       <div className="payment-wrapper">
@@ -398,10 +398,10 @@ class PaymentForm extends React.Component {
 
     if (!this.state.hasLib) {
       return (<PaymentError
-        title={dict.payment.errors.noLib.title}
-        message={dict.payment.errors.noLib.message}
-        link={dict.payment.errors.noLib.message}
-        linkMessage={dict.payment.errors.noLib.linkMessage}
+        title={dict().payment.errors.noLib.title}
+        message={dict().payment.errors.noLib.message}
+        link={dict().payment.errors.noLib.message}
+        linkMessage={dict().payment.errors.noLib.linkMessage}
       />)
     }
 
@@ -412,22 +412,22 @@ class PaymentForm extends React.Component {
       case 'expired':
         return (
           <div className="payment-wrapper">
-            <PaymentError title={dict.payment.expired.title}
-                          message={dict.payment.expired.message}
-                          link={dict.payment.expired.link}
-                          linkMessage={dict.payment.expired.linkMessage}
-                          links={dict.payment.expired.links}
+            <PaymentError title={dict().payment.expired.title}
+                          message={dict().payment.expired.message}
+                          link={dict().payment.expired.link}
+                          linkMessage={dict().payment.expired.linkMessage}
+                          links={dict().payment.expired.links}
             />
           </div>)
         break
       case 'future':
         return (
           <div className="payment-wrapper">
-            <PaymentError title={dict.payment.future.title}
-                          message={dict.payment.future.message}
-                          link={dict.payment.future.link}
-                          linkMessage={dict.payment.future.linkMessage}
-                          links={dict.payment.future.links}
+            <PaymentError title={dict().payment.future.title}
+                          message={dict().payment.future.message}
+                          link={dict().payment.future.link}
+                          linkMessage={dict().payment.future.linkMessage}
+                          links={dict().payment.future.links}
             />
             <CashwayEndPage />
           </div>)

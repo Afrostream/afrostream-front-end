@@ -112,6 +112,12 @@ class UserButton extends React.Component {
 
   getLoginState () {
 
+    const {
+      props: {
+        params
+      }
+    } = this
+
     const inputSigninAction = {
       onClick: event => ::this.showLock('showSignin')
     };
@@ -123,12 +129,12 @@ class UserButton extends React.Component {
       <div className="nav navbar-nav navbar-right">
         <li className="pull-right hidden-xs">
           <a href="#" role="button" className="btn-xs btn-signup pull-right" {...inputSignupAction}>
-            <span>{dict.signup.title}</span>
+            <span>{dict(params.lang).signup.title}</span>
           </a>
         </li>
         <li className="pull-right">
           <a href="#" role="button" className="btn-xs btn-signin pull-right"  {...inputSigninAction}>
-            <span>{dict.signin.action}</span>
+            <span>{dict(params.lang).signin.title}</span>
           </a>
         </li>
       </div>);

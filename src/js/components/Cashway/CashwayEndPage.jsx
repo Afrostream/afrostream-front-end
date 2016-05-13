@@ -76,9 +76,9 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-1.jpg" alt="code_bare_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{dict.payment.cashway.recupCode}
+                    <div className="container_title">{dict().payment.cashway.recupCode}
                       <a target="_blank" href={subOpts.get('couponCodeUrl')}>
-                        {dict.payment.cashway.recupCodeAction}</a></div>
+                        {dict().payment.cashway.recupCodeAction}</a></div>
                   </div>
                 </div>
 
@@ -88,8 +88,8 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-4.jpg" alt="money_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{dict.payment.cashway.rdv}(<a href="#"
-                                                                                   onClick={::this.showPlan}>{dict.payment.cashway.showMap}</a>)
+                    <div className="container_title">{dict().payment.cashway.rdv}(<a href="#"
+                                                                                   onClick={::this.showPlan}>{dict().payment.cashway.showMap}</a>)
                     </div>
                   </div>
                 </div>
@@ -100,7 +100,7 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-2.jpg" alt="validate_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{dict.payment.cashway.partner}
+                    <div className="container_title">{dict().payment.cashway.partner}
                     </div>
                   </div>
                 </div>
