@@ -79,7 +79,7 @@ class SendBird extends React.Component {
     sendBirdClient.init({
       'app_id': sendBird.appId,
       'guest_id': guestId,
-      'user_name': nickName,
+      //'user_name': nickName,
       'image_url': avatar,
       'successFunc': ::this.sendBirdInitSuccessHandler,
       'errorFunc': ::this.sendBirdErrorHandler
@@ -424,7 +424,7 @@ class SendBird extends React.Component {
              }*/}
             <span className="channel-list_title">Utilisateurs</span>
             <div className="user_list">
-              {_.map(this.state.users, ({guest_id, picture, id})=> {
+              {_.map(this.state.users, ({guest_id, picture, id, is_online})=> {
 
                 let isUser = this.isCurrentUser(guest_id)
 
@@ -439,7 +439,8 @@ class SendBird extends React.Component {
                 }
 
                 let avatarClasses = {
-                  'chat_msg_item': true
+                  'chat_msg_item': true,
+                  'is_online': is_online
                 }
 
                 return (

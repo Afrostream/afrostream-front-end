@@ -427,9 +427,18 @@
     .chat_avatar {
       position: relative;
       float: left;
+      border: 1px solid @subscriber-color;
     }
     .chat_username {
       padding: 3px;
+    }
+    &:not(.is_online) {
+      opacity: 0.3;
+      .chat_avatar {
+        img {
+          .filter(grayscale(1));
+        }
+      }
     }
   }
 
