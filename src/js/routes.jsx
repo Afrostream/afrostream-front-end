@@ -98,7 +98,7 @@ const buildRoutes = function (lang) {
   if (!lang) {
     const langRoutes = buildSubRoutes(lang)
     //push subroutes after static routes
-    subRoutes.splice(14, 0, langRoutes);
+    subRoutes.splice(subRoutes.length - 1, 0, langRoutes);
   }
   return subRoutes;
 
