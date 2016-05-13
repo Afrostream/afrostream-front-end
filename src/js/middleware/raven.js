@@ -32,7 +32,6 @@ export default function ({ getState }) {
     } catch (err) {
       console.error('[redux-raven-middleware] Reporting error to Sentry:',
         err);
-
       // Send the report.
       Raven.captureException(err, {
         extra: {
