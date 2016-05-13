@@ -27,7 +27,7 @@ const langs = ['fr', 'en'];
 const buildSubRoutes = function (lang) {
   if (lang) return
   return _.map(langs, (lang) =>
-    <Route key={lang} path={lang} name={lang}>
+    <Route key={lang} path=":lang" name={lang}>
       {buildRoutes(lang)}
     </Route>
   )
