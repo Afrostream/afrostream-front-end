@@ -1,6 +1,6 @@
 import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
-import SB from 'sendbird'
+import sendBirdClient from 'sendbird'
 import { sendBird } from '../../../../config'
 import classSet from 'classnames'
 import _ from 'lodash'
@@ -8,8 +8,6 @@ import shallowEqual from 'react-pure-render/shallowEqual'
 import * as EventActionCreators from '../../actions/event'
 import { withRouter } from 'react-router'
 import SendBirdButton from './SendBirdButton'
-
-const sendBirdClient = SB.getInstance()
 
 if (process.env.BROWSER) {
   require('./SendBird.less')
@@ -428,18 +426,18 @@ class SendBird extends React.Component {
              }*/}
             <span className="channel-list_title">Utilisateurs</span>
             <div className="user_list">
-              {_.map(this.state.users, (user)=> {
+              {_.map(this.state.users, ({guest_id, picture, id})=> {
 
-                let isUser = this.isCurrentUser(user.guest_id)
+                let isUser = this.isCurrentUser(guest_id)
 
                 if (isUser) {
                   return;
                 }
 
-                let img = user.picture
+                let img = picture
 
                 const onAction = {
-                  onClick: event => ::this.joinChannel(channel.channel_url)
+                  //onClick: event => ::this.joinChannel(channel.channel_url)
                 }
 
                 let avatarClasses = {
@@ -447,7 +445,7 @@ class SendBird extends React.Component {
                 }
 
                 return (
-                  <div key={user.id} className={classSet(avatarClasses)} {...onAction}>
+                  <div key={id} className={classSet(avatarClasses)} {...onAction}>
                     <div className="chat_avatar">{img ? <img src={img}/> : <i className="zmdi zmdi-account"/>}</div>
                     {/*<div className="chat_username">
                      {(user.nickname.length > 25 ? user.nickname.substring(0, 22) + '...' : user.nickname)}
@@ -460,10 +458,10 @@ class SendBird extends React.Component {
           </div>
           <div ref="chatConverse" id="chat_converse" className={classSet(converseClasses)}>
             {
-              _.map(this.state.messages, (obj)=> {
+              _.map(this.state.messages, ({user:{image, guest_id}, message, msg_id})=> {
 
-                let isUser = this.isCurrentUser(obj.user.guest_id)
-                let img = obj.user.image
+                let isUser = this.isCurrentUser(guest_id)
+                let img = image
 
                 let avatarClasses = {
                   'chat_msg_item': true,
@@ -471,9 +469,9 @@ class SendBird extends React.Component {
                   'chat_msg_item_admin': !isUser
                 }
                 return (
-                  <div key={obj.msg_id} className={classSet(avatarClasses)}>
+                  <div key={msg_id} className={classSet(avatarClasses)}>
                     <div className="chat_avatar">{img ? <img src={img}/> : <i className="zmdi zmdi-account"/>}</div>
-                    {obj.message}
+                    {message}
                   </div>
                 )
               })
