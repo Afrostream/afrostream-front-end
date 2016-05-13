@@ -1,6 +1,6 @@
 import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
-import sendBirdClient from 'sendbird'
+import SB from 'sendbird'
 import { sendBird } from '../../../../config'
 import classSet from 'classnames'
 import _ from 'lodash'
@@ -8,6 +8,9 @@ import shallowEqual from 'react-pure-render/shallowEqual'
 import * as EventActionCreators from '../../actions/event'
 import { withRouter } from 'react-router'
 import SendBirdButton from './SendBirdButton'
+
+
+const sendBirdClient = SB.getInstance()
 
 if (process.env.BROWSER) {
   require('./SendBird.less')
@@ -85,6 +88,7 @@ class SendBird extends React.Component {
     sendBirdClient.events.onMessageReceived = ::this.setChatMessage
     sendBirdClient.events.onSystemMessageReceived = ::this.setChatMessage
     sendBirdClient.events.onBroadcastMessageReceived = ::this.setChatMessage
+    sendBirdClient.events.onFileMessageReceived = ::this.setChatMessage
   }
 
   sendBirdInitSuccessHandler () {
@@ -228,14 +232,9 @@ class SendBird extends React.Component {
       if (sendBirdClient.isMessage(msg.cmd)) {
         this.setChatMessage(msg.payload)
       }
-      // TODO make file compatibility
-      // else if (sendBirdClient.isFileMessage(msg.cmd)) {
-      //   if (!sendBirdClient.hasImage(msg.payload)) {
-      //     msgList += this.fileMessageList(msg.payload)
-      //   } else {
-      //     msgList += this.imageMessageList(msg.payload)
-      //   }
-      // }
+      else if (sendBirdClient.isFileMessage(msg.cmd)) {
+        this.setChatMessage(msg.payload)
+      }
     })
     this.scrollPositionBottom()
   }
@@ -277,8 +276,7 @@ class SendBird extends React.Component {
   }
 
   setChatMessage (obj) {
-    if (this.isEmpty(obj['message'])) return
-
+    if (this.isEmpty(obj.message || obj.url)) return
     let messages = this.state.messages
     messages.push(obj)
     this.setState({
@@ -458,7 +456,7 @@ class SendBird extends React.Component {
           </div>
           <div ref="chatConverse" id="chat_converse" className={classSet(converseClasses)}>
             {
-              _.map(this.state.messages, ({user:{image, guest_id}, message, msg_id})=> {
+              _.map(this.state.messages, ({user:{image, guest_id}, message, url, msg_id})=> {
 
                 let isUser = this.isCurrentUser(guest_id)
                 let img = image
@@ -468,10 +466,12 @@ class SendBird extends React.Component {
                   'chat_msg_item_user': isUser,
                   'chat_msg_item_admin': !isUser
                 }
+                //this is a message
                 return (
                   <div key={msg_id} className={classSet(avatarClasses)}>
                     <div className="chat_avatar">{img ? <img src={img}/> : <i className="zmdi zmdi-account"/>}</div>
                     {message}
+                    {url ? <a href={url} target="_blank"><img className="chat_image" src={url}/></a> : null}
                   </div>
                 )
               })
