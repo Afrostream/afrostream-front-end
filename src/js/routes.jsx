@@ -1,28 +1,28 @@
-'use strict';
+'use strict'
 
-import React from 'react';
-import { Route, Redirect, IndexRoute } from 'react-router';
-import Application from './components/Application';
-import MoviePage from './components/Movies/MoviePage';
-import PlayerPage from './components/Player/PlayerPage';
-import LoginPage from './components/Login/LoginPage';
-import HomePage from './components/HomePage';
-import BrowseLastPage from './components/Browse/BrowseLastPage';
-import BrowseGenrePage from './components/Browse/BrowseGenrePage';
-import FavoritesPage from './components/Favorites/FavoritesPage';
-import SearchPage from './components/Search/SearchPage';
-import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/';
-import RedeemCoupon from './components/RedeemCoupon/RedeemCoupon';
-import CouponRegister from './components/RedeemCoupon/CouponRegister';
-import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage';
-import * as Static from './components/Static';
-import * as Blog from './components/Blog';
-import AccountPage from './components/Account/AccountPage';
-import CancelSubscription from './components/Account/CancelSubscription';
-import NoMatch from './components/NoMatch';
-import _ from 'lodash';
+import React from 'react'
+import { Route, Redirect, IndexRoute } from 'react-router'
+import Application from './components/Application'
+import MoviePage from './components/Movies/MoviePage'
+import PlayerPage from './components/Player/PlayerPage'
+import LoginPage from './components/Login/LoginPage'
+import HomePage from './components/HomePage'
+import BrowseLastPage from './components/Browse/BrowseLastPage'
+import BrowseGenrePage from './components/Browse/BrowseGenrePage'
+import FavoritesPage from './components/Favorites/FavoritesPage'
+import SearchPage from './components/Search/SearchPage'
+import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
+import RedeemCoupon from './components/RedeemCoupon/RedeemCoupon'
+import CouponRegister from './components/RedeemCoupon/CouponRegister'
+import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
+import * as Static from './components/Static'
+import * as Blog from './components/Blog'
+import AccountPage from './components/Account/AccountPage'
+import CancelSubscription from './components/Account/CancelSubscription'
+import NoMatch from './components/NoMatch'
+import _ from 'lodash'
 
-const langs = ['fr', 'en'];
+const langs = ['fr', 'en']
 
 const buildSubRoutes = function () {
   return _.map(langs, (lang) =>
@@ -30,9 +30,6 @@ const buildSubRoutes = function () {
       {buildRoutes(lang)}
     </Route>
   )
-  //return _.map(langs, (lang) =>
-  //  buildRoutes(lang)
-  //)
 }
 const buildHome = function (lang) {
   const homeRoutes = [
@@ -52,7 +49,7 @@ const buildHome = function (lang) {
              path=":videoId"
              component={PlayerPage}/>
     </Route>
-  ];
+  ]
 
   if (lang) {
     return homeRoutes
@@ -93,9 +90,9 @@ const buildRoutes = function (lang) {
     //push subroutes after static routes
     buildHome(lang),
     <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
-  ];
+  ]
 
-  return subRoutes;
+  return subRoutes
 
 }
 
@@ -103,4 +100,4 @@ export default (
   <Route name="app" component={Application}>
     {buildRoutes()}
   </Route>
-);
+)

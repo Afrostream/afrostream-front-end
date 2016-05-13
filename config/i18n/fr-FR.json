@@ -273,7 +273,7 @@
     "dislike": "Je n'ai pas aimé"
   },
   "signin": {
-    "title": "S’identifier",
+    "title": "Se connecter",
     "action": "Se connecter",
     "all": "Afficher tout",
     "strategyEmailEmpty": "Le courriel est vide.",

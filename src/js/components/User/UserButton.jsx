@@ -134,7 +134,7 @@ class UserButton extends React.Component {
         </li>
         <li className="pull-right">
           <a href="#" role="button" className="btn-xs btn-signin pull-right"  {...inputSigninAction}>
-            <span>{dict(params.lang).signin.action}</span>
+            <span>{dict(params.lang).signin.title}</span>
           </a>
         </li>
       </div>);

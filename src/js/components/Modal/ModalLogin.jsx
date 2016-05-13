@@ -259,8 +259,14 @@ class ModalLogin extends ModalComponent {
   }
 
   getTitle (key = 'title') {
+    const {
+      props: {
+        params
+      }
+    } = this
+
     let keyType = this.getI18n()
-    return dict()[keyType][key] || ''
+    return dict(params.lang)[keyType][key] || ''
   }
 
   getForm () {

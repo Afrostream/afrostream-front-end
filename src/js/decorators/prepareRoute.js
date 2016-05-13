@@ -1,6 +1,5 @@
-'use strict';
-import React, { PropTypes } from 'react';
-import shallowEqual from 'react-pure-render/shallowEqual';
+import React, { PropTypes } from 'react'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
 export default function prepareRoute (prepareFn) {
 
@@ -8,35 +7,35 @@ export default function prepareRoute (prepareFn) {
 
     class PrepareRouteDecorator extends React.Component {
 
-      static prepareRoute = prepareFn;
+      static prepareRoute = prepareFn
 
       static contextTypes = {
         store: PropTypes.object.isRequired
-      };
+      }
 
       static propsTypes = {
         location: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired
-      };
+      }
 
       render () {
         return (
           <DecoratedComponent {...this.props} />
-        );
+        )
       }
 
       componentWillReceiveProps (nextProps) {
         let {
           context: {store},
           props: {params, router, routes}
-        } = this;
+        } = this
 
 
         if (!shallowEqual(nextProps.params, params)) {
-          let lang = routes[3].path;
-          let nextParams = nextProps.params;
-          nextParams.lang = lang;
-          prepareFn({store, params: nextParams, router});
+          let lang = routes && routes.length > 3 && routes[3].path
+          let nextParams = nextProps.params
+          nextParams.lang = lang
+          prepareFn({store, params: nextParams, router})
         }
       }
 
@@ -44,14 +43,13 @@ export default function prepareRoute (prepareFn) {
         let {
           context: {store},
           props: {params, router, routes}
-        } = this;
+        } = this
+        let lang = routes && routes.length > 3 && routes[3].path
+        let nextParams = params
+        nextParams.lang = lang
 
-        let lang = routes[3].path;
-        let nextParams = params;
-        nextParams.lang = lang;
-
-        prepareFn({store, params: nextParams, router});
+        prepareFn({store, params: nextParams, router})
       }
 
-    };
+    }
 }
