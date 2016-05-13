@@ -107,7 +107,7 @@ const config = {
     channels: [
       295,
       204,
-      297
+      308
     ]
   },
   sentry: {

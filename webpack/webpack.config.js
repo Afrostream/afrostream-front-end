@@ -114,7 +114,7 @@ const webpackConfig = {
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
-        test: /sendbird\.js$/, loader: 'expose?sendbird'
+        test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
       },
       {
         test: /chardin\.js$/, loader: 'expose?chardinJs'
@@ -140,6 +140,7 @@ const webpackConfig = {
   plugins: [
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
+      sendBirdClient: 'sendbird',
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery'
