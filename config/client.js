@@ -1,5 +1,7 @@
 'use strict';
 import dictFr from './i18n/fr-FR.json';
+import dictEn from './i18n/en-EN.json';
+
 import _ from 'lodash';
 import castlab from './player/castlab';
 
@@ -7,6 +9,11 @@ dictFr.gift = _.merge(_.cloneDeep(dictFr.signin), dictFr.gift);
 dictFr.signup = _.merge(_.cloneDeep(dictFr.signin), dictFr.signup);
 dictFr.reset = _.merge(_.cloneDeep(dictFr.signin), dictFr.reset);
 dictFr.relog = _.merge(_.cloneDeep(dictFr.signin), dictFr.relog);
+
+dictEn.gift = _.merge(_.cloneDeep(dictEn.signin), dictEn.gift);
+dictEn.signup = _.merge(_.cloneDeep(dictEn.signin), dictEn.signup);
+dictEn.reset = _.merge(_.cloneDeep(dictEn.signin), dictEn.reset);
+dictEn.relog = _.merge(_.cloneDeep(dictEn.signin), dictEn.relog);
 
 const protData = {
   "com.widevine.alpha": {
@@ -137,7 +144,7 @@ const config = {
     limit: 3,
     time: 45
   },
-  dict: dictFr,
+  dict: getI18n,
   oauth2: {
     facebook: process.env.OAUTH_FACEBOOK_ENABLED || false
   },
@@ -321,3 +328,13 @@ const config = {
 };
 
 export default config;
+export default function getI18n (lang = 'fr-FR') {
+  switch (lang) {
+    case 'en-EN':
+      return dictEn
+      break;
+    default:
+      return dictFr
+      break;
+  }
+};
