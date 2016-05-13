@@ -1,7 +1,7 @@
 import React, { PropTypes }  from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
-import { search } from '../../../../config'
+import { search, dict } from '../../../../config'
 import { Link } from 'react-router'
 import _ from 'lodash'
 import * as SearchActionCreators from '../../actions/search'
@@ -57,7 +57,7 @@ class SearchPage extends React.Component {
 
   renderMovies (movies, fetching) {
     if (!movies || !movies.size) {
-      return fetching ? '' : search.dict['noData']
+      return fetching ? '' : dict.search['noData']
     }
 
     return <MoviesSlider key={`search-movie`} dataList={movies} axis="y"/>

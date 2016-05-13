@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
 import ModalComponent from './ModalComponent'
-import { oauth2 } from '../../../../config'
+import { dict, oauth2 } from '../../../../config'
 import MobileDetect from 'mobile-detect'
 import { withRouter } from 'react-router'
 
@@ -85,8 +85,7 @@ class ModalCoupon extends ModalComponent {
   }
 
   getTitle (key = 'title') {
-    let keyType = 'coupon'
-    return oauth2.dict[keyType][key] || ''
+    return dict.coupon[key] || ''
   }
 
   getForm () {

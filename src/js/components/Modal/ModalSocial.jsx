@@ -1,10 +1,10 @@
 import React from 'react';
 import ModalComponent from './ModalComponent';
 import classNames from 'classnames';
-import {social,bitly,metadata} from '../../../../config';
+import { social, bitly, metadata, dict } from '../../../../config';
 import _ from 'lodash';
-import {detectUA} from '../Player/PlayerUtils';
-import {shorten} from '../../lib/bitly';
+import { detectUA } from '../Player/PlayerUtils';
+import { shorten } from '../../lib/bitly';
 import qs from 'qs';
 
 if (process.env.BROWSER) {
@@ -13,12 +13,12 @@ if (process.env.BROWSER) {
 
 class ModalSocial extends ModalComponent {
 
-  async sharePopup(network) {
+  async sharePopup (network) {
     const {
       props: {
         data
-        }
-      } = this;
+      }
+    } = this;
 
     //add share tracking
     let shareParams = qs.stringify({
@@ -56,7 +56,7 @@ class ModalSocial extends ModalComponent {
     return popupOpener = this.updateHref();
   }
 
-  cloneParams(network, url, title, description) {
+  cloneParams (network, url, title, description) {
     let params = _.cloneDeep(network.params);
     let updatedParams = _.mapValues(params, (value)=> {
       return value.replace(/{title}/gm, title).replace(/{description}/gm, description).replace(/{url}/gm, url);
@@ -72,7 +72,7 @@ class ModalSocial extends ModalComponent {
    * @param {String}  str
    * @param {Boolean}
    */
-  isEncoded(str) {
+  isEncoded (str) {
     str = this.toRFC3986(str);
     return decodeURIComponent(str) !== str;
   }
@@ -85,7 +85,7 @@ class ModalSocial extends ModalComponent {
    * @param {DOMNode} el
    * @param {String}  className
    */
-  encode(str) {
+  encode (str) {
     if (typeof str === 'undefined' || str === null || this.isEncoded(str))
       return encodeURIComponent(str);
     else
@@ -99,7 +99,7 @@ class ModalSocial extends ModalComponent {
    *
    * @return {String}
    */
-  toRFC3986(val) {
+  toRFC3986 (val) {
     let tmp = encodeURIComponent(val);
     tmp.replace(/[!'()*]/g, function (c) {
       return ` % ${c.charCodeAt(0).toString(16)}`;
@@ -117,7 +117,7 @@ class ModalSocial extends ModalComponent {
    * @param {boolean} encode
    * @param {Object} params
    */
-  getUrl(url, encode = false, params = {}) {
+  getUrl (url, encode = false, params = {}) {
     let qs = (() => {
       let results = [];
       for (let k of Object.keys(params)) {
@@ -142,7 +142,7 @@ class ModalSocial extends ModalComponent {
    * @param {String} url
    * @param {Object} params
    */
-  updateHref(data = null, params = null, popupOpener = null) {
+  updateHref (data = null, params = null, popupOpener = null) {
     let shareUrl = '';
     if (popupOpener) {
       let encode = data.url.indexOf('mailto:') >= 0;
@@ -173,7 +173,7 @@ class ModalSocial extends ModalComponent {
     );
   }
 
-  getMeta(key) {
+  getMeta (key) {
     let metas = document.getElementsByTagName('meta');
 
     let foundedMeta = _.find(metas, (meta)=> {
@@ -183,7 +183,7 @@ class ModalSocial extends ModalComponent {
     return foundedMeta && foundedMeta.content;
   }
 
-  getShareButtons() {
+  getShareButtons () {
     return _.map(social.networks, (network) => {
 
       const ua = detectUA();
@@ -215,7 +215,7 @@ class ModalSocial extends ModalComponent {
     });
   }
 
-  render() {
+  render () {
 
     let closeClass = classNames({
       'close': true,
@@ -234,7 +234,7 @@ class ModalSocial extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{social.dict.title}</h1>
+                      <h1>{dict.social.title}</h1>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">

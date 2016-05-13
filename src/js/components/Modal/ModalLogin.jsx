@@ -8,7 +8,7 @@ import * as ModalActionCreator from '../../actions/modal'
 import * as UserActionCreators from '../../actions/user'
 import * as IntercomActionCreators from '../../actions/intercom'
 import ModalComponent from './ModalComponent'
-import { oauth2 } from '../../../../config'
+import { oauth2, dict } from '../../../../config'
 import MobileDetect from 'mobile-detect'
 import _ from 'lodash'
 import { withRouter } from 'react-router'
@@ -260,7 +260,7 @@ class ModalLogin extends ModalComponent {
 
   getTitle (key = 'title') {
     let keyType = this.getI18n()
-    return oauth2.dict[keyType][key] || ''
+    return dict[keyType][key] || ''
   }
 
   getForm () {

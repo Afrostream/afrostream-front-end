@@ -132,12 +132,6 @@ const config = {
       season: 20
     }
   },
-  search: {
-    dict: dictFr.search
-  },
-  favorites: {
-    dict: dictFr.favorites
-  },
   reco: {
     enabled: true,
     limit: 3,
@@ -145,11 +139,9 @@ const config = {
   },
   dict: dictFr,
   oauth2: {
-    facebook: process.env.OAUTH_FACEBOOK_ENABLED || false,
-    dict: dictFr
+    facebook: process.env.OAUTH_FACEBOOK_ENABLED || false
   },
   social: {
-    dict: dictFr.social,
     networks: {
       facebook: {
         enabled: true,      // Enable Facebook. [Default: true]

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MoviesSlider from '../Movies/MoviesSlider';
-import {favorites} from '../../../../config';
+import {favorites,dict} from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./FavoritesList.less');
@@ -30,9 +30,9 @@ class FavoritesList extends React.Component {
 
     const favoritesDataMovies = User.get('favorites/movies');
     const favoritesDataEpisodes = User.get('favorites/episodes');
-    let labelPage = favorites.dict['labelPage'];
+    let labelPage = dict.favorites['labelPage'];
     if ((!favoritesDataMovies || !favoritesDataMovies.size) && (!favoritesDataEpisodes || !favoritesDataEpisodes.size)) {
-      labelPage = favorites.dict['noData']
+      labelPage = dict.favorites['noData']
     }
     return (
       <div className="favorites-list">

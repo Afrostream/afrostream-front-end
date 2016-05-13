@@ -108,6 +108,9 @@ class MoviesList extends React.Component {
     } = this
 
     const categories = Category.get('meaList')
+    if (!categories) {
+      return <div />
+    }
 
     return (
       <div className="movies-list">

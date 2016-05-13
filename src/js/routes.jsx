@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { Route, Redirect } from 'react-router';
+import { Route, Redirect, IndexRoute } from 'react-router';
 import Application from './components/Application';
 import MoviePage from './components/Movies/MoviePage';
 import PlayerPage from './components/Player/PlayerPage';
@@ -20,59 +20,93 @@ import * as Blog from './components/Blog';
 import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
 import NoMatch from './components/NoMatch';
+import _ from 'lodash';
 
 const langs = ['fr', 'en'];
-const subRoutes = (
-  <Route>
-    <Route name="legals" path="legals" component={Static.Legals}/>
-    <Route name="cgu" path="cgu" component={Static.CGU}/>
-    <Route name="faq" path="faq" component={Static.FAQ}/>
-    <Route name="policy" path="policy" component={Static.Policy}/>
-    <Route name="reset" path="reset" component={ResetPasswordPage}/>
-    <Route name="signin" path="signin" component={LoginPage}/>
-    <Route name="signup" path="signup" component={LoginPage}/>
-    <Route name="coupon" path="coupon" component={RedeemCoupon}/>
-    <Route name="couponregister" path="couponregister" component={CouponRegister}/>
-    <Route name="login" path="login" component={LoginPage}/>
-    <Route name="newsletter" path="newsletter" component={LoginPage}/>
-    <Route name="blog" path="blog" component={Blog.PostList}>
-      <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
+
+const buildSubRoutes = function (lang) {
+  if (lang) return
+  return _.map(langs, (lang) =>
+    <Route key={lang} path={lang} name={lang}>
+      {buildRoutes(lang)}
     </Route>
-    <Route name="cash" path="cash" component={CashwayPage}>
+  )
+}
+const buildHome = function (lang) {
+  const homeRoutes = [
+    <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
+    <Route key={`${lang}-compte`} name="compte" path="compte" component={AccountPage}>,
+      <Route key={`${lang}-cancelSubscription`} name="cancelSubscription" path="cancel-subscription"
+             component={CancelSubscription}/>
+    </Route>,
+    <Route key={`${lang}-browse`} name="browse" path="browse/genre(/:categoryId)(/:categorySlug)"
+           component={BrowseGenrePage}/>,
+    <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
+    <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
+    <Route key={`${lang}-movie`} name="movie"
+           path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
+           component={MoviePage}>,
+      <Route key={`${lang}-player`} name="player"
+             path=":videoId"
+             component={PlayerPage}/>
+    </Route>
+  ];
+
+  if (lang) {
+    //return (<IndexRoute key={`${lang}-home`} component={HomePage}>
+    //  {homeRoutes}
+    //</IndexRoute>)
+    const defaultRoute = <IndexRoute key={`${lang}-home`} component={HomePage}/>
+    homeRoutes.unshift(defaultRoute)
+  }
+
+  const routePath = {}
+  if (!lang) {
+    routePath.path = '/'
+  }
+  return (<Route key={`${lang}-home`} {...routePath} component={HomePage}>
+    {homeRoutes}
+  </Route>)
+}
+const buildRoutes = function (lang) {
+
+  let subRoutes = [
+    <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.Legals}/>,
+    <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.CGU}/>,
+    <Route key={`${lang}-faq`} name="faq" path="faq" component={Static.FAQ}/>,
+    <Route key={`${lang}-policy`} name="policy" path="policy" component={Static.Policy}/>,
+    <Route key={`${lang}-reset`} name="reset" path="reset" component={ResetPasswordPage}/>,
+    <Route key={`${lang}-signin`} name="signin" path="signin" component={LoginPage}/>,
+    <Route key={`${lang}-signup`} name="signup" path="signup" component={LoginPage}/>,
+    <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={RedeemCoupon}/>,
+    <Route key={`${lang}-couponregister`} name="couponregister" path="couponregister" component={CouponRegister}/>,
+    <Route key={`${lang}-login`} name="login" path="login" component={LoginPage}/>,
+    <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
+    <Route key={`${lang}-blog`} name="blog" path="blog" component={Blog.PostList}>
+      <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
+    </Route>,
+    <Route key={`${lang}-cash`} name="cash" path="cash" component={CashwayPage}>,
       <Route name="cashPayment" path="select-plan" component={PaymentPage}>
         <Route name="cashPaymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
       </Route>
-    </Route>
-    <Route name="payment" path="select-plan" component={PaymentPage}>
+    </Route>,
+    <Route key={`${lang}-payment`} name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
-    </Route>
-    <Route name="home" path="/" component={HomePage}>
-      <Route name="search" path="recherche" component={SearchPage}/>
-      <Route name="compte" path="compte" component={AccountPage}>
-        <Route name="cancelSubscription" path="cancel-subscription" component={CancelSubscription}/>
-      </Route>
-      <Route name="browse" path="browse/genre(/:categoryId)(/:categorySlug)" component={BrowseGenrePage}/>
-      <Route name="last" path="last" component={BrowseLastPage}/>
-      <Route name="favoris" path="favoris" component={FavoritesPage}/>
-      <Route name="movie" path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
-             component={MoviePage}>
-        <Route name="player"
-               path=":videoId"
-               component={PlayerPage}/>
-      </Route>
-      <Redirect from="/" to="/selection"/>
-    </Route>
-    <Route path="*" component={NoMatch}/>
-  </Route>
-);
+    </Route>,
+    buildHome(lang),
+    <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
+  ];
+
+  if (!lang) {
+    const langRoutes = buildSubRoutes(lang)
+    subRoutes.unshift(langRoutes)
+  }
+  return subRoutes;
+
+}
 
 export default (
   <Route name="app" component={Application}>
-    {_.map(langs, (lang) => (
-      <Route key={lang} path={lang}>
-        {subRoutes}
-      </Route>
-    )}
-    {subRoutes}
+    {buildRoutes()}
   </Route>
 );

@@ -6,7 +6,7 @@ import * as UserActionCreators from '../../actions/user';
 import * as OauthActionCreator from '../../actions/oauth';
 import PaymentSuccess from '../Payment/PaymentSuccess';
 import Spinner from '../Spinner/Spinner';
-import { oauth2 } from '../../../../config';
+import { oauth2, dict } from '../../../../config';
 
 if (process.env.BROWSER) {
   require('./CouponRegister.less');
@@ -156,7 +156,7 @@ class CouponRegister extends React.Component {
 
   getTitle (key = 'title') {
     let keyType = this.getI18n();
-    return oauth2.dict[keyType][key] || '';
+    return dict[keyType][key] || '';
   }
 
   getI18n () {
