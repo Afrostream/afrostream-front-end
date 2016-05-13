@@ -21,8 +21,9 @@ import AccountPage from './components/Account/AccountPage';
 import CancelSubscription from './components/Account/CancelSubscription';
 import NoMatch from './components/NoMatch';
 
-export default (
-  <Route name="app" component={Application}>
+const langs = ['fr', 'en'];
+const subRoutes = (
+  <Route>
     <Route name="legals" path="legals" component={Static.Legals}/>
     <Route name="cgu" path="cgu" component={Static.CGU}/>
     <Route name="faq" path="faq" component={Static.FAQ}/>
@@ -62,5 +63,16 @@ export default (
       <Redirect from="/" to="/selection"/>
     </Route>
     <Route path="*" component={NoMatch}/>
+  </Route>
+);
+
+export default (
+  <Route name="app" component={Application}>
+    {_.map(langs, (lang) => (
+      <Route key={lang} path={lang}>
+        {subRoutes}
+      </Route>
+    )}
+    {subRoutes}
   </Route>
 );
