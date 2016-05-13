@@ -77,11 +77,11 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        Movie, Season, Episode, params
+        Movie, Season, Episode, params, routes
       }
     } = this
-
     let {movieId, seasonId, episodeId, lang} = params
+
     let info = {
       title: dict(lang).home.title,
       action: dict(lang).home.action,

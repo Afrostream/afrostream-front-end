@@ -24,13 +24,15 @@ import _ from 'lodash';
 
 const langs = ['fr', 'en'];
 
-const buildSubRoutes = function (lang) {
-  if (lang) return
+const buildSubRoutes = function () {
   return _.map(langs, (lang) =>
-    <Route key={lang} path=":lang" name={lang}>
+    <Route key={lang} path={lang}>
       {buildRoutes(lang)}
     </Route>
   )
+  //return _.map(langs, (lang) =>
+  //  buildRoutes(lang)
+  //)
 }
 const buildHome = function (lang) {
   const homeRoutes = [
@@ -52,9 +54,16 @@ const buildHome = function (lang) {
     </Route>
   ];
 
-  return (<Route key={`${lang}-home`} path={`/${lang ? lang :''}`} component={HomePage}>
+  if (lang) {
+    return homeRoutes
+  }
+  const langRoutes = buildSubRoutes()
+  homeRoutes.unshift(langRoutes)
+
+  return (<Route key={`${lang}-home`} path="/" component={HomePage}>
     {homeRoutes}
   </Route>)
+
 }
 const buildRoutes = function (lang) {
 
@@ -82,15 +91,10 @@ const buildRoutes = function (lang) {
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
     //push subroutes after static routes
-    buildHome(lang)
+    buildHome(lang),
+    <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
   ];
 
-  if (!lang) {
-    const langRoutes = buildSubRoutes(lang)
-    //push subroutes after static routes
-    subRoutes.splice(subRoutes.length - 2, 0, langRoutes);
-    subRoutes.push(<Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>)
-  }
   return subRoutes;
 
 }

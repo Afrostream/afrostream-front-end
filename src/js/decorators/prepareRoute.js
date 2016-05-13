@@ -26,23 +26,31 @@ export default function prepareRoute (prepareFn) {
       }
 
       componentWillReceiveProps (nextProps) {
-        const {
+        let {
           context: {store},
-          props: {params, router}
+          props: {params, router, routes}
         } = this;
 
+
         if (!shallowEqual(nextProps.params, params)) {
-          prepareFn({store, params: nextProps.params, router});
+          let lang = routes[3].path;
+          let nextParams = nextProps.params;
+          nextParams.lang = lang;
+          prepareFn({store, params: nextParams, router});
         }
       }
 
       componentDidMount () {
-        const {
+        let {
           context: {store},
-          props: {params, router}
+          props: {params, router, routes}
         } = this;
 
-        prepareFn({store, params: params, router});
+        let lang = routes[3].path;
+        let nextParams = params;
+        nextParams.lang = lang;
+
+        prepareFn({store, params: nextParams, router});
       }
 
     };
