@@ -205,6 +205,15 @@
       }
     }
 
+    .recommendation-list,
+    .next-episode {
+      position: absolute;
+      left: 50%;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+
     .video-infos {
       display: inline-block;
       vertical-align: middle;
@@ -238,26 +247,30 @@
 
     &.player-next-reco {
       .wrapper {
-        .vjs-tech {
-          width: 30%;
-          left: 20%;
-          margin-left: -10%;
-          display: inline-block;
-          vertical-align: middle;
-          z-index: 3;
-          .transition(width 0.5s ease);
-        }
         .vjs-control-bar {
           display: none;
         }
         .vjs-poster {
-          display: block;
-          background-position: 0% 50%;
-          //background-size: cover;
+          background-size: cover;
         }
+        width: 50%;
       }
       .video-infos {
         display: none;
+      }
+    }
+
+    &.chat-on.player-next-reco {
+      .wrapper,
+      .fabs,
+      .recommendation-list,
+      .next-episode {
+        width: 33%;
+      }
+
+      .recommendation-list,
+      .next-episode {
+        left: 33%;
       }
     }
     .wrapper {
