@@ -52,16 +52,7 @@ const buildHome = function (lang) {
     </Route>
   ];
 
-  if (lang) {
-    const defaultRoute = <IndexRoute key={`${lang}-home`} component={HomePage}/>
-    homeRoutes.unshift(defaultRoute)
-  }
-
-  const routePath = {}
-  if (!lang) {
-    routePath.path = '/'
-  }
-  return (<Route key={`${lang}-home`} {...routePath} component={HomePage}>
+  return (<Route key={`${lang}-home`} path={`/${lang ? lang :''}`} component={HomePage}>
     {homeRoutes}
   </Route>)
 }
@@ -91,14 +82,14 @@ const buildRoutes = function (lang) {
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
     //push subroutes after static routes
-    buildHome(lang),
-    <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
+    buildHome(lang)
   ];
 
   if (!lang) {
     const langRoutes = buildSubRoutes(lang)
     //push subroutes after static routes
-    subRoutes.splice(subRoutes.length - 1, 0, langRoutes);
+    subRoutes.splice(subRoutes.length - 2, 0, langRoutes);
+    subRoutes.push(<Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>)
   }
   return subRoutes;
 
