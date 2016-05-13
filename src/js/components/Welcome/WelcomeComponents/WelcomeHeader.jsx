@@ -81,9 +81,10 @@ class WelcomeHeader extends React.Component {
       }
     } = this
 
-    let {movieId, seasonId, episodeId} = params
+    let {movieId, seasonId, episodeId, lang} = params
     let info = {
-      title: dict.home.title,
+      title: dict(lang).home.title,
+      action: dict(lang).home.action,
       poster: `${metadata.shareImage}`,
       movie: {
         title: '',
@@ -167,7 +168,7 @@ class WelcomeHeader extends React.Component {
               <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
                 return (<span key={`statement-${i}`}>{statement}</span>)
               })}</div>
-              <SignUpButton />
+              <SignUpButton label={info.action}/>
             </div>
           </div>
         </section>

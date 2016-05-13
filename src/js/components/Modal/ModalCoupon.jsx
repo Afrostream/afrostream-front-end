@@ -85,7 +85,13 @@ class ModalCoupon extends ModalComponent {
   }
 
   getTitle (key = 'title') {
-    return dict.coupon[key] || ''
+    const {
+      props: {
+        params
+      }
+    } = this
+
+    return dict(params.lang).coupon[key] || ''
   }
 
   getForm () {

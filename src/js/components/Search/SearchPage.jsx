@@ -57,7 +57,7 @@ class SearchPage extends React.Component {
 
   renderMovies (movies, fetching) {
     if (!movies || !movies.size) {
-      return fetching ? '' : dict.search['noData']
+      return fetching ? '' : dict().search['noData']
     }
 
     return <MoviesSlider key={`search-movie`} dataList={movies} axis="y"/>

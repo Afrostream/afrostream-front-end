@@ -156,7 +156,7 @@ class CouponRegister extends React.Component {
 
   getTitle (key = 'title') {
     let keyType = this.getI18n();
-    return dict[keyType][key] || '';
+    return dict()[keyType][key] || '';
   }
 
   getI18n () {

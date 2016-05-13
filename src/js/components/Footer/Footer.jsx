@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classSet from 'classnames'
 import { withRouter } from 'react-router'
+import { dict } from '../../../../config'
 
 if (process.env.BROWSER) {
   require('./Footer.less');
@@ -16,6 +17,14 @@ class Footer extends React.Component {
 
   render () {
 
+    const {
+      props: {
+        params
+      }
+    } = this
+
+    let labels = dict(params.lang).footer
+
     let footerClasses = {
       'footer': true,
       'footer-hidden': this.props.router.isActive('player')
@@ -25,101 +34,101 @@ class Footer extends React.Component {
       <footer className={classSet(footerClasses)}>
         <div className="links row">
           <div className="get-help col-xs-12 col-md-2">
-            <h4>SUPPORT TECHNIQUE</h4>
+            <h4>{labels.support.title}</h4>
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="mailto:support@afrostream.tv">
-                  Aide en ligne
+                  {labels.support.help}
                 </a>
               </li>
               <li>
                 <Link className="footer-link" to="/faq">
-                  Les réponses à vos questions
+                  {labels.support.faq}
                 </Link>
               </li>
               <li>
                 <Link className="footer-link" to="/cgu">
-                  Conditions d'utilisation
+                  {labels.support.cgu}
                 </Link>
               </li>
               <li>
                 <Link className="footer-link" to="/policy">
-                  Politique de confidentialité
+                  {labels.support.policy}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2">
-            <h4>RECHARGE</h4>
+            <h4>{labels.recharge.title}</h4>
             <ul className="footer-links">
               <li>
                 <Link className="footer-link" to="/cash">
-                  Paiement en espèces avec <img src="/images/payment/cashway-inline-white.png" width="60"
+                  {labels.recharge.cashway}<img src="/images/payment/cashway-inline-white.png" width="60"
                                                 className="img-responsive"/>
                 </Link>
               </li>
               <li>
                 <Link className="footer-link" to="/coupon">
-                  Coupon
+                  {labels.recharge.coupon}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2">
-            <h4>PRO</h4>
+            <h4>{labels.pro.title}</h4>
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="https://afrostream.tv/blog">
-                  Blog
+                  {labels.pro.blog}
                 </a>
               </li>
               <li>
                 <a className="footer-link"
                    href="mailto:presse@afrostream.tv?subject=Contact">
-                  Presse
+                  {labels.pro.press}
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="mailto:investors@afrostream.tv?subject=Contact">
-                  Investisseurs
+                  {labels.pro.investissor}
                 </a>
               </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2">
-            <h4>APPLICATIONS MOBILE</h4>
+            <h4> {labels.apps.title}</h4>
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
                    target="_blank">
-                  IOS <i className="fa fa-apple"></i>
+                  {labels.apps.ios} <i className="fa fa-apple"></i>
                 </a>
               </li>
               <li>
                 <a className="footer-link"
                    href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
                    target="_blank">
-                  Android <i className="fa fa-android"></i>
+                  {labels.apps.android} <i className="fa fa-android"></i>
                 </a>
               </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2">
-            <h4>SUIVEZ-NOUS</h4>
+            <h4>{labels.social.title}</h4>
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="https://www.facebook.com/afrostreamtv?fref=ts">
-                  Facebook <i className="fa fa-facebook"></i>
+                  {labels.social.facebook} <i className="fa fa-facebook"></i>
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="https://twitter.com/intent/user?screen_name=AFROSTREAM">
-                  Twitter <i className="fa fa-twitter"></i>
+                  {labels.social.twitter} <i className="fa fa-twitter"></i>
                 </a>
               </li>
               <li>
                 <Link className="footer-link" to="/newsletter">
-                  Newsletter
+                  {labels.social.newsletter}
                 </Link>
               </li>
             </ul>
@@ -132,7 +141,7 @@ class Footer extends React.Component {
               Copyright &copy; Afrostream Inc. {this.year}
             </div>
             <div className="get-help col-md-6">
-              <Link to="/legals">Mentions légales</Link>
+              <Link to="/legals"> {labels.legals}</Link>
             </div>
           </div>
         </div>

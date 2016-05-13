@@ -1,6 +1,57 @@
 {
   "home": {
-    "title": "Les meilleurs films et séries \n afro-américains et africains \n en illimité"
+    "title": "Les meilleurs films et séries \n afro-américains et africains \n en illimité",
+    "action": "DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE",
+    "devices": {
+      "title": "Vos films et séries afro préférés quand vous voulez où vous voulez en illimité",
+      "action": "J’en profite !",
+      "features": [
+        "En versions sous-titrées ou vost",
+        "Aucune publicité, aucune interruption",
+        "Profitez d'une image haute qualité"
+      ]
+    },
+    "spots": {
+      "title": "Aperçu de notre catalogue",
+      "action": "DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE"
+    },
+    "plans": {
+      "title": "Nos formules",
+      "baseline": "Service uniquement disponible en France, DOM-TOM,Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.",
+      "link": "Les réponses à vos questions"
+    }
+  },
+  "footer": {
+    "legals": "Mentions légales",
+    "support": {
+      "title": "SUPPORT TECHNIQUE",
+      "help": "Aide en ligne",
+      "faq": "Les réponses à vos questions",
+      "cgu": "Conditions d'utilisation",
+      "policy": "Politique de confidentialité"
+    },
+    "recharge": {
+      "title": "RECHARGE",
+      "cashway": "Paiement en espèces avec ",
+      "coupon": "Coupon"
+    },
+    "pro": {
+      "title": "PRO",
+      "blog": "Blog",
+      "press": "Presse",
+      "investissor": "Investisseurs"
+    },
+    "apps": {
+      "title": "APPLICATIONS MOBILE",
+      "ios": "IOS",
+      "android": "Andoid"
+    },
+    "social": {
+      "title": "SUIVEZ-NOUS",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "newsletter": "Newsletter"
+    }
   },
   "loadingTitle": "Veuillez patienter...",
   "close": "Fermer",

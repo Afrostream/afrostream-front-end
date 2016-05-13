@@ -43,7 +43,7 @@ SignUpButton.propTypes = {
 };
 
 SignUpButton.defaultProps = {
-  label: 'DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE',
+  label: '',
   className: 'subscribe-button',
   to: '/'
 };

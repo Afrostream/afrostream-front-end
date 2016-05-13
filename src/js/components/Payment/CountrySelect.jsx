@@ -10,9 +10,9 @@ class CountrySelect extends React.Component {
 
     return (
       <div className="form-group col-md-4">
-        <label className="form-label" htmlFor="country">{dict.payment.country.label}</label>
+        <label className="form-label" htmlFor="country">{dict().payment.country.label}</label>
         <select className="form-control card-country" ref="country" id="country" name="country" required
-                defaultValue={dict.payment.country.defaultValue}>
+                defaultValue={dict().payment.country.defaultValue}>
           <option value="AF">Afghanistan</option>
           <option value="ZA">Afrique du Sud</option>
           <option value="AL">Albanie</option>

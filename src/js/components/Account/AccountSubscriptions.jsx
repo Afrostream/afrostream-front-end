@@ -34,14 +34,14 @@ class AccountSubscriptions extends React.Component {
     return (<div className="row account-details">
       <div className="col-md-12 table-responsive">
         <table className="table">
-          <caption>{dict.account.billing.header}</caption>
+          <caption>{dict().account.billing.header}</caption>
           <thead>
           <tr>
-            <th>{dict.account.billing.dateLabel}</th>
-            <th>{dict.account.billing.decriptionLabel}</th>
-            <th>{dict.account.billing.periodLabel}</th>
-            <th>{dict.account.billing.methodLabel}</th>
-            <th>{dict.account.billing.statusLabel}</th>
+            <th>{dict().account.billing.dateLabel}</th>
+            <th>{dict().account.billing.decriptionLabel}</th>
+            <th>{dict().account.billing.periodLabel}</th>
+            <th>{dict().account.billing.methodLabel}</th>
+            <th>{dict().account.billing.statusLabel}</th>
           </tr>
           </thead>
           <tbody>
@@ -52,7 +52,7 @@ class AccountSubscriptions extends React.Component {
               let internalPlan = subscription.get('internalPlan');
               let providerPlan = subscription.get('provider');
               //PERIOD
-              let period = `${internalPlan.get('periodLength')} ${dict.account.billing.periods[internalPlan.get('periodUnit')]}`;
+              let period = `${internalPlan.get('periodLength')} ${dict().account.billing.periods[internalPlan.get('periodUnit')]}`;
               let now = moment();
               let activeDate = moment(subscription.get('subPeriodStartedDate'));
               let endDate = moment(subscription.get('subPeriodEndsDate'));
@@ -74,14 +74,14 @@ class AccountSubscriptions extends React.Component {
                 case 'expired':
                 case 'future':
                 case 'canceled':
-                  statusLabel = dict.account.billing.status[subscriptionStatus];
+                  statusLabel = dict().account.billing.status[subscriptionStatus];
                   break;
                 case 'pending':
                 case 'pending_active':
                 case 'pending_canceled':
                 case 'pending_expired':
                 case 'requesting_canceled':
-                  statusLabel = dict.account.billing.status['pending'];
+                  statusLabel = dict().account.billing.status['pending'];
                   break;
               }
               return (

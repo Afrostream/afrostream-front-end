@@ -56,7 +56,7 @@ class AccountSocial extends React.Component {
       return <div />;
     }
     const facebookInfos = user.get('facebook');
-    let checkLabel = dict.account.social[facebookInfos ? 'off' : 'on'];
+    let checkLabel = dict().account.social[facebookInfos ? 'off' : 'on'];
     let checked = Boolean(facebookInfos);
 
     const inputAttributes = {
@@ -70,7 +70,7 @@ class AccountSocial extends React.Component {
             <div className="col-md-2">
               <i className="fa fa-facebook-official"/>
             </div>
-            <div className="col-md-6" dangerouslySetInnerHTML={{__html:dict.account.social.facebook}}/>
+            <div className="col-md-6" dangerouslySetInnerHTML={{__html:dict().account.social.facebook}}/>
             <div className="col-md-4">
               <SwitchButton label={checkLabel} name="switch-3" checked={checked}
                 {...inputAttributes} disabled={this.state.fetching}/>

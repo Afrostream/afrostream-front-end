@@ -234,7 +234,7 @@ class ModalSocial extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{dict.social.title}</h1>
+                      <h1>{dict().social.title}</h1>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">

@@ -330,7 +330,7 @@ const config = {
 export default config;
 export default function getI18n (lang = 'fr-FR') {
   switch (lang) {
-    case 'en-EN':
+    case 'en':
       return dictEn
       break;
     default:

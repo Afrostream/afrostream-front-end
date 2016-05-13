@@ -142,7 +142,7 @@ class GocardlessForm extends React.Component {
           <ModalGocardlessMandat ref="modal" {...this.props} data={this.state.modalData}/> : ''}
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{dict.payment.virement.label}</label>
+            <label className="form-label">{dict().payment.virement.label}</label>
             <img src="/images/payment/virement.jpg"/>
           </div>
         </div>

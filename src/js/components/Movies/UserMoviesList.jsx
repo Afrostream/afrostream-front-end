@@ -25,7 +25,7 @@ class UserMoviesList extends React.Component {
     if (!dataList) {
       return (<div />);
     }
-    const label = dict.history.label;
+    const label = dict().history.label;
     const slug = 'history';
     const showTitle = true;
     const showDescription = false;
