@@ -35,138 +35,137 @@ const {webpackDevServer: {host, port}} = config;
 const webpackDevServerUrl = `http://${host}:${port}`;
 
 const webpackConfig = {
-    devtool: '#inline-eval-cheap-source-map',
-    output: {
-      path: assetsPath,
-      publicPath: `${webpackDevServerUrl}/static/`,
-      filename: '[name].js',
-      chunkFilename: '[id].js',
-      hashDigestLength: 32
-    },
-    entry: {
-      main: './src/js/main',
-      vendor: './src/js/vendor'
-    },
-    resolve: {
-      extensions: ['', '.js', '.jsx', '.json'],
-      alias: {
-        jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery')
+  devtool: '#inline-eval-cheap-source-map',
+  output: {
+    path: assetsPath,
+    publicPath: `${webpackDevServerUrl}/static/`,
+    filename: '[name].js',
+    chunkFilename: '[id].js',
+    hashDigestLength: 32
+  },
+  entry: {
+    main: './src/js/main',
+    vendor: './src/js/vendor'
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.json'],
+    alias: {
+      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery')
+    }
+  },
+  stats: {
+    colors: true
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel-loader'],
+        exclude: [node_modules_dir]
+      },
+      {
+        test: /\.js$/, // include .js files
+        loaders: ['babel-loader'],
+        exclude: [node_modules_dir]
+      },
+      {
+        test: /\.js$/, // include .js files
+        loaders: ['babel-loader'],
+        include: [path.join(__dirname, '../node_modules/bootstrap'), path.join(__dirname, '../node_modules/afrostream-player')]
+      },
+      {
+        test: /\.json$/,
+        include: [path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
+        loaders: ['json']
+      },
+      {
+        test: /\.css$/,
+        loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
+        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+      },
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+      },
+      {
+        test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
+      },
+      {
+        test: /.(woff|woff2)([\?]?.*)$/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /.ttf([\?]?.*)$/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /.eot([\?]?.*)$/,
+        loader: 'file-loader?name=[name].[ext]?[hash]'
+      },
+      {
+        test: /vtt\.js$/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000',
+        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+      },
+      {
+        test: /video\.js$/,
+        loader: 'expose?videojs',
+        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+      },
+      {
+        test: /sendbird\.js$/, loader: 'expose?sendbird'
+      },
+      {
+        test: /chardin\.js$/, loader: 'expose?chardinJs'
+      },
+      {
+        test: /jquery\.js$/, loader: 'expose?$'
+      },
+      {
+        test: /jquery\.js$/, loader: 'expose?jQuery'
+      },
+      {
+        test: /jquery\.js$/, loader: 'expose?jquery'
       }
-    },
-    stats: {
-      colors: true
-    },
-    module: {
-      loaders: [
-        {
-          test: /\.jsx?$/,
-          loaders: ['babel-loader'],
-          exclude: [node_modules_dir]
-        },
-        {
-          test: /\.js$/, // include .js files
-          loaders: ['babel-loader'],
-          exclude: [node_modules_dir]
-        },
-        {
-          test: /\.js$/, // include .js files
-          loaders: ['babel-loader'],
-          include: [path.join(__dirname, '../node_modules/bootstrap'), path.join(__dirname, '../node_modules/afrostream-player')]
-        },
-        {
-          test: /\.json$/,
-          include: [path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
-          loaders: ['json']
-        },
-        {
-          test: /\.css$/,
-          loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
-          include: [path.join(__dirname, '../node_modules/afrostream-player')]
-        },
-        {
-          test: /\.less$/,
-          loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
-        },
-        {
-          test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
-          loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
-        },
-        {
-          test: /.(woff|woff2)([\?]?.*)$/,
-          loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
-        },
-        {
-          test: /.ttf([\?]?.*)$/,
-          loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
-        },
-        {
-          test: /.eot([\?]?.*)$/,
-          loader: 'file-loader?name=[name].[ext]?[hash]'
-        },
-        {
-          test: /vtt\.js$/,
-          loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000',
-          include: [path.join(__dirname, '../node_modules/afrostream-player')]
-        },
-        {
-          test: /video\.js$/,
-          loader: 'expose?videojs',
-          include: [path.join(__dirname, '../node_modules/afrostream-player')]
-        },
-        {
-          test: /sendbird\.js$/, loader: 'expose?sendbird'
-        },
-        {
-          test: /chardin\.js$/, loader: 'expose?chardinJs'
-        },
-        {
-          test: /jquery\.js$/, loader: 'expose?$'
-        },
-        {
-          test: /jquery\.js$/, loader: 'expose?jQuery'
-        },
-        {
-          test: /jquery\.js$/, loader: 'expose?jquery'
-        }
-      ],
-      exprContextCritical: false
-    },
-    node: {
-      net: 'empty',
-      tls: 'empty',
-      dns: 'empty'
-    },
-    externals: {'window': 'Window'},
-    plugins: [
-      new ExtractTextPlugin('[name].css', {allChunks: true}),
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.$': 'jquery'
-      }),
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: `${JSON.stringify(process.env.NODE_ENV)}`,
-          API_CLIENT_PROTOCOL: JSON.stringify(process.env.API_CLIENT_PROTOCOL),
-          API_CLIENT_AUTHORITY: JSON.stringify(process.env.API_CLIENT_AUTHORITY),
-          API_CLIENT_END_POINT: JSON.stringify(process.env.API_CLIENT_END_POINT),
-          API_END_POINT: JSON.stringify(process.env.API_END_POINT),
-          ALGOLIA_APP_ID: JSON.stringify(process.env.ALGOLIA_APP_ID),
-          ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY),
-          HEROKU_APP_NAME: JSON.stringify(process.env.HEROKU_APP_NAME),
-          RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY),
-          CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
-          GOCARDLESS_PUBLIC_KEY: JSON.stringify(process.env.GOCARDLESS_PUBLIC_KEY),
-          OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
-          GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
-          SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
-        }
-      }),
-      new HashPlugin({path: assetsPath, fileName: 'hash.txt'})
     ],
+    exprContextCritical: false
+  },
+  node: {
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty'
+  },
+  externals: {'window': 'Window'},
+  plugins: [
+    new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.$': 'jquery'
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: `${JSON.stringify(process.env.NODE_ENV)}`,
+        API_CLIENT_PROTOCOL: JSON.stringify(process.env.API_CLIENT_PROTOCOL),
+        API_CLIENT_AUTHORITY: JSON.stringify(process.env.API_CLIENT_AUTHORITY),
+        API_CLIENT_END_POINT: JSON.stringify(process.env.API_CLIENT_END_POINT),
+        API_END_POINT: JSON.stringify(process.env.API_END_POINT),
+        ALGOLIA_APP_ID: JSON.stringify(process.env.ALGOLIA_APP_ID),
+        ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY),
+        HEROKU_APP_NAME: JSON.stringify(process.env.HEROKU_APP_NAME),
+        RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY),
+        CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
+        GOCARDLESS_PUBLIC_KEY: JSON.stringify(process.env.GOCARDLESS_PUBLIC_KEY),
+        OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
+        GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
+        SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
+      }
+    }),
+    new HashPlugin({path: assetsPath, fileName: 'hash.txt'})
+  ],
 
-    postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
-  }
-  ;
+  postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
+};
 
 export default webpackConfig;
