@@ -208,7 +208,6 @@ class SendBird extends React.Component {
     this.loadMoreChatMessage()
     this.getUserList()
     this.loadBeat(false)
-    dispatch(EventActionCreators.showChat(true))
   }
 
   createChannelList (obj) {
