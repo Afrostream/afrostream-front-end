@@ -7,7 +7,6 @@ import AlertMessage from './Alert/AlertMessage'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
 import { metasData, analytics } from '../decorators'
-//import chardinJs from 'chardin.js'
 
 if (process.env.BROWSER) {
   require('./Application.less')

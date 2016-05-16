@@ -46,8 +46,6 @@ if (canUseDOM) {
 }))
 class PlayerComponent extends Component {
 
-  static displayName = 'PlayerComponent'  //  This is important for production mode
-
   constructor (props) {
     super(props)
     this.player = null
