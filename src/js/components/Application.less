@@ -24,26 +24,16 @@ html, body {
 
 html, body, #main, #main > div {
   height: 100%;
-  //background-color: #ffffff;
 }
 
 body {
   background-color: @background-page;
-  //margin-bottom: @footer-height;
   font-weight: 100;
   font-size: 1em;
   line-height: 1.4;
   color: @brand-primary;
   .body-font();
 }
-
-//@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
-//  body {
-//    transform: translateZ(0);
-//    backface-visibility: hidden;
-//    perspective: 1000;
-//  }
-//}
 
 //
 // Base styles
@@ -166,9 +156,6 @@ a.active {
 }
 
 @media (min-width: 768px) {
-  body {
-    margin-bottom: @footer-height;
-  }
 
   #page-content-wrapper {
     position: relative;

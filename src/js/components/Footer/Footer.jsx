@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import classSet from 'classnames'
 import { withRouter } from 'react-router'
 import { dict } from '../../../../config'
+import _ from 'lodash'
 
 if (process.env.BROWSER) {
   require('./Footer.less');
@@ -19,15 +20,18 @@ class Footer extends React.Component {
 
     const {
       props: {
-        params
+        params,
+        router,
+        routes
       }
     } = this
 
     let labels = dict(params.lang).footer
+    let hasPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player'))
 
     let footerClasses = {
       'footer': true,
-      'footer-hidden': this.props.router.isActive('player')
+      'footer-hidden': hasPlayer
     };
 
     return (
