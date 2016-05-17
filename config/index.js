@@ -1,4 +1,3 @@
-'use strict';
 import _ from 'lodash';
 import client from './client';
 
@@ -65,7 +64,7 @@ const config = _.merge(
      * WebpackDevServer
      */
     webpackDevServer: {
-      host: 'localhost',
+      host: '127.0.0.1',
       port: 8081
     },
 
@@ -73,7 +72,7 @@ const config = _.merge(
      * browserSync
      */
     browserSyncServer: {
-      host: 'localhost',
+      host: '127.0.0.1',
       port: 8082
     }
   }, client);

@@ -1,0 +1,113 @@
+@import "../../node_modules/lesshat/build/lesshat";
+@import "./mixins";
+@import "./fonts";
+@import "./box-sizing";
+@import "./themes";
+
+@zmdi-font-path: "../../../client/assets/fonts";
+@md-font-path: "../../../client/assets/fonts";
+//
+// Colors
+// -----------------------------------------------------------------------------
+
+@white-base: hsl(255, 255, 255);
+
+@gray-base: hsl(0, 0, 0);
+@gray-darker: lighten(@gray-base, 13.5%);
+// #222
+@gray-dark: lighten(@gray-base, 25%);
+// #404040
+@gray: lighten(@gray-base, 33.5%);
+// #555
+@gray-light: lighten(@gray-base, 46.7%);
+// #777
+@gray-lighter: lighten(@gray-base, 93.5%);
+// #eee
+
+@subscriber-color: #66AA33;
+
+@color-yellow: #ffc809;
+@color-yellow-darker: #e5b508;
+@color-indigo: #17071d;
+@color-thumbs: #17071d;
+@color-purple: #281430;
+@color-purple-1: #663774;
+@color-purple-2: #9952AE;
+@color-mea: #009bff;
+@color-purple-transparent: rgba(102, 55, 116, 0.5);
+
+@brand-error: #ff3f34;
+@brand-primary: #FFFFFF;
+@brand-secondary: #9c9c9c;
+@brand-black: #2a1533;
+@brand-label: @color-indigo;
+@brand-thumbs: @color-indigo;
+@brand-bg: #FFFFFF;
+@brand-footer: #b1b1b1;
+
+// set the primary color palette for this theme
+@background-color-base: @color-purple;
+@background-footer: @color-purple;
+@background-page: @color-indigo;
+
+@btn-radius: 1px;
+
+//PLANS COLORS
+
+@plan-blue-color: #759CA7;
+@plan-yellow-color: #EDB62D;
+@plan-purple-color: #6F248B;
+@plan-background-color: #f6f6f6;
+
+//@grid-columns: 20;
+
+//
+// Layout
+// -----------------------------------------------------------------------------
+
+@thumb-margin: 10px;
+@thumb-width: 140px;
+@thumb-height: 200px;
+@thumb-width-episode: 210px;
+@thumb-height-episode: 120px;
+@thumb-width-adspot: 240px;
+@thumb-height-adspot: (@thumb-height + @thumb-margin)  * 2;
+
+@nav-z: 1030;
+@max-content-width: 1280px;
+@app-padding: 40px;
+@app-padding-mobile: 15px;
+@footer-height: 100px;
+@header-height: 47px;
+@sidebar-width: 150px;
+
+@tour-overlay-z: 1000000;
+
+//
+// Media queries breakpoints
+// -----------------------------------------------------------------------------
+
+@screen-xs-min: 480px;
+// Extra small screen / phone
+@screen-sm-min: 768px;
+// Small screen / tablet
+@screen-md-min: 992px;
+// Medium screen / desktop
+@screen-lg-min: 1200px;
+// Large screen / wide desktop
+@highdensity: ~"only screen and (-webkit-min-device-pixel-ratio: 1.5)",
+~"only screen and (min--moz-device-pixel-ratio: 1.5)",
+~"only screen and (-o-min-device-pixel-ratio: 3/2)",
+~"only screen and (min-device-pixel-ratio: 1.5)";
+@mobile: ~"only screen and (max-width: 529px)";
+@tablet: ~"only screen and (min-width: 530px) and (max-width: 949px)";
+@desktop: ~"only screen and (min-width: 950px) and (max-width: 1128px)";
+@desktop-xl: ~"only screen and (min-width: 1129px)";
+
+//
+// Animations
+// -----------------------------------------------------------------------------
+
+@animation-swift-out: .45s cubic-bezier(0.3, 1, 0.4, 1) 0s;
+
+@thumb-margin: 10px;

@@ -1,4 +1,16 @@
 {
-  "stage": 0,
-  "optional": [ "runtime" ]
+  "plugins": [
+    "transform-es2015-modules-commonjs",
+    "transform-decorators-legacy",
+    "syntax-class-properties",
+    "transform-class-properties",
+    "transform-es2015-arrow-functions",
+    "transform-function-bind",
+    "transform-es2015-destructuring"
+  ],
+  "presets": [
+    "react",
+    "stage-2",
+    "es2015"
+  ]
 }
