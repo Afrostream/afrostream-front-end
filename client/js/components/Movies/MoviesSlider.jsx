@@ -1,0 +1,129 @@
+import React, { PropTypes } from 'react';
+import Immutable from 'immutable';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import Slider from '../Slider/Slider';
+import Thumb from '../Movies/Thumb';
+import ReactList from 'react-list';
+
+if (process.env.BROWSER) {
+  require('./MoviesSlider.less');
+}
+
+class MoviesSlider extends React.Component {
+
+  static propTypes = {
+    dataList: PropTypes.instanceOf(Immutable.List).isRequired,
+    selectedId: React.PropTypes.string,
+    label: React.PropTypes.string,
+    slug: React.PropTypes.string,
+    axis: React.PropTypes.string,
+    className: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    selectedId: null,
+    label: '',
+    slug: '',
+    axis: 'x',
+    className: 'movies-data-list'
+  };
+
+  renderSize (index) {
+    const {
+      props: {
+        dataList
+      }
+    } = this;
+
+    let data = dataList.get(index);
+    let isAdSpot = data.get('adSpot');
+    return isAdSpot ? 240 : 160;
+  }
+
+  renderBlock (data) {
+    let isAdSpot = data.get('adSpot');
+    let dataId = data.get('_id');
+    let spotData = {}
+    if (isAdSpot) {
+      spotData.thumbW = 240
+      spotData.thumbH = 465
+      spotData.type = 'spot'
+      spotData.fit = 'min'
+      spotData.crop = 'faces'
+    }
+
+
+    return (
+      <Thumb
+        preload={true}
+        id={dataId}
+        key={`data-thumb-${dataId}`}
+        {...spotData}
+        {...this.props} {...{data, dataId}}  />
+    );
+  }
+
+  renderItem (index) {
+    const {
+      props: {
+        dataList
+      }
+    } = this;
+
+    let data = dataList.get(index);
+    if (data instanceof Immutable.Map) {
+      return this.renderBlock(data)
+    }
+    let dataId = data.get('_id')
+
+    return (
+      <div className="block" key={`data-block-${dataId}${index}`}>{data.map((item)=>this.renderBlock(item))}</div>
+    );
+  }
+
+  render () {
+    const {
+      props: {
+        dataList,
+        selectedId,
+        label,
+        slug
+      }
+    } = this;
+
+    if (!dataList || !dataList.size) {
+      return (<div/>);
+    }
+
+    let index = null;
+
+    //Si on a un episode ou movie dans les params url, on scroll to this point
+    if (selectedId) {
+      index = dataList.findIndex((obj) => {
+        return obj.get('_id') == selectedId;
+      });
+    }
+
+    return (
+      <div className={this.props.className}>
+        {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
+        {label ? <div className="movies-list__selection">{label}</div> : ''}
+        <Slider {...this.props}>
+          <div className="slider-container">
+            <ReactList
+              ref="react-list"
+              useTranslate3d={true}
+              initialIndex={index}
+              axis={this.props.axis}
+              itemRenderer={::this.renderItem}
+              length={dataList.size}
+              type={this.props.axis === 'x' ? 'variable' : 'uniform' }
+            />
+          </div>
+        </Slider>
+      </div>
+    );
+  }
+}
+
+export default MoviesSlider;

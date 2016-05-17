@@ -1,5 +1,3 @@
-'use strict';
-
 import qs from 'qs';
 import config from './superagent-mock-config';
 import argv from 'optimist';

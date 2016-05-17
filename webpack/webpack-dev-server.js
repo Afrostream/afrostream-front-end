@@ -4,7 +4,7 @@ import path from 'path';
 import devConfig from './dev.config';
 import config from '../config';
 
-const { webpackDevServer: { host, port } } = config;
+const {webpackDevServer: {host, port}} = config;
 
 const serverOptions = {
     contentBase: path.resolve(__dirname, '../dist'),
@@ -17,8 +17,6 @@ const serverOptions = {
     watch: true,
     progress: true,
     hotComponents: true,
-    //devtool: 'eval',
-    //historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000

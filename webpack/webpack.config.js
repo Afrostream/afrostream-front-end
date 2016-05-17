@@ -44,8 +44,8 @@ const webpackConfig = {
     hashDigestLength: 32
   },
   entry: {
-    main: './src/js/main',
-    vendor: './src/js/vendor'
+    main: './client/js/main',
+    vendor: './client/js/vendor'
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
@@ -59,27 +59,34 @@ const webpackConfig = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.(jsx|js)$/,
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
-        exclude: [node_modules_dir]
-      },
-      {
-        test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
-        include: [path.join(__dirname, '../node_modules/bootstrap'), path.join(__dirname, '../node_modules/afrostream-player')]
+        exclude: [
+          node_modules_dir,
+          path.join(__dirname, '../node_modules/afrostream-player/libs')
+        ],
+        include: [
+          path.join(__dirname, '../node_modules/bootstrap'),
+          path.join(__dirname, '../node_modules/afrostream-player')
+        ]
       },
       {
         test: /\.json$/,
-        include: [path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
-        loaders: ['json']
+        //exclude: [node_modules_dir],
+        //include: [
+        //  path.join(__dirname, '../node_modules/markdown-it'),
+        //  path.join(__dirname, '../config')
+        //],
+        loaders: ['json-loader']
       },
       {
         test: /\.css$/,
+        exclude: [node_modules_dir],
         loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },

@@ -1,0 +1,212 @@
+@import (reference) '../../../../styles/config.less';
+
+.welcome-header {
+  margin-top: @header-height;
+  width: 100%;
+  min-height: 80vh;
+  //@media all and (min-width: @screen-sm-min) {
+  //  height: 80vh;
+  //}
+  position: relative;
+  text-align: center;
+  color: @white-base;
+  //&:before {
+  //  content: '';
+  //  display: inline-block;
+  //  height: 100%;
+  //  vertical-align: middle;
+  //}
+  .afrostream-movie__poster {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url(../../../../assets/images/default/1920x815.jpg);
+    background-position: center top;
+    background-size: cover;
+    .afrostream-movie__mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: fade(#000, 50%);
+    }
+  }
+
+  .afrostream-movie {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+    max-width: 100%;
+    margin: @header-height @app-padding @app-padding @app-padding;
+    @media all and (max-width: @screen-sm-min) {
+      margin: @header-height @app-padding-mobile @app-padding-mobile @app-padding-mobile;
+    }
+    .afrostream-movie__info {
+      min-height: 100px;
+      h1 {
+        font-family: @font-thin;
+        color: @white-base;
+        text-transform: uppercase;
+        font-size: 4em;
+        text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.6);
+      }
+
+      .detail-text {
+        font-family: @font-family-base;
+        color: @white-base;
+        text-align: justify;
+        font-size: 1.6em;
+        line-height: 1.7em;
+        text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+
+  .afrostream-movie__subscribe {
+    bottom: @app-padding * 2;
+    left: @app-padding;
+    margin: 1em 0 1em 0;
+    //position: absolute;
+    @media all and (max-width: @screen-sm-min) {
+      bottom: @app-padding-mobile;
+      left: @app-padding-mobile;
+    }
+    .afrostream-statement {
+      font-family: @font-book;
+      font-weight: bold;
+      font-size: 3.5em;
+      line-height: 1.2em;
+      margin: 1em 0 1em 0;
+      text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+      span {
+        display: block;
+      }
+    }
+  }
+
+  &.promo {
+    &:before {
+      background-color: rgba(0, 0, 0, 0.4);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .promo-content {
+      display: inline-block;
+      position: relative;
+      margin: 10% 20% 15% 20%;
+      width: 64%;
+      text-align: center;
+      padding: 20px 10px 40px 10px;
+      z-index: 900;
+
+      @media all and (max-width: @screen-lg-min) {
+        margin: 20% 5% 10% 5%;
+        width: 90%;
+      }
+
+      @media all and (max-width: @screen-sm-min) {
+        margin: 15% 0% 10% 0%;
+        width: 100%;
+      }
+
+      @media all and (max-width: @screen-xs-min) {
+        margin: 15% 0% 5% 0%;
+      }
+      .subscribe-button-promo {
+
+        color: #000000;
+        background-color: #2bde73;
+        border: none;
+        border-radius: 32px;
+        font-size: 32px;
+        font-weight: bold;
+        line-height: 52px;
+        padding-left: 32px;
+        padding-right: 32px;
+        z-index: 900;
+
+        @media all and (max-width: @screen-sm-min) {
+          border-radius: 24px;
+          font-size: 24px;
+          font-weight: bold;
+          line-height: 40px;
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+
+        h6 {
+          color: #ffc809;
+        }
+      }
+      .promo-message {
+        margin-bottom: 20px;
+
+        h2 {
+          background-color: @color-purple-2;
+          padding: 10px 10px 10px 10px;
+          margin-left: auto;
+          margin-right: auto;
+
+          @media all and (max-width: @screen-sm-min) {
+            font-size: 24px;
+          }
+        }
+        h1 {
+          margin-bottom: 10px;
+        }
+        h3 {
+          color: #ffc809;
+          @media all and (max-width: @screen-sm-min) {
+            font-size: 20px;
+          }
+        }
+        h5 {
+          margin-top: 25px;
+        }
+      }
+
+      #countdown {
+        font-weight: 600;
+        font-size: 36px;
+        color: #ffc809;
+        margin-bottom: 20px;
+
+        @media all and (max-width: @screen-sm-min) {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+
+//Firefox fix
+@-moz-document url-prefix() {
+  .welcome-header {
+    height: 80vh;
+  }
+}
+
+@media @mobile {
+  .welcome-header {
+    &.welcome-header_movie {
+      .afrostream-movie__poster {
+        position: relative;
+        min-height: 35vh;
+        .afrostream-movie__mask {
+          display: none;
+        }
+      }
+      .afrostream-movie {
+        margin: 0 @app-padding-mobile @app-padding-mobile @app-padding-mobile;
+      }
+    }
+  }
+}
