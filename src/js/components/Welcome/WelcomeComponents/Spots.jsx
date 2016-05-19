@@ -1,8 +1,10 @@
 import React from 'react'
 import Immutable from 'immutable'
+import { prepareRoute } from '../../../decorators'
 import { connect } from 'react-redux'
 import Thumb from '../../../components/Movies/Thumb'
 import SignUpButton from '../../User/SignUpButton'
+import * as CategoryActionCreators from '../../../actions/category'
 import { dict } from '../../../../../config'
 import _ from 'lodash'
 
@@ -10,6 +12,9 @@ if (process.env.BROWSER) {
   require('./Spots.less')
 }
 
+@prepareRoute(async function ({store}) {
+  return store.dispatch(CategoryActionCreators.getAllSpots())
+})
 @connect(({Category}) => ({Category}))
 class Spots extends React.Component {
 

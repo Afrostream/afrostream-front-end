@@ -7,7 +7,6 @@ import PricingTable from './WelcomeComponents/PricingTable'
 import Spinner from '../Spinner/Spinner'
 import * as EventActionCreators from '../../actions/event'
 import * as MovieActionCreators from '../../actions/movie'
-import * as CategoryActionCreators from '../../actions/category'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as BillingActionCreators from '../../actions/billing'
 import { withRouter } from 'react-router'
@@ -18,8 +17,7 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store, params: {movieId, episodeId}}) {
   await * [
-    store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(CategoryActionCreators.getAllSpots())
+    store.dispatch(EventActionCreators.pinHeader(true))
   ];
 
   if (movieId && movieId !== 'undefined') {

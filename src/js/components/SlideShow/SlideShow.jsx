@@ -1,11 +1,9 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
-import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import SlidesContainer from './Slides'
 import Pagination from './Pagination'
-import Controls from './Controls'
 import Spinner from '../Spinner/Spinner'
 import * as SlidesActionCreators from '../../actions/slides'
 import * as CategoryActionCreators from '../../actions/category'
@@ -15,15 +13,15 @@ import { withRouter } from 'react-router'
 if (process.env.BROWSER) {
   require('./SlideShow.less');
 }
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(CategoryActionCreators.getSpots())
   ];
 })
-@connect(({ Category, Slides }) => ({Category, Slides}))
+@connect(({Category, Slides}) => ({Category, Slides}))
 class SlideShow extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.interval = 0;
   }
@@ -41,7 +39,7 @@ class SlideShow extends React.Component {
     return obj;
   }
 
-  initTouch() {
+  initTouch () {
 
     const self = this,
     // touchPosition
@@ -175,25 +173,26 @@ class SlideShow extends React.Component {
     });
   }
 
-  render() {
+  render () {
     const {
       props: {
         Category,
         Slides
-        }
-      } = this;
+      }
+    } = this;
 
     const categoryId = Category.get(`categoryId`);
     if (!categoryId) {
       return (<div />)
     }
-    const slides = Category.get(`categorys/${categoryId}/spots`);
-    const page = Slides.get('page') || 0;
+    const category = Category.get(`categorys/${categoryId}/spots`)
+    const slides = category// && category.get('adSpots')
+    const page = Slides.get('page') || 0
 
     return (
       <div className="slide-show" ref="slC">
-        {slides ? <SlidesContainer page={page} {...{slides}}/> : <Spinner />}
-        {slides ? <Pagination page={page} {...{slides}}/> : ''}
+        {slides && slides.size ? <SlidesContainer page={page} {...{slides}}/> : <Spinner />}
+        {slides && slides.size ? <Pagination page={page} {...{slides}}/> : ''}
       </div>
     );
   }
@@ -201,20 +200,20 @@ class SlideShow extends React.Component {
   //Next prev button
   //<Controls />
 
-  componentDidMount() {
+  componentDidMount () {
     this.initTouch();
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     clearTimeout(this.interval);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     clearTimeout(this.interval);
     this.interval = setTimeout(() => this.toggleNext(), config.carousel.interval);
   }
 
-  onSwipe(e) {
+  onSwipe (e) {
     clearTimeout(this.interval);
     if (e.dir === -1) {
       this.togglePrev();
@@ -224,24 +223,24 @@ class SlideShow extends React.Component {
     }
   }
 
-  toggleNext() {
+  toggleNext () {
 
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(SlidesActionCreators.toggleNext());
   }
 
-  togglePrev() {
+  togglePrev () {
 
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this;
 
     dispatch(SlidesActionCreators.togglePrev());
   }

@@ -7,11 +7,10 @@ import * as CategoryActionCreators from '../../actions/category';
 import MovieInfo from './MovieInfo';
 import SeasonList from '../Seasons/SeasonList';
 
-@prepareRoute(async function ({ store, params: { movieId, seasonId, episodeId} }) {
+@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(EventActionCreators.userActive(true)),
-    store.dispatch(CategoryActionCreators.getAllSpots())
+    store.dispatch(EventActionCreators.userActive(true))
   ];
 
   if (movieId && movieId !== 'undefined') {
@@ -28,13 +27,13 @@ import SeasonList from '../Seasons/SeasonList';
 })
 class MoviePage extends React.Component {
 
-  render() {
+  render () {
     const {
       props: {
-        params: { movieId, seasonId, episodeId },
+        params: {movieId, seasonId, episodeId},
         children
-        }
-      } = this;
+      }
+    } = this;
 
     const dataId = movieId;
 

@@ -1,17 +1,17 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import * as ModalActionCreators from '../../actions/modal';
-import * as OAuthActionCreators from '../../actions/oauth';
-import * as UserActionCreators from '../../actions/user';
-import * as EventActionCreators from '../../actions/event';
-import { Link } from 'react-router';
-import SearchInput from './../Search/SearchBox';
-import FavoritesButton from './../Favorites/FavoritesButton';
-import BrowseButton from './../Browse/BrowseButton';
-import { dict } from '../../../../config';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../actions/modal'
+import * as OAuthActionCreators from '../../actions/oauth'
+import * as UserActionCreators from '../../actions/user'
+import * as EventActionCreators from '../../actions/event'
+import { Link } from 'react-router'
+import SearchInput from './../Search/SearchBox'
+import FavoritesButton from './../Favorites/FavoritesButton'
+import BrowseButton from './../Browse/BrowseButton'
+import { dict } from '../../../../config'
 
 if (process.env.BROWSER) {
-  require('./UserButton.less');
+  require('./UserButton.less')
 }
 
 @connect(({User, OAuth, Event}) => ({User, OAuth, Event}))
@@ -22,9 +22,9 @@ class UserButton extends React.Component {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
-    dispatch(UserActionCreators.getProfile());
+    dispatch(UserActionCreators.getProfile())
   }
 
   logOut () {
@@ -32,43 +32,43 @@ class UserButton extends React.Component {
       props: {
         dispatch
       }
-    } = this;
-    dispatch(OAuthActionCreators.logOut());
+    } = this
+    dispatch(OAuthActionCreators.logOut())
   }
 
   getUserConnectedButtons (user, type) {
 
-    let planCode;
+    let planCode
     if (user) {
-      planCode = user.get('planCode');
+      planCode = user.get('planCode')
     }
 
     if (!planCode) {
-      return '';
+      return ''
     }
-    let el;
+    let el
     switch (type) {
       case 'search':
         el = (<li className="pull-right">
           <SearchInput/>
-        </li>);
-        break;
+        </li>)
+        break
       case 'favorites':
         el = (<li className="pull-right">
           <FavoritesButton/>
-        </li>);
-        break;
+        </li>)
+        break
       case 'browse':
         el = (
           <BrowseButton/>
-        );
-        break;
+        )
+        break
       default:
-        el = '';
-        break;
+        el = ''
+        break
     }
 
-    return el;
+    return el
   }
 
   render () {
@@ -77,36 +77,36 @@ class UserButton extends React.Component {
         User,
         OAuth
       }
-    } = this;
+    } = this
 
-    const token = OAuth.get('token');
-    const user = User.get('user');
+    const token = OAuth.get('token')
+    const user = User.get('user')
 
     if (token) {
       if (user) {
         return (
           <ul className="nav navbar-nav navbar-right">
             <li className="pull-right">
-              <a href="#" role="button" onClick={::this.toggleSideBar} id="userButton"
-                 className="btn-xs btn-user">
+              <button role="button" onClick={::this.toggleSideBar} id="userButton"
+                      className="btn-xs btn-user">
                 <span>Mon profil</span>
                 <img src={user.get('picture')}
                      alt="50x50"
                      id="userButtonImg"
                      className="icon-user"/>
-              </a>
+              </button>
             </li>
             {this.getUserConnectedButtons(user, 'browse')}
             {this.getUserConnectedButtons(user, 'search')}
 
           </ul>
-        );
+        )
       }
       else {
-        return this.getLoginState();
+        return this.getLoginState()
       }
     } else {
-      return this.getLoginState();
+      return this.getLoginState()
     }
   }
 
@@ -120,24 +120,24 @@ class UserButton extends React.Component {
 
     const inputSigninAction = {
       onClick: event => ::this.showLock('showSignin')
-    };
+    }
     const inputSignupAction = {
       onClick: event => ::this.showLock('showSignup')
-    };
+    }
 
     return (
       <div className="nav navbar-nav navbar-right">
         <li className="pull-right hidden-xs">
-          <a href="#" role="button" className="btn-xs btn-signup pull-right" {...inputSignupAction}>
+          <button role="button" className="btn-xs btn-signup pull-right" {...inputSignupAction}>
             <span>{dict(params.lang).signup.title}</span>
-          </a>
+          </button>
         </li>
         <li className="pull-right">
-          <a href="#" role="button" className="btn-xs btn-signin pull-right"  {...inputSigninAction}>
+          <button role="button" className="btn-xs btn-signin pull-right"  {...inputSigninAction}>
             <span>{dict(params.lang).signin.title}</span>
-          </a>
+          </button>
         </li>
-      </div>);
+      </div>)
   }
 
   showLock (mode) {
@@ -145,9 +145,9 @@ class UserButton extends React.Component {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
-    dispatch(ModalActionCreators.open(mode));
+    dispatch(ModalActionCreators.open(mode))
   }
 
   toggleSideBar () {
@@ -155,11 +155,11 @@ class UserButton extends React.Component {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
-    dispatch(EventActionCreators.toggleSideBar());
+    dispatch(EventActionCreators.toggleSideBar())
   }
 
 }
 
-export default UserButton;
+export default UserButton

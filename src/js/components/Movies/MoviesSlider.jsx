@@ -12,7 +12,7 @@ if (process.env.BROWSER) {
 class MoviesSlider extends React.Component {
 
   static propTypes = {
-    dataList: PropTypes.instanceOf(Immutable.List).isRequired,
+    dataList: PropTypes.instanceOf(Immutable.List),
     selectedId: React.PropTypes.string,
     label: React.PropTypes.string,
     slug: React.PropTypes.string,
@@ -28,38 +28,28 @@ class MoviesSlider extends React.Component {
     className: 'movies-data-list'
   };
 
-  renderSize (index) {
-    const {
-      props: {
-        dataList
-      }
-    } = this;
-
-    let data = dataList.get(index);
-    let isAdSpot = data.get('adSpot');
-    return isAdSpot ? 240 : 160;
-  }
-
   renderBlock (data) {
-    let isAdSpot = data.get('adSpot');
-    let dataId = data.get('_id');
+    let isAdSpot = data.get('adSpot')
+    let dataId = data.get('_id')
+    let params = {};
     if (isAdSpot) {
-      return (
-        <Thumb
-          id={dataId}
-          preload={true}
-          thumbW={240} thumbH={465} type="spot"
-          fit="min" crop="faces"
-          key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
-      );
+
+      params = {
+        thumbW: 240,
+        thumbH: 465,
+        type: 'spot',
+        fit: 'min',
+        crop: 'face'
+      }
     }
 
     return (
       <Thumb
         preload={true}
         id={dataId}
-        key={`data-thumb-${dataId}`} {...this.props} {...{data, dataId}}  />
-    );
+        key={`data-thumb-${dataId}`}
+        {...params} {...this.props} {...{data, dataId}}  />
+    )
   }
 
   renderItem (index) {
@@ -74,7 +64,9 @@ class MoviesSlider extends React.Component {
       return this.renderBlock(data);
     }
     return (
-      <div className="block" key={`data-block-${index}`}>{data.map((item)=>this.renderBlock(item))}</div>
+      <div className="block" key={`data-block-${index}`}>{data.map((item)=> {
+        return this.renderBlock(item)
+      })}</div>
     );
   }
 

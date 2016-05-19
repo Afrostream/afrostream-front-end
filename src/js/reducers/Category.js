@@ -1,76 +1,120 @@
-import Immutable from 'immutable';
-import ActionTypes from '../consts/ActionTypes';
-import createReducer from '../lib/createReducer';
-import _ from 'lodash';
+import Immutable from 'immutable'
+import ActionTypes from '../consts/ActionTypes'
+import createReducer from '../lib/createReducer'
+import _ from 'lodash'
 
 const initialState = Immutable.fromJS({
   'categoryId': 1
-});
+})
+
+/**
+ * Used in _.reduce to fill the arrays of blocs
+ */
+const accumulateInBloc = function (finalResult = [], bloc) {
+  // By default, 1 page = 1 bloc
+  let maxBloc = bloc.adSpot ? 1 : 2
+  if (_.last(finalResult).length && _.last(finalResult)[0].adSpot) {
+    maxBloc = 1
+  }
+
+  if (_.last(finalResult).length === maxBloc) {
+    finalResult.push([])
+  }
+  _.last(finalResult).push(bloc)
+
+  return finalResult
+}
+
+const mergeSpots = function (spots, dataList) {
+  //Concat adspots and categrorie movies remove duplicates
+  spots = spots || []
+  dataList = dataList || []
+  let filteredList = []
+
+  spots = _.map(spots, (spot) => {
+    spot.adSpot = true
+    return spot
+  })
+
+  filteredList = filteredList.concat(spots)
+  filteredList = filteredList.concat(dataList)
+
+  const uniqSpots = _.uniq(filteredList, (o)=> (o['_id']))
+  const blocSpots = _(uniqSpots).reduce(accumulateInBloc, [[]])
+
+  return blocSpots
+}
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Category.getAllSpots](state, {res }) {
+  [ActionTypes.Category.getAllSpots](state, {res}) {
     if (!res) {
-      return state;
+      return state
     }
-    const data = res.body;
-    let categoryId = state.get('categoryId');
+    const data = res.body
+    let categoryId = state.get('categoryId')
     const categoryBase = _.find(data, (category)=> {
-      return category._id == categoryId;
+      return category._id == categoryId
     })
+
     if (categoryBase) {
-      categoryId = categoryBase['_id'];
+      categoryId = categoryBase['_id']
     }
 
     return state.merge({
       ['categoryId']: categoryId,
       [`categorys/spots__res`]: res,
       [`categorys/spots`]: data
-    });
+    })
   },
 
-  [ActionTypes.Category.getSpots](state, { categoryId,res }) {
+  [ActionTypes.Category.getSpots](state, {categoryId, res}) {
     if (!res) {
-      return state;
+      return state
     }
-    const data = res.body;
+    const data = res.body
+
     return state.merge({
       ['categoryId']: categoryId,
       [`categorys/${categoryId}/spots__res`]: res,
       [`categorys/${categoryId}/spots`]: data
-    });
+    })
   },
 
-  [ActionTypes.Category.getCategory](state, { categoryId, res }) {
+  [ActionTypes.Category.getCategory](state, {categoryId, res}) {
     if (!res) {
-      return state;
+      return state
     }
-    const data = res.body;
+    const data = res.body
+
+    data.mergeSpotsWithMovies = mergeSpots(data.adSpots, data.movies)
+
     return state.merge({
-      ['categoryId']: categoryId,
       [`categorys/${categoryId}__res`]: res,
       [`categorys/${categoryId}`]: data
-    });
+    })
   },
-  [ActionTypes.Category.getMenu](state, { res }) {
+
+  [ActionTypes.Category.getMenu](state, {res}) {
     if (!res) {
-      return state;
+      return state
     }
     if (!res.body) {
-      return state;
+      return state
     }
-    const data = res.body;
+    const data = res.body
     return state.merge({
       ['menu']: data
-    });
+    })
   },
-  [ActionTypes.Category.getMeaList](state, { res }) {
+
+  [ActionTypes.Category.getMeaList](state, {res}) {
     if (!res) {
-      return state;
+      return state
     }
-    const data = res.body;
+    const data = res.body
     return state.merge({
       ['meaList']: data
-    });
+    })
   }
-});
+})

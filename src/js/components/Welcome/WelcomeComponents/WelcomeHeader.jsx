@@ -140,7 +140,6 @@ class WelcomeHeader extends React.Component {
       }
     }
 
-    //&h=${this.state.size.height}
     let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${images.quality}&fm=${images.type})`}
 
     let promoCode = this.hasPromo()
@@ -151,50 +150,26 @@ class WelcomeHeader extends React.Component {
       'promo': promoCode
     }
 
-
-    if (!promoCode) {
-      return (
-        <section className={classSet(welcomeClassesSet)}>
-          <div className="afrostream-movie__poster" style={imageStyle}>
-            <div className="afrostream-movie__mask"/>
+    return (
+      <section className={classSet(welcomeClassesSet)}>
+        <div className="afrostream-movie__poster" style={imageStyle}>
+          <div className="afrostream-movie__mask"/>
+        </div>
+        {movieData ? <SignUpButton className="subscribe-button subscribe-button-mobile" label={info.action}/> : ''}
+        <div className="afrostream-movie">
+          <div className="afrostream-movie__info">
+            <h1>{info.movie.title}</h1>
+            <div className='detail-text'>{info.movie.synopsis}</div>
           </div>
-          {movieData ? <SignUpButton className="subscribe-button subscribe-button-mobile"/> : ''}
-          <div className="afrostream-movie">
-            <div className="afrostream-movie__info">
-              <h1>{info.movie.title}</h1>
-              <div className='detail-text'>{info.movie.synopsis}</div>
-            </div>
-            <div className="afrostream-movie__subscribe">
-              <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
-                return (<span key={`statement-${i}`}>{statement}</span>)
-              })}</div>
-              <SignUpButton label={info.action}/>
-            </div>
+          <div className="afrostream-movie__subscribe">
+            <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
+              return (<span key={`statement-${i}`}>{statement}</span>)
+            })}</div>
+            <SignUpButton label={info.action}/>
           </div>
-        </section>
-      )
-    }
-    else {
-
-      return (
-        <section className={classSet(welcomeClassesSet)} style={imageStyle}>
-          <div className="promo-content">
-            <div className="promo-message">
-              <h2>{promoCode.promoHeader}
-                <div>avec le code promo: {promoCode.code}</div>
-              </h2>
-              <h5>Fin de l'offre promotionnelle dans</h5>
-              <div id="countdown"></div>
-              <button className="subscribe-button-promo" type=" button" onClick={::this.showLock}>PROFITEZ EN
-                MAINTENANT
-              </button>
-            </div>
-            <h6>{promoCode.promoConditions1}</h6>
-            <h6>{promoCode.promoConditions2}</h6>
-          </div>
-        </section>
-      )
-    }
+        </div>
+      </section>
+    )
   }
 }
 
