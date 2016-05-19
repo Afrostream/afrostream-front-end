@@ -62,13 +62,25 @@ class Thumb extends Poster {
     const type = this.getType()
 
     if (type === 'movie') {
-      return ''
+      return null
     }
     const maxLength = 80
 
     let episodeNumber = data.get('episodeNumber')
     let seasonNumber = data.get('seasonNumber')
-    let title = `Épisode ${seasonNumber} ${data.get('title')}`
+    let title = data.get('title')
+    switch (type) {
+      case 'episode':
+        if (episodeNumber) {
+          title = `Épisode ${episodeNumber} - ${title}`
+        }
+        break
+      case 'season':
+        title = `Saison ${seasonNumber} - ${title}`
+        break
+      default:
+        break
+    }
     let synopsis = data.get('synopsis') || ''
     //wrap text
     if (synopsis.length >= maxLength) {
