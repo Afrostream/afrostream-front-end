@@ -5,6 +5,7 @@ import { cashwayApi } from '../../../../config'
 import * as EventActionCreators from '../../actions/event'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import scriptLoader from '../../lib/script-loader'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./CashwayPage.less');
@@ -135,4 +136,4 @@ class CashwayPage extends React.Component {
 }
 export default scriptLoader(
   cashwayApi
-)(CashwayPage)
+)(withRouter(CashwayPage))
