@@ -65,7 +65,10 @@ class Thumb extends Poster {
       return ''
     }
     const maxLength = 80
-    let title = data.get('title')
+
+    let episodeNumber = data.get('episodeNumber')
+    let seasonNumber = data.get('seasonNumber')
+    let title = `Épisode ${seasonNumber} ${data.get('title')}`
     let synopsis = data.get('synopsis') || ''
     //wrap text
     if (synopsis.length >= maxLength) {

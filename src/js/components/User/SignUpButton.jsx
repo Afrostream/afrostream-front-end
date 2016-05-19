@@ -26,9 +26,8 @@ class SignUpButton extends React.Component {
     } = this;
 
     const user = User.get('user');
-
     if (user) {
-      return history.push(this.props.to);
+      return router.push(this.props.to);
     }
 
     dispatch(ModalActionCreators.open('showSignup', true, this.props.to));
