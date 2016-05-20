@@ -86,6 +86,17 @@ class PaymentForm extends React.Component {
 
   componentDidMount () {
     this.setupPlan()
+    this.attachTooltip()
+  }
+
+  componentDidUpdate () {
+    this.attachTooltip();
+  }
+
+  attachTooltip () {
+    if (this.refs.droitstip) {
+      $(this.refs.droitstip).tooltip();
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -193,7 +204,11 @@ class PaymentForm extends React.Component {
           required
         />
         <div className="checkbox-label">{dict().payment.droits.label} <a href="/pdfs/formulaire-retractation.pdf"
-                                                                       target="_blank">{dict().payment.droits.link}</a>
+                                                                         target="_blank">{dict().payment.droits.link}</a>
+          <a ref="droitstip" className="my-tool-tip"
+             data-original-title={dict().payment.droits.tooltip}
+             data-placement="top"
+             data-toggle="tooltip"><i className="fa fa-question-circle"/></a>
         </div>
       </div>
     </div>)
@@ -221,7 +236,7 @@ class PaymentForm extends React.Component {
         />
 
         <div className="checkbox-label">{dict().payment.cgu.label} <a href="/pdfs/conditions-utilisation.pdf"
-                                                                    target="_blank">{dict().payment.cgu.link}</a>
+                                                                      target="_blank">{dict().payment.cgu.link}</a>
         </div>
       </div>
     </div>)
@@ -286,10 +301,10 @@ class PaymentForm extends React.Component {
     let isCash = router.isActive('cash')
 
     return await dispatch(BillingActionCreators.subscribe(formData, self.state.isGift)).then(() => {
-        self.disableForm(false, 1)
-        //On merge les infos en faisant un new call a getProfile
-        return dispatch(UserActionCreators.getProfile())
-      })
+      self.disableForm(false, 1)
+      //On merge les infos en faisant un new call a getProfile
+      return dispatch(UserActionCreators.getProfile())
+    })
       .then(()=> {
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch((err) => {

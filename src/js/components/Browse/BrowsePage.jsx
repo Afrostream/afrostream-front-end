@@ -1,6 +1,5 @@
 import React from 'react'
 import { prepareRoute } from '../../decorators'
-import * as CategoryActionCreators from '../../actions/category'
 import * as EventActionCreators from '../../actions/event'
 import * as UserActionCreators from '../../actions/user'
 import { Link } from 'react-router'
@@ -13,9 +12,8 @@ import UserMoviesList from '../Movies/UserMoviesList'
     store.dispatch(EventActionCreators.userActive(true))
   ])
 
-  store.dispatch(CategoryActionCreators.getMeaList())
-  store.dispatch(UserActionCreators.getHistory())
   store.dispatch(UserActionCreators.getFavorites('movies'))
+  store.dispatch(UserActionCreators.getHistory())
 })
 class BrowsePage extends React.Component {
 

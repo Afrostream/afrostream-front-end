@@ -71,7 +71,10 @@ const webpackConfig = {
       {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
-        include: [path.join(__dirname, '../node_modules/bootstrap'), path.join(__dirname, '../node_modules/afrostream-player')]
+        include: [
+          path.join(__dirname, '../node_modules/bootstrap'),
+          path.join(__dirname, '../node_modules/afrostream-player')
+        ]
       },
       {
         test: /\.json$/,

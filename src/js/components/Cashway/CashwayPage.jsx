@@ -1,64 +1,77 @@
 import React, { PropTypes } from 'react'
 import SignUpButton from '../User/SignUpButton'
 import { prepareRoute } from '../../decorators'
-import { cashwayApi } from '../../../../config'
+import { cashwayApi, player } from '../../../../config'
 import * as EventActionCreators from '../../actions/event'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import scriptLoader from '../../lib/script-loader'
+import Player from '../Player/Player'
 import { withRouter } from 'react-router'
-
+import _ from 'lodash'
 if (process.env.BROWSER) {
-  require('./CashwayPage.less');
+  require('./CashwayPage.less')
+}
+
+if (canUseDOM) {
+  //require('afrostream-player/libs/video.js')
+  //require('videojs-youtube');
+  //require('imports?define=>false!videojs-youtube');
+  //require('afrostream-player/dist/afrostream-player.js')
 }
 
 
 @prepareRoute(async function ({store}) {
   return await * [
     store.dispatch(EventActionCreators.pinHeader(true))
-  ];
+  ]
 })
 class CashwayPage extends React.Component {
 
   state = {
     location: ''
-  };
+  }
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   static contextTypes = {
     location: PropTypes.object.isRequired
-  };
+  }
 
   componentDidMount () {
     const {
       props: {isScriptLoaded, isScriptLoadSucceed}
-    } = this;
+    } = this
     if (isScriptLoaded && isScriptLoadSucceed) {
-      window.cashwayMapInit();
+      window.cashwayMapInit()
     }
   }
 
   componentWillReceiveProps ({isScriptLoaded, isScriptLoadSucceed}) {
     if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
       if (isScriptLoadSucceed) {
-        window.cashwayMapInit();
+        window.cashwayMapInit()
       }
     }
   }
 
   render () {
 
-    const {props: {children}} = this;
+    const {props: {children}} = this
 
     if (children) {
-      return children;
+      return children
     }
+
+    const source = [
+      {type: 'video/youtube', src: 'https://www.youtube.com/watch?v=gx5p0ZD88EM'}
+    ]
 
     return (
       <div className="cashway-page">
         <div className="container brand-bg-alpha">
+          <Player src={source} options={{autoplay:false}}/>
           <section className="cashway-info">
             <h2>Paiement en espèces avec <img src="/images/payment/cashway-inline.png" width="100"/></h2>
             <h3>Comment ça marche</h3>
@@ -131,7 +144,7 @@ class CashwayPage extends React.Component {
           </section>
         </div>
       </div>
-    );
+    )
   }
 }
 export default scriptLoader(

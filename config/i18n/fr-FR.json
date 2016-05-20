@@ -196,7 +196,8 @@
     },
     "droits": {
       "label": "Je renonce au droit de rétractation",
-      "link": "Télécharger le formulaire de rétractation"
+      "link": "Télécharger le formulaire de rétractation",
+      "tooltip": "Un mois consommé ne peut pas etre remboursé"
     }
   },
   "account": {

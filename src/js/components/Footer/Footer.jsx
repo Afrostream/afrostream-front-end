@@ -27,6 +27,8 @@ class Footer extends React.Component {
     } = this
 
     let labels = dict(params.lang).footer
+    let switchLang = params.lang === 'en' ? 'fr' : 'us';
+    let switchLangRoute = params.lang === 'en' ? 'fr' : 'en';
     let hasPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player'))
 
     let footerClasses = {
@@ -56,9 +58,14 @@ class Footer extends React.Component {
                 </Link>
               </li>
               <li>
-                <Link className="footer-link" to="/policy">
+                <a className="footer-link" href="/policy">
                   {labels.support.policy}
-                </Link>
+                </a>
+              </li>
+              <li>
+                <a className="footer-link" href={`/${switchLangRoute}`}>
+                  <span className={`flag-icon flag-icon-${switchLang}`}></span>
+                </a>
               </li>
             </ul>
           </div>

@@ -40,7 +40,7 @@ class ModalLogin extends ModalComponent {
     let {query} = location
     let token = query && query.k
     if (token) {
-      dispatch(OauthActionCreator.reset({k: token})).then(function () {
+      dispatch(OauthActionCreator.reset({k: token})).then(() => {
         //New password success validate, open login view
         dispatch(ModalActionCreator.open('show', false, '/'))
       }).catch(::this.onError)

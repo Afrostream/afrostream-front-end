@@ -14,11 +14,11 @@ if (process.env.BROWSER) {
 }
 
 @prepareRoute(async function ({store, router}) {
-  let isCash = router.isActive('cash')
-  return await * [
+  let isCash = router && router.isActive('cash')
+  return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'common'))
-  ]
+  ])
 })
 @connect(({Intercom, User}) => ({Intercom, User}))
 class PaymentPage extends React.Component {

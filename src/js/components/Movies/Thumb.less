@@ -13,6 +13,9 @@
     a {
       .thumb-background {
         height: @thumb-height-episode;
+        i {
+          left: 25%;
+        }
       }
       .thumb-new__item {
         background-image: url(../../../assets/images/movie/label-nouveau-episode.png);
@@ -106,7 +109,6 @@
           background-position: center center;
           width: 80px;
           height: 80px;
-
         }
       }
       &:before {
@@ -132,11 +134,23 @@
       }
     }
   }
+  &:hover {
+    .thumb-buttons {
+      opacity: 1;
+      visibility: visible;
+      .transition(0.1s ease-out);
+      transform: translate(0, 0);
+    }
+  }
   .thumb-buttons {
     position: absolute;
     z-index: 3;
     bottom: 10px;
     right: 11px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(0, 3em);
+
     .btn {
       margin: 5px 5px 5px 0px;
     }
