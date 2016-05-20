@@ -25,6 +25,14 @@ class ModalCoupon extends ModalComponent {
   }
 
   componentDidMount () {
+    const {
+      props: {dispatch, location}
+    } = this
+    let {query} = location
+    let code = query && query.code
+    if (code) {
+      this.refs.coupon.value = code
+    }
     const userAgent = (window.navigator && navigator.userAgent) || ''
     this.setState({
       ua: new MobileDetect(userAgent)
@@ -137,7 +145,7 @@ class ModalCoupon extends ModalComponent {
         </label>
         <div className="input-box">
           <i className="icon-barcode"></i>
-          <input name="email" ref="coupon" id="easy_email" type="text" required
+          <input name="email" ref="coupon" id="easy_email" type="text" className="input-coupon" required
                  placeholder={this.getTitle('couponPlaceholder')}
                  title={this.getTitle('couponPlaceholder')}/>
         </div>
