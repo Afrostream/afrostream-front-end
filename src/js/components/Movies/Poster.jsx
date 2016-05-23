@@ -143,7 +143,10 @@ class Poster extends LoadVideo {
   }
 
   getLazyImageUrl () {
-    let imageStyles = require('../../../assets/images/default/134x200.jpg');
+    let imageStyles;
+    if (canUseDOM) {
+      imageStyles = require('../../../assets/images/default/134x200.jpg');
+    }
     switch (this.state.status) {
       case Status.LOADED:
         imageStyles = this.state.src;
