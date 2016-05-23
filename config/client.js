@@ -112,7 +112,8 @@ const config = {
     apiToken: process.env.SENDBIRD_API_TOKEN || '',
     channels: [
       295,
-      204
+      204,
+      308
     ]
   },
   sentry: {
