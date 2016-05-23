@@ -14,7 +14,6 @@
     "GA_TRACKING_ID": "UA-xxxxxx",
     "RECURLY_PUBLIC_KEY": "sjc-ZhO4HmKNWszC5LIA8BcsMJ",
     "GOCARDLESS_PUBLIC_KEY": "sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL",
-    "GOCARDLESS_KEY": "tv59Vddsd5Rlhn3m4bbewe7wntMD9CxuBX_QclsP",
     "OAUTH_FACEBOOK_ENABLED": "true",
     "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-multi.git",
     "BITLY_API_KEY": "R_8199c11a3938481aa8fdd538530b9137",
