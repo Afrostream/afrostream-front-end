@@ -67,7 +67,6 @@ const config = {
    * Front-End Server
    */
   externalsJs: [
-    //'//www.easybroadcast.fr/libs/65/EB.js&s2member_file_download_key=dbb00d0abec8ccb2295b7d2df5325f6b',
     '//www.gstatic.com/cv/js/sender/v1/cast_sender.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== "production" ? "-sandbox" : "") + '.gocardless.com/js/beta',
