@@ -31,6 +31,9 @@ const mergeSpots = function (spots, dataList) {
   dataList = dataList || []
   let filteredList = []
 
+  if (!spots.length) {
+    return dataList
+  }
   spots = _.map(spots, (spot) => {
     spot.adSpot = true
     return spot

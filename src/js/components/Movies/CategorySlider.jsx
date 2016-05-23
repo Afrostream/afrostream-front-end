@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { prepareRoute } from '../../decorators'
@@ -97,6 +98,9 @@ class CategorySlider extends MoviesSlider {
     const category = Category.get(`categorys/${categoryId}`)
     const dataList = category.get('mergeSpotsWithMovies')
     let data = dataList.get(index)
+    if (data instanceof Immutable.Map) {
+      return this.renderBlock(data);
+    }
     return (
       <div className="block" key={`data-block-${index}`}>{data.map((item)=> {
         return this.renderBlock(item)
