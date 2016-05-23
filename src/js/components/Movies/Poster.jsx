@@ -18,7 +18,7 @@ class Poster extends LoadVideo {
 
   constructor (props) {
     super(props);
-    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: ''};
+    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: '', isNew: false};
   }
 
   componentDidMount () {
@@ -27,21 +27,39 @@ class Poster extends LoadVideo {
     }
   }
 
-  // componentWillReceiveProps (nextProps) {
-  //   if (!shallowEqual(nextProps.data, this.props.data)) {
-  //     if (nextProps.data) {
-  //       this.setState({
-  //         status: nextProps.data ? Status.LOADING : Status.PENDING
-  //       });
-  //     }
-  //   }
-  // }
+  componentWillReceiveProps (nextProps) {
 
-  componentDidUpdate () {
-    if (this.state.status === Status.LOADING && !this.img) {
-      this.createLoader();
+    const {
+      props: {data}
+    } = this;
+
+    let dateFrom = data.get('dateFrom');
+
+    let dateNow = Date.now();
+    let compare = dateNow - new Date(dateFrom).getTime();
+    const type = this.getType();
+    let nbDay = config.movies.isNew[type] || 10;
+    let isNew = compare <= (nbDay * 24 * 3600 * 1000)
+    if (isNew !== this.state.isNew) {
+      this.setState({
+        isNew: isNew
+      })
+    }
+
+    if (!shallowEqual(nextProps.data, this.props.data)) {
+      if (nextProps.data) {
+        this.setState({
+          status: nextProps.data ? Status.LOADING : Status.PENDING
+        });
+      }
     }
   }
+
+  //componentDidUpdate () {
+  //  if (this.state.status === Status.LOADING && !this.img) {
+  //    this.createLoader();
+  //  }
+  //}
 
   componentWillUnmount () {
     this.destroyLoader();
@@ -133,10 +151,7 @@ class Poster extends LoadVideo {
   }
 
   getLazyImageUrl () {
-    let imageStyles;
-    if (canUseDOM) {
-      imageStyles = require('../../../assets/images/default/134x200.jpg');
-    }
+    let imageStyles = require('../../../assets/images/default/134x200.jpg');
     switch (this.state.status) {
       case Status.LOADED:
         imageStyles = this.state.src;
@@ -176,20 +191,7 @@ class Poster extends LoadVideo {
   }
 
   getNew () {
-    const {
-      props: {data}
-    } = this;
-
-    let dateFrom = data.get('dateFrom');
-
-    if (!dateFrom) {
-      return '';
-    }
-    let dateNow = Date.now();
-    let compare = dateNow - new Date(dateFrom).getTime();
-    const type = this.getType();
-    let nbDay = config.movies.isNew[type] || 10;
-    if (compare <= (nbDay * 24 * 3600 * 1000)) {
+    if (this.state.isNew) {
       return (<div className="thumb-new__item"></div>);
     }
   }

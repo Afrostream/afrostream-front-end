@@ -21,70 +21,6 @@ class CategorySlider extends MoviesSlider {
 
   constructor (props) {
     super(props)
-    this.state = {
-      percent: 0,
-      loading: 0,
-      interval: null
-    }
-
-    this.boundSimulateProgress = ::this.simulateProgress
-  }
-
-  componentDidMount () {
-    this.launch()
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.categoryId > this.props.categoryId) {
-      this.launch()
-    }
-  }
-
-  launch () {
-    let interval = this.state.interval
-    const percent = this.state.percent
-
-    if (!interval) {
-      interval = setInterval(this.boundSimulateProgress, UPDATE_TIME)
-    }
-
-    this.setState({percent, interval})
-  }
-
-  simulateProgress () {
-    const {
-      props: {
-        categoryId,
-        Category
-      }
-    } = this
-
-    const category = Category.get(`categorys/${categoryId}`)
-
-    let interval = this.state.interval
-    let percent = this.state.percent
-
-    if (category) {
-      clearInterval(interval)
-      interval = null
-      percent = 0
-    } else if (percent < MAX_PROGRESS) {
-      percent = percent + PROGRESS_INCREASE
-    }
-
-    this.setState({percent, interval})
-  }
-
-  shouldShow (percent) {
-    return (percent > 0) && (percent <= 100)
-  }
-
-  buildStyle () {
-    const style = {
-      width: `${this.state.percent}%`
-    }
-
-    return {...style, ...this.props.style}
   }
 
   renderItem (index) {
@@ -123,22 +59,17 @@ class CategorySlider extends MoviesSlider {
       'spots': false
     }
 
-    const style = this.buildStyle()
-    const loaderClass = {
-      'movies-data-list_loader': true
-    }
-
-
     let dataList
     const category = Category.get(`categorys/${categoryId}`)
 
-    loaderClass.loader_hidden = category
     if (category) {
       dataList = category.get('mergeSpotsWithMovies')
-      loaderClass.loader_hidden = dataList
 
       //check if list has one spot
       dataList.map((item)=> {
+        if (item instanceof Immutable.Map) {
+          return
+        }
         const findSpot = item.find((movie)=> {
           return movie.get('adSpot')
         })
@@ -151,7 +82,6 @@ class CategorySlider extends MoviesSlider {
 
     return (
       <div className={classSet(listClass)}>
-        <div style={style} className={classSet(loaderClass)}></div>
         {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
         {label ? <div className="movies-list__selection">{label}</div> : ''}
         {category && dataList ?

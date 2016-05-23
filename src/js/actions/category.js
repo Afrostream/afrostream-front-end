@@ -57,10 +57,7 @@ export function getCategory (categoryId) {
       console.log('Category already present in data store', categoryId)
       return {
         type: ActionTypes.Category.getCategory,
-        categoryId,
-        res: {
-          body: readyCat.toJS()
-        }
+        categoryId
       }
     }
 
