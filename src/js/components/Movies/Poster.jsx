@@ -33,33 +33,11 @@ class Poster extends LoadVideo {
       props: {data}
     } = this;
 
-    let dateFrom = data.get('dateFrom');
 
-    let dateNow = Date.now();
-    let compare = dateNow - new Date(dateFrom).getTime();
-    const type = this.getType();
-    let nbDay = config.movies.isNew[type] || 10;
-    let isNew = compare <= (nbDay * 24 * 3600 * 1000)
-    if (isNew !== this.state.isNew) {
-      this.setState({
-        isNew: isNew
-      })
-    }
-
-    if (!shallowEqual(nextProps.data, this.props.data)) {
-      if (nextProps.data) {
-        this.setState({
-          status: nextProps.data ? Status.LOADING : Status.PENDING
-        });
-      }
+    if (!shallowEqual(nextProps.data, data)) {
+      this.createLoader();
     }
   }
-
-  //componentDidUpdate () {
-  //  if (this.state.status === Status.LOADING && !this.img) {
-  //    this.createLoader();
-  //  }
-  //}
 
   componentWillUnmount () {
     this.destroyLoader();
@@ -99,6 +77,20 @@ class Poster extends LoadVideo {
 
     if (!data) {
       return;
+    }
+
+    let dateFrom = data.get('dateFrom');
+    if (dateFrom) {
+      let dateNow = Date.now();
+      let compare = dateNow - new Date(dateFrom).getTime();
+      const type = this.getType();
+      let nbDay = config.movies.isNew[type] || 10;
+      let isNew = compare <= (nbDay * 24 * 3600 * 1000)
+      if (isNew !== this.state.isNew) {
+        this.setState({
+          isNew: isNew
+        })
+      }
     }
 
     let type = this.getType();

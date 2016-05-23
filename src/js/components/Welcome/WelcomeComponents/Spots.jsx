@@ -19,7 +19,7 @@ if (process.env.BROWSER) {
 class Spots extends React.Component {
 
   getMovies (data) {
-    return <Thumb favorite={false}
+    return <Thumb favorite={false} share={false}
                   key={`spot-home-${data.get('_id')}`} {...{data}}/>
   }
 
