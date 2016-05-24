@@ -7,7 +7,6 @@ import { match } from 'react-router';
 import { Provider } from 'react-redux';
 import createStore from './lib/createStore';
 import request from 'superagent';
-//import superAgentMock from '../../config/mock/superagent-mock';
 import qs from 'qs';
 import createAPI from './lib/createAPI';
 import { apiClient, heroku } from '../../config';
@@ -16,7 +15,6 @@ import moment from 'moment';
 //Set locale date //TODO une fois le site multilingue formater au pays courant
 moment.locale('fr');
 
-//superAgentMock(request);
 if (canUseDOM) {
   require('bootstrap');
   require('jquery.payment');

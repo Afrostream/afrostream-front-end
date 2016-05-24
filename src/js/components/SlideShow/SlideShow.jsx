@@ -191,8 +191,8 @@ class SlideShow extends React.Component {
 
     return (
       <div className="slide-show" ref="slC">
-        {slides && slides.size ? <SlidesContainer page={page} {...{slides}}/> : <Spinner />}
-        {slides && slides.size ? <Pagination page={page} {...{slides}}/> : ''}
+        {slides && slides.size ? <SlidesContainer page={page} {...{slides}}/> : null}
+        {slides && slides.size ? <Pagination page={page} {...{slides}}/> : null}
       </div>
     );
   }

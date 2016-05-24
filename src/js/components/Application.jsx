@@ -7,6 +7,7 @@ import AlertMessage from './Alert/AlertMessage'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
 import { metasData, analytics } from '../decorators'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./Application.less')
@@ -16,11 +17,6 @@ if (process.env.BROWSER) {
 @analytics()
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
-
-  static contextTypes = {
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired
-  }
 
   componentDidMount () {
     require('chardin.js')
@@ -53,4 +49,9 @@ class Application extends React.Component {
   }
 }
 
-export default Application
+Application.propTypes = {
+  location: React.PropTypes.object,
+  history: React.PropTypes.object
+}
+
+export default withRouter(Application)

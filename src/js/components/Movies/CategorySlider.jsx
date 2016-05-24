@@ -9,10 +9,6 @@ import ReactList from 'react-list'
 import MoviesSlider from './MoviesSlider'
 import classSet from 'classnames'
 
-export const UPDATE_TIME = 400
-export const MAX_PROGRESS = 90
-export const PROGRESS_INCREASE = 10
-
 @prepareRoute(async function ({store, categoryId}) {
   store.dispatch(CategoryActionCreators.getCategory(categoryId))
 })
@@ -103,18 +99,11 @@ class CategorySlider extends MoviesSlider {
 }
 
 CategorySlider.propTypes = {
-  categoryId: React.PropTypes.number,
-  style: PropTypes.object,
-  className: PropTypes.string,
-  actions: PropTypes.object,
-  loading: PropTypes.number
+  categoryId: React.PropTypes.number
 }
 
 CategorySlider.defaultProps = {
-  categoryId: null,
-  style: {},
-  className: undefined,
-  loading: 0
+  categoryId: null
 }
 
 export default CategorySlider

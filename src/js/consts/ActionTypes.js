@@ -99,5 +99,9 @@ export default {
   Search: keyMirror({
     fetchMovies: null,
     fetching: null
+  }),
+
+  Static: keyMirror({
+    getStatic: null
   })
 };

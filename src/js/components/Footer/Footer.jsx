@@ -6,14 +6,14 @@ import { dict } from '../../../../config'
 import _ from 'lodash'
 
 if (process.env.BROWSER) {
-  require('./Footer.less');
+  require('./Footer.less')
 }
 
 class Footer extends React.Component {
 
   constructor (props) {
-    super(props);
-    this.year = new Date().getFullYear();
+    super(props)
+    this.year = new Date().getFullYear()
   }
 
   render () {
@@ -26,15 +26,17 @@ class Footer extends React.Component {
       }
     } = this
 
-    let labels = dict(params.lang).footer
-    let switchLang = params.lang === 'en' ? 'fr' : 'us';
-    let switchLangRoute = params.lang === 'en' ? 'fr' : 'en';
+    let {lang} = params
+
+    let labels = dict(lang).footer
+    let switchLang = lang === 'en' ? 'fr' : 'us'
+    let switchLangRoute = lang === 'en' ? 'fr' : 'en'
     let hasPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player'))
 
     let footerClasses = {
       'footer': true,
       'footer-hidden': hasPlayer
-    };
+    }
 
     return (
       <footer className={classSet(footerClasses)}>
@@ -58,9 +60,9 @@ class Footer extends React.Component {
                 </Link>
               </li>
               <li>
-                <a className="footer-link" href="/policy">
+                <Link className="footer-link" to="/policy">
                   {labels.support.policy}
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="footer-link" href={`/${switchLangRoute}`}>
@@ -149,7 +151,7 @@ class Footer extends React.Component {
         <div className="legal-statements">
           <div className="links row">
             <div className="get-help col-md-6">
-              Copyright &copy; Afrostream Inc. {this.year}
+              Copyright &copy Afrostream Inc. {this.year}
             </div>
             <div className="get-help col-md-6">
               <Link to="/legals"> {labels.legals}</Link>
@@ -157,12 +159,12 @@ class Footer extends React.Component {
           </div>
         </div>
       </footer>
-    );
+    )
   }
 }
 
 Footer.propTypes = {
   history: React.PropTypes.object
-};
+}
 
 export default withRouter(Footer)

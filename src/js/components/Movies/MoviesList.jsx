@@ -22,7 +22,7 @@ class MoviesList extends React.Component {
     } = this
 
     //LIST
-    const categories = Category.get(`meaList`)
+    const categories = Category.get(`menu`)
 
     //ITEM
     let categorie = categories.get(index)
@@ -44,7 +44,7 @@ class MoviesList extends React.Component {
       }
     } = this
 
-    const categories = Category.get(`meaList`)
+    const categories = Category.get(`menu`)
     if (!categories) {
       return <div />
     }
@@ -58,6 +58,7 @@ class MoviesList extends React.Component {
           itemRenderer={::this.renderList}
           length={categories.size}
           type={'simple'}
+          pageSize={4}
         />
       </div>
     )
