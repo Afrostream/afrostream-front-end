@@ -42,8 +42,21 @@ class AccountPage extends React.Component {
         <div className="account-details__header col-md-4">{dict().account.user.header}</div>
         <div className="account-details__container col-md-8">
           <div className="row">
+            <div className="col-md-8">
+              <input type="email">{user.get('email')}</input>
+            </div>
+            <div className="col-md-4">
+              <Link className="btn btn-default" to="/email">{dict().account.user.updateEmail}</Link>
+            </div>
+          </div>
+          <div className="row">
             <div className="col-md-6">
-              <span>{user.get('email')}</span>
+              <span>{user.get('name')}</span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 float-right">
+              <Link className="btn btn-default" to="/reset">{dict().account.user.updateProfil}</Link>
             </div>
           </div>
           <div className="row">

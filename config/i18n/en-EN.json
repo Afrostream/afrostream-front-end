@@ -204,7 +204,9 @@
     "user": {
       "header": "MES INFORMATIONS PERSONNELLES",
       "password": "Mot de passe",
-      "updatePassword": "Modifier le mot de passe"
+      "updatePassword": "Modifier mon mot de passe",
+      "updateEmail": "Modifier mon email",
+      "updateProfil": "Modifier mon profil"
     },
     "plan": {
       "header": "DÉTAIL DU FORFAIT",
