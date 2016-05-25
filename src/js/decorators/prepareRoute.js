@@ -28,10 +28,11 @@ export default function prepareRoute (prepareFn) {
 
       componentWillReceiveProps (nextProps) {
         let {
-          context: {store}
+          context: {store},
+          props:{route, params}
         } = this
 
-        if (!shallowEqual(nextProps, this.props)) {
+        if (!shallowEqual(nextProps.route, route), !shallowEqual(nextProps.params, params)) {
           let lang = nextProps.routes && nextProps.routes.length > 3 && nextProps.routes[3].path
           let nextParams = nextProps.params || {}
           nextParams.lang = lang

@@ -32,6 +32,7 @@ async function getToken (tokenData) {
 
   return await new Promise((resolve, reject) => {
     request('POST', url)
+    //.timeout(1000)
       .send(body)
       .end((err, res) => {
 

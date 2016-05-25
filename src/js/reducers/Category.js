@@ -84,7 +84,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Category.getCategory](state, {categoryId, res}) {
+  [ActionTypes.Category.getCategory](state, {categoryId, status, res}) {
     if (!res) {
       return state
     }
