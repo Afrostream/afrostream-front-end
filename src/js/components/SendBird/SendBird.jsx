@@ -401,8 +401,8 @@ class SendBird extends React.Component {
           <div className="chat_header">
             <span id="chat_head">{this.state.currentChannel ? this.state.currentChannel.name : 'Live Chat'}</span>
             <SendBirdButton tipClass="zmdi zmdi-close" tipClassToggle="zmdi-close" tooltip="Quitter le chat"
-                            sendBirdPosition="left"
-                            sendBirdIntro="Fermez le chat"/>
+                            sendBirdPosition="left" label="Quitter le chat"
+                            sendBirdIntro="Fermer le chat"/>
             <div className={classSet(loaderClasses)}/>
             <div className={classSet(optionsClasses)} onClick={::this.toggleOptions}>
               <i className="zmdi zmdi-more-vert"/>
