@@ -77,7 +77,7 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        Movie, Season, Episode, params, routes
+        Movie, Season, Episode, params
       }
     } = this
     let {movieId, seasonId, episodeId, lang} = params

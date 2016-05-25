@@ -19,7 +19,7 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, params: {movieId, episodeId}}) {
   await * [
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(CategoryActionCreators.getMeaList())
+    store.dispatch(CategoryActionCreators.getMenu())
   ];
 
   if (movieId && movieId !== 'undefined') {
@@ -34,34 +34,9 @@ if (process.env.BROWSER) {
 })
 class WelcomePage extends React.Component {
 
-  state = {
-    spinner: this.props.spinner
-  }
-
-  componentDidMount () {
-    this.setState({
-      spinner: this.props.spinner
-    })
-  }
-
-  componentDidUpdate (params) {
-    if (params.spinner !== this.props.spinner) {
-      this.setState({
-        spinner: this.props.spinner
-      })
-    }
-  }
-
-  componentWillReceiveProps () {
-    this.setState({
-      spinner: this.props.spinner
-    })
-  }
-
   render () {
     return (
       <div className="welcome-page">
-        {this.state.spinner ? <Spinner /> : ''}
         <WelcomeHeader {...this.props}/>
         <Devices {...this.props}/>
         <Spots {...this.props}/>
@@ -73,12 +48,7 @@ class WelcomePage extends React.Component {
 
 WelcomePage.propTypes = {
   history: React.PropTypes.object.isRequired,
-  location: React.PropTypes.object.isRequired,
-  spinner: React.PropTypes.bool
-}
-
-WelcomePage.defaultProps = {
-  spinner: false
+  location: React.PropTypes.object.isRequired
 }
 
 export default withRouter(WelcomePage)

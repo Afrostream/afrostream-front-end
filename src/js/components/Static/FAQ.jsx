@@ -1,5 +1,5 @@
 import React from 'react';
-import {prepareRoute} from '../../decorators';
+import { prepareRoute } from '../../decorators';
 import * as EventActionCreators from '../../actions/event';
 @prepareRoute(async function ({store}) {
   return await * [
@@ -7,7 +7,7 @@ import * as EventActionCreators from '../../actions/event';
   ];
 })
 class FAQ extends React.Component {
-  render() {
+  render () {
     return (
       <div className="row-fluid">
         <article>
@@ -20,39 +20,39 @@ class FAQ extends React.Component {
               Pour nous aider à accélérer les choses envoyer un tweet votre opérateur internet en cliquant sur
               les
               liens suivants:
-              <ul>
-                <li>
-                  <a
-                    href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@free je veux @AFROSTREAM dans ma @freebox. Quand est ce que cela sera possible ?"
-                    target="_blank">
-                    Demander Afrostream chez Free</a>
-                </li>
-                <li>
-                  <a
-                    href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@orange je veux @AFROSTREAM dans ma Livebox. Quand est ce que cela sera possible ?"
-                    target="_blank">
-                    Demander Afrostream chez Orange</a>
-                </li>
-                <li>
-                  <a
-                    href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@sfr je veux @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
-                    target="_blank">
-                    Demander Afrostream chez SFR</a>
-                </li>
-                <li>
-                  <a
-                    href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@Numericable je veux avoir @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
-                    target="_blank">
-                    Demander Afrostream chez Numéricable</a>
-                </li>
-                <li>
-                  <a
-                    href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@Bouygues je veux @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
-                    target="_blank">
-                    Demander Afrostream chez Bouygues</a>
-                </li>
-              </ul>
             </p>
+            <ul>
+              <li>
+                <a
+                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@free je veux @AFROSTREAM dans ma @freebox. Quand est ce que cela sera possible ?"
+                  target="_blank">
+                  Demander Afrostream chez Free</a>
+              </li>
+              <li>
+                <a
+                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@orange je veux @AFROSTREAM dans ma Livebox. Quand est ce que cela sera possible ?"
+                  target="_blank">
+                  Demander Afrostream chez Orange</a>
+              </li>
+              <li>
+                <a
+                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@sfr je veux @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
+                  target="_blank">
+                  Demander Afrostream chez SFR</a>
+              </li>
+              <li>
+                <a
+                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@Numericable je veux avoir @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
+                  target="_blank">
+                  Demander Afrostream chez Numéricable</a>
+              </li>
+              <li>
+                <a
+                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@Bouygues je veux @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
+                  target="_blank">
+                  Demander Afrostream chez Bouygues</a>
+              </li>
+            </ul>
 
             <h4>2/ Quand serais- je prélevé ?</h4>
 

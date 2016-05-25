@@ -8,7 +8,6 @@ This project is written with ES7 and uses `Babel` to transpile to ES5.
 ```
 npm install
 ```
-
 ##Run Dev
 ```
 npm run dev
@@ -16,14 +15,6 @@ npm run dev
 ##Run Staging
 ```
 npm run staging
-```
-##Run Dev mock
-```
-npm run dev mock
-```
-##Run Prod
-```
-NODE_ENV=production PORT=8080 npm run build npm run express
 ```
 
 ##Deploy

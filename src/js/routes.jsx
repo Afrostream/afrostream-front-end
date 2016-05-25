@@ -65,10 +65,10 @@ const buildHome = function (lang) {
 const buildRoutes = function (lang) {
 
   let subRoutes = [
-    <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.Legals}/>,
-    <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.CGU}/>,
     <Route key={`${lang}-faq`} name="faq" path="faq" component={Static.FAQ}/>,
-    <Route key={`${lang}-policy`} name="policy" path="policy" component={Static.Policy}/>,
+    <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.StaticRoute}/>,
+    <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.StaticRoute}/>,
+    <Route key={`${lang}-policy`} name="policy" path="policy" component={Static.StaticRoute}/>,
     <Route key={`${lang}-reset`} name="reset" path="reset" component={ResetPasswordPage}/>,
     <Route key={`${lang}-signin`} name="signin" path="signin" component={LoginPage}/>,
     <Route key={`${lang}-signup`} name="signup" path="signup" component={LoginPage}/>,

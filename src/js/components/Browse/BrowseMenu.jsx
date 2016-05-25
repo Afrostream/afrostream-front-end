@@ -31,20 +31,17 @@ class BrowseMenu extends React.Component {
       }
     } = this
 
-    const categories = Category.get('meaList')
+    const categories = Category.get('menu')
     if (!categories) {
       return
     }
 
     const jsCat = categories.toJS()
-    const filteredCat = _.filter(jsCat, (cat) => {
-      return true//cat.menu === true
-    })
     const splitSize = 5
     const colSize = Math.floor(9 / (jsCat.length / splitSize))
 
-    return _.chunk(filteredCat, splitSize).map((splitedCategorie, key) => <li key={`menu-${key}`}
-                                                                              className={`mega-menu-column col-md-${colSize} col-xs-6`}>
+    return _.chunk(jsCat, splitSize).map((splitedCategorie, key) => <li key={`menu-${key}`}
+                                                                        className={`mega-menu-column col-md-${colSize} col-xs-6`}>
       <ul>
         {_.map(splitedCategorie, (categorie)=>
           <li

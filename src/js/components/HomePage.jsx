@@ -42,9 +42,7 @@ class HomePage extends React.Component {
 
   render () {
     const {props: {User, children}} = this
-    const pending = User.get('pending')
     const user = User.get('user')
-    let isPending = Boolean(pending)
     if (user) {
       if (children) {
         return children
@@ -53,7 +51,7 @@ class HomePage extends React.Component {
         return (<BrowsePage key="browse-page"/>)
       }
     } else {
-      return (<WelcomePage spinner={isPending} {...this.props} key="welcome-page"/>)
+      return (<WelcomePage {...this.props} key="welcome-page"/>)
     }
   }
 }

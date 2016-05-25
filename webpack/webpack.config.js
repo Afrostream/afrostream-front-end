@@ -27,6 +27,7 @@ if (process.env.LOAD_STAGING) {
   delete herokuConfig.env.NODE_ENV;
   process.env = merge(process.env, herokuConfig.env);
 }
+console.log('node env :', process.env.NODE_ENV)
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles

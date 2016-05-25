@@ -50,7 +50,7 @@ export function getSpots (categoryId) {
 }
 
 export function getCategory (categoryId) {
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
 
     let readyCat = getState().Category.get(`categorys/${categoryId}`)
     if (readyCat) {
@@ -60,6 +60,11 @@ export function getCategory (categoryId) {
         categoryId
       }
     }
+
+    actionDispatcher({
+      type: ActionTypes.Category.getCategory,
+      categoryId
+    });
 
     const defaultCategory = getState().Category.get('categoryId')
     categoryId = categoryId || defaultCategory
