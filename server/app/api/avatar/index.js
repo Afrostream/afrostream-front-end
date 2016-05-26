@@ -1,8 +1,10 @@
-import express from 'express'
-import controller from './avatar.controller.js'
+'use strict';
 
-const router = express.Router()
+import express from 'express';
+import controller from './avatar.controller.js';
 
-router.get('/:email', controller.getAvatar)
+const router = express.Router();
 
-module.exports = router
+router.get('/:email', controller.getAvatar);
+
+module.exports = router;

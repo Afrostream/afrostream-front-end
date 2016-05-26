@@ -31,6 +31,6 @@
         "allowTemplateLiterals": true
       }
     ],
-    "strict": 2
+    "strict": 0
   }
 }
