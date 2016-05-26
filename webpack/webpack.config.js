@@ -73,56 +73,72 @@ const webpackConfig = {
       },
       {
         test: /\.json$/,
-        include: [path.join(__dirname, '../node_modules/markdown-it'), path.join(__dirname, '../config')],
+        include: [
+          path.join(__dirname, '../node_modules/markdown-it'),
+          path.join(__dirname, '../node_modules/sendbird'),
+          path.join(__dirname, '../config')
+        ],
         loaders: ['json']
       },
       {
         test: /\.css$/,
         loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
-      },
+      }
+      ,
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
-      },
+      }
+      ,
       {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
-      },
+      }
+      ,
       {
         test: /.(woff|woff2)([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
-      },
+      }
+      ,
       {
         test: /.ttf([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
-      },
+      }
+      ,
       {
         test: /.eot([\?]?.*)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]'
-      },
+      }
+      ,
       {
         test: /vtt\.js$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000',
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
-      },
+      }
+      ,
       {
         test: /video\.js$/,
         loader: 'expose?videojs',
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
-      },
+      }
+      ,
       {
         test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
-      },
+      }
+      ,
       {
         test: /chardin\.js$/, loader: 'expose?chardinJs'
-      },
+      }
+      ,
       {
         test: /jquery\.js$/, loader: 'expose?$'
-      },
+      }
+      ,
       {
         test: /jquery\.js$/, loader: 'expose?jQuery'
-      },
+      }
+      ,
       {
         test: /jquery\.js$/, loader: 'expose?jquery'
       }
@@ -133,8 +149,12 @@ const webpackConfig = {
     net: 'empty',
     tls: 'empty',
     dns: 'empty'
-  },
-  externals: {'window': 'Window'},
+  }
+  ,
+  externals: {
+    'window': 'Window'
+  }
+  ,
   plugins: [
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({

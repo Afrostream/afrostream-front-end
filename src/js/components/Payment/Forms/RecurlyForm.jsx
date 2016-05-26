@@ -3,7 +3,7 @@ import ReactDOM from'react-dom'
 import CountrySelect from './../CountrySelect'
 import classSet from 'classnames'
 import config from '../../../../../config'
-import getI18n from '../../../../../config/i18n'
+import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class RecurlyForm extends React.Component {
