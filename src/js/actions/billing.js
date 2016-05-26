@@ -1,11 +1,11 @@
-import ActionTypes from '../consts/ActionTypes';
+import ActionTypes from '../consts/ActionTypes'
 /**
  * Get subscriptions list for user
  * @returns {Function}
  */
 export function getSubscriptions () {
   return (dispatch, getState) => {
-    const user = getState().User.get('user');
+    const user = getState().User.get('user')
     if (!user) {
       return {
         type: ActionTypes.Billing.getSubscriptions,
@@ -16,9 +16,9 @@ export function getSubscriptions () {
       return {
         type: ActionTypes.Billing.getSubscriptions,
         res: await api(`/api/subscriptions/status`)
-      };
-    };
-  };
+      }
+    }
+  }
 }
 
 /**
@@ -32,18 +32,18 @@ export function subscribe (data, isGift = false) {
       type: ActionTypes.Billing.subscribe,
       res: await api(`/api/billings/${isGift ? 'gifts' : 'subscriptions'}`, 'POST', data),
       isGift
-    });
-  };
+    })
+  }
 }
 
 export function cancelSubscription (subscription) {
   return (dispatch, getState) => {
-    let uuid = subscription.get('subscriptionBillingUuid');
+    let uuid = subscription.get('subscriptionBillingUuid')
     return async api => ({
       type: ActionTypes.Billing.cancelSubscription,
       res: await api(`/api/billings/subscriptions/${uuid}/cancel`, 'PUT', {})
-    });
-  };
+    })
+  }
 }
 
 /**
@@ -57,8 +57,8 @@ export function validate (data) {
     return async api => ({
       type: ActionTypes.Billing.validate,
       res: await api(`/api/billings/coupons`, 'GET', data)
-    });
-  };
+    })
+  }
 }
 /**
  * create new coupon
@@ -75,8 +75,8 @@ export function create (data) {
     return async api => ({
       type: ActionTypes.Billing.create,
       res: await api(`/api/billings/coupons`, 'POST', data)
-    });
-  };
+    })
+  }
 }
 
 /**
@@ -90,8 +90,8 @@ export function getCouponCampaigns (providerName) {
       res: await api(`/api/billings/couponscampaigns`, 'GET', {
         billingProvider: providerName
       })
-    });
-  };
+    })
+  }
 }
 
 /**
@@ -101,17 +101,17 @@ export function getCouponCampaigns (providerName) {
 export function getInternalplans (contextBillingUuid = 'common') {
 
   return (dispatch, getState) => {
-    let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`);
+    let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
 
     if (readyPlans) {
-      console.log('plans already present in data store');
+      console.log('plans already present in data store')
       return {
         type: ActionTypes.Billing.getInternalplans,
         contextBillingUuid,
         res: {
           body: readyPlans.toJS()
         }
-      };
+      }
     }
 
     return async api => ({
@@ -120,6 +120,6 @@ export function getInternalplans (contextBillingUuid = 'common') {
       res: await api(`/api/billings/internalplans`, 'GET', {
         contextBillingUuid: contextBillingUuid
       })
-    });
+    })
   }
 }

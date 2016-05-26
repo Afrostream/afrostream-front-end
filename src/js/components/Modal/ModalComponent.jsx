@@ -1,38 +1,38 @@
-import React from 'react';
-import * as ModalActionCreators from '../../actions/modal';
-import classNames from 'classnames';
+import React from 'react'
+import * as ModalActionCreators from '../../actions/modal'
+import classNames from 'classnames'
 
 class ModalComponent extends React.Component {
 
   static contextTypes = {
     location: React.PropTypes.object,
     history: React.PropTypes.object
-  };
-
-  componentWillUnmount() {
-    this.closeModal();
   }
 
-  closeModal() {
+  componentWillUnmount () {
+    this.closeModal()
+  }
+
+  closeModal () {
     if (this.props.dispatch) {
-      this.props.dispatch(ModalActionCreators.close());
+      this.props.dispatch(ModalActionCreators.close())
     }
   }
 
-  handleClose(e) {
-    e.stopPropagation();
-    e.preventDefault();
+  handleClose (e) {
+    e.stopPropagation()
+    e.preventDefault()
     this.closeModal()
   }
 
 
-  render() {
+  render () {
 
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
       'hide': this.props.closable
-    });
+    })
 
     return (
       <div className="lock-container">
@@ -57,7 +57,7 @@ class ModalComponent extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -65,11 +65,11 @@ ModalComponent.propTypes = {
   dispatch: React.PropTypes.func,
   closable: React.PropTypes.bool,
   modal: React.PropTypes.bool
-};
+}
 
 ModalComponent.defaultProps = {
   closable: true,
   modal: true
-};
+}
 
-export default ModalComponent;
+export default ModalComponent

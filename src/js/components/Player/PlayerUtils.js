@@ -1,91 +1,91 @@
 /**
  * Sequelize initialization module
  */
-import MobileDetect from 'mobile-detect';
+import MobileDetect from 'mobile-detect'
 
 export function detectUA () {
-  const userAgent = (navigator && navigator.userAgent.toLowerCase()) || '';
+  const userAgent = (navigator && navigator.userAgent.toLowerCase()) || ''
   const detect = function (pattern) {
     return function () {
-      return (pattern).test(userAgent);
-    };
-  };
+      return (pattern).test(userAgent)
+    }
+  }
 
   return {
     getMobile: function () {
-      return new MobileDetect(userAgent);
+      return new MobileDetect(userAgent)
     },
     getBrowser: function () {
-      var data = {};
-      var browser = '';
-      var version = '';
-      var os = '';
-      var osVersion = '';
-      var parseUserAgent, prepareData, renameOsx, cutSafariVersion;
+      var data = {}
+      var browser = ''
+      var version = ''
+      var os = ''
+      var osVersion = ''
+      var parseUserAgent, prepareData, renameOsx, cutSafariVersion
 
       parseUserAgent = function () {
         var browserParts = /(ie|firefox|chrome|safari|opera)(?:.*version)?(?:[ \/])?([\w.]+)/.exec(userAgent),
-          osParts = /(mac|win|linux|freebsd|mobile|iphone|ipod|ipad|android|blackberry|j2me|webtv)/.exec(userAgent);
+          osParts = /(mac|win|linux|freebsd|mobile|iphone|ipod|ipad|android|blackberry|j2me|webtv)/.exec(userAgent)
 
         if (!!userAgent.match(/trident\/7\./)) {
-          browser = 'ie';
-          version = 11;
+          browser = 'ie'
+          version = 11
         } else if (browserParts && browserParts.length > 2) {
-          browser = browserParts[1];
-          version = browserParts[2];
+          browser = browserParts[1]
+          version = browserParts[2]
         }
 
         if (osParts && osParts.length > 1) {
-          os = osParts[1];
+          os = osParts[1]
         }
 
-        osVersion = navigator.oscpu || navigator.appName;
-      };
+        osVersion = navigator.oscpu || navigator.appName
+      }
 
       prepareData = function () {
-        data.browser = browser;
-        data.version = parseInt(version, 10) || '';
-        data.os = os;
-        data.osVersion = osVersion;
-      };
+        data.browser = browser
+        data.version = parseInt(version, 10) || ''
+        data.os = os
+        data.osVersion = osVersion
+      }
 
       renameOsx = function () {
         if (os === 'mac') {
-          os = 'osx';
+          os = 'osx'
         }
-      };
+      }
 
       cutSafariVersion = function () {
         if (os === 'safari') {
-          version = version.substring(0, 1);
+          version = version.substring(0, 1)
         }
-      };
+      }
 
-      parseUserAgent();
+      parseUserAgent()
 
       // exception rules
-      renameOsx();
-      cutSafariVersion();
+      renameOsx()
+      cutSafariVersion()
 
-      prepareData();
+      prepareData()
 
-      return data;
+      return data
     },
     isChrome: function () {
       return detect(/webkit\W.*(chrome|chromium)\W/i)() && !detect(/Edge/)()
     },
     isFirefox: detect(/mozilla.*\Wfirefox\W/i),
     isIE: function () {
-      return /(MSIE|Trident\/|Edge\/)/i.test(userAgent);
+      return /(MSIE|Trident\/|Edge\/)/i.test(userAgent)
     },
     isEdge: function () {
-      return /(Edge\/)/i.test(userAgent);
+      return /(Edge\/)/i.test(userAgent)
     },
     isSafari: function () {
-      return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/iPad|iPhone|iPod|CriOS/.test(navigator.platform);
+      return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/iPad|iPhone|iPod|CriOS/.test(navigator.platform)
     },
     isWindows: function () {
-      return navigator.appVersion.indexOf('Win') != -1;
+      return navigator.appVersion.indexOf('Win') != -1
     }
-  };
-};
+  }
+}

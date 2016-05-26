@@ -48,7 +48,30 @@ const webpackConfig = {
     // Set up an ES6-ish environment
     polyfill: 'babel-polyfill',
     main: './src/js/main',
-    vendor: './src/js/vendor'
+    vendor: [
+      'react',
+      'react-dom',
+      'react-router',
+      'redux',
+      'fbjs',
+      'history',
+      'lodash',
+      'classnames',
+      'raven-js',
+      'superagent',
+      'jquery',
+      'jquery.payment',
+      'bootstrap',
+      'raven-js',
+      'mobile-detect',
+      'qs',
+      'videojs-vtt.js/dist/vtt.js',
+      'afrostream-player/node_modules/dashjs/dist/dash.all.debug.js',
+      'afrostream-player/libs/video.js',
+      'afrostream-player/dist/afrostream-player.js',
+      'sendbird',
+      'chardin.js'
+    ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],

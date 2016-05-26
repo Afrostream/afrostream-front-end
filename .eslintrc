@@ -17,8 +17,13 @@
     "no-shadow": 0,
     "no-underscore-dangle": 0,
     "no-console": 0,
+    "no-extra-semi": 0,
+    "semi": [
+      1,
+      "never"
+    ],
     "quotes": [
-      2,
+      1,
       "single",
       {
         "avoidEscape": true,

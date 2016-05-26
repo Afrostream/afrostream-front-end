@@ -1,60 +1,60 @@
-import ActionTypes from '../consts/ActionTypes';
-import * as OAuthActionCreators from './oauth';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import { push, isActive } from 'redux-router';
-import _ from 'lodash';
+import ActionTypes from '../consts/ActionTypes'
+import * as OAuthActionCreators from './oauth'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import { push, isActive } from 'redux-router'
+import _ from 'lodash'
 
 const mergeProfile = function (data, getState, actionDispatcher) {
 
-  const token = getState().OAuth.get('token');
-  const coupon = getState().Billing.get('coupon');
-  let donePath = getState().Modal.get('donePath');
+  const token = getState().OAuth.get('token')
+  const coupon = getState().Billing.get('coupon')
+  let donePath = getState().Modal.get('donePath')
 
   if (!token) {
-    return data;
+    return data
   }
 
   return async api => {
-    actionDispatcher(pendingUser(true));
+    actionDispatcher(pendingUser(true))
     try {
-      const userInfos = await api(`/api/users/me`, 'GET', {});
-      const userMerged = userInfos.body || {};
-      userMerged.user_id = userMerged._id || userMerged.user_id;
+      const userInfos = await api(`/api/users/me`, 'GET', {})
+      const userMerged = userInfos.body || {}
+      userMerged.user_id = userMerged._id || userMerged.user_id
 
       if (userMerged) {
-        let planCode = userMerged.planCode;
-        let subscriptionsStatus = userMerged.subscriptionsStatus;
-        let status = subscriptionsStatus.status;
+        let planCode = userMerged.planCode
+        let subscriptionsStatus = userMerged.subscriptionsStatus
+        let status = subscriptionsStatus.status
         if ((!planCode && !coupon.get('coupon'))) {
-          donePath = donePath || `/select-plan`;
+          donePath = donePath || `/select-plan`
           if (status && status !== 'active') {
-            donePath = `${donePath}/none/${status}`;
+            donePath = `${donePath}/none/${status}`
           }
-          actionDispatcher(push(donePath));
+          actionDispatcher(push(donePath))
         }
       }
 
       if (userMerged.facebook) {
-        userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`;
+        userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`
       } else {
-        userMerged.picture = `/avatar/${userMerged.email}`;
+        userMerged.picture = `/avatar/${userMerged.email}`
       }
 
       if (donePath) {
-        actionDispatcher(push(donePath));
+        actionDispatcher(push(donePath))
       }
 
       return _.merge(data, {
         user: userMerged
-      });
+      })
 
     } catch (e) {
-      console.log(e, 'remove user data');
-      actionDispatcher(OAuthActionCreators.logOut());
-      return data;
+      console.log(e, 'remove user data')
+      actionDispatcher(OAuthActionCreators.logOut())
+      return data
     }
   }
-};
+}
 
 /**
  * Get history movies/episodes for user
@@ -62,9 +62,9 @@ const mergeProfile = function (data, getState, actionDispatcher) {
  */
 export function getHistory () {
   return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const token = getState().OAuth.get('token');
-    const refreshToken = getState().OAuth.get('refreshToken');
+    const user = getState().User.get('user')
+    const token = getState().OAuth.get('token')
+    const refreshToken = getState().OAuth.get('refreshToken')
     if (!user) {
       return {
         type: ActionTypes.User.getHistory,
@@ -75,8 +75,8 @@ export function getHistory () {
     return async api => ({
       type: ActionTypes.User.getHistory,
       res: await api(`/api/users/${user.get('_id')}/history`, 'GET', {}, token, refreshToken)
-    });
-  };
+    })
+  }
 }
 /**
  * Get favorites movies/episodes for user
@@ -85,9 +85,9 @@ export function getHistory () {
  */
 export function getFavorites (type = 'movies') {
   return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const capitType = _.capitalize(type);
-    const returnTypeAction = ActionTypes.User[`getFavorites${capitType}`];
+    const user = getState().User.get('user')
+    const capitType = _.capitalize(type)
+    const returnTypeAction = ActionTypes.User[`getFavorites${capitType}`]
     if (!user) {
       return {
         type: returnTypeAction,
@@ -95,29 +95,29 @@ export function getFavorites (type = 'movies') {
       }
     }
 
-    let readyFavorites = getState().User.get(`favorites/${type}`);
+    let readyFavorites = getState().User.get(`favorites/${type}`)
     if (readyFavorites) {
-      console.log(`favorites ${type} already present in data store`);
+      console.log(`favorites ${type} already present in data store`)
       return {
         type: returnTypeAction,
         res: {
           body: readyFavorites.toJS()
         }
-      };
+      }
     }
 
     return async api => ({
       type: returnTypeAction,
       res: await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'GET', {})
-    });
-  };
+    })
+  }
 }
 
 export function setFavorites (type, active, id) {
   return (dispatch, getState) => {
-    const user = getState().User.get('user');
-    const capitType = _.capitalize(type);
-    const returnTypeAction = ActionTypes.User[`setFavorites${capitType}`];
+    const user = getState().User.get('user')
+    const capitType = _.capitalize(type)
+    const returnTypeAction = ActionTypes.User[`setFavorites${capitType}`]
     if (!user) {
       return {
         type: returnTypeAction,
@@ -126,31 +126,31 @@ export function setFavorites (type, active, id) {
       }
     }
     return async api => {
-      let list = getState().User.get(`favorites/${type}`);
-      let dataFav;
+      let list = getState().User.get(`favorites/${type}`)
+      let dataFav
       if (active) {
-        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'POST', {_id: id});
+        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'POST', {_id: id})
       } else {
-        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}/${id}`, 'DELETE', {});
+        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}/${id}`, 'DELETE', {})
       }
 
       let index = await list.findIndex((obj)=> {
-        return obj.get('_id') == id;
-      });
+        return obj.get('_id') == id
+      })
 
-      let newList;
+      let newList
       if (index > -1) {
-        newList = list.delete(index);
+        newList = list.delete(index)
       } else {
-        newList = list.push(dataFav.body);
+        newList = list.push(dataFav.body)
       }
 
       return {
         type: returnTypeAction,
         res: newList.toJS()
-      };
-    };
-  };
+      }
+    }
+  }
 }
 
 export function pendingUser (pending) {
@@ -158,7 +158,7 @@ export function pendingUser (pending) {
     type: ActionTypes.User.pendingUser,
     pending
   }
-};
+}
 /**
  * Get profile from afrostream
  * @returns {Function}
@@ -166,14 +166,14 @@ export function pendingUser (pending) {
 export function getProfile () {
   return (dispatch, getState, actionDispatcher) => {
     return async () => {
-      await actionDispatcher(OAuthActionCreators.getIdToken());
-      const user = getState().User.get('user');
+      await actionDispatcher(OAuthActionCreators.getIdToken())
+      const user = getState().User.get('user')
       return async () => {
         return mergeProfile({
           type: ActionTypes.User.getProfile,
           user: null
-        }, getState, actionDispatcher);
+        }, getState, actionDispatcher)
       }
-    };
-  };
+    }
+  }
 }
