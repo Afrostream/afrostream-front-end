@@ -1,14 +1,14 @@
 import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import SB from 'sendbird'
-import { sendBird } from '../../../../config'
+import config from '../../../../config'
 import classSet from 'classnames'
 import _ from 'lodash'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import * as EventActionCreators from '../../actions/event'
 import { withRouter } from 'react-router'
 import SendBirdButton from './SendBirdButton'
-
+const {sendBird} = config
 
 const sendBirdClient = SB.getInstance()
 

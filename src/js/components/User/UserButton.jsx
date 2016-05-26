@@ -8,8 +8,7 @@ import { Link } from 'react-router'
 import SearchInput from './../Search/SearchBox'
 import FavoritesButton from './../Favorites/FavoritesButton'
 import BrowseButton from './../Browse/BrowseButton'
-import { dict } from '../../../../config'
-
+import { getI18n } from '../../../../config/i18n'
 if (process.env.BROWSER) {
   require('./UserButton.less')
 }
@@ -129,12 +128,12 @@ class UserButton extends React.Component {
       <div className="nav navbar-nav navbar-right">
         <li className="pull-right hidden-xs">
           <button role="button" className="btn-xs btn-signup pull-right" {...inputSignupAction}>
-            <span>{dict(params.lang).signup.title}</span>
+            <span>{getI18n(params.lang).signup.title}</span>
           </button>
         </li>
         <li className="pull-right">
           <button role="button" className="btn-xs btn-signin pull-right"  {...inputSigninAction}>
-            <span>{dict(params.lang).signin.title}</span>
+            <span>{getI18n(params.lang).signin.title}</span>
           </button>
         </li>
       </div>)

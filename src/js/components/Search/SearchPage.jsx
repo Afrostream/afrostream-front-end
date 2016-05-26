@@ -1,7 +1,8 @@
 import React, { PropTypes }  from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
-import { search, dict } from '../../../../config'
+import config from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
 import { Link } from 'react-router'
 import _ from 'lodash'
 import * as SearchActionCreators from '../../actions/search'
@@ -11,6 +12,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import MoviesSlider from '../Movies/MoviesSlider'
 import { withRouter } from 'react-router'
+
+const {search} = config
 
 if (process.env.BROWSER) {
   require('./SearchPage.less')
@@ -57,7 +60,7 @@ class SearchPage extends React.Component {
 
   renderMovies (movies, fetching) {
     if (!movies || !movies.size) {
-      return fetching ? '' : dict().search['noData']
+      return fetching ? '' : getI18n().search['noData']
     }
 
     return <MoviesSlider key={`search-movie`} dataList={movies} axis="y"/>

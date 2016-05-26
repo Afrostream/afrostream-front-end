@@ -1,19 +1,19 @@
-import React, { PropTypes } from 'react';
-import * as BillingActionCreators from '../../actions/billing';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { dict } from '../../../../config';
-import moment from 'moment';
-import PaymentImages from '../Payment/PaymentImages';
+import React, { PropTypes } from 'react'
+import * as BillingActionCreators from '../../actions/billing'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import { getI18n } from '../../../../config/i18n'
+import moment from 'moment'
+import PaymentImages from '../Payment/PaymentImages'
 
 if (process.env.BROWSER) {
-  require('./CancelSubscription.less');
+  require('./CancelSubscription.less')
 }
 
 @connect(({Billing}) => ({Billing}))
 class CancelSubscription extends React.Component {
   constructor (props, context) {
-    super(props, context);
+    super(props, context)
     this.state = {
       pending: false
     }
@@ -21,7 +21,7 @@ class CancelSubscription extends React.Component {
 
   static contextTypes = {
     history: PropTypes.object.isRequired
-  };
+  }
 
   cancelSubscription (subscription) {
 
@@ -29,25 +29,25 @@ class CancelSubscription extends React.Component {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
     if (!subscription) {
-      return;
+      return
     }
 
     this.setState({
       pending: true
-    });
+    })
 
     dispatch(BillingActionCreators.cancelSubscription(subscription))
       .then(()=> {
-        dispatch(BillingActionCreators.getSubscriptions());
+        dispatch(BillingActionCreators.getSubscriptions())
       })
       .catch((err)=> {
         this.setState({
           pending: false
-        });
-      });
+        })
+      })
   }
 
   render () {
@@ -55,33 +55,33 @@ class CancelSubscription extends React.Component {
       props: {
         Billing
       }
-    } = this;
+    } = this
 
-    const subscriptionsList = Billing.get('subscriptions');
+    const subscriptionsList = Billing.get('subscriptions')
 
     if (!subscriptionsList) {
       return (
         <div />
-      );
+      )
     }
 
     let currentSubscription = subscriptionsList.find((obj)=> {
-      return obj.get('isActive') === 'yes';// && obj.get('subStatus') !== 'canceled'
-    });
+      return obj.get('isActive') === 'yes'// && obj.get('subStatus') !== 'canceled'
+    })
 
-    let activeSubscription = currentSubscription && currentSubscription.get('subStatus') !== 'canceled';
-    let dictData = dict().account.cancel[activeSubscription ? 'active' : 'canceled'];
+    let activeSubscription = currentSubscription && currentSubscription.get('subStatus') !== 'canceled'
+    let getI18nData = getI18n().account.cancel[activeSubscription ? 'active' : 'canceled']
 
-    let header = dictData.header;
-    let endDate;
+    let header = getI18nData.header
+    let endDate
     if (currentSubscription) {
-      endDate = moment(currentSubscription.get('subPeriodEndsDate')).format('LLL');
+      endDate = moment(currentSubscription.get('subPeriodEndsDate')).format('LLL')
     }
-    let infos = dictData.info.replace(/{endDate}/gm, endDate);
+    let infos = getI18nData.info.replace(/{endDate}/gm, endDate)
 
     const inputAttributes = {
       onClick: event => ::this.cancelSubscription(currentSubscription)
-    };
+    }
 
     return (
       <div className="account-credit-card">
@@ -100,19 +100,19 @@ class CancelSubscription extends React.Component {
             <div className="col-md-12">
               <button className="btn btn-default btn-danger button-cancel__subscription" {...inputAttributes}
                       disabled={this.state.pending}>
-                {dict().account.cancel.submitBtn}
+                {getI18n().account.cancel.submitBtn}
               </button>
               <Link className="btn btn-default btn-success btn-return__account"
-                    to="/">{dict().account.cancel.cancelBtn}</Link>
+                    to="/">{getI18n().account.cancel.cancelBtn}</Link>
             </div>
           </div>
-          : ''}
+          : null}
 
         <PaymentImages catIds={[18,17]}/>
 
       </div>
-    );
+    )
   }
 }
 
-export default CancelSubscription;
+export default CancelSubscription

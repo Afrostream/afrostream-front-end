@@ -2,44 +2,44 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import { dict } from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
 import * as EventActionCreators from '../../actions/event'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
 
 if (process.env.BROWSER) {
-  require('./CashwayEndPage.less');
+  require('./CashwayEndPage.less')
 }
 
 @prepareRoute(async function ({store}) {
-  return await * [
+  return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(BillingActionCreators.getSubscriptions())
-  ];
+  ])
 })
 @connect(({User, Billing}) => ({User, Billing}))
 class CashwayEndPage extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   static contextTypes = {
     location: PropTypes.object.isRequired
-  };
+  }
 
 
   showPlan (e) {
-    e.stopPropagation();
-    e.preventDefault();
+    e.stopPropagation()
+    e.preventDefault()
 
     const {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
-    dispatch(ModalActionCreators.open('cashway', true));
+    dispatch(ModalActionCreators.open('cashway', true))
   }
 
   render () {
@@ -48,23 +48,23 @@ class CashwayEndPage extends React.Component {
       props: {
         Billing
       }
-    } = this;
+    } = this
 
-    const subscriptionsList = Billing.get('subscriptions');
+    const subscriptionsList = Billing.get('subscriptions')
 
     if (!subscriptionsList) {
-      return <div />;
+      return <div />
     }
 
     const cashwaySubscription = subscriptionsList.find((subscription) => {
-      return subscription.get('provider').get('providerName') === 'cashway' && subscription.get('subStatus') === 'future';
-    });
+      return subscription.get('provider').get('providerName') === 'cashway' && subscription.get('subStatus') === 'future'
+    })
 
     if (!cashwaySubscription) {
-      return <div />;
+      return <div />
     }
 
-    const subOpts = cashwaySubscription.get('subOpts');
+    const subOpts = cashwaySubscription.get('subOpts')
 
     return (
       <div className="cashway-end-page">
@@ -76,9 +76,9 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-1.jpg" alt="code_bare_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{dict().payment.cashway.recupCode}
+                    <div className="container_title">{getI18n().payment.cashway.recupCode}
                       <a target="_blank" href={subOpts.get('couponCodeUrl')}>
-                        {dict().payment.cashway.recupCodeAction}</a></div>
+                        {getI18n().payment.cashway.recupCodeAction}</a></div>
                   </div>
                 </div>
 
@@ -88,8 +88,8 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-4.jpg" alt="money_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{dict().payment.cashway.rdv}(<a href="#"
-                                                                                   onClick={::this.showPlan}>{dict().payment.cashway.showMap}</a>)
+                    <div className="container_title">{getI18n().payment.cashway.rdv}(<a href="#"
+                                                                                   onClick={::this.showPlan}>{getI18n().payment.cashway.showMap}</a>)
                     </div>
                   </div>
                 </div>
@@ -100,7 +100,7 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-2.jpg" alt="validate_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{dict().payment.cashway.partner}
+                    <div className="container_title">{getI18n().payment.cashway.partner}
                     </div>
                   </div>
                 </div>
@@ -110,7 +110,7 @@ class CashwayEndPage extends React.Component {
           </section>
         </div>
       </div>
-    );
+    )
   }
 }
 export default CashwayEndPage

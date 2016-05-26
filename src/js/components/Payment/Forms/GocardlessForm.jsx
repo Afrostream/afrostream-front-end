@@ -1,11 +1,14 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import classSet from 'classnames'
-import { gocardless, dict } from '../../../../../config/client'
+import config from '../../../../../config'
+import { getI18n } from '../../../../../config/i18n'
 import CountrySelect from './../CountrySelect'
 import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat'
 import iban from './iban-validator'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
+const {gocardless} = config
 
 class GocardlessForm extends React.Component {
 
@@ -142,7 +145,7 @@ class GocardlessForm extends React.Component {
           <ModalGocardlessMandat ref="modal" {...this.props} data={this.state.modalData}/> : ''}
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{dict().payment.virement.label}</label>
+            <label className="form-label">{getI18n().payment.virement.label}</label>
             <img src="/images/payment/virement.jpg"/>
           </div>
         </div>

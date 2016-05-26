@@ -1,18 +1,18 @@
-import ActionTypes from '../consts/ActionTypes';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import config from '../../../config/client';
+import ActionTypes from '../consts/ActionTypes'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import config from '../../../config'
 
-export function createIntercom() {
+export function createIntercom () {
   return (dispatch, getState) => {
     if (!document) {
       return {
         type: ActionTypes.Intercom.createIntercom,
         intercom: null
-      };
+      }
     }
-    let ic = getState().Intercom.get('intercom');
+    let ic = getState().Intercom.get('intercom')
     if (ic) {
-      ic('show');
+      ic('show')
       return {
         type: ActionTypes.Intercom.createIntercom,
         intercom: ic
@@ -24,72 +24,72 @@ export function createIntercom() {
 
           window.intercomSettings = {
             app_id: config.intercom.appID
-          };
+          }
 
-          var script = document.createElement('script');
-          script.type = 'text/javascript';
-          script.async = true;
-          script.src = config.intercom.url + config.intercom.appID;
+          var script = document.createElement('script')
+          script.type = 'text/javascript'
+          script.async = true
+          script.src = config.intercom.url + config.intercom.appID
           // Attach the script tag to the document head
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(script, s);
+          var s = document.getElementsByTagName('script')[0]
+          s.parentNode.insertBefore(script, s)
 
           script.onload = function () {
-            var w = window;
-            var ic = w.Intercom;
+            var w = window
+            var ic = w.Intercom
             if (typeof ic === 'function') {
-              console.log(config.intercom.appID);
-              ic('reattach_activator');
+              console.log(config.intercom.appID)
+              ic('reattach_activator')
               ic('update', {
                 app_id: config.intercom.appID
-              });
+              })
             }
 
             return resolve({
               type: ActionTypes.Intercom.createIntercom,
               intercom: ic
-            });
-          };
+            })
+          }
           script.onerror = function (event) {
             return reject({
               type: ActionTypes.Intercom.createIntercom,
               intercom: {}
-            });
-          };
+            })
+          }
           // (old) MSIE browsers may call 'onreadystatechange' instead of 'onload'
           script.onreadystatechange = function () {
             if (this.readyState == 'loaded') {
               // wait for other events, then call onload if default onload hadn't been called
               window.setTimeout(function () {
-                if (loadedScripts[scriptURL] !== true) script.onload();
-              }, 0);
+                if (loadedScripts[scriptURL] !== true) script.onload()
+              }, 0)
             }
-          };
+          }
         }
       )
-    );
+    )
   }
 }
-export function removeIntercom() {
+export function removeIntercom () {
   return (dispatch, getState) => {
     if (!document) {
       return {
         type: ActionTypes.Intercom.removeIntercom,
         intercom: null
-      };
+      }
     }
 
 
-    var w = window;
-    var ic = w.Intercom;
+    var w = window
+    var ic = w.Intercom
     if (ic) {
-      ic('shutdown');
-      ic('hide');
+      ic('shutdown')
+      ic('hide')
     }
 
     return {
       type: ActionTypes.Intercom.removeIntercom,
       intercom: ic
-    };
-  };
+    }
+  }
 }

@@ -1,23 +1,23 @@
-import React from 'react';
-import { prepareRoute } from '../../decorators';
-import { connect } from 'react-redux';
-import * as MovieActionCreators from '../../actions/movie';
-import MoviesSlider from '../Movies/MoviesSlider';
-import Spinner from '../Spinner/Spinner';
+import React from 'react'
+import { prepareRoute } from '../../decorators'
+import { connect } from 'react-redux'
+import * as MovieActionCreators from '../../actions/movie'
+import MoviesSlider from '../Movies/MoviesSlider'
+import Spinner from '../Spinner/Spinner'
 
 if (process.env.BROWSER) {
-  require('./BrowseLastPage.less');
+  require('./BrowseLastPage.less')
 }
 @prepareRoute(async function ({store}) {
-  return await * [
+  return await Promise.all( [
     store.dispatch(MovieActionCreators.getLast())
-  ];
+  ])
 })
 @connect(({Movie}) => ({Movie}))
 class BrowseLastPage extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   renderList () {
@@ -25,21 +25,21 @@ class BrowseLastPage extends React.Component {
       props: {
         Movie
       }
-    } = this;
+    } = this
 
-    const dataList = Movie.get(`movies/last`);
+    const dataList = Movie.get(`movies/last`)
 
     if (!dataList) {
-      return (<Spinner />);
+      return (<Spinner />)
     }
 
-    const label = 'Derniers ajouts';
+    const label = 'Derniers ajouts'
 
     return (<div className="browse-categorie_list">
 
       <MoviesSlider axis="y"
                     key={`last-movies`} {...this.props} {...{dataList, label}} />
-    </div>);
+    </div>)
   }
 
   render () {
@@ -47,8 +47,8 @@ class BrowseLastPage extends React.Component {
       <div className="row-fluid browse-last_page">
         {this.renderList()}
       </div>
-    );
+    )
   }
 }
 
-export default BrowseLastPage;
+export default BrowseLastPage

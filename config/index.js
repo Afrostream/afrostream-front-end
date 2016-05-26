@@ -1,6 +1,5 @@
-'use strict';
-import _ from 'lodash';
-import client from './client';
+import _ from 'lodash'
+import client from './client'
 
 const config = _.merge(
   {
@@ -76,6 +75,6 @@ const config = _.merge(
       host: 'localhost',
       port: 8082
     }
-  }, client);
+  }, client)
 
-export default config;
+export default config

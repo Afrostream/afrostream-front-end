@@ -8,10 +8,12 @@ import * as ModalActionCreator from '../../actions/modal'
 import * as UserActionCreators from '../../actions/user'
 import * as IntercomActionCreators from '../../actions/intercom'
 import ModalComponent from './ModalComponent'
-import { oauth2, dict } from '../../../../config'
+import config from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
 import MobileDetect from 'mobile-detect'
 import _ from 'lodash'
 import { withRouter } from 'react-router'
+const {oauth2}= config
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less')
@@ -266,7 +268,7 @@ class ModalLogin extends ModalComponent {
     } = this
 
     let keyType = this.getI18n()
-    return dict(params.lang)[keyType][key] || ''
+    return getI18n(params.lang)[keyType][key] || ''
   }
 
   getForm () {

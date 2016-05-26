@@ -1,7 +1,7 @@
 import ActionTypes from '../consts/ActionTypes'
-import { reco } from '../../../config'
+import config from '../../../config'
 import _ from 'lodash'
-
+const {reco} = config
 /**
  * Get user video params
  * @returns {Function}

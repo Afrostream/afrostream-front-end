@@ -5,9 +5,12 @@ import { Link } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
 import ModalComponent from './ModalComponent'
-import { dict, oauth2 } from '../../../../config'
+import config from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
 import MobileDetect from 'mobile-detect'
 import { withRouter } from 'react-router'
+
+const {oauth2} = config
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less')
@@ -99,7 +102,7 @@ class ModalCoupon extends ModalComponent {
       }
     } = this
 
-    return dict(params.lang).coupon[key] || ''
+    return getI18n(params.lang).coupon[key] || ''
   }
 
   getForm () {

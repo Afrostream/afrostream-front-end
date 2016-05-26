@@ -1,6 +1,6 @@
 import React from 'react'
 import SignUpButton from '../../User/SignUpButton'
-import { dict } from '../../../../../config'
+import { getI18n } from '../../../../../config/i18n'
 import _ from 'lodash'
 
 if (process.env.BROWSER) {
@@ -18,7 +18,7 @@ class Devices extends React.Component {
       }
     } = this
 
-    let info = dict(params.lang).home.devices;
+    let info = getI18n(params.lang).home.devices;
 
     return (
       <section className="devices">

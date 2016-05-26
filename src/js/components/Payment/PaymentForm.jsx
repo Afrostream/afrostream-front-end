@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import classSet from 'classnames'
-import { dict, gocarlessApi, recurlyApi } from '../../../../config/client'
+import config from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
 import * as BillingActionCreators from '../../actions/billing'
 import * as UserActionCreators from '../../actions/user'
 import * as EventActionCreators from '../../actions/event'
@@ -18,17 +19,18 @@ import Query from 'dom-helpers/query'
 import DomClass from 'dom-helpers/class'
 import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
-
 import _ from 'lodash'
+
+const {gocarlessApi, recurlyApi} = config
 if (process.env.BROWSER) {
   require('./PaymentForm.less')
 }
 
 @connect(({User, Billing}) => ({User, Billing}))
 @prepareRoute(async function ({store}) {
-  return await * [
+  return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true))
-  ]
+  ])
 })
 class PaymentForm extends React.Component {
 
@@ -41,7 +43,7 @@ class PaymentForm extends React.Component {
     subscriptionStatus: 0,
     loading: false,
     isGift: false,
-    pageHeader: dict().payment.header
+    pageHeader: getI18n().payment.header
   }
 
   hasPlan () {
@@ -90,12 +92,12 @@ class PaymentForm extends React.Component {
   }
 
   componentDidUpdate () {
-    this.attachTooltip();
+    this.attachTooltip()
   }
 
   attachTooltip () {
     if (this.refs.droitstip) {
-      $(this.refs.droitstip).tooltip();
+      $(this.refs.droitstip).tooltip()
     }
   }
 
@@ -133,7 +135,7 @@ class PaymentForm extends React.Component {
 
     return (<div className="row">
       <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="first_name">{dict().payment.name}</label>
+        <label className="form-label" htmlFor="first_name">{getI18n().payment.name}</label>
         <input
           type="text"
           className="form-control first-name"
@@ -142,11 +144,11 @@ class PaymentForm extends React.Component {
           id="first_name"
           name="first-name"
           defaultValue={firstName}
-          placeholder={dict().payment.name} required
+          placeholder={getI18n().payment.name} required
           disabled={this.state.disabledForm}/>
       </div>
       <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="last_name">{dict().payment.lastName}</label>
+        <label className="form-label" htmlFor="last_name">{getI18n().payment.lastName}</label>
         <input
           type="text"
           className="form-control last-name"
@@ -155,7 +157,7 @@ class PaymentForm extends React.Component {
           id="last_name"
           name="last-name"
           defaultValue={lastName}
-          placeholder={dict().payment.lastName} required
+          placeholder={getI18n().payment.lastName} required
           disabled={this.state.disabledForm}/>
       </div>
     </div>)
@@ -177,7 +179,7 @@ class PaymentForm extends React.Component {
           form="subscription-create"
           className="button-create-subscription"
           disabled={this.state.disabledForm}
-        >{dict().planCodes.action}
+        >{getI18n().planCodes.action}
         </button>
       </div>
     </div>)
@@ -203,10 +205,10 @@ class PaymentForm extends React.Component {
           disabled={this.state.disabledForm}
           required
         />
-        <div className="checkbox-label">{dict().payment.droits.label} <a href="/pdfs/formulaire-retractation.pdf"
-                                                                         target="_blank">{dict().payment.droits.link}</a>
+        <div className="checkbox-label">{getI18n().payment.droits.label} <a href="/pdfs/formulaire-retractation.pdf"
+                                                                            target="_blank">{getI18n().payment.droits.link}</a>
           <a ref="droitstip" className="my-tool-tip"
-             data-original-title={dict().payment.droits.tooltip}
+             data-original-title={getI18n().payment.droits.tooltip}
              data-placement="top"
              data-toggle="tooltip"><i className="fa fa-question-circle"/></a>
         </div>
@@ -235,8 +237,8 @@ class PaymentForm extends React.Component {
           required
         />
 
-        <div className="checkbox-label">{dict().payment.cgu.label} <a href="/pdfs/conditions-utilisation.pdf"
-                                                                      target="_blank">{dict().payment.cgu.link}</a>
+        <div className="checkbox-label">{getI18n().payment.cgu.label} <a href="/pdfs/conditions-utilisation.pdf"
+                                                                         target="_blank">{getI18n().payment.cgu.link}</a>
         </div>
       </div>
     </div>)
@@ -262,7 +264,7 @@ class PaymentForm extends React.Component {
 
     if (!this.refs.cgu.checked || !this.refs.droits.checked) {
       return this.error({
-        message: dict().payment.errors.checkbox,
+        message: getI18n().payment.errors.checkbox,
         fields: ['cgu', 'droits']
       })
     }
@@ -291,7 +293,6 @@ class PaymentForm extends React.Component {
     const {
       props: {
         dispatch,
-        history,
         router,
         params: {planCode}
       }
@@ -308,7 +309,7 @@ class PaymentForm extends React.Component {
       .then(()=> {
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch((err) => {
-        let message = dict().payment.errors.global
+        let message = getI18n().payment.errors.global
 
         if (err.response && err.response.body) {
           message = err.response.body.error
@@ -328,7 +329,7 @@ class PaymentForm extends React.Component {
     this.disableForm(false)
     this.setState({
       error: {
-        message: formatError.message || dict().payment.errors.fields,
+        message: formatError.message || getI18n().payment.errors.fields,
         fields: formatError.fields || []
       }
     })
@@ -374,7 +375,7 @@ class PaymentForm extends React.Component {
       return <div />
     }
 
-    const planLabel = `${dict().planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
+    const planLabel = `${getI18n().planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
 
     return (
       <div className="payment-wrapper">
@@ -413,10 +414,10 @@ class PaymentForm extends React.Component {
 
     if (!this.state.hasLib) {
       return (<PaymentError
-        title={dict().payment.errors.noLib.title}
-        message={dict().payment.errors.noLib.message}
-        link={dict().payment.errors.noLib.message}
-        linkMessage={dict().payment.errors.noLib.linkMessage}
+        title={getI18n().payment.errors.noLib.title}
+        message={getI18n().payment.errors.noLib.message}
+        link={getI18n().payment.errors.noLib.message}
+        linkMessage={getI18n().payment.errors.noLib.linkMessage}
       />)
     }
 
@@ -427,22 +428,22 @@ class PaymentForm extends React.Component {
       case 'expired':
         return (
           <div className="payment-wrapper">
-            <PaymentError title={dict().payment.expired.title}
-                          message={dict().payment.expired.message}
-                          link={dict().payment.expired.link}
-                          linkMessage={dict().payment.expired.linkMessage}
-                          links={dict().payment.expired.links}
+            <PaymentError title={getI18n().payment.expired.title}
+                          message={getI18n().payment.expired.message}
+                          link={getI18n().payment.expired.link}
+                          linkMessage={getI18n().payment.expired.linkMessage}
+                          links={getI18n().payment.expired.links}
             />
           </div>)
         break
       case 'future':
         return (
           <div className="payment-wrapper">
-            <PaymentError title={dict().payment.future.title}
-                          message={dict().payment.future.message}
-                          link={dict().payment.future.link}
-                          linkMessage={dict().payment.future.linkMessage}
-                          links={dict().payment.future.links}
+            <PaymentError title={getI18n().payment.future.title}
+                          message={getI18n().payment.future.message}
+                          link={getI18n().payment.future.link}
+                          linkMessage={getI18n().payment.future.linkMessage}
+                          links={getI18n().payment.future.links}
             />
             <CashwayEndPage />
           </div>)
@@ -450,7 +451,10 @@ class PaymentForm extends React.Component {
       case 'error':
         return (
           <div className="payment-wrapper">
-            <PaymentError message={this.state.message}/>
+            <PaymentError
+              title={getI18n().payment.errors.abo}
+              linkMessage={getI18n().payment.errors.retry}
+              message={this.state.message}/>
           </div>)
         break
       default:

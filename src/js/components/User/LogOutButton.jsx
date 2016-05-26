@@ -1,31 +1,30 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import * as UserActionCreators from '../../actions/user';
-import config from '../../../../config';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import * as UserActionCreators from '../../actions/user'
 
 if (process.env.BROWSER) {
-  require('./LogOutButton.less');
+  require('./LogOutButton.less')
 }
 
-@connect(({ User }) => ({User}))
+@connect(({User}) => ({User}))
 class LogOutButton extends React.Component {
 
-  logOut() {
+  logOut () {
     const {
       props: {
         dispatch
-        }
-      } = this;
+      }
+    } = this
 
-    dispatch(UserActionCreators.logOut());
+    dispatch(UserActionCreators.logOut())
   }
 
-  render() {
+  render () {
     return (<button
       className="logout-button"
       onClick={::this.logOut}>se déconnecter
-    </button>);
+    </button>)
   }
 }
 
-export default LogOutButton;
+export default LogOutButton

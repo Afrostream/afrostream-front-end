@@ -1,9 +1,8 @@
-import webpack from 'webpack';
-import CompressionPlugin from 'compression-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import webpackConfig from './webpack.config.js';
-import merge from 'lodash/object/merge';
-import config from '../config';
+import webpack from 'webpack'
+import CompressionPlugin from 'compression-webpack-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import webpackConfig from './webpack.config'
+import merge from 'lodash/object/merge'
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
@@ -59,8 +58,8 @@ const prodConfig = merge({}, webpackConfig, {
       minRatio: 0.8
     })
   )
-});
+})
 
-delete prodConfig.module.preLoaders;
+delete prodConfig.module.preLoaders
 
-export default prodConfig;
+export default prodConfig

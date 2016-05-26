@@ -1,14 +1,17 @@
-import React from 'react';
-import ModalComponent from './ModalComponent';
-import classNames from 'classnames';
-import { social, bitly, metadata, dict } from '../../../../config';
-import _ from 'lodash';
-import { detectUA } from '../Player/PlayerUtils';
-import { shorten } from '../../lib/bitly';
-import qs from 'qs';
+import React from 'react'
+import ModalComponent from './ModalComponent'
+import classNames from 'classnames'
+import config from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
+import _ from 'lodash'
+import { detectUA } from '../Player/PlayerUtils'
+import { shorten } from '../../lib/bitly'
+import qs from 'qs'
+
+const {social, bitly, metadata} = config
 
 if (process.env.BROWSER) {
-  require('./ModalSocial.less');
+  require('./ModalSocial.less')
 }
 
 class ModalSocial extends ModalComponent {
@@ -18,50 +21,50 @@ class ModalSocial extends ModalComponent {
       props: {
         data
       }
-    } = this;
+    } = this
 
     //add share tracking
     let shareParams = qs.stringify({
       utm: 'share'
-    });
+    })
 
-    let title = this.getMeta('og:title');
-    let description = this.getMeta('og:description') || '';
-    let url = `${this.getMeta('og:url')}?${shareParams}`;
-    let popupOpener;
-    let updatedParams;
+    let title = this.getMeta('og:title')
+    let description = this.getMeta('og:description') || ''
+    let url = `${this.getMeta('og:url')}?${shareParams}`
+    let popupOpener
+    let updatedParams
     if (data) {
       if (data.get('title')) {
-        title = data.get('title');
+        title = data.get('title')
       }
       if (data.get('description')) {
-        description = data.get('description');
+        description = data.get('description')
       }
       if (data.get('link')) {
-        url = `${metadata.domain}${data.get('link')}?${shareParams}`;
+        url = `${metadata.domain}${data.get('link')}?${shareParams}`
       }
     }
 
-    let self = this;
+    let self = this
     shorten({longUrl: url}).then((shortenData)=> {
-      url = shortenData.data.url;
-      updatedParams = self.cloneParams(network, url, title, description);
-      self.updateHref(network, updatedParams, popupOpener);
+      url = shortenData.data.url
+      updatedParams = self.cloneParams(network, url, title, description)
+      self.updateHref(network, updatedParams, popupOpener)
     }).catch((err)=> {
-      console.log('bitly shorten error ', err);
-      updatedParams = self.cloneParams(network, url, title, description);
-      self.updateHref(network, updatedParams, popupOpener);
-    });
+      console.log('bitly shorten error ', err)
+      updatedParams = self.cloneParams(network, url, title, description)
+      self.updateHref(network, updatedParams, popupOpener)
+    })
 
-    return popupOpener = this.updateHref();
+    return popupOpener = this.updateHref()
   }
 
   cloneParams (network, url, title, description) {
-    let params = _.cloneDeep(network.params);
+    let params = _.cloneDeep(network.params)
     let updatedParams = _.mapValues(params, (value)=> {
-      return value.replace(/{title}/gm, title).replace(/{description}/gm, description).replace(/{url}/gm, url);
-    });
-    return updatedParams;
+      return value.replace(/{title}/gm, title).replace(/{description}/gm, description).replace(/{url}/gm, url)
+    })
+    return updatedParams
   }
 
   /**
@@ -73,8 +76,8 @@ class ModalSocial extends ModalComponent {
    * @param {Boolean}
    */
   isEncoded (str) {
-    str = this.toRFC3986(str);
-    return decodeURIComponent(str) !== str;
+    str = this.toRFC3986(str)
+    return decodeURIComponent(str) !== str
   }
 
   /**
@@ -87,9 +90,9 @@ class ModalSocial extends ModalComponent {
    */
   encode (str) {
     if (typeof str === 'undefined' || str === null || this.isEncoded(str))
-      return encodeURIComponent(str);
+      return encodeURIComponent(str)
     else
-      return this.toRFC3986(str);
+      return this.toRFC3986(str)
   }
 
   /**
@@ -100,11 +103,11 @@ class ModalSocial extends ModalComponent {
    * @return {String}
    */
   toRFC3986 (val) {
-    let tmp = encodeURIComponent(val);
+    let tmp = encodeURIComponent(val)
     tmp.replace(/[!'()*]/g, function (c) {
-      return ` % ${c.charCodeAt(0).toString(16)}`;
-    });
-  };
+      return ` % ${c.charCodeAt(0).toString(16)}`
+    })
+  }
 
 
   /**
@@ -119,17 +122,17 @@ class ModalSocial extends ModalComponent {
    */
   getUrl (url, encode = false, params = {}) {
     let qs = (() => {
-      let results = [];
+      let results = []
       for (let k of Object.keys(params)) {
-        let v = params[k];
-        results.push(`${k}=${this.encode(v)}`);
+        let v = params[k]
+        results.push(`${k}=${this.encode(v)}`)
       }
-      return results.join('&');
-    })();
+      return results.join('&')
+    })()
 
-    if (qs) qs = `?${qs}`;
+    if (qs) qs = `?${qs}`
 
-    return url + qs;
+    return url + qs
   }
 
   /**
@@ -143,20 +146,20 @@ class ModalSocial extends ModalComponent {
    * @param {Object} params
    */
   updateHref (data = null, params = null, popupOpener = null) {
-    let shareUrl = '';
+    let shareUrl = ''
     if (popupOpener) {
-      let encode = data.url.indexOf('mailto:') >= 0;
-      shareUrl = this.getUrl(data.url, !encode, params);
-      return popupOpener.location = shareUrl;
+      let encode = data.url.indexOf('mailto:') >= 0
+      shareUrl = this.getUrl(data.url, !encode, params)
+      return popupOpener.location = shareUrl
     }
 
     let popup = {
       width: 500,
       height: 350
-    };
+    }
 
-    popup.top = (screen.height / 2) - (popup.height / 2);
-    popup.left = (screen.width / 2) - (popup.width / 2);
+    popup.top = (screen.height / 2) - (popup.height / 2)
+    popup.left = (screen.width / 2) - (popup.width / 2)
     return window.open(
       shareUrl,
       'targetWindow', `
@@ -170,49 +173,49 @@ class ModalSocial extends ModalComponent {
         top =${popup.top},
         width =${popup.width},
         height = ${popup.height}`
-    );
+    )
   }
 
   getMeta (key) {
-    let metas = document.getElementsByTagName('meta');
+    let metas = document.getElementsByTagName('meta')
 
     let foundedMeta = _.find(metas, (meta)=> {
-      return (key == meta.name || key == meta.getAttribute('property')) && meta.content;
-    });
+      return (key == meta.name || key == meta.getAttribute('property')) && meta.content
+    })
 
-    return foundedMeta && foundedMeta.content;
+    return foundedMeta && foundedMeta.content
   }
 
   getShareButtons () {
     return _.map(social.networks, (network) => {
 
-      const ua = detectUA();
+      const ua = detectUA()
 
       if (!network.enabled) {
-        return '';
+        return ''
       }
 
       if (!ua.getMobile().is('iPhone') && network.mobile) {
-        return '';
+        return ''
       }
       const inputAttributes = {
         onClick: event => ::this.sharePopup(network)
-      };
+      }
 
       let shareButtonClass = {
         'btn': true,
         'fa': true,
         'share_button': true
-      };
+      }
 
-      shareButtonClass[network.icon] = true;
+      shareButtonClass[network.icon] = true
 
       return (<div className={classNames(shareButtonClass)} type="button" data-toggle="tooltip"
                    data-placement="top"
                    title={network.title}
                    key={`share - btn - ${network.icon}`} {...inputAttributes}>
       </div>)
-    });
+    })
   }
 
   render () {
@@ -221,7 +224,7 @@ class ModalSocial extends ModalComponent {
       'close': true,
       'icon-budicon-3': true,
       'hide': !this.props.closable
-    });
+    })
 
     return (
       <div className="lock-container">
@@ -234,7 +237,7 @@ class ModalSocial extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{dict().social.title}</h1>
+                      <h1>{getI18n().social.title}</h1>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
@@ -249,16 +252,16 @@ class ModalSocial extends ModalComponent {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 ModalSocial.propTypes = {
   data: React.PropTypes.object
-};
+}
 
 ModalSocial.defaultProps = {
   data: null
-};
+}
 
-export default ModalSocial;
+export default ModalSocial

@@ -1,51 +1,51 @@
-import React from 'react';
-import Immutable from 'immutable';
-import { connect } from 'react-redux';
-import { prepareRoute } from '../../decorators';
-import * as CategoryActionCreators from '../../actions/category';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import config from '../../../../config';
-import Poster from '../Movies/Poster';
-import _ from 'lodash';
+import React from 'react'
+import Immutable from 'immutable'
+import { connect } from 'react-redux'
+import { prepareRoute } from '../../decorators'
+import * as CategoryActionCreators from '../../actions/category'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import config from '../../../../config'
+import Poster from '../Movies/Poster'
+import _ from 'lodash'
 
 if (process.env.BROWSER) {
-  require('./PaymentImages.less');
+  require('./PaymentImages.less')
 }
 
-@prepareRoute(async function ({ store }) {
-  return await * [
+@prepareRoute(async function ({store}) {
+  return await Promise.all([
     store.dispatch(CategoryActionCreators.getMeaList())
-  ];
+  ])
 })
-@connect(({ Category }) => ({Category}))
+@connect(({Category}) => ({Category}))
 class PaymentImages extends React.Component {
 
   /**
    * render two rows of thumbnails for the payment pages
    */
-  render() {
+  render () {
     const {
       props: {
-        Category,catIds
-        }
-      } = this;
+        Category, catIds
+      }
+    } = this
 
-    let categories = Category.get('meaList');
+    let categories = Category.get('meaList')
 
     if (!categories) {
-      return (<div/>);
+      return (<div/>)
     }
 
-    let selectionMovies = Immutable.fromJS([]);
+    let selectionMovies = Immutable.fromJS([])
 
     _.forEach(catIds, (id)=> {
       let categorie = categories.find(function (obj) {
-        return obj.get('_id') === id;
-      });
+        return obj.get('_id') === id
+      })
       if (categorie) {
-        selectionMovies = selectionMovies.concat(categorie.get('movies'));
+        selectionMovies = selectionMovies.concat(categorie.get('movies'))
       }
-    });
+    })
 
     return (
       <div>
@@ -54,17 +54,17 @@ class PaymentImages extends React.Component {
             key={`movie-payment-a-${i}`} {...{data}}/>).toJS() : ''}
         </div>
       </div>
-    );
+    )
 
   }
 }
 
 PaymentImages.propTypes = {
   catIds: React.PropTypes.array
-};
+}
 
 PaymentImages.defaultProps = {
   catIds: [1, 3]
-};
+}
 
-export default PaymentImages;
+export default PaymentImages

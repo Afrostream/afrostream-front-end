@@ -1,31 +1,31 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from'react-dom';
-import classSet from 'classnames';
-import { dict } from '../../../../../config';
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import classSet from 'classnames'
+import { getI18n } from '../../../../../config/i18n'
 import RecurlyForm from './RecurlyForm'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class PaypalForm extends RecurlyForm {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   async submit (billingInfo, currentPlan) {
 
-    const self = this;
+    const self = this
     let recurlyInfo = {
       'description': self.props.planLabel,
       'coupon_code': self.refs.couponCode.value
-    };
+    }
 
     return await new Promise(
       (resolve, reject) => {
-        let recurlyLib = window['recurly'];
+        let recurlyLib = window['recurly']
         recurlyLib.paypal(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
           if (err) {
-            return reject(err);
+            return reject(err)
           }
           return resolve(_.merge({
             'recurly-token': token.id,
@@ -35,32 +35,32 @@ class PaypalForm extends RecurlyForm {
               customerBankAccountToken: token.id,
               couponCode: self.refs.couponCode.value
             }
-          }, recurlyInfo));
-        });
+          }, recurlyInfo))
+        })
       }
-    );
+    )
   }
 
   onHeaderClick () {
-    let clickHeader = ReactDOM.findDOMNode(this);
+    let clickHeader = ReactDOM.findDOMNode(this)
     if (clickHeader) {
-      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'paypal', bubbles: true}));
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'paypal', bubbles: true}))
     }
   }
 
   renderPromoCode () {
-    return super.renderPromoCode();
+    return super.renderPromoCode()
   }
 
   getForm () {
-    if (!this.props.selected) return;
+    if (!this.props.selected) return
     return (
 
       <div className="row" ref="goCardlessForm">
         {this.renderPromoCode()}
-        <h5 className="col-md-12">{dict().payment.paypal.paypalText}</h5>
+        <h5 className="col-md-12">{getI18n().payment.paypal.paypalText}</h5>
       </div>
-    );
+    )
   }
 
   render () {
@@ -68,18 +68,18 @@ class PaypalForm extends RecurlyForm {
     let classHeader = {
       'accordion-toggle': true,
       'collapsed': !this.props.selected
-    };
+    }
 
     let classPanel = {
       'panel': true,
       'collapsed': !this.props.selected
-    };
+    }
 
     return (
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{dict().payment.paypal.label}</label>
+            <label className="form-label">{getI18n().payment.paypal.label}</label>
             <img src="/images/payment/paypal.png"/>
           </div>
         </div>
@@ -90,8 +90,8 @@ class PaypalForm extends RecurlyForm {
           {this.getForm()}
         </ReactCSSTransitionGroup>
       </div>
-    );
+    )
   }
 }
 
-export default PaypalForm;
+export default PaypalForm

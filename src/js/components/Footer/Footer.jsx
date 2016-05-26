@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classSet from 'classnames'
 import { withRouter } from 'react-router'
-import { dict } from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 
 if (process.env.BROWSER) {
@@ -28,7 +28,7 @@ class Footer extends React.Component {
 
     let {lang} = params
 
-    let labels = dict(lang).footer
+    let labels = getI18n(lang).footer
     let switchLang = lang === 'en' ? 'fr' : 'us'
     let switchLangRoute = lang === 'en' ? 'fr' : 'en'
     let hasPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player'))

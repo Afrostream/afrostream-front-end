@@ -1,43 +1,46 @@
-import React from 'react';
-import ReactDOM from'react-dom';
-import ModalComponent from './ModalComponent';
-import moment from 'moment';
-import classNames from 'classnames';
-import {dict,gocardless} from '../../../../config';
+import React from 'react'
+import ReactDOM from'react-dom'
+import ModalComponent from './ModalComponent'
+import moment from 'moment'
+import classNames from 'classnames'
+import config from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
+
+const {gocardless} = config
 
 if (process.env.BROWSER) {
-  require('./ModalGocardlessMandat.less');
+  require('./ModalGocardlessMandat.less')
 }
 
 class ModalGocardlessMandat extends ModalComponent {
 
-  submit() {
-    let element = ReactDOM.findDOMNode(this);
+  submit () {
+    let element = ReactDOM.findDOMNode(this)
     if (element) {
-      element.dispatchEvent(new CustomEvent('acceptmandat', {bubbles: true}));
+      element.dispatchEvent(new CustomEvent('acceptmandat', {bubbles: true}))
     }
   }
 
-  cancel() {
-    let element = ReactDOM.findDOMNode(this);
+  cancel () {
+    let element = ReactDOM.findDOMNode(this)
     if (element) {
-      element.dispatchEvent(new CustomEvent('cancelmandat', {bubbles: true}));
+      element.dispatchEvent(new CustomEvent('cancelmandat', {bubbles: true}))
     }
   }
 
-  i18n(key = 'title') {
-    return dict().payment.virement.mandat[key] || '';
+  i18n (key = 'title') {
+    return getI18n().payment.virement.mandat[key] || ''
   }
 
-  render() {
+  render () {
 
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
       'hide': !this.props.closable
-    });
+    })
 
-    let dateNow = moment().format('L');
+    let dateNow = moment().format('L')
 
     return (
       <div className="lock-container">
@@ -136,16 +139,16 @@ class ModalGocardlessMandat extends ModalComponent {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 ModalGocardlessMandat.propTypes = {
   data: React.PropTypes.object
-};
+}
 
 ModalGocardlessMandat.defaultProps = {
   data: null
-};
+}
 
-export default ModalGocardlessMandat;
+export default ModalGocardlessMandat

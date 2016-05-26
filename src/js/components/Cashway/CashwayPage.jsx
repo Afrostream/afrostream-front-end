@@ -1,13 +1,16 @@
 import React, { PropTypes } from 'react'
 import SignUpButton from '../User/SignUpButton'
 import { prepareRoute } from '../../decorators'
-import { cashwayApi, player } from '../../../../config'
+import config from '../../../../config'
 import * as EventActionCreators from '../../actions/event'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import scriptLoader from '../../lib/script-loader'
 import Player from '../Player/Player'
 import { withRouter } from 'react-router'
 import _ from 'lodash'
+
+const {cashwayApi, player} = config
+
 if (process.env.BROWSER) {
   require('./CashwayPage.less')
 }
@@ -21,9 +24,9 @@ if (canUseDOM) {
 
 
 @prepareRoute(async function ({store}) {
-  return await * [
+  return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true))
-  ]
+  ])
 })
 class CashwayPage extends React.Component {
 

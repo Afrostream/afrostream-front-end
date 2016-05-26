@@ -1,5 +1,2 @@
-export Legals from './Legals';
-export CGU from './CGU';
-export FAQ from './FAQ';
-export Policy from './policy';
-export StaticRoute from './StaticRoute';
+export { default as FAQ } from './FAQ';
+export { default as StaticRoute } from './StaticRoute';
