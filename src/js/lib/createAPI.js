@@ -57,7 +57,7 @@ async function getToken (tokenData) {
  * createRequest() may different from client and server sides
  * You can see createRequest() at:
  * Client: ../main.js
- * Server: /lib/render.js
+ * Server: /servr/index.js
  */
 export default function createAPI (createRequest) {
   return async function api (path, method = 'GET', params = {}, legacy = false, showLoader = true) {
