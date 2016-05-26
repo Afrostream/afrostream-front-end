@@ -9,7 +9,7 @@
     "watch": "./node_modules/.bin/babel-node  webpack/webpack-dev-server.js",
     "dev": "echo 'requiring node v4.4.4' && . ~/.nvm/nvm.sh && nvm use 4.4.4 && node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch\"  \"nodemon --exec npm run start\"",
     "staging": "export LOAD_STAGING=true && npm run dev",
-    "start": "./node_modules/.bin/babel-node server",
+    "start": "./node_modules/.bin/babel-node server/",
     "postinstall": "npm run build"
   },
   "keywords": [
