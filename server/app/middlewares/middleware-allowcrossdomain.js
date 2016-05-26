@@ -1,4 +1,4 @@
-import config from '../../config'
+import config from '../../../config'
 
 const allowOrigin = function (options) {
   return function (req, res, next) {

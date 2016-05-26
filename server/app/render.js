@@ -3,12 +3,12 @@ import ReactDOMServer from 'react-dom/server'
 import { match } from 'react-router'
 import { createMemoryHistory } from 'history'
 import request from 'superagent'
-import config from '../config'
+import config from '../../config'
 import qs from 'qs'
-import createStore from '../src/js/lib/createStore'
-import createAPI from '../src/js/lib/createAPI'
-import routes from '../src/js/routes'
-import Router from '../src/js/components/Router'
+import createStore from '../../src/js/lib/createStore'
+import createAPI from '../../src/js/lib/createAPI'
+import routes from '../../src/js/routes'
+import Router from '../../src/js/components/Router'
 import { Provider } from 'react-redux'
 import PrettyError from 'pretty-error'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
@@ -18,7 +18,7 @@ const pretty = new PrettyError()
 const {apps, apiServer} = config
 
 export default function render (req, res, layout, {payload}) {
-  const {path, query} = req
+  const {path} = req
   const history = createMemoryHistory(path)
   const location = history.createLocation(path)
 

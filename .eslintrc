@@ -4,7 +4,9 @@
     "ecmascript": 6,
     "jsx": true
   },
-  "plugins": [ "react" ],
+  "plugins": [
+    "react"
+  ],
   "env": {
     "node": true,
     "browser": true
@@ -14,7 +16,10 @@
     "no-shadow": 0,
     "no-underscore-dangle": 0,
     "no-console": 0,
-    "quotes": [ 1, "single" ],
+    "quotes": [
+      1,
+      "backtick"
+    ],
     "strict": 0
   }
 }
