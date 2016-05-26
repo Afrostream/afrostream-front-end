@@ -1,3 +1,3 @@
-import { routerStateReducer } from 'redux-router';
+import { routerStateReducer } from 'redux-router'
 
-export default routerStateReducer;
+export default routerStateReducer

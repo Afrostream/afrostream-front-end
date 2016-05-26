@@ -117,9 +117,7 @@ class ModalCoupon extends ModalComponent {
             <span className="fill"/>
             </span>
           </div>
-          <div className="spin-message">
-            <span>&nbsp</span>
-          </div>
+          <div className="spin-message"/>
         </div>
       </div>)
     }

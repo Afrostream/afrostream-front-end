@@ -1,4 +1,4 @@
-import keyMirror from 'fbjs/lib/keyMirror';
+import keyMirror from 'fbjs/lib/keyMirror'
 
 export default {
 
@@ -104,4 +104,4 @@ export default {
   Static: keyMirror({
     getStatic: null
   })
-};
+}

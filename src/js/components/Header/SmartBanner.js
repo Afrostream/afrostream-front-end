@@ -1,14 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import MobileDetect from 'mobile-detect';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
+import React, { Component, PropTypes } from 'react'
+import MobileDetect from 'mobile-detect'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 if (process.env.BROWSER) {
-  require('./SmartBaner.less');
+  require('./SmartBaner.less')
 }
 
 class SmartBanner extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       disabled: true
     }
@@ -24,7 +24,7 @@ class SmartBanner extends Component {
     force: PropTypes.string,
     title: PropTypes.string,
     author: PropTypes.string
-  };
+  }
 
   static defaultProps = {
     daysHidden: 15,
@@ -44,178 +44,178 @@ class SmartBanner extends Component {
     force: '',
     title: '',
     author: ''
-  };
+  }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.force !== this.props.force) {
-      this.setType(nextProps.force);
+      this.setType(nextProps.force)
     }
   }
 
-  componentDidMount() {
-    this.setType(this.props.force);
+  componentDidMount () {
+    this.setType(this.props.force)
   }
 
-  type = '';
-  appId = '';
-  settings = {};
+  type = ''
+  appId = ''
+  settings = {}
 
-  parseAppId() {
-    let meta = document.querySelector('meta[name="' + this.settings.appMeta + '"]');
+  parseAppId () {
+    let meta = document.querySelector('meta[name="' + this.settings.appMeta + '"]')
     if (!meta) {
-      return '';
+      return ''
     }
 
     if (this.type === 'windows') {
-      this.appId = meta.getAttribute('content');
+      this.appId = meta.getAttribute('content')
     } else {
-      this.appId = /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
+      this.appId = /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1]
     }
 
-    return this.appId;
+    return this.appId
   }
 
-  setType(deviceType) {
+  setType (deviceType) {
     if (!canUseDOM || !localStorage || !navigator) {
-      return true;
+      return true
     }
-    let appStoreLanguage = this.props.appStoreLanguage || navigator.language.slice(-2) || navigator.userLanguage.slice(-2);
+    let appStoreLanguage = this.props.appStoreLanguage || navigator.language.slice(-2) || navigator.userLanguage.slice(-2)
     let mixins = {
       ios: {
         appMeta: 'apple-itunes-app',
         iconRels: ['apple-touch-icon-precomposed', 'apple-touch-icon'],
         getStoreLink: () => {
-          return 'https://itunes.apple.com/' + appStoreLanguage + '/app/id' + this.appId;
+          return 'https://itunes.apple.com/' + appStoreLanguage + '/app/id' + this.appId
         }
       },
       android: {
         appMeta: 'google-play-app',
         iconRels: ['android-touch-icon', 'apple-touch-icon-precomposed', 'apple-touch-icon'],
         getStoreLink: () => {
-          return 'http://play.google.com/store/apps/details?id=' + this.appId;
+          return 'http://play.google.com/store/apps/details?id=' + this.appId
         }
       },
       windows: {
         appMeta: 'msApplication-ID',
         iconRels: ['windows-touch-icon', 'apple-touch-icon-precomposed', 'apple-touch-icon'],
         getStoreLink: () => {
-          return 'http://www.windowsphone.com/s?appid=' + this.appId;
+          return 'http://www.windowsphone.com/s?appid=' + this.appId
         }
       }
-    };
-
-    const userAgent = (window.navigator && navigator.userAgent) || '';
-    let agent = new MobileDetect(userAgent);
-
-    if (deviceType.length) {
-      this.type = deviceType;
-    } else if (agent.is('WindowsMobileOS') || agent.is('WindowsPhoneOS')) {
-      this.type = 'windows';
-      //iOS >= 6 has native support for Smart Banner
-    } else if (agent.is('iOS') && parseInt(agent.version('iOS'), 10) < 6) {
-      this.type = 'ios';
-    } else if (agent.is('AndroidOS')) {
-      this.type = 'android';
     }
 
-    this.settings = mixins[this.type];
+    const userAgent = (window.navigator && navigator.userAgent) || ''
+    let agent = new MobileDetect(userAgent)
+
+    if (deviceType.length) {
+      this.type = deviceType
+    } else if (agent.is('WindowsMobileOS') || agent.is('WindowsPhoneOS')) {
+      this.type = 'windows'
+      //iOS >= 6 has native support for Smart Banner
+    } else if (agent.is('iOS') && parseInt(agent.version('iOS'), 10) < 6) {
+      this.type = 'ios'
+    } else if (agent.is('AndroidOS')) {
+      this.type = 'android'
+    }
+
+    this.settings = mixins[this.type]
 
     // Don't show banner if device isn't iOS or Android, website is loaded in app,
     // user dismissed banner, or we have no app id in meta
 
-    let disabled = this.hasCookies() || this.parseAppId() === '';
+    let disabled = this.hasCookies() || this.parseAppId() === ''
     this.setState({
       disabled: disabled
-    });
+    })
 
     if (disabled) {
-      this.hide();
+      this.hide()
     } else {
-      this.show();
+      this.show()
     }
   }
 
-  hide() {
-    document.querySelector('html').classList.remove('smartbanner-show');
+  hide () {
+    document.querySelector('html').classList.remove('smartbanner-show')
   }
 
-  show() {
-    document.querySelector('html').classList.add('smartbanner-show');
+  show () {
+    document.querySelector('html').classList.add('smartbanner-show')
   }
 
-  close() {
-    this.hide();
-    let expires = new Date(Date.now() + (this.props.daysHidden * 1000 * 60 * 60 * 24)).toISOString();
-    localStorage.setItem('smartbanner-closed', JSON.stringify({expiresAt: expires}));
+  close () {
+    this.hide()
+    let expires = new Date(Date.now() + (this.props.daysHidden * 1000 * 60 * 60 * 24)).toISOString()
+    localStorage.setItem('smartbanner-closed', JSON.stringify({expiresAt: expires}))
 
   }
 
-  install() {
-    this.hide();
-    let expires = new Date(Date.now() + (this.props.daysReminder * 1000 * 60 * 60 * 24)).toISOString();
-    localStorage.setItem('smartbanner-installed', JSON.stringify({expiresAt: expires}));
+  install () {
+    this.hide()
+    let expires = new Date(Date.now() + (this.props.daysReminder * 1000 * 60 * 60 * 24)).toISOString()
+    localStorage.setItem('smartbanner-installed', JSON.stringify({expiresAt: expires}))
   }
 
-  hasCookies() {
+  hasCookies () {
 
-    let closed;
-    let installed;
-    let closedExpire;
-    let instExpire;
+    let closed
+    let installed
+    let closedExpire
+    let instExpire
 
     try {
-      closed = localStorage.getItem('smartbanner-closed');
-      installed = localStorage.getItem('smartbanner-installed');
-      closedExpire = JSON.parse(closed);
-      instExpire = JSON.parse(installed);
-      let now = Date.now();
+      closed = localStorage.getItem('smartbanner-closed')
+      installed = localStorage.getItem('smartbanner-installed')
+      closedExpire = JSON.parse(closed)
+      instExpire = JSON.parse(installed)
+      let now = Date.now()
       if (closedExpire) {
-        closed = new Date(closedExpire.expiresAt).getTime() > now;
+        closed = new Date(closedExpire.expiresAt).getTime() > now
       }
       if (instExpire) {
-        installed = new Date(instExpire.expiresAt).getTime() > now;
+        installed = new Date(instExpire.expiresAt).getTime() > now
       }
     } catch (err) {
-      console.log(err);
-      return false;
+      console.log(err)
+      return false
     }
     if (!this.type
       || navigator.standalone
       || closed
       || installed) {
-      return true;
+      return true
     }
 
-    return false;
+    return false
   }
 
-  render() {
+  render () {
     // Don't show banner if device isn't iOS or Android, website is loaded in app,
     // user dismissed banner, or we have no app id in meta
     if (this.state.disabled) {
-      return (<div />);
+      return (<div />)
     }
 
-    let link = this.settings.getStoreLink();
-    let inStore = this.props.price[this.type] + ' - ' + this.props.storeText[this.type];
-    let icon;
+    let link = this.settings.getStoreLink()
+    let inStore = this.props.price[this.type] + ' - ' + this.props.storeText[this.type]
+    let icon
     for (let i = 0, max = this.settings.iconRels.length; i < max; i++) {
-      let rel = document.querySelector('link[rel="' + this.settings.iconRels[i] + '"]');
+      let rel = document.querySelector('link[rel="' + this.settings.iconRels[i] + '"]')
       if (rel) {
-        icon = rel.getAttribute('href');
-        break;
+        icon = rel.getAttribute('href')
+        break
       }
     }
 
-    let wrapperClassName = 'smartbanner smartbanner-' + this.type;
+    let wrapperClassName = 'smartbanner smartbanner-' + this.type
     let iconStyle = {
       backgroundImage: 'url(' + icon + ')'
-    };
+    }
 
     return (
       <div className={wrapperClassName}>
         <div className="smartbanner-container">
-          <a className="smartbanner-close" onClick={::this.close}>&times;</a>
+          <a className="smartbanner-close" onClick={::this.close}>&times</a>
           <span className="smartbanner-icon" style={iconStyle}></span>
           <div className="smartbanner-info">
             <div className="smartbanner-title">{this.props.title}</div>
@@ -228,8 +228,8 @@ class SmartBanner extends Component {
           </a>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default SmartBanner;
+export default SmartBanner

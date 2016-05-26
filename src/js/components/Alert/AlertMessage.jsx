@@ -1,10 +1,10 @@
-import React from 'react';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import config from '../../../../config';
-import CookieMessage from '../Welcome/WelcomeComponents/CookieMessage';
+import React from 'react'
+import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
+import config from '../../../../config'
+import CookieMessage from '../Welcome/WelcomeComponents/CookieMessage'
 
 if (process.env.BROWSER) {
-  require('./AlertMessage.less');
+  require('./AlertMessage.less')
 }
 
 class AlertMessage extends React.Component {
@@ -12,35 +12,35 @@ class AlertMessage extends React.Component {
   // do not render cookie message on server-side
   state = {
     isCookieSet: '1'
-  };
+  }
 
   componentDidMount() {
-    let isCookieAccepted = this.isCookieAccepted();
+    let isCookieAccepted = this.isCookieAccepted()
 
     if (isCookieAccepted !== '1') {
-      this.setState({isCookieSet: '0'});
+      this.setState({isCookieSet: '0'})
     }
   }
 
   isCookieAccepted() {
-    let isCookieAccepted = null;
+    let isCookieAccepted = null
 
     if (canUseDOM) {
-      isCookieAccepted = localStorage.getItem('afrostreamAlert');
+      isCookieAccepted = localStorage.getItem('afrostreamAlert')
     }
-    return isCookieAccepted;
+    return isCookieAccepted
   }
 
   setCookieToken() {
     if (canUseDOM) {
-      localStorage.setItem('afrostreamAlert', '1');
-      this.setState({isCookieSet: '1'});
+      localStorage.setItem('afrostreamAlert', '1')
+      this.setState({isCookieSet: '1'})
     }
   }
 
   getAlert(i, alert) {
     if (!alert || this.state.isCookieSet === '1') {
-      return '';
+      return ''
     }
     return (
       <div className="alert-message"><span key={`alert-${i}`}>{alert}
@@ -56,8 +56,8 @@ class AlertMessage extends React.Component {
         {config.alerts ? config.alerts.map((alert, i) => this.getAlert(i, alert)) : ''}
         <CookieMessage />
       </div>
-    );
+    )
   }
 }
 
-export default AlertMessage;
+export default AlertMessage

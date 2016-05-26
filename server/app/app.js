@@ -1,20 +1,20 @@
-import config from '../config'
+import path from 'path'
+import expressHandlebars from 'express-handlebars'
+import handlebars from 'handlebars'
+import routes from './routes'
 import express from 'express'
 import favicon from 'serve-favicon'
 import compression from 'compression'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
-import fastly from 'fastly'
 import allowOrigin from './middlewares/middleware-allowcrossdomain'
 import cacheHandler from './middlewares/middleware-cachehandler'
 const app = express()
 
-const env = process.env.NODE_ENV || 'development'
-
 // Serve static files
 // --------------------------------------------------
-import path from 'path'
-const staticPath = path.resolve(__dirname, '../static/')
+
+const staticPath = path.resolve(__dirname, '../../static/')
 const buildPath = path.resolve(process.cwd(), 'dist')
 
 function errorHandler (err, req, res, next) {
@@ -51,8 +51,6 @@ app.use(errorHandler)
 
 // View engine
 // --------------------------------------------------
-import expressHandlebars from 'express-handlebars'
-import handlebars from 'handlebars'
 
 handlebars.registerHelper('json-stringify', ::JSON.stringify)
 handlebars.registerHelper('json', function (context) {
@@ -65,18 +63,6 @@ app.set('etag', false)
 app.set('x-powered-by', false)
 
 //ROUTES
-import routes from './routes'
 routes(app, buildPath)
 
-const server = app.listen(config.server.port, () => {
-  const {address: host, port} = server.address()
-  console.log(`Front-End server is running at ${host}:${port}`) // eslint-disable-line no-console
-  //on production we decache all fasly routes
-  if (env === 'production') {
-    let fastLySdk = fastly(config.fastly.key)
-    fastLySdk.purgeAll(config.fastly.serviceId, function (err, obj) {
-      if (err) return console.dir(err)   // Oh no!
-      console.dir(obj)                   // Response body from the fastly API
-    })
-  }
-})
+export default app

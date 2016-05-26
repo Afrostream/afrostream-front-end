@@ -13,71 +13,71 @@ const {gocardless} = config
 class GocardlessForm extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       modal: false,
       modalData: null
-    };
+    }
   }
 
   async submit (billingInfo) {
 
-    let self = this;
+    let self = this
     return await new Promise(
       (resolve, reject) => {
-        const gcLib = window['GoCardless'];
+        const gcLib = window['GoCardless']
         const tokenData = {
           iban: self.refs.iban.value,
           country_code: self.refs.country.value(),
           account_holder_name: `${billingInfo.firstName} ${billingInfo.lastName}`
-        };
+        }
         let error = {
           message: '',
           fields: []
-        };
+        }
         gcLib.customerBankAccountTokens.create({
           publishable_access_token: gocardless.key,
           customer_bank_account_tokens: tokenData
         }, (response) => {
           if (response.error) {
             _.forEach(response.error.errors, (value)=> {
-              error.fields.push(value.field);
-              error.message += `${value.field} ${value.message}`;
-            });
+              error.fields.push(value.field)
+              error.message += `${value.field} ${value.message}`
+            })
 
             self.setState({
               modal: false
-            });
+            })
 
-            return reject(error);
+            return reject(error)
 
           } else {
             self.setState({
               modal: true,
               modalData: tokenData
-            });
-            let element = ReactDOM.findDOMNode(this);
+            })
+            let element = ReactDOM.findDOMNode(this)
             element.addEventListener('acceptmandat', function () {
               self.setState({
                 modal: false
-              });
+              })
               return resolve({
                 billingProvider: 'gocardless',
                 subOpts: {
                   customerBankAccountToken: response.customer_bank_account_tokens.id
                 }
               })
-            });
+            })
             element.addEventListener('cancelmandat', function () {
               self.setState({
                 modal: false
-              });
-              error.message = 'Transaction annulée';
-              return reject(error);
-            });
+              })
+              error.message = 'Transaction annulée'
+              return reject(error)
+            })
           }
-        });
-      });
+        })
+      })
   }
 
   static propTypes = {
@@ -85,29 +85,29 @@ class GocardlessForm extends React.Component {
     isGift: React.PropTypes.bool,
     planCode: React.PropTypes.string,
     planLabel: React.PropTypes.string
-  };
+  }
 
   static defaultProps = {
     selected: false,
     isGift: false,
     planCode: null,
     planLabel: null
-  };
+  }
 
   validate () {
-    this.refs.iban.value = iban.printFormat(this.refs.iban.value, ' ');
-    return iban.isValid(this.refs.iban.value);
+    this.refs.iban.value = iban.printFormat(this.refs.iban.value, ' ')
+    return iban.isValid(this.refs.iban.value)
   }
 
   onHeaderClick () {
-    let clickHeader = ReactDOM.findDOMNode(this);
+    let clickHeader = ReactDOM.findDOMNode(this)
     if (clickHeader) {
-      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'gocardless', bubbles: true}));
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'gocardless', bubbles: true}))
     }
   }
 
   getForm () {
-    if (!this.props.selected) return;
+    if (!this.props.selected) return
     return (
       <div className="row" ref="goCardlessForm">
         <div className="form-group col-md-6">
@@ -123,7 +123,7 @@ class GocardlessForm extends React.Component {
         </div>
         <CountrySelect ref="country"/>
       </div>
-    );
+    )
   }
 
   render () {
@@ -131,12 +131,12 @@ class GocardlessForm extends React.Component {
     let classHeader = {
       'accordion-toggle': true,
       'collapsed': !this.props.selected
-    };
+    }
 
     let classPanel = {
       'panel': true,
       'collapsed': !this.props.selected
-    };
+    }
 
 
     return (

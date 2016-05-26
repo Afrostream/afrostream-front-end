@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
 export function numberWithCommas (x) {
-  return x.toLocaleString();
+  return x.toLocaleString()
 }
 
 export function formatPrice (price, currency, coma = false) {
@@ -23,44 +23,44 @@ export function formatPrice (price, currency, coma = false) {
     'THB': '฿', // Thai Baht
     'UAH': '₴', // Ukrainian Hryvnia
     'VND': '₫' // Vietnamese Dong
-  };
-
-  let formatPrice = price / 100;
-
-  if (coma) {
-    formatPrice = numberWithCommas(formatPrice);
   }
 
-  return `${formatPrice}${currencySymbols[currency]}`;
+  let formatPrice = price / 100
+
+  if (coma) {
+    formatPrice = numberWithCommas(formatPrice)
+  }
+
+  return `${formatPrice}${currencySymbols[currency]}`
 }
 
 export function isBoolean (val) {
   if (val == null)
-    return false;
+    return false
 
   if (typeof val === 'boolean') {
     if (val === true)
-      return true;
+      return true
 
-    return false;
+    return false
   }
 
   if (typeof val === 'string') {
     if (val === '')
-      return false;
+      return false
 
-    val = val.replace(/^\s+|\s+$/g, '').toLowerCase();
+    val = val.replace(/^\s+|\s+$/g, '').toLowerCase()
     if (val === 'true' || val === 'yes')
-      return true;
+      return true
 
-    val = val.replace(/,/g, '.').replace(/^\s*\-\s*/g, '-');
+    val = val.replace(/,/g, '.').replace(/^\s*\-\s*/g, '-')
   }
 
   if (!isNaN(val))
-    return (parseFloat(val) !== 0);
+    return (parseFloat(val) !== 0)
 
-  return false;
-};
+  return false
+}
 export const isDefined = val => val != null
 export const isFunction = val => typeof val === 'function'
 export const noop = _ => {
