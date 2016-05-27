@@ -48,7 +48,6 @@ export default function RenderStatic (req, res, layout, {payload}) {
     routes,
     location
   }, async (err, redirectLocation, renderProps) => {
-    console.log(err, redirectLocation, renderProps)
     try {
       if (redirectLocation) {
         res.redirect(301, redirectLocation.pathname + redirectLocation.search)

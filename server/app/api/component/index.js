@@ -1,5 +1,4 @@
 import express from 'express'
-import path from 'path'
 import RenderStatic from './component-render'
 
 const router = express.Router()
