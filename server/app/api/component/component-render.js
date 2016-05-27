@@ -79,14 +79,13 @@ export default function RenderStatic (req, res, layout, {payload}) {
           }
         }
 
-        //const componentHtml = ReactDOMServer.renderToStaticMarkup(
-        //  <Provider {...{store}}>
-        //    <ReduxRouter {...{...renderProps, location}} >
-        //      {staticRoutes}
-        //    </ReduxRouter>
-        //  </Provider>
-        //)
-        const componentHtml = ReactDOMServer.renderToString(<RouterContext {...renderProps} />)
+        const componentHtml = ReactDOMServer.renderToStaticMarkup(
+          <Provider {...{store}}>
+            <ReduxRouter {...{...renderProps, location}} >
+              {routes}
+            </ReduxRouter>
+          </Provider>
+        )
 
         const initialState = store.getState()
 

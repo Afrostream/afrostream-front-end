@@ -119,9 +119,9 @@ const buildRoutes = function (lang) {
 }
 
 export const staticRoutes = [
-  <Route name="footer" path="/footer" component={Footer}/>,
-  <Route name="movieList" path="/movies/list" component={MovieList}/>,
-  <Route name="pricingTable" path="/pricing" component={PricingTable}/>
+  <Route name="footer" path="footer" component={Footer}/>,
+  <Route name="pricingTable" path="pricing" component={PricingTable}/>,
+  <Route name="movieList" path="movies/list" component={MovieList}/>
 ]
 
 export default (
