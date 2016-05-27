@@ -41,7 +41,6 @@ export default function RenderStatic (req, res, layout, {payload}) {
         .send(body)
     }
   )
-
   const store = createStore(api, history)
 
   match({
@@ -89,11 +88,23 @@ export default function RenderStatic (req, res, layout, {payload}) {
 
         const initialState = store.getState()
 
-        return res.render(layout, {
-          ...payload,
-          componentHtml,
-          initialState
-        })
+        const format = req.query.format
+
+        switch (format) {
+          case 'json':
+            return res.json({
+              html: componentHtml,
+              state: initialState
+            })
+            break
+          default:
+            return res.render(layout, {
+              ...payload,
+              componentHtml,
+              initialState
+            })
+            break
+        }
       }
     } catch (err) {
       if (err.redirect) {

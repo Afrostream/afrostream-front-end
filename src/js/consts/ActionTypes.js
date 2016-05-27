@@ -128,6 +128,7 @@ export default {
   }),
 
   Static: keyMirror({
+    getComponentRoute: null,
     getStatic: null
   }),
 

@@ -13,5 +13,16 @@ export default createReducer(initialState, {
     return state.merge({
       [`static/${path}`]: data
     })
+  },
+
+  [ActionTypes.Static.getComponentRoute](state, {route, res}, initialState) {
+    if (!res) {
+      return state
+    }
+    const data = res.body
+    initialState.merge(data.state)
+    return state.merge({
+      [route]: data.html
+    })
   }
 })
