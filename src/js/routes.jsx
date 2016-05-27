@@ -21,6 +21,7 @@ import CancelSubscription from './components/Account/CancelSubscription'
 import NoMatch from './components/NoMatch'
 //STATIC
 import Footer from './components/Footer/Footer'
+import MovieList from './components/Movies/MoviesList'
 
 const langs = ['fr', 'en']
 
@@ -117,7 +118,8 @@ const buildRoutes = function (lang) {
 }
 
 export const staticRoutes = [
-  <Route name="footer" path="/footer" component={Footer}/>
+  <Route name="footer" path="/footer" component={Footer}/>,
+  <Route name="movieList" path="/movies/list" component={MovieList}/>
 ]
 
 export default (
