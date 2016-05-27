@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import { Route, Redirect, IndexRoute } from 'react-router'
 import Application from './components/Application'
 import MoviePage from './components/Movies/MoviePage'
@@ -18,7 +19,8 @@ import * as Life from './components/Life'
 import AccountPage from './components/Account/AccountPage'
 import CancelSubscription from './components/Account/CancelSubscription'
 import NoMatch from './components/NoMatch'
-import _ from 'lodash'
+//STATIC
+import Footer from './components/Footer/Footer'
 
 const langs = ['fr', 'en']
 
@@ -113,6 +115,10 @@ const buildRoutes = function (lang) {
   return subRoutes
 
 }
+
+export const staticRoutes = [
+  <Route name="footer" path="/footer" component={Footer}/>
+]
 
 export default (
   <Route name="app" path="/" component={Application}>
