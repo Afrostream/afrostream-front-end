@@ -1,33 +1,35 @@
-import Promise from 'bluebird';
-import _ from 'lodash';
-import qs from 'qs';
-import URL from 'url';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import { apiClient } from '../../../config';
-import request from 'superagent';
-import NProgress from 'nprogress';
-import { storeToken } from '../lib/storage';
+import Promise from 'bluebird'
+import _ from 'lodash'
+import qs from 'qs'
+import URL from 'url'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import config from '../../../config'
+import request from 'superagent'
+import NProgress from 'nprogress'
+import { storeToken } from '../lib/storage'
 
-NProgress.configure({showSpinner: false});
+const {apiClient} = config
+
+NProgress.configure({showSpinner: false})
 
 const isTokenValid = function (tokenData) {
-  return tokenData && new Date(tokenData.expiresAt).getTime() > Date.now();
-};
+  return tokenData && new Date(tokenData.expiresAt).getTime() > Date.now()
+}
 
 async function getToken (tokenData) {
   if (isTokenValid(tokenData)) {
-    return tokenData;
+    return tokenData
   }
   if (!tokenData || !tokenData.refreshToken) {
-    return tokenData;
+    return tokenData
   }
-  return tokenData;
+  return tokenData
 
-  let url = `${apiClient.urlPrefix}/auth/refresh`;
+  let url = `${apiClient.urlPrefix}/auth/refresh`
   let body = {
     grant_type: 'refresh_token',
     refresh_token: tokenData.refreshToken
-  };
+  }
 
 
   return await new Promise((resolve, reject) => {
@@ -37,14 +39,14 @@ async function getToken (tokenData) {
       .end((err, res) => {
 
         if (err) {
-          return reject(err);
+          return reject(err)
         }
 
-        let storedData = storeToken(res.body);
-        return resolve(storedData);
-      });
-  });
-};
+        let storedData = storeToken(res.body)
+        return resolve(storedData)
+      })
+  })
+}
 /**
  * return api function base on createRequest function
  * Usage:
@@ -55,42 +57,42 @@ async function getToken (tokenData) {
  * createRequest() may different from client and server sides
  * You can see createRequest() at:
  * Client: ../main.js
- * Server: /lib/render.js
+ * Server: /servr/index.js
  */
 export default function createAPI (createRequest) {
   return async function api (path, method = 'GET', params = {}, legacy = false, showLoader = true) {
-    let {pathname, query: queryStr} = URL.parse(path);
-    let query, headers = {}, body;
+    let {pathname, query: queryStr} = URL.parse(path)
+    let query, headers = {}, body
 
     if (_.isObject(method)) {
-      params = method;
-      method = 'GET';
+      params = method
+      method = 'GET'
     }
 
-    query = qs.parse(queryStr);
+    query = qs.parse(queryStr)
 
     if (method === 'GET') {
       if (params && _.isObject(params)) {
-        _.assign(query, params);
+        _.assign(query, params)
       }
 
     } else {
-      body = params;
+      body = params
     }
 
     if (canUseDOM) {
       if (showLoader) {
-        NProgress.start();
+        NProgress.start()
       }
       try {
-        const storageId = apiClient.token;
-        let storedData = localStorage.getItem(storageId);
-        let tokenDataStore = JSON.parse(storedData);
-        let tokenData = await getToken(tokenDataStore);
+        const storageId = apiClient.token
+        let storedData = localStorage.getItem(storageId)
+        let tokenDataStore = JSON.parse(storedData)
+        let tokenData = await getToken(tokenDataStore)
         if (tokenData) {
           headers = _.merge(headers, {
             'Access-Token': tokenData.accessToken
-          });
+          })
         }
       }
       catch (err) {
@@ -102,13 +104,13 @@ export default function createAPI (createRequest) {
       createRequest({method, headers, pathname, query, body, legacy})
         .end((err, res) => {
           if (showLoader) {
-            NProgress.done();
+            NProgress.done()
           }
           if (err) {
-            return reject(err);
+            return reject(err)
           }
-          return resolve(res);
-        });
-    });
-  };
+          return resolve(res)
+        })
+    })
+  }
 }

@@ -655,19 +655,19 @@ class PlayerComponent extends Component {
         }))
 
         let protData = {
-          "com.widevine.alpha": {
-            "httpRequestHeaders": {
-              "dt-custom-data": protUser
+          'com.widevine.alpha': {
+            'httpRequestHeaders': {
+              'dt-custom-data': protUser
             }
           },
-          "com.microsoft.playready": {
-            "httpRequestHeaders": {
-              "http-header-CustomData": protUser
+          'com.microsoft.playready': {
+            'httpRequestHeaders': {
+              'http-header-CustomData': protUser
             }
           },
-          "com.adobe.flashaccess": {
-            "httpRequestHeaders": {
-              "customData": protUser
+          'com.adobe.flashaccess': {
+            'httpRequestHeaders': {
+              'customData': protUser
             }
           }
         }
@@ -925,8 +925,8 @@ class PlayerComponent extends Component {
                                           sendBirdPosition="right"/> : null}
           </div>
           {videoDuration ?
-            <div className=" video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
-          <div className=" video-infos_synopsys">{infos.synopsis}</div>
+            <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
+          <div className="video-infos_synopsys">{infos.synopsis}</div>
         </div>
         {this.getNextComponent()}
         <SendBird {...this.props} />

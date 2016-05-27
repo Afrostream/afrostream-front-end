@@ -1,42 +1,87 @@
-import webpack from 'webpack';
-import merge from 'lodash/object/merge';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
-import webpackConfig from './webpack.config.js';
-import config from '../config';
-import herokuConfig from '../app.json';
+import webpack from 'webpack'
+import merge from 'lodash/object/merge'
+import webpackConfig from './webpack.config'
+import config from '../config'
+import path from 'path'
 
+const node_modules_dir = path.resolve(__dirname, '../node_modules')
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
-const { webpackDevServer: { host, port } } = config;
-const { browserSyncServer: { bSyncHost, bSyncPort } } = config;
-var webpackDevServerUrl = `http://${host}:${port}`;
-const devConfig = merge({}, webpackConfig, {
+const {webpackDevServer: {host, port}} = config
+const {browserSyncServer: {bSyncHost, bSyncPort}} = config
+
+const webpackDevServerUrl = `http://${host}:${port}`
+let clientConfig = merge({}, webpackConfig, {
   devtool: 'eval-source-map',
   debug: true
-});
+})
 
-devConfig.entry.main = [
+clientConfig.entry.main = [
   `webpack-dev-server/client?${webpackDevServerUrl}`,
   'webpack/hot/only-dev-server',
-  devConfig.entry.main
-];
+  clientConfig.entry.main
+]
 
-devConfig.plugins.push(
+clientConfig.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin(),
   new webpack.ProgressPlugin(function (percentage, message) {
-    var MOVE_LEFT = new Buffer('1b5b3130303044', 'hex').toString();
-    var CLEAR_LINE = new Buffer('1b5b304b', 'hex').toString();
-    process.stdout.write(CLEAR_LINE + Math.round(percentage * 100) + '% :' + message + MOVE_LEFT);
+    var MOVE_LEFT = new Buffer('1b5b3130303044', 'hex').toString()
+    var CLEAR_LINE = new Buffer('1b5b304b', 'hex').toString()
+    process.stdout.write(CLEAR_LINE + Math.round(percentage * 100) + '% :' + message + MOVE_LEFT)
   })
   //new BrowserSyncPlugin({
   //  host: bSyncHost,
   //  port: bSyncPort,
   //  server: {baseDir: [webpackConfig.output.publicPath]}
   //})
-);
+)
 
-devConfig.module.loaders[0].loaders.unshift('react-hot');
+clientConfig.module.loaders[0].loaders.unshift('react-hot')
 
-export default devConfig;
+//
+// Configuration for the server-side bundle (server.js)
+// -----------------------------------------------------------------------------
+
+let serverConfig = merge({}, webpackConfig, {
+  entry: {
+    server: './server'
+  },
+  output: {
+    filename: '[name].js?[hash]',
+    chunkFilename: '[id].js?[hash]',
+    libraryTarget: 'commonjs2'
+  },
+  module: {
+    preLoaders: [
+      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
+      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
+    ],
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel-loader'],
+        exclude: [node_modules_dir]
+      },
+      {
+        test: /\.js$/, // include .js files
+        loaders: ['babel-loader'],
+        exclude: [node_modules_dir]
+      }
+    ]
+  },
+
+  target: 'node',
+
+  plugins: [],
+
+  node: {},
+
+  devtool: 'source-map'
+})
+
+serverConfig.output.path = serverConfig.output.path + '/server'
+
+export default [
+  clientConfig
+]

@@ -1,36 +1,38 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { cashwayApi, dict } from '../../../../config'
-import classNames from 'classnames';
-import ModalComponent from './ModalComponent';
+import React from 'react'
+import { connect } from 'react-redux'
+import config from '../../../../config'
+import classNames from 'classnames'
+import ModalComponent from './ModalComponent'
 import scriptLoader from '../../lib/script-loader'
 
+const {cashwayApi} = config
+
 if (process.env.BROWSER) {
-  require('./ModalCashwayPlan.less');
+  require('./ModalCashwayPlan.less')
 }
 
 class ModalCashwayPlan extends ModalComponent {
 
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       location: ''
-    };
+    }
   }
 
   componentDidMount () {
     const {
       props: {isScriptLoaded, isScriptLoadSucceed}
-    } = this;
+    } = this
     if (isScriptLoaded && isScriptLoadSucceed) {
-      window.cashwayMapInit();
+      window.cashwayMapInit()
     }
   }
 
   componentWillReceiveProps ({isScriptLoaded, isScriptLoadSucceed}) {
     if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
       if (isScriptLoadSucceed) {
-        window.cashwayMapInit();
+        window.cashwayMapInit()
       }
     }
   }
@@ -41,7 +43,7 @@ class ModalCashwayPlan extends ModalComponent {
       'close': true,
       'icon-budicon-3': true,
       'hide': !this.props.closable
-    });
+    })
 
     return (
       <div className="lock-container">
@@ -82,12 +84,12 @@ ModalCashwayPlan.propTypes = {
   action: React.PropTypes.string,
   dispatch: React.PropTypes.func,
   closable: React.PropTypes.bool
-};
+}
 
 ModalCashwayPlan.defaultProps = {
   header: 'Trouver un partenaire CASHWAY',
   instructons: 'RDV chez un partenaire CASHWAY'
-};
+}
 
 export default scriptLoader(
   cashwayApi

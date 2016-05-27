@@ -1,10 +1,10 @@
-import React from 'react';
-import { prepareRoute } from '../../decorators';
-import * as EventActionCreators from '../../actions/event';
+import React from 'react'
+import { prepareRoute } from '../../decorators'
+import * as EventActionCreators from '../../actions/event'
 @prepareRoute(async function ({store}) {
-  return await * [
+  return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true))
-  ];
+  ])
 })
 class FAQ extends React.Component {
   render () {
@@ -109,8 +109,8 @@ class FAQ extends React.Component {
           </section>
         </article>
       </div>
-    );
+    )
   }
 }
 
-export default FAQ;
+export default FAQ

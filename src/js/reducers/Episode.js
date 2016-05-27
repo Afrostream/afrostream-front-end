@@ -1,19 +1,19 @@
-import Immutable from 'immutable';
-import ActionTypes from '../consts/ActionTypes';
-import createReducer from '../lib/createReducer';
+import Immutable from 'immutable'
+import ActionTypes from '../consts/ActionTypes'
+import createReducer from '../lib/createReducer'
 
-const initialState = Immutable.fromJS({});
+const initialState = Immutable.fromJS({})
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Episode.getEpisode](state, { episodeId , res}) {
+  [ActionTypes.Episode.getEpisode](state, {episodeId, res}) {
     if (!res) {
-      return state;
+      return state
     }
-    const data = res.body;
+    const data = res.body
     return state.merge({
       [`episodes/${episodeId}`]: data
-    });
+    })
   }
 
-});
+})

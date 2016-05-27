@@ -1,14 +1,14 @@
-import WebpackDevServer from 'webpack-dev-server';
-import webpack from 'webpack';
-import path from 'path';
-import devConfig from './dev.config';
-import config from '../config';
+import WebpackDevServer from 'webpack-dev-server'
+import webpack from 'webpack'
+import path from 'path'
+import devConfig from './dev.config'
+import config from '../config'
 
-const { webpackDevServer: { host, port } } = config;
+const {webpackDevServer: {host, port}} = config
 
 const serverOptions = {
     contentBase: path.resolve(__dirname, '../dist'),
-    publicPath: devConfig.output.publicPath,
+    publicPath: devConfig[0].output.publicPath,
     hot: true,
     headers: {'Access-Control-Allow-Origin': '*'},
     quiet: false,
@@ -33,16 +33,16 @@ const serverOptions = {
     }
   },
   compiler = webpack(devConfig),
-  webpackDevServer = new WebpackDevServer(compiler, serverOptions);
+  webpackDevServer = new WebpackDevServer(compiler, serverOptions)
 
 compiler.plugin('done', (stats) => {
-  process.env.HASH_FILE = stats.hash;
+  process.env.HASH_FILE = stats.hash
   if (stats.hasErrors()) {
-    console.error('WebpackError');
-    stats.toJson().errors.forEach(err => console.error(err));
+    console.error('WebpackError')
+    stats.toJson().errors.forEach(err => console.error(err))
   }
-});
+})
 
 webpackDevServer.listen(port, function () {
-  console.info('==> 🚧  Webpack development server listening on %s:%s', host, port);
-});
+  console.info('==> 🚧  Webpack development server listening on %s:%s', host, port)
+})

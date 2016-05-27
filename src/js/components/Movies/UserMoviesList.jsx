@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MoviesSlider from './MoviesSlider';
-import { dict } from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
 
 if (process.env.BROWSER) {
   require('./UserMoviesList.less');
@@ -25,7 +25,7 @@ class UserMoviesList extends React.Component {
     if (!dataList) {
       return (<div />);
     }
-    const label = dict().history.label;
+    const label = getI18n().history.label;
     const slug = 'history';
     const showTitle = true;
     const showDescription = false;

@@ -1,27 +1,23 @@
-import React, { PropTypes } from 'react';
-import Immutable from 'immutable';
-import { connect } from 'react-redux';
-import config from '../../../../config';
-import Slider from '../Slider/Slider';
-import Spinner from '../Spinner/Spinner';
-import SeasonTabButton from './SeasonTabButton';
-import Thumb from '../Movies/Thumb';
-import * as SeasonActionCreators from '../../actions/season';
-import ReactList from 'react-list';
-import MoviesSlider from '../Movies/MoviesSlider';
+import React, { PropTypes } from 'react'
+import Immutable from 'immutable'
+import { connect } from 'react-redux'
+import Spinner from '../Spinner/Spinner'
+import SeasonTabButton from './SeasonTabButton'
+import * as SeasonActionCreators from '../../actions/season'
+import MoviesSlider from '../Movies/MoviesSlider'
 
 if (process.env.BROWSER) {
-  require('./SeasonList.less');
+  require('./SeasonList.less')
 }
 
-@connect(({ Movie, Season }) => ({Movie, Season}))
+@connect(({Movie, Season}) => ({Movie, Season}))
 class SeasonList extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
   }
 
-  render() {
+  render () {
     const {
       props: {
         Movie,
@@ -29,36 +25,36 @@ class SeasonList extends React.Component {
         params:{
           movieId,
           seasonId
-          }
         }
-      } = this;
+      }
+    } = this
 
-    const seasons = Movie.get(`movies/${movieId}/seasons`);
-    let page = Season.get('selected') || 0;
+    const seasons = Movie.get(`movies/${movieId}/seasons`)
+    let page = Season.get('selected') || 0
 
 
     if (seasons && seasons.size) {
       if (seasonId) {
         page = seasons.findIndex((obj) => {
-          return obj.get('_id') == seasonId;
-        });
+          return obj.get('_id') == seasonId
+        })
       }
       if ((seasons.size - 1) < page) {
-        page = 0;
+        page = 0
       }
       return (
         <div className="season-list">
           {this.parseSeasonTab(page, seasons)}
           {this.parseSeasonList(page, seasons)}
         </div>
-      );
+      )
 
     } else {
       return (<div />)
     }
   }
 
-  parseSeasonTab(page, seasons) {
+  parseSeasonTab (page, seasons) {
 
     return (
       <div className="selection">
@@ -70,43 +66,43 @@ class SeasonList extends React.Component {
           {...{season}}
         />).toJS() : ''}
       </div>
-    );
+    )
   }
 
-  parseSeasonList(page, seasons) {
+  parseSeasonList (page, seasons) {
     const {
       props: {
         dispatch,
         Season,
         params:{
           episodeId
-          }
         }
-      } = this;
+      }
+    } = this
 
-    const selectedSeasonId = seasons.get(page).get('_id');
-    const season = Season.get(`seasons/${selectedSeasonId}`);
-    let selectedId = null;
+    const selectedSeasonId = seasons.get(page).get('_id')
+    const season = Season.get(`seasons/${selectedSeasonId}`)
+    let selectedId = null
 
     if (!season && selectedSeasonId) {
-      dispatch(SeasonActionCreators.getSeason(selectedSeasonId));
-      return (<Spinner />);
+      dispatch(SeasonActionCreators.getSeason(selectedSeasonId))
+      return (<Spinner />)
     }
 
 
-    const dataList = season.get('episodes');
-    const thumbW = 200;
-    const thumbH = 110;
-    const type = 'episode';
-    const load = true;
+    const dataList = season.get('episodes')
+    const thumbW = 200
+    const thumbH = 110
+    const type = 'episode'
+    const load = true
 
     if (episodeId) {
       selectedId = episodeId
     }
     return (
       <MoviesSlider key="season-list" {...this.props} {...{dataList, thumbW, thumbH, selectedId, type, load}}/>
-    );
+    )
   }
 }
 
-export default SeasonList;
+export default SeasonList

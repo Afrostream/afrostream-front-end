@@ -1,18 +1,18 @@
-import React, { PropTypes, Component } from 'react';
-import { prepareRoute } from '../../decorators';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import * as BlogActionCreators from '../../actions/blog';
-import * as EventActionCreators from '../../actions/event';
-import config from '../../../../config/';
+import React, { PropTypes, Component } from 'react'
+import { prepareRoute } from '../../decorators'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import * as BlogActionCreators from '../../actions/blog'
+import * as EventActionCreators from '../../actions/event'
+import config from '../../../../config/'
 if (process.env.BROWSER) {
-  require('./Blog.less');
+  require('./Blog.less')
 }
 @prepareRoute(async function ({ store }) {
-  return await * [
+  return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(BlogActionCreators.fetchAll())
-  ];
+  ])
 })
 @connect(({ Blog }) => ({Blog}))
 export default class PostList extends Component {
@@ -22,14 +22,14 @@ export default class PostList extends Component {
       props: {
         Blog,children
         }
-      } = this;
+      } = this
 
     if (children) {
-      return children;
+      return children
     }
 
 
-    let posts = Blog.get('posts');
+    let posts = Blog.get('posts')
     if (!posts) {
       return (<div />)
     }
@@ -40,13 +40,13 @@ export default class PostList extends Component {
           {posts
             .map(post => {
 
-              const baseUrl = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-              let imageStyles = baseUrl;
-              let thumb = post.get('poster');
+              const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+              let imageStyles = baseUrl
+              let thumb = post.get('poster')
               if (thumb) {
-                let imgix = thumb.get('imgix');
+                let imgix = thumb.get('imgix')
                 if (imgix) {
-                  imageStyles = `${imgix}?crop=faces&fit=min&w=250&h=120&q=${config.images.quality}&fm=${config.images.type}`;
+                  imageStyles = `${imgix}?crop=faces&fit=min&w=250&h=120&q=${config.images.quality}&fm=${config.images.type}`
                 }
               }
 
@@ -68,11 +68,11 @@ export default class PostList extends Component {
                     </div>
                   </section>
                 </article>
-              );
+              )
             }).toJS()
           }
         </div>
       </div>
-    );
+    )
   }
 }

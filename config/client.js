@@ -1,50 +1,33 @@
-'use strict';
-import dictFr from './i18n/fr-FR.json';
-import dictEn from './i18n/en-EN.json';
-
-import _ from 'lodash';
-import castlab from './player/castlab';
-
-dictFr.gift = _.merge(_.cloneDeep(dictFr.signin), dictFr.gift);
-dictFr.signup = _.merge(_.cloneDeep(dictFr.signin), dictFr.signup);
-dictFr.reset = _.merge(_.cloneDeep(dictFr.signin), dictFr.reset);
-dictFr.relog = _.merge(_.cloneDeep(dictFr.signin), dictFr.relog);
-
-dictEn.gift = _.merge(_.cloneDeep(dictEn.signin), dictEn.gift);
-dictEn.signup = _.merge(_.cloneDeep(dictEn.signin), dictEn.signup);
-dictEn.reset = _.merge(_.cloneDeep(dictEn.signin), dictEn.reset);
-dictEn.relog = _.merge(_.cloneDeep(dictEn.signin), dictEn.relog);
-
 const protData = {
-  "com.widevine.alpha": {
-    "drmtoday": true,
-    "serverURL": "https://lic.staging.drmtoday.com/license-proxy-widevine/cenc/",
-    "httpRequestHeaders": {
-      "dt-custom-data": ""
+  'com.widevine.alpha': {
+    'drmtoday': true,
+    'serverURL': 'https://lic.staging.drmtoday.com/license-proxy-widevine/cenc/',
+    'httpRequestHeaders': {
+      'dt-custom-data': ''
     }
   },
-  "com.microsoft.playready": {
-    "drmtoday": true,
-    "serverURL": "https://lic.staging.drmtoday.com/license-proxy-headerauth/drmtoday/RightsManager.asmx",
-    "httpRequestHeaders": {
-      "http-header-CustomData": ""
+  'com.microsoft.playready': {
+    'drmtoday': true,
+    'serverURL': 'https://lic.staging.drmtoday.com/license-proxy-headerauth/drmtoday/RightsManager.asmx',
+    'httpRequestHeaders': {
+      'http-header-CustomData': ''
     }
   },
-  "com.adobe.flashaccess": {
-    "drmtoday": true,
-    "serverURL": "https://lic.staging.drmtoday.com/flashaccess/LicenseTrigger/v1",
-    "httpRequestHeaders": {
-      "customData": null
+  'com.adobe.flashaccess': {
+    'drmtoday': true,
+    'serverURL': 'https://lic.staging.drmtoday.com/flashaccess/LicenseTrigger/v1',
+    'httpRequestHeaders': {
+      'customData': null
     }
   },
-  "org.w3.clearkey": {
-    "clearkeys": {
-      "21920416600048BC8DBB9A45FD4A3B9E": "0001020304050607"
+  'org.w3.clearkey': {
+    'clearkeys': {
+      '21920416600048BC8DBB9A45FD4A3B9E': '0001020304050607'
     }
   }
-};
+}
 
-const config = {
+const client = {
   featuresFlip: {
     gocardless: true,
     paypal: true,
@@ -69,7 +52,7 @@ const config = {
   externalsJs: [
     '//www.gstatic.com/cv/js/sender/v1/cast_sender.js'
   ],
-  gocarlessApi: '//pay' + (process.env.NODE_ENV !== "production" ? "-sandbox" : "") + '.gocardless.com/js/beta',
+  gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
   promoCodes: [
@@ -142,7 +125,6 @@ const config = {
     limit: 3,
     time: 45
   },
-  dict: getI18n,
   oauth2: {
     facebook: process.env.OAUTH_FACEBOOK_ENABLED || false
   },
@@ -223,116 +205,110 @@ const config = {
     clientId: process.env.BITLY_CLIENT_ID || 'none',
     apiSecret: process.env.BITLY_API_SECRET || 'none',
     accessToken: process.env.BITLY_ACCESS_TOKEN || '3f7014f52dd257e8e502a3682835721020713736',
-    domain: 'see.onafro.tv'
+    domain: 'see.onafro.tv',
+    bitUrl: {
+      access_token: 'https://api-ssl.bitly.com/oauth/access_token',
+      shorten: 'https://api-ssl.bitly.com/v3/shorten'
+    }
   },
   player: {
-    "autoplay": true,
-    "controls": true,
-    "language": "fr",
-    "dashas": {
-      "protData": protData
+    'autoplay': true,
+    'controls': true,
+    'language': 'fr',
+    'dashas': {
+      'protData': protData
     },
-    "controlBar": {
-      "volumeMenuButton": {
-        "inline": false
+    'controlBar': {
+      'volumeMenuButton': {
+        'inline': false
       },
-      "progressControl": {
-        "seekBar": {
-          "mouseThumbnailDisplay": {
-            "host": "hw.cdn.afrostream.net"
+      'progressControl': {
+        'seekBar': {
+          'mouseThumbnailDisplay': {
+            'host': 'hw.cdn.afrostream.net'
           }
         }
       }
     },
-    "metrics": {
-      "user_id": ""
+    'metrics': {
+      'user_id': ''
     },
-    "dash": {
-      "inititalMediaSettings": {
-        "lang": "fr"
+    'dash': {
+      'inititalMediaSettings': {
+        'lang': 'fr'
       },
-      "autoSwitch": true,
-      "bolaEnabled": false,
-      "scheduleWhilePaused": true,
-      "initialBitrate": 400,
-      "liveFragmentCount": 4,
-      "buffer": {
-        "bufferToKeep": 60,
-        "minBufferTime": 24,
-        "bufferPruningInterval": 30,
-        "bandwidthSafetyFactor": 0.9,
-        "bufferTimeAtTopQuality": 30,
-        "bufferTimeAtTopQualityLongForm": 60,
-        "longFormContentDurationThreshold": 600,
-        "richBufferThreshold": 20,
-        "abandonLoadTimeout": 4,
-        "fragmentLoaderRetryAttempts": 3,
-        "fragmentLoaderRetryInterval": 1000
+      'autoSwitch': true,
+      'bolaEnabled': false,
+      'scheduleWhilePaused': true,
+      'initialBitrate': 400,
+      'liveFragmentCount': 4,
+      'buffer': {
+        'bufferToKeep': 60,
+        'minBufferTime': 24,
+        'bufferPruningInterval': 30,
+        'bandwidthSafetyFactor': 0.9,
+        'bufferTimeAtTopQuality': 30,
+        'bufferTimeAtTopQualityLongForm': 60,
+        'longFormContentDurationThreshold': 600,
+        'richBufferThreshold': 20,
+        'abandonLoadTimeout': 4,
+        'fragmentLoaderRetryAttempts': 3,
+        'fragmentLoaderRetryInterval': 1000
       },
-      "protData": protData
+      'protData': protData
     },
-    "languages": {
-      "fr": {
-        "French": "Français",
-        "fra": "Français",
-        "fr": "Français",
-        "English": "Anglais",
-        "eng": "Anglais",
-        "en": "Anglais",
-        "Next": "Vidéo Suivante",
-        "Play": "Lecture",
-        "Pause": "Pause",
-        "Current Time": "Temps actuel",
-        "Duration Time": "Durée",
-        "Remaining Time": "Temps restant",
-        "Stream Type": "Type de flux",
-        "LIVE": "EN DIRECT",
-        "Loaded": "Chargé",
-        "Progress": "Progression",
-        "Fullscreen": "Plein écran",
-        "Non-Fullscreen": "Fenêtré",
-        "Mute": "Sourdine",
-        "Unmuted": "Son activé",
-        "Playback Rate": "Vitesse de lecture",
-        "Subtitles": "Sous-titres",
-        "subtitles off": "Sous-titres désactivés",
-        "Captions": "Sous-titres",
-        "captions off": "Sous-titres désactivés",
-        "Audio Selection": "Audio",
-        "audio off": "Audio désactivé",
-        "Quality Selection": "Qualité",
-        "Quality": "Qualité",
-        "Chapters": "Chapitres",
-        "You aborted the media playback": "Vous avez interrompu la lecture de la vidéo.",
-        "A network error caused the media download to fail part-way.": "Une erreur de réseau a interrompu le téléchargement de la vidéo.",
-        "The media could not be loaded, either because the server or network failed or because the format is not supported.": "Cette vidéo n'a pas pu être chargée, soit parce que le serveur ou le réseau a échoué ou parce que le format n'est pas reconnu. Essayez de mettre à jour votre navigateur ou telechargez le plugin flash player : https://get.adobe.com/fr/flashplayer/",
-        "The media playback was aborted due to a corruption problem or because the media used features your browser did not support.": "La lecture de la vidéo a été interrompue à cause d'un problème de corruption ou parce que la vidéo utilise des fonctionnalités non prises en charge par votre navigateur.",
-        "No compatible source was found for this media.": "Aucune source compatible n'a été trouvée pour cette vidéo."
+    'languages': {
+      'fr': {
+        'French': 'Français',
+        'fra': 'Français',
+        'fr': 'Français',
+        'English': 'Anglais',
+        'eng': 'Anglais',
+        'en': 'Anglais',
+        'Next': 'Vidéo Suivante',
+        'Play': 'Lecture',
+        'Pause': 'Pause',
+        'Current Time': 'Temps actuel',
+        'Duration Time': 'Durée',
+        'Remaining Time': 'Temps restant',
+        'Stream Type': 'Type de flux',
+        'LIVE': 'EN DIRECT',
+        'Loaded': 'Chargé',
+        'Progress': 'Progression',
+        'Fullscreen': 'Plein écran',
+        'Non-Fullscreen': 'Fenêtré',
+        'Mute': 'Sourdine',
+        'Unmuted': 'Son activé',
+        'Playback Rate': 'Vitesse de lecture',
+        'Subtitles': 'Sous-titres',
+        'subtitles off': 'Sous-titres désactivés',
+        'Captions': 'Sous-titres',
+        'captions off': 'Sous-titres désactivés',
+        'Audio Selection': 'Audio',
+        'audio off': 'Audio désactivé',
+        'Quality Selection': 'Qualité',
+        'Quality': 'Qualité',
+        'Chapters': 'Chapitres',
+        'You aborted the media playback': 'Vous avez interrompu la lecture de la vidéo.',
+        'A network error caused the media download to fail part-way.': 'Une erreur de réseau a interrompu le téléchargement de la vidéo.',
+        'The media could not be loaded, either because the server or network failed or because the format is not supported.': 'Cette vidéo n\'a pas pu être chargée, soit parce que le serveur ou le réseau a échoué ou parce que le format n\'est pas reconnu. Essayez de mettre à jour votre navigateur ou telechargez le plugin flash player : https://get.adobe.com/fr/flashplayer/',
+        'The media playback was aborted due to a corruption problem or because the media used features your browser did not support.': 'La lecture de la vidéo a été interrompue à cause d\'un problème de corruption ou parce que la vidéo utilise des fonctionnalités non prises en charge par votre navigateur.',
+        'No compatible source was found for this media.': 'Aucune source compatible n\'a été trouvée pour cette vidéo.'
       }
     },
-    "sr_options": {
-      "ID_CLIENT": process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
-      "TRACKER_URL": process.env.STREAMROOT_TRACKER_URL || ''
+    'sr_options': {
+      'ID_CLIENT': process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
+      'TRACKER_URL': process.env.STREAMROOT_TRACKER_URL || ''
     },
-    "chromecast": {
-      "appId": process.env.CHROMECAST_ID || '',
-      "metadata": {
-        "title": "Title",
-        "subtitle": "Subtitle"
+    'chromecast': {
+      'appId': process.env.CHROMECAST_ID || '',
+      'metadata': {
+        'title': 'Title',
+        'subtitle': 'Subtitle'
       }
     },
-    "techOrder": ["dash", "html5", "dashas"]
+    'techOrder': ['dash', 'html5', 'dashas']
   }
-};
+}
 
-export default config;
-export default function getI18n (lang = 'fr-FR') {
-  switch (lang) {
-    case 'en':
-      return dictEn
-      break;
-    default:
-      return dictFr
-      break;
-  }
-};
+export default client

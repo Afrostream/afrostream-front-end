@@ -9,9 +9,9 @@ export async function notFound (err) {
           imgix: 'https://afrostream.imgix.net/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
         }
       }
-    };
+    }
   }
-  return null;
+  return null
 }
 
 export async function notFoundArray (err) {
@@ -20,7 +20,7 @@ export async function notFoundArray (err) {
       body: []
     }
   }
-  return null;
+  return null
 }
 
 export async function notFoundVideo (err) {
@@ -36,7 +36,7 @@ export async function notFoundVideo (err) {
       }
     }
   }
-  return null;
+  return null
 }
 
 export async function notFoundPost (err) {
@@ -53,7 +53,7 @@ export async function notFoundPost (err) {
       }
     }
   }
-  return null;
+  return null
 }
 
 export async function notFoundCategory (err) {
@@ -70,5 +70,5 @@ export async function notFoundCategory (err) {
       }
     }
   }
-  return null;
+  return null
 }

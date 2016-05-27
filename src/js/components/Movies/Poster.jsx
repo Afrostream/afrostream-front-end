@@ -1,29 +1,29 @@
-import React, { PropTypes } from 'react';
-import LoadVideo from '../LoadVideo';
-import config from '../../../../config';
-import shallowEqual from 'react-pure-render/shallowEqual';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import FavoritesAddButton from '../Favorites/FavoritesAddButton';
-import ShareButton from '../Share/ShareButton';
-import _ from 'lodash';
+import React, { PropTypes } from 'react'
+import LoadVideo from '../LoadVideo'
+import config from '../../../../config'
+import shallowEqual from 'react-pure-render/shallowEqual'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import FavoritesAddButton from '../Favorites/FavoritesAddButton'
+import ShareButton from '../Share/ShareButton'
+import _ from 'lodash'
 
 const Status = {
   PENDING: 'pending',
   LOADING: 'loading',
   LOADED: 'loaded',
   FAILED: 'failed'
-};
+}
 
 class Poster extends LoadVideo {
 
   constructor (props) {
-    super(props);
-    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: '', isNew: false};
+    super(props)
+    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: '', isNew: false}
   }
 
   componentDidMount () {
     if (this.state.status === Status.LOADING) {
-      this.createLoader();
+      this.createLoader()
     }
   }
 
@@ -31,40 +31,40 @@ class Poster extends LoadVideo {
 
     const {
       props: {data}
-    } = this;
+    } = this
 
 
     if (!shallowEqual(nextProps.data, data)) {
-      this.createLoader();
+      this.createLoader()
     }
   }
 
   componentWillUnmount () {
-    this.destroyLoader();
+    this.destroyLoader()
   }
 
   getType () {
     const {
       props: {data, type}
-    } = this;
+    } = this
 
-    return type || data.get('type');
+    return type || data.get('type')
   }
 
   extractProfile (image, ratio = '16:31') {
     if (!image) {
-      return;
+      return
     }
-    var rect;
-    var profiles = image.get('profiles');
-    let type = this.getType();
+    var rect
+    var profiles = image.get('profiles')
+    let type = this.getType()
     if (!profiles || type !== 'spot') {
       return `&crop=${this.props.crop}&fit=${this.props.fit}`
     }
     try {
-      rect = profiles.get(ratio);
+      rect = profiles.get(ratio)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
     return rect && `&rect=${_.values(rect.toJS()).join()}`
   }
@@ -72,19 +72,19 @@ class Poster extends LoadVideo {
   createLoader () {
     const {
       props: {data, thumbW, thumbH}
-    } = this;
+    } = this
 
 
     if (!data) {
-      return;
+      return
     }
 
-    let dateFrom = data.get('dateFrom');
+    let dateFrom = data.get('dateFrom')
     if (dateFrom) {
-      let dateNow = Date.now();
-      let compare = dateNow - new Date(dateFrom).getTime();
-      const type = this.getType();
-      let nbDay = config.movies.isNew[type] || 10;
+      let dateNow = Date.now()
+      let compare = dateNow - new Date(dateFrom).getTime()
+      const type = this.getType()
+      let nbDay = config.movies.isNew[type] || 10
       let isNew = compare <= (nbDay * 24 * 3600 * 1000)
       if (isNew !== this.state.isNew) {
         this.setState({
@@ -93,80 +93,80 @@ class Poster extends LoadVideo {
       }
     }
 
-    let type = this.getType();
-    let thumb = data.get(type === 'movie' ? 'thumb' : 'poster');
+    let type = this.getType()
+    let thumb = data.get(type === 'movie' ? 'thumb' : 'poster')
     if (!thumb) {
-      return;
+      return
     }
 
-    let imgix = thumb.get('imgix');
+    let imgix = thumb.get('imgix')
 
     if (!imgix) {
-      return;
+      return
     }
 
-    let rect = this.extractProfile(thumb, '16:31');
-    let imageStyles = `${imgix}?w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5${rect}`;
+    let rect = this.extractProfile(thumb, '16:31')
+    let imageStyles = `${imgix}?w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5${rect}`
 
     if (this.props.preload) {
 
-      this.destroyLoader();  // We can only have one loader at a time.
+      this.destroyLoader()  // We can only have one loader at a time.
 
-      this.img = new Image();
-      this.img.onload = ::this.handleLoad;
-      this.img.onerror = ::this.handleError;
-      this.img.src = imageStyles;
+      this.img = new Image()
+      this.img.onload = ::this.handleLoad
+      this.img.onerror = ::this.handleError
+      this.img.src = imageStyles
     } else {
-      this.setState({status: Status.LOADED, src: imageStyles});
+      this.setState({status: Status.LOADED, src: imageStyles})
     }
   }
 
   destroyLoader () {
-    let imgSrouce = '';
+    let imgSrouce = ''
     if (this.img) {
-      imgSrouce = this.img.src;
-      this.img.onload = null;
-      this.img.onerror = null;
-      this.img = null;
+      imgSrouce = this.img.src
+      this.img.onload = null
+      this.img.onerror = null
+      this.img = null
     }
-    return imgSrouce;
+    return imgSrouce
   }
 
   handleLoad () {
-    let imgSrouce = this.destroyLoader();
-    this.setState({status: Status.LOADED, src: imgSrouce});
+    let imgSrouce = this.destroyLoader()
+    this.setState({status: Status.LOADED, src: imgSrouce})
   }
 
   handleError () {
-    let imgSrouce = this.destroyLoader();
-    this.setState({status: Status.FAILED, src: imgSrouce});
+    let imgSrouce = this.destroyLoader()
+    this.setState({status: Status.FAILED, src: imgSrouce})
   }
 
   getLazyImageUrl () {
-    let imageStyles;
+    let imageStyles
     if (canUseDOM) {
-      imageStyles = require('../../../assets/images/default/134x200.jpg');
+      imageStyles = require('../../../assets/images/default/134x200.jpg')
     }
     switch (this.state.status) {
       case Status.LOADED:
-        imageStyles = this.state.src;
-        break;
+        imageStyles = this.state.src
+        break
       default:
-        break;
+        break
     }
-    return {backgroundImage: `url(${imageStyles})`};
+    return {backgroundImage: `url(${imageStyles})`}
   }
 
   getShareButton () {
     const {
       props: {data, share}
-    } = this;
+    } = this
 
     if (!share) {
-      return;
+      return
     }
 
-    let link = this.getLink();
+    let link = this.getLink()
 
     return <ShareButton link={link} title={data.get('title')} description={data.get('synopsis')}/>
   }
@@ -176,10 +176,10 @@ class Poster extends LoadVideo {
       props: {
         favorite
       }
-    } = this;
+    } = this
 
     if (!favorite) {
-      return;
+      return
     }
 
     return (<FavoritesAddButton {...this.props}/>)
@@ -187,7 +187,7 @@ class Poster extends LoadVideo {
 
   getNew () {
     if (this.state.isNew) {
-      return (<div className="thumb-new__item"></div>);
+      return (<div className="thumb-new__item"></div>)
     }
   }
 
@@ -195,11 +195,11 @@ class Poster extends LoadVideo {
    * render two rows of thumbnails for the payment pages
    */
   render () {
-    let imageStyles = this.getLazyImageUrl();
+    let imageStyles = this.getLazyImageUrl()
 
     return (
       <div className="payment-page__thumb" style={imageStyles}></div>
-    );
+    )
 
   }
 }
@@ -214,7 +214,7 @@ Poster.propTypes = {
   crop: React.PropTypes.string,
   fit: React.PropTypes.string,
   facepad: React.PropTypes.string
-};
+}
 
 Poster.defaultProps = {
   thumbW: 140,
@@ -226,6 +226,6 @@ Poster.defaultProps = {
   crop: 'faces',
   fit: 'min',
   facepad: '1'
-};
+}
 
-export default Poster;
+export default Poster

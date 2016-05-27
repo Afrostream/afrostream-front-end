@@ -77,7 +77,7 @@ const scriptLoader = (...scripts) => (WrappedComponent) => {
 
 
     hasLib () {
-      return this.state.isScriptLoadSucceed;
+      return this.state.isScriptLoadSucceed
     }
 
     constructor (props, context) {

@@ -1,28 +1,26 @@
-import React from 'react';
-import { prepareRoute } from '../../decorators';
-import * as BillingActionCreators from '../../actions/billing';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { dict } from '../../../../config';
-import classSet from 'classnames';
-
-import AccountPlan from './AccountPlan';
-import AccountSubscriptions from './AccountSubscriptions';
-import AccountSocial from './AccountSocial';
+import React from 'react'
+import { prepareRoute } from '../../decorators'
+import * as BillingActionCreators from '../../actions/billing'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import { getI18n } from '../../../../config/i18n'
+import AccountPlan from './AccountPlan'
+import AccountSubscriptions from './AccountSubscriptions'
+import AccountSocial from './AccountSocial'
 
 if (process.env.BROWSER) {
-  require('./AccountPage.less');
+  require('./AccountPage.less')
 }
 
 @prepareRoute(async function ({store}) {
-  return await * [
+  return await Promise.all([
     store.dispatch(BillingActionCreators.getSubscriptions())
-  ];
+  ])
 })
 @connect(({User}) => ({User}))
 class AccountPage extends React.Component {
 
-  state = {cardNumber: null};
+  state = {cardNumber: null}
 
   getUserInfos () {
 
@@ -30,16 +28,16 @@ class AccountPage extends React.Component {
       props: {
         User
       }
-    } = this;
+    } = this
 
-    const user = User.get('user');
+    const user = User.get('user')
     if (!user) {
-      return '';
+      return ''
     }
 
     return (
       <div className="row account-details">
-        <div className="account-details__header col-md-4">{dict().account.user.header}</div>
+        <div className="account-details__header col-md-4">{getI18n().account.user.header}</div>
         <div className="account-details__container col-md-8">
           <div className="row">
             <div className="col-md-6">
@@ -48,10 +46,10 @@ class AccountPage extends React.Component {
           </div>
           <div className="row">
             <div className="col-md-8">
-              <span>{`${dict().account.user.password} : ******`}</span>
+              <span>{`${getI18n().account.user.password} : ******`}</span>
             </div>
             <div className="col-md-4">
-              <Link className="btn btn-default" to="/reset">{dict().account.user.updatePassword}</Link>
+              <Link className="btn btn-default" to="/reset">{getI18n().account.user.updatePassword}</Link>
             </div>
           </div>
         </div>
@@ -64,11 +62,11 @@ class AccountPage extends React.Component {
       props: {
         User, children
       }
-    } = this;
+    } = this
 
-    const user = User.get('user');
+    const user = User.get('user')
     if (!user) {
-      return 'no user found';
+      return 'no user found'
     }
 
     if (children) {
@@ -78,7 +76,7 @@ class AccountPage extends React.Component {
     return (
       <div>
         <div className="row account-details">
-          <h1>{dict().account.header}</h1>
+          <h1>{getI18n().account.header}</h1>
         </div>
         {this.getUserInfos()}
         <AccountPlan />
@@ -98,4 +96,4 @@ class AccountPage extends React.Component {
   }
 }
 
-export default AccountPage;
+export default AccountPage

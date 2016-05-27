@@ -30,7 +30,8 @@ class SwitchButton extends React.Component {
     theme: 'rsbc-switch-button-flat-round',
     checked: null,
     disabled: false,
-    onChange: this.handleChange
+    onChange: () => {
+    }
   };
   // Handle change
   handleChange () {

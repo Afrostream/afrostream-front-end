@@ -64,7 +64,7 @@ export function getCategory (categoryId) {
     actionDispatcher({
       type: ActionTypes.Category.getCategory,
       categoryId
-    });
+    })
 
     const defaultCategory = getState().Category.get('categoryId')
     categoryId = categoryId || defaultCategory

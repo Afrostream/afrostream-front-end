@@ -1,18 +1,18 @@
-import React, { PropTypes } from 'react';
-import { dict } from '../../../../../config/client';
-import * as BillingActionCreators from '../../../actions/billing';
+import React, { PropTypes } from 'react'
+import { getI18n } from '../../../../../config/i18n'
+import * as BillingActionCreators from '../../../actions/billing'
 
 class CashwayForm extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       hasLib: true
-    };
+    }
   }
 
   hasLib () {
-    return this.state.hasLib;
+    return this.state.hasLib
   }
 
   async submit (billingInfo, currentPlan) {
@@ -21,19 +21,19 @@ class CashwayForm extends React.Component {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
-    const providerName = 'cashway';
+    const providerName = 'cashway'
 
     return await dispatch(BillingActionCreators.getCouponCampaigns('cashway'))
       .then(({res: {body: {couponsCampaigns = []}}}) => {
 
         const couponCampaign = _.find(couponsCampaigns, ({internalPlan : {internalPlanUuid}})=> {
-          return internalPlanUuid === currentPlan.get('internalPlanUuid');
-        });
+          return internalPlanUuid === currentPlan.get('internalPlanUuid')
+        })
 
         if (!couponCampaign) {
-          throw new Error('Billing campaign not found');
+          throw new Error('Billing campaign not found')
         }
 
         return dispatch(BillingActionCreators.create({
@@ -41,7 +41,7 @@ class CashwayForm extends React.Component {
           lastName: billingInfo.lastName,
           firstName: billingInfo.firstName,
           couponsCampaignBillingUuid: couponCampaign.couponsCampaignBillingUuid
-        }));
+        }))
 
       })
       .then(({res: {body: {coupon = {}}}}) => {
@@ -54,12 +54,12 @@ class CashwayForm extends React.Component {
             couponCode: coupon.code
           }
         }
-      });
+      })
   }
 
   render () {
-    return (<div className="row" ref="cashwayForm"/>);
+    return (<div className="row" ref="cashwayForm"/>)
   }
 }
 
-export default CashwayForm;
+export default CashwayForm

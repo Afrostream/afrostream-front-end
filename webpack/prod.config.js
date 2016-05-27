@@ -1,13 +1,15 @@
-import webpack from 'webpack';
-import CompressionPlugin from 'compression-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import webpackConfig from './webpack.config.js';
-import merge from 'lodash/object/merge';
-import config from '../config';
+import webpack from 'webpack'
+import CompressionPlugin from 'compression-webpack-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import webpackConfig from './webpack.config'
+import merge from 'lodash/object/merge'
+import path from 'path'
+
+const node_modules_dir = path.resolve(__dirname, '../node_modules')
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
-const prodConfig = merge({}, webpackConfig, {
+let clientConfig = merge({}, webpackConfig, {
   devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'eval',
   output: {
     publicPath: `/static/`,
@@ -21,9 +23,7 @@ const prodConfig = merge({}, webpackConfig, {
     tls: 'empty',
     dns: 'empty'
   },
-  module: {
-    //noParse: [/.\/superagent-mock$/]
-  },
+  target: 'web',
   plugins: webpackConfig.plugins.concat(
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js?[hash]'),
     new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
@@ -50,17 +50,60 @@ const prodConfig = merge({}, webpackConfig, {
       sourceMap: process.env.NODE_ENV === 'production'
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
-    //new webpack.IgnorePlugin(/.\/superagent-mock$/),
     new CompressionPlugin({
       asset: '{file}.gz',
       algorithm: 'gzip',
       regExp: /\.js$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
-    })
+    }),
+    new webpack.optimize.AggressiveMergingPlugin()
   )
-});
+})
 
-delete prodConfig.module.preLoaders;
+//
+// Configuration for the server-side bundle (server.js)
+// -----------------------------------------------------------------------------
 
-export default prodConfig;
+let serverConfig = merge({}, webpackConfig, {
+  entry: {
+    server: './server'
+  },
+  output: {
+    filename: '[name].js?[hash]',
+    chunkFilename: '[id].js?[hash]',
+    libraryTarget: 'commonjs2'
+  },
+  module: {
+    preLoaders: [
+      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
+      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
+    ],
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel-loader'],
+        exclude: [node_modules_dir]
+      },
+      {
+        test: /\.js$/, // include .js files
+        loaders: ['babel-loader'],
+        exclude: [node_modules_dir]
+      }
+    ]
+  },
+
+  target: 'node',
+
+  plugins: [],
+
+  node: {},
+
+  devtool: 'source-map'
+})
+
+serverConfig.output.path = serverConfig.output.path + '/server'
+
+export default [
+  clientConfig
+]

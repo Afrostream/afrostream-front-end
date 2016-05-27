@@ -1,52 +1,50 @@
-'use strict';
-
-import React, { PropTypes } from 'react';
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment';
-import shallowEqual from 'react-pure-render/shallowEqual';
-import config from '../../../config';
+import React, { PropTypes } from 'react'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import shallowEqual from 'react-pure-render/shallowEqual'
+import config from '../../../config'
 
 if (canUseDOM) {
-  var ga = require('react-ga');
+  var ga = require('react-ga')
 }
-export default function analytics(prepareFn) {
+export default function analytics (prepareFn) {
 
   return AnalyticsComponent =>
 
     class AnalyticsDecorator extends React.Component {
 
-      static prepareRoute = prepareFn;
+      static prepareRoute = prepareFn
 
       static contextTypes = {
         location: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired
-      };
+      }
 
-      render() {
+      render () {
         return (
           <AnalyticsComponent {...this.props} />
-        );
+        )
       }
 
       componentWillReceiveProps (nextProps) {
         const {
           props: {location}
-        } = this;
+        } = this
 
         if (!shallowEqual(nextProps.location.pathname, location.pathname && canUseDOM)) {
-          ga.pageview(nextProps.location.pathname);
+          ga.pageview(nextProps.location.pathname)
         }
       }
 
-      componentDidMount() {
+      componentDidMount () {
         const {
           props: {location}
-        } = this;
+        } = this
 
         if (canUseDOM) {
-          ga.initialize(config.google.analyticsKey, {debug: true});
-          ga.pageview(location.pathname);
+          ga.initialize(config.google.analyticsKey, {debug: true})
+          ga.pageview(location.pathname)
         }
       }
 
-    };
+    }
 }

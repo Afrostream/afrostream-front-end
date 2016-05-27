@@ -1,5 +1,3 @@
-'use strict'
-
 import React from 'react'
 import { Route, Redirect, IndexRoute } from 'react-router'
 import Application from './components/Application'

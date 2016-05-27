@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../../actions/modal'
 import { Link } from 'react-router'
-import { dict } from '../../../../../config/client'
+import { getI18n } from '../../../../../config/i18n'
 import { formatPrice, isBoolean } from '../../../lib/utils'
 import ModalCoupon from '../../Modal/ModalCoupon'
 import _ from 'lodash'
@@ -48,7 +48,7 @@ class PricingTable extends React.Component {
       }
     } = this
 
-    let dictionnary = dict(params.lang);
+    let getI18nionnary = getI18n(params.lang);
     let cols = [
       'formule',
       'name',
@@ -78,31 +78,31 @@ class PricingTable extends React.Component {
       let value = ''
       switch (label) {
         case 'formule':
-          value = dictionnary.planCodes.infos[label] || ''
+          value = getI18nionnary.planCodes.infos[label] || ''
           break
         case 'prelevementMensuel':
           if (plan.get('periodUnit') === 'month') {
-            value = <div className="plan-highlight">{dictionnary.planCodes.infos[label]}</div>
+            value = <div className="plan-highlight">{getI18nionnary.planCodes.infos[label]}</div>
           }
           break
         case 'internalActionLabel':
           const inputSignupAction = {
             onClick: event => ::this.openModal(internalPlanUuid)
           }
-          value = (<button className="btn-plan" {...inputSignupAction}>{`${dictionnary.planCodes.action}`}</button>)
+          value = (<button className="btn-plan" {...inputSignupAction}>{`${getI18nionnary.planCodes.action}`}</button>)
           break
         case 'price':
-          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${dictionnary.account.billing.periods[plan.get('periodUnit')]}`
+          value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${getI18nionnary.account.billing.periods[plan.get('periodUnit')]}`
           break
         case 'internalMaxScreens':
           value =
-            <span>{`${objVal} ${dictionnary.planCodes.infos[label].replace('{s}', parseInt(objVal) > 1 ? 's' : '')}`}</span>
+            <span>{`${objVal} ${getI18nionnary.planCodes.infos[label].replace('{s}', parseInt(objVal) > 1 ? 's' : '')}`}</span>
           break
         default :
           let isBool = (objVal === 'true' || objVal === 'false' || typeof objVal === 'boolean' ) && typeof isBoolean(objVal) === 'boolean'
           if (isBool) {
             if (isBoolean(objVal)) {
-              value = <span>{ dictionnary.planCodes.infos[label] || ''}</span>
+              value = <span>{ getI18nionnary.planCodes.infos[label] || ''}</span>
             }
           }
           else {
@@ -166,7 +166,7 @@ class PricingTable extends React.Component {
       }
     } = this
 
-    let info = dict(params.lang).home.plans;
+    let info = getI18n(params.lang).home.plans;
 
     let validPlans = this.getPlans()
 

@@ -1,6 +1,6 @@
 'use strict';
 
-import { getBodyWithoutAuth } from '../api-front';
+import { getBodyWithoutAuth } from '../../../api-front';
 import Q from 'q';
 
 /**
@@ -42,7 +42,7 @@ const getEpisodeLocation = async function (req, episodeId) {
  * @redirect 302 to /:movieId/:movieSlug/   success
  * @redirect 302 to /                       error     FIXME: should be a 404
  */
-export async function movie(req, res) {
+export async function movie (req, res) {
   redirectOr404(res, getMovieLocation.bind(null, req, req.params.movieId));
 }
 
@@ -51,7 +51,7 @@ export async function movie(req, res) {
  * @redirect 302 to /movieId:/:movieSlug/:seasonId/:seasonSlug/   success
  * @redirect 302 to /                       error     FIXME: should be a 404
  */
-export function season(req, res) {
+export function season (req, res) {
   redirectOr404(res, getSeasonLocation.bind(null, req, req.params.seasonId));
 }
 
@@ -60,7 +60,7 @@ export function season(req, res) {
  * @redirect 302 to /movieId:/:movieSlug/:seasonId/:seasonSlug/:episodeId/:episodeSlug/   success
  * @redirect 302 to /                       error     FIXME: should be a 404
  */
-export function episode(req, res) {
+export function episode (req, res) {
   redirectOr404(res, getEpisodeLocation.bind(null, req, req.params.episodeId));
 }
 
@@ -70,8 +70,8 @@ export function episode(req, res) {
  * @redirect 302 to /movieId:/:movieSlug/:seasonId/:seasonSlug/:episodeId/:episodeSlug/:videoId   success (video is an episode)
  * @redirect 302 to /                       error     FIXME: should be a 404
  */
-export function video(req, res) {
-  redirectOr404(res, async function getLocation() {
+export function video (req, res) {
+  redirectOr404(res, async function getLocation () {
     const video = await getBodyWithoutAuth(req, `/api/videos/${req.params.videoId}`);
     let location = (video.episode) ? await getEpisodeLocation(req, video.episode._id) : await getMovieLocation(req, video.movie._id);
     return location + video._id;

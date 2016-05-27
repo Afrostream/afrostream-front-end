@@ -5,8 +5,9 @@ import UserButton from './../User/UserButton'
 import GoBack from './../GoBack/GoBack'
 import SmartBanner from './SmartBanner'
 import classSet from 'classnames'
-import { apps } from '../../../../config'
+import config from '../../../../config'
 import { withRouter } from 'react-router'
+const {apps} = config
 
 if (process.env.BROWSER) {
   require('./Header.less')

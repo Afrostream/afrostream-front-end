@@ -1,2 +1,2 @@
-export PostList from './PostList';
-export PostView from './PostView';
+export { default as PostList } from './PostList'
+export { default as PostView } from './PostView'

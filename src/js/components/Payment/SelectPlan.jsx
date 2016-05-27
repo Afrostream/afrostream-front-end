@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import PaymentImages from './PaymentImages'
-import { dict } from '../../../../config/client'
+import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
@@ -57,17 +57,17 @@ class SelectPlan extends React.Component {
       let value = ''
       switch (label) {
         case 'formule':
-          value = dict().planCodes.infos[label] || ''
+          value = getI18n().planCodes.infos[label] || ''
           break
         case 'internalActionLabel':
           value = (<Link className="btn btn-plan"
-                         to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout`}>{`${dict().planCodes.action}`}</Link>)
+                         to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout`}>{`${getI18n().planCodes.action}`}</Link>)
           break
         case 'price':
           value = (<div className="select-plan_price">
             {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
             <span className="select-plan_period">
-              {`/${plan.get('periodLength')}${dict().account.billing.periods[plan.get('periodUnit')]}`}
+              {`/${plan.get('periodLength')}${getI18n().account.billing.periods[plan.get('periodUnit')]}`}
             </span>
           </div>)
           break
@@ -99,7 +99,7 @@ class SelectPlan extends React.Component {
 
     return (
       <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
-        {label !== 'formule' && dict().planCodes.infos[label] || ''}
+        {label !== 'formule' && getI18n().planCodes.infos[label] || ''}
       </div>)
   }
 
@@ -107,11 +107,11 @@ class SelectPlan extends React.Component {
     let isCash = this.props.router.isActive('cash')
 
     if (isCash) {
-      return <div className=" choose-plan">{dict().planCodes.cash.selectTitle}</div>
+      return <div className=" choose-plan">{getI18n().planCodes.cash.selectTitle}</div>
     }
 
-    return <div className=" choose-plan">{dict().planCodes.selectTitle}
-      <span className=" choose-plan__bolder"> {dict().planCodes.freePeriodLabel}</span>
+    return <div className=" choose-plan">{getI18n().planCodes.selectTitle}
+      <span className=" choose-plan__bolder"> {getI18n().planCodes.freePeriodLabel}</span>
     </div>
   }
 

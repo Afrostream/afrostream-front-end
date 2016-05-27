@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Thumb from '../../../components/Movies/Thumb'
 import SignUpButton from '../../User/SignUpButton'
 import * as CategoryActionCreators from '../../../actions/category'
-import { dict } from '../../../../../config'
+import { getI18n } from '../../../../../config/i18n'
 import _ from 'lodash'
 
 if (process.env.BROWSER) {
@@ -53,7 +53,7 @@ class Spots extends React.Component {
 
     let categoriesList = Immutable.fromJS(uniqSpots)
 
-    let info = dict(params.lang).home.spots;
+    let info = getI18n(params.lang).home.spots;
 
     return (
       <div className="spots-list">

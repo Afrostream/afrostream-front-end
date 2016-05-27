@@ -4,8 +4,11 @@
     "ecmascript": 6,
     "jsx": true
   },
-  "plugins": [ "react" ],
+  "plugins": [
+    "react"
+  ],
   "env": {
+    "es6": true,
     "node": true,
     "browser": true
   },
@@ -13,8 +16,20 @@
     "new-parens": 0,
     "no-shadow": 0,
     "no-underscore-dangle": 0,
-    "no-console": 1,
-    "quotes": [ 1, "single" ],
-    "strict": 0
+    "no-console": 0,
+    "no-extra-semi": 0,
+    "semi": [
+      1,
+      "never"
+    ],
+    "quotes": [
+      1,
+      "single",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
+    "strict": 2
   }
 }

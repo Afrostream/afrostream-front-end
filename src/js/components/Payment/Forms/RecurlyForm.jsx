@@ -3,44 +3,45 @@ import ReactDOM from'react-dom'
 import CountrySelect from './../CountrySelect'
 import classSet from 'classnames'
 import config from '../../../../../config'
+import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class RecurlyForm extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   static propTypes = {
     selected: React.PropTypes.bool
-  };
+  }
 
   static defaultProps = {
     selected: false
-  };
+  }
 
   formatCard () {
-    $('.recurly-cc-number').payment('formatCardNumber');
-    $('.recurly-cc-exp').payment('formatCardExpiry');
-    $('.recurly-cc-cvc').payment('formatCardCVC');
+    $('.recurly-cc-number').payment('formatCardNumber')
+    $('.recurly-cc-exp').payment('formatCardExpiry')
+    $('.recurly-cc-cvc').payment('formatCardCVC')
   }
 
   initLib () {
     //Detect si le payment via la lib recurly est dispo
-    let recurlyLib = window['recurly'];
+    let recurlyLib = window['recurly']
     if (recurlyLib && !recurlyLib.configured) {
-      recurlyLib.configure(config.recurly.key);
+      recurlyLib.configure(config.recurly.key)
     }
   }
 
   componentDidUpdate () {
-    this.formatCard();
-    this.initLib();
+    this.formatCard()
+    this.initLib()
   }
 
   componentDidMount () {
-    this.formatCard();
-    this.initLib();
+    this.formatCard()
+    this.initLib()
   }
 
   componentWillReceiveProps ({isScriptLoaded, isScriptLoadSucceed}) {
@@ -48,24 +49,24 @@ class RecurlyForm extends React.Component {
       if (!isScriptLoadSucceed) {
         this.setState({
           hasLib: isScriptLoadSucceed
-        });
+        })
       } else {
-        this.formatCard();
-        this.initLib();
+        this.formatCard()
+        this.initLib()
       }
     }
   }
 
   async submit (billingInfo, currentPlan) {
-    const self = this;
-    const cardNumber = $('.recurly-cc-number').val();
-    const excludedCards = ['visaelectron', 'maestro'];
+    const self = this
+    const cardNumber = $('.recurly-cc-number').val()
+    const excludedCards = ['visaelectron', 'maestro']
 
     //Excluded cart type message
     if (~excludedCards.indexOf($.payment.cardType(cardNumber))) {
-      //$('#errors').text('Ce type ne carte n‘est pas pris en charge actuellement');
-      $('.recurly-cc-number').addClass('has-error');
-      throw new Error(config.dict().payment.errors.exludedCard);
+      //$('#errors').text('Ce type ne carte n‘est pas pris en charge actuellement')
+      $('.recurly-cc-number').addClass('has-error')
+      throw new Error(getI18n().payment.errors.exludedCard)
     }
     let recurlyInfo = {
       'plan-code': billingInfo.internalPlanUuid,
@@ -83,16 +84,16 @@ class RecurlyForm extends React.Component {
       'unit-amount-in-cents': currentPlan.get('amountInCents'),
       'coupon_code': self.refs.couponCode.value,
       'country': self.refs.country.value()
-    };
+    }
 
     return await new Promise(
       (resolve, reject) => {
-        let recurlyLib = window['recurly'];
+        let recurlyLib = window['recurly']
 
         recurlyLib.token(recurlyInfo, (err, token)=> {
           // send any errors to the error function below
           if (err) {
-            return reject(err);
+            return reject(err)
           }
           return resolve({
             billingProvider: 'recurly',
@@ -100,22 +101,22 @@ class RecurlyForm extends React.Component {
               customerBankAccountToken: token.id,
               couponCode: self.refs.couponCode.value
             }
-          });
-        });
-      });
+          })
+        })
+      })
   }
 
   onHeaderClick () {
-    let clickHeader = ReactDOM.findDOMNode(this);
+    let clickHeader = ReactDOM.findDOMNode(this)
     if (clickHeader) {
-      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'card', bubbles: true}));
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'card', bubbles: true}))
     }
   }
 
   renderPromoCode () {
     return (
       <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="coupon_code">{config.dict().payment.promo.label}</label>
+        <label className="form-label" htmlFor="coupon_code">{getI18n().payment.promo.label}</label>
         <input
           type="text"
           className="form-control coupon-code"
@@ -123,19 +124,19 @@ class RecurlyForm extends React.Component {
           name="coupon_code"
           id="coupon_code"
           ref="couponCode"
-          placeholder={config.dict().payment.promo.placeHolder}
+          placeholder={getI18n().payment.promo.placeHolder}
         />
       </div>
-    );
+    )
   }
 
   getForm () {
-    if (!this.props.selected) return;
+    if (!this.props.selected) return
 
     return (
       <div className="row" ref="goCardlessForm">
         <div className="form-group col-md-6">
-          <label className="form-label" htmlFor="number">{config.dict().payment.creditCard.number}</label>
+          <label className="form-label" htmlFor="number">{getI18n().payment.creditCard.number}</label>
           <input
             type="tel"
             className="form-control recurly-cc-number card-number"
@@ -144,28 +145,28 @@ class RecurlyForm extends React.Component {
             name="number"
             id="number"
             autoComplete="cc-number"
-            placeholder={config.dict().payment.creditCard.placeHolder} required/>
+            placeholder={getI18n().payment.creditCard.placeHolder} required/>
         </div>
         <CountrySelect ref="country"/>
         <div className="form-group col-md-4">
-          <label className="form-label" htmlFor="month">{config.dict().payment.creditCard.exp}</label>
+          <label className="form-label" htmlFor="month">{getI18n().payment.creditCard.exp}</label>
           <input type="tel" className="form-control recurly-cc-exp" data-billing="month"
                  name="month" id="month"
                  autoComplete="cc-exp"
-                 placeholder={config.dict().payment.creditCard.expPlaceHolder} required/>
+                 placeholder={getI18n().payment.creditCard.expPlaceHolder} required/>
         </div>
         <div className="form-group col-md-4">
-          <label className="form-label" htmlFor="cvv">{config.dict().payment.creditCard.cvv}</label>
+          <label className="form-label" htmlFor="cvv">{getI18n().payment.creditCard.cvv}</label>
           <input type="tel" className="form-control recurly-cc-cvc" data-billing="cvv"
                  ref="cvc"
                  name="cvv" id="cvv" autoComplete="off"
-                 placeholder={config.dict().payment.creditCard.cvcPlaceHolder} required/>
+                 placeholder={getI18n().payment.creditCard.cvcPlaceHolder} required/>
         </div>
 
         {this.renderPromoCode()}
 
       </div>
-    );
+    )
   }
 
   render () {
@@ -173,18 +174,18 @@ class RecurlyForm extends React.Component {
     let classHeader = {
       'accordion-toggle': true,
       'collapsed': !this.props.selected
-    };
+    }
 
     let classPanel = {
       'panel': true,
       'collapsed': !this.props.selected
-    };
+    }
 
     return (
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{config.dict().payment.creditCard.label}</label>
+            <label className="form-label">{getI18n().payment.creditCard.label}</label>
             <img src="/images/payment/bank-cards.png"/>
           </div>
         </div>
@@ -195,7 +196,7 @@ class RecurlyForm extends React.Component {
           {this.getForm()}
         </ReactCSSTransitionGroup>
       </div>
-    );
+    )
   }
 }
 

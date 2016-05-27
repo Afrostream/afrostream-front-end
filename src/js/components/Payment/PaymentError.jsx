@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import * as UserActionCreators from '../../actions/user';
-import * as IntercomActionCreators from '../../actions/intercom';
-import { dict } from '../../../../config';
-import { Link } from 'react-router';
-import _ from 'lodash';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import * as UserActionCreators from '../../actions/user'
+import * as IntercomActionCreators from '../../actions/intercom'
+import { getI18n } from '../../../../config/i18n'
+import { Link } from 'react-router'
+import _ from 'lodash'
 
 @connect(({User}) => ({User}))
 class PaymentError extends React.Component {
@@ -16,23 +16,23 @@ class PaymentError extends React.Component {
     link: React.PropTypes.string,
     linkMessage: React.PropTypes.string,
     links: React.PropTypes.array
-  };
+  }
 
   static defaultProps = {
-    title: dict().payment.errors.abo,
+    title: '',
     message: '',
     link: '/',
-    linkMessage: dict().payment.errors.retry,
+    linkMessage: '',
     links: []
-  };
+  }
 
   componentWillUnmount () {
     const {
       props: {
         dispatch
       }
-    } = this;
-    dispatch(IntercomActionCreators.removeIntercom());
+    } = this
+    dispatch(IntercomActionCreators.removeIntercom())
   }
 
   renderLinks () {
@@ -40,9 +40,9 @@ class PaymentError extends React.Component {
       props: {
         links
       }
-    } = this;
+    } = this
     return _.map(links, (link) => <Link to={link.target}>{link.label} {link.image ?
-      <img src={link.image} width="60" className="img-responsive"/> : ''}</Link>);
+      <img src={link.image} width="60" className="img-responsive"/> : ''}</Link>)
   }
 
   logOut () {
@@ -50,9 +50,9 @@ class PaymentError extends React.Component {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
-    dispatch(UserActionCreators.logOut());
+    dispatch(UserActionCreators.logOut())
   }
 
   render () {
@@ -66,9 +66,9 @@ class PaymentError extends React.Component {
           <a href={this.props.link}>{this.props.linkMessage}</a>
         </p>
       </div>
-    );
+    )
   }
 
 }
 
-export default PaymentError;
+export default PaymentError

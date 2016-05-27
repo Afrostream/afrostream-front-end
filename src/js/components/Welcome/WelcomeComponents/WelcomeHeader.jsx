@@ -3,11 +3,14 @@ import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../../actions/modal'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames'
-import { dict, promoCodes, metadata, images }from '../../../../../config'
+import config from '../../../../../config'
+import { getI18n } from '../../../../../config/i18n'
 import _ from 'lodash'
 import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
 import { withRouter } from 'react-router'
+
+const {promoCodes, metadata, images} =config
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
@@ -83,8 +86,8 @@ class WelcomeHeader extends React.Component {
     let {movieId, seasonId, episodeId, lang} = params
 
     let info = {
-      title: dict(lang).home.title,
-      action: dict(lang).home.action,
+      title: getI18n(lang).home.title,
+      action: getI18n(lang).home.action,
       poster: `${metadata.shareImage}`,
       movie: {
         title: '',

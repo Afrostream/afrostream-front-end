@@ -4,7 +4,7 @@
 
 import express from 'express';
 
-import * as controllerSharing from './sharing.controller';
+import * as controllerSharing from './sharing.controller.js';
 
 const router = express.Router();
 

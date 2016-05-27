@@ -1,22 +1,25 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import classSet from 'classnames';
-import * as BillingActionCreators from '../../actions/billing';
-import * as UserActionCreators from '../../actions/user';
-import * as OauthActionCreator from '../../actions/oauth';
-import PaymentSuccess from '../Payment/PaymentSuccess';
-import Spinner from '../Spinner/Spinner';
-import { oauth2, dict } from '../../../../config';
+import React from 'react'
+import { connect } from 'react-redux'
+import classSet from 'classnames'
+import * as BillingActionCreators from '../../actions/billing'
+import * as UserActionCreators from '../../actions/user'
+import * as OauthActionCreator from '../../actions/oauth'
+import PaymentSuccess from '../Payment/PaymentSuccess'
+import Spinner from '../Spinner/Spinner'
+import config from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
+
+const {oauth2} = config
 
 if (process.env.BROWSER) {
-  require('./CouponRegister.less');
+  require('./CouponRegister.less')
 }
 
 @connect(({Billing, User}) => ({Billing, User}))
 class CouponRegister extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       success: false,
       loading: false,
@@ -25,13 +28,13 @@ class CouponRegister extends React.Component {
       errors: {},
       signinError: null,
       timestamp: new Date()
-    };
+    }
   }
 
   redeemCoupon (e) {
-    e.preventDefault();
+    e.preventDefault()
 
-    let loginType = (e.target.id == 'create-account-coupon') ? 'signup' : 'signin';
+    let loginType = (e.target.id == 'create-account-coupon') ? 'signup' : 'signin'
 
     const {
       props: {
@@ -39,25 +42,25 @@ class CouponRegister extends React.Component {
         Billing,
         User
       }
-    } = this;
+    } = this
 
-    const coupon = Billing.get('coupon');
-    const user = User.get('user');
+    const coupon = Billing.get('coupon')
+    const user = User.get('user')
 
-    const self = this;
+    const self = this
 
-    let validations = ['email', 'password'];
+    let validations = ['email', 'password']
 
     if (!self.isValid()) {
-      return;
+      return
     }
 
     this.setState({
       loading: true,
       error: ''
-    });
+    })
 
-    let postData = _.pick(self.state, ['email', 'password']);
+    let postData = _.pick(self.state, ['email', 'password'])
 
     dispatch(OauthActionCreator[loginType](postData)).then((result) => {
 
@@ -72,118 +75,118 @@ class CouponRegister extends React.Component {
           subOpts: {
             couponCode: self.props.Billing.get('coupon').get('coupon').get('code')
           }
-        };
+        }
 
         dispatch(BillingActionCreators.subscribe(billingInfo)).then((subscribeResult) => {
-          var planCode = self.props.Billing.get('coupon').get('coupon').get('internalPlan').get('internalPlanUuid');
-          dispatch(UserActionCreators.getProfile());
+          var planCode = self.props.Billing.get('coupon').get('coupon').get('internalPlan').get('internalPlanUuid')
+          dispatch(UserActionCreators.getProfile())
           self.setState({
             signinError: false,
             success: true,
             loading: false
-          });
-        });
-      });
+          })
+        })
+      })
     }).catch((err)=> {
 
       let signinErrorText = (err.status === 403)
-        ? this.getTitle('wrongEmailPasswordErrorText') : this.getTitle('serverErrorText');
+        ? this.getTitle('wrongEmailPasswordErrorText') : this.getTitle('serverErrorText')
 
       self.setState({
         signinError: signinErrorText,
         success: false,
         loading: false
-      });
+      })
 
-    });
+    })
   }
 
   validate (targetName) {
-    let errors = this.state.errors;
-    errors[targetName] = null;
-    let isValid = true;
-    let valitationType = targetName.split('-')[0];
-    let targetType = valitationType;
-    let valueForm = this.state[targetType];
-    let regex = null;
+    let errors = this.state.errors
+    errors[targetName] = null
+    let isValid = true
+    let valitationType = targetName.split('-')[0]
+    let targetType = valitationType
+    let valueForm = this.state[targetType]
+    let regex = null
 
     switch (targetName) {
       case 'email-create-account-coupon':
       case 'email-signin-account-coupon':
-        regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        isValid = 'email' && regex.test(valueForm);
-        break;
+        regex = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        isValid = 'email' && regex.test(valueForm)
+        break
       case 'password-create-account-coupon':
       case 'password-signin-account-coupon':
         //Minimum 6 and Maximum 50 characters :
-        regex = /^.{6,50}$/;
-        isValid = regex.test(valueForm);
-        valitationType = this.validateSize(valueForm, 6, 50);
-        break;
+        regex = /^.{6,50}$/
+        isValid = regex.test(valueForm)
+        valitationType = this.validateSize(valueForm, 6, 50)
+        break
     }
 
     if (!isValid) {
-      const i18nValidMess = this.getTitle('language');
-      let label = i18nValidMess[targetType];
-      let errMess = (targetType === 'email') ? '' : i18nValidMess[valitationType];
-      errors[targetName] = label + ' ' + errMess;
+      const i18nValidMess = this.getTitle('language')
+      let label = i18nValidMess[targetType]
+      let errMess = (targetType === 'email') ? '' : i18nValidMess[valitationType]
+      errors[targetName] = label + ' ' + errMess
     }
     this.setState({
       errors: errors
-    });
+    })
   }
 
   validateSize (value, min = 0, max = 0) {
-    if (!value) return 'empty';
-    if (value.length < min) return 'min';
-    if (value.length > max) return 'max';
-    return null;
+    if (!value) return 'empty'
+    if (value.length < min) return 'min'
+    if (value.length > max) return 'max'
+    return null
   }
 
   handleInputChange (evt) {
-    let formData = this.state;
+    let formData = this.state
     if (!evt.target) {
-      return;
+      return
     }
-    let name = evt.target.getAttribute('name');//.split('-')[0];
-    let shortName = name.split('-')[0];
-    let value = evt.target.value;
-    formData[shortName] = value;
+    let name = evt.target.getAttribute('name')//.split('-')[0]
+    let shortName = name.split('-')[0]
+    let value = evt.target.value
+    formData[shortName] = value
     this.setState(formData, () => {
-      this.validate(name);
-    });
+      this.validate(name)
+    })
   }
 
   getTitle (key = 'title') {
-    let keyType = this.getI18n();
-    return dict()[keyType][key] || '';
+    let keyType = this.getI18n()
+    return getI18n()[keyType][key] || ''
   }
 
   getI18n () {
-    let keyType = 'signin';
+    let keyType = 'signin'
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
-        keyType = 'signin';
-        break;
+        keyType = 'signin'
+        break
       case 'showSignup':
-        keyType = 'signup';
-        break;
+        keyType = 'signup'
+        break
     }
-    return keyType;
+    return keyType
   }
 
   isValid () {
     let valid = _.filter(this.state.errors, (value, key) => {
-      return value;
-    });
-    return !valid.length;
+      return value
+    })
+    return !valid.length
   }
 
   renderValidationMessages (target) {
-    let errorMessage = this.state.errors[target];
-    if (!errorMessage) return '';
-    return (<div className="help-block">{ errorMessage }</div>);
+    let errorMessage = this.state.errors[target]
+    if (!errorMessage) return ''
+    return (<div className="help-block">{ errorMessage }</div>)
   }
 
   render () {
@@ -194,13 +197,13 @@ class CouponRegister extends React.Component {
             <PaymentSuccess />
           </div>
         </div>
-      );
+      )
     } else {
 
       let spinnerClasses = {
         'spinner-payment': true,
         'spinner-loading': this.state.loading
-      };
+      }
 
       return (
         <div className="row-fluid brand-bg coupon-register-page">
@@ -279,9 +282,9 @@ class CouponRegister extends React.Component {
             </form>
           </div>
         </div>
-      );
+      )
     }
   }
 }
 
-export default CouponRegister;
+export default CouponRegister

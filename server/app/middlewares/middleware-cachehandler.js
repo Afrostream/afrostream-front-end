@@ -1,7 +1,5 @@
-'use strict';
-
-module.exports = function (options) {
-  return function cacheHandler(req, res, next) {
+export default function (options) {
+  return function cacheHandler (req, res, next) {
     res.noCache = function () {
       // default no-cache header should be :
       // res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -12,14 +10,14 @@ module.exports = function (options) {
       res.set('Cache-Control', 'private');
     };
     res.isDynamic = function () {
-      res.set('Cache-Control', 'public, max-age=0');
-    };
+      res.set('Cache-Control', 'public, max-age=0')
+    }
     res.cache = function (duration) {
-      res.set('Cache-Control', 'public, max-age=' + (duration || 60) + ', stale-while-revalidate=10');
-    };
+      res.set('Cache-Control', 'public, max-age=' + (duration || 60) + ', stale-while-revalidate=10')
+    }
     res.isStatic = function () {
-      res.set('Cache-Control', 'public, max-age=31536000');
-    };
-    next();
-  };
-};
+      res.set('Cache-Control', 'public, max-age=31536000')
+    }
+    next()
+  }
+}

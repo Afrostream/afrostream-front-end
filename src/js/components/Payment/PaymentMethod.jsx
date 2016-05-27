@@ -1,8 +1,11 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
-import { dict, payment, featuresFlip } from '../../../../config'
+import { getI18n } from '../../../../config/i18n'
+import config from '../../../../config'
 import { Link } from 'react-router'
 import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm } from './Forms'
+
+const {payment, featuresFlip} = config
 
 if (process.env.BROWSER) {
   require('./PaymentMethod.less')

@@ -11,12 +11,12 @@ import * as EpisodeActionCreators from '../../actions/episode'
 import PlayerComponent from './PlayerComponent'
 
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId, videoId}}) {
-  await * [
+  await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(EventActionCreators.showChat(false)),
     store.dispatch(PlayerActionCreators.getConfig()),
     store.dispatch(CategoryActionCreators.getAllSpots())
-  ]
+  ])
 
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))
@@ -34,10 +34,10 @@ import PlayerComponent from './PlayerComponent'
     await store.dispatch(VideoActionCreators.getVideo(videoId))
   }
 
-  return await * [
+  return await Promise.all([
     store.dispatch(UserActionCreators.getFavorites('movies')),
     store.dispatch(UserActionCreators.getFavorites('episodes'))
-  ]
+  ])
 })
 class PlayerPage extends React.Component {
 
