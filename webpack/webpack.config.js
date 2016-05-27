@@ -27,7 +27,6 @@ if (process.env.LOAD_STAGING) {
   delete herokuConfig.env.NODE_ENV
   process.env = merge(process.env, herokuConfig.env)
 }
-console.log('node env :', process.env.NODE_ENV)
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -53,7 +52,7 @@ const webpackConfig = {
       'react-dom',
       'react-router',
       'redux',
-      'fbjs',
+      'fbjs/lib/ExecutionEnvironment',
       'history',
       'lodash',
       'classnames',
@@ -83,15 +82,19 @@ const webpackConfig = {
     colors: true
   },
   module: {
+    preLoaders: [
+      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
+      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
+    ],
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader', 'eslint-loader'],
+        loaders: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel-loader', 'eslint-loader'],
+        loaders: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {

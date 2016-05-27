@@ -30,6 +30,6 @@
         "allowTemplateLiterals": true
       }
     ],
-    "strict": 0
+    "strict": 2
   }
 }

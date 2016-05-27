@@ -4,11 +4,11 @@ import path from 'path'
 import devConfig from './dev.config'
 import config from '../config'
 
-const { webpackDevServer: { host, port } } = config
+const {webpackDevServer: {host, port}} = config
 
 const serverOptions = {
     contentBase: path.resolve(__dirname, '../dist'),
-    publicPath: devConfig.output.publicPath,
+    publicPath: devConfig[0].output.publicPath,
     hot: true,
     headers: {'Access-Control-Allow-Origin': '*'},
     quiet: false,

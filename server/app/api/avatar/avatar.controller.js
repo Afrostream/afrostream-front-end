@@ -1,12 +1,11 @@
-'use strict';
-import Canvas from 'canvas';
+import Canvas from 'canvas'
 
 exports.getAvatar = function (req, res) {
-  res.cache(3600);
-  res.set('Content-Type', 'image/jpeg');
+  res.cache(3600)
+  res.set('Content-Type', 'image/jpeg')
 
-  let name = req.params.email || '';
-  let size = 50;
+  let name = req.params.email || ''
+  let size = 50
 
   let colours = [
       "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
@@ -14,31 +13,31 @@ exports.getAvatar = function (req, res) {
     ],
 
     nameSplit = String(name).toUpperCase().split('.'),
-    initials;
+    initials
 
 
   if (nameSplit.length == 1) {
-    initials = nameSplit[0] ? nameSplit[0].charAt(0) : '?';
+    initials = nameSplit[0] ? nameSplit[0].charAt(0) : '?'
   } else {
-    initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
+    initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0)
   }
 
-  let charIndex = (initials == '?' ? 72 : initials.charCodeAt(0)) - 64;
-  let colourIndex = charIndex % 20;
+  let charIndex = (initials == '?' ? 72 : initials.charCodeAt(0)) - 64
+  let colourIndex = charIndex % 20
 
-  let canvas = new Canvas(size, size);
-  let ctx = canvas.getContext('2d');
+  let canvas = new Canvas(size, size)
+  let ctx = canvas.getContext('2d')
 
-  ctx.fillStyle = colours[colourIndex - 1];
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.font = Math.round(canvas.width / 2) + 'px Arial';
-  ctx.textAlign = 'center';
-  ctx.fillStyle = '#FFF';
-  ctx.fillText(initials, size / 2, size / 1.5);
+  ctx.fillStyle = colours[colourIndex - 1]
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.font = Math.round(canvas.width / 2) + 'px Arial'
+  ctx.textAlign = 'center'
+  ctx.fillStyle = '#FFF'
+  ctx.fillText(initials, size / 2, size / 1.5)
 
   canvas.jpegStream({
     bufsize: 4096 // output buffer size in bytes, default: 4096
     , quality: 100 // JPEG quality (0-100) default: 75
     , progressive: false // true for progressive compression, default: false
-  }).pipe(res);
-};
+  }).pipe(res)
+}

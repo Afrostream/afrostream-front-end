@@ -1,6 +1,7 @@
 import auth from '../auth'
 import avatar from './api/avatar'
 import sharing from './api/sharing'
+import component from './api/component'
 import config from '../../config'
 import fs from 'fs'
 import path from 'path'
@@ -29,6 +30,9 @@ export default function routes (app, buildPath) {
   // SHARING
   // --------------------------------------------------
   app.use('/sharing', sharing)
+  // SHARING
+  // --------------------------------------------------
+  app.use('/components', component)
 
   // RENDER
   // --------------------------------------------------
