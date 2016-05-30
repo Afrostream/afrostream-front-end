@@ -23,9 +23,7 @@ let clientConfig = merge({}, webpackConfig, {
     tls: 'empty',
     dns: 'empty'
   },
-  module: {
-
-  },
+  module: {},
   plugins: webpackConfig.plugins.concat(
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js?[hash]'),
     new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
@@ -103,6 +101,4 @@ let serverConfig = merge({}, webpackConfig, {
 
 serverConfig.output.path = serverConfig.output.path + '/server'
 
-export default [
-  clientConfig
-]
+export default clientConfig

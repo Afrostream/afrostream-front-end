@@ -99,11 +99,11 @@ const webpackConfig = {
       },
       {
         test: /\.json$/,
-        include: [
-          path.join(__dirname, '../node_modules/markdown-it'),
-          path.join(__dirname, '../node_modules/sendbird'),
-          path.join(__dirname, '../config')
-        ],
+        //include: [
+        //  path.join(__dirname, '../node_modules/markdown-it'),
+        //  path.join(__dirname, '../node_modules/sendbird'),
+        //  path.join(__dirname, '../config')
+        //],
         loaders: ['json']
       },
       {

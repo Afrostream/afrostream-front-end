@@ -82,6 +82,5 @@ let serverConfig = merge({}, webpackConfig, {
 
 serverConfig.output.path = serverConfig.output.path + '/server'
 
-export default [
-  clientConfig
-]
+export default clientConfig
+
