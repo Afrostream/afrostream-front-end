@@ -8,7 +8,7 @@
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc server",
     "build": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --production --verbose --colors --display-error-details --config webpack/prod.config.js",
     "watch": "./node_modules/.bin/babel-node  webpack/webpack-dev-server.js",
-    "dev": "echo 'requiring node v4.4.4' && . ~/.nvm/nvm.sh && nvm use 4.4.4 && node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch\"  \"nodemon --exec npm run app\"",
+    "dev": "echo 'requiring node v4.4.4' && . ~/.nvm/nvm.sh && nvm use 4.4.4 && node ./node_modules/concurrently/src/main.js --kill-others && npm run watch && nodemon --exec npm run app",
     "staging": "export LOAD_STAGING=true && npm run dev",
     "start": "./node_modules/.bin/babel-node server/index.js",
     "debug": "./node_modules/.bin/babel-node --debug server/index.js",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "del": "^1.2.0",
     "jshint": "^2.8.0",
-    "node-notifier": "^4.2.3"
+    "node-notifier": "^4.2.3",
     "nodemon": "^1.9.1",
     "react-hot-loader": "^1.2.8",
     "webpack-dev-server": "^1.10.0"
