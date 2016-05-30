@@ -1,6 +1,4 @@
-'use strict'
-
-import { getData, fwd } from '../../api-front'
+import { getData, fwd } from '../../app/api/api-front'
 import config from '../../../config'
 const {apiClient} =config
 

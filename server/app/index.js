@@ -2,7 +2,7 @@ import config from '../../config'
 import app from './app'
 import fastly from 'fastly'
 // Set default node environment to development
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 const server = app.listen(config.server.port, () => {
   const {address: host, port} = server.address()

@@ -1,15 +1,13 @@
-'use strict';
+import express from 'express'
+import facebook from  './facebook'
 
-import express from 'express';
-import facebook from  './facebook';
-
-const router = express.Router();
+const router = express.Router()
 
 router.use(function (req, res, next) {
-  res.noCache();
-  next();
-});
+  res.noCache()
+  next()
+})
 
-router.use('/facebook', facebook);
+router.use('/facebook', facebook)
 
-module.exports = router;
+module.exports = router
