@@ -31,7 +31,7 @@ const api = createAPI(
    */
   ({method, headers = {}, pathname = '', query = {}, body = {}, legacy = false, local = false}) => {
     pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '')
-    var url = `${apiClient.urlPrefix}${pathname}`
+    let url = `${apiClient.urlPrefix}${pathname}`
     query.from = query.from || heroku.appName
 
     if (legacy) {

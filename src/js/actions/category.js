@@ -57,14 +57,12 @@ export function getCategory (categoryId) {
       console.log('Category already present in data store', categoryId)
       return {
         type: ActionTypes.Category.getCategory,
-        categoryId
+        categoryId,
+        res: {
+          body: readyCat.toJS()
+        }
       }
     }
-
-    actionDispatcher({
-      type: ActionTypes.Category.getCategory,
-      categoryId
-    })
 
     const defaultCategory = getState().Category.get('categoryId')
     categoryId = categoryId || defaultCategory
