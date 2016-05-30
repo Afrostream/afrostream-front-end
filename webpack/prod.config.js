@@ -23,7 +23,9 @@ let clientConfig = merge({}, webpackConfig, {
     tls: 'empty',
     dns: 'empty'
   },
-  target: 'web',
+  module: {
+
+  },
   plugins: webpackConfig.plugins.concat(
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js?[hash]'),
     new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
@@ -56,14 +58,11 @@ let clientConfig = merge({}, webpackConfig, {
       regExp: /\.js$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
-    }),
-    new webpack.optimize.AggressiveMergingPlugin()
+    })
   )
 })
 
-//
-// Configuration for the server-side bundle (server.js)
-// -----------------------------------------------------------------------------
+delete clientConfig.module.preLoaders;
 
 let serverConfig = merge({}, webpackConfig, {
   entry: {
