@@ -1,6 +1,6 @@
 import Q from 'q'
 import _ from 'lodash'
-import config from '../config'
+import config from '../../../config'
 import request from 'request'
 const {apiServer} = config
 /**
