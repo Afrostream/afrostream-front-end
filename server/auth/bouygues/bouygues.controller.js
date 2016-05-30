@@ -4,17 +4,17 @@ const {apiClient} =config
 
 export function signin (req, res) {
   res.noCache()
-  getData(req, '/auth/facebook/signin', {followRedirect: false}).nodeify(fwd(res))
+  getData(req, '/auth/bouygues/signin', {followRedirect: false}).nodeify(fwd(res))
 }
 
 export function signup (req, res) {
   res.noCache()
-  getData(req, '/auth/facebook/signup', {followRedirect: false}).nodeify(fwd(res))
+  getData(req, '/auth/bouygues/signup', {followRedirect: false}).nodeify(fwd(res))
 }
 
 export function link (req, res) {
   res.noCache()
-  getData(req, '/auth/facebook/link', {
+  getData(req, '/auth/bouygues/link', {
     followRedirect: false,
     header: {
       'Access-Token': req.query.access_token
@@ -25,7 +25,7 @@ export function link (req, res) {
 export async function unlink (req, res) {
   res.noCache()
   try {
-    const facebookCompleteFlow = await getData(req, '/auth/facebook/unlink', {
+    const facebookCompleteFlow = await getData(req, '/auth/bouygues/unlink', {
       followRedirect: false,
       header: {
         'Access-Token': req.query.access_token
@@ -51,18 +51,18 @@ export function failure (req, res) {
 export async function callback (req, res) {
   res.noCache()
   try {
-    const facebookCompleteFlow = await getData(req, '/auth/facebook/callback', {followRedirect: false})
-    var fbResponse = facebookCompleteFlow[0]
-      , fbBody = facebookCompleteFlow[1]
+    const bouyguesCompleteFlow = await getData(req, '/auth/bouygues/callback', {followRedirect: false})
+    var bouyguesResponse = bouyguesCompleteFlow[0]
+      , bouyguesBody = bouyguesCompleteFlow[1]
 
     const layout = 'layouts/oauth-success'
-    if (fbResponse.statusCode !== 200) {
-      fbBody.error = fbResponse.statusMessage
+    if (bouyguesResponse.statusCode !== 200) {
+      bouyguesBody.error = bouyguesResponse.statusMessage
     }
-    res.status(fbResponse.statusCode).render(layout, {
-      statusCode: fbResponse.statusCode,
-      statusMessage: fbResponse.statusMessage,
-      tokenData: fbBody,
+    res.status(bouyguesResponse.statusCode).render(layout, {
+      statusCode: bouyguesResponse.statusCode,
+      statusMessage: bouyguesResponse.statusMessage,
+      tokenData: bouyguesBody,
       storageId: apiClient.token
     })
   }
