@@ -1,18 +1,18 @@
-import React, { PropTypes } from 'react';
-import Immutable from 'immutable';
-import Pager from './Pager';
+import React, { PropTypes } from 'react'
+import Immutable from 'immutable'
+import Pager from './Pager'
 
 class Pagination extends React.Component {
 
   static propTypes = {
     slides: PropTypes.instanceOf(Immutable.List).isRequired,
     page: React.PropTypes.number.isRequired
-  };
+  }
 
-  render() {
+  render () {
     const {
-      props: { slides,page }
-      } = this;
+      props: {slides, page}
+    } = this
 
     return (
       <div className="pagination">
@@ -22,8 +22,8 @@ class Pagination extends React.Component {
           key={`page-${category.get('_id')}-${i}`}
           {...{category}} />).toJS()}
       </div>
-    );
+    )
   }
 }
 
-export default Pagination;
+export default Pagination

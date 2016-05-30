@@ -1,8 +1,8 @@
-import React from 'react';
-import classSet from 'classnames';
+import React from 'react'
+import classSet from 'classnames'
 
 if (process.env.BROWSER) {
-  require('./SwitchButton.less');
+  require('./SwitchButton.less')
 }
 
 class SwitchButton extends React.Component {
@@ -18,7 +18,7 @@ class SwitchButton extends React.Component {
     disabled: React.PropTypes.bool,
     checked: React.PropTypes.bool,
     onChange: React.PropTypes.func
-  };
+  }
 
   static defaultProps = {
     id: '',
@@ -32,29 +32,29 @@ class SwitchButton extends React.Component {
     disabled: false,
     onChange: () => {
     }
-  };
+  }
   // Handle change
   handleChange () {
     // Override
   }
 
   render () {
-    let id, label, labelRight;
+    let id, label, labelRight
 
     if (this.props.id == '' && this.props.name != '') {
-      id = this.props.name;
+      id = this.props.name
     }
 
     if (this.props.label != '') {
       label = (
         <label htmlFor={id}>{this.props.label}</label>
-      );
+      )
     }
 
     if (this.props.labelRight != '') {
       labelRight = (
         <label htmlFor={id}>{this.props.labelRight}</label>
-      );
+      )
     }
 
     return (
@@ -66,8 +66,8 @@ class SwitchButton extends React.Component {
         <label htmlFor={id}></label>
         {labelRight}
       </div>
-    );
+    )
   }
 }
 
-export default SwitchButton;
+export default SwitchButton

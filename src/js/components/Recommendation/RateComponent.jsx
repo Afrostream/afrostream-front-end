@@ -1,23 +1,23 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import StarRating from '../StarRating/StarRating';
-import * as RecoActionCreators from '../../actions/reco';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import StarRating from '../StarRating/StarRating'
+import * as RecoActionCreators from '../../actions/reco'
 if (process.env.BROWSER) {
-  require('./RateComponent.less');
+  require('./RateComponent.less')
 }
 
 @connect(({User}) => ({User}))
 class RateComponent extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   handleRatingClick (e, data) {
     const {
       props: {dispatch, videoId}
-    } = this;
-    dispatch(RecoActionCreators.rateVideo(data.rating, videoId));
+    } = this
+    dispatch(RecoActionCreators.rateVideo(data.rating, videoId))
   }
 
   render () {
@@ -27,14 +27,14 @@ class RateComponent extends React.Component {
         videoId,
         defaultValue
       }
-    } = this;
+    } = this
 
-    const videoData = User.get(`video/${videoId}`);
+    const videoData = User.get(`video/${videoId}`)
 
-    let rating = defaultValue;
+    let rating = defaultValue
 
     if (videoData) {
-      rating = videoData.get('rating') || defaultValue;
+      rating = videoData.get('rating') || defaultValue
     }
 
     return (
@@ -42,7 +42,7 @@ class RateComponent extends React.Component {
                   disabled={this.props.disabled}
                   onRatingClick={::this.handleRatingClick}
                   rating={rating}/>
-    );
+    )
   }
 }
 
@@ -53,12 +53,12 @@ RateComponent.propTypes = {
   ]),
   disabled: PropTypes.bool,
   defaultValue: PropTypes.number
-};
+}
 
 RateComponent.defaultProps = {
   videoId: null,
   disabled: false,
   defaultValue: 3
-};
+}
 
-export default RateComponent;
+export default RateComponent

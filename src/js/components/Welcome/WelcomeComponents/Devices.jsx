@@ -18,7 +18,7 @@ class Devices extends React.Component {
       }
     } = this
 
-    let info = getI18n(params.lang).home.devices;
+    let info = getI18n(params.lang).home.devices
 
     return (
       <section className="devices">

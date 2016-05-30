@@ -107,6 +107,7 @@ export default function createAPI (createRequest) {
             NProgress.done()
           }
           if (err) {
+            console.log(err)
             return reject(err)
           }
           return resolve(res)

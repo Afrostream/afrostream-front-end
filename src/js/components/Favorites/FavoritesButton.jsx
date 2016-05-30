@@ -1,14 +1,14 @@
-import React ,{PropTypes } from 'react';
-import { Link } from 'react-router';
+import React ,{PropTypes } from 'react'
+import { Link } from 'react-router'
 
 if (process.env.BROWSER) {
-  require('./FavoritesButton.less');
+  require('./FavoritesButton.less')
 }
 
 class FavoritesButton extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   render() {
@@ -18,4 +18,4 @@ class FavoritesButton extends React.Component {
   }
 }
 
-export default FavoritesButton;
+export default FavoritesButton

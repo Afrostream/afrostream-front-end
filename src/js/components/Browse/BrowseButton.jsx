@@ -1,14 +1,14 @@
-import React from 'react';
-import BrowseMenu from './BrowseMenu';
+import React from 'react'
+import BrowseMenu from './BrowseMenu'
 
 if (process.env.BROWSER) {
-  require('./BrowseButton.less');
+  require('./BrowseButton.less')
 }
 
 class BrowseButton extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   render () {
@@ -24,4 +24,4 @@ class BrowseButton extends React.Component {
   }
 }
 
-export default BrowseButton;
+export default BrowseButton

@@ -1,17 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import MoviesSlider from './MoviesSlider';
+import React from 'react'
+import { connect } from 'react-redux'
+import MoviesSlider from './MoviesSlider'
 import { getI18n } from '../../../../config/i18n'
 
 if (process.env.BROWSER) {
-  require('./UserMoviesList.less');
+  require('./UserMoviesList.less')
 }
 
 @connect(({User}) => ({User}))
 class UserMoviesList extends React.Component {
 
   constructor (props) {
-    super(props);
+    super(props)
   }
 
   render () {
@@ -19,20 +19,20 @@ class UserMoviesList extends React.Component {
       props: {
         User
       }
-    } = this;
+    } = this
 
-    const dataList = User.get('history');
+    const dataList = User.get('history')
     if (!dataList) {
-      return (<div />);
+      return (<div />)
     }
-    const label = getI18n().history.label;
-    const slug = 'history';
-    const showTitle = true;
-    const showDescription = false;
-    const thumbW = 200;
-    const thumbH = 110;
-    const load = true;
-    const type = 'episode';
+    const label = getI18n().history.label
+    const slug = 'history'
+    const showTitle = true
+    const showDescription = false
+    const thumbW = 200
+    const thumbH = 110
+    const load = true
+    const type = 'episode'
     return (
       <div className="user-movie-history">
         <MoviesSlider
@@ -49,8 +49,8 @@ class UserMoviesList extends React.Component {
           load
         }} />
       </div>
-    );
+    )
   }
 }
 
-export default UserMoviesList;
+export default UserMoviesList

@@ -137,7 +137,7 @@ class SendBird extends React.Component {
   }
 
   getUserList (options = {}) {
-    options = _.extend({}, {'page': 1, 'token': '', 'limit': 30}, options);
+    options = _.extend({}, {'page': 1, 'token': '', 'limit': 30}, options)
 
     sendBirdClient.getUserList({
       'token': options['token'],
@@ -150,8 +150,8 @@ class SendBird extends React.Component {
 
   getUserListHandler (data) {
     var users = _.uniq(data['users'], (user)=> {
-      return user.id;
-    });
+      return user.id
+    })
     this.setState({users: users})
   }
 
@@ -428,7 +428,7 @@ class SendBird extends React.Component {
                 let isUser = this.isCurrentUser(guest_id)
 
                 if (isUser) {
-                  return;
+                  return
                 }
 
                 let img = picture
@@ -502,6 +502,6 @@ class SendBird extends React.Component {
 SendBird.propTypes = {
   history: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired
-};
+}
 
 export default withRouter(SendBird)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 class GiftDetails extends React.Component {
 
@@ -56,9 +56,9 @@ class GiftDetails extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 
-export default GiftDetails;
+export default GiftDetails

@@ -1,36 +1,36 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import * as ModalActionCreators from '../../actions/modal';
-import classSet from 'classnames';
+import React from 'react'
+import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../actions/modal'
+import classSet from 'classnames'
 
 if (process.env.BROWSER) {
-  require('./ShareButton.less');
+  require('./ShareButton.less')
 }
 
 @connect(({ Modal }) => ({Modal}))
 class ShareButton extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   componentDidMount() {
-    this.attachTooltip();
+    this.attachTooltip()
   }
 
   componentDidUpdate() {
-    this.attachTooltip();
+    this.attachTooltip()
   }
 
   attachTooltip() {
-    $(this.refs.data).tooltip();
+    $(this.refs.data).tooltip()
   }
 
   getLabel() {
     if (!this.props.label) {
-      return;
+      return
     }
-    return this.props.label;
+    return this.props.label
   }
 
   sharePopup() {
@@ -38,9 +38,9 @@ class ShareButton extends React.Component {
       props: {
         dispatch,link,description,title
         }
-      } = this;
+      } = this
 
-    dispatch(ModalActionCreators.open('social', true, null, {link, description, title}));
+    dispatch(ModalActionCreators.open('social', true, null, {link, description, title}))
   }
 
   render() {
@@ -48,11 +48,11 @@ class ShareButton extends React.Component {
     let favoriteClass = {
       'fa': true,
       'fa-share': true
-    };
+    }
 
     const inputAttributes = {
       onClick: event => ::this.sharePopup()
-    };
+    }
     return (<button className="btn share_button" type="button" data-toggle="tooltip" ref="data"
                     data-placement="top"
                     title={this.props.tooltip}  {...inputAttributes}>
@@ -68,7 +68,7 @@ ShareButton.propTypes = {
   title: React.PropTypes.string,
   tooltip: React.PropTypes.string,
   label: React.PropTypes.string
-};
+}
 
 ShareButton.defaultProps = {
   link: null,
@@ -76,6 +76,6 @@ ShareButton.defaultProps = {
   title: null,
   label: '',
   tooltip: 'Recommander'
-};
+}
 
-export default ShareButton;
+export default ShareButton

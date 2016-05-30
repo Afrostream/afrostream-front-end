@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import cx from 'classnames';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import cx from 'classnames'
 if (process.env.BROWSER) {
-  require('./StarRating.less');
+  require('./StarRating.less')
 }
 // TODO
 // - Add support for svg symbol
@@ -48,7 +48,7 @@ class StarRating extends React.Component {
   }
 
   constructor (props) {
-    super(props);
+    super(props)
 
     this.state = {
       currentRatingVal: props.rating,
@@ -58,26 +58,26 @@ class StarRating extends React.Component {
       pos: this.getStarRatingPosition(props.rating),
       glyph: this.getStars(),
       size: props.size
-    };
+    }
   }
 
   componentWillMount () {
-    this.min = 0;
-    this.max = this.props.totalStars || 5;
+    this.min = 0
+    this.max = this.props.totalStars || 5
 
     if (this.props.rating) {
-      this.state.editing = this.props.editing || false;
+      this.state.editing = this.props.editing || false
     }
   }
 
   componentDidMount () {
-    this.root = ReactDOM.findDOMNode(this.refs.root);
-    this.ratingContainer = ReactDOM.findDOMNode(this.refs.ratingContainer);
+    this.root = ReactDOM.findDOMNode(this.refs.root)
+    this.ratingContainer = ReactDOM.findDOMNode(this.refs.ratingContainer)
   }
 
   componentWillUnmount () {
-    delete this.root;
-    delete this.ratingContainer;
+    delete this.root
+    delete this.ratingContainer
   }
 
   /**
@@ -85,12 +85,12 @@ class StarRating extends React.Component {
    * @return {string} stars
    */
   getStars () {
-    var stars = '';
-    var numRating = this.props.totalStars;
+    var stars = ''
+    var numRating = this.props.totalStars
     for (var i = 0; i < numRating; i++) {
-      stars += '\u2605';
+      stars += '\u2605'
     }
-    return stars;
+    return stars
   }
 
   /**
@@ -99,79 +99,79 @@ class StarRating extends React.Component {
    * @return {number} delta
    */
   getPosition (e) {
-    return e.clientX - this.root.getBoundingClientRect().left;
+    return e.clientX - this.root.getBoundingClientRect().left
   }
 
   getWidthFromValue (val) {
     var min = this.min,
-      max = this.max;
+      max = this.max
     if (val <= min || min === max) {
-      return 0;
+      return 0
     }
     if (val >= max) {
-      return 100;
+      return 100
     }
-    return (val - min) * 100 / (max - min);
+    return (val - min) * 100 / (max - min)
   }
 
   applyPrecision (val, precision) {
-    return parseFloat(val.toFixed(precision));
+    return parseFloat(val.toFixed(precision))
   }
 
   getDecimalPlaces (num) {
-    var match = ('' + num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
-    return !match ? 0 : Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0));
+    var match = ('' + num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/)
+    return !match ? 0 : Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? +match[2] : 0))
   }
 
   getValueFromPosition (pos) {
-    var precision = this.getDecimalPlaces(this.props.step);
-    var maxWidth = this.ratingContainer.offsetWidth;
-    var diff = this.max - this.min;
-    var factor = (diff * pos) / (maxWidth * this.props.step);
-    factor = Math.ceil(factor);
-    var val = this.applyPrecision(parseFloat(this.min + factor * this.props.step), precision);
-    val = Math.max(Math.min(val, this.max), this.min);
-    return val;
+    var precision = this.getDecimalPlaces(this.props.step)
+    var maxWidth = this.ratingContainer.offsetWidth
+    var diff = this.max - this.min
+    var factor = (diff * pos) / (maxWidth * this.props.step)
+    factor = Math.ceil(factor)
+    var val = this.applyPrecision(parseFloat(this.min + factor * this.props.step), precision)
+    val = Math.max(Math.min(val, this.max), this.min)
+    return val
   }
 
   calculate (pos) {
     var val = this.getValueFromPosition(pos),
-      width = this.getWidthFromValue(val);
+      width = this.getWidthFromValue(val)
 
-    width += '%';
-    return {width, val};
+    width += '%'
+    return {width, val}
   }
 
   getStarRatingPosition (val) {
-    return this.getWidthFromValue(val) + '%';
+    return this.getWidthFromValue(val) + '%'
   }
 
   getRatingEvent (e) {
-    var pos = this.getPosition(e);
-    return this.calculate(pos);
+    var pos = this.getPosition(e)
+    return this.calculate(pos)
   }
 
   /**
    * Get Star SVG
    */
   getSvg (rating) {
-    var stars = [];
+    var stars = []
     for (var i = 0; i < this.props.totalStars; i++) {
-      var attrs = {};
-      attrs['transform'] = `translate(${i * 50}, 0)`;
-      attrs['fill'] = (i + this.props.step <= rating) ? '#FFA91B' : '#C6C6C6';
+      var attrs = {}
+      attrs['transform'] = `translate(${i * 50}, 0)`
+      attrs['fill'] = (i + this.props.step <= rating) ? '#FFA91B' : '#C6C6C6'
       stars.push(
         <path {...attrs}
           key={`star-${i}`}
           mask="url(#half-star-mask)"
           d="m0,18.1l19.1,0l5.9,-18.1l5.9,18.1l19.1,0l-15.4,11.2l5.9,18.1l-15.4,-11.2l-15.4,11.2l5.9,-18.1l-15.4,-11.2l0,0z"/>
-      );
+      )
     }
 
     var styles = {
       width: `${stars.length * this.props.size}px`,
       height: `${this.props.size}px`
-    };
+    }
 
     return (
       <svg className="rsr__star"
@@ -189,11 +189,11 @@ class StarRating extends React.Component {
          </defs>*/}
         <g>
           {stars.map((item) => {
-            return item;
+            return item
           })}
         </g>
       </svg>
-    );
+    )
   }
 
   /**
@@ -205,7 +205,7 @@ class StarRating extends React.Component {
     this.setState({
       pos: width,
       rating: val
-    });
+    })
   }
 
   /**
@@ -216,10 +216,10 @@ class StarRating extends React.Component {
       this.updateRating(
         this.getStarRatingPosition(nextProps.rating),
         nextProps.rating
-      );
-      return true;
+      )
+      return true
     } else {
-      return nextState.currentRatingVal !== this.state.currentRatingVal || nextState.rating !== this.state.rating;
+      return nextState.currentRatingVal !== this.state.currentRatingVal || nextState.rating !== this.state.rating
     }
   }
 
@@ -230,7 +230,7 @@ class StarRating extends React.Component {
     this.setState({
       pos: this.state.currentRatingPos,
       rating: this.state.currentRatingVal
-    });
+    })
   }
 
   /**
@@ -239,11 +239,11 @@ class StarRating extends React.Component {
    */
   handleMouseMove (e) {
     // get hover position
-    var ratingEvent = this.getRatingEvent(e);
+    var ratingEvent = this.getRatingEvent(e)
     this.updateRating(
       ratingEvent.width,
       ratingEvent.val
-    );
+    )
   }
 
   /**
@@ -252,9 +252,9 @@ class StarRating extends React.Component {
    */
   handleClick (e) {
     if (this.props.disabled) {
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
+      e.stopPropagation()
+      e.preventDefault()
+      return false
     }
 
     var payload = {
@@ -262,21 +262,21 @@ class StarRating extends React.Component {
       currentRatingVal: this.state.rating,
       caption: this.props.caption,
       name: this.props.name
-    };
+    }
 
-    this.setState(payload);
+    this.setState(payload)
 
     this.props.onRatingClick(e, {
       rating: this.state.rating,
       position: this.state.pos,
       caption: this.props.caption,
       name: this.props.name
-    });
+    })
   }
 
   treatName (title) {
     if (typeof title === 'string') {
-      return title.toLowerCase().split(' ').join('_');
+      return title.toLowerCase().split(' ').join('_')
     }
   }
 
@@ -285,32 +285,32 @@ class StarRating extends React.Component {
       'rsr-root': true,
       'rsr--disabled': this.props.disabled,
       'rsr--editing': this.state.editing
-    });
+    })
   }
 
   getCaption () {
     if (this.props.caption) {
-      return (<span className="rsr__caption">{this.props.caption}</span>);
+      return (<span className="rsr__caption">{this.props.caption}</span>)
     } else {
-      return null;
+      return null
     }
   }
 
   setAttrs () {
-    var attrs = {};
+    var attrs = {}
     if (this.state.editing) {
-      attrs['onMouseMove'] = this.handleMouseMove.bind(this);
-      attrs['onMouseLeave'] = this.handleMouseLeave.bind(this);
-      attrs['onClick'] = this.handleClick.bind(this);
+      attrs['onMouseMove'] = this.handleMouseMove.bind(this)
+      attrs['onMouseLeave'] = this.handleMouseLeave.bind(this)
+      attrs['onClick'] = this.handleClick.bind(this)
     }
-    return attrs;
+    return attrs
   }
 
   render () {
 
-    var classes = this.getClasses();
-    var caption = this.getCaption();
-    var attrs = this.setAttrs();
+    var classes = this.getClasses()
+    var caption = this.getCaption()
+    var attrs = this.setAttrs()
 
     return (
       <span className="rsr-container">
@@ -330,8 +330,8 @@ class StarRating extends React.Component {
           </div>
         </div>
       </span>
-    );
+    )
   }
 }
 
-export default StarRating;
+export default StarRating

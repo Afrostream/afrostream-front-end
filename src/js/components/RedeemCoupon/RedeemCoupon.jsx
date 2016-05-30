@@ -1,9 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import * as ModalActionCreators from '../../actions/modal';
+import React from 'react'
+import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../actions/modal'
 
 if (process.env.BROWSER) {
-  require('./RedeemCoupon.less');
+  require('./RedeemCoupon.less')
 }
 
 @connect(({}) => ({}))
@@ -15,8 +15,8 @@ class RedeemCoupon extends React.Component {
       props: {
         dispatch
         }
-      } = this;
-    dispatch(ModalActionCreators.open('redeemCoupon', false));
+      } = this
+    dispatch(ModalActionCreators.open('redeemCoupon', false))
   }
 
   render() {
@@ -29,8 +29,8 @@ class RedeemCoupon extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default RedeemCoupon;
+export default RedeemCoupon

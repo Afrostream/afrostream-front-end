@@ -48,7 +48,7 @@ class PricingTable extends React.Component {
       }
     } = this
 
-    let getI18nionnary = getI18n(params.lang);
+    let getI18nionnary = getI18n(params.lang)
     let cols = [
       'formule',
       'name',
@@ -166,7 +166,7 @@ class PricingTable extends React.Component {
       }
     } = this
 
-    let info = getI18n(params.lang).home.plans;
+    let info = getI18n(params.lang).home.plans
 
     let validPlans = this.getPlans()
 

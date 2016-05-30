@@ -31,13 +31,13 @@ class CategorySlider extends MoviesSlider {
     const dataList = category.get('mergeSpotsWithMovies')
     let data = dataList.get(index)
     if (data instanceof Immutable.Map) {
-      return this.renderBlock(data);
+      return this.renderBlock(data)
     }
     return (
       <div className="block" key={`data-block-${index}`}>{data.map((item)=> {
         return this.renderBlock(item)
       }).toJS()}</div>
-    );
+    )
   }
 
   render () {

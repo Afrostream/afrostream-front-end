@@ -14,14 +14,14 @@ import { withRouter } from 'react-router'
  * @require react-router
  */
 if (process.env.BROWSER) {
-  require('./GoBack.less');
+  require('./GoBack.less')
 }
 
 
 @connect(({Event}) => ({Event}))
 class GoBack extends React.Component {
   constructor (props, context) {
-    super(props, context);
+    super(props, context)
   }
 
   navigationGoBack () {
@@ -35,19 +35,19 @@ class GoBack extends React.Component {
       'btn-xs': true,
       'hidden-xs': true,
       'hidden-sm': true
-    };
+    }
 
     return (
       <button className={classSet(returnClassesSet)} onClick={::this.navigationGoBack}>
         <span className="fa fa-caret-left"></span><span className="return-btn-label">RETOUR</span>
       </button>
-    );
+    )
   }
 }
 
 GoBack.propTypes = {
   history: React.PropTypes.object.isRequired
-};
+}
 
 
 export default withRouter(GoBack)

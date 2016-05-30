@@ -53,7 +53,7 @@ class Spots extends React.Component {
 
     let categoriesList = Immutable.fromJS(uniqSpots)
 
-    let info = getI18n(params.lang).home.spots;
+    let info = getI18n(params.lang).home.spots
 
     return (
       <div className="spots-list">

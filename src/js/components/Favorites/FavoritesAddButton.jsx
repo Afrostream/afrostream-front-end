@@ -1,32 +1,32 @@
-import React ,{PropTypes } from 'react';
-import Immutable from 'immutable';
-import { connect } from 'react-redux';
-import * as UserActionCreators from '../../actions/user';
-import classSet from 'classnames';
-import Spinner from '../Spinner/Spinner';
+import React ,{PropTypes } from 'react'
+import Immutable from 'immutable'
+import { connect } from 'react-redux'
+import * as UserActionCreators from '../../actions/user'
+import classSet from 'classnames'
+import Spinner from '../Spinner/Spinner'
 
 if (process.env.BROWSER) {
-  require('./FavoritesAddButton.less');
+  require('./FavoritesAddButton.less')
 }
 
 @connect(({User}) => ({User}))
 class FavoritesAddButton extends React.Component {
 
   constructor(props) {
-    super(props);
-    this.state = {pendingFavorite: false};
+    super(props)
+    this.state = {pendingFavorite: false}
   }
 
   componentDidMount() {
-    this.attachTooltip();
+    this.attachTooltip()
   }
 
   componentDidUpdate() {
-    this.attachTooltip();
+    this.attachTooltip()
   }
 
   attachTooltip() {
-    $(this.refs.data).tooltip();
+    $(this.refs.data).tooltip()
   }
 
   static propTypes = {
@@ -35,19 +35,19 @@ class FavoritesAddButton extends React.Component {
       React.PropTypes.string,
       React.PropTypes.number
     ])
-  };
+  }
 
   static defaultProps = {
     data: null,
     dataId: null
-  };
+  }
 
   getType() {
     const {
       props: { data }
-      } = this;
+      } = this
 
-    return data.get('type');
+    return data.get('type')
   }
 
   setFavorite(active, dataId) {
@@ -55,26 +55,26 @@ class FavoritesAddButton extends React.Component {
       props: {
         dispatch
         }
-      } = this;
-    let self = this;
+      } = this
+    let self = this
 
     self.setState({
       pendingFavorite: true
-    });
+    })
 
-    let type = this.getType() === 'episode' ? 'episodes' : 'movies';
+    let type = this.getType() === 'episode' ? 'episodes' : 'movies'
 
     dispatch(UserActionCreators[`setFavorites`](type, active, dataId))
       .then(()=> {
         self.setState({
           pendingFavorite: false
-        });
+        })
       })
       .catch((err)=> {
         self.setState({
           pendingFavorite: false
-        });
-      });
+        })
+      })
   }
 
   render() {
@@ -82,15 +82,15 @@ class FavoritesAddButton extends React.Component {
       props: {
         User,dataId
         }
-      } = this;
+      } = this
 
-    const type = this.getType();
-    const favoritesData = User.get(`favorites/${type === 'episode' ? 'episode' : 'movie'}s`);
-    let isFavorite = false;
+    const type = this.getType()
+    const favoritesData = User.get(`favorites/${type === 'episode' ? 'episode' : 'movie'}s`)
+    let isFavorite = false
     if (favoritesData) {
       isFavorite = favoritesData.find((obj) => {
-        return obj.get('_id') == dataId;
-      });
+        return obj.get('_id') == dataId
+      })
     }
 
     let favoriteClass = {
@@ -98,11 +98,11 @@ class FavoritesAddButton extends React.Component {
       'fa-heart': isFavorite,
       'fa-heart-o': !isFavorite,
       'pending': this.state.pending
-    };
+    }
 
     const inputAttributes = {
       onClick: event => ::this.setFavorite(!isFavorite, dataId)
-    };
+    }
 
     return (<div className="btn favorite-add_button" type="button" data-toggle="tooltip"
                  data-placement="top" ref="data"
@@ -113,4 +113,4 @@ class FavoritesAddButton extends React.Component {
   }
 }
 
-export default FavoritesAddButton;
+export default FavoritesAddButton
