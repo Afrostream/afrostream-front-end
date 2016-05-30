@@ -32,7 +32,6 @@ export default function routes (app, buildPath) {
   app.use('/sharing', sharing)
   // SHARING
   // --------------------------------------------------
-  app.use('/components', component)
 
   // RENDER
   // --------------------------------------------------
