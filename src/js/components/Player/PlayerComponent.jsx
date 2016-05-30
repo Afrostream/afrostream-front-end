@@ -99,12 +99,12 @@ class PlayerComponent extends Component {
     if (canUseDOM) {
       isTourShow = parseInt(localStorage.getItem('afrTourChat'))
     }
-    return isTourShow;
+    return isTourShow
   }
 
   setTourShowed () {
     if (canUseDOM) {
-      localStorage.setItem('afrTourChat', 1);
+      localStorage.setItem('afrTourChat', 1)
     }
   }
 
@@ -470,7 +470,7 @@ class PlayerComponent extends Component {
       }
     } = this
 
-    return ~config.sendBird.channels.indexOf(parseInt(movieId));
+    return ~config.sendBird.channels.indexOf(parseInt(movieId))
   }
 
   makeTour () {
@@ -876,7 +876,7 @@ class PlayerComponent extends Component {
     let renderData = episodeData ? episodeData : movieData
 
     const chatMode = Event.get('showChat')
-    const sendBirdOn = this.hasSendBirdRoom();
+    const sendBirdOn = this.hasSendBirdRoom()
 
     let playerClasses = {
       'player': true,

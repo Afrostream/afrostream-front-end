@@ -1,23 +1,23 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import * as OAuthActionCreators from '../../actions/oauth';
-import * as EventActionCreators from '../../actions/event';
-import { Link } from 'react-router';
-import classSet from 'classnames';
+import React from 'react'
+import { connect } from 'react-redux'
+import * as OAuthActionCreators from '../../actions/oauth'
+import * as EventActionCreators from '../../actions/event'
+import { Link } from 'react-router'
+import classSet from 'classnames'
 
 if (process.env.BROWSER) {
-  require('./SideBar.less');
+  require('./SideBar.less')
 }
 
 @connect(({User, Event}) => ({User, Event}))
 class SideBar extends React.Component {
 
   componentDidMount () {
-    $(document).on('mouseup', this.toggleSideBar.bind(this));
+    $(document).on('mouseup', this.toggleSideBar.bind(this))
   }
 
   componentWillUnMount () {
-    $(document).off('mouseup', this.toggleSideBar.bind(this));
+    $(document).off('mouseup', this.toggleSideBar.bind(this))
   }
 
   toggleSideBar (e) {
@@ -26,12 +26,12 @@ class SideBar extends React.Component {
         dispatch,
         Event
       }
-    } = this;
+    } = this
 
-    const toggled = Event.get('sideBarToggled');
+    const toggled = Event.get('sideBarToggled')
     let userBtn = (e.target.id == 'userButton' || e.target.id == 'userButtonImg')
     if (toggled && !userBtn) {
-      this.close();
+      this.close()
     }
   }
 
@@ -40,10 +40,10 @@ class SideBar extends React.Component {
       props: {
         User,
       }
-    } = this;
+    } = this
 
 
-    const user = User.get('user');
+    const user = User.get('user')
     
     return (
       <div id="sidebar-wrapper">
@@ -56,31 +56,31 @@ class SideBar extends React.Component {
           <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
         </ul>
       </div>
-    );
+    )
   }
 
   getUserConnectedButtons (user, type) {
 
-    let planCode;
+    let planCode
 
     if (user) {
-      planCode = user.get('planCode');
+      planCode = user.get('planCode')
     }
 
     if (!planCode) {
-      return '';
+      return ''
     }
-    let el;
+    let el
     switch (type) {
       case 'favorites':
-        el = ( <li><Link to="/favoris">Mes favoris</Link></li>);
-        break;
+        el = ( <li><Link to="/favoris">Mes favoris</Link></li>)
+        break
       default:
-        el = '';
-        break;
+        el = ''
+        break
     }
 
-    return el;
+    return el
   }
 
   close () {
@@ -88,9 +88,9 @@ class SideBar extends React.Component {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
-    dispatch(EventActionCreators.toggleSideBar());
+    dispatch(EventActionCreators.toggleSideBar())
   }
 
   logout () {
@@ -98,10 +98,10 @@ class SideBar extends React.Component {
       props: {
         dispatch
       }
-    } = this;
+    } = this
 
-    dispatch(OAuthActionCreators.logOut());
+    dispatch(OAuthActionCreators.logOut())
   }
 }
 
-export default SideBar;
+export default SideBar

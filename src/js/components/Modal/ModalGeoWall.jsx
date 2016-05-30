@@ -1,17 +1,17 @@
-import React from 'react';
-import * as ModalActionCreators from '../../actions/modal';
-import * as WaitingUsersActionCreators from '../../actions/waitingUsers';
-import ModalComponent from './ModalComponent';
-import classNames from 'classnames';
+import React from 'react'
+import * as ModalActionCreators from '../../actions/modal'
+import * as WaitingUsersActionCreators from '../../actions/waitingUsers'
+import ModalComponent from './ModalComponent'
+import classNames from 'classnames'
 
 class ModalGeoWall extends ModalComponent {
 
   handleSubmit (e) {
-    e.stopPropagation();
-    e.preventDefault();
-    const email = this.refs.email.value;
-    this.props.dispatch(WaitingUsersActionCreators.create(email));
-    this.props.dispatch(ModalActionCreators.close());
+    e.stopPropagation()
+    e.preventDefault()
+    const email = this.refs.email.value
+    this.props.dispatch(WaitingUsersActionCreators.create(email))
+    this.props.dispatch(ModalActionCreators.close())
   }
 
   render () {
@@ -20,7 +20,7 @@ class ModalGeoWall extends ModalComponent {
       'close': true,
       'icon-budicon-3': true,
       'hide': !this.props.closable
-    });
+    })
 
     return (
       <div className="lock-container">
@@ -68,7 +68,7 @@ class ModalGeoWall extends ModalComponent {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -78,12 +78,12 @@ ModalGeoWall.propTypes = {
   action: React.PropTypes.string,
   dispatch: React.PropTypes.func,
   closable: React.PropTypes.bool
-};
+}
 
 ModalGeoWall.defaultProps = {
   header: 'Coming Soon',
   instructons: 'Enter your details below and be the first to get notified when we launch there :',
   action: 'Notify me'
-};
+}
 
-export default ModalGeoWall;
+export default ModalGeoWall

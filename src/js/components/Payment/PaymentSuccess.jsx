@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import * as UserActionCreators from '../../actions/user';
-import { Link } from 'react-router';
-import { analytics } from '../../decorators';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import * as UserActionCreators from '../../actions/user'
+import { Link } from 'react-router'
+import { analytics } from '../../decorators'
 
 @connect(({ User }) => ({User}))
 class PaymentSuccess extends React.Component {
@@ -12,9 +12,9 @@ class PaymentSuccess extends React.Component {
       props: {
         dispatch
         }
-      } = this;
+      } = this
 
-    dispatch(UserActionCreators.logOut());
+    dispatch(UserActionCreators.logOut())
   }
 
   render() {
@@ -32,9 +32,9 @@ class PaymentSuccess extends React.Component {
           </p>
         </div>
       </div>
-    );
+    )
   }
 
 }
 
-export default PaymentSuccess;
+export default PaymentSuccess

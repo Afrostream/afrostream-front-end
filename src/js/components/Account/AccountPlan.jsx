@@ -1,11 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { getI18n } from '../../../../config/i18n';
-import classSet from 'classnames';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import { getI18n } from '../../../../config/i18n'
+import classSet from 'classnames'
 
 if (process.env.BROWSER) {
-  require('./AccountPlan.less');
+  require('./AccountPlan.less')
 }
 
 @connect(({User, Billing}) => ({User, Billing}))
@@ -16,35 +16,35 @@ class AccountPlan extends React.Component {
       props: {
         User, Billing
       }
-    } = this;
+    } = this
 
-    const user = User.get('user');
+    const user = User.get('user')
     if (!user) {
-      return <div />;
+      return <div />
     }
-    const planCode = user.get('planCode');
+    const planCode = user.get('planCode')
 
     if (!planCode) {
-      return <div />;
+      return <div />
     }
 
-    const subscriptionsList = Billing.get('subscriptions');
+    const subscriptionsList = Billing.get('subscriptions')
 
     if (!subscriptionsList) {
-      return <div />;
+      return <div />
     }
 
     let currentSubscription = subscriptionsList.find((obj)=> {
-      return obj.get('isActive') === 'yes';// && obj.get('subStatus') !== 'canceled'
-    });
+      return obj.get('isActive') === 'yes'// && obj.get('subStatus') !== 'canceled'
+    })
 
     let cancelSubscriptionClasses = {
       'btn': true,
       'btn-default': true,
       'cancel-plan-hidden': !currentSubscription || (currentSubscription.get('subStatus') === 'canceled') || (currentSubscription.get('provider').get('providerName') === 'celery')
-    };
+    }
 
-    const planLabel = getI18n().planCodes[planCode];
+    const planLabel = getI18n().planCodes[planCode]
 
     return (
       <div className="row account-details">
@@ -65,4 +65,4 @@ class AccountPlan extends React.Component {
   }
 }
 
-export default AccountPlan;
+export default AccountPlan

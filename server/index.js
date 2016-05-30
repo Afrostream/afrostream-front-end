@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import cluster from 'express-cluster'
 let clusterConf = {count: process.env.WEB_CONCURRENCY || 1, verbose: true}
 

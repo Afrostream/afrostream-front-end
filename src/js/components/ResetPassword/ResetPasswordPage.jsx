@@ -1,9 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import * as ModalActionCreators from '../../actions/modal';
+import React from 'react'
+import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../actions/modal'
 
 if (process.env.BROWSER) {
-  require('./ResetPasswordPage.less');
+  require('./ResetPasswordPage.less')
 }
 
 @connect(({}) => ({}))
@@ -14,8 +14,8 @@ class ResetPasswordPage extends React.Component {
       props: {
         dispatch
         }
-      } = this;
-    dispatch(ModalActionCreators.open('showReset', false));
+      } = this
+    dispatch(ModalActionCreators.open('showReset', false))
   }
 
   render() {
@@ -28,8 +28,8 @@ class ResetPasswordPage extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default ResetPasswordPage;
+export default ResetPasswordPage

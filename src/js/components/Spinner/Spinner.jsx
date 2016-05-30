@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
 if (process.env.BROWSER) {
-  require('./Spinner.less');
+  require('./Spinner.less')
 }
 
 class Spinner extends React.Component {
 
-  static propTypes = {};
+  static propTypes = {}
 
 
   render() {
@@ -16,8 +16,8 @@ class Spinner extends React.Component {
           <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
         </svg>
       </div>
-    );
+    )
   }
 }
 
-export default Spinner;
+export default Spinner

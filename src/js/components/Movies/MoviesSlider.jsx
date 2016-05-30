@@ -1,12 +1,12 @@
-import React, { PropTypes } from 'react';
-import Immutable from 'immutable';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
-import Slider from '../Slider/Slider';
-import Thumb from '../Movies/Thumb';
-import ReactList from 'react-list';
+import React, { PropTypes } from 'react'
+import Immutable from 'immutable'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import Slider from '../Slider/Slider'
+import Thumb from '../Movies/Thumb'
+import ReactList from 'react-list'
 
 if (process.env.BROWSER) {
-  require('./MoviesSlider.less');
+  require('./MoviesSlider.less')
 }
 
 class MoviesSlider extends React.Component {
@@ -18,7 +18,7 @@ class MoviesSlider extends React.Component {
     slug: React.PropTypes.string,
     axis: React.PropTypes.string,
     className: React.PropTypes.string
-  };
+  }
 
   static defaultProps = {
     selectedId: null,
@@ -26,12 +26,12 @@ class MoviesSlider extends React.Component {
     slug: '',
     axis: 'x',
     className: 'movies-data-list'
-  };
+  }
 
   renderBlock (data) {
     let isAdSpot = data.get('adSpot')
     let dataId = data.get('_id')
-    let params = {};
+    let params = {}
     if (isAdSpot) {
 
       params = {
@@ -57,17 +57,17 @@ class MoviesSlider extends React.Component {
       props: {
         dataList
       }
-    } = this;
+    } = this
 
-    let data = dataList.get(index);
+    let data = dataList.get(index)
     if (data instanceof Immutable.Map) {
-      return this.renderBlock(data);
+      return this.renderBlock(data)
     }
     return (
       <div className="block" key={`data-block-${index}`}>{data.map((item)=> {
         return this.renderBlock(item)
       })}</div>
-    );
+    )
   }
 
   render () {
@@ -78,19 +78,19 @@ class MoviesSlider extends React.Component {
         label,
         slug
       }
-    } = this;
+    } = this
 
     if (!dataList || !dataList.size) {
-      return (<div/>);
+      return (<div/>)
     }
 
-    let index = null;
+    let index = null
 
     //Si on a un episode ou movie dans les params url, on scroll to this point
     if (selectedId) {
       index = dataList.findIndex((obj) => {
-        return obj.get('_id') == selectedId;
-      });
+        return obj.get('_id') == selectedId
+      })
     }
 
     return (
@@ -111,8 +111,8 @@ class MoviesSlider extends React.Component {
           </div>
         </Slider>
       </div>
-    );
+    )
   }
 }
 
-export default MoviesSlider;
+export default MoviesSlider
