@@ -16,7 +16,7 @@ export function getAllSpots () {
 
     return async api => ({
       type: ActionTypes.Category.getAllSpots,
-      res: await api(`/api/categorys/spots`)
+      res: await api({path: `/api/categorys/spots`})
     })
   }
 }
@@ -44,7 +44,7 @@ export function getSpots (categoryId) {
     return async api => ({
       type: ActionTypes.Category.getSpots,
       categoryId,
-      res: await api(`/api/categorys/${categoryId}/spots`)
+      res: await api({path: `/api/categorys/${categoryId}/spots`})
     })
   }
 }
@@ -71,7 +71,7 @@ export function getCategory (categoryId) {
     return async api => ({
       type: ActionTypes.Category.getCategory,
       categoryId,
-      res: await api(`/api/categorys/${categoryId}`).catch(notFoundCategory)
+      res: await api({path: `/api/categorys/${categoryId}`}).catch(notFoundCategory)
     })
   }
 }
@@ -91,7 +91,7 @@ export function getMeaList () {
 
     return async api => ({
       type: ActionTypes.Category.getMeaList,
-      res: await api(`/api/categorys/meas`)
+      res: await api({path: `/api/categorys/meas`})
     })
   }
 }
@@ -110,7 +110,7 @@ export function getMenu () {
     }
     return async api => ({
       type: ActionTypes.Category.getMenu,
-      res: await api(`/api/categorys/menu`)
+      res: await api({path: `/api/categorys/menu`})
     })
   }
 }

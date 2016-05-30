@@ -60,7 +60,7 @@ async function getToken (tokenData) {
  * Server: /servr/index.js
  */
 export default function createAPI (createRequest) {
-  return async function api (path, method = 'GET', params = {}, legacy = false, showLoader = true) {
+  return async function api ({path, method = 'GET', params = {}, legacy = false, showLoader = true, local = false}) {
     let {pathname, query: queryStr} = URL.parse(path)
     let query, headers = {}, body
 
@@ -101,7 +101,7 @@ export default function createAPI (createRequest) {
     }
 
     return await new Promise((resolve, reject) => {
-      createRequest({method, headers, pathname, query, body, legacy})
+      createRequest({method, headers, pathname, query, body, legacy, showLoader, local})
         .end((err, res) => {
           if (showLoader) {
             NProgress.done()

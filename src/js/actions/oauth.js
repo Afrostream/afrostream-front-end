@@ -10,7 +10,7 @@ export function signin (form) {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
       type: ActionTypes.OAuth.signin,
-      res: await api(`/auth/signin`, 'POST', form)
+      res: await api({path: `/auth/signin`, method: 'POST', params: form})
     })
   }
 }
@@ -24,7 +24,7 @@ export function signup (form) {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
       type: ActionTypes.OAuth.signup,
-      res: await api(`/auth/signup`, 'POST', form)
+      res: await api({path: `/auth/signup`, method: 'POST', params: form})
     })
   }
 }
@@ -34,7 +34,7 @@ export function reset (form) {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
       type: ActionTypes.OAuth.reset,
-      res: await api(`/auth/reset`, 'POST', form)
+      res: await api({path: `/auth/reset`, method: 'POST', params: form})
     })
   }
 }

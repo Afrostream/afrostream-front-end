@@ -27,7 +27,7 @@ export function getMovie (movieId) {
     return async api => ({
       type: ActionTypes.Movie.getMovie,
       movieId,
-      res: await api(`/api/movies/${movieId}`).catch(notFound)
+      res: await api({path: `/api/movies/${movieId}`}).catch(notFound)
     })
   }
 }
@@ -48,7 +48,7 @@ export function getLast () {
 
     return async api => ({
       type: ActionTypes.Movie.getLast,
-      res: await api(`/api/movies?order=_id&sort=DESC&limit=20`).catch(notFound)
+      res: await api({path: `/api/movies?order=_id&sort=DESC&limit=20`}).catch(notFound)
     })
   }
 }
@@ -76,7 +76,7 @@ export function getSeason (movieId) {
     return async api => ({
       type: ActionTypes.Movie.getSeason,
       movieId,
-      res: await api(`/api/movies/${movieId}/seasons`).catch(notFoundArray)
+      res: await api({path: `/api/movies/${movieId}/seasons`}).catch(notFoundArray)
     })
   }
 }

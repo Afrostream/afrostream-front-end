@@ -17,7 +17,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
   return async api => {
     actionDispatcher(pendingUser(true))
     try {
-      const userInfos = await api(`/api/users/me`, 'GET', {})
+      const userInfos = await api({path: `/api/users/me`})
       const userMerged = userInfos.body || {}
       userMerged.user_id = userMerged._id || userMerged.user_id
 
@@ -63,8 +63,6 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 export function getHistory () {
   return (dispatch, getState) => {
     const user = getState().User.get('user')
-    const token = getState().OAuth.get('token')
-    const refreshToken = getState().OAuth.get('refreshToken')
     if (!user) {
       return {
         type: ActionTypes.User.getHistory,
@@ -74,7 +72,7 @@ export function getHistory () {
 
     return async api => ({
       type: ActionTypes.User.getHistory,
-      res: await api(`/api/users/${user.get('_id')}/history`, 'GET', {}, token, refreshToken)
+      res: await api({path: `/api/users/${user.get('_id')}/history`})
     })
   }
 }
@@ -108,7 +106,7 @@ export function getFavorites (type = 'movies') {
 
     return async api => ({
       type: returnTypeAction,
-      res: await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'GET', {})
+      res: await api({path: `/api/users/${user.get('_id')}/favorites${capitType}`})
     })
   }
 }
@@ -129,9 +127,13 @@ export function setFavorites (type, active, id) {
       let list = getState().User.get(`favorites/${type}`)
       let dataFav
       if (active) {
-        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}`, 'POST', {_id: id})
+        dataFav = await api({
+          path: `/api/users/${user.get('_id')}/favorites${capitType}`,
+          method: 'POST',
+          params: {_id: id}
+        })
       } else {
-        dataFav = await api(`/api/users/${user.get('_id')}/favorites${capitType}/${id}`, 'DELETE', {})
+        dataFav = await api({path: `/api/users/${user.get('_id')}/favorites${capitType}/${id}`, method: 'DELETE'})
       }
 
       let index = await list.findIndex((obj)=> {

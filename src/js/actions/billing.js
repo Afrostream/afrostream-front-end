@@ -15,7 +15,7 @@ export function getSubscriptions () {
     return async api => {
       return {
         type: ActionTypes.Billing.getSubscriptions,
-        res: await api(`/api/subscriptions/status`)
+        res: await api({path: `/api/subscriptions/status`})
       }
     }
   }
@@ -30,7 +30,7 @@ export function subscribe (data, isGift = false) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.subscribe,
-      res: await api(`/api/billings/${isGift ? 'gifts' : 'subscriptions'}`, 'POST', data),
+      res: await api({path: `/api/billings/${isGift ? 'gifts' : 'subscriptions'}`, method: 'POST', params: data}),
       isGift
     })
   }
@@ -41,7 +41,7 @@ export function cancelSubscription (subscription) {
     let uuid = subscription.get('subscriptionBillingUuid')
     return async api => ({
       type: ActionTypes.Billing.cancelSubscription,
-      res: await api(`/api/billings/subscriptions/${uuid}/cancel`, 'PUT', {})
+      res: await api({path: `/api/billings/subscriptions/${uuid}/cancel`, method: 'PUT', params: {}})
     })
   }
 }
@@ -56,7 +56,7 @@ export function validate (data) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.validate,
-      res: await api(`/api/billings/coupons`, 'GET', data)
+      res: await api({path: `/api/billings/coupons`, params: data})
     })
   }
 }
@@ -74,7 +74,7 @@ export function create (data) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.create,
-      res: await api(`/api/billings/coupons`, 'POST', data)
+      res: await api({path: `/api/billings/coupons`, method: 'POST', params: data})
     })
   }
 }
@@ -87,8 +87,11 @@ export function getCouponCampaigns (providerName) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.getCouponCampaigns,
-      res: await api(`/api/billings/couponscampaigns`, 'GET', {
-        billingProvider: providerName
+      res: await api({
+        path: `/api/billings/couponscampaigns`,
+        params: {
+          billingProvider: providerName
+        }
       })
     })
   }
@@ -117,8 +120,10 @@ export function getInternalplans (contextBillingUuid = 'common') {
     return async api => ({
       type: ActionTypes.Billing.getInternalplans,
       contextBillingUuid,
-      res: await api(`/api/billings/internalplans`, 'GET', {
-        contextBillingUuid: contextBillingUuid
+      res: await api({
+        path: `/api/billings/internalplans`, params: {
+          contextBillingUuid: contextBillingUuid
+        }
       })
     })
   }

@@ -33,7 +33,7 @@ export function getSeason (seasonId) {
     return async api => ({
       type: ActionTypes.Season.getSeason,
       seasonId,
-      res: await api(`/api/seasons/${seasonId}`).catch(notFound)
+      res: await api({path: `/api/seasons/${seasonId}`}).catch(notFound)
     })
   }
 }

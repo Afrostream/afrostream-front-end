@@ -21,7 +21,10 @@ export function getVideoTracking (videoId) {
     let videoUserData = null
     return async api => {
       try {
-        videoUserData = await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'GET', {}, true, false)
+        videoUserData = await api({
+          path: `/api/users/${user.get('_id')}/videos/${videoId}`,
+          legacy: true
+        })
       } catch (e) {
         console.log(`didn’t find any video user data for videoId : ${videoId}`)
       }
@@ -70,7 +73,12 @@ export function trackVideo (data, videoId) {
     return async api => ({
       type: ActionTypes.User.trackVideo,
       videoId,
-      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', postData, true, false).then(()=> {
+      res: await api({
+        path: `/api/users/${user.get('_id')}/videos/${videoId}`,
+        method: 'PUT',
+        params: postData,
+        legacy: true
+      }).then(()=> {
         return {body: postData}
       })
     })
@@ -103,7 +111,13 @@ export function rateVideo (value, videoId) {
     return async api => ({
       type: ActionTypes.User.rateVideo,
       videoId,
-      res: await api(`/api/users/${user.get('_id')}/videos/${videoId}`, 'PUT', {rating: value}, true, true).then(()=> {
+      res: await api({
+        path: `/api/users/${user.get('_id')}/videos/${videoId}`,
+        method: 'PUT',
+        params: {rating: value},
+        legacy: true,
+        showLoader: true
+      }).then(()=> {
         return {body: mergedDataUserVideo}
       })
     })
@@ -164,7 +178,7 @@ export function getRecommendations (route = 'player', videoId = 'home') {
     //TODO connecter une fois l'api reco presente
     //return async api => ({
     //  type: ActionTypes.Reco.getRecommendations,
-    //  res: await api(`/api/users/me/recommendations`, 'POST', {page: route, videoId: videoId,limit:reco.limit})
+    //  res: await api({path: `/api/users/me/recommendations`,method: 'POST', params :{page: route, videoId: videoId,limit:reco.limit}})
     //})
   }
 }

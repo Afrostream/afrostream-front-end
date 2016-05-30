@@ -1,6 +1,6 @@
 import Immutable, { Map, List } from 'immutable'
 
-export default function createReducer(initialState, handlers) {
+export default function createReducer (initialState, handlers) {
   return (state = initialState, action) => {
     if (!Map.isMap(state) && !List.isList(state)) {
       state = Immutable.fromJS(state)
@@ -12,7 +12,7 @@ export default function createReducer(initialState, handlers) {
       return state
     }
 
-    state = handler(state, action)
+    state = handler(state, action, initialState)
 
     if (!Map.isMap(state) && !List.isList(state)) {
       throw new TypeError('Reducers must return Immutable objects.')

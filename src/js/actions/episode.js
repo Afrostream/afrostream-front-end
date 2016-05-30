@@ -23,7 +23,7 @@ export function getEpisode (episodeId) {
     return async api => ({
       type: ActionTypes.Episode.getEpisode,
       episodeId,
-      res: await api(`/api/episodes/${episodeId}`)
+      res: await api({path: `/api/episodes/${episodeId}`})
     })
   }
 }

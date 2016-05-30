@@ -29,13 +29,16 @@ const api = createAPI(
   /**
    * Client's createRequest() method
    */
-  ({method, headers = {}, pathname = '', query = {}, body = {}, legacy = false}) => {
+  ({method, headers = {}, pathname = '', query = {}, body = {}, legacy = false, local = false}) => {
     pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '')
     var url = `${apiClient.urlPrefix}${pathname}`
     query.from = query.from || heroku.appName
 
     if (legacy) {
       url = url.replace(apiClient.urlPrefix, `${apiClient.protocol}://${apiClient.authority}`)
+    }
+    if (local) {
+      url = pathname
     }
 
     return request(method, url)

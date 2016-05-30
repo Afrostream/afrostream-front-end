@@ -33,8 +33,11 @@ export default function render (req, res, layout, {payload}) {
      * on query, then you can assign accessToken (get from req) to query object
      * before calling API
      */
-    ({method, headers = {}, pathname = '', query = {}, body = {}}) => {
+    ({method, headers = {}, pathname = '', query = {}, body = {}, local = false}) => {
       var url = `${apiServer.urlPrefix}${pathname}`
+      if (local) {
+        url = pathname
+      }
       return request(method, url)
         .query(qs.stringify(query))
         .set(headers)
