@@ -12,7 +12,6 @@ export default createReducer(initialState, {
       return state
     }
     const data = res.body
-    console.log('Blog.fetchAll', data)
     return state.merge({
       [`posts`]: data
     })
@@ -22,7 +21,6 @@ export default createReducer(initialState, {
       return state
     }
     const data = res.body
-    console.log('Blog.fetchPost', data)
     return state.merge({
       [`posts/${postId}`]: data
     })
