@@ -1,9 +1,8 @@
-import cluster from 'express-cluster'
-import runApp from './app'
+require('babel-register')
+var cluster = require('express-cluster')
+var clusterConf = {count: process.env.WEB_CONCURRENCY || 1, verbose: true}
 
-const clusterConf = {count: process.env.WEB_CONCURRENCY || 1, verbose: true}
-
-cluster((worker)=> {
+cluster(function (worker) {
   console.log('worker ' + worker.id + ' is up')
-  return runApp()
+  return require('./app')
 }, clusterConf)
