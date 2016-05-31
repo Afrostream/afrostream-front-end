@@ -2,7 +2,7 @@ import webpack from 'webpack'
 import CompressionPlugin from 'compression-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import webpackConfig from './webpack.config'
-import merge from 'lodash/object/merge'
+import {merge} from 'lodash'
 import path from 'path'
 
 const node_modules_dir = path.resolve(__dirname, '../node_modules')

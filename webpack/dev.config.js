@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import merge from 'lodash/object/merge'
+import {merge} from 'lodash'
 import webpackConfig from './webpack.config'
 import config from '../config'
 import path from 'path'

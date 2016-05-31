@@ -39,8 +39,8 @@ const mergeSpots = function (spots, dataList) {
     return spot
   })
 
-  filteredList = filteredList.concat(spots)
-  filteredList = filteredList.concat(dataList)
+  filteredList = _.concat(filteredList, spots)
+  filteredList = _.concat(filteredList, dataList)
 
   const uniqSpots = _.uniq(filteredList, (o)=> (o['_id']))
   const blocSpots = _(uniqSpots).reduce(accumulateInBloc, [[]])

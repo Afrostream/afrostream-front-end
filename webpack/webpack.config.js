@@ -4,7 +4,7 @@ import path from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HashPlugin from 'hash-webpack-plugin'
 import config from '../config'
-import merge from 'lodash/object/merge'
+import { merge } from 'lodash'
 import herokuConfig from '../app.json'
 
 const AUTOPREFIXER_BROWSERS = [

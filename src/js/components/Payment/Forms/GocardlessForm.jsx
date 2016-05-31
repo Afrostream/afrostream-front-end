@@ -5,7 +5,7 @@ import config from '../../../../../config'
 import { getI18n } from '../../../../../config/i18n'
 import CountrySelect from './../CountrySelect'
 import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat'
-import iban from './iban-validator'
+import iban from 'iban'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const {gocardless} = config

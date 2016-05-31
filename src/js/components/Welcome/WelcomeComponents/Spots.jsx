@@ -43,7 +43,7 @@ class Spots extends React.Component {
     categories.map((categorie)=> {
       let catMovies = categorie.get('adSpots')
       if (catMovies) {
-        recoList = recoList.concat(catMovies.toJS())
+        recoList = _.concat(recoList, catMovies.toJS())
       }
     })
 
