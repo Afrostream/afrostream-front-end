@@ -1,4 +1,4 @@
-import auth from '../auth'
+import auth from './auth'
 import avatar from './api/avatar'
 import sharing from './api/sharing'
 import config from '../../config'
