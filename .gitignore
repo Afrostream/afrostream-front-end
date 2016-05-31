@@ -16,3 +16,4 @@ thumb.db
 
 # IDE
 .idea
+/build
