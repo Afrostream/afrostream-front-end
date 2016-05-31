@@ -1,5 +1,5 @@
-import { getData, fwd } from '../../api-front'
-import config from '../../../config'
+import { getData, fwd } from '../../api/api-front'
+import config from '../../../../config'
 const {apiClient} =config
 
 export function signin (req, res) {
