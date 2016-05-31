@@ -5,7 +5,7 @@ import config from '../../../../../config'
 import { getI18n } from '../../../../../config/i18n'
 import CountrySelect from './../CountrySelect'
 import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat'
-import iban from 'iban'
+import IBAN from 'iban'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const {gocardless} = config
@@ -95,8 +95,8 @@ class GocardlessForm extends React.Component {
   }
 
   validate () {
-    this.refs.iban.value = iban.printFormat(this.refs.iban.value, ' ')
-    return iban.isValid(this.refs.iban.value)
+    this.refs.iban.value = IBAN.printFormat(this.refs.iban.value, ' ')
+    return IBAN.isValid(this.refs.iban.value)
   }
 
   onHeaderClick () {
