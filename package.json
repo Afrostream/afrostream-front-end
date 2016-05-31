@@ -82,6 +82,7 @@
     "gsap": "^1.17.0",
     "handlebars": "^4.0.5",
     "hash-webpack-plugin": "0.0.5",
+    "heapdump": "^0.3.7",
     "history": "^2.1.1",
     "hoist-non-react-statics": "^1.0.5",
     "html-loader": "^0.3.0",
