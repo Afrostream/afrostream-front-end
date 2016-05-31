@@ -6,12 +6,15 @@
   "scripts": {
     "app": "./node_modules/.bin/babel-node --debug server/app",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc server",
-    "build": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --production --verbose --colors --display-error-details --config webpack/prod.config.js",
+    "clean": "rm -rf build && mkdir build",
+    "build:client": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --production --verbose --colors --display-error-details --config webpack/prod.config.js",
+    "build:server": "babel -d ./build ./server -s",
+    "build": "npm run clean && npm run build:server && npm run build:client",
     "watch": "./node_modules/.bin/babel-node  webpack/webpack-dev-server.js",
     "dev": "echo 'requiring node v4.4.4' && . ~/.nvm/nvm.sh && nvm use 4.4.4 && node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch\" \"nodemon --exec npm run app\"",
     "staging": "export LOAD_STAGING=true && npm run dev",
-    "start": "node server/index.js",
-    "debug": "./node_modules/.bin/babel-node --debug server/index.js",
+    "start": "node ./build/index.js",
+    "debug": "node --debug ./build/index.js",
     "postinstall": "npm run build"
   },
   "keywords": [

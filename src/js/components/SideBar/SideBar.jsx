@@ -44,7 +44,7 @@ class SideBar extends React.Component {
 
 
     const user = User.get('user')
-    
+
     return (
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
@@ -93,7 +93,8 @@ class SideBar extends React.Component {
     dispatch(EventActionCreators.toggleSideBar())
   }
 
-  logout () {
+  logout (e) {
+    e.preventDefault()
     const {
       props: {
         dispatch
