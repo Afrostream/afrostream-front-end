@@ -79,6 +79,9 @@ const client = {
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
   },
+  facebook: {
+    analyticsKey: process.env.FB_TRACKING_ID || '1594872720779391'
+  },
   apiClient: {
     protocol: process.env.API_CLIENT_PROTOCOL || 'http',
     authority: process.env.API_CLIENT_AUTHORITY || 'localhost:3002',

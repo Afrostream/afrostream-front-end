@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import config from '../../../config'
+import ReactFB from '../lib/fbEvent'
 
 if (canUseDOM) {
   var ga = require('react-ga')
@@ -32,6 +33,7 @@ export default function analytics (prepareFn) {
 
         if (!shallowEqual(nextProps.location.pathname, location.pathname && canUseDOM)) {
           ga.pageview(nextProps.location.pathname)
+          ReactFB.track(nextProps.location.pathname)
         }
       }
 
@@ -43,6 +45,8 @@ export default function analytics (prepareFn) {
         if (canUseDOM) {
           ga.initialize(config.google.analyticsKey, {debug: true})
           ga.pageview(location.pathname)
+          ReactFB.initialize(config.facebook.analyticsKey, {debug: true})
+          ReactFB.track(location.pathname)
         }
       }
 
