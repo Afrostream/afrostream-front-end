@@ -38,7 +38,8 @@ class Slider extends React.Component {
   }
 
   componentDidMount () {
-    this.container = ReactDOM.findDOMNode(this).lastChild
+    const elTarget = ReactDOM.findDOMNode(this)
+    this.container = elTarget.childNodes[elTarget.childNodes.length - 2].firstChild
     this.container.addEventListener('scroll', ::this.handleScroll)
     this.handleScroll()
   }
@@ -58,6 +59,10 @@ class Slider extends React.Component {
         scrollLeft: this.container.scrollLeft
       })
     }, 200)
+  }
+
+  onScroll ({scrollLeft, scrollTop, totalColumnsWidth, totalRowsHeight}) {
+    this.setState({scrollLeft, scrollTop, totalColumnsWidth, totalRowsHeight})
   }
 
   /**

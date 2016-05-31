@@ -4,10 +4,10 @@ import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { prepareRoute } from '../../decorators'
 import * as CategoryActionCreators from '../../actions/category'
-import Slider from '../Slider/Slider'
-import ReactList from 'react-list'
+import { ArrowStepper }from '../Slider'
 import MoviesSlider from './MoviesSlider'
 import classSet from 'classnames'
+import { AutoSizer, ColumnSizer, Grid, ScrollSync } from 'react-virtualized'
 
 @prepareRoute(async function ({store, categoryId}) {
   store.dispatch(CategoryActionCreators.getCategory(categoryId))
@@ -19,7 +19,7 @@ class CategorySlider extends MoviesSlider {
     super(props)
   }
 
-  renderItem (index) {
+  getColumnWidth ({index}) {
     const {
       props: {
         categoryId,
@@ -30,11 +30,25 @@ class CategorySlider extends MoviesSlider {
     const category = Category.get(`categorys/${categoryId}`)
     const dataList = category.get('mergeSpotsWithMovies')
     let data = dataList.get(index)
+    return data.size === 1 ? 240 : 160
+  }
+
+  renderItem ({columnIndex, rowIndex}) {
+    const {
+      props: {
+        categoryId,
+        Category
+      }
+    } = this
+
+    const category = Category.get(`categorys/${categoryId}`)
+    const dataList = category.get('mergeSpotsWithMovies')
+    let data = dataList.get(columnIndex)
     if (data instanceof Immutable.Map) {
       return this.renderBlock(data)
     }
     return (
-      <div className="block" key={`data-block-${index}`}>{data.map((item)=> {
+      <div className="block" key={`data-block-${columnIndex}`}>{data.map((item)=> {
         return this.renderBlock(item)
       }).toJS()}</div>
     )
@@ -46,8 +60,7 @@ class CategorySlider extends MoviesSlider {
         Category,
         categoryId,
         label,
-        slug,
-        axis
+        slug
       }
     } = this
     let listClass = {
@@ -75,24 +88,43 @@ class CategorySlider extends MoviesSlider {
       })
     }
 
-
     return (
       <div className={classSet(listClass)}>
         {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
         {label ? <div className="movies-list__selection">{label}</div> : ''}
         {category && dataList ?
-          <Slider {...this.props}>
-            <div className="slider-container">
-              <ReactList
-                ref="react-list"
-                useTranslate3d={true}
-                axis={axis}
-                itemRenderer={::this.renderItem}
-                length={dataList.size}
-                type={axis === 'x' ? 'variable' : 'uniform' }
-              />
-            </div>
-          </Slider> : null}
+          <AutoSizer className="slider-container" disableHeight>
+            {({width}) => (
+              <ColumnSizer
+                ref="reactList"
+                cellSizeAndPositionGetter={::this.getRowHeight}
+                columnMaxWidth={240}
+                columnMinWidth={160}
+                columnCount={dataList.size}
+                width={width}>
+                {({adjustedWidth, getColumnWidth, registerChild, columnCount}) => (
+                  <ArrowStepper columnCount={dataList.size}>
+                    {({onSectionRendered, onScroll, columnCount, scrollToColumn}) => (
+                      <Grid
+                        ref="reactGrid"
+                        cellRenderer={::this.renderItem}
+                        columnWidth={::this.getColumnWidth}
+                        columnCount={columnCount}
+                        rowHeight={listClass.spots ? 440 : 220}
+                        height={listClass.spots ? 440 : 220}
+                        rowCount={1}
+                        onScroll={onScroll}
+                        onSectionRendered={onSectionRendered}
+                        scrollToColumn={scrollToColumn}
+                        width={adjustedWidth}
+                      />
+                    )}
+                  </ArrowStepper>
+                )}
+              </ColumnSizer>
+            )}
+          </AutoSizer>
+          : null}
       </div>
     )
   }
