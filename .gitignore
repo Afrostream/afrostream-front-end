@@ -3,7 +3,7 @@
 thumb.db
 
 # node_modules
-/node_modules
+node_modules/
 
 # config files
 # /config/index.js
@@ -12,8 +12,8 @@ thumb.db
 /*.log
 
 # Dist
-/dist
+dist/
+build/
 
 # IDE
 .idea
-/build
