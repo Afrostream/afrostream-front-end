@@ -8,7 +8,7 @@ const {webpackDevServer: {host, port}} = config
 
 const serverOptions = {
     contentBase: path.resolve(__dirname, '../dist'),
-    publicPath: devConfig[0].output.publicPath,
+    publicPath: devConfig.output.publicPath,
     hot: true,
     headers: {'Access-Control-Allow-Origin': '*'},
     quiet: false,
