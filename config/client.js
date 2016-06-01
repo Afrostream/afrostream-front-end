@@ -129,13 +129,23 @@ const client = {
     time: 45
   },
   oauth2: {
+    providers: [
+      {
+        name: 'facebook',
+        icon: 'zocial facebook'
+      },
+      {
+        name: 'bouygues',
+        icon: 'zocial facebook'
+      }
+    ],
     facebook: process.env.OAUTH_FACEBOOK_ENABLED || false
   },
   social: {
     networks: {
       facebook: {
         enabled: true,      // Enable Facebook. [Default: true]
-        icon: 'fa-facebook',
+        icon: 'fa-provider',
         url: 'https://www.facebook.com/sharer/sharer.php',
         title: 'Facebook',
         params: {

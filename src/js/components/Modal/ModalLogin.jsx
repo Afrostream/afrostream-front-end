@@ -157,15 +157,13 @@ class ModalLogin extends ModalComponent {
     dispatch(OauthActionCreator[typeCall](postData)).then(::this.onSuccess).catch(::this.onError)
   }
 
-  facebookAuth (event) {
-    event.preventDefault()
+  oauthStrategy (strategy) {
     const {
       dispatch
     } = this.props
 
-    const method = this.getType()
-
-    dispatch(OauthActionCreator.facebook(method)).then(::this.onSuccess).catch(::this.onError)
+    const path = this.getType()
+    dispatch(OauthActionCreator.provider({strategy, path})).then(::this.onSuccess).catch(::this.onError)
   }
 
   onSuccess () {
@@ -295,7 +293,7 @@ class ModalLogin extends ModalComponent {
     }
 
     let formTemplate
-    let social = oauth2.facebook
+    let social = oauth2.providers
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
@@ -315,7 +313,7 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="notloggedin mode">
         <form noValidate="" onSubmit={::this.handleSubmit}>
-          {social ? this.getSocial() : ''}
+          {social ? this.getSocial() : null}
           <div className="instructions">{this.getTitle('headerText')}</div>
           {formTemplate}
         </form>
@@ -327,11 +325,21 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        <div tabIndex="0" data-strategy="facebook" title={this.getTitle('loginFacebook')} onClick={::this.facebookAuth}
-             className="zocial facebook "
-             dir="ltr">
-          <span>{this.getTitle('loginFacebook')}</span>
-        </div>
+        {_.map(oauth2.providers, (strategy)=> {
+          const title = this.getTitle('loginProvider').replace('{provider}', strategy.name)
+          const inputAttributes = {
+            onClick: event => ::this.oauthStrategy(strategy.name)
+          }
+          return (<div tabIndex="0"
+                       key={`${strategy.name}-connect`}
+                       data-strategy={strategy.name}
+                       title={title}
+                       className={strategy.icon}
+            {...inputAttributes}
+                       dir="ltr">
+            <span>{title}</span>
+          </div>)
+        })}
         <div className="separator"><span>ou</span></div>
       </div>
     )
