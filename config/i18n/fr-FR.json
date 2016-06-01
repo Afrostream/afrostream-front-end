@@ -214,7 +214,7 @@
     },
     "social": {
       "header": "Profils liés",
-      "facebook": "Lier mon profil <b>Facebook</b> à mon compte Afrostream",
+      "link": "Lier mon profil <b>{provider}</b> à mon compte Afrostream",
       "on": "Lier mon profil",
       "off": "Ne plus lier mon profil"
     },
@@ -295,7 +295,7 @@
     "popupCredentials": "Saisissez vos identifiants dans la fenêtre pop-up",
     "userClosedPopup": "La fenêtre pop-up a été fermée. Veuillez réessayer.",
     "userConsentFailed": "L'application n'a pas été autorisée. Veuillez réessayer.",
-    "loginFacebook": "Connexion avec facebook",
+    "loginProvider": "Connexion avec {provider}",
     "language": {
       "email": "Doit etre un email valide",
       "password": "Le mot de passe",

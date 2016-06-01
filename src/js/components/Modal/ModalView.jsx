@@ -65,7 +65,7 @@ class ModalView extends React.Component {
           <ModalCoupon type={target} closable={closable} {...this.props}/>
         )
         break
-      case 'social':
+      case 'provider':
         return (
           <ModalSocial closable={closable} {...this.props} data={data}/>
         )

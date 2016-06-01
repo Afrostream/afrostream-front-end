@@ -5,6 +5,9 @@ import { getI18n } from '../../../../config/i18n'
 import SwitchButton from '../SwitchButton/SwitchButton'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
+import config from '../../../../config'
+
+const {oauth2}= config
 
 if (process.env.BROWSER) {
   require('./AccountSocial.less')
@@ -19,7 +22,7 @@ class AccountSocial extends React.Component {
   }
 
 
-  synchroniseHandler (isSynchro) {
+  synchroniseHandler ({isSynchro, strategy}) {
     const {
       props: {
         dispatch
@@ -30,7 +33,7 @@ class AccountSocial extends React.Component {
       fetching: true
     })
 
-    dispatch(OAuthActionCreators.facebook(isSynchro ? 'unlink' : 'link'))
+    dispatch(OAuthActionCreators.provider({strategy, path: isSynchro ? 'unlink' : 'link'}))
       .then(()=> {
         dispatch(UserActionCreators.getProfile())
         this.setState({
@@ -40,6 +43,32 @@ class AccountSocial extends React.Component {
       this.setState({
         fetching: false
       })
+    })
+  }
+
+
+  getSocialProvider (user) {
+
+
+    return _.map(oauth2.providers, (strategy)=> {
+      const providerInfos = user.get(strategy.name)
+      const isSynchro = Boolean(providerInfos)
+      const checkLabel = getI18n().account.social[isSynchro ? 'off' : 'on']
+      const inputAttributes = {
+        onChange: event => ::this.synchroniseHandler({isSynchro, strategy: strategy.name})
+      }
+      const title = getI18n().account.social.link.replace('{provider}', strategy.name)
+      return (<div className="row" key={`${strategy.name}-synchro`}>
+          <div className="col-md-2">
+            <i className="fa fa-facebook-official"/>
+          </div>
+          <div className="col-md-6" dangerouslySetInnerHTML={{__html:title}}/>
+          <div className="col-md-4">
+            <SwitchButton label={checkLabel} name="switch-3" checked={isSynchro}
+              {...inputAttributes} disabled={this.state.fetching}/>
+          </div>
+        </div>
+      )
     })
   }
 
@@ -54,27 +83,10 @@ class AccountSocial extends React.Component {
     if (!user) {
       return <div />
     }
-    const facebookInfos = user.get('facebook')
-    let checkLabel = getI18n().account.social[facebookInfos ? 'off' : 'on']
-    let checked = Boolean(facebookInfos)
-
-    const inputAttributes = {
-      onChange: event => ::this.synchroniseHandler(Boolean(facebookInfos))
-    }
-
     return (
       <div className="row account-details">
         <div className="account-details__container col-md-12">
-          <div className="row">
-            <div className="col-md-2">
-              <i className="fa fa-facebook-official"/>
-            </div>
-            <div className="col-md-6" dangerouslySetInnerHTML={{__html:getI18n().account.social.facebook}}/>
-            <div className="col-md-4">
-              <SwitchButton label={checkLabel} name="switch-3" checked={checked}
-                {...inputAttributes} disabled={this.state.fetching}/>
-            </div>
-          </div>
+          {this.getSocialProvider(user)}
         </div>
       </div>
     )

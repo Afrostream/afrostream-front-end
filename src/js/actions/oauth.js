@@ -50,17 +50,17 @@ export function getIdToken () {
   }
 }
 /**
- * Get token from facebook oauth
+ * Get token from provider oauth
  * @param isSynchro
  * @returns {Function}
  */
-export function facebook (path = 'signin') {
+export function provider ({strategy = 'facebook', path = 'signin'}) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
 
     const token = getState().OAuth.get('token')
-    let url = `/auth/facebook/${path}`
-    //Si il y a un user et qu'on veut desynchro le social account, on passe le token en parametre
+    let url = `/auth/${strategy}/${path}`
+    //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
     if (token) {
       url = `${url}?access_token=${token.get('accessToken')}`
     }
@@ -72,7 +72,7 @@ export function facebook (path = 'signin') {
 
     return async () => {
       return await new Promise((resolve, reject) => {
-        let oauthPopup = window.open(url, 'facebook_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
+        let oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
         let intervalCheck = 0
         let beforeUnload = () => {
           oauthPopup = null
@@ -85,7 +85,7 @@ export function facebook (path = 'signin') {
               let message = ''
               switch (path) {
                 case 'signin':
-                  message = 'Error: No user found, please associate your profile with facebook after being connected'
+                  message = 'Error: No user found, please associate your profile with strategy after being connected'
                   break
                 case 'link':
                   message = 'Error: Your profile is already linked to another user'
@@ -97,7 +97,7 @@ export function facebook (path = 'signin') {
               return reject({message: message})
             }
             return resolve({
-              type: ActionTypes.OAuth.facebook
+              type: ActionTypes.OAuth.strategy
             })
           } catch (err) {
             return reject(err)
