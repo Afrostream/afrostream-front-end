@@ -179,7 +179,7 @@ class Slider extends React.Component {
           onClick={::this.handleClick}
           onMouseDown={this.handleMouseDown.bind(this, 'left')}
           onMouseUp={::this.handleMouseUp}>
-          <i className="fa fa-chevron-left"></i>
+          <i className="zmdi zmdi-hc-8x zmdi-chevron-left"></i>
         </a>
         <a
           ref="arrowRight"
@@ -188,7 +188,7 @@ class Slider extends React.Component {
           onClick={::this.handleClick}
           onMouseDown={this.handleMouseDown.bind(this, 'right')}
           onMouseUp={::this.handleMouseUp}>
-          <i className="fa fa-chevron-right"></i>
+          <i className="zmdi zmdi-hc-8x zmdi-chevron-right"></i>
         </a>
         {this.props.children}
       </div>

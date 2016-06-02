@@ -25,17 +25,17 @@ export function link (req, res) {
 export async function unlink (req, res) {
   res.noCache()
   try {
-    const facebookCompleteFlow = await getData(req, '/auth/bouygues/unlink', {
+    const bouyguesCompleteFlow = await getData(req, '/auth/bouygues/unlink', {
       followRedirect: false,
       header: {
         'Access-Token': req.query.access_token
       }
     })
-    var fbResponse = facebookCompleteFlow[0]
-      , fbBody = facebookCompleteFlow[1]
+    var bouyguesResponse = bouyguesCompleteFlow[0]
+      , bouyguesBody = bouyguesCompleteFlow[1]
 
     const layout = 'layouts/oauth-strategy-unlink'
-    res.status(fbResponse.statusCode).render(layout, fbBody)
+    res.status(bouyguesResponse.statusCode).render(layout, bouyguesBody)
   }
   catch (err) {
     console.error(err)

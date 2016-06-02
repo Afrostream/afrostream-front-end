@@ -80,7 +80,7 @@ class Header extends React.Component {
         {planCode ? <SmartBanner {...apps.params}/> : ''}
         <div className="container-fluid">
           <nav className="nav-collapse" role="navigation">
-            { hasHistory ? <GoBack {...this.props}/> : ''}
+            { hasHistory ? <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
             <Link className="navbar-brand" to="/">
               <img src="/images/logo.png" alt="Afrostream.tv"/>
             </Link>

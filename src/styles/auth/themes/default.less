@@ -150,7 +150,8 @@
 
 /*-----  End of Fonts  ------*/
 
-.btn-small {
+.btn-small,
+.btn-xsmall {
   font-size: 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -168,6 +169,10 @@
     background: #e9e9e9;
     border-color: #e9e9e9;
   }
+}
+
+.btn-xsmall {
+  font-size: 8px;
 }
 
 /*==========  Panel  ==========*/
@@ -352,6 +357,18 @@
 
   }
 
+  input:-webkit-autofill {
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 0 0px 9999px white;
+  }
+
+  input:focus,
+  input:-webkit-autofill:focus {
+    border-color: #66afe9;
+    -webkit-box-shadow: inset 0 0 0px 9999px white,
+    0 0 8px rgba(102, 175, 233, 0.6);
+  }
+
   .email input, .username input, .password input, .repeatPassword input {
     box-sizing: border-box;
     padding: 16px 10px;
@@ -433,7 +450,7 @@
     span {
       letter-spacing: 1px;
       text-transform: uppercase;
-      color:#999;
+      color: #999;
     }
   }
 

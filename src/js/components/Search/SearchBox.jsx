@@ -86,7 +86,7 @@ class SearchBox extends React.Component {
 
     return (
       <div className={classSet(fielClass)}>
-        <i className="fa fa-times" onClick={::this.goBack}/>
+        <i className="zmdi zmdi-close" onClick={::this.goBack}/>
         <input
           onChange={::this.debounceSearch}
           onFocus={::this.handleFocus}

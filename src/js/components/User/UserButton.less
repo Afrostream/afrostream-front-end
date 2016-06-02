@@ -1,11 +1,15 @@
 @import (reference) '../../../styles/config.less';
 
 nav {
+  .btn-goback,
   .btn-browse,
   .btn-favorites,
   .btn-signin,
   .btn-signup,
   .btn-user {
+    .zmdi {
+      margin: -2px 0 0 0;
+    }
     background-color: fade(@brand-primary, 10%);
     color: @brand-primary;
     text-transform: uppercase;
@@ -24,8 +28,7 @@ nav {
     }
     padding-top: 10px !important;
     padding-bottom: 10px !important;
-    padding-left: 10px !important;
-
+    //padding-left: 10px !important;
     span {
       padding: 0 10px 0 10px;
       .isMobile({ display: none; padding: 0; });

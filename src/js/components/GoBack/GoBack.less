@@ -1,50 +1,16 @@
 @import (reference) '../../../styles/config.less';
 
-.return-btn {
-  position: absolute;
-  top: 10px;
-  left: @app-padding;
-  overflow: hidden;
-  z-index: 3000;
-  transition: width .1s ease-in-out;
-  cursor: pointer;
-  text-align: left;
-  background-color: rgba(69, 69, 69, 0.7);
-  border-radius: 5px;
-  margin-left: -5px;
-  .transition(background 0.2s linear);
-  .transition(opacity 0.4s linear);
-  &:hover,
-  &:visited,
-  &:active,
-  &:focus {
-    color: @color-yellow !important;
-  }
-  .fa {
-    //color: @color-yellow;
-    font-size: 2.3em;
+.btn-goback {
+  .zmdi {
     float: left;
+    margin: -4px 0 -4px 5px;
   }
   .return-btn-label {
     font-size: 1.2em;
-    padding: 0 0 0 10px;
-    line-height: 2;
+    //padding: 0 0 0 10px;
+    //line-height: 2;
   }
   &.return-btn-hidden {
-    opacity: 0;
-    .transition(opacity 0.4s linear);
     display: none;
   }
 }
-
-//@media @mobile,@tablet{
-//  .return-btn {
-//    top: 10px;
-//    position: relative;
-//    left: @app-padding-mobile;
-//    &.return-btn-hidden {
-//      opacity: 1;
-//      display: block;
-//    }
-//  }
-//}

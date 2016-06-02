@@ -217,9 +217,9 @@ class ModalLogin extends ModalComponent {
   showProviderAction (event) {
     event.preventDefault()
     const {
-      dispatch, history
+      dispatch
     } = this.props
-    dispatch(ModalActionCreator.open('sowProvider'))
+    dispatch(ModalActionCreator.open('showProvider'))
   }
 
   getI18n () {
@@ -227,6 +227,7 @@ class ModalLogin extends ModalComponent {
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
+      case 'showProvider':
         keyType = 'signin'
         break
       case 'showRelog':
@@ -251,6 +252,7 @@ class ModalLogin extends ModalComponent {
       case 'show':
       case 'showSignin':
       case 'showRelog':
+      case 'showProvider':
         keyType = 'signin'
         break
       case 'showSignup':
@@ -317,6 +319,7 @@ class ModalLogin extends ModalComponent {
         formTemplate = this.getReset()
         break
       case 'showProvider':
+        social = false
         formTemplate = this.getProvider()
         break
     }
@@ -324,7 +327,10 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="notloggedin mode">
         <form noValidate="" onSubmit={::this.handleSubmit}>
-          {social ? this.getStrategy('facebook') : null}
+
+          {social ? this.getStrategy({name: 'facebook'}) : null}
+          {social ? <div className="separator"><span>ou</span></div> : null}
+
           <div className="instructions">{this.getTitle('headerText')}</div>
           {formTemplate}
         </form>
@@ -332,11 +338,8 @@ class ModalLogin extends ModalComponent {
     )
   }
 
-  getStrategy (name) {
-    let filterObj = {active: true}
-    if (name) {
-      filterObj.name = name
-    }
+  getStrategy (filter) {
+    let filterObj = _.merge({active: true}, filter)
 
     return (
       <div className="collapse-social">
@@ -356,7 +359,6 @@ class ModalLogin extends ModalComponent {
             <span>{title}</span>
           </div>)
         })}
-        <div className="separator"><span>ou</span></div>
       </div>
     )
   }
@@ -422,6 +424,7 @@ class ModalLogin extends ModalComponent {
   }
 
   getSignIn () {
+
     return (
       <div className="emailPassword">
         <div className="inputs">
@@ -436,6 +439,7 @@ class ModalLogin extends ModalComponent {
           <div className="db-actions">
             <div className="create-account buttons-actions">
               <Link to="/reset" className="forgot-pass btn-small">{this.getTitle('forgotText')}</Link>
+              {this.getProviderForm()}
             </div>
           </div>
         </div>
@@ -481,11 +485,20 @@ class ModalLogin extends ModalComponent {
     )
   }
 
+  getProviderForm () {
+
+    const providers = _.filter(oauth2.providers, {active: true}).map((provider)=>provider.name)
+
+    return <a href="#" onClick={::this.showProviderAction}
+              className="forgot-pass btn-xsmall">{this.getTitle('providers').replace('{providers}', providers.join(','))}</a>
+  }
+
   getProvider () {
     return (
       <div className="emailPassword">
         <div className="inputs-wrapper">
           <div className="inputs">
+            {this.getStrategy({social: false})}
           </div>
         </div>
         <div className="action">
@@ -494,7 +507,6 @@ class ModalLogin extends ModalComponent {
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
           </div>
         </div>
-
       </div>
     )
   }
@@ -541,11 +553,11 @@ class ModalLogin extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <div className="icon-container">
-                        <div className="avatar">
-                          <i className="avatar-guest icon-budicon-2"></i>
-                        </div>
-                      </div>
+                      {/*<div className="icon-container">
+                       <div className="avatar">
+                       <i className="avatar-guest icon-budicon-2"></i>
+                       </div>
+                       </div>*/}
                       <h1>{this.getTitle()}</h1>
                       <h2 className={errClass}>{this.state.error}</h2>
                       <h2 className={successClass}>{this.getTitle('successText')}</h2>
