@@ -106,8 +106,12 @@ export function provider ({strategy = 'facebook', path = 'signup'}) {
         }
         oauthPopup.onbeforeunload = beforeUnload
         intervalCheck = setInterval(function () {
-          if (!oauthPopup.onbeforeunload) {
-            beforeUnload()
+          try {
+            if (!oauthPopup.onbeforeunload) {
+              beforeUnload()
+            }
+          } catch (e) {
+            console.log('onbeforeunlod error ', e)
           }
         }, 1000)
       })
