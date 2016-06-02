@@ -75,6 +75,7 @@ export function provider ({strategy = 'facebook', path = 'signup'}) {
         let oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
         let intervalCheck = 0
         let beforeUnload = () => {
+          debugger
           oauthPopup = null
           if (intervalCheck) {
             clearInterval(intervalCheck)

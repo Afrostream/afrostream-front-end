@@ -163,7 +163,7 @@ class ModalLogin extends ModalComponent {
     } = this.props
 
     const path = this.getType()
-    dispatch(OauthActionCreator.provider({strategy, path})).then(::this.onSuccess).catch(::this.onError)
+    dispatch(OauthActionCreator.strategy({strategy, path})).then(::this.onSuccess).catch(::this.onError)
   }
 
   onSuccess () {

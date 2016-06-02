@@ -33,7 +33,7 @@ class AccountSocial extends React.Component {
       fetching: true
     })
 
-    dispatch(OAuthActionCreators.provider({strategy, path: isSynchro ? 'unlink' : 'link'}))
+    dispatch(OAuthActionCreators.strategy({strategy, path: isSynchro ? 'unlink' : 'link'}))
       .then(()=> {
         dispatch(UserActionCreators.getProfile())
         this.setState({
@@ -58,7 +58,7 @@ class AccountSocial extends React.Component {
       const inputAttributes = {
         onChange: event => ::this.synchroniseHandler(eventObj)
       }
-      const title = getI18n().account.oauth2.link.replace('{provider}', strategy.name)
+      const title = getI18n().account.oauth2.link.replace('{strategy}', strategy.name)
       return (<div className="row row-provider" key={`${strategy.name}-synchro`}>
           <div className="col-md-2">
             <i className={strategy.icon}/>
