@@ -51,6 +51,9 @@
       "facebook": "Facebook",
       "twitter": "Twitter",
       "newsletter": "Newsletter"
+    },
+    "oauth2": {
+      "title": "FOURNISSEURS"
     }
   },
   "loadingTitle": "Veuillez patienter...",
@@ -212,7 +215,7 @@
       "updatePlan": "Changer de forfait",
       "cancelPlan": "Interrompre votre abonnement"
     },
-    "social": {
+    "oauth2": {
       "header": "Profils liés",
       "link": "Lier mon profil <b>{provider}</b> à mon compte Afrostream",
       "on": "Lier mon profil",

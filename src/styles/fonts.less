@@ -49,3 +49,26 @@
   font-family: @font-family-base;
   line-height: 1;
 }
+
+//.fa {
+//  &.fa-bouygues {
+//    font-family: @font-provider !important;
+//    &:before {
+//      content: '\e900';
+//    }
+//  }
+//}
+
+.fa {
+  &.fa-bouygues {
+    background-image: url(../assets/images/provider/bouygues-strategy.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    width: 3em;
+    height: 1.5em;
+    &:before {
+      content: '';
+    }
+  }
+}

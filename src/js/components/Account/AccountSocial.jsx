@@ -50,22 +50,28 @@ class AccountSocial extends React.Component {
   getSocialProvider (user) {
 
 
-    return _.map(oauth2.providers, (strategy)=> {
+    return _.filter(oauth2.providers, {active: true}).map((strategy)=> {
       const providerInfos = user.get(strategy.name)
       const isSynchro = Boolean(providerInfos)
-      const checkLabel = getI18n().account.social[isSynchro ? 'off' : 'on']
+      const checkLabel = getI18n().account.oauth2[isSynchro ? 'off' : 'on']
+      const eventObj = {isSynchro, strategy: strategy.name}
       const inputAttributes = {
-        onChange: event => ::this.synchroniseHandler({isSynchro, strategy: strategy.name})
+        onChange: event => ::this.synchroniseHandler(eventObj)
       }
-      const title = getI18n().account.social.link.replace('{provider}', strategy.name)
-      return (<div className="row" key={`${strategy.name}-synchro`}>
+      const title = getI18n().account.oauth2.link.replace('{provider}', strategy.name)
+      return (<div className="row row-provider" key={`${strategy.name}-synchro`}>
           <div className="col-md-2">
-            <i className="fa fa-facebook-official"/>
+            <i className={strategy.icon}/>
           </div>
           <div className="col-md-6" dangerouslySetInnerHTML={{__html:title}}/>
           <div className="col-md-4">
-            <SwitchButton label={checkLabel} name="switch-3" checked={isSynchro}
-              {...inputAttributes} disabled={this.state.fetching}/>
+            <SwitchButton
+              label={checkLabel}
+              name={`${strategy.name}-synchro_check`}
+              checked={isSynchro}
+              {...inputAttributes}
+              disabled={this.state.fetching}
+            />
           </div>
         </div>
       )

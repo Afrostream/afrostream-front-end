@@ -313,7 +313,7 @@ class ModalLogin extends ModalComponent {
     return (
       <div className="notloggedin mode">
         <form noValidate="" onSubmit={::this.handleSubmit}>
-          {social ? this.getSocial() : null}
+          {social ? this.getStrategy() : null}
           <div className="instructions">{this.getTitle('headerText')}</div>
           {formTemplate}
         </form>
@@ -321,11 +321,11 @@ class ModalLogin extends ModalComponent {
     )
   }
 
-  getSocial () {
+  getStrategy () {
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        {_.map(oauth2.providers, (strategy)=> {
+        {_.filter(oauth2.providers, {name: 'facebook', active: true}).map((strategy)=> {
           const title = this.getTitle('loginProvider').replace('{provider}', strategy.name)
           const inputAttributes = {
             onClick: event => ::this.oauthStrategy(strategy.name)
@@ -334,7 +334,7 @@ class ModalLogin extends ModalComponent {
                        key={`${strategy.name}-connect`}
                        data-strategy={strategy.name}
                        title={title}
-                       className={strategy.icon}
+                       className={`zocial ${strategy.name}`}
             {...inputAttributes}
                        dir="ltr">
             <span>{title}</span>
