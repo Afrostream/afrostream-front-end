@@ -214,6 +214,14 @@ class ModalLogin extends ModalComponent {
     dispatch(ModalActionCreator.open('show'))
   }
 
+  showProviderAction (event) {
+    event.preventDefault()
+    const {
+      dispatch, history
+    } = this.props
+    dispatch(ModalActionCreator.open('sowProvider'))
+  }
+
   getI18n () {
     let keyType = 'signin'
     switch (this.props.type) {
@@ -308,12 +316,15 @@ class ModalLogin extends ModalComponent {
         social = false
         formTemplate = this.getReset()
         break
+      case 'showProvider':
+        formTemplate = this.getProvider()
+        break
     }
 
     return (
       <div className="notloggedin mode">
         <form noValidate="" onSubmit={::this.handleSubmit}>
-          {social ? this.getStrategy() : null}
+          {social ? this.getStrategy('facebook') : null}
           <div className="instructions">{this.getTitle('headerText')}</div>
           {formTemplate}
         </form>
@@ -321,11 +332,16 @@ class ModalLogin extends ModalComponent {
     )
   }
 
-  getStrategy () {
+  getStrategy (name) {
+    let filterObj = {active: true}
+    if (name) {
+      filterObj.name = name
+    }
+
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        {_.filter(oauth2.providers, {name: 'facebook', active: true}).map((strategy)=> {
+        {_.filter(oauth2.providers, filterObj).map((strategy)=> {
           const title = this.getTitle('loginProvider').replace('{provider}', strategy.name)
           const inputAttributes = {
             onClick: event => ::this.oauthStrategy(strategy.name)
@@ -455,6 +471,24 @@ class ModalLogin extends ModalComponent {
         <div className="action">
           <button type="submit" className="primary next"
                   disabled={!::this.isValid}>{this.getTitle('action')}</button>
+          <div className="options">
+            <a href="#" onClick={::this.cancelAction}
+               className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
+          </div>
+        </div>
+
+      </div>
+    )
+  }
+
+  getProvider () {
+    return (
+      <div className="emailPassword">
+        <div className="inputs-wrapper">
+          <div className="inputs">
+          </div>
+        </div>
+        <div className="action">
           <div className="options">
             <a href="#" onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
