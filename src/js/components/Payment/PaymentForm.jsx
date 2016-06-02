@@ -217,7 +217,7 @@ class PaymentForm extends React.Component {
           <a ref="droitstip" className="my-tool-tip"
              data-original-title={getI18n().payment.droits.tooltip}
              data-placement="top"
-             data-toggle="tooltip"><i className="fa fa-question-circle"/></a>
+             data-toggle="tooltip"><i className="zmdi zmdi-help"/></a>
         </div>
       </div>
     </div>)

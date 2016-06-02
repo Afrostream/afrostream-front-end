@@ -139,14 +139,14 @@ class Footer extends React.Component {
               <li>
                 <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
                    target="_blank">
-                  {labels.apps.ios} <i className="fa fa-apple"></i>
+                  {labels.apps.ios} <i className="zmdi zmdi-apple"></i>
                 </a>
               </li>
               <li>
                 <a className="footer-link"
                    href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
                    target="_blank">
-                  {labels.apps.android} <i className="fa fa-android"></i>
+                  {labels.apps.android} <i className="zmdi zmdi-android"></i>
                 </a>
               </li>
             </ul>
@@ -156,12 +156,12 @@ class Footer extends React.Component {
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="https://www.facebook.com/afrostreamtv?fref=ts">
-                  {labels.social.facebook} <i className="fa fa-facebook"></i>
+                  {labels.social.facebook} <i className="zmdi zmdi-facebook"></i>
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="https://twitter.com/intent/user?screen_name=AFROSTREAM">
-                  {labels.social.twitter} <i className="fa fa-twitter"></i>
+                  {labels.social.twitter} <i className="zmdi zmdi-twitter"></i>
                 </a>
               </li>
               <li>

@@ -16,7 +16,7 @@ a.zocial {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   padding: 0;
-  margin-bottom: 6px;
+  margin: 6px;
   cursor: pointer;
   overflow: hidden;
   transition: opacity 0.2s ease;
@@ -27,7 +27,7 @@ a.zocial {
 }
 
 .zocial span,
-a.zocial span{
+a.zocial span {
   text-transform: uppercase;
   font-weight: 400;
   font-size: 10px;
@@ -40,13 +40,13 @@ a.zocial span{
   transition: all 0.2s ease;
 }
 
-.strategy div.zocial span{
+.strategy div.zocial span {
   text-transform: lowercase;
   font-size: 12px;
 }
 
 .zocial:hover span, a.zocial:hover span, a.zocial {
-  background: rgba(0,0,0,.2);
+  background: rgba(0, 0, 0, .2);
 
 }
 
@@ -59,7 +59,7 @@ a.zocial span{
   width: 16%;
   cursor: pointer;
   text-align: center;
-  background: rgba(0,0,0,.3);
+  background: rgba(0, 0, 0, .3);
   transition: all 0.2s ease;
 }
 
@@ -74,16 +74,15 @@ a.zocial span{
   overflow: hidden;
   white-space: nowrap;
 }
+
 .zocial.icon:before {
   box-shadow: none;
   border: none;
 }
 
-
-.strategy{
+.strategy {
   margin: 10px 0;
 }
-
 
 /* Adjustments for light background buttons */
 
@@ -95,6 +94,7 @@ a.zocial span{
 .zocial.weibo,
 .zocial.stackoverflow,
 .zocial.miicard,
+.zocial.bouygues,
 .zocial.salesforce {
 }
 
@@ -116,6 +116,8 @@ a.zocial span{
 .zocial.twitter:hover,
 .zocial.miicard:focus,
 .zocial.miicard:hover,
+.zocial.bouygues:focus,
+.zocial.bouygues:hover,
 .zocial.weibo:focus,
 .zocial.weibo:hover,
 .zocial.salesforce:focus,
@@ -129,6 +131,7 @@ a.zocial span{
 .zocial.gmail:active,
 .zocial.openid:active,
 .zocial.secondary:active,
+.zocial.bouygues:active,
 .zocial.weibo:active,
 .zocial.stackoverflow:active,
 .zocial.wikipedia:active,
@@ -137,90 +140,381 @@ a.zocial span{
 
 /* Button icon and color */
 /* Icon characters are stored in unicode private area */
-.zocial.amazon:before {content: "a";}
-.zocial.dropbox:before {content: "d"; color: #1f75cc;}
-.zocial.facebook:before {content: "f";}
-.zocial.github:before {content: "\00E8";}
-.zocial.gmail:before {content: "m"; color: #f00;}
-.zocial.google:before {content: "G";}
-.zocial.googleplus:before {content: "+";}
-.zocial.guest:before {content: "?";}
-.zocial.ie:before {content: "6";}
-.zocial.linkedin:before {content: "L";}
-.zocial.openid:before {content: "o"; color: #ff921d;}
-.zocial.paypal:before {content: "$";}
-.zocial.stackoverflow:before {content: "\00EC"; color: #ff7a15;}
-.zocial.twitter:before {content: "T";}
-.zocial.vk:before {content: "N";}
-.zocial.windows:before {content: "W";}
-.zocial.yahoo:before {content: "Y";}
-.zocial.office365:before {content: "W";}
-.zocial.thirtysevensignals:before {content: "b";}
-.zocial.salesforce:before {content: "*";}
-.zocial.waad:before {content: "W";}
-.zocial.box:before {content: "x";}
-.zocial.aol:before {content: "l";}
-.zocial.renren:before {content: "r";}
-.zocial.baidu:before {content: "u";}
-.zocial.fitbit:before {content: "#";}
-.zocial.yandex:before {content: "&";}
-.zocial.wordpress:before {content: "w";}
-.zocial.dwolla:before {content: "D";}
-.zocial.shopify:before {content: "s";}
-.zocial.yammer:before {content: "!";}
-.zocial.miicard:before {content: "m";}
-.zocial.soundcloud:before {content: "t";}
-.zocial.evernote:before {content: "n";}
-.zocial.ebay:before {content: "e";}
-.zocial.sharepoint:before {content: "p";}
-.zocial.weibo:before {content: "S";}
-.zocial.instagram:before {content: "i";}
-.zocial.thecity:before {content: "c";}
-.zocial.planningcenter:before {content: "y";}
-.zocial.exact:before {content: "\e9";}
+.zocial.amazon:before {
+  content: "a";
+}
+
+.zocial.dropbox:before {
+  content: "d";
+  color: #1f75cc;
+}
+
+.zocial.facebook:before {
+  content: "f";
+}
+
+.zocial.bouygues:before {
+  content: "";
+  background-image: url(../../assets/images/provider/bouygues-strategy-ico.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  width: 4em;
+  height: 2.9em;
+  background-color: transparent;
+}
+
+.zocial.github:before {
+  content: "\00E8";
+}
+
+.zocial.gmail:before {
+  content: "m";
+  color: #f00;
+}
+
+.zocial.google:before {
+  content: "G";
+}
+
+.zocial.googleplus:before {
+  content: "+";
+}
+
+.zocial.guest:before {
+  content: "?";
+}
+
+.zocial.ie:before {
+  content: "6";
+}
+
+.zocial.linkedin:before {
+  content: "L";
+}
+
+.zocial.openid:before {
+  content: "o";
+  color: #ff921d;
+}
+
+.zocial.paypal:before {
+  content: "$";
+}
+
+.zocial.stackoverflow:before {
+  content: "\00EC";
+  color: #ff7a15;
+}
+
+.zocial.twitter:before {
+  content: "T";
+}
+
+.zocial.vk:before {
+  content: "N";
+}
+
+.zocial.windows:before {
+  content: "W";
+}
+
+.zocial.yahoo:before {
+  content: "Y";
+}
+
+.zocial.office365:before {
+  content: "W";
+}
+
+.zocial.thirtysevensignals:before {
+  content: "b";
+}
+
+.zocial.salesforce:before {
+  content: "*";
+}
+
+.zocial.waad:before {
+  content: "W";
+}
+
+.zocial.box:before {
+  content: "x";
+}
+
+.zocial.aol:before {
+  content: "l";
+}
+
+.zocial.renren:before {
+  content: "r";
+}
+
+.zocial.baidu:before {
+  content: "u";
+}
+
+.zocial.fitbit:before {
+  content: "#";
+}
+
+.zocial.yandex:before {
+  content: "&";
+}
+
+.zocial.wordpress:before {
+  content: "w";
+}
+
+.zocial.dwolla:before {
+  content: "D";
+}
+
+.zocial.shopify:before {
+  content: "s";
+}
+
+.zocial.yammer:before {
+  content: "!";
+}
+
+.zocial.miicard:before {
+  content: "m";
+}
+
+.zocial.soundcloud:before {
+  content: "t";
+}
+
+.zocial.evernote:before {
+  content: "n";
+}
+
+.zocial.ebay:before {
+  content: "e";
+}
+
+.zocial.sharepoint:before {
+  content: "p";
+}
+
+.zocial.weibo:before {
+  content: "S";
+}
+
+.zocial.instagram:before {
+  content: "i";
+}
+
+.zocial.thecity:before {
+  content: "c";
+}
+
+.zocial.planningcenter:before {
+  content: "y";
+}
+
+.zocial.exact:before {
+  content: "\e9";
+}
 
 /* Button background and text color */
 
-.zocial.amazon {background-color: #ffad1d; color: #030037; }
-.zocial.dropbox {background-color: #007ee5; color: #fff;}
-.zocial.facebook {background-color: #4863ae;}
-.zocial.github {background-color: #eee; color: #050505;}
-.zocial.wordpress {background-color: #1e8cbe; color: #fff;}
-.zocial.dwolla {background-color: #F5891F; color: #fbfbfb;}
-.zocial.gmail {background-color: #efefef; color: #222;}
-.zocial.google {background-color: #4e6cf7;}
-.zocial.googleplus {background-color: #4285f4;}
-.zocial.guest {background-color: #1b4d6d;}
-.zocial.ie {background-color: #00a1d9;}
-.zocial.linkedin {background-color: #0083a8;}
-.zocial.openid {background-color: #f5f5f5; color: #333;}
-.zocial.paypal {background-color: #eee; color: #32689a;}
-.zocial.twitter {background-color: #46c0fb;}
-.zocial.vk {background-color: #45688E;}
-.zocial.office365 {background-color: #00ACED; color: #fff;}
-.zocial.waad {background-color: #00ADEF; color: #fff;}
-.zocial.thirtysevensignals {background-color: #6AC071; color: #fff;}
-.zocial.box {background-color: #267bb6; color: #fff;}
-.zocial.salesforce {background-color: #eee; color: #ff0000;}
-.zocial.windows {background-color: #0078d5;}
-.zocial.yahoo {background-color: #a200c2; color: #fff;}
-.zocial.aol {background-color: #0861A8; color: #fff;}
-.zocial.renren {background-color: #0056B5; color: #fff;}
-.zocial.baidu {background-color: #2832E1; color: #fff;}
-.zocial.fitbit {background-color: #45C2C5; color: #fff;}
-.zocial.yandex {background-color: #FF0000; color: #fff;}
-.zocial.shopify {background-color: #9CC24C; color: #fbfbfb;}
-.zocial.yammer {background-color: #0072c6; color: #fdfdfd;}
-.zocial.miicard {background-color: #C7EAFF; color: #303030;}
-.zocial.soundcloud {background-color: #ff4500;}
-.zocial.evernote {background-color: #6bb130; color: #fff;}
-.zocial.ebay {background-color: #000098; color: #fff;}
-.zocial.sharepoint {background-color: #0072C6; color: #fff;}
-.zocial.weibo {background-color: #faf6f1; color: #e6162d;}
-.zocial.instagram {background-color: #25537B; color: #fff;}
-.zocial.thecity {background-color: #767571; color: #d1d1d1;}
-.zocial.planningcenter {background-color: #4e4e4e; color: #d1d1d1;}
-.zocial.exact {background-color: #ED1C24; color: #fff;}
+.zocial.amazon {
+  background-color: #ffad1d;
+  color: #030037;
+}
+
+.zocial.dropbox {
+  background-color: #007ee5;
+  color: #fff;
+}
+
+.zocial.facebook {
+  background-color: #4863ae;
+}
+
+.zocial.bouygues {
+  background-color: #ffffff;
+  color: #00acd5;
+}
+
+.zocial.github {
+  background-color: #eee;
+  color: #050505;
+}
+
+.zocial.wordpress {
+  background-color: #1e8cbe;
+  color: #fff;
+}
+
+.zocial.dwolla {
+  background-color: #F5891F;
+  color: #fbfbfb;
+}
+
+.zocial.gmail {
+  background-color: #efefef;
+  color: #222;
+}
+
+.zocial.google {
+  background-color: #4e6cf7;
+}
+
+.zocial.googleplus {
+  background-color: #4285f4;
+}
+
+.zocial.guest {
+  background-color: #1b4d6d;
+}
+
+.zocial.ie {
+  background-color: #00a1d9;
+}
+
+.zocial.linkedin {
+  background-color: #0083a8;
+}
+
+.zocial.openid {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.zocial.paypal {
+  background-color: #eee;
+  color: #32689a;
+}
+
+.zocial.twitter {
+  background-color: #46c0fb;
+}
+
+.zocial.vk {
+  background-color: #45688E;
+}
+
+.zocial.office365 {
+  background-color: #00ACED;
+  color: #fff;
+}
+
+.zocial.waad {
+  background-color: #00ADEF;
+  color: #fff;
+}
+
+.zocial.thirtysevensignals {
+  background-color: #6AC071;
+  color: #fff;
+}
+
+.zocial.box {
+  background-color: #267bb6;
+  color: #fff;
+}
+
+.zocial.salesforce {
+  background-color: #eee;
+  color: #ff0000;
+}
+
+.zocial.windows {
+  background-color: #0078d5;
+}
+
+.zocial.yahoo {
+  background-color: #a200c2;
+  color: #fff;
+}
+
+.zocial.aol {
+  background-color: #0861A8;
+  color: #fff;
+}
+
+.zocial.renren {
+  background-color: #0056B5;
+  color: #fff;
+}
+
+.zocial.baidu {
+  background-color: #2832E1;
+  color: #fff;
+}
+
+.zocial.fitbit {
+  background-color: #45C2C5;
+  color: #fff;
+}
+
+.zocial.yandex {
+  background-color: #FF0000;
+  color: #fff;
+}
+
+.zocial.shopify {
+  background-color: #9CC24C;
+  color: #fbfbfb;
+}
+
+.zocial.yammer {
+  background-color: #0072c6;
+  color: #fdfdfd;
+}
+
+.zocial.miicard {
+  background-color: #C7EAFF;
+  color: #303030;
+}
+
+.zocial.soundcloud {
+  background-color: #ff4500;
+}
+
+.zocial.evernote {
+  background-color: #6bb130;
+  color: #fff;
+}
+
+.zocial.ebay {
+  background-color: #000098;
+  color: #fff;
+}
+
+.zocial.sharepoint {
+  background-color: #0072C6;
+  color: #fff;
+}
+
+.zocial.weibo {
+  background-color: #faf6f1;
+  color: #e6162d;
+}
+
+.zocial.instagram {
+  background-color: #25537B;
+  color: #fff;
+}
+
+.zocial.thecity {
+  background-color: #767571;
+  color: #d1d1d1;
+}
+
+.zocial.planningcenter {
+  background-color: #4e4e4e;
+  color: #d1d1d1;
+}
+
+.zocial.exact {
+  background-color: #ED1C24;
+  color: #fff;
+}
 
 /* Any browser-specific adjustments */
 
@@ -229,24 +523,23 @@ button:-moz-focus-inner {
   padding: 0;
 }
 
-
 /* Reference icons from font-files
 ** Base 64-encoded version recommended to resolve cross-site font-loading issues
 */
 
 @font-face {
-    font-family: 'zocial';
-    src: url('//cdn.afr.com/lock/fonts/1/zocial.woff');
+  font-family: 'zocial';
+  src: url('//cdn.afr.com/lock/fonts/1/zocial.woff');
 }
 
 @font-face {
-    font-family: 'zocial';
-    src: url('//cdn.afr.com/lock/fonts/1/zocial.ttf');
+  font-family: 'zocial';
+  src: url('//cdn.afr.com/lock/fonts/1/zocial.ttf');
 }
 
 @font-face {
-    font-family: 'zocial';
-    src: url('//cdn.afr.com/lock/fonts/1/zocial.eot');
+  font-family: 'zocial';
+  src: url('//cdn.afr.com/lock/fonts/1/zocial.eot');
 }
 
 @font-face {
@@ -256,8 +549,7 @@ button:-moz-focus-inner {
   font-style: normal;
 }
 
-
-.equal-viewport .zocial, .zocial.icon{
+.equal-viewport .zocial, .zocial.icon {
   width: auto;
   display: inline-block;
   margin: 6px;
@@ -268,13 +560,13 @@ button:-moz-focus-inner {
 
   }
 
-  &:hover{
-    &:before{
-      background-color: rgba(0,0,0,.4);
+  &:hover {
+    &:before {
+      background-color: rgba(0, 0, 0, .4);
     }
   }
 
-  span{
+  span {
     display: none;
   }
 
