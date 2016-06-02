@@ -34,7 +34,7 @@ export async function unlink (req, res) {
     var fbResponse = facebookCompleteFlow[0]
       , fbBody = facebookCompleteFlow[1]
 
-    const layout = 'layouts/oauth-social-unlink'
+    const layout = 'layouts/oauth-strategy-unlink'
     res.status(fbResponse.statusCode).render(layout, fbBody)
   }
   catch (err) {
