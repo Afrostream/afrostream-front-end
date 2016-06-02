@@ -54,7 +54,7 @@ export function getIdToken () {
  * @param isSynchro
  * @returns {Function}
  */
-export function provider ({strategy = 'facebook', path = 'signin'}) {
+export function provider ({strategy = 'facebook', path = 'signup'}) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
 

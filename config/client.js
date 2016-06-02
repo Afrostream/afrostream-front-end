@@ -1,3 +1,5 @@
+import { isBoolean } from '../src/js/lib/utils'
+
 const protData = {
   'com.widevine.alpha': {
     'drmtoday': true,
@@ -132,20 +134,23 @@ const client = {
     providers: [
       {
         name: 'facebook',
-        icon: 'zocial facebook'
+        social: true,
+        icon: 'fa fa-facebook-official',
+        active: isBoolean(process.env.OAUTH_FACEBOOK_ENABLED || true)
       },
       {
         name: 'bouygues',
-        icon: 'zocial facebook'
+        social: false,
+        icon: 'fa fa-bouygues',
+        active: isBoolean(process.env.OAUTH_BOUYGUES_ENABLED || true)
       }
-    ],
-    facebook: process.env.OAUTH_FACEBOOK_ENABLED || false
+    ]
   },
   social: {
     networks: {
       facebook: {
         enabled: true,      // Enable Facebook. [Default: true]
-        icon: 'fa-provider',
+        icon: 'fa-facebook',
         url: 'https://www.facebook.com/sharer/sharer.php',
         title: 'Facebook',
         params: {
