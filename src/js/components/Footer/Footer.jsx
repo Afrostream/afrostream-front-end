@@ -27,7 +27,7 @@ class Footer extends React.Component {
       dispatch
     } = this.props
 
-    dispatch(OauthActionCreator.provider({strategy})).then(::this.onSuccess)
+    dispatch(OauthActionCreator.strategy({strategy})).then(::this.onSuccess)
   }
 
   onSuccess () {

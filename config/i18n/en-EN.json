@@ -207,7 +207,9 @@
     "user": {
       "header": "MES INFORMATIONS PERSONNELLES",
       "password": "Mot de passe",
-      "updatePassword": "Modifier le mot de passe"
+      "updatePassword": "Modifier mon mot de passe",
+      "updateEmail": "Modifier mon email",
+      "updateProfil": "Modifier mon profil"
     },
     "plan": {
       "header": "DÉTAIL DU FORFAIT",
@@ -216,7 +218,7 @@
     },
     "oauth2": {
       "header": "Profils liés",
-      "link": "Lier mon profil <b>{provider}</b> à mon compte Afrostream",
+      "link": "Lier mon profil <b>{strategy}</b> à mon compte Afrostream",
       "on": "Lier mon profil",
       "off": "Ne plus lier mon profil"
     },
@@ -306,7 +308,7 @@
     "popupCredentials": "Enter your credentials in the pop-up window",
     "userClosedPopup": "Popup window closed. Try again.",
     "userConsentFailed": "Permissions were not granted. Try again.",
-    "loginProvider": "Connect with {provider}",
+    "loginProvider": "Connect with {strategy}",
     "language": {
       "email": "Doit etre un email valide",
       "password": "Le mot de passe",
