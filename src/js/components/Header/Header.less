@@ -4,8 +4,14 @@
   background: @color-yellow !important;
 }
 
-.headroom {
-  z-index: @nav-z + 1 !important;
+.headroom-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: @nav-z + 1;
+  .headroom {
+  }
 }
 
 .navbar.navbar-default {
