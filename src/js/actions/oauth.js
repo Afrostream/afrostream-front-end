@@ -82,18 +82,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           try {
             const tokenData = getToken()
             if (tokenData && tokenData.error) {
-              let message = ''
-              switch (path) {
-                case 'signin':
-                  message = 'Error: No user found, please associate your profile with strategy after being connected'
-                  break
-                case 'link':
-                  message = 'Error: Your profile is already linked to another user'
-                  break
-                default:
-                  message = tokenData.error
-                  break
-              }
+              let message = tokenData.error
               return reject({message: message})
             }
             return resolve({
