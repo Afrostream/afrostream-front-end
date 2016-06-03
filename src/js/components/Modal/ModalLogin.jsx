@@ -345,7 +345,7 @@ class ModalLogin extends ModalComponent {
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
         {_.filter(oauth2.providers, filterObj).map((strategy)=> {
-          const title = this.getTitle('loginProvider').replace('{provider}', strategy.name)
+          const title = this.getTitle('loginProvider').replace('{strategy}', strategy.name)
           const inputAttributes = {
             onClick: event => ::this.oauthStrategy(strategy.name)
           }

@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html data-cast-api-enabled="true">
 <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title data-react-helmet="true">Afrostream.tv OAuth Popup</title>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title data-react-helmet="true">Afrostream.tv OAuth Popup</title>
 </head>
 <body>
 
 <div id="main">
-    <h1>Afrostream Application Authentication - Auth Success</h1>
-    <script type="text/javascript">
-        if (window.opener) {
-            window.opener.focus();
-        }
-        var storageId = '{{storageId}}';
-        var tokenData = {{{json tokenData}}};
+  <h1>Afrostream Application Authentication - Auth Success</h1>
+  <script type="text/javascript">
+    if (window.opener) {
+      window.opener.focus();
+    }
+    var storageId = '{{storageId}}';
+    var tokenData = {{{json tokenData}}};
 
-        if (tokenData) {
-            localStorage.setItem(storageId, JSON.stringify(tokenData));
-        }
-
-        window.close();
-    </script>
+    if (tokenData) {
+      localStorage.setItem(storageId, JSON.stringify(tokenData));
+    }
+    window.close();
+  </script>
 </div>
 </body>
 </html>
