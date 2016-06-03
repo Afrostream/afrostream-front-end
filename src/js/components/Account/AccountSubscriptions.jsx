@@ -24,7 +24,8 @@ class AccountSubscriptions extends React.Component {
       'celery': '/images/payment/bank-cards-paypal.png',
       'recurly': '/images/payment/bank-cards-paypal.png',
       'gocardless': '/images/payment/virement.jpg',
-      'cashway': '/images/payment/cashway-inline.png'
+      'cashway': '/images/payment/cashway-inline.png',
+      'bouygues': '/images/payment/bouygues.png'
     }
 
     if (!subscriptionsList) {
