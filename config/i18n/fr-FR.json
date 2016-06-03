@@ -314,8 +314,8 @@
       "empty": "est requis"
     },
     "Error: The specified email address is already in use.": "Email déja existant",
-    "Error: Your profile is already linked to another user": "Votre profile facebook est deja lié a un autre compte",
-    "Error: No user found, please associate your profile with facebook after being connected": "Aucun utilisateur lié a facebook,veuillez vous connecter puis lié votre profil dans \"mon compte\""
+    "Error: Your profile is already linked to another user": "Votre profile est deja lié a un autre compte",
+    "Error: No user found, please associate your profile after being connected": "Aucun utilisateur lié ,veuillez vous connecter puis lier votre profil dans \"mon compte\""
   },
   "signup": {
     "description": "",

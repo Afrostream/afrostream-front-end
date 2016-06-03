@@ -18,7 +18,7 @@ export function link (req, res) {
   delete req.query.access_token
   getData(req, '/auth/bouygues/link', {
     followRedirect: false,
-    header: {
+    headers: {
       'Access-Token': token
     }
   }).nodeify(fwd(res))
@@ -31,7 +31,7 @@ export async function unlink (req, res) {
     delete req.query.access_token
     const bouyguesCompleteFlow = await getData(req, '/auth/bouygues/unlink', {
       followRedirect: false,
-      header: {
+      headers: {
         'Access-Token': token
       }
     })
