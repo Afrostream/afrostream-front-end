@@ -4,6 +4,10 @@
   background: @color-yellow !important;
 }
 
+.headroom {
+  z-index: @nav-z + 1 !important;
+}
+
 .navbar.navbar-default {
   margin: 0;
   padding: 0;
@@ -33,20 +37,21 @@
       background-color: @color-yellow;
     }
   }
-  .navbar-nav {
-    margin: 15px;
-  }
 
   nav {
+    .navbar-nav {
+      margin: 15px;
+    }
+
     .navbar-collapse {
       border: none;
       top: 5px;
     }
 
     .navbar-brand {
-      .isMobile({ width: 9em; });
+      .isMobile({ padding: 0; });
       img {
-        .isMobile({ width: 100%; padding: 5px; });
+        .isMobile({ width: 100%; });
       }
     }
   }

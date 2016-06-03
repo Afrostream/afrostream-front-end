@@ -215,7 +215,7 @@ class SmartBanner extends Component {
     return (
       <div className={wrapperClassName}>
         <div className="smartbanner-container">
-          <a className="smartbanner-close" onClick={::this.close}>&times</a>
+          <a className="smartbanner-close" onClick={::this.close}>&#xf136;</a>
           <span className="smartbanner-icon" style={iconStyle}></span>
           <div className="smartbanner-info">
             <div className="smartbanner-title">{this.props.title}</div>
