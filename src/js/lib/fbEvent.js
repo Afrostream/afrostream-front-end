@@ -1,12 +1,13 @@
+import _ from 'lodash'
 /**
  * React FBEvents Module
  */
 let eventsList = []
-const RE_SEP = /\-|\./;
-const RE_SEP_AZ = /(\-|\.)[a-zA-Z0-9]/;
-const RE_SEP_AZ_G = /(\-|\.)[a-zA-Z0-9]/g;
-const RE_WS = /[\s]+/g;
-const BLANK = '';
+const RE_SEP = /\-|\./
+const RE_SEP_AZ = /(\-|\.)[a-zA-Z0-9]/
+const RE_SEP_AZ_G = /(\-|\.)[a-zA-Z0-9]/g
+const RE_WS = /[\s]+/g
+const BLANK = ''
 /**
  * Utilities
  */
@@ -54,10 +55,10 @@ export function camelize (path) {
 
 /**
  * pageview:
- * Basic GA pageview tracking
+ * Basic FB pageview tracking
  * @param  {String} path - the current page page e.g. '/about'
  */
-export function trackCustom ({path, params ={}}) {
+export function pageview ({path, params ={}}) {
   if (!path) {
     console.warn('path is required in .pageview()')
     return
@@ -66,6 +67,18 @@ export function trackCustom ({path, params ={}}) {
   const evt = camelize(path)
   if (typeof fbq === 'function' && evt.length && !~eventsList.indexOf(evt)) {
     eventsList.push(evt)
-    fbq('trackCustom', '"' + evt + '"', params)
+    fbq('track', 'PageView')
+  }
+}
+
+export function track ({event, params ={}}) {
+  if (!event) {
+    console.warn('event is required in .track()')
+    return
+  }
+
+  if (typeof fbq === 'function' && event.length && !~eventsList.indexOf(event)) {
+    eventsList.push(event)
+    fbq('track', event, params)
   }
 }

@@ -20,6 +20,7 @@ import DomClass from 'dom-helpers/class'
 import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
 import _ from 'lodash'
+import * as ReactFB from '../../lib/fbEvent'
 
 const {gocarlessApi, recurlyApi} = config
 if (process.env.BROWSER) {
@@ -50,7 +51,6 @@ class PaymentForm extends React.Component {
 
     const {
       props: {
-        history,
         router,
         Billing,
         params: {planCode}
@@ -83,6 +83,13 @@ class PaymentForm extends React.Component {
       isGift: internalPlanUuid === 'afrostreamgift',
       internalPlanUuid: internalPlanUuid,
       currentPlan: currentPlan
+    })
+
+    ReactFB.track({
+      event: 'InitiateCheckout', params: {
+        'content_name': internalPlanUuid,
+        'value': currentPlan.get('amount')
+      }
     })
   }
 
@@ -301,7 +308,16 @@ class PaymentForm extends React.Component {
     const self = this
     let isCash = router.isActive('cash')
 
-    return await dispatch(BillingActionCreators.subscribe(formData, self.state.isGift)).then(() => {
+    return await dispatch(BillingActionCreators.subscribe(formData, self.state.isGift)).then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
+      ReactFB.track({
+        event: 'CompleteRegistration', params: {
+          'content_name': internalPlanUuid,
+          'status': subStatus,
+          'currency': currency,
+          'value': amount
+        }
+      })
+
       self.disableForm(false, 1)
       //On merge les infos en faisant un new call a getProfile
       return dispatch(UserActionCreators.getProfile())
