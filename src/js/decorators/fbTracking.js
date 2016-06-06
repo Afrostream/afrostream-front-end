@@ -2,15 +2,13 @@ import React, { PropTypes } from 'react'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import config from '../../../config'
+import * as ReactFB from '../lib/fbEvent'
 
-if (canUseDOM) {
-  var ga = require('react-ga')
-}
-export default function analytics (prepareFn) {
+export default function fbTrack (prepareFn) {
 
-  return AnalyticsComponent =>
+  return FbTrackingComponent =>
 
-    class AnalyticsDecorator extends React.Component {
+    class FBTrackingDecorator extends React.Component {
 
       static prepareRoute = prepareFn
 
@@ -21,7 +19,7 @@ export default function analytics (prepareFn) {
 
       render () {
         return (
-          <AnalyticsComponent {...this.props} />
+          <FbTrackingComponent {...this.props} />
         )
       }
 
@@ -31,7 +29,7 @@ export default function analytics (prepareFn) {
         } = this
 
         if (!shallowEqual(nextProps.location.pathname, location.pathname && canUseDOM)) {
-          ga.pageview(nextProps.location.pathname)
+          ReactFB.track(nextProps.location.pathname)
         }
       }
 
@@ -41,10 +39,9 @@ export default function analytics (prepareFn) {
         } = this
 
         if (canUseDOM) {
-          ga.initialize(config.google.analyticsKey, {debug: true})
-          ga.pageview(location.pathname)
+          ReactFB.initialize(config.facebook.analyticsKey, {debug: true})
+          ReactFB.track(location.pathname)
         }
       }
-
     }
 }
