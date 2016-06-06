@@ -5,7 +5,7 @@
 /**
  * Utilities
  */
-export default ReactFB = {
+export default {
   initialize: (fbTrackingID, options) => {
     if (!fbTrackingID) {
       console.warn('fbTrackingID is required in initialize()');
@@ -18,7 +18,6 @@ export default ReactFB = {
       }
     }
 
-    <!-- Facebook Pixel Code -->
     (!function (f, b, e, v, n, t, s) {
       if (f.fbq)return;
       n = f.fbq = function () {
