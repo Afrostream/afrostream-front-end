@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import Slider from '../Slider/Slider'
+import { ArrowStepper } from '../Slider/'
 import Thumb from '../Movies/Thumb'
 import { AutoSizer, ColumnSizer, Grid } from 'react-virtualized'
 
@@ -120,17 +120,23 @@ class MoviesSlider extends React.Component {
               columnCount={dataList.size}
               width={width}>
               {({adjustedWidth, getColumnWidth, registerChild}) => (
-                <Grid
-                  ref={registerChild}
-                  cellRenderer={::this.renderItem}
-                  columnWidth={getColumnWidth}
-                  columnCount={dataList.size}
-                  rowHeight={200}
-                  height={200}
-                  rowCount={1}
-                  width={adjustedWidth}
-                  scrollToColumn={index}
-                />
+                <ArrowStepper columnCount={dataList.size}>
+                  {({onScroll, columnCount, scrollLeft}) => (
+                    <Grid
+                      ref={registerChild}
+                      cellRenderer={::this.renderItem}
+                      columnWidth={getColumnWidth}
+                      columnCount={columnCount}
+                      rowHeight={200}
+                      height={200}
+                      rowCount={1}
+                      onScroll={onScroll}
+                      scrollLeft={scrollLeft}
+                      width={adjustedWidth}
+                      scrollToColumn={index}
+                    />
+                  )}
+                </ArrowStepper>
               )}
             </ColumnSizer>
           )}
