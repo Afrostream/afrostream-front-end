@@ -29,7 +29,7 @@ export default function fbTrack (prepareFn) {
         } = this
 
         if (!shallowEqual(nextProps.location.pathname, location.pathname && canUseDOM)) {
-          ReactFB.track(nextProps.location.pathname)
+          ReactFB.trackCustom(nextProps.location.pathname)
         }
       }
 
@@ -40,7 +40,7 @@ export default function fbTrack (prepareFn) {
 
         if (canUseDOM) {
           ReactFB.initialize(config.facebook.analyticsKey, {debug: true})
-          ReactFB.track(location.pathname)
+          ReactFB.trackCustom(location.pathname)
         }
       }
     }

@@ -2,6 +2,11 @@
  * React FBEvents Module
  */
 let eventsList = []
+const RE_SEP = /\-|\./;
+const RE_SEP_AZ = /(\-|\.)[a-zA-Z0-9]/;
+const RE_SEP_AZ_G = /(\-|\.)[a-zA-Z0-9]/g;
+const RE_WS = /[\s]+/g;
+const BLANK = '';
 /**
  * Utilities
  */
@@ -28,13 +33,23 @@ export function initialize (fbTrackingID) {
     s = b.getElementsByTagName(e)[0]
     s.parentNode.insertBefore(t, s)
   })(window,
-    document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', 'fbevents')
+    document, 'script', 'https://connect.facebook.net/fr_FR/fbevents.js', 'fbevents')
 
   fbq('init', fbTrackingID)
 }
 
-export function toCamelCase (string) {
-  return string[1].toUpperCase()
+export function camelize (path) {
+  let id = path.split('/').slice(-1)[0]
+  let m
+  let c
+  let i
+  if (m = id.match(RE_SEP_AZ_G)) {
+    for (i = 0; i < m.length; i++) {
+      c = m[i].replace(RE_SEP, BLANK).toUpperCase()
+      id = id.replace(RE_SEP_AZ, c)
+    }
+  }
+  return (id.substring(0, id.lastIndexOf('.')) || id).replace(RE_WS, BLANK)
 }
 
 /**
@@ -42,19 +57,15 @@ export function toCamelCase (string) {
  * Basic GA pageview tracking
  * @param  {String} path - the current page page e.g. '/about'
  */
-export function track (path) {
+export function trackCustom ({path, params ={}}) {
   if (!path) {
     console.warn('path is required in .pageview()')
     return
   }
 
-  var regex = /(_|-|\/)([a-z])/g
-
-  const evt = path.replace(regex, toCamelCase)
-
+  const evt = camelize(path)
   if (typeof fbq === 'function' && evt.length && !~eventsList.indexOf(evt)) {
     eventsList.push(evt)
-    debugger
-    fbq('track', '"' + evt + '"')
+    fbq('trackCustom', '"' + evt + '"', params)
   }
 }
