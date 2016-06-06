@@ -56,6 +56,7 @@ class ModalView extends React.Component {
       case 'showReset':
       case 'showGift':
       case 'showRelog':
+      case 'showProvider':
         return (
           <ModalLogin type={target} closable={closable} {...this.props}/>
         )
@@ -65,7 +66,7 @@ class ModalView extends React.Component {
           <ModalCoupon type={target} closable={closable} {...this.props}/>
         )
         break
-      case 'social':
+      case 'strategy':
         return (
           <ModalSocial closable={closable} {...this.props} data={data}/>
         )

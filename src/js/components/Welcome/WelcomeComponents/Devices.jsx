@@ -33,7 +33,8 @@ class Devices extends React.Component {
             <h2>{info.title}</h2>
             <ul className="features-list">
               {
-                _.map(info.features, (feature, key)=>( <li key={key} className="features-item">{feature}</li>))
+                _.map(info.features, (feature, key)=>(
+                  <li key={key} className="features-item"><i className="zmdi zmdi-check"></i>{feature}</li>))
               }
             </ul>
             <SignUpButton label={info.action}/>

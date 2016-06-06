@@ -40,7 +40,7 @@ class ShareButton extends React.Component {
         }
       } = this
 
-    dispatch(ModalActionCreators.open('social', true, null, {link, description, title}))
+    dispatch(ModalActionCreators.open('strategy', true, null, {link, description, title}))
   }
 
   render() {

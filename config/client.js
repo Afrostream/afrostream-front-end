@@ -1,3 +1,5 @@
+import { isBoolean } from '../src/js/lib/utils'
+
 const protData = {
   'com.widevine.alpha': {
     'drmtoday': true,
@@ -126,7 +128,20 @@ const client = {
     time: 45
   },
   oauth2: {
-    facebook: process.env.OAUTH_FACEBOOK_ENABLED || false
+    providers: [
+      {
+        name: 'facebook',
+        social: true,
+        icon: 'fa fa-facebook-official',
+        active: isBoolean(process.env.OAUTH_FACEBOOK_ENABLED || true)
+      },
+      {
+        name: 'bouygues',
+        social: false,
+        icon: 'fa fa-bouygues',
+        active: isBoolean(process.env.OAUTH_BOUYGUES_ENABLED || true)
+      }
+    ]
   },
   social: {
     networks: {

@@ -50,17 +50,17 @@ export function getIdToken () {
   }
 }
 /**
- * Get token from facebook oauth
+ * Get token from provider oauth
  * @param isSynchro
  * @returns {Function}
  */
-export function facebook (path = 'signin') {
+export function strategy ({strategy = 'facebook', path = 'signup'}) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
 
     const token = getState().OAuth.get('token')
-    let url = `/auth/facebook/${path}`
-    //Si il y a un user et qu'on veut desynchro le social account, on passe le token en parametre
+    let url = `/auth/${strategy}/${path}`
+    //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
     if (token) {
       url = `${url}?access_token=${token.get('accessToken')}`
     }
@@ -72,7 +72,7 @@ export function facebook (path = 'signin') {
 
     return async () => {
       return await new Promise((resolve, reject) => {
-        let oauthPopup = window.open(url, 'facebook_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
+        let oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
         let intervalCheck = 0
         let beforeUnload = () => {
           oauthPopup = null
@@ -82,22 +82,11 @@ export function facebook (path = 'signin') {
           try {
             const tokenData = getToken()
             if (tokenData && tokenData.error) {
-              let message = ''
-              switch (path) {
-                case 'signin':
-                  message = 'Error: No user found, please associate your profile with facebook after being connected'
-                  break
-                case 'link':
-                  message = 'Error: Your profile is already linked to another user'
-                  break
-                default:
-                  message = tokenData.error
-                  break
-              }
+              let message = tokenData.error
               return reject({message: message})
             }
             return resolve({
-              type: ActionTypes.OAuth.facebook
+              type: ActionTypes.OAuth.strategy
             })
           } catch (err) {
             return reject(err)
@@ -106,8 +95,12 @@ export function facebook (path = 'signin') {
         }
         oauthPopup.onbeforeunload = beforeUnload
         intervalCheck = setInterval(function () {
-          if (!oauthPopup.onbeforeunload) {
-            beforeUnload()
+          try {
+            if (!oauthPopup.onbeforeunload) {
+              beforeUnload()
+            }
+          } catch (e) {
+            console.log('onbeforeunlod error ', e)
           }
         }, 1000)
       })

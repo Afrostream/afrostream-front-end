@@ -18,7 +18,7 @@ class Poster extends LoadVideo {
 
   constructor (props) {
     super(props)
-    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: '', isNew: false}
+    this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: '', isNew: false, hover: false}
   }
 
   componentDidMount () {
@@ -168,12 +168,14 @@ class Poster extends LoadVideo {
 
     let link = this.getLink()
 
-    return <ShareButton link={link} title={data.get('title')} description={data.get('synopsis')}/>
+    return <ShareButton ref={`share-add-${data.get('_id')}`} link={link} title={data.get('title')}
+                        description={data.get('synopsis')}/>
   }
 
   getFavorite () {
     const {
       props: {
+        data,
         favorite
       }
     } = this
@@ -182,7 +184,7 @@ class Poster extends LoadVideo {
       return
     }
 
-    return (<FavoritesAddButton {...this.props}/>)
+    return (<FavoritesAddButton {...this.props} ref={`favorite-add-${data.get('_id')}`}/>)
   }
 
   getNew () {

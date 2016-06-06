@@ -7,7 +7,7 @@ export default {
     signin: null,
     signup: null,
     reset: null,
-    facebook: null,
+    strategy: null,
     logOut: null
   }),
 

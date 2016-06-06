@@ -30,17 +30,18 @@ class GoBack extends React.Component {
 
   render () {
     let returnClassesSet = {
-      'return-btn': true,
-      'btn': true,
       'btn-xs': true,
+      'btn-goback': true,
       'hidden-xs': true,
       'hidden-sm': true
     }
 
     return (
-      <button className={classSet(returnClassesSet)} onClick={::this.navigationGoBack}>
-        <span className="fa fa-caret-left"></span><span className="return-btn-label">RETOUR</span>
-      </button>
+      <li className="pull-left">
+        <button role="button" className={classSet(returnClassesSet)} onClick={::this.navigationGoBack}>
+          <i className="zmdi zmdi-chevron-left zmdi-hc-3x"></i><span className="return-btn-label">RETOUR</span>
+        </button>
+      </li>
     )
   }
 }

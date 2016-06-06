@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import Headroom from 'react-headroom'
 import UserButton from './../User/UserButton'
 import GoBack from './../GoBack/GoBack'
 import SmartBanner from './SmartBanner'
@@ -67,7 +68,6 @@ class Header extends React.Component {
     let sliderClasses = {
       'navbar': true,
       'navbar-default': true,
-      'navbar-fixed-top': true,
       'navbar-hidden': !chatMode && hiddenMode,
       'navbar-fixed-color': chatMode || pinned || this.state.pinned
       || router.isActive('recherche')
@@ -76,18 +76,20 @@ class Header extends React.Component {
     }
 
     return (
-      <div className={classSet(sliderClasses)}>
-        {planCode ? <SmartBanner {...apps.params}/> : ''}
-        <div className="container-fluid">
-          <nav className="nav-collapse" role="navigation">
-            { hasHistory ? <GoBack {...this.props}/> : ''}
-            <Link className="navbar-brand" to="/">
-              <img src="/images/logo.png" alt="Afrostream.tv"/>
-            </Link>
-            <UserButton {...this.props}/>
-          </nav>
+      <Headroom>
+        <div className={classSet(sliderClasses)}>
+          {planCode ? <SmartBanner {...apps.params}/> : ''}
+          <div className="container-fluid">
+            <nav className="nav-collapse" role="navigation">
+              { hasHistory ? <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
+              <Link className="navbar-brand" to="/">
+                <img src="/images/logo.png" alt="Afrostream.tv"/>
+              </Link>
+              <UserButton {...this.props}/>
+            </nav>
+          </div>
         </div>
-      </div>
+      </Headroom>
     )
   }
 }

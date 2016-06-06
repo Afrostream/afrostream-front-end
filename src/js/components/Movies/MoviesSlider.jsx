@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import Slider from '../Slider/Slider'
+import { ArrowStepper } from '../Slider/'
 import Thumb from '../Movies/Thumb'
-import ReactList from 'react-list'
+import { AutoSizer, ColumnSizer, Grid } from 'react-virtualized'
 
 if (process.env.BROWSER) {
   require('./MoviesSlider.less')
@@ -52,7 +52,7 @@ class MoviesSlider extends React.Component {
     )
   }
 
-  renderItem (index) {
+  getRowHeight ({index}) {
     const {
       props: {
         dataList
@@ -61,10 +61,24 @@ class MoviesSlider extends React.Component {
 
     let data = dataList.get(index)
     if (data instanceof Immutable.Map) {
+      return 240
+    }
+    return 465
+  }
+
+  renderItem ({columnIndex, rowIndex}) {
+    const {
+      props: {
+        dataList
+      }
+    } = this
+
+    let data = dataList.get(columnIndex)
+    if (data instanceof Immutable.Map) {
       return this.renderBlock(data)
     }
     return (
-      <div className="block" key={`data-block-${index}`}>{data.map((item)=> {
+      <div className="block" key={`data-block-${columnIndex}`}>{data.map((item)=> {
         return this.renderBlock(item)
       })}</div>
     )
@@ -97,19 +111,36 @@ class MoviesSlider extends React.Component {
       <div className={this.props.className}>
         {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
         {label ? <div className="movies-list__selection">{label}</div> : ''}
-        <Slider {...this.props}>
-          <div className="slider-container">
-            <ReactList
+        <AutoSizer className="slider-container" disableHeight>
+          {({width}) => (
+            <ColumnSizer
               ref="react-list"
-              useTranslate3d={true}
-              initialIndex={index}
-              axis={this.props.axis}
-              itemRenderer={::this.renderItem}
-              length={dataList.size}
-              type={this.props.axis === 'x' ? 'variable' : 'uniform' }
-            />
-          </div>
-        </Slider>
+              columnMaxWidth={210}
+              columnMinWidth={210}
+              columnCount={dataList.size}
+              width={width}>
+              {({adjustedWidth, getColumnWidth, registerChild}) => (
+                <ArrowStepper columnCount={dataList.size}>
+                  {({onScroll, columnCount, scrollLeft}) => (
+                    <Grid
+                      ref={registerChild}
+                      cellRenderer={::this.renderItem}
+                      columnWidth={getColumnWidth}
+                      columnCount={columnCount}
+                      rowHeight={200}
+                      height={200}
+                      rowCount={1}
+                      onScroll={onScroll}
+                      scrollLeft={scrollLeft}
+                      width={adjustedWidth}
+                      scrollToColumn={index}
+                    />
+                  )}
+                </ArrowStepper>
+              )}
+            </ColumnSizer>
+          )}
+        </AutoSizer>
       </div>
     )
   }
