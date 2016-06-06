@@ -7,7 +7,7 @@ import * as CategoryActionCreators from '../../actions/category'
 import { ArrowStepper }from '../Slider'
 import MoviesSlider from './MoviesSlider'
 import classSet from 'classnames'
-import { AutoSizer, ColumnSizer, Grid, ScrollSync } from 'react-virtualized'
+import { AutoSizer, ColumnSizer, Grid } from 'react-virtualized'
 
 @prepareRoute(async function ({store, categoryId}) {
   store.dispatch(CategoryActionCreators.getCategory(categoryId))
@@ -104,7 +104,7 @@ class CategorySlider extends MoviesSlider {
                 width={width}>
                 {({adjustedWidth, getColumnWidth, registerChild, columnCount}) => (
                   <ArrowStepper columnCount={dataList.size}>
-                    {({onSectionRendered, onScroll, columnCount, scrollToColumn}) => (
+                    {({onScroll, columnCount, scrollLeft}) => (
                       <Grid
                         ref="reactGrid"
                         cellRenderer={::this.renderItem}
@@ -114,8 +114,7 @@ class CategorySlider extends MoviesSlider {
                         height={listClass.spots ? 440 : 220}
                         rowCount={1}
                         onScroll={onScroll}
-                        onSectionRendered={onSectionRendered}
-                        scrollToColumn={scrollToColumn}
+                        scrollLeft={scrollLeft}
                         width={adjustedWidth}
                       />
                     )}
