@@ -1,4 +1,4 @@
-import config from '../../../config/client'
+import config from '../../../config'
 const {apiClient} =config
 
 export function storeToken (oauthData) {

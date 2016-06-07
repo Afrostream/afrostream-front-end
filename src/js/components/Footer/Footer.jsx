@@ -188,7 +188,7 @@ class Footer extends React.Component {
         <div className="legal-statements">
           <div className="links row">
             <div className="get-help col-md-6">
-              Copyright &copy Afrostream Inc. {this.year}
+              Copyright &copy; Afrostream Inc. {this.year}
             </div>
             <div className="get-help col-md-6">
               <Link to="/legals"> {labels.legals}</Link>
