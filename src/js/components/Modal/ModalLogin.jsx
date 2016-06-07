@@ -191,7 +191,6 @@ class ModalLogin extends ModalComponent {
     const {
       dispatch
     } = this.props
-debugger
     let errMess = err.message
     if (err.response) {
       if (err.response.body) {
@@ -203,7 +202,7 @@ debugger
 
     this.setState({
       loading: false,
-      error: this.getTitle(errMess.toString()) || this.getTitle('wrongEmailPasswordErrorText')
+      error: this.getTitle(errMess.toString()) || errMess.toString() || this.getTitle('wrongEmailPasswordErrorText')
     })
 
     dispatch(IntercomActionCreators.createIntercom())

@@ -81,8 +81,8 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           }
           try {
             const tokenData = getToken()
-            if (tokenData && tokenData.error) {
-              let message = tokenData.error
+            if (!tokenData || tokenData.error) {
+              let message = tokenData ? tokenData.error : 'Error: strategy error'
               return reject({message: message})
             }
             return resolve({
