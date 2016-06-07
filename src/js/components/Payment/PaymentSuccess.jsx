@@ -2,22 +2,21 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as UserActionCreators from '../../actions/user'
 import { Link } from 'react-router'
-import { analytics } from '../../decorators'
 
-@connect(({ User }) => ({User}))
+@connect(({User}) => ({User}))
 class PaymentSuccess extends React.Component {
 
-  logOut() {
+  logOut () {
     const {
       props: {
         dispatch
-        }
-      } = this
+      }
+    } = this
 
     dispatch(UserActionCreators.logOut())
   }
 
-  render() {
+  render () {
     return (
       <div className="payment-wrapper">
         <div className="payment-success">
