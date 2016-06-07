@@ -318,6 +318,7 @@
       "same": "doit correspondre",
       "empty": "est requis"
     },
+    "Unauthorized": "Impossible de se connecter",
     "invalid_grant": "Courriel ou mot de passe incorrect.",
     "Error: strategy error": "Impossible de se connecter",
     "Error: The specified email address is already in use.": "Email déja existant",
