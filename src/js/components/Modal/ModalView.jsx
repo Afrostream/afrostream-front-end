@@ -30,6 +30,7 @@ class ModalView extends React.Component {
     const target = Modal.get('target')
     const closable = Modal.get('closable')
     const data = Modal.get('data')
+    const cb = Modal.get('cb')
 
     switch (target) {
       case 'newsletter':
@@ -56,8 +57,9 @@ class ModalView extends React.Component {
       case 'showReset':
       case 'showGift':
       case 'showRelog':
+      case 'showProvider':
         return (
-          <ModalLogin type={target} closable={closable} {...this.props}/>
+          <ModalLogin type={target} closable={closable} cb={cb} {...this.props}/>
         )
         break
       case 'redeemCoupon':
@@ -65,13 +67,13 @@ class ModalView extends React.Component {
           <ModalCoupon type={target} closable={closable} {...this.props}/>
         )
         break
-      case 'social':
+      case 'strategy':
         return (
           <ModalSocial closable={closable} {...this.props} data={data}/>
         )
         break
       default:
-        return false
+        return <div />
     }
   }
 }

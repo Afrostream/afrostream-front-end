@@ -9,16 +9,16 @@ if (process.env.BROWSER) {
 @connect(({}) => ({}))
 class ResetPasswordPage extends React.Component {
 
-  componentDidMount() {
+  componentDidMount () {
     const {
       props: {
         dispatch
-        }
-      } = this
-    dispatch(ModalActionCreators.open('showReset', false))
+      }
+    } = this
+    dispatch(ModalActionCreators.open({target: 'showReset', closable: false}))
   }
 
-  render() {
+  render () {
     return (
       <div className="row-fluid">
         <div className="reset-page">

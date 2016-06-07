@@ -12,7 +12,7 @@ exports.getAvatar = function (req, res) {
       '#f1c40f', '#e67e22', '#e74c3c', '#ecf0f1', '#95a5a6', '#f39c12', '#d35400', '#c0392b', '#bdc3c7', '#7f8c8d'
     ],
 
-    nameSplit = String(name).toUpperCase().split('.'),
+    nameSplit = String(name).toUpperCase().replace(' ', '.').split('.'),
     initials
 
 

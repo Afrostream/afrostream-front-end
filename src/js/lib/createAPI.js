@@ -50,8 +50,8 @@ async function getToken (tokenData) {
 /**
  * return api function base on createRequest function
  * Usage:
- *   api('/users/facebook')
- *   api('/users/facebook/repos')
+ *   api('/users')
+ *   api('/users/me')
  *   ...
  *
  * createRequest() may different from client and server sides

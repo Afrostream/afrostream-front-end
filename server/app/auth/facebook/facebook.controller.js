@@ -1,5 +1,5 @@
-import { getData, fwd } from '../../app/api/api-front'
-import config from '../../../config'
+import { getData, fwd } from '../../api/api-front'
+import config from '../../../../config'
 const {apiClient} =config
 
 export function signin (req, res) {
@@ -14,10 +14,12 @@ export function signup (req, res) {
 
 export function link (req, res) {
   res.noCache()
+  let token = req.query.access_token
+  delete req.query.access_token
   getData(req, '/auth/facebook/link', {
     followRedirect: false,
-    header: {
-      'Access-Token': req.query.access_token
+    headers: {
+      'Access-Token': token
     }
   }).nodeify(fwd(res))
 }
@@ -25,16 +27,18 @@ export function link (req, res) {
 export async function unlink (req, res) {
   res.noCache()
   try {
+    let token = req.query.access_token
+    delete req.query.access_token
     const facebookCompleteFlow = await getData(req, '/auth/facebook/unlink', {
       followRedirect: false,
-      header: {
-        'Access-Token': req.query.access_token
+      headers: {
+        'Access-Token': token
       }
     })
     var fbResponse = facebookCompleteFlow[0]
       , fbBody = facebookCompleteFlow[1]
 
-    const layout = 'layouts/oauth-social-unlink'
+    const layout = 'layouts/oauth-strategy-unlink'
     res.status(fbResponse.statusCode).render(layout, fbBody)
   }
   catch (err) {

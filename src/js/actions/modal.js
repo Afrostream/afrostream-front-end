@@ -1,9 +1,9 @@
 import ActionTypes from '../consts/ActionTypes'
 import * as ModalActionCreators from './modal'
 import * as UserActionCreators from './user'
-import {isAuthorized} from '../lib/geo'
+import { isAuthorized } from '../lib/geo'
 
-export function open(target, closable = true, donePath = null, data = null) {
+export function open ({target, closable = true, donePath= null, data = null, cb = null}) {
   return (dispatch, getState, actionDispatcher) => {
 
     return async () => {
@@ -18,7 +18,7 @@ export function open(target, closable = true, donePath = null, data = null) {
       }
 
       if (!authorized) {
-        return actionDispatcher(ModalActionCreators.open('geoWall', true))
+        return actionDispatcher(ModalActionCreators.open({target: 'geoWall'}))
       }
 
 
@@ -27,13 +27,14 @@ export function open(target, closable = true, donePath = null, data = null) {
         target,
         donePath,
         data,
-        closable
+        closable,
+        cb
       }
     }
   }
 }
 
-export function close() {
+export function close () {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(false))
     return {

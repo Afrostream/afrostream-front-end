@@ -40,10 +40,23 @@ class AccountPage extends React.Component {
         <div className="account-details__header col-md-4">{getI18n().account.user.header}</div>
         <div className="account-details__container col-md-8">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12">
               <span>{user.get('email')}</span>
             </div>
+            {/*<div className="col-md-4">
+             <Link className="btn btn-default" to="/email">{getI18n().account.user.updateEmail}</Link>
+             </div>*/}
           </div>
+          <div className="row">
+            <div className="col-md-12">
+              <span>{user.get('name')}</span>
+            </div>
+          </div>
+          {/*<div className="row">
+           <div className="col-md-12 float-right">
+           <Link className="btn btn-default" to="/reset">{getI18n().account.user.updateProfil}</Link>
+           </div>
+           </div>*/}
           <div className="row">
             <div className="col-md-8">
               <span>{`${getI18n().account.user.password} : ******`}</span>

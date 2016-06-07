@@ -51,15 +51,15 @@ class MoviesList extends React.Component {
 
     return (
       <div className="movies-list">
-        <ReactList
-          useTranslate3d={true}
+        {<ReactList
           ref="react-movies-list"
           axis="y"
           itemRenderer={::this.renderList}
           length={categories.size}
           type={'simple'}
-          pageSize={4}
-        />
+          pageSize={2}
+        />}
+        {/*categories.map((item)=>this.renderList(item))*/}
       </div>
     )
   }

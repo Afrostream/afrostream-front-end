@@ -44,7 +44,7 @@ class ModalLogin extends ModalComponent {
     if (token) {
       dispatch(OauthActionCreator.reset({k: token})).then(() => {
         //New password success validate, open login view
-        dispatch(ModalActionCreator.open('show', false, '/'))
+        dispatch(ModalActionCreator.open({target: 'show', closable: false, donePath: '/'}))
       }).catch(::this.onError)
     }
     const userAgent = (window.navigator && navigator.userAgent) || ''
@@ -157,20 +157,19 @@ class ModalLogin extends ModalComponent {
     dispatch(OauthActionCreator[typeCall](postData)).then(::this.onSuccess).catch(::this.onError)
   }
 
-  facebookAuth (event) {
-    event.preventDefault()
+  oauthStrategy (strategy) {
     const {
       dispatch
     } = this.props
 
-    const method = this.getType()
-
-    dispatch(OauthActionCreator.facebook(method)).then(::this.onSuccess).catch(::this.onError)
+    const path = this.getType()
+    dispatch(OauthActionCreator.strategy({strategy, path})).then(::this.onSuccess).catch(::this.onError)
   }
 
   onSuccess () {
     const {
-      dispatch
+      dispatch,
+      cb
     } = this.props
 
     this.setState({
@@ -180,6 +179,9 @@ class ModalLogin extends ModalComponent {
     if (this.props.type !== 'showReset') {
       dispatch(UserActionCreators.getProfile())
       dispatch(ModalActionCreator.close())
+      if (cb) {
+        cb()
+      }
     } else {
       dispatch(IntercomActionCreators.createIntercom())
     }
@@ -213,7 +215,15 @@ class ModalLogin extends ModalComponent {
       dispatch, history
     } = this.props
     history.push('/')
-    dispatch(ModalActionCreator.open('show'))
+    dispatch(ModalActionCreator.open({target: 'show'}))
+  }
+
+  showProviderAction (event) {
+    event.preventDefault()
+    const {
+      dispatch
+    } = this.props
+    dispatch(ModalActionCreator.open({target: 'showProvider'}))
   }
 
   getI18n () {
@@ -221,6 +231,7 @@ class ModalLogin extends ModalComponent {
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
+      case 'showProvider':
         keyType = 'signin'
         break
       case 'showRelog':
@@ -245,6 +256,7 @@ class ModalLogin extends ModalComponent {
       case 'show':
       case 'showSignin':
       case 'showRelog':
+      case 'showProvider':
         keyType = 'signin'
         break
       case 'showSignup':
@@ -295,7 +307,7 @@ class ModalLogin extends ModalComponent {
     }
 
     let formTemplate
-    let social = oauth2.facebook
+    let social = oauth2.providers
     switch (this.props.type) {
       case 'show':
       case 'showSignin':
@@ -310,12 +322,19 @@ class ModalLogin extends ModalComponent {
         social = false
         formTemplate = this.getReset()
         break
+      case 'showProvider':
+        social = false
+        formTemplate = this.getProvider()
+        break
     }
 
     return (
       <div className="notloggedin mode">
         <form noValidate="" onSubmit={::this.handleSubmit}>
-          {social ? this.getSocial() : ''}
+
+          {social ? this.getStrategy({name: 'facebook'}) : null}
+          {social ? <div className="separator"><span>ou</span></div> : null}
+
           <div className="instructions">{this.getTitle('headerText')}</div>
           {formTemplate}
         </form>
@@ -323,16 +342,27 @@ class ModalLogin extends ModalComponent {
     )
   }
 
-  getSocial () {
+  getStrategy (filter) {
+    let filterObj = _.merge({active: true}, filter)
+
     return (
       <div className="collapse-social">
         <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
-        <div tabIndex="0" data-strategy="facebook" title={this.getTitle('loginFacebook')} onClick={::this.facebookAuth}
-             className="zocial facebook "
-             dir="ltr">
-          <span>{this.getTitle('loginFacebook')}</span>
-        </div>
-        <div className="separator"><span>ou</span></div>
+        {_.filter(oauth2.providers, filterObj).map((strategy)=> {
+          const title = this.getTitle('loginProvider').replace('{strategy}', strategy.name)
+          const inputAttributes = {
+            onClick: event => ::this.oauthStrategy(strategy.name)
+          }
+          return (<div tabIndex="0"
+                       key={`${strategy.name}-connect`}
+                       data-strategy={strategy.name}
+                       title={title}
+                       className={`zocial ${strategy.name}`}
+            {...inputAttributes}
+                       dir="ltr">
+            <span>{title}</span>
+          </div>)
+        })}
       </div>
     )
   }
@@ -398,6 +428,7 @@ class ModalLogin extends ModalComponent {
   }
 
   getSignIn () {
+
     return (
       <div className="emailPassword">
         <div className="inputs">
@@ -412,6 +443,7 @@ class ModalLogin extends ModalComponent {
           <div className="db-actions">
             <div className="create-account buttons-actions">
               <Link to="/reset" className="forgot-pass btn-small">{this.getTitle('forgotText')}</Link>
+              {this.getProviderForm()}
             </div>
           </div>
         </div>
@@ -453,6 +485,35 @@ class ModalLogin extends ModalComponent {
           </div>
         </div>
 
+      </div>
+    )
+  }
+
+  getProviderForm () {
+
+    const providers = _.filter(oauth2.providers, {active: true}).map((provider)=>provider.name)
+    if (!providers.length) {
+      return
+    }
+
+    return <a href="#" onClick={::this.showProviderAction}
+              className="forgot-pass btn-xsmall">{this.getTitle('providers').replace('{providers}', providers.join(','))}</a>
+  }
+
+  getProvider () {
+    return (
+      <div className="emailPassword">
+        <div className="inputs-wrapper">
+          <div className="inputs">
+            {this.getStrategy({social: false})}
+          </div>
+        </div>
+        <div className="action">
+          <div className="options">
+            <a href="#" onClick={::this.cancelAction}
+               className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
+          </div>
+        </div>
       </div>
     )
   }
@@ -499,11 +560,11 @@ class ModalLogin extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <div className="icon-container">
-                        <div className="avatar">
-                          <i className="avatar-guest icon-budicon-2"></i>
-                        </div>
-                      </div>
+                      {/*<div className="icon-container">
+                       <div className="avatar">
+                       <i className="avatar-guest icon-budicon-2"></i>
+                       </div>
+                       </div>*/}
                       <h1>{this.getTitle()}</h1>
                       <h2 className={errClass}>{this.state.error}</h2>
                       <h2 className={successClass}>{this.getTitle('successText')}</h2>
@@ -526,7 +587,8 @@ class ModalLogin extends ModalComponent {
 ModalLogin.propTypes = {
   location: React.PropTypes.object.isRequired,
   type: React.PropTypes.string,
-  dispatch: React.PropTypes.func
+  dispatch: React.PropTypes.func,
+  cb: React.PropTypes.func
 }
 
 export default withRouter(ModalLogin)

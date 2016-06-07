@@ -139,14 +139,14 @@ class UserButton extends React.Component {
       </div>)
   }
 
-  showLock (mode) {
+  showLock (target) {
     const {
       props: {
         dispatch
       }
     } = this
 
-    dispatch(ModalActionCreators.open(mode))
+    dispatch(ModalActionCreators.open({target}))
   }
 
   toggleSideBar () {

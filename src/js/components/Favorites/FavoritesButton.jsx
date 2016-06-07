@@ -14,7 +14,7 @@ class FavoritesButton extends React.Component {
   render() {
     return (
       <Link className="btn-xs btn-favorites" to="/favoris" role="button"><span>Mes Favoris </span><i
-        className="fa fa-heart"></i></Link>)
+        className="zmdi zmdi-favorite"></i></Link>)
   }
 }
 

@@ -39,7 +39,7 @@ class CashwayEndPage extends React.Component {
       }
     } = this
 
-    dispatch(ModalActionCreators.open('cashway', true))
+    dispatch(ModalActionCreators.open({target:'cashway'}))
   }
 
   render () {

@@ -4,6 +4,16 @@
   background: @color-yellow !important;
 }
 
+.headroom-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: @nav-z + 1;
+  .headroom {
+  }
+}
+
 .navbar.navbar-default {
   margin: 0;
   padding: 0;
@@ -33,21 +43,21 @@
       background-color: @color-yellow;
     }
   }
-  .navbar-right {
-    margin: 2px 0 0 0;
-  }
 
   nav {
+    .navbar-nav {
+      margin: 15px;
+    }
+
     .navbar-collapse {
       border: none;
       top: 5px;
     }
 
     .navbar-brand {
-      padding: 0;
-      .isMobile({ width: 9em; });
+      .isMobile({ padding: 0; });
       img {
-        .isMobile({ width: 100%; padding: 5px; });
+        .isMobile({ width: 100%; });
       }
     }
   }

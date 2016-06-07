@@ -9,17 +9,17 @@ if (process.env.BROWSER) {
 @connect(({}) => ({}))
 class RedeemCoupon extends React.Component {
 
-  componentDidMount() {
+  componentDidMount () {
     const {
 
       props: {
         dispatch
-        }
-      } = this
-    dispatch(ModalActionCreators.open('redeemCoupon', false))
+      }
+    } = this
+    dispatch(ModalActionCreators.open({target: 'redeemCoupon', closable: false}))
   }
 
-  render() {
+  render () {
     return (
       <div className="row-fluid">
         <div className="redeem-coupon-page">

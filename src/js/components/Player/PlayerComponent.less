@@ -1,10 +1,9 @@
 @import (css) '../../../../node_modules/afrostream-player/dist/afrostream-player.css';
 @import (css) '../../../../node_modules/afrostream-player/node_modules/videojs-chromecast/dist/videojs-chromecast.css';
-@import '../../../styles/config.less';
+@import (reference) '../../../styles/config.less';
 
 .player {
   background-color: #000000;
-  margin: 60px auto;
   width: 100%;
   max-height: 100%;
   &.chat-on {
@@ -181,6 +180,7 @@
 @media (min-width: 768px) {
 
   .player {
+    margin: 60px auto;
     display: block;
     top: 0;
     height: 100%;

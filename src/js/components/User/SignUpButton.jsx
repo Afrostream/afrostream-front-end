@@ -30,7 +30,7 @@ class SignUpButton extends React.Component {
       return router.push(this.props.to)
     }
 
-    dispatch(ModalActionCreators.open('showSignup', true, this.props.to))
+    dispatch(ModalActionCreators.open({target: 'showSignup', donePath: this.props.to}))
   }
 
 }

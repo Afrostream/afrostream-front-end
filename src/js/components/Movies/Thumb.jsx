@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
 import { Link } from 'react-router'
 import Poster from './Poster'
 import { connect } from 'react-redux'
@@ -11,6 +10,7 @@ if (process.env.BROWSER) {
 
 @connect(({Movie, Season}) => ({Movie, Season}))
 class Thumb extends Poster {
+
 
   constructor (props) {
     super(props)
@@ -41,17 +41,15 @@ class Thumb extends Poster {
   }
 
   triggerOver () {
-    let thumbMouse = ReactDOM.findDOMNode(this)
-    if (thumbMouse) {
-      thumbMouse.dispatchEvent(new CustomEvent('thumbover', {bubbles: true}))
-    }
+    this.setState({
+      hover: true
+    })
   }
 
   triggerOut () {
-    let thumbMouse = ReactDOM.findDOMNode(this)
-    if (thumbMouse) {
-      thumbMouse.dispatchEvent(new CustomEvent('thumbout', {bubbles: true}))
-    }
+    this.setState({
+      hover: false
+    })
   }
 
   getInfos () {
@@ -97,9 +95,20 @@ class Thumb extends Poster {
     </div>)
   }
 
+  getButtons () {
+    if (!this.state.hover) {
+      return <div className="thumb-buttons"/>
+    }
+
+    return <div className="thumb-buttons">
+      {this.getFavorite()}
+      {this.getShareButton()}
+    </div>
+  }
+
   getBtnPlay () {
     const type = this.getType()
-    return type === 'episode' ? <i className="btn-play"></i> : ''
+    return type === 'episode' ? <i className="btn-play"></i> : null
   }
 
   render () {
@@ -124,10 +133,7 @@ class Thumb extends Poster {
           </div>
           {this.getInfos()}
         </Link>
-        <div className="thumb-buttons">
-          {this.getFavorite()}
-          {this.getShareButton()}
-        </div>
+        {this.getButtons()}
       </div>
     )
   }

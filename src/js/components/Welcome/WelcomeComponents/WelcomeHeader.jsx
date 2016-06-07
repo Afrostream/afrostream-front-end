@@ -60,7 +60,7 @@ class WelcomeHeader extends React.Component {
       }
     } = this
 
-    dispatch(ModalActionCreators.open('showSignup'))
+    dispatch(ModalActionCreators.open({target: 'showSignup'}))
   }
 
   hasPromo () {

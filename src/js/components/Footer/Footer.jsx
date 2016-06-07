@@ -1,19 +1,38 @@
 import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import classSet from 'classnames'
 import { withRouter } from 'react-router'
 import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
+import config from '../../../../config'
+import * as OauthActionCreator from '../../actions/oauth'
+import * as ModalActionCreators from '../../actions/modal'
+import * as UserActionCreators from '../../actions/user'
+
+const {oauth2}= config
 
 if (process.env.BROWSER) {
   require('./Footer.less')
 }
-
+@connect()
 class Footer extends React.Component {
 
   constructor (props) {
     super(props)
     this.year = new Date().getFullYear()
+  }
+
+  oauthStrategy () {
+    const {
+      dispatch
+    } = this.props
+
+    dispatch(ModalActionCreators.open({
+      target: 'showSignup', cb: ()=> {
+        dispatch(ModalActionCreators.open({target: 'showProvider', donePath: '/compte'}))
+      }
+    }))
   }
 
   render () {
@@ -38,10 +57,12 @@ class Footer extends React.Component {
       'footer-hidden': hasPlayer
     }
 
+    const providers = _.filter(oauth2.providers, {active: true, social: false})
+
     return (
       <footer className={classSet(footerClasses)}>
-        <div className="links row">
-          <div className="get-help col-xs-12 col-md-2">
+        <div className="links row-fluid">
+          <div className={`get-help col-xs-12 col-md-${providers.length ? 2 : 4}`}>
             <h4>{labels.support.title}</h4>
             <ul className="footer-links">
               <li>
@@ -114,14 +135,14 @@ class Footer extends React.Component {
               <li>
                 <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
                    target="_blank">
-                  {labels.apps.ios} <i className="fa fa-apple"></i>
+                  {labels.apps.ios} <i className="zmdi zmdi-apple"></i>
                 </a>
               </li>
               <li>
                 <a className="footer-link"
                    href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
                    target="_blank">
-                  {labels.apps.android} <i className="fa fa-android"></i>
+                  {labels.apps.android} <i className="zmdi zmdi-android"></i>
                 </a>
               </li>
             </ul>
@@ -131,12 +152,12 @@ class Footer extends React.Component {
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="https://www.facebook.com/afrostreamtv?fref=ts">
-                  {labels.social.facebook} <i className="fa fa-facebook"></i>
+                  {labels.social.facebook} <i className="zmdi zmdi-facebook"></i>
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="https://twitter.com/intent/user?screen_name=AFROSTREAM">
-                  {labels.social.twitter} <i className="fa fa-twitter"></i>
+                  {labels.social.twitter} <i className="zmdi zmdi-twitter"></i>
                 </a>
               </li>
               <li>
@@ -146,6 +167,22 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
+          {providers.length ? <div className="get-help col-xs-12 col-md-2">
+            <h4>{labels.oauth2.title}</h4>
+            <ul className="footer-links">
+              {providers.map((strategy)=> {
+                  const inputAttributes = {
+                    onClick: event => ::this.oauthStrategy(strategy.name)
+                  }
+                  return (<li key={`${strategy.name}-connect_footer`}>
+                    <a className="footer-link" href="#" {...inputAttributes}>
+                      {strategy.name} <i className={strategy.icon}></i>
+                    </a>
+                  </li>)
+                }
+              )}
+            </ul>
+          </div> : null}
         </div>
 
         <div className="legal-statements">
@@ -164,7 +201,7 @@ class Footer extends React.Component {
 }
 
 Footer.propTypes = {
-  history: React.PropTypes.object
+  history: PropTypes.object
 }
 
 export default withRouter(Footer)

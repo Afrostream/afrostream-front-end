@@ -4,8 +4,6 @@ import path from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HashPlugin from 'hash-webpack-plugin'
 import config from '../config'
-import { merge } from 'lodash'
-import herokuConfig from '../app.json'
 
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
@@ -22,11 +20,6 @@ const assetsPath = path.resolve(__dirname, '../dist/')
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 let hash = null
 
-// chargement de la conf de staging (lorsque l'on est en local)
-if (process.env.LOAD_STAGING) {
-  delete herokuConfig.env.NODE_ENV
-  process.env = merge(process.env, herokuConfig.env)
-}
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -203,6 +196,7 @@ const webpackConfig = {
         CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
         GOCARDLESS_PUBLIC_KEY: JSON.stringify(process.env.GOCARDLESS_PUBLIC_KEY),
         OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
+        OAUTH_BOUYGUES_ENABLED: JSON.stringify(process.env.OAUTH_BOUYGUES_ENABLED),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
         SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
       }

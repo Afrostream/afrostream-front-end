@@ -1,6 +1,7 @@
 @import ( reference ) './for';
 @import (less) '../../node_modules/font-awesome/less/font-awesome.less';
 @import (less) '../../node_modules/material-design-iconic-font/less/material-design-iconic-font.less';
+@import url(//fonts.googleapis.com/css?family=Open+Sans);
 
 /**
  * Font-face mixin
@@ -37,7 +38,7 @@
 // Typography
 // -----------------------------------------------------------------------------
 
-@font-family-base: 'DIN-30640-Std', Helvetica, Arial, 'Lucida Grande', sans-serif;
+@font-family-base: 'Open Sans', 'DIN-30640-Std', Helvetica, Arial, 'Lucida Grande', sans-serif;
 @font-light: "FtraLt", Helvetica, sans-serif;
 @font-thin: "FtraLh", Helvetica, sans-serif;
 @font-book: "FtraBk", Helvetica, sans-serif;
@@ -48,4 +49,27 @@
 .body-font() {
   font-family: @font-family-base;
   line-height: 1;
+}
+
+//.fa {
+//  &.fa-bouygues {
+//    font-family: @font-provider !important;
+//    &:before {
+//      content: '\e900';
+//    }
+//  }
+//}
+
+.fa {
+  &.fa-bouygues {
+    background-image: url(../assets/images/strategy/bouygues-strategy.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    width: 3em;
+    height: 1.5em;
+    &:before {
+      content: '';
+    }
+  }
 }

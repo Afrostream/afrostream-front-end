@@ -31,6 +31,7 @@ class UserMoviesList extends React.Component {
     const showDescription = false
     const thumbW = 200
     const thumbH = 110
+    const rowHeight = 160
     const load = true
     const type = 'episode'
     return (
@@ -46,7 +47,8 @@ class UserMoviesList extends React.Component {
           type,
           thumbW,
           thumbH,
-          load
+          load,
+          rowHeight
         }} />
       </div>
     )

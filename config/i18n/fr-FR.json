@@ -51,6 +51,9 @@
       "facebook": "Facebook",
       "twitter": "Twitter",
       "newsletter": "Newsletter"
+    },
+    "oauth2": {
+      "title": "BOXES"
     }
   },
   "loadingTitle": "Veuillez patienter...",
@@ -205,16 +208,18 @@
     "user": {
       "header": "MES INFORMATIONS PERSONNELLES",
       "password": "Mot de passe",
-      "updatePassword": "Modifier le mot de passe"
+      "updatePassword": "Modifier mon mot de passe",
+      "updateEmail": "Modifier mon email",
+      "updateProfil": "Modifier mon profil"
     },
     "plan": {
       "header": "DÉTAIL DU FORFAIT",
       "updatePlan": "Changer de forfait",
       "cancelPlan": "Interrompre votre abonnement"
     },
-    "social": {
+    "oauth2": {
       "header": "Profils liés",
-      "facebook": "Lier mon profil <b>Facebook</b> à mon compte Afrostream",
+      "link": "Lier mon profil <b>{strategy}</b> à mon compte Afrostream",
       "on": "Lier mon profil",
       "off": "Ne plus lier mon profil"
     },
@@ -277,10 +282,13 @@
     "title": "Se connecter",
     "action": "Se connecter",
     "all": "Afficher tout",
+    "providers": "Vous êtes abonné chez un opérateur ({providers}) ?",
     "strategyEmailEmpty": "Le courriel est vide.",
     "strategyEmailInvalid": "Le courriel n'est pas valide.",
     "strategyDomainInvalid": "Le domaine {domain} n'a pas été configuré.",
+    "signinText": "Se connecter",
     "signupText": "Inscrivez-vous",
+    "cancelAction": "Annuler",
     "forgotText": "Vous avez oublié votre mot de passe ?",
     "emailPlaceholder": "Courriel",
     "usernamePlaceholder": "Nom d'utilisateur",
@@ -295,7 +303,7 @@
     "popupCredentials": "Saisissez vos identifiants dans la fenêtre pop-up",
     "userClosedPopup": "La fenêtre pop-up a été fermée. Veuillez réessayer.",
     "userConsentFailed": "L'application n'a pas été autorisée. Veuillez réessayer.",
-    "loginFacebook": "Connexion avec facebook",
+    "loginProvider": "Connexion avec {strategy}",
     "language": {
       "email": "Doit etre un email valide",
       "password": "Le mot de passe",
@@ -306,8 +314,8 @@
       "empty": "est requis"
     },
     "Error: The specified email address is already in use.": "Email déja existant",
-    "Error: Your profile is already linked to another user": "Votre profile facebook est deja lié a un autre compte",
-    "Error: No user found, please associate your profile with facebook after being connected": "Aucun utilisateur lié a facebook,veuillez vous connecter puis lié votre profil dans \"mon compte\""
+    "Error: Your profile is already linked to another user": "Votre profile est deja lié a un autre compte",
+    "Error: No user found, please associate your profile after being connected": "Aucun utilisateur lié ,veuillez vous connecter puis lier votre profil dans \"mon compte\""
   },
   "signup": {
     "description": "",
@@ -315,7 +323,6 @@
     "action": "Démarrez",
     "emailPlaceholder": "Courriel",
     "passwordPlaceholder": "Créer un mot de passe",
-    "cancelAction": "Annuler",
     "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
     "footerText": "",
     "signupOnSSODomainErrorText": "Ce domaine {domain} a été configuré pour le Single Sign On et vous ne pouvez pas créer de compte. Essayez de vous connecter à un compte existant.",

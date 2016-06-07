@@ -10,7 +10,7 @@ class ModalComponent extends React.Component {
   }
 
   componentWillUnmount () {
-    this.closeModal()
+    //this.closeModal()
   }
 
   closeModal () {

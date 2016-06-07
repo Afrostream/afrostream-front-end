@@ -44,7 +44,7 @@ export default createReducer(initialState, {
   },
 
 
-  [ActionTypes.OAuth.facebook](state, {}) {
+  [ActionTypes.OAuth.strategy](state, {}) {
     const tokenData = getToken()
     return state.merge({
       ['token']: tokenData

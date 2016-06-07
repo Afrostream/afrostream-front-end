@@ -17,7 +17,7 @@ class BrowseButton extends React.Component {
         <a href="#" className="btn-xs btn-browse dropdown-toggle" data-toggle="dropdown"
            role="button">
           <span>PARCOURIR </span>
-          <b className="caret"/>
+          <i className="zmdi zmdi-chevron-down zmdi-hc-2x"/>
         </a>
         <BrowseMenu />
       </li>)

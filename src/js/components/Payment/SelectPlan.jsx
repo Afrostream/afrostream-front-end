@@ -32,7 +32,7 @@ class SelectPlan extends React.Component {
   getPlanCol (label) {
 
     const {
-      props : {history,router}
+      props : {history, router}
     } = this
 
     let isCash = router.isActive('cash')
@@ -75,7 +75,7 @@ class SelectPlan extends React.Component {
           value = objVal
           let isBool = (value === 'true' || value === 'false' || typeof value === 'boolean' ) && typeof isBoolean(value) === 'boolean'
           if (isBool) {
-            value = isBoolean(value) ? <i className="fa fa-check"></i> : <i className="fa fa-times"></i>
+            value = isBoolean(value) ? <i className="zmdi zmdi-check"></i> : <i className="zmdi zmdi-close"></i>
           }
           break
       }
