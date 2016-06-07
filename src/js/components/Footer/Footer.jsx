@@ -7,6 +7,7 @@ import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import config from '../../../../config'
 import * as OauthActionCreator from '../../actions/oauth'
+import * as ModalActionCreators from '../../actions/modal'
 import * as UserActionCreators from '../../actions/user'
 
 const {oauth2}= config
@@ -22,23 +23,16 @@ class Footer extends React.Component {
     this.year = new Date().getFullYear()
   }
 
-  oauthStrategy (strategy) {
+  oauthStrategy () {
     const {
       dispatch
     } = this.props
 
-    dispatch(OauthActionCreator.strategy({strategy})).then(::this.onSuccess)
-  }
-
-  onSuccess () {
-    const {
-      dispatch
-    } = this.props
-    dispatch(UserActionCreators.getProfile())
-  }
-
-  onError (err) {
-
+    dispatch(ModalActionCreators.open({
+      target: 'showSignup', cb: ()=> {
+        dispatch(ModalActionCreators.open({target: 'showProvider', donePath: '/compte'}))
+      }
+    }))
   }
 
   render () {

@@ -7,43 +7,43 @@ if (process.env.BROWSER) {
   require('./ShareButton.less')
 }
 
-@connect(({ Modal }) => ({Modal}))
+@connect(({Modal}) => ({Modal}))
 class ShareButton extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.attachTooltip()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     this.attachTooltip()
   }
 
-  attachTooltip() {
+  attachTooltip () {
     $(this.refs.data).tooltip()
   }
 
-  getLabel() {
+  getLabel () {
     if (!this.props.label) {
       return
     }
     return this.props.label
   }
 
-  sharePopup() {
+  sharePopup () {
     const {
       props: {
-        dispatch,link,description,title
-        }
-      } = this
+        dispatch, link, description, title
+      }
+    } = this
 
-    dispatch(ModalActionCreators.open('strategy', true, null, {link, description, title}))
+    dispatch(ModalActionCreators.open({target: 'strategy', data: {link, description, title}}))
   }
 
-  render() {
+  render () {
 
     let favoriteClass = {
       'fa': true,

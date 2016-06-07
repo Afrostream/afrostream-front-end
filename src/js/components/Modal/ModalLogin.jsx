@@ -44,7 +44,7 @@ class ModalLogin extends ModalComponent {
     if (token) {
       dispatch(OauthActionCreator.reset({k: token})).then(() => {
         //New password success validate, open login view
-        dispatch(ModalActionCreator.open('show', false, '/'))
+        dispatch(ModalActionCreator.open({target: 'show', closable: false, donePath: '/'}))
       }).catch(::this.onError)
     }
     const userAgent = (window.navigator && navigator.userAgent) || ''
@@ -168,7 +168,8 @@ class ModalLogin extends ModalComponent {
 
   onSuccess () {
     const {
-      dispatch
+      dispatch,
+      cb
     } = this.props
 
     this.setState({
@@ -178,6 +179,9 @@ class ModalLogin extends ModalComponent {
     if (this.props.type !== 'showReset') {
       dispatch(UserActionCreators.getProfile())
       dispatch(ModalActionCreator.close())
+      if (cb) {
+        cb()
+      }
     } else {
       dispatch(IntercomActionCreators.createIntercom())
     }
@@ -211,7 +215,7 @@ class ModalLogin extends ModalComponent {
       dispatch, history
     } = this.props
     history.push('/')
-    dispatch(ModalActionCreator.open('show'))
+    dispatch(ModalActionCreator.open({target: 'show'}))
   }
 
   showProviderAction (event) {
@@ -219,7 +223,7 @@ class ModalLogin extends ModalComponent {
     const {
       dispatch
     } = this.props
-    dispatch(ModalActionCreator.open('showProvider'))
+    dispatch(ModalActionCreator.open({target: 'showProvider'}))
   }
 
   getI18n () {
@@ -580,7 +584,8 @@ class ModalLogin extends ModalComponent {
 ModalLogin.propTypes = {
   location: React.PropTypes.object.isRequired,
   type: React.PropTypes.string,
-  dispatch: React.PropTypes.func
+  dispatch: React.PropTypes.func,
+  cb: React.PropTypes.func
 }
 
 export default withRouter(ModalLogin)

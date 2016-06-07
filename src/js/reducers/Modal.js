@@ -5,24 +5,29 @@ import createReducer from '../lib/createReducer'
 const initialState = Immutable.fromJS({
   target: null,
   closable: true,
-  donePath: null
+  donePath: null,
+  cb: null
 })
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Modal.open](state, {target,closable,donePath,data}) {
+  [ActionTypes.Modal.open](state, {target, closable, donePath, data, cb}) {
     return state.merge({
-      target: target,
-      closable: closable,
-      donePath: donePath,
-      data: data
+      target,
+      closable,
+      donePath,
+      data,
+      cb
     })
   },
 
   [ActionTypes.Modal.close](state, {target}) {
     return state.merge({
       target: target,
-      closable: true
+      closable: true,
+      donePath: null,
+      data: null,
+      cb: null
     })
   }
 

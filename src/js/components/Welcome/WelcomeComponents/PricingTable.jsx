@@ -37,7 +37,7 @@ class PricingTable extends React.Component {
       }
     } = this
     let type = (internalPlanUuid === 'afrostreamgift') ? 'showGift' : 'showSignup'
-    dispatch(ModalActionCreators.open(type, true, `/select-plan/${internalPlanUuid}/checkout`))
+    dispatch(ModalActionCreators.open({target: type, donePath: `/select-plan/${internalPlanUuid}/checkout`}))
   }
 
   getPlanRow (plan) {
