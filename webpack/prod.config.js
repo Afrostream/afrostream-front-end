@@ -2,7 +2,7 @@ import webpack from 'webpack'
 import CompressionPlugin from 'compression-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import webpackConfig from './webpack.config'
-import {merge} from 'lodash'
+import { merge } from 'lodash'
 import path from 'path'
 
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
@@ -47,7 +47,7 @@ let clientConfig = merge({}, webpackConfig, {
         pure_funcs: process.env.NODE_ENV === 'production' ? ['vjs.log', 'videojs.log'] : []
       },
       minimize: true,
-      sourceMap: process.env.NODE_ENV === 'production'
+      sourceMap: process.env.NODE_ENV !== 'production'
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     new CompressionPlugin({
