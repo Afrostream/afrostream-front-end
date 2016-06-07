@@ -491,7 +491,7 @@ class ModalLogin extends ModalComponent {
 
   getProviderForm () {
 
-    const providers = _.filter(oauth2.providers, {active: true}).map((provider)=>provider.name)
+    const providers = _.filter(oauth2.providers, {active: true, social: false}).map((provider)=>provider.name)
     if (!providers.length) {
       return
     }

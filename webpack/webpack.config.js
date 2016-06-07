@@ -175,6 +175,7 @@ const webpackConfig = {
   }
   ,
   plugins: [
+    new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
       sendBirdClient: 'sendbird',
