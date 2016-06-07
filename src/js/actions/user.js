@@ -51,7 +51,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
     } catch (e) {
       console.log(e, 'remove user data')
-      //actionDispatcher(OAuthActionCreators.logOut())
+      actionDispatcher(OAuthActionCreators.logOut())
       return data
     }
   }

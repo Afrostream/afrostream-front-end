@@ -91,7 +91,7 @@ export default function createAPI (createRequest) {
         let tokenData = await getToken(tokenDataStore)
         if (tokenData) {
           headers = _.merge(headers, {
-            'Access-Token': tokenData.accessToken
+            'Access-Token': tokenData.access_token || tokenData.accessToken
           })
         }
       }
