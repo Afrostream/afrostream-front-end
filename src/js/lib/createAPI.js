@@ -101,7 +101,7 @@ export default function createAPI (createRequest) {
     }
 
     return await new Promise((resolve, reject) => {
-      createRequest({method, headers, pathname, query, body, legacy, showLoader, local})
+      createRequest({method, headers, pathname, query, body, legacy, local})
         .end((err, res) => {
           if (showLoader) {
             NProgress.done()

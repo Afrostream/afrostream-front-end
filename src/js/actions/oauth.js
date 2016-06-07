@@ -43,7 +43,7 @@ export function reset (form) {
  * @returns {Promise}
  */
 export function getIdToken () {
-  return (dispatch, getState, actionDispatcher) => {
+  return () => {
     return {
       type: ActionTypes.OAuth.getIdToken
     }
