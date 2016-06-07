@@ -8,7 +8,7 @@
 <body>
 
 <div id="main">
-  <h1>Afrostream Application Authentication - Auth Success</h1>
+  <h5>Afrostream Application Authentication - Auth Success</h5>
   <script type="text/javascript">
     if (window.opener) {
       window.opener.focus();
@@ -19,7 +19,7 @@
     if (tokenData) {
       localStorage.setItem(storageId, JSON.stringify(tokenData));
     }
-    //window.close();
+    setTimeout(window.close, 1000);
   </script>
 </div>
 </body>

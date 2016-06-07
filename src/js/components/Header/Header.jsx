@@ -76,7 +76,7 @@ class Header extends React.Component {
     }
 
     return (
-      <Headroom>
+      <Headroom disableInlineStyles={true}>
         <div className={classSet(sliderClasses)}>
           {planCode ? <SmartBanner {...apps.params}/> : ''}
           <div className="container-fluid">
