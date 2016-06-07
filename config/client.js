@@ -136,13 +136,13 @@ const client = {
         name: 'facebook',
         social: true,
         icon: 'fa fa-facebook-official',
-        active: isBoolean(process.env.OAUTH_FACEBOOK_ENABLED || true)
+        active: isBoolean(process.env.OAUTH_FACEBOOK_ENABLED || false)
       },
       {
         name: 'bouygues',
         social: false,
         icon: 'fa fa-bouygues',
-        active: isBoolean(process.env.OAUTH_BOUYGUES_ENABLED || true)
+        active: isBoolean(process.env.OAUTH_BOUYGUES_ENABLED || false)
       }
     ]
   },

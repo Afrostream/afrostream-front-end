@@ -492,6 +492,9 @@ class ModalLogin extends ModalComponent {
   getProviderForm () {
 
     const providers = _.filter(oauth2.providers, {active: true}).map((provider)=>provider.name)
+    if (!providers.length) {
+      return
+    }
 
     return <a href="#" onClick={::this.showProviderAction}
               className="forgot-pass btn-xsmall">{this.getTitle('providers').replace('{providers}', providers.join(','))}</a>

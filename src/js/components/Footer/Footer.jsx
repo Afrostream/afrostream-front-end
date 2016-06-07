@@ -57,10 +57,12 @@ class Footer extends React.Component {
       'footer-hidden': hasPlayer
     }
 
+    const providers = _.filter(oauth2.providers, {active: true, social: false})
+
     return (
       <footer className={classSet(footerClasses)}>
         <div className="links row-fluid">
-          <div className="get-help col-xs-12 col-md-2">
+          <div className={`get-help col-xs-12 col-md-${providers.length ? 2 : 4}`}>
             <h4>{labels.support.title}</h4>
             <ul className="footer-links">
               <li>
@@ -165,10 +167,10 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help col-xs-12 col-md-2">
+          {providers.length ? <div className="get-help col-xs-12 col-md-2">
             <h4>{labels.oauth2.title}</h4>
             <ul className="footer-links">
-              {_.filter(oauth2.providers, {active: true, social: false}).map((strategy)=> {
+              {providers.map((strategy)=> {
                   const inputAttributes = {
                     onClick: event => ::this.oauthStrategy(strategy.name)
                   }
@@ -180,7 +182,7 @@ class Footer extends React.Component {
                 }
               )}
             </ul>
-          </div>
+          </div> : null}
         </div>
 
         <div className="legal-statements">
