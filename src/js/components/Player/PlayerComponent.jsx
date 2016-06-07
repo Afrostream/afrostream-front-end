@@ -650,7 +650,7 @@ class PlayerComponent extends Component {
       if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
         let protUser = base64.encode(JSON.stringify({
           userId: userId,
-          sessionId: token.accessToken,
+          sessionId: token.access_token,
           merchant: 'afrostream'
         }))
 
