@@ -62,7 +62,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
     let url = `/auth/${strategy}/${path}`
     //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
     if (token) {
-      url = `${url}?access_token=${token.get('accessToken')}`
+      url = `${url}?access_token=${token.get('access_token')}`
     }
 
     let width = 400,
