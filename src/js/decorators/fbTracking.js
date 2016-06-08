@@ -40,7 +40,6 @@ export default function fbTrack (prepareFn) {
 
         if (canUseDOM) {
           ReactFB.initialize(config.facebook.analyticsKey, {debug: true})
-          ReactFB.pageview({path: location.pathname})
         }
       }
     }

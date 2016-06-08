@@ -1,4 +1,3 @@
-import _ from 'lodash'
 /**
  * React FBEvents Module
  */
@@ -17,7 +16,7 @@ export function initialize (fbTrackingID) {
     return
   }
 
-  (function (f, b, e, v, n, t, s) {
+  !function (f, b, e, v, n, t, s) {
     if (f.fbq)return
     n = f.fbq = function () {
       n.callMethod ?
@@ -33,10 +32,11 @@ export function initialize (fbTrackingID) {
     t.src = v
     s = b.getElementsByTagName(e)[0]
     s.parentNode.insertBefore(t, s)
-  })(window,
-    document, 'script', 'https://connect.facebook.net/fr_FR/fbevents.js', 'fbevents')
+  }(window,
+    document, 'script', '//connect.facebook.net/fr_FR/fbevents.js')
 
   fbq('init', fbTrackingID)
+  fbq('track', 'PageView')
 }
 
 export function camelize (path) {
@@ -67,7 +67,7 @@ export function pageview ({path, params ={}}) {
   const evt = camelize(path)
   if (typeof fbq === 'function' && evt.length && !~eventsList.indexOf(evt)) {
     eventsList.push(evt)
-    fbq('track', 'PageView')
+    //fbq('track', 'PageView')
   }
 }
 
