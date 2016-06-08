@@ -111,8 +111,14 @@
 @media @tablet {
   .slide-show {
     min-height: 56vh;
+    .isLandscape({ min-height: 76vh; });
     .pagination {
       left: @app-padding-mobile;
+    }
+    .movie {
+      .btn-play {
+        .isLandscape({ left: 70%; top: 50%; });
+      }
     }
   }
 }
@@ -120,6 +126,8 @@
 @media @mobile {
   .slide-show {
     min-height: 46vh;
+    .isLandscape({ min-height: 70vh; });
+
     .pagination {
       right: 0;
     }
@@ -133,9 +141,9 @@
 
     .movie {
       .btn-play {
-        display: none;
+        font-size: 5em;
+        top: 35%;
       }
-
       .movie-background {
         position: absolute;
         top: 0;

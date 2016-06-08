@@ -24,6 +24,13 @@
   }
 }
 
+// If device is a mobile one
+.isLandscape(@rules) {
+  @media (orientation: landscape) {
+    @rules();
+  }
+}
+
 // If device is not a mobile one
 .isNotMobile(@rules) {
   @media (min-width: 751px) {

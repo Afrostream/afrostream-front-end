@@ -165,8 +165,9 @@ class SlideShow extends React.Component {
         delete gestureEv.delta
         gestureEv.type = 'tap'
         if (touchEvent && e.target) {
-          if (e.target.pathname) {
-            return self.props.history.push(e.target.pathname)
+          const hasPathName = e.target.pathname || (e.target.parentNode && e.target.parentNode.pathname)
+          if (hasPathName) {
+            return self.props.router.push(hasPathName)
           }
         }
       }
