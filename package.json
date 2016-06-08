@@ -80,7 +80,6 @@
     "fbjs": "^0.8.3",
     "file-loader": "^0.8.4",
     "flag-icon-css": "^2.3.0",
-    "font-awesome": "^4.3.0",
     "fs": "https://registry.npmjs.org/fs/-/fs-0.0.2.tgz",
     "gsap": "^1.17.0",
     "handlebars": "^4.0.5",

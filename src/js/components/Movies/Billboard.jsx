@@ -181,7 +181,7 @@ class Billboard extends LoadVideo {
         <Link to={link} ref="slSynopsis" className="billboard-synopsis billboard-row">{synopsis}</Link>
         <div className="billboard-info__btn">
           {hasSubtiles ? <button className="btn btn-xs btn-transparent" href="#">
-            <i className="fa fa-align-left"></i>Audio et sous titres
+            <i className="zmdi zmdi-view-subtitles"></i>Audio et sous titres
           </button> : <div />}
           {this.getFavorite()}
           {this.getShareButton()}

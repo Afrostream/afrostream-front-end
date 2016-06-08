@@ -63,7 +63,7 @@
       position: absolute;
       left: 15px;
       content: '\f002';
-      font-family: 'FontAwesome';
+      font-family: 'Material-Design-Iconic-Font';
       font-size: 6em;
       line-height: 2;
       z-index: 0;
@@ -138,39 +138,6 @@
       font-size: 3.5vh;
       line-height: 3.5vh;
     }
-  }
-
-  .big-search {
-    position: fixed;
-    z-index: 3;
-    width: 100%;
-    background-color: fade(@color-indigo, 90%);
-    padding: (@app-padding + @header-height) @app-padding @app-padding @app-padding;
-    top: 0;
-    .isMobile({ padding: (@app-padding-mobile + @header-height) @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
-    &:before {
-      position: absolute;
-      content: '\f002';
-      font-family: 'FontAwesome';
-      font-size: 6em;
-      .isMobile({ font-size: 2em });
-      line-height: 2;
-      z-index: 0;
-      color: @brand-primary;
-    }
-  }
-
-  .big-search__field {
-    color: red;
-    font-family: @font-thin;
-    background: transparent;
-    border: none;
-    color: white;
-    outline: none;
-    padding-left: 1em;
-    font-size: 8em;
-    .isMobile({ font-size: 3em });
-    width: 100%;
   }
 
   .search-result {

@@ -135,13 +135,13 @@ const client = {
       {
         name: 'facebook',
         social: true,
-        icon: 'fa fa-facebook-official',
+        icon: 'zmdi zmdi-facebook-box',
         active: isBoolean(process.env.OAUTH_FACEBOOK_ENABLED || true)
       },
       {
         name: 'bouygues',
         social: false,
-        icon: 'fa fa-bouygues',
+        icon: 'zmdi zmdi-bouygues',
         active: isBoolean(process.env.OAUTH_BOUYGUES_ENABLED || true)
       }
     ]

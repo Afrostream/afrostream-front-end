@@ -60,7 +60,7 @@ class BrowseMenu extends React.Component {
       <ul className="dropdown-menu mega-menu row-fluid">
         <li className="mega-menu-column col-md-3 col-xs-6">
           <ul>
-            <li><Link to="/">Accueil <i className="fa fa-home"/></Link></li>
+            <li><Link to="/">Accueil <i className="zmdi zmdi-home"/></Link></li>
             <li><Link to="/favoris">Mes Favoris <i className="zmdi zmdi-favorite"/></Link></li>
             <li><Link to="/last">Derniers ajouts</Link></li>
             <li><Link to="/compte">Mon compte</Link></li>
