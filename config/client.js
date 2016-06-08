@@ -150,7 +150,7 @@ const client = {
     networks: {
       facebook: {
         enabled: true,      // Enable Facebook. [Default: true]
-        icon: 'fa-facebook',
+        icon: 'zmdi-facebook',
         url: 'https://www.facebook.com/sharer/sharer.php',
         title: 'Facebook',
         params: {
@@ -161,7 +161,7 @@ const client = {
       whatsapp: {
         enabled: true,     // Enable WhatsApp. [Default: true],
         mobile: true,
-        icon: 'fa-whatsapp',
+        icon: 'zmdi-whatsapp',
         title: 'Whatsapp',
         url: 'whatsapp://send',
         params: {
@@ -170,7 +170,7 @@ const client = {
       },
       twitter: {
         enabled: true,      // Enable Twitter. [Default: true]
-        icon: 'fa-twitter',
+        icon: 'zmdi-twitter',
         url: 'https://twitter.com/intent/tweet',
         title: 'Twitter',
         params: {
@@ -180,7 +180,7 @@ const client = {
       },
       googlePlus: {
         enabled: true, // Enable Google+. [Default: true]
-        icon: 'fa-google-plus',
+        icon: 'zmdi-google-plus',
         title: 'Google +',
         url: 'https://plus.google.com/share',
         params: {
@@ -189,7 +189,7 @@ const client = {
       },
       email: {
         enabled: true,     // Enable Email. [Default: true]
-        icon: 'fa-envelope',
+        icon: 'zmdi-email',
         title: 'email',
         url: 'mailto:',
         params: {

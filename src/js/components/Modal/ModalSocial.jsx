@@ -204,7 +204,7 @@ class ModalSocial extends ModalComponent {
 
       let shareButtonClass = {
         'btn': true,
-        'fa': true,
+        'zmdi': true,
         'share_button': true
       }
 
@@ -213,7 +213,7 @@ class ModalSocial extends ModalComponent {
       return (<div className={classNames(shareButtonClass)} type="button" data-toggle="tooltip"
                    data-placement="top"
                    title={network.title}
-                   key={`share - btn - ${network.icon}`} {...inputAttributes}>
+                   key={`share-btn-${network.icon}`} {...inputAttributes}>
       </div>)
     })
   }

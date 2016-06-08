@@ -92,45 +92,25 @@
       background-repeat: no-repeat;
       cursor: pointer;
       .transition(opacity 0.1s linear);
-      i {
+      .btn-play {
         .transition(opacity 0.1s linear);
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        margin-left: -40px;
-        margin-top: -40px;
-        &.btn-play {
-          background-image: url('../../../../static/images/btn-play-thumb.png');
-          background-repeat: no-repeat;
-          background-size: contain;
-          background-position: center center;
-          width: 80px;
-          height: 80px;
+        display: block;
+        opacity: 0;
+        font-size: 5em;
+        z-index: 1;
+        .transition(opacity 0.2s linear);
+        &:hover {
+          opacity: 1;
         }
       }
       &:before {
         content: '';
         .box-shadow(0px 0px 30px rgba(40, 20, 48, 1) inset);
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
         z-index: 1;
-      }
-      i,
-      &:before {
-        opacity: 0;
-      }
-      &:hover {
-        //border: 1px solid #FFFFFF;
-        &:before {
-          .transition(opacity 0.1s linear);
-          opacity: 1;
-        }
       }
     }
   }
+
   &:hover {
     .thumb-buttons {
       opacity: 1;
@@ -139,6 +119,7 @@
       transform: translate(0, 0);
     }
   }
+
   .thumb-buttons {
     position: absolute;
     z-index: 3;
@@ -162,14 +143,14 @@
           .thumb-background {
             //border-color: @color-yellow;
             .transition(opacity 0.1s linear);
-            i {
+            .btn-play {
               opacity: 0.6;
             }
             &:before {
               opacity: 1;
             }
             &:hover {
-              i,
+              .btn-play,
               &:before {
                 opacity: 1;
               }

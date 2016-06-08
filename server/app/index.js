@@ -11,7 +11,7 @@ const server = app.listen(config.server.port, () => {
   //on production we decache all fasly routes
   if (process.env.NODE_ENV === 'production') {
     let fastLySdk = fastly(config.fastly.key)
-    fastLySdk.purgeAll(config.fastly.serviceId, function (err, obj) {
+    fastLySdk.purgeAll(config.fastly.serviceId, (err, obj) => {
       if (err) return console.dir(err)   // Oh no!
       console.dir(obj)                   // Response body from the fastly API
     })

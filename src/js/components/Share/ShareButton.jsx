@@ -46,8 +46,8 @@ class ShareButton extends React.Component {
   render () {
 
     let favoriteClass = {
-      'fa': true,
-      'fa-share': true
+      'zmdi': true,
+      'zmdi-share': true
     }
 
     const inputAttributes = {

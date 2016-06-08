@@ -1,4 +1,4 @@
-import React ,{PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import * as UserActionCreators from '../../actions/user'
@@ -12,20 +12,20 @@ if (process.env.BROWSER) {
 @connect(({User}) => ({User}))
 class FavoritesAddButton extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {pendingFavorite: false}
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.attachTooltip()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     this.attachTooltip()
   }
 
-  attachTooltip() {
+  attachTooltip () {
     $(this.refs.data).tooltip()
   }
 
@@ -42,20 +42,20 @@ class FavoritesAddButton extends React.Component {
     dataId: null
   }
 
-  getType() {
+  getType () {
     const {
-      props: { data }
-      } = this
+      props: {data}
+    } = this
 
     return data.get('type')
   }
 
-  setFavorite(active, dataId) {
+  setFavorite (active, dataId) {
     const {
       props: {
         dispatch
-        }
-      } = this
+      }
+    } = this
     let self = this
 
     self.setState({
@@ -70,19 +70,19 @@ class FavoritesAddButton extends React.Component {
           pendingFavorite: false
         })
       })
-      .catch((err)=> {
+      .catch(()=> {
         self.setState({
           pendingFavorite: false
         })
       })
   }
 
-  render() {
+  render () {
     const {
       props: {
-        User,dataId
-        }
-      } = this
+        User, dataId
+      }
+    } = this
 
     const type = this.getType()
     const favoritesData = User.get(`favorites/${type === 'episode' ? 'episode' : 'movie'}s`)
@@ -94,9 +94,9 @@ class FavoritesAddButton extends React.Component {
     }
 
     let favoriteClass = {
-      'fa': true,
-      'fa-heart': isFavorite,
-      'fa-heart-o': !isFavorite,
+      'zmdi': true,
+      'zmdi-favorite': isFavorite,
+      'zmdi-favorite-outline': !isFavorite,
       'pending': this.state.pending
     }
 

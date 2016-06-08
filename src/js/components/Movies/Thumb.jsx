@@ -108,7 +108,7 @@ class Thumb extends Poster {
 
   getBtnPlay () {
     const type = this.getType()
-    return type === 'episode' ? <i className="btn-play"></i> : null
+    return type === 'episode' ? <div className="btn-play"/> : null
   }
 
   render () {
