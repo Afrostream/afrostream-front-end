@@ -42,18 +42,8 @@
     margin: (@app-padding - @thumb-margin);
     .isMobile({ margin: (@app-padding-mobile - @thumb-margin); });
     > div {
-      -ms-overflow-style: none;
-      -webkit-overflow-scrolling: touch;
-      &::-webkit-scrollbar {
-        display: none;
-      }
       > div {
         > div {
-          -ms-overflow-style: none;
-          -webkit-overflow-scrolling: touch;
-          &::-webkit-scrollbar {
-            display: none;
-          }
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
@@ -69,10 +59,18 @@
   }
 
   .slider-container {
+  }
+
+  .Grid {
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
     &::-webkit-scrollbar {
       display: none;
+    }
+    &:focus {
+      outline: 0;
+      /* or */
+      outline: none;
     }
   }
 }
