@@ -95,6 +95,7 @@ a.zocial span {
 .zocial.stackoverflow,
 .zocial.miicard,
 .zocial.bouygues,
+.zocial.orange,
 .zocial.salesforce {
 }
 
@@ -118,6 +119,8 @@ a.zocial span {
 .zocial.miicard:hover,
 .zocial.bouygues:focus,
 .zocial.bouygues:hover,
+.zocial.orange:focus,
+.zocial.orange:hover,
 .zocial.weibo:focus,
 .zocial.weibo:hover,
 .zocial.salesforce:focus,
@@ -132,6 +135,7 @@ a.zocial span {
 .zocial.openid:active,
 .zocial.secondary:active,
 .zocial.bouygues:active,
+.zocial.orange:active,
 .zocial.weibo:active,
 .zocial.stackoverflow:active,
 .zocial.wikipedia:active,
@@ -153,15 +157,23 @@ a.zocial span {
   content: "f";
 }
 
-.zocial.bouygues:before {
+.zocial.bouygues:before,
+.zocial.orange:before {
   content: "";
-  background-image: url(../../assets/images/strategy/bouygues-strategy-ico.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center bottom;
   width: 4em;
   height: 2.9em;
   background-color: transparent;
+}
+
+.zocial.bouygues:before {
+  background-image: url(../../assets/images/strategy/bouygues-strategy-ico.png);
+}
+
+.zocial.orange:before {
+  background-image: url(../../assets/images/strategy/orange-strategy-ico.png);
 }
 
 .zocial.github:before {
@@ -338,6 +350,11 @@ a.zocial span {
 .zocial.bouygues {
   background-color: #ffffff;
   color: #00acd5;
+}
+
+.zocial.orange {
+  background-color: #ffffff;
+  color: #FF6600;
 }
 
 .zocial.github {

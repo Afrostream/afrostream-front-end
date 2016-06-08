@@ -60,7 +60,7 @@ class AccountSocial extends React.Component {
       }
       const title = getI18n().account.oauth2.link.replace('{strategy}', strategy.name)
       return (<div className="row row-provider" key={`${strategy.name}-synchro`}>
-          <div className="col-md-2">
+          <div className="col-md-2 text-center">
             <i className={strategy.icon}/>
           </div>
           <div className="col-md-6" dangerouslySetInnerHTML={{__html:title}}/>
