@@ -143,6 +143,12 @@ const client = {
         social: false,
         icon: 'zmdi zmdi-bouygues',
         active: isBoolean(process.env.OAUTH_BOUYGUES_ENABLED || true)
+      },
+      {
+        name: 'orange',
+        social: false,
+        icon: 'zmdi zmdi-orange',
+        active: isBoolean(process.env.OAUTH_ORANGE_ENABLED || true)
       }
     ]
   },
