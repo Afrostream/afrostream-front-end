@@ -38,6 +38,7 @@ export function getData (req, path, requestOptions) {
         method: 'GET',
         json: true,
         qs: queryOptions,
+        body: req.body,
         uri: url,
         headers: {
           'x-forwarded-client-ip': req.clientIp,
