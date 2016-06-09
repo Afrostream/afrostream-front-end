@@ -55,7 +55,7 @@ export function failure (req, res) {
 export async function callback (req, res) {
   res.noCache()
   try {
-    const orangeCompleteFlow = await getData(req, '/auth/orange/callback', {followRedirect: false})
+    const orangeCompleteFlow = await getData(req, '/auth/orange/callback', {followRedirect: false, method: 'POST'})
     var orangeResponse = orangeCompleteFlow[0]
       , orangeBody = orangeCompleteFlow[1]
 
