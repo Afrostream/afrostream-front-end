@@ -197,6 +197,7 @@ const webpackConfig = {
         CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
         GOCARDLESS_PUBLIC_KEY: JSON.stringify(process.env.GOCARDLESS_PUBLIC_KEY),
         OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
+        OAUTH_ORANGE_ENABLED: JSON.stringify(process.env.OAUTH_ORANGE_ENABLED),
         OAUTH_BOUYGUES_ENABLED: JSON.stringify(process.env.OAUTH_BOUYGUES_ENABLED),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
         SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
