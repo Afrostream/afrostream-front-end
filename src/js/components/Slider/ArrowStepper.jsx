@@ -36,21 +36,27 @@ export default class ArrowStepper extends Component {
    */
   handleScroll () {
     clearTimeout(this.scrollTimeout)
-    const self = this
+
+    this.setState({
+      hideProgress: false,
+      tipActive: this.activeSectionCheck()
+    })
+
     this.scrollTimeout = setTimeout(() => {
       if (this.container) {
-        self._scrollLeft = this.container.scrollLeft
-        self._clientWidth = this.container.clientWidth
-        self._scrollWidth = this.container.scrollWidth
+        this._scrollLeft = this.container.scrollLeft
+        this._clientWidth = this.container.clientWidth
+        this._scrollWidth = this.container.scrollWidth
       }
-      self.setState({
+      this.setState({
         clientWidth: this._clientWidth,
         scrollLeft: this._scrollLeft,
-        scrollWidth: this._scrollWidth
+        scrollWidth: this._scrollWidth,
+        hideProgress: true,
+        tipActive: this.activeSectionCheck()
       })
     }, 200)
   }
-
 
   constructor (props, context) {
     super(props, context)
@@ -61,6 +67,7 @@ export default class ArrowStepper extends Component {
 
     this.clickTimer = 0
     this.clickDelay = 250
+    this._nbProgressTip = 0
     this.continueClick = false
     this.direction = null
     this.container = null
@@ -68,6 +75,37 @@ export default class ArrowStepper extends Component {
 
     this._onScroll = ::this._onScroll
   }
+
+  //ProgressTracker
+  activeSectionCheck () {
+    return Math.ceil(this._scrollLeft * this._nbProgressTip / this._scrollWidth)
+  }
+
+  renderProgress () {
+
+    let classProgress = {
+      'progress-tracker': true,
+      'progress-hidden': this.state.hideProgress
+    }
+
+    return <div ref="progressTracker" className={classSet(classProgress)}>
+      <ul>
+        {
+          _.times(this._nbProgressTip, (id)=> {
+
+            const isActive = id === this.state.tipActive
+            const classTip = {
+              'section-tip': true,
+              'active': isActive
+            }
+            return <li ref={`section-${id}`} className={classSet(classTip)}/>
+          })
+        }
+      </ul>
+    </div>
+  }
+
+  //Render Global
 
   render () {
     const {className, children, columnCount} = this.props
@@ -103,6 +141,7 @@ export default class ArrowStepper extends Component {
              onMouseUp={::this.handleMouseUp}>
           <i className="zmdi zmdi-hc-8x zmdi-chevron-right"></i>
         </div>
+        {this.renderProgress()}
         {children({
           onScroll: this._onScroll,
           columnCount,
@@ -179,6 +218,7 @@ export default class ArrowStepper extends Component {
     this._scrollLeft = scrollLeft
     this._clientWidth = clientWidth
     this._scrollWidth = scrollWidth
+    this._nbProgressTip = Math.ceil(this._scrollWidth / this._clientWidth)
     this.handleScroll()
   }
 }
