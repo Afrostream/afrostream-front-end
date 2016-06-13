@@ -47,6 +47,7 @@ export default class ArrowStepper extends Component {
         this._scrollLeft = this.container.scrollLeft
         this._clientWidth = this.container.clientWidth
         this._scrollWidth = this.container.scrollWidth
+        //this._nbProgressTip = Math.ceil(this._scrollWidth / this._clientWidth)
       }
       this.setState({
         clientWidth: this._clientWidth,
@@ -78,7 +79,7 @@ export default class ArrowStepper extends Component {
 
   //ProgressTracker
   activeSectionCheck () {
-    return Math.ceil(this._scrollLeft * this._nbProgressTip / this._scrollWidth)
+    return Math.min(this._nbProgressTip - 1, Math.floor((this._scrollLeft) * this._nbProgressTip / (this._scrollWidth - this._clientWidth )))
   }
 
   renderProgress () {
