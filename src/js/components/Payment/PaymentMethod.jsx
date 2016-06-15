@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
-import { getI18n } from '../../../../config/i18n'
 import config from '../../../../config'
 import { Link } from 'react-router'
-import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm } from './Forms'
+import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm, StripeForm } from './Forms'
 
 const {payment, featuresFlip} = config
 
@@ -111,6 +110,8 @@ class PaymentMethod extends React.Component {
 
     let recurly = <RecurlyForm key="method-card" ref="card"
                                selected={this.state.method === Methods.CARD}/>
+    let stripe = <StripeForm key="method-card" ref="card"
+                             selected={this.state.method === Methods.CARD}/>
     let paypal = <PaypalForm key="method-paypal" ref="paypal"
                              selected={this.state.method === Methods.PAYPAL}
                              planLabel={this.props.planLabel}/>
@@ -126,7 +127,7 @@ class PaymentMethod extends React.Component {
         methods.push(cashway)
         break
       default:
-        methods.push(recurly)
+        methods.push(featuresFlip.recurly ? recurly : stripe)
         if (!this.props.isGift) {
           if (featuresFlip.paypal) {
             methods.push(paypal)
