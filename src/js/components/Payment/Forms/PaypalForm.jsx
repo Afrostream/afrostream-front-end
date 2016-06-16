@@ -58,7 +58,9 @@ class PaypalForm extends RecurlyForm {
 
       <div className="row" ref="goCardlessForm">
         {this.renderPromoCode()}
-        <h5 className="col-md-12">{getI18n().payment.paypal.paypalText}</h5>
+        <h5 className="col-md-12">
+          {getI18n().payment.paypal.paypalText.replace('{submitBtn}', getI18n().planCodes.action)}
+        </h5>
       </div>
     )
   }

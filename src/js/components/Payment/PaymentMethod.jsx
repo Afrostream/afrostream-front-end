@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import config from '../../../../config'
 import { Link } from 'react-router'
-import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm, StripeForm } from './Forms'
+import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm, StripeForm, BraintreeForm } from './Forms'
 
 const {payment, featuresFlip} = config
 
@@ -112,9 +112,12 @@ class PaymentMethod extends React.Component {
                                selected={this.state.method === Methods.CARD}/>
     let stripe = <StripeForm key="method-card" ref="card"
                              selected={this.state.method === Methods.CARD}/>
-    let paypal = <PaypalForm key="method-paypal" ref="paypal"
-                             selected={this.state.method === Methods.PAYPAL}
-                             planLabel={this.props.planLabel}/>
+    let paypalRecurly = <PaypalForm key="method-paypal" ref="paypal"
+                                    selected={this.state.method === Methods.PAYPAL}
+                                    planLabel={this.props.planLabel}/>
+    let paypalBraintree = <BraintreeForm key="method-paypal" ref="paypal"
+                                         selected={this.state.method === Methods.PAYPAL}
+                                         planLabel={this.props.planLabel}/>
     let gocardless = <GocardlessForm key="method-gocardless" ref="gocardless"
                                      selected={this.state.method === Methods.GOCARDLESS}/>
 
@@ -130,7 +133,7 @@ class PaymentMethod extends React.Component {
         methods.push(featuresFlip.recurly ? recurly : stripe)
         if (!this.props.isGift) {
           if (featuresFlip.paypal) {
-            methods.push(paypal)
+            methods.push(featuresFlip.recurly ? paypalRecurly : paypalBraintree)
           }
           if (featuresFlip.gocardless) {
             methods.push(gocardless)
