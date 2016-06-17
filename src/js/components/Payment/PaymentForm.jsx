@@ -22,7 +22,7 @@ import { withRouter } from 'react-router'
 import _ from 'lodash'
 import * as ReactFB from '../../lib/fbEvent'
 
-const {gocarlessApi, recurlyApi} = config
+const {gocarlessApi, recurlyApi, stripeApi, braintreeApi} = config
 if (process.env.BROWSER) {
   require('./PaymentForm.less')
 }
@@ -485,5 +485,5 @@ PaymentForm.propTypes = {
 }
 
 export default  scriptLoader(
-  [recurlyApi, gocarlessApi]
+  [stripeApi, recurlyApi, gocarlessApi, braintreeApi]
 )(withRouter(PaymentForm))

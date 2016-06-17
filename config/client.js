@@ -31,6 +31,7 @@ const protData = {
 
 const client = {
   featuresFlip: {
+    recurly: false,
     gocardless: true,
     paypal: true,
     cashway: true
@@ -57,6 +58,8 @@ const client = {
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
+  stripeApi: '//js.stripe.com/v2/',
+  braintreeApi: '//js.braintreegateway.com/js/braintree-2.24.1.min.js',
   promoCodes: [
     {
       code: 'AFROLOVER',
@@ -207,6 +210,12 @@ const client = {
   },
   recurly: {
     key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
+  },
+  stripe: {
+    key: process.env.STRIPE_PUBLIC_KEY || 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'
+  },
+  braintree: {
+    key: process.env.BRAINTREE_PUBLIC_KEY || 'sandbox_phhy689d_vpchhx9ppk3xwrcy'
   },
   gocardless: {
     key: process.env.GOCARDLESS_PUBLIC_KEY || 'sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL',

@@ -194,6 +194,8 @@ const webpackConfig = {
         ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY),
         HEROKU_APP_NAME: JSON.stringify(process.env.HEROKU_APP_NAME),
         RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY),
+        STRIPE_PUBLIC_KEY: JSON.stringify(process.env.STRIPE_PUBLIC_KEY),
+        BRAINTREE_PUBLIC_KEY: JSON.stringify(process.env.BRAINTREE_PUBLIC_KEY),
         CHROMECAST_ID: JSON.stringify(process.env.CHROMECAST_ID),
         GOCARDLESS_PUBLIC_KEY: JSON.stringify(process.env.GOCARDLESS_PUBLIC_KEY),
         OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
