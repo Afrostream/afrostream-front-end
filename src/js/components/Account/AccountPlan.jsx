@@ -38,13 +38,23 @@ class AccountPlan extends React.Component {
       return obj.get('isActive') === 'yes'// && obj.get('subStatus') !== 'canceled'
     })
 
-    let cancelSubscriptionClasses = {
+
+    let subStatus = currentSubscription && currentSubscription.get('subStatus')
+    let isReactivable = currentSubscription && currentSubscription.get('isReactivable')
+    let isCancelable = currentSubscription && currentSubscription.get('isCancelable')
+
+    let updateSubscriptionClasses = {
       'btn': true,
       'btn-default': true,
-      'cancel-plan-hidden': !currentSubscription || (currentSubscription.get('subStatus') === 'canceled') || (currentSubscription.get('provider').get('providerName') === 'celery')
+      'cancel-plan-hidden': !currentSubscription || isCancelable === 'no' || (subStatus === 'canceled' && isReactivable === 'no') || (currentSubscription.get('provider').get('providerName') === 'celery')
     }
 
     const planLabel = getI18n().planCodes[planCode]
+
+    let updateLabel = getI18n().account.plan.cancelPlan
+    if (subStatus === 'canceled' && isReactivable === 'yes') {
+      updateLabel = getI18n().account.plan.reactivePlan
+    }
 
     return (
       <div className="row account-details">
@@ -55,8 +65,8 @@ class AccountPlan extends React.Component {
               <span>{planLabel}</span>
             </div>
             <div className="col-md-4">
-              <Link className={classSet(cancelSubscriptionClasses)}
-                    to="/compte/cancel-subscription">{getI18n().account.plan.cancelPlan}</Link>
+              <Link className={classSet(updateSubscriptionClasses)}
+                    to="/compte/update-subscription">{updateLabel}</Link>
             </div>
           </div>
         </div>

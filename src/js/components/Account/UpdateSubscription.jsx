@@ -7,7 +7,7 @@ import moment from 'moment'
 import PaymentImages from '../Payment/PaymentImages'
 
 if (process.env.BROWSER) {
-  require('./CancelSubscription.less')
+  require('./UpdateSubscription.less')
 }
 
 @connect(({Billing}) => ({Billing}))
@@ -23,7 +23,7 @@ class CancelSubscription extends React.Component {
     history: PropTypes.object.isRequired
   }
 
-  cancelSubscription (subscription) {
+  updateSubscription (subscription) {
 
     const {
       props: {
@@ -39,7 +39,7 @@ class CancelSubscription extends React.Component {
       pending: true
     })
 
-    dispatch(BillingActionCreators.cancelSubscription(subscription))
+    dispatch(BillingActionCreators.updateSubscription(subscription))
       .then(()=> {
         dispatch(BillingActionCreators.getSubscriptions())
       })
@@ -80,7 +80,7 @@ class CancelSubscription extends React.Component {
     let infos = getI18nData.info.replace(/{endDate}/gm, endDate)
 
     const inputAttributes = {
-      onClick: event => ::this.cancelSubscription(currentSubscription)
+      onClick: event => ::this.updateSubscription(currentSubscription)
     }
 
     return (

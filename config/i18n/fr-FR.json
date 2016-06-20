@@ -215,7 +215,8 @@
     "plan": {
       "header": "DÉTAIL DU FORFAIT",
       "updatePlan": "Changer de forfait",
-      "cancelPlan": "Interrompre votre abonnement"
+      "cancelPlan": "Interrompre mon abonnement",
+      "reactivePlan": "Réactiver mon abonnement"
     },
     "oauth2": {
       "header": "Profils liés",

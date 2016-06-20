@@ -36,12 +36,14 @@ export function subscribe (data, isGift = false) {
   }
 }
 
-export function cancelSubscription (subscription) {
+export function updateSubscription (subscription) {
   return (dispatch, getState) => {
-    let uuid = subscription.get('subscriptionBillingUuid')
+    const uuid = subscription.get('subscriptionBillingUuid')
+    const status = subscription.get('subStatus')
+    const statusRoute = status === 'active' ? 'cancel' : 'reactivate'
     return async api => ({
       type: ActionTypes.Billing.cancelSubscription,
-      res: await api({path: `/api/billings/subscriptions/${uuid}/cancel`, method: 'PUT', params: {}})
+      res: await api({path: `/api/billings/subscriptions/${uuid}/${statusRoute}`, method: 'PUT', params: {}})
     })
   }
 }

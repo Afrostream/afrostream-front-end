@@ -16,7 +16,7 @@ import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
 import * as Blog from './components/Blog'
 import AccountPage from './components/Account/AccountPage'
-import CancelSubscription from './components/Account/CancelSubscription'
+import UpdateSubscription from './components/Account/UpdateSubscription'
 import NoMatch from './components/NoMatch'
 import _ from 'lodash'
 
@@ -33,8 +33,8 @@ const buildHome = function (lang) {
   const homeRoutes = [
     <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
     <Route key={`${lang}-compte`} name="compte" path="compte" component={AccountPage}>,
-      <Route key={`${lang}-cancelSubscription`} name="cancelSubscription" path="cancel-subscription"
-             component={CancelSubscription}/>
+      <Route key={`${lang}-updateSubscription`} name="updateSubscription" path="update-subscription"
+             component={UpdateSubscription}/>
     </Route>,
     <Route key={`${lang}-browse`} name="browse" path="browse/genre(/:categoryId)(/:categorySlug)"
            component={BrowseGenrePage}/>,
