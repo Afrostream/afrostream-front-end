@@ -23,12 +23,14 @@ class GocardlessForm extends React.Component {
   async submit (billingInfo) {
 
     let self = this
+    let ibanValue = self.refs.iban.value
+    let countryValue = self.refs.country.value()
     return await new Promise(
       (resolve, reject) => {
         const gcLib = window['GoCardless']
         const tokenData = {
-          iban: self.refs.iban.value,
-          country_code: self.refs.country.value(),
+          iban: ibanValue,
+          country_code: countryValue,
           account_holder_name: `${billingInfo.firstName} ${billingInfo.lastName}`
         }
         let error = {
@@ -64,7 +66,8 @@ class GocardlessForm extends React.Component {
               return resolve({
                 billingProvider: 'gocardless',
                 subOpts: {
-                  customerBankAccountToken: response.customer_bank_account_tokens.id
+                  customerBankAccountToken: response.customer_bank_account_tokens.id,
+                  iban: ibanValue
                 }
               })
             })
