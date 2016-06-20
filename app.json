@@ -18,6 +18,7 @@
     "GA_TRACKING_ID": "UA-xxxxxx",
     "GOCARDLESS_PUBLIC_KEY": "sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL",
     "NODE_ENV": "staging",
+    "NODE_MODULES_CACHE": "false",
     "OAUTH_FACEBOOK_ENABLED": "true",
     "OAUTH_BOUYGUES_ENABLED": "true",
     "OAUTH_ORANGE_ENABLED": "true",
