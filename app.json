@@ -18,7 +18,6 @@
     "GA_TRACKING_ID": "UA-xxxxxx",
     "GOCARDLESS_PUBLIC_KEY": "sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL",
     "NODE_ENV": "staging",
-    "NODE_MODULES_CACHE": "false",
     "OAUTH_FACEBOOK_ENABLED": "true",
     "OAUTH_BOUYGUES_ENABLED": "true",
     "OAUTH_ORANGE_ENABLED": "true",
@@ -26,7 +25,8 @@
     "STRIPE_PUBLIC_KEY": "pk_test_s9YFHvFFIjo2gdAL5x4k2ISh",
     "BRAINTREE_PUBLIC_KEY": "sandbox_phhy689d_vpchhx9ppk3xwrcy",
     "SENDBIRD_APP_ID": "BEACEB74-4847-4DB1-94F2-F0F04688392A",
-    "SENDBIRD_API_TOKEN": "3915d25ef28e538be42206f17ff7345bb7e6a6cb"
+    "SENDBIRD_API_TOKEN": "3915d25ef28e538be42206f17ff7345bb7e6a6cb",
+    "NPM_CONFIG_PRODUCTION": "false"
   },
   "addons": []
 }
