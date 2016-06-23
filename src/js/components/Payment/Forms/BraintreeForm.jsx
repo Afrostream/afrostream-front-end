@@ -75,7 +75,7 @@ class BraintreeForm extends React.Component {
               headless: true,
               onAuthorizationDismissed: () => {
                 error.message = getI18n().payment.errors.cancelled
-                return reject('transaction')
+                return reject(error)
               },
             }
           });
