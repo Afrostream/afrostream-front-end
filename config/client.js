@@ -34,7 +34,9 @@ const client = {
     recurly: false,
     gocardless: true,
     paypal: true,
-    cashway: true
+    cashway: true,
+    braintree: true,
+    stripe: false
   },
   /**
    * APPS

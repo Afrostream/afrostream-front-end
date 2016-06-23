@@ -130,10 +130,10 @@ class PaymentMethod extends React.Component {
         methods.push(cashway)
         break
       default:
-        methods.push(featuresFlip.recurly ? recurly : stripe)
+        methods.push(featuresFlip.stripe ? stripe : recurly)
         if (!this.props.isGift) {
           if (featuresFlip.paypal) {
-            methods.push(featuresFlip.recurly ? paypalRecurly : paypalBraintree)
+            methods.push(featuresFlip.braintree ? paypalBraintree : paypalRecurly)
           }
           if (featuresFlip.gocardless) {
             methods.push(gocardless)
