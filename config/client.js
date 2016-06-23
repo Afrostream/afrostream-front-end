@@ -61,7 +61,7 @@ const client = {
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
   stripeApi: '//js.stripe.com/v2/',
-  braintreeApi: '//js.braintreegateway.com/js/braintree-2.24.1.min.js',
+  braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   promoCodes: [
     {
       code: 'AFROLOVER',
