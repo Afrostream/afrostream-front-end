@@ -75,7 +75,7 @@ class GocardlessForm extends React.Component {
               self.setState({
                 modal: false
               })
-              error.message = 'Transaction annulée'
+              error.message = getI18n().payment.errors.cancelled
               return reject(error)
             })
           }

@@ -42,6 +42,10 @@ class BraintreeForm extends React.Component {
       (resolve, reject) => {
         //Detect si le payment via la lib braintree est dispo
         const braintreeLib = window['braintree']
+        let error = {
+          message: '',
+          fields: []
+        }
         if (braintreeLib) {
           debugger
           braintreeLib.setup(config.braintree.key, 'paypal', {
@@ -68,7 +72,11 @@ class BraintreeForm extends React.Component {
               amount: parseFloat(currentPlan.get('amount').replace(/,/, '.')),
               currency: currentPlan.get('currency'),
               locale: `${moment.locale()}_${moment.locale().toUpperCase()}`,
-              headless: true
+              headless: true,
+              onAuthorizationDismissed: () => {
+                error.message = getI18n().payment.errors.cancelled
+                return reject('transaction')
+              },
             }
           });
         }
