@@ -182,6 +182,7 @@
         "linkMessage": "Si le probleme persiste, veuillez contacter notre support technique",
         "message": "Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
       },
+      "cancelled": "Transaction annulée",
       "checkbox": "Vous devez cocher toutes les cases pour confirmer l‘abonnement.",
       "card": "Veuillez contacter votre banque ou utilisez une autre carte.",
       "coupon": "Le code promo n’ est pas ou plus valide pour cette formule.",
