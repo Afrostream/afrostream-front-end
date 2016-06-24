@@ -36,7 +36,7 @@ const client = {
     paypal: true,
     cashway: true,
     braintree: true,
-    stripe: false
+    stripe: true
   },
   /**
    * APPS
