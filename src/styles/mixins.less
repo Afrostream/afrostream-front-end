@@ -8,6 +8,13 @@
   perspective: 100px;
 }
 
+.translate3d (@x, @y: 0, @z: 0) {
+  -webkit-transform:       translate3d(@x, @y, @z);
+  -moz-transform: 	 translate3d(@x, @y, @z);
+  -ms-transform: 		 translate3d(@x, @y, @z);
+  -o-transform: 		 translate3d(@x, @y, @z);
+}
+
 .fullHeight() {
   /// margin: auto;
   top: 0;

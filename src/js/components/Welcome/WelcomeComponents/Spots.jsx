@@ -18,9 +18,9 @@ if (process.env.BROWSER) {
 @connect(({Category}) => ({Category}))
 class Spots extends React.Component {
 
-  getMovies (data) {
+  getMovies (data, i) {
     return <Thumb favorite={false} share={false}
-                  key={`spot-home-${data.get('_id')}`} {...{data}}/>
+                  key={`spot-home-${data.get('_id')}-${i}`} {...{data}}/>
   }
 
   /**
@@ -58,7 +58,7 @@ class Spots extends React.Component {
     return (
       <div className="spots-list">
         <h2>{info.title}</h2>
-        {categoriesList ? categoriesList.map((movie, i) => this.getMovies(movie)).toJS() : ''}
+        {categoriesList ? categoriesList.map((movie, i) => this.getMovies(movie, i)).toJS() : ''}
         <div className="container sign-up__container">
           <SignUpButton label={info.action}/>
         </div>

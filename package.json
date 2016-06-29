@@ -123,7 +123,7 @@
     "react-addons-shallow-compare": "https://registry.npmjs.org/react-addons-shallow-compare/-/react-addons-shallow-compare-15.1.0.tgz",
     "react-dom": "^15.1.0",
     "react-ga": "^1.1.0",
-    "react-headroom": "^2.1.0",
+    "react-headrooms": "^1.0.4",
     "react-helmet": "^3.1.0",
     "react-list": "^0.7.18",
     "react-pure-render": "https://registry.npmjs.org/react-pure-render/-/react-pure-render-1.0.2.tgz",

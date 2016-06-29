@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import Headroom from 'react-headroom'
+import Headroom from 'react-headrooms'
 import UserButton from './../User/UserButton'
 import GoBack from './../GoBack/GoBack'
 import SmartBanner from './SmartBanner'
@@ -68,6 +68,7 @@ class Header extends React.Component {
     let sliderClasses = {
       'navbar': true,
       'navbar-default': true,
+      'navbar-fixed-top': true,
       'navbar-hidden': !chatMode && hiddenMode,
       'navbar-fixed-color': chatMode || pinned || this.state.pinned
       || router.isActive('recherche')
@@ -76,7 +77,11 @@ class Header extends React.Component {
     }
 
     return (
-      <Headroom>
+      <Headroom tolerance={5} offset={200} classes={{
+          initial: 'animated',
+          pinned: 'slideDown',
+          unpinned: 'slideUp'
+        }}>
         <div className={classSet(sliderClasses)}>
           {planCode ? <SmartBanner {...apps.params}/> : ''}
           <div className="container-fluid">

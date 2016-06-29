@@ -50,7 +50,7 @@ class BraintreeForm extends React.Component {
           debugger
           braintreeLib.setup(config.braintree.key, 'paypal', {
             onReady: (integration) => {
-              integration.paypal.initAuthFlow();
+              integration.paypal.initAuthFlow()
             },
             onError: (err) => {
               return reject(err)
@@ -78,7 +78,7 @@ class BraintreeForm extends React.Component {
                 return reject(error)
               },
             }
-          });
+          })
         }
       }
     )

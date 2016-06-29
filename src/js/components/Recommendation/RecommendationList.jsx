@@ -70,7 +70,7 @@ class RecommendationList extends React.Component {
       return
     }
     return recoList.map((data, i) => <Thumb favorite={false} share={false}
-                                            key={`spot-home-${data.get('_id')}-${i}`} {...{data}}/>).toJS()
+                                            key={`spot-reco-${data.get('_id')}-${i}`} {...{data}}/>).toJS()
   }
 
   render () {
