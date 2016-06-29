@@ -513,11 +513,11 @@ class PlayerComponent extends Component {
         track.setAttribute('id', caption.get('_id'))
         let lang = caption.get('lang')
         if (lang) {
-          track.setAttribute('srclang', lang.get('lang'))
+          track.setAttribute('srclang', lang.get('ISO6392T'))
           track.setAttribute('label', lang.get('label'))
         }
         let isDefault = false
-        if (lang.get('lang') === 'fr' || lang.get('lang') === 'fra') {
+        if (lang.get('ISO6392T') === 'fr' || lang.get('ISO6392T') === 'fra') {
           isDefault = true
           track.setAttribute('default', isDefault)
         }
