@@ -47,7 +47,6 @@ class BraintreeForm extends React.Component {
           fields: []
         }
         if (braintreeLib) {
-          debugger
           braintreeLib.setup(config.braintree.key, 'paypal', {
             onReady: (integration) => {
               integration.paypal.initAuthFlow()

@@ -1,6 +1,6 @@
 import React, { PropTypes }  from 'react'
 import { connect } from 'react-redux'
-import SB from 'sendbird'
+import sendbird from 'sendbird'
 import config from '../../../../config'
 import classSet from 'classnames'
 import _ from 'lodash'
@@ -10,8 +10,6 @@ import { withRouter } from 'react-router'
 import SendBirdButton from './SendBirdButton'
 const {sendBird} = config
 
-const sendBirdClient = SB.getInstance()
-
 if (process.env.BROWSER) {
   require('./SendBird.less')
 }
@@ -20,7 +18,6 @@ if (process.env.BROWSER) {
 class SendBird extends React.Component {
 
   state = {
-    init: false,
     open: false,
     options: false,
     users: [],
@@ -40,7 +37,7 @@ class SendBird extends React.Component {
         }
       }
     } = this
-    if ((!shallowEqual(nextProps.params.movieId, movieId) || !this.state.init) && movieId) {
+    if ((!shallowEqual(nextProps.params.movieId, movieId)) && movieId) {
       this.startSendBird()
     }
   }
@@ -76,7 +73,7 @@ class SendBird extends React.Component {
 
     this.loadBeat(true)
 
-    sendBirdClient.init({
+    sendbird.init({
       'app_id': sendBird.appId,
       'guest_id': guestId,
       //'user_name': nickName,
@@ -85,10 +82,10 @@ class SendBird extends React.Component {
       'errorFunc': ::this.sendBirdErrorHandler
     })
 
-    sendBirdClient.events.onMessageReceived = ::this.setChatMessage
-    sendBirdClient.events.onSystemMessageReceived = ::this.setChatMessage
-    sendBirdClient.events.onBroadcastMessageReceived = ::this.setChatMessage
-    sendBirdClient.events.onFileMessageReceived = ::this.setChatMessage
+    sendbird.events.onMessageReceived = ::this.setChatMessage
+    sendbird.events.onSystemMessageReceived = ::this.setChatMessage
+    sendbird.events.onBroadcastMessageReceived = ::this.setChatMessage
+    sendbird.events.onFileMessageReceived = ::this.setChatMessage
   }
 
   sendBirdInitSuccessHandler () {
@@ -100,10 +97,6 @@ class SendBird extends React.Component {
       }
     } = this
 
-    this.setState({
-      init: true
-    })
-
     this.loadBeat(false)
     this.getMessagingChannelList()
     this.getChannelList(1)
@@ -111,7 +104,7 @@ class SendBird extends React.Component {
       this.joinChannel(`2b0a2.movie${movieId}`)
     }
     else {
-      sendBirdClient.connect()
+      sendbird.connect()
     }
   }
 
@@ -139,7 +132,7 @@ class SendBird extends React.Component {
   getUserList (options = {}) {
     options = _.extend({}, {'page': 1, 'token': '', 'limit': 30}, options)
 
-    sendBirdClient.getUserList({
+    sendbird.getUserList({
       'token': options['token'],
       'page': options['page'],
       'limit': options['limit'],
@@ -156,7 +149,7 @@ class SendBird extends React.Component {
   }
 
   getChannelList (page) {
-    sendBirdClient.getChannelList({
+    sendbird.getChannelList({
       'page': page,
       'limit': 20,
       'successFunc': ::this.createChannelList,
@@ -165,7 +158,7 @@ class SendBird extends React.Component {
   }
 
   getMessagingChannelList () {
-    sendBirdClient.getMessagingChannelList({
+    sendbird.getMessagingChannelList({
       'successFunc': (data)=> {
         _.map(data['channels'], (channel) => {
           console.log(channel)
@@ -177,7 +170,7 @@ class SendBird extends React.Component {
 
   joinChannel (channelUrl) {
     this.loadBeat(true)
-    sendBirdClient.joinChannel(
+    sendbird.joinChannel(
       channelUrl,
       {
         'successFunc': ::this.onJoinChannelSuccess,
@@ -192,19 +185,13 @@ class SendBird extends React.Component {
       currentChannel: data
     })
 
-    sendBirdClient.connect({
+    sendbird.connect({
       'successFunc': ::this.onJoinChannelConnected,
       'errorFunc': ::this.sendBirdErrorHandler
     })
   }
 
   onJoinChannelConnected () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
     this.loadMoreChatMessage()
     this.getUserList()
     this.loadBeat(false)
@@ -218,7 +205,7 @@ class SendBird extends React.Component {
 
 
   loadMoreChatMessage () {
-    sendBirdClient.getMessageLoadMore({
+    sendbird.getMessageLoadMore({
       'limit': 50,
       'successFunc': ::this.lodMoreChatCompleteHandler,
       'errorFunc': ::this.sendBirdErrorHandler
@@ -228,10 +215,10 @@ class SendBird extends React.Component {
   lodMoreChatCompleteHandler (data) {
     let moreMessage = data['messages']
     _.map(moreMessage.reverse(), (msg)=> {
-      if (sendBirdClient.isMessage(msg.cmd)) {
+      if (sendbird.isMessage(msg.cmd)) {
         this.setChatMessage(msg.payload)
       }
-      else if (sendBirdClient.isFileMessage(msg.cmd)) {
+      else if (sendbird.isFileMessage(msg.cmd)) {
         this.setChatMessage(msg.payload)
       }
     })
@@ -245,7 +232,7 @@ class SendBird extends React.Component {
   onListenMessage (e) {
     var recognition = new webkitSpeechRecognition()
     recognition.onresult = function (event) {
-      sendBirdClient.message(event.results[0][0].transcript)
+      sendbird.message(event.results[0][0].transcript)
     }.bind(this)
     recognition.start()
   }
@@ -270,7 +257,7 @@ class SendBird extends React.Component {
     let valueMess = this.refs.chatSend.value.trim()
     if (!this.isEmpty(valueMess)) {
       this.refs.chatSend.value = ''
-      sendBirdClient.message(valueMess)
+      sendbird.message(valueMess)
     }
   }
 

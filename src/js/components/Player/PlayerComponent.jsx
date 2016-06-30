@@ -156,12 +156,30 @@ class PlayerComponent extends Component {
     })
   }
 
+  getStoredPlayer () {
+    const {
+      props: {User, videoId}
+    } = this
+
+    let stored = User.get(`video/${videoId}`)
+
+    stored = stored && stored.toJS()
+
+    let baseData = {
+      playerAudio: 'fra',
+      playerCaption: 'fra',
+      playerBitrate: 0,
+      playerPosition: 0
+    }
+
+    return _.merge(baseData, stored || {})
+  }
+
   getPlayerTracks (type) {
     let tracks = []
     let audioIndex = this.player.tech['featuresAudioIndex']
     let metrics = this.player.getPlaybackStatistics()
     let bitrateIndex = metrics.video.bitrateIndex || this.player.tech['featuresBitrateIndex']
-
     let key
     switch (type) {
       case 'caption' :
@@ -192,7 +210,7 @@ class PlayerComponent extends Component {
       }
     })
 
-    return selectedTrack ? selectedTrack[key] : ''
+    return selectedTrack ? selectedTrack[key] : null
   }
 
   /**
@@ -494,6 +512,8 @@ class PlayerComponent extends Component {
     console.log('player : generate dom tag')
     const ua = detectUA()
     const mobileVersion = ua.getMobile()
+    const videoTracking = this.getStoredPlayer()
+    const storedCaption = videoTracking.playerCaption
     let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537))
     let excludeBrowser = excludeSafari
     let captions = excludeBrowser && videoData.get('captions')
@@ -517,7 +537,7 @@ class PlayerComponent extends Component {
           track.setAttribute('label', lang.get('label'))
         }
         let isDefault = false
-        if (lang.get('ISO6392T') === 'fr' || lang.get('ISO6392T') === 'fra') {
+        if (lang.get('ISO6392T') === storedCaption) {
           isDefault = true
           track.setAttribute('default', isDefault)
         }
@@ -674,9 +694,9 @@ class PlayerComponent extends Component {
         playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData)
       }
       //Tracking
-      let videoTracking = User.get(`video/${videoId}`)
+      const videoTracking = this.getStoredPlayer()
       if (videoTracking) {
-        const position = videoTracking.get('playerPosition')
+        const position = videoTracking.playerPosition
         const duration = videoData.get('duration')
         //Store duration
         this.setState({
@@ -684,8 +704,10 @@ class PlayerComponent extends Component {
         })
 
         if (position > 300 && position < (duration - 300)) {
-          playerData.starttime = videoTracking.get('playerPosition')
+          playerData.starttime = position
         }
+
+        playerData.dash.inititalMediaSettings.lang = videoTracking.playerCaption
       }
     }
     try {
@@ -718,7 +740,8 @@ class PlayerComponent extends Component {
     this.playerInit = true
     if (!videoData) throw new Error(`no video data ${videoId} ${videoData}`)
     let playerData = await this.getPlayerData(videoData)
-
+    const videoTracking = this.getStoredPlayer()
+    const storedCaption = videoTracking.playerCaption
     let player = await videojs('afrostream-player', playerData).ready(()=> {
         let tracks = player.textTracks() // get list of tracks
         if (!tracks) {
@@ -726,7 +749,7 @@ class PlayerComponent extends Component {
         }
         _.forEach(tracks, (track) => {
           let lang = track.language
-          track.mode = (lang === 'fr' || lang === 'fra') ? 'showing' : 'hidden' // show this track
+          track.mode = lang === storedCaption ? 'showing' : 'hidden' // show this track
         })
       }
     )
@@ -862,7 +885,6 @@ class PlayerComponent extends Component {
       return (<div className="player"><Billboard data={videoData}/></div>)
     }
 
-    let captions = videoData.get('captions')
     let movieData = Movie.get(`movies/${movieId}`)
     let episodeData = videoData.get('episode')
     let seasonData = Season.get(`seasons/${seasonId}`)
