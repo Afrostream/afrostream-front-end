@@ -96,7 +96,7 @@ class RecurlyForm extends React.Component {
             return reject(err)
           }
           return resolve({
-            billingProvider: 'recurly',
+            billingProviderName: 'recurly',
             subOpts: {
               customerBankAccountToken: token.id,
               couponCode: self.refs.couponCode.value

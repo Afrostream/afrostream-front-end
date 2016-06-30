@@ -69,7 +69,7 @@ class CouponRegister extends React.Component {
           email: getProfileResult.user.email,
           id: getProfileResult.user._id,
           internalPlanUuid: self.props.Billing.get('coupon').get('coupon').get('internalPlan').get('internalPlanUuid'),
-          billingProvider: self.props.Billing.get('coupon').get('coupon').get('campaign').get('provider').get('providerName'),
+          billingProviderName: self.props.Billing.get('coupon').get('coupon').get('campaign').get('provider').get('providerName'),
           firstName: null,
           lastName: null,
           subOpts: {

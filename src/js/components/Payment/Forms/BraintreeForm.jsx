@@ -57,7 +57,7 @@ class BraintreeForm extends React.Component {
             onPaymentMethodReceived: (payload)=> {
               console.log(payload)
               return resolve({
-                billingProvider: 'braintree',
+                billingProviderName: 'braintree',
                 subOpts: {
                   customerBankAccountToken: payload.nonce,
                   couponCode: self.refs.couponCode.value

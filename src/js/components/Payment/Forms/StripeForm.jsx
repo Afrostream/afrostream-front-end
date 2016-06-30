@@ -88,7 +88,7 @@ class StripeForm extends React.Component {
             return reject(response.error)
           }
           return resolve({
-            billingProvider: 'stripe',
+            billingProviderName: 'stripe',
             subOpts: {
               customerBankAccountToken: response.id,
               couponCode: self.refs.couponCode.value

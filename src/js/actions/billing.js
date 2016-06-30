@@ -90,7 +90,7 @@ export function getCouponCampaigns (providerName) {
       res: await api({
         path: `/api/billings/couponscampaigns`,
         params: {
-          billingProvider: providerName
+          billingProviderName: providerName
         }
       })
     })

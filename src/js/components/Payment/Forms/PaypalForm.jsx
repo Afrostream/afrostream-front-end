@@ -30,7 +30,7 @@ class PaypalForm extends RecurlyForm {
           return resolve(_.merge({
             'recurly-token': token.id,
             //NEW BILLING API
-            billingProvider: 'recurly',
+            billingProviderName: 'recurly',
             subOpts: {
               customerBankAccountToken: token.id,
               couponCode: self.refs.couponCode.value

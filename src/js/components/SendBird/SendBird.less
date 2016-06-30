@@ -11,6 +11,7 @@
 }
 
 .fabs {
+  @header-height-chat: 50px;
   position: absolute;
   display: block;
   vertical-align: bottom;
@@ -133,7 +134,7 @@
     font-size: 14px;
     font-family: @font-family-base;
     font-weight: 500;
-    height: @header-height;
+    height: @header-height-chat;
     line-height: 1.5;
   }
 
@@ -369,13 +370,13 @@
     display: block;
     position: absolute;
     background: inherit;
-    //margin: @header-height 0 @header-height 0;
+    //margin: @header-height-chat 0 @header-height-chat 0;
     //min-height: 100%;
     font-size: 12px;
     line-height: 18px;
     overflow-y: auto;
-    top: @header-height;
-    bottom: @header-height;
+    top: @header-height-chat;
+    bottom: @header-height-chat;
     width: 100%;
     margin-bottom: 5px;
   }

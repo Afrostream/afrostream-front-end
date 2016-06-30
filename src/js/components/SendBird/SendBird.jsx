@@ -18,6 +18,7 @@ if (process.env.BROWSER) {
 class SendBird extends React.Component {
 
   state = {
+    init: false,
     open: false,
     options: false,
     users: [],
@@ -37,7 +38,7 @@ class SendBird extends React.Component {
         }
       }
     } = this
-    if ((!shallowEqual(nextProps.params.movieId, movieId)) && movieId) {
+    if ((!shallowEqual(nextProps.params.movieId, movieId) || !this.state.init) && movieId) {
       this.startSendBird()
     }
   }
@@ -64,6 +65,7 @@ class SendBird extends React.Component {
     let avatar = user.get('picture')
 
     this.setState({
+      init: true,
       currentChannel: false,
       messages: [],
       guestId: guestId,
@@ -272,7 +274,9 @@ class SendBird extends React.Component {
   }
 
   scrollPositionBottom () {
-    this.refs.chatConverse.scrollTop = this.refs.chatConverse.scrollHeight
+    if (this.refs.chatConverse) {
+      this.refs.chatConverse.scrollTop = this.refs.chatConverse.scrollHeight
+    }
   }
 
 
@@ -290,7 +294,6 @@ class SendBird extends React.Component {
 
     const chatMode = Event.get('showChat')
     let toggle = !chatMode
-
     dispatch(EventActionCreators.showChat(toggle))
   }
 
@@ -320,6 +323,10 @@ class SendBird extends React.Component {
     const hiddenMode = !Event.get('userActive')
     const user = User.get('user')
     const chatMode = Event.get('showChat')
+
+    if (chatMode) {
+      this.scrollPositionBottom()
+    }
 
     let fabsClasses = {
       'fabs': true,
@@ -443,7 +450,7 @@ class SendBird extends React.Component {
           </div>
           <div ref="chatConverse" id="chat_converse" className={classSet(converseClasses)}>
             {
-              _.map(this.state.messages, ({user:{image, guest_id}, message, url, msg_id})=> {
+              _.map(this.state.messages, ({user:{image, guest_id}, message, url, msg_id}, key)=> {
 
                 let isUser = this.isCurrentUser(guest_id)
                 let img = image
@@ -455,7 +462,7 @@ class SendBird extends React.Component {
                 }
                 //this is a message
                 return (
-                  <div key={msg_id} className={classSet(avatarClasses)}>
+                  <div key={`${msg_id}_${key}`} className={classSet(avatarClasses)}>
                     <div className="chat_avatar">{img ? <img src={img}/> : <i className="zmdi zmdi-account"/>}</div>
                     {message}
                     {url ? <a href={url} target="_blank"><img className="chat_image" src={url}/></a> : null}
