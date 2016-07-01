@@ -65,8 +65,8 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
       url = `${url}?access_token=${token.get('access_token')}`
     }
 
-    let width = 400,
-      height = 650,
+    let width = 600,
+      height = 450,
       top = (window.outerHeight - height) / 2,
       left = (window.outerWidth - width) / 2
 
@@ -93,6 +93,8 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           }
 
         }
+
+        oauthPopup.addEventListener('beforeunload', beforeUnload)
         oauthPopup.onbeforeunload = beforeUnload
         intervalCheck = setInterval(function () {
           try {
