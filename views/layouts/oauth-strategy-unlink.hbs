@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html data-cast-api-enabled="true">
 <head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title data-react-helmet="true">Afrostream.tv OAuth Social</title>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title data-react-helmet="true">Afrostream.tv OAuth Social</title>
 </head>
 <body>
 
 <div id="main">
-    <h1>Afrostream Application Social - Synchronisation de compte desactivé</h1>
-    <script type="text/javascript">
-        if (window.opener) {
-            window.opener.focus();
-        }
-
-        window.close();
-    </script>
+  <h1>Afrostream Application Social - Synchronisation de compte desactivé</h1>
+  <script type="text/javascript">
+    if (window.opener) {
+      window.opener.focus();
+      if (window.opener.loginCallBack) {
+        window.opener.loginCallBack();
+      }
+    }
+    window.close();
+  </script>
 </div>
 </body>
 </html>

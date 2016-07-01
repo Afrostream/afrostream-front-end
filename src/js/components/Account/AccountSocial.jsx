@@ -39,7 +39,7 @@ class AccountSocial extends React.Component {
         this.setState({
           fetching: false
         })
-      }).catch((err)=> {
+      }).catch(()=> {
       this.setState({
         fetching: false
       })
