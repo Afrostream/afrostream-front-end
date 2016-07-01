@@ -30,7 +30,7 @@ class Footer extends React.Component {
 
     dispatch(ModalActionCreators.open({
       target: 'showSignup', cb: ()=> {
-        dispatch(ModalActionCreators.open({target: 'showProvider', donePath: '/compte'}))
+        dispatch(ModalActionCreators.open({target: 'linkProvider', donePath: '/compte'}))
       }
     }))
   }

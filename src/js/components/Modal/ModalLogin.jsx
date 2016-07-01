@@ -231,6 +231,7 @@ class ModalLogin extends ModalComponent {
       case 'show':
       case 'showSignin':
       case 'showProvider':
+      case 'linkProvider':
         keyType = 'signin'
         break
       case 'showRelog':
@@ -266,6 +267,9 @@ class ModalLogin extends ModalComponent {
         break
       case 'showReset':
         keyType = 'reset'
+        break
+      case 'linkProvider':
+        keyType = 'link'
         break
     }
     return keyType
