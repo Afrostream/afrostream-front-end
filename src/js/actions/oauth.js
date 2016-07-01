@@ -94,7 +94,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           }
 
         }
-        window.loginCallBack = ::beforeUnload
+        window.loginCallBack = beforeUnload
         oauthPopup.onbeforeunload = beforeUnload
         intervalCheck = setInterval(function () {
           try {
