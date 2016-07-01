@@ -19,6 +19,12 @@
     if (tokenData) {
       localStorage.setItem(storageId, JSON.stringify(tokenData));
     }
+
+    if (window.opener) {
+      if (window.opener.loginCallBack) {
+        window.opener.loginCallBack();
+      }
+    }
     window.close();
   </script>
 </div>

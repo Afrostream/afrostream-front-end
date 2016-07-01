@@ -75,6 +75,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
         let oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
         let intervalCheck = 0
         let beforeUnload = () => {
+          window.loginCallBack = null
           oauthPopup = null
           if (intervalCheck) {
             clearInterval(intervalCheck)
@@ -93,8 +94,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           }
 
         }
-
-        oauthPopup.addEventListener('beforeunload', beforeUnload)
+        window.loginCallBack = ::beforeUnload
         oauthPopup.onbeforeunload = beforeUnload
         intervalCheck = setInterval(function () {
           try {
