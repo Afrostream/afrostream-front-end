@@ -707,7 +707,9 @@ class PlayerComponent extends Component {
           playerData.starttime = position
         }
 
-        playerData.dash.inititalMediaSettings.lang = videoTracking.playerCaption
+        playerData.dash.inititalMediaSettings.text.lang = videoTracking.playerCaption
+        playerData.dash.inititalMediaSettings.audio.lang = videoTracking.playerAudio
+        playerData.dash.inititalMediaSettings.video.lang = videoTracking.playerAudio
       }
     }
     try {

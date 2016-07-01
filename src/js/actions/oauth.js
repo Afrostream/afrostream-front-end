@@ -82,8 +82,8 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           try {
             const tokenData = getToken()
             if (!tokenData || tokenData.error) {
-              let message = tokenData ? tokenData.error : 'Error: strategy error'
-              return reject({message: message})
+              let error = tokenData ? tokenData : {message: 'Error: strategy error'}
+              return reject(error)
             }
             return resolve({
               type: ActionTypes.OAuth.strategy
@@ -96,7 +96,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
         oauthPopup.onbeforeunload = beforeUnload
         intervalCheck = setInterval(function () {
           try {
-            if (!oauthPopup.onbeforeunload) {
+            if (!oauthPopup || !oauthPopup.onbeforeunload) {
               beforeUnload()
             }
           } catch (e) {
