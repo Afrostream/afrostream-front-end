@@ -94,11 +94,12 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           }
 
         }
-        window.loginCallBack = ::beforeUnload
-        oauthPopup.onbeforeunload = beforeUnload
+        window.loginCallBack = beforeUnload
+        //oauthPopup.onbeforeunload = beforeUnload
         intervalCheck = setInterval(function () {
           try {
-            if (!oauthPopup || !oauthPopup.onbeforeunload) {
+            //if (!oauthPopup || !oauthPopup.onbeforeunload) {
+            if (!oauthPopup) {
               beforeUnload()
             }
           } catch (e) {
