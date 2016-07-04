@@ -4,11 +4,6 @@ import cx from 'classnames'
 import { forEach, debounce, defaults } from 'lodash'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
-if (canUseDOM) {
-  var videojs = require('afrostream-player/libs/video.js')
-  var afrostream = require('afrostream-player/dist/afrostream-player.js')
-}
-
 const DEFAULT_HEIGHT = 800
 const DEFAULT_WIDTH = 600
 const DEFAULT_ASPECT_RATIO = (9 / 16)

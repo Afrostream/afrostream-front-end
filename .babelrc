@@ -1,11 +1,5 @@
 {
   "plugins": [
-    //    "transform-es2015-modules-commonjs",
-    //    "syntax-class-properties",
-    //    "transform-class-properties",
-    //    "transform-es2015-arrow-functions",
-    //    "transform-es2015-destructuring",
-    //    "transform-function-bind",
     [
       "transform-decorators-legacy",
       {

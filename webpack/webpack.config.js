@@ -99,6 +99,18 @@ const webpackConfig = {
         exclude: [node_modules_dir]
       },
       {
+        test: /\.js$/, // include .js files
+        loader: 'babel-loader',
+        include: [
+          path.join(__dirname, '../node_modules/afrostream-player/src/js/'),
+          path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-chromecast/es5/js'),
+          path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-youtube/es5')
+        ],
+        query: {
+          presets: ['es2015', 'stage-0']
+        }
+      },
+      {
         test: /\.json$/,
         //include: [
         //  path.join(__dirname, '../node_modules/markdown-it'),
@@ -111,61 +123,49 @@ const webpackConfig = {
         test: /\.css$/,
         loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
-      }
-      ,
+      },
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
-      }
-      ,
+      },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
-      }
-      ,
+      },
       {
         test: /.(woff|woff2)([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
-      }
-      ,
+      },
       {
         test: /.ttf([\?]?.*)$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
-      }
-      ,
+      },
       {
         test: /.eot([\?]?.*)$/,
         loader: 'file-loader?name=[name].[ext]?[hash]'
-      }
-      ,
+      },
       {
         test: /vtt\.js$/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000',
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
-      }
-      ,
+      },
       {
         test: /video\.js$/,
         loader: 'expose?videojs',
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
-      }
-      ,
+      },
       {
         test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
-      }
-      ,
+      },
       {
         test: /chardin\.js$/, loader: 'expose?chardinJs'
-      }
-      ,
+      },
       {
         test: /jquery\.js$/, loader: 'expose?$'
-      }
-      ,
+      },
       {
         test: /jquery\.js$/, loader: 'expose?jQuery'
-      }
-      ,
+      },
       {
         test: /jquery\.js$/, loader: 'expose?jquery'
       }
