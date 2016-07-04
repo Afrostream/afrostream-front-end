@@ -268,6 +268,11 @@ const client = {
     'metrics': {
       'user_id': ''
     },
+    'streamroot': {
+      'p2pConfig': {
+        'streamrootKey': 'ry-0gzuhlor'
+      }
+    },
     'dash': {
       'inititalMediaSettings': {
         'text': {
