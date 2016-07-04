@@ -270,7 +270,15 @@ const client = {
     },
     'dash': {
       'inititalMediaSettings': {
-        'lang': 'fr'
+        'text': {
+          'lang': 'fra'
+        },
+        'audio': {
+          'lang': 'fra'
+        },
+        'video': {
+          'lang': 'fra'
+        }
       },
       'autoSwitch': true,
       'bolaEnabled': false,
