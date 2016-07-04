@@ -67,7 +67,7 @@ const webpackConfig = {
       'qs',
       'videojs-vtt.js/dist/vtt.js',
       'afrostream-player/node_modules/dashjs/dist/dash.all.debug.js',
-      'afrostream-player/libs/video.js',
+      'afrostream-player/node_modules/video.js/dist/video.js',
       'afrostream-player/dist/afrostream-player.js',
       'sendbird',
       'chardin.js'

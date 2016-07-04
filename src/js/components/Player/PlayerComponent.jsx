@@ -30,7 +30,7 @@ if (process.env.BROWSER) {
 if (canUseDOM) {
   var base64 = require('js-base64').Base64
   var dashjs = require('afrostream-player/node_modules/dashjs/dist/dash.all.debug.js')
-  var videojs = require('afrostream-player/libs/video.js')
+  var videojs = require('afrostream-player/node_modules/video.js/dist/video.js')
   var afrostream = require('afrostream-player/dist/afrostream-player.js')
 }
 
