@@ -691,8 +691,6 @@ class PlayerComponent extends Component {
         playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData)
       }
 
-      playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot))
-
       //Tracking
       const videoTracking = this.getStoredPlayer()
       if (videoTracking) {
@@ -725,6 +723,8 @@ class PlayerComponent extends Component {
     }
 
     console.log('player : playerData', playerData)
+
+    playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot))
 
     return playerData
   }
