@@ -144,6 +144,7 @@ class RecurlyForm extends React.Component {
             data-billing="number"
             name="number"
             id="number"
+            x-autocompletetype="cc-number"
             autoComplete="cc-number"
             placeholder={getI18n().payment.creditCard.placeHolder} required/>
         </div>
@@ -153,12 +154,14 @@ class RecurlyForm extends React.Component {
           <input type="tel" className="form-control recurly-cc-exp" data-billing="month"
                  name="month" id="month"
                  autoComplete="cc-exp"
+                 x-autocompletetype="cc-exp"
                  placeholder={getI18n().payment.creditCard.expPlaceHolder} required/>
         </div>
         <div className="form-group col-md-4">
           <label className="form-label" htmlFor="cvv">{getI18n().payment.creditCard.cvv}</label>
           <input type="tel" className="form-control recurly-cc-cvc" data-billing="cvv"
                  ref="cvc"
+                 x-autocompletetype="cc-csc"
                  name="cvv" id="cvv" autoComplete="off"
                  placeholder={getI18n().payment.creditCard.cvcPlaceHolder} required/>
         </div>

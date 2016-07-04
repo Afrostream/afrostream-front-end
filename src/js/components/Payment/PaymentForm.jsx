@@ -149,6 +149,7 @@ class PaymentForm extends React.Component {
           data-billing="first_name"
           ref="firstName"
           id="first_name"
+          x-autocompletetype="given-name"
           name="first-name"
           defaultValue={firstName}
           placeholder={getI18n().payment.name} required
@@ -162,6 +163,7 @@ class PaymentForm extends React.Component {
           data-billing="last_name"
           ref="lastName"
           id="last_name"
+          x-autocompletetype="surname"
           name="last-name"
           defaultValue={lastName}
           placeholder={getI18n().payment.lastName} required
