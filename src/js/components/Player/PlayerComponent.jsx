@@ -21,6 +21,7 @@ import SendBirdButton from '../SendBird/SendBirdButton'
 import RecommendationList from '../Recommendation/RecommendationList'
 import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
+import { slugify } from '../../lib/utils'
 import SendBird from '../SendBird/SendBird'
 
 if (process.env.BROWSER) {
@@ -724,8 +725,11 @@ class PlayerComponent extends Component {
 
     console.log('player : playerData', playerData)
 
-    playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot))
-
+    playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot), {
+      p2pConfig: {
+        contentId: slugify(`${videoData.get('_id')}_${videoData.get('name')}`)
+      }
+    })
     return playerData
   }
 
