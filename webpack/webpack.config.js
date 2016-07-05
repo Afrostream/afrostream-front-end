@@ -209,6 +209,7 @@ const webpackConfig = {
         OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
         OAUTH_ORANGE_ENABLED: JSON.stringify(process.env.OAUTH_ORANGE_ENABLED),
         OAUTH_BOUYGUES_ENABLED: JSON.stringify(process.env.OAUTH_BOUYGUES_ENABLED),
+        FB_TRACKING_ID: JSON.stringify(process.env.FB_TRACKING_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
         SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
       }
