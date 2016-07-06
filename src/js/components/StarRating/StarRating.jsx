@@ -178,8 +178,7 @@ class StarRating extends React.Component {
            style={styles}
            viewBox={`0 0 ${stars.length} 50`}
            preserveAspectRatio="xMinYMin meet"
-           version="1.1"
-           xmlns="http://www.w3.org/2000/svg">
+           version="1.1">
         {/*
          React Doesn't support `mask` attributes yet
          <defs>
