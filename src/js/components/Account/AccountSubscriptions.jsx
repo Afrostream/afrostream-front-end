@@ -21,6 +21,7 @@ class AccountSubscriptions extends React.Component {
     const subscriptionsList = Billing.get('subscriptions')
 
     const providerLogos = {
+      'afr': '/images/payment/afr.png',
       'celery': '/images/payment/bank-cards-paypal.png',
       'stripe': '/images/payment/bank-cards-paypal.png',
       'recurly': '/images/payment/bank-cards-paypal.png',
