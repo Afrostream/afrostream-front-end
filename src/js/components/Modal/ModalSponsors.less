@@ -1,0 +1,76 @@
+@import (reference) '../../../styles/config.less';
+
+#lock.theme-default.sponsors .panel {
+  /* Morph Button: Default Styles */
+
+  .morph-button {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .morph-button > button {
+    position: relative;
+    padding: 0 1em;
+    border: none;
+    background-color: #e85657;
+    color: #f9f6e5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    line-height: 80px;
+    overflow: hidden;
+  }
+
+  .email-field {
+    width: 100px;
+    display: inline-block;
+    color: @brand-primary;
+    text-align: center;
+    background-color: fade(@color-indigo, 10%);
+    border: 1px solid fade(@color-indigo, 20%);
+    padding: .9em 1.8em;
+    cursor: pointer;
+    outline: none;
+    border-radius: @btn-radius;
+    transition: all .1s linear;
+  }
+  .email-field:hover {
+    background-color: fade(@color-indigo, 20%);
+  }
+
+  /* after button is clicked */
+  .email-field.active {
+    width: 140px;
+    outline: none;
+    color: @color-indigo;
+    text-align: left;
+    cursor: inherit;
+  }
+
+  /* Email submit button */
+  #subscribe-button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    transition: all .2s linear;
+    background-color: fade(@color-indigo, 90%);
+    color: @brand-primary;
+    cursor: pointer; /* for demo only */
+    display: none;
+    background: @color-indigo;
+  }
+  #subscribe-button:hover {
+    background-color: fade(@color-indigo, 10%);
+  }
+
+  #subscribe-button.showmail {
+    display: inline-block;
+  }
+
+  /* style input field text */
+  ::-webkit-input-placeholder {
+    color: @color-indigo;
+    opacity: .8;
+  }
+}

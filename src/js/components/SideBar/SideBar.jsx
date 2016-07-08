@@ -49,7 +49,7 @@ class SideBar extends React.Component {
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
           <li><Link to="/compte">Mon compte</Link></li>
-          <li><Link to="/select-plan/afrostreamgift/checkout" className="sidebar-nav_yellow">Offrir un cadeau</Link>
+          <li><Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link>
           </li>
           {this.getUserConnectedButtons(user, 'favorites')}
           <li role="separator" className="divider"></li>
