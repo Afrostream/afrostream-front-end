@@ -18,14 +18,22 @@
 
     if (tokenData) {
       localStorage.setItem(storageId, JSON.stringify(tokenData));
+      // adding token data to url anchor
+      var data = { statusCode: 200, data: tokenData };
+      var newLocation = document.location.href.replace(/#.*$/,'') + "#" + window.btoa(JSON.stringify(data));
+      document.location.replace(newLocation);
     }
 
-    if (window.opener) {
-      if (window.opener.loginCallBack) {
-        window.opener.loginCallBack();
-      }
-    }
-    window.close();
+    // postpone close :
+    //  we let 200ms to mobile app to catch the document.location.href change
+    setTimeout(function () {
+      //try {
+        if (window.opener && window.opener.loginCallBack) {
+          window.opener.loginCallBack();
+        }
+      //} catch (e) { /* Blocked a frame with origin X from accessing a frame with origin Y */ }
+      window.close();
+    }, 200); // enough ?
   </script>
 </div>
 </body>

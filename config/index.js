@@ -47,10 +47,10 @@ const config = _.merge(
      */
     server: {
       host: 'localhost',
-      ip: process.env.IP ||
-      undefined,
+      ip: process.env.IP || undefined,
       port: process.env.PORT ||
-      3000
+            process.env.USER === 'marc' && 80 || // (to bind 80: sudo setcap cap_net_bind_service=+ep `which node`)
+            3000
     },
 
     /**
