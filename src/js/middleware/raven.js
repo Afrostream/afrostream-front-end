@@ -1,7 +1,7 @@
 import Raven from 'raven-js'
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import config from '../../../config'
-export default function ({ getState }) {
+export default function ({getState}) {
   /*
    Function that generates a crash reporter for Sentry.
 
@@ -35,8 +35,7 @@ export default function ({ getState }) {
       // Send the report.
       Raven.captureException(err, {
         extra: {
-          action: action,
-          state: getState()
+          action: action
         }
       })
     }

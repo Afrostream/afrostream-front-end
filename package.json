@@ -120,6 +120,7 @@
     "react": "^15.2.0",
     "react-addons-css-transition-group": "^15.2.0",
     "react-addons-shallow-compare": "^15.2.0",
+    "react-autosuggest": "^3.7.4",
     "react-dom": "^15.2.0",
     "react-ga": "^1.1.0",
     "react-headrooms": "^1.0.4",

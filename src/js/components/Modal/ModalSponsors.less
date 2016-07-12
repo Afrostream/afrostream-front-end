@@ -2,7 +2,9 @@
 
 #lock.theme-default.sponsors .panel {
   /* Morph Button: Default Styles */
-
+  .wrapper {
+    margin: 20px 0 20px 0;
+  }
   .morph-button {
     position: relative;
     display: block;
@@ -21,7 +23,10 @@
     line-height: 80px;
     overflow: hidden;
   }
-
+  .help-block {
+    color: @brand-error;
+    text-transform: capitalize;
+  }
   .email-field {
     width: 100px;
     display: inline-block;
@@ -29,7 +34,7 @@
     text-align: center;
     background-color: fade(@color-indigo, 10%);
     border: 1px solid fade(@color-indigo, 20%);
-    padding: .9em 1.8em;
+    padding: 12px 15px 11px 15px;
     cursor: pointer;
     outline: none;
     border-radius: @btn-radius;
@@ -61,7 +66,7 @@
     background: @color-indigo;
   }
   #subscribe-button:hover {
-    background-color: fade(@color-indigo, 10%);
+    background-color: fade(@subscriber-color, 90%);
   }
 
   #subscribe-button.showmail {
@@ -72,5 +77,51 @@
   ::-webkit-input-placeholder {
     color: @color-indigo;
     opacity: .8;
+  }
+  .sponsors-list {
+    overflow-y: auto;
+    max-height: 350px;
+  }
+  .sponsor {
+    padding: 10px 0 10px 0;
+    height: 50px;
+    text-align: left;
+    border-top: 1px solid fade(@color-indigo, 20%);
+
+    .check {
+      border: 2px solid fade(@color-indigo, 20%);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      .zmdi {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 2;
+        color: fade(@color-indigo, 20%);
+      }
+      &.active {
+        .transition(0.1s ease-out all);
+        background: fade(@subscriber-color, 90%);
+        .zmdi {
+          color: #fff;
+          .animation(bounce 0.2s);
+          .animation-delay(0.08s);
+        }
+      }
+    }
+  }
+
+  .keyframes('bounce') {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 }

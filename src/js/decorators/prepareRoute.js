@@ -27,7 +27,7 @@ export default function prepareRoute (prepareFn) {
       }
 
       componentWillReceiveProps (nextProps) {
-        let {
+        const {
           context: {store},
           props:{route, params}
         } = this
@@ -47,7 +47,7 @@ export default function prepareRoute (prepareFn) {
       }
 
       componentDidMount () {
-        let {
+        const {
           context: {store},
           props: {params, router, routes, route, categoryId}
         } = this

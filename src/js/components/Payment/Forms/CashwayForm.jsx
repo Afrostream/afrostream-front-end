@@ -23,9 +23,11 @@ class CashwayForm extends React.Component {
       }
     } = this
 
-    const providerName = 'cashway'
+    const billingProviderName = 'cashway'
 
-    return await dispatch(BillingActionCreators.getCouponCampaigns('cashway'))
+    return await dispatch(BillingActionCreators.getCouponCampaigns({
+      billingProviderName
+    }))
       .then(({res: {body: {couponsCampaigns = []}}}) => {
 
         const couponCampaign = _.find(couponsCampaigns, ({internalPlan : {internalPlanUuid}})=> {
@@ -36,7 +38,7 @@ class CashwayForm extends React.Component {
           throw new Error('Billing campaign not found')
         }
 
-        return dispatch(BillingActionCreators.create({
+        return dispatch(BillingActionCreators.createCoupon({
           billingProviderName: providerName,
           lastName: billingInfo.lastName,
           firstName: billingInfo.firstName,

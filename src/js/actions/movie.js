@@ -2,7 +2,7 @@ import ActionTypes from '../consts/ActionTypes'
 import { notFound, notFoundArray } from './notFoundAction'
 
 export function getMovie (movieId) {
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
     if (!movieId) {
       console.log('no movie id passed in action', movieId)
       return {
@@ -23,6 +23,11 @@ export function getMovie (movieId) {
         }
       }
     }
+
+    actionDispatcher({
+      type: ActionTypes.Movie.getMovie,
+      movieId
+    })
 
     return async api => ({
       type: ActionTypes.Movie.getMovie,
@@ -54,7 +59,7 @@ export function getLast () {
 }
 
 export function getSeason (movieId) {
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
     if (!movieId) {
       console.log('no movie id passed in action', movieId)
       return {
@@ -73,6 +78,12 @@ export function getSeason (movieId) {
         }
       }
     }
+
+    actionDispatcher({
+      type: ActionTypes.Movie.getSeason,
+      movieId
+    })
+
     return async api => ({
       type: ActionTypes.Movie.getSeason,
       movieId,

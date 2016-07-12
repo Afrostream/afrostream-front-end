@@ -65,16 +65,36 @@ export function validate (data) {
  *
  *
  * @param data {
- *  "userBillingUuid" : "48776f1a-ac29-264f-6100-bad807bbf062",
  *  "couponCampaignBillingUuid" : "80bc2f24-bf54-4e13-9ecc-9d8bbe5e08ed"
  * }
  * @returns {Function}
  */
-export function create (data) {
+export function createCoupon (data) {
   return (dispatch, getState) => {
     return async api => ({
-      type: ActionTypes.Billing.create,
+      type: ActionTypes.Billing.createCoupon,
       res: await api({path: `/api/billings/coupons`, method: 'POST', params: data})
+    })
+  }
+}
+
+/**
+ * list coupons
+ *
+ *
+ * @param data {
+ *  "providerName" :"afr",
+ *  "couponCampaignBillingUuid" : "a94bb541-090d-44b2-b9d2-6e557c212566"
+ * }
+ * @returns {Function}
+ */
+export function getSponsorsList (params) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Billing.sponsorsList,
+      res: await api({
+        path: `/api/billings/coupons/list`, params
+      })
     })
   }
 }
@@ -83,15 +103,14 @@ export function create (data) {
  * Get coupon campain from billingProviderUuid
  * @returns {Function}
  */
-export function getCouponCampaigns (providerName) {
+export function getCouponCampaigns (params) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.getCouponCampaigns,
+      couponsCampaignBillingUuid: params.couponsCampaignBillingUuid,
       res: await api({
         path: `/api/billings/couponscampaigns`,
-        params: {
-          billingProviderName: providerName
-        }
+        params
       })
     })
   }

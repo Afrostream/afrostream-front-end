@@ -16,7 +16,8 @@ export default {
     getSubscriptions: null,
     getInternalplans: null,
     validate: null,
-    create: null,
+    createCoupon: null,
+    sponsorsList: null,
     cancelSubscription: null,
     getCouponCampaigns: null
   }),
@@ -103,5 +104,11 @@ export default {
 
   Static: keyMirror({
     getStatic: null
+  }),
+
+  Facebook: keyMirror({
+    initialized: null,
+    getFriendList: null,
+    getInvitableFriends: null
   })
 }

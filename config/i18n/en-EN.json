@@ -389,5 +389,15 @@
   },
   "social": {
     "title": "Partager"
+  },
+  "sponsors": {
+    "title": "Parrainez vos amis",
+    "placeHolder": "Inviter un ami",
+    "emailField": "Son email",
+    "error": "Vous ne pouvez plus parrainer actuellement.",
+    "validation": {
+      "email": "Doit etre un email valide",
+      "empty": "est requis"
+    }
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
 import { Link } from 'react-router'
@@ -14,6 +15,13 @@ class SideBar extends React.Component {
 
   componentDidMount () {
     $(document).on('mouseup', this.toggleSideBar.bind(this))
+  }
+
+  sponsorShip () {
+    const {props:{dispatch}} = this
+    dispatch(ModalActionCreators.open({
+      target: 'sponsorship'
+    }))
   }
 
   componentWillUnMount () {
@@ -49,7 +57,8 @@ class SideBar extends React.Component {
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
           <li><Link to="/compte">Mon compte</Link></li>
-          <li><Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link>
+          <li>
+            <a href="#" onClick={::this.sponsorShip} className="sidebar-nav_yellow">Parrainer</a>
           </li>
           {this.getUserConnectedButtons(user, 'favorites')}
           <li role="separator" className="divider"></li>
