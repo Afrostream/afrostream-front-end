@@ -5,7 +5,7 @@ import ModalComponent from './ModalComponent'
 import classNames from 'classnames'
 import config from '../../../../config'
 import { getI18n } from '../../../../config/i18n'
-import Autosuggest from 'react-autosuggest'
+//import Autosuggest from 'react-autosuggest'
 import * as BillingActionCreators from '../../actions/billing'
 import * as FBActionCreators from '../../actions/facebook'
 
@@ -151,7 +151,7 @@ class ModalSponsors extends ModalComponent {
     })
   }
 
-  handleClose () {
+  cancel () {
     const expanded = this.state.expanded
     if (expanded) {
       this.setState({
@@ -210,7 +210,7 @@ class ModalSponsors extends ModalComponent {
       couponsCampaignBillingUuid
     }))
 
-    this.handleClose()
+    this.cancel()
   }
 
   onError (err) {
@@ -228,7 +228,7 @@ class ModalSponsors extends ModalComponent {
       error: this.getTitle(errMess.toString()) || errMess.toString() || this.getTitle('error')
     })
 
-    this.handleClose()
+    this.cancel()
   }
 
   getSponsorsList () {
@@ -262,8 +262,6 @@ class ModalSponsors extends ModalComponent {
 
     const {props:{Billing}} = this
     const {suggestions} = this.state
-
-
 
     const sponsorsData = Billing.get('sponsorsList')
     const sponsorsList = sponsorsData && sponsorsData.get('coupons')
@@ -320,6 +318,16 @@ class ModalSponsors extends ModalComponent {
 
   render () {
 
+    let popupClass = classNames({
+      'popup': this.props.modal
+    })
+
+    let overlayClass = classNames({
+      'overlay': this.props.modal,
+      'widget': !this.props.modal,
+      'active': true
+    })
+
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
@@ -329,9 +337,9 @@ class ModalSponsors extends ModalComponent {
     return (
       <div className="lock-container">
         <div id="lock" className="lock theme-default sponsors">
-          <div className="signin">
-            <div className="popup">
-              <div className="overlay active">
+          <div className="sponsors">
+            <div className={popupClass}>
+              <div className={overlayClass}>
                 <div className="centrix">
                   <div id="onestep" className="panel onestep active">
                     {/*HEADER*/}

@@ -245,7 +245,8 @@
       "statusLabel": "Status",
       "periods": {
         "year": "An",
-        "month": "Mois"
+        "month": "Mois",
+        "day": "Jours"
       },
       "status": {
         "canceled": "Annulé",
@@ -382,7 +383,7 @@
     "title": "Partager"
   },
   "sponsors": {
-    "title": "Parrainez vos amis",
+    "title": "Mes filleuls",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
     "placeHolder": "Inviter un ami",
     "emailField": "Son email",

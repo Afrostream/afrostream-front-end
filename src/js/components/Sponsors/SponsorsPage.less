@@ -1,0 +1,165 @@
+@import (reference) '../../../styles/config.less';
+
+.sponsors-page {
+  font-size: 12px;
+  text-align: center;
+  color: @color-purple;
+
+  h1 {
+    font-size: 28px;
+  }
+
+  /** Card Styles **/
+  .card {
+    margin: 20px auto 20px auto;
+    width: 400px;
+    height: 250px;
+    position: relative;
+    border-radius: 0.5rem;
+    background: #fff;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 0.2rem 8.4rem 0 rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    .transition(background-image 500ms ease-out);
+  }
+  .card::before,
+  .card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0.5rem;
+  }
+  .card::before {
+    background-color: fade(#21313c, 50%);
+    -webkit-clip-path: polygon(0 30%, 100% 48%, 100% 100%, 0% 100%);
+    clip-path: polygon(0 30%, 100% 48%, 100% 100%, 0% 100%);
+    mix-blend-mode: overlay;
+  }
+  .card::after {
+    background-color: #393a3d;
+    -webkit-clip-path: polygon(0 44%, 100% 62%, 100% 100%, 0% 100%);
+    clip-path: polygon(0 44%, 100% 62%, 100% 100%, 0% 100%);
+    opacity: 0.7;
+  }
+  .card .info {
+    width: 100%;
+    padding: 0em 4rem 2rem 4rem;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    text-align: center;
+    background-color: fade(#fff, 99%);
+    font-size: 11px;
+  }
+  .card .info::before {
+    content: "";
+    height: 8rem;
+    position: absolute;
+    left: -1px;
+    right: 0;
+    bottom: calc(100% - 1px);
+    background-color: fade(#fff, 98%);
+    -webkit-clip-path: polygon(0 100%, 100% 50%, 100% 100%);
+    clip-path: polygon(0 100%, 100% 50%, 100% 100%);
+  }
+  .card .info .info-list {
+    position: relative;
+  }
+
+  .card .info .tick:first-child {
+    font-size: 2em;
+    margin-bottom: 5px;
+  }
+
+  .card .info .tick {
+    font-size: 1em;
+    text-align: center;
+    position: relative
+  }
+  .card .info li {
+    padding: 0 4rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    -webkit-transition: visibility 0s ease-out 500ms, opacity 500ms ease-out, -webkit-transform 500ms ease-out;
+    transition: visibility 0s ease-out 500ms, opacity 500ms ease-out, -webkit-transform 500ms ease-out;
+    transition: transform 500ms ease-out, visibility 0s ease-out 500ms, opacity 500ms ease-out;
+    transition: transform 500ms ease-out, visibility 0s ease-out 500ms, opacity 500ms ease-out, -webkit-transform 500ms ease-out;
+  }
+
+  .card {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  .card .info h1 {
+    margin-bottom: 1.8rem;
+    font-size: 3rem;
+    font-weight: normal;
+  }
+
+  .card .info p {
+    font-size: 1.6rem;
+    color: #999;
+  }
+
+  .card .actions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: #fff;
+    box-shadow: 0 0 3rem #fff;
+  }
+  .card .actions .rating-container {
+    width: 10rem;
+    height: 10rem;
+    position: absolute;
+    right: 9rem;
+    bottom: 20.5rem;
+    font-size: 2.4rem;
+    text-align: center;
+    line-height: 10rem;
+    background-color: #fff;
+    box-shadow: 0 0.9rem 3.2rem rgba(56, 52, 57, 0.35);
+  }
+  .card .actions .cart {
+    width: 12rem;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute;
+    left: 8rem;
+    bottom: 21.5rem;
+    text-indent: -100rem;
+    line-height: 12rem;
+    background: #17071d url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAhCAYAAAHGyjm9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAuxJREFUeNpi/PPnDwM6YILS/4HYC0r/Z4EKMkIVgGg5RnzaQeAdELOBGAABhKGSBYn9H91WRmQBRhjNhGbRRIAAAhkKcuBWIP4NswkdINssBsQvkYyEOwCbR/6jG8TEgB2ATJsI4wAEEMwkRiwmoHj+P5r3sCoCSTojBcp/fL77j81n6A5nwuUuFixeR1aYhq4Ip+PRw2kCNhPRTSpDMu09TBAggEC+ewakJZEUigDxWwYSAchJUlAbYLa8AWI7JDXPYEkdH2bCEgCgCDgIxJVQMWSL0PEaqJp1DKCIw4IfAvF/IN6CQx6EU6FqXoP4WPMgFKwH4gAgfgrEMmhyckD8EDka8RkEAoFgZ2MHKBYQMoikWMMH3iLFDD4xBoAAQnYR3oxJjItgpv9DTqnkGPQCiS8AxGrkGiQJ9VYSVOwmlkKAEH6GHNjzkdgxSOwXRDhoCXr0awHxVUKFHZbCB6O8vQbEn6DsaQQM6YDSF3ElSA4g/k6Eq2Cu4QKpx5YgfwDxGSj7PA5DHKD0H5il+LIIzEZuIP6GJvcbWnI6AvEBQllkMpT+iiW6YcXvAWIzLagmF8Qh5w3E2+ie+6lmECxMOgiIEfTaf6SwEsYjRtBFk6BFiyQBMQaAAAO5yBNIz0WXgCpOhlYCdAPYamxsvsunl4OYsFTI3NDaHgby8NRsIOBJbOuAUBkLMgtXIgI59CwQGyCJgcoVMyz1FaEQJgW8JJSqt0BzOAw8AmJ1aMFHKQAVjPuR+CCHKBPKHT5APAOtJfMS2rqnBIDM2Y0m5gryMDElUSYQVyPx+aCtIk0yHcMJTQ4saE3wA6QUjW1AHIvWxr8G7VKQCo5B294w0A3Es8kt9O2Rqx4oSEJreOADoGZ0MBJ/HRqfrFoI1P66AsSsFKaji2i5mKJqEVRn3IE2EMkBr4FYHqmtQ7GDaFp1DCoHUdIAYYOOCbyFVv0TcQxPEKuO4hACWSCEpU0nTKY6ikNoMRaxORSoAwMA379EywQmkkQAAAAASUVORK5CYII=") center center no-repeat;
+    box-shadow: 0 0.9rem 3.2rem rgba(40, 43, 41, 0.56);
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-transition: background-color 200ms ease-out;
+    transition: background-color 200ms ease-out;
+  }
+  .card .actions .cart:hover,
+  .card .actions .cart:focus {
+    background-color: #282a2e;
+  }
+  .card .actions .cart:active {
+    background-color: #1c1d20;
+    -webkit-transition: none;
+    transition: none;
+  }
+}

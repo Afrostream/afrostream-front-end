@@ -75,7 +75,7 @@ class SelectPlan extends React.Component {
           value = objVal
           let isBool = (value === 'true' || value === 'false' || typeof value === 'boolean' ) && typeof isBoolean(value) === 'boolean'
           if (isBool) {
-            value = isBoolean(value) ? <i className="zmdi zmdi-check"/> : <i className="zmdi zmdi-close"/>
+            value = isBoolean(value) ? <i className="zmdi zmdi-check"></i> : <i className="zmdi zmdi-close"></i>
           }
           break
       }

@@ -8,6 +8,7 @@ import HomePage from './components/HomePage'
 import BrowseLastPage from './components/Browse/BrowseLastPage'
 import BrowseGenrePage from './components/Browse/BrowseGenrePage'
 import FavoritesPage from './components/Favorites/FavoritesPage'
+import SponsorsPage from './components/Sponsors/SponsorsPage'
 import SearchPage from './components/Search/SearchPage'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
 import RedeemCoupon from './components/RedeemCoupon/RedeemCoupon'
@@ -36,7 +37,7 @@ const buildHome = function (lang) {
       <Route key={`${lang}-cancelSubscription`} name="cancelSubscription" path="cancel-subscription"
              component={CancelSubscription}/>
     </Route>,
-    <Route key={`${lang}-sponsorship`} name="sponsorship" path="parrainage" component={LoginPage}/>,
+    <Route key={`${lang}-sponsorship`} name="sponsorship" path="parrainage" component={SponsorsPage}/>,
     <Route key={`${lang}-browse`} name="browse" path="browse/genre(/:categoryId)(/:categorySlug)"
            component={BrowseGenrePage}/>,
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
