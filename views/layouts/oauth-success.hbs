@@ -26,11 +26,11 @@
     // postpone close :
     //  we let 200ms to mobile app to catch the document.location.href change
     setTimeout(function () {
-      //try {
+      try {
         if (window.opener && window.opener.loginCallBack) {
           window.opener.loginCallBack();
         }
-      //} catch (e) { /* Blocked a frame with origin X from accessing a frame with origin Y */ }
+      } catch (e) { /* Blocked a frame with origin X from accessing a frame with origin Y */ }
       window.close();
     }, 200); // enough ?
   </script>
