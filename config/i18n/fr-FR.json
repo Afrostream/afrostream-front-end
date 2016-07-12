@@ -389,6 +389,7 @@
     "waiting": "Votre ami n'a toujours pas activé son coupon",
     "active": "Votre ami à validé son coupon",
     "error": "Vous ne pouvez plus parrainer actuellement.",
+    "max": "Vous avez atteint le nombre maximum de filleuls",
     "validation": {
       "email": "Doit etre un email valide",
       "empty": "est requis"

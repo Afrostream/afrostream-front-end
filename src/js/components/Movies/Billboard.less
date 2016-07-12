@@ -9,6 +9,7 @@
   font-family: @font-family-base;
   color: @brand-primary;
   padding: @app-padding;
+  margin-top: @header-height;
   font-size: 1.2em;
   a {
     text-decoration: none;
@@ -81,12 +82,14 @@
 
 @media @tablet {
   .billboard-infos {
+    margin-top: @header-height;
     padding: @app-padding;
   }
 }
 
 @media @mobile {
   .billboard-infos {
+    margin-top: @header-height-mobile;
     padding: @app-padding-mobile;
   }
 }

@@ -10,7 +10,7 @@ export default createReducer(initialState, {
       return state
     }
     return state.merge({
-      [`data`]: res
+      [`auth`]: res
     })
   },
 
@@ -28,7 +28,7 @@ export default createReducer(initialState, {
       return state
     }
     return state.merge({
-      [`invitableFriends`]: res.data
+      [`invitableFriends`]: res
     })
   }
 })

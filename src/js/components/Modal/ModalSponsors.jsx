@@ -25,18 +25,19 @@ if (process.env.BROWSER) {
       billingProviderName: 'afr',
       couponsCampaignBillingUuid
     })),
-    store.dispatch(FBActionCreators.getFriendList()
+    store.dispatch(FBActionCreators.getInvitableFriends())
   ])
 })
 @connect(({Billing, User, Facebook}) => ({Billing, User, Facebook}))
 class ModalSponsors extends ModalComponent {
 
   state = {
-    email: false,
+    email: '',
     expanded: false,
     errors: {},
     success: false,
-    loading: false
+    loading: false,
+    suggestions: []
   }
 
   componentDidMount () {
@@ -62,7 +63,7 @@ class ModalSponsors extends ModalComponent {
   }
 
   isValid () {
-    let valid = _.filter(this.state.errors, (value, key) => {
+    let valid = _.filter(this.state.errors, (value) => {
       return value
     })
     return !valid.length
@@ -80,6 +81,38 @@ class ModalSponsors extends ModalComponent {
       this.validate(name)
     })
   }
+
+  getSuggestions (value) {
+
+    const {props:{Facebook}} = this
+
+    const friends = Facebook.get('invitableFriends')
+
+    const inputValue = value.trim().toLowerCase()
+    const inputLength = inputValue.length
+    const finalValues = friends.filter(friend =>
+      friend.get('name').toLowerCase().slice(0, inputLength) === inputValue
+    )
+
+    return finalValues.toArray()
+  }
+
+  getSuggestionValue (suggestion) { // when suggestion selected, this function tells
+    return suggestion.get('name')               // what should be the value of the input
+  }
+
+  renderSuggestion (suggestion) {
+    return (
+      <span>{suggestion.get('name')}</span>
+    )
+  }
+
+  onSuggestionsUpdateRequested ({value}) {
+    this.setState({
+      suggestions: this.getSuggestions(value || '')
+    })
+  }
+
 
   validate (targetName) {
     let errors = this.state.errors
@@ -121,7 +154,9 @@ class ModalSponsors extends ModalComponent {
   handleClose () {
     const expanded = this.state.expanded
     if (expanded) {
-      this.refs.email.value = ''
+      this.setState({
+        email: ''
+      })
     }
     this.setState({
       expanded: !expanded
@@ -225,15 +260,22 @@ class ModalSponsors extends ModalComponent {
 
   getSponsorsComponent () {
 
-    const {props:{Billing, Facebook}} = this
+    const {props:{Billing}} = this
+    const {suggestions} = this.state
+
 
 
     const sponsorsData = Billing.get('sponsorsList')
     const sponsorsList = sponsorsData && sponsorsData.get('coupons')
     if (sponsorsList && sponsorsList.size >= maxSponsors) {
-      return null
+      return <div className="instructions">{this.getTitle('max')}</div>
     }
 
+    const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
+    let description = ''
+    if (coupon && coupon.get('couponsCampaign')) {
+      description = coupon.get('couponsCampaign').get('description')
+    }
     const classBtn = {
       'showmail': this.state.expanded
     }
@@ -241,14 +283,33 @@ class ModalSponsors extends ModalComponent {
       'email-field': true,
       'active': this.state.expanded
     }
+
+    const inputProps = {
+      value: this.state.email,
+      ref: 'email',
+      name: 'email',
+      type: 'email',
+      className: classNames(classEmail),
+      id: 'email-field',
+      required: true,
+      placeholder: `${this.state.expanded ? this.getTitle('emailField') : this.getTitle('placeHolder') }`,
+      onChange: ::this.handleInputChange,
+      onClick: ::this.handleOpen
+    }
+
+
     return <div className="wrapper">
       <div className="middle">
+        <div className="instructions">{this.getTitle('headerText').replace('{couponInfos}', description)}</div>
         {this.renderValidationMessages('email')}
         <form onSubmit={::this.handleSubmit} disabled={this.state.loading}>
-          <input ref="email" type="email" required name="email" className={classNames(classEmail)} id="email-field"
-                 placeholder={`${this.state.expanded ? this.getTitle('emailField') : this.getTitle('placeHolder') }`}
-                 onChange={::this.handleInputChange}
-                 onClick={::this.handleOpen}/>
+          {<input {...inputProps}/> }
+          {/* <Autosuggest suggestions={suggestions}
+           onSuggestionsUpdateRequested={::this.onSuggestionsUpdateRequested}
+           getSuggestionValue={::this.getSuggestionValue}
+           renderSuggestion={::this.renderSuggestion}
+           {...{inputProps}}/>
+           */}
           <button type="submit" value="Subscribe" name="subscribe" id="subscribe-button"
                   className={classNames(classBtn)}>OK
           </button>
@@ -259,12 +320,6 @@ class ModalSponsors extends ModalComponent {
 
   render () {
 
-    const {props:{Billing}} = this
-    const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
-    let description = ''
-    if (coupon && coupon.get('couponsCampaign')) {
-      description = coupon.get('couponsCampaign').get('description')
-    }
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
@@ -287,8 +342,6 @@ class ModalSponsors extends ModalComponent {
                     </div>
                     <div className="mode-container">
                       <div className="mode">
-                        <div
-                          className="instructions">{this.getTitle('headerText').replace('{couponInfos}', description)}</div>
                         {this.getSponsorsComponent()}
                         {this.getSponsorsList()}
                       </div>

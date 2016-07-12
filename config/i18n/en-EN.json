@@ -392,9 +392,13 @@
   },
   "sponsors": {
     "title": "Parrainez vos amis",
+    "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
     "placeHolder": "Inviter un ami",
     "emailField": "Son email",
+    "waiting": "Votre ami n'a toujours pas activé son coupon",
+    "active": "Votre ami à validé son coupon",
     "error": "Vous ne pouvez plus parrainer actuellement.",
+    "max": "Vous avez atteint le nombre maximum de filleuls",
     "validation": {
       "email": "Doit etre un email valide",
       "empty": "est requis"

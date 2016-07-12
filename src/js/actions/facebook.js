@@ -6,20 +6,23 @@ import ActionTypes from '../consts/ActionTypes'
 export function getFriendList () {
   return (dispatch, getState) => {
     const auth = getState().Facebook.get('auth')
-    if (auth && auth.status === 'connected') {
+    if (auth && auth.get('status') === 'connected') {
       /* make the API call */
-      return async api => {
-        return {
-          type: ActionTypes.Facebook.getFriendList,
-          res: await window.FB.api(
-            '/{friend-list-id}',
+      return async () => {
+        return await new Promise((resolve, reject) => {
+          window.FB.api(
+            '/me/friends',
             (response) => {
-              if (response && !response.error) {
-                return response
+              if (!response || response.error) {
+                return reject(response.error)
               }
+              return resolve({
+                type: ActionTypes.Facebook.getFriendList,
+                res: response
+              })
             }
           )
-        }
+        })
       }
     }
   }
@@ -28,20 +31,23 @@ export function getFriendList () {
 export function getInvitableFriends () {
   return (dispatch, getState) => {
     const auth = getState().Facebook.get('auth')
-    if (auth && auth.status === 'connected') {
+    if (auth && auth.get('status') === 'connected') {
       /* make the API call */
-      return async api => {
-        return {
-          type: ActionTypes.Facebook.getInvitableFriends,
-          res: await window.FB.api(
-            '/{user-id}/invitable_friends',
+      return async () => {
+        return await new Promise((resolve, reject) => {
+          window.FB.api(
+            '/me/invitable_friends',
             (response) => {
-              if (response && !response.error) {
-                return response
+              if (!response || response.error) {
+                return reject(response.error)
               }
+              return resolve({
+                type: ActionTypes.Facebook.getInvitableFriends,
+                res: response.data
+              })
             }
           )
-        }
+        })
       }
     }
   }
