@@ -272,9 +272,9 @@ class ModalSponsors extends ModalComponent {
 
     const sponsorsData = Billing.get('sponsorsList')
     const sponsorsList = sponsorsData && sponsorsData.get('coupons')
-    //if (sponsorsList && sponsorsList.size >= maxSponsors) {
-    //  return <div className="instructions">{this.getTitle('max')}</div>
-    //}
+    if (sponsorsList && sponsorsList.size >= maxSponsors) {
+      return <div className="instructions">{this.getTitle('max')}</div>
+    }
 
     const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
     let description = ''
