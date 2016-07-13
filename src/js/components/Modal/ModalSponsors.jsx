@@ -279,7 +279,8 @@ class ModalSponsors extends ModalComponent {
     const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
     let description = ''
     if (coupon && coupon.get('couponsCampaign')) {
-      description = coupon.get('couponsCampaign').get('description')
+      const plan = coupon.get('couponsCampaign').get('internalPlan')
+      description = plan.get('description')
     }
     const classBtn = {
       'showmail': this.state.expanded

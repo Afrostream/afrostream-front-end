@@ -394,6 +394,7 @@
   "sponsors": {
     "title": "Parrainez vos amis",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
+    "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
     "placeHolder": "Parrainer un ami",
     "emailField": "Son email",
     "waiting": "Votre ami n'a toujours pas activé son coupon",

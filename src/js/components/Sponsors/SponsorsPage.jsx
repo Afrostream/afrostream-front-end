@@ -10,7 +10,7 @@ if (process.env.BROWSER) {
   require('./SponsorsPage.less')
 }
 
-@connect(({Billing}) => ({Billing}))
+@connect(({Billing, User}) => ({Billing, User}))
 class SponsorsPage extends React.Component {
 
   state = {
@@ -106,12 +106,31 @@ class SponsorsPage extends React.Component {
     </div>
   }
 
+  getTitle (key = 'title') {
+    const {
+      props: {
+        params
+      }
+    } = this
+
+    return getI18n(params.lang)['sponsors'][key] || ''
+  }
+
   render () {
+
+    const {
+      props: {User}
+    } = this
+
+    const user = User.get('user')
+    const planCode = user && user.get('planCode')
+
     return (
       <div className="row-fluid brand-bg">
         <div className="container brand-bg sponsors-page">
-          {this.renderCoupon()}
-          <ModalSponsors {...this.props} modal={false} closable={false}/>
+          {!planCode && <span>{this.getTitle('activeAccount')}</span>}
+          {planCode && this.renderCoupon()}
+          {planCode && <ModalSponsors {...this.props} modal={false} closable={false}/>}
         </div>
       </div>
     )
