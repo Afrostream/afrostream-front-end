@@ -385,7 +385,7 @@
   "sponsors": {
     "title": "Mes filleuls",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
-    "placeHolder": "Inviter un ami",
+    "placeHolder": "Parrainer un ami",
     "emailField": "Son email",
     "waiting": "Votre ami n'a toujours pas activé son coupon",
     "active": "Votre ami à validé son coupon",

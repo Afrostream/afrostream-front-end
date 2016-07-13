@@ -58,7 +58,7 @@ class SideBar extends React.Component {
         <ul className="sidebar-nav">
           <li><Link to="/compte">Mon compte</Link></li>
           <li>
-            <a href="#" onClick={::this.sponsorShip} className="sidebar-nav_yellow">Parrainer</a>
+            <Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link>
           </li>
           {this.getUserConnectedButtons(user, 'favorites')}
           <li role="separator" className="divider"></li>

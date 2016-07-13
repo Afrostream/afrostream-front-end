@@ -240,20 +240,27 @@ class ModalSponsors extends ModalComponent {
       return
     }
     return <div className="sponsors-list">
-      {sponsorsList.map((coupon, key) => (
-        <div className="sponsor row-fluid"
-             key={`sponsor-info-${key}`}>
-          <div className="col-md-8 text-left">
-            {coupon.get('code')}
-          </div>
-          <div className="col-md-4">
-            <div className="check pull-right"
-                 data-container=".panel"
-                 title={`${this.getTitle(coupon.get('status'))}`}>
-              <i className="zmdi zmdi-check"/>
+      {sponsorsList.map(
+        (coupon, key) => {
+          const couponOpts = coupon.get('couponsOpts')
+          if (!couponOpts) {
+            return
+          }
+          return <div className="sponsor row-fluid"
+                      key={`sponsor-info-${key}`}>
+            <div className="col-md-8 text-left">
+              {couponOpts.get('recipientEmail')}
+            </div>
+            <div className="col-md-4">
+              <div className="check pull-right"
+                   data-container=".panel"
+                   title={`${this.getTitle(coupon.get('status'))}`}>
+                <i className="zmdi zmdi-check"/>
+              </div>
             </div>
           </div>
-        </div>))
+        })
+
       }
     </div>
   }
@@ -265,9 +272,9 @@ class ModalSponsors extends ModalComponent {
 
     const sponsorsData = Billing.get('sponsorsList')
     const sponsorsList = sponsorsData && sponsorsData.get('coupons')
-    if (sponsorsList && sponsorsList.size >= maxSponsors) {
-      return <div className="instructions">{this.getTitle('max')}</div>
-    }
+    //if (sponsorsList && sponsorsList.size >= maxSponsors) {
+    //  return <div className="instructions">{this.getTitle('max')}</div>
+    //}
 
     const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
     let description = ''
@@ -318,6 +325,10 @@ class ModalSponsors extends ModalComponent {
 
   render () {
 
+    const {props:{Billing}} = this
+    const sponsorsData = Billing.get('sponsorsList')
+    const sponsorsList = sponsorsData && sponsorsData.get('coupons')
+
     let popupClass = classNames({
       'popup': this.props.modal
     })
@@ -345,7 +356,7 @@ class ModalSponsors extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{this.getTitle('title')}</h1>
+                      <h1>{`${this.getTitle('title')} ${sponsorsList && '(' + sponsorsList.size + '/' + maxSponsors + ')'}` }</h1>
                       <a ref="closeEl" className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">

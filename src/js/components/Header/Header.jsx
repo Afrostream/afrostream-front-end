@@ -74,14 +74,15 @@ class Header extends React.Component {
       || router.isActive('recherche')
       || router.isActive('compte')
       || router.isActive('couponregister')
+      || router.isActive('parrainage')
     }
 
     return (
       <Headroom tolerance={5} offset={200} classes={{
-          initial: 'animated',
-          pinned: 'slideDown',
-          unpinned: 'slideUp'
-        }}>
+        initial: 'animated',
+        pinned: 'slideDown',
+        unpinned: 'slideUp'
+      }}>
         <div className={classSet(sliderClasses)}>
           {planCode ? <SmartBanner {...apps.params}/> : ''}
           <div className="container-fluid">
