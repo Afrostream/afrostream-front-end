@@ -6,13 +6,11 @@ import config from '../../../config'
 if (canUseDOM) {
   var ga = require('react-ga')
 }
-export default function analytics (prepareFn) {
+export default function analytics () {
 
   return AnalyticsComponent =>
 
     class AnalyticsDecorator extends React.Component {
-
-      static prepareRoute = prepareFn
 
       static contextTypes = {
         location: PropTypes.object.isRequired,

@@ -6,6 +6,7 @@ import ModalLogin from './ModalLogin'
 import ModalSocial from './ModalSocial'
 import ModalCoupon from './ModalCoupon'
 import ModalCashwayPlan from './ModalCashwayPlan'
+import ModalSponsors from './ModalSponsors'
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -71,6 +72,11 @@ class ModalView extends React.Component {
       case 'strategy':
         return (
           <ModalSocial closable={closable} {...this.props} data={data}/>
+        )
+        break
+      case 'sponsorship':
+        return (
+          <ModalSponsors closable={closable} {...this.props} data={data}/>
         )
         break
       default:

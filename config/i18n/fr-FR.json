@@ -245,7 +245,8 @@
       "statusLabel": "Status",
       "periods": {
         "year": "An",
-        "month": "Mois"
+        "month": "Mois",
+        "day": "Jours"
       },
       "status": {
         "canceled": "Annulé",
@@ -380,5 +381,20 @@
   },
   "social": {
     "title": "Partager"
+  },
+  "sponsors": {
+    "title": "Mes filleuls",
+    "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
+    "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
+    "placeHolder": "Parrainer un ami",
+    "emailField": "Son email",
+    "waiting": "Votre ami n'a toujours pas activé son coupon",
+    "active": "Votre ami à validé son coupon",
+    "error": "Vous ne pouvez plus parrainer actuellement.",
+    "max": "Vous avez atteint le nombre maximum de filleuls",
+    "validation": {
+      "email": "Doit etre un email valide",
+      "empty": "est requis"
+    }
   }
 }

@@ -8,9 +8,9 @@ import fastly from 'fastly'
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-if (process.env.NODE_ENV === 'development') {
-  pem.createCertificate({days:1, selfSigned:true}, (err, {serviceKey, certificate}) => {
-      https.createServer({key: serviceKey, cert: certificate}, app).listen(443)
+if (process.env.NODE_ENV === 'development' && process.env.USER === 'marc') {
+  pem.createCertificate({days: 1, selfSigned: true}, (err, {serviceKey, certificate}) => {
+    https.createServer({key: serviceKey, cert: certificate}, app).listen(443)
   });
 }
 

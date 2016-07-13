@@ -6,7 +6,7 @@ import SideBar from './SideBar/SideBar'
 import AlertMessage from './Alert/AlertMessage'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
-import { metasData, analytics, fbTracking } from '../decorators'
+import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -15,6 +15,7 @@ if (process.env.BROWSER) {
 
 @metasData()
 @analytics()
+@fbSDK()
 @fbTracking()
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {

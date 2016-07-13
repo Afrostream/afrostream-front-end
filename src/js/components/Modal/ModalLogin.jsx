@@ -54,7 +54,7 @@ class ModalLogin extends ModalComponent {
   }
 
   isValid () {
-    let valid = _.filter(this.state.errors, (value, key) => {
+    let valid = _.filter(this.state.errors, (value) => {
       return value
     })
     return !valid.length

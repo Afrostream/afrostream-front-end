@@ -87,6 +87,8 @@ const client = {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
   },
   facebook: {
+    appId: '828887693868980',
+    sdkVersion: 'v2.6',
     analyticsKey: process.env.FB_TRACKING_ID || '1594872720779391'
   },
   apiClient: {
@@ -118,6 +120,10 @@ const client = {
   },
   carousel: {
     interval: 10000
+  },
+  sponsors: {
+    maxSponsors: 5,
+    couponsCampaignBillingUuid: 'a94bb541-090d-44b2-b9d2-6e557c212566'
   },
   intercom: {
     url: 'https://widget.intercom.io/widget/',

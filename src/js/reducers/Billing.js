@@ -70,18 +70,18 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Billing.getCouponCampaigns](state, {res}) {
+  [ActionTypes.Billing.getCouponCampaigns](state, {couponsCampaignBillingUuid = 'coupon', res}) {
 
     if (!res) {
       return state
     }
     const data = res.body
     return state.merge({
-      ['couponcampaigns']: data
+      [`coupons/${couponsCampaignBillingUuid}`]: data
     })
   },
 
-  [ActionTypes.Billing.create](state, {res}) {
+  [ActionTypes.Billing.createCoupon](state, {res}) {
 
     if (!res) {
       return state
@@ -89,6 +89,18 @@ export default createReducer(initialState, {
     const data = res.body
     return state.merge({
       ['coupon']: data
+
+    })
+  },
+
+  [ActionTypes.Billing.sponsorsList](state, {res}) {
+
+    if (!res) {
+      return state
+    }
+    const data = res.body
+    return state.merge({
+      ['sponsorsList']: data
     })
   }
 })

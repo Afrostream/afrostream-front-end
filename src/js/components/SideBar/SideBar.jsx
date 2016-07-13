@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
 import { Link } from 'react-router'
@@ -23,7 +24,6 @@ class SideBar extends React.Component {
   toggleSideBar (e) {
     const {
       props: {
-        dispatch,
         Event
       }
     } = this
@@ -49,9 +49,8 @@ class SideBar extends React.Component {
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
           <li><Link to="/compte">Mon compte</Link></li>
-          <li><Link to="/select-plan/afrostreamgift/checkout" className="sidebar-nav_yellow">Offrir un cadeau</Link>
-          </li>
           {this.getUserConnectedButtons(user, 'favorites')}
+          {this.getUserConnectedButtons(user, 'sponsorship')}
           <li role="separator" className="divider"></li>
           <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
         </ul>
@@ -74,6 +73,9 @@ class SideBar extends React.Component {
     switch (type) {
       case 'favorites':
         el = ( <li><Link to="/favoris">Mes favoris</Link></li>)
+        break
+      case 'sponsorship':
+        el = ( <li><Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link></li>)
         break
       default:
         el = ''

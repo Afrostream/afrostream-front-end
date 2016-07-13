@@ -11,7 +11,7 @@ const config = _.merge(
       metas: [
         {
           property: 'fb:app_id',
-          content: '828887693868980'
+          content: client.facebook.appId
         },
         {
           name: 'twitter:card',

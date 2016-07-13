@@ -108,6 +108,7 @@ export function getMenu () {
         }
       }
     }
+
     return async api => ({
       type: ActionTypes.Category.getMenu,
       res: await api({path: `/api/categorys/menu`})
