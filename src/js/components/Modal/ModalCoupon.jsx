@@ -50,6 +50,7 @@ class ModalCoupon extends ModalComponent {
 
     const user = User.get('user')
     const coupon = Billing.get('coupon')
+
     const billingInfo = {
       email: user.get('email'),
       id: user.get('_id'),
@@ -154,9 +155,9 @@ class ModalCoupon extends ModalComponent {
 
     if (this.state.signInOrUp) {
       return (<div className="notloggedin mode">
-        <SignUpButton className="primary next" target="showSignup" to={null} label={getI18n().signup.title}
+        <SignUpButton className="primary next" target="showSignup" label={getI18n().signup.title}
                       cb={::this.finalyse}/>
-        <SignUpButton className="primary next" target="showSignin" to={null} label={getI18n().signin.title}
+        <SignUpButton className="primary next" target="showSignin" label={getI18n().signin.title}
                       cb={::this.finalyse}/>
       </div>)
     }
