@@ -29,7 +29,7 @@ class ModalCoupon extends ModalComponent {
 
   componentDidMount () {
     const {
-      props: {dispatch, location}
+      props: {location}
     } = this
     let {query} = location
     let code = query && query.code
@@ -47,14 +47,12 @@ class ModalCoupon extends ModalComponent {
 
     const {
       props: {
-        dispatch,
-        Billing
+        dispatch
       }
     } = this
 
     const self = this
     let errorText = self.getTitle('global')
-    const coupon = Billing.get('coupon')
 
     let formData = {
       billingProviderName: 'afr',
@@ -67,13 +65,11 @@ class ModalCoupon extends ModalComponent {
     })
 
     return await dispatch(BillingActionCreators.validate(formData)).then(({res:{body:{coupon = {}}}}) => {
-
       if (coupon && coupon.status === 'waiting') {
         dispatch(ModalActionCreators.close())
         self.props.history.push(`/couponregister`)
       }
       else if (coupon && coupon.status !== 'waiting') {
-
         errorText = self.getTitle('couponInvalid')
       }
 
