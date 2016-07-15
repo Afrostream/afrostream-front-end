@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import {merge} from 'lodash'
+import { merge } from 'lodash'
 import webpackConfig from './webpack.config'
 import config from '../config'
 import path from 'path'
@@ -37,7 +37,7 @@ clientConfig.plugins.push(
   //})
 )
 
-clientConfig.module.loaders[0].loaders.unshift('react-hot')
+clientConfig.module.loaders[0].loaders.unshift('react-hot-loader/webpack')
 
 //
 // Configuration for the server-side bundle (server.js)

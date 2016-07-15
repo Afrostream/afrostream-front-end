@@ -2,28 +2,24 @@ import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import { Link } from 'react-router'
-import * as ModalActionCreators from '../../actions/modal'
+import * as UserActionCreators from '../../actions/user'
 import * as BillingActionCreators from '../../actions/billing'
 import ModalComponent from './ModalComponent'
-import config from '../../../../config'
 import { getI18n } from '../../../../config/i18n'
 import MobileDetect from 'mobile-detect'
+import SignUpButton from '../User/SignUpButton'
 import { withRouter } from 'react-router'
 
-const {oauth2} = config
-
-if (process.env.BROWSER) {
-  require('./ModalLogin.less')
-}
-
-@connect(({Billing}) => ({Billing}))
+@connect(({Billing, User}) => ({Billing, User}))
 class ModalCoupon extends ModalComponent {
 
   constructor (props) {
     super(props)
     this.state = {
       success: false,
-      loading: false
+      loading: false,
+      coupon: null,
+      signInOrUp: null
     }
   }
 
@@ -42,17 +38,50 @@ class ModalCoupon extends ModalComponent {
     })
   }
 
+  async finalyse () {
+
+    const {
+      props: {
+        User,
+        Billing,
+        dispatch
+      }
+    } = this
+
+    const user = User.get('user')
+    const coupon = Billing.get('coupon')
+    const billingInfo = {
+      email: user.get('email'),
+      id: user.get('_id'),
+      internalPlanUuid: coupon.get('internalPlan').get('internalPlanUuid'),
+      billingProviderName: coupon.get('campaign').get('provider').get('providerName'),
+      firstName: user.get('firstName'),
+      lastName: user.get('lastName'),
+      subOpts: {
+        couponCode: coupon.get('code')
+      }
+    }
+
+    return await dispatch(BillingActionCreators.subscribe(billingInfo))
+  }
+
+  handleClose (e) {
+    super.handleClose(e)
+    this.props.history.push(`/`)
+  }
+
   async handleSubmit (event) {
     event.preventDefault()
 
     const {
       props: {
+        User,
         dispatch
       }
     } = this
 
     const self = this
-    let errorText = self.getTitle('global')
+    const user = User.get('user')
 
     let formData = {
       billingProviderName: 'afr',
@@ -61,34 +90,48 @@ class ModalCoupon extends ModalComponent {
 
     this.setState({
       loading: true,
-      error: ''
+      error: '',
+      internalPlanUuid: null,
+      providerName: null
     })
 
-    return await dispatch(BillingActionCreators.validate(formData)).then(({res:{body:{coupon = {}}}}) => {
-      if (coupon && coupon.status === 'waiting') {
-        dispatch(ModalActionCreators.close())
-        self.props.history.push(`/couponregister`)
-      }
-      else if (coupon && coupon.status !== 'waiting') {
-        errorText = self.getTitle('couponInvalid')
-      }
-
-      this.setState({
-        loading: false,
-        error: errorText
+    //Validate coupon
+    return await dispatch(BillingActionCreators.validate(formData))
+      .then(({
+        res:{
+          body:{
+            coupon
+          }
+        }
+      }) => {
+        //coupon valid
+        if (coupon && coupon.status === 'waiting') {
+          if (!user) {
+            return
+          }
+          return this.finalyse()
+        }
+        //coupon invalid
+        throw new Error(self.getTitle('couponInvalid'))
       })
-
-    }).catch(({response:{body:{error}}}) => {
-      if (error === 'NOT FOUND') {
-
-        errorText = self.getTitle('couponInvalid')
-
+      //Get updated profile
+      .then(()=> {
         this.setState({
           loading: false,
-          error: errorText
+          signInOrUp: !user,
+          success: user
         })
-      }
-    })
+        return dispatch(UserActionCreators.getProfile())
+      })
+      .catch((err) => {
+        console.log('Error coupon ', err)
+        this.setState({
+          success: false,
+          loading: false,
+          signInOrUp: false,
+          error: err.message || err.error || self.getTitle('couponInvalid')
+        })
+      })
   }
 
   getTitle (key = 'title') {
@@ -102,6 +145,22 @@ class ModalCoupon extends ModalComponent {
   }
 
   getForm () {
+    if (this.state.success) {
+      return (<div className="notloggedin mode">
+        <div className="instructions">{this.getTitle('successText')}</div>
+        <button className="primary next" onClick={::this.handleClose}>{this.getTitle('next')}</button>
+      </div>)
+    }
+
+    if (this.state.signInOrUp) {
+      return (<div className="notloggedin mode">
+        <SignUpButton className="primary next" target="showSignup" to={null} label={getI18n().signup.title}
+                      cb={::this.finalyse}/>
+        <SignUpButton className="primary next" target="showSignin" to={null} label={getI18n().signin.title}
+                      cb={::this.finalyse}/>
+      </div>)
+    }
+
     if (this.state.loading) {
       return (<div className="loading mode">
         <div className="spinner spin-container">
@@ -116,10 +175,6 @@ class ModalCoupon extends ModalComponent {
           <div className="spin-message"/>
         </div>
       </div>)
-    }
-
-    if (this.state.success) {
-      return (<div />)
     }
 
     let formTemplate = this.getRedeemCoupon()

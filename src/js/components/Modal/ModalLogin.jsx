@@ -177,11 +177,12 @@ class ModalLogin extends ModalComponent {
       loading: false
     })
     if (this.props.type !== 'showReset') {
-      dispatch(UserActionCreators.getProfile())
-      dispatch(ModalActionCreator.close())
-      if (cb) {
-        cb()
-      }
+      dispatch(UserActionCreators.getProfile()).then(()=> {
+        dispatch(ModalActionCreator.close())
+        if (cb) {
+          cb()
+        }
+      })
     } else {
       dispatch(IntercomActionCreators.createIntercom())
     }
@@ -361,7 +362,7 @@ class ModalLogin extends ModalComponent {
                        data-strategy={strategy.name}
                        title={title}
                        className={`zocial ${strategy.name}`}
-            {...inputAttributes}
+                       {...inputAttributes}
                        dir="ltr">
             <span>{title}</span>
           </div>)

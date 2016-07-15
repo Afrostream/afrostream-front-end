@@ -8,7 +8,7 @@ const initialState = Immutable.fromJS({
   'favorites/movies': null
 })
 
-function mergeUser(user, data) {
+function mergeUser (user, data) {
   if (!user) {
     return data
   }
@@ -17,21 +17,21 @@ function mergeUser(user, data) {
 
 export default createReducer(initialState, {
 
-  [ActionTypes.User.getProfile](state, { user}) {
+  [ActionTypes.User.getProfile](state, {user}) {
     return state.merge({
       ['user']: mergeUser(state.get('user'), user),
       ['pending']: false
     })
   },
 
-  [ActionTypes.User.pendingUser](state, { pending }) {
+  [ActionTypes.User.pendingUser](state, {pending}) {
     return state.merge({
       ['pending']: pending
     })
   },
 
   // #### RECOMMENDATIONS ####
-  [ActionTypes.User.getRecommendations](state, { videoId, res }) {
+  [ActionTypes.User.getRecommendations](state, {videoId, res}) {
     if (!res) {
       return state
     }
@@ -41,7 +41,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.User.rateVideo](state, { videoId, res }) {
+  [ActionTypes.User.rateVideo](state, {videoId, res}) {
     if (!res) {
       return state
     }
@@ -51,7 +51,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.User.trackVideo](state, { videoId, res }) {
+  [ActionTypes.User.trackVideo](state, {videoId, res}) {
     if (!res) {
       return state
     }
@@ -61,7 +61,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.User.getHistory](state, { res }) {
+  [ActionTypes.User.getHistory](state, {res}) {
     if (!res) {
       return state
     }
@@ -71,7 +71,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.User.getVideoTracking](state, { videoId, res }) {
+  [ActionTypes.User.getVideoTracking](state, {videoId, res}) {
     if (!res) {
       return state
     }
@@ -82,7 +82,7 @@ export default createReducer(initialState, {
   },
 
   // #### FAVORITES ####
-  [ActionTypes.User.getFavoritesMovies](state, { res }) {
+  [ActionTypes.User.getFavoritesMovies](state, {res}) {
     if (!res) {
       return state
     }
@@ -92,7 +92,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.User.getFavoritesEpisodes](state, { res }) {
+  [ActionTypes.User.getFavoritesEpisodes](state, {res}) {
     if (!res) {
       return state
     }
@@ -102,7 +102,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.User.setFavoritesMovies](state, { res }) {
+  [ActionTypes.User.setFavoritesMovies](state, {res}) {
     if (!res) {
       return state
     }
@@ -111,7 +111,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.User.setFavoritesEpisodes](state, { res }) {
+  [ActionTypes.User.setFavoritesEpisodes](state, {res}) {
     if (!res) {
       return state
     }
@@ -121,7 +121,7 @@ export default createReducer(initialState, {
   },
   // ####
 
-  [ActionTypes.User.logOut](state, { }) {
+  [ActionTypes.User.logOut](state, {}) {
     return state.merge({
       ['user']: null
     })

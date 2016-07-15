@@ -100,7 +100,7 @@ const webpackConfig = {
       },
       {
         test: /\.js$/, // include .js files
-        loader: 'babel-loader',
+        loaders: ['babel-loader'],
         include: [
           path.join(__dirname, '../node_modules/afrostream-player/src/js/'),
           path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-chromecast/es5/js'),

@@ -11,8 +11,6 @@ import FavoritesPage from './components/Favorites/FavoritesPage'
 import SponsorsPage from './components/Sponsors/SponsorsPage'
 import SearchPage from './components/Search/SearchPage'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
-import RedeemCoupon from './components/RedeemCoupon/RedeemCoupon'
-import CouponRegister from './components/RedeemCoupon/CouponRegister'
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
 import * as Blog from './components/Blog'
@@ -72,8 +70,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-reset`} name="reset" path="reset" component={ResetPasswordPage}/>,
     <Route key={`${lang}-signin`} name="signin" path="signin" component={LoginPage}/>,
     <Route key={`${lang}-signup`} name="signup" path="signup" component={LoginPage}/>,
-    <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={RedeemCoupon}/>,
-    <Route key={`${lang}-couponregister`} name="couponregister" path="couponregister" component={CouponRegister}/>,
+    <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={LoginPage}/>,
     <Route key={`${lang}-login`} name="login" path="login" component={LoginPage}/>,
     <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
     <Route key={`${lang}-blog`} name="blog" path="blog" component={Blog.PostList}>

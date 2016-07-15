@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
 import { Link } from 'react-router'
-import classSet from 'classnames'
 import config from '../../../../config'
 
 const {featuresFlip} = config

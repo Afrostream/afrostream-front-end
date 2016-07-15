@@ -172,7 +172,7 @@ export function getProfile () {
       await actionDispatcher(OAuthActionCreators.getIdToken())
       const user = getState().User.get('user')
       return async () => {
-        return mergeProfile({
+        return await mergeProfile({
           type: ActionTypes.User.getProfile,
           user: null
         }, getState, actionDispatcher)
