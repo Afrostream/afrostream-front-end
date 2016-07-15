@@ -3,25 +3,15 @@ import SignUpButton from '../User/SignUpButton'
 import { prepareRoute } from '../../decorators'
 import config from '../../../../config'
 import * as EventActionCreators from '../../actions/event'
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import scriptLoader from '../../lib/script-loader'
 import Player from '../Player/Player'
 import { withRouter } from 'react-router'
-import _ from 'lodash'
 
-const {cashwayApi, player} = config
+const {cashwayApi} = config
 
 if (process.env.BROWSER) {
   require('./CashwayPage.less')
 }
-
-if (canUseDOM) {
-  //require('afrostream-player/libs/video.js')
-  //require('videojs-youtube');
-  //require('imports?define=>false!videojs-youtube');
-  //require('afrostream-player/dist/afrostream-player.js')
-}
-
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
@@ -74,7 +64,7 @@ class CashwayPage extends React.Component {
     return (
       <div className="cashway-page">
         <div className="container brand-bg-alpha">
-          <Player src={source} options={{autoplay:false}}/>
+          <Player src={source} options={{autoplay: false}}/>
           <section className="cashway-info">
             <h2>Paiement en espèces avec <img src="/images/payment/cashway-inline.png" width="100"/></h2>
             <h3>Comment ça marche</h3>

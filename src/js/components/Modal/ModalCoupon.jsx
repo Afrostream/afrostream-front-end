@@ -57,7 +57,7 @@ class ModalCoupon extends ModalComponent {
     const coupon = Billing.get('coupon')
 
     let formData = {
-      providerName: 'afr',
+      billingProviderName: 'afr',
       coupon: this.refs.coupon.value
     }
 

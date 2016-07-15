@@ -39,7 +39,7 @@ class CashwayForm extends React.Component {
         }
 
         return dispatch(BillingActionCreators.createCoupon({
-          billingProviderName: providerName,
+          billingProviderName: billingProviderName,
           lastName: billingInfo.lastName,
           firstName: billingInfo.firstName,
           couponsCampaignBillingUuid: couponCampaign.couponsCampaignBillingUuid
@@ -51,7 +51,7 @@ class CashwayForm extends React.Component {
           throw new Error('Error on create coupon')
         }
         return {
-          billingProviderName: providerName,
+          billingProviderName: billingProviderName,
           subOpts: {
             couponCode: coupon.code
           }

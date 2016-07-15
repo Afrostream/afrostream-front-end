@@ -83,7 +83,7 @@ export function createCoupon (data) {
  *
  *
  * @param data {
- *  "providerName" :"afr",
+ *  "billingProviderName" :"afr",
  *  "couponCampaignBillingUuid" : "a94bb541-090d-44b2-b9d2-6e557c212566"
  * }
  * @returns {Function}
