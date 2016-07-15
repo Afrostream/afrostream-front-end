@@ -36,7 +36,8 @@ const client = {
     paypal: true,
     cashway: true,
     braintree: true,
-    stripe: false
+    stripe: false,
+    sponsorship: false
   },
   /**
    * APPS

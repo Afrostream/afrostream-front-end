@@ -5,6 +5,9 @@ import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
 import { Link } from 'react-router'
 import classSet from 'classnames'
+import config from '../../../../config'
+
+const {featuresFlip} = config
 
 if (process.env.BROWSER) {
   require('./SideBar.less')
@@ -75,7 +78,8 @@ class SideBar extends React.Component {
         el = ( <li><Link to="/favoris">Mes favoris</Link></li>)
         break
       case 'sponsorship':
-        el = ( <li><Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link></li>)
+        el = featuresFlip.sponsorship && (
+            <li><Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link></li>)
         break
       default:
         el = ''
