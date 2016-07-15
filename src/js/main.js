@@ -22,6 +22,7 @@ if (canUseDOM) {
   require('bootstrap')
   require('jquery.payment')
   require('./lib/customEventPolyfill')
+  require('./lib/localStoragePolyfill')
 }
 
 const history = useScroll(createHistory)()
