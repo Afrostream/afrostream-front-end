@@ -12,14 +12,13 @@ class SignUpButton extends React.Component {
 
   render () {
     return (<button className={this.props.className} type=" button" onClick={::this.showLock}
-                    dangerouslySetInnerHTML={{__html:  this.props.label}}/>)
+                    dangerouslySetInnerHTML={{__html: this.props.label}}/>)
   }
 
   showLock () {
     const {
       props: {
         User,
-        history,
         dispatch,
         router
       }
