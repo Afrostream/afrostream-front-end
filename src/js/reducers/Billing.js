@@ -45,7 +45,7 @@ export default createReducer(initialState, {
     }
     const data = isGift ? {} : res.body
     return state.merge({
-      ['subscriptions']: mergeData(state.get('subscriptions'), data)
+      ['subscriptions']: mergeData(state.get('subscriptions'), [data])
     })
   },
 

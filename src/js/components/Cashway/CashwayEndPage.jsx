@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Immutable from 'immutable'
 import { prepareRoute } from '../../decorators'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { getI18n } from '../../../../config/i18n'
@@ -40,7 +39,7 @@ class CashwayEndPage extends React.Component {
       }
     } = this
 
-    dispatch(ModalActionCreators.open({target: 'cashway'}))
+    dispatch(ModalActionCreators.open({target:'cashway'}))
   }
 
   render () {
@@ -57,16 +56,9 @@ class CashwayEndPage extends React.Component {
       return <div />
     }
 
-    let cashwaySubscription
-
-    if (subscriptionsList instanceof Immutable.Map) {
-      cashwaySubscription = subscriptionsList
-    }
-    else {
-      cashwaySubscription = subscriptionsList.find((subscription) => {
-        return subscription.get('provider').get('providerName') === 'cashway' && subscription.get('subStatus') === 'future'
-      })
-    }
+    const cashwaySubscription = subscriptionsList.find((subscription) => {
+      return subscription.get('provider').get('providerName') === 'cashway' && subscription.get('subStatus') === 'future'
+    })
 
     if (!cashwaySubscription) {
       return <div />
@@ -97,7 +89,7 @@ class CashwayEndPage extends React.Component {
                 <div className="row-fluid">
                   <div className="col-md-12">
                     <div className="container_title">{getI18n().payment.cashway.rdv}(<a href="#"
-                                                                                        onClick={::this.showPlan}>{getI18n().payment.cashway.showMap}</a>)
+                                                                                   onClick={::this.showPlan}>{getI18n().payment.cashway.showMap}</a>)
                     </div>
                   </div>
                 </div>
