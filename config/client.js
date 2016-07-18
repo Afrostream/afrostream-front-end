@@ -123,7 +123,7 @@ const client = {
     interval: 10000
   },
   sponsors: {
-    maxSponsors: 5,
+    maxSponsors: 10,
     couponsCampaignBillingUuid: 'a94bb541-090d-44b2-b9d2-6e557c212566'
   },
   intercom: {

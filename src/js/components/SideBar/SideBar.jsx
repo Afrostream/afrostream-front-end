@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
 import { Link } from 'react-router'
-import classSet from 'classnames'
 import config from '../../../../config'
 
 const {featuresFlip} = config
@@ -64,9 +62,14 @@ class SideBar extends React.Component {
   getUserConnectedButtons (user, type) {
 
     let planCode
-
+    let canSponsorshipSubscription = false
     if (user) {
       planCode = user.get('planCode')
+      const subscriptionsStatus = user.get('subscriptionsStatus')
+      if (subscriptionsStatus) {
+        const subscriptions = subscriptionsStatus.get('subscriptions')
+        canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('provider').get('providerName') !== 'afr').size)
+      }
     }
 
     if (!planCode) {
@@ -78,7 +81,7 @@ class SideBar extends React.Component {
         el = ( <li><Link to="/favoris">Mes favoris</Link></li>)
         break
       case 'sponsorship':
-        el = featuresFlip.sponsorship && (
+        el = featuresFlip.sponsorship && canSponsorshipSubscription && (
             <li><Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link></li>)
         break
       default:

@@ -59,6 +59,9 @@ class LoginPage extends React.Component {
       case '/parrainage':
         method = 'sponsorship'
         break
+      case '/coupon':
+        method = 'redeemCoupon'
+        break
       default :
         method = 'show'
         break

@@ -373,7 +373,9 @@
   "coupon": {
     "title": "Use your coupon",
     "action": "Submit",
+    "next": "Next",
     "couponPlaceholder": "Coupon",
+    "successText": "Votre coupon est validé, vous pouvez profiter pleinement de votre compte Afrostream",
     "headerText": "Enter coupon code to start your Afrostream subscription.",
     "couponInvalid": "The coupon that you submitted is incorrect or has already been used. Please try again with another coupon.",
     "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe."

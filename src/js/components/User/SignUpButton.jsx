@@ -29,21 +29,29 @@ class SignUpButton extends React.Component {
       return router.push(this.props.to)
     }
 
-    dispatch(ModalActionCreators.open({target: 'showSignup', donePath: this.props.to}))
+    dispatch(ModalActionCreators.open({
+      target: this.props.target,
+      donePath: this.props.to,
+      cb: this.props.cb
+    }))
   }
 
 }
 
 SignUpButton.propTypes = {
+  target: React.PropTypes.string,
   label: React.PropTypes.string,
   className: React.PropTypes.string,
-  to: React.PropTypes.string
+  to: React.PropTypes.string,
+  cb: React.PropTypes.func
 }
 
 SignUpButton.defaultProps = {
+  target: 'showSignup',
   label: '',
   className: 'subscribe-button',
-  to: '/'
+  to: '/',
+  cb: null
 }
 
 SignUpButton.propTypes = {

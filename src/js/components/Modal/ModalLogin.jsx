@@ -166,7 +166,7 @@ class ModalLogin extends ModalComponent {
     dispatch(OauthActionCreator.strategy({strategy, path})).then(::this.onSuccess).catch(::this.onError)
   }
 
-  onSuccess () {
+  async onSuccess () {
     const {
       dispatch,
       cb
@@ -177,8 +177,8 @@ class ModalLogin extends ModalComponent {
       loading: false
     })
     if (this.props.type !== 'showReset') {
-      dispatch(UserActionCreators.getProfile())
-      dispatch(ModalActionCreator.close())
+      await dispatch(UserActionCreators.getProfile())
+      await dispatch(ModalActionCreator.close())
       if (cb) {
         cb()
       }
@@ -361,7 +361,7 @@ class ModalLogin extends ModalComponent {
                        data-strategy={strategy.name}
                        title={title}
                        className={`zocial ${strategy.name}`}
-            {...inputAttributes}
+                       {...inputAttributes}
                        dir="ltr">
             <span>{title}</span>
           </div>)
