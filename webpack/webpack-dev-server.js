@@ -17,8 +17,8 @@ const serverOptions = {
     watch: true,
     progress: true,
     hotComponents: true,
-    //devtool: 'eval',
-    //historyApiFallback: true,
+    devServer: true,
+    hotComponents: true,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000

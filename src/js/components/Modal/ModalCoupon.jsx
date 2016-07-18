@@ -38,32 +38,26 @@ class ModalCoupon extends ModalComponent {
     })
   }
 
-  async finalyse () {
-
+  finalyse () {
     const {
       props: {
-        User,
-        Billing,
         dispatch
       }
     } = this
 
-    const user = User.get('user')
-    const coupon = Billing.get('coupon')
-
-    const billingInfo = {
-      email: user.get('email'),
-      id: user.get('_id'),
-      internalPlanUuid: coupon.get('internalPlan').get('internalPlanUuid'),
-      billingProviderName: coupon.get('campaign').get('provider').get('providerName'),
-      firstName: user.get('firstName'),
-      lastName: user.get('lastName'),
-      subOpts: {
-        couponCode: coupon.get('code')
-      }
-    }
-
-    return await dispatch(BillingActionCreators.subscribe(billingInfo))
+    return dispatch(BillingActionCreators.couponActivate())
+      .then(()=> {
+        return dispatch(UserActionCreators.getProfile())
+      }).then(()=> {
+        return this.props.history.push('/')
+      }).catch((err)=> {
+        this.setState({
+          success: false,
+          loading: false,
+          signInOrUp: false,
+          error: err.message || err.error || this.getTitle('couponInvalid')
+        })
+      })
   }
 
   handleClose (e) {
@@ -97,7 +91,7 @@ class ModalCoupon extends ModalComponent {
     })
 
     //Validate coupon
-    return await dispatch(BillingActionCreators.validate(formData))
+    return await dispatch(BillingActionCreators.couponValidate(formData))
       .then(({
         res:{
           body:{
@@ -155,9 +149,9 @@ class ModalCoupon extends ModalComponent {
 
     if (this.state.signInOrUp) {
       return (<div className="notloggedin mode">
-        <SignUpButton className="primary next" target="showSignup" label={getI18n().signup.title}
+        <SignUpButton className="primary next" target="showSignup" to="/" label={getI18n().signup.title}
                       cb={::this.finalyse}/>
-        <SignUpButton className="primary next" target="showSignin" label={getI18n().signin.title}
+        <SignUpButton className="primary next" target="showSignin" to="/" label={getI18n().signin.title}
                       cb={::this.finalyse}/>
       </div>)
     }

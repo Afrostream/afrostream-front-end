@@ -2,8 +2,6 @@ import ActionTypes from '../consts/ActionTypes'
 import * as UserActionCreators from './user'
 import { push } from 'redux-router'
 import { getToken } from '../lib/storage'
-import config from '../../../config'
-const {apiClient} = config
 
 export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {

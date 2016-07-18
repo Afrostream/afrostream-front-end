@@ -98,18 +98,18 @@ const webpackConfig = {
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
       },
-      {
-        test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
-        include: [
-          path.join(__dirname, '../node_modules/afrostream-player/src/js/'),
-          path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-chromecast/es5/js'),
-          path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-youtube/es5')
-        ],
-        query: {
-          presets: ['es2015', 'stage-0']
-        }
-      },
+      //{
+      //  test: /\.js$/, // include .js files
+      //  loaders: ['babel'],
+      //  include: [
+      //    path.join(__dirname, '../node_modules/afrostream-player/src/js/'),
+      //    path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-chromecast/es5/js'),
+      //    path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-youtube/es5')
+      //  ],
+      //  query: {
+      //    presets: ['es2015', 'stage-0']
+      //  }
+      //},
       {
         test: /\.json$/,
         //include: [

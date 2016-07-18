@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes'
+import * as UserActionCreators from './user'
 /**
  * Get subscriptions list for user
  * @returns {Function}
@@ -52,12 +53,44 @@ export function cancelSubscription (subscription) {
  * @param data
  * @returns {Function}
  */
-export function validate (data) {
+export function couponValidate (data) {
   return (dispatch, getState) => {
     return async api => ({
-      type: ActionTypes.Billing.validate,
+      type: ActionTypes.Billing.couponValidate,
       res: await api({path: `/api/billings/coupons`, params: data})
     })
+  }
+}
+/**
+ * validate an afrostream coupon
+ *
+ * @param data
+ * @returns {Function}
+ */
+export function couponActivate () {
+  return (dispatch, getState, actionDispatcher) => {
+
+    const user = getState().User.get('user')
+    const coupon = getState().Billing.get('coupon')
+
+    const billingInfo = {
+      email: user.get('email'),
+      id: user.get('_id'),
+      internalPlanUuid: coupon.get('internalPlan').get('internalPlanUuid'),
+      billingProviderName: coupon.get('campaign').get('provider').get('providerName'),
+      firstName: user.get('firstName'),
+      lastName: user.get('lastName'),
+      subOpts: {
+        couponCode: coupon.get('code')
+      }
+    }
+    return async () => {
+      await actionDispatcher(this.subscribe(billingInfo))
+      return ({
+        type: ActionTypes.Billing.couponActivate
+      })
+    }
+
   }
 }
 /**

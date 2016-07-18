@@ -62,9 +62,14 @@ class SideBar extends React.Component {
   getUserConnectedButtons (user, type) {
 
     let planCode
-
+    let canSponsorshipSubscription = false
     if (user) {
       planCode = user.get('planCode')
+      const subscriptionsStatus = user.get('subscriptionsStatus')
+      if (subscriptionsStatus) {
+        const subscriptions = subscriptionsStatus.get('subscriptions')
+        canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('provider').get('providerName') !== 'afr').size)
+      }
     }
 
     if (!planCode) {
@@ -76,7 +81,7 @@ class SideBar extends React.Component {
         el = ( <li><Link to="/favoris">Mes favoris</Link></li>)
         break
       case 'sponsorship':
-        el = featuresFlip.sponsorship && (
+        el = featuresFlip.sponsorship && canSponsorshipSubscription && (
             <li><Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link></li>)
         break
       default:

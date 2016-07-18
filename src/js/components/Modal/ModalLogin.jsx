@@ -166,7 +166,7 @@ class ModalLogin extends ModalComponent {
     dispatch(OauthActionCreator.strategy({strategy, path})).then(::this.onSuccess).catch(::this.onError)
   }
 
-  onSuccess () {
+  async onSuccess () {
     const {
       dispatch,
       cb
@@ -177,12 +177,11 @@ class ModalLogin extends ModalComponent {
       loading: false
     })
     if (this.props.type !== 'showReset') {
-      dispatch(UserActionCreators.getProfile()).then(()=> {
-        dispatch(ModalActionCreator.close())
-        if (cb) {
-          cb()
-        }
-      })
+      await dispatch(UserActionCreators.getProfile())
+      await dispatch(ModalActionCreator.close())
+      if (cb) {
+        cb()
+      }
     } else {
       dispatch(IntercomActionCreators.createIntercom())
     }

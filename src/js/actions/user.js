@@ -7,7 +7,6 @@ import _ from 'lodash'
 const mergeProfile = function (data, getState, actionDispatcher) {
 
   const token = getState().OAuth.get('token')
-  const coupon = getState().Billing.get('coupon')
   let donePath = getState().Modal.get('donePath')
 
   if (!token) {
@@ -25,7 +24,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         let planCode = userMerged.planCode
         let subscriptionsStatus = userMerged.subscriptionsStatus
         let status = subscriptionsStatus.status
-        if ((!planCode && !coupon.get('coupon'))) {
+        if (!planCode) {
           donePath = donePath || `/select-plan`
           if (status && status !== 'active') {
             donePath = `${donePath}/none/${status}`
