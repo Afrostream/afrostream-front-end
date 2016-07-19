@@ -78,11 +78,9 @@ export default function RenderStatic (req, res, layout, {payload}) {
           }
         }
 
-        const componentHtml = ReactDOMServer.renderToStaticMarkup(
+        const componentHtml = ReactDOMServer.renderToString(
           <Provider {...{store}}>
-            <ReduxRouter {...{...renderProps, location}} >
-              {routes}
-            </ReduxRouter>
+            <ReduxRouter {...{...renderProps, location}} childRoutes={routes}/>
           </Provider>
         )
 

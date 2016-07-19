@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import * as StaticActionCreators from '../../actions/static'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 @prepareRoute(async function ({store, route}) {
   await store.dispatch(StaticActionCreators.getComponentRoute(route))
@@ -14,22 +15,20 @@ class StaticComponent extends React.Component {
   }
 
   createMarkup () {
-    const {props: {Static, route}} = this
+    const {props: {Static, staticRoute}} = this
 
-    const contentObj = Static.get(route)
+    const contentObj = Static.get(staticRoute)
     let contentHtml = contentObj || ''
     return {__html: contentHtml}
   }
 
   render () {
-    return (
-      <div dangerouslySetInnerHTML={this.createMarkup()}/>
-    )
+    return <div dangerouslySetInnerHTML={this.createMarkup()}/>
   }
 }
 
 StaticComponent.propTypes = {
-  route: React.PropTypes.string.isRequired
+  staticRoute: React.PropTypes.string
 }
 
 export default StaticComponent

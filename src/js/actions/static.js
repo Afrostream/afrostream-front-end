@@ -10,3 +10,24 @@ export function getStatic (path) {
     })
   }
 }
+
+export function getComponentRoute (route) {
+  return (dispatch, getState) => {
+    let readyStatic = getState().Static.get(route)
+    if (readyStatic) {
+      console.log(`static ${route} already present in data store`)
+      return {
+        type: ActionTypes.Static.getComponentRoute,
+        route,
+        res: {
+          body: readyStatic.toJS()
+        }
+      }
+    }
+    return async api => ({
+      type: ActionTypes.Static.getComponentRoute,
+      route,
+      res: await api({local: true, path: route}).catch(notFound)
+    })
+  }
+}

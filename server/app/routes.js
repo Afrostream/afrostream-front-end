@@ -1,4 +1,4 @@
-import { proxy, avatar, sharing, log, statsd } from './api'
+import { proxy, avatar, sharing, log, statsd, component } from './api'
 import auth from './auth'
 import config from '../../config'
 import fs from 'fs'
@@ -131,6 +131,10 @@ export default function routes (app, buildPath) {
   // --------------------------------------------------
 
   app.use('/alive', alive)
+
+  // COMPONENTS
+  // --------------------------------------------------
+  app.use('/components', component)
 
   // BOOTSTRAP
   // --------------------------------------------------
