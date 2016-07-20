@@ -77,7 +77,8 @@ export function trackVideo (data, videoId) {
         path: `/api/users/${user.get('_id')}/videos/${videoId}`,
         method: 'PUT',
         params: postData,
-        legacy: true
+        legacy: true,
+        showLoader: false
       }).then(()=> {
         return {body: postData}
       })
