@@ -193,7 +193,6 @@ class PlayerComponent extends Component {
         key = 'bitrate'
         break
     }
-
     const selectedTrack = _.find(tracks, (track)=> {
       switch (type) {
         case 'caption' :
@@ -207,6 +206,10 @@ class PlayerComponent extends Component {
           break
       }
     })
+
+    if (!selectedTrack && type === 'video') {
+      return metrics.video.bandwidth
+    }
 
     return selectedTrack ? selectedTrack[key] : null
   }
@@ -250,6 +253,7 @@ class PlayerComponent extends Component {
       playerPosition: playerPosition
     }
 
+    this.player.youbora.plugin.data.media.bitrate = playerBitrate
     dispatch(RecoActionCreators.trackVideo(data, videoId))
     this.trackTimeout = setTimeout(::this.trackVideo, 60000)
   }
@@ -737,7 +741,8 @@ class PlayerComponent extends Component {
       media: {
         title: videoData.get('title'),
         duration: videoData.get('duration'),
-        isLive: isLive
+        isLive: isLive,
+        bitrate: 0
       },
       properties: {
         content_id: videoData.get('_id'),
