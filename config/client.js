@@ -124,7 +124,7 @@ const client = {
   },
   sponsors: {
     maxSponsors: 10,
-    couponsCampaignBillingUuid: 'a94bb541-090d-44b2-b9d2-6e557c212566'
+    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID || 'a94bb541-090d-44b2-b9d2-6e557c212566'
   },
   intercom: {
     url: 'https://widget.intercom.io/widget/',
