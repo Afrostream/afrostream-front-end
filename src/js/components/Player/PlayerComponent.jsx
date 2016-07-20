@@ -732,7 +732,7 @@ class PlayerComponent extends Component {
       }
     })
 
-    playerData.youbora = _.merge(playerData.youbora, {
+    playerData.youbora = _.merge(playerData.youbora || {}, {
       username: userId,
       media: {
         title: videoData.get('title'),
@@ -772,7 +772,10 @@ class PlayerComponent extends Component {
         })
       }
     )
-
+    //youbora data
+    if (player.youbora) {
+      player.youbora(playerData.youbora)
+    }
     player.on('firstplay', ::this.onFirstPlay)
     player.on('ended', ::this.clearTrackVideo)
     player.on('seeked', ::this.trackVideo)
