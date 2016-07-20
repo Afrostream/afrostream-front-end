@@ -211,6 +211,7 @@ const webpackConfig = {
         OAUTH_BOUYGUES_ENABLED: JSON.stringify(process.env.OAUTH_BOUYGUES_ENABLED),
         FB_TRACKING_ID: JSON.stringify(process.env.FB_TRACKING_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
+        YOUBORA_ID: JSON.stringify(process.env.YOUBORA_ID),
         SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID),
         SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
       }
