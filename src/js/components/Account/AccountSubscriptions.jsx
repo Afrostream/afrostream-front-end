@@ -95,7 +95,7 @@ class AccountSubscriptions extends React.Component {
                   <td>{internalPlan.get('description')}</td>
                   <td>{period}
                     <div className="progress">
-                      <div className="progress-bar progress-bar-info progress-bar-sm" role="progressbar"
+                      <div className="progress-bar progress-bar-info progress-bar-sm progress-bar-afr" role="progressbar"
                            aria-valuenow="70"
                            aria-valuemin="0" aria-valuemax="100" style={periodPercent}>
                       </div>
