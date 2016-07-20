@@ -56,7 +56,8 @@ const client = {
    * Front-End Server
    */
   externalsJs: [
-    '//www.gstatic.com/cv/js/sender/v1/cast_sender.js'
+    '//www.gstatic.com/cv/js/sender/v1/cast_sender.js',
+    '//smartplugin.youbora.com/v5/javascript/videojs5/5.1.3/sp.min.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
@@ -361,6 +362,12 @@ const client = {
         'title': 'Title',
         'subtitle': 'Subtitle'
       }
+    },
+    'youbora': {
+      'accountCode': process.env.YOUBORA_ID || 'afrostreamdev',
+      'enableAnalytics': true,
+      'httpSecure': true,
+      'transactionCode': 'front'
     },
     'techOrder': ['dash', 'html5', 'dashas']
   }

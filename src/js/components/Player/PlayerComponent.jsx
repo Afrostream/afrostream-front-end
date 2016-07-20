@@ -654,8 +654,9 @@ class PlayerComponent extends Component {
     playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
 
     let user = User.get('user')
+    let userId
     if (user) {
-      let userId = user.get('user_id')
+      userId = user.get('user_id')
       let token = OAuth.get('token')
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId]
       userId = _.find(splitUser, (val) => {
@@ -728,6 +729,18 @@ class PlayerComponent extends Component {
     playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot), {
       p2pConfig: {
         contentId: slugify(`${videoData.get('_id')}_${videoData.get('name')}`)
+      }
+    })
+
+    playerData.youbora = _.merge(playerData.youbora, {
+      username: userId,
+      media: {
+        title: videoData.get('title'),
+        duration: videoData.get('duration'),
+        isLive: isLive
+      },
+      properties: {
+        content_id: videoData.get('_id'),
       }
     })
     return playerData
