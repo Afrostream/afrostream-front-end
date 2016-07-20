@@ -118,6 +118,7 @@ export function logOut () {
     actionDispatcher({
       type: ActionTypes.User.logOut
     })
+    actionDispatcher(push('/'))
     return {
       type: ActionTypes.OAuth.logOut
     }
