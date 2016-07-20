@@ -5,6 +5,7 @@ import ModalComponent from './ModalComponent'
 import classNames from 'classnames'
 import config from '../../../../config'
 import { getI18n } from '../../../../config/i18n'
+import Immutable from 'immutable'
 //import Autosuggest from 'react-autosuggest'
 import * as BillingActionCreators from '../../actions/billing'
 import * as FBActionCreators from '../../actions/facebook'
@@ -335,7 +336,7 @@ class ModalSponsors extends ModalComponent {
 
     const {props:{Billing}} = this
     const sponsorsData = Billing.get('sponsorsList')
-    const sponsorsList = sponsorsData && sponsorsData.get('coupons')
+    const sponsorsList = sponsorsData && sponsorsData.get('coupons') || Immutable.fromJS([])
 
     let popupClass = classNames({
       'popup': this.props.modal
@@ -364,7 +365,7 @@ class ModalSponsors extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{`${this.getTitle('title')} ${sponsorsList && '(' + sponsorsList.size + '/' + maxSponsors + ')'}` }</h1>
+                      <h1>{`${this.getTitle('title')} ${sponsorsList && '(' + sponsorsList.size + '/' + maxSponsors + ')' }` }</h1>
                       <a ref="closeEl" className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
