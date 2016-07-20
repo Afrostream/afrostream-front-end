@@ -11,13 +11,7 @@ const serverOptions = {
     publicPath: devConfig.output.publicPath,
     hot: true,
     headers: {'Access-Control-Allow-Origin': '*'},
-    quiet: false,
-    noInfo: true,
-    cache: false,
-    watch: true,
     progress: true,
-    hotComponents: true,
-    devServer: true,
     hotComponents: true,
     watchOptions: {
       aggregateTimeout: 300,

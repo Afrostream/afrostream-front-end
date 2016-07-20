@@ -10,6 +10,7 @@ import BrowseGenrePage from './components/Browse/BrowseGenrePage'
 import FavoritesPage from './components/Favorites/FavoritesPage'
 import SponsorsPage from './components/Sponsors/SponsorsPage'
 import SearchPage from './components/Search/SearchPage'
+import SubmitMoviePage from './components/Movies/SubmitMoviePage'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
@@ -73,6 +74,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={LoginPage}/>,
     <Route key={`${lang}-login`} name="login" path="login" component={LoginPage}/>,
     <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
+    <Route key={`${lang}-submit-your-film`} name="submitYourFilm" path="submit-your-film" component={SubmitMoviePage}/>,
     <Route key={`${lang}-blog`} name="blog" path="blog" component={Blog.PostList}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
     </Route>,
