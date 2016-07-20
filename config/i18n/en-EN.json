@@ -394,15 +394,18 @@
     "title": "Partager"
   },
   "sponsors": {
-    "title": "Parrainez vos amis",
+    "title": "Mes amis parrainés",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
     "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
     "placeHolder": "Parrainer un ami",
     "emailField": "Son email",
-    "waiting": "Votre ami n'a toujours pas activé son coupon",
-    "active": "Votre ami à validé son coupon",
     "error": "Vous ne pouvez plus parrainer actuellement.",
-    "max": "Vous avez atteint le nombre maximum de filleuls",
+    "max": "Vous avez atteint le nombre maximum d'amis parrainés",
+    "status": {
+      "redeemed": "Votre ami à un compte Afrostream",
+      "active": "Votre ami à validé son coupon",
+      "waiting": "Votre ami n'a toujours pas activé son coupon"
+    },
     "validation": {
       "email": "Doit etre un email valide",
       "empty": "est requis"

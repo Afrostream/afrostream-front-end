@@ -242,19 +242,26 @@ class ModalSponsors extends ModalComponent {
     return <div className="sponsors-list">
       {sponsorsList.map(
         (coupon, key) => {
-          const couponOpts = coupon.get('couponsOpts')
+          const couponOpts = coupon.get('couponOpts')
+          const status = coupon.get('status')
           if (!couponOpts) {
             return
           }
+          const classCheck = {
+            'check': true,
+            'pull-right': true,
+            'active': status === 'redeemed'
+          }
+
           return <div className="sponsor row-fluid"
                       key={`sponsor-info-${key}`}>
             <div className="col-md-8 text-left">
               {couponOpts.get('recipientEmail')}
             </div>
             <div className="col-md-4">
-              <div className="check pull-right"
+              <div className={classNames(classCheck)}
                    data-container=".panel"
-                   title={`${this.getTitle(coupon.get('status'))}`}>
+                   title={`${this.getTitle('status')[status]}`}>
                 <i className="zmdi zmdi-check"/>
               </div>
             </div>
