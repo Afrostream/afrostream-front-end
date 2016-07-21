@@ -6,41 +6,68 @@ import * as EventActionCreators from '../../actions/event'
     store.dispatch(EventActionCreators.pinHeader(true))
   ])
 })
-class FAQ extends React.Component {
+class About extends React.Component {
   render () {
     return (
-      <div className="column-right">
-        <div className="post-text"><h2 className="heading-2 company-subtitle">
-          DEEZER LANCE LA VERSION FINALISÉE DE SON APPLICATION POUR WINDOWS 10</h2>
-          <p>
-            Communiqué de Presse. Paris, le 21 juillet 2016. La nouvelle mise à jour Windows présente des options de
-            recherche plus personnalisées, les paroles des titres et l’incontournable Flow Après avoir annoncé la
-            ver...</p>
-          <p><a className="link-primary link-animated"
-                href="http://www.deezer-blog.com/press/deezer-lance-la-version-finalisee-de-son-application-pour-windows-10/"
-                target="_blank" data-reactid=".0.1.$0.2.0">Lire plus</a></p></div>
-        <div className="post-text" data-reactid=".0.1.$1"><h2 className="heading-2 company-subtitle"
-                                                              data-reactid=".0.1.$1.0">
-          DEEZER DÉPLOIE SON OFFRE «&nbsp;DEEZER FAMILLE&nbsp;» À TOUS SES UTILISATEURS</h2><p
-          data-reactid=".0.1.$1.1">Communiqué de Presse. Paris, le 19 juillet 2016. ' ' En novembre dernier, Deezer
-          annonçait le lancement de Deezer Famille en avant-première avec son partenaire Orange. Aujourd’hui, le
-          leader du streaming en Fra...</p><p data-reactid=".0.1.$1.2"><a className="link-primary link-animated"
-                                                                          href="http://www.deezer-blog.com/press/deezer-deploie-son-offre-deezer-famille-a-tous-ses-utilisateurs/"
-                                                                          target="_blank" data-reactid=".0.1.$1.2.0">Lire
-          plus</a></p></div>
-        <div className="post-text" data-reactid=".0.1.$2"><h2 className="heading-2 company-subtitle"
-                                                              data-reactid=".0.1.$2.0">
-          DEEZER LAUNCHES DIRECT TO CONSUMERS IN U.S. WITH THE MOST PERSONALIZED MUSIC DISCOVERY PLATFORM</h2><p
-          data-reactid=".0.1.$2.1">Following Success of Home Audio and Mobile Subscriptions, Deezer is Made Available
-          to All Music Lovers NEW YORK (July 19, 2016)&nbsp;–&nbsp;Deezer, one of the world’s leading, on-demand
-          digital music streaming services,...</p><p data-reactid=".0.1.$2.2"><a className="link-primary link-animated"
-                                                                                 href="http://www.deezer-blog.com/press/deezer-launches-direct-to-consumers-in-u-s-with-the-most-personalized-music-discovery-platform/"
-                                                                                 target="_blank"
-                                                                                 data-reactid=".0.1.$2.2.0">Lire
-          plus</a></p></div>
+      <div id="react-blog">
+        <section className="backstage-section bg-linear" id="founder">
+          <div className="container-fluid container-no-padding">
+            <div className="column-right">
+              <h2 className="heading-2">Bios</h2>
+              <div className="line-divider-block center-picture clearfix">
+                <figure className="picture big-picture">
+                  <img src="/press/screen/tonje.jpg"
+                       width="100%"/>
+                </figure>
+                <div className="key-people-quote">
+                  <p className="key-people-identity">
+                    <span className="key-people-name">Tonjé Bakang</span>
+                    <span className="key-people-function">FONDATEUR</span>
+                  </p>
+                </div>
+                <div className="key-people-presentation">
+                  <p>Tonjé Bakang est le fondateur et président d’Afrostream, le «Netflix du contenu afro-américain,
+                    Africain et caribéen», un service de streaming destiné en priorité aux marchés européens et
+                    africains. Afrostream est une plate-forme proposant du contenu afro produit par les majors
+                    international mais aussi par des distributeurs indépendants qui cherchent une audience
+                    internationale. Avant de fonder Afrostream, Tonjé a travaillé dans le milieu du divertissement
+                    pendant près de 15 ans. D'abord dans l’industrie musicale en qualité de réalisateur de clips-vidéos,
+                    puis en tant que producteur de spectacles de comédie pour le théâtre. Il a été le mentor de toute
+                    une nouvelle génération de comédiens de ‘couleur’ et a lancé en France le « stand-up » inspiré par
+                    le « Def Comedy Jam » diffusé sur la chaîne câblée américaine HBO. Sa passion pour l'écriture l'a
+                    amené à développer un scénario pour une chaîne de TV française et il va utiliser cette expertise
+                    pour produire du contenu original pour la plateforme Afrostream. Twitter : @Tonjebakang.</p>
+                </div>
+              </div>
+              <div className="line-divider-block center-picture clearfix">
+                <figure className="picture big-picture">
+                  <img src="/press/screen/ludo.jpg"
+                       width="100%"/>
+                </figure>
+                <div className="key-people-quote">
+                  <p className="key-people-identity">
+                    <span className="key-people-name">Ludovic Bostral</span>
+                    <span className="key-people-function">CO-FONDATEUR CTO</span>
+                  </p>
+                </div>
+                <div className="key-people-presentation">
+                  <p>HLudovic Bostral est cofondateur et directeur technique d'Afrostream. Après un diplôme d’ingénieur
+                    logiciel à Polytech’Nantes en 2000, il a acquis 16 ans d'expérience dans l'univers de la vidéo en
+                    ligne travaillant pour Manreo, Netia, M6, et Digibos. En 2007, il rejoint M6 Web, où il a été le
+                    leader technique de l'équipe en charge de la télévision de rattrapage en France, 6Play, l'un des
+                    leaders du secteur. Il a piloté le lancement du service 6Play sur SFR, Free, Orange, Bouygues. Fin
+                    2013 il fonde un cabinet de consultant spécialisé dans la vidéo en ligne. Début 2014, il crée
+                    Afrostream, qui est passé par les programmes Orange Fab et Y Combinator après avoir rejoint The
+                    Family en mars 2014.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     )
   }
 }
 
-export default FAQ
+export default About

@@ -6,7 +6,7 @@ import * as EventActionCreators from '../../actions/event'
     store.dispatch(EventActionCreators.pinHeader(true))
   ])
 })
-class FAQ extends React.Component {
+class Faq extends React.Component {
   render () {
     return (
       <div className="row-fluid">
@@ -113,4 +113,4 @@ class FAQ extends React.Component {
   }
 }
 
-export default FAQ
+export default Faq
