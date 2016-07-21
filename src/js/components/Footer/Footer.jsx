@@ -127,6 +127,11 @@ class Footer extends React.Component {
                   {labels.pro.investissor}
                 </a>
               </li>
+              <li>
+                <Link className="footer-link" to="mediakit">
+                  {labels.pro.mediaKit}
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2">

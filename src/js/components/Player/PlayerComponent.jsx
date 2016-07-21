@@ -729,20 +729,19 @@ class PlayerComponent extends Component {
     }
 
     console.log('player : playerData', playerData)
-
+    const videoSlug = slugify(`${videoData.get('_id')}_${videoData.get('name')}`)
     playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot), {
       p2pConfig: {
-        contentId: slugify(`${videoData.get('_id')}_${videoData.get('name')}`)
+        contentId: videoSlug
       }
     })
 
     playerData.youbora = _.merge(playerData.youbora || {}, {
       username: userId,
       media: {
-        title: videoData.get('title'),
+        title: videoSlug,
         duration: videoData.get('duration'),
-        isLive: isLive,
-        bitrate: 0
+        isLive: isLive
       },
       properties: {
         content_id: videoData.get('_id'),
