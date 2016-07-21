@@ -202,11 +202,11 @@ class Press extends React.Component {
               <ul className="mediakit-list">
                 <li>
                   <img className="pointer"
-                       src="/press/srceen/srceen-link.jpg"
+                       src="/press/screen/screen-link.jpg"
                        width="345" height="190"/>
                   <p>Retrouvez nos logos, notre charte graphique.</p>
                   <span className="btn-download">
-    <a role="button" href="/press/srceen/Logos-2016-07-21.zip" className="btn btn-info"
+    <a role="button" href="/press/screen/Logos-2016-07-21.zip" className="btn btn-info"
        type="button">
     <span className="zmdi zmdi-download"></span>
     <span className="label">Télécharger</span>
@@ -215,11 +215,11 @@ class Press extends React.Component {
                 </li>
                 <li>
                   <img className="pointer"
-                       src="/press/srceen/images-link.jpg"
+                       src="/press/screen/images-link.jpg"
                        width="345" height="190"/>
                   <p>Afrostream en images.</p>
                   <span className="btn-download">
-    <a role="button" href="/press/srceen/Screen_Images_and_Devices-2016-07-21.zip" className="btn btn-info"
+    <a role="button" href="/press/screen/Screen_Images_and_Devices-2016-07-21.zip" className="btn btn-info"
        type="button">
     <span className="zmdi zmdi-download"></span>
     <span className="label">Télécharger</span>
@@ -247,11 +247,11 @@ class Press extends React.Component {
               <ul className="mediakit-list">
                 <li>
                   <img className="pointer"
-                       src="/press/srceen/press.jpg"
+                       src="/press/screen/press.jpg"
                        width="345" height="190"/>
                   <p>Retrouvez notre dossier de presse.</p>
                   <span className="btn-download">
-    <a role="button" href="/press/srceen/Press_Releases-2016-07-21.zip" className="btn btn-info"
+    <a role="button" href="/press/screen/Press_Releases-2016-07-21.zip" className="btn btn-info"
        type="button">
     <span className="zmdi zmdi-download"></span>
     <span className="label">Télécharger</span>
