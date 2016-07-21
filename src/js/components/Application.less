@@ -39,6 +39,11 @@ body {
 //
 // Base styles
 // -----------------------------------------------------------------------------
+dl, ul, ol, li, dt, dd {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
 a,
 a:hover,
@@ -126,7 +131,9 @@ a.active {
 
       .isMobile({ margin: 0px; });
 
-      .container {
+      .container,
+      .container-fluid {
+
         margin-top: @header-height;
         padding: 40px;
         background: @background-page;
@@ -135,6 +142,12 @@ a.active {
         padding-right: @app-padding;
         .isMobile({ padding-left: @app-padding-mobile; padding-right: @app-padding-mobile; });
 
+        &.container-no-padding {
+          margin: 0;
+          padding: 0;
+          background: transparent;
+        }
+        
         &.brand-bg {
           background-color: @brand-bg;
         }

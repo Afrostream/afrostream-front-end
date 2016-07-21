@@ -1,0 +1,174 @@
+@import (reference) '../../../styles/config.less';
+
+.press-page {
+
+  .backstage-section:not(:first-child) {
+    padding: 60px 0;
+  }
+  .backstage-section {
+    width: auto;
+    display: block;
+
+    figure {
+      padging: 0;
+      margin: 0;
+    }
+    .heading-2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+      color: @color-indigo;
+    }
+
+    .key-people-quote {
+      float: left;
+      width: 200px;
+      .key-people-name {
+        color: #32323D;
+        display: block;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: normal;
+      }
+      .key-people-function {
+        color: @color-purple-1;
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+    .key-people-presentation {
+      margin-left: 240px;
+    }
+
+    .three-items-list > li {
+      box-sizing: border-box;
+      float: left;
+      padding-right: 12px;
+      width: 33.33%;
+    }
+    .video-list {
+      img {
+        cursor: pointer;
+      }
+    }
+    .mediakit-list > li {
+      box-sizing: border-box;
+      float: left;
+      width: 50%;
+      img {
+        border: 1px solid @color-indigo;
+      }
+    }
+
+    p {
+      color: #72727D;
+      font-size: 14px;
+      line-height: 25px;
+      margin: 15px 0 15px 0;
+    }
+
+    a.press-link {
+      color: @color-indigo;
+      font-size: 12px;
+      padding: 5px 0 5px 0;
+      cursor: pointer;
+    }
+  }
+
+  .bg-linear {
+    border-bottom: 0;
+    background-image: linear-gradient(#ffffff, #f7f7fa);
+  }
+
+  .column-right {
+    margin-left: 240px;
+  }
+
+  .column-left.fixed {
+    position: fixed;
+    top: @header-height * 2;
+    .isMobile({ display: none; });
+
+    .company-menu {
+      background-color: #23232D;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px #23232D;
+      font-family: 'Open Sans', Arial, sans-serif;
+      width: 200px;
+      .company-menu-list {
+        padding: 10px;
+        margin: 0;
+        list-style: none;
+        .company-menu-item {
+          margin-top: 5px;
+          > a {
+            text-transform: uppercase;
+            cursor: pointer;
+            outline: 0 none;
+            text-decoration: none;
+            color: #D1D1D7;
+            display: block;
+            font-size: 12px;
+            height: 36px;
+            line-height: 36px;
+            padding: 0 10px;
+            transition-property: background-color, color;
+            transition-duration: 0.15s;
+            -webkit-transition-property: background-color, color;
+            &:hover {
+              background-color: #0A0A16;
+              color: #FFFFFF;
+            }
+          }
+
+          &.active > ul {
+            display: block;
+            padding-bottom: 6px;
+          }
+          .company-submenu {
+            display: none;
+            > li {
+            }
+            .company-submenu-link {
+              text-decoration: none;
+              color: #D1D1D7;
+              display: block;
+              font-size: 12px;
+              font-weight: 300;
+              padding: 5px 0 5px 25px;
+              position: relative;
+              transition-property: color;
+              transition-duration: 0.15s;
+              -webkit-transition-property: color;
+
+              &.active,
+              &:hover {
+                color: #FFFFFF;
+                & > .zmdi {
+                  opacity: 1;
+                }
+                & > a {
+                  background-color: #0A0A16;
+                  display: block;
+                }
+              }
+
+              > .zmdi {
+                left: 5px;
+                opacity: 0;
+                position: absolute;
+                top: 50%;
+                -moz-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+                transition-property: opacity;
+                transition-duration: 0.15s;
+                -webkit-transition-property: opacity;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
