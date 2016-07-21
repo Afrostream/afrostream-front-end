@@ -400,16 +400,42 @@
     "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
     "placeHolder": "Parrainer un ami",
     "emailField": "Son email",
-    "error": "Vous ne pouvez plus parrainer actuellement.",
     "max": "Vous avez atteint le nombre maximum d'amis parrainés",
     "status": {
       "redeemed": "Votre ami à un compte Afrostream",
       "active": "Votre ami à validé son coupon",
       "waiting": "Votre ami n'a toujours pas activé son coupon"
     },
+    "errors": {
+      "error": "Vous ne pouvez plus parrainer actuellement.",
+      "self sponsorship is forbidden": "Vous ne pouvez pas vous parrainer",
+      "recipient that has an active subscription cannot be sponsored": "Cet email à déja été parrainé ou a déja un compte actif"
+    },
     "validation": {
       "email": "Doit etre un email valide",
       "empty": "est requis"
+    }
+  },
+  "press": {
+    "menu": {
+      "about": {
+        "label": "About Us",
+        "links": {
+          "founder": "Co-Founder Bios"
+        }
+      },
+      "jobs": {
+        "label": "Job"
+      },
+      "press": {
+        "label": "Press",
+        "links": {
+          "mediakit": "Kit Médias",
+          "videos": "Videos",
+          "press": "Press Releases",
+          "news": "News"
+        }
+      }
     }
   }
 }

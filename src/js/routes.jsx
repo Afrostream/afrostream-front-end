@@ -63,6 +63,11 @@ const buildHome = function (lang) {
 const buildRoutes = function (lang) {
 
   let subRoutes = [
+    <Route key={`${lang}-company`} name="company" path="company" component={Static.StaticPage}>
+      <Route key={`${lang}-company-press`} name="about" path="about" component={Static.ABOUT}/>
+      <Route key={`${lang}-company-jobs`} name="jobs" path="jobs" component={Static.JOBS}/>
+      <Route key={`${lang}-company-jobs`} name="press" path="press" component={Static.PRESS}/>
+    </Route>,
     <Route key={`${lang}-faq`} name="faq" path="faq" component={Static.FAQ}/>,
     <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.StaticRoute}/>,
     <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.StaticRoute}/>,

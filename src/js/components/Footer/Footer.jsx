@@ -128,7 +128,7 @@ class Footer extends React.Component {
                 </a>
               </li>
               <li>
-                <Link className="footer-link" to="mediakit">
+                <Link className="footer-link" to="/company/press">
                   {labels.pro.mediaKit}
                 </Link>
               </li>

@@ -141,7 +141,7 @@ class ModalSponsors extends ModalComponent {
   }
 
   renderValidationMessages (target) {
-    let errorMessage = this.state.errors[target]
+    let errorMessage = this.state.errors[target] || this.state.error
     if (!errorMessage) return ''
     return (<div className="help-block">{ errorMessage }</div>)
   }
@@ -188,7 +188,7 @@ class ModalSponsors extends ModalComponent {
     let postData = {
       billingProviderName: 'afr',
       couponsCampaignBillingUuid,
-      couponsOpts: {
+      couponOpts: {
         recipientEmail: this.state.email
       }
     }
@@ -218,15 +218,16 @@ class ModalSponsors extends ModalComponent {
     let errMess = err.message
     if (err.response) {
       if (err.response.body) {
-        errMess = err.response.body.message
+        errMess = err.response.body.message || err.response.body.error
       } else if (err.response.text) {
         errMess = err.response.text
       }
     }
 
+    const errorMessage = this.getTitle('errors')
     this.setState({
       loading: false,
-      error: this.getTitle(errMess.toString()) || errMess.toString() || this.getTitle('error')
+      error: errorMessage && errorMessage[errMess.toString()] || errMess.toString() || errorMessage.error
     })
 
     this.cancel()
@@ -275,8 +276,21 @@ class ModalSponsors extends ModalComponent {
 
   getSponsorsComponent () {
 
-    const {props:{Billing}} = this
+    const {props:{Billing, User}} = this
     const {suggestions} = this.state
+    const user = User.get('user')
+    let canSponsorshipSubscription = false
+    if (user) {
+      const subscriptionsStatus = user.get('subscriptionsStatus')
+      if (subscriptionsStatus) {
+        const subscriptions = subscriptionsStatus.get('subscriptions')
+        canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no').size)
+      }
+    }
+    //no sponsorship availlable
+    if (!canSponsorshipSubscription) {
+      return
+    }
 
     const sponsorsData = Billing.get('sponsorsList')
     const sponsorsList = sponsorsData && sponsorsData.get('coupons')

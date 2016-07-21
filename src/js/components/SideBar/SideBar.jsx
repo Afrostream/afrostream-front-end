@@ -68,7 +68,7 @@ class SideBar extends React.Component {
       const subscriptionsStatus = user.get('subscriptionsStatus')
       if (subscriptionsStatus) {
         const subscriptions = subscriptionsStatus.get('subscriptions')
-        canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('provider').get('providerName') !== 'afr').size)
+        canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no').size)
       }
     }
 

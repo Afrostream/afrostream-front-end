@@ -1,2 +1,6 @@
-export { default as FAQ } from './FAQ'
+export { default as FAQ } from './Faq'
+export { default as JOBS } from './Jobs'
+export { default as PRESS } from './Press'
+export { default as ABOUT } from './About'
+export { default as StaticPage } from './StaticPage'
 export { default as StaticRoute } from './StaticRoute'
