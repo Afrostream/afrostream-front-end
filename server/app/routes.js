@@ -1,7 +1,6 @@
 import auth from './auth'
 import avatar from './api/avatar'
 import sharing from './api/sharing'
-import snap from './api/snap'
 import config from '../../config'
 import fs from 'fs'
 import path from 'path'
