@@ -36,7 +36,7 @@ class ModalPlayer extends ModalComponent {
                       <div className="mode">
                         <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                         {data && <Player src={data.toJS()}
-                                         options={{autoplay: false, controls: false}}/> }
+                                         options={{autoplay: true, controls: false}}/> }
                       </div>
                     </div>
                   </div>
