@@ -421,10 +421,29 @@
       "press": {
         "label": "Presse",
         "links": {
-          "mediakit": "Kit Médias",
-          "videos": "Videos",
-          "press": "Communiqués de presse",
-          "news": "À la une"
+          "mediakit": {
+            "label": "Kit Médias"
+          },
+          "videos": {
+            "label": "Videos"
+          },
+          "press": {
+            "label": "Communiqués de presse"
+          },
+          "news": {
+            "label": "À la une",
+            "links": {
+              "news-2014": {
+                "label": "News 2014"
+              },
+              "news-2015": {
+                "label": "News 2015"
+              },
+              "news-2016": {
+                "label": "News 2016"
+              }
+            }
+          }
         }
       }
     }

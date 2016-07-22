@@ -41,7 +41,7 @@ const buildHome = function (lang) {
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
     <Route key={`${lang}-movie`} name="movie"
-           path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
+           path="<int:movieId>(/:movieSlug)(/<int:seasonId>/:seasonSlug)(/<int:episodeId>/:episodeSlug)"
            component={MoviePage}>,
       <Route key={`${lang}-player`} name="player"
              path=":videoId"
@@ -67,6 +67,7 @@ const buildRoutes = function (lang) {
       <Route key={`${lang}-company-press`} name="about" path="about" component={Static.ABOUT}/>
       <Route key={`${lang}-company-jobs`} name="jobs" path="jobs" component={Static.JOBS}/>
       <Route key={`${lang}-company-jobs`} name="press" path="press" component={Static.PRESS}/>
+      <Route key={`${lang}-company-nomatch`} path="*" name="companynomatch" component={NoMatch}/>
     </Route>,
     <Route key={`${lang}-faq`} name="faq" path="faq" component={Static.FAQ}/>,
     <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.StaticRoute}/>,
