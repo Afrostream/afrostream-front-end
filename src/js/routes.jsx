@@ -41,7 +41,7 @@ const buildHome = function (lang) {
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
     <Route key={`${lang}-movie`} name="movie"
-           path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
+           path=":movieId(\\d+)(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
            component={MoviePage}>,
       <Route key={`${lang}-player`} name="player"
              path=":videoId"

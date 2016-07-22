@@ -75,8 +75,8 @@ class StaticMenu extends React.Component {
           return <li key={`static-menu-sub-${itemKey}`} role="tab">
             <a className="company-submenu-link" href={`#${itemValue}`}>
               <span className="zmdi zmdi-chevron-right zmdi-hc-2x"></span>{data.label}
-              {data.links && this.renderSubLink(data.links)}
             </a>
+            {data.links && this.renderSubLink(data.links)}
           </li>
         }
       )}

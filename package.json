@@ -129,7 +129,7 @@
     "react-list": "^0.7.18",
     "react-pure-render": "^1.0.2",
     "react-redux": "^4.4.5",
-    "react-router": "2.4.0",
+    "react-router": "^2.6.0",
     "react-virtualized": "^7.2.0",
     "redux": "^3.5.2",
     "redux-devtools": "^2.1.2",

@@ -516,7 +516,7 @@ class Press extends React.Component {
         title: 'INTERVIEW: "We need people to tell their own stories" - Afrostream CEO Tonjé Bakang\'s plan for better representation with streaming media',
         src: 'http://www.afropunk.com/profiles/blogs/interview-we-need-people-to-tell-their-own-stories-afrostream-ceo',
         date: '10-11-2015',
-        partner: 'AfroPunk'
+        partner: 'Afro Punk'
       },
       {
         title: 'How to Design a Better Pitch Deck',
@@ -580,7 +580,7 @@ class Press extends React.Component {
       },
       {
         title: 'Afrostream Boosts Video on Demand Service With High-Speed Transfers From Aspera on IBM Cloud',
-        src: 'http://finance.yahoo.com/news/afrostream-boosts-video-demand-high-130000827.html',
+        src: '',
         date: '15-12-2015',
         partner: 'Yahoo'
       },
@@ -858,9 +858,9 @@ class Press extends React.Component {
               return <div key={`static-press-${groupKey}-${key}`} className="col item press-link effect">
                 <a href={item.src} target="_blank">
                   <div className="wrapper">
-                    <img className="pointer"
-                         src={`/press/screen/site/${slugify(item.partner)}.jpg`}
-                         width="345" height="190" onError={this.onIMGError}/>
+                    {item.src && <img className="pointer"
+                                      src={`/press/screen/site/${slugify(item.partner)}.jpg`}
+                                      width="345" height="190" onError={this.onIMGError}/>}
                   </div>
                   <span>#{item.date}</span>
                   <p>
