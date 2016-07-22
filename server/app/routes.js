@@ -29,6 +29,7 @@ export default function routes (app, buildPath) {
   // SHARING
   // --------------------------------------------------
   app.use('/sharing', sharing)
+  //app.use('/snap', snap)
   // SHARING
   // --------------------------------------------------
 
