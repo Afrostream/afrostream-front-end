@@ -19,8 +19,7 @@
       localStorage.setItem(storageId, JSON.stringify(tokenData));
       // adding token data to url anchor
       var data = { statusCode: tokenData.error ? 500 : 200, data: tokenData };
-      var newLocation = document.location.href.replace(/#.*$/,'') + "#" + window.btoa(JSON.stringify(data));
-      document.location.replace(newLocation);
+      document.location.hash = window.btoa(JSON.stringify(data));
     }
 
     // postpone close :
