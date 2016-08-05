@@ -16,7 +16,7 @@ export default function (options) {
         res.set('Cache-Control', 'private');
       } else {
         // default no-cache header should be :
-        res.set('Cache-Control', 'max-age=0, no-cache, no-store, must-revalidate, private');
+        res.set('Cache-Control', 'max-age=0,no-cache,no-store,no-transform,private');
         res.set('Pragma', 'no-cache'); // http 1.0
         res.set('Expires', 'Thu, 01-Jan-1970 00:00:01 GMT'); // proxy
       }
