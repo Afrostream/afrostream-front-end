@@ -18,19 +18,23 @@ export default function routes (app, buildPath) {
     res.sendFile(path.join(staticPath, 'sitemap.xml'))
   })
 
-  let idQueryStatus200 = 0;
+  let container200 = {};
   app.get('/tests/200.json', function (req, res, next) {
     res.noCache();
-    idQueryStatus200++;
-    res.status(200).json({idQuery:idQueryStatus200});
+    if (req.query.random) {
+      container200[String(req.query.random)] = (container200[String(req.query.random)] || 0) + 1;
+    }
+    res.status(200).json(container200);
   });
 
-  let idQueryStatus302 = 0;
+  let container302 = {};
   app.get('/tests/302.json', function (req, res, next) {
     res.noCache();
-    idQueryStatus302++;
+    if (req.query.random) {
+      container302[String(req.query.random)] = (container302[String(req.query.random)] || 0) + 1;
+    }
     res.set('Location', 'https://google.com');
-    res.status(302).json({idQueryStatus302:idQueryStatus302});
+    res.status(302).json(container302);
   });
 
   // OAUTH
