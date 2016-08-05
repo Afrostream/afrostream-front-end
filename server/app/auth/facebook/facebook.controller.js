@@ -55,6 +55,8 @@ export function failure (req, res) {
 export async function callback (req, res) {
   res.noCache()
   try {
+    // debug: on dump tous les headers
+    console.log(req.headers);
     const facebookCompleteFlow = await getData(req, '/auth/facebook/callback', {followRedirect: false})
     var fbResponse = facebookCompleteFlow[0]
       , fbBody = facebookCompleteFlow[1] || {}
