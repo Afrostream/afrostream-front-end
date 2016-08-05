@@ -18,6 +18,21 @@ export default function routes (app, buildPath) {
     res.sendFile(path.join(staticPath, 'sitemap.xml'))
   })
 
+  let idQueryStatus200 = 0;
+  app.get('/tests/200.json', function (req, res, next) {
+    res.noCache();
+    idQueryStatus200++;
+    res.status(200).json({idQuery:idQueryStatus200});
+  });
+
+  let idQueryStatus302 = 0;
+  app.get('/tests/302.json', function (req, res, next) {
+    res.noCache();
+    idQueryStatus302++;
+    res.set('Location', 'https://google.com');
+    res.status(302).json({idQueryStatus302:idQueryStatus302});
+  });
+
   // OAUTH
   // --------------------------------------------------
   app.use('/auth', auth)
