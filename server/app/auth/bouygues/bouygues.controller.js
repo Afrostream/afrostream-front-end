@@ -57,7 +57,7 @@ export async function callback (req, res) {
   try {
     const bouyguesCompleteFlow = await getData(req, '/auth/bouygues/callback', {followRedirect: false})
     var bouyguesResponse = bouyguesCompleteFlow[0]
-      , bouyguesBody = bouyguesCompleteFlow[1]
+      , bouyguesBody = bouyguesCompleteFlow[1] || {}
 
     const layout = 'layouts/oauth-success'
     if (bouyguesResponse.statusCode !== 200) {

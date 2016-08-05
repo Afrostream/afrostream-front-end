@@ -57,7 +57,7 @@ export async function callback (req, res) {
   try {
     const orangeCompleteFlow = await getData(req, '/auth/orange/callback', {followRedirect: false, method: 'POST'})
     var orangeResponse = orangeCompleteFlow[0]
-      , orangeBody = orangeCompleteFlow[1]
+      , orangeBody = orangeCompleteFlow[1] || {}
 
     const layout = 'layouts/oauth-success'
     if (orangeResponse.statusCode !== 200) {

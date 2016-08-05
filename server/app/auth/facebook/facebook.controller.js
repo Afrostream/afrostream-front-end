@@ -57,7 +57,7 @@ export async function callback (req, res) {
   try {
     const facebookCompleteFlow = await getData(req, '/auth/facebook/callback', {followRedirect: false})
     var fbResponse = facebookCompleteFlow[0]
-      , fbBody = facebookCompleteFlow[1]
+      , fbBody = facebookCompleteFlow[1] || {}
 
     const layout = 'layouts/oauth-success'
     if (fbResponse.statusCode !== 200) {
