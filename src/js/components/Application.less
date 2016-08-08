@@ -147,18 +147,43 @@ a.active {
           padding: 0;
           background: transparent;
         }
-        
+
         &.brand-bg {
           background-color: @brand-bg;
         }
+        &.brand-splitted {
+          background: none;
+          position: relative;
+        }
+      }
+      &.brand-splitted {
+        background-color: #EDEDEF;
       }
       &.brand-bg {
         background-color: @brand-bg;
         color: @color-purple;
       }
       &.brand-bg-alpha {
-        background-color: fade(@brand-bg, 60%);
+        background-color: fade(@brand-bg, 10%);
         color: @color-purple;
+      }
+      .brand-bg-none {
+        background: none;
+        color: @color-purple;
+      }
+
+      //splitted background colors
+      .bg-splitted {
+        .fullHeight();
+        position: absolute;
+        &:before {
+          .fullHeight();
+          position: absolute;
+          content: '';
+          background-color: @color-indigo;
+          -webkit-clip-path: polygon(0 0, 100% 0, 100% 40%, 0% 58%);
+          clip-path: polygon(0 0, 100% 0, 100% 40%, 0% 58%);
+        }
       }
     }
   }

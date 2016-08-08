@@ -369,7 +369,7 @@ class ModalSponsors extends ModalComponent {
     })
 
     return (
-      <div className="lock-container">
+      <div className="lock-container container brand-bg-none">
         <div id="lock" className="lock theme-default sponsors">
           <div className="sponsors">
             <div className={popupClass}>

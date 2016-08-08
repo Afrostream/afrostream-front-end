@@ -10,15 +10,20 @@ class SplashScreen extends React.Component {
 
   // do not render cookie message on server-side
   state = {
-    isCookieSet: '1'
+    isCookieSet: '1',
+    splash: 1
   }
 
   componentDidMount () {
     let isCookieAccepted = this.isCookieAccepted()
 
     if (isCookieAccepted !== '1') {
-      this.setState({splash: '0'})
+      this.setState({splash: 0})
     }
+
+    setTimeout(()=> {
+      this.setState({splash: 1})
+    }, 5000)
   }
 
   isCookieAccepted () {
@@ -27,18 +32,18 @@ class SplashScreen extends React.Component {
     if (canUseDOM) {
       isCookieAccepted = localStorage.getItem('splash')
     }
-    return isCookieAccepted
+    return Boolean(parseInt(isCookieAccepted))
   }
 
   setCookieToken () {
     if (canUseDOM) {
       localStorage.setItem('splash', '1')
-      this.setState({splash: '1'})
+      this.setState({splash: 1})
     }
   }
 
   getSplash (i, splash) {
-    if (!splash || this.state.splash === '1') {
+    if (!splash || this.state.splash) {
       return ''
     }
     return (
