@@ -20,7 +20,6 @@ export async function getExternal (req, requestOptions) {
 }
 
 /**
- * call this method when you don't need the token (faster & safer)
  * @param req
  * @param path
  */
@@ -41,6 +40,8 @@ export function getData (req, path, requestOptions) {
         body: req.body,
         uri: url,
         headers: {
+          // FIXME: should not be a whitelist, error prone.
+          'Authorization': req.get('authorization'), // fwd auth.
           'x-forwarded-client-ip': req.clientIp,
           'x-forwarded-user-ip': req.clientIp
         }
