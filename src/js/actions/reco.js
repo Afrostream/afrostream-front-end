@@ -167,7 +167,7 @@ export function getRecommendations (route = 'player', videoId = 'home') {
     recoList = _.uniq(recoList, (o)=> {
       return o['_id']
     })
-    recoList = _.sample(recoList, reco.limit)
+    recoList = _.sampleSize(recoList, reco.limit)
 
     return {
       type: ActionTypes.User.getRecommendations,
