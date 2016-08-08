@@ -1,0 +1,27 @@
+@import (reference) '../../../styles/config.less';
+
+.splash-screen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url(https://images.unsplash.com/photo-1442406964439-e46ab8eff7c4?ixlib=rb-0.3.5&q=80&fm=jpg&w=1080&fit=max&s=de6103545d21c92c29af9fe9d2f192ce);
+  background-size: cover;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-attachment: fixed;
+  .splash {
+    h1 {
+      top: 50%;
+      .transform(translateY(-50%));
+      position: absolute;
+      color: #FFF;
+      padding: 20px;
+      text-align: center;
+      font-size: 10vw;
+      text-shadow: 0 2px 10px #000;
+    }
+  }
+}
+

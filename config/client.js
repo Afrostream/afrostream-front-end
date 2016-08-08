@@ -85,6 +85,12 @@ const client = {
   },
   //add alerts to front (same as cookies)
   alerts: [],
+  splashs: [
+    {
+      src: 'https://afrostream.imgix.net/production/billings/afrostream-parrainage.jpg',
+      label: 'Offrez 14 jours d\'essai à vos amis en les parrainant'
+    }
+  ],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
   },

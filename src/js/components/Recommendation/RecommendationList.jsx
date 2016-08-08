@@ -66,11 +66,13 @@ class RecommendationList extends React.Component {
     } = this
     const recoList = User.get(`reco/${videoId}`)
 
-    if (!recoList) {
+    if (!recoList || !recoList.size) {
       return
     }
-    return recoList.map((data, i) => <Thumb favorite={false} share={false}
-                                            key={`spot-reco-${data.get('_id')}-${i}`} {...{data}}/>).toJS()
+    return recoList.map((data, i) => {
+      return <Thumb favorite={false} share={false}
+                    key={`spot-reco-${data.get('_id')}-${i}`} {...{data}}/>
+    })
   }
 
   render () {

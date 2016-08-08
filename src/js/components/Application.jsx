@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
 import SideBar from './SideBar/SideBar'
+import SplashScreen from './SplashScreen/SplashScreen'
 import AlertMessage from './Alert/AlertMessage'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
@@ -40,6 +41,7 @@ class Application extends React.Component {
       <div className={appClasses}>
         <Header {...this.props}/>
         <SideBar />
+        <SplashScreen />
         <AlertMessage />
         <div id="page-content-wrapper" className="container-fluid">
           {children}

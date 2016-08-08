@@ -167,6 +167,7 @@ export function getRecommendations (route = 'player', videoId = 'home') {
     recoList = _.uniq(recoList, (o)=> {
       return o['_id']
     })
+
     recoList = _.sampleSize(recoList, reco.limit)
 
     return {
