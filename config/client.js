@@ -109,7 +109,9 @@ const client = {
     channels: [
       295,
       204,
-      308
+      308,
+      321,
+      323
     ]
   },
   sentry: {
