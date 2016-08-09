@@ -99,7 +99,7 @@ export default class ArrowStepper extends Component {
               'section-tip': true,
               'active': isActive
             }
-            return <li ref={`section-${id}`} className={classSet(classTip)}/>
+            return <li ref={`section-${id}`} key={`section-${id}`} className={classSet(classTip)}/>
           })
         }
       </ul>
