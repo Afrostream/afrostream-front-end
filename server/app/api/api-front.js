@@ -40,8 +40,9 @@ export function getData (req, path, requestOptions) {
         body: req.body,
         uri: url,
         headers: {
-          // FIXME: should not be a whitelist, error prone.
-          'Authorization': req.get('authorization'), // fwd auth.
+          // FIXME 1: should not be a whitelist of headers, error prone.
+          // FIXME 2: accessToken should be grab in a middleware.
+          'Access-Token': req.get('Access-Token') || req.query.afro_token, // fwd auth.
           'x-forwarded-client-ip': req.clientIp,
           'x-forwarded-user-ip': req.clientIp
         }
