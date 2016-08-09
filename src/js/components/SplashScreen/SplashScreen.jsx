@@ -32,9 +32,9 @@ class SplashScreen extends React.Component {
     elTarget.addEventListener('mousewheel', ::this.mouseWheelHandler)
     elTarget.addEventListener('DOMMouseScroll', ::this.mouseWheelHandler)
 
-    //this.timeoutSplash = setTimeout(()=> {
-    //  this.hideSplash()
-    //}, 15000)
+    this.timeoutSplash = setTimeout(()=> {
+      this.hideSplash()
+    }, 15000)
   }
 
   handleClose (e) {
@@ -90,12 +90,12 @@ class SplashScreen extends React.Component {
 
     let splash = splashList.find((spl) => {
       const splashId = spl.get('_id')
-      //if (userSplashList) {
-      //  const userHasShowedSplash = userSplashList.find((usrSplash)=> {
-      //    return usrSplash.get('_id') === splashId
-      //  })
-      //  return !userHasShowedSplash
-      //}
+      if (userSplashList) {
+        const userHasShowedSplash = userSplashList.find((usrSplash)=> {
+          return usrSplash.get('_id') === splashId
+        })
+        return !userHasShowedSplash
+      }
       return true
     })
 
