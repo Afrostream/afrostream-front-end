@@ -32,9 +32,14 @@ class SplashScreen extends React.Component {
     elTarget.addEventListener('mousewheel', ::this.mouseWheelHandler)
     elTarget.addEventListener('DOMMouseScroll', ::this.mouseWheelHandler)
 
-    this.timeoutSplash = setTimeout(()=> {
-      this.hideSplash()
-    }, 15000)
+    //this.timeoutSplash = setTimeout(()=> {
+    //  this.hideSplash()
+    //}, 15000)
+  }
+
+  handleClose (e) {
+    e.preventDefault()
+    this.mouseWheelHandler()
   }
 
   mouseWheelHandler () {
@@ -85,12 +90,12 @@ class SplashScreen extends React.Component {
 
     let splash = splashList.find((spl) => {
       const splashId = spl.get('_id')
-      if (userSplashList) {
-        const userHasShowedSplash = userSplashList.find((usrSplash)=> {
-          return usrSplash.get('_id') === splashId
-        })
-        return !userHasShowedSplash
-      }
+      //if (userSplashList) {
+      //  const userHasShowedSplash = userSplashList.find((usrSplash)=> {
+      //    return usrSplash.get('_id') === splashId
+      //  })
+      //  return !userHasShowedSplash
+      //}
       return true
     })
 
@@ -110,15 +115,22 @@ class SplashScreen extends React.Component {
 
     return (
       <a href={splash.get('link')} onClick={::this.hideSplash}>
-        <div className={classNames(splashClass)} key={`splash-${splash.get('_id')}`} style={imageStyle}>
-        </div>
+        <div className={classNames(splashClass)} key={`splash-${splash.get('_id')}`} style={imageStyle}/>
       </a>
     )
   }
 
   render () {
+
+    let closeClass = classNames({
+      'close': true,
+      'hidden': this.state.splash
+    })
+
     return (
       <div className="splash-screen">
+        <a className={closeClass} href="#" onClick={::this.handleClose}><i
+          className="zmdi zmdi-close-circle-o zmdi-hc-2x"></i></a>
         {this.renderSplash()}
       </div>
     )
