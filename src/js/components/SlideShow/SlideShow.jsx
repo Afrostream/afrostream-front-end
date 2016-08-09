@@ -42,7 +42,7 @@ class SlideShow extends React.Component {
   initTouch () {
 
     const self = this,
-    // touchPosition
+      // touchPosition
       sPos = {
         dY: 0,
         dX: 0,
@@ -53,15 +53,15 @@ class SlideShow extends React.Component {
         listenDrag: true
       },
 
-    // Slope to determine if user is swiping
+      // Slope to determine if user is swiping
       SLOPE = 0.5,
-    // Velocity of finger movement to determine user swiping
+      // Velocity of finger movement to determine user swiping
       VELOCITY = 0.5,
-    // Maximum duration between touchstart and touchend to determine tap
+      // Maximum duration between touchstart and touchend to determine tap
       TAP_THRESHOLD = 650,
-    // Minimum number of pixels a user moves before dragging starts
+      // Minimum number of pixels a user moves before dragging starts
       DRAG_THRESHOLD = 10,
-    // Maximum number of pixels a user can move between taps
+      // Maximum number of pixels a user can move between taps
       TAP_DISTANCE = 10
 
     const container = ReactDOM.findDOMNode(this.refs.slC)
@@ -193,7 +193,7 @@ class SlideShow extends React.Component {
     return (
       <div className="slide-show" ref="slC">
         {slides && slides.size ? <SlidesContainer page={page} {...{slides}}/> : <Spinner />}
-        {slides && slides.size ? <Pagination page={page} {...{slides}}/> : null}
+        {slides && slides.size > 1 ? <Pagination page={page} {...{slides}}/> : null}
       </div>
     )
   }

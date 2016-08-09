@@ -125,5 +125,27 @@ export default createReducer(initialState, {
     return state.merge({
       ['user']: null
     })
-  }
+  },
+
+  [ActionTypes.User.put](state, {res}) {
+
+    if (!res) {
+      return state
+    }
+    const user = res.body
+
+    return state.merge({
+      ['user']: mergeUser(state.get('user'), user),
+    })
+  },
+
+  // #### SPLASH ####
+  [ActionTypes.User.setSplash](state, {splashId, user}) {
+    if (!user) {
+      return state
+    }
+    return state.merge({
+      ['user']: user
+    })
+  },
 })

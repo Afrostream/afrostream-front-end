@@ -40,6 +40,8 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         userMerged.picture = `/avatar/${userMerged.email || userMerged.name}`
       }
 
+      userMerged.splashList = userMerged.splashList || []
+
       if (donePath) {
         actionDispatcher(push(donePath))
       }
@@ -73,6 +75,26 @@ export function getHistory () {
     return async api => ({
       type: ActionTypes.User.getHistory,
       res: await api({path: `/api/users/${user.get('_id')}/history`})
+    })
+  }
+}
+/**
+ * put user
+ * @returns {Function}
+ */
+export function put (data) {
+  return (dispatch, getState) => {
+    const user = getState().User.get('user')
+    if (!user) {
+      return {
+        type: ActionTypes.User.put,
+        res: null
+      }
+    }
+
+    return async api => ({
+      type: ActionTypes.User.put,
+      res: await api({path: `/api/users/${user.get('_id')}`, method: 'PUT', params: data})
     })
   }
 }
@@ -152,6 +174,31 @@ export function setFavorites (type, active, id) {
         res: newList.toJS()
       }
     }
+  }
+}
+
+export function setSplash (splashId) {
+  return (dispatch, getState, actionDispatcher) => {
+    const user = getState().User.get('user')
+
+    if (!user) {
+      return {
+        type: ActionTypes.User.setSplash,
+      }
+    }
+
+    let userSPList = user.get('splashList')
+    let splashList = userSPList && userSPList.toJS() || []
+
+    splashList = _.concat(splashList, [{
+      '_id': splashId
+    }])
+
+    splashList = _.uniqBy(splashList, '_id')
+
+    return actionDispatcher(put({
+      splashList
+    }))
   }
 }
 

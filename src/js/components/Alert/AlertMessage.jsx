@@ -1,5 +1,5 @@
 import React from 'react'
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import config from '../../../../config'
 import CookieMessage from '../Welcome/WelcomeComponents/CookieMessage'
 
@@ -14,7 +14,7 @@ class AlertMessage extends React.Component {
     isCookieSet: '1'
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let isCookieAccepted = this.isCookieAccepted()
 
     if (isCookieAccepted !== '1') {
@@ -22,7 +22,7 @@ class AlertMessage extends React.Component {
     }
   }
 
-  isCookieAccepted() {
+  isCookieAccepted () {
     let isCookieAccepted = null
 
     if (canUseDOM) {
@@ -31,14 +31,14 @@ class AlertMessage extends React.Component {
     return isCookieAccepted
   }
 
-  setCookieToken() {
+  setCookieToken () {
     if (canUseDOM) {
       localStorage.setItem('afrostreamAlert', '1')
       this.setState({isCookieSet: '1'})
     }
   }
 
-  getAlert(i, alert) {
+  getAlert (i, alert) {
     if (!alert || this.state.isCookieSet === '1') {
       return ''
     }
@@ -49,11 +49,11 @@ class AlertMessage extends React.Component {
     )
   }
 
-  render() {
+  render () {
 
     return (
       <div className="alerts">
-        {config.alerts ? config.alerts.map((alert, i) => this.getAlert(i, alert)) : ''}
+        {config.alerts && config.alerts.map((alert, i) => this.getAlert(i, alert)) }
         <CookieMessage />
       </div>
     )
