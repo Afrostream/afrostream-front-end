@@ -124,7 +124,7 @@ class SplashScreen extends React.Component {
 
     let closeClass = classNames({
       'close': true,
-      'hidden': this.state.splash
+      'hidden': this.state.splash || !this.splash
     })
 
     return (
