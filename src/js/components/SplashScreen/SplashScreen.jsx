@@ -123,7 +123,7 @@ class SplashScreen extends React.Component {
 
     this.timeoutSplash = setTimeout(()=> {
       this.hideSplash()
-    }, 30000)
+    }, 60000)
 
     return (
       <a href={splash.get('link')} onClick={::this.hideSplash}>
