@@ -4,15 +4,21 @@
   font-size: 12px;
   text-align: center;
   color: @color-purple;
-
+  .container {
+    margin-top: 0 !important;
+  }
   h1 {
-    font-size: 28px;
+    text-transform: uppercase;
+    color: @brand-primary;
+    font-family: @font-book;
+    padding: 0 20% 0 20%;
   }
 
   /** Card Styles **/
   .card {
     margin: 20px auto 20px auto;
     width: 400px;
+    .isMobile({ width: 100%; });
     height: 250px;
     position: relative;
     border-radius: 0.5rem;
@@ -24,28 +30,28 @@
     overflow: hidden;
     .transition(background-image 500ms ease-out);
   }
-  .card::before,
-  .card::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 0.5rem;
-  }
-  .card::before {
-    background-color: fade(#21313c, 50%);
-    -webkit-clip-path: polygon(0 30%, 100% 48%, 100% 100%, 0% 100%);
-    clip-path: polygon(0 30%, 100% 48%, 100% 100%, 0% 100%);
-    mix-blend-mode: overlay;
-  }
-  .card::after {
-    background-color: #393a3d;
-    -webkit-clip-path: polygon(0 44%, 100% 62%, 100% 100%, 0% 100%);
-    clip-path: polygon(0 44%, 100% 62%, 100% 100%, 0% 100%);
-    opacity: 0.7;
-  }
+  //.card::before,
+  //.card::after {
+  //  content: "";
+  //  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  //  right: 0;
+  //  bottom: 0;
+  //  border-radius: 0.5rem;
+  //}
+  //.card::before {
+  //  background-color: fade(#21313c, 50%);
+  //  -webkit-clip-path: polygon(0 30%, 100% 48%, 100% 100%, 0% 100%);
+  //  clip-path: polygon(0 30%, 100% 48%, 100% 100%, 0% 100%);
+  //  mix-blend-mode: overlay;
+  //}
+  //.card::after {
+  //  background-color: #393a3d;
+  //  -webkit-clip-path: polygon(0 44%, 100% 62%, 100% 100%, 0% 100%);
+  //  clip-path: polygon(0 44%, 100% 62%, 100% 100%, 0% 100%);
+  //  opacity: 0.7;
+  //}
   .card .info {
     width: 100%;
     padding: 0em 4rem 2rem 4rem;
@@ -56,17 +62,17 @@
     background-color: fade(#fff, 99%);
     font-size: 11px;
   }
-  .card .info::before {
-    content: "";
-    height: 8rem;
-    position: absolute;
-    left: -1px;
-    right: 0;
-    bottom: calc(100% - 1px);
-    background-color: fade(#fff, 98%);
-    -webkit-clip-path: polygon(0 100%, 100% 50%, 100% 100%);
-    clip-path: polygon(0 100%, 100% 50%, 100% 100%);
-  }
+  //.card .info::before {
+  //  content: "";
+  //  height: 8rem;
+  //  position: absolute;
+  //  left: -1px;
+  //  right: 0;
+  //  bottom: calc(100% - 1px);
+  //  background-color: fade(#fff, 98%);
+  //  -webkit-clip-path: polygon(0 100%, 100% 50%, 100% 100%);
+  //  clip-path: polygon(0 100%, 100% 50%, 100% 100%);
+  //}
   .card .info .info-list {
     position: relative;
   }

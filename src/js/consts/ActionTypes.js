@@ -24,6 +24,7 @@ export default {
   }),
 
   User: keyMirror({
+    put: null,
     logOut: null,
     getProfile: null,
     pendingUser: null,
@@ -35,7 +36,8 @@ export default {
     getFavoritesMovies: null,
     getFavoritesEpisodes: null,
     setFavoritesMovies: null,
-    setFavoritesEpisodes: null
+    setFavoritesEpisodes: null,
+    setSplash: null
   }),
 
   Slides: keyMirror({
@@ -56,6 +58,10 @@ export default {
   }),
 
   Player: keyMirror({
+    getConfig: null
+  }),
+
+  Config: keyMirror({
     getConfig: null
   }),
 

@@ -1,0 +1,31 @@
+@import (reference) '../../../styles/config.less';
+
+.splash-screen {
+  .close {
+    z-index: @nav-z + 2;
+    margin: @app-padding;
+    position: relative;
+    color: #FFFFFF;
+    opacity: 0.8;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  }
+  .splash {
+    &.slide-top {
+      .transform(translateY(-100%));
+    }
+    position: absolute;
+    z-index: @nav-z + 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    background-size: cover;
+    .isMobile({ background-size: contain; });
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    .transition(all 0.5s ease);
+  }
+}
+
