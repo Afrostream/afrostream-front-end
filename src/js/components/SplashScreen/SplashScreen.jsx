@@ -31,10 +31,6 @@ class SplashScreen extends React.Component {
     const elTarget = ReactDOM.findDOMNode(this)
     elTarget.addEventListener('mousewheel', ::this.mouseWheelHandler)
     elTarget.addEventListener('DOMMouseScroll', ::this.mouseWheelHandler)
-
-    this.timeoutSplash = setTimeout(()=> {
-      this.hideSplash()
-    }, 15000)
   }
 
   handleClose (e) {
@@ -86,6 +82,18 @@ class SplashScreen extends React.Component {
       return
     }
 
+
+    let canSponsorshipSubscription = false
+    const subscriptionsStatus = user.get('subscriptionsStatus')
+    if (subscriptionsStatus) {
+      const subscriptions = subscriptionsStatus.get('subscriptions')
+      canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no').size)
+    }
+    //FIXME not all splash are blocked if user payed so add filter option in config
+    if (!canSponsorshipSubscription) {
+      return
+    }
+
     const userSplashList = user.get('splashList')
 
     let splash = splashList.find((spl) => {
@@ -112,6 +120,10 @@ class SplashScreen extends React.Component {
       'splash': true,
       'slide-top': this.state.splash
     }
+
+    this.timeoutSplash = setTimeout(()=> {
+      this.hideSplash()
+    }, 30000)
 
     return (
       <a href={splash.get('link')} onClick={::this.hideSplash}>
