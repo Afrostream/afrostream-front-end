@@ -65,6 +65,7 @@ export default function render (req, res, layout, {payload}) {
           let {params, location, routes} = renderProps
           let route = routes && routes[routes.length - 1]
           const langs = ['fr', 'en']
+          params = params || {}
           params.lang = langs[routes && routes.length > 2 && routes[2].path] || langs[0]
 
           const prepareRouteMethods = _.map(renderProps.components, component =>

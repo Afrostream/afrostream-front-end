@@ -1,7 +1,7 @@
 import webpack, { DefinePlugin, BannerPlugin } from 'webpack'
 import autoprefixer from 'autoprefixer-core'
 import path from 'path'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin-webpack-2'
 import HashPlugin from 'hash-webpack-plugin'
 import config from '../config'
 import { merge } from 'lodash'
@@ -48,6 +48,12 @@ const webpackConfig = {
     // Set up an ES6-ish environment
     polyfill: 'babel-polyfill',
     main: './src/js/main',
+    player: [
+      'videojs-vtt.js/dist/vtt.js',
+      'afrostream-player/node_modules/dashjs/dist/dash.all.debug.js',
+      'afrostream-player/node_modules/video.js/dist/video.js',
+      'afrostream-player/dist/afrostream-player.js',
+    ],
     vendor: [
       'react',
       'react-dom',
@@ -65,10 +71,6 @@ const webpackConfig = {
       'raven-js',
       'mobile-detect',
       'qs',
-      'videojs-vtt.js/dist/vtt.js',
-      'afrostream-player/node_modules/dashjs/dist/dash.all.debug.js',
-      'afrostream-player/node_modules/video.js/dist/video.js',
-      'afrostream-player/dist/afrostream-player.js',
       'sendbird',
       'chardin.js'
     ]
