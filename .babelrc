@@ -11,7 +11,8 @@
       {
         "loose": true
       }
-    ]
+    ],
+    "system-import-transformer"
   ],
   "presets": [
     "es2015",

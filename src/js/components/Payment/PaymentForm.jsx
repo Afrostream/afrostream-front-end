@@ -23,6 +23,7 @@ import _ from 'lodash'
 import * as ReactFB from '../../lib/fbEvent'
 
 const {gocarlessApi, recurlyApi, stripeApi, braintreeApi} = config
+
 if (process.env.BROWSER) {
   require('./PaymentForm.less')
 }
