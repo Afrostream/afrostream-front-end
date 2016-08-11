@@ -29,10 +29,14 @@ let clientConfig = merge({}, webpackConfig, {
     new ExtractTextPlugin({filename: '[name].css?[hash]', allChunks: true}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    //new webpack.LoaderOptionsPlugin({
-    //  minimize: true,
-    //  debug: false
-    //}),
+    new webpack.LoaderOptionsPlugin({
+      test: /\.css$/, // optionally pass test, include and exclude, default affects all loaders
+      minimize: true,
+      debug: false,
+      options: {
+        // pass stuff to the loader
+      }
+    }),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except: ['require', 'export', '$super']
