@@ -37,7 +37,7 @@ clientConfig.plugins.push(
   //})
 )
 
-clientConfig.module.loaders[0].loaders.unshift('react-hot')
+clientConfig.module.loaders[0].loaders.unshift('react-hot-loader/webpack')
 
 //
 // Configuration for the server-side bundle (server.js)

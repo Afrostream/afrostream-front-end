@@ -9,6 +9,7 @@ import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
 import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
+import * as UserActionCreators from '../actions/user'
 
 if (process.env.BROWSER) {
   require('./Application.less')
@@ -21,8 +22,17 @@ if (process.env.BROWSER) {
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
 
+  //componentDidMount () {
+  //  require('chardin.js')
+  //}
   componentDidMount () {
-    require('chardin.js')
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    dispatch(UserActionCreators.getProfile())
   }
 
   render () {

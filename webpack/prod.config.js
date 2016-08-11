@@ -10,7 +10,7 @@ const node_modules_dir = path.resolve(__dirname, '../node_modules')
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 let clientConfig = merge({}, webpackConfig, {
-  devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'eval',
+  devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'cheap-eval-source-map',
   output: {
     publicPath: `/static/`,
     filename: '[name].js?[hash]',
@@ -25,10 +25,10 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js?[hash]'),
-    new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js?[hash]'}),
+    new ExtractTextPlugin({filename: '[name].css?[hash]', allChunks: true}),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except: ['require', 'export', '$super']

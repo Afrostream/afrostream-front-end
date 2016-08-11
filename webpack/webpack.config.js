@@ -48,6 +48,12 @@ const webpackConfig = {
     // Set up an ES6-ish environment
     polyfill: 'babel-polyfill',
     main: './src/js/main',
+    player: [
+      'videojs-vtt.js/dist/vtt.js',
+      'afrostream-player/node_modules/dashjs/dist/dash.all.debug.js',
+      'afrostream-player/node_modules/video.js/dist/video.js',
+      'afrostream-player/dist/afrostream-player.js',
+    ],
     vendor: [
       'react',
       'react-dom',
@@ -65,12 +71,10 @@ const webpackConfig = {
       'raven-js',
       'mobile-detect',
       'qs',
-      'videojs-vtt.js/dist/vtt.js',
-      'afrostream-player/node_modules/dashjs/dist/dash.all.debug.js',
-      'afrostream-player/node_modules/video.js/dist/video.js',
-      'afrostream-player/dist/afrostream-player.js',
       'sendbird',
-      'chardin.js'
+      'chardin.js',
+      './src/js/lib/localStoragePolyfill',
+      './src/js/lib/customEventPolyfill'
     ]
   },
   resolve: {
@@ -121,12 +125,12 @@ const webpackConfig = {
       },
       {
         test: /\.css$/,
-        loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
+        loaders: [ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader'})],
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+        loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader!less-loader'})
       },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
@@ -184,7 +188,7 @@ const webpackConfig = {
   ,
   plugins: [
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
-    new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new webpack.ProvidePlugin({
       sendBirdClient: 'sendbird',
       $: 'jquery',
