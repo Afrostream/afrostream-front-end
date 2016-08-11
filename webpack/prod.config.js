@@ -25,10 +25,10 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js?[hash]'),
-    new ExtractTextPlugin('[name].css?[hash]', {allChunks: true}),
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js?[hash]'}),
+    new ExtractTextPlugin({filename: '[name].css?[hash]', allChunks: true}),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except: ['require', 'export', '$super']
