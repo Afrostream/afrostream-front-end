@@ -12,7 +12,7 @@ const {browserSyncServer: {bSyncHost, bSyncPort}} = config
 
 const webpackDevServerUrl = `http://${host}:${port}`
 let clientConfig = merge({}, webpackConfig, {
-  devtool: 'eval-source-map',
+  devtool: 'cheap-eval-source-map',
   debug: true
 })
 
