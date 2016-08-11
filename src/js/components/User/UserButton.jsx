@@ -16,15 +16,15 @@ if (process.env.BROWSER) {
 @connect(({User, OAuth, Event}) => ({User, OAuth, Event}))
 class UserButton extends React.Component {
 
-  componentDidMount () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
-    dispatch(UserActionCreators.getProfile())
-  }
+  //componentDidMount () {
+  //  const {
+  //    props: {
+  //      dispatch
+  //    }
+  //  } = this
+  //
+  //  dispatch(UserActionCreators.getProfile())
+  //}
 
   logOut () {
     const {
