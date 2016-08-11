@@ -115,12 +115,12 @@ const client = {
     ]
   },
   sentry: {
-    dns: process.env.SENTRY_DSN,
+    dns: process.env.SENTRY_DSN || '',
     config: {}
   },
   fastly: {
-    serviceId: process.env.FASTLY_SERVICE_ID,
-    key: process.env.FASTLY_API_KEY
+    serviceId: process.env.FASTLY_SERVICE_ID || '',
+    key: process.env.FASTLY_API_KEY || ''
   },
   carousel: {
     interval: 10000

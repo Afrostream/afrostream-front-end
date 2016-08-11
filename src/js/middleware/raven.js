@@ -8,7 +8,7 @@ export default function ({getState}) {
    dsn - private Sentry DSN.
    cfg - object to configure Raven.
    */
-  if (!canUseDOM) {
+  if (!canUseDOM || !config.sentry.dns) {
     return next => action => {
       return next(action)
     }
