@@ -7,6 +7,8 @@ import SplashScreen from './SplashScreen/SplashScreen'
 import AlertMessage from './Alert/AlertMessage'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+
 import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import * as UserActionCreators from '../actions/user'
@@ -22,16 +24,15 @@ if (process.env.BROWSER) {
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
 
-  //componentDidMount () {
-  //  require('chardin.js')
-  //}
   componentDidMount () {
     const {
       props: {
         dispatch
       }
     } = this
-
+    if (canUseDOM) {
+      require('chardin.js')
+    }
     dispatch(UserActionCreators.getProfile())
   }
 

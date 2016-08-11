@@ -19,7 +19,7 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, params: {movieId, episodeId}}) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(CategoryActionCreators.getMenu())
+    //store.dispatch(CategoryActionCreators.getMenu())
   ])
 
   if (movieId && movieId !== 'undefined') {

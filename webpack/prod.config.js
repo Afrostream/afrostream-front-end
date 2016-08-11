@@ -29,6 +29,10 @@ let clientConfig = merge({}, webpackConfig, {
     new ExtractTextPlugin({filename: '[name].css?[hash]', allChunks: true}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    //new webpack.LoaderOptionsPlugin({
+    //  minimize: true,
+    //  debug: false
+    //}),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except: ['require', 'export', '$super']
@@ -50,13 +54,13 @@ let clientConfig = merge({}, webpackConfig, {
       sourceMap: process.env.NODE_ENV !== 'production'
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
-    new CompressionPlugin({
-      asset: '{file}.gz',
-      algorithm: 'gzip',
-      regExp: /\.js$|\.html$/,
-      threshold: 10240,
-      minRatio: 0.8
-    })
+    //new CompressionPlugin({
+    //  asset: '{file}.gz',
+    //  algorithm: 'gzip',
+    //  regExp: /\.js$|\.html$/,
+    //  threshold: 10240,
+    //  minRatio: 0.8
+    //})
   )
 })
 
