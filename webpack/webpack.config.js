@@ -62,6 +62,7 @@ const webpackConfig = {
       'fbjs/lib/ExecutionEnvironment',
       'history',
       'lodash',
+      'moment',
       'classnames',
       'raven-js',
       'superagent',
@@ -188,6 +189,7 @@ const webpackConfig = {
   ,
   plugins: [
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
+    new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new webpack.ProvidePlugin({
       sendBirdClient: 'sendbird',
@@ -202,8 +204,6 @@ const webpackConfig = {
         API_CLIENT_AUTHORITY: JSON.stringify(process.env.API_CLIENT_AUTHORITY),
         API_CLIENT_END_POINT: JSON.stringify(process.env.API_CLIENT_END_POINT),
         API_END_POINT: JSON.stringify(process.env.API_END_POINT),
-        ALGOLIA_APP_ID: JSON.stringify(process.env.ALGOLIA_APP_ID),
-        ALGOLIA_API_KEY: JSON.stringify(process.env.ALGOLIA_API_KEY),
         HEROKU_APP_NAME: JSON.stringify(process.env.HEROKU_APP_NAME),
         RECURLY_PUBLIC_KEY: JSON.stringify(process.env.RECURLY_PUBLIC_KEY),
         STRIPE_PUBLIC_KEY: JSON.stringify(process.env.STRIPE_PUBLIC_KEY),

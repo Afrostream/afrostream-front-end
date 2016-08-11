@@ -10,7 +10,7 @@ const node_modules_dir = path.resolve(__dirname, '../node_modules')
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 let clientConfig = merge({}, webpackConfig, {
-  devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'cheap-eval-source-map',
+  devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'eval',
   output: {
     publicPath: `/static/`,
     filename: '[name].js?[hash]',

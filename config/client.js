@@ -65,20 +65,20 @@ const client = {
   stripeApi: '//js.stripe.com/v2/',
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   promoCodes: [
-    {
-      code: 'AFROLOVER',
-      date: '2016/02/15',
-      promoHeader: 'Offrez 1 an de film pour 39,99 EUROS',
-      promoConditions1: '* Valable sur la formule cadeau.',
-      promoConditions2: '12 mois d\'abonnement inclus dans le prix'
-    },
-    {
-      code: 'SENEGALSERIE',
-      date: '2016/02/15',
-      promoHeader: 'PROFITEZ D\'UN MOIS À -50%',
-      promoConditions1: '* Valable sur la formule mensuelle sans engagement.',
-      promoConditions2: 'Soit 3,50 euros au lieu de 6,99 euros le premier mois, puis 6,99 euros par mois sans engagement'
-    }
+    //{
+    //  code: 'AFROLOVER',
+    //  date: '2016/02/15',
+    //  promoHeader: 'Offrez 1 an de film pour 39,99 EUROS',
+    //  promoConditions1: '* Valable sur la formule cadeau.',
+    //  promoConditions2: '12 mois d\'abonnement inclus dans le prix'
+    //},
+    //{
+    //  code: 'SENEGALSERIE',
+    //  date: '2016/02/15',
+    //  promoHeader: 'PROFITEZ D\'UN MOIS À -50%',
+    //  promoConditions1: '* Valable sur la formule mensuelle sans engagement.',
+    //  promoConditions2: 'Soit 3,50 euros au lieu de 6,99 euros le premier mois, puis 6,99 euros par mois sans engagement'
+    //}
   ],
   payment: {
     default: 'card' //paypal/gocardless/card
@@ -91,7 +91,7 @@ const client = {
   facebook: {
     appId: '828887693868980',
     sdkVersion: 'v2.6',
-    analyticsKey: process.env.FB_TRACKING_ID || '1594872720779391'
+    analyticsKey: process.env.FB_TRACKING_ID || 'FB-*******-**'
   },
   apiClient: {
     protocol: process.env.API_CLIENT_PROTOCOL || 'http',
@@ -115,19 +115,19 @@ const client = {
     ]
   },
   sentry: {
-    dns: process.env.SENTRY_DSN || 'https://24502de12b75437cb3783c395bd466f0@app.getsentry.com/59853',
+    dns: process.env.SENTRY_DSN,
     config: {}
   },
   fastly: {
-    serviceId: process.env.FASTLY_SERVICE_ID || 'hc67hHS6Htz3hw4rEVvcc',
-    key: process.env.FASTLY_API_KEY || '642762a026b388ab03a60d3fa55b2877'
+    serviceId: process.env.FASTLY_SERVICE_ID,
+    key: process.env.FASTLY_API_KEY
   },
   carousel: {
     interval: 10000
   },
   sponsors: {
     maxSponsors: 10,
-    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID || 'a94bb541-090d-44b2-b9d2-6e557c212566'
+    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID
   },
   intercom: {
     url: 'https://widget.intercom.io/widget/',
@@ -221,16 +221,16 @@ const client = {
     }
   },
   recurly: {
-    key: process.env.RECURLY_PUBLIC_KEY || 'sjc-ZhO4HmKNWszC5LIA8BcsMJ'
+    key: process.env.RECURLY_PUBLIC_KEY || ''
   },
   stripe: {
-    key: process.env.STRIPE_PUBLIC_KEY || 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'
+    key: process.env.STRIPE_PUBLIC_KEY || ''
   },
   braintree: {
-    key: process.env.BRAINTREE_PUBLIC_KEY || 'sandbox_phhy689d_vpchhx9ppk3xwrcy'
+    key: process.env.BRAINTREE_PUBLIC_KEY || ''
   },
   gocardless: {
-    key: process.env.GOCARDLESS_PUBLIC_KEY || 'sENrK8JLcJaaA-JvFcfF7X_V12YG7lJgTQG8QvFL',
+    key: process.env.GOCARDLESS_PUBLIC_KEY || '',
     version: '2015-07-06',
     creancier: {
       id: 'GB31ZZZSDDBARC0000007495895067',
@@ -238,18 +238,14 @@ const client = {
       adress: '18 RUE SCRIBE 44000 NANTES'
     }
   },
-  algolia: {
-    appId: process.env.ALGOLIA_APP_ID || '3OKNPL7ZVA',
-    apiKey: process.env.ALGOLIA_API_KEY || '3e6547172fb6d80b2ae02d6369edfc72'
-  },
   heroku: {
-    appName: process.env.HEROKU_APP_NAME || 'afrostream-dev'
+    appName: process.env.HEROKU_APP_NAME || ''
   },
   bitly: {
-    apiKey: process.env.BITLY_API_KEY || 'none',
-    clientId: process.env.BITLY_CLIENT_ID || 'none',
-    apiSecret: process.env.BITLY_API_SECRET || 'none',
-    accessToken: process.env.BITLY_ACCESS_TOKEN || '3f7014f52dd257e8e502a3682835721020713736',
+    apiKey: process.env.BITLY_API_KEY || '',
+    clientId: process.env.BITLY_CLIENT_ID || '',
+    apiSecret: process.env.BITLY_API_SECRET || '',
+    accessToken: process.env.BITLY_ACCESS_TOKEN || '',
     domain: 'see.onafro.tv',
     bitUrl: {
       access_token: 'https://api-ssl.bitly.com/oauth/access_token',
@@ -355,7 +351,7 @@ const client = {
       }
     },
     'sr_options': {
-      'ID_CLIENT': process.env.STREAMROOT_CLIENT_ID || 'ry-0gzuhlor',
+      'ID_CLIENT': process.env.STREAMROOT_CLIENT_ID || '',
       'TRACKER_URL': process.env.STREAMROOT_TRACKER_URL || ''
     },
     'chromecast': {
@@ -366,7 +362,7 @@ const client = {
       }
     },
     'youbora': {
-      'accountCode': process.env.YOUBORA_ID || 'afrostreamdev',
+      'accountCode': process.env.YOUBORA_ID || '',
       'enableAnalytics': true,
       'httpSecure': true,
       'transactionCode': 'front'

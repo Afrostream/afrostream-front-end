@@ -8,8 +8,6 @@
     "API_END_POINT": "https://afr-api-v1-staging.herokuapp.com",
     "API_CLIENT_END_POINT": "https://afr-api-v1-staging.herokuapp.com",
     "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-multi.git",
-    "ALGOLIA_APP_ID": "3OKNPL7ZVA",
-    "ALGOLIA_API_KEY": "3e6547172fb6d80b2ae02d6369edfc72",
     "BITLY_API_KEY": "R_8199c11a3938481aa8fdd538530b9137",
     "BITLY_CLIENT_ID": "6919ad7c69fc680e8c1746e329ce06ebf4528640",
     "BITLY_ACCESS_TOKEN": "3f7014f52dd257e8e502a3682835721020713736",
@@ -28,7 +26,8 @@
     "SENDBIRD_API_TOKEN": "3915d25ef28e538be42206f17ff7345bb7e6a6cb",
     "SPONSORSHIP_BILLING_UUID": "a94bb541-090d-44b2-b9d2-6e557c212566",
     "NPM_CONFIG_PRODUCTION": "false",
-    "YOUBORA_ID": "afrostreamdev"
+    "YOUBORA_ID": "afrostreamdev",
+    "STREAMROOT_CLIENT_ID": "ry-0gzuhlor"
   },
   "addons": []
 }

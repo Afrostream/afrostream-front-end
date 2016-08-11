@@ -16,14 +16,13 @@ const isTokenValid = function (tokenData) {
   return tokenData && new Date(tokenData.expiresAt).getTime() > Date.now()
 }
 
-async function getToken (tokenData) {
+async function getToken (tokenData, refresh = false) {
   if (isTokenValid(tokenData)) {
     return tokenData
   }
-  if (!tokenData || !tokenData.refreshToken) {
+  if (!refresh || !tokenData || !tokenData.refreshToken) {
     return tokenData
   }
-  return tokenData
 
   let url = `${apiClient.urlPrefix}/auth/refresh`
   let body = {
@@ -89,7 +88,7 @@ export default function createAPI (createRequest) {
         let storedData = localStorage.getItem(storageId)
         let tokenDataStore = JSON.parse(storedData)
         let tokenData = await getToken(tokenDataStore)
-        if (tokenData) {
+        if (tokenData && isTokenValid(tokenData)) {
           headers = _.merge(headers, {
             'Access-Token': tokenData.access_token
           })

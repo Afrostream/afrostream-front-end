@@ -4,6 +4,8 @@ import { reduxReactRouter, routerStateReducer } from 'redux-router'
 import * as middleWare from '../middleware'
 import * as reducers from '../reducers'
 import { push } from 'redux-router'
+import * as ModalActionCreators from '../actions/modal'
+import { getToken } from './createAPI'
 
 function promiseMiddleware (api, {getState, dispatch}) {
   return next =>
@@ -12,13 +14,15 @@ function promiseMiddleware (api, {getState, dispatch}) {
       if (action && _.isFunction(action.then)) {
         return action.then(_r)
         //TODO add popup reconnect on action error
-        //.catch(function (err) {
-        ////if (_.isFunction(action.catch)) {
-        ////  action.catch(err)
-        ////}
+        //  .catch(function (err) {
+        //if (_.isFunction(action.catch)) {
+        //  action.catch(err)
+        //}
         //else
-        //if (err && err.status === 404) {
-        //  dispatch(pushState(null, '404'))
+        //if (err && err.status === 401 && err.message === 'Unauthorized') {
+        //dispatch(ModalActionCreators.open({target: 'showSignin'})).then(()=> {
+        //  next(action)
+        //})
         //}
         //return next(action)
         //})
