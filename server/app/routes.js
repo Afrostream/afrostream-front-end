@@ -40,7 +40,7 @@ export default function routes (app, buildPath) {
   app.get('/*', (req, res) => {
     res.set('Cache-Control', 'public, max-age=0')
     // Js files
-    const jsPaths = ['vendor', 'main', 'player', 'polyfill'].map(basename => {
+    const jsPaths = ['polyfill', 'vendor', 'main', 'player'].map(basename => {
       if (env === 'development') {
         let {webpackDevServer: {host, port}} = config
         return `//${host}:${port}/static/${basename}.js`
