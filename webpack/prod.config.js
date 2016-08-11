@@ -58,13 +58,13 @@ let clientConfig = merge({}, webpackConfig, {
       sourceMap: process.env.NODE_ENV !== 'production'
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
-    //new CompressionPlugin({
-    //  asset: '{file}.gz',
-    //  algorithm: 'gzip',
-    //  regExp: /\.js$|\.html$/,
-    //  threshold: 10240,
-    //  minRatio: 0.8
-    //})
+    new CompressionPlugin({
+      asset: '{file}.gz',
+      algorithm: 'gzip',
+      regExp: /\.js$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
+    })
   )
 })
 
