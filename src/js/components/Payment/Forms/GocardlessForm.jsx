@@ -85,14 +85,12 @@ class GocardlessForm extends React.Component {
 
   static propTypes = {
     selected: React.PropTypes.bool,
-    isGift: React.PropTypes.bool,
     planCode: React.PropTypes.string,
     planLabel: React.PropTypes.string
   }
 
   static defaultProps = {
     selected: false,
-    isGift: false,
     planCode: null,
     planLabel: null
   }

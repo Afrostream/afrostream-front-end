@@ -31,7 +31,7 @@ class PaymentMethod extends React.Component {
   static methods = Methods
 
   multipleMethods () {
-    return !this.props.isGift && (featuresFlip.gocardless || featuresFlip.paypal || featuresFlip.cashway)
+    return (featuresFlip.gocardless || featuresFlip.paypal || featuresFlip.cashway)
   }
 
   hasLib () {
@@ -131,13 +131,11 @@ class PaymentMethod extends React.Component {
         break
       default:
         methods.push(featuresFlip.stripe ? stripe : recurly)
-        if (!this.props.isGift) {
-          if (featuresFlip.paypal) {
-            methods.push(featuresFlip.braintree ? paypalBraintree : paypalRecurly)
-          }
-          if (featuresFlip.gocardless) {
-            methods.push(gocardless)
-          }
+        if (featuresFlip.paypal) {
+          methods.push(featuresFlip.braintree ? paypalBraintree : paypalRecurly)
+        }
+        if (featuresFlip.gocardless) {
+          methods.push(gocardless)
         }
         break
     }
@@ -156,13 +154,11 @@ class PaymentMethod extends React.Component {
 }
 
 PaymentMethod.propTypes = {
-  isGift: React.PropTypes.bool,
   planCode: React.PropTypes.string,
   planLabel: React.PropTypes.string
 }
 
 PaymentMethod.defaultProps = {
-  isGift: false,
   planCode: null,
   planLabel: null
 }

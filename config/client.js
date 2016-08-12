@@ -239,7 +239,7 @@ const client = {
     }
   },
   heroku: {
-    appName: process.env.HEROKU_APP_NAME || ''
+    appName: process.env.HEROKU_APP_NAME || 'afrostream-dev'
   },
   bitly: {
     apiKey: process.env.BITLY_API_KEY || '',

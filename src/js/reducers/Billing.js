@@ -39,11 +39,11 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Billing.subscribe](state, {res, isGift}) {
+  [ActionTypes.Billing.subscribe](state, {res}) {
     if (!res) {
       return state
     }
-    const data = isGift ? {} : res.body
+    const data = res.body
     return state.merge({
       ['subscriptions']: mergeData(state.get('subscriptions'), [data])
     })

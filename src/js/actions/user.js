@@ -16,14 +16,14 @@ const mergeProfile = function (data, getState, actionDispatcher) {
   return async api => {
     actionDispatcher(pendingUser(true))
     try {
-      const userInfos = await api({path: `/api/users/me`})
+      const userInfos = await api({path: `/api/users/me`, passToken: true})
       const userMerged = userInfos.body || {}
       userMerged.user_id = userMerged._id || userMerged.user_id
 
       if (userMerged) {
         let planCode = userMerged.planCode
         let subscriptionsStatus = userMerged.subscriptionsStatus
-        let status = subscriptionsStatus.status
+        let status = subscriptionsStatus && subscriptionsStatus.status
         if (!planCode) {
           donePath = donePath || `/select-plan`
           if (status && status !== 'active') {
@@ -52,7 +52,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
     } catch (e) {
       console.log(e, 'remove user data')
-      actionDispatcher(OAuthActionCreators.logOut())
+      //actionDispatcher(OAuthActionCreators.logOut())
       return data
     }
   }

@@ -57,7 +57,6 @@ class ModalView extends React.Component {
       case 'showSignin':
       case 'showSignup':
       case 'showReset':
-      case 'showGift':
       case 'showRelog':
       case 'showProvider':
       case 'linkProvider':

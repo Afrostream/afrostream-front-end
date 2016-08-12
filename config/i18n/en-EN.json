@@ -78,7 +78,6 @@
     "afrostreammonthly": "Formule Mensuel - 7 jours d’essai puis 6,99€ par mois sans engagement",
     "afrostreamambassadeurs2": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "afrostreamambassadeurs": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
-    "afrostreamgift": "Formule Cadeau - 1 an de films et séries afro pour 59,99€",
     "infos": {
       "formule": "Formule",
       "prelevementMensuel": "Automatic debit payment",
@@ -188,7 +187,6 @@
       "card": "Veuillez contacter votre banque ou utilisez une autre carte.",
       "coupon": "Le code promo n’ est pas ou plus valide pour cette formule.",
       "already": "Vous avez deja souscrit à cette formule.",
-      "gift": "Les courriels de l’ offrant et de destination sont identiques.Vérifiez le courriel de destination de votre cadeau",
       "global": "Une erreur inconnue s’ est produite, veuillez recommencer.",
       "fields": "Les champs indiqués semblent invalides : ",
       "abo": "Erreur lors de la création de l’abonnement : ",
@@ -380,12 +378,6 @@
     "headerText": "Enter coupon code to start your Afrostream subscription.",
     "couponInvalid": "The coupon that you submitted is incorrect or has already been used. Please try again with another coupon.",
     "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe."
-  },
-  "gift": {
-    "title": "Enregistrez-vous",
-    "action": "Enregistrez-vous",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe pour offrir un cadeau",
-    "serverErrorText": "Nous avions déja enregistré votre courriel. Pour offrir un cadeau, allez dans votre profil Afrostream."
   },
   "relog": {
     "title": "Reconnectez-vous",

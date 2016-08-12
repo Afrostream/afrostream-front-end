@@ -13,10 +13,6 @@ export function signin (form) {
   }
 }
 
-export function gift (form) {
-  return signup(form)
-}
-
 export function signup (form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
