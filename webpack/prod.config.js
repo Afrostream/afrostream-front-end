@@ -25,17 +25,17 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js?[hash]'}),
     new ExtractTextPlugin({filename: '[name].css?[hash]', allChunks: true}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+      filename: 'vendor.js?[hash]'
+    }),
     new webpack.LoaderOptionsPlugin({
-      test: /\.css$/, // optionally pass test, include and exclude, default affects all loaders
       minimize: true,
-      debug: false,
-      options: {
-        // pass stuff to the loader
-      }
+      debug: false
     }),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
