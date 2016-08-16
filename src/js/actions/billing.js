@@ -35,7 +35,7 @@ export function subscribe (data) {
     return async api => ({
       type: ActionTypes.Billing.subscribe,
       res: await api({
-        path: `/api/billings/subscriptions}`,
+        path: `/api/billings/subscriptions`,
         method: 'POST',
         params: data,
         passToken: true
