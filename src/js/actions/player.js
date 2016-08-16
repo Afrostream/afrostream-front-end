@@ -8,7 +8,8 @@ export function getConfig () {
         const playerConfigApi = await api({path: `/api/player/config`})
         return async api => ({
           type: ActionTypes.Player.getConfig,
-          res: playerConfigApi
+          res: playerConfigApi,
+          passToken: true
         })
 
       } catch (e) {

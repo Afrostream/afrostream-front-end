@@ -16,7 +16,10 @@ export function getSubscriptions () {
     return async api => {
       return {
         type: ActionTypes.Billing.getSubscriptions,
-        res: await api({path: `/api/subscriptions/status`, passToken: true})
+        res: await api({
+          path: `/api/subscriptions/status`,
+          passToken: true
+        })
       }
     }
   }
@@ -68,7 +71,8 @@ export function couponValidate (data) {
       type: ActionTypes.Billing.couponValidate,
       res: await api({
         path: `/api/billings/coupons`,
-        params: data
+        params: data,
+        passToken: true
       })
     })
   }
@@ -162,7 +166,8 @@ export function getCouponCampaigns (params) {
       couponsCampaignBillingUuid: params.couponsCampaignBillingUuid,
       res: await api({
         path: `/api/billings/couponscampaigns`,
-        params
+        params,
+        passToken: true
       })
     })
   }
@@ -192,9 +197,11 @@ export function getInternalplans (contextBillingUuid = 'common') {
       type: ActionTypes.Billing.getInternalplans,
       contextBillingUuid,
       res: await api({
-        path: `/api/billings/internalplans`, params: {
+        path: `/api/billings/internalplans`,
+        params: {
           contextBillingUuid: contextBillingUuid
-        }
+        },
+        passToken: true
       })
     })
   }

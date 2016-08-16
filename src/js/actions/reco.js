@@ -183,7 +183,7 @@ export function getRecommendations (route = 'player', videoId = 'home') {
     //TODO connecter une fois l'api reco presente
     //return async api => ({
     //  type: ActionTypes.Reco.getRecommendations,
-    //  res: await api({path: `/api/users/me/recommendations`,method: 'POST', params :{page: route, videoId: videoId,limit:reco.limit}})
+    //  res: await api({path: `/api/users/me/recommendations`,method: 'POST', params :{page: route, videoId: videoId,limit:reco.limit},passToken: true})
     //})
   }
 }

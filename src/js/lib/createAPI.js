@@ -13,7 +13,7 @@ const {apiClient} = config
 NProgress.configure({showSpinner: false})
 
 const isTokenValid = function (tokenData) {
-  return tokenData && new Date(tokenData.expiresAt).getTime() > Date.now()
+  return tokenData && tokenData.access_token && new Date(tokenData.expiresAt).getTime() > Date.now()
 }
 
 async function setTokenInHeader (headers) {
@@ -35,10 +35,9 @@ async function setTokenInHeader (headers) {
 export async function fetchToken (refresh = false) {
   let tokenData = getToken()
 
-  //fixme replace this
-  //if (isTokenValid(tokenData)) {
-  //  return tokenData
-  //}
+  if (isTokenValid(tokenData)) {
+    return tokenData
+  }
 
   if (!refresh) {
     return tokenData
@@ -66,16 +65,21 @@ export async function fetchToken (refresh = false) {
 
 let promiseStack = []
 
-export async function promiseCalls ({createRequest, data, reject, resolve}) {
+async function promiseCalls ({createRequest, data, reject, resolve}) {
   // Promise.map awaits for returned promises as well.
   data.headers = await setTokenInHeader(data.headers)
-  return createRequest(data)
-    .then((err, res)=> {
-      if (err) {
-        return reject(err)
-      }
-      return resolve(res)
-    })
+  console.log('promiseCalls', data)
+  return await new Promise((allRes, allRej) => {
+    createRequest(data)
+      .end((err, res)=> {
+        if (err) {
+          reject(err)
+          return allRej(err)
+        }
+        resolve(res)
+        return allRes(res)
+      })
+  })
 }
 /**
  * return api function base on createRequest function
@@ -115,6 +119,7 @@ export default function createAPI (createRequest) {
         NProgress.start()
       }
       if (passToken) {
+        console.log('call before token error, buffer stack : ', promiseStack.length)
         headers = await setTokenInHeader(headers)
       }
     }
@@ -123,40 +128,38 @@ export default function createAPI (createRequest) {
 
       const data = {method, headers, pathname, query, body, legacy, local}
 
-      console.log('call before token error, buffer stack : ', promiseStack.length)
+      const req = createRequest(data)
+      req.end((err, res) => {
+        if (showLoader) {
+          NProgress.done()
+        }
+        if (err) {
+          console.log(err)
+          if (err.status === 401 && err.message === 'Unauthorized') {
+            //push data in buffer http calls promise
+            promiseStack.push({createRequest, data, reject, resolve})
 
-      createRequest(data)
-        .end((err, res) => {
-          if (showLoader) {
-            NProgress.done()
-          }
-          if (err) {
-            console.log(err)
-            //if (err.status === 401 && err.message === 'Unauthorized') {
-            //  //push data in buffer http calls promise
-            //  promiseStack.push({createRequest, data, reject, resolve})
-            //
-            //  console.log('token is expired, try to get new one, buffer stack : ', promiseStack.length)
-            //  if (promiseStack.length === 1) {
-            //    //get new token
-            //    return fetchToken(true).then(()=> {
-            //      //try to call all promises
-            //      return Promise.map(promiseStack, promiseCalls).then(()=> {
-            //        console.log('all http calls done ,buffer stack : ', promiseStack.length)
-            //        //clear buffer
-            //        promiseStack = []
-            //      })
-            //    }).catch((err) => {
-            //      console.log('fetch refreshToken error', err)
-            //      return reject(err)
-            //    })
-            //  }
-            //  return reject(err)
-            //}
+            console.log('token is expired, try to get new one, buffer stack : ', promiseStack.length)
+            if (promiseStack.length === 1) {
+              //get new token
+              return fetchToken(true).then(()=> {
+                //try to call all promises
+                return Promise.map(promiseStack, promiseCalls).then(()=> {
+                  console.log('all http calls done ,buffer stack : ', promiseStack.length)
+                  //clear buffer
+                  promiseStack = []
+                })
+              }).catch((err) => {
+                console.log('fetch refreshToken error', err)
+                return reject(err)
+              })
+            }
             return reject(err)
           }
-          return resolve(res)
-        })
+          return reject(err)
+        }
+        return resolve(res)
+      })
     })
 
     return promised

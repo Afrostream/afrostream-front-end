@@ -28,7 +28,31 @@ export function reset (form) {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
       type: ActionTypes.OAuth.reset,
-      res: await api({path: `/auth/reset`, method: 'POST', params: form})
+      res: await api({
+        path: `/auth/reset`,
+        method: 'POST',
+        params: form,
+        passToken: true
+      })
+    })
+  }
+}
+
+export function refresh () {
+  return (dispatch, getState, actionDispatcher) => {
+
+    let tokenData = getToken()
+
+    return async api => ({
+      type: ActionTypes.OAuth.refresh,
+      res: await api({
+        path: `/auth/refresh`,
+        method: 'POST',
+        params: {
+          grant_type: 'refresh_token',
+          refresh_token: tokenData.refresh_token
+        }
+      })
     })
   }
 }

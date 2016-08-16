@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import { reduxReactRouter, routerStateReducer } from 'redux-router'
 import * as middleWare from '../middleware'

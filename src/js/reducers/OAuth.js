@@ -65,6 +65,13 @@ export default createReducer(initialState, {
     return state.merge({
       ['token']: null
     })
+  },
+
+  [ActionTypes.OAuth.refresh](state) {
+    const tokenData = getToken()
+    return state.merge({
+      ['token']: tokenData
+    })
   }
 
 })

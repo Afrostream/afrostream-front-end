@@ -15,8 +15,10 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
   return async api => {
     actionDispatcher(pendingUser(true))
-    //try {
-    return await api({path: `/api/users/me`, passToken: true}).then((userInfos)=> {
+    return await api({
+      path: `/api/users/me`,
+      passToken: true
+    }).then((userInfos)=> {
       const userMerged = userInfos.body || {}
       userMerged.user_id = userMerged._id || userMerged.user_id
 
@@ -49,19 +51,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       return _.merge(data, {
         user: userMerged
       })
-    }).catch((e)=> {
-      debugger
-      console.log(e, 'remove user data')
-      //FIXME replace logout method
-      //actionDispatcher(OAuthActionCreators.logOut())
-      return data
     })
-
-    //} catch (e) {
-    //  console.log(e, 'remove user data')
-    //actionDispatcher(OAuthActionCreators.logOut())
-    //return data
-    //}
   }
 }
 
