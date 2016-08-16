@@ -15,6 +15,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
   return async api => {
     actionDispatcher(pendingUser(true))
+    //try {
     return await api({
       path: `/api/users/me`,
       passToken: true
@@ -52,6 +53,12 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         user: userMerged
       })
     })
+    //}).catch((e)=> {
+    //  console.log(e, 'remove user data')
+    //  //FIXME replace logout method
+    //  actionDispatcher(OAuthActionCreators.logOut())
+    //  return data
+    //})
   }
 }
 

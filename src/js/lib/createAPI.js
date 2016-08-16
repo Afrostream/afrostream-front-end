@@ -119,7 +119,6 @@ export default function createAPI (createRequest) {
         NProgress.start()
       }
       if (passToken) {
-        console.log('call before token error, buffer stack : ', promiseStack.length)
         headers = await setTokenInHeader(headers)
       }
     }
