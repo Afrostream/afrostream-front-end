@@ -15,15 +15,18 @@ const mergeProfile = function (data, getState, actionDispatcher) {
 
   return async api => {
     actionDispatcher(pendingUser(true))
-    try {
-      const userInfos = await api({path: `/api/users/me`})
+    //try {
+    return await api({
+      path: `/api/users/me`,
+      passToken: true
+    }).then((userInfos)=> {
       const userMerged = userInfos.body || {}
       userMerged.user_id = userMerged._id || userMerged.user_id
 
       if (userMerged) {
         let planCode = userMerged.planCode
         let subscriptionsStatus = userMerged.subscriptionsStatus
-        let status = subscriptionsStatus.status
+        let status = subscriptionsStatus && subscriptionsStatus.status
         if (!planCode) {
           donePath = donePath || `/select-plan`
           if (status && status !== 'active') {
@@ -49,12 +52,13 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       return _.merge(data, {
         user: userMerged
       })
-
-    } catch (e) {
-      console.log(e, 'remove user data')
-      actionDispatcher(OAuthActionCreators.logOut())
-      return data
-    }
+    })
+    //}).catch((e)=> {
+    //  console.log(e, 'remove user data')
+    //  //FIXME replace logout method
+    //  actionDispatcher(OAuthActionCreators.logOut())
+    //  return data
+    //})
   }
 }
 
@@ -74,7 +78,10 @@ export function getHistory () {
 
     return async api => ({
       type: ActionTypes.User.getHistory,
-      res: await api({path: `/api/users/${user.get('_id')}/history`})
+      res: await api({
+        path: `/api/users/${user.get('_id')}/history`,
+        passToken: true
+      })
     })
   }
 }
@@ -94,7 +101,12 @@ export function put (data) {
 
     return async api => ({
       type: ActionTypes.User.put,
-      res: await api({path: `/api/users/${user.get('_id')}`, method: 'PUT', params: data})
+      res: await api({
+        path: `/api/users/${user.get('_id')}`,
+        method: 'PUT',
+        params: data,
+        passToken: true
+      })
     })
   }
 }
@@ -128,7 +140,10 @@ export function getFavorites (type = 'movies') {
 
     return async api => ({
       type: returnTypeAction,
-      res: await api({path: `/api/users/${user.get('_id')}/favorites${capitType}`})
+      res: await api({
+        path: `/api/users/${user.get('_id')}/favorites${capitType}`,
+        passToken: true
+      })
     })
   }
 }
@@ -152,10 +167,15 @@ export function setFavorites (type, active, id) {
         dataFav = await api({
           path: `/api/users/${user.get('_id')}/favorites${capitType}`,
           method: 'POST',
-          params: {_id: id}
+          params: {_id: id},
+          passToken: true
         })
       } else {
-        dataFav = await api({path: `/api/users/${user.get('_id')}/favorites${capitType}/${id}`, method: 'DELETE'})
+        dataFav = await api({
+          path: `/api/users/${user.get('_id')}/favorites${capitType}/${id}`,
+          method: 'DELETE',
+          passToken: true
+        })
       }
 
       let index = await list.findIndex((obj)=> {

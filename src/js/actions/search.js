@@ -9,7 +9,12 @@ export function fetchMovies (value) {
 
     return async api => ({
       type: ActionTypes.Search.fetchMovies,
-      res: await api({path: `/api/movies/search/`, method: 'POST', params: {query: value}})
+      res: await api({
+        path: `/api/movies/search/`,
+        method: 'POST',
+        params: {query: value},
+        passToken: true
+      })
     })
   }
 }

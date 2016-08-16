@@ -3,13 +3,13 @@ import * as ModalActionCreators from './modal'
 import * as UserActionCreators from './user'
 import { isAuthorized } from '../lib/geo'
 
-export function open ({target, closable = true, donePath= null, data = null, cb = null}) {
+export function open ({target, closable = true, donePath = null, data = null, cb = null}) {
   return (dispatch, getState, actionDispatcher) => {
 
     return async () => {
       actionDispatcher(UserActionCreators.pendingUser(true))
       let authorized = true
-      if (target === 'showSignup' || target === 'showGift') {
+      if (target === 'showSignup') {
         try {
           authorized = await isAuthorized()
         } catch (err) {

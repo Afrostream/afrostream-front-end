@@ -10,7 +10,6 @@ import * as BillingActionCreators from '../../actions/billing'
 import * as UserActionCreators from '../../actions/user'
 import * as EventActionCreators from '../../actions/event'
 import Spinner from '../Spinner/Spinner'
-import GiftDetails from './GiftDetails'
 import CashwayEndPage from '../Cashway/CashwayEndPage'
 import PaymentSuccess from './PaymentSuccess'
 import PaymentError from './PaymentError'
@@ -43,7 +42,6 @@ class PaymentForm extends React.Component {
     hasLib: true,
     subscriptionStatus: 0,
     loading: false,
-    isGift: false,
     pageHeader: getI18n().payment.header
   }
 
@@ -80,7 +78,6 @@ class PaymentForm extends React.Component {
 
     let internalPlanUuid = currentPlan.get('internalPlanUuid')
     this.setState({
-      isGift: internalPlanUuid === 'afrostreamgift',
       internalPlanUuid: internalPlanUuid,
       currentPlan: currentPlan
     })
@@ -170,13 +167,6 @@ class PaymentForm extends React.Component {
           disabled={this.state.disabledForm}/>
       </div>
     </div>)
-  }
-
-  renderGift () {
-    if (!this.state.isGift) {
-      return
-    }
-    return <GiftDetails ref="giftDetails" isVisible={this.state.isGift}/>
   }
 
   renderSubmit () {
@@ -284,10 +274,6 @@ class PaymentForm extends React.Component {
       lastName: this.refs.lastName.value
     }
 
-    if (self.state.isGift) {
-      billingInfo = _.merge(billingInfo, this.refs.giftDetails.value())
-    }
-
     try {
       let subBillingInfo = await this.refs.methodForm.submit(billingInfo, this.state.currentPlan)
       billingInfo = _.merge(billingInfo, subBillingInfo)
@@ -310,7 +296,7 @@ class PaymentForm extends React.Component {
     const self = this
     let isCash = router.isActive('cash')
 
-    return await dispatch(BillingActionCreators.subscribe(formData, self.state.isGift)).then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
+    return await dispatch(BillingActionCreators.subscribe(formData)).then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
       ReactFB.track({
         event: 'CompleteRegistration', params: {
           'content_name': internalPlanUuid,
@@ -377,7 +363,7 @@ class PaymentForm extends React.Component {
 
   renderPaymentMethod (planLabel) {
     return (
-      <PaymentMethod ref="methodForm" isGift={this.state.isGift}
+      <PaymentMethod ref="methodForm"
                      planCode={this.state.internalPlanUuid} {...this.props}
                      planLabel={planLabel}/>)
   }
@@ -411,8 +397,6 @@ class PaymentForm extends React.Component {
 
             {this.renderPaymentMethod(planLabel)}
 
-            {this.renderGift()}
-
             {this.renderCGU()}
             {this.renderDroits()}
             {this.renderSubmit()}
@@ -441,7 +425,7 @@ class PaymentForm extends React.Component {
 
     switch (status) {
       case 'success':
-        return (<PaymentSuccess isGift={this.state.isGift}/>)
+        return (<PaymentSuccess/>)
         break
       case 'expired':
         return (

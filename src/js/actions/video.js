@@ -19,7 +19,10 @@ export function getVideo (videoId) {
       } catch (err) {
         console.log('impossible de touver les information videos utilisateur', videoId)
       }
-      let videoData = await api({path: `/api/videos/${videoId}`}).catch(notFoundVideo)
+      let videoData = await api({
+        path: `/api/videos/${videoId}`,
+        passToken: true
+      }).catch(notFoundVideo)
       return async api => ({
         type: ActionTypes.Video.getVideo,
         videoId,

@@ -240,9 +240,6 @@ class ModalLogin extends ModalComponent {
       case 'showSignup':
         keyType = 'signup'
         break
-      case 'showGift':
-        keyType = 'gift'
-        break
       case 'showReset':
         keyType = 'reset'
         break
@@ -261,9 +258,6 @@ class ModalLogin extends ModalComponent {
         break
       case 'showSignup':
         keyType = 'signup'
-        break
-      case 'showGift':
-        keyType = 'gift'
         break
       case 'showReset':
         keyType = 'reset'
@@ -318,7 +312,6 @@ class ModalLogin extends ModalComponent {
         formTemplate = this.getSignIn()
         break
       case 'showSignup':
-      case 'showGift':
         formTemplate = this.getSignUp()
         break
       case 'showReset':

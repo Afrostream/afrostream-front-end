@@ -27,7 +27,7 @@ class PricingTable extends React.Component {
       return
     }
 
-    return validPlans.filter((a) => a.get('internalPlanUuid') !== 'afrostreamgift').sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')))
+    return validPlans.sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')))
   }
 
   openModal (internalPlanUuid) {
@@ -36,7 +36,7 @@ class PricingTable extends React.Component {
         dispatch
       }
     } = this
-    let type = (internalPlanUuid === 'afrostreamgift') ? 'showGift' : 'showSignup'
+    let type = 'showSignup'
     dispatch(ModalActionCreators.open({target: type, donePath: `/select-plan/${internalPlanUuid}/checkout`}))
   }
 

@@ -16,7 +16,10 @@ export function getSubscriptions () {
     return async api => {
       return {
         type: ActionTypes.Billing.getSubscriptions,
-        res: await api({path: `/api/subscriptions/status`})
+        res: await api({
+          path: `/api/subscriptions/status`,
+          passToken: true
+        })
       }
     }
   }
@@ -27,12 +30,16 @@ export function getSubscriptions () {
  * @param data
  * @returns {Function}
  */
-export function subscribe (data, isGift = false) {
+export function subscribe (data) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.subscribe,
-      res: await api({path: `/api/billings/${isGift ? 'gifts' : 'subscriptions'}`, method: 'POST', params: data}),
-      isGift
+      res: await api({
+        path: `/api/billings/subscriptions`,
+        method: 'POST',
+        params: data,
+        passToken: true
+      })
     })
   }
 }
@@ -42,7 +49,12 @@ export function cancelSubscription (subscription) {
     let uuid = subscription.get('subscriptionBillingUuid')
     return async api => ({
       type: ActionTypes.Billing.cancelSubscription,
-      res: await api({path: `/api/billings/subscriptions/${uuid}/cancel`, method: 'PUT', params: {}})
+      res: await api({
+        path: `/api/billings/subscriptions/${uuid}/cancel`,
+        method: 'PUT',
+        params: {},
+        passToken: true
+      })
     })
   }
 }
@@ -57,7 +69,11 @@ export function couponValidate (data) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.couponValidate,
-      res: await api({path: `/api/billings/coupons`, params: data})
+      res: await api({
+        path: `/api/billings/coupons`,
+        params: data,
+        passToken: true
+      })
     })
   }
 }
@@ -106,7 +122,12 @@ export function createCoupon (data) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.createCoupon,
-      res: await api({path: `/api/billings/coupons`, method: 'POST', params: data})
+      res: await api({
+        path: `/api/billings/coupons`,
+        method: 'POST',
+        params: data,
+        passToken: true
+      })
     })
   }
 }
@@ -126,7 +147,9 @@ export function getSponsorsList (params) {
     return async api => ({
       type: ActionTypes.Billing.sponsorsList,
       res: await api({
-        path: `/api/billings/coupons/list`, params
+        path: `/api/billings/coupons/list`,
+        params,
+        passToken: true
       })
     })
   }
@@ -143,7 +166,8 @@ export function getCouponCampaigns (params) {
       couponsCampaignBillingUuid: params.couponsCampaignBillingUuid,
       res: await api({
         path: `/api/billings/couponscampaigns`,
-        params
+        params,
+        passToken: true
       })
     })
   }
@@ -173,9 +197,11 @@ export function getInternalplans (contextBillingUuid = 'common') {
       type: ActionTypes.Billing.getInternalplans,
       contextBillingUuid,
       res: await api({
-        path: `/api/billings/internalplans`, params: {
+        path: `/api/billings/internalplans`,
+        params: {
           contextBillingUuid: contextBillingUuid
-        }
+        },
+        passToken: true
       })
     })
   }
