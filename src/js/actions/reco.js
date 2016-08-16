@@ -23,7 +23,8 @@ export function getVideoTracking (videoId) {
       try {
         videoUserData = await api({
           path: `/api/users/${user.get('_id')}/videos/${videoId}`,
-          legacy: true
+          legacy: true,
+          passToken: true
         })
       } catch (e) {
         console.log(`didn’t find any video user data for videoId : ${videoId}`)
@@ -78,7 +79,8 @@ export function trackVideo (data, videoId) {
         method: 'PUT',
         params: postData,
         legacy: true,
-        showLoader: false
+        showLoader: false,
+        passToken: true
       }).then(()=> {
         return {body: postData}
       })
@@ -117,7 +119,8 @@ export function rateVideo (value, videoId) {
         method: 'PUT',
         params: {rating: value},
         legacy: true,
-        showLoader: true
+        showLoader: true,
+        passToken: true
       }).then(()=> {
         return {body: mergedDataUserVideo}
       })

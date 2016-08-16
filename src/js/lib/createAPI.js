@@ -17,18 +17,25 @@ const isTokenValid = function (tokenData) {
 }
 
 async function setTokenInHeader (headers) {
-  let tokenData = await fetchToken()
-  if (tokenData && isTokenValid(tokenData)) {
-    headers = _.merge(headers, {
-      'Access-Token': tokenData.access_token
-    })
+  try {
+    let tokenData = await fetchToken()
+    if (tokenData && isTokenValid(tokenData)) {
+      headers = _.merge(headers || {}, {
+        'Access-Token': tokenData.access_token
+      })
+    }
+    return headers
   }
-  return headers
+  catch (err) {
+    console.log('set AccessToken in header fail', err)
+    return headers
+  }
 }
 
 export async function fetchToken (refresh = false) {
   let tokenData = getToken()
 
+  //fixme replace this
   //if (isTokenValid(tokenData)) {
   //  return tokenData
   //}
@@ -59,26 +66,16 @@ export async function fetchToken (refresh = false) {
 
 let promiseStack = []
 
-async function promiseCalls ({createRequest, data, reject, resolve}) {
+export async function promiseCalls ({createRequest, data, reject, resolve}) {
   // Promise.map awaits for returned promises as well.
-  try {
-    let tokenData = await fetchToken()
-    if (tokenData && isTokenValid(tokenData)) {
-      data.headers = _.merge(data.headers || {}, {
-        'Access-Token': tokenData.access_token
-      })
-    }
-  }
-  catch (err) {
-    console.log('set AccessToken in header fail', err)
-  }
-
-  return createRequest(data).then((err, res)=> {
-    if (err) {
-      return reject(err)
-    }
-    return resolve(res)
-  })
+  data.headers = await setTokenInHeader(data.headers)
+  return createRequest(data)
+    .then((err, res)=> {
+      if (err) {
+        return reject(err)
+      }
+      return resolve(res)
+    })
 }
 /**
  * return api function base on createRequest function
@@ -93,7 +90,7 @@ async function promiseCalls ({createRequest, data, reject, resolve}) {
  * Server: /servr/index.js
  */
 export default function createAPI (createRequest) {
-  return async function api ({path, method = 'GET', params = {}, legacy = false, showLoader = true, local = false, passToken:false}) {
+  return async function api ({path, method = 'GET', params = {}, legacy = false, showLoader = true, local = false, passToken = false}) {
     let {pathname, query: queryStr} = URL.parse(path)
     let query, headers = {}, body
 
@@ -118,12 +115,7 @@ export default function createAPI (createRequest) {
         NProgress.start()
       }
       if (passToken) {
-        try {
-          headers = await setTokenInHeader(headers)
-        }
-        catch (err) {
-          console.log('set AccessToken in header fail', err)
-        }
+        headers = await setTokenInHeader(headers)
       }
     }
 
@@ -140,27 +132,27 @@ export default function createAPI (createRequest) {
           }
           if (err) {
             console.log(err)
-            if (err.status === 401 && err.message === 'Unauthorized') {
-              //push data in buffer http calls promise
-              promiseStack.push({createRequest, data, reject, resolve})
-
-              console.log('token is expired, try to get new one, buffer stack : ', promiseStack.length)
-              if (promiseStack.length === 1) {
-                //get new token
-                return fetchToken(true).then(()=> {
-                  //try to call all promises
-                  return Promise.map(promiseStack, promiseCalls).then(()=> {
-                    console.log('all http calls done ,buffer stack : ', promiseStack.length)
-                    //clear buffer
-                    promiseStack = []
-                  })
-                }).catch((err) => {
-                  console.log('set token imppossible', err)
-                  return reject(err)
-                })
-              }
-              //return reject(err)
-            }
+            //if (err.status === 401 && err.message === 'Unauthorized') {
+            //  //push data in buffer http calls promise
+            //  promiseStack.push({createRequest, data, reject, resolve})
+            //
+            //  console.log('token is expired, try to get new one, buffer stack : ', promiseStack.length)
+            //  if (promiseStack.length === 1) {
+            //    //get new token
+            //    return fetchToken(true).then(()=> {
+            //      //try to call all promises
+            //      return Promise.map(promiseStack, promiseCalls).then(()=> {
+            //        console.log('all http calls done ,buffer stack : ', promiseStack.length)
+            //        //clear buffer
+            //        promiseStack = []
+            //      })
+            //    }).catch((err) => {
+            //      console.log('fetch refreshToken error', err)
+            //      return reject(err)
+            //    })
+            //  }
+            //  return reject(err)
+            //}
             return reject(err)
           }
           return resolve(res)
