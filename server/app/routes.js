@@ -74,7 +74,8 @@ export default function routes (app, buildPath) {
   // RENDER
   // --------------------------------------------------
   app.get('/*', (req, res) => {
-
+    //FIXE remove cache une fois correctement set
+    res.set('Cache-Control', 'public, max-age=0')
     const externalsJs = config.externalsJs
 
     // Render
