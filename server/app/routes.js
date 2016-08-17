@@ -6,11 +6,39 @@ import fs from 'fs'
 import path from 'path'
 import render from './render'
 // --------------------------------------------------
-// Render layout
 
 export default function routes (app, buildPath) {
 
   const env = process.env.NODE_ENV || 'development'
+//Get hashed path webpack
+  const hashValue = (env !== 'development') ? fs.readFileSync(path.join(buildPath, 'hash.txt')) : ''
+// Render layout
+  const bootstrapFiles = function (res, files, type) {
+    let loadType = type === 'js' ? 'javascript' : type
+    res.set('Cache-Control', 'public, max-age=0')
+    res.header('Content-type', `text/${loadType}`)
+    let {webpackDevServer: {host, port}} = config
+    const hostname = (env === 'development') ? `//${host}:${port}` : ''
+    // Js files
+    let templateStr = ''
+    let fileLoader = ''
+    switch (type) {
+      case 'js':
+        fileLoader = `document.write('<scr' + 'ipt src="{url}"></scr' + 'ipt>');`
+        break
+      case 'css':
+        fileLoader = ' @import url("{url}") screen;'
+        break
+      default:
+        break
+    }
+    files.map(basename => {
+      templateStr += fileLoader.replace("{url}", `${hostname}/static/${basename}${hashValue}.${type}`)
+    })
+
+    return templateStr
+  }
+
   // SiteMap
   // --------------------------------------------------
   app.get('/sitemap.xml', (req, res) => {
@@ -31,39 +59,28 @@ export default function routes (app, buildPath) {
   app.use('/sharing', sharing)
   // SHARING
   // --------------------------------------------------
+  // BOOTSTRAP
+  // --------------------------------------------------
 
+  app.get('/static/bootstrap.js', (req, res) => {
+    res.send(bootstrapFiles(res, ['vendor', 'main', 'player', 'polyfill'], 'js'))
+  })
+
+  app.get('/static/bootstrap.css', (req, res) => {
+    res.send(bootstrapFiles(res, ['main'], 'css'))
+  })
+  // BOOTSTRAP
+  // --------------------------------------------------
   // RENDER
   // --------------------------------------------------
-  //Get hashed path webpack
-  const hashValue = (env !== 'development') ? fs.readFileSync(path.join(buildPath, 'hash.txt')) : new Date().getTime()
-
   app.get('/*', (req, res) => {
-    res.set('Cache-Control', 'public, max-age=0')
-    // Js files
-    const jsPaths = ['vendor', 'main', 'player', 'polyfill'].map(basename => {
-      if (env === 'development') {
-        let {webpackDevServer: {host, port}} = config
-        return `//${host}:${port}/static/${basename}.js`
-      }
-      return `/static/${basename}.js?${hashValue}`
-    })
-    // Css files
-    const cssPaths = ['main'].map(basename => {
-      if (env === 'development') {
-        let {webpackDevServer: {host, port}} = config
-        return `//${host}:${port}/static/${basename}.css`
-      }
-      return `/static/${basename}.css?${hashValue}`
-    })
 
     const externalsJs = config.externalsJs
 
     // Render
     const layout = 'layouts/main'
     const payload = {
-      jsPaths,
       externalsJs,
-      cssPaths,
       initialState: {},
       body: ''
     }
