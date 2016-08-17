@@ -30,12 +30,6 @@ class Faq extends React.Component {
               </li>
               <li>
                 <a
-                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@orange je veux @AFROSTREAM dans ma Livebox. Quand est ce que cela sera possible ?"
-                  target="_blank">
-                  Demander Afrostream chez Orange</a>
-              </li>
-              <li>
-                <a
                   href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@sfr je veux @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
                   target="_blank">
                   Demander Afrostream chez SFR</a>
@@ -45,12 +39,6 @@ class Faq extends React.Component {
                   href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@Numericable je veux avoir @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
                   target="_blank">
                   Demander Afrostream chez Numéricable</a>
-              </li>
-              <li>
-                <a
-                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@Bouygues je veux @AFROSTREAM dans ma box. Quand est ce que cela sera possible ?"
-                  target="_blank">
-                  Demander Afrostream chez Bouygues</a>
               </li>
             </ul>
 
