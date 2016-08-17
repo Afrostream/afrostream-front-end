@@ -13,8 +13,8 @@ let clientConfig = merge({}, webpackConfig, {
   devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'eval',
   output: {
     publicPath: `/static/`,
-    filename: '[name][hash].js',
-    chunkFilename: '[id][hash].js'
+    filename: '[name].js',
+    chunkFilename: '[id].js'
   },
   externals: [],
   node: {
@@ -25,13 +25,13 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
-    new ExtractTextPlugin({filename: '[name][hash].css', allChunks: true}),
+    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
-      filename: 'vendor[hash].js'
+      filename: 'vendor.js'
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
@@ -75,8 +75,8 @@ let serverConfig = merge({}, webpackConfig, {
     server: './server'
   },
   output: {
-    filename: '[name][hash].js',
-    chunkFilename: '[id][hash].js',
+    filename: '[name].js',
+    chunkFilename: '[id].js',
     libraryTarget: 'commonjs2'
   },
   module: {
