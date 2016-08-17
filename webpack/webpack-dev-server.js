@@ -11,7 +11,7 @@ const serverOptions = {
     publicPath: devConfig.output.publicPath,
     hot: true,
     headers: {'Access-Control-Allow-Origin': '*'},
-    quiet: false,
+    quiet: true,
     noInfo: true,
     cache: false,
     watch: true,

@@ -13,7 +13,7 @@ const {apiClient} = config
 NProgress.configure({showSpinner: false})
 
 const isTokenValid = function (tokenData) {
-  return tokenData && tokenData.access_token && new Date(tokenData.expiresAt).getTime() > Date.now()
+  return tokenData && tokenData.access_token //&& new Date(tokenData.expiresAt).getTime() > Date.now()
 }
 
 async function setTokenInHeader (headers) {
