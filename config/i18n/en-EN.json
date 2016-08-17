@@ -86,7 +86,7 @@
       "internalMaxScreens": "Available simultaneously screen{s}",
       "internalMobile": "Watch on your computer, smartphone and tablet",
       "internalUnlimited": "Unlimited movies and TV shows",
-      "internalEngagment": "Cancel Anytime",
+      "internalEngagment": "Cancel Anytime after {periodLength} {periodUnit}",
       "internalVip": "Invitations to VIP film screenings and special events"
     }
   },
