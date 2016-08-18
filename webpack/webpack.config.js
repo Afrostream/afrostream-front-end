@@ -80,7 +80,8 @@ const webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
-      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery')
+      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
+      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js')
     }
   },
   stats: {
@@ -133,11 +134,10 @@ const webpackConfig = {
       },
       {
         test: /vtt\.js$/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000',
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
-        test: /video\.js$/,
+        test: /video\.js/,
         loader: 'expose?videojs',
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
@@ -174,6 +174,7 @@ const webpackConfig = {
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new webpack.ProvidePlugin({
+      videojs: 'video.js',
       sendBirdClient: 'sendbird',
       $: 'jquery',
       jQuery: 'jquery',
