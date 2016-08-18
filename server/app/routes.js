@@ -14,33 +14,35 @@ const fsPromise = Promise.promisifyAll(fs)
 
 // --------------------------------------------------
 
+
 export default function routes (app, buildPath) {
 
 
   const env = process.env.NODE_ENV || 'development'
 
-  function parseMD5 (files) {
-//Get hashed path webpack
-    const promisedMd5 = []
-    _.map(files, (file)=> {
-      if (file.match(/\.(js|css)$/)) {
-        promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, file)).then((buf) => {
-          return {
-            file: file,
-            hash: md5(buf)
-          }
-        }))
+  function parseMD5Files () {
+    const buildFiles = ['vendor.js', 'main.js', 'player.js', 'polyfill.js', 'main.css']
+    let promisedMd5 = []
+    _.map(buildFiles, (file)=> {
+      if (env === 'development') {
+        return promisedMd5.push({
+          file: file,
+          hash: md5(file)
+        })
       }
+      promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, file)).then((buf) => {
+        return {
+          file: file,
+          hash: md5(buf)
+        }
+      }))
     })
-
-
     return Promise.all(promisedMd5)
   }
 
 
   let hashFiles = []
-
-  fsPromise.readdirAsync(buildPath).then(parseMD5).then((res)=> {
+  hashFiles = parseMD5Files().then((res)=> {
     hashFiles = res
   })
 // Render layout
@@ -49,11 +51,6 @@ export default function routes (app, buildPath) {
     let files = _.filter(hashFiles, (item)=> {
       return item.file.match(matchType)
     })
-    //sort vendor in first
-    files = _.sortBy(files, (item)=> {
-      return item.file !== 'vendor.js'
-    })
-
     let loadType = type === 'js' ? 'javascript' : type
     res.set('Cache-Control', 'public, max-age=0')
     res.header('Content-type', `text/${loadType}`)
