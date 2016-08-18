@@ -134,13 +134,11 @@ const webpackConfig = {
       },
       {
         test: /vtt\.js$/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000',
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /video\.js$/,
-        loader: 'expose?videojs',
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        loader: 'expose?videojs'
       },
       {
         test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
