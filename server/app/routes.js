@@ -55,7 +55,7 @@ export default function routes (app, buildPath) {
     res.set('Cache-Control', 'public, max-age=0')
     res.header('Content-type', `text/${loadType}`)
     let {webpackDevServer: {host, port}} = config
-    const hostname = (env === 'development') ? `//${host}:${port}` : '/static'
+    const hostname = (env === 'development') ? `//${host}:${port}` : ''
     // Js files
     let templateStr = ''
     let fileLoader = ''
@@ -70,7 +70,7 @@ export default function routes (app, buildPath) {
         break
     }
     _.map(files, (item) => {
-      templateStr += fileLoader.replace('{url}', `${hostname}/${item.file}?${item.hash}`)
+      templateStr += fileLoader.replace('{url}', `${hostname}/static/${item.file}?${item.hash}`)
     })
 
     return templateStr
