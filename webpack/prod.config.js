@@ -28,11 +28,11 @@ let clientConfig = merge({}, webpackConfig, {
     new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity,
-      filename: 'vendor.js'
-    }),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'vendor',
+    //  minChunks: Infinity,
+    //  filename: 'vendor.js'
+    //}),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
