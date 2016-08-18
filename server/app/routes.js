@@ -13,7 +13,6 @@ import Promise from 'bluebird'
 const fsPromise = Promise.promisifyAll(fs)
 
 // --------------------------------------------------
-const staticPath = path.resolve(__dirname, '../../static/')
 
 export default function routes (app, buildPath) {
 
@@ -47,14 +46,19 @@ export default function routes (app, buildPath) {
 // Render layout
   const bootstrapFiles = function (res, type) {
     const matchType = new RegExp(`.${type}$`)
-    const files = _.filter(hashFiles, (item)=> {
+    let files = _.filter(hashFiles, (item)=> {
       return item.file.match(matchType)
     })
+    //sort vendor in first
+    files = _.sortBy(files, (item)=> {
+      return item.file !== 'vendor.js'
+    })
+
     let loadType = type === 'js' ? 'javascript' : type
     res.set('Cache-Control', 'public, max-age=0')
     res.header('Content-type', `text/${loadType}`)
     let {webpackDevServer: {host, port}} = config
-    const hostname = (env === 'development') ? `//${host}:${port}` : ''
+    const hostname = (env === 'development') ? `//${host}:${port}` : '/static'
     // Js files
     let templateStr = ''
     let fileLoader = ''
@@ -69,7 +73,7 @@ export default function routes (app, buildPath) {
         break
     }
     _.map(files, (item) => {
-      templateStr += fileLoader.replace("{url}", `${hostname}/static/${item.file}?${item.hash}`)
+      templateStr += fileLoader.replace('{url}', `${hostname}/${item.file}?${item.hash}`)
     })
 
     return templateStr

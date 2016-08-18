@@ -16,7 +16,6 @@ const serverOptions = {
     cache: false,
     watch: true,
     progress: true,
-    hotComponents: true,
     devServer: true,
     hotComponents: true,
     watchOptions: {

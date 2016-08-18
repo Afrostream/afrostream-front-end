@@ -4,10 +4,10 @@ import webpackConfig from './webpack.config'
 import config from '../config'
 import path from 'path'
 //
-import Dashboard from 'webpack-dashboard'
-import DashboardPlugin from 'webpack-dashboard/plugin'
-const dashboard = new Dashboard()
-
+//import Dashboard from 'webpack-dashboard'
+//import DashboardPlugin from 'webpack-dashboard/plugin'
+//const dashboard = new Dashboard()
+//
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
@@ -18,11 +18,11 @@ const webpackDevServerUrl = `http://${host}:${port}`
 let clientConfig = merge({}, webpackConfig, {
   devtool: 'cheap-eval-source-map',
   debug: true,
-  devServer: {
-    quiet: true, // add
-    historyApiFallback: true,
-    noInfo: true
-  }
+  //devServer: {
+  //  quiet: true, // add
+  //  historyApiFallback: true,
+  //  noInfo: true
+  //}
 })
 
 clientConfig.entry.main = [
@@ -32,7 +32,7 @@ clientConfig.entry.main = [
 ]
 
 clientConfig.plugins.push(
-  new DashboardPlugin(dashboard.setData),
+  //new DashboardPlugin(dashboard.setData),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin(),
   new webpack.ProgressPlugin(function (percentage, message) {
@@ -58,8 +58,8 @@ let serverConfig = merge({}, webpackConfig, {
     server: './server'
   },
   output: {
-    filename: '[name].js?[hash]',
-    chunkFilename: '[id].js?[hash]',
+    filename: '[name].js',
+    chunkFilename: '[id].js',
     libraryTarget: 'commonjs2'
   },
   module: {

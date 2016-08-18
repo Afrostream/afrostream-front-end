@@ -2,7 +2,6 @@ import webpack, { DefinePlugin, BannerPlugin } from 'webpack'
 import autoprefixer from 'autoprefixer-core'
 import path from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import HashPlugin from 'hash-webpack-plugin'
 import config from '../config'
 import { merge } from 'lodash'
 import herokuConfig from '../app.json'
@@ -49,10 +48,10 @@ const webpackConfig = {
     polyfill: 'babel-polyfill',
     main: './src/js/main',
     player: [
-      'videojs-vtt.js/dist/vtt.js',
-      'dashjs/dist/dash.all.debug.js',
-      'video.js/dist/video.js',
-      'afrostream-player/dist/afrostream-player.js',
+      'videojs-vtt.js',
+      'dashjs',
+      'video.js',
+      'afrostream-player',
     ],
     vendor: [
       'react',
@@ -81,7 +80,8 @@ const webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
-      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery')
+      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
+      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js')
     }
   },
   stats: {
@@ -137,8 +137,9 @@ const webpackConfig = {
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
-        test: /video\.js$/,
-        loader: 'expose?videojs'
+        test: /video\.js/,
+        loader: 'expose?videojs',
+        include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
         test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
@@ -173,6 +174,7 @@ const webpackConfig = {
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new webpack.ProvidePlugin({
+      videojs: 'video.js',
       sendBirdClient: 'sendbird',
       $: 'jquery',
       jQuery: 'jquery',
@@ -200,8 +202,7 @@ const webpackConfig = {
         SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID),
         SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
       }
-    }),
-    new HashPlugin({path: assetsPath, fileName: 'hash.txt'})
+    })
   ],
 
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
