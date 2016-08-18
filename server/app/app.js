@@ -32,6 +32,7 @@ app.use('/static', function (req, res, next) {
   next()
 })
 app.use(express.static(staticPath))
+app.use('/static', express.static(buildPath))
 app.use(favicon(path.join(staticPath, 'favicon.ico')))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
