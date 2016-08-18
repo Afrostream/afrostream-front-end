@@ -252,8 +252,7 @@ class PlayerComponent extends Component {
       playerBitrate: playerBitrate,
       playerPosition: playerPosition
     }
-
-    this.player.youbora.plugin.data.media.bitrate = playerBitrate
+    //this.player.youbora.plugin.data.media.bitrate = playerBitrate
     dispatch(RecoActionCreators.trackVideo(data, videoId))
     this.trackTimeout = setTimeout(::this.trackVideo, 60000)
   }

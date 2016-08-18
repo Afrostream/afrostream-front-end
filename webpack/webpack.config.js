@@ -2,7 +2,6 @@ import webpack, { DefinePlugin, BannerPlugin } from 'webpack'
 import autoprefixer from 'autoprefixer-core'
 import path from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import HashPlugin from 'hash-webpack-plugin'
 import config from '../config'
 import { merge } from 'lodash'
 import herokuConfig from '../app.json'
@@ -49,10 +48,10 @@ const webpackConfig = {
     polyfill: 'babel-polyfill',
     main: './src/js/main',
     player: [
-      'videojs-vtt.js/dist/vtt.js',
-      'afrostream-player/node_modules/dashjs/dist/dash.all.debug.js',
-      'afrostream-player/node_modules/video.js/dist/video.js',
-      'afrostream-player/dist/afrostream-player.js',
+      'dashjs',
+      'videojs-vtt.js',
+      'video.js',
+      'afrostream-player',
     ],
     vendor: [
       'react',
@@ -81,7 +80,8 @@ const webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
-      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery')
+      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
+      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js')
     }
   },
   stats: {
@@ -103,25 +103,8 @@ const webpackConfig = {
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
       },
-      //{
-      //  test: /\.js$/, // include .js files
-      //  loaders: ['babel'],
-      //  include: [
-      //    path.join(__dirname, '../node_modules/afrostream-player/src/js/'),
-      //    path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-chromecast/es5/js'),
-      //    path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-youtube/es5')
-      //  ],
-      //  query: {
-      //    presets: ['es2015', 'stage-0']
-      //  }
-      //},
       {
         test: /\.json$/,
-        //include: [
-        //  path.join(__dirname, '../node_modules/markdown-it'),
-        //  path.join(__dirname, '../node_modules/sendbird'),
-        //  path.join(__dirname, '../config')
-        //],
         loaders: ['json']
       },
       {
@@ -151,11 +134,10 @@ const webpackConfig = {
       },
       {
         test: /vtt\.js$/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000',
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
-        test: /video\.js$/,
+        test: /video\.js/,
         loader: 'expose?videojs',
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
@@ -192,6 +174,7 @@ const webpackConfig = {
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new webpack.ProvidePlugin({
+      videojs: 'video.js',
       sendBirdClient: 'sendbird',
       $: 'jquery',
       jQuery: 'jquery',
@@ -219,8 +202,7 @@ const webpackConfig = {
         SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID),
         SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
       }
-    }),
-    new HashPlugin({path: assetsPath, fileName: 'hash.txt'})
+    })
   ],
 
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]

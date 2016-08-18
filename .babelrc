@@ -12,11 +12,10 @@
         "loose": true
       }
     ]
-
   ],
   "presets": [
-    "es2015-native-modules",
-    "stage-0",
-    "react"
+    "react",
+    "es2015",
+    "stage-0"
   ]
 }

@@ -16,7 +16,6 @@ const serverOptions = {
     cache: false,
     watch: true,
     progress: true,
-    hotComponents: true,
     devServer: true,
     hotComponents: true,
     watchOptions: {
@@ -40,6 +39,10 @@ compiler.plugin('done', (stats) => {
   if (stats.hasErrors()) {
     console.error('WebpackError')
     stats.toJson().errors.forEach(err => console.error(err))
+  }
+  if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') == -1) {
+    console.log(stats.compilation.errors);
+    process.exit(1); // or throw new Error('webpack build failed.');
   }
 })
 

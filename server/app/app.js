@@ -22,8 +22,6 @@ function errorHandler (err, req, res, next) {
   res.render('error', {error: err})
 }
 
-//Get hashed path webpack
-const HASH_REGXP = /\.([a-f0-9]{32})\.js/
 // We point to our static assets
 app.use(compression())
 //
@@ -35,13 +33,6 @@ app.use('/static', function (req, res, next) {
 })
 app.use(express.static(staticPath))
 app.use('/static', express.static(buildPath))
-app.use('/static', function (req, res, next) {
-  // faire une regexp sur req.url
-  if (req.url.match(HASH_REGXP)) {
-    res.sendFile(req.url.replace(HASH_REGXP, hashValue))
-  }
-  next()
-})
 app.use(favicon(path.join(staticPath, 'favicon.ico')))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())

@@ -18,9 +18,7 @@
   <link rel="apple-touch-icon" href="/images/icon175x175.jpeg">
   <link rel="android-touch-icon" href="/images/icon175x175.jpeg">
   {{{link}}}
-  {{#each cssPaths}}
-  <link rel="stylesheet" href="{{.}}">
-  {{/each}}
+  <link rel="stylesheet" href="/bootstrap.css" type="text/css">
   <!-- End Facebook Pixel Code -->
 </head>
 <body>
@@ -32,9 +30,7 @@
   __INITIAL_STATE__ = {{{json-stringify initialState}}};
 </script>
 
-{{#each jsPaths}}
-<script src="{{.}}" type="text/javascript"></script>
-{{/each}}
+<script src="/bootstrap.js" type="text/javascript"></script>
 
 <!-- javascripts externals -->
 {{#each externalsJs}}

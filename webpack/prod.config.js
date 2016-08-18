@@ -13,8 +13,8 @@ let clientConfig = merge({}, webpackConfig, {
   devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'eval',
   output: {
     publicPath: `/static/`,
-    filename: '[name].js?[hash]',
-    chunkFilename: '[id].js?[hash]'
+    filename: '[name].js',
+    chunkFilename: '[id].js'
   },
   externals: [],
   node: {
@@ -25,14 +25,14 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
-    new ExtractTextPlugin({filename: '[name].css?[hash]', allChunks: true}),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
-      filename: 'vendor.js?[hash]'
+      filename: 'vendor.js'
     }),
+    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
@@ -59,7 +59,7 @@ let clientConfig = merge({}, webpackConfig, {
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     new CompressionPlugin({
-      asset: '{file}.gz',
+      asset: '[file].gz',
       algorithm: 'gzip',
       regExp: /\.js$|\.html$/,
       threshold: 10240,
@@ -75,8 +75,8 @@ let serverConfig = merge({}, webpackConfig, {
     server: './server'
   },
   output: {
-    filename: '[name].js?[hash]',
-    chunkFilename: '[id].js?[hash]',
+    filename: '[name].js',
+    chunkFilename: '[id].js',
     libraryTarget: 'commonjs2'
   },
   module: {
