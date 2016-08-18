@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
+import Immutable from 'immutable'
 import config from '../../../../config'
 import { Link } from 'react-router'
 import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm, StripeForm, BraintreeForm } from './Forms'
@@ -154,11 +155,13 @@ class PaymentMethod extends React.Component {
 }
 
 PaymentMethod.propTypes = {
+  plan: PropTypes.instanceOf(Immutable.Map),
   planCode: React.PropTypes.string,
   planLabel: React.PropTypes.string
 }
 
 PaymentMethod.defaultProps = {
+  plan: null,
   planCode: null,
   planLabel: null
 }

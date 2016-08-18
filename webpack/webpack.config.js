@@ -48,8 +48,8 @@ const webpackConfig = {
     polyfill: 'babel-polyfill',
     main: './src/js/main',
     player: [
-      'videojs-vtt.js',
       'dashjs',
+      'videojs-vtt.js',
       'video.js',
       'afrostream-player',
     ],

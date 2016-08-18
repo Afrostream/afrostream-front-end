@@ -67,7 +67,7 @@ class PaymentForm extends React.Component {
       return planCode === plan.get('internalPlanUuid')
     })
 
-    return plan && plan
+    return plan
   }
 
   setupPlan () {
@@ -364,6 +364,7 @@ class PaymentForm extends React.Component {
   renderPaymentMethod (planLabel) {
     return (
       <PaymentMethod ref="methodForm"
+                     plan={this.state.currentPlan}
                      planCode={this.state.internalPlanUuid} {...this.props}
                      planLabel={planLabel}/>)
   }
