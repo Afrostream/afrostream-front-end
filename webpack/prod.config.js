@@ -59,7 +59,7 @@ let clientConfig = merge({}, webpackConfig, {
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     new CompressionPlugin({
-      asset: '{file}.gz',
+      asset: '[file].gz',
       algorithm: 'gzip',
       regExp: /\.js$|\.html$/,
       threshold: 10240,
