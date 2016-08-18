@@ -105,11 +105,11 @@ export default function routes (app, buildPath) {
   // BOOTSTRAP
   // --------------------------------------------------
 
-  app.get('/static/bootstrap.js', (req, res) => {
+  app.get('/bootstrap.js', (req, res) => {
     res.send(bootstrapFiles(res, 'js'))
   })
 
-  app.get('/static/bootstrap.css', (req, res) => {
+  app.get('/bootstrap.css', (req, res) => {
     res.send(bootstrapFiles(res, 'css'))
   })
   // BOOTSTRAP
