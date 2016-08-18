@@ -50,8 +50,8 @@ const webpackConfig = {
     main: './src/js/main',
     player: [
       'videojs-vtt.js/dist/vtt.js',
-      'afrostream-player/node_modules/dashjs/dist/dash.all.debug.js',
-      'afrostream-player/node_modules/video.js/dist/video.js',
+      'dashjs/dist/dash.all.debug.js',
+      'video.js/dist/video.js',
       'afrostream-player/dist/afrostream-player.js',
     ],
     vendor: [
@@ -103,25 +103,8 @@ const webpackConfig = {
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
       },
-      //{
-      //  test: /\.js$/, // include .js files
-      //  loaders: ['babel'],
-      //  include: [
-      //    path.join(__dirname, '../node_modules/afrostream-player/src/js/'),
-      //    path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-chromecast/es5/js'),
-      //    path.join(__dirname, '../node_modules/afrostream-player/node_modules/videojs-youtube/es5')
-      //  ],
-      //  query: {
-      //    presets: ['es2015', 'stage-0']
-      //  }
-      //},
       {
         test: /\.json$/,
-        //include: [
-        //  path.join(__dirname, '../node_modules/markdown-it'),
-        //  path.join(__dirname, '../node_modules/sendbird'),
-        //  path.join(__dirname, '../config')
-        //],
         loaders: ['json']
       },
       {

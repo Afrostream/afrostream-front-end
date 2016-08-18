@@ -1,11 +1,21 @@
 {
   "plugins": [
-    "transform-decorators-legacy",
-    "transform-runtime"
+    [
+      "transform-decorators-legacy",
+      {
+        "loose": true
+      }
+    ],
+    [
+      "transform-runtime",
+      {
+        "loose": true
+      }
+    ]
   ],
   "presets": [
     "react",
-    "stage-0",
-    "es2015-native-modules"
+    "es2015",
+    "stage-0"
   ]
 }

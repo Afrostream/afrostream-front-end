@@ -41,6 +41,10 @@ compiler.plugin('done', (stats) => {
     console.error('WebpackError')
     stats.toJson().errors.forEach(err => console.error(err))
   }
+  if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') == -1) {
+    console.log(stats.compilation.errors);
+    process.exit(1); // or throw new Error('webpack build failed.');
+  }
 })
 
 webpackDevServer.listen(port, function () {
