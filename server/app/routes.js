@@ -13,11 +13,7 @@ import Promise from 'bluebird'
 const fsPromise = Promise.promisifyAll(fs)
 
 // --------------------------------------------------
-
-const buildFiles = {
-  js: ['vendor', 'main', 'player', 'polyfill'],
-  css: ['main']
-}
+const staticPath = path.resolve(__dirname, '../../static/')
 
 export default function routes (app, buildPath) {
 
