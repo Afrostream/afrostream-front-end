@@ -171,8 +171,8 @@ const webpackConfig = {
   ,
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity
+      names: ['player', 'vendor'],
+      minChunks: 2
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
