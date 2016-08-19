@@ -109,7 +109,7 @@ class RecurlyForm extends React.Component {
   onHeaderClick () {
     let clickHeader = ReactDOM.findDOMNode(this)
     if (clickHeader) {
-      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'card', bubbles: true}))
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'recurly', bubbles: true}))
     }
   }
 

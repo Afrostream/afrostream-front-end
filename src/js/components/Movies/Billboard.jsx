@@ -141,12 +141,16 @@ class Billboard extends LoadVideo {
     let csa = data.get('CSA')
     let rating = data.get('rating') || 3
     if (seasons && seasons.size) {
-      const season = seasons.get(0)
-      const episodes = season.get('episodes')
-      //TODO get last viewed episode
-      const episode = episodes.get(0)
-      if (episode) {
-        videoData = episode.get('video')
+      const season = seasons.first()
+      if (season) {
+        const episodes = season.get('episodes')
+        //TODO get last viewed episode
+        if (episodes && episodes.size) {
+          const episode = episodes.first()
+          if (episode) {
+            videoData = episode.get('video')
+          }
+        }
       }
     }
 

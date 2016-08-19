@@ -2,10 +2,9 @@ import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import Immutable from 'immutable'
 import config from '../../../../config'
-import { Link } from 'react-router'
-import { RecurlyForm, GocardlessForm, PaypalForm, CashwayForm, StripeForm, BraintreeForm } from './Forms'
+import { RecurlyForm, GocardlessForm, CashwayForm, StripeForm, BraintreeForm } from './Forms'
 
-const {payment, featuresFlip} = config
+const {payment} = config
 
 if (process.env.BROWSER) {
   require('./PaymentMethod.less')
@@ -13,7 +12,8 @@ if (process.env.BROWSER) {
 
 const Methods = {
   GOCARDLESS: 'gocardless',
-  CARD: 'card',
+  RECURLY: 'recurly',
+  STRIPE: 'stripe',
   PAYPAL: 'paypal',
   CASHWAY: 'cashway'
 }
@@ -29,10 +29,25 @@ class PaymentMethod extends React.Component {
     }
   }
 
-  static methods = Methods
-
   multipleMethods () {
-    return (featuresFlip.gocardless || featuresFlip.paypal || featuresFlip.cashway)
+    const {
+      props: {
+        plan
+      }
+    } = this
+
+
+    let providers = null
+    let providerDefault = null
+
+    if (plan) {
+      providers = plan.get('providerPlans')
+      if (providers && providers.size) {
+        providerDefault = providers.first().get('provider').get('providerName')
+      }
+    }
+
+    return plan && providers && providers.size && providerDefault
   }
 
   hasLib () {
@@ -40,8 +55,11 @@ class PaymentMethod extends React.Component {
       case  Methods.GOCARDLESS:
         return this.refs.gocardless.hasLib()
         break
-      case  Methods.CARD:
-        return this.refs.card.hasLib()
+      case  Methods.STRIPE:
+        return this.refs.stripe.hasLib()
+        break
+      case  Methods.RECURLY:
+        return this.refs.recurly.hasLib()
         break
       case  Methods.PAYPAL:
         return this.refs.paypal.hasLib()
@@ -61,15 +79,12 @@ class PaymentMethod extends React.Component {
     this.container = ReactDOM.findDOMNode(this)
     this.container.addEventListener('changemethod', this.switchMethod.bind(this))
 
-    let canUseMultiple = this.multipleMethods()
+    let defaultMethod = this.multipleMethods()
     let method = this.method()
     let isCash = this.props.router.isActive('cash')
 
-    if (!canUseMultiple) {
-      method = Methods.CARD
-    }
-    if (isCash) {
-      method = Methods.CASHWAY
+    if (defaultMethod) {
+      method = defaultMethod
     }
 
     this.setState({
@@ -83,8 +98,11 @@ class PaymentMethod extends React.Component {
       case  Methods.GOCARDLESS:
         return await this.refs.gocardless.submit(billingInfo)
         break
-      case  Methods.CARD:
-        return await this.refs.card.submit(billingInfo, currentPlan)
+      case  Methods.STRIPE:
+        return await this.refs.stripe.submit(billingInfo, currentPlan)
+        break
+      case  Methods.RECURLY:
+        return await this.refs.recurly.submit(billingInfo, currentPlan)
         break
       case  Methods.PAYPAL:
         return await this.refs.paypal.submit(billingInfo, currentPlan)
@@ -99,7 +117,7 @@ class PaymentMethod extends React.Component {
     if (!this.multipleMethods()) {
       return
     }
-    let newMethod = event.detail || Methods.GOCARDLESS
+    let newMethod = event.detail
 
     this.setState({
       method: newMethod
@@ -108,39 +126,35 @@ class PaymentMethod extends React.Component {
 
   renderMethods () {
 
-
-    let recurly = <RecurlyForm key="method-card" ref="card"
-                               selected={this.state.method === Methods.CARD}/>
-    let stripe = <StripeForm key="method-card" ref="card"
-                             selected={this.state.method === Methods.CARD}/>
-    let paypalRecurly = <PaypalForm key="method-paypal" ref="paypal"
-                                    selected={this.state.method === Methods.PAYPAL}
-                                    planLabel={this.props.planLabel}/>
-    let paypalBraintree = <BraintreeForm key="method-paypal" ref="paypal"
-                                         selected={this.state.method === Methods.PAYPAL}
-                                         planLabel={this.props.planLabel}/>
-    let gocardless = <GocardlessForm key="method-gocardless" ref="gocardless"
-                                     selected={this.state.method === Methods.GOCARDLESS}/>
-
-    let cashway = <CashwayForm key="method-cashway" ref="cashway" {...this.props}/>
+    const {
+      props: {
+        plan
+      }
+    } = this
 
 
     let methods = []
-    switch (true) {
-      case this.state.isCash === true:
-        methods.push(cashway)
-        break
-      default:
-        methods.push(featuresFlip.stripe ? stripe : recurly)
-        if (featuresFlip.paypal) {
-          methods.push(featuresFlip.braintree ? paypalBraintree : paypalRecurly)
-        }
-        if (featuresFlip.gocardless) {
-          methods.push(gocardless)
-        }
-        break
+
+    let allMethods = {
+      recurly: (<RecurlyForm key="method-recurly" ref="recurly"
+                             selected={this.state.method === Methods.RECURLY}/>),
+      stripe: (<StripeForm key="method-stripe" ref="stripe"
+                           selected={this.state.method === Methods.STRIPE}/>),
+      braintree: (<BraintreeForm key="method-paypal" ref="paypal"
+                                 selected={this.state.method === Methods.PAYPAL} planLabel={this.props.planLabel}/>),
+      cashway: (<CashwayForm key="method-cashway" ref="cashway" {...this.props}/>),
+      gocardless: (<GocardlessForm key="method-gocardless" ref="gocardless"
+                                   selected={this.state.method === Methods.GOCARDLESS}/>)
     }
 
+    if (plan) {
+      let providers = plan.get('providerPlans')
+      providers.map((provider, key)=> {
+        if (allMethods.hasOwnProperty(key)) {
+          methods.push(allMethods[key])
+        }
+      })
+    }
     return methods
   }
 

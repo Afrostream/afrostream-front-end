@@ -31,12 +31,6 @@ const protData = {
 
 const client = {
   featuresFlip: {
-    recurly: false,
-    gocardless: true,
-    paypal: true,
-    cashway: true,
-    braintree: true,
-    stripe: false,
     sponsorship: true
   },
   /**
@@ -81,7 +75,7 @@ const client = {
     //}
   ],
   payment: {
-    default: 'card' //paypal/gocardless/card
+    default: 'recurly'
   },
   //add alerts to front (same as cookies)
   alerts: [],

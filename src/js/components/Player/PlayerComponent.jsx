@@ -379,11 +379,12 @@ class PlayerComponent extends Component {
     }
 
     episodesList = nextSeason.get('episodes')
-    nextEpisode = episodesList.get(0)
-    if (!nextEpisode) {
-      return
+    if (episodesList && episodesList.size) {
+      nextEpisode = episodesList.first()
+      if (!nextEpisode) {
+        return
+      }
     }
-
     //Try to fetch next episode
     nextEpisodeId = nextEpisode.get('_id')
     let fetchEpisode = Episode.get(`episodes/${nextEpisodeId}`)

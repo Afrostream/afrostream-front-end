@@ -101,7 +101,7 @@ class StripeForm extends React.Component {
   onHeaderClick () {
     let clickHeader = ReactDOM.findDOMNode(this)
     if (clickHeader) {
-      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'card', bubbles: true}))
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'stripe', bubbles: true}))
     }
   }
 

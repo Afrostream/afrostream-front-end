@@ -81,9 +81,9 @@ class Press extends React.Component {
     })
 
     let sortGroupedPress = groupedPress.sort((a, b) => {
-      const firstItem = a.get(0)
+      const firstItem = a.first()
       const firstDate = firstItem.get('date')
-      const secondItem = b.get(0)
+      const secondItem = b.first()
       const secondDate = secondItem.get('date')
 
       return (firstDate && firstDate.substring(6)) < (secondDate && secondDate.substring(6))
