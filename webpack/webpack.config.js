@@ -170,10 +170,6 @@ const webpackConfig = {
   }
   ,
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'player'],
-      minChunks: 2
-    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),

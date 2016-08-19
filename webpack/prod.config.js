@@ -25,6 +25,10 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor', 'player'],
+      minChunks: Infinity
+    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
