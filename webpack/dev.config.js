@@ -33,6 +33,7 @@ clientConfig.entry.main = [
 
 clientConfig.plugins.push(
   //new DashboardPlugin(dashboard.setData),
+  new webpack.optimize.OccurrenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin(),
   new webpack.ProgressPlugin(function (percentage, message) {
