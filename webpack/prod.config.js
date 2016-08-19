@@ -6,11 +6,12 @@ import { merge } from 'lodash'
 import path from 'path'
 
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
+const productionMode = process.env.NODE_ENV === 'production'
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 let clientConfig = merge({}, webpackConfig, {
-  devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'eval',
+  devtool: productionMode ? 'eval' : 'eval',
   output: {
     publicPath: `/static/`,
     filename: '[name].js',
@@ -18,7 +19,7 @@ let clientConfig = merge({}, webpackConfig, {
   },
   externals: [],
   node: {
-    console: process.env.NODE_ENV === 'production' ? false : true,
+    console: !productionMode,
     net: 'empty',
     tls: 'empty',
     dns: 'empty'
@@ -44,11 +45,11 @@ let clientConfig = merge({}, webpackConfig, {
         unused: true,
         if_return: true,
         join_vars: true,
-        drop_console: process.env.NODE_ENV === 'production' ? true : false,
-        pure_funcs: process.env.NODE_ENV === 'production' ? ['vjs.log', 'videojs.log'] : []
+        drop_console: productionMode,
+        pure_funcs: productionMode ? ['vjs.log', 'videojs.log'] : []
       },
       minimize: true,
-      sourceMap: process.env.NODE_ENV !== 'production'
+      sourceMap: !productionMode
     }),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     new CompressionPlugin({

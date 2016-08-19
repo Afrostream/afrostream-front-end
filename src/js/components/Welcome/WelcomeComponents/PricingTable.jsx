@@ -96,7 +96,7 @@ class PricingTable extends React.Component {
           break
         case 'internalMaxScreens':
           value =
-            <span>{`${objVal} ${getI18nionnary.planCodes.infos[label].replace('{s}', parseInt(objVal) > 1 ? 's' : '')}`}</span>
+            <span>{`${objVal} ${getI18nionnary.planCodes.infos[label].replace(/{s}/g, parseInt(objVal) > 1 ? 's' : '')}`}</span>
           break
         case 'internalEngagment':
           value =
