@@ -30,7 +30,7 @@ if (process.env.BROWSER) {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 
-  return await store.dispatch(BillingActionCreators.getInternalplans('common'))
+  return await store.dispatch(BillingActionCreators.getInternalplans('common', false))
 })
 class WelcomePage extends React.Component {
 

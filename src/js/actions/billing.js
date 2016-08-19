@@ -174,10 +174,12 @@ export function getCouponCampaigns (params) {
 }
 
 /**
- * Get internalplans billing api
- * @returns {Function}
+ * Don't pass token on home page, if token expire, list of plans is empty
+ * @param contextBillingUuid
+ * @param passToken
+ * @returns {function(*, *)}
  */
-export function getInternalplans (contextBillingUuid = 'common') {
+export function getInternalplans (contextBillingUuid = 'common', passToken = true) {
 
   return (dispatch, getState) => {
     let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
@@ -201,7 +203,7 @@ export function getInternalplans (contextBillingUuid = 'common') {
         params: {
           contextBillingUuid: contextBillingUuid
         },
-        passToken: true
+        passToken: passToken
       })
     })
   }
