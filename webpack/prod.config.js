@@ -25,10 +25,7 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: Infinity
-    }),
+    new webpack.BannerPlugin('App has been developed by @benjipott Afrostream.'),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
