@@ -52,7 +52,7 @@ export default function routes (app, buildPath) {
       return item.file.match(matchType)
     })
     let loadType = type === 'js' ? 'javascript' : type
-    res.set('Cache-Control', 'public, max-age=0')
+    res.noCache()
     res.header('Content-type', `text/${loadType}`)
     let {webpackDevServer: {host, port}} = config
     const hostname = (env === 'development') ? `//${host}:${port}` : ''
@@ -115,7 +115,7 @@ export default function routes (app, buildPath) {
   // --------------------------------------------------
   app.get('/*', (req, res) => {
     //FIXE remove cache une fois correctement set
-    res.set('Cache-Control', 'public, max-age=0')
+    res.noCache()
     const externalsJs = config.externalsJs
 
     // Render
