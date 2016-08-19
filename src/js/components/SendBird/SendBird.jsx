@@ -450,10 +450,10 @@ class SendBird extends React.Component {
           </div>
           <div ref="chatConverse" id="chat_converse" className={classSet(converseClasses)}>
             {
-              _.map(this.state.messages, ({user:{image = null, guest_id}, message, url, msg_id}, key)=> {
+              _.map(this.state.messages, ({user, message, url, msg_id}, key)=> {
 
-                let isUser = this.isCurrentUser(guest_id)
-                let img = image
+                let isUser = user && this.isCurrentUser(user.guest_id)
+                let img = user && user.image
 
                 let avatarClasses = {
                   'chat_msg_item': true,
