@@ -9,6 +9,7 @@ import _ from 'lodash'
 import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
 import { withRouter } from 'react-router'
+import Player from '../../Player/Player'
 
 const {promoCodes, metadata, images} =config
 
@@ -94,7 +95,7 @@ class WelcomeHeader extends React.Component {
         synopsis: ''
       }
     }
-
+    let trailer
     let movieData
     //let videoData
     let seasonData
@@ -132,6 +133,8 @@ class WelcomeHeader extends React.Component {
         title = `${title} Épisode ${episodeNumber}`
       }
 
+      trailer = movieData.get('youtubeTrailer')
+
 
       let poster = data.get('poster')
       if (poster) {
@@ -142,8 +145,8 @@ class WelcomeHeader extends React.Component {
         synopsis: data.get('synopsis')
       }
     }
-
-    let imageStyle = {backgroundImage: `url(${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${images.quality}&fm=${images.type})`}
+    let posterImg = `${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
+    let imageStyle = {backgroundImage: `url(${posterImg})`}
 
     let promoCode = this.hasPromo()
 
@@ -155,9 +158,12 @@ class WelcomeHeader extends React.Component {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        <div className="afrostream-movie__poster" style={imageStyle}>
+        {trailer && <Player src={{src: trailer, type: 'video/youtube'}}
+                            options={{autoplay: false, poster: posterImg}}/> }
+
+        {!trailer && <div className="afrostream-movie__poster" style={imageStyle}>
           <div className="afrostream-movie__mask"/>
-        </div>
+        </div>}
         {movieData ? <SignUpButton className="subscribe-button subscribe-button-mobile" label={info.action}/> : ''}
         <div className="afrostream-movie">
           <div className="afrostream-movie__info">
