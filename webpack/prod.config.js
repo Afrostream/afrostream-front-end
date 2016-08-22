@@ -11,7 +11,6 @@ const productionMode = process.env.NODE_ENV === 'production'
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 let clientConfig = merge({}, webpackConfig, {
-  devtool: productionMode ? 'eval' : '#cheap-module-source-map',
   output: {
     publicPath: `/static/`,
     filename: '[name].js',
@@ -27,11 +26,8 @@ let clientConfig = merge({}, webpackConfig, {
   module: {},
   plugins: webpackConfig.plugins.concat(
     new webpack.BannerPlugin('App has been developed by @benjipott Afrostream.'),
-    /*new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),*/
-    new webpack.optimize.UglifyJsPlugin({
+    new webpack.LoaderOptionsPlugin({
+      debug: false,
       mangle: {
         except: ['require', 'export', '$super']
       },
@@ -51,6 +47,26 @@ let clientConfig = merge({}, webpackConfig, {
       minimize: true,
       sourceMap: !productionMode
     }),
+    //new webpack.optimize.UglifyJsPlugin({
+    //  mangle: {
+    //    except: ['require', 'export', '$super']
+    //  },
+    //  output: {comments: false},
+    //  compress: {
+    //    warnings: false,
+    //    sequences: true,
+    //    dead_code: true,
+    //    conditionals: true,
+    //    booleans: true,
+    //    unused: true,
+    //    if_return: true,
+    //    join_vars: true,
+    //    drop_console: productionMode,
+    //    pure_funcs: productionMode ? ['vjs.log', 'videojs.log'] : []
+    //  },
+    //  minimize: true,
+    //  sourceMap: !productionMode
+    //}),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     new CompressionPlugin({
       asset: '[file].gz',

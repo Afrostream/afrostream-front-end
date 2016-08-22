@@ -99,8 +99,10 @@ class PricingTable extends React.Component {
             <span>{`${objVal} ${getI18nionnary.planCodes.infos[label].replace(/{s}/g, parseInt(objVal) > 1 ? 's' : '')}`}</span>
           break
         case 'internalEngagment':
-          value =
-            <span>{`${getI18nionnary.planCodes.infos[label].replace('{periodLength}', plan.get('periodLength')).replace('{periodUnit}', plan.get('periodUnit'))}`}</span>
+          let periodLabel = getI18nionnary.planCodes.infos[label]
+          periodLabel = periodLabel.replace('{periodLength}', plan.get('periodLength'))
+          periodLabel = periodLabel.replace('{periodUnit}', plan.get('periodUnit'))
+          value = <span>{periodLabel}</span>
           break
         default :
           let isBool = (objVal === 'true' || objVal === 'false' || typeof objVal === 'boolean' ) && typeof isBoolean(objVal) === 'boolean'
