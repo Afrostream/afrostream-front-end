@@ -28,6 +28,10 @@ let clientConfig = merge({}, webpackConfig, {
     new webpack.BannerPlugin('App has been developed by @benjipott Afrostream.'),
     new webpack.LoaderOptionsPlugin({
       debug: false,
+      minimize: true,
+      sourceMap: !productionMode
+    }),
+    new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except: ['require', 'export', '$super']
       },
@@ -47,26 +51,6 @@ let clientConfig = merge({}, webpackConfig, {
       minimize: true,
       sourceMap: !productionMode
     }),
-    //new webpack.optimize.UglifyJsPlugin({
-    //  mangle: {
-    //    except: ['require', 'export', '$super']
-    //  },
-    //  output: {comments: false},
-    //  compress: {
-    //    warnings: false,
-    //    sequences: true,
-    //    dead_code: true,
-    //    conditionals: true,
-    //    booleans: true,
-    //    unused: true,
-    //    if_return: true,
-    //    join_vars: true,
-    //    drop_console: productionMode,
-    //    pure_funcs: productionMode ? ['vjs.log', 'videojs.log'] : []
-    //  },
-    //  minimize: true,
-    //  sourceMap: !productionMode
-    //}),
     new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
     new CompressionPlugin({
       asset: '[file].gz',
