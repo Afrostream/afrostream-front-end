@@ -27,10 +27,10 @@ let clientConfig = merge({}, webpackConfig, {
   module: {},
   plugins: webpackConfig.plugins.concat(
     new webpack.BannerPlugin('App has been developed by @benjipott Afrostream.'),
-    new webpack.LoaderOptionsPlugin({
+    /*new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
-    }),
+    }),*/
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except: ['require', 'export', '$super']
