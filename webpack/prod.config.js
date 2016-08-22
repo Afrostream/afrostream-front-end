@@ -11,7 +11,7 @@ const productionMode = process.env.NODE_ENV === 'production'
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 let clientConfig = merge({}, webpackConfig, {
-  devtool: productionMode ? 'eval' : 'eval',
+  devtool: productionMode ? false : '#cheap-module-source-map',
   output: {
     publicPath: `/static/`,
     filename: '[name].js',
