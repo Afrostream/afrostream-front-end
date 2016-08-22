@@ -22,7 +22,7 @@ if (process.env.BROWSER) {
   require('./Application.less')
 }
 
-@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
+@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId, videoId}}) {
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))
   }
@@ -33,6 +33,7 @@ if (process.env.BROWSER) {
   if (episodeId && episodeId !== 'undefined') {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
+
 })
 
 @metasData()

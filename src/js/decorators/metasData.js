@@ -54,25 +54,29 @@ export default () => {
 
         const movieData = store.getState().Movie.get(`movies/${params.movieId}`)
         let seasonData
+        let videoData
         let episodeData
         let episodesList
-        //if (params.videoId) {
-        //  videoData = store.getState().Video.get(`videos/${params.videoId}`)
-        //}
+        if (params.videoId) {
+          videoData = store.getState().Video.get(`videos/${params.videoId}`)
+        }
         if (params.seasonId) {
           seasonData = store.getState().Season.get(`seasons/${params.seasonId}`)
         }
 
         if (params.episodeId) {
-          if (seasonData) {
-            // episodeData = videoData.get('episode')
-            episodesList = seasonData.get('episodes')
-            if (episodesList) {
-              episodeData = episodesList.find(function (obj) {
-                return obj.get('_id') == params.episodeId
-              })
-            }
+          if (videoData) {
+            episodeData = videoData.get('episode')
           }
+          //if (seasonData) {
+          //episodeData = videoData.get('episode')
+          //episodesList = seasonData.get('episodes')
+          //if (episodesList) {
+          //  episodeData = episodesList.find(function (obj) {
+          //    return obj.get('_id') == params.episodeId
+          //  })
+          //}
+          //}
           else {
             episodeData = store.getState().Episode.get(`episodes/${params.episodeId}`)
           }
@@ -117,8 +121,7 @@ export default () => {
             synopsis = getI18n(lang).home.season.description
 
             seasonNumber = seasonData.get('seasonNumber')
-            title = title.replace(/{seasonNumber}/g, seasonNumber)
-            synopsis = synopsis.replace(/{seasonNumber}/g, seasonNumber)
+
             if (episodesList && episodesList.size) {
               synopsis = synopsis.replace(/{episodesNumber}/g, episodesList.size)
             }
@@ -129,15 +132,20 @@ export default () => {
             synopsis = getI18n(lang).home.episode.description
 
             episodeNumber = episodeData.get('episodeNumber')
+            //seasonNumber = movieData.get('season').get('seasonNumber')
             title = title.replace(/{episodeNumber}/g, episodeNumber)
             synopsis = synopsis.replace(/{episodeNumber}/g, episodeNumber)
           }
 
-          //Replace global
-          title = title.replace(/{serieName}/g, movieData.get('title'))
-          title = title.replace(/{movieName}/g, movieData.get('title'))
+          if (seasonNumber) {
+            title = title.replace(/{seasonNumber}/g, seasonNumber)
+            synopsis = synopsis.replace(/{seasonNumber}/g, seasonNumber)
+          }
 
+          title = title.replace(/{serieName}/g, movieData.get('title'))
           synopsis = synopsis.replace(/{serieName}/g, movieData.get('title'))
+          //Replace global
+          title = title.replace(/{movieName}/g, movieData.get('title'))
           synopsis = synopsis.replace(/{movieName}/g, movieData.get('title'))
 
           ogTitle = title

@@ -76,7 +76,7 @@ class SelectPlan extends React.Component {
           break
         case 'internalActionLabel':
 
-          if (user) {
+          if (!user) {
             const inputSignupAction = {
               onClick: event => ::this.openModal(plan.get('internalPlanUuid'))
             }
