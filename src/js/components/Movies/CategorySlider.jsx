@@ -90,8 +90,8 @@ class CategorySlider extends MoviesSlider {
 
     return (
       <div className={classSet(listClass)}>
-        {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
-        {label ? <div className="movies-list__selection">{label}</div> : ''}
+        {slug && <div id={slug} className="movies-list__anchor"/>}
+        {label && <div className="movies-list__selection">{label}</div>}
         {category && dataList ?
           <AutoSizer className="slider-container" disableHeight>
             {({width}) => (

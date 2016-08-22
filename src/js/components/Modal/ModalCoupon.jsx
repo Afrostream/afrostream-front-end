@@ -235,6 +235,13 @@ class ModalCoupon extends ModalComponent {
       'active': true
     })
 
+    let closeClass = classNames({
+      'close': true,
+      'icon-budicon-3': true,
+      'hide': !this.props.closable
+    })
+
+
     const classType = 'redeemCoupon'
 
     return (
@@ -250,6 +257,7 @@ class ModalCoupon extends ModalComponent {
                       <div className="bg-gradient"></div>
                       <h1>{this.getTitle()}</h1>
                       <h2 className={errClass}>{this.state.error}</h2>
+                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       {this.getForm()}

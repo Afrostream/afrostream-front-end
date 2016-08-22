@@ -3,7 +3,6 @@ import { prepareRoute } from '../../decorators'
 import * as MovieActionCreators from '../../actions/movie'
 import * as EventActionCreators from '../../actions/event'
 import * as UserActionCreators from '../../actions/user'
-import * as CategoryActionCreators from '../../actions/category'
 import MovieInfo from './MovieInfo'
 import SeasonList from '../Seasons/SeasonList'
 

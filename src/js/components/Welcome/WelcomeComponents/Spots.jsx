@@ -2,6 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import { prepareRoute } from '../../../decorators'
 import { connect } from 'react-redux'
+import classSet from 'classnames'
 import Thumb from '../../../components/Movies/Thumb'
 import SignUpButton from '../../User/SignUpButton'
 import * as CategoryActionCreators from '../../../actions/category'
@@ -18,9 +19,26 @@ if (process.env.BROWSER) {
 @connect(({Category}) => ({Category}))
 class Spots extends React.Component {
 
-  getMovies (data, i) {
-    return <Thumb favorite={false} share={false}
-                  key={`spot-home-${data.get('_id')}-${i}`} {...{data}}/>
+  renderMovie (data) {
+    let dataId = data.get('_id')
+
+    let params = {
+      thumbW: 240,
+      thumbH: 465,
+      type: 'spot',
+      fit: 'min',
+      crop: 'face'
+    }
+
+    return (<Thumb
+      favorite={false}
+      share={false}
+      preload={true}
+      id={dataId}
+      key={`data-thumb-${dataId}`}
+      {...params}
+      {...this.props}
+      {...{data, dataId}}  />)
   }
 
   /**
@@ -55,10 +73,17 @@ class Spots extends React.Component {
 
     let info = getI18n(params.lang).home.spots
 
+    let listClass = {
+      'movies-data-list': true,
+      'spots': true
+    }
+
     return (
-      <div className="spots-list">
+      <div className="container spots-list">
         <h2>{info.title}</h2>
-        {categoriesList ? categoriesList.map((movie, i) => this.getMovies(movie, i)).toJS() : ''}
+        <div className={classSet(listClass)}>
+          {categoriesList && categoriesList.map((movie, i) => this.renderMovie(movie, i))}
+        </div>
         <div className="container sign-up__container">
           <SignUpButton label={info.action}/>
         </div>

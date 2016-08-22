@@ -8,14 +8,32 @@ import AlertMessage from './Alert/AlertMessage'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-
 import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
+import { prepareRoute } from '../decorators'
+
+import * as MovieActionCreators from '../actions/movie'
+import * as SeasonActionCreators from '../actions/season'
+import * as EpisodeActionCreators from '../actions/episode'
 import * as UserActionCreators from '../actions/user'
+
 
 if (process.env.BROWSER) {
   require('./Application.less')
 }
+
+@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
+  if (movieId && movieId !== 'undefined') {
+    await store.dispatch(MovieActionCreators.getMovie(movieId))
+  }
+  if (seasonId && seasonId !== 'undefined') {
+    await store.dispatch(SeasonActionCreators.getSeason(seasonId))
+  }
+
+  if (episodeId && episodeId !== 'undefined') {
+    await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
+  }
+})
 
 @metasData()
 @analytics()

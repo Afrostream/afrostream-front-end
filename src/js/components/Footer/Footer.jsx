@@ -66,11 +66,6 @@ class Footer extends React.Component {
             <h4>{labels.support.title}</h4>
             <ul className="footer-links">
               <li>
-                <a className="footer-link" href="mailto:support@afrostream.tv">
-                  {labels.support.help}
-                </a>
-              </li>
-              <li>
                 <Link className="footer-link" to="/faq">
                   {labels.support.faq}
                 </Link>
@@ -84,6 +79,11 @@ class Footer extends React.Component {
                 <Link className="footer-link" to="/policy">
                   {labels.support.policy}
                 </Link>
+              </li>
+              <li>
+                <a className="footer-link" href="mailto:support@afrostream.tv">
+                  {labels.support.help}
+                </a>
               </li>
               <li>
                 <a className="footer-link" href={`/${switchLangRoute}`}>
@@ -134,7 +134,7 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help col-xs-12 col-md-2">
+          <div className="get-help col-xs-12 col-md-4">
             <h4> {labels.apps.title}</h4>
             <ul className="footer-links">
               <li>
@@ -148,6 +148,19 @@ class Footer extends React.Component {
                    href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
                    target="_blank">
                   {labels.apps.android} <i className="zmdi zmdi-android"></i>
+                </a>
+              </li>
+              <li>
+                <a className="footer-link"
+                   href="https://boutique.orange.fr/tv/pass-video"
+                   target="_blank">
+                  Orange <i className="zmdi zmdi-orange"></i>
+                </a>
+              </li>
+              <li>
+                <a className="footer-link" href="https://www.services.bouyguestelecom.fr/television/svod_afrostream"
+                   target="_blank">
+                  Bouygues <i className="zmdi zmdi-bouygues"></i>
                 </a>
               </li>
             </ul>
@@ -172,22 +185,6 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          {providers.length ? <div className="get-help col-xs-12 col-md-2">
-            <h4>{labels.oauth2.title}</h4>
-            <ul className="footer-links">
-              {providers.map((strategy)=> {
-                  const inputAttributes = {
-                    onClick: event => ::this.oauthStrategy(strategy.name)
-                  }
-                  return (<li key={`${strategy.name}-connect_footer`}>
-                    <a className="footer-link" href="#" {...inputAttributes}>
-                      {strategy.name} <i className={strategy.icon}></i>
-                    </a>
-                  </li>)
-                }
-              )}
-            </ul>
-          </div> : null}
         </div>
 
         <div className="legal-statements">

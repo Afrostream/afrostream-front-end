@@ -88,10 +88,10 @@ const webpackConfig = {
     colors: true
   },
   module: {
-    preLoaders: [
-      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
-      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
-    ],
+    //preLoaders: [
+    //  {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
+    //  {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
+    //],
     loaders: [
       {
         test: /\.jsx?$/,

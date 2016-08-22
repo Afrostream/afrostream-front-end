@@ -86,6 +86,7 @@ class MoviesSlider extends React.Component {
     return (
       <Thumb
         preload={true}
+        share={false}
         id={dataId}
         key={`data-thumb-${dataId}`}
         {...params} {...this.props} {...{data, dataId}}  />
