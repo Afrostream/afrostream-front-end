@@ -6,11 +6,6 @@ import { withRouter } from 'react-router'
 import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import config from '../../../../config'
-import * as OauthActionCreator from '../../actions/oauth'
-import * as ModalActionCreators from '../../actions/modal'
-import * as UserActionCreators from '../../actions/user'
-
-const {oauth2}= config
 
 if (process.env.BROWSER) {
   require('./Footer.less')
@@ -21,18 +16,6 @@ class Footer extends React.Component {
   constructor (props) {
     super(props)
     this.year = new Date().getFullYear()
-  }
-
-  oauthStrategy () {
-    const {
-      dispatch
-    } = this.props
-
-    dispatch(ModalActionCreators.open({
-      target: 'showSignup', cb: ()=> {
-        dispatch(ModalActionCreators.open({target: 'linkProvider', donePath: '/compte'}))
-      }
-    }))
   }
 
   render () {
@@ -57,12 +40,10 @@ class Footer extends React.Component {
       'footer-hidden': hasPlayer
     }
 
-    const providers = _.filter(oauth2.providers, {active: true, social: false})
-
     return (
       <footer className={classSet(footerClasses)}>
         <div className="links row-fluid">
-          <div className={`get-help col-xs-12 col-md-${providers.length ? 2 : 4}`}>
+          <div className={`get-help col-xs-12 col-md-2`}>
             <h4>{labels.support.title}</h4>
             <ul className="footer-links">
               <li>
