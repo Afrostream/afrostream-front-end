@@ -1,10 +1,26 @@
 {
   "home": {
-    "title": "Les meilleurs films et séries \n afro-américains et africains \n en illimité",
+    "title": "Les meilleurs films et séries\nafro-américains et africains.\nEn illimité.",
     "action": "DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE",
+    "movie": {
+      "title": "{movieName} | Le film en streaming sur AFROSTREAM",
+      "description": "Regardez {movieName}, film avec {actors} en streaming sur tous vos écrans grâce à AFROSTREAM"
+    },
+    "serie": {
+      "title": "{serieName} | La série TV en streaming sur AFROSTREAM",
+      "description": "Regardez les épisodes de la série TV {serieName} en streaming et en illimité sur tous vos écrans grâce à AFROSTREAM."
+    },
+    "season": {
+      "title": "{serieName} | La saison ${seasonNumber} en streaming sur AFROSTREAM",
+      "description": "Regardez les {episodesNumber} épisodes de la saison {seasonNumber} de la série TV {serieName} en streaming et en illimité sur tous vos écrans grâce à AFROSTREAM."
+    },
+    "episode": {
+      "title": "{serieName} | Saison {seasonNumber} Episode {episodeNumber} en streaming sur AFROSTREAM",
+      "description": "Regardez l'épisode {episodeNumber} de la saison {seasonNumber} de {serieName} en streaming sur tous vos écrans grâce à AFROSTREAM."
+    },
     "devices": {
       "title": "Vos films et séries afro préférés quand vous voulez où vous voulez en illimité",
-      "action": "J’en profite !",
+      "action": "Démarrez votre semaine d'essai offerte",
       "features": [
         "En versions sous-titrées ou vost",
         "Aucune publicité, aucune interruption",
@@ -24,14 +40,14 @@
   "footer": {
     "legals": "Mentions légales",
     "support": {
-      "title": "SUPPORT TECHNIQUE",
-      "help": "Aide en ligne",
-      "faq": "Les réponses à vos questions",
+      "title": "AIDE",
+      "help": "Nous contacter",
+      "faq": "FAQ",
       "cgu": "Conditions d'utilisation",
       "policy": "Politique de confidentialité"
     },
     "recharge": {
-      "title": "RECHARGE",
+      "title": "MOYENS DE PAIEMENT",
       "cashway": "Paiement en espèces avec ",
       "coupon": "Coupon"
     },
@@ -43,7 +59,7 @@
       "mediaKit": "Media Kit"
     },
     "apps": {
-      "title": "APPLICATIONS MOBILE",
+      "title": "PLATEFORMES ET APPAREILS",
       "ios": "IOS",
       "android": "Andoid"
     },
@@ -86,7 +102,7 @@
       "internalMaxScreens": "Écran{s} disponible{s} en simultané",
       "internalMobile": "Sur votre ordinateur, smartphone et tablette",
       "internalUnlimited": "Films et séries TV en illimité",
-      "internalEngagment": "Sans engagement au delà de {periodLength} {periodUnit}",
+      "internalEngagment": "Sans engagement au delà de la période initiale",
       "internalVip": "Invitations VIP aux avant-premières de films"
     }
   },

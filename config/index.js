@@ -5,9 +5,10 @@ const config = _.merge(
   {
     metadata: {
       domain: 'https://afrostream.tv',
-      title: 'Afrostream.tv',
-      description: 'AFROSTREAM, LES MEILLEURS FILMS ET SÉRIES AFRO EN ILLIMITÉ',
+      title: 'AFROSTREAM | Les meilleurs films et séries afro en illimité',
+      description: 'Profitez d\'une sélection des meilleurs films & séries afro à regarder en illimité sur tous vos écrans grâce à Afrostream, la première semaine est offerte.',
       shareImage: 'https://afrostream.imgix.net/production/poster/2016/03/b8a6db25a04982c88a2b-438302.jpg',
+      titleSeason :'{title} | La saison {seasonNumber} en streaming sur AFROSTREAM',
       metas: [
         {
           property: 'fb:app_id',
@@ -49,8 +50,8 @@ const config = _.merge(
       host: 'localhost',
       ip: process.env.IP || undefined,
       port: process.env.PORT ||
-            process.env.USER === 'marc' && 80 || // (to bind 80: sudo setcap cap_net_bind_service=+ep `which node`)
-            3000
+      process.env.USER === 'marc' && 80 || // (to bind 80: sudo setcap cap_net_bind_service=+ep `which node`)
+      3000
     },
 
     /**

@@ -1,28 +1,25 @@
 @import (reference) '../../../../styles/config.less';
 
 .spots-list {
-  width: 100%;
-  margin: 0;
-  h2 {
-    width: 100%;
-    margin: 30px;
-    text-transform: uppercase;
-  }
-  .isMobile({ padding: 0 @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
-  .isNotMobile({ padding: 0 @app-padding @app-padding @app-padding; });
   text-align: center;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  .thumb {
-    order: 0;
-    flex: 0 1 auto;
-    align-self: auto;
+  position: relative;
+  background-color: @color-indigo;
+  width: 100%;
+  padding: @thumb-margin 0 @thumb-margin 0;
+  .browse-categorie_list_label {
+    font-size: 2em;
+    font-family: @font-thin;
+    text-transform: uppercase;
+    margin: 10px @app-padding 10px @app-padding;
+    .isMobile({ margin: 10px @app-padding-mobile 10px @app-padding-mobile; });
   }
-  .sign-up__container {
-    margin: @app-padding;
+  .thumb {
+    float: left;
+  }
+
+  .movies-data-list.spots {
+    .movies-list__selection {
+      font-size: 2.7em;
+    }
   }
 }

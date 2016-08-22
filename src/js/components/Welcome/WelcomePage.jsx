@@ -3,13 +3,12 @@ import { prepareRoute } from '../../decorators'
 import WelcomeHeader from './WelcomeComponents/WelcomeHeader'
 import Spots from './WelcomeComponents/Spots'
 import Devices from './WelcomeComponents/Devices'
-import PricingTable from './WelcomeComponents/PricingTable'
-import Spinner from '../Spinner/Spinner'
+import { SelectPlan } from '../../components/Payment/'
+import ModalCoupon from '../Modal/ModalCoupon'
 import * as EventActionCreators from '../../actions/event'
 import * as MovieActionCreators from '../../actions/movie'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as BillingActionCreators from '../../actions/billing'
-import * as CategoryActionCreators from '../../actions/category'
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -19,7 +18,6 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, params: {movieId, episodeId}}) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    //store.dispatch(CategoryActionCreators.getMenu())
   ])
 
   if (movieId && movieId !== 'undefined') {
@@ -40,7 +38,8 @@ class WelcomePage extends React.Component {
         <WelcomeHeader {...this.props}/>
         <Devices {...this.props}/>
         <Spots {...this.props}/>
-        <PricingTable {...this.props}/>
+        <SelectPlan {...this.props} showImages={false}/>
+        <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
       </div>
     )
   }

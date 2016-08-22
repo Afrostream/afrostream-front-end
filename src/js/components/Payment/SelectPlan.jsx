@@ -6,12 +6,24 @@ import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
+import ModalCoupon from '../Modal/ModalCoupon'
+import * as ModalActionCreators from '../../actions/modal'
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
 }
-@connect(({Billing}) => ({Billing}))
+@connect(({User, Billing}) => ({User, Billing}))
 class SelectPlan extends React.Component {
+
+  openModal (internalPlanUuid) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+    let type = 'showSignup'
+    dispatch(ModalActionCreators.open({target: type, donePath: `/select-plan/${internalPlanUuid}/checkout`}))
+  }
 
   getPlans () {
     const {
@@ -32,7 +44,7 @@ class SelectPlan extends React.Component {
   getPlanCol (label) {
 
     const {
-      props : {history, router}
+      props : {history, router, User}
     } = this
 
     let isCash = router.isActive('cash')
@@ -42,6 +54,9 @@ class SelectPlan extends React.Component {
     if (!validPlans) {
       return
     }
+
+    let user = User.get('user')
+
     return validPlans.map((plan, key)=> {
 
       let objVal = plan.get(label)
@@ -60,8 +75,16 @@ class SelectPlan extends React.Component {
           value = getI18n().planCodes.infos[label] || ''
           break
         case 'internalActionLabel':
-          value = (<Link className="btn btn-plan"
-                         to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout`}>{`${getI18n().planCodes.action}`}</Link>)
+
+          if (!user) {
+            const inputSignupAction = {
+              onClick: event => ::this.openModal(plan.get('internalPlanUuid'))
+            }
+            value = (<button className="btn btn-plan" {...inputSignupAction}>{`${getI18n().planCodes.action}`}</button>)
+          } else {
+            value = (<Link className="btn btn-plan"
+                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout`}>{`${getI18n().planCodes.action}`}</Link>)
+          }
           break
         case 'price':
           value = (<div className="select-plan_price">
@@ -143,7 +166,7 @@ class SelectPlan extends React.Component {
             </div>
           )}
         </div>
-        <PaymentImages />
+        {this.props.showImages && <PaymentImages />}
       </div>
     )
   }
@@ -151,7 +174,12 @@ class SelectPlan extends React.Component {
 
 
 SelectPlan.propTypes = {
-  history: React.PropTypes.object.isRequired
+  history: React.PropTypes.object.isRequired,
+  showImages: React.PropTypes.bool
+}
+
+SelectPlan.defaultProps = {
+  showImages: true
 }
 
 export default withRouter(SelectPlan)

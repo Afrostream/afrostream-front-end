@@ -24,8 +24,8 @@
   "footer": {
     "legals": "Legal",
     "support": {
-      "title": "TECHNICAL SUPPORT",
-      "help": "Online help",
+      "title": "HELP",
+      "help": "Contact",
       "faq": "The answers to your questions",
       "cgu": "Terms of use",
       "policy": "Privacy policy"
@@ -86,7 +86,7 @@
       "internalMaxScreens": "Available simultaneously screen{s}",
       "internalMobile": "Watch on your computer, smartphone and tablet",
       "internalUnlimited": "Unlimited movies and TV shows",
-      "internalEngagment": "Cancel Anytime after {periodLength} {periodUnit}",
+      "internalEngagment": "Cancel Anytime after the first month",
       "internalVip": "Invitations to VIP film screenings and special events"
     }
   },
