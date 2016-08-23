@@ -43,7 +43,7 @@ class Footer extends React.Component {
     return (
       <footer className={classSet(footerClasses)}>
         <div className="links row-fluid">
-          <div className={`get-help col-xs-12 col-md-2`}>
+          <div className={`get-help col-xs-12 col-md-4`}>
             <h4>{labels.support.title}</h4>
             <ul className="footer-links">
               <li>
