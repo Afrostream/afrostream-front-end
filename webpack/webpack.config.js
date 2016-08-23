@@ -88,10 +88,10 @@ const webpackConfig = {
     colors: true
   },
   module: {
-    //preLoaders: [
-    //  {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
-    //  {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
-    //],
+    preLoaders: [
+      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
+      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
+    ],
     loaders: [
       {
         test: /\.jsx?$/,
@@ -109,12 +109,12 @@ const webpackConfig = {
       },
       {
         test: /\.css$/,
-        loaders: [ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader'})],
+        loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader!less-loader'})
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
       },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
@@ -178,7 +178,7 @@ const webpackConfig = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
-    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
+    new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
       videojs: 'video.js',
       sendBirdClient: 'sendbird',

@@ -6,11 +6,12 @@ import { merge } from 'lodash'
 import path from 'path'
 
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
-const productionMode = true//process.env.NODE_ENV === 'production'
+const productionMode = process.env.NODE_ENV === 'production'
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 let clientConfig = merge({}, webpackConfig, {
+  devtool: productionMode ? 'hidden-source-map' : 'cheap-eval-source-map',
   output: {
     publicPath: `/static/`,
     filename: '[name].js',
@@ -26,11 +27,12 @@ let clientConfig = merge({}, webpackConfig, {
   module: {},
   plugins: webpackConfig.plugins.concat(
     new webpack.BannerPlugin('App has been developed by @benjipott Afrostream.'),
-    new webpack.LoaderOptionsPlugin({
-      debug: false,
-      minimize: true,
-      sourceMap: !productionMode
-    }),
+    //WEBPACK2 FEATURE
+    //new webpack.LoaderOptionsPlugin({
+    //  debug: false,
+    //  minimize: true,
+    //  sourceMap: !productionMode
+    //}),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except: ['require', 'export', '$super']
