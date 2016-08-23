@@ -83,6 +83,12 @@ export default function routes (app, buildPath) {
     res.sendFile(path.join(staticPath, 'sitemap.xml'))
   })
 
+  //show headers
+  app.get('/headers', (req, res) => {
+    res.noCache()
+    res.send('<pre>' + JSON.stringify(req.headers) + '</pre>')
+  })
+
   // OAUTH
   // --------------------------------------------------
   app.use('/auth', auth)
