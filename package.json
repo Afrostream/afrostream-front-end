@@ -7,7 +7,7 @@
     "app": "./node_modules/.bin/babel-node server/app",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc server",
     "clean": "rm -rf build && mkdir build",
-    "build:client": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --progress --verbose --display-error-details --config webpack/prod.config.js --bail",
+    "build:client": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --progress --verbose --display-error-details -p --config webpack/prod.config.js --bail",
     "build:server": "babel -d ./build ./server -s",
     "build": "npm run clean && npm run build:server && npm run build:client",
     "watch": "./node_modules/.bin/babel-node webpack/webpack-dev-server.js --hot --inline --watch",

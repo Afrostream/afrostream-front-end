@@ -6,7 +6,7 @@ import { merge } from 'lodash'
 import path from 'path'
 
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
-const productionMode = process.env.NODE_ENV === 'production'
+const productionMode = true//process.env.NODE_ENV === 'production'
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
