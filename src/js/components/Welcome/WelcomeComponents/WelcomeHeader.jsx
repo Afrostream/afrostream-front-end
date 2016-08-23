@@ -159,7 +159,7 @@ class WelcomeHeader extends React.Component {
     return (
       <section className={classSet(welcomeClassesSet)}>
         {trailer && <Player src={{src: trailer, type: 'video/youtube'}}
-                            options={{autoplay: false, poster: posterImg}}/> }
+                            options={{autoplay: true, poster: posterImg}}/> }
 
         {!trailer && <div className="afrostream-movie__poster" style={imageStyle}>
           <div className="afrostream-movie__mask"/>
