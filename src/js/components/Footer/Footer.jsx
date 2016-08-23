@@ -115,7 +115,7 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help col-xs-12 col-md-4">
+          <div className="get-help col-xs-12 col-md-2">
             <h4> {labels.apps.title}</h4>
             <ul className="footer-links">
               <li>

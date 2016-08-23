@@ -48,8 +48,8 @@ const webpackConfig = {
     polyfill: 'babel-polyfill',
     main: './src/js/main',
     player: [
-      'dashjs',
       'videojs-vtt.js',
+      'dashjs',
       'video.js',
       'afrostream-player',
     ],
@@ -102,6 +102,13 @@ const webpackConfig = {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
+      },
+      {
+        test: /\.js$/, // include .js files
+        loaders: ['babel-loader'],
+        include: [
+          path.join(__dirname, '../node_modules/dashjs'),
+        ]
       },
       {
         test: /\.json$/,

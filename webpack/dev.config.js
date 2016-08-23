@@ -16,7 +16,7 @@ const {browserSyncServer: {bSyncHost, bSyncPort}} = config
 
 const webpackDevServerUrl = `http://${host}:${port}`
 let clientConfig = merge({}, webpackConfig, {
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   debug: true,
   devServer: {
     quiet: true, // add
@@ -47,7 +47,7 @@ clientConfig.plugins.push(
   //})
 )
 
-clientConfig.module.loaders[0].loaders.unshift('react-hot-loader/webpack')
+clientConfig.module.loaders[0].loaders.unshift('react-hot')
 
 //
 // Configuration for the server-side bundle (server.js)
