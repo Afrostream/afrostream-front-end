@@ -133,7 +133,7 @@ class WelcomeHeader extends React.Component {
         title = `${title} Épisode ${episodeNumber}`
       }
 
-      trailer = movieData.get('youtubeTrailer')
+      trailer = !this.state.isMobile && movieData.get('youtubeTrailer')
 
 
       let poster = data.get('poster')
