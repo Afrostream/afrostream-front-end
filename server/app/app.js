@@ -22,6 +22,7 @@ function errorHandler (err, req, res, next) {
   res.render('error', {error: err})
 }
 
+app.set('startDate', new Date())
 // We point to our static assets
 app.use(compression())
 //
