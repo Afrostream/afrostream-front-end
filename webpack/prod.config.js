@@ -1,10 +1,11 @@
 import webpack from 'webpack'
 import CompressionPlugin from 'compression-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import webpackConfig from './webpack.config'
 import { merge } from 'lodash'
 import path from 'path'
+import fs from 'fs'
 
+const assetsPath = path.resolve(__dirname, '../dist')
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 const productionMode = process.env.NODE_ENV === 'production'
 //
@@ -66,21 +67,43 @@ let clientConfig = merge({}, webpackConfig, {
 
 delete clientConfig.module.preLoaders;
 
-let serverConfig = merge({}, webpackConfig, {
+let nodeModules = {}
+fs.readdirSync(node_modules_dir)
+  .filter(function (x) {
+    return ['.bin'].indexOf(x) === -1
+  })
+  .forEach(function (mod) {
+    nodeModules[mod] = 'commonjs ' + mod
+  })
+
+let serverConfig = merge({}, {
   entry: {
     server: './server'
   },
   output: {
+    path: assetsPath,
+    publicPath: `/static/`,
     filename: '[name].js',
     chunkFilename: '[id].js',
     libraryTarget: 'commonjs2'
   },
+  externals: nodeModules,
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.json', '.node']
+  },
+
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  },
+
   module: {
-    preLoaders: [
-      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
-      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
-    ],
+    noParse: /node_modules\/json-schema\/lib\/validate\.js/,
     loaders: [
+      {test: /\.node$/, loader: 'node-loader'},
+      {test: /\.json$/, loader: 'json'},
       {
         test: /\.jsx?$/,
         loaders: ['babel-loader'],
@@ -90,19 +113,23 @@ let serverConfig = merge({}, webpackConfig, {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
+      },
+      {
+        test: /\.(ico)$/,
+        exclude: /node_modules/,
+        loader: 'file-loader?name=img/[path][name].[ext]&context=./app/images'
       }
     ]
   },
 
   target: 'node',
 
-  plugins: [],
-
-  node: {},
+  plugins: [
+    new webpack.IgnorePlugin(/\.(css|less|sass|gif|jpg|png|svg|favicon|ico|swf|xap)$/),
+    new webpack.optimize.CommonsChunkPlugin('server', 'server.js'),
+  ],
 
   devtool: 'source-map'
 })
 
-serverConfig.output.path = serverConfig.output.path + '/server'
-
-export default clientConfig
+export default [clientConfig, serverConfig]

@@ -4905,6 +4905,11 @@
         }
       }
     },
+    "node-loader": {
+      "version": "0.5.0",
+      "from": "node-loader@latest",
+      "resolved": "https://registry.npmjs.org/node-loader/-/node-loader-0.5.0.tgz"
+    },
     "node-pre-gyp": {
       "version": "0.6.29",
       "from": "node-pre-gyp@>=0.6.4 <0.7.0",
