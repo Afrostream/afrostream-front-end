@@ -95,7 +95,15 @@ async function promiseCalls ({createRequest, data, reject, resolve}) {
  * Server: /servr/index.js
  */
 export default function createAPI (createRequest) {
-  return async function api ({path, method = 'GET', params = {}, legacy = false, showLoader = true, local = false, passToken = false}) {
+  return async function api ({
+    path,
+    method = 'GET',
+    params = {},
+    legacy = false,
+    showLoader = true,
+    local = false,
+    passToken = false
+  }) {
     let {pathname, query: queryStr} = URL.parse(path)
     let query, headers = {}, body
 
