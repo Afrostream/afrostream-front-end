@@ -1,5 +1,5 @@
 import ActionTypes from '../consts/ActionTypes'
-import * as UserActionCreators from './user'
+import { getCountry } from '../lib/geo'
 /**
  * Get subscriptions list for user
  * @returns {Function}
@@ -183,28 +183,51 @@ export function getInternalplans (contextBillingUuid = 'common', passToken = tru
 
   return (dispatch, getState) => {
     let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
+    const user = getState().User.get('user')
+    //if (readyPlans) {
+    //  console.log('plans already present in data store')
+    //  return {
+    //    type: ActionTypes.Billing.getInternalplans,
+    //    contextBillingUuid,
+    //    res: {
+    //      body: readyPlans.toJS()
+    //    }
+    //  }
+    //}
 
-    if (readyPlans) {
-      console.log('plans already present in data store')
+
+    return async api => {
+      let params = {
+        contextBillingUuid
+      }
+
+      if (contextBillingUuid === 'common') {
+        let country = 'fr'
+        try {
+          country = await getCountry()
+        } catch (err) {
+          console.error('getInternalplans error requesting /auth/geo ', err)
+        }
+
+        params = {
+          filterEnabled: true,
+          country
+        }
+
+        if (user && user.get('_id')) {
+          params.filterUserReferenceUuid = user.get('_id')
+        }
+
+      }
       return {
         type: ActionTypes.Billing.getInternalplans,
         contextBillingUuid,
-        res: {
-          body: readyPlans.toJS()
-        }
+        res: await api({
+          path: `/api/billings/internalplans`,
+          passToken,
+          params
+        })
       }
     }
-
-    return async api => ({
-      type: ActionTypes.Billing.getInternalplans,
-      contextBillingUuid,
-      res: await api({
-        path: `/api/billings/internalplans`,
-        params: {
-          contextBillingUuid: contextBillingUuid
-        },
-        passToken: passToken
-      })
-    })
   }
 }
