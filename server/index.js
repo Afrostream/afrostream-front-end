@@ -1,4 +1,3 @@
-import 'babel-register'
 import cluster from 'express-cluster'
 
 const clusterConf = {count: process.env.WEB_CONCURRENCY || 1, verbose: true}

@@ -8,7 +8,7 @@ export default function (options) {
 
       // additionnal security for highwinds
       // if highwinds => cannot be fastly despite the other headers.
-      reqFromFastly = (req.get('source-cdn') === "Highwinds") ? false : reqFromFastly
+      reqFromFastly = (req.get('source-cdn') === 'Highwinds') ? false : reqFromFastly
 
       if (reqFromFastly) {
         // we have a bug with fastly, we follow the documentation :

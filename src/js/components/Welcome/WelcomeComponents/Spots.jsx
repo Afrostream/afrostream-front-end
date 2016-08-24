@@ -82,7 +82,7 @@ class Spots extends React.Component {
       <div className="container spots-list">
         <h2>{info.title}</h2>
         <div className={classSet(listClass)}>
-          {categoriesList && categoriesList.map((movie, i) => this.renderMovie(movie, i))}
+          {categoriesList && categoriesList.map((movie, i) => this.renderMovie(movie, i)).toJS()}
         </div>
         <div className="container sign-up__container">
           <SignUpButton label={info.action}/>
