@@ -51,7 +51,7 @@ class About extends React.Component {
                   </p>
                 </div>
                 <div className="key-people-presentation">
-                  <p>HLudovic Bostral est cofondateur et directeur technique d'Afrostream. Après un diplôme d’ingénieur
+                  <p>Ludovic Bostral est cofondateur et directeur technique d'Afrostream. Après un diplôme d’ingénieur
                     logiciel à Polytech’Nantes en 2000, il a acquis 16 ans d'expérience dans l'univers de la vidéo en
                     ligne travaillant pour Manreo, Netia, M6, et Digibos. En 2007, il rejoint M6 Web, où il a été le
                     leader technique de l'équipe en charge de la télévision de rattrapage en France, 6Play, l'un des
