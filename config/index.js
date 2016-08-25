@@ -43,7 +43,7 @@ const config = _.merge(
         }]
     },
     domain: {
-      host: 'afrostream.tv'
+      host: process.env.DOMAIN_HOST || 'localhost'
     },
     /**
      * Front-End Server
