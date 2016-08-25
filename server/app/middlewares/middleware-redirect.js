@@ -2,10 +2,12 @@ import config from '../../../config'
 
 export function forceSSL () {
   return function (req, res, next) {
-    if (req.headers['x-forwarded-proto'] === 'https') {
+    const proto = req.get('x-forwarded-proto')
+
+    if (!proto || proto === 'https') {
       return next()
     }
-    res.redirect('https://' + config.domain.host + req.url)
+    res.redirect(301, 'https://' + config.domain.host + req.originalUrl)
   }
 }
 export function forceWWW () {
