@@ -42,6 +42,9 @@ const config = _.merge(
           content: 'netflix, afro, cinema, black, series, shows, empire, cookie, webseries, musique, afrostream, viola davis, taraji p henson, blackxploitation, film, nollywood, ghana, france'
         }]
     },
+    domain: {
+      host: 'afrostream.tv'
+    },
     /**
      * Front-End Server
      */

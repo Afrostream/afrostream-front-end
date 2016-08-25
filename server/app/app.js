@@ -26,6 +26,7 @@ function errorHandler (err, req, res, next) {
 app.set('startDate', new Date())
 // We point to our static assets
 app.use(compression())
+app.use(forceWWW())
 //
 app.use(cacheHandler())
 
