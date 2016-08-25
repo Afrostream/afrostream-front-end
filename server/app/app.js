@@ -24,6 +24,8 @@ function errorHandler (err, req, res, next) {
 }
 
 app.set('startDate', new Date())
+//
+app.use(forceSSL())
 // We point to our static assets
 app.use(compression())
 //
