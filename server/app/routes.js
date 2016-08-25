@@ -89,6 +89,16 @@ export default function routes (app, buildPath) {
     res.send('<pre>' + JSON.stringify(req.headers) + '</pre>')
   })
 
+  //test cache
+  app.get('/test/no-cache', (req, res) => {
+    res.noCache()
+    res.json({date: new Date()})
+  })
+  app.get('/test/cache', (req, res) => {
+    res.cache()
+    res.json({date: new Date()})
+  })
+
   // OAUTH
   // --------------------------------------------------
   app.use('/auth', auth)

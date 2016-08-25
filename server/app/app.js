@@ -9,6 +9,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import allowOrigin from './middlewares/middleware-allowcrossdomain'
 import cacheHandler from './middlewares/middleware-cachehandler'
+import forceSSL from './middlewares/middleware-forcessl'
 const app = express()
 
 // Serve static files
@@ -25,6 +26,7 @@ function errorHandler (err, req, res, next) {
 app.set('startDate', new Date())
 // We point to our static assets
 app.use(compression())
+app.use(forceSSL())
 //
 app.use(cacheHandler())
 
