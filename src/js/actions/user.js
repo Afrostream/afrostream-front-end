@@ -1,5 +1,6 @@
 import ActionTypes from '../consts/ActionTypes'
 import * as OAuthActionCreators from './oauth'
+import * as BillingActionCreators from './billing'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { push, isActive } from 'redux-router'
 import _ from 'lodash'
@@ -35,6 +36,9 @@ const mergeProfile = function (data, getState, actionDispatcher) {
           actionDispatcher(push(donePath))
         }
       }
+
+      //get InternalPlan
+      actionDispatcher(BillingActionCreators.getInternalplans('common'))
 
       if (userMerged.facebook) {
         userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`
