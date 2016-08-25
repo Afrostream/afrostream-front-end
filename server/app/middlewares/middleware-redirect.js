@@ -1,6 +1,6 @@
 import config from '../../../config'
 
-export default forceSSL = function () {
+export function forceSSL () {
   return function (req, res, next) {
     if (req.headers['x-forwarded-proto'] === 'https') {
       return next()
@@ -8,7 +8,7 @@ export default forceSSL = function () {
     res.redirect('https://' + config.domain.host + req.url)
   }
 }
-export default forceWWW = function () {
+export function forceWWW () {
   return function (req, res, next) {
     const env = process.env.NODE_ENV || 'development'
     if (env === 'development') {
