@@ -607,6 +607,12 @@ class PlayerComponent extends Component {
       }
       playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5))
     }
+
+    //on force dash en tech par default pour tous les browsers )
+    playerData.sources = _.sortBy(playerData.sources, (k)=> {
+      return k.type !== 'application/dash+xml'
+    })
+
     if (ua.isSafari()) {
       //Fix Safari < 6.2 can't play hls
       if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
@@ -615,7 +621,7 @@ class PlayerComponent extends Component {
         })
       }
       //Safari 8 can't play dashjs
-      if (browserVersion.version == 600) {
+      if (browserVersion.version >= 538 && browserVersion.version <= 600) {
         playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
           return k !== 'html5'
         })
@@ -625,11 +631,6 @@ class PlayerComponent extends Component {
       }
     }
 
-
-    //on force dash en tech par default pour tous les browsers )
-    playerData.sources = _.sortBy(playerData.sources, (k)=> {
-      return k.type !== 'application/dash+xml'
-    })
 
     //Fix android live hls only
     //Fix ios hls only
