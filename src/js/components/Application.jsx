@@ -54,13 +54,7 @@ class Application extends React.Component {
     if (canUseDOM) {
       require('chardin.js')
     }
-    dispatch(UserActionCreators.getProfile()).then(()=> {
-      const user = User.get('user')
-      if (user) {
-        //get InternalPlan
-        dispatch(BillingActionCreators.getInternalplans('common', false, true))
-      }
-    })
+    dispatch(UserActionCreators.getProfile())
   }
 
   render () {

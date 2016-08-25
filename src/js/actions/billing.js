@@ -183,7 +183,7 @@ export function getInternalplans (contextBillingUuid = 'common', passToken = tru
 
   return (dispatch, getState) => {
     let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
-    const user = getState().User.get('user')
+
     if (readyPlans && !reload) {
       console.log('plans already present in data store')
       return {
@@ -214,6 +214,7 @@ export function getInternalplans (contextBillingUuid = 'common', passToken = tru
           country
         }
 
+        const user = getState().User.get('user')
         if (user && user.get('_id')) {
           params.filterUserReferenceUuid = user.get('_id')
         }

@@ -169,6 +169,7 @@ class ModalLogin extends ModalComponent {
   async onSuccess () {
     const {
       dispatch,
+      User,
       cb
     } = this.props
 
