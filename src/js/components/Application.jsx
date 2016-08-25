@@ -12,6 +12,7 @@ import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
 
+import * as BillingActionCreators from '../actions/billing'
 import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
 import * as EpisodeActionCreators from '../actions/episode'
@@ -46,13 +47,20 @@ class Application extends React.Component {
   componentDidMount () {
     const {
       props: {
+        User,
         dispatch
       }
     } = this
     if (canUseDOM) {
       require('chardin.js')
     }
-    dispatch(UserActionCreators.getProfile())
+    dispatch(UserActionCreators.getProfile()).then(()=> {
+      const user = User.get('user')
+      if (user) {
+        //get InternalPlan
+        dispatch(BillingActionCreators.getInternalplans('common', false, true))
+      }
+    })
   }
 
   render () {
