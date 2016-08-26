@@ -21,7 +21,7 @@ export default function routes (app, buildPath) {
   const env = process.env.NODE_ENV || 'development'
 
   function parseMD5Files () {
-    const buildFiles = ['vendor.js', 'player.js', 'polyfill.js', 'main.js', 'main.css']
+    const buildFiles = ['vendor.js', 'player.js', 'main.js', 'main.css']
     let promisedMd5 = []
     _.map(buildFiles, (file)=> {
       if (env === 'development') {
