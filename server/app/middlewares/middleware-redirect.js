@@ -19,8 +19,10 @@ export function forceWWW () {
     if (env === 'development') {
       return next()
     }
+    const proto = req.get('x-forwarded-proto') || req.protocol
+
     if (req.host.indexOf('www.') !== 0) {
-      return res.redirect(301, req.protocol + '://www.' + config.domain.host + req.originalUrl)
+      return res.redirect(301, proto + 'www.' + config.domain.host + req.originalUrl)
     }
     next()
   }
