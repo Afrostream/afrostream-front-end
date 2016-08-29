@@ -20,6 +20,7 @@ export function forceWWW () {
       return next()
     }
     const proto = req.get('x-forwarded-proto') || req.protocol
+    const host = req.hostname
     if (host.match(/^www\..*/i)) {
       return next()
 
