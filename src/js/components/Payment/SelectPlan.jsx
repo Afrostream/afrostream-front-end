@@ -27,24 +27,20 @@ class SelectPlan extends React.Component {
 
   getPlans () {
     const {
-      props: {history, router, Billing}
+      props: {router, Billing}
     } = this
 
     let isCash = router.isActive('cash')
 
     let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : 'common'}`)
 
-    if (!validPlans) {
-      return
-    }
-
-    return validPlans.sort((a, b)=> b.get('amountInCents').localeCompare(a.get('amountInCents')))
+    return validPlans
   }
 
   getPlanCol (label) {
 
     const {
-      props : {history, router, User}
+      props : {router, User}
     } = this
 
     let isCash = router.isActive('cash')
@@ -130,11 +126,28 @@ class SelectPlan extends React.Component {
     let isCash = this.props.router.isActive('cash')
 
     if (isCash) {
-      return <div className=" choose-plan">{getI18n().planCodes.cash.selectTitle}</div>
+      return <div className="choose-plan">{getI18n().planCodes.cash.selectTitle}</div>
     }
 
-    return <div className=" choose-plan">{getI18n().planCodes.selectTitle}
-      <span className=" choose-plan__bolder"> {getI18n().planCodes.freePeriodLabel}</span>
+    let validPlans = this.getPlans()
+
+    if (!validPlans) {
+      return
+    }
+
+    let trialPeriodPlan = validPlans.filter((plan)=> {
+      return isBoolean(plan.get('trialEnabled'))
+    }).first()
+    let periodTrialLabel = getI18n().planCodes.freePeriodLabel
+
+    if (trialPeriodPlan) {
+      let trialUnit = getI18n().account.billing.periods[trialPeriodPlan.get('trialPeriodUnit')]
+      periodTrialLabel = periodTrialLabel.replace('{trialPeriodLength}', trialPeriodPlan.get('trialPeriodLength'))
+      periodTrialLabel = periodTrialLabel.replace('{trialPeriodUnit}', trialUnit)
+    }
+
+    return <div className="choose-plan">{getI18n().planCodes.selectTitle}
+      <span className="choose-plan__bolder">{` ${periodTrialLabel}`}</span>
     </div>
   }
 

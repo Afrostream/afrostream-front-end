@@ -86,7 +86,7 @@
       "selectTitle": "Choisissez votre formule"
     },
     "selectTitle": "Choisissez votre formule et profitez de",
-    "freePeriodLabel": "7 jours d'essai",
+    "freePeriodLabel": "{trialPeriodLength} {trialPeriodUnit} d'essai",
     "title": "Formule",
     "action": "Choisir cette offre",
     "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",
