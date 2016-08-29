@@ -3,7 +3,7 @@ const env = process.env.NODE_ENV || 'development'
 
 export function forceSSL () {
   return function (req, res, next) {
-    if (env === 'development') {
+    if (env !== 'production') {
       return next()
     }
     const proto = req.get('x-forwarded-proto')
@@ -16,7 +16,7 @@ export function forceSSL () {
 }
 export function forceWWW () {
   return function (req, res, next) {
-    if (env === 'development') {
+    if (env !== 'production') {
       return next()
     }
     const proto = req.get('x-forwarded-proto') || req.protocol

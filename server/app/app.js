@@ -26,7 +26,7 @@ function errorHandler (err, req, res, next) {
 app.set('startDate', new Date())
 //
 app.use(forceSSL())
-app.use(forceWWW())
+//app.use(forceWWW())
 // We point to our static assets
 app.use(compression())
 //
