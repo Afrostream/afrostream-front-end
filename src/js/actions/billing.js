@@ -205,19 +205,19 @@ export function getInternalplans (contextBillingUuid = 'common', passToken = tru
         let country = 'fr'
         try {
           country = await getCountry()
+          params = {
+            filterEnabled: true,
+            country
+          }
+
+          const user = getState().User.get('user')
+          if (user && user.get('_id')) {
+            params.filterUserReferenceUuid = user.get('_id')
+          }
         } catch (err) {
           console.error('getInternalplans error requesting /auth/geo ', err)
         }
 
-        params = {
-          filterEnabled: true,
-          country
-        }
-
-        const user = getState().User.get('user')
-        if (user && user.get('_id')) {
-          params.filterUserReferenceUuid = user.get('_id')
-        }
 
       }
       return {

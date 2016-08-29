@@ -16,14 +16,11 @@ export function forceSSL () {
 }
 export function forceWWW () {
   return function (req, res, next) {
-    if (env !== 'production') {
-      return next()
-    }
     const proto = req.get('x-forwarded-proto') || req.protocol
-    const host = req.hostname
-    if (host.match(/^www\..*/i)) {
-      return next()
+    const cdnHostname = req.get('x-afsm-forwarded-host')
+    if (cdnHostname && !cdnHostname.match(/^www\./i)) {
+      return res.redirect(301, proto + '://www.' + config.domain.host + req.originalUrl)
     }
-    return res.redirect(301, proto + '://www.' + config.domain.host + req.originalUrl)
+    next()
   }
 }

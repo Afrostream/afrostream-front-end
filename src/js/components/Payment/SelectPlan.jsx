@@ -7,15 +7,10 @@ import _ from 'lodash'
 import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
-import * as BillingActionCreators from '../../actions/billing'
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
 }
-@prepareRoute(async function ({store, router}) {
-  let isCash = router && router.isActive('cash')
-  return await store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'common'))
-})
 @connect(({User, Billing}) => ({User, Billing}))
 class SelectPlan extends React.Component {
 
@@ -35,9 +30,7 @@ class SelectPlan extends React.Component {
     } = this
 
     let isCash = router.isActive('cash')
-
     let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : 'common'}`)
-
     return validPlans
   }
 
@@ -143,7 +136,7 @@ class SelectPlan extends React.Component {
     }
 
     return <div className="choose-plan">{getI18n().planCodes.selectTitle}
-      {!isCash && <span className="choose-plan__bolder">{` ${periodTrialLabel}`}</span>}F
+      {!isCash && <span className="choose-plan__bolder">{` ${periodTrialLabel}`}</span>}
     </div>
   }
 
