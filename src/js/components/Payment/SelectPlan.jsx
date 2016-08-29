@@ -127,8 +127,8 @@ class SelectPlan extends React.Component {
       let trialPeriodPlan = validPlans.filter((plan)=> {
         return isBoolean(plan.get('trialEnabled'))
       }).first()
-      periodTrialLabel = getI18n().planCodes.freePeriodLabel
       if (trialPeriodPlan) {
+        periodTrialLabel = getI18n().planCodes.freePeriodLabel
         let trialUnit = getI18n().account.billing.periods[trialPeriodPlan.get('trialPeriodUnit')]
         periodTrialLabel = periodTrialLabel.replace('{trialPeriodLength}', trialPeriodPlan.get('trialPeriodLength'))
         periodTrialLabel = periodTrialLabel.replace('{trialPeriodUnit}', trialUnit)
