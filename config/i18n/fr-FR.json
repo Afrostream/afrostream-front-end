@@ -82,11 +82,8 @@
   "signupSocialButton": "S'inscrire avec {connection:title}",
   "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
   "planCodes": {
-    "cash": {
-      "selectTitle": "Choisissez votre formule"
-    },
-    "selectTitle": "Choisissez votre formule et profitez de",
-    "freePeriodLabel": "{trialPeriodLength} {trialPeriodUnit} d'essai",
+    "selectTitle": "Choisissez votre formule",
+    "freePeriodLabel": "et profitez de {trialPeriodLength} {trialPeriodUnit} d'essai",
     "title": "Formule",
     "action": "Choisir cette offre",
     "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",

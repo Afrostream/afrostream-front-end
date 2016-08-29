@@ -124,30 +124,22 @@ class SelectPlan extends React.Component {
 
   getHeader () {
     let isCash = this.props.router.isActive('cash')
-
-    if (isCash) {
-      return <div className="choose-plan">{getI18n().planCodes.cash.selectTitle}</div>
-    }
-
     let validPlans = this.getPlans()
-
-    if (!validPlans) {
-      return
-    }
-
-    let trialPeriodPlan = validPlans.filter((plan)=> {
-      return isBoolean(plan.get('trialEnabled'))
-    }).first()
-    let periodTrialLabel = getI18n().planCodes.freePeriodLabel
-
-    if (trialPeriodPlan) {
-      let trialUnit = getI18n().account.billing.periods[trialPeriodPlan.get('trialPeriodUnit')]
-      periodTrialLabel = periodTrialLabel.replace('{trialPeriodLength}', trialPeriodPlan.get('trialPeriodLength'))
-      periodTrialLabel = periodTrialLabel.replace('{trialPeriodUnit}', trialUnit)
+    let periodTrialLabel = ''
+    if (validPlans) {
+      let trialPeriodPlan = validPlans.filter((plan)=> {
+        return isBoolean(plan.get('trialEnabled'))
+      }).first()
+      periodTrialLabel = getI18n().planCodes.freePeriodLabel
+      if (trialPeriodPlan) {
+        let trialUnit = getI18n().account.billing.periods[trialPeriodPlan.get('trialPeriodUnit')]
+        periodTrialLabel = periodTrialLabel.replace('{trialPeriodLength}', trialPeriodPlan.get('trialPeriodLength'))
+        periodTrialLabel = periodTrialLabel.replace('{trialPeriodUnit}', trialUnit)
+      }
     }
 
     return <div className="choose-plan">{getI18n().planCodes.selectTitle}
-      <span className="choose-plan__bolder">{` ${periodTrialLabel}`}</span>
+      {!isCash && <span className="choose-plan__bolder">{` ${periodTrialLabel}`}</span>}F
     </div>
   }
 

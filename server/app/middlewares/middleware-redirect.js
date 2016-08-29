@@ -23,7 +23,6 @@ export function forceWWW () {
     const host = req.hostname
     if (host.match(/^www\..*/i)) {
       return next()
-
     }
     return res.redirect(301, proto + '://www.' + config.domain.host + req.originalUrl)
   }
