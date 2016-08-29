@@ -6,12 +6,16 @@ import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
-import ModalCoupon from '../Modal/ModalCoupon'
 import * as ModalActionCreators from '../../actions/modal'
+import * as BillingActionCreators from '../../actions/billing'
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
 }
+@prepareRoute(async function ({store, router}) {
+  let isCash = router && router.isActive('cash')
+  return await store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'common'))
+})
 @connect(({User, Billing}) => ({User, Billing}))
 class SelectPlan extends React.Component {
 
