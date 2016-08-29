@@ -19,9 +19,10 @@ export function forceWWW () {
     const proto = req.get('x-forwarded-proto') || req.protocol
     const cdnHostname = req.get('x-afsm-forwarded-host')
 
-    if (!cdnHostname ||                         // no header x-afsm-forwarded-host <=> env=dev|staging
-        //req.originalUrl.match(/^\/auth\//i) ||  // auth facebook, orange, bouygues
-        cdnHostname.match(/^www\./i)) {         // already redirected
+    if (req.method !== 'GET' ||                   // no redirect on POST/PUT/DELETE/...
+        !cdnHostname ||                           // no redirect when header x-afsm-forwarded-host is missing <=> env=dev|staging
+        //req.originalUrl.match(/^\/auth\//i) ||  // no redirect on auth facebook, orange, bouygues
+        cdnHostname.match(/^www\./i)) {           // no redirect if already redirected
       // skipping redirect
       return next()
     }
