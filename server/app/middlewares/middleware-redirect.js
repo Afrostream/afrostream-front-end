@@ -20,10 +20,10 @@ export function forceWWW () {
       return next()
     }
     const proto = req.get('x-forwarded-proto') || req.protocol
+    if (host.match(/^www\..*/i)) {
+      return next()
 
-    if (req.host.indexOf('www.') !== 0) {
-      return res.redirect(301, proto + '://www.' + config.domain.host + req.originalUrl)
     }
-    next()
+    return res.redirect(301, proto + '://www.' + config.domain.host + req.originalUrl)
   }
 }
