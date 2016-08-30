@@ -20,7 +20,10 @@ const {apps, apiServer} = config
 export default function render (req, res, layout, {payload}) {
   const {path} = req
   const history = createMemoryHistory(path)
-  const location = history.createLocation(path)
+  const location = history.createLocation({
+    pathname: path,
+    search: '?' + qs.stringify(req.query)
+  })
 
   const api = createAPI(
     /**
@@ -38,6 +41,9 @@ export default function render (req, res, layout, {payload}) {
       if (local) {
         url = pathname
       }
+
+      console.log('contextBillingUuid', query)
+      console.log('url', url)
       return request(method, url)
         .query(qs.stringify(query))
         .set(headers)
@@ -51,7 +57,6 @@ export default function render (req, res, layout, {payload}) {
       routes,
       location
     }, async (err, redirectLocation, renderProps) => {
-
       try {
         if (redirectLocation) {
           res.redirect(301, redirectLocation.pathname + redirectLocation.search)

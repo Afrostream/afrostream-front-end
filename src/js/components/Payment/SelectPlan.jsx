@@ -50,7 +50,7 @@ class SelectPlan extends React.Component {
     let {query} = location
     let isCash = router.isActive('cash')
     const internalPlanQuery = query && query.contextBillingUuid
-
+    console.log(location)
     let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : (internalPlanQuery || 'common')}`)
     return validPlans
   }
@@ -198,6 +198,7 @@ class SelectPlan extends React.Component {
 
 
 SelectPlan.propTypes = {
+  location: React.PropTypes.object.isRequired,
   history: React.PropTypes.object.isRequired,
   showImages: React.PropTypes.bool
 }
