@@ -159,7 +159,7 @@ export default function createAPI (createRequest) {
                 })
               }).catch((err) => {
                 console.log('fetch refreshToken error', err)
-                cleatToken()
+                clearToken()
                 return reject(err)
               })
             }
