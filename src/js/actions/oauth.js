@@ -1,7 +1,8 @@
 import ActionTypes from '../consts/ActionTypes'
 import * as UserActionCreators from './user'
 import { push } from 'redux-router'
-import { getToken } from '../lib/storage'
+import { getToken, storeToken } from '../lib/storage'
+import config from '../../../config/'
 
 export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {
@@ -92,6 +93,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
       return await new Promise((resolve, reject) => {
         let oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
         let intervalCheck = 0
+
         let beforeUnload = () => {
           window.loginCallBack = null
           oauthPopup = null
@@ -113,7 +115,16 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
 
         }
         window.loginCallBack = beforeUnload
+        let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
+        let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
         //oauthPopup.onbeforeunload = beforeUnload
+        window[eventMethod](messageEvent, (event) => {
+          if (!~event.origin.indexOf(config.domain.host)) return
+          console.log('received response:  ', event.data)
+          storeToken(event.data)
+          beforeUnload()
+        }, false)
+
         intervalCheck = setInterval(function () {
           try {
             //if (!oauthPopup || !oauthPopup.onbeforeunload) {

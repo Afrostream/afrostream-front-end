@@ -45,12 +45,6 @@ class PaymentPage extends React.Component {
   render () {
     const {props: {User, children}} = this
 
-    const user = User.get('user')
-
-    if (!user) {
-      return <WelcomePage {...this.props}/>
-    }
-
     return (
       <div className="row-fluid brand-bg">
         <div className="container brand-bg">
