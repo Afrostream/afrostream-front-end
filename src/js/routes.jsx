@@ -28,6 +28,11 @@ const buildSubRoutes = function () {
     </Route>
   )
 }
+
+const fn = function () {
+  console.log(arguments)
+}
+
 const buildHome = function (lang) {
   const homeRoutes = [
     <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
@@ -40,7 +45,7 @@ const buildHome = function (lang) {
            component={BrowseGenrePage}/>,
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
-    <Route key={`${lang}-movie`} name="movie"
+    <Route key={`${lang}-movie`} name="movie" match={fn}
            path=":movieId(\\d+)(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
            component={MoviePage}>,
       <Route key={`${lang}-player`} name="player"

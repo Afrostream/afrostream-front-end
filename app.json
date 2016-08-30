@@ -4,6 +4,7 @@
   "scripts": {},
   "env": {
     "API_CLIENT_PROTOCOL": "https",
+    "DOMAIN_HOST": "staging.afrostream.tv",
     "API_CLIENT_AUTHORITY": "afr-api-v1-staging.herokuapp.com",
     "API_END_POINT": "https://afr-api-v1-staging.herokuapp.com",
     "API_CLIENT_END_POINT": "https://afr-api-v1-staging.herokuapp.com",

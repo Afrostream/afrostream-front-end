@@ -1,5 +1,6 @@
 import ActionTypes from '../consts/ActionTypes'
 import { getCountry } from '../lib/geo'
+import { merge } from 'lodash'
 /**
  * Get subscriptions list for user
  * @returns {Function}
@@ -204,20 +205,18 @@ export function getInternalplans (contextBillingUuid = 'common', passToken = tru
       if (contextBillingUuid === 'common') {
         let country = 'fr'
         try {
-          country = await getCountry()
-          params = {
-            filterEnabled: true,
-            country
-          }
-
           const user = getState().User.get('user')
           if (user && user.get('_id')) {
-            params.filterUserReferenceUuid = user.get('_id')
+            country = await getCountry()
+            params = merge(params, {
+              filterEnabled: true,
+              country,
+              filterUserReferenceUuid: user.get('_id')
+            })
           }
         } catch (err) {
           console.error('getInternalplans error requesting /auth/geo ', err)
         }
-
 
       }
       return {
