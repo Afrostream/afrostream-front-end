@@ -35,10 +35,10 @@ const mergeProfile = function (data, getState, actionDispatcher) {
           }
           actionDispatcher(push(donePath))
         }
+        //get InternalPlan
+        actionDispatcher(BillingActionCreators.getInternalplans('common', true, true, userMerged._id))
       }
 
-      //get InternalPlan
-      actionDispatcher(BillingActionCreators.getInternalplans('common', true, true))
 
       if (userMerged.facebook) {
         userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`

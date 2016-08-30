@@ -196,6 +196,7 @@ const webpackConfig = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: `${JSON.stringify(process.env.NODE_ENV || 'development')}`,
+        DOMAIN_HOST: JSON.stringify(process.env.DOMAIN_HOST),
         API_CLIENT_PROTOCOL: JSON.stringify(process.env.API_CLIENT_PROTOCOL),
         API_CLIENT_AUTHORITY: JSON.stringify(process.env.API_CLIENT_AUTHORITY),
         API_CLIENT_END_POINT: JSON.stringify(process.env.API_CLIENT_END_POINT),

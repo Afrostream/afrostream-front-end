@@ -180,9 +180,9 @@ export function getCouponCampaigns (params) {
  * @param passToken
  * @returns {function(*, *)}
  */
-export function getInternalplans (contextBillingUuid = 'common', passToken = true, reload = false) {
+export function getInternalplans (contextBillingUuid = 'common', passToken = true, reload = false, userId = null) {
 
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
     let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
 
     if (readyPlans && !reload) {
@@ -196,6 +196,10 @@ export function getInternalplans (contextBillingUuid = 'common', passToken = tru
       }
     }
 
+    actionDispatcher({
+      type: ActionTypes.Billing.getInternalplans,
+      contextBillingUuid
+    })
 
     return async api => {
       let params = {
@@ -203,19 +207,22 @@ export function getInternalplans (contextBillingUuid = 'common', passToken = tru
       }
 
       if (contextBillingUuid === 'common') {
-        let country = 'fr'
-        try {
-          const user = getState().User.get('user')
-          if (user && user.get('_id')) {
+        let country = 'FR'
+        const user = getState().User.get('user')
+        const filterUserReferenceUuid = user && user.get('_id') || userId
+        console.log('filterUserReferenceUuid', filterUserReferenceUuid)
+        if (filterUserReferenceUuid) {
+          try {
             country = await getCountry()
-            params = merge(params, {
-              filterEnabled: true,
-              country,
-              filterUserReferenceUuid: user.get('_id')
-            })
+          } catch (err) {
+            console.error('getInternalplans error requesting /auth/geo ', err)
           }
-        } catch (err) {
-          console.error('getInternalplans error requesting /auth/geo ', err)
+
+          params = {
+            filterEnabled: true,
+            country,
+            filterUserReferenceUuid
+          }
         }
 
       }
