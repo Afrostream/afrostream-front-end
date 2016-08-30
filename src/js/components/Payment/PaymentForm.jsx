@@ -135,10 +135,14 @@ class PaymentForm extends React.Component {
     } = this
 
 
-    const user = User.get('user').toJS()
-
-    let firstName = user && user.facebook && user.facebook.first_name || user && user.first_name
-    let lastName = user && user.facebook && user.facebook.last_name || user && user.last_name
+    const user = User.get('user')
+    let firstName = ''
+    let lastName = ''
+    if (user) {
+      let userJs = user.toJS()
+      firstName = userJs && userJs.facebook && userJs.facebook.first_name || userJs && userJs.first_name
+      lastName = userJs && userJs.facebook && userJs.facebook.last_name || userJs && userJs.last_name
+    }
 
     return (<div className="row">
       <div className="form-group col-md-6">

@@ -21,10 +21,26 @@ class SelectPlan extends React.Component {
       }
     } = this
     let type = 'showSignup'
+
+    const internalPlanQuery = this.getInternalQuery()
+
     dispatch(ModalActionCreators.open({
       target: type,
-      donePath: `/select-plan/${internalPlanUuid}/checkout${query && query.contextBillingUuid && '?contextBillingUuid=' + query.contextBillingUuid}`
+      donePath: `/select-plan/${internalPlanUuid}/checkout${internalPlanQuery}`
     }))
+  }
+
+  getInternalQuery () {
+    const {
+      props: {location}
+    } = this
+    let {query} = location
+
+    let queryS = ''
+    if (query && query.contextBillingUuid) {
+      queryS = '?contextBillingUuid=' + query.contextBillingUuid
+    }
+    return queryS
   }
 
   getPlans () {
@@ -33,16 +49,17 @@ class SelectPlan extends React.Component {
     } = this
     let {query} = location
     let isCash = router.isActive('cash')
-    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')}`)
+    const internalPlanQuery = query && query.contextBillingUuid
+
+    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : (internalPlanQuery || 'common')}`)
     return validPlans
   }
 
   getPlanCol (label) {
 
     const {
-      props : {router, location, User}
+      props : {router, User}
     } = this
-    let {query} = location
     let isCash = router.isActive('cash')
 
     let validPlans = this.getPlans()
@@ -72,6 +89,8 @@ class SelectPlan extends React.Component {
           break
         case 'internalActionLabel':
 
+          const internalPlanQuery = this.getInternalQuery()
+
           if (!user) {
             const inputSignupAction = {
               onClick: event => ::this.openModal(plan.get('internalPlanUuid'))
@@ -79,7 +98,7 @@ class SelectPlan extends React.Component {
             value = (<button className="btn btn-plan" {...inputSignupAction}>{`${getI18n().planCodes.action}`}</button>)
           } else {
             value = (<Link className="btn btn-plan"
-                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${query && query.contextBillingUuid && '?contextBillingUuid=' + query.contextBillingUuid}`}>{`${getI18n().planCodes.action}`}</Link>)
+                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${internalPlanQuery}`}>{`${getI18n().planCodes.action}`}</Link>)
           }
           break
         case 'price':
