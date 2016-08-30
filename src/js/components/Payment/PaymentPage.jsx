@@ -13,11 +13,12 @@ if (process.env.BROWSER) {
   require('./PaymentPage.less')
 }
 
-@prepareRoute(async function ({store, router}) {
+@prepareRoute(async function ({store, location, router}) {
+  let {query} = location
   let isCash = router && router.isActive('cash')
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : 'common'))
+    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')))
   ])
 })
 @connect(({Intercom, User}) => ({Intercom, User}))

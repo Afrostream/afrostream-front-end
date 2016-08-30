@@ -114,7 +114,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           }
 
         }
-        window.loginCallBack = beforeUnload
+        //window.loginCallBack = beforeUnload
         let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
         //oauthPopup.onbeforeunload = beforeUnload
@@ -125,16 +125,17 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           beforeUnload()
         }, false)
 
-        intervalCheck = setInterval(function () {
-          try {
-            //if (!oauthPopup || !oauthPopup.onbeforeunload) {
-            if (!oauthPopup) {
-              beforeUnload()
-            }
-          } catch (e) {
-            console.log('onbeforeunlod error ', e)
-          }
-        }, 1000)
+        debugger
+        //intervalCheck = setInterval(function () {
+        //  try {
+        //    //if (!oauthPopup || !oauthPopup.onbeforeunload) {
+        //    if (!oauthPopup) {
+        //      beforeUnload()
+        //    }
+        //  } catch (e) {
+        //    console.log('onbeforeunlod error ', e)
+        //  }
+        //}, 1000)
       })
     }
   }

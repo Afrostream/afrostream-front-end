@@ -51,13 +51,16 @@ class PaymentForm extends React.Component {
       props: {
         router,
         Billing,
+        location,
         params: {planCode}
       }
     } = this
 
+    let {query} = location
+
     let isCash = router.isActive('cash')
 
-    let planCodes = Billing.get(`internalPlans/${isCash ? 'cashway' : 'common'}`)
+    let planCodes = Billing.get(`internalPlans/${isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')}`)
 
     if (!planCodes) {
       return false

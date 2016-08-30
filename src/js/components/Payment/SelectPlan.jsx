@@ -26,11 +26,11 @@ class SelectPlan extends React.Component {
 
   getPlans () {
     const {
-      props: {router, Billing}
+      props: {router, location, Billing}
     } = this
-
+    let {query} = location
     let isCash = router.isActive('cash')
-    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : 'common'}`)
+    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')}`)
     return validPlans
   }
 

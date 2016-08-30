@@ -10,12 +10,14 @@ import * as MovieActionCreators from '../../actions/movie'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as BillingActionCreators from '../../actions/billing'
 import { withRouter } from 'react-router'
+import qs from 'qs'
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less')
 }
 
-@prepareRoute(async function ({store, params: {movieId, episodeId}}) {
+@prepareRoute(async function ({store, location, params: {movieId, episodeId}}) {
+  let {query} = location
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
   ])
@@ -27,8 +29,7 @@ if (process.env.BROWSER) {
   if (episodeId && episodeId !== 'undefined') {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
-
-  return await store.dispatch(BillingActionCreators.getInternalplans('common', false))
+  return await store.dispatch(BillingActionCreators.getInternalplans(query && query.contextBillingUuid || 'common', false))
 })
 class WelcomePage extends React.Component {
 

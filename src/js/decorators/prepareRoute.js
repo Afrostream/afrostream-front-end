@@ -29,7 +29,7 @@ export default function prepareRoute (prepareFn) {
       componentWillReceiveProps (nextProps) {
         const {
           context: {store},
-          props:{route, params}
+          props:{route, location, params}
         } = this
 
         if (!shallowEqual(nextProps.route, route), !shallowEqual(nextProps.params, params)) {
@@ -38,6 +38,7 @@ export default function prepareRoute (prepareFn) {
           nextParams.lang = lang
           prepareFn({
             store,
+            location,
             params: nextParams,
             router: nextProps.router,
             route: nextProps.route,
@@ -49,13 +50,13 @@ export default function prepareRoute (prepareFn) {
       componentDidMount () {
         const {
           context: {store},
-          props: {params, router, routes, route, categoryId}
+          props: {params, location, router, routes, route, categoryId}
         } = this
         let lang = routes && routes.length > 3 && routes[3].path
         let nextParams = params || {}
         nextParams.lang = lang
 
-        prepareFn({store, params: nextParams, router, route, categoryId})
+        prepareFn({store, location, params: nextParams, router, route, categoryId})
       }
 
     }
