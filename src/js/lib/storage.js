@@ -1,6 +1,11 @@
 import config from '../../../config'
 const {apiClient} =config
 
+export function clearToken (oauthData) {
+  const storageId = apiClient.token
+  return localStorage.removeItem(storageId)
+}
+
 export function storeToken (oauthData) {
   const storageId = apiClient.token
   if (oauthData.access_token) {

@@ -6,7 +6,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import config from '../../../config'
 import request from 'superagent'
 import NProgress from 'nprogress'
-import { storeToken, getToken } from '../lib/storage'
+import { storeToken, getToken, clearToken } from '../lib/storage'
 
 const {apiClient} = config
 
@@ -36,7 +36,7 @@ async function setTokenInHeader (headers) {
 export async function fetchToken (refresh = false) {
   let tokenData = getToken()
 
-  if (isTokenValid(tokenData)) {
+  if (isTokenValid(tokenData) && !refresh) {
     return tokenData
   }
 
@@ -47,7 +47,7 @@ export async function fetchToken (refresh = false) {
   let url = `${apiClient.urlPrefix}/auth/refresh`
   let body = {
     grant_type: 'refresh_token',
-    refresh_token: tokenData.refresh_token
+    refresh_token: tokenData && tokenData.refresh_token
   }
 
   return await new Promise((resolve, reject) => {
@@ -159,6 +159,7 @@ export default function createAPI (createRequest) {
                 })
               }).catch((err) => {
                 console.log('fetch refreshToken error', err)
+                cleatToken()
                 return reject(err)
               })
             }
