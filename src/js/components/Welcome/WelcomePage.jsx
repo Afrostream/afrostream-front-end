@@ -30,7 +30,7 @@ if (process.env.BROWSER) {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 
-  let contextBillingUuid = isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')
+  let contextBillingUuid = query && query.contextBillingUuid || 'common'
   let country = query && query.contextCountry
 
   return await store.dispatch(BillingActionCreators.getInternalplans({contextBillingUuid, country, passToken: false}))
