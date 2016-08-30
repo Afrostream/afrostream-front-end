@@ -4,7 +4,7 @@ const {apiClient} =config
 export function storeToken (oauthData) {
   const storageId = apiClient.token
   if (oauthData.access_token) {
-    oauthData.expiresAt = new Date(Date.now() + 1000 * oauthData.expiresIn).toISOString()
+    oauthData.expiresAt = new Date(Date.now() + 1000 * (oauthData.expiresIn || oauthData.expires_in)).toISOString()
     localStorage.setItem(storageId, JSON.stringify(oauthData))
   }
   return oauthData
