@@ -180,7 +180,13 @@ export function getCouponCampaigns (params) {
  * @param passToken
  * @returns {function(*, *)}
  */
-export function getInternalplans (contextBillingUuid = 'common', passToken = true, reload = false, userId = null) {
+export function getInternalplans ({
+  contextBillingUuid = 'common',
+  passToken = true,
+  reload = false,
+  userId = null,
+  country = 'FR'
+}) {
 
   return (dispatch, getState, actionDispatcher) => {
     let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
@@ -207,7 +213,6 @@ export function getInternalplans (contextBillingUuid = 'common', passToken = tru
       }
 
       if (contextBillingUuid === 'common') {
-        let country = 'FR'
         const user = getState().User.get('user')
         const filterUserReferenceUuid = user && user.get('_id') || userId
         console.log('filterUserReferenceUuid', filterUserReferenceUuid)

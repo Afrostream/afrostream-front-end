@@ -36,7 +36,12 @@ const mergeProfile = function (data, getState, actionDispatcher) {
           actionDispatcher(push(donePath))
         }
         //get InternalPlan
-        actionDispatcher(BillingActionCreators.getInternalplans('common', true, true, userMerged._id))
+        actionDispatcher(BillingActionCreators.getInternalplans({
+          contextBillingUuid: 'common',
+          passToken: true,
+          reload: true,
+          userId: userMerged._id
+        }))
       }
 
 

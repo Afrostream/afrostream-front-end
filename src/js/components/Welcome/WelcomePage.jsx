@@ -29,7 +29,11 @@ if (process.env.BROWSER) {
   if (episodeId && episodeId !== 'undefined') {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
-  return await store.dispatch(BillingActionCreators.getInternalplans(query && query.contextBillingUuid || 'common', false))
+
+  let contextBillingUuid = isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')
+  let country = query && query.contextCountry
+
+  return await store.dispatch(BillingActionCreators.getInternalplans({contextBillingUuid, country, passToken: false}))
 })
 class WelcomePage extends React.Component {
 

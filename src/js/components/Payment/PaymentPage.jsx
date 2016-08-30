@@ -16,9 +16,11 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, location, router}) {
   let {query} = location
   let isCash = router && router.isActive('cash')
+  let contextBillingUuid = isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')
+  let country = query && query.contextCountry
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans(isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')))
+    store.dispatch(BillingActionCreators.getInternalplans({contextBillingUuid, country}))
   ])
 })
 @connect(({Intercom, User}) => ({Intercom, User}))
