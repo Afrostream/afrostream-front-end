@@ -119,13 +119,11 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
         //oauthPopup.onbeforeunload = beforeUnload
         window[eventMethod](messageEvent, (event) => {
-          if (!~event.origin.indexOf(config.domain.host)) return
+          //if (!~event.origin.indexOf(config.domain.host)) return
           console.log('received response:  ', event.data)
           storeToken(event.data)
           beforeUnload()
         }, false)
-
-        debugger
         //intervalCheck = setInterval(function () {
         //  try {
         //    //if (!oauthPopup || !oauthPopup.onbeforeunload) {

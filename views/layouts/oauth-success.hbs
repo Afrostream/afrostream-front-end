@@ -27,7 +27,7 @@
     //  we let 200ms to mobile app to catch the document.location.href change
     setTimeout(function () {
       try {
-        window.opener.postMessage(tokenData, 'afrostream.tv'); //send the message and target URI
+        window.opener.postMessage(tokenData, '*'); //send the message and target URI
         if (window.opener && window.opener.loginCallBack) {
           window.opener.loginCallBack();
         }
