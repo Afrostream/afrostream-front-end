@@ -209,7 +209,8 @@ export function getInternalplans ({
 
     return async api => {
       let params = {
-        contextBillingUuid
+        contextBillingUuid,
+        country
       }
 
       if (contextBillingUuid === 'common') {
