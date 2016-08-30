@@ -21,7 +21,10 @@ class SelectPlan extends React.Component {
       }
     } = this
     let type = 'showSignup'
-    dispatch(ModalActionCreators.open({target: type, donePath: `/select-plan/${internalPlanUuid}/checkout`}))
+    dispatch(ModalActionCreators.open({
+      target: type,
+      donePath: `/select-plan/${internalPlanUuid}/checkout${query && query.contextBillingUuid && '?contextBillingUuid=' + query.contextBillingUuid}`
+    }))
   }
 
   getPlans () {
@@ -37,9 +40,9 @@ class SelectPlan extends React.Component {
   getPlanCol (label) {
 
     const {
-      props : {router, User}
+      props : {router, location, User}
     } = this
-
+    let {query} = location
     let isCash = router.isActive('cash')
 
     let validPlans = this.getPlans()
@@ -76,7 +79,7 @@ class SelectPlan extends React.Component {
             value = (<button className="btn btn-plan" {...inputSignupAction}>{`${getI18n().planCodes.action}`}</button>)
           } else {
             value = (<Link className="btn btn-plan"
-                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout`}>{`${getI18n().planCodes.action}`}</Link>)
+                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${query && query.contextBillingUuid && '?contextBillingUuid=' + query.contextBillingUuid}`}>{`${getI18n().planCodes.action}`}</Link>)
           }
           break
         case 'price':
