@@ -23,7 +23,8 @@ if (process.env.BROWSER) {
   require('./Application.less')
 }
 
-@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId, videoId}}) {
+@prepareRoute(async function ({store, location, params: {movieId, seasonId, episodeId, videoId}}) {
+
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))
   }
@@ -47,7 +48,6 @@ class Application extends React.Component {
   componentDidMount () {
     const {
       props: {
-        User,
         dispatch
       }
     } = this

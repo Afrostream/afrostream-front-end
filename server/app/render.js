@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
-import { match } from 'react-router'
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory, useQueries } from 'history'
+import { useRouterHistory, match } from 'react-router'
 import request from 'superagent'
 import config from '../../config'
 import qs from 'qs'
 import createStore from '../../src/js/lib/createStore'
 import createAPI from '../../src/js/lib/createAPI'
 import routes from '../../src/js/routes'
-import Router from '../../src/js/components/Router'
+import { RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
 import PrettyError from 'pretty-error'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
@@ -19,11 +19,8 @@ const {apps, apiServer} = config
 
 export default function render (req, res, layout, {payload}) {
   const {path} = req
-  const history = createMemoryHistory(path)
-  const location = history.createLocation({
-    pathname: path,
-    search: '?' + qs.stringify(req.query)
-  })
+  const history = useRouterHistory(useQueries(createMemoryHistory))();
+  const location = history.createLocation(req.url)
 
   const api = createAPI(
     /**
@@ -88,7 +85,7 @@ export default function render (req, res, layout, {payload}) {
 
           const body = ReactDOMServer.renderToStaticMarkup(
             <Provider {...{store}}>
-              <Router {...{...renderProps, location}} />
+              <RouterContext {...{...renderProps}} />
             </Provider>
           )
 
