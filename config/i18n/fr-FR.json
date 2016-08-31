@@ -11,7 +11,7 @@
       "description": "Regardez les épisodes de la série TV {serieName} en streaming et en illimité sur tous vos écrans grâce à AFROSTREAM."
     },
     "season": {
-      "title": "{serieName} | La saison ${seasonNumber} en streaming sur AFROSTREAM",
+      "title": "{serieName} | La saison {seasonNumber} en streaming sur AFROSTREAM",
       "description": "Regardez les {episodesNumber} épisodes de la saison {seasonNumber} de la série TV {serieName} en streaming et en illimité sur tous vos écrans grâce à AFROSTREAM."
     },
     "episode": {
