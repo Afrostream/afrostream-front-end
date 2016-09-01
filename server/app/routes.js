@@ -132,7 +132,7 @@ export default function routes (app, buildPath) {
   app.get('/*', (req, res) => {
     //set .noCache() to caching site
 
-    res.noCache()
+    res.cache()
     const externalsJs = config.externalsJs
 
     // Render
