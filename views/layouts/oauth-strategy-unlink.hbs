@@ -12,11 +12,18 @@
   <script type="text/javascript">
     if (window.opener) {
       window.opener.focus();
-      if (window.opener.loginCallBack) {
-        window.opener.loginCallBack();
-      }
     }
-    window.close();
+
+    setTimeout(function () {
+      try {
+        window.opener.postMessage({}, '*'); //send the message and target URI
+        if (window.opener && window.opener.loginCallBack) {
+          window.opener.loginCallBack();
+        }
+      } catch (e) { /* Blocked a frame with origin X from accessing a frame with origin Y */
+      }
+      window.close();
+    }, 200); // enough ?
   </script>
 </div>
 </body>
