@@ -24,9 +24,16 @@ class StaticRoute extends React.Component {
     return {__html: data ? data.get('html') : ''}
   }
 
+  print () {
+    window.print()
+  }
+
   render () {
     return (
-      <div className="row-fluid" dangerouslySetInnerHTML={this.renderPage()}/>
+      <div className="row-fluid static-route">
+        <i className="zmdi zmdi-print zmdi-hc-4x" onClick={::this.print}></i>
+        <div className="content" dangerouslySetInnerHTML={this.renderPage()}/>
+      </div>
     )
   }
 }

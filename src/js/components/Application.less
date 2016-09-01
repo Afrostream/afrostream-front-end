@@ -35,6 +35,16 @@ body {
   .body-font();
 }
 
+@media print {
+  .navbar, .footer {
+    display: none;
+  }
+
+  #page-content-wrapper {
+    display: block;
+  }
+}
+
 //
 // Base styles
 // -----------------------------------------------------------------------------
