@@ -41,10 +41,6 @@ class WelcomeHeader extends React.Component {
 
     this.setState({
       isMobile: isMobile,
-      size: {
-        height: window.innerHeight,
-        width: window.innerWidth
-      }
     })
 
     let promoCode = this.hasPromo()
