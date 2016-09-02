@@ -7,7 +7,7 @@ const config = _.merge(
       domain: 'https://afrostream.tv',
       title: 'AFROSTREAM | Les meilleurs films et séries afro en illimité',
       description: 'Profitez d\'une sélection des meilleurs films & séries afro à regarder en illimité sur tous vos écrans grâce à Afrostream, la première semaine est offerte.',
-      shareImage: 'https://images.cdn.afrostream.net/production/poster/2016/03/b8a6db25a04982c88a2b-438302.jpg',
+      shareImage: '/production/poster/2016/03/b8a6db25a04982c88a2b-438302.jpg',
       metas: [
         {
           property: 'fb:app_id',
