@@ -27,12 +27,12 @@ class NextEpisode extends React.Component {
       return
     }
 
-    let imgix = imgData.get('imgix')
-    if (!imgix) {
+    let path = imgData.get('path')
+    if (!path) {
       return
     }
 
-    let imageStyles = `${imgix}?crop=faces&fit=crop&w=800&h=600&q=40&fm=${images.type}`
+    let imageStyles = `${images.urlPrefix}${path}?crop=faces&fit=crop&w=800&h=600&q=40&fm=${images.type}`
     return {backgroundImage: `url(${imageStyles})`}
   }
 

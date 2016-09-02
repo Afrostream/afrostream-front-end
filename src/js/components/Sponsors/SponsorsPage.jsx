@@ -111,12 +111,12 @@ class SponsorsPage extends React.Component {
       return
     }
 
-    const imgix = thumb.get('imgix')
-    if (!imgix) {
+    const path = thumb.get('path')
+    if (!path) {
       return
     }
 
-    let imageStyle = {backgroundImage: `url(${imgix}?crop=faces&fit=clip&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`}
+    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${path}?crop=faces&fit=clip&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`}
     return <div>
       <h1>{plan.get('name')} à vos amis en les parrainant</h1>
       <section className="card" style={imageStyle}>

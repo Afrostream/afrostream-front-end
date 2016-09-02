@@ -6,7 +6,7 @@ export async function notFound (err) {
         title: 'Non trouvé',
         synopsis: 'Désolé, ce contenu n’est plus disponible',
         poster: {
-          imgix: 'https://afrostream.imgix.net/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
+          path: '/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
         }
       }
     }
@@ -31,7 +31,7 @@ export async function notFoundVideo (err) {
         title: 'Non trouvé',
         synopsis: 'Désolé, ce contenu n’est plus disponible',
         poster: {
-          imgix: 'https://afrostream.imgix.net/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
+          imgix: '/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
         }
       }
     }
@@ -48,7 +48,7 @@ export async function notFoundPost (err) {
         description: 'Désolé, ce contenu n’est plus disponible',
         body: 'Désolé, ce contenu n’est plus disponible',
         poster: {
-          imgix: 'https://afrostream.imgix.net/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
+          imgix: '/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
         }
       }
     }
@@ -65,7 +65,7 @@ export async function notFoundCategory (err) {
         adSpots: [],
         movies: [],
         poster: {
-          imgix: 'https://afrostream.imgix.net/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
+          imgix: '/production/poster/2016/02/fac002d7261011bc2aea-1920x1080.jpg'
         }
       }
     }

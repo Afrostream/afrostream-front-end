@@ -94,6 +94,9 @@ const client = {
     token: 'accessToken'
   },
   images: {
+    protocol: process.env.API_IMAGES_PROTOCOL || 'http',
+    authority: process.env.API_IMAGES_AUTHORITY || 'images.cdn.afrostream.net',
+    urlPrefix: process.env.API_IMAGES_END_POINT || 'https://images.cdn.afrostream.net',
     quality: 65,
     type: 'jpg'
   },

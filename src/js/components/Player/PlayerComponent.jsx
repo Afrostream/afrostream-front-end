@@ -143,7 +143,7 @@ class PlayerComponent extends Component {
       return
     }
 
-    return imgData.get('imgix')
+    return imgData.get('path')
   }
 
   backNextHandler () {
@@ -307,7 +307,7 @@ class PlayerComponent extends Component {
     return {
       link: link,
       title: episode.get('title'),
-      poster: `${posterImg}?crop=faces&fit=min&w=150&h=80&q=60&fm=${config.images.type}`
+      poster: `${config.images.urlPrefix}${posterImg}?crop=faces&fit=min&w=150&h=80&q=60&fm=${config.images.type}`
     }
 
   }
@@ -573,14 +573,14 @@ class PlayerComponent extends Component {
       throw new Error('no movie data ref')
     }
 
-    let posterImgImgix = {}
+    let posterImgObj = {}
 
     if (movie) {
       let poster = movie.get('poster')
-      let posterImg = poster ? poster.get('imgix') : ''
+      let posterImg = poster ? poster.get('path') : ''
       if (posterImg) {
-        posterImgImgix.poster = `${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`
-        videoOptions = _.merge(videoOptions, posterImgImgix)
+        posterImgObj.poster = `${config.images.urlPrefix}${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`
+        videoOptions = _.merge(videoOptions, posterImgObj)
         videoOptions.live = movie.get('live')
       }
     }

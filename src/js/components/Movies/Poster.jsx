@@ -99,14 +99,14 @@ class Poster extends LoadVideo {
       return
     }
 
-    let imgix = thumb.get('imgix')
+    let path = thumb.get('path')
 
-    if (!imgix) {
+    if (!path) {
       return
     }
 
     let rect = this.extractProfile(thumb, '16:31')
-    let imageStyles = `${imgix}?w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5${rect}`
+    let imageStyles = `${config.images.urlPrefix}${path}?w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5${rect}`
 
     if (this.props.preload) {
 

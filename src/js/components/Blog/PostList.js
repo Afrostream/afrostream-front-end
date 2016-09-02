@@ -44,9 +44,9 @@ export default class PostList extends Component {
               let imageStyles = baseUrl
               let thumb = post.get('poster')
               if (thumb) {
-                let imgix = thumb.get('imgix')
-                if (imgix) {
-                  imageStyles = `${imgix}?crop=faces&fit=min&w=250&h=120&q=${config.images.quality}&fm=${config.images.type}`
+                let path = thumb.get('path')
+                if (path) {
+                  imageStyles = `${path}?crop=faces&fit=min&w=250&h=120&q=${config.images.quality}&fm=${config.images.type}`
                 }
               }
 

@@ -82,9 +82,9 @@ class MovieInfo extends LoadVideo {
     })
 
     let poster = data.get('poster')
-    let posterImg = poster ? poster.get('imgix') : ''
+    let posterImg = poster ? poster.get('path') : ''
     //&h=${this.state.size.height}
-    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`} : {}
+    let imageStyles = posterImg ? {backgroundImage: `url(${config.images.urlPrefix}${posterImg}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`} : {}
     const link = this.getLink()
     return (
       <div ref="slContainer" className={classes}>

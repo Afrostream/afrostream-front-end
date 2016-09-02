@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import * as BlogActionCreators from '../../actions/blog'
+import config from '../../../../config'
 import MarkdownIt from 'markdown-it'
 const md = MarkdownIt({
   html: true,        // Enable HTML tags in source
@@ -40,8 +41,8 @@ export default class PostView extends Component {
     console.log('post founded')
 
     let poster = post.get('poster')
-    let posterImg = poster ? poster.get('imgix') : ''
-    let imageStyles = posterImg ? {backgroundImage: `url(${posterImg}?crop=faces&fit=min&w=1280&h=720&q=70)`} : {}
+    let posterImg = poster ? poster.get('path') : ''
+    let imageStyles = posterImg ? {backgroundImage: `url(${config.images.urlPrefix}${posterImg}?crop=faces&fit=min&w=1280&h=720&q=70)`} : {}
     return (
       <div className="row-fluid">
         <div className="blog">

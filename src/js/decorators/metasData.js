@@ -155,13 +155,13 @@ export default () => {
 
 
         if (poster) {
-          let posterImg = poster.get('imgix')
+          let posterImg = poster.get('path')
           if (posterImg) {
             imageStyle = posterImg
           }
         }
 
-        let ogImage = `${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`
+        let ogImage = `${config.images.urlPrefix}${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`
 
         if (title) {
           metas.title = title

@@ -138,14 +138,14 @@ class WelcomeHeader extends React.Component {
 
       let poster = data.get('poster')
       if (poster) {
-        info.poster = poster.get('imgix')
+        info.poster = poster.get('path')
       }
       info.movie = {
         title: title,
         synopsis: data.get('synopsis')
       }
     }
-    let posterImg = `${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
+    let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
     let imageStyle = {backgroundImage: `url(${posterImg})`}
 
     let promoCode = this.hasPromo()

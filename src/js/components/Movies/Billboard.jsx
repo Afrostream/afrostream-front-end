@@ -107,10 +107,11 @@ class Billboard extends LoadVideo {
         {casts.map((cast, i) => {
           let thumb = cast.get('poster')
           if (thumb) {
-            thumb = thumb.get('imgix')
+            thumb = thumb.get('path')
           }
           return (<span key={`cast-${i}`} className="billboard-row_cast">
-            {thumb ? <img src={thumb}/> : null}
+            {thumb ? <img
+              src={`${config.images.urlPrefix}${thumb}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`}/> : null}
             {`${(i ? ' | ' : '')} ${cast.get('firstName')} ${cast.get('lastName')} `}
           </span>)
         }).toJS()}
