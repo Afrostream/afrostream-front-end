@@ -162,7 +162,7 @@ class SelectPlan extends React.Component {
   }
 
   render () {
-
+    let plans = this.getPlans()
     let cols = [
       'formule',
       'name',
@@ -175,6 +175,14 @@ class SelectPlan extends React.Component {
       'internalVip',
       'internalActionLabel'
     ]
+
+    if (!plans || !plans.size) {
+      return (
+        <div className="plan-container">
+          <div className="choose-plan">{getI18n().planCodes.noPlans}</div>
+        </div>
+      )
+    }
 
     return (
       <div className="plan-container">
