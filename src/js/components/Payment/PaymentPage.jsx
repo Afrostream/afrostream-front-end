@@ -18,7 +18,6 @@ if (process.env.BROWSER) {
   let isCash = router && router.isActive('cash')
   let contextBillingUuid = isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')
   let country = query && query.contextCountry
-  console.log('prepareRoute contextBillingUuid', contextBillingUuid)
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(BillingActionCreators.getInternalplans({contextBillingUuid, country}))

@@ -9,6 +9,7 @@ import { getI18n } from '../../../../config/i18n'
 import * as BillingActionCreators from '../../actions/billing'
 import * as UserActionCreators from '../../actions/user'
 import * as EventActionCreators from '../../actions/event'
+import PaymentImages from './PaymentImages'
 import Spinner from '../Spinner/Spinner'
 import CashwayEndPage from '../Cashway/CashwayEndPage'
 import PaymentSuccess from './PaymentSuccess'
@@ -444,6 +445,7 @@ class PaymentForm extends React.Component {
                           linkMessage={getI18n().payment.expired.linkMessage}
                           links={getI18n().payment.expired.links}
             />
+            <PaymentImages />
           </div>)
         break
       case 'future':
