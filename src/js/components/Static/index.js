@@ -1,5 +1,6 @@
 export { default as FAQ } from './Faq'
 export { default as JOBS } from './Jobs'
+export { default as JOB } from './Job'
 export { default as PRESS } from './Press'
 export { default as ABOUT } from './About'
 export { default as StaticPage } from './StaticPage'

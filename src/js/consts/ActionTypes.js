@@ -105,6 +105,11 @@ export default {
     fetchPost: null
   }),
 
+  Job: keyMirror({
+    fetchAll: null,
+    fetchJob: null
+  }),
+
   Search: keyMirror({
     fetchMovies: null,
     fetching: null

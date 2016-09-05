@@ -66,7 +66,9 @@ const buildRoutes = function (lang) {
   let subRoutes = [
     <Route key={`${lang}-company`} name="company" path="company" component={Static.StaticPage}>
       <Route key={`${lang}-company-press`} name="about" path="about" component={Static.ABOUT}/>
-      <Route key={`${lang}-company-jobs`} name="jobs" path="jobs" component={Static.JOBS}/>
+      <Route key={`${lang}-company-jobs`} name="jobs" path="jobs" component={Static.JOBS}>
+        <Route key={`${lang}-company-jobs-job`} name="job" path=":jobId(/:jobSlug)" component={Static.JOB}/>
+      </Route>
       <Route key={`${lang}-company-jobs`} name="press" path="press" component={Static.PRESS}/>
       <Route key={`${lang}-company-nomatch`} path="*" name="companynomatch" component={NoMatch}/>
     </Route>,
