@@ -10,8 +10,7 @@ const {featuresFlip} = config
 if (process.env.BROWSER) {
   require('./SideBar.less')
 }
-
-@connect(({User, Event}) => ({User, Event}))
+@connect(({User, Event, Facebook}) => ({User, Event, Facebook}))
 class SideBar extends React.Component {
 
   componentDidMount () {
@@ -36,10 +35,48 @@ class SideBar extends React.Component {
     }
   }
 
+  renderFriends () {
+
+    const {
+      props: {
+        Facebook
+      }
+    } = this
+
+    const friendList = Facebook.get('friendList')
+    if (!friendList) {
+      return
+    }
+
+    return <div className="friends-list">
+      <h5>Mes amis sur Afrostream</h5>
+      { friendList.map((friend)=> {
+        let picture
+        let id
+        let name
+        if (friend.get('facebook')) {
+          let fbData = friend.get('facebook')
+          picture = `//graph.facebook.com/${fbData.get('id')}/picture`
+          name = friend.get('nickname') || fbData.get('nickname')
+          id = fbData.get('id')
+        } else {
+          picture = `/avatar/${friend.get('nickname')}`
+          name = friend.get('nickname')
+          id = friend.get('_id')
+        }
+
+        return <img src={picture}
+                    key={`fb-friend-${id}`}
+                    alt="50x50"
+                    id="userButtonImg"
+                    className="icon-user"/>
+      }).toJS()}</div>
+  }
+
   render () {
     const {
       props: {
-        User,
+        User
       }
     } = this
 
@@ -50,11 +87,13 @@ class SideBar extends React.Component {
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
           <li><Link to="/compte">Mon compte</Link></li>
+          <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
           {this.getUserConnectedButtons(user, 'favorites')}
           {this.getUserConnectedButtons(user, 'sponsorship')}
           <li role="separator" className="divider"></li>
-          <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
+          {this.renderFriends()}
         </ul>
+
       </div>
     )
   }

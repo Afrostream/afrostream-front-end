@@ -2,18 +2,31 @@
 
 /* Sidebar Styles */
 
+#sidebar-wrapper {
+  .friends-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 1em;
+    .icon-user {
+      width: 35px;
+      height: 35px;
+      margin-right: 1em;
+    }
+  }
+}
+
 .sidebar-nav {
-  position: absolute;
   top: 0;
   width: @sidebar-width;
   margin: 0;
   list-style: none;
-  .isMobile({ padding: @header-height 0; });
+  .isMobile({ padding: @header-height 0 0 0; });
 }
 
 .sidebar-nav li {
-  text-indent: 20px;
-  line-height: 40px;
+  text-indent: 1em;
+  line-height: 2em;
 }
 
 .sidebar-nav li a {
@@ -54,6 +67,6 @@
 
 @media (min-width: 768px) {
   .sidebar-nav {
-    padding: (@header-height + @app-padding) 0;
+    padding: (@header-height + @app-padding) 0 0 0;
   }
 }

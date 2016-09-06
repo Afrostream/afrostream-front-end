@@ -3,7 +3,7 @@ import { prepareRoute } from '../../decorators'
 import * as EventActionCreators from '../../actions/event'
 import * as UserActionCreators from '../../actions/user'
 import * as CategoryActionCreators from '../../actions/category'
-import { Link } from 'react-router'
+
 import SlideShow from '../SlideShow/SlideShow'
 import MoviesList from '../Movies/MoviesList'
 import UserMoviesList from '../Movies/UserMoviesList'
