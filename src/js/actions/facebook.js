@@ -1,29 +1,73 @@
 import ActionTypes from '../consts/ActionTypes'
+import _ from 'lodash'
 /**
  * Get list friendlist
  * @returns {Function}
  */
 export function getFriendList () {
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
     const auth = getState().Facebook.get('auth')
+    if (!auth || auth.get('status') !== 'connected') {
+      return {
+        type: ActionTypes.Facebook.getFriendList,
+        res: []
+      }
+    }
     if (auth && auth.get('status') === 'connected') {
+
       /* make the API call */
       return async () => {
-        return await new Promise((resolve, reject) => {
-          window.FB.api(
-            '/me/friends',
-            (response) => {
-              if (!response || response.error) {
-                return reject(response.error)
-              }
-              return resolve({
-                type: ActionTypes.Facebook.getFriendList,
-                res: response
-              })
-            }
-          )
+
+        let friendList = getState().Facebook.get('friends')
+        if (!friendList) {
+          await actionDispatcher(this.getFriends()).then((data)=> {
+            friendList = data.res
+          })
+        }
+
+        let piskData = _.map(friendList, 'id');
+
+        return async api => ({
+          type: ActionTypes.Facebook.getFriendList,
+          res: await api({
+            path: `/api/users/search`,
+            method: 'POST',
+            params: {
+              facebookIdList: piskData
+            },
+            passToken: true
+          })
         })
       }
+    }
+  }
+}
+
+export function getFriends () {
+  return (dispatch, getState) => {
+    const auth = getState().Facebook.get('auth')
+    if (!auth || auth.get('status') !== 'connected') {
+      return {
+        type: ActionTypes.Facebook.getFriends,
+        res: []
+      }
+    }
+    /* make the API call */
+    return async () => {
+      return await new Promise((resolve, reject) => {
+        window.FB.api(
+          '/me/friends',
+          (response) => {
+            if (!response || response.error) {
+              return reject(response.error)
+            }
+            return resolve({
+              type: ActionTypes.Facebook.getFriends,
+              res: response.data
+            })
+          }
+        )
+      })
     }
   }
 }

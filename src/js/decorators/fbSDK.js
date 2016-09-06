@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import ActionTypes from '../consts/ActionTypes'
+import * as FBActionCreators from '../actions/facebook'
 
 import config from '../../../config'
 const {facebook} = config
@@ -32,6 +33,7 @@ export default function fbSDK () {
             type: ActionTypes.Facebook.initialized,
             res: response
           })
+          store.dispatch(FBActionCreators.getFriendList())
         })
       }
 

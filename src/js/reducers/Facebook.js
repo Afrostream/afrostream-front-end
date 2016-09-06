@@ -14,12 +14,21 @@ export default createReducer(initialState, {
     })
   },
 
+  [ActionTypes.Facebook.getFriends](state, {res}) {
+    if (!res) {
+      return state
+    }
+    return state.merge({
+      [`friends`]: res
+    })
+  },
+
   [ActionTypes.Facebook.getFriendList](state, {res}) {
     if (!res) {
       return state
     }
     return state.merge({
-      [`friendList`]: res.data
+      [`friendList`]: res.body
     })
   },
 
