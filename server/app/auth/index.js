@@ -13,5 +13,6 @@ router.use(function (req, res, next) {
 router.use('/facebook', facebook)
 router.use('/bouygues', bouygues)
 router.use('/orange', orange)
+router.use('/netsize', netsize)
 
 module.exports = router
