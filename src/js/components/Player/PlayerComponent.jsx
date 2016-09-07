@@ -510,7 +510,7 @@ class PlayerComponent extends Component {
     this.setTourShowed()
   }
 
-  async generateDomTag (videoData) {
+  async generateDomTag (videoData, komentData) {
     console.log('player : generate dom tag')
     const ua = detectUA()
     const mobileVersion = ua.getMobile()
@@ -526,6 +526,7 @@ class PlayerComponent extends Component {
     video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered vjs-controls-enabled afrostream-player-dimensions'
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
+    video.setAttribute('data-setup', komentData)
 
     if (hasSubtiles) {
       captions.map((caption) => {
@@ -563,8 +564,19 @@ class PlayerComponent extends Component {
     } = this
 
     console.log('player : Get player data')
+    const user = User.get('user')
+    let userId
 
-    let videoEl = await this.generateDomTag(videoData)
+
+    let komentsData = {
+      controls: 1,
+      api: `${config.apiClient.urlPrefix}/api/videos/${videoId}/commments`,
+      token: OAuth.get('token'),
+      user: user && user.toJS(),
+      languages: config.player.languages
+    }
+
+    let videoEl = await this.generateDomTag(videoData, komentsData)
 
     let videoOptions = videoData.toJS()
 
@@ -658,8 +670,6 @@ class PlayerComponent extends Component {
 
     playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
 
-    let user = User.get('user')
-    let userId
     if (user) {
       userId = user.get('user_id')
       let token = OAuth.get('token')

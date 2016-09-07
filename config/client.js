@@ -310,6 +310,8 @@ const client = {
     },
     'languages': {
       'fr': {
+        'Send': 'Envoyer',
+        'Add your comment here...': 'Commenter ce passage de la video...',
         'French': 'Français',
         'fra': 'Français',
         'fr': 'Français',
