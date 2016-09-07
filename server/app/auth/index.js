@@ -2,6 +2,7 @@ import express from 'express'
 import facebook from  './facebook'
 import bouygues from  './bouygues'
 import orange from  './orange'
+import netsize from './netsize'
 
 const router = express.Router()
 
