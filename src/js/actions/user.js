@@ -1,7 +1,7 @@
 import ActionTypes from '../consts/ActionTypes'
 import * as OAuthActionCreators from './oauth'
 import * as BillingActionCreators from './billing'
-import * as FBActionCreators from './facebook'
+
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { push, isActive } from 'redux-router'
 import _ from 'lodash'
@@ -44,7 +44,6 @@ const mergeProfile = function (data, getState, actionDispatcher) {
           userId: userMerged._id
         }))
 
-        actionDispatcher(FBActionCreators.getFriendList())
       }
 
 

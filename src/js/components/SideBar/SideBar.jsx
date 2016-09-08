@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
+import * as FBActionCreators from '../../actions/facebook'
 import { Link } from 'react-router'
 import config from '../../../../config'
 
@@ -24,14 +25,21 @@ class SideBar extends React.Component {
   toggleSideBar (e) {
     const {
       props: {
-        Event
+        Event,
+        Facebook,
+        dispatch
       }
     } = this
 
+    const friendList = Facebook.get('friendList')
     const toggled = Event.get('sideBarToggled')
     let userBtn = (e.target.id == 'userButton' || e.target.id == 'userButtonImg')
     if (toggled && !userBtn) {
       this.close()
+    }
+
+    if (!toggled && !friendList) {
+      dispatch(FBActionCreators.getFriendList())
     }
   }
 
