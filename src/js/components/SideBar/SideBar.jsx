@@ -26,11 +26,13 @@ class SideBar extends React.Component {
     const {
       props: {
         Event,
+        User,
         Facebook,
         dispatch
       }
     } = this
 
+    const user = User.get('user')
     const friendList = Facebook.get('friendList')
     const toggled = Event.get('sideBarToggled')
     let userBtn = (e.target.id == 'userButton' || e.target.id == 'userButtonImg')
@@ -38,7 +40,7 @@ class SideBar extends React.Component {
       this.close()
     }
 
-    if (!toggled && !friendList) {
+    if (!toggled && !friendList && user) {
       dispatch(FBActionCreators.getFriendList())
     }
   }
