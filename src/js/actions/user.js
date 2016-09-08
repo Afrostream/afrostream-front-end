@@ -50,6 +50,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       if (userMerged.facebook) {
         userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`
         userMerged.name = userMerged.name || userMerged.facebook.name
+        userMerged.nickname = userMerged.nickname || userMerged.facebook.nickname
       } else {
         userMerged.picture = `/avatar/${userMerged.email || userMerged.name}`
       }

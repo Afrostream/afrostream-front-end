@@ -478,7 +478,6 @@ class PlayerComponent extends Component {
       return this.player
     } catch (err) {
       console.log('player : ', err)
-      //this.destroyPlayer()
       return this.playerInit = false
     }
   }
@@ -527,11 +526,11 @@ class PlayerComponent extends Component {
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
 
-    //try {
-    //  video.setAttribute('data-setup', JSON.stringify(komentData))
-    //} catch (e) {
-    //  console.log('parse koment json error', e)
-    //}
+    try {
+      video.setAttribute('data-setup', JSON.stringify(komentData))
+    } catch (e) {
+      console.log('parse koment json error', e)
+    }
 
     if (hasSubtiles) {
       captions.map((caption) => {
@@ -575,13 +574,16 @@ class PlayerComponent extends Component {
 
     let komentsData = {
       controls: 1,
-      api: `${config.apiClient.urlPrefix}/api/videos/${videoId}/commments`,
+      api: `${config.apiClient.urlPrefix}/api/videos/${videoId}/comments`,
       token: token && token.get('access_token'),
-      user: user && user.toJS(),
+      user: (user && {
+        picture: user.get('picture'),
+        nickname: user.get('nickname')
+      }),
       languages: config.player.languages
     }
 
-    let videoEl = await this.generateDomTag(videoData, komentsData)
+    await this.generateDomTag(videoData, komentsData)
 
     let videoOptions = videoData.toJS()
 
@@ -780,7 +782,6 @@ class PlayerComponent extends Component {
     let playerData = await this.getPlayerData(videoData)
     const videoTracking = this.getStoredPlayer()
     const storedCaption = videoTracking.playerCaption
-    //await koment('afrostream-player', {controls: 1})
 
     let player = await videojs('afrostream-player', playerData).ready(()=> {
         let tracks = player.textTracks() // get list of tracks
@@ -793,6 +794,9 @@ class PlayerComponent extends Component {
         })
       }
     )
+    if (player.tech_.el_) {
+      await koment(player.tech_.el_)
+    }
     //youbora data
     if (player.youbora) {
       player.youbora(playerData.youbora)
