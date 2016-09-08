@@ -25,7 +25,7 @@ export function getFriendList () {
           })
         }
 
-        let piskData = _.map(friendList, 'id');
+        let piskData = _.map(friendList, 'id')
 
         return async api => ({
           type: ActionTypes.Facebook.getFriendList,

@@ -39,8 +39,6 @@ export default function render (req, res, layout, {payload}) {
         url = pathname
       }
 
-      console.log('contextBillingUuid', query)
-      console.log('url', url)
       return request(method, url)
         .query(qs.stringify(query))
         .set(headers)

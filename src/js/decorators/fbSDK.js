@@ -33,7 +33,6 @@ export default function fbSDK () {
             type: ActionTypes.Facebook.initialized,
             res: response
           })
-          store.dispatch(FBActionCreators.getFriendList())
         })
       }
 
