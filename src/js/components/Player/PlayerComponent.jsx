@@ -526,7 +526,12 @@ class PlayerComponent extends Component {
     video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered vjs-controls-enabled afrostream-player-dimensions'
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
-    video.setAttribute('data-setup', komentData)
+
+    //try {
+    //  video.setAttribute('data-setup', JSON.stringify(komentData))
+    //} catch (e) {
+    //  console.log('parse koment json error', e)
+    //}
 
     if (hasSubtiles) {
       captions.map((caption) => {
@@ -566,12 +571,12 @@ class PlayerComponent extends Component {
     console.log('player : Get player data')
     const user = User.get('user')
     let userId
-
+    let token = OAuth.get('token')
 
     let komentsData = {
       controls: 1,
       api: `${config.apiClient.urlPrefix}/api/videos/${videoId}/commments`,
-      token: OAuth.get('token'),
+      token: token && token.get('access_token'),
       user: user && user.toJS(),
       languages: config.player.languages
     }
@@ -672,7 +677,6 @@ class PlayerComponent extends Component {
 
     if (user) {
       userId = user.get('user_id')
-      let token = OAuth.get('token')
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId]
       userId = _.find(splitUser, (val) => {
         return parseInt(val, 10)
@@ -684,7 +688,7 @@ class PlayerComponent extends Component {
       if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
         let protUser = base64.encode(JSON.stringify({
           userId: userId,
-          sessionId: token.access_token,
+          sessionId: token.get('access_token'),
           merchant: 'afrostream'
         }))
 
@@ -776,6 +780,8 @@ class PlayerComponent extends Component {
     let playerData = await this.getPlayerData(videoData)
     const videoTracking = this.getStoredPlayer()
     const storedCaption = videoTracking.playerCaption
+    //await koment('afrostream-player', {controls: 1})
+
     let player = await videojs('afrostream-player', playerData).ready(()=> {
         let tracks = player.textTracks() // get list of tracks
         if (!tracks) {
@@ -791,6 +797,8 @@ class PlayerComponent extends Component {
     if (player.youbora) {
       player.youbora(playerData.youbora)
     }
+
+
     player.on('firstplay', ::this.onFirstPlay)
     player.on('ended', ::this.clearTrackVideo)
     player.on('seeked', ::this.trackVideo)
@@ -985,7 +993,6 @@ class PlayerComponent extends Component {
           </div>
           {videoDuration ?
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
-          <div className="video-infos_synopsys">{infos.synopsis}</div>
         </div>
         {this.getNextComponent()}
         <SendBird {...this.props} />
