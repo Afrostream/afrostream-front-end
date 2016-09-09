@@ -47,9 +47,9 @@
       }
     },
     "afrostream-player": {
-      "version": "2.1.20",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.2",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#b771b46a9b077ecaec392246a716e08b8c37e11d"
+      "version": "2.2.3",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.3",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#04940846b79dd76a1981f1d0895c6a221ab2a6c3"
     },
     "after": {
       "version": "0.8.1",
@@ -4616,8 +4616,8 @@
     },
     "koment-js": {
       "version": "0.0.0",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#1.0.5",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#586ed33a8c63e21b6caeed69807a0cdf93c5ad1e",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#1.0.6",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#61a74818d8356092ae206c2bab7ced541d5efe9a",
       "dependencies": {
         "babel": {
           "version": "5.8.38",
@@ -7906,9 +7906,9 @@
       "resolved": "https://registry.npmjs.org/stream-combiner2/-/stream-combiner2-1.1.1.tgz"
     },
     "stream-http": {
-      "version": "2.3.1",
+      "version": "2.4.0",
       "from": "stream-http@>=2.0.0 <3.0.0",
-      "resolved": "https://registry.npmjs.org/stream-http/-/stream-http-2.3.1.tgz"
+      "resolved": "https://registry.npmjs.org/stream-http/-/stream-http-2.4.0.tgz"
     },
     "stream-shift": {
       "version": "1.0.0",
