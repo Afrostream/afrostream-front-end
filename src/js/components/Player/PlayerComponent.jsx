@@ -573,11 +573,10 @@ class PlayerComponent extends Component {
     let token = OAuth.get('token')
 
     let komentsData = {
-      controls: 1,
-      api: `${config.apiClient.urlPrefix}/api/videos/${videoId}/comments`,
-      token: token && token.get('access_token'),
+      videoId,
       user: (user && {
-        picture: user.get('picture'),
+        token: token && token.get('access_token'),
+        avatar: user.get('picture'),
         nickname: user.get('nickname')
       }),
       languages: config.player.languages
