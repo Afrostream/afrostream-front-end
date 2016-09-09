@@ -24,6 +24,8 @@ import { withRouter } from 'react-router'
 import { slugify } from '../../lib/utils'
 import SendBird from '../SendBird/SendBird'
 
+const {featuresFlip} = config
+
 if (process.env.BROWSER) {
   require('./PlayerComponent.less')
 }
@@ -795,7 +797,7 @@ class PlayerComponent extends Component {
         })
       }
     )
-    if (player.tech_.el_) {
+    if (featuresFlip.koment && player.tech_.el_) {
       await koment(player.tech_.el_)
     }
     //youbora data

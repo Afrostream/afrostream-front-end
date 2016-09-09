@@ -31,7 +31,8 @@ const protData = {
 
 const client = {
   featuresFlip: {
-    sponsorship: true
+    sponsorship: true,
+    koment: true
   },
   /**
    * APPS
