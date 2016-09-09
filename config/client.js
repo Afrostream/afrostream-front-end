@@ -103,13 +103,7 @@ const client = {
   sendBird: {
     appId: process.env.SENDBIRD_APP_ID || '',
     apiToken: process.env.SENDBIRD_API_TOKEN || '',
-    channels: [
-      295,
-      204,
-      308,
-      321,
-      323
-    ]
+    channels: []
   },
   sentry: {
     dns: process.env.SENTRY_DSN || '',
