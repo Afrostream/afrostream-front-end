@@ -575,6 +575,8 @@ class PlayerComponent extends Component {
     let komentsData = {
       videoId,
       user: (user && {
+        id: user.get('_id'),
+        provider: config.domain.host,
         token: token && token.get('access_token'),
         avatar: user.get('picture'),
         nickname: user.get('nickname')

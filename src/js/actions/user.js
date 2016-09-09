@@ -55,6 +55,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         userMerged.picture = `/avatar/${userMerged.email || userMerged.name}`
       }
 
+      userMerged.nickname = userMerged.nickname || 'Anonymous'
       userMerged.splashList = userMerged.splashList || []
 
       if (donePath) {
