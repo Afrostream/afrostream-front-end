@@ -576,6 +576,14 @@ class PlayerComponent extends Component {
 
     let komentsData = {
       videoId,
+      controlBar: {
+        komentToggle: {
+          attributes: {
+            'data-position': 'left',
+            'data-intro': 'Vous pouvez desormais commenter les video'
+          }
+        }
+      },
       user: (user && {
         id: user.get('_id').toString(),
         provider: config.domain.host,
