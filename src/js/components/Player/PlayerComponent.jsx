@@ -476,7 +476,7 @@ class PlayerComponent extends Component {
       this.container = ReactDOM.findDOMNode(this)
       this.container.removeEventListener('gobacknext', ::this.backNextHandler)
       this.container.addEventListener('gobacknext', ::this.backNextHandler)
-      this.makeTour()
+
       return this.player
     } catch (err) {
       console.log('player : ', err)
@@ -500,7 +500,6 @@ class PlayerComponent extends Component {
     if (!hasRoom || isTourShow === 1) {
       return
     }
-    //SendbirdTour
     $('body').chardinJs('start')
     this.player.off('userinactive')
     $('body').on('chardinJs:stop', ::this.handleUserActive)
