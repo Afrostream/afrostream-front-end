@@ -413,7 +413,9 @@
     "validation": {
       "email": "Doit etre un email valide",
       "empty": "est requis"
-    }
+    },
+    "new": "Générer un coupon",
+    "share": "Partager a un ami"
   },
   "press": {
     "menu": {

@@ -6,11 +6,11 @@ import classNames from 'classnames'
 import config from '../../../../config'
 import { getI18n } from '../../../../config/i18n'
 import Immutable from 'immutable'
-//import Autosuggest from 'react-autosuggest'
 import * as BillingActionCreators from '../../actions/billing'
 import * as FBActionCreators from '../../actions/facebook'
+import * as ModalActionCreators from '../../actions/modal'
 
-const {couponsCampaignBillingUuid, maxSponsors} = config.sponsors
+const {couponsCampaignBillingUuid, couponsCampaignType, maxSponsors} = config.sponsors
 
 if (process.env.BROWSER) {
   require('./ModalSponsors.less')
@@ -24,7 +24,7 @@ if (process.env.BROWSER) {
     })),
     store.dispatch(BillingActionCreators.getSponsorsList({
       billingProviderName: 'afr',
-      couponsCampaignBillingUuid
+      couponsCampaignType
     })),
     store.dispatch(FBActionCreators.getInvitableFriends())
   ])
@@ -33,12 +33,9 @@ if (process.env.BROWSER) {
 class ModalSponsors extends ModalComponent {
 
   state = {
-    email: '',
-    expanded: false,
     errors: {},
     success: false,
-    loading: false,
-    suggestions: []
+    loading: false
   }
 
   componentDidMount () {
@@ -63,122 +60,11 @@ class ModalSponsors extends ModalComponent {
     return getI18n(params.lang)['sponsors'][key] || ''
   }
 
-  isValid () {
-    let valid = _.filter(this.state.errors, (value) => {
-      return value
-    })
-    return !valid.length
-  }
-
-  handleInputChange (evt) {
-    let formData = this.state
-    if (!evt.target) {
-      return
-    }
-    let name = evt.target.getAttribute('name')
-    let value = evt.target.value
-    formData[name] = value
-    this.setState(formData, () => {
-      this.validate(name)
-    })
-  }
-
-  getSuggestions (value) {
-
-    const {props:{Facebook}} = this
-
-    const friends = Facebook.get('invitableFriends')
-
-    const inputValue = value.trim().toLowerCase()
-    const inputLength = inputValue.length
-    const finalValues = friends.filter(friend =>
-      friend.get('name').toLowerCase().slice(0, inputLength) === inputValue
-    )
-
-    return finalValues.toArray()
-  }
-
-  getSuggestionValue (suggestion) { // when suggestion selected, this function tells
-    return suggestion.get('name')               // what should be the value of the input
-  }
-
-  renderSuggestion (suggestion) {
-    return (
-      <span>{suggestion.get('name')}</span>
-    )
-  }
-
-  onSuggestionsUpdateRequested ({value}) {
-    this.setState({
-      suggestions: this.getSuggestions(value || '')
-    })
-  }
-
-
-  validate (targetName) {
-    let errors = this.state.errors
-    errors[targetName] = null
-    let valueForm = this.state[targetName]
-    let isValid = true
-    let valitationType = targetName
-    let regex = null
-    switch (targetName) {
-      case 'email':
-        regex = /^(([^<>()[\]\\.,:\s@\"]+(\.[^<>()[\]\\.,:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        isValid = 'email' && regex.test(valueForm)
-        break
-    }
-
-    if (!isValid) {
-      const i18nValidMess = this.getTitle('validation')
-      let label = targetName
-      let errMess = i18nValidMess[valitationType]
-      errors[targetName] = label + ' ' + errMess
-    }
-    this.setState({
-      errors: errors
-    })
-  }
-
-  renderValidationMessages (target) {
-    let errorMessage = this.state.errors[target] || this.state.error
-    if (!errorMessage) return ''
-    return (<div className="help-block">{ errorMessage }</div>)
-  }
-
-  handleOpen () {
-    this.setState({
-      expanded: true
-    })
-  }
-
-  cancel () {
-    const expanded = this.state.expanded
-    if (expanded) {
-      this.setState({
-        email: ''
-      })
-    }
-    this.setState({
-      expanded: !expanded
-    })
-  }
-
-  handleSubmit (event) {
+  generateCoupon (event) {
     event.preventDefault()
     const {
       props: {dispatch}
     } = this
-
-
-    const formData = this.state
-    this.setState(formData, () => {
-      this.validate('email')
-    })
-
-    if (!this.isValid()) {
-      return
-    }
 
     this.setState({
       loading: true,
@@ -187,10 +73,7 @@ class ModalSponsors extends ModalComponent {
 
     let postData = {
       billingProviderName: 'afr',
-      couponsCampaignBillingUuid,
-      couponOpts: {
-        recipientEmail: this.state.email
-      }
+      couponsCampaignBillingUuid
     }
 
     dispatch(BillingActionCreators.createCoupon(postData)).then(::this.onSuccess).catch(::this.onError)
@@ -208,10 +91,9 @@ class ModalSponsors extends ModalComponent {
 
     dispatch(BillingActionCreators.getSponsorsList({
       billingProviderName: 'afr',
-      couponsCampaignBillingUuid
+      couponsCampaignType
     }))
 
-    this.cancel()
   }
 
   onError (err) {
@@ -230,7 +112,48 @@ class ModalSponsors extends ModalComponent {
       error: errorMessage && errorMessage[errMess.toString()] || errMess.toString() || errorMessage.error
     })
 
-    this.cancel()
+  }
+
+  shareCoupon (coupon) {
+    const {props:{dispatch}} = this
+    if (coupon && coupon.get('internalPlan')) {
+      const plan = coupon.get('internalPlan')
+      const description = plan.get('description')
+
+      let shareData = Immutable.fromJS({
+        title: `Coupon cadeau "${coupon.get('code')}"`,
+        description: `Salut, soit le premier à profiter de ce goupon gratuit sur afrostream et profite de ${description}`,
+        link: 'parrainage',
+        query: {
+          coupon: coupon.get('code')
+        }
+      })
+      dispatch(ModalActionCreators.open({target: 'strategy', data: shareData}))
+    }
+  }
+
+  renderShareButton (coupon) {
+
+    const inputProps = {
+      onClick: e =>::this.shareCoupon(coupon)
+    }
+
+    return <button className="btn" {...inputProps} >{this.getTitle('share')}</button>
+
+  }
+
+  renderCheck (status) {
+
+    const classCheck = {
+      'check': true,
+      'pull-right': true,
+      'active': status === 'redeemed'
+    }
+
+    return <div className={classNames(classCheck)}
+                data-container=".panel"
+                title={`${this.getTitle('status')[status]}`}>
+      <i className="zmdi zmdi-check"/></div>
   }
 
   getSponsorsList () {
@@ -249,23 +172,17 @@ class ModalSponsors extends ModalComponent {
           if (!couponOpts) {
             return
           }
-          const classCheck = {
-            'check': true,
-            'pull-right': true,
-            'active': status === 'redeemed'
-          }
+
 
           return <div className="sponsor row-fluid"
                       key={`sponsor-info-${key}`}>
             <div className="col-md-8 text-left">
+              {coupon.get('code')}
               {couponOpts.get('recipientEmail')}
             </div>
             <div className="col-md-4">
-              <div className={classNames(classCheck)}
-                   data-container=".panel"
-                   title={`${this.getTitle('status')[status]}`}>
-                <i className="zmdi zmdi-check"/>
-              </div>
+              {status && (status === 'waiting' && this.renderShareButton(coupon))}
+              {status && (status !== 'waiting' && this.renderCheck(status))}
             </div>
           </div>
         })
@@ -277,7 +194,6 @@ class ModalSponsors extends ModalComponent {
   getSponsorsComponent () {
 
     const {props:{Billing, User}} = this
-    const {suggestions} = this.state
     const user = User.get('user')
     let canSponsorshipSubscription = false
     if (user) {
@@ -294,6 +210,7 @@ class ModalSponsors extends ModalComponent {
 
     const sponsorsData = Billing.get('sponsorsList')
     const sponsorsList = sponsorsData && sponsorsData.get('coupons')
+
     if (sponsorsList && sponsorsList.size >= maxSponsors) {
       return <div className="instructions">{this.getTitle('max')}</div>
     }
@@ -304,46 +221,11 @@ class ModalSponsors extends ModalComponent {
       const plan = coupon.get('couponsCampaign').get('internalPlan')
       description = plan.get('description')
     }
-    const classBtn = {
-      'showmail': this.state.expanded
-    }
-    const classEmail = {
-      'email-field': true,
-      'active': this.state.expanded
-    }
-
-    const inputProps = {
-      value: this.state.email,
-      ref: 'email',
-      name: 'email',
-      type: 'email',
-      className: classNames(classEmail),
-      id: 'email-field',
-      required: true,
-      placeholder: `${this.state.expanded ? this.getTitle('emailField') : this.getTitle('placeHolder') }`,
-      onChange: ::this.handleInputChange,
-      onClick: ::this.handleOpen
-    }
 
 
-    return <div className="wrapper">
-      <div className="middle">
-        <div className="instructions">{this.getTitle('headerText').replace('{couponInfos}', description)}</div>
-        {this.renderValidationMessages('email')}
-        <form onSubmit={::this.handleSubmit} disabled={this.state.loading}>
-          {<input {...inputProps}/> }
-          {/* <Autosuggest suggestions={suggestions}
-           onSuggestionsUpdateRequested={::this.onSuggestionsUpdateRequested}
-           getSuggestionValue={::this.getSuggestionValue}
-           renderSuggestion={::this.renderSuggestion}
-           {...{inputProps}}/>
-           */}
-          <button type="submit" value="Subscribe" name="subscribe" id="subscribe-button"
-                  className={classNames(classBtn)}>OK
-          </button>
-        </form>
-      </div>
-    </div>
+    return (<button className="generate-btn" onClick={::this.generateCoupon}>{this.getTitle('new')}
+      <i className="zmdi zmdi-plus"></i>
+    </button>)
   }
 
   render () {
@@ -399,12 +281,16 @@ class ModalSponsors extends ModalComponent {
   }
 }
 
-ModalSponsors.propTypes = {
+ModalSponsors
+  .propTypes = {
   data: React.PropTypes.object
 }
 
-ModalSponsors.defaultProps = {
+ModalSponsors
+  .defaultProps = {
   data: null
 }
 
-export default ModalSponsors
+export
+default
+ModalSponsors

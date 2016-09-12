@@ -24,15 +24,16 @@ class ModalSocial extends ModalComponent {
     } = this
 
     //add share tracking
-    let shareParams = qs.stringify({
+    let shareParams = qs.stringify(_.merge({
       utm: 'share'
-    })
+    }))
 
     let title = this.getMeta('og:title')
     let description = this.getMeta('og:description') || ''
     let url = `${this.getMeta('og:url')}?${shareParams}`
     let popupOpener
     let updatedParams
+
     if (data) {
       if (data.get('title')) {
         title = data.get('title')
@@ -48,19 +49,19 @@ class ModalSocial extends ModalComponent {
     let self = this
     shorten({longUrl: url}).then((shortenData)=> {
       url = shortenData.data.url
-      updatedParams = self.cloneParams(network, url, title, description)
+      updatedParams = self.cloneParams(network, url, title, description, data)
       self.updateHref(network, updatedParams, popupOpener)
     }).catch((err)=> {
       console.log('bitly shorten error ', err)
-      updatedParams = self.cloneParams(network, url, title, description)
+      updatedParams = self.cloneParams(network, url, title, description, data)
       self.updateHref(network, updatedParams, popupOpener)
     })
 
     return popupOpener = this.updateHref()
   }
 
-  cloneParams (network, url, title, description) {
-    let params = _.cloneDeep(network.params)
+  cloneParams (network, url, title, description, full) {
+    let params = _.cloneDeep(network[full ? 'fullParams' : 'params'])
     let updatedParams = _.mapValues(params, (value)=> {
       return value.replace(/{title}/gm, title).replace(/{description}/gm, description).replace(/{url}/gm, url)
     })
