@@ -82,7 +82,8 @@ const webpackConfig = {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
       jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
-      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js')
+      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js'),
+      koment: path.join(__dirname, '../node_modules/koment-js/dist/koment.js')
     }
   },
   stats: {
@@ -150,7 +151,9 @@ const webpackConfig = {
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
-        test: /koment-js$/, loader: 'expose?koment'
+        test: /koment-js$/,
+        loader: 'expose?koment',
+        include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
         test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
