@@ -2,6 +2,33 @@
 @import (css) '../../../../node_modules/videojs-chromecast/dist/videojs-chromecast.css';
 @import (reference) '../../../styles/config.less';
 
+.koment {
+  .koment-control-bar {
+    margin: @header-height @app-padding @app-padding @app-padding;
+
+    .isMobile({ margin: 0 @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
+  }
+
+  .koment-display,
+  .koment-list {
+    padding: @header-height @app-padding @app-padding @app-padding;
+    .isMobile({ margin: 0 @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
+  }
+
+  .koment-list {
+    align-content: flex-start;
+  }
+
+  &.koment-toggle-edit .koment-control-bar {
+    margin-top: @header-height;
+    top: @app-padding;
+    left: @app-padding;
+    right: @app-padding;
+    .isMobile({ margin: 0; top: @app-padding-mobile; left: @app-padding-mobile; right: @app-padding-mobile; });
+  }
+
+}
+
 .player {
   display: inline-block;
   background-color: #000000;
@@ -67,6 +94,7 @@
     //position: relative;
     display: inline-block;
     vertical-align: middle;
+    bottom: @app-padding + 4em;
     left: 0;
     max-width: 350px;
     z-index: 5;
@@ -203,7 +231,7 @@
         z-index: 2147483647;
       }
       .video-infos {
-        position: relative;
+        position: absolute;
       }
     }
 
@@ -218,7 +246,8 @@
 
     .video-infos {
       display: inline-block;
-      vertical-align: middle;
+      vertical-align: bottom;
+      margin-bottom: 5em;
       text-align: left;
       max-width: 35%;
       max-height: 65%;
@@ -286,3 +315,4 @@
     }
   }
 }
+

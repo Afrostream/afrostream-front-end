@@ -51,6 +51,7 @@ const webpackConfig = {
       'videojs-vtt.js',
       'dashjs',
       'video.js',
+      'koment-js',
       'afrostream-player',
     ],
     vendor: [
@@ -149,6 +150,9 @@ const webpackConfig = {
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
+        test: /koment-js$/, loader: 'expose?koment'
+      },
+      {
         test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
       },
       {
@@ -187,6 +191,7 @@ const webpackConfig = {
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
+      koment: 'koment-js',
       videojs: 'video.js',
       sendBirdClient: 'sendbird',
       $: 'jquery',

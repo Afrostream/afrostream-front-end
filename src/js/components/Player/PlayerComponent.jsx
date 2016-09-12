@@ -24,6 +24,8 @@ import { withRouter } from 'react-router'
 import { slugify } from '../../lib/utils'
 import SendBird from '../SendBird/SendBird'
 
+const {featuresFlip} = config
+
 if (process.env.BROWSER) {
   require('./PlayerComponent.less')
 }
@@ -474,11 +476,10 @@ class PlayerComponent extends Component {
       this.container = ReactDOM.findDOMNode(this)
       this.container.removeEventListener('gobacknext', ::this.backNextHandler)
       this.container.addEventListener('gobacknext', ::this.backNextHandler)
-      this.makeTour()
+
       return this.player
     } catch (err) {
       console.log('player : ', err)
-      //this.destroyPlayer()
       return this.playerInit = false
     }
   }
@@ -499,7 +500,6 @@ class PlayerComponent extends Component {
     if (!hasRoom || isTourShow === 1) {
       return
     }
-    //SendbirdTour
     $('body').chardinJs('start')
     this.player.off('userinactive')
     $('body').on('chardinJs:stop', ::this.handleUserActive)
@@ -510,7 +510,7 @@ class PlayerComponent extends Component {
     this.setTourShowed()
   }
 
-  async generateDomTag (videoData) {
+  async generateDomTag (videoData, komentData) {
     console.log('player : generate dom tag')
     const ua = detectUA()
     const mobileVersion = ua.getMobile()
@@ -526,6 +526,12 @@ class PlayerComponent extends Component {
     video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered vjs-controls-enabled afrostream-player-dimensions'
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
+
+    try {
+      video.setAttribute('data-setup', JSON.stringify(komentData))
+    } catch (e) {
+      console.log('parse koment json error', e)
+    }
 
     if (hasSubtiles) {
       captions.map((caption) => {
@@ -563,8 +569,31 @@ class PlayerComponent extends Component {
     } = this
 
     console.log('player : Get player data')
+    const user = User.get('user')
+    let userId
+    let token = OAuth.get('token')
 
-    let videoEl = await this.generateDomTag(videoData)
+    let komentsData = {
+      videoId,
+      controlBar: {
+        komentToggle: {
+          attributes: {
+            'data-position': 'left',
+            'data-intro': 'Vous pouvez desormais commenter les video'
+          }
+        }
+      },
+      user: (user && {
+        id: user.get('_id').toString(),
+        provider: config.domain.host,
+        token: token && token.get('access_token'),
+        avatar: user.get('picture'),
+        nickname: user.get('nickname')
+      }),
+      languages: config.player.languages
+    }
+
+    await this.generateDomTag(videoData, komentsData)
 
     let videoOptions = videoData.toJS()
 
@@ -658,11 +687,8 @@ class PlayerComponent extends Component {
 
     playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
 
-    let user = User.get('user')
-    let userId
     if (user) {
       userId = user.get('user_id')
-      let token = OAuth.get('token')
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId]
       userId = _.find(splitUser, (val) => {
         return parseInt(val, 10)
@@ -674,7 +700,7 @@ class PlayerComponent extends Component {
       if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
         let protUser = base64.encode(JSON.stringify({
           userId: userId,
-          sessionId: token.access_token,
+          sessionId: token.get('access_token'),
           merchant: 'afrostream'
         }))
 
@@ -766,6 +792,7 @@ class PlayerComponent extends Component {
     let playerData = await this.getPlayerData(videoData)
     const videoTracking = this.getStoredPlayer()
     const storedCaption = videoTracking.playerCaption
+
     let player = await videojs('afrostream-player', playerData).ready(()=> {
         let tracks = player.textTracks() // get list of tracks
         if (!tracks) {
@@ -777,10 +804,15 @@ class PlayerComponent extends Component {
         })
       }
     )
+    if (featuresFlip.koment && player.tech_.el_) {
+      await koment(player.tech_.el_)
+    }
     //youbora data
     if (player.youbora) {
       player.youbora(playerData.youbora)
     }
+
+
     player.on('firstplay', ::this.onFirstPlay)
     player.on('ended', ::this.clearTrackVideo)
     player.on('seeked', ::this.trackVideo)
@@ -975,7 +1007,6 @@ class PlayerComponent extends Component {
           </div>
           {videoDuration ?
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
-          <div className="video-infos_synopsys">{infos.synopsis}</div>
         </div>
         {this.getNextComponent()}
         <SendBird {...this.props} />
