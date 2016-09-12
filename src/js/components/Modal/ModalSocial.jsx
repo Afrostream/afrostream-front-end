@@ -59,6 +59,11 @@ class ModalSocial extends ModalComponent {
       updatedParams = self.cloneParams(network, url, title, description, data)
       self.updateHref(network, updatedParams, popupOpener)
     })
+
+    if (network === social.networks.facebook) {
+      return
+    }
+
     return popupOpener = this.updateHref()
   }
 
@@ -151,6 +156,15 @@ class ModalSocial extends ModalComponent {
   updateHref (data = null, params = null, popupOpener = null) {
 
     let shareUrl = ''
+
+    if (data && network === social.networks.facebook) {
+      return FB.ui({
+        method: 'send',
+        href: data.url,
+        message: data.description
+      }, function (response) {
+      });
+    }
 
     if (popupOpener) {
       let encode = data.url.indexOf('mailto:') >= 0
