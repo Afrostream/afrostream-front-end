@@ -128,6 +128,7 @@ class ModalSponsors extends ModalComponent {
           coupon: coupon.get('code')
         }
       })
+
       dispatch(ModalActionCreators.open({target: 'strategy', data: shareData}))
     }
   }
