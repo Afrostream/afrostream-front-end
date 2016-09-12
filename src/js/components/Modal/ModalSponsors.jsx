@@ -121,11 +121,11 @@ class ModalSponsors extends ModalComponent {
       const description = plan.get('description')
 
       let shareData = Immutable.fromJS({
-        title: `Coupon cadeau "${coupon.get('code')}"`,
-        description: `Salut, soit le premier à profiter de ce goupon gratuit sur afrostream et profite de ${description}`,
-        link: 'parrainage',
+        title: `Coupon "${coupon.get('code')}"`,
+        description: `${description} pour tout abonnement à Afrostream grâce à ce code.`,
+        link: 'coupon',
         query: {
-          coupon: coupon.get('code')
+          code: coupon.get('code')
         }
       })
 

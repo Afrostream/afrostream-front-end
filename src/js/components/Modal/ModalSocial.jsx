@@ -23,10 +23,11 @@ class ModalSocial extends ModalComponent {
       }
     } = this
 
+    let query = data && data.get('query').toJS()
     //add share tracking
     let shareParams = qs.stringify(_.merge({
       utm: 'share'
-    }))
+    }, query || {}))
 
     let title = this.getMeta('og:title')
     let description = this.getMeta('og:description') || ''
@@ -42,12 +43,14 @@ class ModalSocial extends ModalComponent {
         description = data.get('description')
       }
       if (data.get('link')) {
-        url = `${metadata.domain}${data.get('link')}?${shareParams}`
+        url = `${metadata.domain}/${data.get('link')}?${shareParams}`
       }
     }
-
     let self = this
     shorten({longUrl: url}).then((shortenData)=> {
+      if (!shortenData || shortenData.status_code === 500) {
+        throw new Error(shortenData.status_txt)
+      }
       url = shortenData.data.url
       updatedParams = self.cloneParams(network, url, title, description, data)
       self.updateHref(network, updatedParams, popupOpener)
@@ -56,11 +59,6 @@ class ModalSocial extends ModalComponent {
       updatedParams = self.cloneParams(network, url, title, description, data)
       self.updateHref(network, updatedParams, popupOpener)
     })
-
-    if (network === social.networks.facebook) {
-      return;
-    }
-
     return popupOpener = this.updateHref()
   }
 
@@ -153,14 +151,6 @@ class ModalSocial extends ModalComponent {
   updateHref (data = null, params = null, popupOpener = null) {
 
     let shareUrl = ''
-
-    if (data === social.networks.facebook) {
-      return FB.ui({
-        method: 'apprequests',
-        message: 'YOUR_MESSAGE_HERE'
-      }, function (response) {
-      });
-    }
 
     if (popupOpener) {
       let encode = data.url.indexOf('mailto:') >= 0
