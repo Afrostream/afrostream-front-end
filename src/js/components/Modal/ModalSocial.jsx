@@ -160,8 +160,8 @@ class ModalSocial extends ModalComponent {
     if (data === social.networks.facebook) {
       return FB.ui({
         method: 'send',
-        link: data.url,
-        message: data.description
+        link: params.url,
+        message: params.description
       }, function (response) {
       });
     }
