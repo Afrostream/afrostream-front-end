@@ -157,7 +157,7 @@ class ModalSocial extends ModalComponent {
 
     let shareUrl = ''
 
-    if (data && network === social.networks.facebook) {
+    if (data === social.networks.facebook) {
       return FB.ui({
         method: 'send',
         href: data.url,
