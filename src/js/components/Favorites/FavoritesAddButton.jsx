@@ -95,8 +95,8 @@ class FavoritesAddButton extends React.Component {
 
     let favoriteClass = {
       'zmdi': true,
-      'zmdi-favorite': isFavorite,
-      'zmdi-favorite-outline': !isFavorite,
+      'zmdi-minus': isFavorite,
+      'zmdi-plus': !isFavorite,
       'pending': this.state.pending
     }
 
