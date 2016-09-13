@@ -169,6 +169,11 @@ class Footer extends React.Component {
                   {labels.pro.jobs}
                 </Link>
               </li>
+              <li>
+                <Link className="footer-link" to="/submit-content">
+                  {labels.pro.submit}
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
