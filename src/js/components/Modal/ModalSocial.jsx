@@ -60,7 +60,7 @@ class ModalSocial extends ModalComponent {
       self.updateHref(network, updatedParams, popupOpener)
     })
 
-    if (network === social.networks.facebook) {
+    if (network === social.networks.facebook && FB !== undefined) {
       return
     }
 
@@ -157,11 +157,12 @@ class ModalSocial extends ModalComponent {
 
     let shareUrl = ''
 
-    if (data === social.networks.facebook) {
+    if (data === social.networks.facebook && FB !== undefined) {
       return FB.ui({
         method: 'send',
         link: params.url,
-        message: params.description
+        caption: params.title,
+        description: params.description
       }, function (response) {
       });
     }

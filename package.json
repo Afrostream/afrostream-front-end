@@ -38,7 +38,7 @@
     "webshot": "^0.18.0"
   },
   "dependencies": {
-    "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.8",
+    "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.9",
     "autoprefixer-core": "^5.2.1",
     "autoprefixer-loader": "^2.0.0",
     "babel-cli": "^6.11.4",

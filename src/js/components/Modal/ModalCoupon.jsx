@@ -6,6 +6,7 @@ import * as UserActionCreators from '../../actions/user'
 import * as BillingActionCreators from '../../actions/billing'
 import ModalComponent from './ModalComponent'
 import { getI18n } from '../../../../config/i18n'
+import { decodeSafeUrl } from '../../lib/utils'
 import MobileDetect from 'mobile-detect'
 import SignUpButton from '../User/SignUpButton'
 import { withRouter } from 'react-router'
@@ -25,17 +26,32 @@ class ModalCoupon extends ModalComponent {
 
   componentDidMount () {
     const {
-      props: {location}
+      props: {location, dispatch}
     } = this
     let {query} = location
-    let code = query && query.code
+    let {code, data} = query
     if (code) {
       this.refs.coupon.value = code
+    } else if (data) {
+      const decodedData = decodeSafeUrl(data)
+      dispatch(BillingActionCreators.createCoupon(decodedData)).then(::this.createCouponSuccessHandler)
     }
     const userAgent = (window.navigator && navigator.userAgent) || ''
     this.setState({
       ua: new MobileDetect(userAgent)
     })
+  }
+
+  createCouponSuccessHandler ({
+    res:{
+      body:{
+        coupon
+      }
+    }
+  }) {
+    if (coupon && coupon.code) {
+      this.refs.coupon.value = coupon.code
+    }
   }
 
   finalyse () {

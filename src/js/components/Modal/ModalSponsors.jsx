@@ -5,12 +5,13 @@ import ModalComponent from './ModalComponent'
 import classNames from 'classnames'
 import config from '../../../../config'
 import { getI18n } from '../../../../config/i18n'
+import { encodeSafeUrl } from '../../lib/utils'
 import Immutable from 'immutable'
 import * as BillingActionCreators from '../../actions/billing'
 import * as FBActionCreators from '../../actions/facebook'
 import * as ModalActionCreators from '../../actions/modal'
 
-const {couponsCampaignBillingUuid, couponsCampaignType, maxSponsors} = config.sponsors
+const {couponsCampaignBillingUuid, couponsCampaignType, billingProviderName} = config.sponsors
 
 if (process.env.BROWSER) {
   require('./ModalSponsors.less')
@@ -19,11 +20,11 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store}) {
   return await Promise.all([
     store.dispatch(BillingActionCreators.getCouponCampaigns({
-      billingProviderName: 'afr',
+      billingProviderName,
       couponsCampaignBillingUuid
     })),
     store.dispatch(BillingActionCreators.getSponsorsList({
-      billingProviderName: 'afr',
+      billingProviderName,
       couponsCampaignType
     })),
     store.dispatch(FBActionCreators.getInvitableFriends())
@@ -72,7 +73,7 @@ class ModalSponsors extends ModalComponent {
     })
 
     let postData = {
-      billingProviderName: 'afr',
+      billingProviderName,
       couponsCampaignBillingUuid
     }
 
@@ -90,7 +91,7 @@ class ModalSponsors extends ModalComponent {
     })
 
     dispatch(BillingActionCreators.getSponsorsList({
-      billingProviderName: 'afr',
+      billingProviderName,
       couponsCampaignType
     }))
 
@@ -114,33 +115,30 @@ class ModalSponsors extends ModalComponent {
 
   }
 
-  shareCoupon (coupon) {
-    const {props:{dispatch}} = this
-    if (coupon && coupon.get('internalPlan')) {
-      const plan = coupon.get('internalPlan')
-      const description = plan.get('description')
+
+  sharePlan (campaign) {
+    const {props:{User, dispatch}} = this
+    const user = User.get('user')
+    if (user && campaign) {
+      const name = campaign.get('name')
+      const description = campaign.get('description')
+      const data = encodeSafeUrl({
+        userReferenceUuid: user.get('_id'),
+        billingProviderName,
+        couponsCampaignBillingUuid
+      })
 
       let shareData = Immutable.fromJS({
-        title: `Coupon "${coupon.get('code')}"`,
-        description: `${description} pour tout abonnement à Afrostream grâce à ce code.`,
+        title: `Parrainage`,
+        description: `${description} ${this.getTitle('shareDesc')}`,
         link: 'coupon',
         query: {
-          code: coupon.get('code')
+          data
         }
       })
 
       dispatch(ModalActionCreators.open({target: 'strategy', data: shareData}))
     }
-  }
-
-  renderShareButton (coupon) {
-
-    const inputProps = {
-      onClick: e =>::this.shareCoupon(coupon)
-    }
-
-    return <button className="btn" {...inputProps} >{this.getTitle('share')}</button>
-
   }
 
   renderCheck (status) {
@@ -177,13 +175,14 @@ class ModalSponsors extends ModalComponent {
 
           return <div className="sponsor row-fluid"
                       key={`sponsor-info-${key}`}>
-            <div className="col-md-8 text-left">
+            <div className="col-md-4 text-left">
               {coupon.get('code')}
+            </div>
+            <div className="col-md-4">
               {couponOpts.get('recipientEmail')}
             </div>
             <div className="col-md-4">
-              {status && (status === 'waiting' && this.renderShareButton(coupon))}
-              {status && (status !== 'waiting' && this.renderCheck(status))}
+              {this.renderCheck(status)}
             </div>
           </div>
         })
@@ -194,39 +193,20 @@ class ModalSponsors extends ModalComponent {
 
   getSponsorsComponent () {
 
-    const {props:{Billing, User}} = this
-    const user = User.get('user')
-    let canSponsorshipSubscription = false
-    if (user) {
-      const subscriptionsStatus = user.get('subscriptionsStatus')
-      if (subscriptionsStatus) {
-        const subscriptions = subscriptionsStatus.get('subscriptions')
-        canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no').size)
-      }
-    }
-    //no sponsorship availlable
-    if (!canSponsorshipSubscription) {
+    const {props:{Billing}} = this
+
+    const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
+
+    if (!coupon) {
       return
     }
 
-    const sponsorsData = Billing.get('sponsorsList')
-    const sponsorsList = sponsorsData && sponsorsData.get('coupons')
+    const plan = coupon.get('couponsCampaign').get('internalPlan')
 
-    if (sponsorsList && sponsorsList.size >= maxSponsors) {
-      return <div className="instructions">{this.getTitle('max')}</div>
+    const inputProps = {
+      onClick: e =>::this.sharePlan(plan)
     }
-
-    const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
-    let description = ''
-    if (coupon && coupon.get('couponsCampaign')) {
-      const plan = coupon.get('couponsCampaign').get('internalPlan')
-      description = plan.get('description')
-    }
-
-
-    return (<button className="generate-btn" onClick={::this.generateCoupon}>{this.getTitle('new')}
-      <i className="zmdi zmdi-plus"></i>
-    </button>)
+    return <button className="generate-btn" {...inputProps} >{this.getTitle('share')}</button>
   }
 
   render () {
@@ -262,7 +242,7 @@ class ModalSponsors extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{`${this.getTitle('title')} ${sponsorsList && '(' + sponsorsList.size + '/' + maxSponsors + ')' }` }</h1>
+                      <h1>{`${this.getTitle('title')} ${sponsorsList && '(' + sponsorsList.size + ')' }` }</h1>
                       <a ref="closeEl" className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">

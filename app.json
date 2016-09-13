@@ -26,7 +26,7 @@
     "RECURLY_PUBLIC_KEY": "sjc-ZhO4HmKNWszC5LIA8BcsMJ",
     "STRIPE_PUBLIC_KEY": "pk_test_s9YFHvFFIjo2gdAL5x4k2ISh",
     "BRAINTREE_PUBLIC_KEY": "sandbox_phhy689d_vpchhx9ppk3xwrcy",
-    "SPONSORSHIP_BILLING_UUID": "a94bb541-090d-44b2-b9d2-6e557c212566",
+    "SPONSORSHIP_BILLING_UUID": "e9d0c006-175a-4564-a736-7cc9edb3e532",
     "NPM_CONFIG_PRODUCTION": "false",
     "YOUBORA_ID": "afrostreamdev",
     "STREAMROOT_CLIENT_ID": "ry-0gzuhlor"

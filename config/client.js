@@ -113,7 +113,7 @@ const client = {
     interval: 10000
   },
   sponsors: {
-    maxSponsors: 200,
+    billingProviderName: 'afr',
     couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID,
     couponsCampaignType: 'sponsorship'
   },
