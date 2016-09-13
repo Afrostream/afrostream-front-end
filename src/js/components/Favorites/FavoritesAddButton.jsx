@@ -106,7 +106,7 @@ class FavoritesAddButton extends React.Component {
 
     return (<div className="btn favorite-add_button" type="button" data-toggle="tooltip"
                  data-placement="top" ref="data"
-                 title={`${isFavorite ? 'Supprimer de ' : 'Ajouter à' }mes favoris`}  {...inputAttributes}>
+                 title={`${isFavorite ? 'Supprimer de' : 'Ajouter à' } mes favoris`}  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>
       {this.state.pendingFavorite ? <Spinner /> : ''}
     </div>)

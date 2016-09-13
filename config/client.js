@@ -113,8 +113,9 @@ const client = {
     interval: 10000
   },
   sponsors: {
-    maxSponsors: 10,
-    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID
+    billingProviderName: 'afr',
+    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID,
+    couponsCampaignType: 'sponsorship'
   },
   intercom: {
     url: 'https://widget.intercom.io/widget/',
@@ -164,6 +165,10 @@ const client = {
         params: {
           u: '{url}',
           s: 'En ce moment je regarde "{title}" sur @afrostream'
+        },
+        fullParams: {
+          u: '{url}',
+          s: '{title} {description}'
         }
       },
       whatsapp: {
@@ -174,6 +179,9 @@ const client = {
         url: 'whatsapp://send',
         params: {
           text: 'En ce moment je regarde "{title}" sur @afrostream {url}'
+        },
+        fullParams: {
+          text: '{title} {descroption} {url}'
         }
       },
       twitter: {
@@ -184,6 +192,10 @@ const client = {
         params: {
           url: '{url}',
           text: 'En ce moment je regarde "{title}" sur @afrostream'
+        },
+        fullParams: {
+          url: '{url}',
+          text: '{title} {description}'
         }
       },
       googlePlus: {
@@ -193,6 +205,10 @@ const client = {
         url: 'https://plus.google.com/share',
         params: {
           url: '{url}'
+        },
+        fullParams: {
+          url: '{url}',
+          text: '{title} {description}'
         }
       },
       email: {
@@ -203,6 +219,10 @@ const client = {
         params: {
           subject: 'À voir: "{title}" sur afrostream',
           body: 'En ce moment je regarde "{title}" et tu vas aimer {description} Tu peux aussi télécharger l’application Afrostream : https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=en pour Androïd et https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8 pour Iphone / Ipad'
+        },
+        fullParams: {
+          subject: '{title}',
+          body: '{description} {url}'
         }
       }
     }

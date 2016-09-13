@@ -395,6 +395,7 @@
     "placeHolder": "Parrainer un ami",
     "emailField": "Son email",
     "max": "Vous avez atteint le nombre maximum d'amis parrainés",
+    "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",
     "status": {
       "redeemed": "Votre ami à un compte Afrostream",
       "active": "Votre ami à validé son coupon",

@@ -4,7 +4,7 @@ import client from './client'
 const config = _.merge(
   {
     metadata: {
-      domain: 'https://afrostream.tv',
+      domain: 'https://www.afrostream.tv',
       title: 'AFROSTREAM | Les meilleurs films et séries afro en illimité',
       description: 'Profitez d\'une sélection des meilleurs films & séries afro à regarder en illimité sur tous vos écrans grâce à Afrostream, la première semaine est offerte.',
       shareImage: '/production/poster/2016/03/b8a6db25a04982c88a2b-438302.jpg',

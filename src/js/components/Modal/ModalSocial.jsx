@@ -23,16 +23,18 @@ class ModalSocial extends ModalComponent {
       }
     } = this
 
+    let query = data && data.get('query').toJS()
     //add share tracking
-    let shareParams = qs.stringify({
+    let shareParams = qs.stringify(_.merge({
       utm: 'share'
-    })
+    }, query || {}))
 
     let title = this.getMeta('og:title')
     let description = this.getMeta('og:description') || ''
     let url = `${this.getMeta('og:url')}?${shareParams}`
     let popupOpener
     let updatedParams
+
     if (data) {
       if (data.get('title')) {
         title = data.get('title')
@@ -41,26 +43,32 @@ class ModalSocial extends ModalComponent {
         description = data.get('description')
       }
       if (data.get('link')) {
-        url = `${metadata.domain}${data.get('link')}?${shareParams}`
+        url = `${metadata.domain}/${data.get('link')}?${shareParams}`
       }
     }
-
     let self = this
     shorten({longUrl: url}).then((shortenData)=> {
+      if (!shortenData || shortenData.status_code === 500) {
+        throw new Error(shortenData.status_txt)
+      }
       url = shortenData.data.url
-      updatedParams = self.cloneParams(network, url, title, description)
+      updatedParams = self.cloneParams(network, url, title, description, data)
       self.updateHref(network, updatedParams, popupOpener)
     }).catch((err)=> {
       console.log('bitly shorten error ', err)
-      updatedParams = self.cloneParams(network, url, title, description)
+      updatedParams = self.cloneParams(network, url, title, description, data)
       self.updateHref(network, updatedParams, popupOpener)
     })
+
+    //if (network === social.networks.facebook && FB !== undefined) {
+    //  return
+    //}
 
     return popupOpener = this.updateHref()
   }
 
-  cloneParams (network, url, title, description) {
-    let params = _.cloneDeep(network.params)
+  cloneParams (network, url, title, description, full) {
+    let params = _.cloneDeep(network[full ? 'fullParams' : 'params'])
     let updatedParams = _.mapValues(params, (value)=> {
       return value.replace(/{title}/gm, title).replace(/{description}/gm, description).replace(/{url}/gm, url)
     })
@@ -146,7 +154,19 @@ class ModalSocial extends ModalComponent {
    * @param {Object} params
    */
   updateHref (data = null, params = null, popupOpener = null) {
+
     let shareUrl = ''
+
+    //if (data === social.networks.facebook && FB !== undefined) {
+    //  return FB.ui({
+    //    method: 'send',
+    //    link: params.url,
+    //    caption: params.title,
+    //    description: params.description
+    //  }, function (response) {
+    //  });
+    //}
+
     if (popupOpener) {
       let encode = data.url.indexOf('mailto:') >= 0
       shareUrl = this.getUrl(data.url, !encode, params)
