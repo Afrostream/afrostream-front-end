@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { prepareRoute } from '../../decorators'
@@ -69,10 +70,13 @@ class CategorySlider extends MoviesSlider {
     }
 
     let dataList
+    let catSlug
+
     const category = Category.get(`categorys/${categoryId}`)
 
     if (category) {
       dataList = category.get('mergeSpotsWithMovies')
+      catSlug = category.get('slug')
 
       //check if list has one spot
       dataList.map((item)=> {
@@ -91,7 +95,7 @@ class CategorySlider extends MoviesSlider {
     return (
       <div className={classSet(listClass)}>
         {slug && <div id={slug} className="movies-list__anchor"/>}
-        {label && <div className="movies-list__selection">{label}</div>}
+        {label && <Link to={`/browse/genre/${categoryId}/${catSlug}`} className="movies-list__selection">{label}</Link>}
         {category && dataList ?
           <AutoSizer className="slider-container" disableHeight>
             {({width}) => (
