@@ -60,9 +60,9 @@ class ModalSocial extends ModalComponent {
       self.updateHref(network, updatedParams, popupOpener)
     })
 
-    if (network === social.networks.facebook && FB !== undefined) {
-      return
-    }
+    //if (network === social.networks.facebook && FB !== undefined) {
+    //  return
+    //}
 
     return popupOpener = this.updateHref()
   }
@@ -157,15 +157,15 @@ class ModalSocial extends ModalComponent {
 
     let shareUrl = ''
 
-    if (data === social.networks.facebook && FB !== undefined) {
-      return FB.ui({
-        method: 'send',
-        link: params.url,
-        caption: params.title,
-        description: params.description
-      }, function (response) {
-      });
-    }
+    //if (data === social.networks.facebook && FB !== undefined) {
+    //  return FB.ui({
+    //    method: 'send',
+    //    link: params.url,
+    //    caption: params.title,
+    //    description: params.description
+    //  }, function (response) {
+    //  });
+    //}
 
     if (popupOpener) {
       let encode = data.url.indexOf('mailto:') >= 0
