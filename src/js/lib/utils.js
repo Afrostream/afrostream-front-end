@@ -2,20 +2,26 @@ export function numberWithCommas (x) {
   return x.toLocaleString()
 }
 
-export function encodeSafeUrl (data) {
+export function encodeSafeUrl (data, uriComp = true) {
   let encoded
   try {
-    encoded = window.encodeURIComponent(window.btoa(JSON.stringify(data)))
+    encoded = window.btoa(JSON.stringify(data))
+    if (uriComp) {
+      encoded = window.encodeURIComponent(data)
+    }
   } catch (e) {
     console.log('cant encode safe url', e)
   }
   return encoded
 }
 
-export function decodeSafeUrl (data) {
+export function decodeSafeUrl (data, uriComp = true) {
   let decoded
   try {
-    decoded = JSON.parse(window.atob(decodeURIComponent(data)))
+    if (uriComp) {
+      data = decodeURIComponent(data)
+    }
+    decoded = JSON.parse(window.atob(data))
   } catch (e) {
     console.log('cant decode safe url', e)
   }

@@ -114,7 +114,7 @@ const client = {
   },
   sponsors: {
     billingProviderName: 'afr',
-    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID,
+    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID || 'toto',
     couponsCampaignType: 'sponsorship'
   },
   intercom: {

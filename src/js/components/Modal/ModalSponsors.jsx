@@ -126,7 +126,7 @@ class ModalSponsors extends ModalComponent {
         userReferenceUuid: user.get('_id'),
         billingProviderName,
         couponsCampaignBillingUuid
-      })
+      },false)
 
       let shareData = Immutable.fromJS({
         title: `Parrainage`,
