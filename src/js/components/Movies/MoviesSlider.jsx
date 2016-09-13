@@ -22,8 +22,8 @@ class MoviesSlider extends React.Component {
 
   static propTypes = {
     dataList: PropTypes.instanceOf(Immutable.List),
-    favorite: React.PropTypes.boolean,
-    share: React.PropTypes.boolean,
+    favorite: React.PropTypes.bool,
+    share: React.PropTypes.bool,
     selectedId: React.PropTypes.string,
     label: React.PropTypes.string,
     slug: React.PropTypes.string,
