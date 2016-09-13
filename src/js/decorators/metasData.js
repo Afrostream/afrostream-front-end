@@ -94,6 +94,7 @@ export default () => {
         let seasonNumber = null
         let poster = null
         let episodeNumber = null
+        let ogType = 'website'
 
         if (data) {
 
@@ -182,6 +183,13 @@ export default () => {
           metas.meta.push({
             name: 'twitter:title',
             content: ogTitle
+          })
+        }
+
+        if (ogType) {
+          metas.meta.push({
+            property: 'og:type',
+            content: ogType
           })
         }
 
