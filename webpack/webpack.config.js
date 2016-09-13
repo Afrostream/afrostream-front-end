@@ -72,8 +72,6 @@ const webpackConfig = {
       'raven-js',
       'mobile-detect',
       'qs',
-      'sendbird',
-      'chardin.js',
       './src/js/lib/localStoragePolyfill',
       './src/js/lib/customEventPolyfill'
     ]
@@ -156,12 +154,6 @@ const webpackConfig = {
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
-        test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
-      },
-      {
-        test: /chardin\.js$/, loader: 'expose?chardinJs'
-      },
-      {
         test: /jquery\.js$/, loader: 'expose?$'
       },
       {
@@ -196,7 +188,6 @@ const webpackConfig = {
     new webpack.ProvidePlugin({
       koment: 'koment-js',
       videojs: 'video.js',
-      sendBirdClient: 'sendbird',
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery'
@@ -224,8 +215,7 @@ const webpackConfig = {
         FB_TRACKING_ID: JSON.stringify(process.env.FB_TRACKING_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
         YOUBORA_ID: JSON.stringify(process.env.YOUBORA_ID),
-        SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID),
-        SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
+        SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID)
       }
     })
   ],

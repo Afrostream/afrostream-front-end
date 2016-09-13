@@ -17,12 +17,10 @@ import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import { Billboard, CsaIcon } from '../Movies'
 import NextEpisode from './NextEpisode'
 import ShareButton from '../Share/ShareButton'
-import SendBirdButton from '../SendBird/SendBirdButton'
 import RecommendationList from '../Recommendation/RecommendationList'
 import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
 import { slugify } from '../../lib/utils'
-import SendBird from '../SendBird/SendBird'
 
 const {featuresFlip} = config
 
@@ -484,27 +482,6 @@ class PlayerComponent extends Component {
     }
   }
 
-  hasSendBirdRoom () {
-    const {
-      props: {
-        movieId
-      }
-    } = this
-
-    return ~config.sendBird.channels.indexOf(parseInt(movieId))
-  }
-
-  makeTour () {
-    const hasRoom = this.hasSendBirdRoom()
-    let isTourShow = this.isTourShowed()
-    if (!hasRoom || isTourShow === 1) {
-      return
-    }
-    $('body').chardinJs('start')
-    this.player.off('userinactive')
-    $('body').on('chardinJs:stop', ::this.handleUserActive)
-  }
-
   handleUserActive () {
     this.player.on('userinactive', ::this.triggerUserActive)
     this.setTourShowed()
@@ -957,7 +934,6 @@ class PlayerComponent extends Component {
     let renderData = episodeData ? episodeData : movieData
 
     const chatMode = Event.get('showChat')
-    const sendBirdOn = this.hasSendBirdRoom()
 
     let playerClasses = {
       'player': true,
@@ -1001,15 +977,11 @@ class PlayerComponent extends Component {
           <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
             <ShareButton />
-            {sendBirdOn ? <SendBirdButton label="Live Chat" ref="sendbird"
-                                          sendBirdIntro="Vous pouvez desormais chatter avec les autres utilisateurs regardant la même video que vous"
-                                          sendBirdPosition="right"/> : null}
           </div>
           {videoDuration ?
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
         </div>
         {this.getNextComponent()}
-        <SendBird {...this.props} />
       </div>
     )
   }

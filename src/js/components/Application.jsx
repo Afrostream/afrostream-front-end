@@ -51,9 +51,6 @@ class Application extends React.Component {
         dispatch
       }
     } = this
-    if (canUseDOM) {
-      require('chardin.js')
-    }
     dispatch(UserActionCreators.getProfile())
   }
 
