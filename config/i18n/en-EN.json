@@ -391,6 +391,10 @@
   "sponsors": {
     "title": "Mes amis parrainés",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
+    "metas": {
+      "title": "14 jours de streaming offerts",
+      "description": "Inscrivez-vous dès maintenant pour bénéficier de 14 jours d’abonnement à Afrostream offerts."
+    },
     "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
     "placeHolder": "Parrainer un ami",
     "emailField": "Son email",

@@ -177,9 +177,10 @@ export default () => {
                 title = getI18n(lang).sponsors.metas.title
                 synopsis = getI18n(lang).sponsors.metas.description
 
+                //TODO connect to plan name/description
                 //Replace global
-                title = title.replace(/{planName}/g, plan.get('name'))
-                synopsis = synopsis.replace(/{planDescription}/g, plan.get('description'))
+                //title = title.replace(/{planName}/g, plan.get('name'))
+                //synopsis = synopsis.replace(/{planDescription}/g, plan.get('description'))
 
                 const thumb = plan.get('thumb')
                 if (thumb) {
