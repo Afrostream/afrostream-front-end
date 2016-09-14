@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import Helmet from 'react-helmet'
 import config from '../../../config'
 import _ from 'lodash'
+import qs from 'qs'
 import { getI18n } from '../../../config/i18n'
 
 export default () => {
@@ -45,6 +46,7 @@ export default () => {
         } = this
 
         let {lang} = params
+        let {query} = location
 
         let metas = {
           title: _.cloneDeep(config.metadata.title),
@@ -89,7 +91,7 @@ export default () => {
 
         let title = _.cloneDeep(config.metadata.title)
         let ogTitle = title
-        let slug = location.pathname !== '/' ? location.pathname : ''
+        let slug = (location.pathname !== '/' ? location.pathname : '' )
         let synopsis = _.cloneDeep(config.metadata.description)
         let ogDescription = synopsis
         let imageStyle = config.metadata.shareImage
@@ -167,6 +169,9 @@ export default () => {
 
         //META SPONSORSHIP
         if (location.pathname === '/coupon') {
+          if (query) {
+            slug = `${slug}?${qs.stringify(query)}`
+          }
           let couponItem = store.getState().Billing.get('coupon')
           if (couponItem) {
             const coupon = couponItem.get('coupon')
@@ -252,17 +257,18 @@ export default () => {
         }
 
         if (slug) {
+          const slugMeta = `${config.metadata.domain}${slug}`
           metas.link.push({
             rel: 'canonical',
-            href: `${config.metadata.domain}${slug}`
+            href: slugMeta
           })
           metas.meta.push({
             property: 'og:url',
-            content: `${config.metadata.domain}${slug}`
+            content: slugMeta
           })
           metas.meta.push({
             name: 'twitter:site',
-            content: `${config.metadata.domain}${slug}`
+            content: slugMeta
           })
         }
 
