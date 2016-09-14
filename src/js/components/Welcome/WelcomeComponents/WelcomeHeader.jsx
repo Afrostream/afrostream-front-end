@@ -12,7 +12,7 @@ import { withRouter } from 'react-router'
 import Player from '../../Player/Player'
 import window from 'global/window'
 
-const {promoCodes, metadata, images} =config
+const {metadata, images} =config
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
@@ -24,7 +24,7 @@ class WelcomeHeader extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isMobile: false,
+      isMobile: true,
       size: {
         width: 1280,
         height: 500
@@ -32,27 +32,17 @@ class WelcomeHeader extends React.Component {
     }
   }
 
-  showLock () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
+  componentDidMount () {
+    let isMobile = false
+    if (canUseDOM) {
+      const userAgent = (window.navigator && navigator.userAgent) || ''
+      let agent = new MobileDetect(userAgent)
+      isMobile = agent.mobile()
+    }
 
-    dispatch(ModalActionCreators.open({target: 'showSignup'}))
-  }
-
-  hasPromo () {
-    const {
-      props: {
-        location
-      }
-    } = this
-    let pathName = location.pathname.split('/').join('')
-    let HasProm = _.find(promoCodes, function (promo) {
-      return pathName === promo.code
+    this.setState({
+      isMobile: isMobile,
     })
-    return HasProm
   }
 
   render () {
@@ -123,15 +113,13 @@ class WelcomeHeader extends React.Component {
         synopsis: data.get('synopsis')
       }
     }
-    let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
+    let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
     let imageStyle = {backgroundImage: `url(${posterImg})`}
 
-    let promoCode = this.hasPromo()
 
     let welcomeClassesSet = {
       'welcome-header': true,
-      'welcome-header_movie': Boolean(movieData),
-      'promo': promoCode
+      'welcome-header_movie': Boolean(movieData)
     }
 
     return (
@@ -161,12 +149,9 @@ class WelcomeHeader extends React.Component {
 }
 
 WelcomeHeader.propTypes = {
-  location: React.PropTypes.object.isRequired,
-  promoCode: React.PropTypes.string
+  location: React.PropTypes.object.isRequired
 }
 
-WelcomeHeader.defaultProps = {
-  promoCode: ''
-}
+WelcomeHeader.defaultProps = {}
 
 export default withRouter(WelcomeHeader)

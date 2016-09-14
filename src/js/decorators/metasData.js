@@ -174,8 +174,12 @@ export default () => {
               const plan = coupon.get('internalPlan')
               if (plan) {
 
-                title = `${plan.get('name')} grâce à ce coupon`
-                synopsis = `${plan.get('description')}`
+                title = getI18n(lang).sponsors.metas.title
+                synopsis = getI18n(lang).sponsors.metas.description
+
+                //Replace global
+                title = title.replace(/{planName}/g, plan.get('name'))
+                synopsis = synopsis.replace(/{planDescription}/g, plan.get('description'))
 
                 const thumb = plan.get('thumb')
                 if (thumb) {

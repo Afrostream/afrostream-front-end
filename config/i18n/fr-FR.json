@@ -396,6 +396,10 @@
   "sponsors": {
     "title": "Mes amis parrainés",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
+    "metas": {
+      "title": "{planName} grâce à ce coupon",
+      "description": "{planDescription}",
+    },
     "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
     "placeHolder": "Parrainer un ami",
     "emailField": "Son email",
