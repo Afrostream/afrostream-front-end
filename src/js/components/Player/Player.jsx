@@ -3,6 +3,7 @@ import ReactDOM from'react-dom'
 import cx from 'classnames'
 import { forEach, debounce, defaults } from 'lodash'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import window from 'global/window'
 
 const DEFAULT_HEIGHT = 800
 const DEFAULT_WIDTH = 600

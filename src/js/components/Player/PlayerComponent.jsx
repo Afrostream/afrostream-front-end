@@ -21,6 +21,7 @@ import RecommendationList from '../Recommendation/RecommendationList'
 import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
 import { slugify } from '../../lib/utils'
+import window from 'global/window'
 
 const {featuresFlip} = config
 

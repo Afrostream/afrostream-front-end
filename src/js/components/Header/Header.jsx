@@ -8,6 +8,8 @@ import SmartBanner from './SmartBanner'
 import classSet from 'classnames'
 import config from '../../../../config'
 import { withRouter } from 'react-router'
+import window from 'global/window'
+
 const {apps} = config
 
 if (process.env.BROWSER) {

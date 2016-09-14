@@ -1,13 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { Link } from 'react-router'
 import * as UserActionCreators from '../../actions/user'
 import * as BillingActionCreators from '../../actions/billing'
 import ModalComponent from './ModalComponent'
 import { getI18n } from '../../../../config/i18n'
-import { decodeSafeUrl } from '../../lib/utils'
-import MobileDetect from 'mobile-detect'
 import SignUpButton from '../User/SignUpButton'
 import { withRouter } from 'react-router'
 
@@ -26,52 +23,33 @@ class ModalCoupon extends ModalComponent {
 
   componentDidMount () {
     const {
-      props: {location, dispatch}
+      props: {location}
     } = this
     let {query} = location
-    let {code, data} = query
+    let {code} = query
     if (code) {
       this.refs.coupon.value = code
-    } else if (data) {
-      const decodedData = decodeSafeUrl(data)
-      dispatch(BillingActionCreators.createCoupon(decodedData)).then(::this.createCouponSuccessHandler)
-    }
-    const userAgent = (window.navigator && navigator.userAgent) || ''
-    this.setState({
-      ua: new MobileDetect(userAgent)
-    })
-  }
-
-  createCouponSuccessHandler ({
-    res:{
-      body:{
-        coupon
-      }
-    }
-  }) {
-    if (coupon && coupon.code) {
-      this.refs.coupon.value = coupon.code
     }
   }
 
-  finalyse () {
+  async finalyse () {
     const {
       props: {
         dispatch
       }
     } = this
 
-    return dispatch(BillingActionCreators.couponActivate())
+    return await dispatch(BillingActionCreators.couponActivate())
       .then(()=> {
         return dispatch(UserActionCreators.getProfile())
       }).then(()=> {
         return this.props.history.push('/')
-      }).catch((err)=> {
-        this.setState({
+      }).catch(({response:{body:{error}}, message})=> {
+        return this.setState({
           success: false,
           loading: false,
           signInOrUp: false,
-          error: err.message || err.error || this.getTitle('couponInvalid')
+          error: error || message || this.getTitle('couponInvalid')
         })
       })
   }
@@ -156,6 +134,10 @@ class ModalCoupon extends ModalComponent {
   }
 
   getForm () {
+    if (this.state.error) {
+      return
+    }
+
     if (this.state.success) {
       return (<div className="notloggedin mode">
         <div className="instructions">{this.getTitle('successText')}</div>
@@ -201,6 +183,20 @@ class ModalCoupon extends ModalComponent {
   }
 
   getCoupon () {
+
+    const {
+      props: {
+        Billing
+      }
+    } = this
+
+    let couponStore = Billing.get('coupon')
+    let coupon
+
+    if (couponStore) {
+      coupon = couponStore.get('coupon')
+    }
+
     return (
       <div className="email">
         <label htmlFor="easy_email" className="sad-placeholder">
@@ -209,6 +205,7 @@ class ModalCoupon extends ModalComponent {
         <div className="input-box">
           <i className="icon-barcode"></i>
           <input name="email" ref="coupon" id="easy_email" type="text" className="input-coupon" required
+                 defaultValue={coupon ? coupon.get('code') : ''}
                  placeholder={this.getTitle('couponPlaceholder')}
                  title={this.getTitle('couponPlaceholder')}/>
         </div>
@@ -238,11 +235,9 @@ class ModalCoupon extends ModalComponent {
       'hide': !this.state.error
     })
 
-    let ua = this.state.ua
 
     let popupClass = classNames({
-      'popup': this.props.modal,
-      'ios': ua && ua.is('iOS')
+      'popup': this.props.modal
     })
 
     let overlayClass = classNames({

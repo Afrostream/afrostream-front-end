@@ -5,6 +5,7 @@ import config from '../../../../../config'
 import moment from 'moment'
 import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import window from 'global/window'
 
 class BraintreeForm extends React.Component {
 

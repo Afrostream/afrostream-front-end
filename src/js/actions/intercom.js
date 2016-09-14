@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import config from '../../../config'
+import window from 'global/window'
 
 export function createIntercom () {
   return (dispatch, getState) => {

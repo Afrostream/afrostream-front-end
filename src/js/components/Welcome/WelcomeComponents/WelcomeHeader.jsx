@@ -10,6 +10,7 @@ import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
 import { withRouter } from 'react-router'
 import Player from '../../Player/Player'
+import window from 'global/window'
 
 const {promoCodes, metadata, images} =config
 
@@ -28,25 +29,6 @@ class WelcomeHeader extends React.Component {
         width: 1280,
         height: 500
       }
-    }
-  }
-
-  componentDidMount () {
-    let isMobile = false
-    if (canUseDOM) {
-      const userAgent = (window.navigator && navigator.userAgent) || ''
-      let agent = new MobileDetect(userAgent)
-      isMobile = agent.mobile()
-    }
-
-    this.setState({
-      isMobile: isMobile,
-    })
-
-    let promoCode = this.hasPromo()
-
-    if (canUseDOM && promoCode) {
-      //FIXME create countdown
     }
   }
 

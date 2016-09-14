@@ -1,5 +1,6 @@
 import ActionTypes from '../consts/ActionTypes'
 import _ from 'lodash'
+import window from 'global/window'
 /**
  * Get list friendlist
  * @returns {Function}

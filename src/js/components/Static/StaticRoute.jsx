@@ -4,6 +4,7 @@ import { prepareRoute } from '../../decorators'
 import * as EventActionCreators from '../../actions/event'
 import * as StaticActionCreators from '../../actions/static'
 import { withRouter } from 'react-router'
+import window from 'global/window'
 
 @prepareRoute(async function ({store, route}) {
   return await Promise.all([

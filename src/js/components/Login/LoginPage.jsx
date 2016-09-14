@@ -1,14 +1,48 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { prepareRoute } from '../../decorators'
+import { decodeSafeUrl } from '../../lib/utils'
+import * as BillingActionCreators from '../../actions/billing'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import config from '../../../../config'
 import * as ModalActionCreators from '../../actions/modal'
-import MobileDetect from 'mobile-detect'
 
 if (process.env.BROWSER) {
   require('./LoginPage.less')
 }
+@prepareRoute(async function ({store, location}) {
 
+  let {query} = location
+  let {data} = query
+
+  let method
+  switch (location.pathname) {
+    case '/signup':
+      method = 'showSignup'
+      break
+    case '/signin':
+      method = 'showSignin'
+      break
+    case '/newsletter':
+      method = 'newsletter'
+      break
+    case '/parrainage':
+      method = 'sponsorship'
+      break
+    case '/coupon':
+      if (data) {
+        const decodedData = decodeSafeUrl(data)
+        await store.dispatch(BillingActionCreators.createCoupon(decodedData))
+      }
+      method = 'redeemCoupon'
+      break
+    default :
+      method = 'show'
+      break
+  }
+
+  await store.dispatch(ModalActionCreators.open({target: method}))
+})
 @connect(({User}) => ({User}))
 class LoginPage extends React.Component {
 
@@ -24,55 +58,9 @@ class LoginPage extends React.Component {
     location: PropTypes.object.isRequired
   }
 
-  componentDidMount () {
-    const {
-      props: {
-        dispatch, location
-      }
-    } = this
-    let method
-
-    let isMobile = false
-    if (canUseDOM) {
-      const userAgent = (window.navigator && navigator.userAgent) || ''
-      let agent = new MobileDetect(userAgent)
-      isMobile = agent.mobile()
-      this.setState({
-        isMobile: isMobile,
-        size: {
-          height: window.innerHeight,
-          width: window.innerWidth
-        }
-      })
-    }
-
-    switch (location.pathname) {
-      case '/signup':
-        method = 'showSignup'
-        break
-      case '/signin':
-        method = 'showSignin'
-        break
-      case '/newsletter':
-        method = 'newsletter'
-        break
-      case '/parrainage':
-        method = 'sponsorship'
-        break
-      case '/coupon':
-        method = 'redeemCoupon'
-        break
-      default :
-        method = 'show'
-        break
-    }
-    dispatch(ModalActionCreators.open({target: method}))
-  }
-
   render () {
 
     let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`}
-
 
     return (
       <div className="row-fluid">

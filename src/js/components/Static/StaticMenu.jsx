@@ -3,6 +3,7 @@ import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import { withRouter } from 'react-router'
 import classSet from 'classnames'
+import window from 'global/window'
 
 class StaticMenu extends React.Component {
 

@@ -52,11 +52,13 @@ export default () => {
           link: []
         }
 
+        const configImage = `?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`
         const movieData = store.getState().Movie.get(`movies/${params.movieId}`)
         let seasonData
         let videoData
         let episodeData
         let episodesList
+
         if (params.videoId) {
           videoData = store.getState().Video.get(`videos/${params.videoId}`)
         }
@@ -96,6 +98,7 @@ export default () => {
         let episodeNumber = null
         let ogType = 'website'
 
+        //META MOVIE/SERIE/EPISODE/VIDEO
         if (data) {
 
           let type = movieData.get('type')
@@ -162,7 +165,35 @@ export default () => {
           }
         }
 
-        let ogImage = `${config.images.urlPrefix}${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`
+        //META SPONSORSHIP
+        if (location.pathname === '/coupon') {
+          let couponItem = store.getState().Billing.get('coupon')
+          if (couponItem) {
+            const coupon = couponItem.get('coupon')
+            if (coupon) {
+              const plan = coupon.get('internalPlan')
+              if (plan) {
+
+                title = `${plan.get('name')} grâce à ce coupon`
+                synopsis = `${plan.get('description')}`
+
+                const thumb = plan.get('thumb')
+                if (thumb) {
+
+                  const path = thumb.get('path')
+                  if (path) {
+                    imageStyle = path
+                  }
+                }
+                ogTitle = title
+                ogDescription = synopsis
+              }
+            }
+          }
+        }
+
+
+        let ogImage = `${config.images.urlPrefix}${imageStyle}${configImage}`
 
         if (title) {
           metas.title = title

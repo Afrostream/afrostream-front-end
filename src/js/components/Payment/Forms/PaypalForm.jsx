@@ -4,6 +4,7 @@ import classSet from 'classnames'
 import { getI18n } from '../../../../../config/i18n'
 import RecurlyForm from './RecurlyForm'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import window from 'global/window'
 
 class PaypalForm extends RecurlyForm {
 

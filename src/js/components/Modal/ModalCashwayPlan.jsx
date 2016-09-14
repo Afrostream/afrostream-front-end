@@ -4,6 +4,7 @@ import config from '../../../../config'
 import classNames from 'classnames'
 import ModalComponent from './ModalComponent'
 import scriptLoader from '../../lib/script-loader'
+import window from 'global/window'
 
 const {cashwayApi} = config
 

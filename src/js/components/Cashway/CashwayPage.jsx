@@ -6,6 +6,7 @@ import * as EventActionCreators from '../../actions/event'
 import scriptLoader from '../../lib/script-loader'
 import Player from '../Player/Player'
 import { withRouter } from 'react-router'
+import window from 'global/window'
 
 const {cashwayApi} = config
 

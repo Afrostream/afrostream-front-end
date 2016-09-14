@@ -7,6 +7,7 @@ import _ from 'lodash'
 import { detectUA } from '../Player/PlayerUtils'
 import { shorten } from '../../lib/bitly'
 import qs from 'qs'
+import window from 'global/window'
 
 const {social, bitly, metadata} = config
 

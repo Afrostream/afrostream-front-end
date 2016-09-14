@@ -10,7 +10,6 @@ import * as IntercomActionCreators from '../../actions/intercom'
 import ModalComponent from './ModalComponent'
 import config from '../../../../config'
 import { getI18n } from '../../../../config/i18n'
-import MobileDetect from 'mobile-detect'
 import _ from 'lodash'
 import { withRouter } from 'react-router'
 const {oauth2}= config
@@ -47,10 +46,6 @@ class ModalLogin extends ModalComponent {
         dispatch(ModalActionCreator.open({target: 'show', closable: false, donePath: '/'}))
       }).catch(::this.onError)
     }
-    const userAgent = (window.navigator && navigator.userAgent) || ''
-    this.setState({
-      ua: new MobileDetect(userAgent)
-    })
   }
 
   isValid () {
@@ -535,11 +530,9 @@ class ModalLogin extends ModalComponent {
       'hide': !this.state.success
     })
 
-    let ua = this.state.ua
 
     let popupClass = classNames({
-      'popup': true,
-      'ios': ua && ua.is('iOS')
+      'popup': true
     })
 
     const classType = this.getType()

@@ -3,6 +3,7 @@ import * as UserActionCreators from './user'
 import { push } from 'redux-router'
 import { getToken, storeToken } from '../lib/storage'
 import config from '../../../config/'
+import window from 'global/window'
 
 export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {

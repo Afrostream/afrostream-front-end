@@ -102,9 +102,10 @@ export function couponActivate () {
       }
     }
     return async () => {
-      await actionDispatcher(this.subscribe(billingInfo))
-      return ({
-        type: ActionTypes.Billing.couponActivate
+      return await actionDispatcher(this.subscribe(billingInfo)).then(()=> {
+        return ({
+          type: ActionTypes.Billing.couponActivate
+        })
       })
     }
 
