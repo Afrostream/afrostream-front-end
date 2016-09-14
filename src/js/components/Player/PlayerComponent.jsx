@@ -565,10 +565,14 @@ class PlayerComponent extends Component {
         id: user.get('_id').toString(),
         provider: config.domain.host,
         token: token && token.get('access_token'),
-        avatar: user.get('picture'),
-        nickname: user.get('nickname')
+        avatar: user.get('picture')
+
       }),
       languages: config.player.languages
+    }
+
+    if (user.get('nickname')) {
+      komentsData.user.nickname = user.get('nickname')
     }
 
     await this.generateDomTag(videoData, komentsData)
