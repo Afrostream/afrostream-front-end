@@ -397,8 +397,8 @@
     "title": "Mes amis parrainés",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
     "metas": {
-      "title": "{planName} grâce à ce coupon",
-      "description": "{planDescription}",
+      "title": "Envie de profiter des meilleurs films et séries afro pendant {planName} ?",
+      "description": "Bénéficiez de {planDescription} à Afrostream avec mon code lors de votre première inscription."
     },
     "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
     "placeHolder": "Parrainer un ami",
