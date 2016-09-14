@@ -571,8 +571,8 @@ class PlayerComponent extends Component {
       languages: config.player.languages
     }
 
-    if (user.get('nickname')) {
-      komentsData.user.nickname = user.get('nickname')
+    if (user && user.get('nickname')) {
+      komentsData = _.merge(komentsData.user, {nickname: user.get('nickname')})
     }
 
     await this.generateDomTag(videoData, komentsData)
