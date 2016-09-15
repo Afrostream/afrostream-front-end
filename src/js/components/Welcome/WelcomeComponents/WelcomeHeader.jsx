@@ -57,7 +57,8 @@ class WelcomeHeader extends React.Component {
     let info = {
       title: getI18n(lang).home.title,
       action: getI18n(lang).home.action,
-      poster: `${metadata.shareImage}`,
+      poster: `${metadata.screen && metadata.screen.image || metadata.shareImage}`,
+      logo: `${metadata.screen && metadata.screen.logo}`,
       movie: {
         title: '',
         synopsis: ''
@@ -110,15 +111,19 @@ class WelcomeHeader extends React.Component {
       }
       info.movie = {
         title: title,
-        synopsis: data.get('synopsis')
+        synopsis: data.get('synopsis'),
+        logo: null
       }
     }
     let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
     let imageStyle = {backgroundImage: `url(${posterImg})`}
+    let logoImg = `${images.urlPrefix}${info.logo}?crop=faces&fit=clip&w=400&q=${images.quality}&fm=png`
+    let logoStyle = {backgroundImage: `url(${logoImg})`}
 
 
     let welcomeClassesSet = {
       'welcome-header': true,
+      'welcome-overlay': !info.logo,
       'welcome-header_movie': Boolean(movieData)
     }
 
@@ -129,6 +134,7 @@ class WelcomeHeader extends React.Component {
 
         {!trailer && <div className="afrostream-movie__poster" style={imageStyle}>
           <div className="afrostream-movie__mask"/>
+          {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
         </div>}
         {movieData ? <SignUpButton className="subscribe-button subscribe-button-mobile" label={info.action}/> : ''}
         <div className="afrostream-movie">

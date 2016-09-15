@@ -1,5 +1,14 @@
 @import (reference) '../../../../styles/config.less';
 
+.aspect-ratio(@width, @height) {
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: (@height / @width) * 100%;
+  }
+}
+
 .welcome-header {
   width: 100%;
   min-height: 80vh;
@@ -26,6 +35,10 @@
     background-image: url(../../../../assets/images/default/1920x815.jpg);
     background-position: center top;
     background-size: cover;
+    &:not(.overlay) {
+      background-position: left top;
+    }
+
     .afrostream-movie__mask {
       position: absolute;
       top: 0;
@@ -33,6 +46,25 @@
       bottom: 0;
       right: 0;
       background-color: fade(#000, 50%);
+    }
+
+    &.overlay {
+      .afrostream-movie__mask {
+        .isWideScreen({ background-color: fade(#000, 20%); });
+      }
+    }
+
+    .afrostream-movie__logo {
+      position: absolute;
+      width: 40%;
+      max-width: 40%;
+      right: 5em;
+      top: 8em;
+      background-position: center center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      .aspect-ratio(16, 9);
+      .isMobile({ width: 100%; max-width: 100%; right: inherit });
     }
   }
 
