@@ -10,7 +10,7 @@ const config = _.merge(
       shareImage: '/production/poster/2016/03/b8a6db25a04982c88a2b-438302.jpg',
       screen: {
         image: '/production/screen/being_black.jpg',
-        logo: '/production/screen/BMJ13_Logo_PinkOverlayBet.png',
+        logo: '/production/screen/BMJ13_Logo_PinkOverlayBet2.png',
       },
       metas: [
         {
