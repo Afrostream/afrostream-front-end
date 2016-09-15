@@ -117,7 +117,7 @@ class WelcomeHeader extends React.Component {
     }
     let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
     let imageStyle = {backgroundImage: `url(${posterImg})`}
-    let logoImg = `${images.urlPrefix}${info.logo}?crop=faces&fit=clip&w=400&q=${images.quality}&fm=png`
+    let logoImg = `${images.urlPrefix}${info.logo}?crop=faces&fit=clip&w=500&q=70&fm=png`
     let logoStyle = {backgroundImage: `url(${logoImg})`}
 
 
