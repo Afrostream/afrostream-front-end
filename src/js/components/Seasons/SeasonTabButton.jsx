@@ -1,4 +1,4 @@
-import React, { Component,PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
 
 import { connect } from 'react-redux'
@@ -6,7 +6,7 @@ import classSet from 'classnames'
 import * as SeasonActionCreators from '../../actions/season'
 import { Link } from 'react-router'
 
-@connect(({ Season }) => ({Season}))
+@connect(({Season}) => ({Season}))
 class SeasonTabButton extends Component {
 
   static propTypes = {
@@ -15,16 +15,16 @@ class SeasonTabButton extends Component {
     season: PropTypes.instanceOf(Immutable.Map),
   }
 
-  render() {
+  render () {
     const {
       props: {
-        active,index,season,
+        active, index, season,
         params:{
           movieId,
           movieSlug
-          }
         }
-      } = this
+      }
+    } = this
 
     const classes = classSet({
       'season': true,
@@ -34,19 +34,21 @@ class SeasonTabButton extends Component {
     const seasonId = season.get('_id')
     const seasonSlug = season.get('slug')
     const seasonNumber = season.get('seasonNumber')
+    const shortTitle = season.get('shortTitle')
 
     //:movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)
     return (
-      <Link className={classes} to={`/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}`}>SAISON {seasonNumber}</Link>
+      <Link className={classes}
+            to={`/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}`}>{shortTitle ? shortTitle : ('SAISON ' + seasonNumber)}</Link>
     )
   }
 
-  toggleSeason() {
+  toggleSeason () {
     const {
       props: {
         dispatch
-        }
-      } = this
+      }
+    } = this
 
     dispatch(SeasonActionCreators.toggleSeason(this.props.index))
   }
