@@ -23,7 +23,7 @@ if (process.env.BROWSER) {
   require('./Application.less')
 }
 
-@prepareRoute(async function ({store, location, params: {movieId, seasonId, episodeId, videoId}}) {
+@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
 
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))
@@ -36,6 +36,8 @@ if (process.env.BROWSER) {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 
+  await store.dispatch(UserActionCreators.getProfile())
+
 })
 
 @metasData()
@@ -44,15 +46,6 @@ if (process.env.BROWSER) {
 @fbTracking()
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
-
-  componentDidMount () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-    dispatch(UserActionCreators.getProfile())
-  }
 
   render () {
 

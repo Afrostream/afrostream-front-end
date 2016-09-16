@@ -551,7 +551,8 @@ class PlayerComponent extends Component {
     let userId
     let token = OAuth.get('token')
 
-    let komentsData = {
+    let komentData = {
+      open: true,
       videoId,
       controlBar: {
         komentToggle: {
@@ -572,10 +573,10 @@ class PlayerComponent extends Component {
     }
 
     if (user && user.get('nickname')) {
-      komentsData = _.merge(komentsData.user, {nickname: user.get('nickname')})
+      komentData = _.merge(komentData.user, {nickname: user.get('nickname')})
     }
 
-    await this.generateDomTag(videoData, komentsData)
+    await this.generateDomTag(videoData, komentData)
 
     let videoOptions = videoData.toJS()
 
