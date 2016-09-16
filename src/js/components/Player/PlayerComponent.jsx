@@ -786,7 +786,7 @@ class PlayerComponent extends Component {
     const splashs = Config.get(`/config/splash`)
 
 
-    if (!user || !splashs || !splashs.size) {
+    if (!this.player || !user || !splashs || !splashs.size) {
       return
     }
 

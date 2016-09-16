@@ -2,11 +2,24 @@
 @import (css) '../../../../node_modules/videojs-chromecast/dist/videojs-chromecast.css';
 @import (reference) '../../../styles/config.less';
 
+.player {
+
+  .splash.splash-bubble {
+    .isMobile({ top: @header-height-mobile; margin-top: @app-padding-mobile; right: @app-padding-mobile + 50px; });
+    top: 30%;
+    margin-top: @app-padding;
+    right: @app-padding + 50px;
+    max-width: 100%;
+  }
+
+}
+
 .koment {
   .koment-control-bar {
-    margin: @header-height @app-padding @app-padding @app-padding;
+    top: 30%;
+    margin: @app-padding @app-padding @app-padding @app-padding;
 
-    .isMobile({ margin: 0 @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
+    .isMobile({ top: 0; margin: @app-padding-mobile @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
   }
 
   .koment-display,
@@ -315,9 +328,5 @@
     }
   }
 
-  .splash.splash-bubble {
-    top: @header-height;
-    right: @app-padding + 50px;
-  }
 }
 
