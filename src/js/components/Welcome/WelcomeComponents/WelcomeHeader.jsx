@@ -112,8 +112,8 @@ class WelcomeHeader extends React.Component {
       info.movie = {
         title: title,
         synopsis: data.get('synopsis'),
-        logo: null
       }
+      info.logo = null
     }
     let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
     let imageStyle = {backgroundImage: `url(${posterImg})`}
