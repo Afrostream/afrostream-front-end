@@ -72,6 +72,7 @@ class MovieInfo extends LoadVideo {
     return (
       <div ref="slContainer" className={classes}>
         <div ref="slBackground" className="movie-background" style={imageStyles}>
+          <div className="afrostream-movie__mask"/>
         </div>
         <Link to={link}>
           <div className="btn-play"/>
