@@ -9,11 +9,11 @@ import config from '../../../../config'
 const {oauth2}= config
 
 if (process.env.BROWSER) {
-  require('./AccountSocial.less')
+  require('./AccountProfil.less')
 }
 
 @connect(({User}) => ({User}))
-class AccountSocial extends React.Component {
+class AccountProfil extends React.Component {
 
   constructor (props) {
     super(props)
@@ -98,4 +98,4 @@ class AccountSocial extends React.Component {
   }
 }
 
-export default AccountSocial
+export default AccountProfil

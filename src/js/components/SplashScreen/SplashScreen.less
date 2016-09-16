@@ -1,6 +1,7 @@
 @import (reference) '../../../styles/config.less';
 
-.splash-screen {
+.splash-screen,
+.splash {
   .close {
     z-index: @nav-z + 2;
     margin: @app-padding;
@@ -9,23 +10,82 @@
     opacity: 0.8;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   }
-  .splash {
-    &.slide-top {
-      .transform(translateY(-100%));
+}
+
+.splash.splash-image {
+  &.slide-top {
+    .transform(translateY(-100%));
+  }
+  position: absolute;
+  z-index: @nav-z + 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  background-size: cover;
+  .isMobile({ background-size: contain; });
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  .transition(all 0.5s ease);
+}
+
+.splash.splash-bubble {
+  position: absolute;
+  top: @header-height;
+  right: 0;
+  color: @color-indigo;
+  transition: transform 0.5s linear, opacity 0.3s linear;
+  background-color: fade(@brand-bg, 90%);
+  padding: 2em;
+  .transform(translateX(-100%));
+  .splash-title {
+    line-height: 2;
+    &:first-letter {
+      text-transform: uppercase;
     }
-    position: absolute;
-    z-index: @nav-z + 1;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: black;
-    background-size: cover;
-    .isMobile({ background-size: contain; });
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    .transition(all 0.5s ease);
+    font-size: 1.8em;
+  }
+  .splash-desc {
+    &:first-letter {
+      text-transform: uppercase;
+    }
+    font-size: 1.3em;
+  }
+  &.right {
+    .close {
+      right: 0;
+      margin-top: -10px;
+      position: absolute;
+      color: @color-indigo
+    }
+    .transform(translateX(0));
+    animation-name: splash-bubble-right;
+    animation-duration: 0.7s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-Out;
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -10px;
+      width: 0;
+      height: 0;
+      border: 5px solid fade(@brand-bg, 90%);
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+    }
   }
 }
 
+@keyframes splash-bubble-right {
+  from {
+    opacity: 0;
+    transform: translateX(-100);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

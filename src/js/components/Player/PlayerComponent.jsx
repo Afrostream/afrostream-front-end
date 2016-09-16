@@ -12,6 +12,7 @@ import shallowEqual from 'react-pure-render/shallowEqual'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
+import * as UserActionCreators from '../../actions/user'
 import Spinner from '../Spinner/Spinner'
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import { Billboard, CsaIcon } from '../Movies'
@@ -33,7 +34,8 @@ if (canUseDOM) {
   var base64 = require('js-base64').Base64
 }
 
-@connect(({OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
+@connect(({Config, OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
+  Config,
   OAuth,
   Video,
   Movie,
@@ -542,7 +544,7 @@ class PlayerComponent extends Component {
   async getPlayerData (videoData) {
     const {
       props: {
-        OAuth, Player, Movie, User, movieId, videoId
+        Config, OAuth, Player, Movie, User, movieId, videoId
       }
     } = this
 
@@ -758,6 +760,78 @@ class PlayerComponent extends Component {
       }
     })
     return playerData
+  }
+
+  //SPLASH BUBBLE
+  hideSplash (splashId) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    dispatch(UserActionCreators.setSplash(splashId))
+  }
+
+  renderSplashs () {
+    const {
+      props: {
+        Config,
+        User
+      }
+    } = this
+
+
+    const user = User.get('user')
+    const splashs = Config.get(`/config/splash`)
+
+
+    if (!user || !splashs || !splashs.size) {
+      return
+    }
+
+    const splashList = splashs.filter((splash)=> {
+      return splash && splash.get('type') === 'bubble'
+    })
+
+    const userSplashList = user.get('splashList')
+
+    let splash = splashList.find((spl) => {
+      const splashId = spl.get('_id')
+      if (userSplashList) {
+        const userHasShowedSplash = userSplashList.find((usrSplash)=> {
+          return usrSplash.get('_id') === splashId
+        })
+        return !userHasShowedSplash
+      }
+      return true
+    })
+
+    if (!splash) {
+      return
+    }
+
+    let splashClass = {
+      'splash': true,
+      'splash-bubble': true,
+      'right': true
+    }
+
+    const inputProps = {
+      onClick: e =>::this.hideSplash(splash.get('_id'))
+    }
+
+    return (
+      <div className={classSet(splashClass)} key={`splash-bubble-${splash.get('_id')}`}>
+        <i className="zmdi zmdi-close zmdi-hc-2x close" {...inputProps}></i>
+        <div className="splash-title">
+          {splash.get('title')}
+        </div>
+        <div className="splash-desc">
+          {splash.get('description')}
+        </div>
+      </div>
+    )
   }
 
   async generatePlayer (videoData) {
@@ -988,6 +1062,7 @@ class PlayerComponent extends Component {
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
         </div>
         {this.getNextComponent()}
+        {this.renderSplashs()}
       </div>
     )
   }
