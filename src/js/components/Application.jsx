@@ -12,11 +12,9 @@ import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
 
-import * as BillingActionCreators from '../actions/billing'
 import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
 import * as EpisodeActionCreators from '../actions/episode'
-import * as UserActionCreators from '../actions/user'
 
 
 if (process.env.BROWSER) {
@@ -35,8 +33,6 @@ if (process.env.BROWSER) {
   if (episodeId && episodeId !== 'undefined') {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
-
-  await store.dispatch(UserActionCreators.getProfile())
 
 })
 

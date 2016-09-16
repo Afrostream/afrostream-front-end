@@ -2,9 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
-import * as UserActionCreators from '../../actions/user'
 import * as EventActionCreators from '../../actions/event'
-import { Link } from 'react-router'
 import SearchInput from './../Search/SearchBox'
 import FavoritesButton from './../Favorites/FavoritesButton'
 import BrowseButton from './../Browse/BrowseButton'
@@ -15,16 +13,6 @@ if (process.env.BROWSER) {
 
 @connect(({User, OAuth, Event}) => ({User, OAuth, Event}))
 class UserButton extends React.Component {
-
-  //componentDidMount () {
-  //  const {
-  //    props: {
-  //      dispatch
-  //    }
-  //  } = this
-  //
-  //  dispatch(UserActionCreators.getProfile())
-  //}
 
   logOut () {
     const {
