@@ -46,7 +46,7 @@ class Faq extends React.Component {
 
             <p>Le premier prélèvement a lieu au moment de la commande le l’abonnement.
 
-              Pour l’abonnement « Ambassadeurs » et l’abonnement « Do the Right Think », il n’y a qu’un seul
+              Pour l’abonnement Annuel et l’abonnement Mensuel, il n’y a qu’un seul
               prélèvement pour toute l’année.
               Pour l’abonnement « Think Like A man » , les prochains prélèvements mensuels débuteront le 1
               novembre. Cet abonnement mensuel est sans engagement. Vous pouvez vous désabonner à tout
@@ -63,7 +63,7 @@ class Faq extends React.Component {
             <p>Quelques jours avant la date de démarrage de votre abonnement à Afrostream, vous recevrez par
               email
               les informations nécessaires pour paramétrer votre profil et votre mot de passe.
-              Les abonnements « Ambassadeurs » et « Do the Right Think » démarrent le 1er septembre.
+              Les abonnements Annuel et Mensuel démarrent le 1er septembre.
               L’abonnement « Think Like a Man » démarre le 1 Octobre.</p>
 
 

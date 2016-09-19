@@ -239,6 +239,25 @@
       "on": "Lier mon profil",
       "off": "Ne plus lier mon profil"
     },
+    "profile": {
+      "profile": "Profile",
+      "birthDate": "Anniversaire",
+      "first_name": "Nom",
+      "last_name": "Prénom",
+      "nickname": "Nom d'utilisateur",
+      "gender": "Sexe",
+      "telephone": "Téléphone",
+      "social": "Partage social",
+      "socialSharing": "Partager a mes amis mon activité",
+      "player": "Vidéo",
+      "playerAudio": "Langue audio",
+      "playerCaption": "Sous titres",
+      "playerQuality": "Qualité de lecture",
+      "playerKoment": "Commentaires",
+      "playerAutoNext": "Passage à l'épisode suivant automatiquement",
+      "on": "Activé",
+      "off": "Désactivé"
+    },
     "cancel": {
       "active": {
         "header": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",

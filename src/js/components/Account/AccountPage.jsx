@@ -7,6 +7,7 @@ import { getI18n } from '../../../../config/i18n'
 import AccountPlan from './AccountPlan'
 import AccountSubscriptions from './AccountSubscriptions'
 import AccountSocial from './AccountSocial'
+import AccountProfil from './AccountProfil'
 
 if (process.env.BROWSER) {
   require('./AccountPage.less')
@@ -95,6 +96,7 @@ class AccountPage extends React.Component {
         <AccountPlan />
         <AccountSubscriptions />
         <AccountSocial />
+        <AccountProfil />
       </div>
     )
   }

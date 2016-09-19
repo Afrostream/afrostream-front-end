@@ -2,11 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getI18n } from '../../../../config/i18n'
 import SwitchButton from '../SwitchButton/SwitchButton'
-import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
 import config from '../../../../config'
+import _ from 'lodash'
 
-const {oauth2}= config
+const {userProfile}= config
 
 if (process.env.BROWSER) {
   require('./AccountProfil.less')
@@ -21,7 +21,7 @@ class AccountProfil extends React.Component {
   }
 
 
-  synchroniseHandler ({isSynchro, strategy}) {
+  synchroniseHandler ({data}) {
     const {
       props: {
         dispatch
@@ -32,7 +32,7 @@ class AccountProfil extends React.Component {
       fetching: true
     })
 
-    dispatch(OAuthActionCreators.strategy({strategy, path: isSynchro ? 'unlink' : 'link'}))
+    dispatch(UserActionCreators.updateUserProfile(data))
       .then(()=> {
         dispatch(UserActionCreators.getProfile())
         this.setState({
@@ -46,34 +46,71 @@ class AccountProfil extends React.Component {
   }
 
 
-  getSocialProvider (user) {
-
-
-    return _.filter(oauth2.providers, {active: true}).map((strategy)=> {
-      const providerInfos = user.get(strategy.name)
-      const isSynchro = Boolean(providerInfos)
-      const checkLabel = getI18n().account.oauth2[isSynchro ? 'off' : 'on']
-      const eventObj = {isSynchro, strategy: strategy.name}
-      const inputAttributes = {
-        onChange: event => ::this.synchroniseHandler(eventObj)
+  renderFormElement (section) {
+    const {
+      props: {
+        User
       }
-      const title = getI18n().account.oauth2.link.replace('{strategy}', strategy.name)
-      return (<div className="row row-provider" key={`${strategy.name}-synchro`}>
-          <div className="col-md-2 text-center">
-            <i className={strategy.icon}/>
-          </div>
-          <div className="col-md-6" dangerouslySetInnerHTML={{__html: title}}/>
-          <div className="col-md-4">
-            <SwitchButton
-              label={checkLabel}
-              name={`${strategy.name}-synchro_check`}
-              checked={isSynchro}
-              {...inputAttributes}
-              disabled={this.state.fetching}
-            />
-          </div>
-        </div>
-      )
+    } = this
+
+    const user = User.get('user')
+
+    const sectionValue = user.get(section.key)
+    const isEnable = Boolean(sectionValue)
+    const checkLabel = getI18n().account.profile[isEnable ? 'off' : 'on']
+    const eventObj = {}
+    const inputAttributes = {
+      onChange: event => ::this.synchroniseHandler(eventObj)
+    }
+
+    let element
+
+    switch (section.type) {
+      case 'Date':
+        element = <input type="date"/>
+        break
+      case 'Boolean':
+        element = <SwitchButton
+          label={checkLabel}
+          name={`${section.key}-synchro_check`}
+          checked={isEnable}
+          {...inputAttributes}
+          disabled={this.state.fetching}
+        />
+        break
+      default:
+        element = <input type="text"/>
+        break
+    }
+
+    return element
+  }
+
+  renderUserProfile () {
+    //GET SECTIONS
+    return _.map(userProfile.keys, (sections, key)=> {
+      console.log(key)
+      let title = getI18n().account.profile[key]
+
+      return (<div className="row row-provider" key={`${key}-profile`}>
+        <h3>{title}</h3>
+        {sections.map((section)=> {
+          title = getI18n().account.profile[section.key]
+
+
+          return (<div className="col-md-4">
+              <div className="row row-provider" key={`${section.key}-ection`}>
+                <div className="col-md-6" dangerouslySetInnerHTML={{__html: title}}/>
+                <div className="col-md-4">
+                  {this.renderFormElement(section)}
+                </div>
+              </div>
+            </div>
+          )
+
+        })}
+
+      </div>)
     })
   }
 
@@ -91,7 +128,7 @@ class AccountProfil extends React.Component {
     return (
       <div className="row account-details">
         <div className="account-details__container col-md-12">
-          {this.getSocialProvider(user)}
+          {this.renderUserProfile()}
         </div>
       </div>
     )

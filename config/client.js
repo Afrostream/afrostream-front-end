@@ -34,6 +34,26 @@ const client = {
     sponsorship: true,
     koment: true
   },
+  userProfile: {
+    keys: {
+      profile: [
+        {key: 'birthDate', type: 'Date'},
+        {key: 'first_name', type: 'String'},
+        {key: 'last_name', type: 'String'},
+        {key: 'nickname', type: 'String'},
+        {key: 'gender', type: 'Boolean'},
+        {key: 'telephone', type: 'Number'}
+      ],
+      social: [{key: 'socialSharing', type: 'Boolean'}],
+      player: [
+        {key: 'playerAudio', type: 'List'},
+        {key: 'playerCaption', type: 'List'},
+        {key: 'playerQuality', type: 'List'},
+        {key: 'playerKoment', type: 'Boolean'},
+        {key: 'playerAutoNext', type: 'Boolean'}
+      ]
+    }
+  },
   /**
    * APPS
    */
