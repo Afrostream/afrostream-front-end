@@ -93,10 +93,10 @@ class AccountPage extends React.Component {
           <h1>{getI18n().account.header}</h1>
         </div>
         {this.getUserInfos()}
-        <AccountPlan />
-        <AccountSubscriptions />
         <AccountSocial />
         <AccountProfil />
+        <AccountPlan />
+        <AccountSubscriptions />
       </div>
     )
   }

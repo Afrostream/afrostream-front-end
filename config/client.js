@@ -37,20 +37,44 @@ const client = {
   userProfile: {
     keys: {
       profile: [
-        {key: 'birthDate', type: 'Date'},
+        {key: 'email', type: 'Email', icon: '', disabled: true},
         {key: 'first_name', type: 'String'},
         {key: 'last_name', type: 'String'},
         {key: 'nickname', type: 'String'},
-        {key: 'gender', type: 'Boolean'},
-        {key: 'telephone', type: 'Number'}
+        {
+          key: 'gender',
+          type: 'Radio',
+          icon: 'zmdi zmdi-female',
+          iconRight: 'zmdi zmdi-male-alt',
+          defaultSelected: 'women',
+          list: [{value: 'women'}, {value: 'men'}]
+        },
+        {key: 'telephone', type: 'Number', icon: 'zmdi zmdi-smartphone-android'},
+        {key: 'birthDate', type: 'Date', icon: ''}
       ],
-      social: [{key: 'socialSharing', type: 'Boolean'}],
+      social: [{key: 'socialSharing', type: 'Boolean', icon: 'zmdi zmdi-share'}],
       player: [
-        {key: 'playerAudio', type: 'List'},
-        {key: 'playerCaption', type: 'List'},
-        {key: 'playerQuality', type: 'List'},
-        {key: 'playerKoment', type: 'Boolean'},
-        {key: 'playerAutoNext', type: 'Boolean'}
+        {
+          key: 'playerAudio',
+          type: 'List',
+          icon: 'zmdi zmdi-hearing',
+          list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
+        },
+        {
+          key: 'playerCaption', type: 'List', icon: 'zmdi zmdi-view-subtitles',
+          list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
+        },
+        {
+          key: 'playerQuality', type: 'List', icon: 'zmdi zmdi-router',
+          list: [
+            {label: 'Bas', value: 4},
+            {label: 'Moyen', value: 3},
+            {label: 'Normal', value: 2},
+            {label: 'HD', value: 1},
+            {label: 'Auto', value: 0}]
+        },
+        {key: 'playerKoment', type: 'Boolean', icon: 'zmdi zmdi-comment-more'},
+        {key: 'playerAutoNext', type: 'Boolean', icon: 'zmdi zmdi-skip-next'}
       ]
     }
   },

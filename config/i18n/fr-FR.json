@@ -240,7 +240,7 @@
       "off": "Ne plus lier mon profil"
     },
     "profile": {
-      "profile": "Profile",
+      "profile": "Informations personnelles",
       "birthDate": "Anniversaire",
       "first_name": "Nom",
       "last_name": "Prénom",
@@ -255,6 +255,8 @@
       "playerQuality": "Qualité de lecture",
       "playerKoment": "Commentaires",
       "playerAutoNext": "Passage à l'épisode suivant automatiquement",
+      "men": "Homme",
+      "women": "Femme",
       "on": "Activé",
       "off": "Désactivé"
     },

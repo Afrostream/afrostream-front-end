@@ -15,6 +15,19 @@ import { prepareRoute } from '../decorators'
 import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
 import * as EpisodeActionCreators from '../actions/episode'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { grey600, purple700, purple800, purple900 } from 'material-ui/styles/colors'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+
+
+const muiTheme = getMuiTheme({
+  palette: {
+    textColor: grey600,
+    primary1Color: purple700,
+    primary2Color: purple800,
+    primary3Color: purple900,
+  }
+})
 
 
 if (process.env.BROWSER) {
@@ -56,17 +69,19 @@ class Application extends React.Component {
     })
 
     return (
-      <div className={appClasses}>
-        <Header {...this.props}/>
-        <SideBar />
-        <SplashScreen />
-        <AlertMessage />
-        <div id="page-content-wrapper" className="container-fluid">
-          {children}
-          <Footer {...this.props}/>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div className={appClasses}>
+          <Header {...this.props}/>
+          <SideBar />
+          <SplashScreen />
+          <AlertMessage />
+          <div id="page-content-wrapper" className="container-fluid">
+            {children}
+            <Footer {...this.props}/>
+          </div>
+          <ModalView {...this.props}/>
         </div>
-        <ModalView {...this.props}/>
-      </div>
+      </MuiThemeProvider>
     )
   }
 }
