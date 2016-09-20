@@ -38,7 +38,7 @@ const client = {
     keys: {
       profile: [
         {key: 'picture', type: 'picture'},
-        {key: 'nickname', type: 'text', col: 3},
+        {key: 'nickname', type: 'text', col: 6},
         {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 3},
         {key: 'last_name', type: 'text', autoComplete: 'surname', col: 3},
         {
@@ -58,7 +58,7 @@ const client = {
           col: 3
 
         },
-        {key: 'birthDate', type: 'date', icon: ''},
+        {key: 'birthDate', type: 'date', icon: '', col: 3},
         {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 6},
         {key: 'password', type: 'password', col: 6}
       ],
