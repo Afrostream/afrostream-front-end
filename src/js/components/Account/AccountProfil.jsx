@@ -180,6 +180,7 @@ class AccountProfil extends React.Component {
           iconStyle={{
             fill: '#FF9800'
           }}
+          defaultValue={true}
           toggled={isEnable}
           {...{label, icon}}
           {...inputAttributes}
