@@ -42,9 +42,7 @@ class AccountPage extends React.Component {
 
     return (
       <div>
-        <div className="row account-details">
-          <h1>{getI18n().account.header}</h1>
-        </div>
+        <h1>{getI18n().account.header}</h1>
         <AccountProfil profile="profile"/>
         <AccountProfil profile="social"/>
         <AccountSocial />
