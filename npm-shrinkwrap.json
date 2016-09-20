@@ -6855,9 +6855,9 @@
       }
     },
     "react": {
-      "version": "15.3.1",
+      "version": "15.3.2",
       "from": "react@latest",
-      "resolved": "https://registry.npmjs.org/react/-/react-15.3.1.tgz",
+      "resolved": "https://registry.npmjs.org/react/-/react-15.3.2.tgz",
       "dependencies": {
         "core-js": {
           "version": "1.2.7",
@@ -6877,14 +6877,14 @@
       "resolved": "https://registry.npmjs.org/react-addons-create-fragment/-/react-addons-create-fragment-15.3.1.tgz"
     },
     "react-addons-css-transition-group": {
-      "version": "15.3.0",
-      "from": "react-addons-css-transition-group@>=15.3.0 <16.0.0",
-      "resolved": "https://registry.npmjs.org/react-addons-css-transition-group/-/react-addons-css-transition-group-15.3.0.tgz"
+      "version": "15.3.2",
+      "from": "react-addons-css-transition-group@latest",
+      "resolved": "https://registry.npmjs.org/react-addons-css-transition-group/-/react-addons-css-transition-group-15.3.2.tgz"
     },
     "react-addons-shallow-compare": {
-      "version": "15.3.0",
-      "from": "react-addons-shallow-compare@>=15.3.0 <16.0.0",
-      "resolved": "https://registry.npmjs.org/react-addons-shallow-compare/-/react-addons-shallow-compare-15.3.0.tgz"
+      "version": "15.3.2",
+      "from": "react-addons-shallow-compare@latest",
+      "resolved": "https://registry.npmjs.org/react-addons-shallow-compare/-/react-addons-shallow-compare-15.3.2.tgz"
     },
     "react-addons-transition-group": {
       "version": "15.3.1",
@@ -6902,9 +6902,9 @@
       "resolved": "https://registry.npmjs.org/react-autowhatever/-/react-autowhatever-4.3.0.tgz"
     },
     "react-dom": {
-      "version": "15.3.0",
-      "from": "react-dom@>=15.3.0 <16.0.0",
-      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-15.3.0.tgz"
+      "version": "15.3.2",
+      "from": "react-dom@latest",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-15.3.2.tgz"
     },
     "react-event-listener": {
       "version": "0.2.1",
