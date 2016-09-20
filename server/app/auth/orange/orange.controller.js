@@ -56,18 +56,23 @@ export async function callback (req, res) {
   res.noCache()
   try {
     const orangeCompleteFlow = await getData(req, '/auth/orange/callback', {followRedirect: false, method: 'POST'})
-    var orangeResponse = orangeCompleteFlow[0]
-      , orangeBody = orangeCompleteFlow[1] || {}
+    const orangeResponse = orangeCompleteFlow[0]
+    const orangeBody = orangeCompleteFlow[1] || {}
+    let signupClientType
 
     const layout = 'layouts/oauth-success'
     if (orangeResponse.statusCode !== 200) {
       orangeBody.error = orangeResponse.statusMessage
+    } else {
+      signupClientType = orangeBody.signupClientType || ''
+      delete orangeBody.signupClientType
     }
     res.status(orangeResponse.statusCode).render(layout, {
       statusCode: orangeResponse.statusCode,
       statusMessage: orangeResponse.statusMessage,
       tokenData: orangeBody,
-      storageId: apiClient.token
+      storageId: apiClient.token,
+      signupClientType: signupClientType
     })
   }
   catch (err) {
