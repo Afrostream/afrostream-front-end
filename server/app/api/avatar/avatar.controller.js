@@ -5,7 +5,22 @@ exports.getAvatar = function (req, res) {
   res.set('Content-Type', 'image/jpeg')
 
   let name = req.params.email || ''
+  let type = req.query.type
   let size = 50
+  switch (type) {
+
+    case'large':
+      size = 200
+      break
+    case'normal':
+      size = 100
+      break
+    case'square':
+    case'small':
+    default:
+      size = 50
+      break
+  }
 
   let colours = [
       '#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e', '#16a085', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50',

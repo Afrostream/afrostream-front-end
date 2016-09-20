@@ -33,7 +33,8 @@ const buildHome = function (lang) {
   const homeRoutes = [
     <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
     <Route key={`${lang}-compte`} name="compte" path="compte" component={AccountPage}>,
-      <Route key={`${lang}-cancelSubscription`} name="cancelSubscription" path="cancel-subscription"
+      <Route key={`${lang}-cancelSubscription`} name="cancelSubscription"
+             path="cancel-subscription(/:subscriptionBillingUuid)"
              component={CancelSubscription}/>
     </Route>,
     <Route key={`${lang}-sponsorship`} name="sponsorship" path="parrainage" component={SponsorsPage}/>,

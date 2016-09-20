@@ -16,16 +16,27 @@ import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
 import * as EpisodeActionCreators from '../actions/episode'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { grey600, purple700, purple800, purple900 } from 'material-ui/styles/colors'
+import {
+  red500,
+  grey200,
+  grey400,
+  grey600,
+  purple600,
+  purple700,
+  purple800,
+  purple900
+} from 'material-ui/styles/colors'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 
 const muiTheme = getMuiTheme({
   palette: {
     textColor: grey600,
-    primary1Color: purple700,
-    primary2Color: purple800,
-    primary3Color: purple900,
+    disabledColor: grey400,
+    primary1Color: purple600,
+    primary2Color: purple700,
+    primary3Color: grey200,
+    accent1Color: red500
   }
 })
 

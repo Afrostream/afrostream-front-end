@@ -5,9 +5,16 @@ import { Link } from 'react-router'
 import { getI18n } from '../../../../config/i18n'
 import moment from 'moment'
 import PaymentImages from '../Payment/PaymentImages'
+import { withRouter } from 'react-router'
+import { isBoolean } from '../../lib/utils'
+import RaisedButton from 'material-ui/RaisedButton'
 
 if (process.env.BROWSER) {
   require('./CancelSubscription.less')
+}
+
+const style = {
+  margin: 12
 }
 
 @connect(({Billing}) => ({Billing}))
@@ -53,7 +60,10 @@ class CancelSubscription extends React.Component {
   render () {
     const {
       props: {
-        Billing
+        Billing,
+        params:{
+          subscriptionBillingUuid
+        }
       }
     } = this
 
@@ -64,20 +74,26 @@ class CancelSubscription extends React.Component {
         <div />
       )
     }
-
     let currentSubscription = subscriptionsList.find((obj)=> {
-      return obj.get('isActive') === 'yes'// && obj.get('subStatus') !== 'canceled'
+      return obj.get('subscriptionBillingUuid') == subscriptionBillingUuid
     })
 
-    let activeSubscription = currentSubscription && currentSubscription.get('subStatus') !== 'canceled'
-    let getI18nData = getI18n().account.cancel[activeSubscription ? 'active' : 'canceled']
+    let isCancelable = isBoolean(currentSubscription.get('isCancelable'))
+    let subStatus = currentSubscription.get('subStatus')
+    let activeSubscription = currentSubscription && subStatus !== 'canceled' && isCancelable
+    let status = currentSubscription.get('status')
 
-    let header = getI18nData.header
+    if (!isCancelable) {
+      status = 'unCancelable'
+    }
+
+    let header = getI18n().account.cancel.status[status]
+
     let endDate
     if (currentSubscription) {
       endDate = moment(currentSubscription.get('subPeriodEndsDate')).format('LLL')
     }
-    let infos = getI18nData.info.replace(/{endDate}/gm, endDate)
+    let infos = getI18n().account.cancel.info.replace(/{endDate}/gm, endDate)
 
     const inputAttributes = {
       onClick: event => ::this.cancelSubscription(currentSubscription)
@@ -95,24 +111,24 @@ class CancelSubscription extends React.Component {
             {infos}
           </div>
         </div>
-        { activeSubscription ?
-          <div className="row">
-            <div className="col-md-12">
-              <button className="btn btn-default btn-danger button-cancel__subscription" {...inputAttributes}
-                      disabled={this.state.pending}>
-                {getI18n().account.cancel.submitBtn}
-              </button>
-              <Link className="btn btn-default btn-success btn-return__account"
-                    to="/">{getI18n().account.cancel.cancelBtn}</Link>
-            </div>
+        { activeSubscription &&
+        <div className="row">
+          <div className="col-md-12">
+            <RaisedButton {...inputAttributes} label={getI18n().account.cancel.submitBtn} secondary={true} style={style}
+                          disabled={this.state.pending}/>
+            <Link to="/">
+              <RaisedButton label={getI18n().account.cancel.cancelBtn} style={style}
+                            disabled={this.state.pending}/>
+            </Link>
           </div>
-          : null}
+        </div>
+        }
 
-        <PaymentImages catIds={[18,17]}/>
+        <PaymentImages catIds={[18, 17]}/>
 
       </div>
     )
   }
 }
 
-export default CancelSubscription
+export default withRouter(CancelSubscription)

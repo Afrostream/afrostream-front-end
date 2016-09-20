@@ -37,35 +37,45 @@ const client = {
   userProfile: {
     keys: {
       profile: [
-        {key: 'email', type: 'Email', icon: '', disabled: true},
-        {key: 'first_name', type: 'String'},
-        {key: 'last_name', type: 'String'},
-        {key: 'nickname', type: 'String'},
+        {key: 'picture', type: 'picture'},
+        {key: 'password', type: 'password', col: 6},
+        {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 6},
+        {key: 'nickname', type: 'text', col: 3},
+        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 3},
+        {key: 'last_name', type: 'text', autoComplete: 'surname', col: 3},
         {
           key: 'gender',
-          type: 'Radio',
+          type: 'radio',
           icon: 'zmdi zmdi-female',
           iconRight: 'zmdi zmdi-male-alt',
           defaultSelected: 'women',
           list: [{value: 'women'}, {value: 'men'}]
         },
-        {key: 'telephone', type: 'Number', icon: 'zmdi zmdi-smartphone-android'},
-        {key: 'birthDate', type: 'Date', icon: ''}
+        {
+          key: 'telephone',
+          type: 'tel',
+          icon: 'zmdi zmdi-smartphone-android',
+          autoComplete: 'phone',
+          pattern: '[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}',
+          col: 3
+
+        },
+        {key: 'birthDate', type: 'date', icon: ''}
       ],
-      social: [{key: 'socialSharing', type: 'Boolean', icon: 'zmdi zmdi-share'}],
+      social: [{key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
       player: [
         {
           key: 'playerAudio',
-          type: 'List',
+          type: 'select',
           icon: 'zmdi zmdi-hearing',
           list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
         },
         {
-          key: 'playerCaption', type: 'List', icon: 'zmdi zmdi-view-subtitles',
+          key: 'playerCaption', type: 'select', icon: 'zmdi zmdi-view-subtitles',
           list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
         },
         {
-          key: 'playerQuality', type: 'List', icon: 'zmdi zmdi-router',
+          key: 'playerQuality', type: 'select', icon: 'zmdi zmdi-router',
           list: [
             {label: 'Bas', value: 4},
             {label: 'Moyen', value: 3},
@@ -73,8 +83,8 @@ const client = {
             {label: 'HD', value: 1},
             {label: 'Auto', value: 0}]
         },
-        {key: 'playerKoment', type: 'Boolean', icon: 'zmdi zmdi-comment-more'},
-        {key: 'playerAutoNext', type: 'Boolean', icon: 'zmdi zmdi-skip-next'}
+        {key: 'playerKoment', type: 'toggle', icon: 'zmdi zmdi-comment-more'},
+        {key: 'playerAutoNext', type: 'toggle', icon: 'zmdi zmdi-skip-next'}
       ]
     }
   },

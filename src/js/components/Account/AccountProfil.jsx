@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getI18n } from '../../../../config/i18n'
+import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
+import { Link } from 'react-router'
 import config from '../../../../config'
-import _ from 'lodash'
 import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import DatePicker from 'material-ui/DatePicker'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
-import VerifiedUser from 'material-ui/svg-icons/action/verified-user';
+import RaisedButton from 'material-ui/RaisedButton'
 
 import areIntlLocalesSupported from 'intl-locales-supported'
 
@@ -21,11 +22,11 @@ let DateTimeFormat
  * Use the native Intl.DateTimeFormat if available, or a polyfill if not.
  */
 if (areIntlLocalesSupported(['fr'])) {
-  DateTimeFormat = global.Intl.DateTimeFormat;
+  DateTimeFormat = global.Intl.DateTimeFormat
 } else {
-  const IntlPolyfill = require('intl');
-  DateTimeFormat = IntlPolyfill.DateTimeFormat;
-  require('intl/locale-data/jsonp/fr');
+  const IntlPolyfill = require('intl')
+  DateTimeFormat = IntlPolyfill.DateTimeFormat
+  require('intl/locale-data/jsonp/fr')
 }
 
 const {userProfile}= config
@@ -43,7 +44,7 @@ class AccountProfil extends React.Component {
   }
 
 
-  synchroniseHandler (key, value) {
+  updateUserHandler (key, value) {
     const {
       props: {
         dispatch
@@ -68,6 +69,34 @@ class AccountProfil extends React.Component {
   }
 
 
+  syncFB () {
+    const {
+      props: {
+        dispatch,
+        User
+      }
+    } = this
+
+    const user = User.get('user')
+    const strategy = 'facebook'
+    if (user.get(strategy)) {
+      return
+    }
+    dispatch(OAuthActionCreators.strategy({strategy, isSynchro: user.get(strategy)}))
+      .then(()=> {
+        dispatch(UserActionCreators.getProfile())
+        this.setState({
+          fetching: false
+        })
+      }).catch(()=> {
+      this.setState({
+        fetching: false
+      })
+    })
+
+  }
+
+
   renderFormElement (section) {
     const {
       props: {
@@ -79,54 +108,63 @@ class AccountProfil extends React.Component {
     const label = getI18n().account.profile[section.key]
     const sectionValue = user.get(section.key) || ''
     const icon = section.icon || ''
-    const iconStyle = section.icon || ''
-    const iconRight = section.iconRight || ''
     const isEnable = Boolean(sectionValue)
-    const checkLabel = getI18n().account.profile[isEnable ? 'off' : 'on']
     let inputAttributes = {
       onChange: (event, key, payload) => {
-        this.synchroniseHandler(section.key, payload)
+        this.updateUserHandler(section.key, payload)
       }
     }
 
     let element
 
     switch (section.type) {
-      case 'Date':
+      case  'password':
+        element = <Link to="/reset"><RaisedButton {...{label}} {...inputAttributes}/></Link>
+        break
+      case  'picture':
+        inputAttributes = {
+          onClick: (event) => this.syncFB()
+        }
+        element = <img className="img-responsive" {...inputAttributes} src={`${user.get('picture')}?type=large`}/>
+        break
+      case 'date':
         inputAttributes = {
           onChange: (event, date) => {
-            this.synchroniseHandler(section.key, date)
+            this.updateUserHandler(section.key, date)
           }
         }
-        let selectedDate = typeof sectionValue === Date ? sectionValue : new Date(sectionValue)
-        element = <DatePicker defaultDate={selectedDate}
+        let selectedDate = sectionValue && new Date(sectionValue)
+        element = <DatePicker value={selectedDate}
+                              locale="fr-FR"
+                              mode="landscape"
                               floatingLabelText={label}
                               hintText={label} {...inputAttributes} DateTimeFormat={DateTimeFormat}/>
         break
-      case 'Radio':
+      case 'radio':
         inputAttributes = {
           onChange: (event, payload) => {
             let value = payload
-            this.synchroniseHandler(section.key, value)
+            this.updateUserHandler(section.key, value)
           }
         }
         element =
           <RadioButtonGroup style={{display: 'flex'}}
                             {...inputAttributes}
                             name={section.key}
-                            defaultSelected={section.defaultSelected}>
+                            defaultSelected={section.defaultSelected}
+                            valueSelected={sectionValue || section.defaultSelected}>
             {section.list.map((item, key) =><RadioButton style={{width: '30%'}} value={item.value}
                                                          label={ getI18n().account.profile[item.value]}
                                                          key={`${key}-item-radio`}/>)}
           </RadioButtonGroup>
         break
-      case 'List':
-        element = <SelectField defaultValue={sectionValue} {...inputAttributes} floatingLabelText={label}>
+      case 'select':
+        element = <SelectField value={sectionValue} {...inputAttributes} floatingLabelText={label}>
           {section.list.map((item, key) =><MenuItem value={item.value} primaryText={item.label}
-                                                    key={`${key}-item-menu`}/>)}
+                                                    key={item.value}/>)}
         </SelectField>
         break
-      case 'Boolean':
+      case 'toggle':
 
         inputAttributes = {
           onToggle: (event, payload) => {
@@ -134,12 +172,11 @@ class AccountProfil extends React.Component {
             if (section.key === 'gender') {
               value = payload ? 'man' : 'woman'
             }
-            this.synchroniseHandler(section.key, value)
+            this.updateUserHandler(section.key, value)
           }
         }
 
         element = <Toggle
-          {...inputAttributes}
           iconStyle={{
             fill: '#FF9800'
           }}
@@ -149,24 +186,28 @@ class AccountProfil extends React.Component {
           disabled={this.state.fetching}
         />
         break
+
       default:
 
-        let inputAttributes = {
+        inputAttributes = {
           onChange: (event, payload) => {
             clearTimeout(this.updateTimeout)
             this.updateTimeout = setTimeout(()=> {
 
-              this.synchroniseHandler(section.key, payload)
+              this.updateUserHandler(section.key, payload)
             }, 1500)
           }
         }
 
-        element = <TextField floatingLabelText={label}
-                             underlineShow={false}
+        element = <TextField underlineShow={false}
+                             autoComplete={section.autoComplete}
                              disabled={section.disabled}
                              defaultValue={sectionValue}
                              name={`${section.key}-input`}
                              hintText={label}
+                             pattern={section.pattern}
+                             type={section.type.toLowerCase()}
+                             floatingLabelText={label}
                              {...inputAttributes}/>
         break
     }
@@ -175,33 +216,38 @@ class AccountProfil extends React.Component {
   }
 
   renderUserProfile () {
-    //GET SECTIONS
-    return _.map(userProfile.keys, (sections, key)=> {
-      let title = getI18n().account.profile[key]
+    const {
+      props: {
+        profile
+      }
+    } = this
 
-      return (<div className="panel-profil" key={`${key}-profile`}>
-        <div className="pannel-header">{title}</div>
-        <div className="row row-profil">
-          {sections.map((section)=> {
-            return (<div className="col-md-6" key={`${section.key}-section`}>
-                <div className="row">
-                  <div className="col-md-12">
-                    {this.renderFormElement(section)}
-                  </div>
+    //GET SECTIONS
+    const title = getI18n().account.profile[profile]
+    const sections = userProfile.keys[profile]
+    return (<div className="panel-profil" key={`${profile}-profile`}>
+      <div className="pannel-header">{title}</div>
+      <div className="row-fluid row-profil">
+        {sections.map((section)=> {
+          return (<div className={`col-md-${section.col ? section.col : 6}`} key={`${section.key}-section`}>
+              <div className="row-fluid">
+                <div className="col-md-12">
+                  {this.renderFormElement(section)}
                 </div>
               </div>
-            )
+            </div>
+          )
 
-          })}
-        </div>
-      </div>)
-    })
+        })}
+      </div>
+    </div>)
   }
 
   render () {
     const {
       props: {
-        User
+        User,
+        col
       }
     } = this
 
@@ -210,13 +256,24 @@ class AccountProfil extends React.Component {
       return <div />
     }
     return (
-      <div className="row account-details">
-        <div className="account-details__container col-md-12">
+      <div className={`account-details__container col-md-${col}`}>
+        <form>
           {this.renderUserProfile()}
-        </div>
+        </form>
       </div>
     )
   }
 }
+
+
+AccountProfil.propTypes = {
+  profile: React.PropTypes.string.isRequired,
+  col: React.PropTypes.number
+}
+
+AccountProfil.defaultProps = {
+  col: 12
+}
+
 
 export default AccountProfil

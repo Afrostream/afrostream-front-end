@@ -5,15 +5,12 @@
   text-align: left;
   color: @color-purple;
 
-  h1 {
-    font-size: 28px;
+  .img-responsive {
+    cursor: pointer;
   }
 
-  .account-details:not(:first-child) {
-    padding: 20px 0 20px 0;
-  }
-  .account-details:not(:last-child) {
-    border-bottom: 1px solid @gray-light;
+  h1 {
+    font-size: 28px;
   }
 
   .account-details__header {
@@ -42,20 +39,12 @@
 
   .progress {
     height: 12px;
-    border-radius: 2px;
-  }
-
-  .table {
-    color: @color-purple;
-  }
-
-  .cancel-plan-hidden {
-    display: none;
+    border-radius: @btn-radius;
   }
 
   .row-profil {
-    border-bottom: 1px solid fade(#000000, 10%);
-    padding: 20px 0 20px 0;
+    padding: 2em;
+    .isMobile({ padding: 0; });
   }
 
   .panel-profil {
@@ -73,7 +62,7 @@
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       background-color: rgb(232, 232, 232);
       height: 56px;
-      padding: 0px 24px;
+      padding: 0px 30px;
       display: flex;
       justify-content: space-between;
       background: rgb(248, 248, 248);
@@ -81,8 +70,9 @@
       font-size: 2em;
     }
     .row-profil {
-      margin: 20px;
-      border: 0;
+      padding: 2em 0 2em 0;
+      //border: 0;
+      overflow: auto;
     }
   }
 }
