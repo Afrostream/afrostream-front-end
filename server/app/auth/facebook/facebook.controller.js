@@ -67,7 +67,8 @@ export async function callback (req, res) {
       statusCode: fbResponse.statusCode,
       statusMessage: fbResponse.statusMessage,
       tokenData: fbBody,
-      storageId: apiClient.token
+      storageId: apiClient.token,
+      signupClientType: ''
     })
   }
   catch (err) {
