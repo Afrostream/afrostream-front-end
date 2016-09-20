@@ -443,9 +443,22 @@ class PlayerComponent extends Component {
   }
 
   onTimeUpdate () {
+    const {
+      props: {
+        User
+      }
+    } = this
+
     if (!config.reco.enabled) {
       return
     }
+
+    const user = User.get('user')
+
+    if (user && user.get('playerAutoNext') === false) {
+      return
+    }
+
     let currentTime = this.player.currentTime()
     let currentDuration = this.state.duration || this.player.duration() || 0
     if (!currentDuration) {
@@ -569,13 +582,17 @@ class PlayerComponent extends Component {
         provider: config.domain.host,
         token: token && token.get('access_token'),
         avatar: user.get('picture')
-
       }),
       languages: config.player.languages
     }
 
     if (user && user.get('nickname')) {
       komentData = _.merge(komentData.user, {nickname: user.get('nickname')})
+    }
+
+    //L'user a choisi de ne pas afficher les comentaires par default
+    if (user && user.get('playerKoment')) {
+      komentData.open = user.get('playerKoment')
     }
 
     await this.generateDomTag(videoData, komentData)

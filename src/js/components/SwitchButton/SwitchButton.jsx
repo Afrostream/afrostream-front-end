@@ -13,6 +13,8 @@ class SwitchButton extends React.Component {
     title: React.PropTypes.string,
     label: React.PropTypes.string,
     labelRight: React.PropTypes.string,
+    icon: React.PropTypes.string,
+    iconRight: React.PropTypes.string,
     defaultChecked: React.PropTypes.string,
     theme: React.PropTypes.string,
     disabled: React.PropTypes.bool,
@@ -26,6 +28,8 @@ class SwitchButton extends React.Component {
     title: '',
     label: '',
     labelRight: '',
+    icon: '',
+    iconRight: '',
     defaultChecked: '',
     theme: 'rsbc-switch-button-flat-round',
     checked: null,
@@ -39,7 +43,7 @@ class SwitchButton extends React.Component {
   }
 
   render () {
-    let id, label, labelRight
+    let id, label, labelRight, icon, iconRight
 
     if (this.props.id == '' && this.props.name != '') {
       id = this.props.name
@@ -57,14 +61,39 @@ class SwitchButton extends React.Component {
       )
     }
 
+    if (this.props.icon != '') {
+      let classIcon = {
+        enabled: this.props.checked
+      }
+      classIcon[this.props.icon] = true
+
+      icon = (
+        <i className={classSet(classIcon)} htmlFor={id}></i>
+      )
+    }
+
+    if (this.props.iconRight != '') {
+
+      let classIconRight = {
+        enabled: this.props.checked
+      }
+      classIconRight[this.props.iconRight] = true
+
+      iconRight = (
+        <i className={classSet(classIconRight)} htmlFor={id}></i>
+      )
+    }
+
     return (
       <div className={'rsbc-switch-button ' + this.props.theme }>
         {label}
+        {icon}
         <input onChange={this.props.onChange} checked={this.props.checked}
                disabled={this.props.disabled}
                id={id} name={this.props.name} type="checkbox" value="1"/>
         <label htmlFor={id}></label>
         {labelRight}
+        {iconRight}
       </div>
     )
   }

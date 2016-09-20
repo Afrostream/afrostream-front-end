@@ -234,6 +234,12 @@ export function setSplash (splashId) {
   }
 }
 
+export function updateUserProfile (data) {
+  return (dispatch, getState, actionDispatcher) => {
+    return actionDispatcher(put(data))
+  }
+}
+
 export function pendingUser (pending) {
   return {
     type: ActionTypes.User.pendingUser,

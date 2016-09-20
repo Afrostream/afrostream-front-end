@@ -72,6 +72,7 @@ const webpackConfig = {
       'raven-js',
       'mobile-detect',
       'qs',
+      'material-ui',
       './src/js/lib/localStoragePolyfill',
       './src/js/lib/customEventPolyfill'
     ]

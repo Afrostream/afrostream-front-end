@@ -24,11 +24,11 @@ class ModalSocial extends ModalComponent {
       }
     } = this
 
-    let query = data && data.get('query').toJS()
+    let query = data && data.get('query')
     //add share tracking
     let shareParams = qs.stringify(_.merge({
       utm: 'share'
-    }, query || {}))
+    }, query && query.toJS() || {}))
 
     let title = this.getMeta('og:title')
     let description = this.getMeta('og:description') || ''

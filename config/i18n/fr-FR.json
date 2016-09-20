@@ -239,14 +239,37 @@
       "on": "Lier mon profil",
       "off": "Ne plus lier mon profil"
     },
+    "profile": {
+      "password": "Modifier mon mot de passe",
+      "picture": "Avatar",
+      "profile": "Informations personnelles",
+      "birthDate": "Anniversaire",
+      "email": "Email",
+      "first_name": "Nom",
+      "last_name": "Prénom",
+      "nickname": "Nom d'utilisateur",
+      "gender": "Sexe",
+      "telephone": "Téléphone",
+      "synchro": "Comptes synchronisés",
+      "social": "Partage social",
+      "socialSharing": "Partager a mes amis mon activité",
+      "player": "Vidéo",
+      "playerAudio": "Langue audio",
+      "playerCaption": "Sous titres",
+      "playerQuality": "Qualité de lecture",
+      "playerKoment": "Afficher les commentaires automatiquement",
+      "playerAutoNext": "Passage à l'épisode suivant automatiquement",
+      "men": "Homme",
+      "women": "Femme",
+      "on": "Activé",
+      "off": "Désactivé"
+    },
     "cancel": {
-      "active": {
-        "header": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",
-        "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
-      },
-      "canceled": {
-        "header": "Votre abonnement été annulé.",
-        "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
+      "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}",
+      "status": {
+        "active": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",
+        "canceled": "Votre abonnement été annulé.",
+        "unCancelable": "Votre abonnement ne peut être annulé."
       },
       "submitBtn": "Confirmer l'interruption",
       "cancelBtn": "Continuer l'abonnement"
@@ -258,6 +281,7 @@
       "periodLabel": "Période de service",
       "methodLabel": "Mode de paiement",
       "statusLabel": "Status",
+      "cancelLabel": "Annuler",
       "periods": {
         "year": "An",
         "month": "Mois",
