@@ -557,7 +557,7 @@ class PlayerComponent extends Component {
   async getPlayerData (videoData) {
     const {
       props: {
-        Config, OAuth, Player, Movie, User, movieId, videoId
+        OAuth, Player, Movie, User, movieId, videoId
       }
     } = this
 
@@ -587,7 +587,7 @@ class PlayerComponent extends Component {
     }
 
     if (user && user.get('nickname')) {
-      komentData = _.merge(komentData.user, {nickname: user.get('nickname')})
+      komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
     }
 
     //L'user a choisi de ne pas afficher les comentaires par default
