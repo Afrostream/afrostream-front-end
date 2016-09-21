@@ -39,8 +39,8 @@ const client = {
       profile: [
         {key: 'picture', type: 'picture', col: 4},
         {key: 'nickname', type: 'text', col: 8},
-        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 4},
         {key: 'last_name', type: 'text', autoComplete: 'surname', col: 4},
+        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 4},
         {
           key: 'gender',
           type: 'radio',
