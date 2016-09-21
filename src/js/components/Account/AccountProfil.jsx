@@ -11,6 +11,7 @@ import DatePicker from 'material-ui/DatePicker'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
+import Checkbox from 'material-ui/Checkbox'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import areIntlLocalesSupported from 'intl-locales-supported'
@@ -169,6 +170,14 @@ class AccountProfil extends React.Component {
           {section.list.map((item, key) =><MenuItem value={item.value} primaryText={item.label}
                                                     key={item.value}/>)}
         </SelectField>
+        break
+      case 'checkbox':
+        inputAttributes = {
+          onCheck: (event, isInputChecked) => {
+            this.updateUserHandler(section.key, isInputChecked)
+          }
+        }
+        element = <Checkbox checked={sectionValue} {...inputAttributes} {...{label}}/>
         break
       case 'toggle':
 

@@ -59,8 +59,10 @@ const client = {
 
         },
         {key: 'birthDate', type: 'date', icon: '', col: 4},
+        {key: 'emailNewsletter', type: 'checkbox', col: 8},
+        {key: 'emailOptIn', type: 'checkbox', col: 8},
         {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 8},
-        {key: 'password', type: 'password', col: 6}
+        {key: 'password', type: 'password', col: 6},
       ],
       social: [{key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
       player: [
