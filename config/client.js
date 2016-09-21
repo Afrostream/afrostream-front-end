@@ -37,10 +37,10 @@ const client = {
   userProfile: {
     keys: {
       profile: [
-        {key: 'picture', type: 'picture'},
-        {key: 'nickname', type: 'text', col: 6},
-        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 3},
-        {key: 'last_name', type: 'text', autoComplete: 'surname', col: 3},
+        {key: 'picture', type: 'picture', col: 4},
+        {key: 'nickname', type: 'text', col: 8},
+        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 4},
+        {key: 'last_name', type: 'text', autoComplete: 'surname', col: 4},
         {
           key: 'gender',
           type: 'radio',
@@ -55,11 +55,11 @@ const client = {
           icon: 'zmdi zmdi-smartphone-android',
           autoComplete: 'phone',
           pattern: '[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}',
-          col: 3
+          col: 4
 
         },
-        {key: 'birthDate', type: 'date', icon: '', col: 3},
-        {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 6},
+        {key: 'birthDate', type: 'date', icon: '', col: 4},
+        {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 8},
         {key: 'password', type: 'password', col: 6}
       ],
       social: [{key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
@@ -77,10 +77,10 @@ const client = {
         {
           key: 'playerQuality', type: 'select', icon: 'zmdi zmdi-router',
           list: [
-            {label: 'Bas', value: 4},
-            {label: 'Moyen', value: 3},
-            {label: 'Normal', value: 2},
-            {label: 'HD', value: 1},
+            {label: 'HD', value: 4},
+            {label: 'Normal', value: 3},
+            {label: 'Moyen', value: 2},
+            {label: 'Bas', value: 1},
             {label: 'Auto', value: 0}]
         },
         {key: 'playerKoment', type: 'toggle', icon: 'zmdi zmdi-comment-more'},
@@ -434,6 +434,7 @@ const client = {
       'httpSecure': true,
       'transactionCode': 'front'
     },
+    'defaultVolume': 0.65,
     'techOrder': ['dash', 'html5', 'dashas']
   }
 }

@@ -167,8 +167,8 @@ class PlayerComponent extends Component {
     stored = stored && stored.toJS()
 
     let baseData = {
-      playerAudio: 'fra',
-      playerCaption: 'fra',
+      playerAudio: null,
+      playerCaption: null,
       playerBitrate: 0,
       playerPosition: 0
     }
@@ -726,6 +726,37 @@ class PlayerComponent extends Component {
         playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData)
       }
 
+      //OVERRIDE USER SETTINGS
+      if (user.get('playerAudio')) {
+        playerData.dash = _.merge(playerData.dash, {
+          inititalMediaSettings: {
+            audio: {
+              lang: user.get('playerAudio')
+            }
+          }
+        })
+      }
+      if (user.get('playerCaption')) {
+        playerData.dash = _.merge(playerData.dash, {
+          inititalMediaSettings: {
+            text: {
+              lang: user.get('playerCaption')
+            }
+          }
+        })
+      }
+
+      //OVERIDE USER QUALITY
+
+      let playerQuality = user.get('playerQuality') || 1
+      const qualityList = [0, 400, 800, 1600, 3000]
+
+      playerData.dash = _.merge(playerData.dash, {
+        autoSwitch: !playerQuality,
+        bolaEnabled: !playerQuality,
+        initialBitrate: qualityList[playerQuality]
+      })
+
       //Tracking
       const videoTracking = this.getStoredPlayer()
       if (videoTracking) {
@@ -739,10 +770,15 @@ class PlayerComponent extends Component {
         if (position > 300 && position < (duration - 300)) {
           playerData.starttime = position
         }
-
-        playerData.dash.inititalMediaSettings.text.lang = videoTracking.playerCaption
-        playerData.dash.inititalMediaSettings.audio.lang = videoTracking.playerAudio
-        playerData.dash.inititalMediaSettings.video.lang = videoTracking.playerAudio
+        if (videoTracking.playerCaption) {
+          playerData.dash.inititalMediaSettings.text.lang = videoTracking.playerCaption
+        }
+        if (videoTracking.playerAudio) {
+          playerData.dash.inititalMediaSettings.audio.lang = videoTracking.playerAudio
+        }
+        if (videoTracking.playerAudio) {
+          playerData.dash.inititalMediaSettings.video.lang = videoTracking.playerAudio
+        }
       }
     }
     try {
@@ -868,14 +904,18 @@ class PlayerComponent extends Component {
     const storedCaption = videoTracking.playerCaption
 
     let player = await videojs('afrostream-player', playerData).ready(()=> {
-        let tracks = player.textTracks() // get list of tracks
-        if (!tracks) {
-          return
+        if (storedCaption) {
+          let tracks = player.textTracks() // get list of tracks
+          if (!tracks) {
+            return
+          }
+          _.forEach(tracks, (track) => {
+            let lang = track.language
+            track.mode = lang === storedCaption ? 'showing' : 'hidden' // show this track
+          })
         }
-        _.forEach(tracks, (track) => {
-          let lang = track.language
-          track.mode = lang === storedCaption ? 'showing' : 'hidden' // show this track
-        })
+
+        player.volume(player.options_.defaultVolume)
       }
     )
     if (featuresFlip.koment && player.tech_.el_) {

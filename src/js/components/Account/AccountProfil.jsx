@@ -125,7 +125,13 @@ class AccountProfil extends React.Component {
         inputAttributes = {
           onClick: (event) => this.syncFB()
         }
-        element = <img className="img-responsive" {...inputAttributes} src={`${user.get('picture')}?type=large`}/>
+        element = <div className="row-fluid">
+          <img className="img-responsive" {...inputAttributes} src={`${user.get('picture')}?type=large`}/>
+          <RaisedButton {...{label}} {...inputAttributes} style={{
+            marginTop: 20,
+            minWidth: 200
+          }} disabled={user.get('facebook')}/>
+        </div>
         break
       case 'date':
         inputAttributes = {
@@ -135,8 +141,8 @@ class AccountProfil extends React.Component {
         }
         let selectedDate = sectionValue && new Date(sectionValue)
         element = <DatePicker value={selectedDate}
+                              autoOk={true}
                               locale="fr-FR"
-                              mode="landscape"
                               floatingLabelText={label}
                               hintText={label} {...inputAttributes} DateTimeFormat={DateTimeFormat}/>
         break

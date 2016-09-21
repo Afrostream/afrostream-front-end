@@ -241,7 +241,7 @@
     },
     "profile": {
       "password": "Modifier mon mot de passe",
-      "picture": "Avatar",
+      "picture": "Modifier mon avatar",
       "profile": "Informations personnelles",
       "birthDate": "Date de naissance",
       "nickname": "Nom d'utilisateur",

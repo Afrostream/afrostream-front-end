@@ -47,9 +47,9 @@
       }
     },
     "afrostream-player": {
-      "version": "2.2.10",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.10",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2e5228d6ecbcb4c9163c0141d581928b13b91893"
+      "version": "2.2.11",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.11",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#051bc4d9a4873fd106ffab08d032d1a93905cbb1"
     },
     "after": {
       "version": "0.8.1",
@@ -201,9 +201,9 @@
       "resolved": "https://registry.npmjs.org/asn1/-/asn1-0.2.3.tgz"
     },
     "asn1.js": {
-      "version": "4.8.0",
+      "version": "4.8.1",
       "from": "asn1.js@>=4.0.0 <5.0.0",
-      "resolved": "https://registry.npmjs.org/asn1.js/-/asn1.js-4.8.0.tgz"
+      "resolved": "https://registry.npmjs.org/asn1.js/-/asn1.js-4.8.1.tgz"
     },
     "assert": {
       "version": "1.3.0",
@@ -1232,9 +1232,9 @@
       "resolved": "https://registry.npmjs.org/cli/-/cli-0.11.3.tgz",
       "dependencies": {
         "glob": {
-          "version": "7.0.6",
+          "version": "7.1.0",
           "from": "glob@>=7.0.5 <8.0.0",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.0.tgz"
         }
       }
     },
@@ -1805,9 +1805,9 @@
           "resolved": "https://registry.npmjs.org/find-root/-/find-root-1.0.0.tgz"
         },
         "glob": {
-          "version": "7.0.6",
+          "version": "7.1.0",
           "from": "glob@^7.0.5",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.0.tgz"
         }
       }
     },
@@ -4345,9 +4345,9 @@
       "resolved": "https://registry.npmjs.org/karma/-/karma-0.13.22.tgz",
       "dependencies": {
         "glob": {
-          "version": "7.0.6",
+          "version": "7.1.0",
           "from": "glob@^7.0.0",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.0.tgz"
         },
         "lodash": {
           "version": "3.10.1",
@@ -5513,9 +5513,9 @@
       "resolved": "https://registry.npmjs.org/node-gyp/-/node-gyp-3.4.0.tgz",
       "dependencies": {
         "glob": {
-          "version": "7.0.6",
+          "version": "7.1.0",
           "from": "glob@^7.0.3",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.0.tgz"
         }
       }
     },
@@ -5640,9 +5640,9 @@
       "resolved": "https://registry.npmjs.org/node-sass/-/node-sass-3.10.0.tgz",
       "dependencies": {
         "glob": {
-          "version": "7.0.6",
+          "version": "7.1.0",
           "from": "glob@^7.0.3",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.0.tgz"
         },
         "npmlog": {
           "version": "4.0.0",
@@ -7512,9 +7512,9 @@
           "resolved": "https://registry.npmjs.org/cliui/-/cliui-3.2.0.tgz"
         },
         "glob": {
-          "version": "7.0.6",
+          "version": "7.1.0",
           "from": "glob@^7.0.0",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz"
+          "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.0.tgz"
         },
         "window-size": {
           "version": "0.2.0",
