@@ -23,6 +23,7 @@ import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
 import { slugify } from '../../lib/utils'
 import window from 'global/window'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const {featuresFlip} = config
 
@@ -919,7 +920,7 @@ class PlayerComponent extends Component {
       }
     )
     if (featuresFlip.koment && player.tech_.el_) {
-      await koment(player.tech_.el_)
+      player.koment = await koment(player.tech_.el_)
     }
     //youbora data
     if (player.youbora) {
@@ -938,6 +939,14 @@ class PlayerComponent extends Component {
     player.on('next', ::this.loadNextVideo)
 
     return player
+  }
+
+  //KOMENT
+  showKoment () {
+    if (this.player && this.player.koment) {
+      this.player.koment.toggleMenu(true);
+      this.player.koment.toggleEdit(true);
+    }
   }
 
   onFullScreenHandler () {
@@ -1114,6 +1123,8 @@ class PlayerComponent extends Component {
           <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
             <ShareButton />
+            <RaisedButton onClick={::this.showKoment} label="Commenter" primary={true}
+                          icon={<i className="zmdi zmdi-comment-more"></i>}/>
           </div>
           {videoDuration ?
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}

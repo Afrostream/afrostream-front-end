@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import classSet from 'classnames'
-
+import RaisedButton from 'material-ui/RaisedButton'
 if (process.env.BROWSER) {
   require('./ShareButton.less')
 }
