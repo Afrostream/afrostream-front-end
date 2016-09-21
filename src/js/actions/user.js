@@ -1,6 +1,7 @@
 import ActionTypes from '../consts/ActionTypes'
 import * as OAuthActionCreators from './oauth'
 import * as BillingActionCreators from './billing'
+import * as FBActionCreators from './facebook'
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { push, isActive } from 'redux-router'
@@ -56,6 +57,8 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       }
 
       userMerged.splashList = userMerged.splashList || []
+
+      actionDispatcher(FBActionCreators.getFriendList())
 
       if (donePath) {
         actionDispatcher(push(donePath))

@@ -3,7 +3,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import ActionTypes from '../consts/ActionTypes'
 import window from 'global/window'
 import config from '../../../config'
-
+import * as FBActionCreators from '../actions/facebook'
 const {facebook} = config
 
 export default function fbSDK () {
@@ -33,6 +33,8 @@ export default function fbSDK () {
             type: ActionTypes.Facebook.initialized,
             res: response
           })
+
+          store.dispatch(FBActionCreators.getFriendList())
         })
       }
 

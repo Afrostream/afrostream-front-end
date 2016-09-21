@@ -25,23 +25,14 @@ class SideBar extends React.Component {
   toggleSideBar (e) {
     const {
       props: {
-        Event,
-        User,
-        Facebook,
-        dispatch
+        Event
       }
     } = this
 
-    const user = User.get('user')
-    const friendList = Facebook.get('friendList')
     const toggled = Event.get('sideBarToggled')
     let userBtn = (e.target.id == 'userButton' || e.target.id == 'userButtonImg')
     if (toggled && !userBtn) {
       this.close()
-    }
-
-    if (!toggled && !friendList && user) {
-      dispatch(FBActionCreators.getFriendList())
     }
   }
 
