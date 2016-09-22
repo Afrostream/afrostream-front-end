@@ -74,14 +74,14 @@ class SearchPage extends React.Component {
 
     let moviesJs = movies.toJS()
     let flatActors = _.flatten(_.map(moviesJs, (movie) => {
-      return movie.actors
+      return movie.actors || []
     }))
     let uniqActors = _.uniq(_.map(flatActors, (actor) => {
       return `${actor.firstName} ${actor.lastName}`
     }))
 
     let actors = _.take(_.map(uniqActors, ((actor, i) =><Link key={`search-actor-${i}`} to="recherche"
-                                                              query={{search:actor}}
+                                                              query={{search: actor}}
                                                               className="actors">{`${actor}`}</Link>)), 10)
     return (
       <div>
