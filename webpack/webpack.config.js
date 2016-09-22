@@ -96,7 +96,7 @@ const webpackConfig = {
       {
         test: /\.jsx?$/,
         loaders: ['babel-loader'],
-        exclude: [node_modules_dir],
+        exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
@@ -177,7 +177,7 @@ const webpackConfig = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
-    new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
       koment: 'koment-js',
