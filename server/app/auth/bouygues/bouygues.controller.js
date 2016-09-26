@@ -65,7 +65,7 @@ export async function callback (req, res) {
     if (bouyguesResponse.statusCode !== 200) {
       bouyguesBody.error = bouyguesResponse.statusMessage
     }
-    res.status(bouyguesResponse.statusCode).render(layout, {
+    res.status(200).render(layout, {
       statusCode: bouyguesResponse.statusCode,
       statusMessage: bouyguesResponse.statusMessage,
       tokenData: bouyguesBody,

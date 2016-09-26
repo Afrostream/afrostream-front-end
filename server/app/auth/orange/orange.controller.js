@@ -65,7 +65,7 @@ export async function callback (req, res) {
     if (orangeResponse.statusCode !== 200) {
       orangeBody.error = orangeResponse.statusMessage
     }
-    res.status(orangeResponse.statusCode).render(layout, {
+    res.status(200).render(layout, {
       statusCode: orangeResponse.statusCode,
       statusMessage: orangeResponse.statusMessage,
       tokenData: orangeBody,
