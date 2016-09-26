@@ -58,14 +58,12 @@ export async function callback (req, res) {
     const orangeCompleteFlow = await getData(req, '/auth/orange/callback', {followRedirect: false, method: 'POST'})
     const orangeResponse = orangeCompleteFlow[0]
     const orangeBody = orangeCompleteFlow[1] || {}
-    let signupClientType
+    const signupClientType = orangeBody.signupClientType || ''
+    delete orangeBody.signupClientType
 
     const layout = 'layouts/oauth-success'
     if (orangeResponse.statusCode !== 200) {
       orangeBody.error = orangeResponse.statusMessage
-    } else {
-      signupClientType = orangeBody.signupClientType || ''
-      delete orangeBody.signupClientType
     }
     res.status(orangeResponse.statusCode).render(layout, {
       statusCode: orangeResponse.statusCode,
