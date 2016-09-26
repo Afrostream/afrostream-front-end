@@ -67,7 +67,9 @@ const client = {
         {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 8},
         {key: 'password', type: 'password', col: 6},
       ],
-      social: [{key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
+      social: [
+        {key: 'webPushNotifications', type: 'toggle', icon: 'zmdi zmdi-notifications', col: 12},
+        {key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
       player: [
         {
           key: 'playerAudio',
