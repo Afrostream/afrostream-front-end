@@ -749,7 +749,7 @@ class PlayerComponent extends Component {
 
       //OVERIDE USER QUALITY
 
-      let playerQuality = user.get('playerQuality') || 1
+      let playerQuality = user.get('playerQuality') || 0
       const qualityList = [0, 400, 800, 1600, 3000]
 
       playerData.dash = _.merge(playerData.dash, {
@@ -757,7 +757,6 @@ class PlayerComponent extends Component {
         bolaEnabled: !playerQuality,
         initialBitrate: qualityList[playerQuality]
       })
-
       //Tracking
       const videoTracking = this.getStoredPlayer()
       if (videoTracking) {
