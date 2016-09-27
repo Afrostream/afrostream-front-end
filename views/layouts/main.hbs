@@ -21,6 +21,22 @@
 
   <link rel="stylesheet" href="/bootstrap.css" type="text/css">
   <!-- End Facebook Pixel Code -->
+
+  <!-- GCM manifest app -->
+  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCDjTwcMGz1NQ3bLBvCHv5VhIXW2SJ69qA",
+      authDomain: "eco-hangar-97804.firebaseapp.com",
+      databaseURL: "https://eco-hangar-97804.firebaseio.com",
+      storageBucket: "eco-hangar-97804.appspot.com",
+      messagingSenderId: "1055101774560"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <link rel="manifest" href="/manifest.json">
+  <!-- End GCM manifest app -->
 </head>
 <body>
 {{hash}}

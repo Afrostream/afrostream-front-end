@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
+import * as SWActionCreators from '../../actions/sw'
+
 import { Link } from '../Utils'
 import config from '../../../../config'
 import TextField from 'material-ui/TextField'
@@ -105,6 +107,7 @@ class AccountProfil extends React.Component {
     const {
       props: {
         User,
+        dispatch,
         intl
       }
     } = this
@@ -193,6 +196,11 @@ class AccountProfil extends React.Component {
             let value = payload
             if (section.key === 'gender') {
               value = payload ? 'man' : 'woman'
+            }
+            if (section.key === 'webPushNotifications') {
+              return dispatch(SWActionCreators.setPushNotifications(value)).then(()=> {
+                this.updateUserHandler(section.key, value)
+              })
             }
             this.updateUserHandler(section.key, value)
           }

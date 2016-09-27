@@ -11,13 +11,6 @@ import allowOrigin from './middlewares/middleware-allowcrossdomain'
 import cacheHandler from './middlewares/middleware-cachehandler'
 import { forceSSL, forceWWW } from './middlewares/middleware-redirect'
 const app = express()
-
-//
-// Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
-// user agent is not known.
-// -----------------------------------------------------------------------------
-global.navigator = global.navigator || {}
-global.navigator.userAgent = global.navigator.userAgent || 'all'
 // Serve static files
 // --------------------------------------------------
 

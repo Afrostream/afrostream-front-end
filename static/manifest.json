@@ -1,0 +1,17 @@
+{
+  "name": "Push Notifications codelab",
+  "short_name": "Push Demo",
+  "icons": [
+    {
+      "src": "images/icon175x175.jpeg",
+      "sizes": "175x175",
+      "type": "image/jpeg"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "gcm_sender_id": "1055101774560",
+  "permissions": [
+    "gcm"
+  ]
+}
