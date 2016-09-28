@@ -15,7 +15,7 @@ const masonryOptions = {
   percentPosition: true,
   fitWidth: true,
   transitionDuration: '0.2s',
-  //gutter: 10
+  gutter: 15
 }
 
 if (process.env.BROWSER) {
@@ -101,8 +101,9 @@ export default class LifeList extends Component {
             <a href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl" target="_self">DC Comics : Qui
               est vraiment Jimmy Olsen ?</a>
           </h2>
-          <a href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl" target="_self">
-            <RaisedButton label="Lire la suite"/>
+          <a className="raised-btn" href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl"
+             target="_self">
+            Lire la suite
           </a>
 
         </div>
