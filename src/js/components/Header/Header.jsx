@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import Headroom from 'react-headrooms'
+import LifeNavigation from '../Life/LifeNavigation'
 import UserButton from './../User/UserButton'
 import GoBack from './../GoBack/GoBack'
 import SmartBanner from './SmartBanner'
@@ -91,11 +92,13 @@ class Header extends React.Component {
             <nav className="nav-collapse" role="navigation">
               { hasHistory ? <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
               <Link className="navbar-brand" to="/">
-                <img src="/images/logo.png" alt="Afrostream.tv"/>
+                <img src="/images/logo.png" alt="afrostream-logo"/>
+                <img src="/images/life.png" alt="afrostream-life"/>
               </Link>
               <UserButton {...this.props}/>
             </nav>
           </div>
+          <LifeNavigation />
         </div>
       </Headroom>
     )
