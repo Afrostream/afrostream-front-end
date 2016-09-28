@@ -19,7 +19,7 @@
     if (tokenData) {
       localStorage.setItem(storageId, JSON.stringify(tokenData));
       // adding token data to url anchor
-      var data = {statusCode: tokenData.error ? 500 : 200, data: tokenData};
+      var data = {statusCode: (tokenData.error && (tokenData.statusCode || 500) || 200), data: tokenData};
       document.location.hash = window.btoa(JSON.stringify(data));
       // request from tapptic app ?
       if (signupClientType === 'legacy-api.tapptic') {
