@@ -9,6 +9,7 @@ import MasonryInfiniteScroller from 'react-masonry-infinite'
 import Masonry from 'react-masonry-component'
 import classSet from 'classnames'
 import RaisedButton from 'material-ui/RaisedButton'
+import Player from '../Player/Player'
 import _ from 'lodash'
 import Immutable from 'immutable'
 
@@ -19,6 +20,12 @@ const masonryOptions = {
   transitionDuration: '0.2s',
   gutter: 15
 }
+
+const sourcePlayer = {
+  "src": "https://www.youtube.com/watch?v=xyRXwzKy_rk",
+  "type": "video/youtube"
+}
+
 
 if (process.env.BROWSER) {
   require('./LifeList.less')
@@ -45,10 +52,7 @@ export default class LifeList extends Component {
     } = this
 
     dispatch(ModalActionCreators.open({
-      target: 'player', data: Immutable.fromJS({
-        "src": "https://www.youtube.com/watch?v=xyRXwzKy_rk",
-        "type": "video/youtube"
-      })
+      target: 'player', data: Immutable.fromJS(sourcePlayer)
     }))
   }
 
@@ -177,6 +181,7 @@ export default class LifeList extends Component {
               ).toJS()
             }
           </Masonry>
+          <Player src={sourcePlayer} options={{autoplay: false}}/>
         </div>
       </div>
     )
