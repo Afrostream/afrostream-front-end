@@ -14,6 +14,8 @@ import StoreLocator from './components/Store/StoreLocator'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
+import * as Blog from './components/Blog'
+import * as Life from './components/Life'
 import AccountPage from './components/Account/AccountPage'
 import CancelSubscription from './components/Account/CancelSubscription'
 import NoMatch from './components/NoMatch'
@@ -23,7 +25,7 @@ const langs = ['fr', 'en']
 
 const buildSubRoutes = function () {
   return _.map(langs, (lang) =>
-    <Route key={lang} path={lang} lang={lang}>
+    <Route key={lang} path={lang}>
       {buildRoutes(lang)}
     </Route>
   )
@@ -57,7 +59,7 @@ const buildHome = function (lang) {
   const langRoutes = buildSubRoutes()
   homeRoutes.unshift(langRoutes)
 
-  return (<Route key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
+  return (<Route key={`${lang}-home`} path="/" component={HomePage}>
     {homeRoutes}
   </Route>)
 
@@ -84,6 +86,12 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={LoginPage}/>,
     <Route key={`${lang}-login`} name="login" path="login" component={LoginPage}/>,
     <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
+    <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeList}>
+      <Route name="lifePost" path=":lifeId(/:lifeSlug)" component={Life.LifeView}/>
+    </Route>,
+    <Route key={`${lang}-blog`} name="blog" path="blog" component={Blog.PostList}>
+      <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
+    </Route>,
     <Route key={`${lang}-store`} name="store" path="store-locator" component={StoreLocator}/>,
     <Route key={`${lang}-cash`} name="cash" path="cash" component={CashwayPage}>,
       <Route name="cashPayment" path="select-plan" component={PaymentPage}>
@@ -93,7 +101,6 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-payment`} name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
-    <Redirect key={`${lang}-redirect`} from="blog/**/*" to="/"/>,
     //push subroutes after static routes
     buildHome(lang),
     <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
