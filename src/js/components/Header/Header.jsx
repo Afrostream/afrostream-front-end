@@ -94,7 +94,7 @@ class Header extends React.Component {
             <nav className="nav-collapse" role="navigation">
               { hasHistory ? <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
               <Link className="navbar-brand" to="/">
-                <img src="/images/logo.png" alt="afrostream-logo"/>
+                <img src="/images/logo.png" alt="afrostream-logo" className="logo"/>
                 {isOnLife && <img src="/images/life.png" alt="afrostream-life"/>}
               </Link>
               <UserButton {...this.props}/>
