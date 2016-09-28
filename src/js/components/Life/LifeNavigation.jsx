@@ -1,4 +1,6 @@
 import React, { PropTypes, Component } from 'react'
+import { Link } from 'react-router'
+
 if (process.env.BROWSER) {
   require('./LifeNavigation.less')
 }
@@ -11,12 +13,12 @@ export default class LifeList extends Component {
 
     return (
       <ul className="life-navigation">
-        <li ><a href="#">Vidéo</a></li>
-        <li ><a href="#">Audio</a></li>
-        <li ><a href="#">Actualité</a></li>
-        <li ><a href="#">Exprérience</a></li>
-        <li ><a href="#">Focus</a></li>
-        <li ><a href="#">Prémium</a></li>
+        <li ><Link to="/life">Vidéo</Link></li>
+        <li ><Link href="/life">Audio</Link></li>
+        <li ><Link href="/life">Actualité</Link></li>
+        <li ><Link href="/life">Exprérience</Link></li>
+        <li ><Link href="/life">Focus</Link></li>
+        <li ><Link href="/life">Prémium</Link></li>
       </ul>
     )
   }
