@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import * as BlogActionCreators from '../../actions/blog'
+import * as ModalActionCreators from '../../actions/modal'
 import * as EventActionCreators from '../../actions/event'
 import config from '../../../../config/'
 import MasonryInfiniteScroller from 'react-masonry-infinite'
@@ -9,6 +10,7 @@ import Masonry from 'react-masonry-component'
 import classSet from 'classnames'
 import RaisedButton from 'material-ui/RaisedButton'
 import _ from 'lodash'
+import Immutable from 'immutable'
 
 const {images} =config
 const masonryOptions = {
@@ -33,6 +35,21 @@ export default class LifeList extends Component {
   constructor (props, context) {
     super(props, context)
     this._columnYMap = []
+  }
+
+  loadVideo () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    dispatch(ModalActionCreators.open({
+      target: 'player', data: Immutable.fromJS({
+        "src": "https://www.youtube.com/watch?v=xyRXwzKy_rk",
+        "type": "video/youtube"
+      })
+    }))
   }
 
   getRandomInt (min, max) {
@@ -87,7 +104,9 @@ export default class LifeList extends Component {
     brickStyle[elSize.type] = true
 
     return (
-      <article className={classSet(brickStyle)} key={`data-brick-${index}`} style={elSize}>
+      <article className={classSet(brickStyle)} key={`data-brick-${index}`} style={elSize} onClick={
+        ::this.loadVideo
+      }>
         <div className="brick-background" style={imageStyles}>
           <div className="brick-background_mask"/>
           <div className="btn-play"/>
