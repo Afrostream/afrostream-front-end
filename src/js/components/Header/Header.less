@@ -116,6 +116,7 @@
 
   background-color: transparent;
   border-color: transparent;
+  text-align: center;
   .transition(background 0.2s linear);
   .transition(opacity 0.4s linear);
   border-radius: 0;
@@ -152,8 +153,10 @@
     }
 
     .navbar-brand {
+      display: inline-block;
       .isMobile({ padding: 0; });
       img {
+        display: inline-block;
         .isMobile({ width: 100%; });
       }
     }

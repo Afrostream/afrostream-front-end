@@ -10,7 +10,7 @@ class Faq extends React.Component {
   render () {
     return (
       <div className="row-fluid">
-        <article>
+        <article classname="article-static">
           <section>
             <h1>Nos réponses à vos questions</h1>
 
