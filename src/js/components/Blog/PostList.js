@@ -5,24 +5,27 @@ import { Link } from 'react-router'
 import * as BlogActionCreators from '../../actions/blog'
 import * as EventActionCreators from '../../actions/event'
 import config from '../../../../config/'
+
+const {images} =config
+
 if (process.env.BROWSER) {
   require('./Blog.less')
 }
-@prepareRoute(async function ({ store }) {
+@prepareRoute(async function ({store}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(BlogActionCreators.fetchAll())
   ])
 })
-@connect(({ Blog }) => ({Blog}))
+@connect(({Blog}) => ({Blog}))
 export default class PostList extends Component {
 
-  render() {
+  render () {
     const {
       props: {
-        Blog,children
-        }
-      } = this
+        Blog, children
+      }
+    } = this
 
     if (children) {
       return children
@@ -46,7 +49,7 @@ export default class PostList extends Component {
               if (thumb) {
                 let path = thumb.get('path')
                 if (path) {
-                  imageStyles = `${path}?crop=faces&fit=min&w=250&h=120&q=${config.images.quality}&fm=${config.images.type}`
+                  imageStyles = `${images.urlPrefix}${path}?crop=faces&fit=min&w=250&h=120&q=${config.images.quality}&fm=${config.images.type}`
                 }
               }
 
