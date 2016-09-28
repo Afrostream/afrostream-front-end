@@ -80,6 +80,8 @@ class Header extends React.Component {
       || router.isActive('parrainage')
     }
 
+    const isOnLife = router.isActive('life')
+
     return (
       <Headroom tolerance={5} offset={200} classes={{
         initial: 'animated',
@@ -93,12 +95,12 @@ class Header extends React.Component {
               { hasHistory ? <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
               <Link className="navbar-brand" to="/">
                 <img src="/images/logo.png" alt="afrostream-logo"/>
-                <img src="/images/life.png" alt="afrostream-life"/>
+                {isOnLife && <img src="/images/life.png" alt="afrostream-life"/>}
               </Link>
               <UserButton {...this.props}/>
             </nav>
           </div>
-          <LifeNavigation />
+          {isOnLife && <LifeNavigation />}
         </div>
       </Headroom>
     )
