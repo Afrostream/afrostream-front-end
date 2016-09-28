@@ -13,7 +13,7 @@ import _ from 'lodash'
 const {images} =config
 const masonryOptions = {
   percentPosition: true,
-  fitWidth: true,
+  //fitWidth: true,
   transitionDuration: '0.2s',
   gutter: 15
 }
