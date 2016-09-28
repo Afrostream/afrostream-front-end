@@ -91,6 +91,7 @@ export default class LifeList extends Component {
         <div className="brick-background" style={imageStyles}>
           <div className="brick-background_mask"/>
           <div className="btn-play"/>
+          {brickStyle.premium && (<div className="premium-flag"><i className="zmdi zmdi-star"></i></div>)}
         </div>
         <div className="card-body">
           <div className="card-meta">
