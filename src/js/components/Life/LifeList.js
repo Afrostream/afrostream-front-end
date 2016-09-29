@@ -86,7 +86,9 @@ export default class LifeList extends Component {
     ]
 
     const dataList = Blog.get('posts')
-    const data = dataList.get(index)
+    const sortedList = dataList.sort((a, b) => new Date(a.get('date')).getTime() < new Date(b.get('date')).getTime())
+
+    const data = sortedList.get(index)
     const elSize = index && _.sample(sizes) || {type: 'first'}
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     let imageURL = baseUrl
@@ -123,9 +125,8 @@ export default class LifeList extends Component {
               <time>il y a 1 semaine</time>
             </div>
             <h2>
-              <a href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl" target="_self">DC Comics :
-                Qui
-                est vraiment Jimmy Olsen ?</a>
+              <a href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl"
+                 target="_self">{data.get('title')}</a>
             </h2>
             <a className="raised-btn" href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl"
                target="_self">
@@ -154,6 +155,7 @@ export default class LifeList extends Component {
     if (!dataList) {
       return (<div />)
     }
+
     return (
       //<AutoSizer disableHeight>
       //  {({width}) => (
@@ -181,7 +183,7 @@ export default class LifeList extends Component {
           <Masonry className="masonry-list" options={masonryOptions}>
             {
               dataList.map((el, index) => {
-                  return index && this.renderItem({index})
+                  return index && this.renderItem({index}) || null
                 }
               ).toJS()
             }
