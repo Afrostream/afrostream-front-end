@@ -26,7 +26,7 @@ export function setPushNotifications (value) {
           if (subscription) {
             return subscription
           }
-          return swReg.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: config.google.cloudKey})
+          return swReg.pushManager.subscribe({userVisibleOnly: true})
         })
         .then((subscription)=> {
           console.log('Subscription Notification', subscription)
