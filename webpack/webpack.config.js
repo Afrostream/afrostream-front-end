@@ -35,7 +35,7 @@ const {webpackDevServer: {host, port}} = config
 const webpackDevServerUrl = `http://${host}:${port}`
 
 const webpackConfig = {
-  devtool: '#inline-eval-cheap-source-map',
+  devtool: 'cheap-module-eval-source-map',
   output: {
     path: assetsPath,
     publicPath: `${webpackDevServerUrl}/static/`,

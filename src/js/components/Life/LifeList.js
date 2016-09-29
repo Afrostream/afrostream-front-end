@@ -8,7 +8,6 @@ import config from '../../../../config/'
 import MasonryInfiniteScroller from 'react-masonry-infinite'
 import Masonry from 'react-masonry-component'
 import classSet from 'classnames'
-import RaisedButton from 'material-ui/RaisedButton'
 import Player from '../Player/Player'
 import _ from 'lodash'
 import Immutable from 'immutable'
@@ -17,13 +16,14 @@ const {images} =config
 const masonryOptions = {
   percentPosition: true,
   //fitWidth: true,
+  //stamp: '.first',
   transitionDuration: '0.2s',
-  gutter: 15
+  gutter: 0
 }
 
 const sourcePlayer = {
-  "src": "https://www.youtube.com/watch?v=xyRXwzKy_rk",
-  "type": "video/youtube"
+  'src': 'https://www.youtube.com/watch?v=xyRXwzKy_rk',
+  'type': 'video/youtube'
 }
 
 
@@ -81,13 +81,13 @@ export default class LifeList extends Component {
         type: 'medium',
       },
       {
-        type: 'medium',
+        type: 'square',
       },
     ]
 
     const dataList = Blog.get('posts')
     const data = dataList.get(index)
-    const elSize = _.sample(sizes)
+    const elSize = index && _.sample(sizes) || {type: 'first'}
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     let imageURL = baseUrl
     const thumb = data.get('poster')
@@ -101,7 +101,8 @@ export default class LifeList extends Component {
     let imageStyles = {backgroundImage: `url(${imageURL})`}
 
     const brickStyle = {
-      'brick masonry-brick': true,
+      'brick': true,
+      'masonry-brick': true,
       'premium': Math.random() >= 0.5
     }
 
@@ -111,24 +112,26 @@ export default class LifeList extends Component {
       <article className={classSet(brickStyle)} key={`data-brick-${index}`} style={elSize} onClick={
         ::this.loadVideo
       }>
-        <div className="brick-background" style={imageStyles}>
-          <div className="brick-background_mask"/>
-          <div className="btn-play"/>
-          {brickStyle.premium && (<div className="premium-flag"><i className="zmdi zmdi-star"></i></div>)}
-        </div>
-        <div className="card-body">
-          <div className="card-meta">
-            <time>il y a 1 semaine</time>
+        <div className="brick-content">
+          <div className="brick-background" style={imageStyles}>
+            <div className="brick-background_mask"/>
+            <div className="btn-play"/>
+            {brickStyle.premium && (<div className="premium-flag"><i className="zmdi zmdi-star"></i></div>)}
           </div>
-          <h2>
-            <a href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl" target="_self">DC Comics : Qui
-              est vraiment Jimmy Olsen ?</a>
-          </h2>
-          <a className="raised-btn" href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl"
-             target="_self">
-            Lire la suite
-          </a>
-
+          <div className="card-body">
+            <div className="card-meta">
+              <time>il y a 1 semaine</time>
+            </div>
+            <h2>
+              <a href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl" target="_self">DC Comics :
+                Qui
+                est vraiment Jimmy Olsen ?</a>
+            </h2>
+            <a className="raised-btn" href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl"
+               target="_self">
+              Lire la suite
+            </a>
+          </div>
         </div>
       </article>
     )
@@ -174,10 +177,12 @@ export default class LifeList extends Component {
         {/*</MasonryInfiniteScroller>*/}
         {/*</div>*/}
         <div className="container container-wall brand-bg ">
+          {this.renderItem({index: 0})}
           <Masonry className="masonry-list" options={masonryOptions}>
             {
-              dataList.map((el, index) =>
-                this.renderItem({index})
+              dataList.map((el, index) => {
+                  return index && this.renderItem({index})
+                }
               ).toJS()
             }
           </Masonry>
