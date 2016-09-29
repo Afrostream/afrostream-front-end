@@ -1,5 +1,6 @@
 import ActionTypes from '../consts/ActionTypes'
 import * as EventActionCreators from './event'
+import config from '../../../config'
 
 export function setPushNotifications (value) {
   return (dispatch, getState, actionDispatcher) => {
@@ -7,8 +8,8 @@ export function setPushNotifications (value) {
     return async () => {
       //console.log('service Worker ready ', navigator.serviceWorker.ready)
 
-      return await navigator.serviceWorker.register('sw.js')
-      //return await navigator.serviceWorker.ready
+      //return await navigator.serviceWorker.register('sw.js')
+      return await navigator.serviceWorker.ready
         .then((registration)=> {
           swReg = registration
           //return swReg.pushManager.permissionState({userVisibleOnly: true})
@@ -25,7 +26,7 @@ export function setPushNotifications (value) {
           if (subscription) {
             return subscription
           }
-          return swReg.pushManager.subscribe({userVisibleOnly: true})
+          return swReg.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: config.google.cloudKey})
         })
         .then((subscription)=> {
           console.log('Subscription Notification', subscription)

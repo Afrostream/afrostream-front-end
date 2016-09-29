@@ -164,7 +164,8 @@ const client = {
   //add alerts to front (same as cookies)
   alerts: [],
   google: {
-    analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
+    analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
+    cloudKey: process.env.GCM_KEY || 'AIzaSyCDjTwcMGz1NQ3bLBvCHv5VhIXW2SJ69qA'
   },
   facebook: {
     appId: '828887693868980',
