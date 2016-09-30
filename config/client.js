@@ -113,6 +113,7 @@ const client = {
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
+  gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
   stripeApi: '//js.stripe.com/v2/',
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   promoCodes: [
