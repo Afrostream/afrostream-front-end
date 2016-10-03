@@ -32,39 +32,86 @@ class StoreLocator extends React.Component {
 
   initMap () {
 
-    const map = new google.maps.Map(document.getElementById('map-canvas'), {
-      zoom: 6,
-      center: new google.maps.LatLng(2.8, -187.3),
-      mapTypeId: 'terrain'
+    this.map = new google.maps.Map(document.getElementById('map-canvas'), {
+      zoom: 10,
+      center: new google.maps.LatLng(48.856614, 2.352222),
+      disableDefaultUI: false,
+      scrollwheel: false,
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.SMALL,
+        position: google.maps.ControlPosition.LEFT_BOTTOM
+      },
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      styles: [{
+        'featureType': 'all',
+        'elementType': 'all',
+        'stylers': [
+          //{'visibility': 'simplified'},
+          {'lightness': '22'}
+        ]
+      }, {
+        'featureType': 'all',
+        'elementType': 'labels',
+        //'stylers': [{'visibility': 'off'}]
+      }]
     })
 
-    this.geoCoder = new google.maps.Geocoder
+    this.geoCoder = new google.maps.Geocoder()
 
-    google.maps.event.addListener(map, 'idle', () => {
-      return I ? void(I = !1) : (map.data.forEach((e)=> {
-        map.data.remove(e)
-      }), void map.data.loadGeoJson(config.apiClient.urlPrefix + '/api/stores?latitude=' + map.getBounds().getCenter().lat + '&longitude=' + map.getBounds().getCenter().ln + '&distance=' + map.getZoom()))
+    const infowindow = new google.maps.InfoWindow()
+
+    this.map.data.setStyle((feature)=> {
+      return {
+        title: feature.getProperty('name') || null,
+        icon: 'http://www.google.com/mapfiles/marker.png'
+      }
     })
 
-    map.data.loadGeoJson('https://afr-api-v1-staging.herokuapp.com/api/stores')
+    this.map.data.addListener('click', function (event) {
+      const name = event.feature.getProperty('name')
+      const adresse = event.feature.getProperty('adresse')
+      const ville = event.feature.getProperty('ville')
+      const cp = event.feature.getProperty('cp')
+      const phone = event.feature.getProperty('phone')
+      infowindow.setContent(`<div style="width:150px; text-align: left;"><div >${name}</div><div>${adresse} ${cp} ${ville} - +33${phone}</div></div>`)
+      infowindow.setPosition(event.feature.getGeometry().get())
+      infowindow.setOptions({pixelOffset: new google.maps.Size(0, -30)})
+      infowindow.open(this.map)
+    });
+
+    google.maps.event.addListener(this.map, 'idle', ::this.findMarkers)
+
+    this.findMarkers()
+  }
+
+  findMarkers () {
+    const bound = this.map && this.map.getBounds()
+    const geo = bound && bound.getCenter()
+    if (!geo) {
+      return
+    }
+    const zoom = this.map.getZoom()
+
+    this.map.data.forEach((e)=> {
+      this.map.data.remove(e)
+    })
+
+    this.map.data.loadGeoJson(config.apiClient.urlPrefix + '/api/stores?latitude=' + geo.lat() + '&longitude=' + geo.lng() + '&zoom=' + zoom)
   }
 
   searchLocation () {
     const e = document.getElementById('map-search')
     this.geoCoder.geocode({
-      address: e.value,
-      region: 'FR'
-    }, (e, t) => {
-      //t == google.maps.GeocoderStatus.OK ? (
-      //  const f = e[0].types[0];
-      //  const m = {
-      //    lat: e[0].geometry.location.lat(),
-      //    lng: e[0].geometry.location.lng()
-      //  }, c
-      //  ()
-      //  ) :
-      //  l()
-    })
+        address: e.value,
+        region: 'FR'
+      }, (result, status) => {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+            this.map.setCenter(result[0].geometry.location)
+          }
+        }
+      }
+    )
   }
 
   componentDidMount () {
@@ -92,10 +139,6 @@ class StoreLocator extends React.Component {
       return children
     }
 
-    const source = [
-      {type: 'video/youtube', src: 'https://www.youtube.com/watch?v=gx5p0ZD88EM'}
-    ]
-
     return (
       <div className="store-locator-page">
         <div className="container-fluid brand-bg-alpha">
@@ -104,7 +147,8 @@ class StoreLocator extends React.Component {
             <p>Il n’a jamais été aussi simple de s’abonner à Afrostream.
               Vous pouvez désormais vous rendre chez un buraliste et vous abonner pour 1 (6,99€) ou 3 mois (18,99€) à
               Afrostream.
-              Trouvez le bureau de tabac le plus proche de chez vous grâce à cette carte et profitez des meilleurs films
+              Trouvez le bureau de tabac le plus proche de chez vous grâce à cette carte et profitez des meilleurs
+              films
               et séries afro.</p>
           </section>
           <section className="cashway-plan">
@@ -116,7 +160,8 @@ class StoreLocator extends React.Component {
               <input type="text" id="map-search" defaultValue={this.state.location} className="form-control"/>
             </div>
             <div className="form-group col-md-2">
-              <button className="btn btn-default" id="map-search-btn" onClick={::this.searchLocation}>Verifier</button>
+              <button className="btn btn-default" id="map-search-btn" onClick={::this.searchLocation}>Verifier
+              </button>
             </div>
             <div id="map-canvas" className="map-canvas"></div>
           </section>
@@ -125,6 +170,12 @@ class StoreLocator extends React.Component {
     )
   }
 }
-export default scriptLoader(
-  gmapApi
-)(withRouter(StoreLocator))
+
+export
+default
+
+scriptLoader(gmapApi)
+
+(
+  withRouter(StoreLocator)
+)
