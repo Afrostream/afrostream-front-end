@@ -6,7 +6,7 @@ const initialState = Immutable.fromJS({
   userActive: true,
   pinHeader: false,
   showChat: false,
-  sideBarToggled: false
+  sideBarToggled: true
 })
 
 export default createReducer(initialState, {

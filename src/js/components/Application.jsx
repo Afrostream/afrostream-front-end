@@ -30,7 +30,24 @@ import {
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 const muiTheme = getMuiTheme({
+  menuItem: {
+    color: '#FFFFFF',
+    hoverColor: '#FFFFFF',
+    secondaryTextColor: '#FFFFFF',
+  },
+  listItem: {
+    color: '#FFFFFF',
+    textColor: '#FFFFFF',
+    secondaryTextColor: '#FFFFFF',
+  },
+  drawer: {
+    color: '#23232C',
+    textColor: '#FFFFFF',
+    secondaryTextColor: '#FFFFFF',
+  },
   palette: {
+    accent2Color: '#23232C',
+    canvasColor: '#23232C',
     textColor: grey900,
     secondaryTextColor: grey600,
     disabledColor: grey600,
