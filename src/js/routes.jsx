@@ -10,6 +10,7 @@ import BrowseGenrePage from './components/Browse/BrowseGenrePage'
 import FavoritesPage from './components/Favorites/FavoritesPage'
 import SponsorsPage from './components/Sponsors/SponsorsPage'
 import SearchPage from './components/Search/SearchPage'
+import StoreLocator from './components/Store/StoreLocator'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
@@ -87,6 +88,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-blog`} name="blog" path="blog" component={Blog.PostList}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
     </Route>,
+    <Route key={`${lang}-store`} name="store" path="store-locator" component={StoreLocator}/>,
     <Route key={`${lang}-cash`} name="cash" path="cash" component={CashwayPage}>,
       <Route name="cashPayment" path="select-plan" component={PaymentPage}>
         <Route name="cashPaymentMethod" path=":planCode(/:status)" component={PaymentForm}/>

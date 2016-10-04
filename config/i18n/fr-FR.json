@@ -75,6 +75,13 @@
       "title": "BOXES"
     }
   },
+  "storesLocator": {
+    "title": "Vous cherchez un buraliste pour vous abonner à Afrostream ?",
+    "description": "Vous pouvez désormais vous abonner à Afrostream dans les bureaux de tabac. Consultez la carte et trouvez le bureau de tabac le plus proche de chez vous.",
+    "where": "Où trouver un buraliste ?",
+    "inputFind": "Ville...",
+    "find": "Trouver un point de vente"
+  },
   "loadingTitle": "Veuillez patienter...",
   "close": "Fermer",
   "windowsAuthTitle": "Connexion Windows",
