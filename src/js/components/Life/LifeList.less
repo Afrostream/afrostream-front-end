@@ -1,7 +1,6 @@
 @import (reference) '../../../styles/config.less';
 
 .life-list {
-  padding-top: @header-height;
   margin: 0 auto;
   .masonry-list {
     margin: 0 auto;
@@ -97,7 +96,6 @@
       vertical-align: middle;
       display: inline-block;
       color: #FFFFFF;
-      margin: 20px;
       a {
         color: #FFFFFF;
       }
@@ -113,8 +111,7 @@
     }
 
   }
-  .brick,
-  .brick.video {
-    .isMobile({ width: 100%; });
+  .brick {
+    .isMobile({ width: 100% !important; });
   }
 }
