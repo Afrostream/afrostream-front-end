@@ -33,7 +33,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 const muiTheme = getMuiTheme({
   palette: {
     textColor: grey900,
-    disabledColor: grey400,
+    secondaryTextColor: grey600,
+    disabledColor: grey600,
+    alternateTextColor: grey400,
     primary1Color: purple600,
     primary2Color: purple700,
     primary3Color: grey200,

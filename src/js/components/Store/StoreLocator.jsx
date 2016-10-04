@@ -4,6 +4,8 @@ import config from '../../../../config'
 import * as EventActionCreators from '../../actions/event'
 import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
+import TextField from 'material-ui/TextField'
+import { getI18n } from '../../../../config/i18n'
 
 const {gmapApi} = config
 
@@ -63,7 +65,7 @@ class StoreLocator extends React.Component {
     this.map.data.setStyle((feature)=> {
       return {
         title: feature.getProperty('name') || null,
-        icon: 'http://www.google.com/mapfiles/marker.png'
+        icon: '/images/flat-marker.png'
       }
     })
 
@@ -85,33 +87,55 @@ class StoreLocator extends React.Component {
   }
 
   findMarkers () {
-    const bound = this.map && this.map.getBounds()
-    const geo = bound && bound.getCenter()
-    if (!geo) {
+    const bounds = this.map && this.map.getBounds()
+    if (!bounds) {
       return
     }
+    const geo = bounds && bounds.getCenter()
     const zoom = this.map.getZoom()
+
+    const center = bounds.getCenter()
+    const ne = bounds.getNorthEast()
+
+// r = radius of the earth in statute miles
+    const r = 3963.0
+
+// Convert lat or lng from decimal degrees into radians (divide by 57.2958)
+    const divider = 57.2958
+    const lat1 = center.lat() / divider
+    const lon1 = center.lng() / divider
+    const lat2 = ne.lat() / divider
+    const lon2 = ne.lng() / divider
+
+// distance = circle radius from center to Northeast corner of bounds
+    const dis = Math.round(r * Math.acos(Math.sin(lat1) * Math.sin(lat2) +
+        Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)))
+
 
     this.map.data.forEach((e)=> {
       this.map.data.remove(e)
     })
 
-    this.map.data.loadGeoJson(config.apiClient.urlPrefix + '/api/stores?latitude=' + geo.lat() + '&longitude=' + geo.lng() + '&zoom=' + zoom)
+
+    this.map.data.loadGeoJson(config.apiClient.urlPrefix + '/api/stores?latitude=' + geo.lat() + '&longitude=' + geo.lng() + '&distance=' + dis)
   }
 
   searchLocation () {
-    const e = document.getElementById('map-search')
-    this.geoCoder.geocode({
-        address: e.value,
-        region: 'FR'
-      }, (result, status) => {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-            this.map.setCenter(result[0].geometry.location)
+    clearTimeout(this.serachTimeout)
+    this.serachTimeout = setTimeout(()=> {
+      const e = document.getElementById('map-search')
+      this.geoCoder.geocode({
+          address: e.value,
+          region: 'FR'
+        }, (result, status) => {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+              this.map.setCenter(result[0].geometry.location)
+            }
           }
         }
-      }
-    )
+      )
+    }, 300)
   }
 
   componentDidMount () {
@@ -141,28 +165,15 @@ class StoreLocator extends React.Component {
 
     return (
       <div className="store-locator-page">
-        <div className="container-fluid brand-bg-alpha">
-          <section className="cashway-info">
-            <h2>Abonnez-vous à Afrostream au coin de la rue</h2>
-            <p>Il n’a jamais été aussi simple de s’abonner à Afrostream.
-              Vous pouvez désormais vous rendre chez un buraliste et vous abonner pour 1 (6,99€) ou 3 mois (18,99€) à
-              Afrostream.
-              Trouvez le bureau de tabac le plus proche de chez vous grâce à cette carte et profitez des meilleurs
-              films
-              et séries afro.</p>
+        <div className="container-fluid brand-bg">
+          <section className="info">
+            <h2>{getI18n().storesLocator.title}</h2>
+            <p>{getI18n().storesLocator.description}</p>
           </section>
-          <section className="cashway-plan">
-            <h3> Où payer en espèces ?</h3>
-            <div className="form-group col-md-12">
-              <span className="form-label" htmlFor="number">Trouver un point de vente</span>
-            </div>
-            <div className="form-group col-md-10">
-              <input type="text" id="map-search" defaultValue={this.state.location} className="form-control"/>
-            </div>
-            <div className="form-group col-md-2">
-              <button className="btn btn-default" id="map-search-btn" onClick={::this.searchLocation}>Verifier
-              </button>
-            </div>
+          <section>
+            <h3>{getI18n().storesLocator.where}</h3>
+            <TextField id="map-search" defaultValue={this.state.location} onChange={::this.searchLocation}
+                       hintText={getI18n().storesLocator.inputFind} floatingLabelText={getI18n().storesLocator.find}/>
             <div id="map-canvas" className="map-canvas"></div>
           </section>
         </div>

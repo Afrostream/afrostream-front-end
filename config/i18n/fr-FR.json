@@ -75,6 +75,13 @@
       "title": "BOXES"
     }
   },
+  "storesLocator": {
+    "title": "Abonnez-vous à Afrostream au coin de la rue",
+    "description": "Il n’a jamais été aussi simple de s’abonner à Afrostream.Vous pouvez désormais vous rendre chez un buraliste et vous abonner pour 1 (6,99€) ou 3 mois (18,99€) à Afrostream.Trouvez le bureau de tabac le plus proche de chez vous grâce à cette carte et profitez des meilleursfilmset séries afro.",
+    "where": "Où payer en espèces ?",
+    "inputFind": "Ville...",
+    "find": "Trouver un point de vente"
+  },
   "loadingTitle": "Veuillez patienter...",
   "close": "Fermer",
   "windowsAuthTitle": "Connexion Windows",
