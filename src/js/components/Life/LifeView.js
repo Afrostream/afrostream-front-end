@@ -14,11 +14,6 @@ const md = MarkdownIt({
   linkify: true        // Autoconvert URL-like text to links
 })
 
-@prepareRoute(async function ({store, params: {postId}}) {
-  return await Promise.all([
-    store.dispatch(BlogActionCreators.fetchPost(postId))
-  ])
-})
 @connect(({Blog}) => ({Blog}))
 export default class LifeView extends Component {
 
