@@ -10,6 +10,7 @@ import classSet from 'classnames'
 import config from '../../../../config'
 import { withRouter } from 'react-router'
 import window from 'global/window'
+import * as EventActionCreators from '../../actions/event'
 
 const {apps} = config
 
@@ -35,6 +36,16 @@ class Header extends React.Component {
 
   componentWillUnmount () {
     window.removeEventListener('scroll', this.updatePin.bind(this))
+  }
+
+  toggleSideBar (toggle) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    dispatch(EventActionCreators.toggleSideBar(toggle))
   }
 
   updatePin () {
@@ -72,7 +83,7 @@ class Header extends React.Component {
 
     let sliderClasses = {
       'navbar': true,
-      //'navbar-life': isOnLife,
+      'navbar-life': isOnLife,
       'navbar-default': true,
       'navbar-fixed-top': true,
       'navbar-hidden': !chatMode && hiddenMode,
@@ -95,14 +106,15 @@ class Header extends React.Component {
           {planCode ? <SmartBanner {...apps.params}/> : ''}
           <div className="container-fluid">
             <nav className="nav-collapse" role="navigation">
-              { hasHistory ? <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
+              { hasHistory && !isOnLife ?
+                <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
               <Link className="navbar-brand" to="/">
                 <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
               </Link>
-              {!isOnLife && <UserButton {...this.props}/>}
+              <UserButton {...this.props}/>
             </nav>
+            {isOnLife && <LifeNavigation />}
           </div>
-          {isOnLife && <LifeNavigation />}
         </div>
       </Headroom>
     )

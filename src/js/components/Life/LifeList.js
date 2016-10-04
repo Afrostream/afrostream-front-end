@@ -13,7 +13,7 @@ import Immutable from 'immutable'
 
 const {images} =config
 const masonryOptions = {
-  percentPosition: true,
+  //percentPosition: true,
   fitWidth: true,
   transitionDuration: '0.2s',
   gutter: 0
