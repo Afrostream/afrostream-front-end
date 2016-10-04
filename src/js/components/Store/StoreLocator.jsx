@@ -194,11 +194,4 @@ class StoreLocator extends React.Component {
   }
 }
 
-export
-default
-
-scriptLoader(gmapApi)
-
-(
-  withRouter(StoreLocator)
-)
+export default scriptLoader(gmapApi)(withRouter(StoreLocator))

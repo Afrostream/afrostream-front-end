@@ -13,12 +13,9 @@ export default class LifeList extends Component {
 
     return (
       <ul className="life-navigation">
-        <li ><Link to="/life">Vidéo</Link></li>
-        <li ><Link href="/life">Audio</Link></li>
+        <li ><Link to="/life">Streaming</Link></li>
         <li ><Link href="/life">Actualité</Link></li>
         <li ><Link href="/life">Exprérience</Link></li>
-        <li ><Link href="/life">Focus</Link></li>
-        <li ><Link href="/life">Prémium</Link></li>
       </ul>
     )
   }

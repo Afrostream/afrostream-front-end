@@ -1,5 +1,4 @@
 @import (reference) '../../../styles/config.less';
-@import '../../../styles/btn-play.less';
 
 .life-list {
   padding-top: @header-height;
@@ -8,21 +7,36 @@
     margin: 0 auto;
   }
 
-  @gap-brick: 20px;
-
+  @gap-brick: 10px;
+  .life-player {
+    margin: 0 auto;
+    width: 900px;
+    padding: @gap-brick
+  }
   .brick {
     display: flex;
-    width: 33.3%;
-    min-height: 293px;
+    width: 300px;
+    height: 300px;
     cursor: pointer;
+    overflow: hidden;
+    margin: 0 auto;
     .brick-content {
-      margin: 0 @gap-brick @gap-brick 0;
+      text-align: center;
+      margin: @gap-brick;
+      .isMobile({ margin: 0; });
       box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
       position: relative;
       width: 100%;
+      &:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        height: 100%;
+      }
     }
     .brick-background {
-      position: relative;
+      position: absolute;
       left: 0;
       right: 0;
       top: 0;
@@ -48,144 +62,53 @@
     }
 
     &.video {
-      width: 66.6%;
-      .brick-background {
-        position: absolute;
-      }
+      width: 600px;
+      height: 300px;
       .brick-background_mask {
         display: block;
-      }
-      .btn-play {
-        display: block;
-        cursor: pointer;
-      }
-      .card-body {
-        position: absolute;
-        bottom: 0;
-        color: #FFFFFF;
-        a {
-          color: #FFFFFF;
-        }
-      }
-      .raised-btn {
-        color: #FFFFFF;
-        border: 2px solid #FFFFFF;
-        background-color: fade(#FFFFFF, 20);
-        padding: 5px;
-      }
-    }
-
-    &.square {
-      min-height: 600px;
-      .brick-background {
-        position: absolute;
-      }
-      .card-body {
-        position: absolute;
-        bottom: 0;
-        color: #FFFFFF;
-        a {
-          color: #FFFFFF;
-        }
-      }
-      .raised-btn {
-        color: #FFFFFF;
-        border: 2px solid #FFFFFF;
-        background-color: fade(#FFFFFF, 20);
-        padding: 5px;
       }
     }
 
     &.premium {
+
       .premium-flag {
-        top: 0;
-        right: 0;
-        width: 40px;
-        height: 40px;
+        left: 0;
         position: absolute;
-        .zmdi {
-          right: 0.3em;
-          position: absolute;
-          top: 0.3em;
-          font-size: 1.5em;
-        }
-        &:before {
-          content: '';
-          position: absolute;
-          right: 0;
-          top: 0;
-          border-right: 40px solid @color-yellow;
-          border-bottom: 40px solid transparent;
+        right: 0;
+        top: 0;
+        text-align: center;
+        .premium-flag__header-label {
+          display: inline-block;
+          margin: 0 auto;
+          padding: 10px;
+          background-color: fade(@color-indigo, 90%);
+          font-size: 1.8em;
         }
       }
+
     }
     &.first {
-      width: 100%;
-      .brick-content {
-        text-align: center;
-        &:before {
-          content: '';
-          display: inline-block;
-          vertical-align: middle;
-          text-align: center;
-          height: 100%;
-        }
-      }
-      .brick-background {
-        position: absolute;
-      }
-      .card-body {
-        position: relative;
-        vertical-align: middle;
-        display: inline-block;
-        color: #FFFFFF;
-        margin: 100px 0 100px 0;
-        .card-meta {
-          display: none;
-        }
-        h2 {
-          font-family: @font-heavy;
-          text-transform: uppercase;
-          font-size: 2.6em;
-          line-height: 2.5;
-        }
-        a {
-          color: #FFFFFF;
-        }
-      }
-
-      .raised-btn {
-        color: #FFFFFF;
-        border: 2px solid #FFFFFF;
-        background-color: fade(#FFFFFF, 20);
-        padding: 5px;
-      }
-
-    }
-    .raised-btn {
-      font-family: @font-roman;
-      text-transform: uppercase;
-
-      color: #000000;
-      border: 2px solid #000000;
-      padding: 5px;
-
-      &:hover {
-        opacity: 1;
-      }
+      width: 900px;
+      height: 400px;
     }
 
     .card-body {
+      position: relative;
+      vertical-align: middle;
+      display: inline-block;
+      color: #FFFFFF;
       margin: 20px;
-      color: @color-indigo;
       a {
-        color: @color-indigo;
+        color: #FFFFFF;
       }
       .card-meta {
+        display: none;
         font-size: 1.2em;
       }
-      h2 {
-        font-size: 1.6em;
+      .card-info {
+        font-family: @font-heavy;
+        text-transform: uppercase;
+        font-size: 2.6em;
       }
     }
 

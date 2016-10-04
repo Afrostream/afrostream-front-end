@@ -68,8 +68,11 @@ class Header extends React.Component {
 
     let hasHistory = !this.state.isIOS && user && (location.pathname.length > 1)
 
+    const isOnLife = router.isActive('life')
+
     let sliderClasses = {
       'navbar': true,
+      //'navbar-life': isOnLife,
       'navbar-default': true,
       'navbar-fixed-top': true,
       'navbar-hidden': !chatMode && hiddenMode,
@@ -80,7 +83,6 @@ class Header extends React.Component {
       || router.isActive('parrainage')
     }
 
-    const isOnLife = router.isActive('life')
 
     return (
       <Headroom tolerance={5} offset={200} classes={{
@@ -88,16 +90,16 @@ class Header extends React.Component {
         pinned: 'slideDown',
         unpinned: 'slideUp'
       }}>
+
         <div className={classSet(sliderClasses)}>
           {planCode ? <SmartBanner {...apps.params}/> : ''}
           <div className="container-fluid">
             <nav className="nav-collapse" role="navigation">
               { hasHistory ? <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
               <Link className="navbar-brand" to="/">
-                <img src="/images/logo.png" alt="afrostream-logo" className="logo"/>
-                {isOnLife && <img src="/images/life.png" alt="afrostream-life"/>}
+                <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
               </Link>
-              <UserButton {...this.props}/>
+              {!isOnLife && <UserButton {...this.props}/>}
             </nav>
           </div>
           {isOnLife && <LifeNavigation />}
