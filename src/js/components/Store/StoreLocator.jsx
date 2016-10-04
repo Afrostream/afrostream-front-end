@@ -171,7 +171,7 @@ class StoreLocator extends React.Component {
     }
 
     return (
-      <div className="store-locator-page">
+      <div className="row-fluid store-locator-page">
         <div className="container-fluid brand-bg">
           <section className="info">
             <h2>{getI18n().storesLocator.title}</h2>
