@@ -110,6 +110,14 @@
   animation-name: slideUp;
 }
 
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: @header-height;
+}
+
 .navbar.navbar-default {
   margin: 0;
   padding: 0;
@@ -202,27 +210,31 @@
       padding: 5px;
     }
 
-    .navbar-brand {
-      position: absolute;
-      transform: translateX(-50%);
-      left: 50%;
-      img {
-        margin: 0 auto;
-        display: inherit;
-      }
+    img {
+      margin: 0 auto;
+      display: inherit;
     }
-    &.navbar-hidden {
-      opacity: 0;
-      .transition(opacity 0.4s linear);
-      display: none;
+
+    &:not(.navbar-life) {
+      .navbar-brand {
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+      }
     }
   }
 
-  .app.toggled nav {
-    &.navbar-hidden {
-      opacity: 1;
-      .transition(opacity 0.4s linear);
-      display: block;
-    }
+  &.navbar-hidden {
+    opacity: 0;
+    .transition(opacity 0.4s linear);
+    display: none;
+  }
+}
+
+.app.toggled nav {
+  &.navbar-hidden {
+    opacity: 1;
+    .transition(opacity 0.4s linear);
+    display: block;
   }
 }
