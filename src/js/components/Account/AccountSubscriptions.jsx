@@ -4,7 +4,7 @@ import { getI18n } from '../../../../config/i18n'
 import moment from 'moment'
 import { Link } from 'react-router'
 import { formatPrice } from '../../lib/utils'
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import LinearProgress from 'material-ui/LinearProgress'
 import RaisedButton from 'material-ui/RaisedButton'
 

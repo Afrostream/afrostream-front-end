@@ -2,9 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
-import * as FBActionCreators from '../../actions/facebook'
 import { Link } from 'react-router'
 import config from '../../../../config'
+import Drawer from 'material-ui/Drawer'
+import MenuItem from 'material-ui/MenuItem'
 
 const {featuresFlip} = config
 
@@ -77,25 +78,23 @@ class SideBar extends React.Component {
   render () {
     const {
       props: {
-        User
+        User,
+        Event
       }
     } = this
 
 
     const user = User.get('user')
-
+    const toggled = Event.get('sideBarToggled')
     return (
-      <div id="sidebar-wrapper">
-        <ul className="sidebar-nav">
-          <li><Link to="/compte">Mon compte</Link></li>
-          {this.getUserConnectedButtons(user, 'favorites')}
-          {this.getUserConnectedButtons(user, 'sponsorship')}
-          <li role="separator" className="divider"></li>
-          <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
-          {this.renderFriends()}
-        </ul>
-
-      </div>
+      <Drawer open={toggled}>
+        <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
+        <Link to="/compte"><MenuItem>Mon compte</MenuItem></Link>
+        {this.getUserConnectedButtons(user, 'favorites')}
+        {this.getUserConnectedButtons(user, 'sponsorship')}
+        <a href="#" onClick={::this.logout}><MenuItem>Se deconnecter</MenuItem></a>
+        {this.renderFriends()}
+      </Drawer>
     )
   }
 
@@ -118,11 +117,11 @@ class SideBar extends React.Component {
     let el
     switch (type) {
       case 'favorites':
-        el = ( <li><Link to="/favoris">Mes favoris</Link></li>)
+        el = (<Link to="/favoris"><MenuItem>Mes favoris</MenuItem></Link>)
         break
       case 'sponsorship':
         el = featuresFlip.sponsorship && canSponsorshipSubscription && (
-            <li><Link to="/parrainage" className="sidebar-nav_yellow">Parrainer</Link></li>)
+            <Link to="/parrainage" className="sidebar-nav_yellow"><MenuItem>Parrainer</MenuItem></Link>)
         break
       default:
         el = ''

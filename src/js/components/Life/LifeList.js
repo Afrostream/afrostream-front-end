@@ -5,7 +5,6 @@ import * as BlogActionCreators from '../../actions/blog'
 import * as ModalActionCreators from '../../actions/modal'
 import * as EventActionCreators from '../../actions/event'
 import config from '../../../../config/'
-import MasonryInfiniteScroller from 'react-masonry-infinite'
 import Masonry from 'react-masonry-component'
 import classSet from 'classnames'
 import Player from '../Player/Player'
@@ -15,8 +14,7 @@ import Immutable from 'immutable'
 const {images} =config
 const masonryOptions = {
   percentPosition: true,
-  //fitWidth: true,
-  //stamp: '.first',
+  fitWidth: true,
   transitionDuration: '0.2s',
   gutter: 0
 }
@@ -56,10 +54,6 @@ export default class LifeList extends Component {
     }))
   }
 
-  getRandomInt (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
-  }
-
   renderItem ({index}) {
     const {
       props: {
@@ -70,18 +64,38 @@ export default class LifeList extends Component {
     let sizes = [
       {
         type: 'video',
+        width: 600,
+        height: 300
       },
       {
         type: 'medium',
+        width: 300,
+        height: 300
       },
       {
         type: 'medium',
+        width: 300,
+        height: 300
       },
       {
         type: 'medium',
+        width: 300,
+        height: 300
       },
       {
-        type: 'square',
+        type: 'medium',
+        width: 300,
+        height: 300
+      },
+      {
+        type: 'medium',
+        width: 300,
+        height: 300
+      },
+      {
+        type: 'medium',
+        width: 300,
+        height: 300
       },
     ]
 
@@ -89,14 +103,14 @@ export default class LifeList extends Component {
     const sortedList = dataList.sort((a, b) => new Date(a.get('date')).getTime() < new Date(b.get('date')).getTime())
 
     const data = sortedList.get(index)
-    const elSize = index && _.sample(sizes) || {type: 'first'}
+    const elSize = index && _.sample(sizes) || {type: 'first', width: 900, height: 300}
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     let imageURL = baseUrl
     const thumb = data.get('poster')
     if (thumb) {
       const path = thumb.get('path')
       if (path) {
-        imageURL = `${images.urlPrefix}${path}?&w=500&q=${config.images.quality}&fm=${config.images.type}`
+        imageURL = `${images.urlPrefix}${path}?&facepad=1.5&crop=face&fit=min&w=${elSize.width}&h=${elSize.height}&q=${config.images.quality}&fm=${config.images.type}`
       }
     }
 
@@ -117,21 +131,17 @@ export default class LifeList extends Component {
         <div className="brick-content">
           <div className="brick-background" style={imageStyles}>
             <div className="brick-background_mask"/>
-            <div className="btn-play"/>
-            {brickStyle.premium && (<div className="premium-flag"><i className="zmdi zmdi-star"></i></div>)}
+            {brickStyle.premium && (<div className="premium-flag">
+              <div className="premium-flag__header-label"> Accès Prémium</div>
+            </div>)}
           </div>
           <div className="card-body">
             <div className="card-meta">
-              <time>il y a 1 semaine</time>
             </div>
-            <h2>
+            <div className="card-info">
               <a href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl"
                  target="_self">{data.get('title')}</a>
-            </h2>
-            <a className="raised-btn" href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl"
-               target="_self">
-              Lire la suite
-            </a>
+            </div>
           </div>
         </div>
       </article>
@@ -157,28 +167,8 @@ export default class LifeList extends Component {
     }
 
     return (
-      //<AutoSizer disableHeight>
-      //  {({width}) => (
-      //    <Collection
-      //      cellCount={dataList.size}
-      //      cellRenderer={::this.renderItem}
-      //      cellSizeAndPositionGetter={::this._cellSizeAndPositionGetter}
-      //      height={300}
-      //      width={width}
-      //    />
-      //  )}
-      //</AutoSizer>
-      <div className="row-fluid life-list brand-bg">
-        {/*<div className="container brand-bg ">*/}
-        {/*<MasonryInfiniteScroller className="masonry-list">*/}
-        {/*{*/}
-        {/*dataList.map((el, index) =>*/}
-        {/*this.renderItem({index})*/}
-        {/*).toJS()*/}
-        {/*}*/}
-        {/*</MasonryInfiniteScroller>*/}
-        {/*</div>*/}
-        <div className="container container-wall brand-bg ">
+      <div className="row-fluid life-list brand-grey">
+        <div className="container container-wall brand-grey">
           {this.renderItem({index: 0})}
           <Masonry className="masonry-list" options={masonryOptions}>
             {
@@ -188,7 +178,9 @@ export default class LifeList extends Component {
               ).toJS()
             }
           </Masonry>
-          <Player src={sourcePlayer} options={{autoplay: false}}/>
+          <div className="life-player">
+            <Player src={sourcePlayer} options={{autoplay: false}}/>
+          </div>
         </div>
       </div>
     )
