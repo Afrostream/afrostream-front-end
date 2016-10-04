@@ -48,6 +48,7 @@
     },
     "recharge": {
       "title": "MOYENS DE PAIEMENT",
+      "stores": "Liste des points de vente",
       "cashway": "Paiement en espèces avec ",
       "coupon": "Coupon"
     },

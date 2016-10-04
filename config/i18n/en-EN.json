@@ -32,6 +32,7 @@
     },
     "recharge": {
       "title": "RECHARGE",
+      "stores": "Stores locator",
       "cashway": "Payment in cash with ",
       "coupon": "Coupon"
     },
