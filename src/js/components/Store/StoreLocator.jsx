@@ -6,8 +6,15 @@ import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
 import TextField from 'material-ui/TextField'
 import { getI18n } from '../../../../config/i18n'
+import {
+  purple800
+} from 'material-ui/styles/colors'
 
 const {gmapApi} = config
+
+const textStyle = {
+  color: purple800
+}
 
 if (process.env.BROWSER) {
   require('./StoreLocator.less')
@@ -173,6 +180,11 @@ class StoreLocator extends React.Component {
           <section>
             <h3>{getI18n().storesLocator.where}</h3>
             <TextField id="map-search" defaultValue={this.state.location} onChange={::this.searchLocation}
+                       floatingLabelFixed={true}
+                       floatingLabelStyle={textStyle}
+                       disabledStyle={textStyle}
+                       hintStyle={textStyle}
+                       underlineStyle={textStyle}
                        hintText={getI18n().storesLocator.inputFind} floatingLabelText={getI18n().storesLocator.find}/>
             <div id="map-canvas" className="map-canvas"></div>
           </section>
