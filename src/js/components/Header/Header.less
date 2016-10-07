@@ -130,8 +130,8 @@
   border-radius: 0;
   z-index: @nav-z + 1;
   &.navbar-fixed-color {
-    background-color: @color-indigo;
-    background-color: fade(@color-indigo, 90%);
+    background-color: @color-black-2;
+    //background-color: fade(@color-black-2, 90%);
   }
   .container-fluid {
     padding: 0;
@@ -161,6 +161,8 @@
     }
 
     .navbar-brand {
+      background: none;
+      border: none;
       display: inline-block;
       .isMobile({ padding: 0; });
       img {
@@ -174,6 +176,11 @@
 
   .collapse.in {
     background-color: @color-indigo;
+  }
+
+  .open-menu-icon {
+    margin-left: @app-padding;
+    padding: 5px;
   }
 
   .label-user {
