@@ -97,8 +97,15 @@ class SideBar extends React.Component {
         <ul className="sidebar-nav">
           {this.getUserConnectedButtons(user, 'search')}
           {this.getUserConnectedButtons(user, 'compte')}
+          <li><Link to="/"><i className="zmdi zmdi-home"/>Accueil</Link></li>
+          <li><Link to="/life"><i className="zmdi zmdi-accounts"/>Communauté</Link></li>
+          <li><Link to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link></li>
+          <li><Link to="/last"><i className="zmdi zmdi-movie"/>Derniers ajouts</Link></li>
+          <li role="separator" className="divider"></li>
           {this.getUserConnectedButtons(user, 'sponsorship')}
-          {this.getUserConnectedButtons(user, 'browse')}
+        </ul>
+        {this.getUserConnectedButtons(user, 'browse')}
+        <ul className="sidebar-nav">
           <li role="separator" className="divider"></li>
           <li><Link to="/" onClick={::this.logout}><i className="zmdi zmdi-lock-open"/>Se deconnecter</Link></li>
           <li role="separator" className="divider"></li>
