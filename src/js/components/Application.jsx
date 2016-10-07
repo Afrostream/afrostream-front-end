@@ -12,6 +12,7 @@ import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
 
+import * as CategoryActionCreators from '../actions/category'
 import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
 import * as EpisodeActionCreators from '../actions/episode'
@@ -30,24 +31,7 @@ import {
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 const muiTheme = getMuiTheme({
-  menuItem: {
-    color: '#FFFFFF',
-    hoverColor: '#FFFFFF',
-    secondaryTextColor: '#FFFFFF',
-  },
-  listItem: {
-    color: '#FFFFFF',
-    textColor: '#FFFFFF',
-    secondaryTextColor: '#FFFFFF',
-  },
-  drawer: {
-    color: '#23232C',
-    textColor: '#FFFFFF',
-    secondaryTextColor: '#FFFFFF',
-  },
   palette: {
-    accent2Color: '#23232C',
-    canvasColor: '#23232C',
     textColor: grey900,
     secondaryTextColor: grey600,
     disabledColor: grey600,
@@ -65,6 +49,8 @@ if (process.env.BROWSER) {
 }
 
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
+
+  await store.dispatch(CategoryActionCreators.getMenu())
 
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))

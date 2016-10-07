@@ -5,19 +5,12 @@ import * as BlogActionCreators from '../../actions/blog'
 import * as ModalActionCreators from '../../actions/modal'
 import * as EventActionCreators from '../../actions/event'
 import config from '../../../../config/'
-import Masonry from 'react-masonry-component'
 import classSet from 'classnames'
 import Player from '../Player/Player'
 import _ from 'lodash'
 import Immutable from 'immutable'
 
 const {images} =config
-const masonryOptions = {
-  //percentPosition: true,
-  fitWidth: true,
-  transitionDuration: '0.2s',
-  gutter: 0
-}
 
 const sourcePlayer = {
   'src': 'https://www.youtube.com/watch?v=xyRXwzKy_rk',
@@ -64,7 +57,7 @@ export default class LifeList extends Component {
     let sizes = [
       {
         type: 'video',
-        width: 600,
+        width: 1080,
         height: 300
       },
       {
@@ -125,7 +118,7 @@ export default class LifeList extends Component {
     brickStyle[elSize.type] = true
 
     return (
-      <article className={classSet(brickStyle)} key={`data-brick-${index}`} style={elSize} onClick={
+      <article className={classSet(brickStyle)} key={`data-brick-${index}`} onClick={
         ::this.loadVideo
       }>
         <div className="brick-content">
@@ -170,14 +163,14 @@ export default class LifeList extends Component {
       <div className="row-fluid life-list brand-grey">
         <div className="container container-wall brand-grey">
           {this.renderItem({index: 0})}
-          <Masonry className="masonry-list" options={masonryOptions}>
+          <div className="masonry-list">
             {
               dataList.map((el, index) => {
                   return index && this.renderItem({index}) || null
                 }
               ).toJS()
             }
-          </Masonry>
+          </div>
           <div className="life-player">
             <Player src={sourcePlayer} options={{autoplay: false}}/>
           </div>

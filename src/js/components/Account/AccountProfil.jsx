@@ -106,6 +106,7 @@ class AccountProfil extends React.Component {
     } = this
 
     const user = User.get('user')
+    const hasFacebook = Boolean(user && user.get('facebook'))
     const label = getI18n().account.profile[section.key]
     const sectionValue = user.get(section.key) || ''
     const icon = section.icon || ''
@@ -131,7 +132,7 @@ class AccountProfil extends React.Component {
           <RaisedButton {...{label}} {...inputAttributes} style={{
             marginTop: 20,
             minWidth: 200
-          }} disabled={user.get('facebook')}/>
+          }} disabled={hasFacebook}/>
         </div>
         break
       case 'date':

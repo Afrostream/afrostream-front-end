@@ -19,7 +19,7 @@ class SearchBox extends React.Component {
   }
 
   state = {
-    hasFocus: false
+    hasFocus: this.props.defaultOpen
   }
 
   debounceSearch = _.debounce(::this.search, 400)
@@ -41,7 +41,7 @@ class SearchBox extends React.Component {
       let input = self.getInput()
       input.value = ''
       self.setState({
-        hasFocus: false
+        hasFocus: this.props.defaultOpen
       })
     }, 200)
   }
@@ -101,7 +101,12 @@ class SearchBox extends React.Component {
 }
 
 SearchBox.propTypes = {
-  history: React.PropTypes.object
+  history: React.PropTypes.object,
+  defaultOpen: React.PropTypes.bool
+}
+
+SearchBox.defaultProps = {
+  defaultOpen: false
 }
 
 export default withRouter(SearchBox)

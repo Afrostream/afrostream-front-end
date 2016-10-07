@@ -11,8 +11,7 @@ import UserMoviesList from '../Movies/UserMoviesList'
 @prepareRoute(async function ({store}) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(EventActionCreators.userActive(true)),
-    store.dispatch(CategoryActionCreators.getMenu())
+    store.dispatch(EventActionCreators.userActive(true))
   ])
 
   store.dispatch(UserActionCreators.getFavorites('movies'))
