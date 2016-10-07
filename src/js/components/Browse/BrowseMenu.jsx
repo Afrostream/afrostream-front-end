@@ -33,10 +33,6 @@ class BrowseMenu extends React.Component {
   render () {
     return (
       <ul className="sidebar-nav scrollable">
-        <li><Link to="/"><i className="zmdi zmdi-home"/>Accueil</Link></li>
-        <li><Link to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link></li>
-        <li><Link to="/last"><i className="zmdi zmdi-movie"/>Derniers ajouts</Link></li>
-        <li role="separator" className="divider"></li>
         {this.renderCategories()}
       </ul>
     )

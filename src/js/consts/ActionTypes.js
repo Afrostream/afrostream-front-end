@@ -130,5 +130,9 @@ export default {
     getFriends: null,
     getFriendList: null,
     getInvitableFriends: null
+  }),
+
+  Life: keyMirror({
+    fetchPins: null
   })
 }
