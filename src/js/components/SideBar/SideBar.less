@@ -3,6 +3,23 @@
 /* Sidebar Styles */
 
 #sidebar-wrapper {
+  z-index: @nav-z + 1;
+  position: fixed;
+  left: 0;
+  width: @sidebar-width;
+  height: 100%;
+  transform: translateX(-100%);
+  background-color: @color-black-2;
+  .transition(transform @menu-open-duration ease);
+  box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+
+}
+
+.app.toggled #sidebar-wrapper {
+  transform: translateX(0);
+}
+
+#sidebar-wrapper {
   .friends-list {
     border-top: solid 1px fade(#FFFFFF, 10%);
     display: flex;
@@ -23,6 +40,43 @@
   margin: 0;
   list-style: none;
   .isMobile({ padding: @header-height 0 0 0; });
+
+  .icon-user {
+    border-radius: 50px;
+    border: 3px solid @color-purple;
+    width: 40px;
+    height: 40px;
+  }
+
+  .divider {
+    height: 1px;
+    background: fade(@color-grey, 20%);
+    margin: 0 20px 0 20px;
+  }
+
+  &.scrollable {
+    overflow: scroll;
+    height: 100%;
+  }
+}
+
+.side-drawer,
+.sidebar-nav {
+  .search-box {
+    margin: 10px;
+    &.has-focus input {
+      width: 100%;
+    }
+    &:before {
+      left: 20px;
+    }
+  }
+}
+
+.side-drawer {
+  > div {
+    padding-top: @header-height;
+  }
 }
 
 .sidebar-nav li {
@@ -33,10 +87,15 @@
 .sidebar-nav li a {
   display: block;
   text-decoration: none;
-  font-size: 1.2em;
-  color: @brand-primary;
+  font-size: 1.4em;
+  font-family: @font-family-base;
+  color: @brand-secondary;
+  padding-left: 10px;
   &.sidebar-nav_yellow {
     color: @color-yellow;
+  }
+  i {
+    padding: 0 10px 0 0;
   }
 }
 
@@ -67,7 +126,10 @@
 }
 
 @media (min-width: 768px) {
-  .sidebar-nav {
-    padding: (@header-height + @app-padding) 0 0 0;
+  #sidebar-wrapper {
+    padding-top: 15px;
+    .sidebar-nav {
+      padding: (@app-padding) 0 0 0;
+    }
   }
 }

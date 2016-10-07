@@ -83,7 +83,7 @@ class UserButton extends React.Component {
                      className="icon-user"/>
               </button>
             </li>
-            {this.getUserConnectedButtons(user, 'browse')}
+            {/*{this.getUserConnectedButtons(user, 'browse')}*/}
             {this.getUserConnectedButtons(user, 'search')}
 
           </ul>

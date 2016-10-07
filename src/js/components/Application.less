@@ -1,4 +1,4 @@
-@import '../../../node_modules/bootstrap/less/bootstrap.less';
+@import '../../styles/bootstrap.less';
 @import (css) '../../../node_modules/react-virtualized/styles.css';
 @import (css) '../../../node_modules/nprogress/nprogress.css';
 @import '../../styles/normalize.less';
@@ -92,33 +92,13 @@ a.active {
 /* Toggle Styles */
 
 .app {
-  padding-left: 0;
-  .transition(padding-right 0.5s ease);
+  margin-left: 0;
+  .transition(left @menu-open-duration ease);
 }
 
 .app.toggled {
-  padding-left: @sidebar-width;
-  .transition(padding-right 0.5s ease);
-}
-
-.app.chat-open {
-  padding-right: 30%;
-  .transition(padding-right 0.5s ease);
-}
-
-#sidebar-wrapper {
-  z-index: 1000;
-  position: fixed;
-  right: @sidebar-width;
-  width: 0;
-  height: 100%;
-  margin-right: -@sidebar-width;
-  background-color: @color-indigo;
-  .transition(all 0.5s ease);
-}
-
-.app.toggled #sidebar-wrapper {
-  width: @sidebar-width;
+  margin-left: @sidebar-width;
+  .transition(margin-left @menu-open-duration ease);
 }
 
 #page-content-wrapper {
@@ -211,6 +191,10 @@ a.active {
 .app.toggled #page-content-wrapper {
   position: absolute;
   margin-right: -@sidebar-width;
+}
+
+.container {
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {

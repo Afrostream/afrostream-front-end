@@ -1,11 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
 import { Link } from 'react-router'
 import config from '../../../../config'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
+import BrowseMenu from './../Browse/BrowseMenu'
+import Divider from 'material-ui/Divider'
+import SearchInput from './../Search/SearchBox'
 
 const {featuresFlip} = config
 
@@ -79,22 +83,28 @@ class SideBar extends React.Component {
     const {
       props: {
         User,
-        Event
+        Event,
+        router
       }
     } = this
 
 
     const user = User.get('user')
-    const toggled = Event.get('sideBarToggled')
+    const toggled = user && Event.get('sideBarToggled')
     return (
-      <Drawer open={toggled}>
+      <div id="sidebar-wrapper">
         <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
-        <Link to="/compte"><MenuItem>Mon compte</MenuItem></Link>
-        {this.getUserConnectedButtons(user, 'favorites')}
-        {this.getUserConnectedButtons(user, 'sponsorship')}
-        <a href="#" onClick={::this.logout}><MenuItem>Se deconnecter</MenuItem></a>
-        {this.renderFriends()}
-      </Drawer>
+        <ul className="sidebar-nav">
+          {this.getUserConnectedButtons(user, 'search')}
+          {this.getUserConnectedButtons(user, 'compte')}
+          {this.getUserConnectedButtons(user, 'sponsorship')}
+          {this.getUserConnectedButtons(user, 'browse')}
+          <li role="separator" className="divider"></li>
+          <li><Link to="/" onClick={::this.logout}><i className="zmdi zmdi-lock-open"/>Se deconnecter</Link></li>
+          <li role="separator" className="divider"></li>
+          {/*{this.renderFriends()}*/}
+        </ul>
+      </div>
     )
   }
 
@@ -117,11 +127,23 @@ class SideBar extends React.Component {
     let el
     switch (type) {
       case 'favorites':
-        el = (<Link to="/favoris"><MenuItem>Mes favoris</MenuItem></Link>)
+        el = (<li><Link to="/favoris">Mes favoris</Link ></li>)
         break
       case 'sponsorship':
         el = featuresFlip.sponsorship && canSponsorshipSubscription && (
-            <Link to="/parrainage" className="sidebar-nav_yellow"><MenuItem>Parrainer</MenuItem></Link>)
+            <li><Link to="/parrainage"><i className="zmdi zmdi-ticket-star"/>Parrainer</Link></li>)
+        break
+      case 'browse':
+        el = <BrowseMenu/>
+        break
+      case 'search':
+        el = <SearchInput defaultOpen={true}/>
+        break
+      case 'compte':
+        el = (<li><Link to="/compte"><img src={user.get('picture')}
+                                          alt="50x50"
+                                          id="userButtonImg"
+                                          className="icon-user"/> Mon profil</Link></li>)
         break
       default:
         el = ''
@@ -152,5 +174,4 @@ class SideBar extends React.Component {
     dispatch(OAuthActionCreators.logOut())
   }
 }
-
-export default SideBar
+export default withRouter(SideBar)
