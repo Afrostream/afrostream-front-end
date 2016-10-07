@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import Headroom from 'react-headrooms'
 import LifeNavigation from '../Life/LifeNavigation'
 import UserButton from './../User/UserButton'
-import GoBack from './../GoBack/GoBack'
 import SmartBanner from './SmartBanner'
 import classSet from 'classnames'
 import config from '../../../../config'
@@ -110,9 +108,9 @@ class Header extends React.Component {
                 <i className="open-menu-icon zmdi zmdi-menu"/>
                 <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
               </button>
+              {isOnLife && <LifeNavigation />}
               <UserButton {...this.props}/>
             </nav>
-            {isOnLife && <LifeNavigation />}
           </div>
         </div>
       </Headroom>

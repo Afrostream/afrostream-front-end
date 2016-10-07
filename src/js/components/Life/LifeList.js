@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
-import * as BlogActionCreators from '../../actions/blog'
+import * as LifeActionCreators from '../../actions/life'
 import * as ModalActionCreators from '../../actions/modal'
 import * as EventActionCreators from '../../actions/event'
 import config from '../../../../config/'
@@ -24,10 +24,10 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BlogActionCreators.fetchAll())
+    store.dispatch(LifeActionCreators.fetchPins())
   ])
 })
-@connect(({Blog}) => ({Blog}))
+@connect(({Life}) => ({Life}))
 export default class LifeList extends Component {
 
   constructor (props, context) {
@@ -50,7 +50,7 @@ export default class LifeList extends Component {
   renderItem ({index}) {
     const {
       props: {
-        Blog
+        Life
       }
     } = this
 
@@ -92,14 +92,14 @@ export default class LifeList extends Component {
       },
     ]
 
-    const dataList = Blog.get('posts')
+    const dataList = Life.get('life/pins')
     const sortedList = dataList.sort((a, b) => new Date(a.get('date')).getTime() < new Date(b.get('date')).getTime())
 
     const data = sortedList.get(index)
     const elSize = index && _.sample(sizes) || {type: 'first', width: 900, height: 300}
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     let imageURL = baseUrl
-    const thumb = data.get('poster')
+    const thumb = data.get('image')
     if (thumb) {
       const path = thumb.get('path')
       if (path) {
@@ -145,7 +145,7 @@ export default class LifeList extends Component {
   render () {
     const {
       props: {
-        Blog, children
+        Life, children
       }
     } = this
 
@@ -154,7 +154,7 @@ export default class LifeList extends Component {
     }
 
 
-    let dataList = Blog.get('posts')
+    let dataList = Life.get('life/pins')
     if (!dataList) {
       return (<div />)
     }
