@@ -35,7 +35,7 @@ class SideBar extends React.Component {
     } = this
 
     const toggled = Event.get('sideBarToggled')
-    let userBtn = (e.target.id == 'userButton' || e.target.id == 'userButtonImg')
+    let userBtn = (e.target.id == 'userButton' || e.target.id == 'userButtonImg' || e.target.nodeName === 'INPUT')
     if (toggled && !userBtn) {
       this.close()
     }
