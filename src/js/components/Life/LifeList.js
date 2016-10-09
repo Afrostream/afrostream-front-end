@@ -98,16 +98,16 @@ export default class LifeList extends Component {
     const data = sortedList.get(index)
     const elSize = index && _.sample(sizes) || {type: 'first', width: 900, height: 300}
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-    let imageURL = baseUrl
     const thumb = data.get('image')
+    let imageUrl = data.get('imageUrl') || baseUrl;
     if (thumb) {
       const path = thumb.get('path')
       if (path) {
-        imageURL = `${images.urlPrefix}${path}?&facepad=1.5&crop=face&fit=min&w=${elSize.width}&h=${elSize.height}&q=${config.images.quality}&fm=${config.images.type}`
+        imageUrl = `${images.urlPrefix}${path}?&facepad=1.5&crop=face&fit=min&w=${elSize.width}&h=${elSize.height}&q=${config.images.quality}&fm=${config.images.type}`
       }
     }
 
-    let imageStyles = {backgroundImage: `url(${imageURL})`}
+    let imageStyles = {backgroundImage: `url(${imageUrl})`}
 
     const brickStyle = {
       'brick': true,
@@ -132,8 +132,11 @@ export default class LifeList extends Component {
             <div className="card-meta">
             </div>
             <div className="card-info">
-              <a href="https://www.warnerbros.fr/articles/dc-comics-jimmy-olsen-supergirl"
+              <a href={data.get('providerUrl')}
                  target="_self">{data.get('title')}</a>
+            </div>
+            <div className="card-description">
+              {data.get('description')}
             </div>
           </div>
         </div>
@@ -141,6 +144,23 @@ export default class LifeList extends Component {
     )
   }
 
+  renderContent (dataList) {
+    if (!dataList || !dataList.size) {
+      return
+    }
+    return [this.renderItem({index: 0}),
+      <div className="masonry-list">
+        {
+          dataList.map((el, index) => {
+              return index && this.renderItem({index}) || null
+            }
+          ).toJS()
+        }
+      </div>,
+      <div className="life-player">
+        <Player src={sourcePlayer} options={{autoplay: false}}/>
+      </div>]
+  }
 
   render () {
     const {
@@ -155,25 +175,11 @@ export default class LifeList extends Component {
 
 
     let dataList = Life.get('life/pins')
-    if (!dataList) {
-      return (<div />)
-    }
 
     return (
       <div className="row-fluid life-list brand-grey">
         <div className="container container-wall brand-grey">
-          {this.renderItem({index: 0})}
-          <div className="masonry-list">
-            {
-              dataList.map((el, index) => {
-                  return index && this.renderItem({index}) || null
-                }
-              ).toJS()
-            }
-          </div>
-          <div className="life-player">
-            <Player src={sourcePlayer} options={{autoplay: false}}/>
-          </div>
+          {dataList && this.renderContent(dataList)}
         </div>
       </div>
     )
