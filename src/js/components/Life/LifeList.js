@@ -7,7 +7,9 @@ import * as EventActionCreators from '../../actions/event'
 import config from '../../../../config/'
 import classSet from 'classnames'
 import Player from '../Player/Player'
+import LifePost from './LifePost'
 import _ from 'lodash'
+import moment from 'moment'
 import Immutable from 'immutable'
 
 const {images} =config
@@ -32,19 +34,26 @@ export default class LifeList extends Component {
 
   constructor (props, context) {
     super(props, context)
-    this._columnYMap = []
   }
 
-  loadVideo () {
+  clickHandler (data) {
     const {
       props: {
         dispatch
       }
     } = this
 
-    dispatch(ModalActionCreators.open({
-      target: 'player', data: Immutable.fromJS(sourcePlayer)
-    }))
+    switch (data.get('type')) {
+      case 'video':
+        dispatch(ModalActionCreators.open({
+          target: 'player', data: Immutable.fromJS({
+            src: data.get('originalUrl'),
+            type: `video/${data.get('providerName')}`
+          })
+        }))
+        break
+
+    }
   }
 
   renderItem ({index}) {
@@ -56,54 +65,29 @@ export default class LifeList extends Component {
 
     let sizes = [
       {
-        type: 'video',
-        width: 1080,
+        type: 'first',
+        width: 900,
         height: 300
       },
       {
         type: 'medium',
-        width: 300,
+        width: 350,
         height: 300
-      },
-      {
-        type: 'medium',
-        width: 300,
-        height: 300
-      },
-      {
-        type: 'medium',
-        width: 300,
-        height: 300
-      },
-      {
-        type: 'medium',
-        width: 300,
-        height: 300
-      },
-      {
-        type: 'medium',
-        width: 300,
-        height: 300
-      },
-      {
-        type: 'medium',
-        width: 300,
-        height: 300
-      },
+      }
     ]
 
     const dataList = Life.get('life/pins')
     const sortedList = dataList.sort((a, b) => new Date(a.get('date')).getTime() < new Date(b.get('date')).getTime())
 
     const data = sortedList.get(index)
-    const elSize = index && _.sample(sizes) || {type: 'first', width: 900, height: 300}
+    const elSize = sizes[Math.min(index, 1)]
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     const thumb = data.get('image')
     let imageUrl = data.get('imageUrl') || baseUrl;
     if (thumb) {
       const path = thumb.get('path')
       if (path) {
-        imageUrl = `${images.urlPrefix}${path}?&facepad=1.5&crop=face&fit=min&w=${elSize.width}&h=${elSize.height}&q=${config.images.quality}&fm=${config.images.type}`
+        imageUrl = `${images.urlPrefix}${path}?&crop=face&fit=${elSize.type === 'first' ? 'clamp' : 'clip'}&w=${elSize.width}&h=${elSize.height}&q=${config.images.quality}&fm=${config.images.type}`
       }
     }
 
@@ -119,10 +103,11 @@ export default class LifeList extends Component {
 
     return (
       <article className={classSet(brickStyle)} key={`data-brick-${index}`} onClick={
-        ::this.loadVideo
+        e =>::this.clickHandler(data)
       }>
         <div className="brick-content">
-          <div className="brick-background" style={imageStyles}>
+          <div className="brick-background">
+            <div className="brick-background_image" style={imageStyles}/>
             <div className="brick-background_mask"/>
             {brickStyle.premium && (<div className="premium-flag">
               <div className="premium-flag__header-label"> Accès Prémium</div>
@@ -138,6 +123,9 @@ export default class LifeList extends Component {
             <div className="card-description">
               {data.get('description')}
             </div>
+            <div className="card-date">
+              <i class="zmdi zmdi-time-interval"></i>{moment(data.get('date'))}
+            </div>
           </div>
         </div>
       </article>
@@ -149,7 +137,7 @@ export default class LifeList extends Component {
       return
     }
     return [this.renderItem({index: 0}),
-      <div className="masonry-list">
+      <div key="masonry-pin-list" className="masonry-list">
         {
           dataList.map((el, index) => {
               return index && this.renderItem({index}) || null
@@ -157,9 +145,10 @@ export default class LifeList extends Component {
           ).toJS()
         }
       </div>,
-      <div className="life-player">
+      <div key="masonry-pin-player" className="life-player">
         <Player src={sourcePlayer} options={{autoplay: false}}/>
-      </div>]
+      </div>,
+      <LifePost key="life-post-sticky"/>]
   }
 
   render () {
