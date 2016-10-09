@@ -3,7 +3,7 @@ import { notFoundPost } from './notFoundAction'
 
 export function fetchPins () {
   return (dispatch, getState) => {
-    let readyPins = getState().Life.get(`pins`)
+    let readyPins = getState().Life.get(`life/pins`)
     if (readyPins) {
       console.log('Life pins already present in data store')
       return {
@@ -15,29 +15,29 @@ export function fetchPins () {
     }
     return async api => ({
       type: ActionTypes.Life.fetchPins,
-      res: await api({path: `/api/life/pins`})
+      res: await api({path: `/api/life/pins`, params: {filterCountry: false}})
     })
   }
 }
 
-export function fetchPost (postId) {
+export function fetchPin (pinId) {
   return (dispatch, getState) => {
-    let readyPost = getState().Blog.get(`/posts/${postId}`)
-    if (readyPost) {
-      console.log('blog post already present in data store')
+    let readyPin = getState().Blog.get(`life/pins/${pinId}`)
+    if (readyPin) {
+      console.log('Life pin already present in data store')
       return {
-        type: ActionTypes.Blog.fetchPost,
-        postId,
+        type: ActionTypes.Life.fetchPin,
+        pinId,
         res: {
-          body: readyPost.toJS()
+          body: readyPin.toJS()
         }
       }
     }
-    console.log('fetchPost ', postId)
+    console.log('fetchPin ', pinId)
     return async api => ({
-      type: ActionTypes.Blog.fetchPost,
-      postId,
-      res: await api({path: `/api/posts/${postId}`}).catch(notFoundPost)
+      type: ActionTypes.Life.fetchPin,
+      pinId,
+      res: await api({path: `/api/life/pins/${pinId}`, params: {filterCountry: false}}).catch(notFoundPost)
     })
   }
 }

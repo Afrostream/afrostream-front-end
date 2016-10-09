@@ -15,7 +15,7 @@ const app = express()
 // Serve static files
 // --------------------------------------------------
 
-const staticPath = './static'//path.resolve(__dirname, '../../static')
+const staticPath = './static'
 const buildPath = path.resolve(process.cwd(), 'dist')
 
 function errorHandler (err, req, res, next) {
