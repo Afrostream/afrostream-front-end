@@ -134,6 +134,7 @@ export default {
   }),
 
   Life: keyMirror({
-    fetchPins: null
+    fetchPins: null,
+    fetchPin: null
   })
 }
