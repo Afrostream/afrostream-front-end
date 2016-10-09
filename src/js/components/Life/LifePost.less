@@ -1,0 +1,44 @@
+@import (reference) '../../../styles/config.less';
+
+.life-pin-sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5px 5px 5px 10px;
+  background: @color-yellow;
+  display: flex;
+  box-shadow: rgba(0, 0, 0, 0.156863) -3px 0px 5px, rgba(0, 0, 0, 0.227451) -3px 0px 5px;
+  .life-pin-action {
+    margin: 6px;
+    color: #FFFFFF;
+  }
+}
+
+.life-list {
+
+  .headroom {
+    transition: transform 200ms linear;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    zIndex: 1;
+  }
+  .headroom--pinned {
+    transform: translateY(100%);
+  }
+
+  .headroom--unpinned {
+    transform: translateY(0%);
+  }
+  .headroom--bottom {
+    bottom: 150px; /* equal to height of footer */
+    transform: translateY(0%);
+  }
+
+}
+
+.app.toggled .life-pin-sticky {
+  padding: 5px 5px 5px (@sidebar-width + 10px);
+}
