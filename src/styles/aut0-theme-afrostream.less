@@ -13,16 +13,16 @@
 #lock.theme-default,
 #widget {
 
-  .lock {
-    &.player {
-      position: relative;
-    }
+  &.lock.player {
+    position: fixed;
+    background: none;
   }
 
   .overlay {
     background: @background-color-base;
     background: fade(@background-color-base, @popup-bg-alpha);
   }
+
   .panel {
     font-family: @font-family-base;
     background: lighten(@color-grey, 5%);
