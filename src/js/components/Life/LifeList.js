@@ -19,7 +19,6 @@ const sourcePlayer = {
   'type': 'video/youtube'
 }
 
-
 if (process.env.BROWSER) {
   require('./LifeList.less')
 }
@@ -81,6 +80,7 @@ export default class LifeList extends Component {
 
     const data = sortedList.get(index)
     const elSize = sizes[Math.min(index, 1)]
+    const type = index ? data.get('type') : 'first'
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     const thumb = data.get('image')
     let imageUrl = data.get('imageUrl') || baseUrl;
@@ -91,7 +91,10 @@ export default class LifeList extends Component {
       }
     }
 
-    let imageStyles = {backgroundImage: `url(${imageUrl})`}
+    const imageStyles = {backgroundImage: `url(${imageUrl})`}
+
+    const pinnedDate = moment(data.get('date')).format('L')
+    const pinnedUser = data.get('user')
 
     const brickStyle = {
       'brick': true,
@@ -99,11 +102,11 @@ export default class LifeList extends Component {
       'premium': Math.random() >= 0.5
     }
 
-    brickStyle[elSize.type] = true
+    brickStyle[type] = true
 
     return (
       <article className={classSet(brickStyle)} key={`data-brick-${index}`} onClick={
-        e =>::this.clickHandler(data)
+        (e) =>::this.clickHandler(data)
       }>
         <div className="brick-content">
           <div className="brick-background">
@@ -117,14 +120,13 @@ export default class LifeList extends Component {
             <div className="card-meta">
             </div>
             <div className="card-info">
-              <a href={data.get('providerUrl')}
-                 target="_self">{data.get('title')}</a>
+              <div target="_self">{data.get('title')}</div>
             </div>
             <div className="card-description">
               {data.get('description')}
             </div>
             <div className="card-date">
-              <i class="zmdi zmdi-time-interval"></i>{moment(data.get('date'))}
+              {`${pinnedDate}-${pinnedUser && pinnedUser.get('nickname')}`}
             </div>
           </div>
         </div>
@@ -133,7 +135,7 @@ export default class LifeList extends Component {
   }
 
   renderContent (dataList) {
-    if (!dataList || !dataList.size) {
+    if (!dataList.size) {
       return
     }
     return [this.renderItem({index: 0}),
