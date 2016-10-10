@@ -10,6 +10,7 @@
   }
 
   @gap-brick: 10px;
+
   .life-player {
     margin: 0 auto;
     padding: @gap-brick
@@ -65,19 +66,18 @@
       bottom: 0;
 
       .brick-background_mask {
-        display: none;
         position: absolute;
         top: 0;
         left: 0;
         bottom: 0;
         right: 0;
-        .gradient(fade(#000000, 20), fade(#000000, 70));
+        .gradient(fade(#000000, 20), fade(#000000, 40));
       }
     }
 
     &.video {
       .brick-background_mask {
-        display: block;
+        .gradient(fade(#000000, 20), fade(#000000, 70));
       }
     }
 

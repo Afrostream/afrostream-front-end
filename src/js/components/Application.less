@@ -127,12 +127,10 @@ a.active {
       .container-fluid {
 
         margin-top: @header-height;
-        padding: 40px;
+        padding: @app-padding;
         background: @background-page;
         min-height: 100%;
-        padding-left: @app-padding;
-        padding-right: @app-padding;
-        .isMobile({ margin-top: @header-height-mobile; padding-left: @app-padding-mobile; padding-right: @app-padding-mobile; });
+        .isMobile({ padding: @app-padding-mobile; });
 
         &.container-no-padding {
           margin: 0;
