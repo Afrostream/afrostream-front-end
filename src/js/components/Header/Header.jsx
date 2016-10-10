@@ -105,7 +105,7 @@ class Header extends React.Component {
           <div className="container-fluid">
             <nav className="nav-collapse" role="navigation">
               <button role="button" className="navbar-brand" onClick={::this.toggleSideBar}>
-                <i className="open-menu-icon zmdi zmdi-menu"/>
+                {user && <i className="open-menu-icon zmdi zmdi-menu"/>}
                 <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
               </button>
               {isOnLife && <LifeNavigation />}

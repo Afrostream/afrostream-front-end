@@ -20,11 +20,11 @@ if (process.env.BROWSER) {
 class SideBar extends React.Component {
 
   componentDidMount () {
-    $(document).on('mouseup', this.toggleSideBar.bind(this))
+    //$(document).on('mouseup', this.toggleSideBar.bind(this))
   }
 
   componentWillUnMount () {
-    $(document).off('mouseup', this.toggleSideBar.bind(this))
+    //$(document).off('mouseup', this.toggleSideBar.bind(this))
   }
 
   toggleSideBar (e) {
@@ -104,13 +104,13 @@ class SideBar extends React.Component {
           <li role="separator" className="divider"></li>
           {this.getUserConnectedButtons(user, 'sponsorship')}
         </ul>
-        {this.getUserConnectedButtons(user, 'browse')}
         <ul className="sidebar-nav">
           <li role="separator" className="divider"></li>
           <li><Link to="/" onClick={::this.logout}><i className="zmdi zmdi-lock-open"/>Se deconnecter</Link></li>
           <li role="separator" className="divider"></li>
           {/*{this.renderFriends()}*/}
         </ul>
+        {this.getUserConnectedButtons(user, 'browse')}
       </div>
     )
   }

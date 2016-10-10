@@ -7,6 +7,8 @@ import SearchInput from './../Search/SearchBox'
 import FavoritesButton from './../Favorites/FavoritesButton'
 import BrowseButton from './../Browse/BrowseButton'
 import { getI18n } from '../../../../config/i18n'
+import { Link } from 'react-router'
+
 if (process.env.BROWSER) {
   require('./UserButton.less')
 }
@@ -74,17 +76,17 @@ class UserButton extends React.Component {
         return (
           <ul className="nav navbar-nav navbar-right">
             <li className="pull-right">
-              <button role="button" onClick={::this.toggleSideBar} id="userButton"
-                      className="btn-xs btn-user">
+              <Link to="compte" role="button" onClick={::this.toggleSideBar} id="userButton"
+                    className="btn-xs btn-user">
                 <span>Mon profil</span>
                 <img src={user.get('picture')}
                      alt="50x50"
                      id="userButtonImg"
                      className="icon-user"/>
-              </button>
+              </Link>
             </li>
             {/*{this.getUserConnectedButtons(user, 'browse')}*/}
-            {this.getUserConnectedButtons(user, 'search')}
+            {/*{this.getUserConnectedButtons(user, 'search')}*/}
 
           </ul>
         )

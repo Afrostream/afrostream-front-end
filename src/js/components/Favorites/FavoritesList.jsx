@@ -37,7 +37,7 @@ class FavoritesList extends React.Component {
       labelPage = getI18n().favorites['noData']
     }
     return (
-      <div className="favorites-list">
+      <div className="favorites-list container brand-grey">
         <div className="favorites-list__label">{labelPage}</div>
         { this.renderList(favoritesDataMovies, 'Films / Series', 'movies') }
         { this.renderList(favoritesDataEpisodes, 'Episodes', 'episodes', 'episode', 200, 110, true) }
