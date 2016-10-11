@@ -11,7 +11,7 @@ import TextField from 'material-ui/TextField'
 if (process.env.BROWSER) {
   require('./LifePost.less')
 }
-@connect(({Life}) => ({Life}))
+@connect(({Life, User}) => ({Life, User}))
 export default class LifePost extends Component {
 
   constructor (props, context) {
@@ -21,11 +21,15 @@ export default class LifePost extends Component {
   render () {
     const {
       props: {
+        User,
         Life
       }
     } = this
 
-
+    const user = User.get('user')
+    if (!user) {
+      return <div />
+    }
     return (
       <Headroom disableInlineStyles={true} tolerance={5} offset={200} classes={{
         initial: 'headroom',
