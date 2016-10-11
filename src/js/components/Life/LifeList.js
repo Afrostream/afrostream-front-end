@@ -113,7 +113,7 @@ export default class LifeList extends Component {
             <div className="brick-background_image" style={imageStyles}/>
             <div className="brick-background_mask"/>
             {brickStyle.premium && (<div className="premium-flag">
-              <div className="premium-flag__header-label"> Accès Prémium</div>
+              <div className="premium-flag__header-label"> Accès Premium</div>
             </div>)}
           </div>
           <div className="card-body">
