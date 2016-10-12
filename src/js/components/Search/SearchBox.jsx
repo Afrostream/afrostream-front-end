@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
 import { connect } from 'react-redux'
-import config from '../../../../config/'
+import _ from 'lodash'
 import classSet from 'classnames'
-import { Link } from 'react-router'
 import { withRouter } from 'react-router'
 import * as EventActionCreators from '../../actions/event'
 
@@ -41,7 +39,7 @@ class SearchBox extends React.Component {
       let input = self.getInput()
       input.value = ''
       self.setState({
-        hasFocus: this.props.defaultOpen
+        hasFocus: self.props.defaultOpen
       })
     }, 200)
   }
