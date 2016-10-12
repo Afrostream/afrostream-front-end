@@ -1,21 +1,28 @@
 import ActionTypes from '../consts/ActionTypes'
 import { notFoundPost } from './notFoundAction'
 
-export function fetchPins () {
+export function fetchPins ({startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
-    let readyPins = getState().Life.get(`life/pins`)
-    if (readyPins) {
-      console.log('Life pins already present in data store')
-      return {
-        type: ActionTypes.Life.fetchPins,
-        res: {
-          body: readyPins.toJS()
-        }
-      }
-    }
+    //let readyPins = getState().Life.get(`life/pins`)
+    //if (readyPins) {
+    //  console.log('Life pins already present in data store')
+    //  return {
+    //    type: ActionTypes.Life.fetchPins,
+    //    res: {
+    //      body: readyPins.toJS()
+    //    }
+    //  }
+    //}
     return async api => ({
       type: ActionTypes.Life.fetchPins,
-      res: await api({path: `/api/life/pins`, params: {filterCountry: false}})
+      res: await api({
+        path: `/api/life/pins`,
+        params: {filterCountry: false},
+        headers: {
+          // @see https://www.npmjs.com/package/range-parser
+          //'Range': `items=${startIndex }-${stopIndex}`
+        }
+      })
     })
   }
 }

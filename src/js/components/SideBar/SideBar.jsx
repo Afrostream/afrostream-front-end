@@ -7,7 +7,6 @@ import { Link } from 'react-router'
 import config from '../../../../config'
 import BrowseMenu from './../Browse/BrowseMenu'
 import SearchInput from './../Search/SearchBox'
-import LifeNavigation from '../Life/LifeNavigation'
 
 const {featuresFlip} = config
 
@@ -167,6 +166,7 @@ class SideBar extends React.Component {
         <ul className="sidebar-nav">
           {this.getUserConnectedButtons(user, 'compte')}
           <li><Link to="/"><i className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}</Link></li>
+          <li><Link to="/life"><i className="zmdi zmdi-accounts"/>Actualité</Link></li>
           <li><Link to="/life"><i className="zmdi zmdi-accounts"/>Communauté</Link></li>
           <li><Link to="/life/experience"><i className="zmdi zmdi-gamepad"/>Expérience</Link></li>
           {this.getUserConnectedButtons(user, 'favoris')}

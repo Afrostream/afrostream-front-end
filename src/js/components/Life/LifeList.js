@@ -11,6 +11,8 @@ import LifePost from './LifePost'
 import _ from 'lodash'
 import moment from 'moment'
 import Immutable from 'immutable'
+import ReactList from 'react-list'
+import { InfiniteLoader, List } from 'react-virtualized'
 
 const {images} =config
 
@@ -25,7 +27,7 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchPins())
+    store.dispatch(LifeActionCreators.fetchPins({startIndex: 0, stopIndex: 3}))
   ])
 })
 @connect(({Life}) => ({Life}))
@@ -33,6 +35,28 @@ export default class LifeList extends Component {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  isRowLoaded ({index}) {
+    const {
+      props: {
+        Life
+      }
+    } = this
+
+    const dataList = Life.get('life/pins')
+    const sortedList = dataList.sort((a, b) => new Date(a.get('date')).getTime() < new Date(b.get('date')).getTime())
+    return !!sortedList.get(index);
+  }
+
+  loadMoreRows ({startIndex, stopIndex}) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    return dispatch(LifeActionCreators.fetchPins({startIndex, stopIndex}))
   }
 
   clickHandler (data) {
@@ -55,7 +79,8 @@ export default class LifeList extends Component {
     }
   }
 
-  renderItem ({index}) {
+  //renderItem (index, key) {
+  renderItem ({key, index, style}) {
     const {
       props: {
         Life
@@ -134,10 +159,11 @@ export default class LifeList extends Component {
     )
   }
 
-  renderContent (dataList) {
+  renderContent (dataList, resourceCount) {
     if (!dataList.size) {
       return
     }
+    debugger;
     return [this.renderItem({index: 0}),
       <div key="masonry-pin-list" className="masonry-list">
         {
@@ -166,11 +192,12 @@ export default class LifeList extends Component {
 
 
     let dataList = Life.get('life/pins')
+    let resourceCount = Life.get('life/pins/resourceCount')
 
     return (
       <div className="row-fluid life-list brand-grey">
         <div className="container container-wall brand-grey">
-          {dataList && this.renderContent(dataList)}
+          {dataList && this.renderContent(dataList, resourceCount)}
         </div>
       </div>
     )

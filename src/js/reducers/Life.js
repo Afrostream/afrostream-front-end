@@ -3,7 +3,8 @@ import ActionTypes from '../consts/ActionTypes'
 import createReducer from '../lib/createReducer'
 
 const initialState = Immutable.fromJS({
-  'life/pins': null
+  'life/pins': null,
+  'life/pins/resourceCount': null
 })
 
 export default createReducer(initialState, {
@@ -12,7 +13,9 @@ export default createReducer(initialState, {
       return state
     }
     const data = res.body
+    const resourceCount = res.headers['Resource-Count'] || data.length
     return state.merge({
+      [`life/pins/resourceCount`]: resourceCount,
       [`life/pins`]: data
     })
   },
