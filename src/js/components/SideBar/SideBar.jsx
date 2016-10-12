@@ -5,11 +5,9 @@ import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
 import { Link } from 'react-router'
 import config from '../../../../config'
-import Drawer from 'material-ui/Drawer'
-import MenuItem from 'material-ui/MenuItem'
 import BrowseMenu from './../Browse/BrowseMenu'
-import Divider from 'material-ui/Divider'
 import SearchInput from './../Search/SearchBox'
+import LifeNavigation from '../Life/LifeNavigation'
 
 const {featuresFlip} = config
 
@@ -79,42 +77,6 @@ class SideBar extends React.Component {
       }).toJS()}</div>
   }
 
-  render () {
-    const {
-      props: {
-        User,
-        Event,
-        router
-      }
-    } = this
-
-
-    const user = User.get('user')
-    const toggled = user && Event.get('sideBarToggled')
-    return (
-      <div id="sidebar-wrapper">
-        <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
-        <ul className="sidebar-nav">
-          {this.getUserConnectedButtons(user, 'search')}
-          {this.getUserConnectedButtons(user, 'compte')}
-          <li><Link to="/"><i className="zmdi zmdi-home"/>Accueil</Link></li>
-          <li><Link to="/life"><i className="zmdi zmdi-accounts"/>Communauté</Link></li>
-          <li><Link to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link></li>
-          <li><Link to="/last"><i className="zmdi zmdi-movie"/>Derniers ajouts</Link></li>
-          <li role="separator" className="divider"></li>
-          {this.getUserConnectedButtons(user, 'sponsorship')}
-        </ul>
-        <ul className="sidebar-nav">
-          <li role="separator" className="divider"></li>
-          <li><Link to="/" onClick={::this.logout}><i className="zmdi zmdi-lock-open"/>Se deconnecter</Link></li>
-          <li role="separator" className="divider"></li>
-          {/*{this.renderFriends()}*/}
-        </ul>
-        {this.getUserConnectedButtons(user, 'browse')}
-      </div>
-    )
-  }
-
   getUserConnectedButtons (user, type) {
 
     let planCode
@@ -133,8 +95,14 @@ class SideBar extends React.Component {
     }
     let el
     switch (type) {
-      case 'favorites':
-        el = (<li><Link to="/favoris">Mes favoris</Link ></li>)
+      case 'favoris':
+        el = (<li><Link to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link></li>)
+        break
+      case 'last':
+        el = (<li><Link to="/last"><i className="zmdi zmdi-movie"/>Derniers ajouts</Link></li>)
+        break
+      case 'community':
+        el = (<li><Link to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link></li>)
         break
       case 'sponsorship':
         el = featuresFlip.sponsorship && canSponsorshipSubscription && (
@@ -179,6 +147,42 @@ class SideBar extends React.Component {
     } = this
 
     dispatch(OAuthActionCreators.logOut())
+  }
+
+  render () {
+    const {
+      props: {
+        User,
+        Event,
+        router
+      }
+    } = this
+
+    const isOnLife = router.isActive('life')
+    const user = User.get('user')
+    const toggled = (user && Event.get('sideBarToggled') || isOnLife)
+    return (
+      <div id="sidebar-wrapper">
+        <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
+        <ul className="sidebar-nav">
+          {this.getUserConnectedButtons(user, 'compte')}
+          <li><Link to="/"><i className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}</Link></li>
+          <li><Link to="/life"><i className="zmdi zmdi-accounts"/>Communauté</Link></li>
+          <li><Link to="/life/experience"><i className="zmdi zmdi-gamepad"/>Expérience</Link></li>
+          {this.getUserConnectedButtons(user, 'favoris')}
+          {this.getUserConnectedButtons(user, 'last')}
+          <li role="separator" className="divider"></li>
+          {this.getUserConnectedButtons(user, 'sponsorship')}
+        </ul>
+        <ul className="sidebar-nav">
+          <li role="separator" className="divider"></li>
+          <li><Link to="/" onClick={::this.logout}><i className="zmdi zmdi-lock-open"/>Se deconnecter</Link></li>
+          <li role="separator" className="divider"></li>
+          {/*{this.renderFriends()}*/}
+        </ul>
+        {/*{this.getUserConnectedButtons(user, 'browse')}*/}
+      </div>
+    )
   }
 }
 export default withRouter(SideBar)
