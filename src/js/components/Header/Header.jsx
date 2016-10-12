@@ -4,6 +4,7 @@ import Headroom from 'react-headrooms'
 import LifeNavigation from '../Life/LifeNavigation'
 import UserButton from './../User/UserButton'
 import SmartBanner from './SmartBanner'
+import SearchInput from './../Search/SearchBox'
 import classSet from 'classnames'
 import config from '../../../../config'
 import { withRouter } from 'react-router'
@@ -80,12 +81,9 @@ class Header extends React.Component {
     const isOnLife = router.isActive('life')
 
     let sliderClasses = {
-      'navbar': true,
-      'navbar-life': true,
-      'navbar-default': true,
-      'navbar-fixed-top': true,
-      'navbar-hidden': !chatMode && hiddenMode,
-      'navbar-fixed-color': chatMode || pinned || this.state.pinned
+      'topbar': true,
+      'topbar-hidden': !chatMode && hiddenMode,
+      'topbar-fixed-color': chatMode || pinned || this.state.pinned
       || router.isActive('recherche')
       || router.isActive('compte')
       || router.isActive('couponregister')
@@ -100,19 +98,25 @@ class Header extends React.Component {
         unpinned: 'slideUp'
       }}>
 
-        <div className={classSet(sliderClasses)}>
-          {planCode && <SmartBanner {...apps.params}/>}
-          <div className="container-fluid">
-            <nav className="nav-collapse" role="navigation">
-              <button role="button" className="navbar-brand" onClick={::this.toggleSideBar}>
-                {user && <i className="open-menu-icon zmdi zmdi-menu"/>}
-                <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
-              </button>
-              {isOnLife && <LifeNavigation />}
-              <UserButton {...this.props}/>
-            </nav>
-          </div>
-        </div>
+        <header className={classSet(sliderClasses)}>
+          {/*{planCode && <SmartBanner {...apps.params}/>}*/}
+          <nav className="float--left" role="navigation">
+            <ul className="nav">
+              <li>
+                <button role="button" className="btn-home" onClick={::this.toggleSideBar}>
+                  {user && <i className="open-menu-icon zmdi zmdi-menu"/>}
+                  <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
+                </button>
+              </li>
+              {user && <li className="nav-full-width">
+                <SearchInput/>
+              </li>}
+            </ul>
+          </nav>
+          <nav className="float--right" role="navigation">
+            <UserButton {...this.props}/>
+          </nav>
+        </header>
       </Headroom>
     )
   }
