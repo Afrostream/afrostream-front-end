@@ -147,10 +147,15 @@ header {
     nav {
       &.float--left {
         float: left;
-        //position: absolute;
       }
       &.float--right {
         float: right;
+      }
+      &.float--bottom {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: @header-height;
       }
       ul.nav {
         display: flex;
@@ -183,144 +188,3 @@ header {
     vertical-align: middle;
   }
 }
-
-//
-//.navbar.navbar-default {
-//  margin: 0;
-//  padding: 0;
-//
-//  background-color: transparent;
-//  border-color: transparent;
-//  text-align: center;
-//  .transition(background 0.2s linear);
-//  .transition(opacity 0.4s linear);
-//  border-radius: 0;
-//  z-index: @nav-z + 1;
-//  &.navbar-fixed-color {
-//    background-color: @color-black-2;
-//    //background-color: fade(@color-black-2, 90%);
-//  }
-//  .container-fluid {
-//    padding: 0;
-//  }
-//  .navbar-nav > li {
-//    height: 100%;
-//    > a {
-//      display: inline-block;
-//      color: @brand-primary;
-//      background-color: fade(@brand-primary, 10%);
-//      &:focus {
-//        background-color: fade(@brand-primary, 10%);
-//        color: @brand-primary;
-//      }
-//      &:hover {
-//        color: @color-indigo;
-//        background-color: @color-yellow;
-//      }
-//    }
-//  }
-//
-//  nav {
-//    .navbar-nav {
-//      float: none;
-//      margin-left: 15px;
-//      height: @header-height;
-//      width: @sidebar-width;
-//      .isMobile({ margin: 5px 5px 5px 5px; height: @header-height-mobile; });
-//    }
-//
-//    &.nav-collapse {
-//      margin: 0px;
-//      height: @header-height;
-//      display: flex;
-//    }
-//
-//    .navbar-brand {
-//      margin: 0;
-//      width: @sidebar-width;
-//      background: none;
-//      border: none;
-//      display: inline-block;
-//      .isMobile({ padding: 0; });
-//      img {
-//        display: inline-block;
-//        &.logo {
-//          .isMobile({ width: 100%; });
-//        }
-//      }
-//    }
-//  }
-//
-//  .collapse.in {
-//    background-color: @color-indigo;
-//  }
-//
-//  .open-menu-icon {
-//    margin-left: @app-padding;
-//    padding: 5px;
-//    font-size: 2em;
-//    vertical-align: middle;
-//  }
-//
-//  .label-user {
-//    vertical-align: middle;
-//    padding-left: 15px;
-//    font-size: 0.8em;
-//    color: @brand-primary;
-//    text-transform: capitalize;
-//  }
-//
-//  .login-button {
-//    float: right !important;
-//    color: #000000;
-//    background-color: #E4BD00;
-//    border: none;
-//    border-radius: 20px;
-//    font-size: 16px;
-//    line-height: 24px;
-//    padding-left: 16px;
-//    padding-right: 16px;
-//    margin: 20px 25px 0 0;
-//
-//    @media all and (max-width: @screen-sm-min) {
-//      margin: 10px 10px 0 0;
-//    }
-//  }
-//}
-//
-//@media (min-width: 768px) {
-//  .navbar {
-//    .navbar-header {
-//      width: 100%;
-//      text-align: center;
-//      padding: 5px;
-//    }
-//
-//    img {
-//      margin: 0 auto;
-//      display: inherit;
-//    }
-//
-//    &:not(.navbar-life) {
-//      .navbar-brand {
-//        position: absolute;
-//        transform: translateX(-50%);
-//        left: 50%;
-//      }
-//    }
-//  }
-//
-//  &.navbar-hidden {
-//    opacity: 0;
-//    .transition(opacity 0.4s linear);
-//    display: none;
-//  }
-//}
-//
-//.app.toggled nav {
-//  &.navbar-hidden {
-//    opacity: 1;
-//    .transition(opacity 0.4s linear);
-//    display: block;
-//  }
-//}

@@ -10,8 +10,10 @@ import Player from '../Player/Player'
 import LifePost from './LifePost'
 import _ from 'lodash'
 import moment from 'moment'
+import LifeNavigation from '../Life/LifeNavigation'
 import Immutable from 'immutable'
 import ReactList from 'react-list'
+
 import { InfiniteLoader, List } from 'react-virtualized'
 
 const {images} =config
@@ -27,6 +29,7 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(LifeActionCreators.fetchThemes()),
     store.dispatch(LifeActionCreators.fetchPins({startIndex: 0, stopIndex: 3}))
   ])
 })
@@ -163,7 +166,6 @@ export default class LifeList extends Component {
     if (!dataList.size) {
       return
     }
-    debugger;
     return [this.renderItem({index: 0}),
       <div key="masonry-pin-list" className="masonry-list">
         {
@@ -186,16 +188,17 @@ export default class LifeList extends Component {
       }
     } = this
 
+
     if (children) {
       return children
     }
-
 
     let dataList = Life.get('life/pins')
     let resourceCount = Life.get('life/pins/resourceCount')
 
     return (
       <div className="row-fluid life-list brand-grey">
+        <LifeNavigation />
         <div className="container container-wall brand-grey">
           {dataList && this.renderContent(dataList, resourceCount)}
         </div>
