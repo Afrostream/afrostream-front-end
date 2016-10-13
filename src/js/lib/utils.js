@@ -313,3 +313,17 @@ export function slugify (text) {
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '')            // Trim - from end of text
 }
+
+export function mergeFbUserInfo (user) {
+  if (!user) {
+    return null
+  }
+  if (user.facebook) {
+    user.picture = `//graph.facebook.com/${user.facebook.id}/picture`
+    user.name = user.name || user.facebook.name
+    user.nickname = user.nickname || user.facebook.nickname
+  } else {
+    user.picture = `/avatar/${user.email || user.name}`
+  }
+  return user
+}

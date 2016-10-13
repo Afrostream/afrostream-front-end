@@ -82,6 +82,7 @@ class Header extends React.Component {
 
     let sliderClasses = {
       'topbar': true,
+      'topbar-life': isOnLife,
       'topbar-hidden': !chatMode && hiddenMode,
       'topbar-fixed-color': chatMode || pinned || this.state.pinned
       || router.isActive('recherche')
@@ -112,6 +113,7 @@ class Header extends React.Component {
                 <SearchInput/>
               </li>}
             </ul>
+            {isOnLife && <LifeNavigation />}
           </nav>
           <nav className="float--right" role="navigation">
             <UserButton {...this.props}/>

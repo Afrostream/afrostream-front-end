@@ -11,6 +11,7 @@
   background-color: lighten(@color-black-2, 5%);
   border-radius: @btn-radius;
   text-align: left;
+  .transition(all 0.15s linear);
   &:before {
     position: absolute;
     content: '\f1c3';
@@ -33,7 +34,7 @@
 
   &.has-focus {
     width: 100%;
-    background-color: lighten(@color-black-2, 10%);
+    background-color: lighten(@color-black-2, 5%);
     .isMobile({ position: fixed; left: 0; top: @header-height - 1px; right: 0; background: fade(@color-indigo, 90%); margin: 0; padding: 1em; });
     i {
       display: block;
@@ -62,7 +63,7 @@
   input {
     height: 100%;
     font-size: 3em;
-    font-family: @font-family-base;
+    font-family: @font-roman;
     padding: 11px 11px 8px 30px;
     border-radius: @btn-radius;
     color: @brand-black;
@@ -72,7 +73,6 @@
     /*defining background image as a search symbol*/
     background: none;
     width: @box-size-collapse;
-    .transition(all 0.15s linear);
     &[aria-expanded="true"] {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;

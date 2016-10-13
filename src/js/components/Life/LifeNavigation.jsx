@@ -18,18 +18,12 @@ export default class LifeList extends Component {
 
     const themesList = Life.get('life/themes')
     return (
-      <Headroom tolerance={5} offset={300} classes={{
-        initial: 'animated',
-        pinned: 'slideDown',
-        unpinned: 'slideUp'
-      }}>
-        <ul className="life-navigation">
-          {themesList && themesList.map((theme, i)=><li key={`life-theme-${i}`}>
-              <Link to={`/life/${theme.get('slug')}`}>{theme.get('label')}</Link>
-            </li>
-          )}
-        </ul>
-      </Headroom>
+      <ul className="nav toolbar-life-navigation">
+        {themesList && themesList.map((theme, i)=><li key={`life-theme-${i}`}>
+            <Link to={`/life/${theme.get('slug')}`}>{theme.get('label')}</Link>
+          </li>
+        )}
+      </ul>
     )
   }
 }
