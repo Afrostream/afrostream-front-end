@@ -12,6 +12,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import LifeNavigation from '../Life/LifeNavigation'
 import Immutable from 'immutable'
+import { withRouter } from 'react-router'
 import ReactList from 'react-list'
 
 import { InfiniteLoader, List } from 'react-virtualized'
@@ -34,7 +35,7 @@ if (process.env.BROWSER) {
   ])
 })
 @connect(({Life}) => ({Life}))
-export default class LifeList extends Component {
+class LifeList extends Component {
 
   constructor (props, context) {
     super(props, context)
@@ -92,12 +93,10 @@ export default class LifeList extends Component {
 
     let sizes = [
       {
-        type: 'first',
         width: 900,
         height: 300
       },
       {
-        type: 'medium',
         width: 350,
         height: 300
       }
@@ -108,14 +107,14 @@ export default class LifeList extends Component {
 
     const data = sortedList.get(index)
     const elSize = sizes[Math.min(index, 1)]
-    const type = index ? data.get('type') : 'first'
+    const type = data.get('type')
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     const thumb = data.get('image')
     let imageUrl = data.get('imageUrl') || baseUrl;
     if (thumb) {
       const path = thumb.get('path')
       if (path) {
-        imageUrl = `${images.urlPrefix}${path}?&crop=face&fit=${elSize.type === 'first' ? 'clamp' : 'clip'}&w=${elSize.width}&h=${elSize.height}&q=${config.images.quality}&fm=${config.images.type}`
+        imageUrl = `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${elSize.width}&q=${config.images.quality}&fm=${config.images.type}`
       }
     }
 
@@ -123,14 +122,22 @@ export default class LifeList extends Component {
 
     const pinnedDate = moment(data.get('date')).format('L')
     const pinnedUser = data.get('user')
+    const themes = data.get('themes')
 
     const brickStyle = {
       'brick': true,
       'masonry-brick': true,
-      'premium': Math.random() >= 0.5
+      'first': !index,
+      'premium': data.get('role') === 'premium'
+    }
+
+    const cardTypeIcon = {
+      "card-bubble": true,
+      "card-bubble-type": true
     }
 
     brickStyle[type] = true
+    cardTypeIcon[type] = true
 
     return (
       <article className={classSet(brickStyle)} key={`data-brick-${index}`} onClick={
@@ -145,7 +152,17 @@ export default class LifeList extends Component {
             </div>)}
           </div>
           <div className="card-body">
+            <div className="card-bubbles">
+              {pinnedUser && <div className="card-bubble card-bubble-user">
+                <img src={pinnedUser.get('picture')}
+                     alt="user-button"
+                     className="icon-user"/>
+              </div>}
+              <div className={classSet(cardTypeIcon)}/>
+            </div>
             <div className="card-meta">
+              {themes.map((theme, a)=><div key={`data-card-theme-${a}`}
+                                           className="card-theme">{theme.get('label')}</div>)}
             </div>
             <div className="card-info">
               <div target="_self">{data.get('title')}</div>
@@ -154,7 +171,8 @@ export default class LifeList extends Component {
               {data.get('description')}
             </div>
             <div className="card-date">
-              {`${pinnedDate}-${pinnedUser && pinnedUser.get('nickname')}`}
+              {`${pinnedDate}`}
+              {pinnedUser && ` - ${pinnedUser.get('nickname')}`}
             </div>
           </div>
         </div>
@@ -166,17 +184,14 @@ export default class LifeList extends Component {
     if (!dataList.size) {
       return
     }
-    return [this.renderItem({index: 0}),
+    return [
       <div key="masonry-pin-list" className="masonry-list">
         {
           dataList.map((el, index) => {
-              return index && this.renderItem({index}) || null
+              return this.renderItem({index})
             }
           ).toJS()
         }
-      </div>,
-      <div key="masonry-pin-player" className="life-player">
-        <Player src={sourcePlayer} options={{autoplay: false}}/>
       </div>,
       <LifePost key="life-post-sticky"/>]
   }
@@ -184,10 +199,12 @@ export default class LifeList extends Component {
   render () {
     const {
       props: {
+        router,
         Life, children
       }
     } = this
 
+    const isOnLife = router.isActive('life')
 
     if (children) {
       return children
@@ -198,7 +215,6 @@ export default class LifeList extends Component {
 
     return (
       <div className="row-fluid life-list brand-grey">
-        <LifeNavigation />
         <div className="container container-wall brand-grey">
           {dataList && this.renderContent(dataList, resourceCount)}
         </div>
@@ -206,3 +222,5 @@ export default class LifeList extends Component {
     )
   }
 }
+
+export default withRouter(LifeList)

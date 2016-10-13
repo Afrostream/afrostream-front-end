@@ -1,3 +1,5 @@
+import _ from 'lodash'
+import { mergeFbUserInfo } from '../lib/utils'
 import Immutable from 'immutable'
 import ActionTypes from '../consts/ActionTypes'
 import createReducer from '../lib/createReducer'
@@ -24,11 +26,17 @@ export default createReducer(initialState, {
     if (!res) {
       return state
     }
-    const data = res.body
-    const resourceCount = res.headers['Resource-Count'] || data.length
+    const pins = res.body
+    const resourceCount = res.headers['Resource-Count'] || pins.length
+
+    const mappedUserPins = _.map(pins, (pin)=> {
+      pin.user = mergeFbUserInfo(pin.user)
+      return pin
+    })
+
     return state.merge({
       [`life/pins/resourceCount`]: resourceCount,
-      [`life/pins`]: data
+      [`life/pins`]: mappedUserPins
     })
   },
 
