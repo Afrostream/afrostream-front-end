@@ -1,28 +1,38 @@
 @import (reference) '../../../styles/config.less';
 
 .life-navigation {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: @nav-z;
+  margin-left: @sidebar-width;
+  padding-top: @header-height;
+
+  background: #FFFFFF;
+  box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 10px, rgba(0, 0, 0, 0.2) 1px 0px 10px;
   font-family: @font-oswald;
   font-size: 1.8em;
   text-transform: uppercase;
   display: inline-block;
   list-style: none;
   cursor: default;
-  padding-top: 20px;
-  float: left;
+  width: 100%;
+
   li {
     position: relative;
     display: inline-block;
     margin: 10px;
-    padding: 0 0 10px 0;
+    padding: 10px 0 10px 0;
     cursor: pointer;
     &:after {
       content: '';
       position: absolute;
       right: -10px;
-      top: 0.5em;
+      top: 1em;
       height: 2px;
       width: 5px;
-      background: #FFFFFF;
+      background: @color-black-2;
     }
     &:last-child {
       &:after {
@@ -32,7 +42,7 @@
 
     a {
       text-decoration: none;
-      color: #FFF;
+      color: @color-black-2;
       &:hover,
       &:active {
         &:before {
@@ -50,7 +60,7 @@
         bottom: 0;
         left: 0;
         height: 0;
-        background: #FFFFFF;
+        background: @color-black-2;
         opacity: 0;
         visibility: hidden;
         transition: height .1s linear, opacity .1s linear;

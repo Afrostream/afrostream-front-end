@@ -3,11 +3,23 @@ import ActionTypes from '../consts/ActionTypes'
 import createReducer from '../lib/createReducer'
 
 const initialState = Immutable.fromJS({
+  'life/themes': null,
   'life/pins': null,
   'life/pins/resourceCount': null
 })
 
 export default createReducer(initialState, {
+
+  [ActionTypes.Life.fetchThemes](state, {res}) {
+    if (!res) {
+      return state
+    }
+    const data = res.body
+    return state.merge({
+      [`life/themes`]: data
+    })
+  },
+
   [ActionTypes.Life.fetchPins](state, {res}) {
     if (!res) {
       return state
@@ -19,6 +31,7 @@ export default createReducer(initialState, {
       [`life/pins`]: data
     })
   },
+
   [ActionTypes.Blog.fetchPin](state, {res, pinId}) {
     if (!res) {
       return state
