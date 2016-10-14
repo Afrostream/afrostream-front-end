@@ -438,7 +438,7 @@ const client = {
       'transactionCode': 'front'
     },
     'defaultVolume': 0.65,
-    'techOrder': ['dash', 'html5', 'dashas']
+    'techOrder': ['dash', 'html5', 'dashas', 'youtube']
   }
 }
 

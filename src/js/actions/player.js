@@ -22,3 +22,20 @@ export function getConfig () {
     }
   }
 }
+
+export function loadPlayer ({data}) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Player.loadPlayer,
+      data
+    })
+  }
+}
+
+export function killPlayer () {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Player.killPlayer
+    })
+  }
+}

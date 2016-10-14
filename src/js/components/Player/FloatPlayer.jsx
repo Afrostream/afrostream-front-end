@@ -1,0 +1,278 @@
+import React, { PropTypes } from 'react'
+import ReactDOM from'react-dom'
+import shallowEqual from 'react-pure-render/shallowEqual'
+import { connect } from 'react-redux'
+import config from '../../../../config'
+const {featuresFlip} = config
+import { detectUA } from './PlayerUtils'
+
+if (process.env.BROWSER) {
+  require('./FloatPlayer.less')
+}
+
+@connect(({Config, OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
+  Config,
+  OAuth,
+  Video,
+  Movie,
+  Event,
+  Season,
+  Episode,
+  User,
+  Player
+}))
+class FloatPlayer extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.player = null
+    this.initState()
+  }
+
+  initState () {
+    this.playerInit = false
+  }
+
+  componentWillUnmount () {
+    this.destroyPlayer()
+    console.log('player : componentWillUnmount', this.player)
+  }
+
+  componentWillReceiveProps (nextProps) {
+
+    if (!shallowEqual(nextProps.Player, this.props.Player)) {
+      const videoData = nextProps.Player.get('/player/data')
+      this.initState()
+      this.destroyPlayer().then(()=> {
+        this.initPlayer(videoData)
+      })
+    }
+  }
+
+  async destroyPlayer () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    if (this.player) {
+
+      console.log('player : destroy player', this.player)
+      this.initState()
+      //Tracking Finalise tracking video
+      return await new Promise((resolve) => {
+        this.player.off('firstplay')
+        this.player.off('ended')
+        this.player.off('seeked')
+        this.player.off('fullscreenchange')
+        this.player.off('timeupdate')
+        this.player.off('useractive')
+        this.player.off('userinactive')
+        this.player.off('error')
+        this.player.off('next')
+        this.player.one('dispose', () => {
+          this.player = null
+          this.playerInit = false
+          console.log('player : destroyed player')
+          resolve(null)
+        })
+        this.player.dispose()
+      })
+    } else {
+      console.log('player : destroy player impossible')
+      this.playerInit = false
+      return null
+    }
+  }
+
+  async initPlayer (videoData) {
+    console.log('player : initPlayer')
+    try {
+      this.player = await this.generatePlayer(videoData)
+      //On ajoute l'ecouteur au nextvideo automatique
+      console.log('player : generatePlayer complete', this.player)
+      this.container = ReactDOM.findDOMNode(this)
+      return this.player
+    } catch (err) {
+      console.log('player : ', err)
+      return this.playerInit = false
+    }
+  }
+
+  async generatePlayer (videoData) {
+    const {
+      props: {}
+    } = this
+
+    if (this.playerInit) throw new Error('old player was already generate, destroy it before')
+
+    await this.destroyPlayer()
+    this.playerInit = true
+    if (!videoData) throw new Error(`no video data ${videoData}`)
+    let playerData = await this.getPlayerData(videoData)
+    let player = await videojs('afrostream-player', playerData).ready(()=> {
+        player.volume(player.options_.defaultVolume)
+      }
+    )
+
+    return player
+  }
+
+  async generateDomTag () {
+    console.log('player : generate dom tag')
+    let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
+    let video = document.createElement('video')
+    video.id = 'afrostream-player'
+    video.className = 'player-container video-js vjs-fluid vjs-big-play-centered'
+    video.crossOrigin = true
+    video.setAttribute('crossorigin', true)
+
+    if (wrapper) {
+      wrapper.appendChild(video)
+    } else {
+      console.log('cant set wrapper elements')
+    }
+    return video
+  }
+
+  async getPlayerData (videoData) {
+    const {
+      props: {
+        OAuth, Player, User
+      }
+    } = this
+
+    console.log('player : Get player data')
+    const user = User.get('user')
+    let userId
+    let token = OAuth.get('token')
+
+    await this.generateDomTag(videoData)
+
+    let videoOptions = videoData.toJS()
+
+    const apiPlayerConfig = Player.get(`/player/config`)
+    if (!apiPlayerConfig) throw new Error('no player config api data')
+    //initialize the player
+    let apiPlayerConfigJs = {}
+    if (apiPlayerConfig) {
+      apiPlayerConfigJs = apiPlayerConfig.toJS()
+    }
+    let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfigJs))
+    //merge all configs
+    let playerData = _.merge(playerConfig, videoOptions)
+    // ==== START hacks config
+    let isLive = playerData.hasOwnProperty('live') && playerData.live
+    const ua = detectUA()
+    let browserVersion = ua.getBrowser()
+    let mobileVersion = ua.getMobile()
+
+    if (ua.isIE()) {
+      playerData.html5 = {
+        nativeCaptions: false,
+        nativeTextTracks: false
+      }
+      playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5))
+    }
+
+    //on force dash en tech par default pour tous les browsers )
+    playerData.sources = _.sortBy(playerData.sources, (k)=> {
+      return k.type !== 'application/dash+xml'
+    })
+
+    if (ua.isSafari()) {
+      //Fix Safari < 6.2 can't play hls
+      if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
+        playerData.techOrder = _.sortBy(playerData.techOrder, (k) => {
+          return k !== 'dashas'
+        })
+      }
+      //Safari 8 can't play dashjs
+      if (browserVersion.version >= 538 && browserVersion.version <= 600) {
+        playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
+          return k !== 'html5'
+        })
+        playerData.sources = _.sortBy(playerData.sources, (k)=> {
+          return k.type === 'application/dash+xml'
+        })
+      }
+    }
+
+
+    //Fix android live hls only
+    //Fix ios hls only
+    if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (mobileVersion.is('AndroidOS') && isLive)) {
+      playerData.sources = _.sortBy(playerData.sources, (k)=> {
+        return k.type === 'application/dash+xml'
+      })
+      playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
+        return k !== 'html5'
+      })
+    }
+
+    //VTT flash vtt.js
+    //playerData['vtt.js'] = ''
+    //playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
+    // ==== END hacks config
+    playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
+
+    if (user) {
+      userId = user.get('user_id')
+      let splitUser = typeof userId === 'string' ? userId.split('|') : [userId]
+      userId = _.find(splitUser, (val) => {
+        return parseInt(val, 10)
+      })
+      if (playerData.metrics) {
+        playerData.metrics.user_id = userId
+      }
+      //encode data to pass it into drmtoday
+      if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
+        let protUser = window.atob(JSON.stringify({
+          userId: userId,
+          sessionId: token.get('access_token'),
+          merchant: 'afrostream'
+        }))
+
+        let protData = {
+          'com.widevine.alpha': {
+            'httpRequestHeaders': {
+              'dt-custom-data': protUser
+            }
+          },
+          'com.microsoft.playready': {
+            'httpRequestHeaders': {
+              'http-header-CustomData': protUser
+            }
+          },
+          'com.adobe.flashaccess': {
+            'httpRequestHeaders': {
+              'customData': protUser
+            }
+          }
+        }
+        playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData)
+      }
+
+    }
+
+    console.log('player : playerData', playerData)
+    return playerData
+  }
+
+  render () {
+    const {
+      props: {Player}
+    } = this
+
+    let data = Player.get('/player/data')
+
+    return (
+      <div className="float-player">
+        <div ref="wrapper" className="wrapper"/>
+      </div>
+    )
+  }
+}
+
+export default FloatPlayer
