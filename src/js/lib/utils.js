@@ -327,3 +327,44 @@ export function mergeFbUserInfo (user) {
   }
   return user
 }
+
+//SCROLL HELPER
+export function getViewportH () {
+  var client = window.document.documentElement.clientHeight,
+    inner = window.innerHeight
+
+  return (client < inner) ? inner : client
+}
+
+export function isElementInViewPort (el, factorTolerance) {
+  factorTolerance = factorTolerance || 0
+
+  var style = el.getBoundingClientRect()
+  var top = style.top
+  var height = style.height
+  var toleranceTop = height * factorTolerance
+  var maxDisplayTop = window.innerHeight
+  var minDisplayTop = -height
+
+  return top < (maxDisplayTop - toleranceTop) && top > (minDisplayTop + toleranceTop)
+}
+
+export function getOffset (el) {
+  var offsetTop = 0,
+    offsetLeft = 0
+
+  do {
+    if (!isNaN(el.offsetTop)) {
+      offsetTop += el.offsetTop
+    }
+    if (!isNaN(el.offsetLeft)) {
+      offsetLeft += el.offsetLeft
+    }
+  } while (el === el.offsetParent)
+
+  return {
+    top: offsetTop,
+    left: offsetLeft
+  }
+}
+
