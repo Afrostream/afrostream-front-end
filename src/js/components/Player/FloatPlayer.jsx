@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
+import Immutable from 'immutable'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import { connect } from 'react-redux'
 import config from '../../../../config'
 const {featuresFlip} = config
 import { detectUA } from './PlayerUtils'
+import window from 'global/window'
+import { isElementInViewPort } from '../../lib/utils'
 
 if (process.env.BROWSER) {
   require('./FloatPlayer.less')
@@ -23,6 +26,10 @@ if (process.env.BROWSER) {
 }))
 class FloatPlayer extends React.Component {
 
+  state = {
+    position: {}
+  }
+
   constructor (props) {
     super(props)
     this.player = null
@@ -35,6 +42,7 @@ class FloatPlayer extends React.Component {
 
   componentWillUnmount () {
     this.destroyPlayer()
+
     console.log('player : componentWillUnmount', this.player)
   }
 
@@ -47,93 +55,6 @@ class FloatPlayer extends React.Component {
         this.initPlayer(videoData)
       })
     }
-  }
-
-  async destroyPlayer () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
-    if (this.player) {
-
-      console.log('player : destroy player', this.player)
-      this.initState()
-      //Tracking Finalise tracking video
-      return await new Promise((resolve) => {
-        this.player.off('firstplay')
-        this.player.off('ended')
-        this.player.off('seeked')
-        this.player.off('fullscreenchange')
-        this.player.off('timeupdate')
-        this.player.off('useractive')
-        this.player.off('userinactive')
-        this.player.off('error')
-        this.player.off('next')
-        this.player.one('dispose', () => {
-          this.player = null
-          this.playerInit = false
-          console.log('player : destroyed player')
-          resolve(null)
-        })
-        this.player.dispose()
-      })
-    } else {
-      console.log('player : destroy player impossible')
-      this.playerInit = false
-      return null
-    }
-  }
-
-  async initPlayer (videoData) {
-    console.log('player : initPlayer')
-    try {
-      this.player = await this.generatePlayer(videoData)
-      //On ajoute l'ecouteur au nextvideo automatique
-      console.log('player : generatePlayer complete', this.player)
-      this.container = ReactDOM.findDOMNode(this)
-      return this.player
-    } catch (err) {
-      console.log('player : ', err)
-      return this.playerInit = false
-    }
-  }
-
-  async generatePlayer (videoData) {
-    const {
-      props: {}
-    } = this
-
-    if (this.playerInit) throw new Error('old player was already generate, destroy it before')
-
-    await this.destroyPlayer()
-    this.playerInit = true
-    if (!videoData) throw new Error(`no video data ${videoData}`)
-    let playerData = await this.getPlayerData(videoData)
-    let player = await videojs('afrostream-player', playerData).ready(()=> {
-        player.volume(player.options_.defaultVolume)
-      }
-    )
-
-    return player
-  }
-
-  async generateDomTag () {
-    console.log('player : generate dom tag')
-    let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
-    let video = document.createElement('video')
-    video.id = 'afrostream-player'
-    video.className = 'player-container video-js vjs-fluid vjs-big-play-centered'
-    video.crossOrigin = true
-    video.setAttribute('crossorigin', true)
-
-    if (wrapper) {
-      wrapper.appendChild(video)
-    } else {
-      console.log('cant set wrapper elements')
-    }
-    return video
   }
 
   async getPlayerData (videoData) {
@@ -260,15 +181,122 @@ class FloatPlayer extends React.Component {
     return playerData
   }
 
-  render () {
+  async destroyPlayer () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    if (this.player) {
+
+      console.log('player : destroy player', this.player)
+      this.initState()
+      //Tracking Finalise tracking video
+      return await new Promise((resolve) => {
+        videojs.off(window, 'scroll')
+        this.player.one('dispose', () => {
+          this.player = null
+          this.playerInit = false
+          console.log('player : destroyed player')
+          resolve(null)
+        })
+        this.player.dispose()
+      })
+    } else {
+      console.log('player : destroy player impossible')
+      this.playerInit = false
+      return null
+    }
+  }
+
+  async initPlayer (videoData) {
+    console.log('player : initPlayer')
+    try {
+      this.player = await this.generatePlayer(videoData)
+      //On ajoute l'ecouteur au nextvideo automatique
+      console.log('player : generatePlayer complete', this.player)
+      this.container = ReactDOM.findDOMNode(this)
+      return this.player
+    } catch (err) {
+      console.log('player : ', err)
+      return this.playerInit = false
+    }
+  }
+
+  async generatePlayer (videoData) {
+    const {
+      props: {}
+    } = this
+
+    if (this.playerInit) throw new Error('old player was already generate, destroy it before')
+
+    await this.destroyPlayer()
+    this.playerInit = true
+    if (!videoData) throw new Error(`no video data ${videoData}`)
+    let playerData = await this.getPlayerData(videoData)
+    let player = await videojs('afrostream-player', playerData).ready(()=> {
+        player.volume(player.options_.defaultVolume)
+        this.updatePlayerPosition()
+      }
+    )
+    videojs.on(window, 'scroll', ::this.updatePlayerPosition)
+    this.updatePlayerPosition()
+    return player
+  }
+
+  async generateDomTag () {
+    console.log('player : generate dom tag')
+    let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
+    let video = document.createElement('video')
+    video.id = 'afrostream-player'
+    video.className = 'player-container video-js vjs-fluid vjs-big-play-centered'
+    video.crossOrigin = true
+    video.setAttribute('crossorigin', true)
+
+    if (wrapper) {
+      wrapper.appendChild(video)
+    } else {
+      console.log('cant set wrapper elements')
+    }
+    return video
+  }
+
+  updatePlayerPosition () {
+
     const {
       props: {Player}
     } = this
 
-    let data = Player.get('/player/data')
+    const data = Player.get('/player/data')
+    const target = data && data.get('target')
+    const elVisible = isElementInViewPort(target, 0.15)
+
+    let position = elVisible && target && target.getBoundingClientRect() || {
+        bottom: 0,
+        left: 0
+      }
+
+    //FIXME why position 157 ?
+    position.transform = `translate3d(${position.left}px, ${(position.top - (157 + position.height ) ) || 0}px, 0)`
+
+    this.setState({
+      position,
+      elVisible
+    })
+  }
+
+  render () {
+
+    const position = {
+      width: this.state.position.width,
+      height: this.state.position.height,
+      transform: this.state.position.transform
+    }
+
 
     return (
-      <div className="float-player">
+      <div className="float-player" style={position}>
         <div ref="wrapper" className="wrapper"/>
       </div>
     )
