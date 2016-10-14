@@ -8,6 +8,7 @@ const {featuresFlip} = config
 import { detectUA } from './PlayerUtils'
 import window from 'global/window'
 import { isElementInViewPort } from '../../lib/utils'
+import classSet from 'classnames'
 
 if (process.env.BROWSER) {
   require('./FloatPlayer.less')
@@ -278,7 +279,7 @@ class FloatPlayer extends React.Component {
       }
 
     //FIXME why position 157 ?
-    position.transform = `translate3d(${position.left}px, ${(position.top - (157 + position.height ) ) || 0}px, 0)`
+    position.transform = `translate3d(${position.left}px, ${elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
 
     this.setState({
       position,
@@ -294,9 +295,13 @@ class FloatPlayer extends React.Component {
       transform: this.state.position.transform
     }
 
+    const classFloatPlayer = {
+      'float-player': true,
+      'pinned': this.state.elVisible
+    }
 
     return (
-      <div className="float-player" style={position}>
+      <div className={classSet(classFloatPlayer)} style={position}>
         <div ref="wrapper" className="wrapper"/>
       </div>
     )
