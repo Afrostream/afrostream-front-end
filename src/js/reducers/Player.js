@@ -11,6 +11,18 @@ export default createReducer(initialState, {
     return state.merge({
       [`/player/config`]: data
     })
+  },
+
+  [ActionTypes.Player.loadPlayer](state, {data}) {
+    return state.merge({
+      [`/player/data`]: data
+    })
+  },
+
+  [ActionTypes.Player.killPlayer](state) {
+    return state.merge({
+      [`/player/data`]: null
+    })
   }
 
 })

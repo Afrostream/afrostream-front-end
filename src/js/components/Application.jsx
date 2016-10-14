@@ -5,6 +5,7 @@ import Footer from './Footer/Footer'
 import SideBar from './SideBar/SideBar'
 import SplashScreen from './SplashScreen/SplashScreen'
 import AlertMessage from './Alert/AlertMessage'
+import FloatPlayer from './Player/FloatPlayer'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
@@ -95,6 +96,7 @@ class Application extends React.Component {
             {children}
             <Footer {...this.props}/>
           </div>
+          <FloatPlayer {...this.props}/>
           <ModalView {...this.props}/>
         </div>
       </MuiThemeProvider>
