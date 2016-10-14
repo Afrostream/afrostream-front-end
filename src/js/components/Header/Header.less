@@ -172,8 +172,9 @@ header {
           button, a {
             text-align: center;
             &.btn-home {
-              width: @sidebar-width;
+              width: @sidebar-width - 50px;
               font-size: 2em;
+              background: @color-black-2;
             }
             background: none;
             border: none;
@@ -191,5 +192,6 @@ header {
     padding: 5px;
     font-size: 2em;
     vertical-align: middle;
+    .isNotMobile({ display: none; });
   }
 }
