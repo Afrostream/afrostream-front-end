@@ -8,6 +8,7 @@
   padding: 5px 5px 5px 10px;
   background: lighten(@color-black-2, 10px);
   display: flex;
+  z-index: @nav-z + 4;
   box-shadow: rgba(0, 0, 0, 0.156863) -3px 0px 5px, rgba(0, 0, 0, 0.227451) -3px 0px 5px;
   .life-pin-action {
     margin: 6px;
@@ -41,5 +42,6 @@
 }
 
 .app.toggled .life-pin-sticky {
-  padding: 5px 5px 5px (@sidebar-width + 10px);
+  padding: 5px 5px 5px 10px;
+  margin-left: @sidebar-width;
 }
