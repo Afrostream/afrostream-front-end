@@ -63,7 +63,7 @@ class LifeList extends Component {
     return dispatch(LifeActionCreators.fetchPins({startIndex, stopIndex}))
   }
 
-  clickHandler (data) {
+  clickHandler (e, data) {
     const {
       props: {
         dispatch
@@ -72,6 +72,7 @@ class LifeList extends Component {
 
     switch (data.get('type')) {
       case 'video':
+        e.preventDefault();
         dispatch(ModalActionCreators.open({
           target: 'player', data: Immutable.fromJS({
             src: data.get('originalUrl'),
@@ -140,42 +141,44 @@ class LifeList extends Component {
     cardTypeIcon[type] = true
 
     return (
-      <article className={classSet(brickStyle)} key={`data-brick-${index}`} onClick={
-        (e) =>::this.clickHandler(data)
-      }>
-        <div className="brick-content">
-          <div className="brick-background">
-            <div className="brick-background_image" style={imageStyles}/>
-            <div className="brick-background_mask"/>
-            {brickStyle.premium && (<div className="premium-flag">
-              <div className="premium-flag__header-label"> Accès Premium</div>
-            </div>)}
+      <article className={classSet(brickStyle)} key={`data-brick-${index}`}>
+        <a href={data.get('originalUrl')} target="_blank" onClick={
+          (e) =>::this.clickHandler(e, data)
+        }>
+          <div className="brick-content">
+            <div className="brick-background">
+              <div className="brick-background_image" style={imageStyles}/>
+              <div className="brick-background_mask"/>
+              {brickStyle.premium && (<div className="premium-flag">
+                <div className="premium-flag__header-label"> Accès Premium</div>
+              </div>)}
+            </div>
+            <div className="card-body">
+              <div className="card-bubbles">
+                {pinnedUser && <div className="card-bubble card-bubble-user">
+                  <img src={pinnedUser.get('picture')}
+                       alt="user-button"
+                       className="icon-user"/>
+                </div>}
+                <div className={classSet(cardTypeIcon)}/>
+              </div>
+              <div className="card-meta">
+                {themes.map((theme, a)=><div key={`data-card-theme-${a}`}
+                                             className="card-theme">{theme.get('label')}</div>)}
+              </div>
+              <div className="card-info">
+                <div target="_self">{data.get('title')}</div>
+              </div>
+              <div className="card-description">
+                {data.get('description')}
+              </div>
+              <div className="card-date">
+                {`${pinnedDate}`}
+                {pinnedUser && ` - ${pinnedUser.get('nickname')}`}
+              </div>
+            </div>
           </div>
-          <div className="card-body">
-            <div className="card-bubbles">
-              {pinnedUser && <div className="card-bubble card-bubble-user">
-                <img src={pinnedUser.get('picture')}
-                     alt="user-button"
-                     className="icon-user"/>
-              </div>}
-              <div className={classSet(cardTypeIcon)}/>
-            </div>
-            <div className="card-meta">
-              {themes.map((theme, a)=><div key={`data-card-theme-${a}`}
-                                           className="card-theme">{theme.get('label')}</div>)}
-            </div>
-            <div className="card-info">
-              <div target="_self">{data.get('title')}</div>
-            </div>
-            <div className="card-description">
-              {data.get('description')}
-            </div>
-            <div className="card-date">
-              {`${pinnedDate}`}
-              {pinnedUser && ` - ${pinnedUser.get('nickname')}`}
-            </div>
-          </div>
-        </div>
+        </a>
       </article>
     )
   }
