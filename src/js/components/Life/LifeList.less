@@ -3,7 +3,7 @@
 .life-list {
   @cardTypeSize: 50px;
   @gap-brick: 0px;
-  margin: 0 auto;
+  margin: (@header-height - 10px) auto;
 
   .masonry-list {
     //> div > div > div {
@@ -16,7 +16,7 @@
 
   .life-player {
     margin: 0 auto;
-    padding-bottom: @gap-brick
+    padding: @gap-brick
   }
   .brick {
     display: flex;
@@ -30,7 +30,7 @@
     font-family: @font-oswald;
     .brick-content {
       text-align: center;
-      margin-bottom: @gap-brick;
+      margin: @gap-brick;
       .isMobile({ margin: 0; });
       //box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
       position: relative;

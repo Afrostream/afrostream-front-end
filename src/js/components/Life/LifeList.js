@@ -215,7 +215,7 @@ class LifeList extends Component {
 
     return (
       <div className="row-fluid life-list brand-grey">
-        <div className="container container-no-padding brand-grey">
+        <div className="container-fluid container-no-padding brand-grey">
           {dataList && this.renderContent(dataList, resourceCount)}
         </div>
       </div>
