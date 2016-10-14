@@ -38,8 +38,9 @@ export default class LifePost extends Component {
         bottom: 'headroom--bottom'
       }}>
         <div className="life-pin-sticky">
-          <TextField hintText="COPIER/COLLER un lien externe" fullWidth={true}/>
-          <RaisedButton className="life-pin-action" primary={true} label="Poster"/>
+          <TextField hintText="COPIER/COLLER un lien externe" fullWidth={true}
+                     style={{color: '#FFFFFFF', textColor: '#FFFFFFF'}}/>
+          <RaisedButton className="life-pin-action" label="Poster"/>
         </div>
       </Headroom>
     )
