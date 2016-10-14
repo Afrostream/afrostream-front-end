@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
+import * as PlayerActionCreators from '../../actions/player'
 import * as LifeActionCreators from '../../actions/life'
 import * as ModalActionCreators from '../../actions/modal'
 import * as EventActionCreators from '../../actions/event'
@@ -73,10 +74,15 @@ class LifeList extends Component {
     switch (data.get('type')) {
       case 'video':
         e.preventDefault();
-        dispatch(ModalActionCreators.open({
-          target: 'player', data: Immutable.fromJS({
-            src: data.get('originalUrl'),
-            type: `video/${data.get('providerName')}`
+        dispatch(PlayerActionCreators.killPlayer())
+        dispatch(PlayerActionCreators.loadPlayer({
+          data: Immutable.fromJS({
+            height: 150,
+            controls: false,
+            sources: [{
+              src: data.get('originalUrl'),
+              type: `video/${data.get('providerName')}`
+            }]
           })
         }))
         break
