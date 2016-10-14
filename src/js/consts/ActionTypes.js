@@ -61,7 +61,9 @@ export default {
   }),
 
   Player: keyMirror({
-    getConfig: null
+    getConfig: null,
+    loadPlayer: null,
+    killPlayer: null
   }),
 
   Config: keyMirror({
