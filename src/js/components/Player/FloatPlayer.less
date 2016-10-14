@@ -10,7 +10,11 @@
   // ***
   //padding: 0.5em;
   width: @sidebar-width;
-  z-index: @nav-z;
+  z-index: @nav-z + 3;
+  .transition(transform 0.2s linear);
+  &.pinned {
+    .transition(none);
+  }
   .player-container {
     height: 150px;
   }

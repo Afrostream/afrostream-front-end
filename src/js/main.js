@@ -32,8 +32,8 @@ if (canUseDOM) {
 }
 
 const history = useScroll(createHistory)()
-getCountry().then((country)=> {
 
+function initSite (country) {
   const api = createAPI(
     /**
      * Client's createRequest() method
@@ -75,4 +75,10 @@ getCountry().then((country)=> {
     </Provider>,
     document.getElementById('main')
   )
+}
+
+getCountry().then((country)=> {
+  initSite(country)
+}).catch((err)=> {
+  initSite()
 })
