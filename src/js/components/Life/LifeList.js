@@ -1,29 +1,18 @@
 import React, { PropTypes, Component } from 'react'
+import ReactDOM from'react-dom'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import * as PlayerActionCreators from '../../actions/player'
 import * as LifeActionCreators from '../../actions/life'
-import * as ModalActionCreators from '../../actions/modal'
 import * as EventActionCreators from '../../actions/event'
 import config from '../../../../config/'
 import classSet from 'classnames'
-import Player from '../Player/Player'
 import LifePost from './LifePost'
-import _ from 'lodash'
 import moment from 'moment'
-import LifeNavigation from '../Life/LifeNavigation'
 import Immutable from 'immutable'
 import { withRouter } from 'react-router'
-import ReactList from 'react-list'
-
-import { InfiniteLoader, List } from 'react-virtualized'
 
 const {images} =config
-
-const sourcePlayer = {
-  'src': 'https://www.youtube.com/watch?v=xyRXwzKy_rk',
-  'type': 'video/youtube'
-}
 
 if (process.env.BROWSER) {
   require('./LifeList.less')
@@ -77,6 +66,7 @@ class LifeList extends Component {
         dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
+            target: e.target,
             height: 150,
             controls: false,
             sources: [{
