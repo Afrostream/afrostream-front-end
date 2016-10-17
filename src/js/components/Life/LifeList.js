@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import * as PlayerActionCreators from '../../actions/player'
 import * as LifeActionCreators from '../../actions/life'
 import * as EventActionCreators from '../../actions/event'
+import * as ModalActionCreators from '../../actions/modal'
+
 import config from '../../../../config/'
 import classSet from 'classnames'
 import LifePost from './LifePost'
@@ -25,7 +27,7 @@ if (process.env.BROWSER) {
     store.dispatch(LifeActionCreators.fetchPins({startIndex: 0, stopIndex: 3}))
   ])
 })
-@connect(({Life}) => ({Life}))
+@connect(({Life, User}) => ({Life, User}))
 class LifeList extends Component {
 
   constructor (props, context) {
@@ -41,7 +43,7 @@ class LifeList extends Component {
 
     const dataList = Life.get('life/pins')
     const sortedList = dataList.sort((a, b) => new Date(a.get('date')).getTime() < new Date(b.get('date')).getTime())
-    return !!sortedList.get(index);
+    return !!sortedList.get(index)
   }
 
   loadMoreRows ({startIndex, stopIndex}) {
@@ -54,6 +56,42 @@ class LifeList extends Component {
     return dispatch(LifeActionCreators.fetchPins({startIndex, stopIndex}))
   }
 
+  /**
+   * Checks if the user role meets the minimum requirements of the route
+   */
+  validRole (roleRequired) {
+
+    const {
+      props: {
+        User
+      }
+    } = this
+
+    const user = User.get('user')
+    let currentRole = 0
+    let planCode = null
+    let internalPlanOpts = null
+    if (user) {
+      currentRole += 1
+      planCode = user.get('planCode')
+      const subscriptionsStatus = user.get('subscriptionsStatus')
+      if (subscriptionsStatus) {
+        const subscriptions = subscriptionsStatus.get('subscriptions')
+        const currentSubscription = subscriptions && subscriptions.first((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no')
+        if (currentSubscription) {
+          currentRole += 1
+          const isVIP = currentSubscription.get('internalPlan').get('internalPlanOpts').get('internalVip')
+          if (isVIP) {
+            currentRole += 1
+          }
+        }
+      }
+    }
+
+    const userRole = config.userRoles[currentRole]
+    return config.userRoles.indexOf(userRole) >= config.userRoles.indexOf(roleRequired)
+  }
+
   clickHandler (e, data) {
     const {
       props: {
@@ -61,13 +99,20 @@ class LifeList extends Component {
       }
     } = this
 
+    const acl = this.validRole(data.get('role'))
+
+    if (!acl) {
+      e.preventDefault()
+      return dispatch(ModalActionCreators.open({target: 'signup'}))
+    }
+
     switch (data.get('type')) {
       case 'video':
-        e.preventDefault();
+        e.preventDefault()
         dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
-            target: e.target,
+            target: e.currentTarget || e.target,
             height: 150,
             controls: false,
             sources: [{
@@ -108,7 +153,7 @@ class LifeList extends Component {
     const type = data.get('type')
     const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
     const thumb = data.get('image')
-    let imageUrl = data.get('imageUrl') || baseUrl;
+    let imageUrl = data.get('imageUrl') || baseUrl
     if (thumb) {
       const path = thumb.get('path')
       if (path) {
@@ -130,8 +175,8 @@ class LifeList extends Component {
     }
 
     const cardTypeIcon = {
-      "card-bubble": true,
-      "card-bubble-type": true
+      'card-bubble': true,
+      'card-bubble-type': true
     }
 
     brickStyle[type] = true
