@@ -59,7 +59,7 @@ class LifeList extends Component {
   /**
    * Checks if the user role meets the minimum requirements of the route
    */
-  validRole (roleRequired) {
+  userRole () {
 
     const {
       props: {
@@ -88,8 +88,23 @@ class LifeList extends Component {
       }
     }
 
-    const userRole = config.userRoles[currentRole]
-    return config.userRoles.indexOf(userRole) >= config.userRoles.indexOf(roleRequired)
+    return currentRole
+  }
+
+  /**
+   * get nex role have acl
+   */
+  targetRole () {
+    const userRole = this.userRole()
+    return config.userRoles[userRole + 1]
+  }
+
+  /**
+   * Checks if the user role meets the minimum requirements of the route
+   */
+  validRole (roleRequired) {
+    const userRole = this.userRole()
+    return config.userRoles.indexOf(config.userRoles[userRole]) >= config.userRoles.indexOf(roleRequired)
   }
 
   clickHandler (e, data) {
@@ -98,12 +113,13 @@ class LifeList extends Component {
         dispatch
       }
     } = this
-
-    const acl = this.validRole(data.get('role'))
+    const pinRole = data.get('role')
+    const acl = this.validRole(pinRole)
 
     if (!acl) {
       e.preventDefault()
-      return dispatch(ModalActionCreators.open({target: 'signup'}))
+      const modalRole = this.targetRole()
+      return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath: '/life'}))
     }
 
     switch (data.get('type')) {
@@ -166,12 +182,14 @@ class LifeList extends Component {
     const pinnedDate = moment(data.get('date')).format('L')
     const pinnedUser = data.get('user')
     const themes = data.get('themes')
+    const pinRole = data.get('role')
+    const isPremium = pinRole === 'premium' || pinRole === 'vip'
 
     const brickStyle = {
       'brick': true,
       'masonry-brick': true,
       'first': !index,
-      'premium': data.get('role') === 'premium'
+      'premium': isPremium
     }
 
     const cardTypeIcon = {
@@ -191,8 +209,8 @@ class LifeList extends Component {
             <div className="brick-background">
               <div className="brick-background_image" style={imageStyles}/>
               <div className="brick-background_mask"/>
-              {brickStyle.premium && (<div className="premium-flag">
-                <div className="premium-flag__header-label"> Accès Premium</div>
+              {isPremium && (<div className="premium-flag">
+                <div className="premium-flag__header-label"> Accès {pinRole}</div>
               </div>)}
             </div>
             <div className="card-body">
