@@ -9,6 +9,7 @@ import config from '../../../../config/'
 import classSet from 'classnames'
 import LifePost from './LifePost'
 import moment from 'moment'
+import LifeNavigation from '../Life/LifeNavigation'
 import Immutable from 'immutable'
 import { withRouter } from 'react-router'
 
@@ -214,6 +215,7 @@ class LifeList extends Component {
 
     return (
       <div className="row-fluid life-list brand-grey">
+        <LifeNavigation />
         <div className="container-fluid container-no-padding brand-grey">
           {dataList && this.renderContent(dataList, resourceCount)}
         </div>

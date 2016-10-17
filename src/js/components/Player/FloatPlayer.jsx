@@ -238,11 +238,11 @@ class FloatPlayer extends React.Component {
     let playerData = await this.getPlayerData(videoData)
     let player = await videojs('afrostream-player', playerData).ready(()=> {
         player.volume(player.options_.defaultVolume)
-        this.updatePlayerPosition()
+        this.requestTick()
       }
     )
-    videojs.on(window, 'scroll', ::this.updatePlayerPosition)
-    this.updatePlayerPosition()
+    videojs.on(window, 'scroll', ::this.requestTick)
+    this.requestTick()
     return player
   }
 
@@ -263,6 +263,20 @@ class FloatPlayer extends React.Component {
     return video
   }
 
+  /**
+   * Calls rAF if it's not already
+   * been done already
+   */
+  requestTick (force) {
+    if (force !== undefined) {
+      this.ticking = !force;
+    }
+    if (!this.ticking) {
+      requestAnimationFrame(::this.updatePlayerPosition)
+      this.ticking = true;
+    }
+  }
+
   updatePlayerPosition () {
 
     const {
@@ -271,7 +285,7 @@ class FloatPlayer extends React.Component {
 
     const data = Player.get('/player/data')
     const target = data && data.get('target')
-    const elVisible = isElementInViewPort(target, 0.15)
+    const elVisible = isElementInViewPort(target, 0.60)
 
     let position = elVisible && target && target.getBoundingClientRect() || {
         bottom: 0,
@@ -281,10 +295,13 @@ class FloatPlayer extends React.Component {
     //FIXME why position 157 ?
     position.transform = `translate3d(${position.left}px, ${elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
 
+    this.ticking = false
+
     this.setState({
       position,
       elVisible
     })
+
   }
 
   render () {
