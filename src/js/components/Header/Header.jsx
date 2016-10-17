@@ -104,7 +104,7 @@ class Header extends React.Component {
             <ul className="nav">
               <li>
                 <button role="button" className="btn-home" onClick={::this.toggleSideBar}>
-                  {user && <i className="open-menu-icon zmdi zmdi-menu"/>}
+                  {/*{user && <i className="open-menu-icon zmdi zmdi-menu"/>}*/}
                   <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
                 </button>
               </li>

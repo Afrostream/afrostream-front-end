@@ -71,15 +71,16 @@ const config = _.merge(
      * WebpackDevServer
      */
     webpackDevServer: {
-      host: 'localhost',
+      host: '192.168.1.85',
       port: 8081
     },
-
+    // List of user roles
+    userRoles: ['free', 'user', 'premium', 'vip'],
     /**
      * browserSync
      */
     browserSyncServer: {
-      host: 'localhost',
+      host: '192.168.1.85',
       port: 8082
     }
   }, client)

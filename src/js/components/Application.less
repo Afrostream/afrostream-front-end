@@ -96,11 +96,6 @@ a.active {
   .transition(left @menu-open-duration ease);
 }
 
-.app.toggled {
-  margin-left: @sidebar-width;
-  .transition(margin-left @menu-open-duration ease);
-}
-
 #page-content-wrapper {
   width: 100%;
   &.container,
@@ -193,23 +188,6 @@ a.active {
   }
 }
 
-.app.toggled #page-content-wrapper {
-  position: absolute;
-  margin-right: -@sidebar-width;
-}
-
 .container {
   max-width: 100%;
-}
-
-@media (min-width: 768px) {
-
-  #page-content-wrapper {
-    position: relative;
-  }
-
-  .app.toggled #page-content-wrapper {
-    position: relative;
-    margin-left: 0;
-  }
 }
