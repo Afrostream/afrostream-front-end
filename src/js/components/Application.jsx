@@ -12,6 +12,8 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
+import window from 'global/window'
+import MobileDetect from 'mobile-detect'
 
 import * as CategoryActionCreators from '../actions/category'
 import * as MovieActionCreators from '../actions/movie'
@@ -73,10 +75,26 @@ if (process.env.BROWSER) {
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      isMobile: true
+    }
+  }
+
+  componentDidMount () {
+    const userAgent = (window.navigator && navigator.userAgent) || ''
+    let agent = new MobileDetect(userAgent)
+
+    this.setState({
+      isMobile: agent.mobile()
+    })
+  }
+
   render () {
 
-    const {props: {children, Event, User, Modal}} = this
-    const toggled = User.get('user') && Event.get('sideBarToggled')
+    const {props: {children, Event, Modal}} = this
+    const toggled = canUseDOM && Event.get('sideBarToggled')
     const hasPopup = Modal.get('target')
 
     let appClasses = classNames({
@@ -89,7 +107,7 @@ class Application extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={appClasses}>
           <Header {...this.props}/>
-          <SideBar />
+          <SideBar {...{toggled}} {...this.props}/>
           <SplashScreen />
           <AlertMessage />
           <div id="page-content-wrapper" className="container-fluid">
