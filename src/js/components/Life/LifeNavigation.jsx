@@ -20,7 +20,7 @@ export default class LifeList extends Component {
     return (
       <Headroom tolerance={5} offset={200} classes={{
         initial: 'animated',
-        pinned: 'slideDown',
+        pinned: 'slideDownSubHeader',
         unpinned: 'slideUpSubHeader'
       }}>
         <ul className="life-navigation">

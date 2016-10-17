@@ -133,7 +133,7 @@ class SideBar extends React.Component {
       }
     } = this
 
-    const useTouch = this.state.dragSupported;
+    const useTouch = this.state.dragSupported
     const rootProps = {}
     let dragHandle = null
     const user = User.get('user')
@@ -195,11 +195,11 @@ class SideBar extends React.Component {
       }
     }
 
-    const overlay = (<div className="sidebar-overlay"
-                          style={overlayStyle}
-                          role="presentation"
-                          tabIndex="0"
-                          onClick={this.overlayClicked}/>)
+    //const overlay = (<div className="sidebar-overlay"
+    //                      style={overlayStyle}
+    //                      role="presentation"
+    //                      tabIndex="0"
+    //                      onClick={this.overlayClicked}/>)
 
 
     return (
@@ -217,7 +217,6 @@ class SideBar extends React.Component {
         </ul>
         {this.getUserConnectedButtons(user, 'logout')}
         {dragHandle}
-        {overlay}
       </div>
     )
   }
