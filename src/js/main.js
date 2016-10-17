@@ -12,6 +12,12 @@ import qs from 'qs'
 import config from '../../config'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { getCountry } from './lib/geo'
+import * as UserActionCreators from './actions/user'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin()
 
 const {apiClient, heroku} = config
 
@@ -61,6 +67,8 @@ getCountry().then((country)=> {
 
   /* global __INITIAL_STATE__:true */
   const store = createStore(api, history, __INITIAL_STATE__)
+
+  store.dispatch(UserActionCreators.getProfile())
 
   ReactDOM.render(
     <Provider {...{store}}>

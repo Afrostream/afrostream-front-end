@@ -12,18 +12,43 @@ import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
 
-import * as BillingActionCreators from '../actions/billing'
 import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
 import * as EpisodeActionCreators from '../actions/episode'
-import * as UserActionCreators from '../actions/user'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import {
+  red500,
+  grey200,
+  grey400,
+  grey600,
+  grey900,
+  purple600,
+  purple700,
+  purple800,
+  purple900
+} from 'material-ui/styles/colors'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+
+
+const muiTheme = getMuiTheme({
+  palette: {
+    textColor: grey900,
+    secondaryTextColor: grey600,
+    disabledColor: grey600,
+    alternateTextColor: grey400,
+    primary1Color: purple600,
+    primary2Color: purple700,
+    primary3Color: grey200,
+    accent1Color: red500
+  }
+})
 
 
 if (process.env.BROWSER) {
   require('./Application.less')
 }
 
-@prepareRoute(async function ({store, location, params: {movieId, seasonId, episodeId, videoId}}) {
+@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
 
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))
@@ -45,18 +70,6 @@ if (process.env.BROWSER) {
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
 
-  componentDidMount () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-    if (canUseDOM) {
-      require('chardin.js')
-    }
-    dispatch(UserActionCreators.getProfile())
-  }
-
   render () {
 
     const {props: {children, Event, User, Modal}} = this
@@ -70,17 +83,19 @@ class Application extends React.Component {
     })
 
     return (
-      <div className={appClasses}>
-        <Header {...this.props}/>
-        <SideBar />
-        <SplashScreen />
-        <AlertMessage />
-        <div id="page-content-wrapper" className="container-fluid">
-          {children}
-          <Footer {...this.props}/>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div className={appClasses}>
+          <Header {...this.props}/>
+          <SideBar />
+          <SplashScreen />
+          <AlertMessage />
+          <div id="page-content-wrapper" className="container-fluid">
+            {children}
+            <Footer {...this.props}/>
+          </div>
+          <ModalView {...this.props}/>
         </div>
-        <ModalView {...this.props}/>
-      </div>
+      </MuiThemeProvider>
     )
   }
 }

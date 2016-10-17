@@ -51,6 +51,7 @@ const webpackConfig = {
       'videojs-vtt.js',
       'dashjs',
       'video.js',
+      'koment-js',
       'afrostream-player',
     ],
     vendor: [
@@ -71,8 +72,7 @@ const webpackConfig = {
       'raven-js',
       'mobile-detect',
       'qs',
-      'sendbird',
-      'chardin.js',
+      'material-ui',
       './src/js/lib/localStoragePolyfill',
       './src/js/lib/customEventPolyfill'
     ]
@@ -81,7 +81,8 @@ const webpackConfig = {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
       jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
-      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js')
+      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js'),
+      koment: path.join(__dirname, '../node_modules/koment-js/dist/koment.js')
     }
   },
   stats: {
@@ -149,10 +150,9 @@ const webpackConfig = {
         include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
-        test: /sendbird\.js$/, loader: 'expose?sendBirdClient'
-      },
-      {
-        test: /chardin\.js$/, loader: 'expose?chardinJs'
+        test: /koment-js$/,
+        loader: 'expose?koment',
+        include: [path.join(__dirname, '../node_modules/afrostream-player')]
       },
       {
         test: /jquery\.js$/, loader: 'expose?$'
@@ -187,8 +187,8 @@ const webpackConfig = {
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.ProvidePlugin({
+      koment: 'koment-js',
       videojs: 'video.js',
-      sendBirdClient: 'sendbird',
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery'
@@ -213,11 +213,11 @@ const webpackConfig = {
         OAUTH_FACEBOOK_ENABLED: JSON.stringify(process.env.OAUTH_FACEBOOK_ENABLED),
         OAUTH_ORANGE_ENABLED: JSON.stringify(process.env.OAUTH_ORANGE_ENABLED),
         OAUTH_BOUYGUES_ENABLED: JSON.stringify(process.env.OAUTH_BOUYGUES_ENABLED),
+        BITLY_ACCESS_TOKEN: JSON.stringify(process.env.BITLY_ACCESS_TOKEN),
         FB_TRACKING_ID: JSON.stringify(process.env.FB_TRACKING_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
         YOUBORA_ID: JSON.stringify(process.env.YOUBORA_ID),
-        SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID),
-        SENDBIRD_APP_ID: JSON.stringify(process.env.SENDBIRD_APP_ID)
+        SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID)
       }
     })
   ],

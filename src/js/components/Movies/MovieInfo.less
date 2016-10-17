@@ -62,6 +62,14 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     .isMobile({ background-attachment: scroll });
+    .afrostream-movie__mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: fade(#000, 50%);
+    }
     &:after {
       content: '';
       background-image: url(../../../assets/images/shadow.png);

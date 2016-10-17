@@ -48,6 +48,7 @@
     },
     "recharge": {
       "title": "MOYENS DE PAIEMENT",
+      "stores": "Liste des points de vente",
       "cashway": "Paiement en espèces avec ",
       "coupon": "Coupon"
     },
@@ -57,7 +58,8 @@
       "press": "Presse",
       "investissor": "Investisseurs",
       "mediaKit": "Media Kit",
-      "jobs": "Jobs"
+      "jobs": "Jobs",
+      "submit": "Proposer votre contenu"
     },
     "apps": {
       "title": "PLATEFORMES",
@@ -73,6 +75,13 @@
     "oauth2": {
       "title": "BOXES"
     }
+  },
+  "storesLocator": {
+    "title": "Vous cherchez un buraliste pour vous abonner à Afrostream ?",
+    "description": "Vous pouvez désormais vous abonner à Afrostream dans les bureaux de tabac. Consultez la carte et trouvez le bureau de tabac le plus proche de chez vous.",
+    "where": "Où trouver un buraliste ?",
+    "inputFind": "Ville...",
+    "find": "Trouver un point de vente"
   },
   "loadingTitle": "Veuillez patienter...",
   "close": "Fermer",
@@ -213,7 +222,7 @@
       "link": "(En savoir plus)"
     },
     "droits": {
-      "label": "Je fais la demande express du début immédiat du service (Code de la consommation 221-8 alinéa 13) et je renonce au droit de rétractation",
+      "label": "Je fais la demande express du début immédiat du service (Code de la consommation 221-28 alinéa 13) et je renonce au droit de rétractation",
       "link": "Télécharger le formulaire de rétractation",
       "tooltip": "Un mois consommé ne peut pas etre remboursé"
     }
@@ -238,14 +247,39 @@
       "on": "Lier mon profil",
       "off": "Ne plus lier mon profil"
     },
+    "profile": {
+      "password": "Modifier mon mot de passe",
+      "picture": "Modifier mon avatar",
+      "profile": "Informations personnelles",
+      "birthDate": "Date de naissance",
+      "nickname": "Nom d'utilisateur",
+      "first_name": "Nom",
+      "last_name": "Prénom",
+      "gender": "Sexe",
+      "telephone": "Numero de téléphone",
+      "email": "Email",
+      "synchro": "Comptes synchronisés",
+      "social": "Partage social",
+      "socialSharing": "Partager à mes amis mon activité",
+      "player": "Paramétrage des vidéos",
+      "playerAudio": "Langue audio",
+      "playerCaption": "Sous titres",
+      "playerQuality": "Qualité de lecture",
+      "playerKoment": "Afficher les commentaires automatiquement",
+      "playerAutoNext": "Passage à l'épisode suivant automatiquement",
+      "emailOptIn": "Je souhaite recevoir des offres exclusives des partenaires sélectionnés par Afrostream",
+      "emailNewsletter": "Je souhaite recevoir des promotions et des actualités sur Afrostream",
+      "men": "Homme",
+      "women": "Femme",
+      "on": "Activé",
+      "off": "Désactivé"
+    },
     "cancel": {
-      "active": {
-        "header": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",
-        "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
-      },
-      "canceled": {
-        "header": "Votre abonnement été annulé.",
-        "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
+      "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}",
+      "status": {
+        "active": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",
+        "canceled": "Votre abonnement été annulé.",
+        "unCancelable": "Votre abonnement ne peut être annulé."
       },
       "submitBtn": "Confirmer l'interruption",
       "cancelBtn": "Continuer l'abonnement"
@@ -257,6 +291,7 @@
       "periodLabel": "Période de service",
       "methodLabel": "Mode de paiement",
       "statusLabel": "Status",
+      "cancelLabel": "Annuler",
       "periods": {
         "year": "An",
         "month": "Mois",
@@ -395,14 +430,19 @@
   "sponsors": {
     "title": "Mes amis parrainés",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
+    "metas": {
+      "title": "14 jours de streaming offerts",
+      "description": "Inscrivez-vous dès maintenant pour bénéficier de 14 jours d’abonnement à Afrostream offerts."
+    },
     "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
     "placeHolder": "Parrainer un ami",
     "emailField": "Son email",
     "max": "Vous avez atteint le nombre maximum d'amis parrainés",
+    "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",
     "status": {
       "redeemed": "Votre ami à un compte Afrostream",
-      "active": "Votre ami à validé son coupon",
-      "waiting": "Votre ami n'a toujours pas activé son coupon"
+      "active": "Votre ami à validé ce coupon",
+      "waiting": "Personne n'a activé ce coupon"
     },
     "errors": {
       "error": "Vous ne pouvez plus parrainer actuellement.",
@@ -412,7 +452,9 @@
     "validation": {
       "email": "Doit etre un email valide",
       "empty": "est requis"
-    }
+    },
+    "new": "Générer un coupon",
+    "share": "Partager à mes amis"
   },
   "press": {
     "menu": {

@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import Helmet from 'react-helmet'
 import config from '../../../config'
 import _ from 'lodash'
+import qs from 'qs'
 import { getI18n } from '../../../config/i18n'
 
 export default () => {
@@ -45,6 +46,7 @@ export default () => {
         } = this
 
         let {lang} = params
+        let {query} = location
 
         let metas = {
           title: _.cloneDeep(config.metadata.title),
@@ -52,11 +54,13 @@ export default () => {
           link: []
         }
 
+        const configImage = `?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`
         const movieData = store.getState().Movie.get(`movies/${params.movieId}`)
         let seasonData
         let videoData
         let episodeData
         let episodesList
+
         if (params.videoId) {
           videoData = store.getState().Video.get(`videos/${params.videoId}`)
         }
@@ -87,14 +91,16 @@ export default () => {
 
         let title = _.cloneDeep(config.metadata.title)
         let ogTitle = title
-        let slug = location.pathname !== '/' ? location.pathname : ''
+        let slug = (location.pathname !== '/' ? location.pathname : '' )
         let synopsis = _.cloneDeep(config.metadata.description)
         let ogDescription = synopsis
         let imageStyle = config.metadata.shareImage
         let seasonNumber = null
         let poster = null
         let episodeNumber = null
+        let ogType = 'website'
 
+        //META MOVIE/SERIE/EPISODE/VIDEO
         if (data) {
 
           let type = movieData.get('type')
@@ -161,7 +167,43 @@ export default () => {
           }
         }
 
-        let ogImage = `${config.images.urlPrefix}${imageStyle}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`
+        //META SPONSORSHIP
+        if (location.pathname === '/coupon') {
+          if (query) {
+            slug = `${slug}?${qs.stringify(query)}`
+          }
+          let couponItem = store.getState().Billing.get('coupon')
+          if (couponItem) {
+            const coupon = couponItem.get('coupon')
+            if (coupon) {
+              const plan = coupon.get('internalPlan')
+              if (plan) {
+
+                title = getI18n(lang).sponsors.metas.title
+                synopsis = getI18n(lang).sponsors.metas.description
+
+                //TODO connect to plan name/description
+                //Replace global
+                //title = title.replace(/{planName}/g, plan.get('name'))
+                //synopsis = synopsis.replace(/{planDescription}/g, plan.get('description'))
+
+                const thumb = plan.get('thumb')
+                if (thumb) {
+
+                  const path = thumb.get('path')
+                  if (path) {
+                    imageStyle = path
+                  }
+                }
+                ogTitle = title
+                ogDescription = synopsis
+              }
+            }
+          }
+        }
+
+
+        let ogImage = `${config.images.urlPrefix}${imageStyle}${configImage}`
 
         if (title) {
           metas.title = title
@@ -182,6 +224,13 @@ export default () => {
           metas.meta.push({
             name: 'twitter:title',
             content: ogTitle
+          })
+        }
+
+        if (ogType) {
+          metas.meta.push({
+            property: 'og:type',
+            content: ogType
           })
         }
 
@@ -208,17 +257,18 @@ export default () => {
         }
 
         if (slug) {
+          const slugMeta = `${config.metadata.domain}${slug}`
           metas.link.push({
             rel: 'canonical',
-            href: `${config.metadata.domain}${slug}`
+            href: slugMeta
           })
           metas.meta.push({
             property: 'og:url',
-            content: `${config.metadata.domain}${slug}`
+            content: slugMeta
           })
           metas.meta.push({
             name: 'twitter:site',
-            content: `${config.metadata.domain}${slug}`
+            content: slugMeta
           })
         }
 

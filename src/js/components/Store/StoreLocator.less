@@ -1,0 +1,55 @@
+@import (reference) '../../../styles/config.less';
+
+.store-locator-page {
+
+  padding-top: @header-height;
+  font-size: 1.3em;
+  .container-fluid {
+    padding: 0;
+    background-color: fade(@brand-primary, 97%) !important;
+    color: @color-indigo;
+    section {
+      margin: 15px;
+    }
+    // Center responsive images
+    .img-responsive.img-center {
+      margin: 0 auto;
+      border-radius: 50%;
+    }
+
+    .number {
+      font-family: @font-black;
+      background: @color-yellow;
+      color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 3em;
+      padding: 0.2em;
+      width: 1.7em;
+      height: 1.7em;
+      border: 4px solid #fff;
+      box-shadow: 1px 1px 1px rgba(50, 50, 50, .4);
+      text-shadow: 1px 1px 1px rgba(50, 50, 50, .1);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+    }
+
+    .subscribe-button {
+      padding: @app-padding-mobile;
+      margin: @app-padding-mobile;
+    }
+
+    .container_title {
+      margin: 1em;
+      font-family: @font-book;
+      font-size: 1.8em;
+      .isMobile({ font-size: 2.5em; });
+    }
+
+    .map-canvas {
+      width: 100%;
+      height: 350px;
+    }
+  }
+}

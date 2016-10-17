@@ -22,6 +22,8 @@ class MoviesSlider extends React.Component {
 
   static propTypes = {
     dataList: PropTypes.instanceOf(Immutable.List),
+    favorite: React.PropTypes.bool,
+    share: React.PropTypes.bool,
     selectedId: React.PropTypes.string,
     label: React.PropTypes.string,
     slug: React.PropTypes.string,
@@ -36,7 +38,9 @@ class MoviesSlider extends React.Component {
     slug: '',
     axis: 'x',
     className: 'movies-data-list',
-    rowHeight: 200
+    rowHeight: 200,
+    share: false,
+    favorite: true
   }
 
   cellSizeAndPositionGetter ({index}) {
@@ -86,7 +90,6 @@ class MoviesSlider extends React.Component {
     return (
       <Thumb
         preload={true}
-        share={false}
         id={dataId}
         key={`data-thumb-${dataId}`}
         {...params} {...this.props} {...{data, dataId}}  />

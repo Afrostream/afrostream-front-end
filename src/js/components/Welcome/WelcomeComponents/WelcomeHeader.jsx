@@ -10,8 +10,9 @@ import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
 import { withRouter } from 'react-router'
 import Player from '../../Player/Player'
+import window from 'global/window'
 
-const {promoCodes, metadata, images} =config
+const {metadata, images} =config
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
@@ -23,7 +24,7 @@ class WelcomeHeader extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isMobile: false,
+      isMobile: true,
       size: {
         width: 1280,
         height: 500
@@ -42,35 +43,6 @@ class WelcomeHeader extends React.Component {
     this.setState({
       isMobile: isMobile,
     })
-
-    let promoCode = this.hasPromo()
-
-    if (canUseDOM && promoCode) {
-      //FIXME create countdown
-    }
-  }
-
-  showLock () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
-    dispatch(ModalActionCreators.open({target: 'showSignup'}))
-  }
-
-  hasPromo () {
-    const {
-      props: {
-        location
-      }
-    } = this
-    let pathName = location.pathname.split('/').join('')
-    let HasProm = _.find(promoCodes, function (promo) {
-      return pathName === promo.code
-    })
-    return HasProm
   }
 
   render () {
@@ -85,7 +57,8 @@ class WelcomeHeader extends React.Component {
     let info = {
       title: getI18n(lang).home.title,
       action: getI18n(lang).home.action,
-      poster: `${metadata.shareImage}`,
+      poster: `${metadata.screen && metadata.screen.image || metadata.shareImage}`,
+      logo: `${metadata.screen && metadata.screen.logo}`,
       movie: {
         title: '',
         synopsis: ''
@@ -138,18 +111,20 @@ class WelcomeHeader extends React.Component {
       }
       info.movie = {
         title: title,
-        synopsis: data.get('synopsis')
+        synopsis: data.get('synopsis'),
       }
+      info.logo = null
     }
-    let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
+    let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
     let imageStyle = {backgroundImage: `url(${posterImg})`}
+    let logoImg = `${images.urlPrefix}${info.logo}?crop=faces&fit=clip&w=500&q=70&fm=png`
+    let logoStyle = {backgroundImage: `url(${logoImg})`}
 
-    let promoCode = this.hasPromo()
 
     let welcomeClassesSet = {
       'welcome-header': true,
-      'welcome-header_movie': Boolean(movieData),
-      'promo': promoCode
+      'welcome-overlay': !info.logo,
+      'welcome-header_movie': Boolean(movieData)
     }
 
     return (
@@ -159,6 +134,7 @@ class WelcomeHeader extends React.Component {
 
         {!trailer && <div className="afrostream-movie__poster" style={imageStyle}>
           <div className="afrostream-movie__mask"/>
+          {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
         </div>}
         {movieData ? <SignUpButton className="subscribe-button subscribe-button-mobile" label={info.action}/> : ''}
         <div className="afrostream-movie">
@@ -179,12 +155,9 @@ class WelcomeHeader extends React.Component {
 }
 
 WelcomeHeader.propTypes = {
-  location: React.PropTypes.object.isRequired,
-  promoCode: React.PropTypes.string
+  location: React.PropTypes.object.isRequired
 }
 
-WelcomeHeader.defaultProps = {
-  promoCode: ''
-}
+WelcomeHeader.defaultProps = {}
 
 export default withRouter(WelcomeHeader)

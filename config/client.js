@@ -31,7 +31,64 @@ const protData = {
 
 const client = {
   featuresFlip: {
-    sponsorship: true
+    sponsorship: true,
+    koment: true
+  },
+  userProfile: {
+    keys: {
+      profile: [
+        {key: 'picture', type: 'picture', col: 4},
+        {key: 'nickname', type: 'text', col: 8},
+        {key: 'last_name', type: 'text', autoComplete: 'surname', col: 4},
+        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 4},
+        {
+          key: 'gender',
+          type: 'radio',
+          icon: 'zmdi zmdi-female',
+          iconRight: 'zmdi zmdi-male-alt',
+          defaultSelected: 'women',
+          list: [{value: 'women'}, {value: 'men'}]
+        },
+        {
+          key: 'telephone',
+          type: 'tel',
+          icon: 'zmdi zmdi-smartphone-android',
+          autoComplete: 'phone',
+          pattern: '[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}',
+          col: 4
+
+        },
+        {key: 'birthDate', type: 'date', icon: '', col: 4},
+        {key: 'emailNewsletter', type: 'checkbox', col: 8},
+        {key: 'emailOptIn', type: 'checkbox', col: 8},
+        {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 8},
+        {key: 'password', type: 'password', col: 6},
+      ],
+      social: [{key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
+      player: [
+        {
+          key: 'playerAudio',
+          type: 'select',
+          icon: 'zmdi zmdi-hearing',
+          list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
+        },
+        {
+          key: 'playerCaption', type: 'select', icon: 'zmdi zmdi-view-subtitles',
+          list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
+        },
+        {
+          key: 'playerQuality', type: 'select', icon: 'zmdi zmdi-router',
+          list: [
+            {label: 'HD', value: 4},
+            {label: 'Normal', value: 3},
+            {label: 'Moyen', value: 2},
+            {label: 'Bas', value: 1},
+            {label: 'Auto', value: 0}]
+        },
+        {key: 'playerKoment', type: 'toggle', icon: 'zmdi zmdi-comment-more'},
+        {key: 'playerAutoNext', type: 'toggle', icon: 'zmdi zmdi-skip-next'}
+      ]
+    }
   },
   /**
    * APPS
@@ -56,6 +113,7 @@ const client = {
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
+  gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
   stripeApi: '//js.stripe.com/v2/',
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   promoCodes: [
@@ -100,17 +158,6 @@ const client = {
     quality: 65,
     type: 'jpg'
   },
-  sendBird: {
-    appId: process.env.SENDBIRD_APP_ID || '',
-    apiToken: process.env.SENDBIRD_API_TOKEN || '',
-    channels: [
-      295,
-      204,
-      308,
-      321,
-      323
-    ]
-  },
   sentry: {
     dns: process.env.SENTRY_DSN || '',
     config: {}
@@ -123,8 +170,9 @@ const client = {
     interval: 10000
   },
   sponsors: {
-    maxSponsors: 10,
-    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID
+    billingProviderName: 'afr',
+    couponsCampaignBillingUuid: process.env.SPONSORSHIP_BILLING_UUID || 'toto',
+    couponsCampaignType: 'sponsorship'
   },
   intercom: {
     url: 'https://widget.intercom.io/widget/',
@@ -174,6 +222,10 @@ const client = {
         params: {
           u: '{url}',
           s: 'En ce moment je regarde "{title}" sur @afrostream'
+        },
+        fullParams: {
+          u: '{url}',
+          s: '{title} {description}'
         }
       },
       whatsapp: {
@@ -184,6 +236,9 @@ const client = {
         url: 'whatsapp://send',
         params: {
           text: 'En ce moment je regarde "{title}" sur @afrostream {url}'
+        },
+        fullParams: {
+          text: '{title} {descroption} {url}'
         }
       },
       twitter: {
@@ -194,6 +249,10 @@ const client = {
         params: {
           url: '{url}',
           text: 'En ce moment je regarde "{title}" sur @afrostream'
+        },
+        fullParams: {
+          url: '{url}',
+          text: '{title} {description}'
         }
       },
       googlePlus: {
@@ -203,6 +262,10 @@ const client = {
         url: 'https://plus.google.com/share',
         params: {
           url: '{url}'
+        },
+        fullParams: {
+          url: '{url}',
+          text: '{title} {description}'
         }
       },
       email: {
@@ -213,6 +276,10 @@ const client = {
         params: {
           subject: 'À voir: "{title}" sur afrostream',
           body: 'En ce moment je regarde "{title}" et tu vas aimer {description} Tu peux aussi télécharger l’application Afrostream : https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=en pour Androïd et https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8 pour Iphone / Ipad'
+        },
+        fullParams: {
+          subject: '{title}',
+          body: '{description} {url}'
         }
       }
     }
@@ -310,6 +377,12 @@ const client = {
     },
     'languages': {
       'fr': {
+        'Koment': 'Afficher les commentaires',
+        'Non-Koment': 'Masquer les commentaires',
+        'List': 'Liste des commentaires',
+        'Edit': 'Commenter',
+        'Send': 'Envoyer',
+        'Add your comment here...': 'Commenter ce passage de la video...',
         'French': 'Français',
         'fra': 'Français',
         'fr': 'Français',
@@ -364,6 +437,7 @@ const client = {
       'httpSecure': true,
       'transactionCode': 'front'
     },
+    'defaultVolume': 0.65,
     'techOrder': ['dash', 'html5', 'dashas']
   }
 }

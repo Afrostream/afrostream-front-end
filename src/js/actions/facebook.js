@@ -1,5 +1,6 @@
 import ActionTypes from '../consts/ActionTypes'
 import _ from 'lodash'
+import window from 'global/window'
 /**
  * Get list friendlist
  * @returns {Function}
@@ -25,7 +26,7 @@ export function getFriendList () {
           })
         }
 
-        let piskData = _.map(friendList, 'id');
+        let piskData = _.map(friendList, 'id')
 
         return async api => ({
           type: ActionTypes.Facebook.getFriendList,

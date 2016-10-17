@@ -2,10 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getI18n } from '../../../../config/i18n'
 import moment from 'moment'
+import { Link } from 'react-router'
 import { formatPrice } from '../../lib/utils'
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import LinearProgress from 'material-ui/LinearProgress'
+import RaisedButton from 'material-ui/RaisedButton'
 
 if (process.env.BROWSER) {
   require('./AccountSubscriptions.less')
+}
+const style = {
+  margin: 20
 }
 
 @connect(({User, Billing}) => ({User, Billing}))
@@ -35,81 +42,96 @@ class AccountSubscriptions extends React.Component {
     if (!subscriptionsList) {
       return <div />
     }
+    let title = getI18n().account.plan.header
 
-    return (<div className="row account-details">
-      <div className="col-md-12 table-responsive">
-        <table className="table">
-          <caption>{getI18n().account.billing.header}</caption>
-          <thead>
-          <tr>
-            <th>{getI18n().account.billing.dateLabel}</th>
-            <th>{getI18n().account.billing.decriptionLabel}</th>
-            <th>{getI18n().account.billing.periodLabel}</th>
-            <th>{getI18n().account.billing.methodLabel}</th>
-            <th>{getI18n().account.billing.statusLabel}</th>
-          </tr>
-          </thead>
-          <tbody>
+    let currentSubscription = subscriptionsList.find((obj)=> {
+      return obj.get('isActive') === 'yes' && obj.get('isCancelable')
+    })
 
-          {subscriptionsList.map((subscription, i) => {
+    const isCancelable = currentSubscription && currentSubscription.get('isCancelable')
+    const uuid = currentSubscription && currentSubscription.get('subscriptionBillingUuid')
 
-              let subscriptionDate = moment(subscription.get('subActivatedDate') || subscription.get('creationDate')).format('L')
-              let internalPlan = subscription.get('internalPlan')
-              let providerPlan = subscription.get('provider')
-              //PERIOD
-              let period = `${internalPlan.get('periodLength')} ${getI18n().account.billing.periods[internalPlan.get('periodUnit')]}`
-              let now = moment()
-              let activeDate = moment(subscription.get('subPeriodStartedDate'))
-              let endDate = moment(subscription.get('subPeriodEndsDate'))
-              let percentComplete = (now - activeDate) / (endDate - activeDate) * 100
-              let periodPercent = {width: `${percentComplete}%`}
-              //PRICE
-              let currencyPlan = internalPlan.get('currency')
-              let amountInCentsExclTax = formatPrice(internalPlan.get('amountInCentsExclTax'), currencyPlan)
-              let amountInCents = formatPrice(internalPlan.get('amountInCents'), currencyPlan)
-              //PROVIDER
-              let providerName = providerPlan.get('providerName')
-              let providerLogo = providerLogos.hasOwnProperty(providerName) ? providerLogos[providerName] : ''
-              //STATUS
-              let subscriptionStatus = subscription.get('subStatus')
-
-              let statusLabel
-              switch (subscriptionStatus) {
-                case 'active':
-                case 'expired':
-                case 'future':
-                case 'canceled':
-                  statusLabel = getI18n().account.billing.status[subscriptionStatus]
-                  break
-                case 'pending':
-                case 'pending_active':
-                case 'pending_canceled':
-                case 'pending_expired':
-                case 'requesting_canceled':
-                  statusLabel = getI18n().account.billing.status['pending']
-                  break
-              }
-              return (
-                <tr key={`subscription-${i}-info`}>
-                  <th scope="row">{subscriptionDate}</th>
-                  <td>{internalPlan.get('description')}</td>
-                  <td>{period}
-                    <div className="progress">
-                      <div className="progress-bar progress-bar-info progress-bar-sm progress-bar-afr" role="progressbar"
-                           aria-valuenow="70"
-                           aria-valuemin="0" aria-valuemax="100" style={periodPercent}>
-                      </div>
-                    </div>
-                  </td>
-                  <td><img src={providerLogo} alt={providerName} className="img-responsive"/></td>
-                  <td>{statusLabel}</td>
-                </tr>)
+    return (
+      <div className="account-details__container col-md-12">
+        <div className="panel-profil">
+          <div className="pannel-header">{title}</div>
+          <div className="row-fluid row-profil">
+            {isCancelable &&
+            <Link to={`/compte/cancel-subscription/${uuid}`} disabled={!isCancelable} style={style}>
+              <RaisedButton label={getI18n().account.plan.cancelPlan}/></Link>
             }
-          ).toJS()}
-          </tbody>
-        </table>
-      </div>
-    </div>)
+            <Table displayRowCheckbox={false} style={{padding: '0'}}>
+              <TableHeader style={{border: 'none'}} adjustForCheckbox={false} displaySelectAll={false}>
+                <TableRow style={{border: 'none'}} selectable={false}>
+                  <TableHeaderColumn>{getI18n().account.billing.dateLabel}</TableHeaderColumn>
+                  <TableHeaderColumn>{getI18n().account.billing.decriptionLabel}</TableHeaderColumn>
+                  <TableHeaderColumn>{getI18n().account.billing.periodLabel}</TableHeaderColumn>
+                  <TableHeaderColumn>{getI18n().account.billing.methodLabel}</TableHeaderColumn>
+                  <TableHeaderColumn>{getI18n().account.billing.statusLabel}</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody displayRowCheckbox={false}>
+
+                {subscriptionsList.map((subscription, i) => {
+
+                    let subscriptionDate = moment(subscription.get('subActivatedDate') || subscription.get('creationDate')).format('L')
+                    let uuid = subscription.get('subscriptionBillingUuid')
+                    let internalPlan = subscription.get('internalPlan')
+                    let providerPlan = subscription.get('provider')
+                    //PERIOD
+                    let period = `${internalPlan.get('periodLength')} ${getI18n().account.billing.periods[internalPlan.get('periodUnit')]}`
+                    let now = moment()
+                    let activeDate = moment(subscription.get('subPeriodStartedDate'))
+                    let endDate = moment(subscription.get('subPeriodEndsDate'))
+                    let percentComplete = (now - activeDate) / (endDate - activeDate) * 100
+                    //PRICE
+                    let currencyPlan = internalPlan.get('currency')
+                    let amountInCentsExclTax = formatPrice(internalPlan.get('amountInCentsExclTax'), currencyPlan)
+                    let amountInCents = formatPrice(internalPlan.get('amountInCents'), currencyPlan)
+                    //PROVIDER
+                    let providerName = providerPlan.get('providerName')
+                    let providerLogo = providerLogos.hasOwnProperty(providerName) ? providerLogos[providerName] : ''
+                    //STATUS
+                    let subscriptionStatus = subscription.get('subStatus')
+
+                    let statusLabel
+                    switch (subscriptionStatus) {
+                      case 'active':
+                      case 'expired':
+                      case 'future':
+                      case 'canceled':
+                        statusLabel = getI18n().account.billing.status[subscriptionStatus]
+                        break
+                      case 'pending':
+                      case 'pending_active':
+                      case 'pending_canceled':
+                      case 'pending_expired':
+                      case 'requesting_canceled':
+                        statusLabel = getI18n().account.billing.status['pending']
+                        break
+                    }
+
+                    let isCancelable = (subscription.get('subStatus') === 'canceled') || (subscription.get('isCancelable') === 'no')
+
+
+                    return (
+                      <TableRow key={`subscription-${i}-info`}>
+                        <TableRowColumn scope="row">{subscriptionDate}</TableRowColumn>
+                        <TableRowColumn>{internalPlan.get('description')}</TableRowColumn>
+                        <TableRowColumn>{period}
+                          <LinearProgress style={{height: '0.7em'}} mode="determinate" value={percentComplete}/>
+                        </TableRowColumn>
+                        <TableRowColumn><img src={providerLogo} alt={providerName}
+                                             className="img-responsive"/></TableRowColumn>
+                        <TableRowColumn>{statusLabel}</TableRowColumn>
+                      </TableRow>)
+                  }
+                ).toJS()}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </div>)
   }
 }
 

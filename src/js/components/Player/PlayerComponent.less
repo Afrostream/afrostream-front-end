@@ -3,6 +3,46 @@
 @import (reference) '../../../styles/config.less';
 
 .player {
+
+  .splash.splash-bubble {
+    .isMobile({ top: @header-height-mobile; margin-top: @app-padding-mobile; right: @app-padding-mobile + 50px; });
+    top: 30%;
+    margin-top: @app-padding;
+    right: @app-padding + 50px;
+    max-width: 100%;
+  }
+
+}
+
+.koment {
+  .koment-control-bar {
+    top: 30%;
+    margin: @app-padding @app-padding @app-padding @app-padding;
+
+    .isMobile({ top: 0; margin: @app-padding-mobile @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
+  }
+
+  .koment-display,
+  .koment-list {
+    padding: @header-height @app-padding 3em @app-padding;
+    .isMobile({ padding: 0 @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
+  }
+
+  .koment-list {
+    align-content: flex-start;
+  }
+
+  &.koment-toggle-edit .koment-control-bar {
+    margin-top: @header-height;
+    top: @app-padding;
+    left: @app-padding;
+    right: @app-padding;
+    .isMobile({ margin: 0; top: @app-padding-mobile; left: @app-padding-mobile; right: @app-padding-mobile; });
+  }
+
+}
+
+.player {
   display: inline-block;
   background-color: #000000;
   width: 100%;
@@ -67,6 +107,7 @@
     //position: relative;
     display: inline-block;
     vertical-align: middle;
+    bottom: @app-padding + 4em;
     left: 0;
     max-width: 350px;
     z-index: 5;
@@ -203,7 +244,7 @@
         z-index: 2147483647;
       }
       .video-infos {
-        position: relative;
+        position: absolute;
       }
     }
 
@@ -218,7 +259,8 @@
 
     .video-infos {
       display: inline-block;
-      vertical-align: middle;
+      vertical-align: bottom;
+      margin-bottom: 5em;
       text-align: left;
       max-width: 35%;
       max-height: 65%;
@@ -285,4 +327,6 @@
       left: 0;
     }
   }
+
 }
+

@@ -1,4 +1,4 @@
-import React ,{PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -7,14 +7,14 @@ if (process.env.BROWSER) {
 
 class FavoritesButton extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
-  render() {
+  render () {
     return (
       <Link className="btn-xs btn-favorites" to="/favoris" role="button"><span>Mes Favoris </span><i
-        className="zmdi zmdi-favorite"></i></Link>)
+        className="zmdi zmdi-playlist-plus"></i></Link>)
   }
 }
 

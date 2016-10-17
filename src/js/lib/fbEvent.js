@@ -1,6 +1,8 @@
 /**
  * React FBEvents Module
  */
+import window from 'global/window'
+
 let eventsList = []
 const RE_SEP = /\-|\./
 const RE_SEP_AZ = /(\-|\.)[a-zA-Z0-9]/
@@ -58,7 +60,7 @@ export function camelize (path) {
  * Basic FB pageview tracking
  * @param  {String} path - the current page page e.g. '/about'
  */
-export function pageview ({path, params ={}}) {
+export function pageview ({path, params = {}}) {
   if (!path) {
     console.warn('path is required in .pageview()')
     return
@@ -71,7 +73,7 @@ export function pageview ({path, params ={}}) {
   }
 }
 
-export function track ({event, params ={}}) {
+export function track ({event, params = {}}) {
   if (!event) {
     console.warn('event is required in .track()')
     return

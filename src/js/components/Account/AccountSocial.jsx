@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { getI18n } from '../../../../config/i18n'
-import SwitchButton from '../SwitchButton/SwitchButton'
+import Toggle from 'material-ui/Toggle'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
 import config from '../../../../config'
@@ -53,24 +52,21 @@ class AccountSocial extends React.Component {
     return _.filter(oauth2.providers, {active: true}).map((strategy)=> {
       const providerInfos = user.get(strategy.name)
       const isSynchro = Boolean(providerInfos)
-      const checkLabel = getI18n().account.oauth2[isSynchro ? 'off' : 'on']
-      const eventObj = {isSynchro, strategy: strategy.name}
       const inputAttributes = {
-        onChange: event => ::this.synchroniseHandler(eventObj)
+        onToggle: (event, payload) => {
+          this.synchroniseHandler({isSynchro: !payload, strategy: strategy.name})
+        }
       }
       const title = getI18n().account.oauth2.link.replace('{strategy}', strategy.name)
-      return (<div className="row row-provider" key={`${strategy.name}-synchro`}>
-          <div className="col-md-2 text-center">
+      return (<div className="row" key={`${strategy.name}-synchro`}>
+          <div className="col-xs-2 col-md-2 text-center">
             <i className={strategy.icon}/>
           </div>
-          <div className="col-md-6" dangerouslySetInnerHTML={{__html:title}}/>
-          <div className="col-md-4">
-            <SwitchButton
-              label={checkLabel}
-              name={`${strategy.name}-synchro_check`}
-              checked={isSynchro}
+          <div className="col-xs-8 col-md-8" dangerouslySetInnerHTML={{__html: title}}/>
+          <div className="col-xs-2 col-md-2">
+            <Toggle
+              toggled={isSynchro}
               {...inputAttributes}
-              disabled={this.state.fetching}
             />
           </div>
         </div>
@@ -81,7 +77,8 @@ class AccountSocial extends React.Component {
   render () {
     const {
       props: {
-        User
+        User,
+        col
       }
     } = this
 
@@ -89,14 +86,28 @@ class AccountSocial extends React.Component {
     if (!user) {
       return <div />
     }
+
+    let title = getI18n().account.profile['synchro']
+
     return (
-      <div className="row account-details">
-        <div className="account-details__container col-md-12">
-          {this.getSocialProvider(user)}
+      <div className={`account-details__container col-md-${col}`}>
+        <div className="panel-profil">
+          <div className="pannel-header">{title}</div>
+          <div className="row-fluid row-profil">
+            {this.getSocialProvider(user)}
+          </div>
         </div>
       </div>
     )
   }
+}
+
+AccountSocial.propTypes = {
+  col: React.PropTypes.number
+}
+
+AccountSocial.defaultProps = {
+  col: 12
 }
 
 export default AccountSocial

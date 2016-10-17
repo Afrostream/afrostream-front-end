@@ -1,5 +1,49 @@
+import window from 'global/window'
+
+export function btoa (x) {
+  if (window.btoa) {
+    return window.btoa(x)
+  } else {
+    return new Buffer(x).toString('base64')
+  }
+}
+export function atob (x) {
+  if (window.atob) {
+    return window.atob(x)
+  } else {
+    return new Buffer(x, 'base64').toString()
+  }
+}
 export function numberWithCommas (x) {
   return x.toLocaleString()
+}
+
+export function encodeSafeUrl (data, uriComp = true) {
+  let encoded
+
+  try {
+    encoded = btoa(JSON.stringify(data))
+    if (uriComp) {
+      encoded = encodeURIComponent(data)
+    }
+  } catch (e) {
+    console.log('cant encode safe url', e)
+  }
+
+  return encoded
+}
+
+export function decodeSafeUrl (data, uriComp = true) {
+  let decoded
+  try {
+    if (uriComp) {
+      data = decodeURIComponent(data)
+    }
+    decoded = JSON.parse(atob(data))
+  } catch (e) {
+    console.log('cant decode safe url', e)
+  }
+  return decoded
 }
 
 export function formatPrice (price, currency, coma = false) {

@@ -12,17 +12,20 @@ import shallowEqual from 'react-pure-render/shallowEqual'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
+import * as UserActionCreators from '../../actions/user'
 import Spinner from '../Spinner/Spinner'
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import { Billboard, CsaIcon } from '../Movies'
 import NextEpisode from './NextEpisode'
 import ShareButton from '../Share/ShareButton'
-import SendBirdButton from '../SendBird/SendBirdButton'
 import RecommendationList from '../Recommendation/RecommendationList'
 import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
 import { slugify } from '../../lib/utils'
-import SendBird from '../SendBird/SendBird'
+import window from 'global/window'
+import RaisedButton from 'material-ui/RaisedButton'
+
+const {featuresFlip} = config
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less')
@@ -32,7 +35,8 @@ if (canUseDOM) {
   var base64 = require('js-base64').Base64
 }
 
-@connect(({OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
+@connect(({Config, OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
+  Config,
   OAuth,
   Video,
   Movie,
@@ -164,8 +168,8 @@ class PlayerComponent extends Component {
     stored = stored && stored.toJS()
 
     let baseData = {
-      playerAudio: 'fra',
-      playerCaption: 'fra',
+      playerAudio: null,
+      playerCaption: null,
       playerBitrate: 0,
       playerPosition: 0
     }
@@ -440,9 +444,22 @@ class PlayerComponent extends Component {
   }
 
   onTimeUpdate () {
+    const {
+      props: {
+        User
+      }
+    } = this
+
     if (!config.reco.enabled) {
       return
     }
+
+    const user = User.get('user')
+
+    if (user && user.get('playerAutoNext') === false) {
+      return
+    }
+
     let currentTime = this.player.currentTime()
     let currentDuration = this.state.duration || this.player.duration() || 0
     if (!currentDuration) {
@@ -474,35 +491,12 @@ class PlayerComponent extends Component {
       this.container = ReactDOM.findDOMNode(this)
       this.container.removeEventListener('gobacknext', ::this.backNextHandler)
       this.container.addEventListener('gobacknext', ::this.backNextHandler)
-      this.makeTour()
+
       return this.player
     } catch (err) {
       console.log('player : ', err)
-      //this.destroyPlayer()
       return this.playerInit = false
     }
-  }
-
-  hasSendBirdRoom () {
-    const {
-      props: {
-        movieId
-      }
-    } = this
-
-    return ~config.sendBird.channels.indexOf(parseInt(movieId))
-  }
-
-  makeTour () {
-    const hasRoom = this.hasSendBirdRoom()
-    let isTourShow = this.isTourShowed()
-    if (!hasRoom || isTourShow === 1) {
-      return
-    }
-    //SendbirdTour
-    $('body').chardinJs('start')
-    this.player.off('userinactive')
-    $('body').on('chardinJs:stop', ::this.handleUserActive)
   }
 
   handleUserActive () {
@@ -510,7 +504,7 @@ class PlayerComponent extends Component {
     this.setTourShowed()
   }
 
-  async generateDomTag (videoData) {
+  async generateDomTag (videoData, komentData) {
     console.log('player : generate dom tag')
     const ua = detectUA()
     const mobileVersion = ua.getMobile()
@@ -526,6 +520,12 @@ class PlayerComponent extends Component {
     video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered vjs-controls-enabled afrostream-player-dimensions'
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
+
+    try {
+      video.setAttribute('data-setup', JSON.stringify(komentData))
+    } catch (e) {
+      console.log('parse koment json error', e)
+    }
 
     if (hasSubtiles) {
       captions.map((caption) => {
@@ -563,8 +563,40 @@ class PlayerComponent extends Component {
     } = this
 
     console.log('player : Get player data')
+    const user = User.get('user')
+    let userId
+    let token = OAuth.get('token')
 
-    let videoEl = await this.generateDomTag(videoData)
+    let komentData = {
+      open: true,
+      videoId,
+      controlBar: {
+        komentToggle: {
+          attributes: {
+            'data-position': 'left',
+            'data-intro': 'Vous pouvez desormais commenter les video'
+          }
+        }
+      },
+      user: (user && {
+        id: user.get('_id').toString(),
+        provider: config.domain.host,
+        token: token && token.get('access_token'),
+        avatar: user.get('picture')
+      }),
+      languages: config.player.languages
+    }
+
+    if (user && user.get('nickname')) {
+      komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
+    }
+
+    //L'user a choisi de ne pas afficher les comentaires par default
+    if (user && user.get('playerKoment')) {
+      komentData.open = user.get('playerKoment')
+    }
+
+    await this.generateDomTag(videoData, komentData)
 
     let videoOptions = videoData.toJS()
 
@@ -658,11 +690,8 @@ class PlayerComponent extends Component {
 
     playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
 
-    let user = User.get('user')
-    let userId
     if (user) {
       userId = user.get('user_id')
-      let token = OAuth.get('token')
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId]
       userId = _.find(splitUser, (val) => {
         return parseInt(val, 10)
@@ -674,7 +703,7 @@ class PlayerComponent extends Component {
       if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
         let protUser = base64.encode(JSON.stringify({
           userId: userId,
-          sessionId: token.access_token,
+          sessionId: token.get('access_token'),
           merchant: 'afrostream'
         }))
 
@@ -698,6 +727,36 @@ class PlayerComponent extends Component {
         playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData)
       }
 
+      //OVERRIDE USER SETTINGS
+      if (user.get('playerAudio')) {
+        playerData.dash = _.merge(playerData.dash, {
+          inititalMediaSettings: {
+            audio: {
+              lang: user.get('playerAudio')
+            }
+          }
+        })
+      }
+      if (user.get('playerCaption')) {
+        playerData.dash = _.merge(playerData.dash, {
+          inititalMediaSettings: {
+            text: {
+              lang: user.get('playerCaption')
+            }
+          }
+        })
+      }
+
+      //OVERIDE USER QUALITY
+
+      let playerQuality = user.get('playerQuality') || 0
+      const qualityList = [0, 400, 800, 1600, 3000]
+
+      playerData.dash = _.merge(playerData.dash, {
+        autoSwitch: !playerQuality,
+        bolaEnabled: !playerQuality,
+        initialBitrate: qualityList[playerQuality]
+      })
       //Tracking
       const videoTracking = this.getStoredPlayer()
       if (videoTracking) {
@@ -711,10 +770,15 @@ class PlayerComponent extends Component {
         if (position > 300 && position < (duration - 300)) {
           playerData.starttime = position
         }
-
-        playerData.dash.inititalMediaSettings.text.lang = videoTracking.playerCaption
-        playerData.dash.inititalMediaSettings.audio.lang = videoTracking.playerAudio
-        playerData.dash.inititalMediaSettings.video.lang = videoTracking.playerAudio
+        if (videoTracking.playerCaption) {
+          playerData.dash.inititalMediaSettings.text.lang = videoTracking.playerCaption
+        }
+        if (videoTracking.playerAudio) {
+          playerData.dash.inititalMediaSettings.audio.lang = videoTracking.playerAudio
+        }
+        if (videoTracking.playerAudio) {
+          playerData.dash.inititalMediaSettings.video.lang = videoTracking.playerAudio
+        }
       }
     }
     try {
@@ -751,6 +815,78 @@ class PlayerComponent extends Component {
     return playerData
   }
 
+  //SPLASH BUBBLE
+  hideSplash (splashId) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    dispatch(UserActionCreators.setSplash(splashId))
+  }
+
+  renderSplashs () {
+    const {
+      props: {
+        Config,
+        User
+      }
+    } = this
+
+
+    const user = User.get('user')
+    const splashs = Config.get(`/config/splash`)
+
+
+    if (!this.player || !user || !splashs || !splashs.size) {
+      return
+    }
+
+    const splashList = splashs.filter((splash)=> {
+      return splash && splash.get('type') === 'bubble'
+    })
+
+    const userSplashList = user.get('splashList')
+
+    let splash = splashList.find((spl) => {
+      const splashId = spl.get('_id')
+      if (userSplashList) {
+        const userHasShowedSplash = userSplashList.find((usrSplash)=> {
+          return usrSplash.get('_id') === splashId
+        })
+        return !userHasShowedSplash
+      }
+      return true
+    })
+
+    if (!splash) {
+      return
+    }
+
+    let splashClass = {
+      'splash': true,
+      'splash-bubble': true,
+      'right': true
+    }
+
+    const inputProps = {
+      onClick: e =>::this.hideSplash(splash.get('_id'))
+    }
+
+    return (
+      <div className={classSet(splashClass)} key={`splash-bubble-${splash.get('_id')}`}>
+        <i className="zmdi zmdi-close zmdi-hc-2x close" {...inputProps}></i>
+        <div className="splash-title">
+          {splash.get('title')}
+        </div>
+        <div className="splash-desc">
+          {splash.get('description')}
+        </div>
+      </div>
+    )
+  }
+
   async generatePlayer (videoData) {
     const {
       props: {
@@ -766,21 +902,31 @@ class PlayerComponent extends Component {
     let playerData = await this.getPlayerData(videoData)
     const videoTracking = this.getStoredPlayer()
     const storedCaption = videoTracking.playerCaption
+
     let player = await videojs('afrostream-player', playerData).ready(()=> {
-        let tracks = player.textTracks() // get list of tracks
-        if (!tracks) {
-          return
+        if (storedCaption) {
+          let tracks = player.textTracks() // get list of tracks
+          if (!tracks) {
+            return
+          }
+          _.forEach(tracks, (track) => {
+            let lang = track.language
+            track.mode = lang === storedCaption ? 'showing' : 'hidden' // show this track
+          })
         }
-        _.forEach(tracks, (track) => {
-          let lang = track.language
-          track.mode = lang === storedCaption ? 'showing' : 'hidden' // show this track
-        })
+
+        player.volume(player.options_.defaultVolume)
       }
     )
+    if (featuresFlip.koment && player.tech_.el_) {
+      player.koment = await koment(player.tech_.el_)
+    }
     //youbora data
     if (player.youbora) {
       player.youbora(playerData.youbora)
     }
+
+
     player.on('firstplay', ::this.onFirstPlay)
     player.on('ended', ::this.clearTrackVideo)
     player.on('seeked', ::this.trackVideo)
@@ -792,6 +938,14 @@ class PlayerComponent extends Component {
     player.on('next', ::this.loadNextVideo)
 
     return player
+  }
+
+  //KOMENT
+  showKoment () {
+    if (this.player && this.player.koment) {
+      this.player.koment.toggleMenu(true);
+      this.player.koment.toggleEdit(true);
+    }
   }
 
   onFullScreenHandler () {
@@ -925,7 +1079,6 @@ class PlayerComponent extends Component {
     let renderData = episodeData ? episodeData : movieData
 
     const chatMode = Event.get('showChat')
-    const sendBirdOn = this.hasSendBirdRoom()
 
     let playerClasses = {
       'player': true,
@@ -969,16 +1122,14 @@ class PlayerComponent extends Component {
           <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
             <ShareButton />
-            {sendBirdOn ? <SendBirdButton label="Live Chat" ref="sendbird"
-                                          sendBirdIntro="Vous pouvez desormais chatter avec les autres utilisateurs regardant la même video que vous"
-                                          sendBirdPosition="right"/> : null}
+            <RaisedButton onClick={::this.showKoment} label="Commenter" primary={true}
+                          icon={<i className="zmdi zmdi-comment-more"></i>}/>
           </div>
           {videoDuration ?
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
-          <div className="video-infos_synopsys">{infos.synopsis}</div>
         </div>
         {this.getNextComponent()}
-        <SendBird {...this.props} />
+        {this.renderSplashs()}
       </div>
     )
   }

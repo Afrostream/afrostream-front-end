@@ -1,6 +1,8 @@
 import ActionTypes from '../consts/ActionTypes'
 import * as OAuthActionCreators from './oauth'
 import * as BillingActionCreators from './billing'
+import * as FBActionCreators from './facebook'
+
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { push, isActive } from 'redux-router'
 import _ from 'lodash'
@@ -42,17 +44,21 @@ const mergeProfile = function (data, getState, actionDispatcher) {
           reload: true,
           userId: userMerged._id
         }))
+
       }
 
 
       if (userMerged.facebook) {
         userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`
         userMerged.name = userMerged.name || userMerged.facebook.name
+        userMerged.nickname = userMerged.nickname || userMerged.facebook.nickname
       } else {
         userMerged.picture = `/avatar/${userMerged.email || userMerged.name}`
       }
 
       userMerged.splashList = userMerged.splashList || []
+
+      actionDispatcher(FBActionCreators.getFriendList())
 
       if (donePath) {
         actionDispatcher(push(donePath))
@@ -228,6 +234,12 @@ export function setSplash (splashId) {
     return actionDispatcher(put({
       splashList
     }))
+  }
+}
+
+export function updateUserProfile (data) {
+  return (dispatch, getState, actionDispatcher) => {
+    return actionDispatcher(put(data))
   }
 }
 

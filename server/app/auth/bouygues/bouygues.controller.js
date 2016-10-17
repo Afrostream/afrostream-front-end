@@ -56,18 +56,21 @@ export async function callback (req, res) {
   res.noCache()
   try {
     const bouyguesCompleteFlow = await getData(req, '/auth/bouygues/callback', {followRedirect: false})
-    var bouyguesResponse = bouyguesCompleteFlow[0]
-      , bouyguesBody = bouyguesCompleteFlow[1]
+    const bouyguesResponse = bouyguesCompleteFlow[0]
+    const bouyguesBody = bouyguesCompleteFlow[1]
+    const signupClientType = bouyguesBody.signupClientType || ''
+    delete bouyguesBody.signupClientType
 
     const layout = 'layouts/oauth-success'
     if (bouyguesResponse.statusCode !== 200) {
       bouyguesBody.error = bouyguesResponse.statusMessage
     }
-    res.status(bouyguesResponse.statusCode).render(layout, {
+    res.status(200).render(layout, {
       statusCode: bouyguesResponse.statusCode,
       statusMessage: bouyguesResponse.statusMessage,
       tokenData: bouyguesBody,
-      storageId: apiClient.token
+      storageId: apiClient.token,
+      signupClientType: signupClientType
     })
   }
   catch (err) {

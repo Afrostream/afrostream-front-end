@@ -24,27 +24,10 @@ class MovieInfo extends LoadVideo {
     this.state = {
       isMobile: false,
       size: {
-        height: 1920,
-        width: 815
+        height: 1280,
+        width: 800
       }
     }
-  }
-
-  componentDidMount () {
-    let isMobile = false
-    if (canUseDOM) {
-      const userAgent = (window.navigator && navigator.userAgent) || ''
-      let agent = new MobileDetect(userAgent)
-      isMobile = agent.mobile()
-    }
-
-    this.setState({
-      isMobile: isMobile,
-      size: {
-        height: window.innerHeight,
-        width: window.innerWidth
-      }
-    })
   }
 
   static propTypes = {
@@ -89,6 +72,7 @@ class MovieInfo extends LoadVideo {
     return (
       <div ref="slContainer" className={classes}>
         <div ref="slBackground" className="movie-background" style={imageStyles}>
+          <div className="afrostream-movie__mask"/>
         </div>
         <Link to={link}>
           <div className="btn-play"/>

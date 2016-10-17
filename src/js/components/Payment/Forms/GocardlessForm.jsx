@@ -7,6 +7,7 @@ import CountrySelect from './../CountrySelect'
 import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat'
 import IBAN from 'iban'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import window from 'global/window'
 
 const {gocardless} = config
 

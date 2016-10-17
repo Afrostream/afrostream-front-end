@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
+import * as FBActionCreators from '../../actions/facebook'
 import { Link } from 'react-router'
 import config from '../../../../config'
 
@@ -87,10 +88,10 @@ class SideBar extends React.Component {
       <div id="sidebar-wrapper">
         <ul className="sidebar-nav">
           <li><Link to="/compte">Mon compte</Link></li>
-          <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
           {this.getUserConnectedButtons(user, 'favorites')}
           {this.getUserConnectedButtons(user, 'sponsorship')}
           <li role="separator" className="divider"></li>
+          <li><a href="#" onClick={::this.logout}>Se deconnecter</a></li>
           {this.renderFriends()}
         </ul>
 

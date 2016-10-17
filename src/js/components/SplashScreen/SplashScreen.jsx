@@ -42,8 +42,8 @@ class SplashScreen extends React.Component {
     clearTimeout(this.timeoutSplash)
 
     const elTarget = ReactDOM.findDOMNode(this)
-    elTarget.removeEventListener('mousewheel')
-    elTarget.removeEventListener('DOMMouseScroll')
+    elTarget.removeEventListener('mousewheel', ::this.mouseWheelHandler)
+    elTarget.removeEventListener('DOMMouseScroll', ::this.mouseWheelHandler)
 
     this.timeoutSplash = setTimeout(()=> {
       this.hideSplash()
@@ -75,13 +75,16 @@ class SplashScreen extends React.Component {
 
 
     const user = User.get('user')
-    const splashList = Config.get(`/config/splash`)
+    const splashs = Config.get(`/config/splash`)
 
 
-    if (!user || !splashList || !splashList.size) {
+    if (!user || !splashs || !splashs.size) {
       return
     }
 
+    const splashList = splashs.filter((splash)=> {
+      return splash && splash.get('type') === 'screen'
+    })
 
     let canSponsorshipSubscription = false
     const subscriptionsStatus = user.get('subscriptionsStatus')
@@ -118,6 +121,7 @@ class SplashScreen extends React.Component {
 
     let splashClass = {
       'splash': true,
+      'splash-image': true,
       'slide-top': this.state.splash
     }
 

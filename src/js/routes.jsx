@@ -10,6 +10,7 @@ import BrowseGenrePage from './components/Browse/BrowseGenrePage'
 import FavoritesPage from './components/Favorites/FavoritesPage'
 import SponsorsPage from './components/Sponsors/SponsorsPage'
 import SearchPage from './components/Search/SearchPage'
+import StoreLocator from './components/Store/StoreLocator'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
@@ -33,7 +34,8 @@ const buildHome = function (lang) {
   const homeRoutes = [
     <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
     <Route key={`${lang}-compte`} name="compte" path="compte" component={AccountPage}>,
-      <Route key={`${lang}-cancelSubscription`} name="cancelSubscription" path="cancel-subscription"
+      <Route key={`${lang}-cancelSubscription`} name="cancelSubscription"
+             path="cancel-subscription(/:subscriptionBillingUuid)"
              component={CancelSubscription}/>
     </Route>,
     <Route key={`${lang}-sponsorship`} name="sponsorship" path="parrainage" component={SponsorsPage}/>,
@@ -73,6 +75,7 @@ const buildRoutes = function (lang) {
       <Route key={`${lang}-company-nomatch`} path="*" name="companynomatch" component={NoMatch}/>
     </Route>,
     <Route key={`${lang}-faq`} name="faq" path="faq" component={Static.FAQ}/>,
+    <Route key={`${lang}-submit`} name="submit" path="submit-content" component={Static.SubmitYourFilm}/>,
     <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.StaticRoute}/>,
     <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.StaticRoute}/>,
     <Route key={`${lang}-policy`} name="policy" path="policy" component={Static.StaticRoute}/>,
@@ -85,6 +88,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-blog`} name="blog" path="blog" component={Blog.PostList}>
       <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
     </Route>,
+    <Route key={`${lang}-store`} name="store" path="store-locator" component={StoreLocator}/>,
     <Route key={`${lang}-cash`} name="cash" path="cash" component={CashwayPage}>,
       <Route name="cashPayment" path="select-plan" component={PaymentPage}>
         <Route name="cashPaymentMethod" path=":planCode(/:status)" component={PaymentForm}/>

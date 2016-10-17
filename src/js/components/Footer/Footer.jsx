@@ -83,6 +83,11 @@ class Footer extends React.Component {
                 </Link>
               </li>
               <li>
+                <Link className="footer-link" to="/store-locator">
+                  {labels.recharge.stores}
+                </Link>
+              </li>
+              <li>
                 <Link className="footer-link" to="/coupon">
                   {labels.recharge.coupon}
                 </Link>
@@ -93,19 +98,19 @@ class Footer extends React.Component {
             <h4>{labels.pro.title}</h4>
             <ul className="footer-links">
               <li>
-                <a className="footer-link" href="https://afrostream.tv/blog">
-                  {labels.pro.blog}
-                </a>
+                <Link className="footer-link" to="/company/jobs">
+                  {labels.pro.jobs}
+                </Link>
+              </li>
+              <li>
+                <Link className="footer-link" to="/submit-content">
+                  {labels.pro.submit}
+                </Link>
               </li>
               <li>
                 <a className="footer-link"
                    href="mailto:presse@afrostream.tv?subject=Contact">
                   {labels.pro.press}
-                </a>
-              </li>
-              <li>
-                <a className="footer-link" href="mailto:investors@afrostream.tv?subject=Contact">
-                  {labels.pro.investissor}
                 </a>
               </li>
               <li>
@@ -162,11 +167,6 @@ class Footer extends React.Component {
               <li>
                 <Link className="footer-link" to="/newsletter">
                   {labels.social.newsletter}
-                </Link>
-              </li>
-              <li>
-                <Link className="footer-link" to="/company/jobs">
-                  {labels.pro.jobs}
                 </Link>
               </li>
             </ul>

@@ -5,6 +5,7 @@ import classSet from 'classnames'
 import config from '../../../../../config'
 import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import window from 'global/window'
 
 class StripeForm extends React.Component {
 
