@@ -233,6 +233,7 @@ class ModalLogin extends ModalComponent {
       case 'showRelog':
         keyType = 'relog'
         break
+      case 'life-user':
       case 'showSignup':
         keyType = 'signup'
         break
@@ -252,6 +253,7 @@ class ModalLogin extends ModalComponent {
       case 'showProvider':
         keyType = 'signin'
         break
+      case 'life-user':
       case 'showSignup':
         keyType = 'signup'
         break
@@ -307,6 +309,7 @@ class ModalLogin extends ModalComponent {
       case 'showRelog':
         formTemplate = this.getSignIn()
         break
+      case 'life-user':
       case 'showSignup':
         formTemplate = this.getSignUp()
         break
