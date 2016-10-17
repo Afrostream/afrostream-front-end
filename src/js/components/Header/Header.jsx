@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Headroom from 'react-headrooms'
-import LifeNavigation from '../Life/LifeNavigation'
 import UserButton from './../User/UserButton'
 import SmartBanner from './SmartBanner'
 import SearchInput from './../Search/SearchBox'
@@ -113,7 +112,6 @@ class Header extends React.Component {
                 <SearchInput/>
               </li>}
             </ul>
-            {isOnLife && <LifeNavigation />}
           </nav>
           <nav className="float--right" role="navigation">
             <UserButton {...this.props}/>

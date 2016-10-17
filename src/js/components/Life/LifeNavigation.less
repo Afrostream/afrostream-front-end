@@ -1,21 +1,66 @@
 @import (reference) '../../../styles/config.less';
 
+@-webkit-keyframes slideUpSubHeader {
+  0% {
+    -webkit-transform: translateY(0);
+  }
+
+  100% {
+    -webkit-transform: translateY(-@header-height);
+  }
+}
+
+@-moz-keyframes slideUpSubHeader {
+  0% {
+    -moz-transform: translateY(0);
+  }
+
+  100% {
+    -moz-transform: translateY(-@header-height);
+  }
+}
+
+@-o-keyframes slideUpSubHeader {
+  0% {
+    -o-transform: translateY(0);
+  }
+
+  100% {
+    -o-transform: translateY(-@header-height);
+  }
+}
+
+@keyframes slideUpSubHeader {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-@header-height);
+  }
+}
+
 .toolbar-life-navigation {
   font-size: 2em;
   text-transform: uppercase;
+}
+
+&.animated.slideUpSubHeader {
+  -webkit-animation-name: slideUpSubHeader;
+  -moz-animation-name: slideUpSubHeader;
+  -o-animation-name: slideUpSubHeader;
+  animation-name: slideUpSubHeader;
 }
 
 .life-navigation {
   position: fixed;
   left: 0;
   right: 0;
-  top: 0;
-  z-index: @nav-z;
-  margin-left: @sidebar-width;
-  padding-top: @header-height;
-
+  top: @header-height;
+  z-index: @nav-z + 2;
+  padding: 0.2em;
   background: #FFFFFF;
-  box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 10px, rgba(0, 0, 0, 0.2) 1px 0px 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
   font-family: @font-oswald;
   font-size: 1.8em;
   text-transform: uppercase;
@@ -23,6 +68,11 @@
   list-style: none;
   cursor: default;
   width: 100%;
+  text-align: center;
+}
+
+.app.toggled .life-navigation {
+  padding-left: @sidebar-width;
 }
 
 .toolbar-life-navigation,
@@ -30,14 +80,14 @@
   li {
     position: relative;
     display: inline-block;
-    padding: 0 10px 10px 10px;
+    padding: 10px;
     cursor: pointer;
     font-family: @font-oswald;
     &:after {
       content: '';
       position: absolute;
       right: 0;
-      top: 1.5em;
+      top: 1em;
       height: 2px;
       width: 5px;
       background: @color-black-2;
