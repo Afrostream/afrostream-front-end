@@ -10,7 +10,7 @@ import ModalSponsors from './ModalSponsors'
 import ModalPlayer from './ModalPlayer'
 import ModalImage from './ModalImage'
 import ModalComponent from './ModalComponent'
-
+import { SelectPlan } from '../../components/Payment/'
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -64,6 +64,7 @@ class ModalView extends React.Component {
       case 'showRelog':
       case 'showProvider':
       case 'linkProvider':
+      case 'life-user':
         return (
           <ModalLogin {...{closable, cb, type, className}} {...this.props}/>
         )
@@ -92,6 +93,11 @@ class ModalView extends React.Component {
         return (
           <ModalImage {...{closable, cb, type, className, data}} {...this.props} />
         )
+        break
+      case 'life-premium':
+      case 'life-vip':
+        return <ModalComponent closable={closable} className="large" {...this.props}><SelectPlan {...this.props}
+                                                                                                 showImages={false}/></ModalComponent>
         break
       default:
         return <div />
