@@ -4,11 +4,11 @@ import Immutable from 'immutable'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import { connect } from 'react-redux'
 import config from '../../../../config'
-const {featuresFlip} = config
 import { detectUA } from './PlayerUtils'
 import window from 'global/window'
 import { isElementInViewPort } from '../../lib/utils'
 import classSet from 'classnames'
+const {featuresFlip} = config
 
 if (process.env.BROWSER) {
   require('./FloatPlayer.less')
@@ -269,11 +269,11 @@ class FloatPlayer extends React.Component {
    */
   requestTick (force) {
     if (force !== undefined) {
-      this.ticking = !force;
+      this.ticking = !force
     }
     if (!this.ticking) {
       requestAnimationFrame(::this.updatePlayerPosition)
-      this.ticking = true;
+      this.ticking = true
     }
   }
 
