@@ -86,7 +86,8 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={LoginPage}/>,
     <Route key={`${lang}-login`} name="login" path="login" component={LoginPage}/>,
     <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
-    <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeList}>
+    <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeHome}>
+      <Route name="lifePost" path="(/:themeId)(/:themeSlug)" component={Life.LifeList}/>
       <Route name="lifePost" path=":lifeId(/:lifeSlug)" component={Life.LifeView}/>
     </Route>,
     <Route key={`${lang}-blog`} name="blog" path="blog" component={Blog.PostList}>

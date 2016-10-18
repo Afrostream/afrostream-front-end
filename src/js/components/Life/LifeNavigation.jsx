@@ -7,7 +7,7 @@ if (process.env.BROWSER) {
   require('./LifeNavigation.less')
 }
 @connect(({Life}) => ({Life}))
-export default class LifeList extends Component {
+export default class LifeNavigation extends Component {
 
   render () {
     const {
@@ -16,7 +16,7 @@ export default class LifeList extends Component {
       }
     } = this
 
-    const themesList = Life.get('life/themes')
+    const themesList = Life.get('life/themes/')
     return (
       <Headroom tolerance={5} offset={200} classes={{
         initial: 'animated',
@@ -25,7 +25,7 @@ export default class LifeList extends Component {
       }}>
         <ul className="life-navigation">
           {themesList && themesList.map((theme, i)=><li key={`life-theme-${i}`}>
-              <Link to={`/life/${theme.get('slug')}`}>{theme.get('label')}</Link>
+              <Link to={`/life/${theme.get('_id')}/${theme.get('slug')}`}>{theme.get('label')}</Link>
             </li>
           )}
         </ul>
