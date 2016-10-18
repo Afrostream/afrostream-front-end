@@ -23,7 +23,7 @@
   @cardTypeSize: 50px;
   @gap-brick: 0px;
   &.flat,
-  &.virtual > div > div > div {
+  &.virtual > div {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -50,6 +50,7 @@
     width: 33.33%;
     max-width: 33.33%;
     min-height: 300px;
+    max-height: 70vh;
     cursor: pointer;
     overflow: hidden;
     //margin: 0 auto;
@@ -95,7 +96,6 @@
       right: 0;
       top: 0;
       bottom: 0;
-
       .brick-background_mask {
         position: absolute;
         top: 0;
