@@ -257,6 +257,10 @@ class LifeList extends Component {
     )
   }
 
+  itemSizeGetter (index) {
+
+  }
+
   render () {
     const {
       props: {
@@ -275,6 +279,7 @@ class LifeList extends Component {
       'virtual': virtual
     }
 
+
     return (<div className={classSet(classList)}>
       {!virtual && pinsList.map((data, index) =>this.renderItem({
         data,
@@ -283,9 +288,11 @@ class LifeList extends Component {
       })).toJS()}
       {virtual && <ReactList
         ref="react-pins-list"
+        axis="y"
+        itemSizeGetter={::this.itemSizeGetter}
         itemRenderer={::this.renderInfiniteItem}
         length={pinsList.size}
-        type={'uniform'}
+        type={'simple'}
       />}
     </div>)
   }
