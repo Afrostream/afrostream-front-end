@@ -6,6 +6,7 @@ import * as EventActionCreators from '../../actions/event'
 import LifeNavigation from './LifeNavigation'
 import LifeList from './LifeList'
 import { withRouter } from 'react-router'
+import Immutable from 'immutable'
 
 if (process.env.BROWSER) {
   require('./LifeThemes.less')
@@ -28,15 +29,28 @@ class LifeThemes extends Component {
     const {
       props: {
         Life,
-        themeId
+        params:{
+          themeId
+        }
       }
     } = this
 
-    const themesList = Life.get('life/themes/')
-    const pins = themesList.map((theme) => {
-        return theme.get('pins')
-      }
-    ).flatten(true)
+    const themesList = Life.get(`life/themes/${themeId || ''}`)
+
+    if (!themesList) {
+      return
+    }
+    let pins = null
+
+    if (themesList instanceof Immutable.List) {
+      pins = themesList.map((theme) => {
+          return theme.get('pins')
+        }
+      ).flatten(true)
+    }
+    else {
+      pins = themesList.get('pins')
+    }
 
     //const pins = Life.get('life/pins/')
     if (!pins || !pins.size) {
