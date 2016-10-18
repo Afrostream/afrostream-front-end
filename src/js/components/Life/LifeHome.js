@@ -33,20 +33,18 @@ class LifeThemes extends Component {
     } = this
 
     const themesList = Life.get('life/themes/')
+    const pins = themesList.map((theme) => {
+        return theme.get('pins')
+      }
+    ).flatten(true)
 
-    if (!themesList || !themesList.size) {
+    //const pins = Life.get('life/pins/')
+    if (!pins || !pins.size) {
       return
     }
 
     return (<div key="life-themes-list" className="life-theme">
-      {
-        themesList.map((theme, key) => {
-            const pins = theme.get('pins')
-            const themeId = theme.get('_id')
-            return <LifeList {...{pins, themeId}} virtual={false} key={`life-theme-pins-${key}`}/>
-          }
-        ).toJS()
-      }
+      <LifeList {...{pins, themeId}} virtual={true} key={`life-theme-pins`}/>
     </div>)
   }
 
