@@ -18,7 +18,7 @@ export default createReducer(initialState, {
     }
     const data = res.body
     return state.merge({
-      [`life/themes/${themeId || ''}`]: data
+      [`life/themes/${themeId}`]: data
     })
   },
 
