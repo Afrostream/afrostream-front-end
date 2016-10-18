@@ -1,15 +1,16 @@
 import ActionTypes from '../consts/ActionTypes'
 import { notFoundPost } from './notFoundAction'
 
-export function fetchThemes (themeId) {
+export function fetchThemes (fetchThemeId) {
   return (dispatch, getState) => {
 
-    const fetchThemeId = themeId || ''
+    const themeId = fetchThemeId || ''
     return async api => ({
       type: ActionTypes.Life.fetchThemes,
+      themeId,
       res: await api({
-        path: `/api/life/themes/${fetchThemeId}`,
-        themeId
+        path: `/api/life/themes/${themeId}`,
+        showSpinner: true
       })
     })
   }
