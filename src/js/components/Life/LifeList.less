@@ -1,25 +1,43 @@
 @import (reference) '../../../styles/config.less';
 
-#page-content-wrapper.container-fluid .row-fluid.life-list {
-  margin: (@header-height - 10px) auto;
-  .isMobile({ margin: (@header-height + 30px) auto; });
+@-webkit-keyframes brickmoveUp {
+  0% {
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes brickmoveUp {
+  0% {
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .life-list {
   @cardTypeSize: 50px;
   @gap-brick: 0px;
-
-  .masonry-list {
-    //> div > div > div {
+  &.flat,
+  &.virtual > div > div > div {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    //}
-    a {
-      width: 100%;
-      height: 100%;
-    }
+  }
+  a {
+    width: 100%;
+    height: 100%;
+  }
+  .brick.animate {
+    -webkit-transform: translateY(200px);
+    transform: translateY(200px);
+    -webkit-animation: brickmoveUp 0.65s ease forwards;
+    animation: brickmoveUp 0.65s ease forwards;
   }
 
   .life-player {
@@ -153,17 +171,6 @@
         color: #FFFFFF;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         .card-bubbles {
-          position: relative;
-          .card-bubble {
-            margin-left: 1em;
-          }
-          top: inherit;
-          bottom: 0;
-          margin-top: 5px;
-          margin-bottom: 5px;
-          text-align: center;
-        }
-        .card-meta {
           display: none;
         }
         .card-info {
