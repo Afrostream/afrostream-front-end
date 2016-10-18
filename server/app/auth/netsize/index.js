@@ -1,11 +1,10 @@
 import express from 'express'
-import * as controller from './netsize.controller'
+import { proxy } from '../../api/api-front'
 
 const router = express.Router()
 
-router.get('/check', controller.check)
-router.get('/subscribe', controller.subscribe)
-router.get('/unsubscribe', controller.unsubscribe)
-router.get('/callback', controller.callback)
+router.use(function (req, res) {
+  proxy(req, res)
+})
 
 module.exports = router

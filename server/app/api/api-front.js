@@ -1,18 +1,19 @@
 import Q from 'q'
 import _ from 'lodash'
 import config from '../../../config'
-import request from 'request'
+import anr from 'afrostream-node-request'
 const {apiServer} = config
+const request = anr.create({baseUrl:apiServer.urlPrefix});
+
 /**
  * call request on external api
  * @param req
  * @param path
  */
 export async function getExternal (req, requestOptions) {
-  return await Q.nfcall(request,
+  return await request(
     _.merge({
-        method: 'POST',
-        json: true
+        method: 'POST'
       },
       requestOptions || {}
     )
@@ -31,19 +32,13 @@ export function getData (req, path, requestOptions) {
 
   var queryOptions = _.merge({}, req.query || {})
 
-  return Q.nfcall(request,
+  return request(
     _.merge(
       {
-        method: 'GET',
-        json: true,
         qs: queryOptions,
         body: req.body,
         uri: url,
-        headers: {
-          // FIXME 1: should not be a whitelist of headers, error prone.
-          'x-forwarded-client-ip': req.clientIp,
-          'x-forwarded-user-ip': req.clientIp
-        }
+        context: { req: req }
       },
       requestOptions || {}
     )
@@ -62,6 +57,23 @@ export async function getBodyWithoutAuth (...args) {
   return body
 }
 
+export function proxy (req, res, queryOptions) {
+   request(
+    _.merge(
+      {
+        method: req.method,
+        context: { req: req },
+        qs: req.query,
+        body: req.body,
+        uri: req.originalUrl,
+        followRedirect: false,
+        filter: null
+      },
+      queryOptions
+    )
+  ).nodeify(fwd(res))
+}
+
 /*
  * forward backend result to the frontend.
  *
@@ -70,23 +82,17 @@ export async function getBodyWithoutAuth (...args) {
 export function fwd (res) {
   return function (err, data) {
     if (err) {
-      res.status(500).json({error: String(err)})
+      res.status(500).json({error: err.message || 'unknown error' })
     } else {
       var backendResponse = data[0]
         , backendBody = data[1]
-      switch (backendResponse.statusCode) {
-        case 301:
-        case 302:
-          if (backendResponse.headers &&
-            backendResponse.headers.location) {
-            res.set('location', backendResponse.headers.location)
-          }
-          break
-        default:
-          break
-      }
 
-      res.status(backendResponse.statusCode).send(backendBody)
+      // fwd des headers du backend vers le front
+      Object.keys(backendResponse && backendResponse.headers || {}).forEach(function (k) {      // fwd des headers du backend vers le front
+        res.set(k, backendResponse.headers[k])
+      })
+
+      res.status(backendResponse.statusCode || 500).send(backendBody)
     }
   }
 }
