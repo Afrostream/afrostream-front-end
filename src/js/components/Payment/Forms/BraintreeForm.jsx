@@ -32,7 +32,7 @@ class BraintreeForm extends React.Component {
   }
 
   async submit (billingInfo, currentPlan) {
-
+    const self = this
     return await new Promise(
       (resolve, reject) => {
         //Detect si le payment via la lib braintree est dispo
@@ -54,7 +54,8 @@ class BraintreeForm extends React.Component {
               return resolve({
                 billingProviderName: 'braintree',
                 subOpts: {
-                  customerBankAccountToken: payload.nonce
+                  customerBankAccountToken: payload.nonce,
+                  couponCode: self.refs.couponCode.value
                 }
               })
               // retrieve nonce from payload.nonce
@@ -106,7 +107,7 @@ class BraintreeForm extends React.Component {
     return (
 
       <div className="row" ref="goCardlessForm">
-        {/*this.renderPromoCode()*/}
+        {this.renderPromoCode()}
         <h5 className="col-md-12">
           {getI18n().payment.paypal.paypalText.replace('{submitBtn}', getI18n().planCodes.action)}
         </h5>
