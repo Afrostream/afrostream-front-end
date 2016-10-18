@@ -1,7 +1,6 @@
 import { getData, fwd } from '../../api/api-front'
 
 export function check (req, res) {
-  console.log('debug');
   res.noCache()
   getData(req, '/auth/netsize/check', {followRedirect: false}).nodeify(fwd(res))
 }
