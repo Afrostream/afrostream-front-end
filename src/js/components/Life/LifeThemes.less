@@ -1,0 +1,23 @@
+@import (reference) '../../../styles/config.less';
+
+#page-content-wrapper.container-fluid .row-fluid.life-themes {
+  margin: (@header-height - 10px) auto;
+  .isMobile({ margin: (@header-height + 30px) auto; });
+}
+
+.life-themes-list {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  h1:before {
+    content: "";
+    display: block;
+    border-top: solid 1px @color-black-2;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+  }
+}

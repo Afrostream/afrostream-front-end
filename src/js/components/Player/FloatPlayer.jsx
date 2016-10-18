@@ -51,6 +51,9 @@ class FloatPlayer extends React.Component {
 
     if (!shallowEqual(nextProps.Player, this.props.Player)) {
       const videoData = nextProps.Player.get('/player/data')
+      if (!videoData) {
+        return
+      }
       this.initState()
       this.destroyPlayer().then(()=> {
         this.initPlayer(videoData)

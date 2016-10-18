@@ -12,13 +12,13 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Life.fetchThemes](state, {res}) {
+  [ActionTypes.Life.fetchThemes](state, {res, themeId}) {
     if (!res) {
       return state
     }
     const data = res.body
     return state.merge({
-      [`life/themes`]: data
+      [`life/themes/${themeId || ''}`]: data
     })
   },
 
