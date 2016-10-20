@@ -7,6 +7,7 @@ import LifePin from './LifePin'
 import { slugify } from '../../lib/utils'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
+import Immutable from 'immutable'
 
 if (process.env.BROWSER) {
   require('./LifePinView.less')
@@ -86,28 +87,19 @@ class LifePinView extends LifePin {
       return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath: '/life', closable: true}))
     }
 
-    switch (data.get('type')) {
-      case 'video':
-        e.preventDefault()
-        dispatch(PlayerActionCreators.killPlayer())
-        dispatch(PlayerActionCreators.loadPlayer({
-          data: Immutable.fromJS({
-            target: e.currentTarget || e.target,
-            height: 150,
-            controls: false,
-            sources: [{
-              src: data.get('originalUrl'),
-              type: `video/${data.get('providerName')}`
-            }]
-          })
-        }))
-        break
-
-      case 'article':
-        e.preventDefault()
-        history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('slug'))}`)
-        break
-    }
+    e.preventDefault()
+    dispatch(PlayerActionCreators.killPlayer())
+    dispatch(PlayerActionCreators.loadPlayer({
+      data: Immutable.fromJS({
+        target: this.refs.pinHeader || e.currentTarget,
+        height: 150,
+        controls: false,
+        sources: [{
+          src: data.get('richMediaUrl'),
+          type: `video/${data.get('providerName')}`
+        }]
+      })
+    }))
   }
 
   render () {
@@ -124,10 +116,11 @@ class LifePinView extends LifePin {
     if (!pin) {
       return (<div />)
     }
-    const themesList = pin.get('themes')
-    const spots = themesList && themesList.flatMap((theme)=> {
+    const pinThemesList = pin.get('themes')
+    const allThemesList = Life.get(`life/themes/`)
+    const spots = pinThemesList && pinThemesList.flatMap((theme)=> {
         const themeId = theme.get('_id')
-        const themesSpots = Life.get(`life/themes/${themeId}`)
+        const themesSpots = Life.get(`life/themes/`)
         if (themesSpots) {
           return themesSpots.get('spots')
         }
@@ -140,7 +133,7 @@ class LifePinView extends LifePin {
     let imageStyles = bgImg ? {backgroundImage: `url(${config.images.urlPrefix}${bgImg}?crop=faces&fit=min&w=1280&h=720&q=70)`} : {}
     return (
       <article className="row no-padding brand-bg life-pin">
-        <div className="pin-header">
+        <div ref="pinHeader" className="pin-header">
           <div className="pin-header-background">
             <div className="pin-header-background_image" style={imageStyles}/>
             <div className="pin-header-background_mask"/>
@@ -164,14 +157,18 @@ class LifePinView extends LifePin {
               <section dangerouslySetInnerHTML={{__html: pin.get('body')}}/>
             </div>
             <div className="col-md-4 no-padding">
-              {spots.map((spot)=> {
+              {spots && spots.map((spot, key)=> {
                 const sourceImg = spot.get('image')
-                let bgImg = sourceImg ? sourceImg.get('path') : ''
+                const bgImg = sourceImg ? sourceImg.get('path') : ''
+                const spotImgSrc = `${config.images.urlPrefix}${bgImg}?crop=faces&fit=min&w=1280&h=720&q=70)`
+                debugger
                 return bgImg && (
-                    <a href={spot.get('targetlUrl')} target="_blank"> <img
-                      source={`${config.images.urlPrefix}${bgImg}?crop=faces&fit=min&w=1280&h=720&q=70)`}/>
+                    <a href={spot.get('targetUrl')} target="_blank"
+                       key={`life-pin-spot-${spot.get('_id')}-${key}`}>
+                      <img className="img-responsive" alt={spot.get('title')}
+                           source={spotImgSrc}/>
                     </a>)
-              })}
+              }).toJS()}
             </div>
           </div>
         </div>
