@@ -15,6 +15,7 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, params:{themeId}}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(LifeActionCreators.fetchPins({})),
     store.dispatch(LifeActionCreators.fetchThemes(themeId))
   ])
 })
@@ -40,19 +41,20 @@ class LifeThemes extends Component {
     if (!themesList) {
       return
     }
+
     let pins = null
 
-    if (themesList instanceof Immutable.List) {
-      pins = themesList.map((theme) => {
-          return theme.get('pins')
-        }
-      ).flatten(true)
-    }
-    else {
-      pins = themesList.get('pins')
-    }
+    //if (themesList instanceof Immutable.List) {
+    //  pins = themesList.map((theme) => {
+    //      return theme.get('pins')
+    //    }
+    //  ).flatten(true)
+    //}
+    //else {
+    //  pins = themesList.get('pins')
+    //}
 
-    //const pins = Life.get('life/pins/')
+    pins = themeId ? themesList.get('pins') : Life.get('life/pins/')
     if (!pins || !pins.size) {
       return
     }
@@ -70,9 +72,9 @@ class LifeThemes extends Component {
     } = this
 
     return (
-      <div className="row-fluid life-themes brand-grey">
+      <div className="container-fluid container-no-padding life-themes brand-grey">
         <LifeNavigation />
-        <div className="container-fluid container-no-padding brand-grey">
+        <div className="row-fluid container-no-padding brand-grey">
           {children || this.renderThemes()}
         </div>
       </div>

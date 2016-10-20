@@ -9,6 +9,7 @@ import window from 'global/window'
 import { isElementInViewPort } from '../../lib/utils'
 import classSet from 'classnames'
 const {featuresFlip} = config
+import * as PlayerActionCreators from '../../actions/player'
 
 if (process.env.BROWSER) {
   require('./FloatPlayer.less')
@@ -28,17 +29,20 @@ if (process.env.BROWSER) {
 class FloatPlayer extends React.Component {
 
   state = {
+    elVisible: false,
     position: {}
   }
 
   constructor (props) {
     super(props)
     this.player = null
-    this.initState()
   }
 
   initState () {
     this.playerInit = false
+    this.setState({
+      elVisible: false
+    })
   }
 
   componentWillUnmount () {
@@ -280,6 +284,15 @@ class FloatPlayer extends React.Component {
     }
   }
 
+  handleClose (e) {
+    const {
+      props: {dispatch}
+    } = this
+    e.preventDefault()
+    this.destroyPlayer()
+    dispatch(PlayerActionCreators.killPlayer())
+  }
+
   updatePlayerPosition () {
 
     const {
@@ -288,7 +301,7 @@ class FloatPlayer extends React.Component {
 
     const data = Player.get('/player/data')
     const target = data && data.get('target')
-    const elVisible = isElementInViewPort(target, 0.60)
+    const elVisible = target && isElementInViewPort(target, 0.60)
 
     let position = elVisible && target && target.getBoundingClientRect() || {
         bottom: 0,
@@ -315,6 +328,11 @@ class FloatPlayer extends React.Component {
       transform: this.state.position.transform
     }
 
+    let closeClass = classSet({
+      'close': true,
+      'hide': !this.player
+    })
+
     const classFloatPlayer = {
       'float-player': true,
       'pinned': this.state.elVisible
@@ -322,6 +340,7 @@ class FloatPlayer extends React.Component {
 
     return (
       <div className={classSet(classFloatPlayer)} style={position}>
+        <a className={closeClass} href="#" onClick={::this.handleClose}><i className="zmdi zmdi-hc-2x zmdi-close"/></a>
         <div ref="wrapper" className="wrapper"/>
       </div>
     )
