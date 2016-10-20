@@ -29,6 +29,14 @@ class LifePinView extends LifePin {
     if (!pin) {
       return (<div />)
     }
+    const themesList = pin.get('themes')
+    const spots = themesList && themesList.flatMap((theme)=> {
+        const themeId = theme.get('_id')
+        const themesSpots = Life.get(`life/themes/${themeId}`)
+        if (themesSpots) {
+          return themesSpots.get('spots')
+        }
+      })
 
     const pinnedDate = moment(pin.get('date'))
 
@@ -55,12 +63,21 @@ class LifePinView extends LifePin {
             </Link>
           </div>
         </div>
-        <div className="container-fluid brand-bg article-content">
+        <div className="container-fluid no-padding brand-bg article-content">
           <div className="row no-padding">
             <div className="col-md-8 no-padding ">
               <section dangerouslySetInnerHTML={{__html: pin.get('body')}}/>
             </div>
-            <div className="col-md-4 no-padding"/>
+            <div className="col-md-4 no-padding">
+              {spots.map((spot)=> {
+                const sourceImg = spot.get('image')
+                let bgImg = sourceImg ? sourceImg.get('path') : ''
+                return bgImg && (
+                    <a href={spot.get('targetlUrl')} target="_blank"> <img
+                      source={`${config.images.urlPrefix}${bgImg}?crop=faces&fit=min&w=1280&h=720&q=70)`}/>
+                    </a>)
+              })}
+            </div>
           </div>
         </div>
       </article>
