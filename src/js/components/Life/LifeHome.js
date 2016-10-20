@@ -14,10 +14,13 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, params:{themeId, pinId}}) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchThemes(themeId)),
+    store.dispatch(LifeActionCreators.fetchThemes()),
     store.dispatch(LifeActionCreators.fetchPins({}))
   ])
 
+  if (themeId) {
+    await store.dispatch(LifeActionCreators.fetchThemes(themeId))
+  }
   if (pinId) {
     await store.dispatch(LifeActionCreators.fetchPin(pinId))
   }
