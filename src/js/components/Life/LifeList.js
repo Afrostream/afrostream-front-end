@@ -193,7 +193,7 @@ class LifeList extends Component {
 
     const imageStyles = {backgroundImage: `url(${imageUrl})`}
 
-    const pinnedDate = moment(data.get('date')).format('L')
+    const pinnedDate = moment(data.get('date'))
     const pinnedUser = data.get('user')
     const themes = data.get('themes')
     const pinRole = data.get('role')
@@ -226,6 +226,12 @@ class LifeList extends Component {
               {isPremium && (<div className="premium-flag">
                 <div className="premium-flag__header-label"> Accès {pinRole}</div>
               </div>)}
+
+              <div className="bkdate">
+                <div className="day">{pinnedDate.format('DD')}</div>
+                <div className="month">{pinnedDate.format('MMM')}</div>
+              </div>
+
             </div>
             <div className="card-body">
               {!index && <div className="card-bubbles">
@@ -247,7 +253,7 @@ class LifeList extends Component {
                 {data.get('description')}
               </div>
               <div className="card-date">
-                {`${pinnedDate}`}
+                {`${pinnedDate.format('L')}`}
                 {pinnedUser && ` - ${pinnedUser.get('nickname')}`}
               </div>
             </div>
@@ -258,7 +264,7 @@ class LifeList extends Component {
   }
 
   itemSizeGetter (index) {
-
+    return 500
   }
 
   render () {
@@ -293,6 +299,7 @@ class LifeList extends Component {
         itemRenderer={::this.renderInfiniteItem}
         length={pinsList.size}
         type={'simple'}
+        pageSize={4}
       />}
     </div>)
   }

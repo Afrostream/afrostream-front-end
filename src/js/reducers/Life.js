@@ -36,7 +36,7 @@ export default createReducer(initialState, {
 
     return state.merge({
       [`life/pins/resourceCount`]: resourceCount,
-      [`life/pins`]: mappedUserPins
+      [`life/pins/`]: mappedUserPins
     })
   },
 
