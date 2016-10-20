@@ -3,65 +3,30 @@ import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import * as LifeActionCreators from '../../actions/life'
 import * as EventActionCreators from '../../actions/event'
+import LifeTheme from './LifeTheme'
 import LifeNavigation from './LifeNavigation'
-import LifeList from './LifeList'
 import { withRouter } from 'react-router'
-import Immutable from 'immutable'
 
 if (process.env.BROWSER) {
-  require('./LifeThemes.less')
+  require('./LifeHome.less')
 }
 
-@prepareRoute(async function ({store, params:{themeId}}) {
-  return await Promise.all([
+@prepareRoute(async function ({store, params:{themeId, pinId}}) {
+  await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchPins({})),
-    store.dispatch(LifeActionCreators.fetchThemes(themeId))
+    store.dispatch(LifeActionCreators.fetchThemes(themeId)),
+    store.dispatch(LifeActionCreators.fetchPins({}))
   ])
+
+  if (pinId) {
+    await store.dispatch(LifeActionCreators.fetchPin(pinId))
+  }
+
 })
-@connect(({Life, User}) => ({Life, User}))
-class LifeThemes extends Component {
+class LifeHome extends Component {
 
   constructor (props, context) {
     super(props, context)
-  }
-
-  renderThemes () {
-    const {
-      props: {
-        Life,
-        params:{
-          themeId
-        }
-      }
-    } = this
-
-    const themesList = Life.get(`life/themes/${themeId || ''}`)
-
-    if (!themesList) {
-      return
-    }
-
-    let pins = null
-
-    //if (themesList instanceof Immutable.List) {
-    //  pins = themesList.map((theme) => {
-    //      return theme.get('pins')
-    //    }
-    //  ).flatten(true)
-    //}
-    //else {
-    //  pins = themesList.get('pins')
-    //}
-
-    pins = themeId ? themesList.get('pins') : Life.get('life/pins/')
-    if (!pins || !pins.size) {
-      return
-    }
-
-    return (<div key="life-themes-list" className="life-theme">
-      <LifeList {...{pins, themeId}} virtual={true} key={`life-theme-pins`}/>
-    </div>)
   }
 
   render () {
@@ -72,14 +37,14 @@ class LifeThemes extends Component {
     } = this
 
     return (
-      <div className="container-fluid container-no-padding life-themes brand-grey">
+      <div className="container-fluid no-padding life-themes brand-grey">
         <LifeNavigation />
-        <div className="row-fluid container-no-padding brand-grey">
-          {children || this.renderThemes()}
+        <div className="row-fluid no-padding brand-grey">
+          {children || <LifeTheme {...this.props}/>}
         </div>
       </div>
     )
   }
 }
 
-export default withRouter(LifeThemes)
+export default withRouter(LifeHome)

@@ -105,11 +105,6 @@ a.active {
     width: 100%;
     padding: 0;
 
-    .container-no-padding {
-      margin: 0;
-      padding: 0;
-    }
-
     .row,
     .row-fluid {
       &:before {
@@ -123,8 +118,8 @@ a.active {
 
       .isMobile({ margin: 0px; });
 
-      .container,
-      .container-fluid {
+      > .container,
+      > .container-fluid {
 
         margin-top: @header-height;
         padding: @app-padding;
@@ -135,9 +130,7 @@ a.active {
         &.brand-bg {
           background-color: @brand-bg;
         }
-        &.brand-grey {
-          background-color: @brand-grey;
-        }
+
         &.brand-splitted {
           background: none;
           position: relative;
@@ -150,6 +143,7 @@ a.active {
         background-color: @brand-bg;
         color: @color-purple;
       }
+
       &.brand-grey {
         background-color: @brand-grey;
       }
@@ -177,6 +171,12 @@ a.active {
         }
       }
     }
+
+    .no-padding {
+      margin: 0;
+      padding: 0;
+    }
+
   }
   .no-padding {
     margin: 0;

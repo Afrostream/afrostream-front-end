@@ -49,7 +49,7 @@ class JobPage extends React.Component {
     return (
       <div id="react-blog">
         <section className="backstage-section bg-linear" id="jobs">
-          <div className="container-fluid container-no-padding">
+          <div className="container-fluid no-padding">
             {this.renderJob()}
           </div>
         </section>

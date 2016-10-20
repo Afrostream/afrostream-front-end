@@ -1,4 +1,3 @@
 export { default as LifeHome } from './LifeHome'
-export { default as LifeList } from './LifeList'
-export { default as LifePost } from './LifePost'
-export { default as LifeView } from './LifeView'
+export { default as LifeTheme } from './LifeTheme'
+export { default as LifePinView } from './LifePinView'

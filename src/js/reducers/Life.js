@@ -40,7 +40,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Blog.fetchPin](state, {res, pinId}) {
+  [ActionTypes.Life.fetchPin](state, {res, pinId}) {
     if (!res) {
       return state
     }
