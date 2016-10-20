@@ -4,6 +4,10 @@ import config from '../../../../config'
 import moment from 'moment'
 import { Link } from '../Utils'
 import LifePin from './LifePin'
+import { slugify } from '../../lib/utils'
+import * as PlayerActionCreators from '../../actions/player'
+import * as ModalActionCreators from '../../actions/modal'
+
 if (process.env.BROWSER) {
   require('./LifePinView.less')
 }
@@ -13,6 +17,97 @@ class LifePinView extends LifePin {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  /**
+   * Checks if the user role meets the minimum requirements of the route
+   */
+  userRole () {
+
+    const {
+      props: {
+        User
+      }
+    } = this
+
+    const user = User.get('user')
+    let currentRole = 0
+    let planCode = null
+    let internalPlanOpts = null
+    if (user) {
+      currentRole += 1
+      planCode = user.get('planCode')
+      const subscriptionsStatus = user.get('subscriptionsStatus')
+      if (subscriptionsStatus) {
+        const subscriptions = subscriptionsStatus.get('subscriptions')
+        const currentSubscription = subscriptions && subscriptions.first((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no')
+        if (currentSubscription) {
+          currentRole += 1
+          const isVIP = currentSubscription.get('internalPlan').get('internalPlanOpts').get('internalVip')
+          if (isVIP) {
+            currentRole += 1
+          }
+        }
+      }
+    }
+
+    return currentRole
+  }
+
+  /**
+   * get nex role have acl
+   */
+  targetRole () {
+    const userRole = this.userRole()
+    return config.userRoles[userRole + 1]
+  }
+
+  /**
+   * Checks if the user role meets the minimum requirements of the route
+   */
+  validRole (roleRequired) {
+    const userRole = this.userRole()
+    return config.userRoles.indexOf(config.userRoles[userRole]) >= config.userRoles.indexOf(roleRequired)
+  }
+
+  clickHandler (e, data) {
+    const {
+      props: {
+        dispatch,
+        history
+      }
+    } = this
+    const pinRole = data.get('role')
+    const acl = this.validRole(pinRole)
+
+    if (!acl) {
+      e.preventDefault()
+      const modalRole = this.targetRole()
+      return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath: '/life', closable: true}))
+    }
+
+    switch (data.get('type')) {
+      case 'video':
+        e.preventDefault()
+        dispatch(PlayerActionCreators.killPlayer())
+        dispatch(PlayerActionCreators.loadPlayer({
+          data: Immutable.fromJS({
+            target: e.currentTarget || e.target,
+            height: 150,
+            controls: false,
+            sources: [{
+              src: data.get('originalUrl'),
+              type: `video/${data.get('providerName')}`
+            }]
+          })
+        }))
+        break
+
+      case 'article':
+        e.preventDefault()
+        history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('slug'))}`)
+        break
+    }
   }
 
   render () {
