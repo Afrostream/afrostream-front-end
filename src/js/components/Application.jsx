@@ -94,7 +94,7 @@ class Application extends React.Component {
   render () {
 
     const {props: {children, Event, Modal}} = this
-    const toggled = canUseDOM && Event.get('sideBarToggled')
+    const toggled = true //canUseDOM && Event.get('sideBarToggled')
     const hasPopup = Modal.get('target')
 
     let appClasses = classNames({
