@@ -62,17 +62,9 @@
       text-align: center;
       margin: @gap-brick;
       .isMobile({ margin: 0; });
-      //box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
       position: relative;
       width: 100%;
       height: 100%;
-      //&:before {
-      //  content: '';
-      //  display: inline-block;
-      //  vertical-align: middle;
-      //  text-align: center;
-      //  height: 100%;
-      //}
     }
 
     .brick-background {
@@ -134,7 +126,7 @@
 
     }
 
-    &.first {
+    &:first-child {
       width: 100%;
       max-width: 100%;
     }
@@ -150,8 +142,7 @@
       }
     }
 
-    //&.video,
-    &.first {
+    &:first-child {
       width: 100%;
       .brick-background {
         position: absolute;
@@ -175,6 +166,9 @@
         .card-info {
           padding: 1.5em 0 1.5em 0;
           font-size: 2.6em;
+          &:after {
+            content: inherit;
+          }
         }
         .card-date,
         .card-description {
