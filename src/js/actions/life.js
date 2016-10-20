@@ -16,12 +16,15 @@ export function fetchThemes (fetchThemeId) {
   }
 }
 
-export function fetchPins ({startIndex = 0, stopIndex = 3}) {
+export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.fetchPins,
       res: await api({
-        path: `/api/life/pins`
+        path: `/api/life/pins`,
+        params: {
+          limit
+        }
       })
     })
   }

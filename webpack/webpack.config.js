@@ -78,6 +78,7 @@ const webpackConfig = {
     ]
   },
   resolve: {
+    modules: ['node_modules'],
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
       jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
