@@ -105,6 +105,11 @@ a.active {
     width: 100%;
     padding: 0;
 
+    .container-no-padding {
+      margin: 0;
+      padding: 0;
+    }
+
     .row,
     .row-fluid {
       &:before {
@@ -126,12 +131,6 @@ a.active {
         background: @background-page;
         min-height: 100%;
         .isMobile({ padding: @app-padding-mobile; });
-
-        &.container-no-padding {
-          margin: 0;
-          padding: 0;
-          //background: transparent;
-        }
 
         &.brand-bg {
           background-color: @brand-bg;
