@@ -78,6 +78,7 @@ class LifePin extends Component {
     } = this
     const pinRole = data.get('role')
     const acl = this.validRole(pinRole)
+    const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
 
     if (!acl) {
       e.preventDefault()
@@ -85,9 +86,10 @@ class LifePin extends Component {
       return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath: '/life', closable: true}))
     }
 
+
     if (data.get('body')) {
       e.preventDefault()
-      return history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('slug'))}`)
+      return history.push(pinUrl)
     }
 
     switch (data.get('type')) {
@@ -109,7 +111,7 @@ class LifePin extends Component {
 
       case 'article':
         e.preventDefault()
-        history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('slug'))}`)
+        history.push(pinUrl)
         break
 
       case 'image':
@@ -209,7 +211,7 @@ class LifePin extends Component {
 
       case 'article':
         e.preventDefault()
-        history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('slug'))}`)
+        history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`)
         break
     }
   }

@@ -4,10 +4,11 @@ import config from '../../../../config'
 import moment from 'moment'
 import { Link } from '../Utils'
 import LifePin from './LifePin'
-import { slugify } from '../../lib/utils'
+import { slugify, extractImg } from '../../lib/utils'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
 import Immutable from 'immutable'
+import ModalSocial from '../Modal/ModalSocial'
 
 if (process.env.BROWSER) {
   require('./LifePinView.less')
@@ -95,7 +96,7 @@ class LifePinView extends LifePin {
         height: 150,
         controls: false,
         sources: [{
-          src: data.get('richMediaUrl'),
+          src: data.get('originalUrl'),
           type: `video/${data.get('providerName')}`
         }]
       })
@@ -120,14 +121,16 @@ class LifePinView extends LifePin {
     const allThemesList = Life.get(`life/themes/`)
     const spots = pinThemesList && pinThemesList.flatMap((theme)=> {
         const themeId = theme.get('_id')
-        const themesSpots = Life.get(`life/themes/`)
+        const themesSpots = allThemesList.find((theme)=> {
+          return theme.get('_id') === themeId
+        })//Life.get(`life/themes/${themeId}`)
         if (themesSpots) {
           return themesSpots.get('spots')
         }
       })
 
     const pinnedDate = moment(pin.get('date'))
-
+    const pinnedUser = pin.get('user')
     let image = pin.get('image')
     let bgImg = image ? image.get('path') : ''
     let imageStyles = bgImg ? {backgroundImage: `url(${config.images.urlPrefix}${bgImg}?crop=faces&fit=min&w=1280&h=720&q=70)`} : {}
@@ -155,18 +158,22 @@ class LifePinView extends LifePin {
           <div className="row no-padding">
             <div className="col-md-8 no-padding ">
               <section dangerouslySetInnerHTML={{__html: pin.get('body')}}/>
+              <ModalSocial {...this.props} closable={false} modal={false}/>
             </div>
             <div className="col-md-4 no-padding">
-              {spots && spots.map((spot, key)=> {
-                const sourceImg = spot.get('image')
-                const bgImg = sourceImg ? sourceImg.get('path') : ''
-                const spotImgSrc = `${config.images.urlPrefix}${bgImg}?crop=faces&fit=min&w=1280&h=720&q=70)`
+              {pinnedUser && <div className="card-bubble card-bubble-user">
+                <img src={`${pinnedUser.get('picture')}?type=large`}
+                     alt="user-button"
+                     className="icon-user"/>
+              </div>}
+              {spots && spots.map((data, key)=> {
+                const spotImgSrc = extractImg({data, key: 'image', width: 300})
                 return bgImg && (
-                    <a href={spot.get('targetUrl')} target="_blank"
-                       key={`life-pin-spot-${spot.get('_id')}-${key}`}>
-                      <img className="img-responsive" alt={spot.get('title')}
-                           source={spotImgSrc}/>
-                    </a>)
+                    <Link to={data.get('targetUrl')}
+                          key={`life-pin-spot-${data.get('_id')}-${key}`}>
+                      <img className="life-spot spot-vertical" alt={data.get('title')}
+                           src={spotImgSrc}/>
+                    </Link>)
               }).toJS()}
             </div>
           </div>
