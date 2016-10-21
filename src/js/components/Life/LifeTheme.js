@@ -22,9 +22,10 @@ class LifeTheme extends Component {
 
     const themesList = Life.get(`life/themes/${themeId || ''}`)
     const pins = themeId ? themesList && themesList.get('pins') : Life.get('life/pins/')
+    const spots = themesList && themesList.get('spots')
 
     return (<div key="life-themes-list" className="life-theme">
-      {pins && <LifeList {...this.props} {...{pins, themeId}} virtual={true} key={`life-theme-pins`}/>}
+      {pins && <LifeList {...this.props} {...{pins, spots, themeId}} virtual={true} key={`life-theme-pins`}/>}
     </div>)
   }
 }
