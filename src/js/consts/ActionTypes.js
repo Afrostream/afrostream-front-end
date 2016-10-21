@@ -104,11 +104,6 @@ export default {
     close: null
   }),
 
-  Blog: keyMirror({
-    fetchAll: null,
-    fetchPost: null
-  }),
-
   Job: keyMirror({
     fetchAll: null,
     fetchJob: null

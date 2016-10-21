@@ -23,9 +23,9 @@
       }
     },
     "afrostream-player": {
-      "version": "2.2.15",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.15",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#23a407f0e5eb2573d710a4743344d4f423cae4d6"
+      "version": "2.2.16",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.16",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#6b14b9c06d9c59f0661d46b5b031acf38551f803"
     },
     "after": {
       "version": "0.8.1"
@@ -667,9 +667,6 @@
     "callsites": {
       "version": "0.2.0"
     },
-    "camel-case": {
-      "version": "1.2.2"
-    },
     "camelcase": {
       "version": "2.1.1"
     },
@@ -690,9 +687,6 @@
     },
     "chalk": {
       "version": "1.1.1"
-    },
-    "change-case": {
-      "version": "2.3.1"
     },
     "change-emitter": {
       "version": "0.1.2"
@@ -719,17 +713,6 @@
     },
     "classnames": {
       "version": "2.2.5"
-    },
-    "clean-css": {
-      "version": "3.1.9",
-      "dependencies": {
-        "commander": {
-          "version": "2.6.0"
-        },
-        "source-map": {
-          "version": "0.1.43"
-        }
-      }
     },
     "cli": {
       "version": "0.11.3",
@@ -897,9 +880,6 @@
     },
     "console-control-strings": {
       "version": "1.1.0"
-    },
-    "constant-case": {
-      "version": "1.1.2"
     },
     "constants-browserify": {
       "version": "1.0.0"
@@ -1172,14 +1152,8 @@
     "domhandler": {
       "version": "2.2.1"
     },
-    "domify": {
-      "version": "1.0.0"
-    },
     "domutils": {
       "version": "1.5.1"
-    },
-    "dot-case": {
-      "version": "1.1.2"
     },
     "dot-parts": {
       "version": "1.0.1"
@@ -1782,58 +1756,6 @@
     "html-comment-regex": {
       "version": "1.1.1"
     },
-    "html-loader": {
-      "version": "0.3.0",
-      "dependencies": {
-        "source-map": {
-          "version": "0.1.43"
-        }
-      }
-    },
-    "html-minifier": {
-      "version": "0.7.2",
-      "dependencies": {
-        "async": {
-          "version": "0.2.10"
-        },
-        "camelcase": {
-          "version": "1.2.1"
-        },
-        "cli": {
-          "version": "0.6.6"
-        },
-        "concat-stream": {
-          "version": "1.4.10"
-        },
-        "glob": {
-          "version": "3.2.11"
-        },
-        "isarray": {
-          "version": "0.0.1"
-        },
-        "minimatch": {
-          "version": "0.3.0"
-        },
-        "readable-stream": {
-          "version": "1.1.14"
-        },
-        "source-map": {
-          "version": "0.1.34"
-        },
-        "uglify-js": {
-          "version": "2.4.24"
-        },
-        "window-size": {
-          "version": "0.1.0"
-        },
-        "wordwrap": {
-          "version": "0.0.2"
-        },
-        "yargs": {
-          "version": "3.5.4"
-        }
-      }
-    },
     "htmlescape": {
       "version": "1.1.1"
     },
@@ -1855,7 +1777,7 @@
       "version": "1.5.0"
     },
     "http-proxy": {
-      "version": "1.14.0"
+      "version": "1.15.1"
     },
     "http-signature": {
       "version": "1.1.1"
@@ -1889,14 +1811,6 @@
     },
     "immutable": {
       "version": "3.8.1"
-    },
-    "imports-loader": {
-      "version": "0.6.5",
-      "dependencies": {
-        "source-map": {
-          "version": "0.1.43"
-        }
-      }
     },
     "imurmurhash": {
       "version": "0.1.4"
@@ -2019,9 +1933,6 @@
     "is-integer": {
       "version": "1.0.6"
     },
-    "is-lower-case": {
-      "version": "1.1.3"
-    },
     "is-my-json-valid": {
       "version": "2.13.1"
     },
@@ -2067,9 +1978,6 @@
     "is-typedarray": {
       "version": "1.0.0"
     },
-    "is-upper-case": {
-      "version": "1.1.2"
-    },
     "is-utf8": {
       "version": "0.2.1"
     },
@@ -2114,14 +2022,6 @@
     },
     "jsesc": {
       "version": "0.5.0"
-    },
-    "jshint-loader": {
-      "version": "0.8.3",
-      "dependencies": {
-        "strip-json-comments": {
-          "version": "0.1.3"
-        }
-      }
     },
     "json-loader": {
       "version": "0.5.4"
@@ -2343,8 +2243,8 @@
     },
     "koment-js": {
       "version": "1.0.8",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#1.0.17",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#6a0500e481e168e8719d14d6034d90189e27d76b",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#1.0.18",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#1a3f2df13b4eecf28ae9898e2242f3e9f11f7308",
       "dependencies": {
         "babel": {
           "version": "5.8.38",
@@ -2548,14 +2448,6 @@
     "lcid": {
       "version": "1.0.0"
     },
-    "legacy-loader": {
-      "version": "0.0.2",
-      "dependencies": {
-        "source-map": {
-          "version": "0.3.0"
-        }
-      }
-    },
     "less": {
       "version": "2.7.1"
     },
@@ -2573,9 +2465,6 @@
     },
     "lexical-scope": {
       "version": "1.2.0"
-    },
-    "linkify-it": {
-      "version": "1.2.4"
     },
     "load-json-file": {
       "version": "1.1.0"
@@ -2747,12 +2636,6 @@
     "loud-rejection": {
       "version": "1.6.0"
     },
-    "lower-case": {
-      "version": "1.1.3"
-    },
-    "lower-case-first": {
-      "version": "1.0.2"
-    },
     "lowercase-keys": {
       "version": "1.0.0"
     },
@@ -2768,14 +2651,6 @@
     "map-stream": {
       "version": "0.1.0"
     },
-    "markdown-it": {
-      "version": "5.1.0",
-      "dependencies": {
-        "entities": {
-          "version": "1.1.1"
-        }
-      }
-    },
     "material-design-iconic-font": {
       "version": "2.2.0"
     },
@@ -2789,9 +2664,6 @@
     },
     "md5": {
       "version": "2.1.0"
-    },
-    "mdurl": {
-      "version": "1.0.1"
     },
     "media-typer": {
       "version": "0.3.0"
@@ -2876,16 +2748,6 @@
     "nested-error-stacks": {
       "version": "1.0.2"
     },
-    "new-element": {
-      "version": "1.0.0",
-      "dependencies": {
-        "format-text": {
-          "version": "0.0.3",
-          "from": "azer/format-text",
-          "resolved": "git://github.com/azer/format-text.git#84d0f3ab339b6556e1782b360cc145cbf64f1daf"
-        }
-      }
-    },
     "node-fetch": {
       "version": "1.6.0"
     },
@@ -2941,9 +2803,6 @@
           }
         }
       }
-    },
-    "node-loader": {
-      "version": "0.5.0"
     },
     "node-pre-gyp": {
       "version": "0.6.29",
@@ -3117,9 +2976,6 @@
     "pako": {
       "version": "0.2.9"
     },
-    "param-case": {
-      "version": "1.1.2"
-    },
     "parents": {
       "version": "1.0.1"
     },
@@ -3150,9 +3006,6 @@
     "parseurl": {
       "version": "1.3.1"
     },
-    "pascal-case": {
-      "version": "1.1.2"
-    },
     "patch-text": {
       "version": "1.0.2"
     },
@@ -3161,9 +3014,6 @@
     },
     "path-browserify": {
       "version": "0.0.0"
-    },
-    "path-case": {
-      "version": "1.1.2"
     },
     "path-exists": {
       "version": "1.0.0"
@@ -3692,22 +3542,8 @@
     "raw-body": {
       "version": "2.1.7"
     },
-    "raw-loader": {
-      "version": "0.5.1"
-    },
     "rc": {
       "version": "1.1.6"
-    },
-    "rcfinder": {
-      "version": "0.1.9"
-    },
-    "rcloader": {
-      "version": "0.1.2",
-      "dependencies": {
-        "lodash": {
-          "version": "2.4.2"
-        }
-      }
     },
     "react": {
       "version": "15.3.2",
@@ -3945,9 +3781,6 @@
     "regjsparser": {
       "version": "0.1.5"
     },
-    "relateurl": {
-      "version": "0.2.7"
-    },
     "rename-function-calls": {
       "version": "0.1.1",
       "dependencies": {
@@ -4117,9 +3950,6 @@
     "sax": {
       "version": "1.2.1"
     },
-    "script-loader": {
-      "version": "0.6.1"
-    },
     "scroll-behavior": {
       "version": "0.3.4"
     },
@@ -4150,9 +3980,6 @@
     },
     "send": {
       "version": "0.14.1"
-    },
-    "sentence-case": {
-      "version": "1.1.3"
     },
     "serve-favicon": {
       "version": "2.3.0"
@@ -4219,9 +4046,6 @@
     },
     "smoothie": {
       "version": "1.27.0"
-    },
-    "snake-case": {
-      "version": "1.1.2"
     },
     "sntp": {
       "version": "1.0.9"
@@ -4407,9 +4231,6 @@
     "strip-json-comments": {
       "version": "1.0.4"
     },
-    "strip-loader": {
-      "version": "0.1.2"
-    },
     "style-loader": {
       "version": "0.12.4"
     },
@@ -4441,9 +4262,6 @@
     },
     "svgo": {
       "version": "0.6.6"
-    },
-    "swap-case": {
-      "version": "1.1.2"
     },
     "symbol-observable": {
       "version": "0.2.4"
@@ -4503,9 +4321,6 @@
     },
     "timers-browserify": {
       "version": "1.4.2"
-    },
-    "title-case": {
-      "version": "1.1.2"
     },
     "to-array": {
       "version": "0.1.4"
@@ -4595,9 +4410,6 @@
     "ua-parser-js": {
       "version": "0.7.10"
     },
-    "uc.micro": {
-      "version": "1.0.3"
-    },
     "uglify-js": {
       "version": "2.7.2",
       "dependencies": {
@@ -4659,12 +4471,6 @@
     },
     "update-section": {
       "version": "0.3.3"
-    },
-    "upper-case": {
-      "version": "1.1.3"
-    },
-    "upper-case-first": {
-      "version": "1.1.2"
     },
     "url": {
       "version": "0.11.0",
