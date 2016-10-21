@@ -79,11 +79,11 @@ const webpackConfig = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
-    alias: {
-      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
-      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js'),
-      koment: path.join(__dirname, '../node_modules/koment-js/dist/koment.js')
-    }
+    //alias: {
+    //  jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
+    //  videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js'),
+    //  koment: path.join(__dirname, '../node_modules/koment-js/dist/koment.js')
+    //}
   },
   stats: {
     colors: true
