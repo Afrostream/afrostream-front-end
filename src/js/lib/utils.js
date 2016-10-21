@@ -1,4 +1,5 @@
 import window from 'global/window'
+import { images } from '../../../config'
 
 export function btoa (x) {
   if (window.btoa) {
@@ -319,12 +320,13 @@ export function mergeFbUserInfo (user) {
     return null
   }
   if (user.facebook) {
-    user.picture = `//graph.facebook.com/${user.facebook.id}/picture`
+    //user.picture = `//graph.facebook.com/${user.facebook.id}/picture`
     user.name = user.name || user.facebook.name
     user.nickname = user.nickname || user.facebook.nickname
-  } else {
-    user.picture = `/avatar/${user.email || user.name}`
   }
+  //else {
+  //user.picture = `/avatar/${user.email || user.name}`
+  //}
   return user
 }
 
@@ -368,3 +370,16 @@ export function getOffset (el) {
   }
 }
 
+export function extractImg ({data, key, width = 1024, height = 600}) {
+  const thumb = data.get(key)
+  let imageUrl = data.get('imageUrl') || baseUrl
+  if (thumb) {
+    const path = thumb.get('path')
+    if (path) {
+      imageUrl =
+        `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
+
+    }
+  }
+
+}

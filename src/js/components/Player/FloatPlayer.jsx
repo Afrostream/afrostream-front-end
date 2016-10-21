@@ -245,11 +245,11 @@ class FloatPlayer extends React.Component {
     let playerData = await this.getPlayerData(videoData)
     let player = await videojs('afrostream-player', playerData).ready(()=> {
         player.volume(player.options_.defaultVolume)
-        this.requestTick()
+        this.requestTick(true)
       }
     )
     videojs.on(window, 'scroll', ::this.requestTick)
-    this.requestTick()
+    this.requestTick(true)
     return player
   }
 
@@ -290,7 +290,9 @@ class FloatPlayer extends React.Component {
     } = this
     e.preventDefault()
     this.destroyPlayer()
-    dispatch(PlayerActionCreators.killPlayer())
+    dispatch(PlayerActionCreators.killPlayer()).then(()=> {
+      this.requestTick(true)
+    })
   }
 
   updatePlayerPosition () {

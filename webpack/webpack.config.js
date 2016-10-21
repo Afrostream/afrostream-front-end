@@ -64,7 +64,6 @@ const webpackConfig = {
       'lodash',
       'moment',
       'classnames',
-      'raven-js',
       'superagent',
       'jquery',
       'jquery.payment',
@@ -79,12 +78,7 @@ const webpackConfig = {
   },
   resolve: {
     modules: ['node_modules'],
-    extensions: ['', '.js', '.jsx', '.json'],
-    alias: {
-      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
-      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js'),
-      koment: path.join(__dirname, '../node_modules/koment-js/dist/koment.js')
-    }
+    extensions: ['', '.js', '.jsx', '.json']
   },
   stats: {
     colors: true
@@ -106,20 +100,13 @@ const webpackConfig = {
         exclude: [node_modules_dir]
       },
       {
-        test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
-        include: [
-          path.join(__dirname, '../node_modules/dashjs'),
-        ]
-      },
-      {
         test: /\.json$/,
         loaders: ['json']
       },
       {
         test: /\.css$/,
         loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /\.less$/,
@@ -148,12 +135,12 @@ const webpackConfig = {
       {
         test: /video\.js/,
         loader: 'expose?videojs',
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /koment-js$/,
         loader: 'expose?koment',
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /jquery\.js$/, loader: 'expose?$'

@@ -3,8 +3,18 @@ import { notFoundPost } from './notFoundAction'
 
 export function fetchThemes (fetchThemeId) {
   return (dispatch, getState) => {
-
     const themeId = fetchThemeId || ''
+    let readyThemes = getState().Life.get(`life/themes/${themeId || ''}`)
+    if (readyThemes) {
+      console.log('Life themes already present in data store')
+      return {
+        type: ActionTypes.Life.fetchThemes,
+        themeId,
+        res: {
+          body: readyThemes.toJS()
+        }
+      }
+    }
     return async api => ({
       type: ActionTypes.Life.fetchThemes,
       themeId,
@@ -18,6 +28,16 @@ export function fetchThemes (fetchThemeId) {
 
 export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
+    let readyPins = getState().Life.get(`life/pins`)
+    if (readyPins) {
+      console.log('Life pins already present in data store')
+      return {
+        type: ActionTypes.Life.fetchPins,
+        res: {
+          body: readyPins.toJS()
+        }
+      }
+    }
     return async api => ({
       type: ActionTypes.Life.fetchPins,
       res: await api({
@@ -32,6 +52,18 @@ export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
 
 export function fetchPin (pinId) {
   return (dispatch, getState) => {
+    let readyPin = getState().Life.get(`life/pins/${pinId}`)
+    if (readyPin) {
+      console.log('Life pin already present in data store')
+      return {
+        type: ActionTypes.Life.fetchPin,
+        pinId,
+        res: {
+          body: readyPin.toJS()
+        }
+      }
+    }
+    console.log('fetchPin ', pinId)
     return async api => ({
       type: ActionTypes.Life.fetchPin,
       pinId,
