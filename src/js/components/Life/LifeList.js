@@ -1,22 +1,15 @@
 import React, { PropTypes, Component } from 'react'
-import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
-import * as LifeActionCreators from '../../actions/life'
-import * as EventActionCreators from '../../actions/event'
 import classSet from 'classnames'
 import Immutable from 'immutable'
 import LifePin from './LifePin'
 import ReactList from 'react-list'
+import { extractImg } from '../../lib/utils'
+import { Link } from '../Utils'
 
 if (process.env.BROWSER) {
   require('./LifeList.less')
 }
-//@prepareRoute(async function ({store, params:{themeId}}) {
-//  return await Promise.all([
-//    store.dispatch(EventActionCreators.pinHeader(true)),
-//    store.dispatch(LifeActionCreators.fetchThemes(themeId))
-//  ])
-//})
 @connect(({Life, User}) => ({Life, User}))
 class LifeList extends Component {
 
@@ -33,10 +26,23 @@ class LifeList extends Component {
       }
     } = this
 
-    const lifeTheme = Life.get(`life/themes/${themeId}`
-    )
+    const lifeTheme = Life.get(`life/themes/${themeId}`)
 
     return pins || (lifeTheme && lifeTheme.get('pins'))
+  }
+
+  getSpots () {
+    const {
+      props: {
+        Life,
+        themeId,
+        spots
+      }
+    } = this
+
+    const lifeTheme = Life.get(`life/themes/${themeId}`)
+
+    return spots || (lifeTheme && lifeTheme.get('spots'))
   }
 
   renderInfiniteItem (index, key) {
@@ -65,6 +71,15 @@ class LifeList extends Component {
     )
   }
 
+  renderSpot ({data, key, index, style}) {
+    const imageUrl = extractImg({data, key: 'image'})
+    return (
+      <Link to={data.get('targetUrl')}>
+        <img className="life-spot spot-banner" {...{key}} src={imageUrl}/>
+      </Link>
+    )
+  }
+
   render () {
     const {
       props: {
@@ -77,6 +92,13 @@ class LifeList extends Component {
       return
     }
 
+    let spotList = this.getSpots()
+
+    if (spotList) {
+      spotList = spotList.filter((spot)=> {
+        return spot.get('type') === 'banner'
+      })
+    }
     const classList = {
       'life-list': true,
       'flat': !virtual,
@@ -98,6 +120,12 @@ class LifeList extends Component {
         length={pinsList.size}
         type={'simple'}
       />}
+      {spotList && spotList.map((data, index) =>this.renderSpot({
+        data,
+        index,
+        key: `life-list-spot-${themeId}-${index}`
+
+      })).toJS()}
     </div>)
   }
 }
@@ -106,6 +134,7 @@ LifeList.propTypes = {
   highlightFirst: PropTypes.bool,
   virtual: PropTypes.bool,
   pins: PropTypes.instanceOf(Immutable.List),
+  spots: PropTypes.instanceOf(Immutable.List),
   themeId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
@@ -119,6 +148,7 @@ LifeList.defaultProps = {
   highlightFirst: true,
   virtual: true,
   pins: null,
+  spots: null,
   themeId: ''
 }
 
