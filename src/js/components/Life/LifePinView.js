@@ -151,7 +151,7 @@ class LifePinView extends LifePin {
             </Link>
           </div>
         </div>
-        <div className="container-fluid no-padding brand-bg article-content">
+        <div className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
           <div className="row no-padding">
             <div className="col-md-8 no-padding ">
               <section dangerouslySetInnerHTML={{__html: pin.get('body')}}/>
@@ -161,7 +161,6 @@ class LifePinView extends LifePin {
                 const sourceImg = spot.get('image')
                 const bgImg = sourceImg ? sourceImg.get('path') : ''
                 const spotImgSrc = `${config.images.urlPrefix}${bgImg}?crop=faces&fit=min&w=1280&h=720&q=70)`
-                debugger
                 return bgImg && (
                     <a href={spot.get('targetUrl')} target="_blank"
                        key={`life-pin-spot-${spot.get('_id')}-${key}`}>

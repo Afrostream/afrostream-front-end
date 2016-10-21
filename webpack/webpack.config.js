@@ -64,7 +64,6 @@ const webpackConfig = {
       'lodash',
       'moment',
       'classnames',
-      'raven-js',
       'superagent',
       'jquery',
       'jquery.payment',
@@ -100,13 +99,6 @@ const webpackConfig = {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
-      },
-      {
-        test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
-        include: [
-          path.join(__dirname, '../node_modules/dashjs'),
-        ]
       },
       {
         test: /\.json$/,

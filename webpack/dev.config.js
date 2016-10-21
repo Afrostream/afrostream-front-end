@@ -20,7 +20,10 @@ let clientConfig = merge({}, webpackConfig, {
   devServer: {
     quiet: true, // add
     historyApiFallback: true,
-    noInfo: true
+    noInfo: true,
+    hot: true,
+    watch: true,
+    progress: true
   }
 })
 

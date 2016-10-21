@@ -65,10 +65,6 @@ class LifeList extends Component {
     )
   }
 
-  itemSizeGetter (index) {
-    return 500
-  }
-
   render () {
     const {
       props: {
@@ -98,11 +94,9 @@ class LifeList extends Component {
       {virtual && <ReactList
         ref="react-pins-list"
         axis="y"
-        itemSizeGetter={::this.itemSizeGetter}
         itemRenderer={::this.renderInfiniteItem}
         length={pinsList.size}
         type={'simple'}
-        pageSize={4}
       />}
     </div>)
   }

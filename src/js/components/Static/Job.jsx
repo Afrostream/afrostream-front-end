@@ -3,16 +3,6 @@ import { prepareRoute } from '../../decorators'
 import * as EventActionCreators from '../../actions/event'
 import * as JobActionCreators from '../../actions/job'
 import { connect } from 'react-redux'
-import MarkdownIt from 'markdown-it'
-const md = MarkdownIt({
-  html: true,        // Enable HTML tags in source
-  xhtmlOut: true,        // Use '/' to close single tags (<br />).
-  // This is only for full CommonMark compatibility.
-  breaks: true,        // Convert '\n' in paragraphs into <br>
-  langPrefix: 'language-',  // CSS language prefix for fenced blocks. Can be
-                            // useful for external highlighters.
-  linkify: true        // Autoconvert URL-like text to links
-})
 
 @prepareRoute(async function ({store, params:{jobId}}) {
   return await Promise.all([
@@ -40,7 +30,7 @@ class JobPage extends React.Component {
 
     return <div className="col col-md-12">
       <h4>{job.get('title')}</h4>
-      <section dangerouslySetInnerHTML={{__html: md.render(job.get('body'))}}/>
+      <section dangerouslySetInnerHTML={{__html: job.get('body')}}/>
     </div>
   }
 

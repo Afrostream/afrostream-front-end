@@ -103,7 +103,6 @@
     "less-loader": "^2.2.0",
     "lesshat": "^3.0.2",
     "lodash": "^4.13.1",
-    "markdown-it": "^5.1.0",
     "material-design-iconic-font": "^2.2.0",
     "material-ui": "^0.15.4",
     "md5": "^2.1.0",
