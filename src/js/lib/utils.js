@@ -1,5 +1,5 @@
 import window from 'global/window'
-import { images } from '../../../config'
+import config from '../../../config'
 
 export function btoa (x) {
   if (window.btoa) {
@@ -370,16 +370,18 @@ export function getOffset (el) {
   }
 }
 
-export function extractImg ({data, key, width = 1024, height = 600}) {
+export function extractImg ({data, key, width = 1024}) {
+  const {images} =config
   const thumb = data.get(key)
-  let imageUrl = data.get('imageUrl') || baseUrl
+  let imageUrl = data.get('imageUrl')
   if (thumb) {
     const path = thumb.get('path')
     if (path) {
-      imageUrl =
-        `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
+      imageUrl = `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
 
     }
   }
+
+  return imageUrl
 
 }
