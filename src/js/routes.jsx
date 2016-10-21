@@ -14,7 +14,6 @@ import StoreLocator from './components/Store/StoreLocator'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
 import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
-import * as Blog from './components/Blog'
 import * as Life from './components/Life'
 import AccountPage from './components/Account/AccountPage'
 import CancelSubscription from './components/Account/CancelSubscription'
@@ -90,9 +89,6 @@ const buildRoutes = function (lang) {
       <Route name="lifePin" path="pin/:pinId(/:pinSlug)" component={Life.LifePinView}/>
       <Route name="LifeTheme" path=":themeId(/:themeSlug)" component={Life.LifeTheme}/>
     </Route>,
-    <Route key={`${lang}-blog`} name="blog" path="blog" component={Blog.PostList}>
-      <Route name="post" path=":postId(/:postSlug)" component={Blog.PostView}/>
-    </Route>,
     <Route key={`${lang}-store`} name="store" path="store-locator" component={StoreLocator}/>,
     <Route key={`${lang}-cash`} name="cash" path="cash" component={CashwayPage}>,
       <Route name="cashPayment" path="select-plan" component={PaymentPage}>
@@ -102,6 +98,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-payment`} name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
+    <Redirect key={`${lang}-redirect`} from="blog" to="life"/>,
     //push subroutes after static routes
     buildHome(lang),
     <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>

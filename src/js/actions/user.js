@@ -33,11 +33,10 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         let subscriptionsStatus = userMerged.subscriptionsStatus
         let status = subscriptionsStatus && subscriptionsStatus.status
         if (!planCode) {
-          donePath = donePath || `/select-plan`
           if (status && status !== 'active') {
             donePath = `${donePath}/none/${status}`
+            actionDispatcher(push(donePath))
           }
-          actionDispatcher(push(donePath))
         }
         //get InternalPlan
         actionDispatcher(BillingActionCreators.getInternalplans({

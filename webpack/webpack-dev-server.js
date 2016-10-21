@@ -1,39 +1,18 @@
 import WebpackDevServer from 'webpack-dev-server'
-import webpack from 'webpack'
 import path from 'path'
+import webpack from 'webpack'
 import devConfig from './dev.config'
 import config from '../config'
+import { merge } from 'lodash'
 
 const {webpackDevServer: {host, port}} = config
 
 const serverOptions = {
     contentBase: path.resolve(__dirname, '../dist'),
-    publicPath: devConfig.output.publicPath,
-    hot: true,
-    headers: {'Access-Control-Allow-Origin': '*'},
-    quiet: true,
-    noInfo: true,
-    cache: false,
-    watch: true,
-    progress: true,
-    devServer: true,
-    hotComponents: true,
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000
-    },
-    debug: true,
-    devServer: {
-      port: port,
-      historyApiFallback: true
-    },
-    stats: {
-      chunks: false,
-      colors: true
-    }
+    publicPath: devConfig.output.publicPath
   },
   compiler = webpack(devConfig),
-  webpackDevServer = new WebpackDevServer(compiler, serverOptions)
+  webpackDevServer = new WebpackDevServer(compiler, merge(serverOptions, devConfig.devServer))
 
 compiler.plugin('done', (stats) => {
   process.env.HASH_FILE = stats.hash

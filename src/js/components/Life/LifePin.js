@@ -4,7 +4,7 @@ import config from '../../../../config'
 import moment from 'moment'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
-import { slugify } from '../../lib/utils'
+import { slugify, extractImg } from '../../lib/utils'
 import { Link } from '../Utils'
 import classSet from 'classnames'
 import Immutable from 'immutable'
@@ -85,6 +85,11 @@ class LifePin extends Component {
       return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath: '/life', closable: true}))
     }
 
+    if (data.get('body')) {
+      e.preventDefault()
+      return history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('slug'))}`)
+    }
+
     switch (data.get('type')) {
       case 'video':
         e.preventDefault()
@@ -105,6 +110,15 @@ class LifePin extends Component {
       case 'article':
         e.preventDefault()
         history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('slug'))}`)
+        break
+
+      case 'image':
+        e.preventDefault()
+        dispatch(ModalActionCreators.open({
+          target: 'image', data: Immutable.fromJS({
+            src: extractImg({data, key: 'image'})
+          })
+        }))
         break
     }
   }
