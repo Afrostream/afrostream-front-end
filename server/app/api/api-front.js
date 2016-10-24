@@ -3,7 +3,7 @@ import _ from 'lodash'
 import config from '../../../config'
 import anr from 'afrostream-node-request'
 const {apiServer} = config
-const request = anr.create({baseUrl:apiServer.urlPrefix});
+const request = anr.create({baseUrl:apiServer.urlPrefix, filter:null});
 
 /**
  * call request on external api
