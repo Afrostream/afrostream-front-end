@@ -25,19 +25,12 @@ export async function getExternal (req, requestOptions) {
  * @param path
  */
 export function getData (req, path, requestOptions) {
-  path = path.replace(new RegExp(`^${apiServer.urlPrefix}`), '')
-  var url = `${apiServer.urlPrefix}${path}`
-
-  console.log('request api-front', url)
-
-  var queryOptions = _.merge({}, req.query || {})
-
   return request(
     _.merge(
       {
-        qs: queryOptions,
+        qs: req.query || {},
         body: req.body,
-        uri: url,
+        uri: path,
         context: { req: req }
       },
       requestOptions || {}
