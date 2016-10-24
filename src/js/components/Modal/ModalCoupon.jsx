@@ -42,14 +42,13 @@ class ModalCoupon extends ModalComponent {
     return await dispatch(BillingActionCreators.couponActivate())
       .then(()=> {
         return dispatch(UserActionCreators.getProfile())
-      }).then(()=> {
-        return this.props.history.push('/')
-      }).catch(({response:{body:{error}}, message})=> {
+      }).catch(({response:{body:{error, code, message}}})=> {
+        const errorCode = (code && this.getTitle('errors')[code])
         return this.setState({
           success: false,
           loading: false,
           signInOrUp: false,
-          error: error || message || this.getTitle('couponInvalid')
+          error: (errorCode && errorCode.message) || error || message || this.getTitle('couponInvalid')
         })
       })
   }
@@ -94,14 +93,14 @@ class ModalCoupon extends ModalComponent {
         }
       }) => {
         //coupon valid
-        if (coupon && coupon.status === 'waiting') {
+        if (coupon /*&& coupon.status === 'waiting'*/) {
           if (!user) {
             return
           }
           return this.finalyse()
         }
         //coupon invalid
-        throw new Error(self.getTitle('couponInvalid'))
+        throw new Error(self.getTitle('status')[coupon.status] || self.getTitle('couponInvalid'))
       })
       //Get updated profile
       .then(()=> {
@@ -112,13 +111,17 @@ class ModalCoupon extends ModalComponent {
         })
         return dispatch(UserActionCreators.getProfile())
       })
+      .then(()=> {
+        return this.props.history.push('/')
+      })
       .catch((err) => {
         console.log('Error coupon ', err)
+        const errorCode = (err.code && self.getTitle('errors')[error.code])
         this.setState({
           success: false,
           loading: false,
           signInOrUp: false,
-          error: err.message || err.error || self.getTitle('couponInvalid')
+          error: (errorCode && errorCode.message ) || (err.message || err.error) || self.getTitle('couponInvalid')
         })
       })
   }

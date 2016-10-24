@@ -103,6 +103,7 @@ export function couponActivate () {
     }
     return async () => {
       return await actionDispatcher(this.subscribe(billingInfo)).then(()=> {
+        debugger
         return ({
           type: ActionTypes.Billing.couponActivate
         })

@@ -379,77 +379,148 @@
     "couponPlaceholder": "Coupon",
     "successText": "Votre coupon est validé, vous pouvez profiter pleinement de votre compte Afrostream",
     "headerText": "Enter coupon code to start your Afrostream subscription.",
-    "couponInvalid": "The coupon that you submitted is incorrect or has already been used. Please try again with another coupon.",
-    "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe."
-  },
-  "relog": {
-    "title": "Reconnectez-vous",
-    "action": "Reconnectez-vous"
-  },
-  "social": {
-    "title": "Partager"
-  },
-  "sponsors": {
-    "title": "Mes amis parrainés",
-    "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
-    "metas": {
-      "title": "14 jours de streaming offerts",
-      "description": "Inscrivez-vous dès maintenant pour bénéficier de 14 jours d’abonnement à Afrostream offerts."
-    },
-    "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
-    "placeHolder": "Parrainer un ami",
-    "emailField": "Son email",
-    "max": "Vous avez atteint le nombre maximum d'amis parrainés",
-    "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",
+    "couponInvalid": "Please contact us at support@afrostream.tv",
+    "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe.",
     "status": {
-      "redeemed": "Votre ami à un compte Afrostream",
-      "active": "Votre ami à validé son coupon",
-      "waiting": "Votre ami n'a toujours pas activé son coupon"
+      "redeemed": "Le code a déjà été utilisé.",
+      "pending": "Le code est en attente.",
+      "expired": "Le code a déjà été utilisé."
     },
     "errors": {
-      "error": "Vous ne pouvez plus parrainer actuellement.",
-      "self sponsorship is forbidden": "Vous ne pouvez pas vous parrainer",
-      "recipient that has an active subscription cannot be sponsored": "Cet email à déja été parrainé ou a déja un compte actif"
+      "50": {
+        "name": "COUPON_CODE_NOT_FOUND",
+        "message": "Le code n'a pas été trouvé."
+      },
+      "450": {
+        "name": "COUPON_REDEEMED",
+        "message": "Le code a déjà été utilisé."
+      },
+      "451": {
+        "name": "COUPON_EXPIRED",
+        "message": "Le code a expiré."
+      },
+      "452": {
+        "name": "COUPON_PENDING",
+        "message": "Le code est en attente."
+      },
+      "453": {
+        "name": "COUPON_NOT_READY",
+        "message": "Le code n'est pas prêt."
+      },
+      "454": {
+        "name": "COUPON_PROVIDER_INCOMPATIBLE",
+        "message": "Le code n'est pas utilisable avec ce provider."
+      },
+      "455": {
+        "name": "COUPON_INTERNALPLAN_INCOMPATIBLE",
+        "message": "Le code n'est pas utilisable avec ce plan."
+      },
+      "456": {
+        "name": "COUPON_ALREADY_LINKED",
+        "message": "Le code n'est pas utilisable."
+      },
+      "401": {
+        "name": "AFR_COUPON_SPS_RECIPIENT_ALREADY_SPONSORED",
+        "message": "codes de sponsoring : 1 seul / compte"
+      },
+      "60": {
+        "name": "SEPA_IBAN_INVALID",
+        "message": "compte IBAN banni (processus manuel)"
+      },
+      "400": {
+        "name": "AFR_COUPON_SPS_SELF_FORBIDDEN",
+        "message": "codes de sponsoring : 1 seul / compte"
+      },
+      "401": {
+        "name": "AFR_COUPON_SPS_RECIPIENT_ALREADY_SPONSORED",
+        "message": "auto-sponsoring INTERDIT"
+      },
+      "402": {
+        "name": "AFR_COUPON_SPS_RECIPIENT_ACTIVE_FORBIDDEN",
+        "message": "sponsoriser un abonné actif est INTERDIT"
+      },
+      "200": {
+        "name": "CASHWAY_COUPON_ONE_BY_USER_FOR_EACH_CAMPAIGN",
+        "message": "codes CASHWAY : 1 seul d'une campagne / compte"
+      },
+      "420": {
+        "name": "SUBS_AUTO_ALREADY_EXISTS",
+        "message": "Lorsqu'une personne abonnée à un plan renouvelable essaie de s'abonner à nouveau."
+      },
+      "421": {
+        "name": "SUBS_FUTURE_ALREADY_EXISTS",
+        "message": "Lorsqu'une personne prend un abonnement alors qu'il y a déjà un abonnement à venir."
+      }
     },
-    "validation": {
-      "email": "Doit etre un email valide",
-      "empty": "est requis"
-    }
-  },
-  "press": {
-    "menu": {
-      "about": {
-        "label": "About Us",
-        "links": {
-          "founder": "Co-Founder Bios"
-        }
+    "relog": {
+      "title": "Reconnectez-vous",
+      "action": "Reconnectez-vous"
+    },
+    "social": {
+      "title": "Partager"
+    },
+    "sponsors": {
+      "title": "Mes amis parrainés",
+      "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
+      "metas": {
+        "title": "14 jours de streaming offerts",
+        "description": "Inscrivez-vous dès maintenant pour bénéficier de 14 jours d’abonnement à Afrostream offerts."
       },
-      "jobs": {
-        "label": "Job"
+      "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
+      "placeHolder": "Parrainer un ami",
+      "emailField": "Son email",
+      "max": "Vous avez atteint le nombre maximum d'amis parrainés",
+      "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",
+      "status": {
+        "redeemed": "Votre ami à un compte Afrostream",
+        "active": "Votre ami à validé son coupon",
+        "waiting": "Votre ami n'a toujours pas activé son coupon"
       },
-      "press": {
-        "label": "Press",
-        "links": {
-          "mediakit": {
-            "label": "Kit Médias"
-          },
-          "videos": {
-            "label": "Videos"
-          },
-          "press": {
-            "label": "Press Releases"
-          },
-          "news": {
-            "label": "News",
-            "links": {
-              "news-2016": {
-                "label": "News 2016"
-              },
-              "news-2015": {
-                "label": "News 2015"
-              },
-              "news-2014": {
-                "label": "News 2014"
+      "errors": {
+        "error": "Vous ne pouvez plus parrainer actuellement.",
+        "self sponsorship is forbidden": "Vous ne pouvez pas vous parrainer",
+        "recipient that has an active subscription cannot be sponsored": "Cet email à déja été parrainé ou a déja un compte actif"
+      },
+      "validation": {
+        "email": "Doit etre un email valide",
+        "empty": "est requis"
+      }
+    },
+    "press": {
+      "menu": {
+        "about": {
+          "label": "About Us",
+          "links": {
+            "founder": "Co-Founder Bios"
+          }
+        },
+        "jobs": {
+          "label": "Job"
+        },
+        "press": {
+          "label": "Press",
+          "links": {
+            "mediakit": {
+              "label": "Kit Médias"
+            },
+            "videos": {
+              "label": "Videos"
+            },
+            "press": {
+              "label": "Press Releases"
+            },
+            "news": {
+              "label": "News",
+              "links": {
+                "news-2016": {
+                  "label": "News 2016"
+                },
+                "news-2015": {
+                  "label": "News 2015"
+                },
+                "news-2014": {
+                  "label": "News 2014"
+                }
               }
             }
           }
@@ -457,4 +528,3 @@
       }
     }
   }
-}
