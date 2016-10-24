@@ -198,12 +198,30 @@ class LifePin extends Component {
         dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
+            className: data.get('type'),
+            autoplay: true,
             target: e.currentTarget || e.target,
             height: 150,
-            controls: false,
             sources: [{
               src: data.get('originalUrl'),
               type: `video/${data.get('providerName')}`
+            }]
+          })
+        }))
+        break
+      case 'audio':
+      case 'rich':
+        e.preventDefault()
+        dispatch(PlayerActionCreators.killPlayer())
+        dispatch(PlayerActionCreators.loadPlayer({
+          data: Immutable.fromJS({
+            className: data.get('type'),
+            autoplay: true,
+            target: e.currentTarget || e.target,
+            height: 150,
+            sources: [{
+              src: data.get('originalUrl'),
+              type: `audio/${data.get('providerName')}`
             }]
           })
         }))
