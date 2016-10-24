@@ -253,12 +253,13 @@ class FloatPlayer extends React.Component {
     return player
   }
 
-  async generateDomTag () {
+  async generateDomTag (videoData) {
     console.log('player : generate dom tag')
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
     let video = document.createElement('video')
+    const className = videoData.get('className')
     video.id = 'afrostream-player'
-    video.className = 'player-container video-js vjs-fluid vjs-big-play-centered'
+    video.className = `player-container video-js vjs-fluid vjs-big-play-centered ${className}`
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
 
@@ -337,7 +338,8 @@ class FloatPlayer extends React.Component {
 
     const classFloatPlayer = {
       'float-player': true,
-      'pinned': this.state.elVisible
+      'pinned': this.state.elVisible,
+      'unpinned': !this.state.elVisible
     }
 
     return (
