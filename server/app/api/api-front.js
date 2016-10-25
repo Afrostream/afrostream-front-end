@@ -31,7 +31,10 @@ export function getData (req, path, requestOptions) {
         qs: req.query || {},
         body: req.body,
         uri: path,
-        context: { req: req }
+        context: { req: req },
+        forwardedHeaders: {
+          'Access-Token': 'Access-Token'
+        }
       },
       requestOptions || {}
     )
@@ -60,7 +63,10 @@ export function proxy (req, res, queryOptions) {
         body: req.body,
         uri: req.originalUrl,
         followRedirect: false,
-        filter: null
+        filter: null,
+        forwardedHeaders: {
+          'Access-Token': 'Access-Token'
+        }
       },
       queryOptions
     )
