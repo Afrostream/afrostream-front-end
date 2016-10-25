@@ -451,76 +451,76 @@
         "name": "SUBS_FUTURE_ALREADY_EXISTS",
         "message": "Lorsqu'une personne prend un abonnement alors qu'il y a déjà un abonnement à venir."
       }
+    }
+  },
+  "relog": {
+    "title": "Reconnectez-vous",
+    "action": "Reconnectez-vous"
+  },
+  "social": {
+    "title": "Partager"
+  },
+  "sponsors": {
+    "title": "Mes amis parrainés",
+    "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
+    "metas": {
+      "title": "14 jours de streaming offerts",
+      "description": "Inscrivez-vous dès maintenant pour bénéficier de 14 jours d’abonnement à Afrostream offerts."
     },
-    "relog": {
-      "title": "Reconnectez-vous",
-      "action": "Reconnectez-vous"
+    "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
+    "placeHolder": "Parrainer un ami",
+    "emailField": "Son email",
+    "max": "Vous avez atteint le nombre maximum d'amis parrainés",
+    "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",
+    "status": {
+      "redeemed": "Votre ami à un compte Afrostream",
+      "active": "Votre ami à validé son coupon",
+      "waiting": "Votre ami n'a toujours pas activé son coupon"
     },
-    "social": {
-      "title": "Partager"
+    "errors": {
+      "error": "Vous ne pouvez plus parrainer actuellement.",
+      "self sponsorship is forbidden": "Vous ne pouvez pas vous parrainer",
+      "recipient that has an active subscription cannot be sponsored": "Cet email à déja été parrainé ou a déja un compte actif"
     },
-    "sponsors": {
-      "title": "Mes amis parrainés",
-      "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
-      "metas": {
-        "title": "14 jours de streaming offerts",
-        "description": "Inscrivez-vous dès maintenant pour bénéficier de 14 jours d’abonnement à Afrostream offerts."
+    "validation": {
+      "email": "Doit etre un email valide",
+      "empty": "est requis"
+    }
+  },
+  "press": {
+    "menu": {
+      "about": {
+        "label": "About Us",
+        "links": {
+          "founder": "Co-Founder Bios"
+        }
       },
-      "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
-      "placeHolder": "Parrainer un ami",
-      "emailField": "Son email",
-      "max": "Vous avez atteint le nombre maximum d'amis parrainés",
-      "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",
-      "status": {
-        "redeemed": "Votre ami à un compte Afrostream",
-        "active": "Votre ami à validé son coupon",
-        "waiting": "Votre ami n'a toujours pas activé son coupon"
+      "jobs": {
+        "label": "Job"
       },
-      "errors": {
-        "error": "Vous ne pouvez plus parrainer actuellement.",
-        "self sponsorship is forbidden": "Vous ne pouvez pas vous parrainer",
-        "recipient that has an active subscription cannot be sponsored": "Cet email à déja été parrainé ou a déja un compte actif"
-      },
-      "validation": {
-        "email": "Doit etre un email valide",
-        "empty": "est requis"
-      }
-    },
-    "press": {
-      "menu": {
-        "about": {
-          "label": "About Us",
-          "links": {
-            "founder": "Co-Founder Bios"
-          }
-        },
-        "jobs": {
-          "label": "Job"
-        },
-        "press": {
-          "label": "Press",
-          "links": {
-            "mediakit": {
-              "label": "Kit Médias"
-            },
-            "videos": {
-              "label": "Videos"
-            },
-            "press": {
-              "label": "Press Releases"
-            },
-            "news": {
-              "label": "News",
-              "links": {
-                "news-2016": {
-                  "label": "News 2016"
-                },
-                "news-2015": {
-                  "label": "News 2015"
-                },
-                "news-2014": {
-                  "label": "News 2014"
-                }
+      "press": {
+        "label": "Press",
+        "links": {
+          "mediakit": {
+            "label": "Kit Médias"
+          },
+          "videos": {
+            "label": "Videos"
+          },
+          "press": {
+            "label": "Press Releases"
+          },
+          "news": {
+            "label": "News",
+            "links": {
+              "news-2016": {
+                "label": "News 2016"
+              },
+              "news-2015": {
+                "label": "News 2015"
+              },
+              "news-2014": {
+                "label": "News 2014"
               }
             }
           }
@@ -528,3 +528,4 @@
       }
     }
   }
+}

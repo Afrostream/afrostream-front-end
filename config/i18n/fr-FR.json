@@ -418,12 +418,12 @@
     "successText": "Votre coupon est validé, vous pouvez profiter pleinement de votre compte Afrostream",
     "headerText": "Entrez le code du coupon pour commencer votre abonnement Afrostream.",
     "couponInvalid": "Une erreur interne est survenue. Merci de contacter le support à support@afrostream.tv .",
+    "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe.",
     "status": {
       "redeemed": "Le code a déjà été utilisé.",
       "pending": "Le code est en attente.",
       "expired": "Le code a déjà été utilisé."
     },
-    "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe.",
     "errors": {
       "50": {
         "name": "COUPON_CODE_NOT_FOUND",
