@@ -42,6 +42,8 @@ class ModalCoupon extends ModalComponent {
     return await dispatch(BillingActionCreators.couponActivate())
       .then(()=> {
         return dispatch(UserActionCreators.getProfile())
+      }).then(()=> {
+        return this.props.history.push('/')
       }).catch(({response:{body:{error, code, message}}})=> {
         const errorCode = (code && this.getTitle('errors')[code])
         return this.setState({
@@ -110,9 +112,6 @@ class ModalCoupon extends ModalComponent {
           success: user
         })
         return dispatch(UserActionCreators.getProfile())
-      })
-      .then(()=> {
-        return this.props.history.push('/')
       })
       .catch((err) => {
         console.log('Error coupon ', err)
