@@ -22,10 +22,276 @@
         }
       }
     },
+    "afrostream-node-request": {
+      "version": "2.4.1",
+      "from": "git+https://afrostream-tech:d51e355769ddd0fd212084c35fb99f71ab4146b2@github.com/Afrostream/afrostream-node-request.git#v2.4.1",
+      "resolved": "git+https://afrostream-tech:d51e355769ddd0fd212084c35fb99f71ab4146b2@github.com/Afrostream/afrostream-node-request.git#0bea75552b24d0541c5094b515e3c3975ffe73f0",
+      "dependencies": {
+        "lodash": {
+          "version": "4.15.0"
+        },
+        "q": {
+          "version": "1.4.1"
+        },
+        "request": {
+          "version": "2.74.0",
+          "dependencies": {
+            "aws-sign2": {
+              "version": "0.6.0"
+            },
+            "aws4": {
+              "version": "1.4.1"
+            },
+            "bl": {
+              "version": "1.1.2",
+              "dependencies": {
+                "readable-stream": {
+                  "version": "2.0.6",
+                  "dependencies": {
+                    "core-util-is": {
+                      "version": "1.0.2"
+                    },
+                    "inherits": {
+                      "version": "2.0.3"
+                    },
+                    "isarray": {
+                      "version": "1.0.0"
+                    },
+                    "process-nextick-args": {
+                      "version": "1.0.7"
+                    },
+                    "string_decoder": {
+                      "version": "0.10.31"
+                    },
+                    "util-deprecate": {
+                      "version": "1.0.2"
+                    }
+                  }
+                }
+              }
+            },
+            "caseless": {
+              "version": "0.11.0"
+            },
+            "combined-stream": {
+              "version": "1.0.5",
+              "dependencies": {
+                "delayed-stream": {
+                  "version": "1.0.0"
+                }
+              }
+            },
+            "extend": {
+              "version": "3.0.0"
+            },
+            "forever-agent": {
+              "version": "0.6.1"
+            },
+            "form-data": {
+              "version": "1.0.1",
+              "dependencies": {
+                "async": {
+                  "version": "2.0.1",
+                  "dependencies": {
+                    "lodash": {
+                      "version": "4.15.0"
+                    }
+                  }
+                }
+              }
+            },
+            "har-validator": {
+              "version": "2.0.6",
+              "dependencies": {
+                "chalk": {
+                  "version": "1.1.3",
+                  "dependencies": {
+                    "ansi-styles": {
+                      "version": "2.2.1"
+                    },
+                    "escape-string-regexp": {
+                      "version": "1.0.5"
+                    },
+                    "has-ansi": {
+                      "version": "2.0.0",
+                      "dependencies": {
+                        "ansi-regex": {
+                          "version": "2.0.0"
+                        }
+                      }
+                    },
+                    "strip-ansi": {
+                      "version": "3.0.1",
+                      "dependencies": {
+                        "ansi-regex": {
+                          "version": "2.0.0"
+                        }
+                      }
+                    },
+                    "supports-color": {
+                      "version": "2.0.0"
+                    }
+                  }
+                },
+                "commander": {
+                  "version": "2.9.0",
+                  "dependencies": {
+                    "graceful-readlink": {
+                      "version": "1.0.1"
+                    }
+                  }
+                },
+                "is-my-json-valid": {
+                  "version": "2.13.1",
+                  "dependencies": {
+                    "generate-function": {
+                      "version": "2.0.0"
+                    },
+                    "generate-object-property": {
+                      "version": "1.2.0",
+                      "dependencies": {
+                        "is-property": {
+                          "version": "1.0.2"
+                        }
+                      }
+                    },
+                    "jsonpointer": {
+                      "version": "2.0.0"
+                    },
+                    "xtend": {
+                      "version": "4.0.1"
+                    }
+                  }
+                },
+                "pinkie-promise": {
+                  "version": "2.0.1",
+                  "dependencies": {
+                    "pinkie": {
+                      "version": "2.0.4"
+                    }
+                  }
+                }
+              }
+            },
+            "hawk": {
+              "version": "3.1.3",
+              "dependencies": {
+                "boom": {
+                  "version": "2.10.1"
+                },
+                "cryptiles": {
+                  "version": "2.0.5"
+                },
+                "hoek": {
+                  "version": "2.16.3"
+                },
+                "sntp": {
+                  "version": "1.0.9"
+                }
+              }
+            },
+            "http-signature": {
+              "version": "1.1.1",
+              "dependencies": {
+                "assert-plus": {
+                  "version": "0.2.0"
+                },
+                "jsprim": {
+                  "version": "1.3.1",
+                  "dependencies": {
+                    "extsprintf": {
+                      "version": "1.0.2"
+                    },
+                    "json-schema": {
+                      "version": "0.2.3"
+                    },
+                    "verror": {
+                      "version": "1.3.6"
+                    }
+                  }
+                },
+                "sshpk": {
+                  "version": "1.10.0",
+                  "dependencies": {
+                    "asn1": {
+                      "version": "0.2.3"
+                    },
+                    "assert-plus": {
+                      "version": "1.0.0"
+                    },
+                    "bcrypt-pbkdf": {
+                      "version": "1.0.0",
+                      "dependencies": {
+                        "tweetnacl": {
+                          "version": "0.14.3"
+                        }
+                      }
+                    },
+                    "dashdash": {
+                      "version": "1.14.0"
+                    },
+                    "ecc-jsbn": {
+                      "version": "0.1.1"
+                    },
+                    "getpass": {
+                      "version": "0.1.6"
+                    },
+                    "jodid25519": {
+                      "version": "1.0.2"
+                    },
+                    "jsbn": {
+                      "version": "0.1.0"
+                    },
+                    "tweetnacl": {
+                      "version": "0.13.3"
+                    }
+                  }
+                }
+              }
+            },
+            "is-typedarray": {
+              "version": "1.0.0"
+            },
+            "isstream": {
+              "version": "0.1.2"
+            },
+            "json-stringify-safe": {
+              "version": "5.0.1"
+            },
+            "mime-types": {
+              "version": "2.1.11",
+              "dependencies": {
+                "mime-db": {
+                  "version": "1.23.0"
+                }
+              }
+            },
+            "node-uuid": {
+              "version": "1.4.7"
+            },
+            "oauth-sign": {
+              "version": "0.8.2"
+            },
+            "qs": {
+              "version": "6.2.1"
+            },
+            "stringstream": {
+              "version": "0.0.5"
+            },
+            "tough-cookie": {
+              "version": "2.3.1"
+            },
+            "tunnel-agent": {
+              "version": "0.4.3"
+            }
+          }
+        }
+      }
+    },
     "afrostream-player": {
-      "version": "2.2.17",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.17",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#91fc90998ec911919c044b44ad815c85b57c7eb3"
+      "version": "2.2.19",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.19",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#c7962b9eb68003b8261910dfe9b3983667e02a23"
     },
     "after": {
       "version": "0.8.1"
@@ -43,7 +309,7 @@
       "version": "1.0.0"
     },
     "anchor-markdown-header": {
-      "version": "0.5.5"
+      "version": "0.5.6"
     },
     "ansi-escapes": {
       "version": "1.4.0"
@@ -1889,7 +2155,7 @@
       "version": "1.1.1"
     },
     "is": {
-      "version": "3.1.0"
+      "version": "3.2.0"
     },
     "is-absolute-url": {
       "version": "2.0.0"
@@ -2245,9 +2511,9 @@
       "version": "3.0.4"
     },
     "koment-js": {
-      "version": "1.0.8",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#1.0.18",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#1a3f2df13b4eecf28ae9898e2242f3e9f11f7308",
+      "version": "1.0.9",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#1.0.19",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/koment-js.git#568488edecadb2889dba0a6eff724231c786098e",
       "dependencies": {
         "babel": {
           "version": "5.8.38",
@@ -4550,9 +4816,9 @@
       "resolved": "git+https://github.com/benjipott/video.js-chromecast.git#680b46d47d5621e9724c5c7d492f3c0060ddcabe"
     },
     "videojs-externals": {
-      "version": "1.0.1",
-      "from": "git+https://github.com/Afrostream/videojs-externals.git#master",
-      "resolved": "git+https://github.com/Afrostream/videojs-externals.git#6f1c4fb236b4b466769ccec1d917ca326578129d"
+      "version": "1.0.4",
+      "from": "git+https://github.com/Afrostream/videojs-externals.git#1.0.4",
+      "resolved": "git+https://github.com/Afrostream/videojs-externals.git#180c467a9767fa9e06a5822daeae226b0e0facab"
     },
     "videojs-font": {
       "version": "2.0.0"
@@ -4573,11 +4839,6 @@
     },
     "videojs-vtt.js": {
       "version": "0.12.1"
-    },
-    "videojs-youtube": {
-      "version": "2.0.8",
-      "from": "git+https://github.com/benjipott/videojs-youtube.git#es6",
-      "resolved": "git+https://github.com/benjipott/videojs-youtube.git#1a387e2c6335932c35e6322ab638319ccaa9302a"
     },
     "vm-browserify": {
       "version": "0.0.4"
