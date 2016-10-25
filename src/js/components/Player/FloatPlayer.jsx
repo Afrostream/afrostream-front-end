@@ -47,7 +47,6 @@ class FloatPlayer extends React.Component {
 
   componentWillUnmount () {
     this.destroyPlayer()
-
     console.log('player : componentWillUnmount', this.player)
   }
 
@@ -203,6 +202,7 @@ class FloatPlayer extends React.Component {
       //Tracking Finalise tracking video
       return await new Promise((resolve) => {
         videojs.off(window, 'scroll')
+        videojs.off(window, 'resize')
         this.player.one('dispose', () => {
           this.player = null
           this.playerInit = false
@@ -249,6 +249,7 @@ class FloatPlayer extends React.Component {
       }
     )
     videojs.on(window, 'scroll', ::this.requestTick)
+    videojs.on(window, 'resize', ::this.requestTick)
     this.requestTick(true)
     return player
   }
@@ -256,10 +257,18 @@ class FloatPlayer extends React.Component {
   async generateDomTag (videoData) {
     console.log('player : generate dom tag')
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
+    let elementType = 'video'
+    switch (videoData.get('type')) {
+      case 'rich':
+      case 'audio':
+        elementType = 'audio'
+        break
+      default:
+        break
+    }
     let video = document.createElement('video')
-    const className = videoData.get('className')
     video.id = 'afrostream-player'
-    video.className = `player-container video-js vjs-fluid vjs-big-play-centered ${className}`
+    video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
 
