@@ -31,7 +31,10 @@ export function getData (req, path, requestOptions) {
         qs: req.query || {},
         body: req.body,
         uri: path,
-        context: { req: req }
+        context: { req: req },
+        forwardedHeaders: {
+          'Access-Token': 'Access-Token'
+        }
       },
       requestOptions || {}
     )
