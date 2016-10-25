@@ -63,7 +63,10 @@ export function proxy (req, res, queryOptions) {
         body: req.body,
         uri: req.originalUrl,
         followRedirect: false,
-        filter: null
+        filter: null,
+        forwardedHeaders: {
+          'Access-Token': 'Access-Token'
+        }
       },
       queryOptions
     )
