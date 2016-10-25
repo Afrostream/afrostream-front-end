@@ -94,6 +94,8 @@ class LifePin extends Component {
 
     switch (data.get('type')) {
       case 'video':
+      case 'audio':
+      case 'rich':
         e.preventDefault()
         dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({

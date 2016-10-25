@@ -1,14 +1,17 @@
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import config from '../../../../config'
 import moment from 'moment'
 import { Link } from '../Utils'
+import _ from 'lodash'
 import LifePin from './LifePin'
 import { slugify, extractImg } from '../../lib/utils'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
 import Immutable from 'immutable'
 import ModalSocial from '../Modal/ModalSocial'
+import document from 'global/document'
 
 if (process.env.BROWSER) {
   require('./LifePinView.less')
@@ -19,6 +22,16 @@ class LifePinView extends LifePin {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  componentDidMount () {
+    const players = document.querySelectorAll('.ta-insert-video')
+    if (players) {
+      _.forEach(players, (element)=> {
+        debugger
+        element.addEventListener('click', ::this.videoClickHandler)
+      })
+    }
   }
 
   /**
@@ -72,11 +85,34 @@ class LifePinView extends LifePin {
     return config.userRoles.indexOf(config.userRoles[userRole]) >= config.userRoles.indexOf(roleRequired)
   }
 
+  videoClickHandler (e) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+    e.preventDefault()
+    debugger
+    const target = e.currentTarget || e.target;
+    const targetUrl = target.getAttribute('ta-insert-video')
+    dispatch(PlayerActionCreators.killPlayer())
+    dispatch(PlayerActionCreators.loadPlayer({
+      data: Immutable.fromJS({
+        target,
+        height: 150,
+        autoplay: true,
+        sources: [{
+          src: targetUrl.replace('embed/', 'watch?v='),
+          type: `video/youtube`
+        }]
+      })
+    }))
+  }
+
   clickHandler (e, data) {
     const {
       props: {
-        dispatch,
-        history
+        dispatch
       }
     } = this
     const pinRole = data.get('role')
@@ -94,7 +130,7 @@ class LifePinView extends LifePin {
       data: Immutable.fromJS({
         target: this.refs.pinHeader || e.currentTarget,
         height: 150,
-        controls: false,
+        autoplay: true,
         sources: [{
           src: data.get('originalUrl'),
           type: `video/${data.get('providerName')}`
