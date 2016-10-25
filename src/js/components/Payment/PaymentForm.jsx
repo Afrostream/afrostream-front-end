@@ -330,7 +330,7 @@ class PaymentForm extends React.Component {
         if (code) {
           const errorCode = (self && getI18n().coupon.errors[code])
           if (errorCode && errorCode.message) {
-            globalMessage = errorCode.message
+            globalMessage = `${errorCode.message} [${code}]`
           }
         }
 

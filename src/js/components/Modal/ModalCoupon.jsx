@@ -50,7 +50,7 @@ class ModalCoupon extends ModalComponent {
           success: false,
           loading: false,
           signInOrUp: false,
-          error: (errorCode && errorCode.message) || error || message || this.getTitle('couponInvalid')
+          error: (errorCode && `${errorCode.message} [${code}]`) || error || message || this.getTitle('couponInvalid')
         })
       })
   }
