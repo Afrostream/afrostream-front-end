@@ -95,7 +95,7 @@ class ModalCoupon extends ModalComponent {
         }
       }) => {
         //coupon valid
-        if (coupon /*&& coupon.status === 'waiting'*/) {
+        if (coupon && coupon.status === 'waiting') {
           if (!user) {
             return
           }

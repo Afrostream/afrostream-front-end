@@ -320,14 +320,22 @@ class PaymentForm extends React.Component {
     })
       .then(()=> {
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
-      }).catch((err) => {
-        let message = getI18n().payment.errors.global
+      }).catch(({response:{body:{error, code, message}}}) => {
+        let globalMessage = getI18n().payment.errors.global
 
-        if (err.response && err.response.body) {
-          message = err.response.body.error
+        if (error) {
+          globalMessage = message
         }
 
-        self.disableForm(false, 2, message)
+        if (code) {
+          const errorCode = (self && getI18n().coupon.errors[code])
+          if (errorCode && errorCode.message) {
+            globalMessage = errorCode.message
+          }
+        }
+
+
+        self.disableForm(false, 2, globalMessage)
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/error`)
       })
   }
