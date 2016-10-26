@@ -74,17 +74,24 @@ class SideBar extends React.Component {
     let el
     switch (type) {
       case 'favoris':
-        el = (<li><Link to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link></li>)
+        el = (
+          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link>
+          </li>)
         break
       case 'last':
-        el = (<li><Link to="/last"><i className="zmdi zmdi-movie"/>Derniers ajouts</Link></li>)
+        el = (
+          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/last"><i className="zmdi zmdi-movie"/>Derniers
+            ajouts</Link></li>)
         break
       case 'community':
-        el = (<li><Link to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link></li>)
+        el = (
+          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link>
+          </li>)
         break
       case 'sponsorship':
         el = featuresFlip.sponsorship && canSponsorshipSubscription && (
-            <li><Link to="/parrainage"><i className="zmdi zmdi-ticket-star"/>Parrainer</Link></li>)
+            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/parrainage"><i className="zmdi zmdi-ticket-star"/>Parrainer</Link>
+            </li>)
         break
       case 'browse':
         el = <BrowseMenu/>
@@ -93,10 +100,11 @@ class SideBar extends React.Component {
         el = <SearchInput defaultOpen={true}/>
         break
       case 'compte':
-        el = (<li><Link to="/compte"><img src={user.get('picture')}
-                                          alt="50x50"
-                                          id="userButtonImg"
-                                          className="icon-user"/> Mon profil</Link></li>)
+        el = (<li><Link onClick={(e)=>::this.onSetOpen(false)} to="/compte"><img src={user.get('picture')}
+                                                                                 alt="50x50"
+                                                                                 id="userButtonImg"
+                                                                                 className="icon-user"/> Mon
+          profil</Link></li>)
         break
       case 'logout':
         el = (<ul className="sidebar-nav">
@@ -207,10 +215,15 @@ class SideBar extends React.Component {
         <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
         <ul className="sidebar-nav">
           {this.getUserConnectedButtons(user, 'compte')}
-          <li><Link to="/"><i className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}</Link></li>
-          <li><Link to="/life"><i className="zmdi zmdi-accounts"/>Actualité</Link></li>
-          <li><Link to="/life"><i className="zmdi zmdi-accounts"/>Communauté</Link></li>
-          <li><Link to="/life/experience"><i className="zmdi zmdi-gamepad"/>Expérience</Link></li>
+          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/"><i
+            className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}
+          </Link></li>
+          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
+            className="zmdi zmdi-accounts"/>Actualité</Link></li>
+          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
+            className="zmdi zmdi-accounts"/>Communauté</Link></li>
+          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i className="zmdi zmdi-gamepad"/>Expérience</Link>
+          </li>
           {this.getUserConnectedButtons(user, 'favoris')}
           {this.getUserConnectedButtons(user, 'last')}
           {this.getUserConnectedButtons(user, 'sponsorship')}
