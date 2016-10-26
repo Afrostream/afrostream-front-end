@@ -7,6 +7,7 @@ import { Link } from 'react-router'
 import config from '../../../../config'
 import BrowseMenu from './../Browse/BrowseMenu'
 import SearchInput from './../Search/SearchBox'
+import classSet from 'classnames'
 import window from 'global/window'
 import MobileDetect from 'mobile-detect'
 
@@ -73,49 +74,49 @@ class SideBar extends React.Component {
         canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no').size)
       }
     }
-
-    if (!planCode) {
-      return ''
+    if (!user) {
+      return
     }
+
     let el
     switch (type) {
       case 'favoris':
-        el = (
-          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link>
-          </li>)
+        el = planCode && (
+            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i
+              className="zmdi zmdi-favorite"/>Mes Favoris</Link>
+            </li>)
         break
       case 'last':
-        el = (
-          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/last"><i className="zmdi zmdi-movie"/>Derniers
-            ajouts</Link></li>)
-        break
-      case 'community':
-        el = (
-          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i className="zmdi zmdi-favorite"/>Mes Favoris</Link>
-          </li>)
+        el = planCode && (
+            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/last"><i
+              className="zmdi zmdi-movie"/>Derniers
+              ajouts</Link></li>)
         break
       case 'sponsorship':
         el = featuresFlip.sponsorship && canSponsorshipSubscription && (
-            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/parrainage"><i className="zmdi zmdi-ticket-star"/>Parrainer</Link>
+            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/parrainage"><i
+              className="zmdi zmdi-ticket-star"/>Parrainer</Link>
             </li>)
         break
       case 'browse':
-        el = <BrowseMenu/>
+        el = planCode && <BrowseMenu/>
         break
       case 'search':
-        el = <SearchInput defaultOpen={true}/>
+        el = planCode && <SearchInput defaultOpen={true}/>
         break
       case 'compte':
-        el = (<li><Link onClick={(e)=>::this.onSetOpen(false)} to="/compte"><img src={user.get('picture')}
-                                                                                 alt="50x50"
-                                                                                 id="userButtonImg"
-                                                                                 className="icon-user"/> Mon
+        el = (<li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/compte"><img
+          src={user.get('picture')}
+          alt="50x50"
+          id="userButtonImg"
+          className="icon-user"/> Mon
           profil</Link></li>)
         break
       case 'logout':
         el = (<ul className="sidebar-nav">
           <li role="separator" className="divider"></li>
-          <li><Link to="/" onClick={::this.logout}><i className="zmdi zmdi-lock-toggled"/>Se deconnecter</Link></li>
+          <li><Link activeClassName="active" to="/" onClick={::this.logout}><i className="zmdi zmdi-lock-toggled"/>Se
+            deconnecter</Link></li>
           <li role="separator" className="divider"></li>
         </ul>)
         break
@@ -202,9 +203,9 @@ class SideBar extends React.Component {
       width: this.props.touchHandleWidth
     }
 
-    sidebarStyle.left = 0;
-    sidebarStyle.transform = 'translateX(-100%)';
-    sidebarStyle.WebkitTransform = 'translateX(-100%)';
+    sidebarStyle.left = 0
+    sidebarStyle.transform = 'translateX(-100%)'
+    sidebarStyle.WebkitTransform = 'translateX(-100%)'
 
     if (this.props.toggled) {
       // slide open sidebar
@@ -236,7 +237,7 @@ class SideBar extends React.Component {
         sidebarStyle.WebkitTransform = `translateX(0%)`
       }
       // make space on the left/right side of the content for the sidebar
-      contentStyle.left = `${this.state.sidebarWidth}px`;
+      contentStyle.left = `${this.state.sidebarWidth}px`
     }
 
     if (useTouch) {
@@ -267,14 +268,15 @@ class SideBar extends React.Component {
           <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
           <ul className="sidebar-nav">
             {this.getUserConnectedButtons(user, 'compte')}
-            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/"><i
+            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/"><i
               className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}
             </Link></li>
-            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
+            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
               className="zmdi zmdi-accounts"/>Actualité</Link></li>
-            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
+            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/community"><i
               className="zmdi zmdi-accounts"/>Communauté</Link></li>
-            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i className="zmdi zmdi-gamepad"/>Expérience</Link>
+            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i
+              className="zmdi zmdi-gamepad"/>Expérience</Link>
             </li>
             {this.getUserConnectedButtons(user, 'favoris')}
             {this.getUserConnectedButtons(user, 'last')}
@@ -283,7 +285,7 @@ class SideBar extends React.Component {
           {this.getUserConnectedButtons(user, 'logout')}
         </div>
         {overlay}
-        <div style={contentStyle}>
+        <div style={contentStyle} className={classSet({docked: this.props.docked})}>
           {dragHandle}
           {this.props.children}
         </div>

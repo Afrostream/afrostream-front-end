@@ -39,7 +39,7 @@ class LifeList extends Component {
       if (canInsertSpot) {
         const randIndex = _.random(0, spotList.size - 1)
         const spot = spotList.get(randIndex)
-        mergedList = mergedList.insert(index, spot);
+        mergedList = mergedList.insert(index, spot)
       }
     })
 

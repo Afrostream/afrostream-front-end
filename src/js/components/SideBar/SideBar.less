@@ -96,10 +96,13 @@
     }
   }
 
-  .sidebar-nav li a:hover {
+  .sidebar-nav li a {
     text-decoration: none;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
+    &:hover,
+    &.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.2);
+    }
   }
 
   .sidebar-nav li a:active,
@@ -133,31 +136,12 @@
     }
   }
 
-  .app.toggled .sidebar-wrapper {
-    //transform: translateX(0);
-  }
-
-  .app.toggled .life-navigation {
-    padding-left: @sidebar-width;
-  }
-
-  .app.toggled {
-    margin-left: @sidebar-width;
-    .transition(margin-left @menu-open-duration ease);
-  }
-
-  .app.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -@sidebar-width;
-  }
-
   #page-content-wrapper {
     position: relative;
   }
 
-  .app.toggled #page-content-wrapper {
-    position: relative;
-    margin-left: 0;
+  .docked .life-navigation {
+    padding-left: @sidebar-width;
   }
 }
 
