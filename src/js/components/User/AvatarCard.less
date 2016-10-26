@@ -4,7 +4,9 @@
   overflow: hidden;
   position: relative;
   width: 100%;
+  min-height: 150px;
   border: 1px solid #CCC;
+  background-color: #FFF;
   text-align: center;
   .header {
     // This stretches the canvas across the entire hero unit
@@ -15,6 +17,13 @@
     height: 70px;
     // This positions the canvas under the text
     z-index: 1;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    opacity: 0.9;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
   }
   .avatar {
     position: relative;
@@ -31,5 +40,11 @@
   }
   .content {
     padding: 10px;
+    color: @color-indigo;
+    font-family: @font-oswald;
+    font-size: 1.8em;
+    &:first-letter {
+      text-transform: uppercase;
+    }
   }
 }
