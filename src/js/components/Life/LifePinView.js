@@ -93,7 +93,6 @@ class LifePinView extends LifePin {
     e.preventDefault()
     const target = e.currentTarget || e.target;
     const targetUrl = target.getAttribute('ta-insert-video')
-    dispatch(PlayerActionCreators.killPlayer())
     dispatch(PlayerActionCreators.loadPlayer({
       data: Immutable.fromJS({
         target,
@@ -123,7 +122,6 @@ class LifePinView extends LifePin {
     }
 
     e.preventDefault()
-    dispatch(PlayerActionCreators.killPlayer())
     dispatch(PlayerActionCreators.loadPlayer({
       data: Immutable.fromJS({
         target: this.refs.pinHeader || e.currentTarget,
@@ -205,7 +203,7 @@ class LifePinView extends LifePin {
                 return bgImg && (
                     <Link to={data.get('targetUrl')}
                           key={`life-pin-spot-${data.get('_id')}-${key}`}>
-                      <img className="life-spot spot-vertical" alt={data.get('title')}
+                      <img className="life-spot spot-vertical" alt={data.get('title')} width={data.get('displayWidth')}
                            src={spotImgSrc}/>
                     </Link>)
               }).toJS()}
