@@ -291,7 +291,7 @@
     "afrostream-player": {
       "version": "2.2.20",
       "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.20",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#b73eb7d72b9c54fcd7992367b96f51d509907763"
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#60b35c8cf9a8cea1271b36dbfd388503296903db"
     },
     "after": {
       "version": "0.8.1"
