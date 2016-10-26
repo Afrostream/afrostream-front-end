@@ -102,7 +102,6 @@ class LifePin extends Component {
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
             target: target,
-            height: 150,
             controls: false,
             sources: [{
               src: data.get('originalUrl'),
