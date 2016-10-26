@@ -30,6 +30,7 @@
   // ***
   //padding: 0.5em;
   width: @sidebar-width;
+  .isMobile({ width: 100%; });
   z-index: @nav-z + 3;
   .transition(all 0.35s linear);
   .animation(playerMove 0.35s ease forwards);
@@ -50,8 +51,11 @@
       }
     }
   }
+
   .player-container {
-    height: 150px;
+    &.afrostream-player-dimensions.vjs-fluid {
+      .isMobile({ padding-top: 36.25%; });
+    }
   }
 
   .close {
