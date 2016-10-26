@@ -15,7 +15,8 @@ if (process.env.BROWSER) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(LifeActionCreators.fetchThemes()),
-    store.dispatch(LifeActionCreators.fetchPins({}))
+    store.dispatch(LifeActionCreators.fetchPins({})),
+    store.dispatch(LifeActionCreators.fetchSpots({}))
   ])
 
   if (themeId) {
