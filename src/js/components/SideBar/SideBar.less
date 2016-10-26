@@ -9,23 +9,11 @@
   width: @sidebar-width;
   height: 100%;
   margin-bottom: -@header-height;
-  .isMobile({ transform: translateX(-100%); margin-bottom: -@header-height-mobile; });
+  .isMobile({ margin-bottom: -@header-height-mobile; });
   background-color: @color-black-2;
   .transition(transform @menu-open-duration ease);
   box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
 
-  .sidebar-overlay {
-    z-index: 1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease-out;
-    backgroundColor: fade(@color-black-2, 30%);
-  }
   .friends-list {
     border-top: solid 1px fade(#FFFFFF, 10%);
     display: flex;
@@ -46,7 +34,7 @@
     width: @sidebar-width;
     margin: 0;
     list-style: none;
-    .isMobile({ padding: @header-height 0 0 0; });
+    .isMobile({ padding: @header-height-mobile 0 0 0; });
 
     .icon-user {
       border-radius: 50px;
@@ -83,6 +71,7 @@
   .side-drawer {
     > div {
       padding-top: @header-height;
+      .isMobile({ padding-top: @header-height-mobile; });
     }
   }
 
@@ -95,6 +84,7 @@
     display: block;
     text-decoration: none;
     font-size: 1.8em;
+    .isMobile({ font-size: 2.5em; padding: 1em 10px 0 0 });
     font-family: @font-oswald;
     color: @brand-primary;
     padding-left: 10px;
@@ -169,4 +159,10 @@
     position: relative;
     margin-left: 0;
   }
+}
+
+.sidebar-overlay {
+  z-index: @nav-z + 2;
+  background-color: fade(@color-black-2, 60%);
+  .isNotMobile({ display: none });
 }

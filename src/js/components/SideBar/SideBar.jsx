@@ -8,6 +8,7 @@ import config from '../../../../config'
 import BrowseMenu from './../Browse/BrowseMenu'
 import SearchInput from './../Search/SearchBox'
 import window from 'global/window'
+import MobileDetect from 'mobile-detect'
 
 const {featuresFlip} = config
 
@@ -40,7 +41,12 @@ class SideBar extends React.Component {
   }
 
   componentDidMount () {
+    const userAgent = (window.navigator && navigator.userAgent) || ''
+    let agent = new MobileDetect(userAgent)
+    const isMobile = agent.mobile()
+    //this.onSetOpen(!isMobile)
     this.setState({
+      isMobile,
       dragSupported: typeof window === 'object' && 'ontouchstart' in window
     })
   }
@@ -142,28 +148,63 @@ class SideBar extends React.Component {
     } = this
 
     const useTouch = this.state.dragSupported
-    const rootProps = {}
+    const rootProps = {
+      style: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        //overflow: 'hidden'
+      }
+    }
     let dragHandle = null
     const user = User.get('user')
     const isTouching = this.isTouching()
 
-    const overlayStyle = {}
+    const overlayStyle = {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      opacity: 0,
+      visibility: 'hidden',
+      transition: 'opacity .3s ease-out'
+    }
 
-    const sidebarStyle = {}
+    const contentStyle = {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      //overflow: 'auto',
+      transition: 'left .3s ease-out, right .3s ease-out'
+    }
+
+    const sidebarStyle = {
+      position: 'fixed',
+      top: 0,
+      bottom: 0,
+      transition: 'transform .3s ease-out',
+      WebkitTransition: '-webkit-transform .3s ease-out',
+      willChange: 'transform',
+      overflowY: 'auto',
+    }
 
     const dragHandleStyle = {
       zIndex: 1,
       position: 'fixed',
       top: 0,
       bottom: 0,
-      right: 0,
-      marginRight: -this.props.touchHandleWidth,
+      left: 0,
       width: this.props.touchHandleWidth
     }
 
-    sidebarStyle.transform = 'translateX(-100%)'
-    sidebarStyle.WebkitTransform = 'translateX(-100%)'
-
+    sidebarStyle.left = 0;
+    sidebarStyle.transform = 'translateX(-100%)';
+    sidebarStyle.WebkitTransform = 'translateX(-100%)';
 
     if (this.props.toggled) {
       // slide open sidebar
@@ -186,6 +227,16 @@ class SideBar extends React.Component {
       sidebarStyle.transition = 'none'
       sidebarStyle.WebkitTransition = 'none'
       overlayStyle.transition = 'none'
+      contentStyle.transition = 'none'
+    }
+    else if (this.props.docked) {
+//    show sidebar
+      if (this.state.sidebarWidth !== 0) {
+        sidebarStyle.transform = `translateX(0%)`
+        sidebarStyle.WebkitTransform = `translateX(0%)`
+      }
+      // make space on the left/right side of the content for the sidebar
+      contentStyle.left = `${this.state.sidebarWidth}px`;
     }
 
     if (useTouch) {
@@ -203,33 +254,39 @@ class SideBar extends React.Component {
       }
     }
 
-    //const overlay = (<div className="sidebar-overlay"
-    //                      style={overlayStyle}
-    //                      role="presentation"
-    //                      tabIndex="0"
-    //                      onClick={this.overlayClicked}/>)
+    const overlay = (<div className="sidebar-overlay"
+                          style={overlayStyle}
+                          role="presentation"
+                          tabIndex="0"
+                          onClick={this.overlayClicked}/>)
 
 
     return (
-      <div className="sidebar-wrapper" style={sidebarStyle}  {...rootProps}>
-        <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
-        <ul className="sidebar-nav">
-          {this.getUserConnectedButtons(user, 'compte')}
-          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/"><i
-            className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}
-          </Link></li>
-          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
-            className="zmdi zmdi-accounts"/>Actualité</Link></li>
-          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
-            className="zmdi zmdi-accounts"/>Communauté</Link></li>
-          <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i className="zmdi zmdi-gamepad"/>Expérience</Link>
-          </li>
-          {this.getUserConnectedButtons(user, 'favoris')}
-          {this.getUserConnectedButtons(user, 'last')}
-          {this.getUserConnectedButtons(user, 'sponsorship')}
-        </ul>
-        {this.getUserConnectedButtons(user, 'logout')}
-        {dragHandle}
+      <div {...rootProps}>
+        <div className="sidebar-wrapper" style={sidebarStyle}>
+          <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
+          <ul className="sidebar-nav">
+            {this.getUserConnectedButtons(user, 'compte')}
+            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/"><i
+              className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}
+            </Link></li>
+            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
+              className="zmdi zmdi-accounts"/>Actualité</Link></li>
+            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
+              className="zmdi zmdi-accounts"/>Communauté</Link></li>
+            <li><Link onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i className="zmdi zmdi-gamepad"/>Expérience</Link>
+            </li>
+            {this.getUserConnectedButtons(user, 'favoris')}
+            {this.getUserConnectedButtons(user, 'last')}
+            {this.getUserConnectedButtons(user, 'sponsorship')}
+          </ul>
+          {this.getUserConnectedButtons(user, 'logout')}
+        </div>
+        {overlay}
+        <div style={contentStyle}>
+          {dragHandle}
+          {this.props.children}
+        </div>
       </div>
     )
   }
@@ -328,7 +385,7 @@ SideBar.propTypes = {
 SideBar.defaultProps = {
   docked: false,
   toggled: false,
-  touchHandleWidth: 10,
+  touchHandleWidth: 20,
   dragToggleDistance: 50,
   styles: {}
 }
