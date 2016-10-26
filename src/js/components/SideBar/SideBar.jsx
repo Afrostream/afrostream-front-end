@@ -44,7 +44,7 @@ class SideBar extends React.Component {
     const userAgent = (window.navigator && navigator.userAgent) || ''
     let agent = new MobileDetect(userAgent)
     const isMobile = agent.mobile()
-    //this.onSetOpen(!isMobile)
+    this.onSetOpen(!isMobile)
     this.setState({
       isMobile,
       dragSupported: typeof window === 'object' && 'ontouchstart' in window
@@ -229,7 +229,7 @@ class SideBar extends React.Component {
       overlayStyle.transition = 'none'
       contentStyle.transition = 'none'
     }
-    else if (this.props.docked) {
+    else if (this.props.docked && !useTouch) {
 //    show sidebar
       if (this.state.sidebarWidth !== 0) {
         sidebarStyle.transform = `translateX(0%)`
