@@ -92,15 +92,16 @@ class LifePin extends Component {
       return history.push(pinUrl)
     }
 
+    const target = e.currentTarget || e.target;
+
     switch (data.get('type')) {
       case 'video':
       case 'audio':
       case 'rich':
         e.preventDefault()
-        dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
-            target: e.currentTarget || e.target,
+            target: target,
             height: 150,
             controls: false,
             sources: [{
@@ -242,7 +243,8 @@ class LifePin extends Component {
       props:{
         data,
         showBubble,
-        imageWidth
+        imageWidth,
+        imageHeight
       }
     } = this
 
@@ -254,7 +256,7 @@ class LifePin extends Component {
       const path = thumb.get('path')
       if (path) {
         imageUrl =
-          `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${imageWidth}&q=${config.images.quality}&fm=${config.images.type}`
+          `${images.urlPrefix}${path}?&crop=face&fit=crop&w=${imageWidth}&h=${imageHeight}&q=${config.images.quality}&fm=${config.images.type}`
 
       }
     }
@@ -265,12 +267,14 @@ class LifePin extends Component {
 
     const pinnedDate = moment(data.get('date'))
     const pinnedUser = data.get('user')
+    const description = data.get('description')
     const themes = data.get('themes')
     const pinRole = data.get('role')
     const isPremium = pinRole === 'premium' || pinRole === 'vip'
 
     const brickStyle = {
       'brick': true,
+      'brick-full': !(description && description.length),
       'premium': isPremium
     }
 
@@ -319,7 +323,7 @@ class LifePin extends Component {
               <div target="_self">{data.get('title')}</div>
             </div>
             <div className="card-description">
-              {data.get('description')}
+              {description}
             </div>
             <div className="card-date">
               {
@@ -338,6 +342,7 @@ class LifePin extends Component {
 
 LifePin.propTypes = {
   data: PropTypes.instanceOf(Immutable.Map),
+  imageHeight: PropTypes.number,
   imageWidth: PropTypes.number,
   showBubble: PropTypes.bool,
   history: PropTypes.object.isRequired,
@@ -347,6 +352,7 @@ LifePin.propTypes = {
 
 LifePin.defaultProps = {
   imageWidth: 1080,
+  imageHeight: 500,
   showBubble: true
 }
 
