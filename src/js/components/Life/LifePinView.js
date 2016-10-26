@@ -10,6 +10,7 @@ import { slugify, extractImg } from '../../lib/utils'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
 import Immutable from 'immutable'
+import AvatarCard from '../User/AvatarCard'
 import ModalSocial from '../Modal/ModalSocial'
 import document from 'global/document'
 
@@ -190,14 +191,10 @@ class LifePinView extends LifePin {
           <div className="row no-padding">
             <div className="col-md-8 no-padding ">
               <section dangerouslySetInnerHTML={{__html: pin.get('body')}}/>
-              <ModalSocial {...this.props} closable={false} modal={false}/>
+              <ModalSocial {...this.props} closable={false} modal={false} showLabel={true}/>
             </div>
-            <div className="col-md-4 no-padding">
-              {pinnedUser && <div className="card-bubble card-bubble-user">
-                <img src={`${pinnedUser.get('picture')}?type=large`}
-                     alt="user-button"
-                     className="icon-user"/>
-              </div>}
+            <div className="col-md-4 no-padding col-right">
+              {pinnedUser && <AvatarCard user={pinnedUser}/>}
               {spots && spots.map((data, key)=> {
                 const spotImgSrc = extractImg({data, key: 'image', width: 300})
                 return bgImg && (
