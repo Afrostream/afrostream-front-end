@@ -6,13 +6,18 @@
     position: relative;
     border-radius: 0;
     color: #FFF;
-    width: 45px;
+    min-width: 1.3em;
+    font-family: @font-family-base;
+    padding: 1em;
     &:hover {
       color: fade(@color-yellow, 70%);
     }
-    font: normal normal normal 1.5em/1 'Material-Design-Iconic-Font';
     .isMobile({ width: 3em; });
+
     &:before {
+      padding: 0.5em;
+      font-family: @font-material;
+      font-size: 1.3em;
       .isMobile({ font-size: 2em; });
     }
   }
