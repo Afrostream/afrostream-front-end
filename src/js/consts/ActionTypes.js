@@ -133,6 +133,7 @@ export default {
     fetchThemes: null,
     fetchSpots: null,
     fetchPins: null,
-    fetchPin: null
+    fetchPin: null,
+    fetchUsers: null
   })
 }

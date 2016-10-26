@@ -144,10 +144,6 @@ a.active {
         color: @color-purple;
       }
 
-      &.brand-grey {
-        background-color: @brand-grey;
-      }
-
       &.brand-bg-alpha {
         background-color: fade(@brand-bg, 10%);
         color: @color-purple;
@@ -172,9 +168,20 @@ a.active {
       }
     }
 
+    .content-padding {
+      padding: @app-padding * 5 !important;
+    }
+
+    .brand-grey {
+      background-color: @brand-grey;
+    }
+
     .no-padding {
       margin: 0;
       padding: 0;
+      &:before {
+        content: none;
+      }
     }
 
   }
