@@ -97,7 +97,6 @@ class LifePinView extends LifePin {
     dispatch(PlayerActionCreators.loadPlayer({
       data: Immutable.fromJS({
         target,
-        height: 150,
         autoplay: true,
         sources: [{
           src: targetUrl.replace('embed/', 'watch?v='),
@@ -126,7 +125,6 @@ class LifePinView extends LifePin {
     dispatch(PlayerActionCreators.loadPlayer({
       data: Immutable.fromJS({
         target: this.refs.pinHeader || e.currentTarget,
-        height: 150,
         autoplay: true,
         sources: [{
           src: data.get('originalUrl'),
