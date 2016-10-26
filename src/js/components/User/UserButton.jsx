@@ -107,7 +107,7 @@ class UserButton extends React.Component {
       }
     } = this
 
-    dispatch(EventActionCreators.toggleSideBar())
+    dispatch(EventActionCreators.toggleSideBar(false))
   }
 
 }

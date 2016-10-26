@@ -13,7 +13,6 @@ import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
 import window from 'global/window'
-import MobileDetect from 'mobile-detect'
 
 import * as CategoryActionCreators from '../actions/category'
 import * as MovieActionCreators from '../actions/movie'
@@ -77,18 +76,6 @@ class Application extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      isMobile: true
-    }
-  }
-
-  componentDidMount () {
-    const userAgent = (window.navigator && navigator.userAgent) || ''
-    let agent = new MobileDetect(userAgent)
-
-    this.setState({
-      isMobile: agent.mobile()
-    })
   }
 
   render () {
@@ -99,21 +86,21 @@ class Application extends React.Component {
 
     let appClasses = classNames({
       'app': true,
-      'toggled': toggled,
       'lock-open': hasPopup
     })
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={appClasses}>
-          <Header {...this.props}/>
-          <SideBar {...{toggled}} {...this.props}/>
           <SplashScreen />
           <AlertMessage />
-          <div id="page-content-wrapper" className="container-fluid">
-            {children}
-            <Footer {...this.props}/>
-          </div>
+          <Header {...this.props}/>
+          <SideBar {...{toggled}} docked={true} {...this.props}>
+            <div id="page-content-wrapper" className="container-fluid">
+              {children}
+              <Footer {...this.props}/>
+            </div>
+          </SideBar>
           <FloatPlayer {...this.props}/>
           <ModalView {...this.props}/>
         </div>
