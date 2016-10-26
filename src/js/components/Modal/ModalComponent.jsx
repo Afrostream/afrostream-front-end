@@ -33,7 +33,7 @@ class ModalComponent extends React.Component {
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
-      'hide': this.props.closable
+      'hide': !this.props.closable
     })
 
     let panelClass = {

@@ -235,6 +235,7 @@ class ModalSocial extends ModalComponent {
                    data-placement="top"
                    title={network.title}
                    key={`share-btn-${network.icon}`} {...inputAttributes}>
+        {this.props.showLabel && network.label}
       </div>)
     })
   }
@@ -287,10 +288,12 @@ class ModalSocial extends ModalComponent {
 }
 
 ModalSocial.propTypes = {
+  showLabel: React.PropTypes.bool,
   data: React.PropTypes.object
 }
 
 ModalSocial.defaultProps = {
+  showLabel: false,
   data: null
 }
 
