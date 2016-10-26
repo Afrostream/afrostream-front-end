@@ -29,7 +29,21 @@ class LifeList extends Component {
 
     const lifeTheme = Life.get(`life/themes/${themeId}`)
 
-    return pins || (lifeTheme && lifeTheme.get('pins'))
+    const pinsList = pins || (lifeTheme && lifeTheme.get('pins')) || Immutable.fromJs([])
+    const spotList = this.getSpots()
+
+    //const listSize = (pinsList.size + Math.min(Math.round(pinsList.size / this.props.moduloSpots), spotList.size))
+    let mergedList = pinsList
+    pinsList.forEach((spot, index)=> {
+      const canInsertSpot = this.canInsertSpot(spotList, index)
+      if (canInsertSpot) {
+        const randIndex = _.random(0, spotList.size - 1)
+        const spot = spotList.get(randIndex)
+        mergedList = mergedList.insert(index, spot);
+      }
+    })
+
+    return mergedList
   }
 
   getSpots () {
@@ -50,26 +64,31 @@ class LifeList extends Component {
         return spot.get('type') === 'banner'
       })
     }
-    return spotList
+    return spotList || Immutable.fromJs([])
+  }
+
+  canInsertSpot (spotList, index) {
+    const firstPage = Number(index <= this.props.moduloSpots)
+    const listIndex = index + 1
+    const hasMaxSpots = ((listIndex / this.props.moduloSpots) >= spotList.size)
+    return spotList && !((listIndex + firstPage) % this.props.moduloSpots) && !hasMaxSpots
   }
 
   renderInfiniteItem (index, key) {
     const pinsList = this.getPins()
-    let data = pinsList.get(index)
-    const spotList = this.getSpots()
-
-    if (index % 3) {
-      const randIndex = _.random(0, spotList.size)
-      data = spotList.get(randIndex)
-      return this.renderSpot({data, randIndex, key})
+    const data = pinsList.get(index)
+    const typeItem = data.get('type')
+    switch (typeItem) {
+      case 'spot':
+      case 'banner':
+        return this.renderSpot({data, index, key})
+        break
     }
-
-    data = pinsList.get(index)
     return this.renderItem({data, index, key})
 
   }
 
-  renderItem ({data, key, index, style}) {
+  renderItem ({data, key, index}) {
     const {
       props: {
         highlightFirst
@@ -88,7 +107,7 @@ class LifeList extends Component {
     )
   }
 
-  renderSpot ({data, key, index, style}) {
+  renderSpot ({data, key}) {
     const imageUrl = extractImg({data, key: 'image'})
     return (
       <Link {...{key}} to={data.get('targetUrl')}>
@@ -105,18 +124,12 @@ class LifeList extends Component {
       }
     } = this
     const pinsList = this.getPins()
-    if (!pinsList) {
-      return
-    }
-
-    let spotList = this.getSpots()
 
     const classList = {
       'life-list': true,
       'flat': !virtual,
       'virtual': virtual
     }
-
 
     return (<div className={classSet(classList)}>
       {!virtual && pinsList.map((data, index) =>this.renderItem({
@@ -132,17 +145,12 @@ class LifeList extends Component {
         length={pinsList.size}
         type={'simple'}
       />}
-      {spotList && spotList.map((data, index) =>this.renderSpot({
-        data,
-        index,
-        key: `life-list-spot-${themeId}-${index}`
-
-      })).toJS()}
     </div>)
   }
 }
 
 LifeList.propTypes = {
+  moduloSpots: PropTypes.number,
   highlightFirst: PropTypes.bool,
   virtual: PropTypes.bool,
   pins: PropTypes.instanceOf(Immutable.List),
@@ -157,6 +165,7 @@ LifeList.propTypes = {
 
 
 LifeList.defaultProps = {
+  moduloSpots: 6,
   highlightFirst: true,
   virtual: true,
   pins: null,

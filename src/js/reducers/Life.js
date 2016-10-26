@@ -40,6 +40,19 @@ export default createReducer(initialState, {
     })
   },
 
+  [ActionTypes.Life.fetchSpots](state, {res}) {
+    if (!res) {
+      return state
+    }
+    const spots = res.body
+    const resourceCount = res.headers['Resource-Count'] || spots.length
+
+    return state.merge({
+      [`life/spots/resourceCount`]: resourceCount,
+      [`life/spots/`]: spots
+    })
+  },
+
   [ActionTypes.Life.fetchPin](state, {res, pinId}) {
     if (!res) {
       return state
