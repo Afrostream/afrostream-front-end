@@ -14,7 +14,7 @@
   @cardTypeSize: 50px;
   @gap-brick: 0px;
   @yUpSize: 50px;
-
+  @minBrickHeight: 500px;
   &.flat,
     //&.virtual > div > div > div {
   &.virtual > div {
@@ -48,12 +48,13 @@
   }
 
   .brick {
+
     display: inline-block;
     display: flex;
     //width: 350px;
     width: 33.33%;
     max-width: 33.33%;
-    .isNotMobile({ min-height: 500px; });
+    .isNotMobile({ min-height: @minBrickHeight; });
     //max-height: 70vh;
     vertical-align: top;
     cursor: pointer;
@@ -190,6 +191,7 @@
     &:first-child {
       width: 100%;
       max-width: 100%;
+      min-height: @minBrickHeight;
       .brick-full();
       .card-body {
         .card-bubbles {
