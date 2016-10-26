@@ -8,7 +8,8 @@
   left: 0;
   width: @sidebar-width;
   height: 100%;
-  //transform: translateX(-@sidebar-width);
+  margin-bottom: -@header-height;
+  .isMobile({ transform: translateX(-100%); margin-bottom: -@header-height-mobile; });
   background-color: @color-black-2;
   .transition(transform @menu-open-duration ease);
   box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
