@@ -132,6 +132,7 @@ export default {
 
   Life: keyMirror({
     fetchThemes: null,
+    fetchSpots: null,
     fetchPins: null,
     fetchPin: null
   })

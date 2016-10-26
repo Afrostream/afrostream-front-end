@@ -50,6 +50,30 @@ export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
   }
 }
 
+export function fetchSpots ({limit = 20, startIndex = 0, stopIndex = 3}) {
+  return (dispatch, getState) => {
+    let readySpots = getState().Life.get(`life/spots`)
+    if (readySpots) {
+      console.log('Life spots already present in data store')
+      return {
+        type: ActionTypes.Life.fetchSpots,
+        res: {
+          body: readySpots.toJS()
+        }
+      }
+    }
+    return async api => ({
+      type: ActionTypes.Life.fetchSpots,
+      res: await api({
+        path: `/api/life/spots`,
+        params: {
+          limit
+        }
+      })
+    })
+  }
+}
+
 export function fetchPin (pinId) {
   return (dispatch, getState) => {
     let readyPin = getState().Life.get(`life/pins/${pinId}`)

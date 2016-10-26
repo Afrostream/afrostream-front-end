@@ -92,7 +92,7 @@ class LifePin extends Component {
       return history.push(pinUrl)
     }
 
-    const target = e.currentTarget || e.target;
+    const target = e.currentTarget || e.target
 
     switch (data.get('type')) {
       case 'video':
