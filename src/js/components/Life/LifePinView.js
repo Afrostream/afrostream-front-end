@@ -28,7 +28,6 @@ class LifePinView extends LifePin {
     const players = document.querySelectorAll('.ta-insert-video')
     if (players) {
       _.forEach(players, (element)=> {
-        debugger
         element.addEventListener('click', ::this.videoClickHandler)
       })
     }
@@ -92,7 +91,6 @@ class LifePinView extends LifePin {
       }
     } = this
     e.preventDefault()
-    debugger
     const target = e.currentTarget || e.target;
     const targetUrl = target.getAttribute('ta-insert-video')
     dispatch(PlayerActionCreators.killPlayer())

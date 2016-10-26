@@ -35,10 +35,11 @@
   .animation(playerMove 0.35s ease forwards);
   &.unpinned {
     .player-container {
-      .vjs-progress-control,
-      .vjs-remaining-time {
-        display: none;
-      }
+      font-size: 8px;
+      //.vjs-progress-control,
+      //.vjs-remaining-time {
+      //  display: none;
+      //}
     }
   }
   &.pinned {
@@ -55,6 +56,9 @@
   }
   .player-container {
     height: 150px;
+    &.big-play-button {
+      display: none;
+    }
   }
 
   .close {
