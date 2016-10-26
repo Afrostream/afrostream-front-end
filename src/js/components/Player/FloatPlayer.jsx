@@ -243,7 +243,7 @@ class FloatPlayer extends React.Component {
     this.playerInit = true
     if (!videoData) throw new Error(`no video data ${videoData}`)
     let playerData = await this.getPlayerData(videoData)
-    let player = await videojs('afrostream-player', playerData).ready(()=> {
+    let player = await videojs('afrostream-float-player', playerData).ready(()=> {
         player.volume(player.options_.defaultVolume)
         this.requestTick(true)
       }
@@ -267,7 +267,7 @@ class FloatPlayer extends React.Component {
         break
     }
     let video = document.createElement('video')
-    video.id = 'afrostream-player'
+    video.id = 'afrostream-float-player'
     video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)

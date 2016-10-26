@@ -74,6 +74,20 @@ export function fetchSpots ({limit = 20, startIndex = 0, stopIndex = 3}) {
   }
 }
 
+export function fetchUsers ({limit = 20, startIndex = 0, stopIndex = 3}) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Life.fetchUsers,
+      res: await api({
+        path: `/api/life/users`,
+        params: {
+          limit
+        }
+      })
+    })
+  }
+}
+
 export function fetchPin (pinId) {
   return (dispatch, getState) => {
     let readyPin = getState().Life.get(`life/pins/${pinId}`)
