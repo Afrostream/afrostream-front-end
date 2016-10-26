@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import classSet from 'classnames'
 import Immutable from 'immutable'
 import LifePin from './LifePin'
+import _ from 'lodash'
 import ReactList from 'react-list'
 import { extractImg } from '../../lib/utils'
 import { Link } from '../Utils'
@@ -42,12 +43,28 @@ class LifeList extends Component {
 
     const lifeTheme = Life.get(`life/themes/${themeId}`)
 
-    return spots || (lifeTheme && lifeTheme.get('spots'))
+    let spotList = spots || (lifeTheme && lifeTheme.get('spots'))
+
+    if (spotList) {
+      spotList = spotList.filter((spot)=> {
+        return spot.get('type') === 'banner'
+      })
+    }
+    return spotList
   }
 
   renderInfiniteItem (index, key) {
     const pinsList = this.getPins()
-    const data = pinsList.get(index)
+    let data = pinsList.get(index)
+    const spotList = this.getSpots()
+
+    if (index % 3) {
+      const randIndex = _.random(0, spotList.size)
+      data = spotList.get(randIndex)
+      return this.renderSpot({data, randIndex, key})
+    }
+
+    data = pinsList.get(index)
     return this.renderItem({data, index, key})
 
   }
@@ -74,8 +91,8 @@ class LifeList extends Component {
   renderSpot ({data, key, index, style}) {
     const imageUrl = extractImg({data, key: 'image'})
     return (
-      <Link to={data.get('targetUrl')}>
-        <img className="life-spot spot-banner" {...{key}} src={imageUrl}/>
+      <Link {...{key}} to={data.get('targetUrl')}>
+        <img className="life-spot spot-banner" src={imageUrl}/>
       </Link>
     )
   }
@@ -94,11 +111,6 @@ class LifeList extends Component {
 
     let spotList = this.getSpots()
 
-    if (spotList) {
-      spotList = spotList.filter((spot)=> {
-        return spot.get('type') === 'banner'
-      })
-    }
     const classList = {
       'life-list': true,
       'flat': !virtual,
