@@ -122,20 +122,6 @@
 
 header {
   background-color: fade(@color-black-2, 70%);
-  &.topbar-hidden {
-    opacity: 0;
-    .transition(opacity 0.4s linear);
-    //display: none;
-  }
-  &.topbar-fixed-color {
-    background-color: @color-black-2;
-  }
-  &.slideDown {
-    background-color: @color-black-2;
-  }
-  &.topbar-life {
-    background-color: @color-black-2;
-  }
   &.topbar {
     display: block;
     position: fixed;
@@ -144,6 +130,7 @@ header {
     right: 0;
     height: @header-height;
     z-index: @nav-z-header;
+    background-color: transparent;
     //box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 6px, rgba(0, 0, 0, 0.2) 1px 0px 6px;
     .transition(background-color 0.5s linear);
     .nav-full-width {
@@ -186,6 +173,16 @@ header {
         }
       }
     }
+  }
+
+  &.topbar-hidden {
+    opacity: 0;
+    .transition(opacity 0.4s linear);
+    //display: none;
+  }
+  &.topbar-fixed-color,
+  &.topbar-life {
+    background-color: @color-black-2;
   }
 
   .open-menu-icon {

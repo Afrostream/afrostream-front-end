@@ -275,9 +275,9 @@ class SideBar extends React.Component {
               className="zmdi zmdi-accounts"/>Actualité</Link></li>
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/community"><i
               className="zmdi zmdi-accounts"/>Communauté</Link></li>
-            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i
-              className="zmdi zmdi-gamepad"/>Expérience</Link>
-            </li>
+            {/*<li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i*/}
+            {/*className="zmdi zmdi-gamepad"/>Expérience</Link>*/}
+            {/*</li>*/}
             {this.getUserConnectedButtons(user, 'favoris')}
             {this.getUserConnectedButtons(user, 'last')}
             {this.getUserConnectedButtons(user, 'sponsorship')}

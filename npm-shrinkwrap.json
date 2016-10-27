@@ -289,9 +289,9 @@
       }
     },
     "afrostream-player": {
-      "version": "2.2.20",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.20",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#60b35c8cf9a8cea1271b36dbfd388503296903db"
+      "version": "2.2.21",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.21",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#0ac4913dfd171933fcee43aeee8e9ae1e9ac8f7f"
     },
     "after": {
       "version": "0.8.1"
