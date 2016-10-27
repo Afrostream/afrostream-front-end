@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import config from '../../../../config'
 import moment from 'moment'
 import { Link } from '../Utils'
 import _ from 'lodash'
 import LifePin from './LifePin'
-import { slugify, extractImg } from '../../lib/utils'
+import { extractImg } from '../../lib/utils'
 import * as PlayerActionCreators from '../../actions/player'
-import * as ModalActionCreators from '../../actions/modal'
+import LifeSpot from './LifeSpot'
 import Immutable from 'immutable'
 import AvatarCard from '../User/AvatarCard'
 import ModalSocial from '../Modal/ModalSocial'
@@ -110,15 +109,7 @@ class LifePinView extends LifePin {
             </div>
             <div className="col-md-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
-              {spots && spots.map((data, key)=> {
-                const spotImgSrc = extractImg({data, key: 'image', width: 300})
-                return bgImg && (
-                    <Link to={data.get('targetUrl')}
-                          key={`life-pin-spot-${data.get('_id')}-${key}`}>
-                      <img className="life-spot spot-vertical" alt={data.get('title')} width={data.get('displayWidth')}
-                           src={spotImgSrc}/>
-                    </Link>)
-              }).toJS()}
+              {spots && spots.map((data, key)=><LifeSpot {...{data, key}} {...this.props} />).toJS()}
             </div>
           </div>
         </div>
