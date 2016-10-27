@@ -13,7 +13,7 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, params:{lifeUserId}}) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchUsers({lifeUserId}))
+    store.dispatch(LifeActionCreators.fetchUsers(lifeUserId, {}))
   ])
 
 })
@@ -25,14 +25,12 @@ class LifeCommunity extends Component {
 
   render () {
     const {
-      props: {
-        children
-      }
+      props: {children}
     } = this
 
     return (
       <div className="life-theme">
-        <LifeUsersList {...this.props}/>
+        {children || <LifeUsersList {...this.props}/>}
       </div>
     )
   }
