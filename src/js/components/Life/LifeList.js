@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import classSet from 'classnames'
 import Immutable from 'immutable'
 import LifePin from './LifePin'
+import LifeSpot from './LifeSpot'
 import _ from 'lodash'
 import ReactList from 'react-list'
-import { extractImg } from '../../lib/utils'
-import { Link } from '../Utils'
 
 if (process.env.BROWSER) {
   require('./LifeList.less')
@@ -29,7 +28,7 @@ class LifeList extends Component {
 
     const lifeTheme = Life.get(`life/themes/${themeId}`)
 
-    const pinsList = pins || (lifeTheme && lifeTheme.get('pins')) || Immutable.fromJs([])
+    const pinsList = pins || (lifeTheme && lifeTheme.get('pins')) || Immutable.fromJS([])
     const spotList = this.getSpots()
 
     //const listSize = (pinsList.size + Math.min(Math.round(pinsList.size / this.props.moduloSpots), spotList.size))
@@ -64,7 +63,7 @@ class LifeList extends Component {
         return spot.get('type') === 'banner'
       })
     }
-    return spotList || Immutable.fromJs([])
+    return spotList || Immutable.fromJS([])
   }
 
   canInsertSpot (spotList, index) {
@@ -108,11 +107,8 @@ class LifeList extends Component {
   }
 
   renderSpot ({data, key}) {
-    const imageUrl = extractImg({data, key: 'image'})
     return (
-      <Link {...{key}} to={data.get('targetUrl')}>
-        <img className="life-spot spot-banner" src={imageUrl}/>
-      </Link>
+      <LifeSpot {...{data, key}} {...this.props} />
     )
   }
 
