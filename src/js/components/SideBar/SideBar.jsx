@@ -174,15 +174,7 @@ class SideBar extends React.Component {
       transition: 'opacity .3s ease-out'
     }
 
-    const contentStyle = {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      //overflow: 'auto',
-      transition: 'left .3s ease-out, right .3s ease-out'
-    }
+    const contentStyle = {}
 
     const sidebarStyle = {
       position: 'fixed',
@@ -237,7 +229,7 @@ class SideBar extends React.Component {
         sidebarStyle.WebkitTransform = `translateX(0%)`
       }
       // make space on the left/right side of the content for the sidebar
-      contentStyle.left = `${this.state.sidebarWidth}px`
+      //contentStyle.left = `${this.state.sidebarWidth}px`
     }
 
     if (useTouch) {
@@ -285,7 +277,7 @@ class SideBar extends React.Component {
           {this.getUserConnectedButtons(user, 'logout')}
         </div>
         {overlay}
-        <div style={contentStyle} className={classSet({docked: this.props.docked})}>
+        <div style={contentStyle} className={classSet({contentdock: true, docked: this.props.docked})}>
           {dragHandle}
           {this.props.children}
         </div>

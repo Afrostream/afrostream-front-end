@@ -235,7 +235,7 @@ class ModalSocial extends ModalComponent {
                    data-placement="top"
                    title={network.title}
                    key={`share-btn-${network.icon}`} {...inputAttributes}>
-        {this.props.showLabel && <span>network.label>network.label</span>}
+        {this.props.showLabel && <span>{network.label}</span>}
       </div>)
     })
   }

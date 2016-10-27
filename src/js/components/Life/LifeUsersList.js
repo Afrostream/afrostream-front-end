@@ -16,11 +16,12 @@ class LifeUsersList extends Component {
   getUsers () {
     const {
       props: {
-        Life
+        Life,
+        lifeUserId
       }
     } = this
 
-    const lifeUsersList = Life.get(`life/users/`)
+    const lifeUsersList = Life.get(`life/users/${lifeUserId ? lifeUserId : ''}`)
     return lifeUsersList
   }
 

@@ -92,3 +92,29 @@
   background: -ms-linear-gradient(top, @startColor, @endColor);
   background: -o-linear-gradient(top, @startColor, @endColor);
 }
+
+.aspect-ratio(@width, @height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: (@height / @width) * 100%;
+  }
+  > .content,
+  > .mode-container {
+    position: absolute;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    span:before {
+      content: "@{width}";
+    }
+
+    span:after {
+      content: "@{height}";
+    }
+  }
+}

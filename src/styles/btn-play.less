@@ -10,7 +10,6 @@
   top: 50%;
   margin-left: -0.75em;
   margin-top: -0.75em;
-  opacity: 0.7;
 
   font-size: 8em;
 
@@ -21,12 +20,12 @@
   border-radius: 50%;
 
   background-color: @color-black-2;
-  background-color: fade(@color-indigo, 90%);
+  background-color: fade(@color-indigo, 80%);
   font-family: VideoJS;
 
   .transition(opacity 0.2s linear);
   &:hover {
-    opacity: 1;
+    background-color: fade(@color-indigo, 100%);
   }
 
   &:before {
