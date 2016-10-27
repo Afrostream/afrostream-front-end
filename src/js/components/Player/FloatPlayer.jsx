@@ -52,6 +52,9 @@ class FloatPlayer extends React.Component {
 
   componentWillReceiveProps (nextProps) {
 
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.updatePlayerPosition();
+    }
     if (!shallowEqual(nextProps.Player, this.props.Player)) {
       const videoData = nextProps.Player.get('/player/data')
       if (!videoData) {

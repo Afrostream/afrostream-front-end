@@ -337,7 +337,9 @@ class AvatarCard extends React.Component {
 
     return (
       <div className={this.props.className}>
-        <div className="header" style={imageStyles}/>
+        <div className="header">
+          <div className="header-bg" style={imageStyles}/>
+        </div>
         <div className="avatar">
           <img src={`${imageUrl}?type=large`} alt="user-avatar"/>
         </div>
