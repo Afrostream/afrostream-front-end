@@ -74,12 +74,15 @@ export function fetchSpots ({limit = 20, startIndex = 0, stopIndex = 3}) {
   }
 }
 
-export function fetchUsers ({limit = 20, startIndex = 0, stopIndex = 3}) {
+export function fetchUsers (fetchUserId, {limit = 20, startIndex = 0, stopIndex = 3}) {
+  const lifeUserId = fetchUserId || ''
+
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.fetchUsers,
+      lifeUserId,
       res: await api({
-        path: `/api/life/users`,
+        path: `/api/life/users/${lifeUserId || ''}`,
         params: {
           limit
         }

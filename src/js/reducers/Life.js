@@ -63,13 +63,13 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.fetchUsers](state, {res, pinId}) {
+  [ActionTypes.Life.fetchUsers](state, {res, lifeUserId}) {
     if (!res) {
       return state
     }
     const data = res.body
     return state.merge({
-      [`life/users/`]: data
+      [`life/users/${lifeUserId}`]: data
     })
   }
 })
