@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import LifeList from './LifeList'
 import { withRouter } from 'react-router'
+import AvatarCard from '../User/AvatarCard'
 
 @connect(({Life, User}) => ({Life, User}))
 class LifeUserInfos extends Component {
@@ -14,16 +15,18 @@ class LifeUserInfos extends Component {
     const {
       props: {
         Life,
-        params:{
-          themeId
-        }
+        params:{lifeUserId}
       }
     } = this
 
-    const lifeUser = Life.get(`life/users/${lifeUserId || ''}`)
-    const pins = lifeUser && lifeUser.get('pins')
+    const user = Life.get(`life/users/${lifeUserId}`)
+    const pins = user && user.get('lifePins')
 
+    if (!pins) {
+      return <div />
+    }
     return (<div key="life-themes-list" className="life-theme">
+      <AvatarCard className="avatar-card col-md-3" {...{user}} {...this.props} />
       {pins && <LifeList {...this.props} {...{pins}} virtual={true} key={`life-theme-pins`}/>}
     </div>)
   }

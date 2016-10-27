@@ -76,7 +76,6 @@ class LifePin extends Component {
         history
       }
     } = this
-    debugger
     const donePath = data.get('targetUrl') || '/life'
     const pinRole = data.get('role')
     const acl = this.validRole(pinRole)

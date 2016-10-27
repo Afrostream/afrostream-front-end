@@ -28,9 +28,12 @@ class LifeCommunity extends Component {
       props: {children}
     } = this
 
+    if (children) {
+      return children
+    }
     return (
       <div className="life-theme">
-        {children || <LifeUsersList {...this.props}/>}
+        <LifeUsersList {...this.props}/>
       </div>
     )
   }
