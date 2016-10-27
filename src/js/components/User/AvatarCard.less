@@ -17,13 +17,28 @@
     height: 70px;
     // This positions the canvas under the text
     z-index: 1;
-    filter: blur(8px);
-    -webkit-filter: blur(8px);
-    opacity: 0.9;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-size: cover;
     overflow: hidden;
+    .header-bg {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      filter: blur(3px);
+    }
+    &:after {
+      position: absolute;
+      content: "";
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      background-color: fade(@color-black-2, 40%);
+    }
   }
   .avatar {
     position: relative;

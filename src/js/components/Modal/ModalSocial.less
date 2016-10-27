@@ -1,6 +1,9 @@
 @import (reference) '../../../styles/config.less';
 
 #lock.theme-default.social .panel {
+  .mode {
+    .isMobile({ padding: 1em 0 1em 0; });
+  }
   .share_button {
     background-color: transparent;
     position: relative;
@@ -12,7 +15,9 @@
     &:hover {
       color: fade(@color-yellow, 70%);
     }
-    .isMobile({ width: 3em; });
+    .isMobile({ min-width: 3em; span {
+      display: none;
+    } });
 
     &:before {
       padding: 0.5em;
