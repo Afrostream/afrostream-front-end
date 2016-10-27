@@ -131,8 +131,9 @@ header {
     height: @header-height;
     z-index: @nav-z-header;
     background-color: transparent;
+    .isMobile({ background-color: @color-black-2; });
     //box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 6px, rgba(0, 0, 0, 0.2) 1px 0px 6px;
-    .transition(background-color 0.5s linear);
+    .transition(background-color 0.2s linear);
     .nav-full-width {
       width: 100%;
     }

@@ -95,7 +95,7 @@ class ModalView extends React.Component {
       case 'image':
         return (
           <ModalComponent closable={closable} className="large" {...this.props} >
-            <img src={data.get('src')}/></ModalComponent>
+            <img className="modal-image" src={data.get('src')}/></ModalComponent>
         )
         break
       //LIFE ACL

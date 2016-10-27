@@ -69,64 +69,6 @@ class LifePin extends Component {
     return config.userRoles.indexOf(config.userRoles[userRole]) >= config.userRoles.indexOf(roleRequired)
   }
 
-  clickHandler (e, data) {
-    const {
-      props: {
-        dispatch,
-        history
-      }
-    } = this
-    const pinRole = data.get('role')
-    const acl = this.validRole(pinRole)
-    const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
-
-    if (!acl) {
-      e.preventDefault()
-      const modalRole = this.targetRole()
-      return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath: '/life', closable: true}))
-    }
-
-
-    if (data.get('body')) {
-      e.preventDefault()
-      return history.push(pinUrl)
-    }
-
-    const target = e.currentTarget || e.target
-    switch (data.get('type')) {
-      case 'video':
-      case 'audio':
-      case 'rich':
-        e.preventDefault()
-        dispatch(PlayerActionCreators.loadPlayer({
-          data: Immutable.fromJS({
-            target: target,
-            controls: false,
-            sources: [{
-              src: data.get('originalUrl'),
-              type: `video/${data.get('providerName')}`
-            }]
-          })
-        }))
-        break
-
-      case 'article':
-        e.preventDefault()
-        history.push(pinUrl)
-        break
-
-      case 'image':
-        e.preventDefault()
-        debugger
-        dispatch(ModalActionCreators.open({
-          target: 'image', data: Immutable.fromJS({
-            src: extractImg({data, key: 'image'})
-          })
-        }))
-        break
-    }
-  }
-
   /**
    * Checks if the user role meets the minimum requirements of the route
    */
@@ -187,6 +129,7 @@ class LifePin extends Component {
     } = this
     const pinRole = data.get('role')
     const acl = this.validRole(pinRole)
+    const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
 
     if (!acl) {
       e.preventDefault()
@@ -194,16 +137,21 @@ class LifePin extends Component {
       return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath: '/life', closable: true}))
     }
 
+
+    if (data.get('body')) {
+      e.preventDefault()
+      return history.push(pinUrl)
+    }
+
+    const target = e.currentTarget || e.target
     switch (data.get('type')) {
       case 'video':
         e.preventDefault()
         dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
-            className: data.get('type'),
             autoplay: true,
-            target: e.currentTarget || e.target,
-            height: 150,
+            target: target,
             sources: [{
               src: data.get('originalUrl'),
               type: `video/${data.get('providerName')}`
@@ -211,16 +159,15 @@ class LifePin extends Component {
           })
         }))
         break
+
       case 'audio':
       case 'rich':
         e.preventDefault()
         dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
-            className: data.get('type'),
             autoplay: true,
-            target: e.currentTarget || e.target,
-            height: 150,
+            target: target,
             sources: [{
               src: data.get('originalUrl'),
               type: `audio/${data.get('providerName')}`
@@ -228,10 +175,18 @@ class LifePin extends Component {
           })
         }))
         break
-
       case 'article':
         e.preventDefault()
-        history.push(`/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`)
+        history.push(pinUrl)
+        break
+
+      case 'image':
+        e.preventDefault()
+        dispatch(ModalActionCreators.open({
+          target: 'image', data: Immutable.fromJS({
+            src: extractImg({data, key: 'image', width: 900})
+          })
+        }))
         break
     }
   }
