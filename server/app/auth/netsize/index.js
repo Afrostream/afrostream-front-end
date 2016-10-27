@@ -8,6 +8,13 @@ router.use(function (req, res) {
   // on fwd le token manuellement
   let token = req.query.access_token
   delete req.query.access_token
+  // HACK HACK HACK
+  // backend authentification fail when using ?access_token=(...) !
+  // rewriting urls.
+  if (token) {
+    req.url = req.url.replace('access_token='+token, '')
+    req.originalUrl = req.url.replace('access_token='+token, '')
+  }
   proxy(req, res, {headers: {'Access-Token': token}})
 })
 
