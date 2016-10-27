@@ -2,14 +2,15 @@
 
 #lock.theme-default.social .panel {
   .mode {
-    .isMobile({ padding: 1em 0 1em 0; });
+    .isMobile({ display: flex; padding: 1em 0 1em 0; });
   }
   .share_button {
     background-color: transparent;
     position: relative;
     border-radius: 0;
     color: #FFF;
-    min-width: 1.3em;
+    flex: 1;
+    min-width: 4em;
     font-family: @font-family-base;
     padding: 1em;
     &:hover {
@@ -21,6 +22,7 @@
 
     &:before {
       padding: 0.5em;
+      .isMobile({ padding: 0; });
       font-family: @font-material;
       font-size: 1.3em;
       .isMobile({ font-size: 2em; });
