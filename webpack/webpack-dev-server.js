@@ -11,18 +11,14 @@ const serverOptions = {
     publicPath: devConfig.output.publicPath,
     hot: true,
     headers: {'Access-Control-Allow-Origin': '*'},
-    quiet: true,
-    noInfo: true,
-    cache: false,
-    watch: true,
-    progress: true,
+    quiet: false,
+    cache: true,
     devServer: true,
     hotComponents: true,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000
     },
-    debug: true,
     devServer: {
       port: port,
       historyApiFallback: true

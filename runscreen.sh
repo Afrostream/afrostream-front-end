@@ -1,6 +1,6 @@
 #!/bin/bash
 
-exec >/dev/tty 2>/dev/tty </dev/tty
+export TERM=xterm
 
 screen -S devwatch -d -m npm run watch
 screen -S nodeapp -d -m npm run app
