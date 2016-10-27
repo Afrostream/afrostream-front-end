@@ -93,7 +93,6 @@ class LifePin extends Component {
     }
 
     const target = e.currentTarget || e.target
-
     switch (data.get('type')) {
       case 'video':
       case 'audio':
@@ -118,6 +117,7 @@ class LifePin extends Component {
 
       case 'image':
         e.preventDefault()
+        debugger
         dispatch(ModalActionCreators.open({
           target: 'image', data: Immutable.fromJS({
             src: extractImg({data, key: 'image'})
