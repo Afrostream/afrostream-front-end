@@ -34,57 +34,6 @@ class LifePinView extends LifePin {
     }
   }
 
-  /**
-   * Checks if the user role meets the minimum requirements of the route
-   */
-  userRole () {
-
-    const {
-      props: {
-        User
-      }
-    } = this
-
-    const user = User.get('user')
-    let currentRole = 0
-    let planCode = null
-    let internalPlanOpts = null
-    if (user) {
-      currentRole += 1
-      planCode = user.get('planCode')
-      const subscriptionsStatus = user.get('subscriptionsStatus')
-      if (subscriptionsStatus) {
-        const subscriptions = subscriptionsStatus.get('subscriptions')
-        const currentSubscription = subscriptions && subscriptions.first((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no')
-        if (currentSubscription) {
-          currentRole += 1
-          const isVIP = currentSubscription.get('internalPlan').get('internalPlanOpts').get('internalVip')
-          if (isVIP) {
-            currentRole += 1
-          }
-        }
-      }
-    }
-
-    return currentRole
-  }
-
-  /**
-   * get nex role have acl
-   */
-  targetRole () {
-    const userRole = this.userRole()
-    return config.userRoles[userRole + 1]
-  }
-
-  /**
-   * Checks if the user role meets the minimum requirements of the route
-   */
-  validRole (roleRequired) {
-    const userRole = this.userRole()
-    return config.userRoles.indexOf(config.userRoles[userRole]) >= config.userRoles.indexOf(roleRequired)
-  }
-
   videoClickHandler (e) {
     const {
       props: {
@@ -101,34 +50,6 @@ class LifePinView extends LifePin {
         sources: [{
           src: targetUrl.replace('embed/', 'watch?v='),
           type: `video/youtube`
-        }]
-      })
-    }))
-  }
-
-  clickHandler (e, data) {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-    const pinRole = data.get('role')
-    const acl = this.validRole(pinRole)
-
-    if (!acl) {
-      e.preventDefault()
-      const modalRole = this.targetRole()
-      return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath: '/life', closable: true}))
-    }
-
-    e.preventDefault()
-    dispatch(PlayerActionCreators.loadPlayer({
-      data: Immutable.fromJS({
-        target: this.refs.pinHeader || e.currentTarget,
-        autoplay: true,
-        sources: [{
-          src: data.get('originalUrl'),
-          type: `video/${data.get('providerName')}`
         }]
       })
     }))
@@ -178,20 +99,16 @@ class LifePinView extends LifePin {
             </div>
           </div>
           <div className="pin-header-content">
-            <Link to={pin.get('originalUrl')} onClick={
-              (e) =>::this.clickHandler(e, pin)
-            }>
-              <h1> {pin.get('title')}</h1>
-            </Link>
+            <h1> {pin.get('title')}</h1>
           </div>
         </div>
         <div className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
           <div className="row no-padding">
-            <div className="col-md-8 no-padding ">
+            <div className="col-md-9 no-padding">
               <section dangerouslySetInnerHTML={{__html: pin.get('body')}}/>
               <ModalSocial {...this.props} closable={false} modal={false} showLabel={true}/>
             </div>
-            <div className="col-md-4 no-padding col-right">
+            <div className="col-md-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
               {spots && spots.map((data, key)=> {
                 const spotImgSrc = extractImg({data, key: 'image', width: 300})

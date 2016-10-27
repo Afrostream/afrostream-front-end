@@ -374,13 +374,12 @@ export function extractImg ({data, key, width = 1024}) {
   const {images} =config
   const thumb = data.get(key)
   let imageUrl = data.get('imageUrl')
-  if (thumb) {
-    const path = thumb.get('path')
-    if (path) {
-      imageUrl = `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
-
-    }
+  const path = thumb.get('path')
+  if (path) {
+    imageUrl = path
   }
+
+  imageUrl = `${images.urlPrefix}${imageUrl}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
 
   return imageUrl
 

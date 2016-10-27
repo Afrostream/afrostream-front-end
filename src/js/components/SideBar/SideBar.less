@@ -120,7 +120,15 @@
     color: #fff;
     background: none;
   }
+}
 
+.contentdock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: left .3s ease-out, right .3s ease-out;
 }
 
 @media (min-width: 768px) {
@@ -134,6 +142,10 @@
 
   #page-content-wrapper {
     position: relative;
+  }
+
+  .contentdock.docked {
+    left: @sidebar-width;
   }
 
   .docked .life-navigation {

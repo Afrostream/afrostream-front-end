@@ -51,8 +51,7 @@ class ModalComponent extends React.Component {
                 <div className="centrix">
                   <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
-                    <div className="header top-header ">
-                      <div className="bg-gradient"></div>
+                    <div className="header top-header">
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
