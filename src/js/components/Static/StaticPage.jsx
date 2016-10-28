@@ -21,7 +21,7 @@ class StaticPage extends React.Component {
 
     return (
       <div className="row-fluid">
-        <div className="container-fluid brand-bg press-page">
+        <div className="container-fluid brand-grey press-page">
           <div className="column-left fixed">
             <StaticMenu {...this.props} />
           </div>
