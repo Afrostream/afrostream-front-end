@@ -8,8 +8,13 @@ import { slugify, extractImg } from '../../lib/utils'
 import { Link } from '../Utils'
 import classSet from 'classnames'
 import Immutable from 'immutable'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 const {images} =config
+
+if (canUseDOM) {
+  var ReactGA = require('react-ga')
+}
 
 @connect(({Life, User}) => ({Life, User}))
 class LifePin extends Component {
@@ -139,6 +144,8 @@ class LifePin extends Component {
         }))
         break
     }
+    //call ga click
+    ReactGA.modalview(pinUrl)
   }
 
   render () {
@@ -153,17 +160,8 @@ class LifePin extends Component {
     } = this
 
     const type = data.get('type')
-    const baseUrl = 'data:image/gifbase64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
-    const thumb = data.get('image')
-    let imageUrl = data.get('imageUrl') || baseUrl
-    if (thumb) {
-      const path = thumb.get('path')
-      if (path) {
-        imageUrl =
-          `${images.urlPrefix}${path}?&crop=face&fit=crop&w=${imageWidth}&h=${imageHeight}&q=${config.images.quality}&fm=${config.images.type}`
-
-      }
-    }
+    
+    let imageUrl = extractImg({data, key: 'image', width: imageWidth})
 
     const imageStyles = {
       backgroundImage: `url(${imageUrl})`

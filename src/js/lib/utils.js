@@ -376,6 +376,8 @@ export function extractImg ({data, key, keys = [], width = 1024}) {
   let thumb
   let imageUrl = config.metadata.shareImage
   if (data) {
+    imageUrl = data.get('imageUrl') || config.metadata.shareImage
+
     if (key) {
       thumb = data.get(key)
     }
@@ -387,17 +389,16 @@ export function extractImg ({data, key, keys = [], width = 1024}) {
         }
       })
     }
-    imageUrl = data.get('imageUrl') || config.metadata.shareImage
+
 
     if (thumb) {
       const path = thumb.get('path')
       if (path) {
-        imageUrl = path
+        imageUrl = `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
       }
     }
   }
 
-  imageUrl = `${images.urlPrefix}${imageUrl}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
 
   return imageUrl
 
