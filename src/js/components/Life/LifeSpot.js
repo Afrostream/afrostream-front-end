@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { extractImg } from '../../lib/utils'
 import { Link } from '../Utils'
 import Immutable from 'immutable'
-import LifePin from './LifePin'
+import ClickablePin from './ClickablePin'
 
 @connect(({Life, User}) => ({Life, User}))
-class LifeSpot extends LifePin {
+class LifeSpot extends ClickablePin {
 
   constructor (props, context) {
     super(props, context)
@@ -25,7 +25,7 @@ class LifeSpot extends LifePin {
     const imageUrl = extractImg({data, key: 'image', imageWidth})
 
     return ( <Link to={data.get('targetUrl')} onClick={
-      (e) =>::this.clickHandler(e, data)
+      (e) =>::this.clickHandlerPin(e, data)
     }>
       <img className={`life-spot ${className}`} src={imageUrl} width={data.get('displayWidth')}/>
     </Link>)
