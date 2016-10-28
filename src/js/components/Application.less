@@ -27,10 +27,6 @@ html, body, #main, #main > div {
 
 body {
   background-color: @background-page;
-  font-weight: 100;
-  font-size: 1em;
-  line-height: 1.4;
-  color: @color-black-2;
   .body-font();
 }
 
@@ -64,11 +60,11 @@ a:active,
 a.active {
   outline: none;
   text-decoration: none;
-  color: @brand-primary;
+  color: @color-indigo;
 }
 
 a {
-  color: @brand-primary;
+  color: @color-indigo;
 }
 
 a:hover,
@@ -123,7 +119,7 @@ a.active {
 
         margin-top: @header-height;
         padding: @app-padding;
-        background: @background-page;
+        background: @brand-primary;
         min-height: 100%;
         .isMobile({ padding: @app-padding-mobile; });
 
@@ -150,7 +146,7 @@ a.active {
       }
       .brand-bg-none {
         background: none;
-        color: @color-purple;
+        color: @color-grey;
       }
 
       //splitted background colors
@@ -169,7 +165,7 @@ a.active {
     }
 
     .content-padding {
-      padding: @app-padding * 5 !important;
+      padding: @header-height (@app-padding * 5) (@app-padding * 5) !important;
     }
 
     .brand-grey {
