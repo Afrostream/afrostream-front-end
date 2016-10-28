@@ -38,6 +38,10 @@ export default () => {
         )
       }
 
+      getdata () {
+
+      }
+
       getMetadata () {
 
         const {
