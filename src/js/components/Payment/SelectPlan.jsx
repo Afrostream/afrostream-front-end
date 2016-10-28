@@ -231,14 +231,14 @@ class SelectPlan extends React.Component {
 
     if (!plans || !plans.size) {
       return (
-        <div className="plan-container">
+        <div className="container plan-container content-padding">
           <div className="choose-plan">{getI18n().planCodes.noPlans}</div>
         </div>
       )
     }
 
     return (
-      <div className="plan-container">
+      <div className="container plan-container content-padding">
 
         {this.getHeader()}
 
