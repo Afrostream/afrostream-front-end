@@ -55,6 +55,18 @@ class FloatPlayer extends React.Component {
     if (nextProps.location.pathname !== this.props.location.pathname) {
       this.updatePlayerPosition()
     }
+
+    if (!shallowEqual(nextProps.data, this.props.data)) {
+      const videoData = nextProps.data
+      if (!videoData) {
+        return
+      }
+      this.initState()
+      this.destroyPlayer().then(()=> {
+        this.initPlayer(videoData)
+      })
+    }
+
     if (!shallowEqual(nextProps.Player, this.props.Player)) {
       const videoData = nextProps.Player.get('/player/data')
       if (!videoData) {
@@ -83,10 +95,10 @@ class FloatPlayer extends React.Component {
 
     let videoOptions = videoData.toJS()
 
-    const apiPlayerConfig = Player.get(`/player/config`)
-    if (!apiPlayerConfig) throw new Error('no player config api data')
-    //initialize the player
+    let apiPlayerConfig = Player.get(`/player/config`)
     let apiPlayerConfigJs = {}
+    //if (!apiPlayerConfig) throw new Error('no player config api data')
+    //initialize the player
     if (apiPlayerConfig) {
       apiPlayerConfigJs = apiPlayerConfig.toJS()
     }
@@ -311,11 +323,14 @@ class FloatPlayer extends React.Component {
   updatePlayerPosition () {
 
     const {
-      props: {Player}
+      props: {Player, data, float}
     } = this
 
-    const data = Player.get('/player/data')
-    const target = data && data.get('target')
+    if (!float) {
+      return
+    }
+    const playerData = data || Player.get('/player/data')
+    const target = playerData && playerData.get('target') || this.refs.container
     const elVisible = target && isElementInViewPort(target, 0.60)
 
     let position = elVisible && target && target.getBoundingClientRect() || {
@@ -350,12 +365,15 @@ class FloatPlayer extends React.Component {
 
     const classFloatPlayer = {
       'float-player': true,
+      'fixed': this.props.float,
       'pinned': this.state.elVisible,
       'unpinned': !this.state.elVisible
     }
 
+    classFloatPlayer[this.props.className] = true
+
     return (
-      <div className={classSet(classFloatPlayer)} style={position}>
+      <div className={classSet(classFloatPlayer)} style={position} ref="container">
         <a className={closeClass} href="#" onClick={::this.handleClose}><i className="zmdi zmdi-hc-2x zmdi-close"/></a>
         <div ref="wrapper" className="wrapper"/>
       </div>
@@ -363,4 +381,14 @@ class FloatPlayer extends React.Component {
   }
 }
 
+
+FloatPlayer.propTypes = {
+  data: PropTypes.instanceOf(Immutable.Map),
+  float: PropTypes.bool,
+  className: PropTypes.string,
+}
+
+FloatPlayer.defaultProps = {
+  float: true
+}
 export default FloatPlayer
