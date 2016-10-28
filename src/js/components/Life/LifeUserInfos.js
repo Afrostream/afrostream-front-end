@@ -27,7 +27,10 @@ class LifeUserInfos extends Component {
     }
     return (<div key="life-themes-list" className="life-theme">
       <AvatarCard className="avatar-card col-md-3" {...{user}} {...this.props} />
-      {pins && <LifeList {...this.props} {...{pins}} virtual={true} key={`life-theme-pins`}/>}
+      {pins &&
+      <div className="col-md-12">
+        <LifeList {...this.props} {...{pins}} virtual={true} highlightFirst={false} key={`life-theme-pins`}/>
+      </div>}
     </div>)
   }
 }

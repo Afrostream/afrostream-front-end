@@ -24,10 +24,10 @@ export function getMovie (movieId) {
     //  }
     //}
 
-    //actionDispatcher({
-    //  type: ActionTypes.Movie.getMovie,
-    //  movieId
-    //})
+    actionDispatcher({
+      type: ActionTypes.Movie.getMovie,
+      movieId
+    })
 
     return async api => ({
       type: ActionTypes.Movie.getMovie,
