@@ -116,60 +116,62 @@ export default () => {
 
           default:
             //META MOVIE/SERIE/EPISODE/VIDEO
-            const movieData = store.getState().Movie.get(`movies/${params.movieId}`)
-            let seasonData
-            let videoData
-            let episodeData
+            if (params.movieId) {
+              const movieData = store.getState().Movie.get(`movies/${params.movieId}`)
+              let seasonData
+              let videoData
+              let episodeData
 
-            if (params.videoId) {
-              videoData = store.getState().Video.get(`videos/${params.videoId}`)
-            }
-            if (params.seasonId) {
-              seasonData = store.getState().Season.get(`seasons/${params.seasonId}`)
-            }
-
-            if (params.episodeId) {
-              if (videoData) {
-                episodeData = videoData.get('episode')
+              if (params.videoId) {
+                videoData = store.getState().Video.get(`videos/${params.videoId}`)
               }
-              else {
-                episodeData = store.getState().Episode.get(`episodes/${params.episodeId}`)
+              if (params.seasonId) {
+                seasonData = store.getState().Season.get(`seasons/${params.seasonId}`)
               }
+
+              if (params.episodeId) {
+                if (videoData) {
+                  episodeData = videoData.get('episode')
+                }
+                else {
+                  episodeData = store.getState().Episode.get(`episodes/${params.episodeId}`)
+                }
+              }
+
+              let type = movieData.get('type')
+              movieTitle = movieData.get('title')
+
+              if (type === 'movie') {
+                metas.title = getI18n(lang).home.movie.title
+                metas.description = getI18n(lang).home.movie.description
+              } else {
+                metas.title = getI18n(lang).home.serie.title
+                metas.description = getI18n(lang).home.serie.description
+              }
+
+              let actorsList = movieData.get('actors')
+              if (actorsList) {
+                let actorsFlat = actorsList.map((actor)=> {
+                  return `${actor.get('firstName')} ${actor.get('lastName')}`
+                })
+                actors = _.join(actorsFlat.toJS(), ',')
+              }
+
+              if (seasonData) {
+                metas.title = getI18n(lang).home.season.title
+                metas.description = getI18n(lang).home.season.description
+                seasonNumber = seasonData.get('seasonNumber')
+              }
+
+              if (episodeData) {
+                metas.title = getI18n(lang).home.episode.title
+                metas.description = getI18n(lang).home.episode.description
+                episodeNumber = episodeData.get('episodeNumber')
+              }
+
+              //si on a les données de l'episode alors, on remplace les infos affichées
+              data = episodeData ? movieData.merge(episodeData) : movieData
             }
-
-            let type = movieData.get('type')
-            movieTitle = movieData.get('title')
-
-            if (type === 'movie') {
-              metas.title = getI18n(lang).home.movie.title
-              metas.description = getI18n(lang).home.movie.description
-            } else {
-              metas.title = getI18n(lang).home.serie.title
-              metas.description = getI18n(lang).home.serie.description
-            }
-
-            let actorsList = movieData.get('actors')
-            if (actorsList) {
-              let actorsFlat = actorsList.map((actor)=> {
-                return `${actor.get('firstName')} ${actor.get('lastName')}`
-              })
-              actors = _.join(actorsFlat.toJS(), ',')
-            }
-
-            if (seasonData) {
-              metas.title = getI18n(lang).home.season.title
-              metas.description = getI18n(lang).home.season.description
-              seasonNumber = seasonData.get('seasonNumber')
-            }
-
-            if (episodeData) {
-              metas.title = getI18n(lang).home.episode.title
-              metas.description = getI18n(lang).home.episode.description
-              episodeNumber = episodeData.get('episodeNumber')
-            }
-
-            //si on a les données de l'episode alors, on remplace les infos affichées
-            data = episodeData ? movieData.merge(episodeData) : movieData
             break
         }
 
