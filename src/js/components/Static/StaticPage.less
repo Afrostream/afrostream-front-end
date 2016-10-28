@@ -7,59 +7,59 @@
     padding: @app-padding;
     position: absolute;
   }
+
   iframe {
     width: 100%;
     border: none;
     background-color: @brand-bg;
   }
 
-  .article-static {
-    display: inline-block;
-    font-size: 14px;
-    font-family: @font-light;
-    background: #FFF;
-    color: @brand-black;
-    margin: 0;
-    padding: @header-height * 2  @app-padding;
-    .isMobile({ padding: @header-height * 2  @app-padding-mobile; });
-    section {
-      a,
-      a:hover,
-      a:focus,
-      a:active,
-      a.active {
-        outline: none;
-      }
-
-      a {
-        color: @color-purple;
-      }
-
-      a:hover,
-      a:focus,
-      a:active,
-      a.active {
-        color: darken(@brand-black, 10%);
-      }
-
-      h1, h2, h3, h4 {
-        color: @brand-black;
-        font-family: @font-book;
-      }
-      p {
-        font-family: @font-light;
-      }
-      ul {
-        li {
-          ul {
-            li {
-              margin-left: 30px;
-            }
-          }
-        }
-      }
-    }
-  }
+  //.article-static {
+  //  display: inline-block;
+  //  font-family: @font-light;
+  //  background: #FFF;
+  //  color: @brand-black;
+  //  margin: 0;
+  //  padding: @header-height * 2  @app-padding;
+  //  .isMobile({ padding: @header-height * 2  @app-padding-mobile; });
+  //  section {
+  //    a,
+  //    a:hover,
+  //    a:focus,
+  //    a:active,
+  //    a.active {
+  //      outline: none;
+  //    }
+  //
+  //    a {
+  //      color: @color-purple;
+  //    }
+  //
+  //    a:hover,
+  //    a:focus,
+  //    a:active,
+  //    a.active {
+  //      color: darken(@brand-black, 10%);
+  //    }
+  //
+  //    h1, h2, h3, h4 {
+  //      color: @brand-black;
+  //      font-family: @font-book;
+  //    }
+  //    p {
+  //      font-family: @font-light;
+  //    }
+  //    ul {
+  //      li {
+  //        ul {
+  //          li {
+  //            margin-left: 30px;
+  //          }
+  //        }
+  //      }
+  //    }
+  //  }
+  //}
 }
 
 .press-page {
@@ -115,7 +115,7 @@
       }
     }
     .key-people-presentation {
-      margin-left: 240px;
+      margin-left: 200px;
     }
 
     .three-items-list > .col {
@@ -190,8 +190,11 @@
   }
 
   .column-right {
-    .isLandscape({ margin-left: 240px; });
+    .isLandscape({ margin-left: 200px; });
     margin-bottom: 30px;
+    img {
+      max-width: 100%;
+    }
   }
 
   .column-left.fixed {
