@@ -116,13 +116,15 @@ class LifeList extends Component {
     const {
       props: {
         virtual,
-        themeId
+        themeId,
+        highlightFirst
       }
     } = this
     const pinsList = this.getPins()
 
     const classList = {
       'life-list': true,
+      'hightlight-first': highlightFirst,
       'flat': !virtual,
       'virtual': virtual
     }

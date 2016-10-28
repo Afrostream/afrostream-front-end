@@ -52,7 +52,7 @@ class LifePin extends ClickablePin {
 
     const brickStyle = {
       'brick': true,
-      'brick-full': !(description && description.length),
+      'full': !(description && description.length),
       'premium': isPremium
     }
 

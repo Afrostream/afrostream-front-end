@@ -10,6 +10,43 @@
   }
 }
 
+.brick-full {
+  .brick-background {
+    position: absolute;
+  }
+  .brick-content {
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      height: 100%;
+    }
+  }
+  .card-body {
+    color: #FFFFFF;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    .card-info {
+      padding: 1.5em 0 1.5em 0;
+      font-size: 2.6em;
+      &:after {
+        content: none;
+      }
+    }
+    .card-bubbles {
+      position: relative;
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      margin: 0;
+    }
+    .card-date,
+    .card-description {
+      display: none;
+    }
+  }
+}
+
 .life-list {
   @cardTypeSize: 50px;
   @gap-brick: 0px;
@@ -151,53 +188,8 @@
 
     }
 
-    &.brick-full {
-      .brick-background {
-        position: absolute;
-      }
-      .brick-content {
-        &:before {
-          content: '';
-          display: inline-block;
-          vertical-align: middle;
-          text-align: center;
-          height: 100%;
-        }
-      }
-      .card-body {
-        color: #FFFFFF;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        .card-info {
-          padding: 1.5em 0 1.5em 0;
-          font-size: 2.6em;
-          &:after {
-            content: none;
-          }
-        }
-        .card-bubbles {
-          position: relative;
-          text-align: center;
-          padding: 20px;
-          width: 100%;
-          margin: 0;
-        }
-        .card-date,
-        .card-description {
-          display: none;
-        }
-      }
-    }
-
-    &:first-child {
-      width: 100%;
-      max-width: 100%;
-      min-height: @minBrickHeight;
+    &.full {
       .brick-full();
-      .card-body {
-        .card-bubbles {
-          display: none;
-        }
-      }
     }
 
     .bkdate {
@@ -349,5 +341,21 @@
   }
   .brick {
     .isMobile({ width: 100%; max-width: 100%; });
+  }
+
+  &.hightlight-first {
+    .brick {
+      &:first-child {
+        width: 100%;
+        max-width: 100%;
+        min-height: @minBrickHeight;
+        .brick-full();
+        .card-body {
+          .card-bubbles {
+            display: none;
+          }
+        }
+      }
+    }
   }
 }
