@@ -1,5 +1,6 @@
 import window from 'global/window'
 import config from '../../../config'
+import _ from 'lodash'
 
 export function btoa (x) {
   if (window.btoa) {
@@ -370,13 +371,30 @@ export function getOffset (el) {
   }
 }
 
-export function extractImg ({data, key, width = 1024}) {
-  const {images} =config
-  const thumb = data.get(key)
-  let imageUrl = data.get('imageUrl')
-  const path = thumb.get('path')
-  if (path) {
-    imageUrl = path
+export function extractImg ({data, key, keys = [], width = 1024}) {
+  const {images} = config
+  let thumb
+  let imageUrl = config.metadata.shareImage
+  if (data) {
+    if (key) {
+      thumb = data.get(key)
+    }
+    if (keys) {
+      _.forEach(keys, (value) => {
+        const foundedValue = data.get(value)
+        if (foundedValue) {
+          thumb = foundedValue
+        }
+      })
+    }
+    imageUrl = data.get('imageUrl') || config.metadata.shareImage
+
+    if (thumb) {
+      const path = thumb.get('path')
+      if (path) {
+        imageUrl = path
+      }
+    }
   }
 
   imageUrl = `${images.urlPrefix}${imageUrl}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
