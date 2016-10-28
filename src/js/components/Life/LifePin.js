@@ -97,7 +97,7 @@ class LifePin extends Component {
     switch (data.get('type')) {
       case 'video':
         e.preventDefault()
-        dispatch(PlayerActionCreators.killPlayer())
+        //dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
             autoplay: true,
@@ -113,7 +113,7 @@ class LifePin extends Component {
       case 'audio':
       case 'rich':
         e.preventDefault()
-        dispatch(PlayerActionCreators.killPlayer())
+        //dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
             autoplay: true,

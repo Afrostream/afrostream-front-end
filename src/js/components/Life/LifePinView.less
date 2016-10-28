@@ -1,4 +1,5 @@
 @import (reference) '../../../styles/config.less';
+@import (reference) '../../../styles/btn-play';
 
 #page-content-wrapper .container-fluid.life-pin {
   min-height: 100%;
@@ -9,9 +10,15 @@
 .life-pin {
   width: 100%;
   position: relative;
+
   img[ta-insert-video] {
     cursor: pointer;
   }
+
+  .video-player img[ta-insert-video] {
+    .btn-play();
+  }
+
   .pin-header {
     position: relative;
     width: 100%;

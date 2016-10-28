@@ -7,7 +7,6 @@ import { getI18n } from '../../../../../config/i18n'
 import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
 import { withRouter } from 'react-router'
-import Player from '../../Player/Player'
 import window from 'global/window'
 
 const {metadata, images} =config
@@ -127,9 +126,6 @@ class WelcomeHeader extends React.Component {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        {trailer && <Player src={{src: trailer, type: 'video/youtube'}}
-                            options={{autoplay: true, poster: posterImg}}/> }
-
         {!trailer && <div className="afrostream-movie__poster" style={imageStyle}>
           <div className="afrostream-movie__mask"/>
           {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}

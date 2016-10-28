@@ -20,8 +20,8 @@ class StaticPage extends React.Component {
     const {props: {children}} = this
 
     return (
-      <div className="row-fluid">
-        <div className="container-fluid brand-grey press-page">
+      <div className="row-fluid brand-grey">
+        <div className="container-fluid press-page">
           <div className="column-left fixed">
             <StaticMenu {...this.props} />
           </div>
