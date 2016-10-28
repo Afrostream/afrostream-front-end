@@ -84,9 +84,9 @@ export default () => {
 
             if (themesList) {
               let themesFlat = themesList.map((theme)=> {
-                return ` - ${theme.get('label')}`
+                return theme.get('label')
               })
-              themes = _.join(themesFlat.toJS(), ',')
+              themes = _.join(themesFlat.toJS(), ' - ')
             }
 
             metas.title = getI18n(lang).life.metas.title
