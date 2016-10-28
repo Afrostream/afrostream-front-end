@@ -335,6 +335,8 @@ class AvatarCard extends React.Component {
       backgroundImage: `url(${imageUrl})`
     }
 
+    const pins = user.get('lifePins')
+
     return (
       <div className={this.props.className}>
         <div className="header">
@@ -345,6 +347,7 @@ class AvatarCard extends React.Component {
         </div>
         <div className="content">
           <p>{user.get('nickname')}</p>
+          {pins && <p>{`Nombre de posts : ${pins.size}`}</p>}
         </div>
       </div>
     )

@@ -80,10 +80,10 @@ class ClickablePin extends Component {
         history
       }
     } = this
-    const donePath = data.get('targetUrl') || '/life'
     const pinRole = data.get('role') || config.userRoles[1]
     const acl = this.validRole(pinRole)
     const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
+    const donePath = data.get('targetUrl') || pinUrl || '/life'
 
     if (!acl) {
       e.preventDefault()
