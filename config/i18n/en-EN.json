@@ -478,6 +478,12 @@
   "social": {
     "title": "Partager"
   },
+  "life": {
+    "metas": {
+      "title": "Lifestyle {themes} l Afrostream Life",
+      "description": "Afrostream Life est le média dédié au meilleur de la culture afro-américaine, africaine et afro-caribéenne."
+    }
+  },
   "sponsors": {
     "title": "Mes amis parrainés",
     "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
