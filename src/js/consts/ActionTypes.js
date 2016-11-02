@@ -107,6 +107,10 @@ export default {
     fetchJob: null
   }),
 
+  Press: keyMirror({
+    fetchAll: null
+  }),
+
   Search: keyMirror({
     fetchMovies: null,
     fetching: null
