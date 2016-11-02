@@ -100,7 +100,7 @@ class PaymentMethod extends React.Component {
   async submit (billingInfo, currentPlan) {
     switch (this.state.method) {
       case  Methods.NETSIZE:
-        return await this.refs.netsize.submit(billingInfo)
+        return await this.refs.netsize.submit(billingInfo, currentPlan)
         break
       case  Methods.GOCARDLESS:
         return await this.refs.gocardless.submit(billingInfo)

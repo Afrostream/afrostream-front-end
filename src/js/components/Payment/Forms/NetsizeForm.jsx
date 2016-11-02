@@ -21,7 +21,7 @@ class NetsizeForm extends React.Component {
     selected: false
   }
 
-  async submit () {
+  async submit (billingInfo, currentPlan) {
     const {
       props:{}
     }=this
@@ -29,6 +29,9 @@ class NetsizeForm extends React.Component {
     return await new Promise(
       (resolve) => {
         return resolve({
+          internalPlanUuid: billingInfo.internalPlanUuid,
+          currency: currentPlan.get('currency'),
+          amount: currentPlan.get('amount'),
           billingProviderName: 'netsize'
         })
       }

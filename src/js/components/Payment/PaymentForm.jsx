@@ -137,6 +137,11 @@ class PaymentForm extends React.Component {
       }
     } = this
 
+    const currentPlan = this.hasPlan()
+
+    if (currentPlan && currentPlan.get('internalPlanUuid') === config.netsize.internalPlanUuid) {
+      return
+    }
 
     const user = User.get('user')
     let firstName = ''
@@ -287,8 +292,8 @@ class PaymentForm extends React.Component {
 
     let billingInfo = {
       internalPlanUuid: this.state.internalPlanUuid,
-      firstName: this.refs.firstName.value,
-      lastName: this.refs.lastName.value
+      firstName: this.refs.firstName && this.refs.firstName.value,
+      lastName: this.refs.lastName && this.refs.lastName.value
     }
 
     try {
@@ -316,26 +321,14 @@ class PaymentForm extends React.Component {
     return Q()
       .then(()=> {
         if (formData.billingProviderName === 'netsize') {
-          return dispatch(OAuthActionCreators.netsizeSubscribe({}))
+          return dispatch(OAuthActionCreators.netsizeSubscribe({internalPlan: formData}))
         }
         return dispatch(BillingActionCreators.subscribe(formData))
       })
-      .then(({res:{body:{data: {netsizeStatusCode, error, message}, subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
-        //IF netsize error
-        if (error) {
-          throw new Error({
-            response: {
-              body: {
-                code: netsizeStatusCode,
-                message,
-                error
-              }
-            }
-          })
-        }
+      .then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
         ReactFB.track({
           event: 'CompleteRegistration', params: {
-            'content_name': internalPlanUuid || this.state.internalPlanUuid,
+            'content_name': internalPlanUuid,
             'status': subStatus,
             'currency': currency,
             'value': amount
@@ -347,14 +340,12 @@ class PaymentForm extends React.Component {
         return dispatch(UserActionCreators.getProfile())
       })
       .then(()=> {
-        debugger
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
-      }).catch(({response:{body:{data, error, code, message}}}) => {
-        debugger
+      }).catch(({response:{body:{error, code, message}}}) => {
         let globalMessage = getI18n().payment.errors.global
 
-        if (error || data.error) {
-          globalMessage = message || data.message
+        if (error) {
+          globalMessage = message
         }
 
         if (code) {
