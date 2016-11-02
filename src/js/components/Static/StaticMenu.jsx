@@ -35,7 +35,7 @@ class StaticMenu extends React.Component {
         }
         try {
 
-          var divPos = $(theID).offset().top // get the offset of the div from the top of page
+          var divPos = $(theID) && $(theID).offset().top // get the offset of the div from the top of page
           var divHeight = $(theID).height() // get the height of the div in question
           if (windowPos >= divPos && windowPos < (divPos + divHeight)) {
             $(`a[href="${theID}"]`).addClass('active')

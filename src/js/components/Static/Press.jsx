@@ -2,17 +2,22 @@ import React from 'react'
 import { prepareRoute } from '../../decorators'
 import * as EventActionCreators from '../../actions/event'
 import * as ModalActionCreators from '../../actions/modal'
+import * as PressActionCreators from '../../actions/press'
 import * as ConfigActionCreators from '../../actions/config'
 import { connect } from 'react-redux'
 import { slugify } from '../../lib/utils'
+import moment from 'moment'
+import config from '../../../../config'
+const {images} =config
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(ConfigActionCreators.getConfig('press'))
+    store.dispatch(ConfigActionCreators.getConfig('press')),
+    store.dispatch(PressActionCreators.fetchAll())
   ])
 })
-@connect(({Config}) => ({Config}))
+@connect(({Config, Press}) => ({Config, Press}))
 class Press extends React.Component {
 
   onIMGError (e) {
@@ -58,16 +63,15 @@ class Press extends React.Component {
 
     const {
       props: {
-        Config
+        Config, Press
       }
     } = this
 
 
-    const pressData = Config.get(`/config/press`)
-    if (!pressData) {
+    const articles = Press.get(`press`)
+    if (!articles) {
       return
     }
-    const articles = pressData.get('articles')
 
     let sortArticles = articles.sort((a, b) => {
       const aD = a.get('date')
@@ -91,22 +95,33 @@ class Press extends React.Component {
 
     return sortGroupedPress.map((group, groupKey)=> {
       const firstItem = group.get(0)
-      const date = firstItem.get('date')
-      return <div className="row-fluid" key={`static-press-group-${groupKey}`} id={`news-${date.substring(6)}`}>
-        <h3>{date.substring(6)}</h3>
+      const date = moment(firstItem.get('date'))
+      return <div className="row-fluid" key={`static-press-group-${groupKey}`} id={`news-${date.format('YYYY')}`}>
+        <h3>{date.format('YYYY')}</h3>
         <div className="items">
           {
             group.map((item, key)=> {
               let partner = item.get('partner')
-              let source = item.get('src')
+              let source = item.get('url')
+              const itemDate = moment(item.get('date'))
+              let image = item.get('image')
+              let pdf = item.get('pdf')
+              let posterImg;
+              if (image) {
+                posterImg = image.get('path')
+              }
+              if (pdf) {
+                source = `${images.urlPrefix}${pdf.get('path')}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}`
+              }
+              posterImg = `${images.urlPrefix}${posterImg}?crop=faces&fit=clip&w=345&h=190&q=${images.quality}&fm=${images.type}`
               return (<div key={`static-press-${groupKey}-${key}`} className="col item press-link effect">
                 <a href={source} target="_blank">
                   <div className="wrapper">
                     {source && <img className="pointer"
-                                    src={`/press/screen/site/${slugify(partner)}.jpg`}
+                                    src={`${posterImg}`}
                                     width="345" height="190" onError={this.onIMGError}/>}
                   </div>
-                  <span>#{item.get('date')}</span>
+                  <span>#{itemDate.format('DD-MM-YYYY')}</span>
                   <p>
                     {item.get('title')}
                   </p>
