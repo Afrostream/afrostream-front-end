@@ -80,17 +80,17 @@ class Press extends React.Component {
     })
 
     let groupedPress = sortArticles.groupBy((item) => {
-      const date = item.get('date')
-      return date && date.substring(6)
+      const date = moment(item.get('date'))
+      return date && date.format('YYYY')
     })
 
     let sortGroupedPress = groupedPress.sort((a, b) => {
       const firstItem = a.first()
-      const firstDate = firstItem.get('date')
+      const firstDate = moment(firstItem.get('date'), 'DD/MM/YYYY')
       const secondItem = b.first()
-      const secondDate = secondItem.get('date')
+      const secondDate = moment(secondItem.get('date'), 'DD/MM/YYYY')
 
-      return (firstDate && firstDate.substring(6)) < (secondDate && secondDate.substring(6))
+      return (firstDate && firstDate) < (secondDate && secondDate)
     })
 
     return sortGroupedPress.map((group, groupKey)=> {
