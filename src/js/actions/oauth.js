@@ -149,7 +149,7 @@ export function netsizeCheck () {
   }
 }
 
-export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe'}) {
+export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', internalPlan :{}}) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
 
@@ -177,15 +177,24 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe'}) {
             clearInterval(intervalCheck)
           }
           try {
-            if (!data || data.error) {
-              let error = data ? data : {message: 'Error: strategy error'}
-              return reject(error)
+            if (!data || (data && data.error)) {
+              return reject({
+                response: {
+                  body: {
+                    error: data.error,
+                    message: data.message,
+                    code: data.netsizeErrorCode || data.netsizeStatusCode,
+                  }
+                }
+              })
             }
             return resolve({
               type: ActionTypes.OAuth.netsizeSubscribe,
               res: {
                 body: {
-                  data
+                  subStatus: data.netsizeStatusCode,
+                  transactionId: data.netsizeTransactionId,
+                  internalPlan
                 }
               }
             })
@@ -199,7 +208,7 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe'}) {
         window[eventMethod](messageEvent, (event) => {
           console.log('received response:  ', event.data, event.origin, config.domain.host)
           if (!~event.origin.indexOf(config.domain.host)) return
-          beforeUnload(event.data)
+          beforeUnload(event.data && event.data.data)
         }, false)
       })
     }
