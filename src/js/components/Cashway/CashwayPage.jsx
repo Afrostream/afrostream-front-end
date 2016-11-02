@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react'
+import Immutable from 'immutable'
 import SignUpButton from '../User/SignUpButton'
 import { prepareRoute } from '../../decorators'
 import config from '../../../../config'
 import * as EventActionCreators from '../../actions/event'
 import scriptLoader from '../../lib/script-loader'
-import Player from '../Player/Player'
+import FloatPlayer from '../Player/FloatPlayer'
 import { withRouter } from 'react-router'
 import window from 'global/window'
 
@@ -40,6 +41,14 @@ class CashwayPage extends React.Component {
     if (isScriptLoaded && isScriptLoadSucceed) {
       window.cashwayMapInit()
     }
+    const data = Immutable.fromJS({
+      sources: [
+        {type: 'video/youtube', src: 'https://www.youtube.com/watch?v=gx5p0ZD88EM'}
+      ]
+    })
+    this.setState({
+      data
+    })
   }
 
   componentWillReceiveProps ({isScriptLoaded, isScriptLoadSucceed}) {
@@ -58,14 +67,10 @@ class CashwayPage extends React.Component {
       return children
     }
 
-    const source = [
-      {type: 'video/youtube', src: 'https://www.youtube.com/watch?v=gx5p0ZD88EM'}
-    ]
-
     return (
       <div className="cashway-page">
         <div className="container brand-bg-alpha">
-          <Player src={source} options={{autoplay: false}}/>
+          <FloatPlayer float={false} data={this.state.data} {...this.props} />
           <section className="cashway-info">
             <h2>Paiement en espèces avec <img src="/images/payment/cashway-inline.png" width="100"/></h2>
             <h3>Comment ça marche</h3>

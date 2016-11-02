@@ -11,7 +11,7 @@ class About extends React.Component {
     return (
       <div id="react-blog">
         <section className="backstage-section bg-linear" id="founder">
-          <div className="container-fluid container-no-padding">
+          <div className="container-fluid no-padding">
             <div className="column-right">
               <h2 className="heading-2">Bios</h2>
               <div className="line-divider-block center-picture clearfix">

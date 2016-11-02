@@ -59,7 +59,9 @@ export default {
   }),
 
   Player: keyMirror({
-    getConfig: null
+    getConfig: null,
+    loadPlayer: null,
+    killPlayer: null
   }),
 
   Config: keyMirror({
@@ -100,11 +102,6 @@ export default {
     close: null
   }),
 
-  Blog: keyMirror({
-    fetchAll: null,
-    fetchPost: null
-  }),
-
   Job: keyMirror({
     fetchAll: null,
     fetchJob: null
@@ -124,5 +121,13 @@ export default {
     getFriends: null,
     getFriendList: null,
     getInvitableFriends: null
+  }),
+
+  Life: keyMirror({
+    fetchThemes: null,
+    fetchSpots: null,
+    fetchPins: null,
+    fetchPin: null,
+    fetchUsers: null
   })
 }

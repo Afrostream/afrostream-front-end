@@ -33,24 +33,29 @@ class ModalComponent extends React.Component {
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
-      'hide': this.props.closable
+      'hide': !this.props.closable
     })
+
+    let panelClass = {
+      'panel onestep active': true,
+    }
+
+    panelClass[this.props.className] = true
 
     return (
       <div className="lock-container">
-        <div id="a0-lock" className="a0-lock a0-theme-default">
-          <div className="a0-signin">
-            <div className="a0-popup">
-              <div className="a0-overlay a0-active">
-                <div className="a0-centrix">
-                  <div id="a0-onestep" className="a0-panel a0-onestep a0-active">
+        <div id="lock" className="lock theme-default">
+          <div className="signin">
+            <div className="popup">
+              <div className="overlay active">
+                <div className="centrix">
+                  <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
-                    <div className="a0-header a0-top-header ">
-                      <div className="a0-bg-gradient"></div>
+                    <div className="header top-header">
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
-                    <div className="a0-mode-container">
-                      {this.props.chidren}
+                    <div className="mode-container">
+                      {this.props.children}
                     </div>
                   </div>
                 </div>
@@ -66,12 +71,15 @@ class ModalComponent extends React.Component {
 ModalComponent.propTypes = {
   dispatch: React.PropTypes.func,
   closable: React.PropTypes.bool,
-  modal: React.PropTypes.bool
+  modal: React.PropTypes.bool,
+  className: React.PropTypes.string
+
 }
 
 ModalComponent.defaultProps = {
   closable: true,
-  modal: true
+  modal: true,
+  className: ''
 }
 
 export default ModalComponent

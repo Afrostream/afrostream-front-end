@@ -5,13 +5,16 @@ import Footer from './Footer/Footer'
 import SideBar from './SideBar/SideBar'
 import SplashScreen from './SplashScreen/SplashScreen'
 import AlertMessage from './Alert/AlertMessage'
+import FloatPlayer from './Player/FloatPlayer'
 import ModalView from './Modal/ModalView'
 import classNames from 'classnames'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
+import window from 'global/window'
 
+import * as CategoryActionCreators from '../actions/category'
 import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
 import * as EpisodeActionCreators from '../actions/episode'
@@ -28,7 +31,6 @@ import {
   purple900
 } from 'material-ui/styles/colors'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -50,6 +52,8 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
 
+  await store.dispatch(CategoryActionCreators.getMenu())
+
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))
   }
@@ -70,29 +74,34 @@ if (process.env.BROWSER) {
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
 
+  constructor (props) {
+    super(props)
+  }
+
   render () {
 
-    const {props: {children, Event, User, Modal}} = this
-    const toggled = User.get('user') && Event.get('sideBarToggled')
+    const {props: {children, Event, Modal}} = this
+    const toggled = Event.get('sideBarToggled')
     const hasPopup = Modal.get('target')
 
     let appClasses = classNames({
       'app': true,
-      'toggled': toggled,
       'lock-open': hasPopup
     })
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={appClasses}>
-          <Header {...this.props}/>
-          <SideBar />
           <SplashScreen />
           <AlertMessage />
-          <div id="page-content-wrapper" className="container-fluid">
-            {children}
-            <Footer {...this.props}/>
-          </div>
+          <Header {...this.props}/>
+          <SideBar {...{toggled}} docked={true} {...this.props}>
+            <div id="page-content-wrapper" className="container-fluid">
+              {children}
+              <Footer {...this.props}/>
+            </div>
+          </SideBar>
+          <FloatPlayer {...this.props}/>
           <ModalView {...this.props}/>
         </div>
       </MuiThemeProvider>

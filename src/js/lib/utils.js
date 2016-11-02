@@ -1,4 +1,6 @@
 import window from 'global/window'
+import config from '../../../config'
+import _ from 'lodash'
 
 export function btoa (x) {
   if (window.btoa) {
@@ -312,4 +314,92 @@ export function slugify (text) {
     .replace(/\-\-+/g, '-')         // Replace multiple - with single -
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '')            // Trim - from end of text
+}
+
+export function mergeFbUserInfo (user) {
+  if (!user) {
+    return null
+  }
+  if (user.facebook) {
+    //user.picture = `//graph.facebook.com/${user.facebook.id}/picture`
+    user.name = user.name || user.facebook.name
+    user.nickname = user.nickname || user.facebook.nickname
+  }
+  //else {
+  //user.picture = `/avatar/${user.email || user.name}`
+  //}
+  return user
+}
+
+//SCROLL HELPER
+export function getViewportH () {
+  var client = window.document.documentElement.clientHeight,
+    inner = window.innerHeight
+
+  return (client < inner) ? inner : client
+}
+
+export function isElementInViewPort (el, factorTolerance) {
+  factorTolerance = factorTolerance || 0
+
+  var style = el.getBoundingClientRect()
+  var top = style.top
+  var height = style.height
+  var toleranceTop = height * factorTolerance
+  var maxDisplayTop = window.innerHeight
+  var minDisplayTop = -height
+
+  return top < (maxDisplayTop - toleranceTop) && top > (minDisplayTop + toleranceTop)
+}
+
+export function getOffset (el) {
+  var offsetTop = 0,
+    offsetLeft = 0
+
+  do {
+    if (!isNaN(el.offsetTop)) {
+      offsetTop += el.offsetTop
+    }
+    if (!isNaN(el.offsetLeft)) {
+      offsetLeft += el.offsetLeft
+    }
+  } while (el === el.offsetParent)
+
+  return {
+    top: offsetTop,
+    left: offsetLeft
+  }
+}
+
+export function extractImg ({data, key, keys = [], width = 1024}) {
+  const {images} = config
+  let thumb
+  let imageUrl = config.metadata.shareImage
+  if (data) {
+    imageUrl = data.get('imageUrl') || config.metadata.shareImage
+
+    if (key) {
+      thumb = data.get(key)
+    }
+    if (keys) {
+      _.forEach(keys, (value) => {
+        const foundedValue = data.get(value)
+        if (foundedValue) {
+          thumb = foundedValue
+        }
+      })
+    }
+
+
+    if (thumb) {
+      const path = thumb.get('path')
+      if (path) {
+        imageUrl = `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
+      }
+    }
+  }
+
+
+  return imageUrl
+
 }

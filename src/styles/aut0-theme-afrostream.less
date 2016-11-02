@@ -12,10 +12,17 @@
 
 #lock.theme-default,
 #widget {
+
+  &.lock.player {
+    position: fixed;
+    background: none;
+  }
+
   .overlay {
     background: @background-color-base;
     background: fade(@background-color-base, @popup-bg-alpha);
   }
+
   .panel {
     font-family: @font-family-base;
     background: @brand-primary;
@@ -29,8 +36,8 @@
         font-family: @font-family-base;
         font-weight: 500;
       }
-      border-bottom: 1px solid @line-separator-color;
-      margin: 0 @popup-padding 20px @popup-padding;
+      //border-bottom: 1px solid @line-separator-color;
+      margin: 0 @popup-padding 0 @popup-padding;
     }
 
     .close:hover {
@@ -95,6 +102,7 @@
     }
 
   }
+
 }
 
 @media screen and (max-width: 480px) {

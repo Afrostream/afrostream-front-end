@@ -11,18 +11,18 @@ export function getMovie (movieId) {
       }
     }
 
-    let readyMovie = getState().Movie.get(`movies/${movieId}`)
-
-    if (readyMovie) {
-      console.log('movie already present in data store', movieId)
-      return {
-        type: ActionTypes.Movie.getMovie,
-        movieId,
-        res: {
-          body: readyMovie.toJS()
-        }
-      }
-    }
+    //let readyMovie = getState().Movie.get(`movies/${movieId}`)
+    //
+    //if (readyMovie) {
+    //  console.log('movie already present in data store', movieId)
+    //  return {
+    //    type: ActionTypes.Movie.getMovie,
+    //    movieId,
+    //    res: {
+    //      body: readyMovie.toJS()
+    //    }
+    //  }
+    //}
 
     actionDispatcher({
       type: ActionTypes.Movie.getMovie,
@@ -67,17 +67,17 @@ export function getSeason (movieId) {
         movieId
       }
     }
-    let readySeason = getState().Movie.get(`movies/${movieId}/seasons`)
-    if (readySeason) {
-      console.log('season already present in data store', movieId)
-      return {
-        type: ActionTypes.Movie.getSeason,
-        movieId,
-        res: {
-          body: readySeason.toJS()
-        }
-      }
-    }
+    //let readySeason = getState().Movie.get(`movies/${movieId}/seasons`)
+    //if (readySeason) {
+    //  console.log('season already present in data store', movieId)
+    //  return {
+    //    type: ActionTypes.Movie.getSeason,
+    //    movieId,
+    //    res: {
+    //      body: readySeason.toJS()
+    //    }
+    //  }
+    //}
 
     actionDispatcher({
       type: ActionTypes.Movie.getSeason,

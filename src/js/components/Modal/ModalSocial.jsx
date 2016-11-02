@@ -235,11 +235,21 @@ class ModalSocial extends ModalComponent {
                    data-placement="top"
                    title={network.title}
                    key={`share-btn-${network.icon}`} {...inputAttributes}>
+        {this.props.showLabel && <span>{network.label}</span>}
       </div>)
     })
   }
 
   render () {
+
+    let popupClass = classNames({
+      'popup': this.props.modal
+    })
+
+    let overlayClass = classNames({
+      'overlay': this.props.modal,
+      'active': true
+    })
 
     let closeClass = classNames({
       'close': true,
@@ -251,16 +261,16 @@ class ModalSocial extends ModalComponent {
       <div className="lock-container">
         <div id="lock" className="lock theme-default social">
           <div className="signin">
-            <div className="popup">
-              <div className="overlay active">
+            <div className={popupClass}>
+              <div className={overlayClass}>
                 <div className="centrix">
                   <div id="onestep" className="panel onestep active">
                     {/*HEADER*/}
-                    <div className="header top-header ">
+                    {this.props.modal && <div className="header top-header ">
                       <div className="bg-gradient"></div>
                       <h1>{getI18n().social.title}</h1>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
-                    </div>
+                    </div>}
                     <div className="mode-container">
                       <div className="mode">
                         {this.getShareButtons()}
@@ -278,10 +288,12 @@ class ModalSocial extends ModalComponent {
 }
 
 ModalSocial.propTypes = {
+  showLabel: React.PropTypes.bool,
   data: React.PropTypes.object
 }
 
 ModalSocial.defaultProps = {
+  showLabel: false,
   data: null
 }
 

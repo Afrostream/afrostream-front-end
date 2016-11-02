@@ -123,7 +123,7 @@ class Press extends React.Component {
     return (
       <div id="react-blog">
         <section className="backstage-section bg-linear" id="mediakit">
-          <div className="container-fluid container-no-padding">
+          <div className="container-fluid no-padding">
             <div className="column-right">
               <h2 className="heading-2">Kit média</h2>
               <div className="row mediakit-list">
@@ -162,7 +162,7 @@ class Press extends React.Component {
           className="backstage-section bg-linear"
           id="videos">
           <div
-            className="container-fluid container-no-padding">
+            className="container-fluid no-padding">
             <div
               className="column-right">
               <h2 className="heading-2"> Vidéos</h2>
@@ -173,7 +173,7 @@ class Press extends React.Component {
           </div>
         </section>
         <section className="backstage-section bg-linear" id="press">
-          <div className="container-fluid container-no-padding">
+          <div className="container-fluid no-padding">
             <div className="column-right">
               <h2 className="heading-2">Presse</h2>
               <div className="row mediakit-list">
@@ -195,7 +195,7 @@ class Press extends React.Component {
           </div>
         </section>
         <section className="backstage-section bg-linear" id="news">
-          <div className="container-fluid container-no-padding">
+          <div className="container-fluid no-padding">
             <div className="column-right">
               <h2 className="heading-2">News</h2>
               {this.renderPress()}

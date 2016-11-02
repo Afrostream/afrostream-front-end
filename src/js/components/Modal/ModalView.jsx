@@ -8,6 +8,8 @@ import ModalCoupon from './ModalCoupon'
 import ModalCashwayPlan from './ModalCashwayPlan'
 import ModalSponsors from './ModalSponsors'
 import ModalPlayer from './ModalPlayer'
+import ModalComponent from './ModalComponent'
+import { SelectPlan } from '../../components/Payment/'
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -60,6 +62,7 @@ class ModalView extends React.Component {
       case 'showRelog':
       case 'showProvider':
       case 'linkProvider':
+      case 'life-user':
         return (
           <ModalLogin type={target} closable={closable} cb={cb} {...this.props}/>
         )
@@ -83,6 +86,23 @@ class ModalView extends React.Component {
         return (
           <ModalPlayer closable={closable} {...this.props} data={data}/>
         )
+        break
+      case 'player':
+        return (
+          <ModalPlayer closable={closable} {...this.props} data={data}/>
+        )
+        break
+      case 'image':
+        return (
+          <ModalComponent closable={closable} className="large" {...this.props} >
+            <img className="modal-image" src={data.get('src')}/></ModalComponent>
+        )
+        break
+      //LIFE ACL
+      case 'life-premium':
+      case 'life-vip':
+        return <ModalComponent closable={closable} className="large" {...this.props}><SelectPlan {...this.props}
+                                                                                                 showImages={false}/></ModalComponent>
         break
       default:
         return <div />

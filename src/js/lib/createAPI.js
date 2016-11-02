@@ -99,13 +99,14 @@ export default function createAPI (createRequest) {
     path,
     method = 'GET',
     params = {},
+    headers = {},
     legacy = false,
     showLoader = true,
     local = false,
     passToken = false
   }) {
     let {pathname, query: queryStr} = URL.parse(path)
-    let query, headers = {}, body
+    let query, body
 
     if (_.isObject(method)) {
       params = method

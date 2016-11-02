@@ -9,8 +9,8 @@ import * as EventActionCreators from '../../actions/event'
 class Faq extends React.Component {
   render () {
     return (
-      <div className="row-fluid">
-        <article>
+      <div className="row-fluid content-padding brand-grey">
+        <article className="article-static">
           <section>
             <h1>Nos réponses à vos questions</h1>
 

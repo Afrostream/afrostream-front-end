@@ -1,18 +1,44 @@
 import React from 'react'
+import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
+import shallowEqual from 'react-pure-render/shallowEqual'
 import ModalComponent from './ModalComponent'
 import { withRouter } from 'react-router'
-import Player from '../Player/Player'
+import FloatPlayer from '../Player/FloatPlayer'
+import * as PlayerActionCreators from '../../actions/player'
 
 if (process.env.BROWSER) {
   require('./ModalPlayer.less')
 }
-
+@connect(({Player})=>({Player}))
 class ModalPlayer extends ModalComponent {
 
   constructor (props) {
     super(props)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!shallowEqual(nextProps.Player, this.props.Player)) {
+      const videoData = nextProps.Player.get('/player/data')
+      if (!videoData) {
+        return this.closeModal()
+      }
+    }
+  }
+
+  componentDidMount () {
+    const {props:{dispatch, data}} = this
+    dispatch(PlayerActionCreators.loadPlayer({
+      data: Immutable.fromJS({
+        autoplay: true,
+        target: this.refs.container,
+        sources: [{
+          src: data.get('src'),
+          type: data.get('type')
+        }]
+      })
+    }))
   }
 
   render () {
@@ -33,10 +59,7 @@ class ModalPlayer extends ModalComponent {
                 <div className="centrix">
                   <div id="onestep" className="panel onestep active">
                     <div className="mode-container">
-                      <div className="mode">
-                        <a className={closeClass} href="#" onClick={::this.handleClose}></a>
-                        {data && <Player src={data.toJS()}
-                                         options={{autoplay: true, controls: false}}/> }
+                      <div ref="container" className="mode">
                       </div>
                     </div>
                   </div>

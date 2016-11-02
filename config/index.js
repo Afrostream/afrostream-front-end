@@ -74,7 +74,8 @@ const config = _.merge(
       host: 'localhost',
       port: 8081
     },
-
+    // List of user roles
+    userRoles: ['free', 'user', 'premium', 'vip'],
     /**
      * browserSync
      */

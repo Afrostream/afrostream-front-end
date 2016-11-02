@@ -1,0 +1,182 @@
+@import (reference) '../../../styles/config.less';
+
+@-webkit-keyframes slideUpSubHeader {
+  0% {
+    -webkit-transform: translateY(0);
+  }
+
+  100% {
+    -webkit-transform: translateY(-@header-height);
+  }
+}
+
+@-moz-keyframes slideUpSubHeader {
+  0% {
+    -moz-transform: translateY(0);
+  }
+
+  100% {
+    -moz-transform: translateY(-@header-height);
+  }
+}
+
+@-o-keyframes slideUpSubHeader {
+  0% {
+    -o-transform: translateY(0);
+  }
+
+  100% {
+    -o-transform: translateY(-@header-height);
+  }
+}
+
+@keyframes slideUpSubHeader {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-@header-height);
+  }
+}
+
+@-webkit-keyframes slideDownSubHeader {
+  0% {
+    -webkit-transform: translateY(-@header-height);
+  }
+
+  100% {
+    -webkit-transform: translateY(0);
+  }
+}
+
+@-moz-keyframes slideDownSubHeader {
+  0% {
+    -moz-transform: translateY(-@header-height);
+  }
+
+  100% {
+    -moz-transform: translateY(0);
+  }
+}
+
+@-o-keyframes slideDownSubHeader {
+  0% {
+    -o-transform: translateY(-@header-height);
+  }
+
+  100% {
+    -o-transform: translateY(0);
+  }
+}
+
+@keyframes slideDownSubHeader {
+  0% {
+    transform: translateY(-@header-height);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animated.slideDownSubHeader {
+  -webkit-animation-duration: 0.4s;
+  -moz-animation-duration: 0.4s;
+  -o-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-name: slideDownSubHeader;
+  -moz-animation-name: slideDownSubHeader;
+  -o-animation-name: slideDownSubHeader;
+  animation-name: slideDownSubHeader;
+}
+
+.toolbar-life-navigation {
+  font-size: 2em;
+  text-transform: uppercase;
+}
+
+&.animated.slideUpSubHeader {
+  -webkit-animation-duration: 0.2s;
+  -moz-animation-duration: 0.2s;
+  -o-animation-duration: 0.2s;
+  animation-duration: 0.2s;
+  -webkit-animation-name: slideUpSubHeader;
+  -moz-animation-name: slideUpSubHeader;
+  -o-animation-name: slideUpSubHeader;
+  animation-name: slideUpSubHeader;
+}
+
+.life-navigation {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: @header-height;
+  z-index: @nav-z + 2;
+  padding: 0.2em;
+  background: #FFFFFF;
+  box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
+  font-family: @font-oswald;
+  font-size: 1.8em;
+  .isMobile({ font-size: 1.3em; });
+  text-transform: uppercase;
+  display: inline-block;
+  list-style: none;
+  cursor: default;
+  width: 100%;
+  text-align: center;
+}
+
+.toolbar-life-navigation,
+.life-navigation {
+  li {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    font-family: @font-oswald;
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 1em;
+      height: 2px;
+      width: 5px;
+      background: @color-black-2;
+    }
+    &:last-child {
+      &:after {
+        display: none;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: @color-black-2;
+      &:hover,
+      &:active,
+      &.active {
+        &:before {
+          height: 0.2em;
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 0;
+        background: @color-black-2;
+        opacity: 0;
+        visibility: hidden;
+        transition: height .1s linear, opacity .1s linear;
+      }
+
+    }
+  }
+}

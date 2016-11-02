@@ -6,7 +6,7 @@ class AppRouter extends React.Component {
 
   render () {
     return (
-      <ReduxRouter {...this.props}>
+      <ReduxRouter {...this.props} >
         {routes}
       </ReduxRouter>
     )

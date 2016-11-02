@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import _ from 'lodash'
 
 if (process.env.BROWSER) {
   require('./BrowseMenu.less')
@@ -12,16 +11,6 @@ class BrowseMenu extends React.Component {
 
   constructor (props) {
     super(props)
-  }
-
-  componentDidMount () {
-    $('.dropdown').hover(
-      ()=> {
-        $('.dropdown-menu', this).fadeIn('fast')
-      },
-      () => {
-        $('.dropdown-menu', this).fadeOut('fast')
-      })
   }
 
   renderCategories () {
@@ -35,37 +24,15 @@ class BrowseMenu extends React.Component {
     if (!categories) {
       return
     }
-
-    const jsCat = categories.toJS()
-    const splitSize = 5
-    const colSize = Math.floor(9 / (jsCat.length / splitSize))
-
-    return _.chunk(jsCat, splitSize).map((splitedCategorie, key) => <li key={`menu-${key}`}
-                                                                        className={`mega-menu-column col-md-${colSize} col-xs-6`}>
-      <ul>
-        {_.map(splitedCategorie, (categorie)=>
-          <li
-            key={`menu-${categorie._id}`}>
-            <Link to={`/browse/genre/${categorie._id}/${categorie.slug}`}>
-              {categorie.label}
-            </Link>
-          </li>
-        )}
-      </ul>
-    </li>)
+    return categories.map((categorie, key) =>(<li key={`menu-${categorie.get('_id')}`}><Link
+      to={`/browse/genre/${categorie.get('_id')}/${categorie.get('slug')}`}>
+      {categorie.get('label')}
+    </Link></li>)).toJS()
   }
 
   render () {
     return (
-      <ul className="dropdown-menu mega-menu row-fluid">
-        <li className="mega-menu-column col-md-3 col-xs-6">
-          <ul>
-            <li><Link to="/">Accueil <i className="zmdi zmdi-home"/></Link></li>
-            <li><Link to="/favoris">Mes Favoris <i className="zmdi zmdi-favorite"/></Link></li>
-            <li><Link to="/last">Derniers ajouts</Link></li>
-            <li><Link to="/compte">Mon compte</Link></li>
-          </ul>
-        </li>
+      <ul className="sidebar-nav scrollable">
         {this.renderCategories()}
       </ul>
     )

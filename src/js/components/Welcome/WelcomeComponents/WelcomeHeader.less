@@ -1,6 +1,6 @@
 @import (reference) '../../../../styles/config.less';
 
-.aspect-ratio(@width, @height) {
+.aspect-ratio-w(@width, @height) {
   &:before {
     display: block;
     content: "";
@@ -58,12 +58,12 @@
       position: absolute;
       width: 40%;
       max-width: 40%;
-      right: 5em;
+      right: 0.5em;
       top: 8em;
       background-position: center center;
       background-size: contain;
       background-repeat: no-repeat;
-      .aspect-ratio(16, 9);
+      .aspect-ratio-w(16, 9);
       .isMobile({ width: 100%; max-width: 100%; right: inherit });
     }
   }

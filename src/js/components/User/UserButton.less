@@ -10,12 +10,11 @@ nav {
     .zmdi {
       margin: -2px 0 0 0;
     }
-    background-color: fade(@brand-primary, 10%);
     color: @brand-primary;
     text-transform: uppercase;
+    font-family: @font-oswald;
     font-size: 1em;
     border-radius: @btn-radius;
-    margin: 2px;
     font-weight: 400;
     line-height: 2;
     display: inline-block;
@@ -23,12 +22,9 @@ nav {
     &:hover,
     &:active {
       background-color: @color-yellow;
-      color: @color-indigo;
+      color: #FFFFFF;
       text-decoration: none;
     }
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    //padding-left: 10px !important;
     span {
       padding: 0 10px 0 10px;
       .isMobile({ display: none; padding: 0; });
@@ -40,14 +36,17 @@ nav {
   }
 
   .btn-user {
-    padding-top: 3px !important;
-    padding-bottom: 3px !important;
-    padding-right: 2px !important;
-    padding-left: 2px !important;
+    .icon-user {
+      border-radius: 25px;
+      //border: 3px solid @color-purple;
+      width: 50px;
+      height: 50px;
+    }
   }
 
   .btn-signup,
   .btn-signin {
+    background-color: @color-black-2;
     span {
       .isMobile({ display: inherit; });
     }
@@ -55,24 +54,6 @@ nav {
   .btn-signup {
     color: #000000 !important;
     background-color: @color-yellow !important;
+    background-color: @color-black-2;
   }
-  //.btn-signup {
-  //  .isMobile({ display: none; });
-  //}
-  //.btn-login {
-  //  color: #000000;
-  //  background-color: @color-yellow;
-  //  border: none;
-  //  border-radius: 2px;
-  //  font-size: 20px;
-  //  font-weight: bold;
-  //  line-height: 32px;
-  //  padding: 2px 16px 2px 16px;
-  //  margin: 8px;
-  //  @media all and (max-width: @screen-xs-min) {
-  //    font-size: 16px;
-  //    font-weight: normal;
-  //    line-height: 24px;
-  //  }
-  //}
 }
