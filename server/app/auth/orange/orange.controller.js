@@ -74,7 +74,7 @@ export async function callback (req, res) {
     })
   }
   catch (err) {
-    console.error(err)
+    console.error(err, err.message, err.stack)
     res.status(500).send('')
   }
 }
