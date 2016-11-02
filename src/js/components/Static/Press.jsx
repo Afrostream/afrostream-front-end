@@ -196,14 +196,28 @@ class Press extends React.Component {
                   <img className="pointer"
                        src="/press/screen/press.jpg"
                        width="345" height="190"/>
-                  <p>Retrouvez notre dossier de presse.</p>
+                  <p>Retrouvez notre dossier de presse (FR).</p>
                   <span className="btn-download">
-        <a role="button" href="/press/screen/Press_Releases-2016-10-01.zip" className="btn btn-info"
+        <a role="button" href="/press/screen/Press_Releases-2016-10-01-FR.zip" className="btn btn-info"
            type="button">
         <span className="zmdi zmdi-download"></span>
         <span className="label">Télécharger</span>
         </a>
         </span>
+                </div>
+                <div className="col col-md-6">
+                  <img className="pointer"
+                       src="/press/screen/press.jpg"
+                       width="345" height="190"/>
+                  <p>Retrouvez notre dossier de presse (EN).</p>
+                  <span className="btn-download">
+                      <a role="button"
+                         href="/press/screen/Press_Releases-2016-10-01-EN.zip" className="btn btn-info"
+                         type="button">
+                  <span className="zmdi zmdi-download"></span>
+                  <span className="label">Download</span>
+                  </a>
+                  </span>
                 </div>
               </div>
             </div>
