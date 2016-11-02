@@ -9,7 +9,9 @@ export default {
     signup: null,
     reset: null,
     strategy: null,
-    logOut: null
+    logOut: null,
+    netsizeCheck: null,
+    netsizeSubscribe: null
   }),
 
   Billing: keyMirror({

@@ -1,4 +1,3 @@
-import Q from 'q'
 import _ from 'lodash'
 import config from '../../../config'
 import anr from 'afrostream-node-request'

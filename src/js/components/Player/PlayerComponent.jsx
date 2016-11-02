@@ -943,8 +943,8 @@ class PlayerComponent extends Component {
   //KOMENT
   showKoment () {
     if (this.player && this.player.koment) {
-      this.player.koment.toggleMenu(true);
-      this.player.koment.toggleEdit(true);
+      this.player.koment.toggleMenu(true)
+      this.player.koment.toggleEdit(true)
     }
   }
 

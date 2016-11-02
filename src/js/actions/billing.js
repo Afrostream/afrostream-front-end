@@ -1,6 +1,8 @@
 import ActionTypes from '../consts/ActionTypes'
 import { getCountry } from '../lib/geo'
 import { merge } from 'lodash'
+import config from '../../../config/'
+import * as OAuthActionCreators from './oauth'
 /**
  * Get subscriptions list for user
  * @returns {Function}
@@ -190,25 +192,45 @@ export function getInternalplans ({
 }) {
 
   return (dispatch, getState, actionDispatcher) => {
-    let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
+    return async api => {
+      //const callNetsize = await actionDispatcher(OAuthActionCreators.netsizeCheck())
+      //const {body: {data: {netsizeStatusCode}}} = callNetsize
+      //const isNetsizeEnabled = netsizeStatusCode === 421
+      //console.log('isNetsizeEnabled', isNetsizeEnabled)
+      //if (isNetsizeEnabled) {
+      return await api({
+        path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
+        passToken
+      }).then(({body})=> {
+        return {
+          type: ActionTypes.Billing.getInternalplans,
+          contextBillingUuid: 'common',
+          res: {
+            body: [
+              body
+            ]
+          }
+        }
+      })
+      //}
+      let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
 
-    if (readyPlans && !reload) {
-      console.log('plans already present in data store')
-      return {
-        type: ActionTypes.Billing.getInternalplans,
-        contextBillingUuid,
-        res: {
-          body: readyPlans.toJS()
+      if (readyPlans && !reload) {
+        console.log('plans already present in data store')
+        return {
+          type: ActionTypes.Billing.getInternalplans,
+          contextBillingUuid,
+          res: {
+            body: readyPlans.toJS()
+          }
         }
       }
-    }
 
-    actionDispatcher({
-      type: ActionTypes.Billing.getInternalplans,
-      contextBillingUuid
-    })
+      actionDispatcher({
+        type: ActionTypes.Billing.getInternalplans,
+        contextBillingUuid
+      })
 
-    return async api => {
       let params = {
         contextBillingUuid,
         country
