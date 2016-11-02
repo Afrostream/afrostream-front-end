@@ -86,7 +86,8 @@ const webpackConfig = {
     }
   },
   stats: {
-    colors: true
+    colors: true,
+    chunks: false
   },
   module: {
     preLoaders: [

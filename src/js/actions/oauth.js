@@ -140,6 +140,73 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
   }
 }
 
+export function netsizeCheck () {
+  return (dispatch, getState, actionDispatcher) => {
+    return async api => ({
+      type: ActionTypes.OAuth.netsizeCheck,
+      res: await api({path: `/auth/netsize/check`, method: 'GET', passToken: true, local: true})
+    })
+  }
+}
+
+export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe'}) {
+  return (dispatch, getState, actionDispatcher) => {
+    actionDispatcher(UserActionCreators.pendingUser(true))
+
+    const token = getState().OAuth.get('token')
+    let url = `/auth/${strategy}/${path}`
+    //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
+    if (token) {
+      url = `${url}?access_token=${token.get('access_token')}&returnUrl=/auth/${strategy}/subscribe`
+    }
+
+    let width = 600,
+      height = 450,
+      top = (window.outerHeight - height) / 2,
+      left = (window.outerWidth - width) / 2
+
+    return async () => {
+      return await new Promise((resolve, reject) => {
+        let oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
+        let intervalCheck = 0
+
+        let beforeUnload = (data) => {
+          window.loginCallBack = null
+          oauthPopup = null
+          if (intervalCheck) {
+            clearInterval(intervalCheck)
+          }
+          try {
+            if (!data || data.error) {
+              let error = data ? data : {message: 'Error: strategy error'}
+              return reject(error)
+            }
+            return resolve({
+              type: ActionTypes.OAuth.netsizeSubscribe,
+              res: {
+                body: {
+                  data
+                }
+              }
+            })
+          } catch (err) {
+            return reject(err)
+          }
+
+        }
+        let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
+        let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
+        window[eventMethod](messageEvent, (event) => {
+          console.log('received response:  ', event.data, event.origin, config.domain.host)
+          if (!~event.origin.indexOf(config.domain.host)) return
+          beforeUnload(event.data)
+        }, false)
+      })
+    }
+  }
+}
+
+
 /**
  * Logout user
  * @returns {Function}

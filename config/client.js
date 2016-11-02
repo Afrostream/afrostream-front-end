@@ -158,6 +158,9 @@ const client = {
     quality: 65,
     type: 'jpg'
   },
+  netsize: {
+    internalPlanUuid: 'nsafrostreammonthly'
+  },
   sentry: {
     dns: process.env.SENTRY_DSN || '',
     config: {}

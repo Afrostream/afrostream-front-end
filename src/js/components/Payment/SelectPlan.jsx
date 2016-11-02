@@ -11,7 +11,7 @@ import * as ModalActionCreators from '../../actions/modal'
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
 }
-@connect(({User, Billing}) => ({User, Billing}))
+@connect(({User, Billing, OAuth}) => ({User, Billing, OAuth}))
 class SelectPlan extends React.Component {
 
   openModal (internalPlanUuid) {

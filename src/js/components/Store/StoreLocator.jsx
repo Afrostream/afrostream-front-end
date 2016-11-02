@@ -86,7 +86,7 @@ class StoreLocator extends React.Component {
       infowindow.setPosition(event.feature.getGeometry().get())
       infowindow.setOptions({pixelOffset: new google.maps.Size(0, -30)})
       infowindow.open(this.map)
-    });
+    })
 
     google.maps.event.addListener(this.map, 'idle', ::this.findMarkers)
 
