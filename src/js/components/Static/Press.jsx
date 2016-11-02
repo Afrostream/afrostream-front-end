@@ -198,7 +198,7 @@ class Press extends React.Component {
                        width="345" height="190"/>
                   <p>Retrouvez notre dossier de presse.</p>
                   <span className="btn-download">
-        <a role="button" href="/press/screen/Press_Releases-2016-07-21.zip" className="btn btn-info"
+        <a role="button" href="/press/screen/Press_Releases-2016-10-01.zip" className="btn btn-info"
            type="button">
         <span className="zmdi zmdi-download"></span>
         <span className="label">Télécharger</span>
