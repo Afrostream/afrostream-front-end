@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import PaymentImages from './PaymentImages'
 import { getI18n } from '../../../../config/i18n'
+import config from '../../../../config'
 import _ from 'lodash'
 import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
@@ -89,15 +90,21 @@ class SelectPlan extends React.Component {
         case 'internalActionLabel':
 
           const internalPlanQuery = this.getInternalQuery()
+          const internalPlanUuid = plan.get('internalPlanUuid')
+
+          let buttonLabel = getI18n().planCodes.action
+          if (plan && internalPlanUuid === config.netsize.internalPlanUuid) {
+            buttonLabel = getI18n().planCodes.actionMobile
+          }
 
           if (!user) {
             const inputSignupAction = {
-              onClick: event => ::this.openModal(plan.get('internalPlanUuid'))
+              onClick: event => ::this.openModal(internalPlanUuid)
             }
-            value = (<button className="btn btn-plan" {...inputSignupAction}>{`${getI18n().planCodes.action}`}</button>)
+            value = (<button className="btn btn-plan" {...inputSignupAction}>{`${buttonLabel}`}</button>)
           } else {
             value = (<Link className="btn btn-plan"
-                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${internalPlanQuery}`}>{`${getI18n().planCodes.action}`}</Link>)
+                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${internalPlanQuery}`}>{`${buttonLabel}`}</Link>)
           }
           break
         case 'price':
