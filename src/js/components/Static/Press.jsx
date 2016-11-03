@@ -106,7 +106,7 @@ class Press extends React.Component {
               const itemDate = moment(item.get('date'))
               let image = item.get('image')
               let pdf = item.get('pdf')
-              let posterImg;
+              let posterImg
               if (image) {
                 posterImg = image.get('path')
               }
