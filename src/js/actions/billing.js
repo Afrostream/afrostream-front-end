@@ -50,8 +50,12 @@ export function subscribe (data) {
 export function cancelSubscription (subscription) {
   return (dispatch, getState, actionDispatcher) => {
     let uuid = subscription.get('subscriptionBillingUuid')
-    if (uuid === config.netsize.internalPlanUuid) {
-      return actionDispatcher(OAuthActionCreators.netsizeSubscribe({path: 'unsubscribe'}))
+    let plan = subscription.get('internalPlan')
+    if (plan) {
+      let planUuid = plan.get('internalPlanUuid')
+      if (planUuid === config.netsize.internalPlanUuid) {
+        return actionDispatcher(OAuthActionCreators.netsizeSubscribe({path: 'unsubscribe'}))
+      }
     }
     return async api => ({
       type: ActionTypes.Billing.cancelSubscription,
@@ -200,7 +204,7 @@ export function getInternalplans ({
       if (contextBillingUuid === 'common') {
         let isNetsizeEnabled = false
 
-        await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode}}})=> {
+        await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode = 0}}})=> {
           isNetsizeEnabled = netsizeStatusCode === 421
           console.log('isNetsizeEnabled', isNetsizeEnabled)
         }).catch((err)=> {
