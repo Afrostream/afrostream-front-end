@@ -4,6 +4,7 @@ import { push } from 'redux-router'
 import { getToken, storeToken } from '../lib/storage'
 import config from '../../../config/'
 import window from 'global/window'
+import _ from 'lodash'
 
 export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {
@@ -97,9 +98,12 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
 
         let beforeUnload = () => {
           window.loginCallBack = null
+          if (!oauthPopup) {
+            return
+          }
           oauthPopup = null
           if (intervalCheck) {
-            clearInterval(intervalCheck)
+            clearTimeout(intervalCheck)
           }
           try {
             const tokenData = getToken()
@@ -118,7 +122,11 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
         //window.loginCallBack = beforeUnload
         let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
-        //oauthPopup.onbeforeunload = beforeUnload
+        oauthPopup.onbeforeunload = (e) => {
+          intervalCheck = setTimeout(()=> {
+            beforeUnload(null)
+          }, 1000)
+        }
         window[eventMethod](messageEvent, (event) => {
           console.log('received response:  ', event.data, event.origin, config.domain.host)
           if (!~event.origin.indexOf(config.domain.host)) return
@@ -149,7 +157,7 @@ export function netsizeCheck () {
   }
 }
 
-export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', internalPlan :{}}) {
+export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', internalPlan = {}}) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
 
@@ -157,7 +165,7 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
     let url = `/auth/${strategy}/${path}`
     //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
     if (token) {
-      url = `${url}?access_token=${token.get('access_token')}&returnUrl=/auth/${strategy}/subscribe`
+      url = `${url}?access_token=${token.get('access_token')}&returnUrl=/auth/${strategy}/final-callback`
     }
 
     let width = 600,
@@ -170,45 +178,69 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
         let oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
         let intervalCheck = 0
 
-        let beforeUnload = (data) => {
+        let beforeUnload = (data, plan) => {
           window.loginCallBack = null
+          if (!oauthPopup) {
+            return
+          }
           oauthPopup = null
           if (intervalCheck) {
-            clearInterval(intervalCheck)
+            clearTimeout(intervalCheck)
           }
           try {
             if (!data || (data && data.error)) {
+              //Format resut
+              let error = _.merge({
+                error: 0,
+                message: 'Error: netsize error',
+                netsizeErrorCode: 0,
+                netsizeStatusCode: 0
+              }, data || {})
+
               return reject({
                 response: {
                   body: {
-                    error: data.error,
-                    message: data.message,
-                    code: data.netsizeErrorCode || data.netsizeStatusCode,
+                    error: error.error,
+                    message: error.message,
+                    code: error.netsizeErrorCode || error.netsizeStatusCode,
                   }
                 }
               })
             }
+            //Format resut
             return resolve({
               type: ActionTypes.OAuth.netsizeSubscribe,
               res: {
                 body: {
                   subStatus: data.netsizeStatusCode,
                   transactionId: data.netsizeTransactionId,
-                  internalPlan
+                  internalPlan: plan
                 }
               }
             })
           } catch (err) {
-            return reject(err)
+            //Format resut
+            return reject({
+              response: {
+                body: {
+                  message: err.message || err.stack
+                }
+              }
+            })
           }
 
         }
         let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
+        oauthPopup.onbeforeunload = (e) => {
+          intervalCheck = setTimeout(()=> {
+            beforeUnload(null, internalPlan)
+          }, 1000)
+        }
         window[eventMethod](messageEvent, (event) => {
           console.log('received response:  ', event.data, event.origin, config.domain.host)
-          if (!~event.origin.indexOf(config.domain.host)) return
-          beforeUnload(event.data && event.data.data)
+          //if (!~event.origin.indexOf(config.domain.host)) return
+          beforeUnload(event.data && event.data.data, internalPlan)
         }, false)
       })
     }
