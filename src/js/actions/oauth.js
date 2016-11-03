@@ -239,7 +239,7 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
         }
         window[eventMethod](messageEvent, (event) => {
           console.log('received response:  ', event.data, event.origin, config.domain.host)
-          //if (!~event.origin.indexOf(config.domain.host)) return
+          if (!~event.origin.indexOf(config.domain.host)) return
           beforeUnload(event.data && event.data.data, internalPlan)
         }, false)
       })
