@@ -198,27 +198,33 @@ export function getInternalplans ({
     return async api => {
       //ONLY for common context,not cashway
       if (contextBillingUuid === 'common') {
-        //const callNetsize = await actionDispatcher(OAuthActionCreators.netsizeCheck())
-        //const {body: {data: {netsizeStatusCode}}} = callNetsize
-        //const isNetsizeEnabled = netsizeStatusCode === 421
-        //console.log('isNetsizeEnabled', isNetsizeEnabled)
-        //if (isNetsizeEnabled) {
-        return await api({
-          path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
-          passToken
-        }).then(({body})=> {
-          return {
-            type: ActionTypes.Billing.getInternalplans,
-            contextBillingUuid: 'common',
-            res: {
-              body: [
-                body
-              ]
-            }
-          }
+        let isNetsizeEnabled = false
+
+        await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode}}})=> {
+          isNetsizeEnabled = netsizeStatusCode === 421
+          console.log('isNetsizeEnabled', isNetsizeEnabled)
+        }).catch((err)=> {
+          isNetsizeEnabled = false
+          console.log('isNetsizeEnabled', err)
         })
-        //}
+        if (isNetsizeEnabled) {
+          return await api({
+            path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
+            passToken
+          }).then(({body})=> {
+            return {
+              type: ActionTypes.Billing.getInternalplans,
+              contextBillingUuid: 'common',
+              res: {
+                body: [
+                  body
+                ]
+              }
+            }
+          })
+        }
       }
+
       let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
 
       if (readyPlans && !reload) {
