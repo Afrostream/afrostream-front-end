@@ -8806,6 +8806,11 @@
         }
       }
     },
+    "web-terminal": {
+      "version": "0.7.0",
+      "from": "web-terminal@latest",
+      "resolved": "https://registry.npmjs.org/web-terminal/-/web-terminal-0.7.0.tgz"
+    },
     "webpack": {
       "version": "1.13.2",
       "from": "webpack@>=1.13.2 <2.0.0",

