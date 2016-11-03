@@ -3,9 +3,6 @@ import { getCountry } from '../lib/geo'
 import { merge } from 'lodash'
 import config from '../../../config/'
 import * as OAuthActionCreators from './oauth'
-import MobileDetect from 'mobile-detect'
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import window from 'global/window'
 /**
  * Get subscriptions list for user
  * @returns {Function}
@@ -203,17 +200,10 @@ export function getInternalplans ({
 
   return (dispatch, getState, actionDispatcher) => {
     return async api => {
-      let isMobile = false
-      if (canUseDOM) {
-        const userAgent = (window.navigator && navigator.userAgent) || ''
-        let agent = new MobileDetect(userAgent)
-        isMobile = agent.mobile()
-      }
       //ONLY for common context,not cashway
-      if (contextBillingUuid === 'common' && isMobile) {
+      if (contextBillingUuid === 'common') {
         let isNetsizeEnabled = false
-        //await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode = 0}}})=> {
-        await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({res:{body: {subStatus = 0}}})=> {
+        await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode = 0}}})=> {
           isNetsizeEnabled = subStatus === 120
           console.log('isNetsizeEnabled', isNetsizeEnabled)
         }).catch((err)=> {
