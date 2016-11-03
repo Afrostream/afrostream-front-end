@@ -150,11 +150,11 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
 
 export function netsizeCheck () {
   return (dispatch, getState, actionDispatcher) => {
-    //return async api => ({
-    //  type: ActionTypes.OAuth.netsizeCheck,
-    //  res: await api({path: `/auth/netsize/check`, method: 'GET', passToken: true, local: true})
-    //})
-    return actionDispatcher(netsizeSubscribe({path: 'check'}))
+    return async api => ({
+      type: ActionTypes.OAuth.netsizeCheck,
+      res: await api({path: `/auth/netsize/check`, method: 'GET', passToken: true, local: true})
+    })
+    //return actionDispatcher(netsizeSubscribe({path: 'check'}))
   }
 }
 
