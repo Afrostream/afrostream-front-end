@@ -4,7 +4,7 @@ import * as controller from './netsize.controller'
 
 const router = express.Router()
 
-router.get('/subscribe', controller.callback)
+router.get('/final-callback', controller.callback)
 
 router.use(function (req, res) {
   res.noCache()

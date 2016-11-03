@@ -48,8 +48,11 @@ export function subscribe (data) {
 }
 
 export function cancelSubscription (subscription) {
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
     let uuid = subscription.get('subscriptionBillingUuid')
+    if (uuid === config.netsize.internalPlanUuid) {
+      return actionDispatcher(OAuthActionCreators.netsizeSubscribe({path: 'unsubscribe'}))
+    }
     return async api => ({
       type: ActionTypes.Billing.cancelSubscription,
       res: await api({
@@ -193,26 +196,29 @@ export function getInternalplans ({
 
   return (dispatch, getState, actionDispatcher) => {
     return async api => {
-      //const callNetsize = await actionDispatcher(OAuthActionCreators.netsizeCheck())
-      //const {body: {data: {netsizeStatusCode}}} = callNetsize
-      //const isNetsizeEnabled = netsizeStatusCode === 421
-      //console.log('isNetsizeEnabled', isNetsizeEnabled)
-      //if (isNetsizeEnabled) {
-      return await api({
-        path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
-        passToken
-      }).then(({body})=> {
-        return {
-          type: ActionTypes.Billing.getInternalplans,
-          contextBillingUuid: 'common',
-          res: {
-            body: [
-              body
-            ]
+      //ONLY for common context,not cashway
+      if (contextBillingUuid === 'common') {
+        //const callNetsize = await actionDispatcher(OAuthActionCreators.netsizeCheck())
+        //const {body: {data: {netsizeStatusCode}}} = callNetsize
+        //const isNetsizeEnabled = netsizeStatusCode === 421
+        //console.log('isNetsizeEnabled', isNetsizeEnabled)
+        //if (isNetsizeEnabled) {
+        return await api({
+          path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
+          passToken
+        }).then(({body})=> {
+          return {
+            type: ActionTypes.Billing.getInternalplans,
+            contextBillingUuid: 'common',
+            res: {
+              body: [
+                body
+              ]
+            }
           }
-        }
-      })
-      //}
+        })
+        //}
+      }
       let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
 
       if (readyPlans && !reload) {
@@ -235,7 +241,7 @@ export function getInternalplans ({
         contextBillingUuid,
         country
       }
-
+      //ONLY for common context,not cashway
       if (contextBillingUuid === 'common') {
         const user = getState().User.get('user')
         const filterUserReferenceUuid = user && user.get('_id') || userId

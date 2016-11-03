@@ -12,7 +12,7 @@
     if (window.opener) {
       window.opener.focus();
     }
-    var netsizeResponse = JSON.parse(atob(location.hash.substr(1)))
+    var netsizeResponse = JSON.parse(atob(location.hash && location.hash.substr(1)))
     // postpone close :
     //  we let 200ms to mobile app to catch the document.location.href change
     setTimeout(function () {

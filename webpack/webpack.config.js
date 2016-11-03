@@ -35,7 +35,7 @@ const {webpackDevServer: {host, port}} = config
 const webpackDevServerUrl = `http://${host}:${port}`
 
 const webpackConfig = {
-  devtool: '#inline-eval-cheap-source-map',
+  devtool: 'cheap-module-eval-source-map',
   output: {
     path: assetsPath,
     publicPath: `${webpackDevServerUrl}/static/`,
@@ -78,12 +78,8 @@ const webpackConfig = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    alias: {
-      jquery: path.join(__dirname, '../node_modules/jquery/dist/jquery'),
-      videojs: path.join(__dirname, '../node_modules/video.js/dist/video.js'),
-      koment: path.join(__dirname, '../node_modules/koment-js/dist/koment.js')
-    }
+    modules: ['node_modules'],
+    extensions: ['', '.js', '.jsx', '.json']
   },
   stats: {
     colors: true,
@@ -119,7 +115,7 @@ const webpackConfig = {
       {
         test: /\.css$/,
         loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /\.less$/,
@@ -148,12 +144,12 @@ const webpackConfig = {
       {
         test: /video\.js/,
         loader: 'expose?videojs',
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /koment-js$/,
         loader: 'expose?koment',
-        include: [path.join(__dirname, '../node_modules/afrostream-player')]
+        include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /jquery\.js$/, loader: 'expose?$'
