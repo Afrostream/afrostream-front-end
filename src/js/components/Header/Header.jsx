@@ -9,7 +9,7 @@ import config from '../../../../config'
 import { withRouter } from 'react-router'
 import window from 'global/window'
 import * as EventActionCreators from '../../actions/event'
-
+import Breadcrumbs from './Breadcrumbs'
 const {apps} = config
 
 if (process.env.BROWSER) {
@@ -83,13 +83,14 @@ class Header extends React.Component {
       'topbar': true,
       'topbar-life': isOnLife,
       'topbar-hidden': !chatMode && hiddenMode,
-      'topbar-fixed-color': chatMode || pinned || this.state.pinned
-      || router.isActive('recherche')
-      || router.isActive('compte')
-      || router.isActive('couponregister')
-      || router.isActive('parrainage')
+      'topbar-fixed-color': true
+      //'topbar-fixed-color': chatMode || pinned || this.state.pinned
+      //|| router.isActive('recherche')
+      //|| router.isActive('player')
+      //|| router.isActive('compte')
+      //|| router.isActive('couponregister')
+      //|| router.isActive('parrainage')
     }
-
 
     return (
       <Headroom tolerance={5} offset={200} classes={{
@@ -108,10 +109,28 @@ class Header extends React.Component {
                   <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
                 </button>
               </li>
-              {user && <li className="nav-full-width">
+              {user && <li>
                 <SearchInput/>
               </li>}
+
+
             </ul>
+          </nav>
+          <nav className="float--left" role="navigation">
+            <Breadcrumbs
+              routes={this.props.routes}
+              params={this.props.params}
+              excludes={['app', 'player']}
+              displayMissingText="Accueil"
+              hideNoPath={true}
+              displayMissing={true}
+              setDocumentTitle={false}
+              wrapperClass="nav breadcrumbs"
+              separator=""
+              itemClass="step"
+              wrapperElement="ul"
+              activeItemClass="active"
+              itemElement="li"/>
           </nav>
           <nav className="float--right" role="navigation">
             <UserButton {...this.props}/>

@@ -33,7 +33,7 @@ class LifeUsersList extends Component {
     const user = data
     return (
       <div className="col-md-3" {...{key}}>
-        <Link to={`/life/community/${user.get('_id')}`}>
+        <Link to={`/life/community/${user.get('_id')}/${user.get('nickname')}`}>
           <AvatarCard className="avatar-card col-md-3" {...{user}} {...this.props} />
         </Link>
       </div>

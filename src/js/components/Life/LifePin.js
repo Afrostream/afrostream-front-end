@@ -37,7 +37,7 @@ class LifePin extends ClickablePin {
 
     const type = data.get('type')
 
-    let imageUrl = extractImg({data, key: 'image', width: imageWidth})
+    let imageUrl = extractImg({data, key: 'image', width: imageWidth, height: imageHeight, fit: 'min'})
 
     const imageStyles = {
       backgroundImage: `url(${imageUrl})`

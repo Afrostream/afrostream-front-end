@@ -43,10 +43,12 @@ const buildHome = function (lang) {
            component={BrowseGenrePage}/>,
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
-    <Route key={`${lang}-movie`} name="movie"
-           path=":movieId(\\d+)(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
+    <Route key={`${lang}-movie`}
+           name="movie"
+           path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
            component={MoviePage}>,
-      <Route key={`${lang}-player`} name="player"
+      <Route key={`${lang}-player`}
+             name="player"
              path=":videoId"
              component={PlayerPage}/>
     </Route>
@@ -85,12 +87,12 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={LoginPage}/>,
     <Route key={`${lang}-login`} name="login" path="login" component={LoginPage}/>,
     <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
-    <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeHome}>
-      <Route name="lifeCommunity" path="community" component={Life.LifeCommunity}>
-        <Route name="lifeUserInfos" path=":lifeUserId" component={Life.LifeUserInfos}/>
+    <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeHome} breadcrumblink={true}>
+      <Route name="life-community" path="community" component={Life.LifeCommunity}>
+        <Route name="lifeUserInfos" path=":lifeUserId(/:lifeUserName)" component={Life.LifeUserInfos}/>
       </Route>
       <Route name="lifePin" path="pin/:pinId(/:pinSlug)" component={Life.LifePinView}/>
-      <Route name="LifeTheme" path=":themeId(/:themeSlug)" component={Life.LifeTheme}/>
+      <Route name="lifeTheme" path=":themeId(/:themeSlug)" component={Life.LifeTheme}/>
     </Route>,
     <Route key={`${lang}-store`} name="store" path="store-locator" component={StoreLocator}/>,
     <Route key={`${lang}-cash`} name="cash" path="cash" component={CashwayPage}>,
@@ -112,7 +114,7 @@ const buildRoutes = function (lang) {
 }
 
 export default (
-  <Route name="app" component={Application}>
+  <Route name="app" component={Application} breadcrumblink={true}>
     {buildRoutes()}
   </Route>
 )

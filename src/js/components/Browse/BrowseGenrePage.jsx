@@ -17,10 +17,10 @@ if (process.env.BROWSER) {
 @connect(({Category}) => ({Category}))
 class BrowseGenrePage extends React.Component {
 
+
   constructor (props) {
     super(props)
   }
-
   renderList () {
     const {
       props: {
