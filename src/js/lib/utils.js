@@ -371,12 +371,16 @@ export function getOffset (el) {
   }
 }
 
-export function extractImg ({data, key, keys = [], width = 1024}) {
-  const {images} = config
+export function extractImg ({data, key, keys = [], width = 1024, height = 780,fit='clip'}) {
   let thumb
   let imageUrl = config.metadata.shareImage
   if (data) {
-    imageUrl = data.get('imageUrl') || config.metadata.shareImage
+
+    const imageUrlExplicit = data.get('imageUrl')
+
+    if (imageUrlExplicit) {
+      return imageUrlExplicit
+    }
 
     if (key) {
       thumb = data.get(key)
@@ -394,11 +398,12 @@ export function extractImg ({data, key, keys = [], width = 1024}) {
     if (thumb) {
       const path = thumb.get('path')
       if (path) {
-        imageUrl = `${images.urlPrefix}${path}?&crop=face&fit=clip&w=${width}&q=${config.images.quality}&fm=${config.images.type}`
+        imageUrl = path
       }
     }
   }
 
+  imageUrl = `${config.images.urlPrefix}${imageUrl}?&crop=face&fit=${fit}&w=${width}&h=${height}&q=${config.images.quality}&fm=${config.images.type}`
 
   return imageUrl
 

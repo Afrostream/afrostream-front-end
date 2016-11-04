@@ -80,10 +80,11 @@ class Application extends React.Component {
 
   render () {
 
-    const {props: {children, Event, Modal}} = this
+    const {props: {children, Event, Modal, User}} = this
+    const user = User.get('user')
+    const docked = Boolean(user)
     const toggled = Event.get('sideBarToggled')
     const hasPopup = Modal.get('target')
-
     let appClasses = classNames({
       'app': true,
       'lock-open': hasPopup
@@ -95,7 +96,7 @@ class Application extends React.Component {
           <SplashScreen />
           <AlertMessage />
           <Header {...this.props}/>
-          <SideBar {...{toggled}} docked={true} {...this.props}>
+          <SideBar {...{toggled, docked}} {...this.props}>
             <div id="page-content-wrapper" className="container-fluid">
               {children}
               <Footer {...this.props}/>
