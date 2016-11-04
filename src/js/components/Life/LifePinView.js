@@ -42,7 +42,6 @@ class LifePinView extends LifePin {
     e.preventDefault()
     const target = e.currentTarget || e.target
     const targetUrl = target.getAttribute('ta-insert-video')
-    debugger
     dispatch(PlayerActionCreators.loadPlayer({
       data: Immutable.fromJS({
         target,

@@ -1,5 +1,86 @@
 @import (reference) '../../../styles/config.less';
 
+.breadcrumbs {
+  @breadcrumbs: 50px;
+  display: inline-block;
+  list-style-type: none;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  li {
+    display: inline-block;
+    float: left;
+    padding: 0;
+    margin: 0;
+    color: fade(@brand-primary, 70%);
+    text-decoration: none;
+    background: @color-black-2;
+    position: relative;
+    text-transform: uppercase;
+    a {
+      padding: 0 1em 0 @breadcrumbs;
+      position: relative;
+      display: block;
+      &:after {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: @breadcrumbs solid transparent;
+        border-bottom: @breadcrumbs solid transparent;
+        border-left: (@breadcrumbs - 20px) solid @color-black-2;
+        position: absolute;
+        top: 50%;
+        margin-top: -@breadcrumbs;
+        left: 100%;
+        z-index: 2;
+      }
+
+      &:before {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: @breadcrumbs solid transparent;
+        border-bottom: @breadcrumbs solid transparent;
+        border-left: (@breadcrumbs - 20px)  solid white;
+        position: absolute;
+        top: 50%;
+        margin-top: -@breadcrumbs;
+        margin-left: 6px;
+        left: 100%;
+        z-index: 1;
+      }
+
+      &.active,
+      &:hover {
+        color: white;
+        background: @color-purple-1;
+        &:after {
+          border-left-color: @color-purple-1;
+        }
+      }
+    }
+
+    &:last-child {
+      margin: 0 @breadcrumbs 0 0;
+    }
+    &.active {
+      padding: 0 1em 0 @breadcrumbs;
+    }
+    &:first-child {
+      a {
+        padding: 0 1em 0 1em;
+      }
+    }
+
+    a,
+    a:active {
+      color: white;
+    }
+  }
+}
+
 #nprogress .bar {
   background: @color-yellow !important;
   z-index: @nav-z-header + 1 !important;
@@ -155,12 +236,17 @@ header {
         float: left;
         display: flex;
         list-style: none;
-        li {
+        > li {
           display: inline-block;
           zoom: 1;
           height: @header-height;
+          &:not(.step) {
+            min-width: 50px;
+          }
+          line-height: @header-height;
           button, a {
             text-align: center;
+            height: 100%;
             &.btn-home {
               width: @sidebar-width - 50px;
               font-size: 2em;
@@ -168,8 +254,6 @@ header {
             }
             border: none;
             //border-right: 1px solid rgba(255, 255, 255, .2);
-            min-width: 70px;
-            line-height: @header-height;
           }
         }
       }
