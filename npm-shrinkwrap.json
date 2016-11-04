@@ -35,9 +35,9 @@
       }
     },
     "afrostream-node-request": {
-      "version": "2.4.1",
-      "from": "git+https://afrostream-tech:d51e355769ddd0fd212084c35fb99f71ab4146b2@github.com/Afrostream/afrostream-node-request.git#v2.4.1",
-      "resolved": "git+https://afrostream-tech:d51e355769ddd0fd212084c35fb99f71ab4146b2@github.com/Afrostream/afrostream-node-request.git#0bea75552b24d0541c5094b515e3c3975ffe73f0",
+      "version": "2.5.0",
+      "from": "git+https://afrostream-tech:d51e355769ddd0fd212084c35fb99f71ab4146b2@github.com/Afrostream/afrostream-node-request.git#v2.5.0",
+      "resolved": "git+https://afrostream-tech:d51e355769ddd0fd212084c35fb99f71ab4146b2@github.com/Afrostream/afrostream-node-request.git#8936fdd3cc6470bfa65bc7f950f411c90037fcc2",
       "dependencies": {
         "lodash": {
           "version": "4.15.0",
