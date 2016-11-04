@@ -6,6 +6,20 @@ const router = express.Router()
 
 router.get('/final-callback', controller.callback)
 
+import request from 'request'
+
+
+router.get('/what', (req, res) => {
+  request.debug = (req.query.debug === 'true');
+  request({uri:req.query.uri}, function (err, response, body) {
+    res.json({
+      err: err,
+      response: response,
+      body: body
+    })
+  })
+})
+
 router.use(function (req, res) {
   res.noCache()
   // on fwd le token manuellement
