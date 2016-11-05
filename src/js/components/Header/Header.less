@@ -43,7 +43,7 @@
         height: 0;
         border-top: @breadcrumbs solid transparent;
         border-bottom: @breadcrumbs solid transparent;
-        border-left: (@breadcrumbs - 20px)  solid white;
+        border-left: (@breadcrumbs - 20px)  solid lighten(@color-black-2, 5%);
         position: absolute;
         top: 50%;
         margin-top: -@breadcrumbs;
@@ -247,9 +247,12 @@ header {
           button, a {
             text-align: center;
             height: 100%;
+            display: inline-block;
             &.btn-home {
               width: @sidebar-width - 50px;
-              font-size: 2em;
+              img {
+                .isMobile({ max-width: 80%; });
+              }
               background: @color-black-2;
             }
             border: none;
@@ -271,6 +274,10 @@ header {
   }
 
   .open-menu-icon {
+    display: none;
+    width: 10%;
+    color: #fff;
+    .isMobile({ display: inline-block; });
     margin-left: @app-padding;
     padding: 5px;
     font-size: 2em;

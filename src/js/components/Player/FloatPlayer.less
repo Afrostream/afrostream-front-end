@@ -39,10 +39,11 @@
   .transition(all 0.35s linear);
   .animation(playerMove 0.35s ease forwards);
   &.unpinned {
-    .player-container {
+    .player-container:not(.vjs-fullscreen) {
       font-size: 8px;
     }
   }
+
   &.pinned {
     .transition(none);
     .animation(playerMovePin 0.35s ease forwards);
@@ -61,6 +62,9 @@
     height: 150px;
     &.vjs-fluid {
       padding-top: 56.25%;
+    }
+    &.vjs-fullscreen {
+      z-index: 2147483647;
     }
   }
 

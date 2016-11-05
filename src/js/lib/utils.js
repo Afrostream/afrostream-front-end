@@ -371,28 +371,21 @@ export function getOffset (el) {
   }
 }
 
-export function extractImg ({data, key, keys = [], width = 1024, height = 780,fit='clip'}) {
+export function extractImg ({data, key, keys = [], width = 1024, height = 780, fit = 'clip'}) {
   let thumb
   let imageUrl = config.metadata.shareImage
   if (data) {
 
     const imageUrlExplicit = data.get('imageUrl')
-
-    if (imageUrlExplicit) {
-      return imageUrlExplicit
-    }
-
     if (key) {
       thumb = data.get(key)
     }
-    if (keys) {
-      _.forEach(keys, (value) => {
-        const foundedValue = data.get(value)
-        if (foundedValue) {
-          thumb = foundedValue
-        }
-      })
-    }
+
+    _.forEach(keys, (value) => {
+      if (!thumb) {
+        thumb = data.get(value)
+      }
+    })
 
 
     if (thumb) {
@@ -401,6 +394,11 @@ export function extractImg ({data, key, keys = [], width = 1024, height = 780,fi
         imageUrl = path
       }
     }
+
+    else if (imageUrlExplicit) {
+      return imageUrlExplicit
+    }
+
   }
 
   imageUrl = `${config.images.urlPrefix}${imageUrl}?&crop=face&fit=${fit}&w=${width}&h=${height}&q=${config.images.quality}&fm=${config.images.type}`
