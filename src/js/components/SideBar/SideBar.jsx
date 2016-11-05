@@ -45,7 +45,7 @@ class SideBar extends React.Component {
     const userAgent = (window.navigator && navigator.userAgent) || ''
     let agent = new MobileDetect(userAgent)
     const isMobile = agent.mobile()
-    this.onSetOpen(!isMobile)
+    //this.onSetOpen(!isMobile)
     this.setState({
       isMobile,
       dragSupported: typeof window === 'object' && 'ontouchstart' in window
