@@ -105,7 +105,7 @@ class Header extends React.Component {
             <ul className="nav">
               <li>
                 <button role="button" className="btn-home" onClick={::this.toggleSideBar}>
-                  {/*{user && <i className="open-menu-icon zmdi zmdi-menu"/>}*/}
+                  <i className="open-menu-icon zmdi zmdi-menu"/>
                   <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
                 </button>
               </li>
@@ -123,7 +123,7 @@ class Header extends React.Component {
               excludes={['app', 'player']}
               displayMissingText="Accueil"
               hideNoPath={true}
-              displayMissing={true}
+              displayMissing={false}
               setDocumentTitle={false}
               wrapperClass="nav breadcrumbs"
               separator=""
