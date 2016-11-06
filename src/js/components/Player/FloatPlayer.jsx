@@ -221,6 +221,7 @@ class FloatPlayer extends React.Component {
         this.player.one('dispose', () => {
           this.player = null
           this.playerInit = false
+          this.initState()
           console.log('player : destroyed player')
           resolve(null)
         })
@@ -329,9 +330,10 @@ class FloatPlayer extends React.Component {
     if (!float) {
       return
     }
+
     const playerData = data || Player.get('/player/data')
     const target = playerData && playerData.get('target') || this.refs.container
-    const elVisible = target && isElementInViewPort(target, 0.60)
+    const elVisible = target && isElementInViewPort(target, 0.60) && this.player
 
     let position = elVisible && target && target.getBoundingClientRect() || {
         bottom: 0,

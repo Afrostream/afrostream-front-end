@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import config from '../../../../config'
 import moment from 'moment'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
@@ -8,10 +7,9 @@ import { slugify, extractImg } from '../../lib/utils'
 import { Link } from '../Utils'
 import ClickablePin from './ClickablePin'
 import classSet from 'classnames'
+import ReactImgix from '../Image/ReactImgix'
 import Immutable from 'immutable'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-
-const {images} =config
 
 if (canUseDOM) {
   var ReactGA = require('react-ga')
@@ -38,10 +36,6 @@ class LifePin extends ClickablePin {
     const type = data.get('type')
 
     let imageUrl = extractImg({data, key: 'image', width: imageWidth, height: imageHeight, fit: 'min'})
-
-    const imageStyles = {
-      backgroundImage: `url(${imageUrl})`
-    }
 
     const pinnedDate = moment(data.get('date'))
     const pinnedUser = data.get('user')
@@ -70,7 +64,7 @@ class LifePin extends ClickablePin {
       }>
         <div className="brick-content">
           <div className="brick-background">
-            <div className="brick-background_image" style={imageStyles}/>
+            <ReactImgix className="brick-background_image" src={imageUrl} bg={true}/>
             <div className="brick-background_mask"/>
             {isPremium && (<div className="premium-flag">
               <div className="premium-flag__header-label"> Accès {pinRole}</div>

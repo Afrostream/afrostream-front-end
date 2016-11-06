@@ -116,7 +116,7 @@ class Header extends React.Component {
 
             </ul>
           </nav>
-          <nav className="float--left" role="navigation">
+          <nav className="float--left float-bottom-mobile" role="navigation">
             <Breadcrumbs
               routes={this.props.routes}
               params={this.props.params}
