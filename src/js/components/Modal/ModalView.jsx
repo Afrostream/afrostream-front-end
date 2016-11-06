@@ -9,6 +9,7 @@ import ModalCashwayPlan from './ModalCashwayPlan'
 import ModalSponsors from './ModalSponsors'
 import ModalPlayer from './ModalPlayer'
 import ModalComponent from './ModalComponent'
+import ReactImgix from '../Image/ReactImgix'
 import { SelectPlan } from '../../components/Payment/'
 import { withRouter } from 'react-router'
 
@@ -95,7 +96,7 @@ class ModalView extends React.Component {
       case 'image':
         return (
           <ModalComponent closable={closable} className="large" {...this.props} >
-            <img className="modal-image" src={data.get('src')}/></ModalComponent>
+            <ReactImgix className="modal-image" src={data.get('src')}/></ModalComponent>
         )
         break
       //LIFE ACL
