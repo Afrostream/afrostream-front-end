@@ -166,7 +166,7 @@ export default class ReactImgix extends Component {
 
     let childProps = {
       ...this.props.imgProps,
-      className: this.props.className,
+      className: `imgix ${this.props.className}`,
       width: other.width <= 1 ? null : other.width,
       height: other.height <= 1 ? null : other.height
     }
