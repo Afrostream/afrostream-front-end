@@ -303,7 +303,7 @@ class SideBar extends React.Component {
 
   overlayClicked () {
     if (this.props.toggled) {
-      this.props.onSetOpen(false)
+      this.onSetOpen(false)
     }
   }
 
