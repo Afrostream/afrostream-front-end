@@ -2,11 +2,13 @@
 
 .breadcrumbs {
   @breadcrumbs: 50px;
+
   display: inline-block;
   list-style-type: none;
   overflow: hidden;
   margin: 0;
   padding: 0;
+
   li {
     display: inline-block;
     float: left;
@@ -43,7 +45,7 @@
         height: 0;
         border-top: @breadcrumbs solid transparent;
         border-bottom: @breadcrumbs solid transparent;
-        border-left: (@breadcrumbs - 20px)  solid lighten(@color-black-2, 5%);
+        border-left: (@breadcrumbs - 20px)  solid lighten(@color-black-2, 30%);
         position: absolute;
         top: 50%;
         margin-top: -@breadcrumbs;
@@ -232,6 +234,16 @@ header {
         right: 0;
         top: @header-height;
       }
+
+      &.float-bottom-mobile {
+        .isMobile({ display: none; });
+        //background-color: @color-black-2;
+        //.isMobile({ position: absolute; top: @header-height-mobile; height: 20px; });
+        //ul.nav > li {
+        //  .isMobile({ line-height: 20px; height: 20px; });
+        //}
+      }
+
       ul.nav {
         float: left;
         display: flex;
@@ -278,8 +290,8 @@ header {
     width: 10%;
     color: #fff;
     .isMobile({ display: inline-block; });
-    margin-left: @app-padding;
-    padding: 5px;
+    margin: 0;
+    padding: 0;
     font-size: 2em;
     vertical-align: middle;
     .isNotMobile({ display: none; });

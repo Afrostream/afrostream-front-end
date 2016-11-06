@@ -89,7 +89,6 @@ class ModalView extends React.Component {
           <ModalPlayer {...{closable, cb, type, className, data}} {...this.props} />
         )
         break
-      //LIFE ACL
       case 'player':
         return (
           <ModalPlayer closable={closable} {...this.props} data={data}/>
