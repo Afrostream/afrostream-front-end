@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import config from '../../../../config'
 import moment from 'moment'
-import { Link } from '../Utils'
 import _ from 'lodash'
 import LifePin from './LifePin'
 import { extractImg } from '../../lib/utils'
@@ -12,6 +10,7 @@ import Immutable from 'immutable'
 import AvatarCard from '../User/AvatarCard'
 import ModalSocial from '../Modal/ModalSocial'
 import document from 'global/document'
+import ReactImgix from '../Image/ReactImgix'
 
 if (process.env.BROWSER) {
   require('./LifePinView.less')
@@ -64,11 +63,11 @@ class LifePinView extends LifePin {
       }
     } = this
 
-    const pin = Life.get(`life/pins/${pinId}`)
-    if (!pin) {
+    const data = Life.get(`life/pins/${pinId}`)
+    if (!data) {
       return (<div />)
     }
-    const pinThemesList = pin.get('themes')
+    const pinThemesList = data.get('themes')
     const allThemesList = Life.get(`life/themes/`)
     const spots = pinThemesList && pinThemesList.flatMap((theme)=> {
         const themeId = theme.get('_id')
@@ -80,16 +79,15 @@ class LifePinView extends LifePin {
         }
       })
 
-    const pinnedDate = moment(pin.get('date'))
-    const pinnedUser = pin.get('user')
-    let image = pin.get('image')
-    let bgImg = image ? image.get('path') : ''
-    let imageStyles = bgImg ? {backgroundImage: `url(${config.images.urlPrefix}${bgImg}?crop=faces&fit=min&w=1280&h=720&q=70)`} : {}
+    const pinnedDate = moment(data.get('date'))
+    const pinnedUser = data.get('user')
+    let imageUrl = extractImg({data, key: 'image', width: 1280, height: 720, fit: 'min'})
+
     return (
       <article className="row no-padding brand-bg life-pin">
         <div ref="pinHeader" className="pin-header">
           <div className="pin-header-background">
-            <div className="pin-header-background_image" style={imageStyles}/>
+            <ReactImgix className="pin-header-background_image" src={imageUrl} bg={true}/>
             <div className="pin-header-background_mask"/>
 
             <div className="bkdate">
@@ -98,13 +96,13 @@ class LifePinView extends LifePin {
             </div>
           </div>
           <div className="pin-header-content">
-            <h1> {pin.get('title')}</h1>
+            <h1> {data.get('title')}</h1>
           </div>
         </div>
         <div className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
           <div className="row no-padding">
             <div className="col-md-9 no-padding">
-              <section dangerouslySetInnerHTML={{__html: pin.get('body')}}/>
+              <section dangerouslySetInnerHTML={{__html: data.get('body')}}/>
               <ModalSocial {...this.props} closable={false} modal={false} showLabel={true}/>
             </div>
             <div className="col-md-3 no-padding col-right">

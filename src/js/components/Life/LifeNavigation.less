@@ -112,13 +112,14 @@
   left: 0;
   right: 0;
   top: @header-height;
+  height: @life-navigation-height;
   z-index: @nav-z + 2;
   padding: 0.2em;
   background: #FFFFFF;
   box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
   font-family: @font-oswald;
   font-size: 1.8em;
-  .isMobile({ font-size: 1.3em; });
+  .isMobile({ height: @life-navigation-height-mobile; font-size: 1.3em; });
   text-transform: uppercase;
   display: inline-block;
   list-style: none;
@@ -140,6 +141,7 @@
       position: absolute;
       right: 0;
       top: 1em;
+      .isMobile({ top: 1.2em; });
       height: 2px;
       width: 5px;
       background: @color-black-2;
