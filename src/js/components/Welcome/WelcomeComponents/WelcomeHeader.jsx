@@ -126,7 +126,7 @@ class WelcomeHeader extends React.Component {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        {!trailer && <ReactImgix className="afrostream-movie__poster" src={posterImg}>
+        {!trailer && <ReactImgix className="afrostream-movie__poster" src={posterImg} bg={true}>
           <div className="afrostream-movie__mask"/>
           {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
         </ReactImgix>}
