@@ -4,7 +4,7 @@ import { notFoundPost } from './notFoundAction'
 export function fetchThemes (fetchThemeId) {
   return (dispatch, getState) => {
     const themeId = fetchThemeId || ''
-    let readyThemes = getState().Life.get(`life/themes/${themeId || ''}`)
+    let readyThemes = getState().Life.get(`life/themes/${themeId}`)
     if (readyThemes) {
       console.log('Life themes already present in data store')
       return {
@@ -28,7 +28,7 @@ export function fetchThemes (fetchThemeId) {
 
 export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
-    let readyPins = getState().Life.get(`life/pins`)
+    let readyPins = getState().Life.get(`life/pins/`)
     if (readyPins) {
       console.log('Life pins already present in data store')
       return {
@@ -52,7 +52,7 @@ export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
 
 export function fetchSpots ({limit = 20, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
-    let readySpots = getState().Life.get(`life/spots`)
+    let readySpots = getState().Life.get(`life/spots/`)
     if (readySpots) {
       console.log('Life spots already present in data store')
       return {

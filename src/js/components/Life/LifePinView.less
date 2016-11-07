@@ -11,13 +11,15 @@
   width: 100%;
   position: relative;
 
-  img[ta-insert-video] {
-    cursor: pointer;
+  .ta-insert-video {
+    position: relative;
+    display: inline-block;
     .isMobile({ width: 100% !important; });
-  }
-
-  .video-player img[ta-insert-video] {
-    .btn-play();
+    .ta-insert-video-btn {
+      .btn-play();
+      cursor: pointer;
+      display: block;
+    }
   }
 
   .pin-header {

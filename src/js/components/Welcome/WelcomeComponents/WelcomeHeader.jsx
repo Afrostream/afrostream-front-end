@@ -8,6 +8,7 @@ import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
 import { withRouter } from 'react-router'
 import window from 'global/window'
+import ReactImgix from '../../Image/ReactImgix'
 
 const {metadata, images} =config
 
@@ -113,7 +114,6 @@ class WelcomeHeader extends React.Component {
       info.logo = null
     }
     let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
-    let imageStyle = {backgroundImage: `url(${posterImg})`}
     let logoImg = `${images.urlPrefix}${info.logo}?crop=faces&fit=clip&w=500&q=70&fm=png`
     let logoStyle = {backgroundImage: `url(${logoImg})`}
 
@@ -126,10 +126,10 @@ class WelcomeHeader extends React.Component {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        {!trailer && <div className="afrostream-movie__poster" style={imageStyle}>
+        {!trailer && <ReactImgix className="afrostream-movie__poster" src={posterImg}>
           <div className="afrostream-movie__mask"/>
           {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
-        </div>}
+        </ReactImgix>}
         {movieData ? <SignUpButton className="subscribe-button subscribe-button-mobile" label={info.action}/> : ''}
         <div className="afrostream-movie">
           <div className="afrostream-movie__info">
