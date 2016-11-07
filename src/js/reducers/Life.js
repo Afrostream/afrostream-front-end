@@ -6,8 +6,7 @@ import createReducer from '../lib/createReducer'
 
 const initialState = Immutable.fromJS({
   'life/themes': null,
-  'life/pins': null,
-  'life/pins/resourceCount': null
+  'life/pins': null
 })
 
 export default createReducer(initialState, {
@@ -27,7 +26,6 @@ export default createReducer(initialState, {
       return state
     }
     const pins = res.body
-    const resourceCount = res.headers['Resource-Count'] || pins.length
 
     const mappedUserPins = _.map(pins, (pin)=> {
       pin.user = mergeFbUserInfo(pin.user)
@@ -35,7 +33,6 @@ export default createReducer(initialState, {
     })
 
     return state.merge({
-      [`life/pins/resourceCount`]: resourceCount,
       [`life/pins/`]: mappedUserPins
     })
   },
@@ -45,10 +42,8 @@ export default createReducer(initialState, {
       return state
     }
     const spots = res.body
-    const resourceCount = res.headers['Resource-Count'] || spots.length
 
     return state.merge({
-      [`life/spots/resourceCount`]: resourceCount,
       [`life/spots/`]: spots
     })
   },
