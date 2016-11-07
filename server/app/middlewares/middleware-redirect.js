@@ -20,9 +20,10 @@ export function forceWWW () {
     const cdnHostname = req.get('x-afsm-forwarded-host')
 
     if (req.method !== 'GET' ||                   // no redirect on POST/PUT/DELETE/...
-        !cdnHostname ||                           // no redirect when header x-afsm-forwarded-host is missing <=> env=dev|staging
-        //req.originalUrl.match(/^\/auth\//i) ||  // no redirect on auth facebook, orange, bouygues
-        cdnHostname.match(/^www\./i)) {           // no redirect if already redirected
+      !cdnHostname ||                           // no redirect when header x-afsm-forwarded-host is missing <=> env=dev|staging
+      //req.originalUrl.match(/^\/auth\//i) ||  // no redirect on auth facebook, orange, bouygues
+      config.domain.host !== 'afrostream.tv' ||  // no redirect other domain/subdomains
+      cdnHostname.match(/^www\./i)) {           // no redirect if already redirected
       // skipping redirect
       return next()
     }
