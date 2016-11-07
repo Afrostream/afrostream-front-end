@@ -58,21 +58,21 @@ class FloatPlayer extends React.Component {
 
     if (!shallowEqual(nextProps.data, this.props.data)) {
       const videoData = nextProps.data
-      if (!videoData) {
-        return
-      }
       this.initState()
       this.destroyPlayer().then(()=> {
+        if (!videoData) {
+          return
+        }
         this.initPlayer(videoData)
       })
     }
 
     if (!shallowEqual(nextProps.Player, this.props.Player)) {
       const videoData = nextProps.Player.get('/player/data')
-      if (!videoData) {
-        return
-      }
       this.initState()
+      //if (!videoData) {
+      //  return
+      //}
       this.destroyPlayer().then(()=> {
         this.initPlayer(videoData)
       })
@@ -211,9 +211,7 @@ class FloatPlayer extends React.Component {
     } = this
 
     if (this.player) {
-
       console.log('player : destroy player', this.player)
-      this.initState()
       //Tracking Finalise tracking video
       return await new Promise((resolve) => {
         videojs.off(window, 'scroll')
@@ -221,8 +219,8 @@ class FloatPlayer extends React.Component {
         this.player.one('dispose', () => {
           this.player = null
           this.playerInit = false
-          this.initState()
           console.log('player : destroyed player')
+          this.initState()
           resolve(null)
         })
         this.player.dispose()
@@ -366,6 +364,7 @@ class FloatPlayer extends React.Component {
     })
 
     const classFloatPlayer = {
+      'hidden': !this.player,
       'float-player': true,
       'fixed': this.props.float,
       'pinned': this.state.elVisible,
