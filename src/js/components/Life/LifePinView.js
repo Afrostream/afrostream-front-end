@@ -41,13 +41,14 @@ class LifePinView extends LifePin {
     e.preventDefault()
     const target = e.currentTarget || e.target
     const targetUrl = target.getAttribute('ta-insert-video')
+    const targetType = target.getAttribute('ta-insert-type')
     dispatch(PlayerActionCreators.loadPlayer({
       data: Immutable.fromJS({
         target,
         autoplay: true,
         sources: [{
-          src: targetUrl.replace('embed/', 'watch?v='),
-          type: `video/youtube`
+          src: targetUrl,
+          type: `video/${targetType}`
         }]
       })
     }))
