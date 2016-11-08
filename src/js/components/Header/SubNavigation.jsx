@@ -3,21 +3,21 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import Headroom from 'react-headrooms'
+import Immutable from 'immutable'
 
 if (process.env.BROWSER) {
-  require('./LifeNavigation.less')
+  require('./SubNavigation.less')
 }
-@connect(({Life}) => ({Life}))
-export default class LifeNavigation extends Component {
+
+class SubNavigation extends Component {
 
   render () {
     const {
       props: {
-        Life
+        themesList,
+        to
       }
     } = this
-
-    const themesList = Life.get('life/themes/')
 
     return (
       <Headroom tolerance={5} offset={200} classes={{
@@ -25,11 +25,16 @@ export default class LifeNavigation extends Component {
         pinned: 'slideDownSubHeader',
         unpinned: 'slideUpSubHeader'
       }}>
-        <ul className="life-navigation">
+        <ul className="sub-navigation">
           {themesList && themesList.map((theme, i)=> {
-              return (<li key={`life-theme-${i}`}>
+
+              let mapTo = to
+              mapTo.replace('{_id}', theme.get('_id'))
+              mapTo.replace('{slug}', theme.get('slug'))
+
+              return (<li key={`theme-${i}`}>
                 <Link activeClassName="active"
-                      to={`/life/${theme.get('_id')}/${theme.get('slug')}`}>{theme.get('label')}</Link>
+                      to={mapTo}>{theme.get('label')}</Link>
               </li>)
             }
           )}
@@ -38,3 +43,14 @@ export default class LifeNavigation extends Component {
     )
   }
 }
+
+
+SubNavigation.propTypes = {
+  themesList: PropTypes.instanceOf(Immutable.List).isRequired,
+  to: PropTypes.string.isRequired,
+}
+
+SubNavigation.defaultProps = {}
+
+
+export default SubNavigation
