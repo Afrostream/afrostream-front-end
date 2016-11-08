@@ -9,6 +9,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import Raven from 'raven-js'
 import { detectUA } from './PlayerUtils'
 import shallowEqual from 'react-pure-render/shallowEqual'
+import * as PlayerActionCreators from '../../actions/player'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
@@ -118,20 +119,30 @@ class PlayerComponent extends Component {
 
   componentWillReceiveProps (nextProps) {
 
-    if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
-      this.setState({
-        nextAuto: true,
-        numLoad: 0
-      })
+    const {props:{dispatch, data}} = this
+    if (!shallowEqual(nextProps.Video, this.props.Video)) {
+      let data = nextProps.Video.get(`videos/${nextProps.videoId}`)
+      data.target = this.refs.wrapper
+      dispatch(PlayerActionCreators.loadPlayer({
+        data
+      }))
     }
 
-    if (!shallowEqual(nextProps.Video, this.props.Video)) {
-      const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
-      this.initState()
-      this.destroyPlayer().then(()=> {
-        this.initPlayer(videoData)
-      })
-    }
+
+    //if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
+    //  this.setState({
+    //    nextAuto: true,
+    //    numLoad: 0
+    //  })
+    //}
+    //
+    //if (!shallowEqual(nextProps.Video, this.props.Video)) {
+    //  const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
+    //  this.initState()
+    //  this.destroyPlayer().then(()=> {
+    //    this.initPlayer(videoData)
+    //  })
+    //}
   }
 
   getType (data) {

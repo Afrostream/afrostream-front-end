@@ -29,8 +29,8 @@ class SubNavigation extends Component {
           {themesList && themesList.map((theme, i)=> {
 
               let mapTo = to
-              mapTo.replace('{_id}', theme.get('_id'))
-              mapTo.replace('{slug}', theme.get('slug'))
+              mapTo = mapTo.replace(/{_id}/g, theme.get('_id'))
+              mapTo = mapTo.replace(/{slug}/g, theme.get('slug'))
 
               return (<li key={`theme-${i}`}>
                 <Link activeClassName="active"
