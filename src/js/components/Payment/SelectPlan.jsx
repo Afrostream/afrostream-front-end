@@ -182,7 +182,12 @@ class SelectPlan extends React.Component {
       }
     }
 
-    return (<button className="btn btn-plan" {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}</button>)
+    return (<div className="row">
+      <div className="col-md-12 text-center">
+        <button
+          className="btn btn-plan" {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}</button>
+      </div>
+    </div>)
   }
 
   getHeader () {
@@ -201,7 +206,8 @@ class SelectPlan extends React.Component {
       }
     }
 
-    return <div className="choose-plan">{getI18n().planCodes.selectTitle}
+    return <div
+      className="choose-plan">{getI18n().planCodes[validPlans && validPlans.size > 1 ? 'selectTitle' : 'onePlanTitle']}
       {!isCash && <span className="choose-plan__bolder">{` ${periodTrialLabel}`}</span>}
     </div>
   }

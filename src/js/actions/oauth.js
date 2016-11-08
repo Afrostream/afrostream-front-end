@@ -5,6 +5,7 @@ import { getToken, storeToken } from '../lib/storage'
 import config from '../../../config/'
 import window from 'global/window'
 import _ from 'lodash'
+import qs from 'qs'
 
 export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {
@@ -158,15 +159,29 @@ export function netsizeCheck ({internalPlan = {}}) {
   }
 }
 
+const encodeUrlCallbackNetsize = function (token, path, callback) {
+  return encodeURIComponent(`https://${config.domain.host}/auth/netsize/${path}?access_token=${token}${callback ? '&returnUrl=' + callback : ''}`)
+}
+
+
 export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', internalPlan = {}}) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
 
     const token = getState().OAuth.get('token')
-    let url = `/auth/${strategy}/${path}`
+    let url = `https://${config.domain.host}/auth/${strategy}/${path}`
+
     //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
     if (token) {
-      url = `${url}?access_token=${token.get('access_token')}&returnUrl=/auth/${strategy}/${path === 'check' ? 'subscribe' : 'final-callback'}`
+      const accessToken = token.get('access_token')
+      const finalCB = encodeUrlCallbackNetsize(accessToken, 'final-callback')
+      url = `${url}?access_token=${accessToken}`
+
+      if (path === 'check') {
+        url = `${url}&returnUrl=${encodeUrlCallbackNetsize(accessToken, 'subscribe', finalCB)}`
+      } else {
+        url = `${url}&returnUrl=${finalCB}`
+      }
     }
 
     let width = 600,
