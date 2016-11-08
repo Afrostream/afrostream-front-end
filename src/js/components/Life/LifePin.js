@@ -77,14 +77,6 @@ class LifePin extends ClickablePin {
 
           </div>
           <div className="card-body">
-            {!showBubble && <div className="card-bubbles">
-              {pinnedUser && <div className="card-bubble card-bubble-user">
-                <img src={pinnedUser.get('picture')}
-                     alt="user-button"
-                     className="icon-user"/>
-              </div>}
-              <div className={classSet(cardTypeIcon)}/>
-            </div>}
             <div className="card-meta">
               {themes && themes.map((theme, a)=><div key={`data-card-theme-${a}`}
                                                      className="card-theme">{theme.get('label')}</div>)}
@@ -103,6 +95,14 @@ class LifePin extends ClickablePin {
               ` - ${pinnedUser.get('nickname')}`
               }
             </div>
+            {!showBubble && <div className="card-bubbles">
+              {pinnedUser && <div className="card-bubble card-bubble-user">
+                <img src={pinnedUser.get('picture')}
+                     alt="user-button"
+                     className="icon-user"/>
+              </div>}
+              <div className={classSet(cardTypeIcon)}/>
+            </div>}
           </div>
         </div>
       </Link>

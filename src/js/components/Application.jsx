@@ -12,8 +12,8 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
-import window from 'global/window'
 
+import * as LifeActionCreators from '../actions/life'
 import * as CategoryActionCreators from '../actions/category'
 import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
@@ -64,6 +64,8 @@ if (process.env.BROWSER) {
   if (episodeId && episodeId !== 'undefined') {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
+
+  await store.dispatch(LifeActionCreators.fetchThemes())
 
 })
 
