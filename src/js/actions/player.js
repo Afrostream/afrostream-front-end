@@ -32,6 +32,24 @@ export function loadPlayer ({data}) {
   }
 }
 
+export function setPlayer (player) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Player.setPlayer,
+      player
+    })
+  }
+}
+
+export function setFullScreen (fullscreen) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Player.setFullScreen,
+      fullscreen
+    })
+  }
+}
+
 export function killPlayer () {
   return (dispatch, getState) => {
     return async api => ({
