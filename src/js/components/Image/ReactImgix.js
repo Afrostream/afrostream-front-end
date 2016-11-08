@@ -178,7 +178,7 @@ export default class ReactImgix extends Component {
       childProps.style = {
         ...childProps.style,
         backgroundImage: `url(${_src})`,
-        backgroundSize: 'cover'
+        //backgroundSize: 'cover'
       }
     } else {
       if (!component) {

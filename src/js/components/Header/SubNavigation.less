@@ -91,7 +91,7 @@
   animation-name: slideDownSubHeader;
 }
 
-.toolbar-life-navigation {
+.toolbar-sub-navigation {
   font-size: 2em;
   text-transform: uppercase;
 }
@@ -107,7 +107,7 @@
   animation-name: slideUpSubHeader;
 }
 
-.life-navigation {
+.sub-navigation {
   position: fixed;
   left: 0;
   right: 0;
@@ -115,14 +115,14 @@
   overflow-x: auto;
   overflow-y: hidden;
   top: @header-height;
-  height: @life-navigation-height;
+  height: @sub-navigation-height;
   z-index: @nav-z + 2;
   padding: 0.2em;
   background: #FFFFFF;
   box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
   font-family: @font-oswald;
   font-size: 1.8em;
-  .isMobile({ height: @life-navigation-height-mobile; font-size: 1.3em; });
+  .isMobile({ height: @sub-navigation-height-mobile; font-size: 1.3em; });
   text-transform: uppercase;
   display: inline-block;
   list-style: none;
@@ -131,8 +131,8 @@
   text-align: center;
 }
 
-.toolbar-life-navigation,
-.life-navigation {
+.toolbar-sub-navigation,
+.sub-navigation {
   li {
     position: relative;
     display: inline-block;

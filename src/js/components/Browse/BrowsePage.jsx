@@ -4,6 +4,7 @@ import * as EventActionCreators from '../../actions/event'
 import * as UserActionCreators from '../../actions/user'
 import * as CategoryActionCreators from '../../actions/category'
 
+import BrowseMenu from './BrowseMenu'
 import SlideShow from '../SlideShow/SlideShow'
 import MoviesList from '../Movies/MoviesList'
 import UserMoviesList from '../Movies/UserMoviesList'
@@ -22,6 +23,7 @@ class BrowsePage extends React.Component {
   render () {
     return (
       <div className="row-fluid">
+        <BrowseMenu />
         <SlideShow />
         <UserMoviesList />
         <MoviesList />

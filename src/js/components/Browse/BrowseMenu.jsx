@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import SubNavigation from '../Header/SubNavigation'
 
 if (process.env.BROWSER) {
   require('./BrowseMenu.less')
@@ -13,28 +13,20 @@ class BrowseMenu extends React.Component {
     super(props)
   }
 
-  renderCategories () {
+  render () {
     const {
       props: {
         Category
       }
     } = this
 
-    const categories = Category.get('menu')
-    if (!categories) {
+    const themesList = Category.get('menu')
+    if (!themesList) {
       return
     }
-    return categories.map((categorie, key) =>(<li key={`menu-${categorie.get('_id')}`}><Link
-      to={`/browse/genre/${categorie.get('_id')}/${categorie.get('slug')}`}>
-      {categorie.get('label')}
-    </Link></li>)).toJS()
-  }
 
-  render () {
     return (
-      <ul className="sidebar-nav scrollable">
-        {this.renderCategories()}
-      </ul>
+      <SubNavigation {...{themesList}} to="/browse/genre/{_id}/{slug}"/>
     )
   }
 }
