@@ -148,13 +148,13 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
   }
 }
 
-export function netsizeCheck () {
+export function netsizeCheck ({internalPlan = {}}) {
   return (dispatch, getState, actionDispatcher) => {
-    return async api => ({
-      type: ActionTypes.OAuth.netsizeCheck,
-      res: await api({path: `/auth/netsize/check`, method: 'GET', passToken: true, local: true})
-    })
-    //return actionDispatcher(netsizeSubscribe({path: 'check'}))
+    //return async api => ({
+    //  type: ActionTypes.OAuth.netsizeCheck,
+    //  res: await api({path: `/auth/netsize/check`, method: 'GET', passToken: true, local: true})
+    //})
+    return actionDispatcher(netsizeSubscribe({path: 'check', internalPlan}))
   }
 }
 
@@ -166,7 +166,7 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
     let url = `/auth/${strategy}/${path}`
     //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
     if (token) {
-      url = `${url}?access_token=${token.get('access_token')}&returnUrl=/auth/${strategy}/final-callback`
+      url = `${url}?access_token=${token.get('access_token')}&returnUrl=/auth/${strategy}/${path === 'check' ? 'subscribe' : 'final-callback'}`
     }
 
     let width = 600,

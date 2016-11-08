@@ -43,8 +43,8 @@ class WelcomePage extends React.Component {
         <WelcomeHeader {...this.props}/>
         <Devices {...this.props}/>
         <SelectPlan {...this.props} showImages={false}/>
-        <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
         <Spots {...this.props}/>
+        <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
       </div>
     )
   }

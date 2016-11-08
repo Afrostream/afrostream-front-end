@@ -321,7 +321,7 @@ class PaymentForm extends React.Component {
     return Q()
       .then(()=> {
         if (formData.billingProviderName === 'netsize') {
-          return dispatch(OAuthActionCreators.netsizeSubscribe({internalPlan: formData}))
+          return dispatch(OAuthActionCreators.netsizeCheck({internalPlan: formData}))
         }
         return dispatch(BillingActionCreators.subscribe(formData))
       })

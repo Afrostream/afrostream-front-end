@@ -3,6 +3,9 @@ import { getCountry } from '../lib/geo'
 import { merge } from 'lodash'
 import config from '../../../config/'
 import * as OAuthActionCreators from './oauth'
+import MobileDetect from 'mobile-detect'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import window from 'global/window'
 /**
  * Get subscriptions list for user
  * @returns {Function}
@@ -194,38 +197,46 @@ export function getInternalplans ({
   contextBillingUuid = 'common',
   passToken = true,
   reload = false,
+  checkMobile = false,
   userId = null,
   country = 'FR'
 }) {
 
   return (dispatch, getState, actionDispatcher) => {
     return async api => {
+      let isMobile = false
+      if (canUseDOM) {
+        const userAgent = (window.navigator && navigator.userAgent) || ''
+        let agent = new MobileDetect(userAgent)
+        isMobile = agent.mobile()
+      }
       //ONLY for common context,not cashway
-      if (contextBillingUuid === 'common') {
-        let isNetsizeEnabled = false
-        await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode = 0}}})=> {
-          isNetsizeEnabled = subStatus === 120
-          console.log('isNetsizeEnabled', isNetsizeEnabled)
-        }).catch((err)=> {
-          isNetsizeEnabled = false
-          console.log('isNetsizeEnabled', err)
-        })
-        if (isNetsizeEnabled) {
-          return await api({
-            path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
-            passToken
-          }).then(({body})=> {
-            return {
-              type: ActionTypes.Billing.getInternalplans,
-              contextBillingUuid: 'common',
-              res: {
-                body: [
-                  body
-                ]
-              }
+      if (contextBillingUuid === 'common' && isMobile && checkMobile) {
+        //let isNetsizeEnabled = false
+        ////await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode = 0}}})=> {
+        //await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({res:{body: {subStatus = 0}}})=> {
+        //  isNetsizeEnabled = subStatus === 120
+        //  console.log('isNetsizeEnabled', isNetsizeEnabled)
+        //}).catch((err)=> {
+        //  isNetsizeEnabled = false
+        //  console.log('isNetsizeEnabled', err)
+        //})
+        //if (isNetsizeEnabled) {
+        return await api({
+          path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
+          passToken
+        }).then(({body})=> {
+          return {
+            type: ActionTypes.Billing.getInternalplans,
+            contextBillingUuid: 'common',
+            res: {
+              body: [
+                body
+              ]
             }
-          })
-        }
+          }
+        })
+        //}
       }
 
       let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
