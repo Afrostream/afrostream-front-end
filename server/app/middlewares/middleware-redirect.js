@@ -22,12 +22,11 @@ export function forceWWW () {
     if (req.method !== 'GET' ||                   // no redirect on POST/PUT/DELETE/...
       !cdnHostname ||                           // no redirect when header x-afsm-forwarded-host is missing <=> env=dev|staging
       //req.originalUrl.match(/^\/auth\//i) ||  // no redirect on auth facebook, orange, bouygues
-      config.domain.host !== 'afrostream.tv' ||  // no redirect other domain/subdomains
-      cdnHostname.match(/^www\./i)) {           // no redirect if already redirected
+      cdnHostname.match(/^(www|beta)\./i)) {    // no redirect if already redirected
       // skipping redirect
       return next()
     }
     // redirect on www.afrostream.tv
-    return res.redirect(301, proto + '://www.' + config.domain.host + req.originalUrl)
+    return res.redirect(301, proto + '://' + config.subdomain + '.' + config.domain.host + req.originalUrl)
   }
 }

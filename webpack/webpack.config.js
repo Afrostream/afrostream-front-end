@@ -207,7 +207,8 @@ const webpackConfig = {
         FB_TRACKING_ID: JSON.stringify(process.env.FB_TRACKING_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
         YOUBORA_ID: JSON.stringify(process.env.YOUBORA_ID),
-        SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID)
+        SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID),
+        SUBDOMAIN: JSON.stringify(process.env.SUBDOMAIN)
       }
     })
   ],
