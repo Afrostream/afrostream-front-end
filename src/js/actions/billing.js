@@ -197,7 +197,7 @@ export function getInternalplans ({
   contextBillingUuid = 'common',
   passToken = true,
   reload = false,
-  checkMobile = false,
+  checkMobile = true,
   userId = null,
   country = 'FR'
 }) {

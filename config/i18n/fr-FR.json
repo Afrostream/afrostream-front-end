@@ -94,6 +94,7 @@
   "planCodes": {
     "selectTitle": "Choisissez votre formule",
     "noPlans": "Auncune formule n'est possible dans votre pays",
+    "noMobilePlans": "Choisir un autre mode de paiement",
     "freePeriodLabel": "et profitez de {trialPeriodLength} {trialPeriodUnit} d'essai",
     "title": "Formule",
     "action": "Choisir cette offre",

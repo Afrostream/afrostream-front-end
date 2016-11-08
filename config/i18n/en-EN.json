@@ -77,6 +77,7 @@
     "title": "Formule",
     "action": "Choose this offer",
     "actionMobile": "Paiement via votre facture téléphonique",
+    "noMobilePlans": "Choisir un autre mode de paiement",
     "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",
     "cashway-coupon-oneyear": "Formule Sérénité - 59,99€ pour 1 an de films et séries afro",
     "afrostreammonthly": "Formule Mensuel - 7 jours d’essai puis 6,99€ par mois sans engagement",
