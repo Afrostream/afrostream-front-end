@@ -73,7 +73,7 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help col-xs-12 col-md-4 padding-left-paiement">
+          <div className="get-help col-xs-12 col-md-4 padding-left-paiement hidden-xs">
             <h4>{labels.recharge.title}</h4>
             <ul className="footer-links">
               <li>
@@ -94,7 +94,7 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help col-xs-12 col-md-2">
+          <div className="get-help col-xs-12 col-md-2 hidden-xs">
             <h4>{labels.pro.title}</h4>
             <ul className="footer-links">
               <li>
@@ -120,7 +120,7 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help col-xs-12 col-md-2">
+          <div className="get-help col-xs-12 col-md-2 hidden-xs">
             <h4> {labels.apps.title}</h4>
             <ul className="footer-links">
               <li>
@@ -151,7 +151,7 @@ class Footer extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="get-help col-xs-12 col-md-2">
+          <div className="get-help col-xs-12 col-md-2 hidden-xs">
             <h4>{labels.social.title}</h4>
             <ul className="footer-links">
               <li>
