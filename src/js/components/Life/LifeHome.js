@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import * as LifeActionCreators from '../../actions/life'
 import * as EventActionCreators from '../../actions/event'
 import LifeTheme from './LifeTheme'
-import LifeNavigation from './LifeNavigation'
+import SubNavigation from '../Header/SubNavigation'
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -26,6 +26,7 @@ if (process.env.BROWSER) {
   }
 
 })
+@connect(({Life}) => ({Life}))
 class LifeHome extends Component {
 
   constructor (props, context) {
@@ -35,13 +36,16 @@ class LifeHome extends Component {
   render () {
     const {
       props: {
-        children
+        children,
+        Life
       }
     } = this
 
+    const themesList = Life.get('life/themes/')
+
     return (
       <div className="container-fluid no-padding life-themes brand-grey">
-        <LifeNavigation />
+        <SubNavigation {...{themesList}} to="/life/{_id}/{slug}"/>
         <div className="row-fluid no-padding brand-grey">
           {children || <LifeTheme {...this.props}/>}
         </div>
