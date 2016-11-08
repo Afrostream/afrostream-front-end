@@ -1,18 +1,13 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from'react-dom'
 import Immutable from 'immutable'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import config from '../../../../config'
 import classSet from 'classnames'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import Raven from 'raven-js'
-import { detectUA } from './PlayerUtils'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import * as PlayerActionCreators from '../../actions/player'
 import * as EpisodeActionCreators from '../../actions/episode'
-import * as EventActionCreators from '../../actions/event'
-import * as RecoActionCreators from '../../actions/reco'
 import * as UserActionCreators from '../../actions/user'
 import Spinner from '../Spinner/Spinner'
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
@@ -22,7 +17,6 @@ import ShareButton from '../Share/ShareButton'
 import RecommendationList from '../Recommendation/RecommendationList'
 import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
-import { slugify } from '../../lib/utils'
 import window from 'global/window'
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -51,7 +45,6 @@ class PlayerComponent extends Component {
 
   constructor (props) {
     super(props)
-    this.player = null
     this.state = {
       numLoad: 0
     }
@@ -67,22 +60,11 @@ class PlayerComponent extends Component {
   }
 
   initState () {
-    this.playerInit = false
-    this.nextEpisode = false
-    clearInterval(this.promiseLoadNextTimeout)
-    this.promiseLoadNextTimeout = 0
-    let numLoad = this.state.numLoad
-    numLoad++
     this.state = {
       size: {
         height: 1920,
         width: 815
-      },
-      showStartTimeAlert: false,
-      fullScreen: false,
-      numLoad: numLoad,
-      nextReco: false,
-      nextAuto: Boolean(numLoad % 3)
+      }
     }
   }
 
@@ -96,44 +78,41 @@ class PlayerComponent extends Component {
 
   }
 
-  isTourShowed () {
-    let isTourShow = null
-
-    if (canUseDOM) {
-      isTourShow = parseInt(localStorage.getItem('afrTourChat'))
-    }
-    return isTourShow
-  }
-
-  setTourShowed () {
-    if (canUseDOM) {
-      localStorage.setItem('afrTourChat', 1)
-    }
-  }
-
-  componentWillUnmount () {
-    this.destroyPlayer()
-    console.log('player : componentWillUnmount', this.player)
-  }
+  //componentDidUpdate () {
+  //  const {props:{dispatch, videoId}} = this
+  //  if (this.videoData) {
+  //    this.videoData = this.videoData.set('target', this.refs.wrapper)
+  //    this.videoData = this.videoData.set('videoId', videoId)
+  //    dispatch(PlayerActionCreators.loadPlayer({
+  //      data: this.videoData
+  //    }))
+  //    this.videoData = null;
+  //  }
+  //}
 
   componentWillReceiveProps (nextProps) {
 
-    const {props:{dispatch, data}} = this
-    if (!shallowEqual(nextProps.Video, this.props.Video)) {
-      let data = nextProps.Video.get(`videos/${nextProps.videoId}`)
-      data.target = this.refs.wrapper
-      dispatch(PlayerActionCreators.loadPlayer({
-        data
-      }))
+    const {props:{dispatch, videoId}} = this
+
+    if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
+      this.setState({
+        nextAuto: true,
+        numLoad: 0
+      })
     }
 
+    if (!shallowEqual(nextProps.Video, this.props.Video)) {
+      let videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
+      dispatch(PlayerActionCreators.killPlayer()).then(()=> {
+        videoData = videoData.set('target', this.refs.wrapper)
+        videoData = videoData.set('videoId', videoId)
+        dispatch(PlayerActionCreators.loadPlayer({
+          data: videoData
+        }))
+        //this.initState()
+      })
+    }
 
-    //if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
-    //  this.setState({
-    //    nextAuto: true,
-    //    numLoad: 0
-    //  })
-    //}
     //
     //if (!shallowEqual(nextProps.Video, this.props.Video)) {
     //  const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
@@ -162,114 +141,12 @@ class PlayerComponent extends Component {
   }
 
   backNextHandler () {
-    this.player.off('timeupdate')
+    const player = this.player()
+    player.off('timeupdate')
     clearInterval(this.promiseLoadNextTimeout)
     this.setState({
       nextReco: false
     })
-  }
-
-  getStoredPlayer () {
-    const {
-      props: {User, videoId}
-    } = this
-
-    let stored = User.get(`video/${videoId}`)
-
-    stored = stored && stored.toJS()
-
-    let baseData = {
-      playerAudio: null,
-      playerCaption: null,
-      playerBitrate: 0,
-      playerPosition: 0
-    }
-
-    return _.merge(baseData, stored || {})
-  }
-
-  getPlayerTracks (type) {
-    let tracks = []
-    let audioIndex = this.player.tech['featuresAudioIndex']
-    let metrics = this.player.getPlaybackStatistics()
-    let bitrateIndex = metrics.video.bitrateIndex || this.player.tech['featuresBitrateIndex']
-    let key
-    switch (type) {
-      case 'caption' :
-        tracks = this.player.textTracks() || []
-        key = 'language'
-        break
-      case 'audio' :
-        tracks = this.player.audioTracks() || []
-        key = 'lang'
-        break
-      case 'video' :
-        tracks = this.player.videoTracks() || []
-        key = 'bitrate'
-        break
-    }
-    const selectedTrack = _.find(tracks, (track)=> {
-      switch (type) {
-        case 'caption' :
-          return track.mode === 'showing'
-          break
-        case 'audio' :
-          return track.index === audioIndex
-          break
-        case 'video' :
-          return track.qualityIndex === bitrateIndex
-          break
-      }
-    })
-
-    if (!selectedTrack && type === 'video') {
-      return metrics.video.bandwidth
-    }
-
-    return selectedTrack ? selectedTrack[key] : null
-  }
-
-  /**
-   * Start track video on start
-   */
-  onFirstPlay () {
-    this.trackVideo()
-  }
-
-  /**
-   * Stop track video on ended
-   */
-  clearTrackVideo () {
-    this.trackVideo()
-    clearTimeout(this.trackTimeout)
-  }
-
-  /**
-   * Track User video playing
-   */
-  trackVideo () {
-    const {
-      props: {dispatch, videoId}
-    } = this
-
-    clearTimeout(this.trackTimeout)
-    if (!this.player) {
-      return
-    }
-    const playerAudio = this.getPlayerTracks('audio')
-    const playerCaption = this.getPlayerTracks('caption')
-    const playerBitrate = this.getPlayerTracks('video')
-    const playerPosition = parseInt(this.player.currentTime(), 10)
-
-    let data = {
-      playerAudio: playerAudio,
-      playerCaption: playerCaption,
-      playerBitrate: playerBitrate,
-      playerPosition: playerPosition
-    }
-    //this.player.youbora.plugin.data.media.bitrate = playerBitrate
-    dispatch(RecoActionCreators.trackVideo(data, videoId))
-    this.trackTimeout = setTimeout(::this.trackVideo, 60000)
   }
 
   getNextComponent () {
@@ -293,7 +170,8 @@ class PlayerComponent extends Component {
   }
 
   getNextLink () {
-    return this.player && this.player.options().controlBar.nextVideoButton && this.player.options().controlBar.nextVideoButton.link
+    const player = this.player()
+    return player && player.options().controlBar.nextVideoButton && player.options().controlBar.nextVideoButton.link
   }
 
   //TODO refactor and split method
@@ -424,7 +302,8 @@ class PlayerComponent extends Component {
 
 
   promiseLoadNextVideo (time = 9) {
-    this.player.off('timeupdate')
+    const player = this.player()
+    player.off('timeupdate')
     clearInterval(this.promiseLoadNextTimeout)
     this.promiseLoadNextTimeout = setInterval(function () {
       let loadNextTime = time--
@@ -451,7 +330,6 @@ class PlayerComponent extends Component {
     let nextLink = this.getNextLink()
     this.backNextHandler()
     router.push(nextLink)
-
   }
 
   onTimeUpdate () {
@@ -470,9 +348,9 @@ class PlayerComponent extends Component {
     if (user && user.get('playerAutoNext') === false) {
       return
     }
-
-    let currentTime = this.player.currentTime()
-    let currentDuration = this.state.duration || this.player.duration() || 0
+    const player = this.player()
+    let currentTime = player.currentTime()
+    let currentDuration = this.state.duration || player.duration() || 0
     if (!currentDuration) {
       return
     }
@@ -493,337 +371,14 @@ class PlayerComponent extends Component {
     }
   }
 
-  async initPlayer (videoData) {
-    console.log('player : initPlayer')
-    try {
-      this.player = await this.generatePlayer(videoData)
-      //On ajoute l'ecouteur au nextvideo automatique
-      console.log('player : generatePlayer complete', this.player)
-      this.container = ReactDOM.findDOMNode(this)
-      this.container.removeEventListener('gobacknext', ::this.backNextHandler)
-      this.container.addEventListener('gobacknext', ::this.backNextHandler)
-
-      return this.player
-    } catch (err) {
-      console.log('player : ', err)
-      return this.playerInit = false
-    }
-  }
-
-  handleUserActive () {
-    this.player.on('userinactive', ::this.triggerUserActive)
-    this.setTourShowed()
-  }
-
-  async generateDomTag (videoData, komentData) {
-    console.log('player : generate dom tag')
-    const ua = detectUA()
-    const mobileVersion = ua.getMobile()
-    const videoTracking = this.getStoredPlayer()
-    const storedCaption = videoTracking.playerCaption
-    let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537))
-    let excludeBrowser = excludeSafari
-    let captions = excludeBrowser && videoData.get('captions')
-    let hasSubtiles = captions ? captions.size : false
-    let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
-    let video = document.createElement('video')
-    video.id = 'afrostream-player'
-    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered vjs-controls-enabled afrostream-player-dimensions'
-    video.crossOrigin = true
-    video.setAttribute('crossorigin', true)
-
-    try {
-      video.setAttribute('data-setup', JSON.stringify(komentData))
-    } catch (e) {
-      console.log('parse koment json error', e)
-    }
-
-    if (hasSubtiles) {
-      captions.map((caption) => {
-        let track = document.createElement('track')
-        track.setAttribute('kind', 'captions')
-        track.setAttribute('src', caption.get('src'))
-        track.setAttribute('id', caption.get('_id'))
-        let lang = caption.get('lang')
-        if (lang) {
-          track.setAttribute('srclang', lang.get('ISO6392T'))
-          track.setAttribute('label', lang.get('label'))
-        }
-        let isDefault = false
-        if (lang.get('ISO6392T') === storedCaption) {
-          isDefault = true
-          track.setAttribute('default', isDefault)
-        }
-        track.setAttribute('mode', isDefault ? 'showing' : 'hidden')
-        video.appendChild(track)
-      })
-    }
-    if (wrapper) {
-      wrapper.appendChild(video)
-    } else {
-      console.log('cant set wrapper elements')
-    }
-    return video
-  }
-
-  async getPlayerData (videoData) {
+  player () {
     const {
-      props: {
-        OAuth, Player, Movie, User, movieId, videoId
+      props:{
+        Player
       }
-    } = this
+    }=this
 
-    console.log('player : Get player data')
-    const user = User.get('user')
-    let userId
-    let token = OAuth.get('token')
-
-    let komentData = {
-      open: true,
-      videoId,
-      controlBar: {
-        komentToggle: {
-          attributes: {
-            'data-position': 'left',
-            'data-intro': 'Vous pouvez desormais commenter les video'
-          }
-        }
-      },
-      user: (user && {
-        id: user.get('_id').toString(),
-        provider: config.domain.host,
-        token: token && token.get('access_token'),
-        avatar: user.get('picture')
-      }),
-      languages: config.player.languages
-    }
-
-    if (user && user.get('nickname')) {
-      komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
-    }
-
-    //L'user a choisi de ne pas afficher les comentaires par default
-    if (user && user.get('playerKoment')) {
-      komentData.open = user.get('playerKoment')
-    }
-
-    await this.generateDomTag(videoData, komentData)
-
-    let videoOptions = videoData.toJS()
-
-    const movie = Movie.get(`movies/${movieId}`)
-    if (!movie) {
-      throw new Error('no movie data ref')
-    }
-
-    let posterImgObj = {}
-
-    if (movie) {
-      let poster = movie.get('poster')
-      let posterImg = poster ? poster.get('path') : ''
-      if (posterImg) {
-        posterImgObj.poster = `${config.images.urlPrefix}${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`
-        videoOptions = _.merge(videoOptions, posterImgObj)
-        videoOptions.live = movie.get('live')
-      }
-    }
-    const apiPlayerConfig = Player.get(`/player/config`)
-    if (!apiPlayerConfig) throw new Error('no player config api data')
-    //initialize the player
-    let apiPlayerConfigJs = {}
-    if (apiPlayerConfig) {
-      apiPlayerConfigJs = apiPlayerConfig.toJS()
-    }
-    let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfigJs))
-    //merge all configs
-    let playerData = _.merge(videoOptions, playerConfig)
-    // ==== START hacks config
-    let isLive = playerData.hasOwnProperty('live') && playerData.live
-    const ua = detectUA()
-    let browserVersion = ua.getBrowser()
-    let mobileVersion = ua.getMobile()
-
-    if (ua.isIE()) {
-      playerData.html5 = {
-        nativeCaptions: false,
-        nativeTextTracks: false
-      }
-      playerData.dash = _.merge(playerData.dash, _.clone(playerData.html5))
-    }
-
-    //on force dash en tech par default pour tous les browsers )
-    playerData.sources = _.sortBy(playerData.sources, (k)=> {
-      return k.type !== 'application/dash+xml'
-    })
-
-    if (ua.isSafari()) {
-      //Fix Safari < 6.2 can't play hls
-      if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
-        playerData.techOrder = _.sortBy(playerData.techOrder, (k) => {
-          return k !== 'dashas'
-        })
-      }
-      //Safari 8 can't play dashjs
-      if (browserVersion.version >= 538 && browserVersion.version <= 600) {
-        playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
-          return k !== 'html5'
-        })
-        playerData.sources = _.sortBy(playerData.sources, (k)=> {
-          return k.type === 'application/dash+xml'
-        })
-      }
-    }
-
-
-    //Fix android live hls only
-    //Fix ios hls only
-    if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (mobileVersion.is('AndroidOS') && isLive)) {
-      playerData.sources = _.sortBy(playerData.sources, (k)=> {
-        return k.type === 'application/dash+xml'
-      })
-      playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
-        return k !== 'html5'
-      })
-    }
-
-    //VTT flash vtt.js
-    //playerData['vtt.js'] = ''
-    //playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
-    // ==== END hacks config
-    playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
-
-    let chromecastOptions = {
-      metadata: {
-        title: movie.get('title'),
-        subtitle: movie.get('synopsis')
-      }
-    }
-
-    playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
-
-    if (user) {
-      userId = user.get('user_id')
-      let splitUser = typeof userId === 'string' ? userId.split('|') : [userId]
-      userId = _.find(splitUser, (val) => {
-        return parseInt(val, 10)
-      })
-      if (playerData.metrics) {
-        playerData.metrics.user_id = userId
-      }
-      //encode data to pass it into drmtoday
-      if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
-        let protUser = base64.encode(JSON.stringify({
-          userId: userId,
-          sessionId: token.get('access_token'),
-          merchant: 'afrostream'
-        }))
-
-        let protData = {
-          'com.widevine.alpha': {
-            'httpRequestHeaders': {
-              'dt-custom-data': protUser
-            }
-          },
-          'com.microsoft.playready': {
-            'httpRequestHeaders': {
-              'http-header-CustomData': protUser
-            }
-          },
-          'com.adobe.flashaccess': {
-            'httpRequestHeaders': {
-              'customData': protUser
-            }
-          }
-        }
-        playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData)
-      }
-
-      //OVERRIDE USER SETTINGS
-      if (user.get('playerAudio')) {
-        playerData.dash = _.merge(playerData.dash, {
-          inititalMediaSettings: {
-            audio: {
-              lang: user.get('playerAudio')
-            }
-          }
-        })
-      }
-      if (user.get('playerCaption')) {
-        playerData.dash = _.merge(playerData.dash, {
-          inititalMediaSettings: {
-            text: {
-              lang: user.get('playerCaption')
-            }
-          }
-        })
-      }
-
-      //OVERIDE USER QUALITY
-
-      let playerQuality = user.get('playerQuality') || 0
-      const qualityList = [0, 400, 800, 1600, 3000]
-
-      playerData.dash = _.merge(playerData.dash, {
-        autoSwitch: !playerQuality,
-        bolaEnabled: !playerQuality,
-        initialBitrate: qualityList[playerQuality]
-      })
-      //Tracking
-      const videoTracking = this.getStoredPlayer()
-      if (videoTracking) {
-        const position = videoTracking.playerPosition
-        const duration = videoData.get('duration')
-        //Store duration
-        this.setState({
-          duration: duration
-        })
-
-        if (position > 300 && position < (duration - 300)) {
-          playerData.starttime = position
-        }
-        if (videoTracking.playerCaption) {
-          playerData.dash.inititalMediaSettings.text.lang = videoTracking.playerCaption
-        }
-        if (videoTracking.playerAudio) {
-          playerData.dash.inititalMediaSettings.audio.lang = videoTracking.playerAudio
-        }
-        if (videoTracking.playerAudio) {
-          playerData.dash.inititalMediaSettings.video.lang = videoTracking.playerAudio
-        }
-      }
-    }
-    try {
-      let nextButton = await this.getNextVideo()
-      if (nextButton) {
-        playerData.controlBar = _.merge(playerData.controlBar, {
-          nextVideoButton: nextButton
-        })
-      }
-
-    } catch (e) {
-      console.log('player : Next video error', e)
-    }
-
-    console.log('player : playerData', playerData)
-    const videoSlug = slugify(`${videoData.get('_id')}_${videoData.get('name')}`)
-    playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot), {
-      p2pConfig: {
-        contentId: videoSlug
-      }
-    })
-
-    playerData.youbora = _.merge(playerData.youbora || {}, {
-      username: userId,
-      media: {
-        title: videoSlug,
-        duration: videoData.get('duration'),
-        isLive: isLive
-      },
-      properties: {
-        content_id: videoData.get('_id'),
-      }
-    })
-    return playerData
+    return Player.get('player')
   }
 
   //SPLASH BUBBLE
@@ -846,11 +401,12 @@ class PlayerComponent extends Component {
     } = this
 
 
+    const player = this.player()
     const user = User.get('user')
     const splashs = Config.get(`/config/splash`)
 
 
-    if (!this.player || !user || !splashs || !splashs.size) {
+    if (!player || !user || !splashs || !splashs.size) {
       return
     }
 
@@ -898,140 +454,13 @@ class PlayerComponent extends Component {
     )
   }
 
-  async generatePlayer (videoData) {
-    const {
-      props: {
-        videoId
-      }
-    } = this
-
-    if (this.playerInit) throw new Error('old player was already generate, destroy it before')
-
-    await this.destroyPlayer()
-    this.playerInit = true
-    if (!videoData) throw new Error(`no video data ${videoId} ${videoData}`)
-    let playerData = await this.getPlayerData(videoData)
-    const videoTracking = this.getStoredPlayer()
-    const storedCaption = videoTracking.playerCaption
-
-    let player = await videojs('afrostream-player', playerData).ready(()=> {
-        if (storedCaption) {
-          let tracks = player.textTracks() // get list of tracks
-          if (!tracks) {
-            return
-          }
-          _.forEach(tracks, (track) => {
-            let lang = track.language
-            track.mode = lang === storedCaption ? 'showing' : 'hidden' // show this track
-          })
-        }
-
-        player.volume(player.options_.defaultVolume)
-      }
-    )
-    if (featuresFlip.koment && player.tech_.el_) {
-      player.koment = await koment(player.tech_.el_)
-    }
-    //youbora data
-    if (player.youbora) {
-      player.youbora(playerData.youbora)
-    }
-
-
-    player.on('firstplay', ::this.onFirstPlay)
-    player.on('ended', ::this.clearTrackVideo)
-    player.on('seeked', ::this.trackVideo)
-    player.on('fullscreenchange', ::this.onFullScreenHandler)
-    player.on('timeupdate', ::this.onTimeUpdate)
-    player.on('useractive', ::this.triggerUserActive)
-    player.on('userinactive', ::this.triggerUserActive)
-    player.on('error', ::this.triggerError)
-    player.on('next', ::this.loadNextVideo)
-
-    return player
-  }
 
   //KOMENT
   showKoment () {
-    if (this.player && this.player.koment) {
-      this.player.koment.toggleMenu(true)
-      this.player.koment.toggleEdit(true)
-    }
-  }
-
-  onFullScreenHandler () {
-    let isFullScreen = this.player.isFullscreen()
-    this.setState({
-      fullScreen: isFullScreen
-    })
-  }
-
-  triggerUserActive () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
-    dispatch(EventActionCreators.userActive(this.player ? (this.player.paused() || this.player.userActive()) : true))
-  }
-
-  triggerError (e) {
-    if (Raven && Raven.isSetup()) {
-      // Send the report.
-      Raven.captureException(e, {
-        extra: {
-          error: this.player.error(),
-          cache: this.player.getCache()
-        }
-      })
-    }
-  }
-
-  async destroyPlayer () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
-    if (this.player) {
-
-      console.log('player : destroy player', this.player)
-      //Tracking Finalise tracking video
-      this.trackVideo()
-      this.initState()
-      this.container = ReactDOM.findDOMNode(this)
-      this.container.removeEventListener('gobacknext', ::this.backNextHandler)
-      //Tracking Finalise tracking video
-      return await new Promise((resolve) => {
-        this.player.off('firstplay')
-        this.player.off('ended')
-        this.player.off('seeked')
-        this.player.off('fullscreenchange')
-        this.player.off('timeupdate')
-        this.player.off('useractive')
-        this.player.off('userinactive')
-        this.player.off('error')
-        this.player.off('next')
-        dispatch(EventActionCreators.userActive(true))
-        this.player.one('dispose', () => {
-          this.player = null
-          this.playerInit = false
-          console.log('player : destroyed player')
-          resolve(null)
-        })
-        this.player.dispose()
-      })
-    } else {
-      console.log('player : destroy player impossible')
-      //let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
-      //if (wrapper) {
-      //  let unmount = ReactDOM.unmountComponentAtNode(wrapper)
-      //}
-      //console.log('player : wrapper unmount')
-      this.playerInit = false
-      return null
+    const player = this.player()
+    if (player && player.koment) {
+      player.koment.toggleMenu(true)
+      player.koment.toggleEdit(true)
     }
   }
 
@@ -1056,6 +485,7 @@ class PlayerComponent extends Component {
   render () {
     const {
       props: {
+        Player,
         Event,
         Season,
         Movie,
@@ -1094,7 +524,7 @@ class PlayerComponent extends Component {
     let playerClasses = {
       'player': true,
       'player-next-reco': this.state.nextReco,
-      'player-fullScreen': this.state.fullScreen,
+      'player-fullScreen': Player.get(`/player/fullscreen`),
       'chat-on': chatMode
     }
 
