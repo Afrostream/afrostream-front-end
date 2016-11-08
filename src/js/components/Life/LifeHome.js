@@ -14,7 +14,6 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, params:{themeId, pinId}}) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchThemes()),
     store.dispatch(LifeActionCreators.fetchPins({})),
     store.dispatch(LifeActionCreators.fetchSpots({}))
   ])

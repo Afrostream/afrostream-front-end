@@ -132,7 +132,7 @@ export default class ReactImgix extends Component {
     //_src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=30`)
     //_src = _src.replace(/&w=([1-9][0-9]*|0)/g, `&w=20`)
     //_src = _src.replace(/&h=([1-9][0-9]*|0)/g, `&h=20`)
-    _src += '&blur=500'
+    _src += '&blur=800'
 
     let srcSet = ''
     let _component = component
