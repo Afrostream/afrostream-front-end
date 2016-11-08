@@ -96,7 +96,12 @@ class ModalView extends React.Component {
       case 'image':
         return (
           <ModalComponent closable={closable} className="large" {...this.props} >
-            <ReactImgix className="modal-image" src={data.get('src')}/></ModalComponent>
+            <div className="modal-image-container">
+              <div className="content">
+                <ReactImgix className="modal-image" src={data.get('src')} bg={true}/>
+              </div>
+            </div>
+          </ModalComponent>
         )
         break
       //LIFE ACL
