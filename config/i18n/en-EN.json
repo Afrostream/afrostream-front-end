@@ -457,6 +457,10 @@
       "421": {
         "name": "SUBS_FUTURE_ALREADY_EXISTS",
         "message": "Lorsqu'une personne prend un abonnement alors qu'il y a déjà un abonnement à venir."
+      },
+      "433": {
+        "name": "ALREADY_SUBSCRIBE",
+        "message": "Vous êtes deja abonné."
       }
     }
   },

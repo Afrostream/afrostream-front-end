@@ -464,16 +464,16 @@
         "name": "COUPON_ALREADY_LINKED",
         "message": "Le code n'est pas utilisable."
       },
-      "401": {
-        "name": "AFR_COUPON_SPS_RECIPIENT_ALREADY_SPONSORED",
-        "message": "codes de sponsoring : 1 seul / compte"
-      },
       "60": {
         "name": "SEPA_IBAN_INVALID",
         "message": "compte IBAN banni (processus manuel)"
       },
       "400": {
         "name": "AFR_COUPON_SPS_SELF_FORBIDDEN",
+        "message": "codes de sponsoring : 1 seul / compte"
+      },
+      "401": {
+        "name": "AFR_COUPON_SPS_RECIPIENT_ALREADY_SPONSORED",
         "message": "codes de sponsoring : 1 seul / compte"
       },
       "401": {
@@ -495,6 +495,10 @@
       "421": {
         "name": "SUBS_FUTURE_ALREADY_EXISTS",
         "message": "Lorsqu'une personne prend un abonnement alors qu'il y a déjà un abonnement à venir."
+      },
+      "433": {
+        "name": "ALREADY_SUBSCRIBE",
+        "message": "Vous êtes deja abonné."
       }
     }
   },

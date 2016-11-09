@@ -217,7 +217,7 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
                 response: {
                   body: {
                     error: error.error,
-                    message: error.message,
+                    message: error.message || error.error,
                     code: error.netsizeErrorCode || error.netsizeStatusCode,
                   }
                 }
