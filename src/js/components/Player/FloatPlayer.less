@@ -41,6 +41,9 @@
   &.unpinned {
     .player-container:not(.vjs-fullscreen) {
       font-size: 8px;
+      .vjs-remaining-time {
+        display: none;
+      }
     }
     .isMobile({ width: 50vw; margin: 1em; box-shadow: 1px 0px 2px 0px fade(@color-black-2, 30%); });
   }

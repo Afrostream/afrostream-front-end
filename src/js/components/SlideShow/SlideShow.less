@@ -4,8 +4,7 @@
   position: relative;
   background-color: @background-color-base;
   .fullHeight();
-  padding: @header-height @app-padding;
-  margin-top: -10px;
+  padding: @header-height 0 0 0;
   min-height: 66vh;
   .movie {
     min-height: 100% !important;
@@ -143,8 +142,9 @@
 
     .movie {
       .btn-play {
-        font-size: 5em;
-        top: 35%;
+        //font-size: 5em;
+        //top: 35%;
+        display: none;
       }
       .movie-background {
         position: absolute;
@@ -154,6 +154,7 @@
         margin: 0;
       }
       .billboard-infos {
+        max-width: 100%;
         margin-bottom: 20px;
         .billboard-synopsis {
           display: none;

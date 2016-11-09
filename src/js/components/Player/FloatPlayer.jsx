@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import Immutable from 'immutable'
+import _ from 'lodash'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import { connect } from 'react-redux'
 import config from '../../../../config'
@@ -9,7 +10,12 @@ import window from 'global/window'
 import { isElementInViewPort } from '../../lib/utils'
 import classSet from 'classnames'
 const {featuresFlip} = config
+import Raven from 'raven-js'
+import { slugify } from '../../lib/utils'
+
 import * as PlayerActionCreators from '../../actions/player'
+import * as EventActionCreators from '../../actions/event'
+import * as RecoActionCreators from '../../actions/reco'
 
 if (process.env.BROWSER) {
   require('./FloatPlayer.less')
@@ -30,19 +36,35 @@ class FloatPlayer extends React.Component {
 
   state = {
     elVisible: false,
-    position: {}
+    position: {},
+    numLoad: 0
   }
 
   constructor (props) {
     super(props)
     this.player = null
+    this.initState()
   }
 
   initState () {
     this.playerInit = false
-    this.setState({
-      elVisible: false
-    })
+    this.nextEpisode = false
+    clearInterval(this.promiseLoadNextTimeout)
+    this.promiseLoadNextTimeout = 0
+    let numLoad = this.state.numLoad
+    numLoad++
+    this.state = {
+      elVisible: false,
+      size: {
+        height: 1920,
+        width: 815
+      },
+      position: {},
+      showStartTimeAlert: false,
+      numLoad: numLoad,
+      nextReco: false,
+      nextAuto: Boolean(numLoad % 3)
+    }
   }
 
   componentWillUnmount () {
@@ -52,49 +74,93 @@ class FloatPlayer extends React.Component {
 
   componentWillReceiveProps (nextProps) {
 
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.updatePlayerPosition()
-    }
-
     if (!shallowEqual(nextProps.data, this.props.data)) {
       const videoData = nextProps.data
-      this.initState()
+      if (!videoData) {
+        return
+      }
       this.destroyPlayer().then(()=> {
-        if (!videoData) {
-          return
-        }
         this.initPlayer(videoData)
       })
     }
 
-    if (!shallowEqual(nextProps.Player, this.props.Player)) {
+    if (!shallowEqual(nextProps.Player.get('/player/data'), this.props.Player.get('/player/data'))) {
       const videoData = nextProps.Player.get('/player/data')
-      this.initState()
-      //if (!videoData) {
-      //  return
-      //}
+      if (!videoData) {
+        return
+      }
       this.destroyPlayer().then(()=> {
         this.initPlayer(videoData)
       })
+    }
+
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.updatePlayerPosition()
     }
   }
 
   async getPlayerData (videoData) {
     const {
       props: {
-        OAuth, Player, User
+        OAuth, Player, User, Movie,
+        params:{videoId, movieId}
       }
     } = this
 
     console.log('player : Get player data')
-    const user = User.get('user')
     let userId
+    const user = User.get('user')
     let token = OAuth.get('token')
 
-    await this.generateDomTag(videoData)
+    let komentData = {
+      open: true,
+      videoId,
+      controlBar: {
+        komentToggle: {
+          attributes: {
+            'data-position': 'left',
+            'data-intro': 'Vous pouvez desormais commenter les video'
+          }
+        }
+      },
+      user: (user && {
+        id: user.get('_id').toString(),
+        provider: config.domain.host,
+        token: token && token.get('access_token'),
+        avatar: user.get('picture')
+      }),
+      languages: config.player.languages
+    }
+
+    if (user && user.get('nickname')) {
+      komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
+    }
+
+    //L'user a choisi de ne pas afficher les comentaires par default
+    if (user && user.get('playerKoment')) {
+      komentData.open = user.get('playerKoment')
+    }
+
+    await this.generateDomTag(videoData, komentData)
 
     let videoOptions = videoData.toJS()
+    //ADD MOVIE INFO
+    const movie = Movie.get(`movies/${movieId}`)
+    if (!movie) {
+      throw new Error('no movie data ref')
+    }
+    let posterImgObj = {}
 
+    if (movie) {
+      let poster = movie.get('poster')
+      let posterImg = poster ? poster.get('path') : ''
+      if (posterImg) {
+        posterImgObj.poster = `${config.images.urlPrefix}${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`
+        videoOptions = _.merge(videoOptions, posterImgObj)
+        videoOptions.live = movie.get('live')
+      }
+    }
+    //MERGE PLAYER DATA API
     let apiPlayerConfig = Player.get(`/player/config`)
     let apiPlayerConfigJs = {}
     //if (!apiPlayerConfig) throw new Error('no player config api data')
@@ -160,6 +226,16 @@ class FloatPlayer extends React.Component {
     // ==== END hacks config
     playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
 
+    //CHROMECAST
+    let chromecastOptions = {
+      metadata: {
+        title: movie.get('title'),
+        subtitle: movie.get('synopsis')
+      }
+    }
+
+    playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
+
     if (user) {
       userId = user.get('user_id')
       let splitUser = typeof userId === 'string' ? userId.split('|') : [userId]
@@ -196,49 +272,127 @@ class FloatPlayer extends React.Component {
         }
         playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData)
       }
+      //OVERRIDE USER SETTINGS
+      if (user.get('playerAudio')) {
+        playerData.dash = _.merge(playerData.dash, {
+          inititalMediaSettings: {
+            audio: {
+              lang: user.get('playerAudio')
+            }
+          }
+        })
+      }
+      if (user.get('playerCaption')) {
+        playerData.dash = _.merge(playerData.dash, {
+          inititalMediaSettings: {
+            text: {
+              lang: user.get('playerCaption')
+            }
+          }
+        })
+      }
 
+      //OVERIDE USER QUALITY
+
+      let playerQuality = user.get('playerQuality') || 0
+      const qualityList = [0, 400, 800, 1600, 3000]
+
+      playerData.dash = _.merge(playerData.dash, {
+        autoSwitch: !playerQuality,
+        bolaEnabled: !playerQuality,
+        initialBitrate: qualityList[playerQuality]
+      })
+      //Tracking
+      const videoTracking = this.getStoredPlayer()
+      if (videoTracking) {
+        const position = videoTracking.playerPosition
+        const duration = videoData.get('duration')
+        //Store duration
+        this.setState({
+          duration: duration
+        })
+
+        if (position > 300 && position < (duration - 300)) {
+          playerData.starttime = position
+        }
+        if (videoTracking.playerCaption) {
+          playerData.dash.inititalMediaSettings.text.lang = videoTracking.playerCaption
+        }
+        if (videoTracking.playerAudio) {
+          playerData.dash.inititalMediaSettings.audio.lang = videoTracking.playerAudio
+        }
+        if (videoTracking.playerAudio) {
+          playerData.dash.inititalMediaSettings.video.lang = videoTracking.playerAudio
+        }
+      }
     }
 
     console.log('player : playerData', playerData)
+
+    const videoSlug = slugify(`${videoData.get('_id')}_${videoData.get('name')}`)
+    playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot), {
+      p2pConfig: {
+        contentId: videoSlug
+      }
+    })
+
+    playerData.youbora = _.merge(playerData.youbora || {}, {
+      username: userId,
+      media: {
+        title: videoSlug,
+        duration: videoData.get('duration'),
+        isLive: isLive
+      },
+      properties: {
+        content_id: videoData.get('_id'),
+      }
+    })
+
     return playerData
   }
 
-  async destroyPlayer () {
+  backNextHandler () {
+    const player = this.player
+    player.off('timeupdate')
+    clearInterval(this.promiseLoadNextTimeout)
+    this.setState({
+      nextReco: false
+    })
+  }
+
+  getStoredPlayer () {
     const {
       props: {
-        dispatch
+        User,
+        params:{videoId}
       }
     } = this
 
-    if (this.player) {
-      console.log('player : destroy player', this.player)
-      //Tracking Finalise tracking video
-      return await new Promise((resolve) => {
-        videojs.off(window, 'scroll')
-        videojs.off(window, 'resize')
-        this.player.one('dispose', () => {
-          this.player = null
-          this.playerInit = false
-          console.log('player : destroyed player')
-          this.initState()
-          resolve(null)
-        })
-        this.player.dispose()
-      })
-    } else {
-      console.log('player : destroy player impossible')
-      this.playerInit = false
-      return null
+    let stored = User.get(`video/${videoId}`)
+
+    stored = stored && stored.toJS()
+
+    let baseData = {
+      playerAudio: null,
+      playerCaption: null,
+      playerBitrate: 0,
+      playerPosition: 0
     }
+
+    return _.merge(baseData, stored || {})
   }
 
   async initPlayer (videoData) {
     console.log('player : initPlayer')
     try {
       this.player = await this.generatePlayer(videoData)
+      this.props.dispatch(PlayerActionCreators.setPlayer(this.player))
       //On ajoute l'ecouteur au nextvideo automatique
       console.log('player : generatePlayer complete', this.player)
-      this.container = ReactDOM.findDOMNode(this)
+      this.container = ReactDOM.findDOMNode(videoData.get('target'))
+      this.container.removeEventListener('gobacknext', ::this.backNextHandler)
+      this.container.addEventListener('gobacknext', ::this.backNextHandler)
+
       return this.player
     } catch (err) {
       console.log('player : ', err)
@@ -257,19 +411,228 @@ class FloatPlayer extends React.Component {
     this.playerInit = true
     if (!videoData) throw new Error(`no video data ${videoData}`)
     let playerData = await this.getPlayerData(videoData)
-    let player = await videojs('afrostream-float-player', playerData).ready(()=> {
+    const videoTracking = this.getStoredPlayer()
+    const storedCaption = videoTracking.playerCaption
+
+    let player = await videojs('afrostream-player', playerData).ready(()=> {
+        if (storedCaption) {
+          let tracks = player.textTracks() // get list of tracks
+          if (!tracks) {
+            return
+          }
+          _.forEach(tracks, (track) => {
+            let lang = track.language
+            track.mode = lang === storedCaption ? 'showing' : 'hidden' // show this track
+          })
+        }
+
         player.volume(player.options_.defaultVolume)
         this.requestTick(true)
       }
     )
+
+    if (featuresFlip.koment && player.tech_.el_) {
+      player.koment = await koment(player.tech_.el_)
+    }
+    //youbora data
+    if (player.youbora) {
+      player.youbora(playerData.youbora)
+    }
+
     videojs.on(window, 'scroll', ::this.requestTick)
     videojs.on(window, 'resize', ::this.requestTick)
+    player.on('error', ::this.triggerError)
+    player.on('useractive', ::this.triggerUserActive)
+    player.on('userinactive', ::this.triggerUserActive)
+    player.on('firstplay', ::this.onFirstPlay)
+    player.on('ended', ::this.clearTrackVideo)
+    player.on('seeked', ::this.trackVideo)
+    player.on('fullscreenchange', ::this.onFullScreenHandler)
+
     this.requestTick(true)
     return player
   }
 
-  async generateDomTag (videoData) {
+  async destroyPlayer () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    if (this.player) {
+      console.log('player : destroy player', this.player)
+      //Tracking Finalise tracking video
+      this.trackVideo()
+      this.initState()
+      //Tracking Finalise tracking video
+      return await new Promise((resolve) => {
+        dispatch(EventActionCreators.userActive(true))
+        videojs.off(window, 'scroll')
+        videojs.off(window, 'resize')
+        this.player.off('fullscreenchange')
+        this.player.off('firstplay')
+        this.player.off('useractive')
+        this.player.off('userinactive')
+        this.player.off('ended')
+        this.player.off('seeked')
+        this.player.off('error')
+        this.player.one('dispose', () => {
+          this.player = null
+          this.playerInit = false
+          console.log('player : destroyed player')
+          //dispatch(PlayerActionCreators.killPlayer()).then(()=> {
+          this.requestTick(true)
+          resolve(null)
+          //})
+        })
+        if (this.container) {
+          this.container.removeEventListener('gobacknext', ::this.backNextHandler)
+        }
+        this.player.dispose()
+      })
+    } else {
+      console.log('player : destroy player impossible')
+      this.playerInit = false
+      return null
+    }
+  }
+
+  /**
+   * Start track video on start
+   */
+  onFirstPlay () {
+    this.trackVideo()
+  }
+
+  onFullScreenHandler () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    let isFullScreen = this.player.isFullscreen()
+    dispatch(PlayerActionCreators.setFullScreen(isFullScreen))
+  }
+
+  triggerUserActive () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    const player = this.player
+    dispatch(EventActionCreators.userActive(player ? (player.paused() || player.userActive()) : true))
+  }
+
+  triggerError (e) {
+    if (Raven && Raven.isSetup()) {
+      // Send the report.
+      Raven.captureException(e, {
+        extra: {
+          error: this.player.error(),
+          cache: this.player.getCache()
+        }
+      })
+    }
+  }
+
+  /**
+   * Stop track video on ended
+   */
+  clearTrackVideo () {
+    this.trackVideo()
+    clearTimeout(this.trackTimeout)
+  }
+
+
+  /**
+   * Track User video playing
+   */
+  trackVideo () {
+    const {
+      props: {
+        dispatch, params:{videoId}
+      }
+    } = this
+
+    clearTimeout(this.trackTimeout)
+
+    const player = this.player
+    if (!player || !videoId) {
+      return
+    }
+    const playerAudio = this.getPlayerTracks('audio')
+    const playerCaption = this.getPlayerTracks('caption')
+    const playerBitrate = this.getPlayerTracks('video')
+    const playerPosition = parseInt(player.currentTime(), 10)
+
+    let data = {
+      playerAudio: playerAudio,
+      playerCaption: playerCaption,
+      playerBitrate: playerBitrate,
+      playerPosition: playerPosition
+    }
+    //player.youbora.plugin.data.media.bitrate = playerBitrate
+    dispatch(RecoActionCreators.trackVideo(data, videoId))
+    this.trackTimeout = setTimeout(::this.trackVideo, 60000)
+  }
+
+  getPlayerTracks (type) {
+    const player = this.player
+    let tracks = []
+    let audioIndex = player.tech['featuresAudioIndex']
+    let metrics = player.getPlaybackStatistics()
+    let bitrateIndex = metrics.video.bitrateIndex || player.tech['featuresBitrateIndex']
+    let key
+    switch (type) {
+      case 'caption' :
+        tracks = player.textTracks() || []
+        key = 'language'
+        break
+      case 'audio' :
+        tracks = player.audioTracks() || []
+        key = 'lang'
+        break
+      case 'video' :
+        tracks = player.videoTracks() || []
+        key = 'bitrate'
+        break
+    }
+    const selectedTrack = _.find(tracks, (track)=> {
+      switch (type) {
+        case 'caption' :
+          return track.mode === 'showing'
+          break
+        case 'audio' :
+          return track.index === audioIndex
+          break
+        case 'video' :
+          return track.qualityIndex === bitrateIndex
+          break
+      }
+    })
+
+    if (!selectedTrack && type === 'video') {
+      return metrics.video.bandwidth
+    }
+
+    return selectedTrack ? selectedTrack[key] : null
+  }
+
+  async generateDomTag (videoData, komentData) {
     console.log('player : generate dom tag')
+    const ua = detectUA()
+    const mobileVersion = ua.getMobile()
+    const videoTracking = this.getStoredPlayer()
+    const storedCaption = videoTracking.playerCaption
+    let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537))
+    let excludeBrowser = excludeSafari
+    let captions = excludeBrowser && videoData.get('captions')
+    let hasSubtiles = captions ? captions.size : false
+
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
     let elementType = 'video'
     switch (videoData.get('type')) {
@@ -281,10 +644,38 @@ class FloatPlayer extends React.Component {
         break
     }
     let video = document.createElement('video')
-    video.id = 'afrostream-float-player'
-    video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
+    video.id = 'afrostream-player'
+    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered afrostream-player-dimensions'
+    //video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
+
+    try {
+      video.setAttribute('data-setup', JSON.stringify(komentData))
+    } catch (e) {
+      console.log('parse koment json error', e)
+    }
+
+    if (hasSubtiles) {
+      captions.map((caption) => {
+        let track = document.createElement('track')
+        track.setAttribute('kind', 'captions')
+        track.setAttribute('src', caption.get('src'))
+        track.setAttribute('id', caption.get('_id'))
+        let lang = caption.get('lang')
+        if (lang) {
+          track.setAttribute('srclang', lang.get('ISO6392T'))
+          track.setAttribute('label', lang.get('label'))
+        }
+        let isDefault = false
+        if (lang.get('ISO6392T') === storedCaption) {
+          isDefault = true
+          track.setAttribute('default', isDefault)
+        }
+        track.setAttribute('mode', isDefault ? 'showing' : 'hidden')
+        video.appendChild(track)
+      })
+    }
 
     if (wrapper) {
       wrapper.appendChild(video)
@@ -314,9 +705,7 @@ class FloatPlayer extends React.Component {
     } = this
     e.preventDefault()
     this.destroyPlayer()
-    dispatch(PlayerActionCreators.killPlayer()).then(()=> {
-      this.requestTick(true)
-    })
+
   }
 
   updatePlayerPosition () {
@@ -331,12 +720,14 @@ class FloatPlayer extends React.Component {
 
     const playerData = data || Player.get('/player/data')
     const target = playerData && playerData.get('target') || this.refs.container
-    const elVisible = target && isElementInViewPort(target, 0.60) && this.player
+    const elVisible = this.player && target && isElementInViewPort(target, 0.60)
 
     let position = elVisible && target && target.getBoundingClientRect() || {
         bottom: 0,
         left: 0
       }
+
+    console.log('updata', target, position)
 
     //FIXME why position 157 ?
     position.transform = `translate3d(${position.left}px, ${elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
@@ -373,6 +764,10 @@ class FloatPlayer extends React.Component {
 
     classFloatPlayer[this.props.className] = true
 
+    if (!this.props.float) {
+      return <div ref="wrapper" className="wrapper"/>
+    }
+
     return (
       <div className={classSet(classFloatPlayer)} style={position} ref="container">
         <a className={closeClass} href="#" onClick={::this.handleClose}><i className="zmdi zmdi-hc-2x zmdi-close"/></a>
@@ -390,6 +785,7 @@ FloatPlayer.propTypes = {
 }
 
 FloatPlayer.defaultProps = {
+  className: '',
   float: true
 }
 export default FloatPlayer

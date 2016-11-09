@@ -19,9 +19,23 @@ export default createReducer(initialState, {
     })
   },
 
+  [ActionTypes.Player.setPlayer](state, {player}) {
+    return state.merge({
+      [`player`]: player
+    })
+  },
+
+  [ActionTypes.Player.setFullScreen](state, {fullscreen}) {
+    return state.merge({
+      [`/player/fullscreen`]: fullscreen
+    })
+  },
+
   [ActionTypes.Player.killPlayer](state) {
     return state.merge({
-      [`/player/data`]: null
+      [`/player/data`]: null,
+      [`/player/fullscreen`]: null,
+      [`player`]: null
     })
   }
 

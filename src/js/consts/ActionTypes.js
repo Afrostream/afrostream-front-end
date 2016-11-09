@@ -62,6 +62,8 @@ export default {
 
   Player: keyMirror({
     getConfig: null,
+    setFullScreen: null,
+    setPlayer: null,
     loadPlayer: null,
     killPlayer: null
   }),
