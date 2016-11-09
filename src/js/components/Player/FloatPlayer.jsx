@@ -74,16 +74,11 @@ class FloatPlayer extends React.Component {
 
   componentWillReceiveProps (nextProps) {
 
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.updatePlayerPosition()
-    }
-
     if (!shallowEqual(nextProps.data, this.props.data)) {
       const videoData = nextProps.data
       if (!videoData) {
         return
       }
-      this.initState()
       this.destroyPlayer().then(()=> {
         this.initPlayer(videoData)
       })
@@ -91,14 +86,16 @@ class FloatPlayer extends React.Component {
 
     if (!shallowEqual(nextProps.Player.get('/player/data'), this.props.Player.get('/player/data'))) {
       const videoData = nextProps.Player.get('/player/data')
-      debugger
       if (!videoData) {
         return
       }
-      this.initState()
       this.destroyPlayer().then(()=> {
         this.initPlayer(videoData)
       })
+    }
+
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.updatePlayerPosition()
     }
   }
 
@@ -275,7 +272,7 @@ class FloatPlayer extends React.Component {
         }
         playerData.dashas.protData = playerData.dash.protData = _.merge(playerData.dash.protData, protData)
       }
-//OVERRIDE USER SETTINGS
+      //OVERRIDE USER SETTINGS
       if (user.get('playerAudio')) {
         playerData.dash = _.merge(playerData.dash, {
           inititalMediaSettings: {
@@ -417,7 +414,7 @@ class FloatPlayer extends React.Component {
     const videoTracking = this.getStoredPlayer()
     const storedCaption = videoTracking.playerCaption
 
-    let player = await videojs('afrostream-float-player', playerData).ready(()=> {
+    let player = await videojs('afrostream-player', playerData).ready(()=> {
         if (storedCaption) {
           let tracks = player.textTracks() // get list of tracks
           if (!tracks) {
@@ -489,7 +486,9 @@ class FloatPlayer extends React.Component {
           resolve(null)
           //})
         })
-        this.container.removeEventListener('gobacknext', ::this.backNextHandler)
+        if (this.container) {
+          this.container.removeEventListener('gobacknext', ::this.backNextHandler)
+        }
         this.player.dispose()
       })
     } else {
@@ -645,8 +644,9 @@ class FloatPlayer extends React.Component {
         break
     }
     let video = document.createElement('video')
-    video.id = 'afrostream-float-player'
-    video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
+    video.id = 'afrostream-player'
+    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered afrostream-player-dimensions'
+    //video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
 
@@ -763,6 +763,10 @@ class FloatPlayer extends React.Component {
     }
 
     classFloatPlayer[this.props.className] = true
+
+    if (!this.props.float) {
+      return <div ref="wrapper" className="wrapper"/>
+    }
 
     return (
       <div className={classSet(classFloatPlayer)} style={position} ref="container">
