@@ -199,6 +199,13 @@ a.active {
       }
     }
   }
+  .no-padding {
+    margin: 0;
+    padding: 0;
+    &:before {
+      content: none;
+    }
+  }
 }
 
 .app.toggled #page-content-wrapper {

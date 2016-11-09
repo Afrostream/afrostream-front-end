@@ -128,7 +128,7 @@ class SelectPlan extends React.Component {
 
       return (
         <div key={`col-plan-${label}-${key}`}
-             className={`col col-xs-${(12 / validPlans.size)} col-sm-${(12 / validPlans.size)} col-md-2`}>
+             className={`col col-xs-${(12 / validPlans.size)} col-sm-${(12 / validPlans.size)} col-md-2 no-padding`}>
           {value}
         </div>
       )

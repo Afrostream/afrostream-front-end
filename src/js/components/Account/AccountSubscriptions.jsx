@@ -36,6 +36,7 @@ class AccountSubscriptions extends React.Component {
       'gocardless': '/images/payment/virement.jpg',
       'cashway': '/images/payment/cashway-inline.png',
       'bouygues': '/images/payment/bouygues.png',
+      'netsize': '/images/payment/netsize.png',
       'orange': '/images/payment/orange.png'
     }
 
