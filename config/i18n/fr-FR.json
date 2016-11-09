@@ -106,6 +106,7 @@
     "afrostreamambassadeurs2": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "afrostreamambassadeurs": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "infos": {
+      "coupon": "Coupon valide {couponName}",
       "formule": "Formule",
       "prelevementMensuel": "Prélèvement mensuel",
       "price": "Tarif",

@@ -59,8 +59,9 @@ class SelectPlan extends React.Component {
   getPlanCol (label) {
 
     const {
-      props : {router, User}
+      props : {router, User, Billing}
     } = this
+
     let isCash = router.isActive('cash')
 
     let validPlans = this.getPlans()
@@ -70,8 +71,10 @@ class SelectPlan extends React.Component {
     }
 
     let user = User.get('user')
+    let coupon = Billing.get('coupon')
 
     return validPlans.map((plan, key)=> {
+      const internalPlanUuid = plan.get('internalPlanUuid')
 
       let objVal = plan.get(label)
 
@@ -83,21 +86,26 @@ class SelectPlan extends React.Component {
         objVal = true
       }
 
+      //COUPON Filter availlable discount for plan with current active coupon
+      if (label === 'coupon' && coupon && coupon.size) {
+        const couponPlans = coupon.get('internalPlans')
+        objVal = Boolean(couponPlans.find((a) => a.get('internalPlanUuid') === internalPlanUuid))
+      }
+
+
       let value = ''
       switch (label) {
+
         case 'formule':
           value = getI18n().planCodes.infos[label] || ''
           break
+
         case 'internalActionLabel':
-
           const internalPlanQuery = this.getInternalQuery()
-          const internalPlanUuid = plan.get('internalPlanUuid')
-
           let buttonLabel = getI18n().planCodes.action
           if (plan && internalPlanUuid === config.netsize.internalPlanUuid) {
             buttonLabel = getI18n().planCodes.actionMobile
           }
-
           if (!user) {
             const inputSignupAction = {
               onClick: event => ::this.openModal(internalPlanUuid)
@@ -109,6 +117,7 @@ class SelectPlan extends React.Component {
           }
 
           break
+
         case 'price':
           value = (<div className="select-plan_price">
             {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
@@ -117,6 +126,7 @@ class SelectPlan extends React.Component {
             </span>
           </div>)
           break
+
         default :
           value = objVal
           let isBool = (value === 'true' || value === 'false' || typeof value === 'boolean' ) && typeof isBoolean(value) === 'boolean'
@@ -136,6 +146,11 @@ class SelectPlan extends React.Component {
   }
 
   getLabel (label) {
+    const {
+      props: {
+        Billing
+      }
+    } = this
 
     let validPlans = this.getPlans()
 
@@ -143,10 +158,19 @@ class SelectPlan extends React.Component {
       return
     }
 
+    let labelDisplay = getI18n().planCodes.infos[label]
+
+    if (label === 'coupon') {
+      const coupon = Billing.get('coupon')
+      if (coupon && coupon.size) {
+        const couponName = coupon.get('campaign').get('name')
+        labelDisplay = labelDisplay.replace(/{couponName}/g, couponName)
+      }
+    }
+
     return (
-      <div key={`line-plan-${label}`}
-           className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
-        {getI18n().planCodes.infos[label] || ''}
+      <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
+        {labelDisplay}
       </div>)
   }
 
@@ -214,6 +238,24 @@ class SelectPlan extends React.Component {
     </div>
   }
 
+  renderCouponRow () {
+    const {
+      props: {
+        Billing
+      }
+    } = this
+
+    let coupon = Billing.get('coupon')
+    if (!coupon || !coupon.size) {
+      return
+    }
+
+    return (<div className="row">
+      {this.getLabel('coupon')}
+      {this.getPlanCol('coupon')}
+    </div>)
+  }
+
   render () {
     let plans = this.getPlans()
     let cols = [
@@ -250,6 +292,7 @@ class SelectPlan extends React.Component {
               {this.getPlanCol(value)}
             </div>
           )}
+          {this.renderCouponRow()}
         </div>
 
         {this.getFooter()}

@@ -5,7 +5,9 @@ import { getI18n } from '../../../../../config/i18n'
 import RecurlyForm from './RecurlyForm'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
+import { connect } from 'react-redux'
 
+@connect(({Billing}) => ({Billing}))
 class PaypalForm extends RecurlyForm {
 
   constructor (props) {
@@ -47,10 +49,6 @@ class PaypalForm extends RecurlyForm {
     if (clickHeader) {
       clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'paypal', bubbles: true}))
     }
-  }
-
-  renderPromoCode () {
-    return super.renderPromoCode()
   }
 
   getForm () {

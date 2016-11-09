@@ -6,8 +6,11 @@ import config from '../../../../../config'
 import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
+import CouponForm from './CouponForm'
+import { connect } from 'react-redux'
 
-class RecurlyForm extends React.Component {
+@connect(({Billing}) => ({Billing}))
+class RecurlyForm extends CouponForm {
 
   constructor (props) {
     super(props)
@@ -112,23 +115,6 @@ class RecurlyForm extends React.Component {
     if (clickHeader) {
       clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'recurly', bubbles: true}))
     }
-  }
-
-  renderPromoCode () {
-    return (
-      <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="coupon_code">{getI18n().payment.promo.label}</label>
-        <input
-          type="text"
-          className="form-control coupon-code"
-          data-billing="coupon_code"
-          name="coupon_code"
-          id="coupon_code"
-          ref="couponCode"
-          placeholder={getI18n().payment.promo.placeHolder}
-        />
-      </div>
-    )
   }
 
   getForm () {
