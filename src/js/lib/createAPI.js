@@ -115,6 +115,7 @@ export default function createAPI (createRequest) {
     path,
     method = 'GET',
     params = {},
+    headers = {},
     legacy = false,
     showLoader = true,
     local = false,

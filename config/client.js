@@ -222,6 +222,7 @@ const client = {
         icon: 'zmdi-facebook',
         url: 'https://www.facebook.com/sharer/sharer.php',
         title: 'Facebook',
+        label: 'Share',
         params: {
           u: '{url}',
           s: 'En ce moment je regarde "{title}" sur @afrostream'
@@ -234,6 +235,7 @@ const client = {
       whatsapp: {
         enabled: true,     // Enable WhatsApp. [Default: true],
         mobile: true,
+        label: 'Share',
         icon: 'zmdi-whatsapp',
         title: 'Whatsapp',
         url: 'whatsapp://send',
@@ -246,6 +248,7 @@ const client = {
       },
       twitter: {
         enabled: true,      // Enable Twitter. [Default: true]
+        label: 'Tweet',
         icon: 'zmdi-twitter',
         url: 'https://twitter.com/intent/tweet',
         title: 'Twitter',
@@ -261,6 +264,7 @@ const client = {
       googlePlus: {
         enabled: true, // Enable Google+. [Default: true]
         icon: 'zmdi-google-plus',
+        label: 'Share',
         title: 'Google +',
         url: 'https://plus.google.com/share',
         params: {
@@ -274,6 +278,7 @@ const client = {
       email: {
         enabled: true,     // Enable Email. [Default: true]
         icon: 'zmdi-email',
+        label: 'Email',
         title: 'email',
         url: 'mailto:',
         params: {
@@ -441,7 +446,7 @@ const client = {
       'transactionCode': 'front'
     },
     'defaultVolume': 0.65,
-    'techOrder': ['dash', 'html5', 'dashas']
+    'techOrder': ['dash', 'html5', 'dashas', 'youtube', 'soundcloud']
   }
 }
 

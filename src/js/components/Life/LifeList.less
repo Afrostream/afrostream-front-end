@@ -1,0 +1,374 @@
+@import (reference) '../../../styles/config.less';
+
+@cardTypeSize: 4em;
+@gap-brick: 0px;
+@yUpSize: 50px;
+@minBrickHeight: 500px;
+
+@keyframes brickmoveUp {
+  0% {
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.brick-full {
+  .brick-background {
+    position: absolute;
+  }
+  .brick-content {
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      height: 100%;
+    }
+  }
+  .card-body {
+    color: #FFFFFF;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    .card-info {
+      padding: 1.5em 0 1.5em 0;
+      font-size: 2.6em;
+      &:after {
+        content: none;
+      }
+    }
+    .card-bubbles {
+      position: relative;
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      margin: 0;
+      .card-bubble {
+        width: @cardTypeSize * 0.8;
+        height: @cardTypeSize * 0.8;
+      }
+      .card-bubble-type {
+        &:before {
+          font-size: 1.5em;
+        }
+      }
+    }
+    .card-date,
+    .card-description {
+      display: none;
+    }
+  }
+}
+
+.life-list {
+  &.flat,
+    //&.virtual > div > div > div {
+  &.virtual > div {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    //justify-content: space-between;
+  }
+  a {
+    width: 100%;
+    height: 100%;
+  }
+  //.brick:not(:first-child) {
+  //  opacity: 0;
+  //  .transform(translate3D(0, @yUpSize, 0));
+  //  .animation(brickmoveUp 0.25s ease forwards);
+  //  &:nth-child(3n+2) {
+  //    animation-delay: 0.1s;
+  //  }
+  //  &:nth-child(3n+3) {
+  //    animation-delay: 0.2s;
+  //  }
+  //  &:nth-child(3n+4) {
+  //    animation-delay: 0.3s;
+  //  }
+  //}
+
+  .life-player {
+    margin: 0 auto;
+    padding: @gap-brick
+  }
+
+  .brick {
+
+    display: inline-block;
+    display: flex;
+    //width: 350px;
+    width: 33.33%;
+    max-width: 33.33%;
+    .isNotMobile({ min-height: @minBrickHeight; });
+    //max-height: 70vh;
+    vertical-align: top;
+    cursor: pointer;
+    //overflow: hidden;
+    //margin: 0 auto;
+    font-family: @font-oswald;
+
+    //ZOOM TRANSITION
+    //ZOOM effect
+    -webkit-transform-style: preserve-3d;
+    -webkit-perspective: 1000;
+
+    //.isMobile({ margin-bottom: 1em; });
+    &:hover {
+      z-index: 20;
+      //z-index: @nav-z + 3;
+      .brick-content {
+        .transform(translate3D(0, 0, 1em));
+        box-shadow: 0px 0px 16px -2px rgba(0, 0, 0, 0.75);
+      }
+    }
+
+    .brick-content {
+      .transform(translate3D(0, 0, 0));
+      .transition(transform .3s ease-out, box-shadow 0.3s ease-in-out);
+    }
+    //END ZOOM TRANSITION
+
+    .brick-content {
+      text-align: center;
+      margin: @gap-brick;
+      .isMobile({ margin: 0; });
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: @color-grey;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    }
+    .brick-background {
+      .brick-background_image {
+        background-position: 50% 25%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+      }
+      &:before {
+        display: block;
+        content: '';
+        width: 100%;
+        padding-top: 56.25%;
+      }
+      overflow: hidden;
+      position: relative;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      .brick-background_mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        .gradient(fade(#000000, 20), fade(#000000, 60));
+      }
+    }
+
+    &.video {
+      .brick-background_mask {
+        .gradient(fade(#000000, 30), fade(#000000, 70));
+      }
+    }
+
+    &.premium {
+      .premium-flag {
+        left: 0;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+        .premium-flag__header-label {
+          display: inline-block;
+          margin: 0 auto;
+          padding: 10px;
+          background-color: fade(@color-indigo, 90%);
+          font-size: 1.8em;
+          text-transform: capitalize;
+        }
+      }
+
+    }
+
+    &.full {
+      .brick-full();
+    }
+
+    .bkdate {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 5px 10px;
+      width: 65px;
+      text-align: center;
+      font-weight: 600;
+      color: #fff;
+      background-color: fade(@color-black-2, 10%);
+      text-transform: uppercase;
+      .day {
+        font-size: 2em;
+        line-height: 2em;
+        border-bottom: 0.1em solid @color-black-2;
+      }
+      .month {
+        font-size: 1.5em;
+        line-height: 1.5em;
+      }
+    }
+    .card-body {
+      position: relative;
+      vertical-align: middle;
+      display: inline-block;
+      color: @color-black-2;
+      width: 100%;
+      padding: 10px;
+      .card-bubbles {
+        position: absolute;
+        text-align: right;
+        left: 0;
+        right: 0;
+        top: 0;
+        margin-top: -@cardTypeSize / 2;
+        display: inline-block;
+        z-index: @nav-z + 1;
+        .card-bubble {
+          text-align: center;
+          display: inline-block;
+          border: 2px solid @brand-primary;
+          width: @cardTypeSize;
+          height: @cardTypeSize;
+          border-radius: 50%;
+          margin-right: 1em;
+          background: @color-black-2;
+          overflow: hidden;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        &.card-bubble-user {
+        }
+
+        .card-bubble-type {
+          &:before {
+            font-family: @font-awasome;
+            line-height: 2;
+            font-size: 2em;
+            color: @brand-primary;
+          }
+          &.image {
+            &:before {
+              content: "\f030";
+            }
+          }
+          &.video {
+            &:before {
+              content: "\f04b";
+              padding-left: 0.2em;
+            }
+          }
+          &.rich,
+          &.audio {
+            &:before {
+              content: "\f001";
+            }
+          }
+          &.article {
+            &:before {
+              content: "\f1ea";
+            }
+          }
+          &.website {
+            &:before {
+              content: "\f0c1";
+            }
+          }
+          &.event {
+            &:before {
+              content: "\f073";
+            }
+          }
+          &.ads {
+            &:before {
+              content: "\f155";
+            }
+          }
+        }
+      }
+      .card-meta {
+        font-size: 1.2em;
+        line-height: 1.3;
+        display: inline-block;
+        .card-theme {
+          display: inline-block;
+          background: @color-black-2;
+          color: @brand-primary;
+          padding: 5px;
+          font-family: @font-oswald;
+        }
+      }
+      .card-info {
+        position: relative;
+        padding: 0.5em 0 0.5em 0;
+        font-size: 1.8em;
+        line-height: 1.5;
+        &:after {
+          content: '';
+          width: 3em;
+          height: 1px;
+          background: lighten(@color-black-2, 50%);
+          bottom: 0;
+          position: absolute;
+          left: 50%;
+          margin-left: -1.5em;
+          font-family: @font-material;
+        }
+      }
+      .card-description {
+        padding: 1em 0 1em 0;
+        font-size: 1.3em;
+        font-family: @font-family-base;
+        text-align: justify;
+      }
+      .card-date {
+        padding: 1.5em;
+        font-size: 1em;
+        color: lighten(@color-black-2, 70%);
+        &:before {
+          content: '\F334';
+          font-family: @font-material;
+          padding-right: 5px;
+        }
+      }
+    }
+
+  }
+  .brick {
+    .isMobile({ width: 100%; max-width: 100%; });
+  }
+
+  &.hightlight-first {
+    .brick {
+      &:first-child {
+        width: 100%;
+        max-width: 100%;
+        min-height: @minBrickHeight;
+        .brick-full();
+        .card-body {
+          .card-bubbles {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

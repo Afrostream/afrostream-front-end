@@ -27,15 +27,28 @@
     margin-top: -@header-height;
   }
   .movies-list__selection {
-    font-size: 1.8em;
-    font-family: @font-light;
+    font-size: 2em;
+    font-family: @font-oswald;
     text-transform: uppercase;
     margin: 10px;
+    color: @color-indigo;
   }
 
   .spinner {
     width: 0.8em;
     height: 0.8em;
+  }
+
+  .GridRow {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .GridColumn {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
   }
 
   //axis-y
@@ -58,15 +71,23 @@
       }
     }
   }
-
-  .slider-container {
+  .ReactVirtualized__Grid {
+    > div {
+      display: flex;
+      flex-direction: row;
+      .block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
   }
 
   .progress-tracker {
     top: 35px;
   }
-
-  .Grid {
+  .Grid,
+  .ReactVirtualized__Grid {
     -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
     &::-webkit-scrollbar {
@@ -87,10 +108,6 @@
     }
     .react-list {
       padding: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
-    }
-
-    .Grid__cell {
-      //margin: 0 (@app-padding - @thumb-margin) 0 (@app-padding - @thumb-margin);
     }
 
   }

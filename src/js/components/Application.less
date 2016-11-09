@@ -1,4 +1,4 @@
-@import '../../../node_modules/bootstrap/less/bootstrap.less';
+@import '../../styles/bootstrap.less';
 @import (css) '../../../node_modules/react-virtualized/styles.css';
 @import (css) '../../../node_modules/nprogress/nprogress.css';
 @import '../../styles/normalize.less';
@@ -27,10 +27,6 @@ html, body, #main, #main > div {
 
 body {
   background-color: @background-page;
-  font-weight: 100;
-  font-size: 1em;
-  line-height: 1.4;
-  color: @brand-primary;
   .body-font();
 }
 
@@ -64,11 +60,11 @@ a:active,
 a.active {
   outline: none;
   text-decoration: none;
-  color: @brand-primary;
+  color: @color-indigo;
 }
 
 a {
-  color: @brand-primary;
+  color: @color-indigo;
 }
 
 a:hover,
@@ -92,44 +88,20 @@ a.active {
 /* Toggle Styles */
 
 .app {
-  padding-right: 0;
-  .transition(padding-right 0.5s ease);
-}
-
-.app.toggled {
-  padding-right: @sidebar-width;
-  .transition(padding-right 0.5s ease);
-}
-
-.app.chat-open {
-  padding-right: 30%;
-  .transition(padding-right 0.5s ease);
-}
-
-#sidebar-wrapper {
-  z-index: 1000;
-  position: fixed;
-  right: @sidebar-width;
-  width: 0;
-  height: 100%;
-  margin-right: -@sidebar-width;
-  background-color: @color-indigo;
-  .transition(all 0.5s ease);
-}
-
-.app.toggled #sidebar-wrapper {
-  width: @sidebar-width;
+  margin-left: 0;
+  .transition(left @menu-open-duration ease);
 }
 
 #page-content-wrapper {
+  background: @brand-grey;
   width: 100%;
+
   &.container,
   &.container-fluid {
     height: 100%;
     min-height: 100%;
     width: 100%;
     padding: 0;
-
     .row,
     .row-fluid {
       &:before {
@@ -147,22 +119,15 @@ a.active {
       .container-fluid {
 
         margin-top: @header-height;
-        padding: 40px;
-        background: @background-page;
+        padding: @app-padding;
+        background: @brand-primary;
         min-height: 100%;
-        padding-left: @app-padding;
-        padding-right: @app-padding;
-        .isMobile({ margin-top: @header-height-mobile; padding-left: @app-padding-mobile; padding-right: @app-padding-mobile; });
-
-        &.container-no-padding {
-          margin: 0;
-          padding: 0;
-          background: transparent;
-        }
+        .isMobile({ padding: @app-padding-mobile; });
 
         &.brand-bg {
           background-color: @brand-bg;
         }
+
         &.brand-splitted {
           background: none;
           position: relative;
@@ -175,13 +140,14 @@ a.active {
         background-color: @brand-bg;
         color: @color-purple;
       }
+
       &.brand-bg-alpha {
         background-color: fade(@brand-bg, 10%);
         color: @color-purple;
       }
       .brand-bg-none {
         background: none;
-        color: @color-purple;
+        color: @color-grey;
       }
 
       //splitted background colors
@@ -198,6 +164,23 @@ a.active {
         }
       }
     }
+
+    .content-padding {
+      padding: @header-height (@app-padding * 5) (@app-padding * 5) !important;
+    }
+
+    .brand-grey {
+      background-color: @brand-grey;
+    }
+
+    .no-padding {
+      margin: 0;
+      padding: 0;
+      &:before {
+        content: none;
+      }
+    }
+
   }
   .no-padding {
     margin: 0;
@@ -208,68 +191,10 @@ a.active {
   }
 }
 
-.app.toggled #page-content-wrapper {
-  position: absolute;
-  margin-left: -@sidebar-width;
+.container {
+  max-width: 100%;
 }
 
-@media (min-width: 768px) {
-
-  #page-content-wrapper {
-    position: relative;
-  }
-
-  .app.toggled #page-content-wrapper {
-    position: relative;
-    margin-left: 0;
-  }
-}
-
-article {
-  display: inline-block;
-  font-size: 14px;
-  font-family: @font-light;
-  background: #FFF;
-  color: @brand-black;
-  margin: 0;
-  //.fullHeight();
-  padding: @header-height * 2  @app-padding;
-  .isMobile({ padding: @header-height * 2  @app-padding-mobile; });
-  section {
-    a,
-    a:hover,
-    a:focus,
-    a:active,
-    a.active {
-      outline: none;
-    }
-
-    a {
-      color: @color-purple;
-    }
-
-    a:hover,
-    a:focus,
-    a:active,
-    a.active {
-      color: darken(@brand-black, 10%);
-    }
-
-    h1, h2, h3, h4 {
-      color: @brand-black;
-      font-family: @font-book;
-    }
-    p {
-      font-family: @font-light;
-    }
-    ul {
-      li {
-        ul {
-          li {
-            margin-left: 30px;
-          }
-        }
-      }
-    }
-  }
+.imgix {
+  transition: background 0.2s linear;
 }

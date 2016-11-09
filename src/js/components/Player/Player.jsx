@@ -141,7 +141,9 @@ class Player extends React.Component {
 
   unmountVideoPlayer () {
     this.removeResizeEventListener()
-    this._player.dispose()
+    if (this._player) {
+      this._player.dispose()
+    }
   }
 
   addEndlessMode () {

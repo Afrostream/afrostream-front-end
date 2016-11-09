@@ -7,7 +7,7 @@
   vertical-align: top;
   overflow: hidden;
   width: @thumb-width + (@thumb-margin * 2);
-  flex: 1;
+  //flex: 1;
   &.episode {
     width: @thumb-width-episode;
     a {
@@ -33,9 +33,11 @@
         position: absolute;
         bottom: 0;
         padding: 10px;
+        color: @brand-primary;
         .thumb-info__title {
           font-family: @font-heavy;
-          font-size: 4em;
+          font-size: 3em;
+          line-height: 1;
           text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
       }
@@ -63,7 +65,8 @@
       float: left;
       white-space: normal;
       box-sizing: inherit;
-      color: @brand-primary;
+      //color: @brand-primary;
+      color: @color-indigo;
 
       &__title,
       &__synopsis {
@@ -91,6 +94,10 @@
       background-position: center center;
       background-repeat: no-repeat;
       cursor: pointer;
+
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+      overflow: hidden;
+
       .transition(opacity 0.1s linear);
       .btn-play {
         .transition(opacity 0.1s linear);

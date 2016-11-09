@@ -9,10 +9,10 @@
 }
 
 .translate3d (@x, @y: 0, @z: 0) {
-  -webkit-transform:       translate3d(@x, @y, @z);
-  -moz-transform: 	 translate3d(@x, @y, @z);
-  -ms-transform: 		 translate3d(@x, @y, @z);
-  -o-transform: 		 translate3d(@x, @y, @z);
+  -webkit-transform: translate3d(@x, @y, @z);
+  -moz-transform: translate3d(@x, @y, @z);
+  -ms-transform: translate3d(@x, @y, @z);
+  -o-transform: translate3d(@x, @y, @z);
 }
 
 .fullHeight() {
@@ -29,6 +29,15 @@
   @media (max-width: 750px) {
     @rules();
   }
+  //@media @mobile {
+  //  @rules();
+  //}
+  //@media @tablet {
+  //  @rules();
+  //}
+  //@media @highdensityTablet {
+  //  @rules();
+  //}
 }
 
 // If device is a mobile one
@@ -73,4 +82,48 @@
   background-image: -moz-linear-gradient(left, @startColor @start, @endColor @end);
   background-image: -ms-linear-gradient(left, @startColor @start, @endColor @end);
   background-image: -o-linear-gradient(left, @startColor @start, @endColor @end);
+}
+
+.horizontal-gradient-inverse (@startColor: #eee, @start : 0%, @endColor: white, @end : 0%) {
+  background-color: @startColor;
+  background-image: -webkit-gradient(linear, right top, left top, from(@startColor start), to(@endColor @end));
+  background-image: -webkit-linear-gradient(right, @startColor @start, @endColor @end);
+  background-image: -moz-linear-gradient(right, @startColor @start, @endColor @end);
+  background-image: -ms-linear-gradient(right, @startColor @start, @endColor @end);
+  background-image: -o-linear-gradient(right, @startColor @start, @endColor @end);
+}
+
+.gradient (@startColor: #eee, @endColor: white) {
+  background-color: @startColor;
+  background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+  background: -webkit-linear-gradient(top, @startColor, @endColor);
+  background: -moz-linear-gradient(top, @startColor, @endColor);
+  background: -ms-linear-gradient(top, @startColor, @endColor);
+  background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+.aspect-ratio(@width, @height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: (@height / @width) * 100%;
+  }
+  > .content,
+  > .mode-container {
+    position: absolute;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    span:before {
+      content: "@{width}";
+    }
+
+    span:after {
+      content: "@{height}";
+    }
+  }
 }

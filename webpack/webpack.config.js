@@ -35,7 +35,7 @@ const {webpackDevServer: {host, port}} = config
 const webpackDevServerUrl = `http://${host}:${port}`
 
 const webpackConfig = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: '#inline-eval-cheap-source-map',
   output: {
     path: assetsPath,
     publicPath: `${webpackDevServerUrl}/static/`,
@@ -100,13 +100,6 @@ const webpackConfig = {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
-      },
-      {
-        test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
-        include: [
-          path.join(__dirname, '../node_modules/dashjs'),
-        ]
       },
       {
         test: /\.json$/,

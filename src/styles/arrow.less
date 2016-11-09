@@ -4,13 +4,13 @@
   display: none;
   .isWideScreen({ display: block });
   width: 80px;
-  height: 80px;
+  //height: 80px;
+  height: 100%;
   position: absolute;
-  border-radius: 50px;
+  //border-radius: 50px;
   z-index: 3;
-  top: 50%;
   opacity: 1;
-  margin-top: -40px;
+
   transition: transform ease-out 0.1s;
   &:before {
     z-index: 2;
@@ -19,9 +19,8 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: @color-purple;
-    border-radius: 50px;
-    transition: height ease-in-out 0.1s, width ease-in-out 0.1s, transform ease-in-out 0.1s;
+    //background-color: @color-purple;
+    //border-radius: 50px;
   }
   &:hover {
     &:before {
@@ -30,10 +29,15 @@
     }
   }
   i {
+    transition: height ease-in-out 0.1s, width ease-in-out 0.1s, transform ease-in-out 0.1s;
     position: relative;
     z-index: 3;
     font-size: 6em;
     line-height: 1.3;
+    top: 50%;
+    margin-top: -40px;
+    color: @color-indigo;
+    text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
   }
 }
 
@@ -44,24 +48,34 @@
 .arrow--left {
   &:after {
   }
+  &:before {
+    .horizontal-gradient-inverse(transparent, 0%, @brand-thumbs, 80%);
+  }
   left: -20px;
   i {
     padding-left: 30px;
   }
   &.arrow--hidden {
+    //i {
     transform: translateX(-100%);
+    //}
   }
 }
 
 .arrow--right {
   &:after {
   }
+  &:before {
+    .horizontal-gradient(transparent, 0%, @brand-thumbs, 80%);
+  }
   right: -20px;
   i {
     padding-left: 25px;
   }
   &.arrow--hidden {
+    //i {
     transform: translateX(100%);
+    //}
   }
 }
 
@@ -94,13 +108,13 @@
   width: 10px;
   height: 3px;
   position: relative;
-  background-color: fade(#FFFFFF, 20%);
+  background-color: fade(@color-indigo, 20%);
   list-style-type: none;
   float: left;
   margin: 0 5px 0 0;
 }
 
 .progress-tracker ul li.active {
-  background-color: fade(#FFFFFF, 70%);
+  background-color: fade(@color-indigo, 70%);
   .transition(background 0.3s linear);
 }

@@ -4,6 +4,7 @@ import * as EventActionCreators from '../../actions/event'
 import * as UserActionCreators from '../../actions/user'
 import * as CategoryActionCreators from '../../actions/category'
 
+import BrowseMenu from './BrowseMenu'
 import SlideShow from '../SlideShow/SlideShow'
 import MoviesList from '../Movies/MoviesList'
 import UserMoviesList from '../Movies/UserMoviesList'
@@ -11,8 +12,7 @@ import UserMoviesList from '../Movies/UserMoviesList'
 @prepareRoute(async function ({store}) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(false)),
-    store.dispatch(EventActionCreators.userActive(true)),
-    store.dispatch(CategoryActionCreators.getMenu())
+    store.dispatch(EventActionCreators.userActive(true))
   ])
 
   store.dispatch(UserActionCreators.getFavorites('movies'))
@@ -23,6 +23,7 @@ class BrowsePage extends React.Component {
   render () {
     return (
       <div className="row-fluid">
+        <BrowseMenu />
         <SlideShow />
         <UserMoviesList />
         <MoviesList />

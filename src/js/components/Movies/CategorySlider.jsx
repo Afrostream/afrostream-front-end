@@ -110,7 +110,7 @@ class CategorySlider extends MoviesSlider {
                   <ArrowStepper columnCount={dataList.size}>
                     {({onScroll, columnCount, scrollLeft}) => (
                       <Grid
-                        ref="reactGrid"
+                        ref={registerChild}
                         cellRenderer={::this.renderItem}
                         columnWidth={::this.getColumnWidth}
                         columnCount={columnCount}

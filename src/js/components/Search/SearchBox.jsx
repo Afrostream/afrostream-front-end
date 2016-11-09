@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
 import { connect } from 'react-redux'
-import config from '../../../../config/'
+import _ from 'lodash'
 import classSet from 'classnames'
-import { Link } from 'react-router'
 import { withRouter } from 'react-router'
 import * as EventActionCreators from '../../actions/event'
 
@@ -19,7 +17,7 @@ class SearchBox extends React.Component {
   }
 
   state = {
-    hasFocus: false
+    hasFocus: this.props.defaultOpen
   }
 
   debounceSearch = _.debounce(::this.search, 400)
@@ -41,7 +39,7 @@ class SearchBox extends React.Component {
       let input = self.getInput()
       input.value = ''
       self.setState({
-        hasFocus: false
+        hasFocus: self.props.defaultOpen
       })
     }, 200)
   }
@@ -101,7 +99,12 @@ class SearchBox extends React.Component {
 }
 
 SearchBox.propTypes = {
-  history: React.PropTypes.object
+  history: React.PropTypes.object,
+  defaultOpen: React.PropTypes.bool
+}
+
+SearchBox.defaultProps = {
+  defaultOpen: false
 }
 
 export default withRouter(SearchBox)

@@ -1,0 +1,84 @@
+@import (reference) '../../../styles/config.less';
+
+@keyframes playerMovePin {
+  0% {
+    .transform(translate3d(0, 0, 0));
+    z-index: @nav-z;
+  }
+  100% {
+    z-index: @nav-z;
+  }
+}
+
+@keyframes playerMove {
+  0% {
+    z-index: @nav-z + 3;
+  }
+  100% {
+    z-index: @nav-z + 3;
+    .transform(translate3d(0, 0, 0));
+  }
+}
+
+.float-player {
+  width: 100%;
+  &.fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: @sidebar-width;
+  }
+  // *** Perf position @see https://benfrain.com/improving-css-performance-fixed-position-elements
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  // ***
+  //padding: 0.5em;
+
+  z-index: @nav-z + 3;
+  .transition(all 0.35s linear);
+  .animation(playerMove 0.35s linear);
+
+  &.unpinned {
+    .player-container:not(.vjs-fullscreen) {
+      font-size: 8px;
+      .vjs-remaining-time {
+        display: none;
+      }
+    }
+    .isMobile({ width: 50vw; margin: 1em; box-shadow: 1px 0px 2px 0px fade(@color-black-2, 30%); });
+  }
+
+  &.pinned {
+    .transition(none);
+    .animation(playerMovePin 0.35s linear);
+    z-index: @nav-z;
+    margin: 0;
+    .wrapper {
+      height: 100%;
+      .vjs-fluid {
+        padding: 0;
+        height: 100%;
+      }
+    }
+  }
+
+  .player-container {
+    height: 150px;
+    &.vjs-fluid {
+      padding-top: 56.25%;
+    }
+    &.vjs-fullscreen {
+      z-index: 2147483647;
+    }
+  }
+
+  .close {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: 0;
+    padding: 1em;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  }
+}
