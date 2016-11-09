@@ -60,7 +60,19 @@ export default class ReactImgix extends Component {
     mounted: false
   }
 
-  forceLayout = () => {
+  createLoader () {
+    this.img = new Image()
+    this.img.onload = ::this.handleLoad
+    this.img.onerror = ::this.handleError
+    this.img.src = this.props.src
+  }
+
+  destroyLoader () {
+    if (this.img) {
+      this.img.onload = null
+      this.img.onerror = null
+      this.img = null
+    }
     const node = ReactDOM.findDOMNode(this)
     this.setState({
       width: node.scrollWidth,
@@ -69,22 +81,22 @@ export default class ReactImgix extends Component {
     })
   }
 
-  preloadImage () {
-    const small = this.refs.small
-    const img = new Image()
-    img.src = this.props.src
-    img.onload = ()=> {
-      small.classList.add('loaded')
-    }
+  handleLoad () {
+    this.destroyLoader()
   }
 
-  componentDidMount = () => {
-    var img = new Image()
-    img.src = this.props.src
-    img.onload = ()=> {
-      this.forceLayout()
-    }
+  handleError () {
+    this.destroyLoader()
   }
+
+  componentDidMount () {
+    this.createLoader()
+  }
+
+  componentWillUnmount () {
+    this.destroyLoader()
+  }
+
 
   _findSizeForDimension = dim => findSizeForDimension(dim, this.props, this.state)
 

@@ -19,6 +19,7 @@ import RateComponent from '../Recommendation/RateComponent'
 import { withRouter } from 'react-router'
 import window from 'global/window'
 import RaisedButton from 'material-ui/RaisedButton'
+import FloatPlayer from '../Player/FloatPlayer'
 
 const {featuresFlip} = config
 
@@ -104,12 +105,14 @@ class PlayerComponent extends Component {
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
       let videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
       dispatch(PlayerActionCreators.killPlayer()).then(()=> {
-        videoData = videoData.set('target', this.refs.wrapper)
+        //videoData = videoData.set('target', this.refs.wrapper)
         videoData = videoData.set('videoId', videoId)
-        dispatch(PlayerActionCreators.loadPlayer({
-          data: videoData
-        }))
-        //this.initState()
+        //dispatch(PlayerActionCreators.loadPlayer({
+        //  data: videoData
+        //}))
+        this.setState({
+          videoData
+        })
       })
     }
 
@@ -547,7 +550,7 @@ class PlayerComponent extends Component {
 
     return (
       <div className={classSet(playerClasses)}>
-        <div ref="wrapper" className="wrapper"/>
+        <FloatPlayer ref="wrapper" float={false} data={this.state.videoData} {...this.props} />
         <div className={classSet(videoInfoClasses)}>
           <div className="video-infos_label">Vous regardez</div>
           <div className="video-infos_title">{infos.title}
