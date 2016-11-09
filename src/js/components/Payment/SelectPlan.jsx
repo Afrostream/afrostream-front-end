@@ -139,13 +139,13 @@ class SelectPlan extends React.Component {
 
     let validPlans = this.getPlans()
 
-    if (!validPlans) {
+    if (!validPlans || label === 'formule') {
       return
     }
 
     return (
       <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
-        {label !== 'formule' && getI18n().planCodes.infos[label] || ''}
+        {getI18n().planCodes.infos[label] || ''}
       </div>)
   }
 
@@ -204,6 +204,7 @@ class SelectPlan extends React.Component {
         periodTrialLabel = periodTrialLabel.replace('{trialPeriodLength}', trialPeriodPlan.get('trialPeriodLength'))
         periodTrialLabel = periodTrialLabel.replace('{trialPeriodUnit}', trialUnit)
       }
+
     }
 
     return <div
@@ -217,6 +218,7 @@ class SelectPlan extends React.Component {
     let cols = [
       'formule',
       'name',
+      'internalActionLabel',
       'price',
       'trialEnabled',
       'internalMaxScreens',
