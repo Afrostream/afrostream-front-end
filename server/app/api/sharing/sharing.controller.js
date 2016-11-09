@@ -1,5 +1,4 @@
 import { getBodyWithoutAuth } from '../api-front'
-import Q from 'q'
 
 /**
  * @param res           express object

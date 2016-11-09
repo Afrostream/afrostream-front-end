@@ -9,6 +9,7 @@ import { getI18n } from '../../../../config/i18n'
 import * as BillingActionCreators from '../../actions/billing'
 import * as UserActionCreators from '../../actions/user'
 import * as EventActionCreators from '../../actions/event'
+import * as OAuthActionCreators from '../../actions/oauth'
 import PaymentImages from './PaymentImages'
 import Spinner from '../Spinner/Spinner'
 import CashwayEndPage from '../Cashway/CashwayEndPage'
@@ -21,13 +22,14 @@ import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
 import _ from 'lodash'
 import * as ReactFB from '../../lib/fbEvent'
+import Q from 'q'
 
 const {gocarlessApi, recurlyApi, stripeApi, braintreeApi} = config
 if (process.env.BROWSER) {
   require('./PaymentForm.less')
 }
 
-@connect(({User, Billing}) => ({User, Billing}))
+@connect(({User, Billing, OAuth}) => ({User, Billing, OAuth}))
 @prepareRoute(async function ({store}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true))
@@ -135,6 +137,11 @@ class PaymentForm extends React.Component {
       }
     } = this
 
+    const currentPlan = this.hasPlan()
+
+    if (currentPlan && currentPlan.get('internalPlanUuid') === config.netsize.internalPlanUuid) {
+      return
+    }
 
     const user = User.get('user')
     let firstName = ''
@@ -178,6 +185,13 @@ class PaymentForm extends React.Component {
   }
 
   renderSubmit () {
+    const currentPlan = this.hasPlan()
+    let buttonLabel = getI18n().planCodes.action
+    if (currentPlan && currentPlan.get('internalPlanUuid') === config.netsize.internalPlanUuid) {
+      buttonLabel = getI18n().planCodes.actionMobile
+    }
+
+
     return (<div className="row">
       <div className="form-group  col-md-12">
         <button
@@ -186,7 +200,7 @@ class PaymentForm extends React.Component {
           form="subscription-create"
           className="button-create-subscription"
           disabled={this.state.disabledForm}
-        >{getI18n().planCodes.action}
+        >{buttonLabel}
         </button>
       </div>
     </div>)
@@ -278,8 +292,8 @@ class PaymentForm extends React.Component {
 
     let billingInfo = {
       internalPlanUuid: this.state.internalPlanUuid,
-      firstName: this.refs.firstName.value,
-      lastName: this.refs.lastName.value
+      firstName: this.refs.firstName && this.refs.firstName.value,
+      lastName: this.refs.lastName && this.refs.lastName.value
     }
 
     try {
@@ -304,20 +318,27 @@ class PaymentForm extends React.Component {
     const self = this
     let isCash = router.isActive('cash')
 
-    return await dispatch(BillingActionCreators.subscribe(formData)).then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
-      ReactFB.track({
-        event: 'CompleteRegistration', params: {
-          'content_name': internalPlanUuid,
-          'status': subStatus,
-          'currency': currency,
-          'value': amount
+    return Q()
+      .then(()=> {
+        if (formData.billingProviderName === 'netsize') {
+          return dispatch(OAuthActionCreators.netsizeCheck({internalPlan: formData}))
         }
+        return dispatch(BillingActionCreators.subscribe(formData))
       })
+      .then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
+        ReactFB.track({
+          event: 'CompleteRegistration', params: {
+            'content_name': internalPlanUuid,
+            'status': subStatus,
+            'currency': currency,
+            'value': amount
+          }
+        })
 
-      self.disableForm(false, 1)
-      //On merge les infos en faisant un new call a getProfile
-      return dispatch(UserActionCreators.getProfile())
-    })
+        self.disableForm(false, 1)
+        //On merge les infos en faisant un new call a getProfile
+        return dispatch(UserActionCreators.getProfile())
+      })
       .then(()=> {
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch(({response:{body:{error, code, message}}}) => {
@@ -327,6 +348,7 @@ class PaymentForm extends React.Component {
           globalMessage = message
         }
 
+        debugger
         if (code) {
           const errorCode = (self && getI18n().coupon.errors[code])
           if (errorCode && errorCode.message) {

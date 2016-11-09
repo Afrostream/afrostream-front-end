@@ -1,7 +1,7 @@
 import React from'react'
 import ReactDOM from'react-dom'
-import createHistory from 'history/lib/createBrowserHistory'
-import useScroll from 'scroll-behavior/lib/useStandardScroll'
+import { createHistory } from 'history'
+import withScroll from 'scroll-behavior'
 import Router from './components/Router'
 import { Provider } from 'react-redux'
 import createStore from './lib/createStore'
@@ -31,9 +31,9 @@ if (canUseDOM) {
   require('./lib/localStoragePolyfill')
 }
 
-const history = useScroll(createHistory)()
-getCountry().then((country)=> {
+const history = withScroll(createHistory())
 
+function initSite (country) {
   const api = createAPI(
     /**
      * Client's createRequest() method
@@ -64,7 +64,6 @@ getCountry().then((country)=> {
         .send(body)
     }
   )
-
   /* global __INITIAL_STATE__:true */
   const store = createStore(api, history, __INITIAL_STATE__)
 
@@ -76,4 +75,10 @@ getCountry().then((country)=> {
     </Provider>,
     document.getElementById('main')
   )
+}
+
+getCountry().then((country)=> {
+  initSite(country)
+}).catch((err)=> {
+  initSite()
 })

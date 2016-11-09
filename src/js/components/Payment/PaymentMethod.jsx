@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import Immutable from 'immutable'
 import config from '../../../../config'
-import { RecurlyForm, GocardlessForm, CashwayForm, StripeForm, BraintreeForm } from './Forms'
+import { RecurlyForm, GocardlessForm, CashwayForm, StripeForm, BraintreeForm, NetsizeForm } from './Forms'
 
 const {payment} = config
 
@@ -12,6 +12,7 @@ if (process.env.BROWSER) {
 
 const Methods = {
   GOCARDLESS: 'gocardless',
+  NETSIZE: 'netsize',
   RECURLY: 'recurly',
   STRIPE: 'stripe',
   PAYPAL: 'paypal',
@@ -52,6 +53,9 @@ class PaymentMethod extends React.Component {
 
   hasLib () {
     switch (this.state.method) {
+      case  Methods.NETSIZE:
+        return this.refs.netsize.hasLib()
+        break
       case  Methods.GOCARDLESS:
         return this.refs.gocardless.hasLib()
         break
@@ -95,6 +99,9 @@ class PaymentMethod extends React.Component {
 
   async submit (billingInfo, currentPlan) {
     switch (this.state.method) {
+      case  Methods.NETSIZE:
+        return await this.refs.netsize.submit(billingInfo, currentPlan)
+        break
       case  Methods.GOCARDLESS:
         return await this.refs.gocardless.submit(billingInfo)
         break
@@ -136,6 +143,8 @@ class PaymentMethod extends React.Component {
     let methods = []
 
     let allMethods = {
+      netsize: (<NetsizeForm key="method-netsize" ref="netsize"
+                             selected={this.state.method === Methods.NETSIZE}/>),
       recurly: (<RecurlyForm key="method-recurly" ref="recurly"
                              selected={this.state.method === Methods.RECURLY}/>),
       stripe: (<StripeForm key="method-stripe" ref="stripe"

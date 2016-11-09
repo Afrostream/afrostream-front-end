@@ -33,6 +33,22 @@ async function setTokenInHeader (headers) {
   }
 }
 
+async function setTokenInQuery (query) {
+  try {
+    let tokenData = await fetchToken()
+    if (tokenData && isTokenValid(tokenData)) {
+      query = _.merge(query || {}, {
+        'access_token': tokenData.access_token
+      })
+    }
+    return query
+  }
+  catch (err) {
+    console.log('set AccessToken in query fail', err)
+    return query
+  }
+}
+
 export async function fetchToken (refresh = false) {
   let tokenData = getToken()
 
@@ -105,14 +121,14 @@ export default function createAPI (createRequest) {
     passToken = false
   }) {
     let {pathname, query: queryStr} = URL.parse(path)
-    let query, headers = {}, body
+    let query = {}, headers = {}, body
 
     if (_.isObject(method)) {
       params = method
       method = 'GET'
     }
 
-    query = qs.parse(queryStr)
+    query = qs.parse(queryStr) || {}
 
     if (method === 'GET') {
       if (params && _.isObject(params)) {
@@ -129,6 +145,9 @@ export default function createAPI (createRequest) {
       }
       if (passToken) {
         headers = await setTokenInHeader(headers)
+        if (local) {
+          query = await setTokenInQuery(query)
+        }
       }
     }
 

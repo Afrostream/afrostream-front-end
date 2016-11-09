@@ -72,6 +72,26 @@ export default createReducer(initialState, {
     return state.merge({
       ['token']: tokenData
     })
+  },
+
+  [ActionTypes.OAuth.netsizeCheck](state, {res}) {
+    if (!res) {
+      return state
+    }
+    const data = res.body
+    return state.merge({
+      [`netsize/check`]: data
+    })
+  },
+
+  [ActionTypes.OAuth.netsizeSubscribe](state, {res}) {
+    if (!res) {
+      return state
+    }
+    const data = res.body
+    return state.merge({
+      [`netsize/subscribe`]: data
+    })
   }
 
 })

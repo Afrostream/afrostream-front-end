@@ -28,6 +28,7 @@ const serverOptions = {
       historyApiFallback: true
     },
     stats: {
+      chunks: false,
       colors: true
     }
   },

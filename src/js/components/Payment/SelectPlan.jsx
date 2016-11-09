@@ -3,15 +3,17 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import PaymentImages from './PaymentImages'
 import { getI18n } from '../../../../config/i18n'
+import config from '../../../../config'
 import _ from 'lodash'
 import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
+import * as BillingActionCreators from '../../actions/billing'
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
 }
-@connect(({User, Billing}) => ({User, Billing}))
+@connect(({User, Billing, OAuth}) => ({User, Billing, OAuth}))
 class SelectPlan extends React.Component {
 
   openModal (internalPlanUuid) {
@@ -89,16 +91,23 @@ class SelectPlan extends React.Component {
         case 'internalActionLabel':
 
           const internalPlanQuery = this.getInternalQuery()
+          const internalPlanUuid = plan.get('internalPlanUuid')
+
+          let buttonLabel = getI18n().planCodes.action
+          if (plan && internalPlanUuid === config.netsize.internalPlanUuid) {
+            buttonLabel = getI18n().planCodes.actionMobile
+          }
 
           if (!user) {
             const inputSignupAction = {
-              onClick: event => ::this.openModal(plan.get('internalPlanUuid'))
+              onClick: event => ::this.openModal(internalPlanUuid)
             }
-            value = (<button className="btn btn-plan" {...inputSignupAction}>{`${getI18n().planCodes.action}`}</button>)
+            value = (<button className="btn btn-plan" {...inputSignupAction}>{`${buttonLabel}`}</button>)
           } else {
             value = (<Link className="btn btn-plan"
-                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${internalPlanQuery}`}>{`${getI18n().planCodes.action}`}</Link>)
+                           to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${internalPlanQuery}`}>{`${buttonLabel}`}</Link>)
           }
+
           break
         case 'price':
           value = (<div className="select-plan_price">
@@ -119,7 +128,7 @@ class SelectPlan extends React.Component {
 
       return (
         <div key={`col-plan-${label}-${key}`}
-             className={`col col-xs-${(12 / validPlans.size)} col-sm-${(12 / validPlans.size)} col-md-2`}>
+             className={`col col-xs-${(12 / validPlans.size)} col-sm-${(12 / validPlans.size)} col-md-2 no-padding`}>
           {value}
         </div>
       )
@@ -130,14 +139,55 @@ class SelectPlan extends React.Component {
 
     let validPlans = this.getPlans()
 
-    if (!validPlans) {
+    if (!validPlans || label === 'formule') {
       return
     }
 
     return (
       <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
-        {label !== 'formule' && getI18n().planCodes.infos[label] || ''}
+        {getI18n().planCodes.infos[label] || ''}
       </div>)
+  }
+
+  getFooter () {
+
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    let validPlans = this.getPlans()
+    let netsizePlan
+    if (validPlans) {
+      netsizePlan = validPlans.filter((plan)=> {
+        const internalPlanUuid = plan.get('internalPlanUuid')
+        return internalPlanUuid === config.netsize.internalPlanUuid
+      }).first()
+
+    }
+    if (!netsizePlan) {
+      return
+    }
+
+    const inputChangeAction = {
+      onClick: event => {
+        //get InternalPlan
+        dispatch(BillingActionCreators.getInternalplans({
+          contextBillingUuid: 'common',
+          passToken: true,
+          reload: true,
+          checkMobile: false
+        }))
+      }
+    }
+
+    return (<div className="row">
+      <div className="col-md-12 text-center">
+        <button
+          className="btn btn-plan" {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}</button>
+      </div>
+    </div>)
   }
 
   getHeader () {
@@ -154,9 +204,11 @@ class SelectPlan extends React.Component {
         periodTrialLabel = periodTrialLabel.replace('{trialPeriodLength}', trialPeriodPlan.get('trialPeriodLength'))
         periodTrialLabel = periodTrialLabel.replace('{trialPeriodUnit}', trialUnit)
       }
+
     }
 
-    return <div className="choose-plan">{getI18n().planCodes.selectTitle}
+    return <div
+      className="choose-plan">{getI18n().planCodes[validPlans && validPlans.size > 1 ? 'selectTitle' : 'onePlanTitle']}
       {!isCash && <span className="choose-plan__bolder">{` ${periodTrialLabel}`}</span>}
     </div>
   }
@@ -166,6 +218,7 @@ class SelectPlan extends React.Component {
     let cols = [
       'formule',
       'name',
+      'internalActionLabel',
       'price',
       'trialEnabled',
       'internalMaxScreens',
@@ -197,6 +250,8 @@ class SelectPlan extends React.Component {
             </div>
           )}
         </div>
+
+        {this.getFooter()}
         {this.props.showImages && <PaymentImages />}
       </div>
     )

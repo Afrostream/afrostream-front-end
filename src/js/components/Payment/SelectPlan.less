@@ -2,6 +2,7 @@
 
 .plan-container {
   padding: 50px;
+  .isMobile({ padding: 0; });
   background-color: @white-base;
   .choose-plan {
     padding: @app-padding;
@@ -136,11 +137,13 @@
     background-color: #eeeeee;
     border-radius: @btn-radius;
     border: 1px solid #C5C6C7;
+    color: @plan-purple-color;
     text-align: center;
     max-width: 100%;
     white-space: normal !important;
     word-wrap: break-word;
     text-transform: uppercase;
+    .isMobile({ margin: 1em 0 1em 0; });
     &:hover {
       background-color: @subscriber-color;
       color: @brand-primary !important;

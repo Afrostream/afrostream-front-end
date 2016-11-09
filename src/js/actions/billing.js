@@ -1,6 +1,11 @@
 import ActionTypes from '../consts/ActionTypes'
 import { getCountry } from '../lib/geo'
 import { merge } from 'lodash'
+import config from '../../../config/'
+import * as OAuthActionCreators from './oauth'
+import MobileDetect from 'mobile-detect'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import window from 'global/window'
 /**
  * Get subscriptions list for user
  * @returns {Function}
@@ -46,8 +51,15 @@ export function subscribe (data) {
 }
 
 export function cancelSubscription (subscription) {
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
     let uuid = subscription.get('subscriptionBillingUuid')
+    let plan = subscription.get('internalPlan')
+    if (plan) {
+      let planUuid = plan.get('internalPlanUuid')
+      if (planUuid === config.netsize.internalPlanUuid) {
+        return actionDispatcher(OAuthActionCreators.netsizeSubscribe({path: 'unsubscribe'}))
+      }
+    }
     return async api => ({
       type: ActionTypes.Billing.cancelSubscription,
       res: await api({
@@ -185,35 +197,71 @@ export function getInternalplans ({
   contextBillingUuid = 'common',
   passToken = true,
   reload = false,
+  checkMobile = true,
   userId = null,
   country = 'FR'
 }) {
 
   return (dispatch, getState, actionDispatcher) => {
-    let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
+    return async api => {
+      let isMobile = false
+      if (canUseDOM) {
+        const userAgent = (window.navigator && navigator.userAgent) || ''
+        let agent = new MobileDetect(userAgent)
+        isMobile = agent.mobile()
+      }
+      //ONLY for common context,not cashway
+      if (contextBillingUuid === 'common' && isMobile && checkMobile) {
+        //let isNetsizeEnabled = false
+        ////await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode = 0}}})=> {
+        //await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({res:{body: {subStatus = 0}}})=> {
+        //  isNetsizeEnabled = subStatus === 120
+        //  console.log('isNetsizeEnabled', isNetsizeEnabled)
+        //}).catch((err)=> {
+        //  isNetsizeEnabled = false
+        //  console.log('isNetsizeEnabled', err)
+        //})
+        //if (isNetsizeEnabled) {
+        return await api({
+          path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
+          passToken
+        }).then(({body})=> {
+          return {
+            type: ActionTypes.Billing.getInternalplans,
+            contextBillingUuid: 'common',
+            res: {
+              body: [
+                body
+              ]
+            }
+          }
+        })
+        //}
+      }
 
-    if (readyPlans && !reload) {
-      console.log('plans already present in data store')
-      return {
-        type: ActionTypes.Billing.getInternalplans,
-        contextBillingUuid,
-        res: {
-          body: readyPlans.toJS()
+      let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
+
+      if (readyPlans && !reload) {
+        console.log('plans already present in data store')
+        return {
+          type: ActionTypes.Billing.getInternalplans,
+          contextBillingUuid,
+          res: {
+            body: readyPlans.toJS()
+          }
         }
       }
-    }
 
-    actionDispatcher({
-      type: ActionTypes.Billing.getInternalplans,
-      contextBillingUuid
-    })
+      actionDispatcher({
+        type: ActionTypes.Billing.getInternalplans,
+        contextBillingUuid
+      })
 
-    return async api => {
       let params = {
         contextBillingUuid,
         country
       }
-
+      //ONLY for common context,not cashway
       if (contextBillingUuid === 'common') {
         const user = getState().User.get('user')
         const filterUserReferenceUuid = user && user.get('_id') || userId

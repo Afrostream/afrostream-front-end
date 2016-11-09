@@ -73,9 +73,12 @@
       "selectTitle": "Choisissez votre formule"
     },
     "selectTitle": "Choisissez votre formule et profitez de",
+    "onePlanTitle": "Votre formule",
     "freePeriodLabel": "7 jours d'essai",
     "title": "Formule",
     "action": "Choose this offer",
+    "actionMobile": "Paiement via votre facture téléphonique",
+    "noMobilePlans": "Choisir un autre mode de paiement",
     "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",
     "cashway-coupon-oneyear": "Formule Sérénité - 59,99€ pour 1 an de films et séries afro",
     "afrostreammonthly": "Formule Mensuel - 7 jours d’essai puis 6,99€ par mois sans engagement",
@@ -137,6 +140,10 @@
       "expPlaceHolder": "MM/AA",
       "number": "Numéro de carte",
       "placeHolder": "1234 5678 8901 1234"
+    },
+    "mobile": {
+      "label": "Paiement via votre facture téléphonique",
+      "text": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Mobile"
     },
     "paypal": {
       "label": "Paiement par Paypal",
@@ -450,6 +457,10 @@
       "421": {
         "name": "SUBS_FUTURE_ALREADY_EXISTS",
         "message": "Lorsqu'une personne prend un abonnement alors qu'il y a déjà un abonnement à venir."
+      },
+      "433": {
+        "name": "ALREADY_SUBSCRIBE",
+        "message": "Vous êtes deja abonné."
       }
     }
   },

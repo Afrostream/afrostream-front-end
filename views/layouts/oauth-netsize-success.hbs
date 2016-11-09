@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html data-cast-api-enabled="true">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title data-react-helmet="true">Afrostream.tv OAuth Popup</title>
+</head>
+<body>
+
+<div id="main">
+  <script type="text/javascript">
+    if (window.opener) {
+      window.opener.focus();
+    }
+    var netsizeResponse = JSON.parse(atob(location.hash && location.hash.substr(1)))
+    // postpone close :
+    //  we let 200ms to mobile app to catch the document.location.href change
+    setTimeout(function () {
+      try {
+        window.opener.postMessage(netsizeResponse, '*'); //send the message and target URI
+        if (window.opener && window.opener.loginCallBack) {
+          window.opener.loginCallBack();
+        }
+      } catch (e) { /* Blocked a frame with origin X from accessing a frame with origin Y */
+      }
+      window.close();
+    }, 200); // enough ?
+  </script>
+</div>
+</body>
+</html>

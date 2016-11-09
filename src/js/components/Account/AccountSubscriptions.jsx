@@ -4,7 +4,7 @@ import { getI18n } from '../../../../config/i18n'
 import moment from 'moment'
 import { Link } from 'react-router'
 import { formatPrice } from '../../lib/utils'
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import LinearProgress from 'material-ui/LinearProgress'
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -36,6 +36,7 @@ class AccountSubscriptions extends React.Component {
       'gocardless': '/images/payment/virement.jpg',
       'cashway': '/images/payment/cashway-inline.png',
       'bouygues': '/images/payment/bouygues.png',
+      'netsize': '/images/payment/netsize.png',
       'orange': '/images/payment/orange.png'
     }
 

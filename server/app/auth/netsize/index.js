@@ -1,7 +1,10 @@
 import express from 'express'
 import { proxy } from '../../api/api-front'
+import * as controller from './netsize.controller'
 
 const router = express.Router()
+
+router.get('/final-callback', controller.callback)
 
 router.use(function (req, res) {
   res.noCache()
@@ -12,8 +15,8 @@ router.use(function (req, res) {
   // backend authentification fail when using ?access_token=(...) !
   // rewriting urls.
   if (token) {
-    req.url = req.url.replace('access_token='+token, '')
-    req.originalUrl = req.originalUrl.replace('access_token='+token, '')
+    req.url = req.url.replace('access_token=' + token, '')
+    req.originalUrl = req.originalUrl.replace('access_token=' + token, '')
   }
   proxy(req, res, {headers: {'Access-Token': token}})
 })
