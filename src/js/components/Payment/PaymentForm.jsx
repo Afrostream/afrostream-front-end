@@ -348,7 +348,6 @@ class PaymentForm extends React.Component {
           globalMessage = message
         }
 
-        debugger
         if (code) {
           const errorCode = (self && getI18n().coupon.errors[code])
           if (errorCode && errorCode.message) {

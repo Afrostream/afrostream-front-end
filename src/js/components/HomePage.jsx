@@ -4,7 +4,7 @@ import WelcomePage from './Welcome/WelcomePage'
 import BrowsePage from './Browse/BrowsePage'
 import { withRouter } from 'react-router'
 
-@connect(({User}) => ({User}))
+@connect(({User, Billing}) => ({User, Billing}))
 class HomePage extends React.Component {
 
   componentWillReceiveProps () {
@@ -21,7 +21,7 @@ class HomePage extends React.Component {
 
   checkAuth () {
     const {
-      props: {location, history, router, User}
+      props: {location, history, router, User, Billing}
     } = this
 
     const user = User.get('user')
@@ -34,6 +34,16 @@ class HomePage extends React.Component {
         let donePath = `${isCash ? '/cash' : ''}/select-plan`
         if (status && status !== 'active') {
           donePath = `${donePath}/none/${status}`
+        }
+        let validPlans = Billing.get(`common`)
+        if (validPlans) {
+          const mobilePlan = validPlans.find((plan)=> {
+            let planUuid = plan.get('internalPlanUuid')
+            return planUuid === config.netsize.internalPlanUuid
+          })
+          if (mobilePlan) {
+            donePath = `${donePath}/${mobilePlan.get('internalPlanUuid')}/checkout`
+          }
         }
         history.push(donePath)
       }
