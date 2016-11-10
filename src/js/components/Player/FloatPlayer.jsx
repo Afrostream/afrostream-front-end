@@ -11,7 +11,7 @@ import { isElementInViewPort } from '../../lib/utils'
 import classSet from 'classnames'
 const {featuresFlip} = config
 import Raven from 'raven-js'
-import { slugify } from '../../lib/utils'
+import { slugify, extractImg } from '../../lib/utils'
 
 import * as PlayerActionCreators from '../../actions/player'
 import * as EventActionCreators from '../../actions/event'
@@ -74,7 +74,7 @@ class FloatPlayer extends React.Component {
 
   componentWillReceiveProps (nextProps) {
 
-    if (!shallowEqual(nextProps.data, this.props.data)) {
+    if (nextProps.data && (!shallowEqual(nextProps.data, this.props.data))) {
       const videoData = nextProps.data
       if (!videoData) {
         return
@@ -146,18 +146,26 @@ class FloatPlayer extends React.Component {
     let videoOptions = videoData.toJS()
     //ADD MOVIE INFO
     const movie = Movie.get(`movies/${movieId}`)
-    if (!movie) {
-      throw new Error('no movie data ref')
-    }
     let posterImgObj = {}
+    let chromecastOptions = {}
 
     if (movie) {
-      let poster = movie.get('poster')
-      let posterImg = poster ? poster.get('path') : ''
-      if (posterImg) {
-        posterImgObj.poster = `${config.images.urlPrefix}${posterImg}?crop=faces&fit=clip&w=${this.state.size.width}&h=${this.state.size.height}&q=${config.images.quality}&fm=${config.images.type}`
-        videoOptions = _.merge(videoOptions, posterImgObj)
-        videoOptions.live = movie.get('live')
+      const posterImg = extractImg({
+        data: movie,
+        key: 'poster',
+        width: this.state.size.width,
+        height: this.state.size.height
+      })
+
+      posterImgObj.poster = posterImg
+      videoOptions = _.merge(videoOptions, posterImgObj)
+      videoOptions.live = movie.get('live')
+      //CHROMECAST
+      chromecastOptions = {
+        metadata: {
+          title: movie.get('title'),
+          subtitle: movie.get('synopsis')
+        }
       }
     }
     //MERGE PLAYER DATA API
@@ -225,14 +233,6 @@ class FloatPlayer extends React.Component {
     //playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
     // ==== END hacks config
     playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
-
-    //CHROMECAST
-    let chromecastOptions = {
-      metadata: {
-        title: movie.get('title'),
-        subtitle: movie.get('synopsis')
-      }
-    }
 
     playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
 
@@ -645,7 +645,7 @@ class FloatPlayer extends React.Component {
     }
     let video = document.createElement('video')
     video.id = 'afrostream-player'
-    video.className = 'player-container video-js vjs-afrostream-skin vjs-big-play-centered afrostream-player-dimensions'
+    video.className = 'player-container video-js vjs-fluid vjs-afrostream-skin vjs-big-play-centered'
     //video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
@@ -726,8 +726,6 @@ class FloatPlayer extends React.Component {
         bottom: 0,
         left: 0
       }
-
-    console.log('updata', target, position)
 
     //FIXME why position 157 ?
     position.transform = `translate3d(${position.left}px, ${elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
