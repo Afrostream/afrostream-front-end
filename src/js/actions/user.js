@@ -6,6 +6,7 @@ import * as FBActionCreators from './facebook'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { push, isActive } from 'redux-router'
 import _ from 'lodash'
+import config from '../../../config'
 
 const mergeProfile = function (data, getState, actionDispatcher) {
 
@@ -23,51 +24,60 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       path: `/api/users/me`,
       passToken: true
     }).then((userInfos)=> {
-      const userMerged = userInfos.body || {}
-      userMerged.user_id = userMerged._id || userMerged.user_id
-
-      if (userMerged) {
+        const userMerged = userInfos.body || {}
         let planCode = userMerged.planCode
         let subscriptionsStatus = userMerged.subscriptionsStatus
         let status = subscriptionsStatus && subscriptionsStatus.status
-        if (!planCode) {
-          donePath = donePath || `/select-plan`
-          if (status && status !== 'active') {
-            donePath = `${donePath}/none/${status}`
-          }
-          actionDispatcher(push(donePath))
+        userMerged.user_id = userMerged._id || userMerged.user_id
+        if (userMerged.facebook) {
+          userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`
+          userMerged.name = userMerged.name || userMerged.facebook.name
+          userMerged.nickname = userMerged.nickname || userMerged.facebook.nickname
+        } else {
+          userMerged.picture = `/avatar/${userMerged.email || userMerged.name}`
         }
-        //get InternalPlan
-        actionDispatcher(BillingActionCreators.getInternalplans({
-          contextBillingUuid: 'common',
-          passToken: true,
-          reload: true,
-          userId: userMerged._id
-        }))
+        userMerged.splashList = userMerged.splashList || []
+
+        actionDispatcher(FBActionCreators.getFriendList())
+
+        return async ()=> {
+          if (!planCode) {
+            //get InternalPlan
+            await actionDispatcher(BillingActionCreators.getInternalplans({
+              contextBillingUuid: 'common',
+              passToken: true,
+              reload: true,
+              userId: userMerged._id
+            })).then(({res: {body = []}}) => {
+              donePath = donePath || `/select-plan`
+              if (status && status !== 'active') {
+                donePath = `${donePath}/none/${status}`
+              }
+              if (body) {
+                const mobilePlan = _.find(body, (plan)=> {
+                  let planUuid = plan.internalPlanUuid
+                  return planUuid === config.netsize.internalPlanUuid
+                })
+                if (mobilePlan) {
+                  donePath = `${donePath}/${mobilePlan.internalPlanUuid}/checkout`
+                }
+              }
+            })
+          }
+
+          if (donePath) {
+            actionDispatcher(push(donePath))
+          }
+
+          return _.merge(data, {
+            user: userMerged
+          })
+
+        }
+
 
       }
-
-
-      if (userMerged.facebook) {
-        userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`
-        userMerged.name = userMerged.name || userMerged.facebook.name
-        userMerged.nickname = userMerged.nickname || userMerged.facebook.nickname
-      } else {
-        userMerged.picture = `/avatar/${userMerged.email || userMerged.name}`
-      }
-
-      userMerged.splashList = userMerged.splashList || []
-
-      actionDispatcher(FBActionCreators.getFriendList())
-
-      if (donePath) {
-        actionDispatcher(push(donePath))
-      }
-
-      return _.merge(data, {
-        user: userMerged
-      })
-    })
+    )
     //}).catch((e)=> {
     //  console.log(e, 'remove user data')
     //  //FIXME replace logout method

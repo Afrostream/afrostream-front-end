@@ -212,16 +212,6 @@ export function getInternalplans ({
       }
       //ONLY for common context,not cashway
       if (contextBillingUuid === 'common' && isMobile && checkMobile) {
-        //let isNetsizeEnabled = false
-        ////await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({body: {data: {netsizeStatusCode = 0}}})=> {
-        //await actionDispatcher(OAuthActionCreators.netsizeCheck()).then(({res:{body: {subStatus = 0}}})=> {
-        //  isNetsizeEnabled = subStatus === 120
-        //  console.log('isNetsizeEnabled', isNetsizeEnabled)
-        //}).catch((err)=> {
-        //  isNetsizeEnabled = false
-        //  console.log('isNetsizeEnabled', err)
-        //})
-        //if (isNetsizeEnabled) {
         return await api({
           path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
           passToken

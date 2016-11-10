@@ -32,11 +32,13 @@
       &:nth-child(n+3) {
         border-bottom: 1px solid @gray-lighter;
       }
-      //Seulement la premiere colonne
-      .col:first-child {
-        font-weight: bold;
-        @media all and (min-width: @screen-md-min) {
-          text-align: left;
+      &:not(:first-child) {
+        //Seulement la premiere colonne second ligne
+        .col:first-child {
+          font-weight: bold;
+          @media all and (min-width: @screen-md-min) {
+            text-align: left;
+          }
         }
       }
 
