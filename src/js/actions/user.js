@@ -49,7 +49,6 @@ const mergeProfile = function (data, getState, actionDispatcher) {
               reload: true,
               userId: userMerged._id
             })).then(({res: {body = []}}) => {
-
               donePath = donePath || `/select-plan`
               if (status && status !== 'active') {
                 donePath = `${donePath}/none/${status}`

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import WelcomePage from './Welcome/WelcomePage'
 import BrowsePage from './Browse/BrowsePage'
 import { withRouter } from 'react-router'
+import config from '../../../config'
 
 @connect(({User, Billing}) => ({User, Billing}))
 class HomePage extends React.Component {
@@ -35,7 +36,7 @@ class HomePage extends React.Component {
         if (status && status !== 'active') {
           donePath = `${donePath}/none/${status}`
         }
-        let validPlans = Billing.get(`common`)
+        let validPlans = Billing.get(`internalPlans`)
         if (validPlans) {
           const mobilePlan = validPlans.find((plan)=> {
             let planUuid = plan.get('internalPlanUuid')
