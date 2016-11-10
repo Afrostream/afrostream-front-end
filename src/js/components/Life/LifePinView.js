@@ -25,7 +25,7 @@ class LifePinView extends LifePin {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (!shallowEqual(nextProps.pinId, this.props.pinId)) {
+    if (!shallowEqual(nextProps.params, this.props.params)) {
       const players = document.querySelectorAll('.ta-insert-video')
       if (players) {
         _.forEach(players, (element)=> {
