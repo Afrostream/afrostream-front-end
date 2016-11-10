@@ -7,15 +7,13 @@ import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
 import CouponForm from './CouponForm'
-import { connect } from 'react-redux'
 import TextField from 'material-ui/TextField'
 import Payment from 'payment'
 
-@connect(({Billing}) => ({Billing}))
 class RecurlyForm extends CouponForm {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
   }
 
   static propTypes = {
@@ -28,9 +26,15 @@ class RecurlyForm extends CouponForm {
 
   formatCard () {
     const {cardNumber, expiration, cvc} = this.refs
-    Payment.formatCardNumber(ReactDOM.findDOMNode(cardNumber).querySelector('input'))
-    Payment.formatCardExpiry(ReactDOM.findDOMNode(expiration).querySelector('input'))
-    Payment.formatCardCVC(ReactDOM.findDOMNode(cvc).querySelector('input'))
+    if (cardNumber) {
+      Payment.formatCardNumber(ReactDOM.findDOMNode(cardNumber).querySelector('input'))
+    }
+    if (expiration) {
+      Payment.formatCardExpiry(ReactDOM.findDOMNode(expiration).querySelector('input'))
+    }
+    if (cvc) {
+      Payment.formatCardCVC(ReactDOM.findDOMNode(cvc).querySelector('input'))
+    }
   }
 
   initLib () {
@@ -72,11 +76,10 @@ class RecurlyForm extends CouponForm {
     const excludedCards = ['visaelectron', 'maestro']
 
     //Excluded cart type message
-    //if (~excludedCards.indexOf($.payment.cardType(cardNumber))) {
-    //  //$('#errors').text('Ce type ne carte n‘est pas pris en charge actuellement')
-    //  $('.recurly-cc-number').addClass('has-error')
-    //  throw new Error(getI18n().payment.errors.exludedCard)
-    //}
+    if (~excludedCards.indexOf(Payment.fns.cardType(cardNumber))) {
+      throw new Error(getI18n().payment.errors.exludedCard)
+    }
+
     let recurlyInfo = {
       'plan-code': billingInfo.internalPlanUuid,
       'first_name': billingInfo.firstName,
@@ -126,7 +129,7 @@ class RecurlyForm extends CouponForm {
     if (!this.props.selected) return
 
     return (
-      <div className="row no-padding" ref="goCardlessForm">
+      <div className="row no-padding">
         <div className="col-md-12">
           <div className="row no-padding">
             <div className="col-md-6">
@@ -134,7 +137,7 @@ class RecurlyForm extends CouponForm {
                 floatingLabelFixed={true}
                 fullWidth={true}
                 type="tel"
-                className=" recurly-cc-number card-number"
+                className="card-number"
                 ref="cardNumber"
                 name="number"
                 id="number"
@@ -151,7 +154,6 @@ class RecurlyForm extends CouponForm {
               <TextField
                 floatingLabelFixed={true}
                 fullWidth={true}
-                className="recurly-cc-exp"
                 ref="expiration"
                 name="expiration" id="expiration"
                 autoComplete="cc-exp"
@@ -162,7 +164,7 @@ class RecurlyForm extends CouponForm {
               <TextField
                 fullWidth={true}
                 floatingLabelFixed={true}
-                type="tel" className=" recurly-cc-cvc"
+                type="tel"
                 ref="cvc"
                 autoComplete="cc-csc"
                 name="cvv" id="cvv"

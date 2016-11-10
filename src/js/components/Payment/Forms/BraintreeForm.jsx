@@ -8,13 +8,10 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
 import CouponForm from './CouponForm'
 
-import { connect } from 'react-redux'
-
-@connect(({Billing}) => ({Billing}))
 class BraintreeForm extends CouponForm {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
   }
 
   static propTypes = {
@@ -93,7 +90,7 @@ class BraintreeForm extends CouponForm {
     if (!this.props.selected) return
     return (
 
-      <div className="row" ref="goCardlessForm">
+      <div className="row">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {getI18n().payment.paypal.paypalText.replace('{submitBtn}', getI18n().planCodes.action)}

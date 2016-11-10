@@ -21,7 +21,7 @@ class CountrySelect extends React.Component {
   render () {
 
     return (
-      <div className="col-md-6">
+      <div className="col-md-4">
         <label className="form-label" htmlFor="country">{getI18n().payment.country.label}</label>
         <DropDownMenu className="card-country" ref="country" id="country" name="country" required
                       onChange={::this.handleChange}

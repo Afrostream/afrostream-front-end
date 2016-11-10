@@ -7,13 +7,13 @@ import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
 import CouponForm from './CouponForm'
-import { connect } from 'react-redux'
+import TextField from 'material-ui/TextField'
+import Payment from 'payment'
 
-@connect(({Billing}) => ({Billing}))
 class StripeForm extends CouponForm {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
   }
 
   static propTypes = {
@@ -25,9 +25,16 @@ class StripeForm extends CouponForm {
   }
 
   formatCard () {
-    $('.stripe-cc-number').payment('formatCardNumber')
-    $('.stripe-cc-exp').payment('formatCardExpiry')
-    $('.stripe-cc-cvc').payment('formatCardCVC')
+    const {cardNumber, expiration, cvc} = this.refs
+    if (cardNumber) {
+      Payment.formatCardNumber(ReactDOM.findDOMNode(cardNumber).querySelector('input'))
+    }
+    if (expiration) {
+      Payment.formatCardExpiry(ReactDOM.findDOMNode(expiration).querySelector('input'))
+    }
+    if (cvc) {
+      Payment.formatCardCVC(ReactDOM.findDOMNode(cvc).querySelector('input'))
+    }
   }
 
   initLib () {
@@ -62,23 +69,24 @@ class StripeForm extends CouponForm {
   }
 
   async submit (billingInfo, currentPlan) {
+    const {cardNumber, expiration, cvc, couponCode, country} = this.refs
+    const {month, year} = Payment.fns.cardExpiryVal(expiration)
+
     const self = this
-    const cardNumber = $('.stripe-cc-number').val()
     const excludedCards = ['visaelectron', 'maestro']
 
     //Excluded cart type message
-    if (~excludedCards.indexOf($.payment.cardType(cardNumber))) {
-      //$('#errors').text('Ce type ne carte n‘est pas pris en charge actuellement')
-      $('.stripe-cc-number').addClass('has-error')
+    if (~excludedCards.indexOf(Payment.fns.cardType(cardNumber))) {
       throw new Error(getI18n().payment.errors.exludedCard)
     }
+
     let stripeInfo = {
-      'number': self.refs.cardNumber.value,
-      'exp_month': $('.stripe-cc-exp').payment('cardExpiryVal').month,
-      'exp_year': $('.stripe-cc-exp').payment('cardExpiryVal').year,
-      'cvc': self.refs.cvc.value,
+      'number': cardNumber.value,
+      'exp_month': month,
+      'exp_year': year,
+      'cvc': cvc.value,
       // optional attributes
-      'address_country': self.refs.country.value(),
+      'address_country': country.value(),
       'name': `${billingInfo.firstName} ${billingInfo.lastName}`
     }
 
@@ -95,7 +103,7 @@ class StripeForm extends CouponForm {
             billingProviderName: 'stripe',
             subOpts: {
               customerBankAccountToken: response.id,
-              couponCode: self.refs.couponCode.value
+              couponCode: couponCode.value
             }
           })
         })
@@ -111,39 +119,52 @@ class StripeForm extends CouponForm {
 
   getForm () {
     if (!this.props.selected) return
-
     return (
-      <div className="row" ref="goCardlessForm">
-        <div className="form-group col-md-6">
-          <label className="form-label" htmlFor="number">{getI18n().payment.creditCard.number}</label>
-          <input
-            type="tel"
-            className="form-control stripe-cc-number card-number"
-            ref="cardNumber"
-            data-billing="number"
-            name="number"
-            id="number"
-            autoComplete="cc-number"
-            placeholder={getI18n().payment.creditCard.placeHolder} required/>
+      <div className="row no-padding">
+        <div className="col-md-12">
+          <div className="row no-padding">
+            <div className="col-md-6">
+              <TextField
+                floatingLabelFixed={true}
+                fullWidth={true}
+                type="tel"
+                className="card-number"
+                ref="cardNumber"
+                name="number"
+                id="number"
+                autoComplete="cc-number"
+                floatingLabelText={getI18n().payment.creditCard.number}
+                hintText={getI18n().payment.creditCard.placeHolder} required/>
+            </div>
+            <CountrySelect ref="country"/>
+          </div>
         </div>
-        <CountrySelect ref="country"/>
-        <div className="form-group col-md-4">
-          <label className="form-label" htmlFor="month">{getI18n().payment.creditCard.exp}</label>
-          <input type="tel" className="form-control stripe-cc-exp" data-billing="month"
-                 name="month" id="month"
-                 autoComplete="cc-exp"
-                 placeholder={getI18n().payment.creditCard.expPlaceHolder} required/>
+        <div className="col-md-12">
+          <div className="row no-padding">
+            <div className="col-md-6">
+              <TextField
+                floatingLabelFixed={true}
+                fullWidth={true}
+                ref="expiration"
+                name="expiration" id="expiration"
+                autoComplete="cc-exp"
+                floatingLabelText={getI18n().payment.creditCard.exp}
+                hintText={getI18n().payment.creditCard.expPlaceHolder} required/>
+            </div>
+            <div className="col-md-6">
+              <TextField
+                fullWidth={true}
+                floatingLabelFixed={true}
+                type="tel"
+                ref="cvc"
+                autoComplete="cc-csc"
+                name="cvv" id="cvv"
+                floatingLabelText={getI18n().payment.creditCard.cvv}
+                hintText={getI18n().payment.creditCard.cvcPlaceHolder} required/>
+            </div>
+          </div>
         </div>
-        <div className="form-group col-md-4">
-          <label className="form-label" htmlFor="cvv">{getI18n().payment.creditCard.cvv}</label>
-          <input type="tel" className="form-control stripe-cc-cvc" data-billing="cvv"
-                 ref="cvc"
-                 name="cvv" id="cvv" autoComplete="off"
-                 placeholder={getI18n().payment.creditCard.cvcPlaceHolder} required/>
-        </div>
-
         {this.renderPromoCode()}
-
       </div>
     )
   }

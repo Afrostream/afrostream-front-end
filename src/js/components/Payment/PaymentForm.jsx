@@ -153,38 +153,43 @@ class PaymentForm extends React.Component {
       lastName = userJs && userJs.facebook && userJs.facebook.last_name || userJs && userJs.last_name
     }
 
-    return (<div className="row no-padding">
-      <div className="col-md-6">
-        <TextField
-          floatingLabelFixed={true}
-          fullWidth={true}
-          type="text"
-          className="first-name"
-          data-billing="first_name"
-          ref="firstName"
-          id="first_name"
-          autoComplete="given-name"
-          name="first-name"
-          defaultValue={firstName}
-          floatingLabelText={getI18n().payment.name} required
-          disabled={this.state.disabledForm}/>
-      </div>
-      <div className="col-md-6">
-        <TextField
-          floatingLabelFixed={true}
-          fullWidth={true}
-          type="text"
-          className="last-name"
-          data-billing="last_name"
-          ref="lastName"
-          id="last_name"
-          autoComplete="surname"
-          name="last-name"
-          defaultValue={lastName}
-          floatingLabelText={getI18n().payment.lastName} required
-          disabled={this.state.disabledForm}/>
-      </div>
-    </div>)
+    return (
+      <div className="panel-group">
+        <div className="pannel">
+          <div className="row no-padding">
+            <div className="col-md-6">
+              <TextField
+                floatingLabelFixed={true}
+                fullWidth={true}
+                type="text"
+                className="first-name"
+                data-billing="first_name"
+                ref="firstName"
+                id="first_name"
+                autoComplete="given-name"
+                name="first-name"
+                defaultValue={firstName}
+                floatingLabelText={getI18n().payment.name} required
+                disabled={this.state.disabledForm}/>
+            </div>
+            <div className="col-md-6">
+              <TextField
+                floatingLabelFixed={true}
+                fullWidth={true}
+                type="text"
+                className="last-name"
+                data-billing="last_name"
+                ref="lastName"
+                id="last_name"
+                autoComplete="surname"
+                name="last-name"
+                defaultValue={lastName}
+                floatingLabelText={getI18n().payment.lastName} required
+                disabled={this.state.disabledForm}/>
+            </div>
+          </div>
+        </div>
+      </div>)
   }
 
   renderSubmit () {

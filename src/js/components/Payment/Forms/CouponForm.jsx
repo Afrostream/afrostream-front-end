@@ -4,6 +4,7 @@ import Spinner from '../../Spinner/Spinner'
 import TextField from 'material-ui/TextField'
 import * as BillingActionCreators from '../../../actions/billing'
 import config from '../../../../../config'
+import { Link } from 'react-router'
 
 class CouponForm extends React.Component {
 
@@ -57,7 +58,8 @@ class CouponForm extends React.Component {
       }
     } = this
     let coupon = Billing.get('coupon')
-    let couponName
+    let couponName = ''
+    let couponIcon = 'zmdi-block'
     let inputAttributes = {
       onChange: (event, payload) => {
         clearTimeout(this.updateTimeout)
@@ -70,13 +72,16 @@ class CouponForm extends React.Component {
     if (coupon && coupon.size) {
       const couponCode = coupon.get('code')
       const providers = coupon.get('internalCouponsCampaign').get('providers')
-      const providerAfr = providers.find((provider)=> {
-        return provider.get('providerName') === config.sponsors.billingProviderName
-      })
-      couponName = coupon.get('campaign').get('description')
+      const couponCampeign = coupon.get('campaign')
+      const couponType = couponCampeign.get('couponsCampaignType')
       inputAttributes.defaultValue = couponCode
-      if (providerAfr) {
-        couponName = <Link to={`/coupon?code=${couponCode}`}>getI18n().payment.promo.activate</Link>
+      if (couponType !== 'promo') {
+        couponName = (
+          <Link className="coupon-warning" to={`/coupon?code=${couponCode}`}>{getI18n().payment.promo.activate}</Link>)
+        couponIcon = 'zmdi-alert-triangle'
+      } else {
+        couponIcon = 'zmdi-check'
+        couponName = couponCampeign.get('description')
       }
     }
 
@@ -98,14 +103,16 @@ class CouponForm extends React.Component {
             />
           </div>
           <div className="col-md-1">
-            <i className={`zmdi coupon-check ${this.state.validCoupon ? 'zmdi-check' : 'zmdi-block' } zmdi-hc-2x`}
+            <i className={`zmdi coupon-check
+                          ${couponIcon }
+                          zmdi-hc-2x`}
                aria-hidden=" true"/>
             {this.state.fetching && <Spinner/>}
           </div>
         </div>
         {this.state.validCoupon && <div className="row no-padding">
-          <div className="col-md-12">
-            <div className=" col-md-12">{couponName}</div>
+          <div className="col-md-12 coupon-desc">
+            {couponName}
           </div>
         </div>}
       </div>
