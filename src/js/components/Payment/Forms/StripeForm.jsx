@@ -26,6 +26,9 @@ class StripeForm extends CouponForm {
 
   formatCard () {
     const {cardNumber, expiration, cvc} = this.refs
+    if (!this.props.selected) {
+      return
+    }
     if (cardNumber) {
       Payment.formatCardNumber(ReactDOM.findDOMNode(cardNumber).querySelector('input'))
     }
@@ -70,9 +73,8 @@ class StripeForm extends CouponForm {
 
   async submit (billingInfo, currentPlan) {
     const {cardNumber, expiration, cvc, couponCode, country} = this.refs
-    const {month, year} = Payment.fns.cardExpiryVal(expiration)
+    const {month, year} = Payment.fns.cardExpiryVal(expiration.getValue())
 
-    const self = this
     const excludedCards = ['visaelectron', 'maestro']
 
     //Excluded cart type message
@@ -81,12 +83,12 @@ class StripeForm extends CouponForm {
     }
 
     let stripeInfo = {
-      'number': cardNumber.value,
+      'number': cardNumber.getValue(),
       'exp_month': month,
       'exp_year': year,
-      'cvc': cvc.value,
+      'cvc': cvc.getValue(),
       // optional attributes
-      'address_country': country.value(),
+      'address_country': country.getValue(),
       'name': `${billingInfo.firstName} ${billingInfo.lastName}`
     }
 

@@ -10,7 +10,7 @@ class CountrySelect extends React.Component {
     this.state = {value: getI18n().payment.country.defaultValue};
   }
 
-  value () {
+  getValue () {
     return this.state.value
   }
 

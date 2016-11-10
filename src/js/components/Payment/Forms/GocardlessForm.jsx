@@ -23,10 +23,10 @@ class GocardlessForm extends React.Component {
   }
 
   async submit (billingInfo) {
-
+    const {iban, country} = this.refs
     let self = this
-    let ibanValue = self.refs.iban.value
-    let countryValue = self.refs.country.value()
+    let ibanValue = iban.getValue()
+    let countryValue = country.getValue()
     return await new Promise(
       (resolve, reject) => {
         const gcLib = window['GoCardless']
@@ -98,8 +98,8 @@ class GocardlessForm extends React.Component {
   }
 
   validate () {
-    this.refs.iban.value = IBAN.printFormat(this.refs.iban.value, ' ')
-    return IBAN.isValid(this.refs.iban.value)
+    this.refs.iban.getInputNode().value = IBAN.printFormat(this.refs.iban.getValue(), ' ')
+    return IBAN.isValid(this.refs.iban.getValue())
   }
 
   onHeaderClick () {

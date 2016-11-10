@@ -13,11 +13,12 @@ class PaypalForm extends RecurlyForm {
   }
 
   async submit (billingInfo, currentPlan) {
+    const {couponCode} = this.refs
 
     const self = this
     let recurlyInfo = {
       'description': self.props.planLabel,
-      'coupon_code': self.refs.couponCode.value
+      'coupon_code': couponCode.getValue()
     }
 
     return await new Promise(
@@ -34,7 +35,7 @@ class PaypalForm extends RecurlyForm {
             billingProviderName: 'recurly',
             subOpts: {
               customerBankAccountToken: token.id,
-              couponCode: self.refs.couponCode.value
+              couponCode: couponCode.getValue()
             }
           }, recurlyInfo))
         })
@@ -53,7 +54,7 @@ class PaypalForm extends RecurlyForm {
     if (!this.props.selected) return
     return (
 
-      <div className="row" ref="goCardlessForm">
+      <div className="row">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {getI18n().payment.paypal.paypalText.replace('{submitBtn}', getI18n().planCodes.action)}

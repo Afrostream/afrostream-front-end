@@ -155,7 +155,7 @@ class PaymentForm extends React.Component {
 
     return (
       <div className="panel-group">
-        <div className="pannel">
+        <div className="panel">
           <div className="row no-padding">
             <div className="col-md-6">
               <TextField
@@ -281,7 +281,7 @@ class PaymentForm extends React.Component {
     } = this
 
     e.preventDefault()
-
+    const {droits, cgu, firstName, lastName, methodForm} = this.refs
     const self = this
     const user = User.get('user')
 
@@ -291,7 +291,7 @@ class PaymentForm extends React.Component {
 
     this.disableForm(true)
 
-    if (!this.refs.cgu.checked || !this.refs.droits.checked) {
+    if (!cgu.checked || !droits.checked) {
       return this.error({
         message: getI18n().payment.errors.checkbox,
         fields: ['cgu', 'droits']
@@ -300,15 +300,16 @@ class PaymentForm extends React.Component {
 
     let billingInfo = {
       internalPlanUuid: this.state.internalPlanUuid,
-      firstName: this.refs.firstName && this.refs.firstName.value,
-      lastName: this.refs.lastName && this.refs.lastName.value
+      firstName: firstName && firstName.getValue(),
+      lastName: lastName && lastName.getValue()
     }
 
     try {
-      let subBillingInfo = await this.refs.methodForm.submit(billingInfo, this.state.currentPlan)
+      let subBillingInfo = await methodForm.submit(billingInfo, this.state.currentPlan)
       billingInfo = _.merge(billingInfo, subBillingInfo)
       await this.submitSubscription(billingInfo)
     } catch (err) {
+
       self.error(err)
     }
   }
@@ -356,7 +357,6 @@ class PaymentForm extends React.Component {
           globalMessage = message
         }
 
-        debugger
         if (code) {
           const errorCode = (self && getI18n().coupon.errors[code])
           if (errorCode && errorCode.message) {

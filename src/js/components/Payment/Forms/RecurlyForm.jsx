@@ -26,6 +26,9 @@ class RecurlyForm extends CouponForm {
 
   formatCard () {
     const {cardNumber, expiration, cvc} = this.refs
+    if (!this.props.selected) {
+      return
+    }
     if (cardNumber) {
       Payment.formatCardNumber(ReactDOM.findDOMNode(cardNumber).querySelector('input'))
     }
@@ -70,9 +73,8 @@ class RecurlyForm extends CouponForm {
 
   async submit (billingInfo, currentPlan) {
     const {cardNumber, expiration, cvc, couponCode, country} = this.refs
-    const {month, year} = Payment.fns.cardExpiryVal(expiration)
+    const {month, year} = Payment.fns.cardExpiryVal(expiration.getValue())
 
-    const self = this
     const excludedCards = ['visaelectron', 'maestro']
 
     //Excluded cart type message
@@ -86,16 +88,16 @@ class RecurlyForm extends CouponForm {
       'last_name': billingInfo.lastName,
       'email': billingInfo.email,
       // required attributes
-      'number': cardNumber.value,
+      'number': cardNumber.getValue(),
 
       'month': month,
       'year': year,
 
-      'cvv': cvc.value,
+      'cvv': cvc.getValue(),
       // optional attributes
       'unit-amount-in-cents': currentPlan.get('amountInCents'),
-      'coupon_code': couponCode.value,
-      'country': country.value()
+      'coupon_code': couponCode.getValue(),
+      'country': country.getValue()
     }
 
     return await new Promise(
