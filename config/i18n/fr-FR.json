@@ -134,6 +134,7 @@
     },
     "promo": {
       "label": "Code promo (optionnel)",
+      "activate": "Vous pouvez activer votre coupon en cliquant ici",
       "placeHolder": "Entrez votre code"
     },
     "virement": {

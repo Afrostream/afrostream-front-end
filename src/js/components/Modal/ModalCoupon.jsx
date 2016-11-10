@@ -7,6 +7,7 @@ import ModalComponent from './ModalComponent'
 import { getI18n } from '../../../../config/i18n'
 import SignUpButton from '../User/SignUpButton'
 import { withRouter } from 'react-router'
+import config from '../../../../config'
 
 @connect(({Billing, User}) => ({Billing, User}))
 class ModalCoupon extends ModalComponent {
@@ -74,7 +75,7 @@ class ModalCoupon extends ModalComponent {
     const user = User.get('user')
 
     let formData = {
-      billingProviderName: 'afr',
+      billingProviderName: config.sponsors.billingProviderName,
       coupon: this.refs.coupon.value
     }
 

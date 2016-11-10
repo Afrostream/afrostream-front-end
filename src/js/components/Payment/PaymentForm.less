@@ -89,6 +89,14 @@
   }
 
   .payment-form {
+
+    .zmdi.coupon-check {
+      color: @gray-lighter;
+      &.zmdi-check {
+        color: @subscriber-color;
+      }
+      line-height: 3;
+    }
     //recreate local variables
     @input-height-base: 34px;
     @input-height-small: 30px;
@@ -108,6 +116,10 @@
 
     .zmdi {
       padding-left: 5px;
+    }
+
+    .spinner {
+      font-size: 2em;
     }
 
     .spinner-payment {
@@ -130,11 +142,15 @@
     .panel {
       border-radius: 0;
       border-bottom: @gray-lighter solid 1px;
+      .panel-collapse {
+        background-color: lighten(@gray-lighter, 4%);
+      }
     }
     .payment-method-details {
       line-height: 2;
       padding: 5px 0 5px 0;
       text-align: left;
+      background-color: lighten(@gray-lighter, 1%);
       .accordion-toggle {
         label {
           color: @color-purple-1;
@@ -151,8 +167,8 @@
           content: "\f2f2"; /* adjust as needed, taken from bootstrap.css */
           float: left; /* adjust as needed */
           color: @color-indigo; /* adjust as needed */
-          margin-right: 10px;
-          font-size: 2em;
+          margin: -10px 10px 10px 10px;
+          font-size: 4em;
         }
         &.collapsed {
           &:before {

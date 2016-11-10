@@ -23,6 +23,7 @@ import { withRouter } from 'react-router'
 import _ from 'lodash'
 import * as ReactFB from '../../lib/fbEvent'
 import Q from 'q'
+import TextField from 'material-ui/TextField'
 
 const {gocarlessApi, recurlyApi, stripeApi, braintreeApi} = config
 if (process.env.BROWSER) {
@@ -152,33 +153,35 @@ class PaymentForm extends React.Component {
       lastName = userJs && userJs.facebook && userJs.facebook.last_name || userJs && userJs.last_name
     }
 
-    return (<div className="row">
-      <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="first_name">{getI18n().payment.name}</label>
-        <input
+    return (<div className="row no-padding">
+      <div className="col-md-6">
+        <TextField
+          floatingLabelFixed={true}
+          fullWidth={true}
           type="text"
-          className="form-control first-name"
+          className="first-name"
           data-billing="first_name"
           ref="firstName"
           id="first_name"
           autoComplete="given-name"
           name="first-name"
           defaultValue={firstName}
-          placeholder={getI18n().payment.name} required
+          floatingLabelText={getI18n().payment.name} required
           disabled={this.state.disabledForm}/>
       </div>
-      <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="last_name">{getI18n().payment.lastName}</label>
-        <input
+      <div className="col-md-6">
+        <TextField
+          floatingLabelFixed={true}
+          fullWidth={true}
           type="text"
-          className="form-control last-name"
+          className="last-name"
           data-billing="last_name"
           ref="lastName"
           id="last_name"
           autoComplete="surname"
           name="last-name"
           defaultValue={lastName}
-          placeholder={getI18n().payment.lastName} required
+          floatingLabelText={getI18n().payment.lastName} required
           disabled={this.state.disabledForm}/>
       </div>
     </div>)
@@ -193,7 +196,7 @@ class PaymentForm extends React.Component {
 
 
     return (<div className="row">
-      <div className="form-group  col-md-12">
+      <div className=" col-md-12">
         <button
           id="subscribe"
           type="submit"
