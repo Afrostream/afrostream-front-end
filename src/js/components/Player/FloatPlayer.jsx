@@ -84,7 +84,7 @@ class FloatPlayer extends React.Component {
       })
     }
 
-    if (!shallowEqual(nextProps.Player.get('/player/data'), this.props.Player.get('/player/data'))) {
+    else if (!shallowEqual(nextProps.Player.get('/player/data'), this.props.Player.get('/player/data'))) {
       const videoData = nextProps.Player.get('/player/data')
       if (!videoData) {
         return
@@ -103,7 +103,7 @@ class FloatPlayer extends React.Component {
     const {
       props: {
         OAuth, Player, User, Movie,
-        params:{videoId, movieId}
+        params:{movieId, videoId}
       }
     } = this
 
@@ -112,36 +112,7 @@ class FloatPlayer extends React.Component {
     const user = User.get('user')
     let token = OAuth.get('token')
 
-    let komentData = {
-      open: true,
-      videoId,
-      controlBar: {
-        komentToggle: {
-          attributes: {
-            'data-position': 'left',
-            'data-intro': 'Vous pouvez desormais commenter les video'
-          }
-        }
-      },
-      user: (user && {
-        id: user.get('_id').toString(),
-        provider: config.domain.host,
-        token: token && token.get('access_token'),
-        avatar: user.get('picture')
-      }),
-      languages: config.player.languages
-    }
-
-    if (user && user.get('nickname')) {
-      komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
-    }
-
-    //L'user a choisi de ne pas afficher les comentaires par default
-    if (user && user.get('playerKoment')) {
-      komentData.open = user.get('playerKoment')
-    }
-
-    await this.generateDomTag(videoData, komentData)
+    await this.generateDomTag(videoData)
 
     let videoOptions = videoData.toJS()
     //ADD MOVIE INFO
@@ -167,6 +138,38 @@ class FloatPlayer extends React.Component {
           subtitle: movie.get('synopsis')
         }
       }
+      //KOMENT
+      let komentData = {
+        open: true,
+        videoId,
+        controlBar: {
+          komentToggle: {
+            attributes: {
+              'data-position': 'left',
+              'data-intro': 'Vous pouvez desormais commenter les video'
+            }
+          }
+        },
+        user: (user && {
+          id: user.get('_id').toString(),
+          provider: config.domain.host,
+          token: token && token.get('access_token'),
+          avatar: user.get('picture')
+        }),
+        languages: config.player.languages
+      }
+
+      if (user && user.get('nickname')) {
+        komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
+      }
+
+      //L'user a choisi de ne pas afficher les comentaires par default
+      if (user && user.get('playerKoment')) {
+        komentData.open = user.get('playerKoment')
+      }
+
+      videoOptions.komentData = komentData
+      //END KOMENT
     }
     //MERGE PLAYER DATA API
     let apiPlayerConfig = Player.get(`/player/config`)
@@ -390,8 +393,10 @@ class FloatPlayer extends React.Component {
       //On ajoute l'ecouteur au nextvideo automatique
       console.log('player : generatePlayer complete', this.player)
       this.container = ReactDOM.findDOMNode(videoData.get('target'))
-      this.container.removeEventListener('gobacknext', ::this.backNextHandler)
-      this.container.addEventListener('gobacknext', ::this.backNextHandler)
+      if (this.container) {
+        this.container.removeEventListener('gobacknext', ::this.backNextHandler)
+        this.container.addEventListener('gobacknext', ::this.backNextHandler)
+      }
 
       return this.player
     } catch (err) {
@@ -622,7 +627,7 @@ class FloatPlayer extends React.Component {
     return selectedTrack ? selectedTrack[key] : null
   }
 
-  async generateDomTag (videoData, komentData) {
+  async generateDomTag (videoData) {
     console.log('player : generate dom tag')
     const ua = detectUA()
     const mobileVersion = ua.getMobile()
@@ -650,10 +655,12 @@ class FloatPlayer extends React.Component {
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
 
-    try {
-      video.setAttribute('data-setup', JSON.stringify(komentData))
-    } catch (e) {
-      console.log('parse koment json error', e)
+    if (videoData.komentData) {
+      try {
+        video.setAttribute('data-setup', JSON.stringify(videoData.komentData))
+      } catch (e) {
+        console.log('parse koment json error', e)
+      }
     }
 
     if (hasSubtiles) {

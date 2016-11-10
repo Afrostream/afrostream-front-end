@@ -104,26 +104,16 @@ class PlayerComponent extends Component {
 
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
       let videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
+
       dispatch(PlayerActionCreators.killPlayer()).then(()=> {
-        //videoData = videoData.set('target', this.refs.wrapper)
         videoData = videoData.set('videoId', videoId)
-        //dispatch(PlayerActionCreators.loadPlayer({
-        //  data: videoData
-        //}))
+        videoData = videoData.set('target', this.refs.wrapper)
         this.setState({
           videoData
         })
       })
     }
 
-    //
-    //if (!shallowEqual(nextProps.Video, this.props.Video)) {
-    //  const videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
-    //  this.initState()
-    //  this.destroyPlayer().then(()=> {
-    //    this.initPlayer(videoData)
-    //  })
-    //}
   }
 
   getType (data) {
