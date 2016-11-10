@@ -24,7 +24,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
       path: `/api/users/me`,
       passToken: true
     }).then((userInfos)=> {
-        const userMerged = userInfos.body || {}
+        let userMerged = userInfos.body || {}
         let planCode = userMerged.planCode
         let subscriptionsStatus = userMerged.subscriptionsStatus
         let status = subscriptionsStatus && subscriptionsStatus.status
