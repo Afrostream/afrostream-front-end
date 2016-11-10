@@ -58,6 +58,13 @@ function initSite (country) {
         url = pathname
       }
 
+      //FIX HW disallow body null and return 502
+      if (method === 'GET') {
+        return request(method, url)
+          .query(qs.stringify(query))
+          .set(headers)
+      }
+
       return request(method, url)
         .query(qs.stringify(query))
         .set(headers)
