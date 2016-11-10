@@ -110,6 +110,18 @@ export function couponActivate () {
       console.log('cant get provider name ', e)
     }
 
+    const couponsCampaignType = coupon.get('campaign').get('couponsCampaignType')
+
+
+    //IF coupon provider is not AFR redirect to select plan form
+    if (couponsCampaignType === 'promo') {
+      return new Promise((resolve, reject) => {
+        resolve({
+          type: ActionTypes.Billing.couponActivate
+        })
+      })
+    }
+
     const billingInfo = {
       email: user.get('email'),
       id: user.get('_id'),
@@ -120,13 +132,6 @@ export function couponActivate () {
       subOpts: {
         couponCode: coupon.get('code')
       }
-    }
-
-    //IF coupon provider is not AFR redirect to select plan form
-    if (billingInfo.billingProviderName !== config.sponsors.billingProviderName) {
-      return ({
-        type: ActionTypes.Billing.couponActivate
-      })
     }
 
     return async () => {
