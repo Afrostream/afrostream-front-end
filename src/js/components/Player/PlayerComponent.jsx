@@ -91,6 +91,12 @@ class PlayerComponent extends Component {
   //  }
   //}
 
+  componentWillUnmount () {
+    const {props:{dispatch, videoId}} = this
+    dispatch(PlayerActionCreators.killPlayer())
+  }
+
+
   componentWillReceiveProps (nextProps) {
 
     const {props:{dispatch, videoId}} = this
@@ -104,14 +110,10 @@ class PlayerComponent extends Component {
 
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
       let videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
-
-      dispatch(PlayerActionCreators.killPlayer()).then(()=> {
-        videoData = videoData.set('videoId', videoId)
-        videoData = videoData.set('target', this.refs.wrapper)
-        this.setState({
-          videoData
-        })
-      })
+      videoData = videoData.set('videoId', videoId)
+      dispatch(PlayerActionCreators.loadPlayer({
+        data: videoData
+      }))
     }
 
   }

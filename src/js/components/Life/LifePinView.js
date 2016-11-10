@@ -11,6 +11,7 @@ import AvatarCard from '../User/AvatarCard'
 import ModalSocial from '../Modal/ModalSocial'
 import document from 'global/document'
 import ReactImgix from '../Image/ReactImgix'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
 if (process.env.BROWSER) {
   require('./LifePinView.less')
@@ -21,6 +22,26 @@ class LifePinView extends LifePin {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!shallowEqual(nextProps.pinId, this.props.pinId)) {
+      const players = document.querySelectorAll('.ta-insert-video')
+      if (players) {
+        _.forEach(players, (element)=> {
+          element.addEventListener('click', ::this.videoClickHandler)
+        })
+      }
+    }
+  }
+
+  componentWillUnmount () {
+    const players = document.querySelectorAll('.ta-insert-video')
+    if (players) {
+      _.forEach(players, (element)=> {
+        element.removeEventListener('click', ::this.videoClickHandler)
+      })
+    }
   }
 
   componentDidMount () {
@@ -39,6 +60,7 @@ class LifePinView extends LifePin {
       }
     } = this
     e.preventDefault()
+
     const target = e.currentTarget || e.target
     const targetUrl = target.getAttribute('ta-insert-video')
     const targetType = target.getAttribute('ta-insert-type')

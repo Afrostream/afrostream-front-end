@@ -74,17 +74,17 @@ class FloatPlayer extends React.Component {
 
   componentWillReceiveProps (nextProps) {
 
-    if (nextProps.data && (!shallowEqual(nextProps.data, this.props.data))) {
-      const videoData = nextProps.data
-      if (!videoData) {
-        return
-      }
-      this.destroyPlayer().then(()=> {
-        this.initPlayer(videoData)
-      })
-    }
+    //if (nextProps.data && (!shallowEqual(nextProps.data, this.props.data))) {
+    //  const videoData = nextProps.data
+    //  if (!videoData) {
+    //    return
+    //  }
+    //  this.destroyPlayer().then(()=> {
+    //    this.initPlayer(videoData)
+    //  })
+    //}
 
-    else if (!shallowEqual(nextProps.Player.get('/player/data'), this.props.Player.get('/player/data'))) {
+    if (!shallowEqual(nextProps.Player.get('/player/data'), this.props.Player.get('/player/data'))) {
       const videoData = nextProps.Player.get('/player/data')
       if (!videoData) {
         return
@@ -466,7 +466,6 @@ class FloatPlayer extends React.Component {
     } = this
 
     if (this.player) {
-      console.log('player : destroy player', this.player)
       //Tracking Finalise tracking video
       this.trackVideo()
       this.initState()
@@ -483,13 +482,15 @@ class FloatPlayer extends React.Component {
         this.player.off('seeked')
         this.player.off('error')
         this.player.one('dispose', () => {
-          this.player = null
-          this.playerInit = false
-          console.log('player : destroyed player')
-          //dispatch(PlayerActionCreators.killPlayer()).then(()=> {
-          this.requestTick(true)
-          resolve(null)
-          //})
+          setTimeout(() => {
+            console.log('player : destroy player', this.player)
+            this.player = null
+            this.playerInit = false
+            console.log('player : destroyed player')
+            //dispatch(PlayerActionCreators.killPlayer()).then(()=> {
+            this.requestTick(true)
+            resolve(null)
+          }, 0)
         })
         if (this.container) {
           this.container.removeEventListener('gobacknext', ::this.backNextHandler)
