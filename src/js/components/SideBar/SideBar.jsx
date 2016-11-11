@@ -83,19 +83,18 @@ class SideBar extends React.Component {
       case 'favoris':
         el = planCode && (
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i
-              className="zmdi zmdi-favorite"/>Mes Favoris</Link>
+              className="zmdi zmdi-favorite"/>Favoris</Link>
             </li>)
         break
       case 'last':
         el = planCode && (
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/last"><i
-              className="zmdi zmdi-movie"/>Derniers
-              ajouts</Link></li>)
+              className="zmdi zmdi-movie-alt"/>Nouveautés</Link></li>)
         break
       case 'sponsorship':
         el = featuresFlip.sponsorship && canSponsorshipSubscription && (
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/parrainage"><i
-              className="zmdi zmdi-ticket-star"/>Parrainer</Link>
+              className="zmdi zmdi-star"/>Parrainage</Link>
             </li>)
         break
       case 'browse':
@@ -266,7 +265,7 @@ class SideBar extends React.Component {
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
               className="zmdi zmdi-accounts"/>Actualité</Link></li>
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/community"><i
-              className="zmdi zmdi-accounts"/>Communauté</Link></li>
+              className="zmdi zmdi-accounts-list-alt"/>Communauté</Link></li>
             {/*<li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i*/}
             {/*className="zmdi zmdi-gamepad"/>Expérience</Link>*/}
             {/*</li>*/}

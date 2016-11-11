@@ -13,6 +13,12 @@ const {featuresFlip} = config
 import Raven from 'raven-js'
 import { slugify, extractImg } from '../../lib/utils'
 
+import FavoritesAddButton from '../Favorites/FavoritesAddButton'
+import { Billboard, CsaIcon } from '../Movies'
+import ShareButton from '../Share/ShareButton'
+import RateComponent from '../Recommendation/RateComponent'
+import RaisedButton from 'material-ui/RaisedButton'
+
 import * as PlayerActionCreators from '../../actions/player'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
@@ -716,6 +722,14 @@ class FloatPlayer extends React.Component {
 
   }
 
+  getType (data) {
+    return data && data.get('type')
+  }
+
+  isValid (data) {
+    return data && this.getType(data) !== 'error'
+  }
+
   updatePlayerPosition () {
 
     const {
@@ -747,7 +761,50 @@ class FloatPlayer extends React.Component {
 
   }
 
+  formatTime (seconds) {
+    if (!isFinite(seconds)) {
+      return null
+    }
+    var h = Math.floor(((seconds / 86400) % 1) * 24),
+      m = Math.floor(((seconds / 3600) % 1) * 60),
+      s = Math.round(((seconds / 60) % 1) * 60) + 's', time
+
+    time = s
+    if (m) {
+      time = m + 'm ' + time
+    }
+    if (h) {
+      time = h + 'h ' + time
+    }
+    return ' ' + time
+  }
+
+  //KOMENT
+  showKoment () {
+    const player = this.player
+    if (player && player.koment) {
+      player.koment.toggleMenu(true)
+      player.koment.toggleEdit(true)
+    }
+  }
+
   render () {
+    const {
+      props: {
+        Player,
+        Event,
+        Season,
+        Movie,
+        Video,
+        params:{
+          seasonId,
+          movieId,
+          videoId
+        }
+      }
+    } = this
+
+    const hiddenMode = !Event.get('userActive')
 
     const position = {
       width: this.state.position.width,
@@ -760,12 +817,60 @@ class FloatPlayer extends React.Component {
       'hide': !this.player
     })
 
+    const videoData = Video.get(`videos/${videoId}`)
+    let movieData
+    let episodeData
+    let seasonData
+    let videoDuration
+    let csa
+    let infos
+    let renderData
+    let chatMode
+    let titleStyle
+
+    if (this.isValid(videoData)) {
+      //  return (<div className="player"><Billboard data={videoData}/></div>)
+      movieData = Movie.get(`movies/${movieId}`)
+      episodeData = videoData.get('episode')
+      seasonData = Season.get(`seasons/${seasonId}`)
+      videoDuration = this.formatTime(videoData.get('duration'))
+      csa = movieData.get('CSA')
+      //si on a les données de l'episode alors, on remplace les infos affichées
+      infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS()
+      if (seasonData) {
+        infos.seasonNumber = seasonData.get('seasonNumber')
+      }
+      renderData = episodeData ? episodeData : movieData
+
+      chatMode = Event.get('showChat')
+
+      const textLength = infos.title.length
+
+      if (textLength < 20) {
+        titleStyle = 'small'
+      } else if (textLength < 70) {
+        titleStyle = 'medium'
+      } else if (textLength >= 70) {
+        titleStyle = 'large'
+      }
+
+    }
+
+    const videoInfoClasses = {
+      'video-infos': true,
+      'video-infos-hidden': hiddenMode,
+      [`video-infos-${titleStyle}`]: true
+    }
+
     const classFloatPlayer = {
       'hidden': !this.player,
+      'player': videoData,
       'float-player': true,
       'fixed': this.props.float,
       'pinned': this.state.elVisible,
-      'unpinned': !this.state.elVisible
+      'unpinned': !this.state.elVisible,
+      'player-next-reco': this.state.nextReco,
+      'player-fullScreen': this.player && this.player.isFullscreen()
     }
 
     classFloatPlayer[this.props.className] = true
@@ -778,6 +883,27 @@ class FloatPlayer extends React.Component {
       <div className={classSet(classFloatPlayer)} style={position} ref="container">
         <a className={closeClass} href="#" onClick={::this.handleClose}><i className="zmdi zmdi-hc-2x zmdi-close"/></a>
         <div ref="wrapper" className="wrapper"/>
+        {videoData && <div className={classSet(videoInfoClasses)}>
+          <div className="video-infos_label">Vous regardez</div>
+          <div className="video-infos_title">{infos.title}
+            {<CsaIcon {...{csa}}/>}
+          </div>
+          <div>
+            {infos.seasonNumber ?
+              <label className="tag video-infos_episode">{`Saison ${infos.seasonNumber}`}</label> : ''}
+            {infos.episodeNumber ?
+              <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
+          </div>
+          {<RateComponent {...{videoId}}/>}
+          <div className="player-buttons">
+            <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
+            <ShareButton />
+            <RaisedButton onClick={::this.showKoment} label="Commenter" primary={true}
+                          icon={<i className="zmdi zmdi-comment-more"></i>}/>
+          </div>
+          {videoDuration ?
+            <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
+        </div>}
       </div>
     )
   }

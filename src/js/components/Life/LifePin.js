@@ -70,11 +70,6 @@ class LifePin extends ClickablePin {
               <div className="premium-flag__header-label"> Accès {pinRole}</div>
             </div>)}
 
-            <div className="bkdate">
-              <div className="day">{pinnedDate.format('DD')}</div>
-              <div className="month">{pinnedDate.format('MMM')}</div>
-            </div>
-
           </div>
           <div className="card-body">
             <div className="card-meta">

@@ -82,7 +82,7 @@ class Header extends React.Component {
     let sliderClasses = {
       'topbar': true,
       'topbar-life': isOnLife,
-      'topbar-hidden': !chatMode && hiddenMode,
+      'topbar-hidden': !chatMode && hiddenMode && router.isActive('player'),
       'topbar-fixed-color': true
       //'topbar-fixed-color': chatMode || pinned || this.state.pinned
       //|| router.isActive('recherche')

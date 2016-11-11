@@ -2,6 +2,10 @@
 @import (css) '../../../../node_modules/videojs-chromecast/dist/videojs-chromecast.css';
 @import (reference) '../../../styles/config.less';
 
+.player-page {
+  background-color: @color-black-2;
+}
+
 .player {
 
   .splash.splash-bubble {
@@ -16,6 +20,7 @@
 
 .koment {
   .koment-control-bar {
+    color: @color-purple-1;
     top: 30%;
     margin: @app-padding @app-padding @app-padding @app-padding;
 
@@ -47,7 +52,7 @@
   background-color: #000000;
   width: 100%;
   max-height: 100%;
-  .isMobile({ padding: @header-height 0 0 0; });
+  .isMobile({ margin: @header-height 0 0 0; });
   &.chat-on {
     .wrapper {
       width: 70%;
@@ -77,6 +82,10 @@
       display: none;
     }
   }
+  .close {
+    display: none;
+  }
+
   .billboard-infos {
     margin: @app-padding;
   }
@@ -94,13 +103,16 @@
     //  height: 100%;
     //}
 
-    .vjs-fluid {
-      padding-top: 56.25%;
-      height: 100%;
-    }
+    padding-top: 56.25%;
+    height: 100%;
 
     .vjs-tech {
-      color: #FFFFFF;
+      color: @color-yellow;
+    }
+
+    .vjs-fluid {
+      position: absolute;
+      .fullHeight();
     }
 
     .vjs-error .vjs-error-display .vjs-modal-dialog-content {
@@ -327,6 +339,7 @@
         left: 33%;
       }
     }
+
     .wrapper {
       position: absolute;
       vertical-align: middle;
