@@ -339,16 +339,18 @@ class AvatarCard extends React.Component {
 
     return (
       <div className={this.props.className}>
-        <div className="header">
-          <div className="header-bg" style={imageStyles}/>
-        </div>
-        <div className="avatar">
-          <img src={`${imageUrl}?type=large`} alt="user-avatar"/>
-        </div>
-        <div className="content">
-          <p>{user.get('nickname')}</p>
-          {pins && <p>{`Nombre de posts : ${pins.size}`}</p>}
-        </div>
+        <Link to={`/life/community/${user.get('_id')}/${user.get('nickname')}`}>
+          <div className="header">
+            <div className="header-bg" style={imageStyles}/>
+          </div>
+          <div className="avatar">
+            <img src={`${imageUrl}?type=large`} alt="user-avatar"/>
+          </div>
+          <div className="content">
+            <p>{user.get('nickname')}</p>
+            {pins && <p>{`Nombre de posts : ${pins.size}`}</p>}
+          </div>
+        </Link>
       </div>
     )
   }

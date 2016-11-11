@@ -2,7 +2,6 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import AvatarCard from '../User/AvatarCard'
-import { Link } from 'react-router'
 if (process.env.BROWSER) {
   require('./LifeUsersList.less')
 }
@@ -33,9 +32,7 @@ class LifeUsersList extends Component {
     const user = data
     return (
       <div className="col-md-3" {...{key}}>
-        <Link to={`/life/community/${user.get('_id')}/${user.get('nickname')}`}>
-          <AvatarCard className="avatar-card col-md-3" {...{user}} {...this.props} />
-        </Link>
+        <AvatarCard className="avatar-card col-md-3" {...{user}} {...this.props} />
       </div>
     )
   }
