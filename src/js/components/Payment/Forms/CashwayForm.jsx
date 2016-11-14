@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { getI18n } from '../../../../../config/i18n'
 import * as BillingActionCreators from '../../../actions/billing'
 
 class CashwayForm extends React.Component {

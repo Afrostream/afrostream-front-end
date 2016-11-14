@@ -67,7 +67,6 @@ const webpackConfig = {
       'raven-js',
       'superagent',
       'jquery',
-      'jquery.payment',
       'bootstrap',
       'raven-js',
       'mobile-detect',

@@ -6,11 +6,14 @@ import config from '../../../../../config'
 import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
+import CouponForm from './CouponForm'
+import TextField from 'material-ui/TextField'
+import Payment from 'payment'
 
-class RecurlyForm extends React.Component {
+class RecurlyForm extends CouponForm {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
   }
 
   static propTypes = {
@@ -22,9 +25,19 @@ class RecurlyForm extends React.Component {
   }
 
   formatCard () {
-    $('.recurly-cc-number').payment('formatCardNumber')
-    $('.recurly-cc-exp').payment('formatCardExpiry')
-    $('.recurly-cc-cvc').payment('formatCardCVC')
+    const {cardNumber, expiration, cvc} = this.refs
+    if (!this.props.selected) {
+      return
+    }
+    if (cardNumber) {
+      Payment.formatCardNumber(ReactDOM.findDOMNode(cardNumber).querySelector('input'))
+    }
+    if (expiration) {
+      Payment.formatCardExpiry(ReactDOM.findDOMNode(expiration).querySelector('input'))
+    }
+    if (cvc) {
+      Payment.formatCardCVC(ReactDOM.findDOMNode(cvc).querySelector('input'))
+    }
   }
 
   initLib () {
@@ -59,32 +72,32 @@ class RecurlyForm extends React.Component {
   }
 
   async submit (billingInfo, currentPlan) {
-    const self = this
-    const cardNumber = $('.recurly-cc-number').val()
+    const {cardNumber, expiration, cvc, couponCode, country} = this.refs
+    const {month, year} = Payment.fns.cardExpiryVal(expiration.getValue())
+
     const excludedCards = ['visaelectron', 'maestro']
 
     //Excluded cart type message
-    if (~excludedCards.indexOf($.payment.cardType(cardNumber))) {
-      //$('#errors').text('Ce type ne carte n‘est pas pris en charge actuellement')
-      $('.recurly-cc-number').addClass('has-error')
+    if (~excludedCards.indexOf(Payment.fns.cardType(cardNumber))) {
       throw new Error(getI18n().payment.errors.exludedCard)
     }
+
     let recurlyInfo = {
       'plan-code': billingInfo.internalPlanUuid,
       'first_name': billingInfo.firstName,
       'last_name': billingInfo.lastName,
       'email': billingInfo.email,
       // required attributes
-      'number': self.refs.cardNumber.value,
+      'number': cardNumber.getValue(),
 
-      'month': $('.recurly-cc-exp').payment('cardExpiryVal').month,
-      'year': $('.recurly-cc-exp').payment('cardExpiryVal').year,
+      'month': month,
+      'year': year,
 
-      'cvv': self.refs.cvc.value,
+      'cvv': cvc.getValue(),
       // optional attributes
       'unit-amount-in-cents': currentPlan.get('amountInCents'),
-      'coupon_code': self.refs.couponCode.value,
-      'country': self.refs.country.value()
+      'coupon_code': couponCode.getValue(),
+      'country': country.getValue()
     }
 
     return await new Promise(
@@ -100,7 +113,7 @@ class RecurlyForm extends React.Component {
             billingProviderName: 'recurly',
             subOpts: {
               customerBankAccountToken: token.id,
-              couponCode: self.refs.couponCode.value
+              couponCode: couponCode.value
             }
           })
         })
@@ -114,59 +127,55 @@ class RecurlyForm extends React.Component {
     }
   }
 
-  renderPromoCode () {
-    return (
-      <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="coupon_code">{getI18n().payment.promo.label}</label>
-        <input
-          type="text"
-          className="form-control coupon-code"
-          data-billing="coupon_code"
-          name="coupon_code"
-          id="coupon_code"
-          ref="couponCode"
-          placeholder={getI18n().payment.promo.placeHolder}
-        />
-      </div>
-    )
-  }
-
   getForm () {
     if (!this.props.selected) return
 
     return (
-      <div className="row" ref="goCardlessForm">
-        <div className="form-group col-md-6">
-          <label className="form-label" htmlFor="number">{getI18n().payment.creditCard.number}</label>
-          <input
-            type="tel"
-            className="form-control recurly-cc-number card-number"
-            ref="cardNumber"
-            data-billing="number"
-            name="number"
-            id="number"
-            autoComplete="cc-number"
-            placeholder={getI18n().payment.creditCard.placeHolder} required/>
+      <div className="row no-padding">
+        <div className="col-md-12">
+          <div className="row no-padding">
+            <div className="col-md-6">
+              <TextField
+                floatingLabelFixed={true}
+                fullWidth={true}
+                type="tel"
+                className="card-number"
+                ref="cardNumber"
+                name="number"
+                id="number"
+                autoComplete="cc-number"
+                floatingLabelText={getI18n().payment.creditCard.number}
+                hintText={getI18n().payment.creditCard.placeHolder} required/>
+            </div>
+            <CountrySelect ref="country"/>
+          </div>
         </div>
-        <CountrySelect ref="country"/>
-        <div className="form-group col-md-4">
-          <label className="form-label" htmlFor="month">{getI18n().payment.creditCard.exp}</label>
-          <input type="tel" className="form-control recurly-cc-exp" data-billing="month"
-                 name="month" id="month"
-                 autoComplete="cc-exp"
-                 placeholder={getI18n().payment.creditCard.expPlaceHolder} required/>
+        <div className="col-md-12">
+          <div className="row no-padding">
+            <div className="col-md-6">
+              <TextField
+                floatingLabelFixed={true}
+                fullWidth={true}
+                ref="expiration"
+                name="expiration" id="expiration"
+                autoComplete="cc-exp"
+                floatingLabelText={getI18n().payment.creditCard.exp}
+                hintText={getI18n().payment.creditCard.expPlaceHolder} required/>
+            </div>
+            <div className="col-md-6">
+              <TextField
+                fullWidth={true}
+                floatingLabelFixed={true}
+                type="tel"
+                ref="cvc"
+                autoComplete="cc-csc"
+                name="cvv" id="cvv"
+                floatingLabelText={getI18n().payment.creditCard.cvv}
+                hintText={getI18n().payment.creditCard.cvcPlaceHolder} required/>
+            </div>
+          </div>
         </div>
-        <div className="form-group col-md-4">
-          <label className="form-label" htmlFor="cvv">{getI18n().payment.creditCard.cvv}</label>
-          <input type="tel" className="form-control recurly-cc-cvc" data-billing="cvv"
-                 ref="cvc"
-                 autoComplete="cc-csc"
-                 name="cvv" id="cvv"
-                 placeholder={getI18n().payment.creditCard.cvcPlaceHolder} required/>
-        </div>
-
         {this.renderPromoCode()}
-
       </div>
     )
   }

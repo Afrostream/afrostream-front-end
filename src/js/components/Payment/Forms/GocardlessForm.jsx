@@ -8,6 +8,7 @@ import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat'
 import IBAN from 'iban'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
+import TextField from 'material-ui/TextField'
 
 const {gocardless} = config
 
@@ -22,10 +23,10 @@ class GocardlessForm extends React.Component {
   }
 
   async submit (billingInfo) {
-
+    const {iban, country} = this.refs
     let self = this
-    let ibanValue = self.refs.iban.value
-    let countryValue = self.refs.country.value()
+    let ibanValue = iban.getValue()
+    let countryValue = country.getValue()
     return await new Promise(
       (resolve, reject) => {
         const gcLib = window['GoCardless']
@@ -97,8 +98,8 @@ class GocardlessForm extends React.Component {
   }
 
   validate () {
-    this.refs.iban.value = IBAN.printFormat(this.refs.iban.value, ' ')
-    return IBAN.isValid(this.refs.iban.value)
+    this.refs.iban.getInputNode().value = IBAN.printFormat(this.refs.iban.getValue(), ' ')
+    return IBAN.isValid(this.refs.iban.getValue())
   }
 
   onHeaderClick () {
@@ -111,17 +112,17 @@ class GocardlessForm extends React.Component {
   getForm () {
     if (!this.props.selected) return
     return (
-      <div className="row" ref="goCardlessForm">
-        <div className="form-group col-md-6">
-          <label className="form-label" htmlFor="number">IBAN</label>
-          <input
-            className="form-control"
-            data-billing="iban"
+      <div className="row no-padding">
+        <div className="col-md-6">
+          <TextField
             name="iban"
+            floatingLabelFixed={true}
+            fullWidth={true}
             id="iban"
             ref="iban"
             onChange={::this.validate}
-            placeholder="ex. FR14 2004 1010 0505 0001 3M02 606" required/>
+            floatingLabelText="IBAN"
+            hintText="ex. FR14 2004 1010 0505 0001 3M02 606" required/>
         </div>
         <CountrySelect ref="country"/>
       </div>

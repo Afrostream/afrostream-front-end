@@ -102,21 +102,42 @@ export function couponActivate () {
     const user = getState().User.get('user')
     const coupon = getState().Billing.get('coupon')
 
+    let provider = config.sponsors.billingProviderName
+    //FIXME provider n'est pas rempli par default, prendre "afr" de base
+    try {
+      provider = coupon.get('campaign').get('provider').get('providerName')
+    } catch (e) {
+      console.log('cant get provider name ', e)
+    }
+
+    const couponsCampaignType = coupon.get('campaign').get('couponsCampaignType')
+
+
+    //IF coupon provider is not AFR redirect to select plan form
+    if (couponsCampaignType === 'promo') {
+      return new Promise((resolve, reject) => {
+        resolve({
+          type: ActionTypes.Billing.couponActivate
+        })
+      })
+    }
+
     const billingInfo = {
       email: user.get('email'),
       id: user.get('_id'),
       internalPlanUuid: coupon.get('internalPlan').get('internalPlanUuid'),
-      billingProviderName: coupon.get('campaign').get('provider').get('providerName'),
+      billingProviderName: provider,
       firstName: user.get('firstName'),
       lastName: user.get('lastName'),
       subOpts: {
         couponCode: coupon.get('code')
       }
     }
+
     return async () => {
       return await actionDispatcher(this.subscribe(billingInfo)).then(()=> {
         return ({
-          type: ActionTypes.Billing.couponActivate
+          type: ActionTypes.Billing.couponActivate,
         })
       })
     }

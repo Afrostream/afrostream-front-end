@@ -1,257 +1,272 @@
 import React from 'react'
 import { getI18n } from '../../../../config/i18n'
+import DropDownMenu from 'material-ui/DropDownMenu'
+import MenuItem from 'material-ui/MenuItem'
 
 class CountrySelect extends React.Component {
-  value () {
-    return this.refs.country.value
+
+  constructor (props) {
+    super(props);
+    this.state = {value: getI18n().payment.country.defaultValue};
+  }
+
+  getValue () {
+    return this.state.value
+  }
+
+  handleChange (event, index, value) {
+    this.setState({value})
   }
 
   render () {
 
     return (
-      <div className="form-group col-md-4">
+      <div className="col-md-4">
         <label className="form-label" htmlFor="country">{getI18n().payment.country.label}</label>
-        <select className="form-control card-country" ref="country" id="country" name="country" required
-                defaultValue={getI18n().payment.country.defaultValue}>
-          <option value="AF">Afghanistan</option>
-          <option value="ZA">Afrique du Sud</option>
-          <option value="AL">Albanie</option>
-          <option value="DZ">Algérie</option>
-          <option value="DE">Allemagne</option>
-          <option value="AD">Andorre</option>
-          <option value="AO">Angola</option>
-          <option value="AI">Anguilla</option>
-          <option value="AG">Antigua et Barbuda</option>
-          <option value="AN">Antilles néerlandaises</option>
-          <option value="SA">Arabie saoudite</option>
-          <option value="AR">Argentine</option>
-          <option value="AM">Arménie</option>
-          <option value="AW">Aruba</option>
-          <option value="AU">Australie</option>
-          <option value="AT">Autriche</option>
-          <option value="AZ">Azerbaïdjan</option>
-          <option value="BS">Bahamas</option>
-          <option value="BH">Bahreïn</option>
-          <option value="BD">Bangladesh</option>
-          <option value="BB">Barbade</option>
-          <option value="BE">Belgique</option>
-          <option value="BM">Bermudes</option>
-          <option value="BT">Bhoutan</option>
-          <option value="BY">Biélorussie</option>
-          <option value="BO">Bolivie</option>
-          <option value="BA">Bosnie et Herzégovine</option>
-          <option value="BW">Botswana</option>
-          <option value="BN">Brunei Darussalam</option>
-          <option value="BR">Brésil</option>
-          <option value="BG">Bulgarie</option>
-          <option value="BF">Burkina Faso</option>
-          <option value="BI">Burundi</option>
-          <option value="BZ">Bélize</option>
-          <option value="BJ">Bénin</option>
-          <option value="KH">Cambodge</option>
-          <option value="CM">Cameroun</option>
-          <option value="CA">Canada</option>
-          <option value="CV">Cap-Vert</option>
-          <option value="CF">Centrafrique</option>
-          <option value="CL">Chili</option>
-          <option value="CN">Chine</option>
-          <option value="CY">Chypre</option>
-          <option value="CO">Colombiae</option>
-          <option value="KM">Comores</option>
-          <option value="CG">Congo</option>
-          <option value="KR">Corée du Nord</option>
-          <option value="KP">Corée du Sud</option>
-          <option value="CR">Costa Rica</option>
-          <option value="HR">Croatie</option>
-          <option value="CU">Cuba</option>
-          <option value="CI">Côte d'Ivoire</option>
-          <option value="DK">Danemark</option>
-          <option value="DJ">Djibouti</option>
-          <option value="DM">Dominique</option>
-          <option value="SV">El Salvador</option>
-          <option value="ES">Espagne</option>
-          <option value="EE">Estonie</option>
-          <option value="EG">Égypte</option>
-          <option value="AE">Émirats arabes unis</option>
-          <option value="EC">Équateur</option>
-          <option value="ER">Érythrée</option>
-          <option value="FM">États fédérés de Micronésie</option>
-          <option value="US">États-Unis</option>
-          <option value="ET">Éthiopie</option>
-          <option value="FJ">Fidji</option>
-          <option value="FI">Finlande</option>
-          <option value="FR">France</option>
-          <option value="GA">Gabon</option>
-          <option value="GM">Gambie</option>
-          <option value="GH">Ghana</option>
-          <option value="GI">Gibraltar</option>
-          <option value="GD">Grenade</option>
-          <option value="GL">Groënland</option>
-          <option value="GR">Grèce</option>
-          <option value="GP">Guadeloupe</option>
-          <option value="GU">Guam</option>
-          <option value="GT">Guatemala</option>
-          <option value="GN">Guinée</option>
-          <option value="GQ">Guinée équatoriale</option>
-          <option value="GW">Guinée-Bissau</option>
-          <option value="GY">Guyane</option>
-          <option value="GF">Guyane française</option>
-          <option value="GE">Géorgie</option>
-          <option value="HT">Haïti</option>
-          <option value="HN">Honduras</option>
-          <option value="HK">Hong Kong</option>
-          <option value="HU">Hongrie</option>
-          <option value="BV">Ile Bouvet</option>
-          <option value="CX">Ile Christmas</option>
-          <option value="HM">Ile Heard et iles McDonald</option>
-          <option value="MU">Ile Maurice</option>
-          <option value="NF">Ile Norfolk</option>
-          <option value="KY">Iles Cayman</option>
-          <option value="CC">Iles Cocos (Keeling)</option>
-          <option value="CK">Iles Cook</option>
-          <option value="FK">Iles Falkland (Malouines)</option>
-          <option value="FO">Iles Faroe</option>
-          <option value="MH">Iles Marshall</option>
-          <option value="MP">Iles Northern Mariana</option>
-          <option value="SB">Iles Salomon</option>
-          <option value="VG">Iles Vierges, G.B.</option>
-          <option value="VI">Iles Vierges, É.U.</option>
-          <option value="IN">Inde</option>
-          <option value="ID">Indonésie</option>
-          <option value="IQ">Irak</option>
-          <option value="IR">Iran</option>
-          <option value="IE">Irlande</option>
-          <option value="IS">Islande</option>
-          <option value="IL">Israël</option>
-          <option value="IT">Italie</option>
-          <option value="JM">Jamaïque</option>
-          <option value="JP">Japon</option>
-          <option value="JO">Jordan</option>
-          <option value="KZ">Kazakhstan</option>
-          <option value="KE">Kenya</option>
-          <option value="KG">Kirghizstan</option>
-          <option value="KI">Kiribati</option>
-          <option value="KW">Koweït</option>
-          <option value="LA">Laos</option>
-          <option value="LV">Lettonie</option>
-          <option value="LB">Liban</option>
-          <option value="LY">Libye</option>
-          <option value="LR">Libéria</option>
-          <option value="LI">Liechtenstein</option>
-          <option value="LT">Lituanie</option>
-          <option value="LU">Luxembourg</option>
-          <option value="LS">Lésotho</option>
-          <option value="MO">Macao</option>
-          <option value="MK">Macédoine</option>
-          <option value="MG">Madagascar</option>
-          <option value="MY">Malaisie</option>
-          <option value="MW">Malawi</option>
-          <option value="MV">Maldives</option>
-          <option value="ML">Mali</option>
-          <option value="MT">Malte</option>
-          <option value="MA">Maroc</option>
-          <option value="MQ">Martinique</option>
-          <option value="MR">Mauritanie</option>
-          <option value="YT">Mayotte</option>
-          <option value="MX">Mexique</option>
-          <option value="MD">Moldavie</option>
-          <option value="MC">Monaco</option>
-          <option value="MN">Mongolie</option>
-          <option value="MS">Montserrat</option>
-          <option value="MZ">Mozambique</option>
-          <option value="MM">Myanmar (Birmanie)</option>
-          <option value="NA">Namibie</option>
-          <option value="NR">Nauru</option>
-          <option value="NI">Nicaragua</option>
-          <option value="NE">Niger</option>
-          <option value="NG">Nigéria</option>
-          <option value="NU">Niue</option>
-          <option value="NO">Norvège</option>
-          <option value="NC">Nouvelle Calédonie</option>
-          <option value="NZ">Nouvelle-Zélande</option>
-          <option value="NP">Népal</option>
-          <option value="OM">Oman</option>
-          <option value="UG">Ouganda</option>
-          <option value="UZ">Ouzbékistan</option>
-          <option value="PK">Pakistan</option>
-          <option value="PW">Palau</option>
-          <option value="PS">Palestine</option>
-          <option value="PA">Panama</option>
-          <option value="PG">Papouasie Nouvelle Guinée</option>
-          <option value="PY">Paraguay</option>
-          <option value="NL">Pays-Bas</option>
-          <option value="PH">Philippines</option>
-          <option value="PN">Pitcairn</option>
-          <option value="PL">Pologne</option>
-          <option value="PF">Polynésie française</option>
-          <option value="PT">Portugal</option>
-          <option value="PR">Puerto Rico</option>
-          <option value="PE">Pérou</option>
-          <option value="QA">Qatar</option>
-          <option value="RO">Roumanie</option>
-          <option value="GB">Royaume-Uni</option>
-          <option value="RU">Russie</option>
-          <option value="RW">Rwanda</option>
-          <option value="CD">République Démocratique du Congo</option>
-          <option value="DO">République dominicaine</option>
-          <option value="CZ">République tchèque</option>
-          <option value="RE">Réunion, île de la</option>
-          <option value="EH">Sahara Ouest</option>
-          <option value="KN">Saint-Kitts et Nevis</option>
-          <option value="PM">Saint-Pierre et Miquelon</option>
-          <option value="VC">Saint-Vincent et Les Grenadines</option>
-          <option value="SH">Sainte-Hélène</option>
-          <option value="LC">Sainte-Lucie</option>
-          <option value="WS">Samoa</option>
-          <option value="AS">Samoa américaine</option>
-          <option value="SM">San Marino</option>
-          <option value="ST">San Tomé et Principe</option>
-          <option value="SC">Seychelles</option>
-          <option value="SL">Sierra Leone</option>
-          <option value="SG">Singapour</option>
-          <option value="SK">Slovaquie</option>
-          <option value="SI">Slovénie</option>
-          <option value="SO">Somalie</option>
-          <option value="SD">Soudan</option>
-          <option value="LK">Sri Lanka</option>
-          <option value="GS">St-George et les iles Sandwich</option>
-          <option value="CH">Suisse</option>
-          <option value="SR">Surinam</option>
-          <option value="SE">Suède</option>
-          <option value="SJ">Svalbard et Jan Mayen</option>
-          <option value="SZ">Swaziland</option>
-          <option value="SY">Syrie</option>
-          <option value="SN">Sénégal</option>
-          <option value="TJ">Tadjikistan</option>
-          <option value="TZ">Tanzanie</option>
-          <option value="TW">Taïwan</option>
-          <option value="TD">Tchad</option>
-          <option value="IO">Territoire britannique de l'Océan Indien</option>
-          <option value="TF">Territoires français du Sud</option>
-          <option value="TH">Thaïlande</option>
-          <option value="TP">Timor Est</option>
-          <option value="TG">Togo</option>
-          <option value="TK">Tokelau</option>
-          <option value="TO">Tonga</option>
-          <option value="TT">Trinidad et Tobago</option>
-          <option value="TN">Tunisie</option>
-          <option value="TM">Turkmenistan</option>
-          <option value="TC">Turks et iles Caicos</option>
-          <option value="TR">Turquie</option>
-          <option value="TV">Tuvalu</option>
-          <option value="UA">Ukraine</option>
-          <option value="UM">United States Minor Outlying Islands</option>
-          <option value="UY">Uruguay</option>
-          <option value="VU">Vanuatu</option>
-          <option value="VA">Vatican, cité du</option>
-          <option value="VN">Vietnam</option>
-          <option value="VE">Vénézuela</option>
-          <option value="WF">Wallis et Futuna</option>
-          <option value="YU">Yougoslavie</option>
-          <option value="YE">Yémen</option>
-          <option value="ZM">Zambie</option>
-          <option value="ZW">Zimbabwé</option>
-        </select>
+        <DropDownMenu className="card-country" ref="country" id="country" name="country" required
+                      onChange={::this.handleChange}
+                      autoWidth={false}
+                      style={{width: '100%'}}
+                      value={this.state.value}>
+          <MenuItem value="AF" primaryText="Afghanistan"/>
+          <MenuItem value="ZA" primaryText="Afrique du Sud"/>
+          <MenuItem value="AL" primaryText="Albanie"/>
+          <MenuItem value="DZ" primaryText="Algérie"/>
+          <MenuItem value="DE" primaryText="Allemagne"/>
+          <MenuItem value="AD" primaryText="Andorre"/>
+          <MenuItem value="AO" primaryText="Angola"/>
+          <MenuItem value="AI" primaryText="Anguilla"/>
+          <MenuItem value="AG" primaryText="Antigua et Barbuda"/>
+          <MenuItem value="AN" primaryText="Antilles néerlandaises"/>
+          <MenuItem value="SA" primaryText="Arabie saoudite"/>
+          <MenuItem value="AR" primaryText="Argentine"/>
+          <MenuItem value="AM" primaryText="Arménie"/>
+          <MenuItem value="AW" primaryText="Aruba"/>
+          <MenuItem value="AU" primaryText="Australie"/>
+          <MenuItem value="AT" primaryText="Autriche"/>
+          <MenuItem value="AZ" primaryText="Azerbaïdjan"/>
+          <MenuItem value="BS" primaryText="Bahamas"/>
+          <MenuItem value="BH" primaryText="Bahreïn"/>
+          <MenuItem value="BD" primaryText="Bangladesh"/>
+          <MenuItem value="BB" primaryText="Barbade"/>
+          <MenuItem value="BE" primaryText="Belgique"/>
+          <MenuItem value="BM" primaryText="Bermudes"/>
+          <MenuItem value="BT" primaryText="Bhoutan"/>
+          <MenuItem value="BY" primaryText="Biélorussie"/>
+          <MenuItem value="BO" primaryText="Bolivie"/>
+          <MenuItem value="BA" primaryText="Bosnie et Herzégovine"/>
+          <MenuItem value="BW" primaryText="Botswana"/>
+          <MenuItem value="BN" primaryText="Brunei Darussalam"/>
+          <MenuItem value="BR" primaryText="Brésil"/>
+          <MenuItem value="BG" primaryText="Bulgarie"/>
+          <MenuItem value="BF" primaryText="Burkina Faso"/>
+          <MenuItem value="BI" primaryText="Burundi"/>
+          <MenuItem value="BZ" primaryText="Bélize"/>
+          <MenuItem value="BJ" primaryText="Bénin"/>
+          <MenuItem value="KH" primaryText="Cambodge"/>
+          <MenuItem value="CM" primaryText="Cameroun"/>
+          <MenuItem value="CA" primaryText="Canada"/>
+          <MenuItem value="CV" primaryText="Cap-Vert"/>
+          <MenuItem value="CF" primaryText="Centrafrique"/>
+          <MenuItem value="CL" primaryText="Chili"/>
+          <MenuItem value="CN" primaryText="Chine"/>
+          <MenuItem value="CY" primaryText="Chypre"/>
+          <MenuItem value="CO" primaryText="Colombiae"/>
+          <MenuItem value="KM" primaryText="Comores"/>
+          <MenuItem value="CG" primaryText="Congo"/>
+          <MenuItem value="KR" primaryText="Corée du Nord"/>
+          <MenuItem value="KP" primaryText="Corée du Sud"/>
+          <MenuItem value="CR" primaryText="Costa Rica"/>
+          <MenuItem value="HR" primaryText="Croatie"/>
+          <MenuItem value="CU" primaryText="Cuba"/>
+          <MenuItem value="CI" primaryText="Côte d'Ivoire"/>
+          <MenuItem value="DK" primaryText="Danemark"/>
+          <MenuItem value="DJ" primaryText="Djibouti"/>
+          <MenuItem value="DM" primaryText="Dominique"/>
+          <MenuItem value="SV" primaryText="El Salvador"/>
+          <MenuItem value="ES" primaryText="Espagne"/>
+          <MenuItem value="EE" primaryText="Estonie"/>
+          <MenuItem value="EG" primaryText="Égypte"/>
+          <MenuItem value="AE" primaryText="Émirats arabes unis"/>
+          <MenuItem value="EC" primaryText="Équateur"/>
+          <MenuItem value="ER" primaryText="Érythrée"/>
+          <MenuItem value="FM" primaryText="États fédérés de Micronésie"/>
+          <MenuItem value="US" primaryText="États-Unis"/>
+          <MenuItem value="ET" primaryText="Éthiopie"/>
+          <MenuItem value="FJ" primaryText="Fidji"/>
+          <MenuItem value="FI" primaryText="Finlande"/>
+          <MenuItem value="FR" primaryText="France"/>
+          <MenuItem value="GA" primaryText="Gabon"/>
+          <MenuItem value="GM" primaryText="Gambie"/>
+          <MenuItem value="GH" primaryText="Ghana"/>
+          <MenuItem value="GI" primaryText="Gibraltar"/>
+          <MenuItem value="GD" primaryText="Grenade"/>
+          <MenuItem value="GL" primaryText="Groënland"/>
+          <MenuItem value="GR" primaryText="Grèce"/>
+          <MenuItem value="GP" primaryText="Guadeloupe"/>
+          <MenuItem value="GU" primaryText="Guam"/>
+          <MenuItem value="GT" primaryText="Guatemala"/>
+          <MenuItem value="GN" primaryText="Guinée"/>
+          <MenuItem value="GQ" primaryText="Guinée équatoriale"/>
+          <MenuItem value="GW" primaryText="Guinée-Bissau"/>
+          <MenuItem value="GY" primaryText="Guyane"/>
+          <MenuItem value="GF" primaryText="Guyane française"/>
+          <MenuItem value="GE" primaryText="Géorgie"/>
+          <MenuItem value="HT" primaryText="Haïti"/>
+          <MenuItem value="HN" primaryText="Honduras"/>
+          <MenuItem value="HK" primaryText="Hong Kong"/>
+          <MenuItem value="HU" primaryText="Hongrie"/>
+          <MenuItem value="BV" primaryText="Ile Bouvet"/>
+          <MenuItem value="CX" primaryText="Ile Christmas"/>
+          <MenuItem value="HM" primaryText="Ile Heard et iles McDonald"/>
+          <MenuItem value="MU" primaryText="Ile Maurice"/>
+          <MenuItem value="NF" primaryText="Ile Norfolk"/>
+          <MenuItem value="KY" primaryText="Iles Cayman"/>
+          <MenuItem value="CC" primaryText="Iles Cocos (Keeling)"/>
+          <MenuItem value="CK" primaryText="Iles Cook"/>
+          <MenuItem value="FK" primaryText="Iles Falkland (Malouines)"/>
+          <MenuItem value="FO" primaryText="Iles Faroe"/>
+          <MenuItem value="MH" primaryText="Iles Marshall"/>
+          <MenuItem value="MP" primaryText="Iles Northern Mariana"/>
+          <MenuItem value="SB" primaryText="Iles Salomon"/>
+          <MenuItem value="VG" primaryText="Iles Vierges, G.B."/>
+          <MenuItem value="VI" primaryText="Iles Vierges, É.U."/>
+          <MenuItem value="IN" primaryText="Inde"/>
+          <MenuItem value="ID" primaryText="Indonésie"/>
+          <MenuItem value="IQ" primaryText="Irak"/>
+          <MenuItem value="IR" primaryText="Iran"/>
+          <MenuItem value="IE" primaryText="Irlande"/>
+          <MenuItem value="IS" primaryText="Islande"/>
+          <MenuItem value="IL" primaryText="Israël"/>
+          <MenuItem value="IT" primaryText="Italie"/>
+          <MenuItem value="JM" primaryText="Jamaïque"/>
+          <MenuItem value="JP" primaryText="Japon"/>
+          <MenuItem value="JO" primaryText="Jordan"/>
+          <MenuItem value="KZ" primaryText="Kazakhstan"/>
+          <MenuItem value="KE" primaryText="Kenya"/>
+          <MenuItem value="KG" primaryText="Kirghizstan"/>
+          <MenuItem value="KI" primaryText="Kiribati"/>
+          <MenuItem value="KW" primaryText="Koweït"/>
+          <MenuItem value="LA" primaryText="Laos"/>
+          <MenuItem value="LV" primaryText="Lettonie"/>
+          <MenuItem value="LB" primaryText="Liban"/>
+          <MenuItem value="LY" primaryText="Libye"/>
+          <MenuItem value="LR" primaryText="Libéria"/>
+          <MenuItem value="LI" primaryText="Liechtenstein"/>
+          <MenuItem value="LT" primaryText="Lituanie"/>
+          <MenuItem value="LU" primaryText="Luxembourg"/>
+          <MenuItem value="LS" primaryText="Lésotho"/>
+          <MenuItem value="MO" primaryText="Macao"/>
+          <MenuItem value="MK" primaryText="Macédoine"/>
+          <MenuItem value="MG" primaryText="Madagascar"/>
+          <MenuItem value="MY" primaryText="Malaisie"/>
+          <MenuItem value="MW" primaryText="Malawi"/>
+          <MenuItem value="MV" primaryText="Maldives"/>
+          <MenuItem value="ML" primaryText="Mali"/>
+          <MenuItem value="MT" primaryText="Malte"/>
+          <MenuItem value="MA" primaryText="Maroc"/>
+          <MenuItem value="MQ" primaryText="Martinique"/>
+          <MenuItem value="MR" primaryText="Mauritanie"/>
+          <MenuItem value="YT" primaryText="Mayotte"/>
+          <MenuItem value="MX" primaryText="Mexique"/>
+          <MenuItem value="MD" primaryText="Moldavie"/>
+          <MenuItem value="MC" primaryText="Monaco"/>
+          <MenuItem value="MN" primaryText="Mongolie"/>
+          <MenuItem value="MS" primaryText="Montserrat"/>
+          <MenuItem value="MZ" primaryText="Mozambique"/>
+          <MenuItem value="MM" primaryText="Myanmar (Birmanie)"/>
+          <MenuItem value="NA" primaryText="Namibie"/>
+          <MenuItem value="NR" primaryText="Nauru"/>
+          <MenuItem value="NI" primaryText="Nicaragua"/>
+          <MenuItem value="NE" primaryText="Niger"/>
+          <MenuItem value="NG" primaryText="Nigéria"/>
+          <MenuItem value="NU" primaryText="Niue"/>
+          <MenuItem value="NO" primaryText="Norvège"/>
+          <MenuItem value="NC" primaryText="Nouvelle Calédonie"/>
+          <MenuItem value="NZ" primaryText="Nouvelle-Zélande"/>
+          <MenuItem value="NP" primaryText="Népal"/>
+          <MenuItem value="OM" primaryText="Oman"/>
+          <MenuItem value="UG" primaryText="Ouganda"/>
+          <MenuItem value="UZ" primaryText="Ouzbékistan"/>
+          <MenuItem value="PK" primaryText="Pakistan"/>
+          <MenuItem value="PW" primaryText="Palau"/>
+          <MenuItem value="PS" primaryText="Palestine"/>
+          <MenuItem value="PA" primaryText="Panama"/>
+          <MenuItem value="PG" primaryText="Papouasie Nouvelle Guinée"/>
+          <MenuItem value="PY" primaryText="Paraguay"/>
+          <MenuItem value="NL" primaryText="Pays-Bas"/>
+          <MenuItem value="PH" primaryText="Philippines"/>
+          <MenuItem value="PN" primaryText="Pitcairn"/>
+          <MenuItem value="PL" primaryText="Pologne"/>
+          <MenuItem value="PF" primaryText="Polynésie française"/>
+          <MenuItem value="PT" primaryText="Portugal"/>
+          <MenuItem value="PR" primaryText="Puerto Rico"/>
+          <MenuItem value="PE" primaryText="Pérou"/>
+          <MenuItem value="QA" primaryText="Qatar"/>
+          <MenuItem value="RO" primaryText="Roumanie"/>
+          <MenuItem value="GB" primaryText="Royaume-Uni"/>
+          <MenuItem value="RU" primaryText="Russie"/>
+          <MenuItem value="RW" primaryText="Rwanda"/>
+          <MenuItem value="CD" primaryText="République Démocratique du Congo"/>
+          <MenuItem value="DO" primaryText="République dominicaine"/>
+          <MenuItem value="CZ" primaryText="République tchèque"/>
+          <MenuItem value="RE" primaryText="Réunion, île de la"/>
+          <MenuItem value="EH" primaryText="Sahara Ouest"/>
+          <MenuItem value="KN" primaryText="Saint-Kitts et Nevis"/>
+          <MenuItem value="PM" primaryText="Saint-Pierre et Miquelon"/>
+          <MenuItem value="VC" primaryText="Saint-Vincent et Les Grenadines"/>
+          <MenuItem value="SH" primaryText="Sainte-Hélène"/>
+          <MenuItem value="LC" primaryText="Sainte-Lucie"/>
+          <MenuItem value="WS" primaryText="Samoa"/>
+          <MenuItem value="AS" primaryText="Samoa américaine"/>
+          <MenuItem value="SM" primaryText="San Marino"/>
+          <MenuItem value="ST" primaryText="San Tomé et Principe"/>
+          <MenuItem value="SC" primaryText="Seychelles"/>
+          <MenuItem value="SL" primaryText="Sierra Leone"/>
+          <MenuItem value="SG" primaryText="Singapour"/>
+          <MenuItem value="SK" primaryText="Slovaquie"/>
+          <MenuItem value="SI" primaryText="Slovénie"/>
+          <MenuItem value="SO" primaryText="Somalie"/>
+          <MenuItem value="SD" primaryText="Soudan"/>
+          <MenuItem value="LK" primaryText="Sri Lanka"/>
+          <MenuItem value="GS" primaryText="St-George et les iles Sandwich"/>
+          <MenuItem value="CH" primaryText="Suisse"/>
+          <MenuItem value="SR" primaryText="Surinam"/>
+          <MenuItem value="SE" primaryText="Suède"/>
+          <MenuItem value="SJ" primaryText="Svalbard et Jan Mayen"/>
+          <MenuItem value="SZ" primaryText="Swaziland"/>
+          <MenuItem value="SY" primaryText="Syrie"/>
+          <MenuItem value="SN" primaryText="Sénégal"/>
+          <MenuItem value="TJ" primaryText="Tadjikistan"/>
+          <MenuItem value="TZ" primaryText="Tanzanie"/>
+          <MenuItem value="TW" primaryText="Taïwan"/>
+          <MenuItem value="TD" primaryText="Tchad"/>
+          <MenuItem value="IO" primaryText="Territoire britannique de l'Océan Indien"/>
+          <MenuItem value="TF" primaryText="Territoires français du Sud"/>
+          <MenuItem value="TH" primaryText="Thaïlande"/>
+          <MenuItem value="TP" primaryText="Timor Est"/>
+          <MenuItem value="TG" primaryText="Togo"/>
+          <MenuItem value="TK" primaryText="Tokelau"/>
+          <MenuItem value="TO" primaryText="Tonga"/>
+          <MenuItem value="TT" primaryText="Trinidad et Tobago"/>
+          <MenuItem value="TN" primaryText="Tunisie"/>
+          <MenuItem value="TM" primaryText="Turkmenistan"/>
+          <MenuItem value="TC" primaryText="Turks et iles Caicos"/>
+          <MenuItem value="TR" primaryText="Turquie"/>
+          <MenuItem value="TV" primaryText="Tuvalu"/>
+          <MenuItem value="UA" primaryText="Ukraine"/>
+          <MenuItem value="UM" primaryText="United States Minor Outlying Islands"/>
+          <MenuItem value="UY" primaryText="Uruguay"/>
+          <MenuItem value="VU" primaryText="Vanuatu"/>
+          <MenuItem value="VA" primaryText="Vatican, cité du"/>
+          <MenuItem value="VN" primaryText="Vietnam"/>
+          <MenuItem value="VE" primaryText="Vénézuela"/>
+          <MenuItem value="WF" primaryText="Wallis et Futuna"/>
+          <MenuItem value="YU" primaryText="Yougoslavie"/>
+          <MenuItem value="YE" primaryText="Yémen"/>
+          <MenuItem value="ZM" primaryText="Zambie"/>
+          <MenuItem value="ZW" primaryText="Zimbabwé"/>
+        </DropDownMenu>
       </div>
     )
   }

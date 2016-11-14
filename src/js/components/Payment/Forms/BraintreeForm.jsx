@@ -6,11 +6,12 @@ import moment from 'moment'
 import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
+import CouponForm from './CouponForm'
 
-class BraintreeForm extends React.Component {
+class BraintreeForm extends CouponForm {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
   }
 
   static propTypes = {
@@ -85,28 +86,11 @@ class BraintreeForm extends React.Component {
     }
   }
 
-  renderPromoCode () {
-    return (
-      <div className="form-group col-md-6">
-        <label className="form-label" htmlFor="coupon_code">{getI18n().payment.promo.label}</label>
-        <input
-          type="text"
-          className="form-control coupon-code"
-          data-billing="coupon_code"
-          name="coupon_code"
-          id="coupon_code"
-          ref="couponCode"
-          placeholder={getI18n().payment.promo.placeHolder}
-        />
-      </div>
-    )
-  }
-
   getForm () {
     if (!this.props.selected) return
     return (
 
-      <div className="row" ref="goCardlessForm">
+      <div className="row">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {getI18n().payment.paypal.paypalText.replace('{submitBtn}', getI18n().planCodes.action)}
