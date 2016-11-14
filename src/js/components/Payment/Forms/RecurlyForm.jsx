@@ -161,7 +161,7 @@ class RecurlyForm extends CouponForm {
                 fullWidth={true}
                 type="text"
                 ref="expiration"
-                maxlength="9"
+                maxLength="9"
                 name="expiration" id="expiration"
                 autoComplete="cc-exp"
                 floatingLabelText={getI18n().payment.creditCard.exp}
