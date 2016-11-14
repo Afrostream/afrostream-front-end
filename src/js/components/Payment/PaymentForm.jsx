@@ -415,6 +415,38 @@ class PaymentForm extends React.Component {
                      planLabel={planLabel}/>)
   }
 
+  renderFooter () {
+
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    if (!this.state.currentPlan) {
+      return
+    }
+
+    const inputChangeAction = {
+      onClick: event => {
+        //get InternalPlan
+        dispatch(BillingActionCreators.getInternalplans({
+          contextBillingUuid: 'common',
+          passToken: true,
+          reload: true,
+          checkMobile: false
+        }))
+      }
+    }
+
+    return (<div className="row">
+      <div className="col-md-12 text-center">
+        <button
+          className="btn btn-plan" {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}</button>
+      </div>
+    </div>)
+  }
+
   renderForm () {
 
     var spinnerClasses = {
@@ -447,6 +479,7 @@ class PaymentForm extends React.Component {
             {this.renderCGU()}
             {this.renderDroits()}
             {this.renderSubmit()}
+            {this.renderFooter()}
 
           </form>
         </div>
