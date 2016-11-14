@@ -38,12 +38,18 @@ class HomePage extends React.Component {
         }
         let validPlans = Billing.get(`internalPlans`)
         if (validPlans) {
-          const mobilePlan = validPlans.find((plan)=> {
+
+          let firstPlan = validPlans.find((plan)=> {
             let planUuid = plan.get('internalPlanUuid')
             return planUuid === config.netsize.internalPlanUuid
           })
-          if (mobilePlan) {
-            donePath = `${donePath}/${mobilePlan.get('internalPlanUuid')}/checkout`
+
+          if (!firstPlan) {
+            firstPlan = validPlans.get(0)
+          }
+
+          if (firstPlan) {
+            donePath = `${donePath}/${firstPlan.get('internalPlanUuid')}/checkout`
           }
         }
         history.push(donePath)

@@ -54,15 +54,16 @@ const mergeProfile = function (data, getState, actionDispatcher) {
             })).then(({res: {body = []}}) => {
               if (body) {
 
-                const mobilePlan = _.find(body, (plan)=> {
+                let firstPlan = _.find(body, (plan)=> {
                   let planUuid = plan.internalPlanUuid
                   return planUuid === config.netsize.internalPlanUuid
                 })
-                const firstPlan = _.head(body)
 
-                if (mobilePlan) {
-                  donePath = `/select-plan/${mobilePlan.internalPlanUuid}/checkout`
-                } else if (firstPlan) {
+                if (!firstPlan) {
+                  firstPlan = _.head(body)
+                }
+
+                if (firstPlan) {
                   donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
                 }
               }
