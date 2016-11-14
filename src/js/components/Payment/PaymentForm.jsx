@@ -202,7 +202,7 @@ class PaymentForm extends React.Component {
       }
     } = this
 
-    const currentPlan = this.hasPlan()
+    const currentPlan = this.state.currentPlan
 
     if (!currentPlan) {
       return

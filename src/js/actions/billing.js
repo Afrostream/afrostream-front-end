@@ -253,7 +253,6 @@ export function getInternalplans ({
             }
           }
         })
-        //}
       }
 
       let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
