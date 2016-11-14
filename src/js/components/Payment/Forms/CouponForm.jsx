@@ -127,45 +127,39 @@ class CouponForm extends React.Component {
     }
 
     return (
-      <div className="panel-group">
-        <div className="panel">
-          <div className="row no-padding">
-            <div className="col-md-12"
-                 data-original-title={getI18n().payment.promo.disabledLabel}
-                 ref="couponContainer"
-                 data-placement="top"
-                 data-toggle="tooltip">
-              <div className="row no-padding">
-                <div className="col-md-11">
-                  <TextField
-                    floatingLabelFixed={true}
-                    fullWidth={true}
-                    type="text"
-                    data-billing="coupon_code"
-                    name="coupon_code"
-                    id="coupon_code"
-                    ref="couponCode"
-                    floatingLabelText={getI18n().payment.promo.label}
-                    {...inputAttributes}
-                    hintText={getI18n().payment.promo.placeHolder}
-                  />
-                </div>
-                <div className="col-md-1">
-                  <i className={`zmdi coupon-check
+      <div className="col-md-12"
+           data-original-title={getI18n().payment.promo.disabledLabel}
+           ref="couponContainer"
+           data-placement="top"
+           data-toggle="tooltip">
+        <div className="row no-padding">
+          <div className="col-md-11">
+            <TextField
+              floatingLabelFixed={true}
+              fullWidth={true}
+              type="text"
+              data-billing="coupon_code"
+              name="coupon_code"
+              id="coupon_code"
+              ref="couponCode"
+              floatingLabelText={getI18n().payment.promo.label}
+              {...inputAttributes}
+              hintText={getI18n().payment.promo.placeHolder}
+            />
+          </div>
+          <div className="col-md-1">
+            <i className={`zmdi coupon-check
                                 ${couponIcon }
                                 zmdi-hc-2x`}
-                     aria-hidden=" true"/>
-                  {this.state.fetching && <Spinner/>}
-                </div>
-              </div>
-              {validCoupon && <div className="row no-padding">
-                <div className="col-md-12 coupon-desc">
-                  {couponName}
-                </div>
-              </div>}
-            </div>
+               aria-hidden=" true"/>
+            {this.state.fetching && <Spinner/>}
           </div>
         </div>
+        {validCoupon && <div className="row no-padding">
+          <div className="col-md-12 coupon-desc">
+            {couponName}
+          </div>
+        </div>}
       </div>
     )
   }
