@@ -120,7 +120,7 @@ class Header extends React.Component {
             <Breadcrumbs
               routes={this.props.routes}
               params={this.props.params}
-              excludes={['app', 'player']}
+              excludes={['app', 'player', 'search']}
               displayMissingText="Accueil"
               hideNoPath={true}
               displayMissing={false}

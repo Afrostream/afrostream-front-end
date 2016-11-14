@@ -60,7 +60,7 @@ class SearchPage extends React.Component {
 
   renderMovies (movies, fetching) {
     if (!movies || !movies.size) {
-      return fetching ? '' : getI18n().search['noData']
+      return fetching ? '' : <span>{getI18n().search['noData']}</span>
     }
 
     return <MoviesSlider key={`search-movie`} dataList={movies} axis="y"/>
@@ -111,7 +111,7 @@ class SearchPage extends React.Component {
       <ReactCSSTransitionGroup transitionName="search" className="row-fluid search-page" transitionEnterTimeout={300}
                                transitionLeaveTimeout={300} component="div">
         <div className="search-result">
-          {moviesFetching ? <div className="spinner-search"><Spinner /></div> : ''}
+          {moviesFetching && <div className="spinner-search"><Spinner /></div>}
           {actors}
           {movies}
         </div>

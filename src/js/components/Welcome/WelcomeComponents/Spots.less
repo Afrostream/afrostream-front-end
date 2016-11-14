@@ -18,7 +18,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
 
     .movies-list__selection {
       font-size: 2.7em;
@@ -27,7 +27,9 @@
     .thumb {
       float: left;
       order: 0;
-      flex: 1 1 200px;
+      flex: 1 1 auto;
+      //flex-basis: 270px; /* default value */
+      flex-grow: 0;
       align-self: auto;
       .isMobile({ width: 100%; });
     }
