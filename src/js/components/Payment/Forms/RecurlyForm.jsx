@@ -9,7 +9,7 @@ import window from 'global/window'
 import CouponForm from './CouponForm'
 import TextField from 'material-ui/TextField'
 import Payment from 'payment'
-
+const J = Payment.J
 class RecurlyForm extends CouponForm {
 
   constructor (props, context) {
@@ -77,11 +77,14 @@ class RecurlyForm extends CouponForm {
 
     const excludedCards = ['visaelectron', 'maestro']
 
+    //J.toggleClass(document.querySelectorAll('input'), 'error')
+    //J.toggleClass(cardNumber, 'error', !Payment.fns.validateCardNumber(J.val(cardNumber)))
+    //J.toggleClass(expiration, 'error', !Payment.fns.validateCardExpiry(Payment.cardExpiryVal(expiration)))
+
     //Excluded cart type message
     if (~excludedCards.indexOf(Payment.fns.cardType(cardNumber))) {
       throw new Error(getI18n().payment.errors.exludedCard)
     }
-
     let recurlyInfo = {
       'plan-code': billingInfo.internalPlanUuid,
       'first_name': billingInfo.firstName,
@@ -91,7 +94,7 @@ class RecurlyForm extends CouponForm {
       'number': cardNumber.getValue(),
 
       'month': month,
-      'year': year,
+      'year': parseInt(year.toString().slice(-2)),
 
       'cvv': cvc.getValue(),
       // optional attributes
@@ -138,7 +141,7 @@ class RecurlyForm extends CouponForm {
               <TextField
                 floatingLabelFixed={true}
                 fullWidth={true}
-                type="tel"
+                type="text"
                 className="card-number"
                 ref="cardNumber"
                 name="number"
@@ -156,7 +159,9 @@ class RecurlyForm extends CouponForm {
               <TextField
                 floatingLabelFixed={true}
                 fullWidth={true}
+                type="text"
                 ref="expiration"
+                maxlength="9"
                 name="expiration" id="expiration"
                 autoComplete="cc-exp"
                 floatingLabelText={getI18n().payment.creditCard.exp}
@@ -166,10 +171,10 @@ class RecurlyForm extends CouponForm {
               <TextField
                 fullWidth={true}
                 floatingLabelFixed={true}
-                type="tel"
+                type="text"
                 ref="cvc"
-                autoComplete="cc-csc"
                 name="cvv" id="cvv"
+                autoComplete="off"
                 floatingLabelText={getI18n().payment.creditCard.cvv}
                 hintText={getI18n().payment.creditCard.cvcPlaceHolder} required/>
             </div>

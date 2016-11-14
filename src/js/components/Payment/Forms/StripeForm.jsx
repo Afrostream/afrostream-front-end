@@ -85,7 +85,7 @@ class StripeForm extends CouponForm {
     let stripeInfo = {
       'number': cardNumber.getValue(),
       'exp_month': month,
-      'exp_year': year,
+      'exp_year': parseInt(year.toString().slice(-2)),
       'cvc': cvc.getValue(),
       // optional attributes
       'address_country': country.getValue(),
@@ -129,7 +129,7 @@ class StripeForm extends CouponForm {
               <TextField
                 floatingLabelFixed={true}
                 fullWidth={true}
-                type="tel"
+                type="text"
                 className="card-number"
                 ref="cardNumber"
                 name="number"
@@ -147,7 +147,9 @@ class StripeForm extends CouponForm {
               <TextField
                 floatingLabelFixed={true}
                 fullWidth={true}
+                type="text"
                 ref="expiration"
+                maxlength="9"
                 name="expiration" id="expiration"
                 autoComplete="cc-exp"
                 floatingLabelText={getI18n().payment.creditCard.exp}
@@ -157,10 +159,10 @@ class StripeForm extends CouponForm {
               <TextField
                 fullWidth={true}
                 floatingLabelFixed={true}
-                type="tel"
+                type="text"
                 ref="cvc"
-                autoComplete="cc-csc"
                 name="cvv" id="cvv"
+                autoComplete="off"
                 floatingLabelText={getI18n().payment.creditCard.cvv}
                 hintText={getI18n().payment.creditCard.cvcPlaceHolder} required/>
             </div>
