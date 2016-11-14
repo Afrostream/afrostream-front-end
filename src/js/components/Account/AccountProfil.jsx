@@ -13,6 +13,7 @@ import MenuItem from 'material-ui/MenuItem'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import Checkbox from 'material-ui/Checkbox'
 import RaisedButton from 'material-ui/RaisedButton'
+import AvatarCard from '../User/AvatarCard'
 
 import areIntlLocalesSupported from 'intl-locales-supported'
 
@@ -128,7 +129,7 @@ class AccountProfil extends React.Component {
           onClick: (event) => this.syncFB()
         }
         element = <div className="row-fluid">
-          <img className="img-responsive" {...inputAttributes} src={`${user.get('picture')}?type=large`}/>
+          <AvatarCard user={user} {...inputAttributes}/>
           <RaisedButton {...{label}} {...inputAttributes} style={{
             marginTop: 20,
             minWidth: 200
@@ -248,7 +249,7 @@ class AccountProfil extends React.Component {
         {sections.map((section)=> {
           return (<div className={`col-md-${section.col ? section.col : 6}`} key={`${section.key}-section`}>
               <div className="row-fluid">
-                <div className="col-md-12">
+                <div className="col-md-12 no-padding">
                   {this.renderFormElement(section)}
                 </div>
               </div>

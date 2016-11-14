@@ -24,33 +24,48 @@ class LifePinView extends LifePin {
     super(props, context)
   }
 
+  hasEvent = function (elm, type) {
+    var ev = elm.dataset.events
+    if (!ev) return false;
+
+    return (new RegExp(type)).test(ev)
+  }
+
+  addRemoveEvent (add = true) {
+    const players = document.querySelectorAll('.ta-insert-video')
+    const type = 'click'
+    if (players) {
+      _.forEach(players, (element)=> {
+        if (!element.dataset.events) element.dataset.events = ''
+        const has = this.hasEvent(element, type)
+
+        if ((add && has) || (!add && !has)) {
+          return
+        }
+
+        if (add) element.dataset.events += ',' + type
+        else element.dataset.events = element.dataset.events.replace(new RegExp(type), '')
+        element[`${add ? 'add' : 'remove'}EventListener`]('click', ::this.videoClickHandler)
+      })
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
-    if (!shallowEqual(nextProps.params, this.props.params)) {
-      const players = document.querySelectorAll('.ta-insert-video')
-      if (players) {
-        _.forEach(players, (element)=> {
-          element.addEventListener('click', ::this.videoClickHandler)
-        })
-      }
+    if (!shallowEqual(nextProps.params.pinId, this.props.params.pinId)) {
+      this.addRemoveEvent()
     }
   }
 
   componentWillUnmount () {
-    const players = document.querySelectorAll('.ta-insert-video')
-    if (players) {
-      _.forEach(players, (element)=> {
-        element.removeEventListener('click', ::this.videoClickHandler)
-      })
-    }
+    this.addRemoveEvent(false)
+  }
+
+  componentDidUpdate () {
+    this.addRemoveEvent()
   }
 
   componentDidMount () {
-    const players = document.querySelectorAll('.ta-insert-video')
-    if (players) {
-      _.forEach(players, (element)=> {
-        element.addEventListener('click', ::this.videoClickHandler)
-      })
-    }
+    this.addRemoveEvent()
   }
 
   videoClickHandler (e) {
