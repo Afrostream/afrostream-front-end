@@ -24,6 +24,7 @@ import _ from 'lodash'
 import * as ReactFB from '../../lib/fbEvent'
 import Q from 'q'
 import TextField from 'material-ui/TextField'
+import Checkbox from 'material-ui/Checkbox'
 
 const {gocarlessApi, recurlyApi, stripeApi, braintreeApi} = config
 if (process.env.BROWSER) {
@@ -193,25 +194,56 @@ class PaymentForm extends React.Component {
   }
 
   renderSubmit () {
+
+    const {
+      props: {
+        dispatch,
+        history
+      }
+    } = this
+
     const currentPlan = this.hasPlan()
+
+    if (!currentPlan) {
+      return
+    }
+
     let buttonLabel = getI18n().planCodes.action
     if (currentPlan && currentPlan.get('internalPlanUuid') === config.netsize.internalPlanUuid) {
       buttonLabel = getI18n().planCodes.actionMobile
     }
 
+    const inputChangeAction = {
+      onClick: event => {
+        event.preventDefault()
+        //get InternalPlan
+        dispatch(BillingActionCreators.getInternalplans({
+          contextBillingUuid: 'common',
+          passToken: true,
+          reload: true,
+          checkMobile: false
+        })).then(()=> {
+          history.push('/select-plan')
+        })
+      }
+    }
+
 
     return (<div className="row">
-      <div className=" col-md-12">
-        <button
-          id="subscribe"
-          type="submit"
-          form="subscription-create"
-          className="button-create-subscription"
-          disabled={this.state.disabledForm}
-        >{buttonLabel}
-        </button>
+        <div className="col-md-12">
+          <button
+            id="subscribe"
+            type="submit"
+            form="subscription-create"
+            className="button-create-subscription pull-right"
+            disabled={this.state.disabledForm}
+          >{buttonLabel}
+          </button>
+          <button
+            className="button-cancel-subscription pull-right" {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}</button>
+        </div>
       </div>
-    </div>)
+    )
   }
 
   renderDroits () {
@@ -225,7 +257,7 @@ class PaymentForm extends React.Component {
 
     return (<div className="row">
       <div className={classSet(checkClass)}>
-        <input
+        <Checkbox
           type="checkbox"
           className="checkbox"
           name="droit-retractation"
@@ -233,9 +265,11 @@ class PaymentForm extends React.Component {
           ref="droits"
           disabled={this.state.disabledForm}
           required
+          label={getI18n().payment.droits.label}
         />
-        <div className="checkbox-label">{getI18n().payment.droits.label} <a href="/pdfs/formulaire-retractation.pdf"
-                                                                            target="_blank">{getI18n().payment.droits.link}</a>
+        <div className="checkbox-label">
+          <a href="/pdfs/formulaire-retractation.pdf"
+             target="_blank">{getI18n().payment.droits.link}</a>
           <a ref="droitstip" className="my-tool-tip"
              data-original-title={getI18n().payment.droits.tooltip}
              data-placement="top"
@@ -256,7 +290,7 @@ class PaymentForm extends React.Component {
 
     return (<div className="row">
       <div className={classSet(checkClass)}>
-        <input
+        <Checkbox
           type="checkbox"
           className="checkbox-conditions-generales"
           ref="cgu"
@@ -264,10 +298,11 @@ class PaymentForm extends React.Component {
           id="accept-conditions-generales"
           disabled={this.state.disabledForm}
           required
+          label={getI18n().payment.cgu.label}
         />
-
-        <div className="checkbox-label">{getI18n().payment.cgu.label} <a href="/pdfs/conditions-utilisation.pdf"
-                                                                         target="_blank">{getI18n().payment.cgu.link}</a>
+        <div className="checkbox-label"><a
+          href="/pdfs/conditions-utilisation.pdf"
+          target="_blank">{getI18n().payment.cgu.link}</a>
         </div>
       </div>
     </div>)
@@ -291,7 +326,7 @@ class PaymentForm extends React.Component {
 
     this.disableForm(true)
 
-    if (!cgu.checked || !droits.checked) {
+    if (!cgu.state.switched || !droits.state.switched) {
       return this.error({
         message: getI18n().payment.errors.checkbox,
         fields: ['cgu', 'droits']
@@ -415,38 +450,6 @@ class PaymentForm extends React.Component {
                      planLabel={planLabel}/>)
   }
 
-  renderFooter () {
-
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
-    if (!this.state.currentPlan) {
-      return
-    }
-
-    const inputChangeAction = {
-      onClick: event => {
-        //get InternalPlan
-        dispatch(BillingActionCreators.getInternalplans({
-          contextBillingUuid: 'common',
-          passToken: true,
-          reload: true,
-          checkMobile: false
-        }))
-      }
-    }
-
-    return (<div className="row">
-      <div className="col-md-12 text-center">
-        <button
-          className="btn btn-plan" {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}</button>
-      </div>
-    </div>)
-  }
-
   renderForm () {
 
     var spinnerClasses = {
@@ -479,9 +482,8 @@ class PaymentForm extends React.Component {
             {this.renderCGU()}
             {this.renderDroits()}
             {this.renderSubmit()}
-            {this.renderFooter()}
-
           </form>
+
         </div>
       </div>
     )

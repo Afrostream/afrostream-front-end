@@ -69,11 +69,7 @@
 
   .checkbox {
     text-align: left;
-    input[type='checkbox'] {
-      margin-left: 0;
-    }
     .checkbox-label {
-      margin-left: 20px;
       color: @color-indigo;
       font-weight: bold;
       text-align: left;
@@ -197,6 +193,7 @@
       padding: 15px 0 15px 0;
     }
 
+    .button-cancel-subscription,
     .button-create-subscription {
       font-weight: bold;
       background-color: @subscriber-color;
@@ -204,9 +201,14 @@
       padding: 10px 20px 10px 20px;
       border-radius: @btn-radius;
       border: none;
-      margin-top: 20px;
+      margin: 1em;
       float: left;
       .isMobile({ float: inherit; });
+    }
+
+    .button-cancel-subscription {
+      background-color: @brand-grey;
+      color: @brand-secondary;
     }
 
     .has-error {
