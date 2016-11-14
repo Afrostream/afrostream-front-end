@@ -79,7 +79,7 @@ export function cancelSubscription (subscription) {
  * @returns {Function}
  */
 export function couponValidate (data) {
-  return (dispatch, getState) => {
+  return (dispatch, getState, actionDispatcher) => {
     return async api => ({
       type: ActionTypes.Billing.couponValidate,
       res: await api({
@@ -87,11 +87,15 @@ export function couponValidate (data) {
         params: data,
         passToken: true
       }).catch((err)=> {
-        return {
-          body: {
-            coupon: null
+        actionDispatcher({
+          type: ActionTypes.Billing.couponValidate,
+          res: {
+            body: {
+              coupon: null
+            }
           }
-        }
+        })
+        throw err
       })
     })
   }
@@ -121,7 +125,7 @@ export function couponActivate () {
 
     //IF coupon provider is not AFR redirect to select plan form
     if (couponsCampaignType === 'promo') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         resolve({
           type: ActionTypes.Billing.couponActivate
         })

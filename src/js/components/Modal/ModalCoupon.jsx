@@ -96,14 +96,15 @@ class ModalCoupon extends ModalComponent {
         }
       }) => {
         //coupon valid
-        if (coupon && coupon.status === 'waiting') {
+        const status = coupon && coupon.status
+        if (coupon && status === 'waiting') {
           if (!user) {
             return
           }
           return this.finalyse()
         }
         //coupon invalid
-        throw new Error(self.getTitle('status')[coupon.status] || self.getTitle('couponInvalid'))
+        throw new Error(self.getTitle('status')[status] || self.getTitle('couponInvalid'))
       })
       //Get updated profile
       .then(()=> {

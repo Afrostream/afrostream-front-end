@@ -9,6 +9,7 @@ import { getI18n } from '../../../../config/i18n'
 import * as BillingActionCreators from '../../actions/billing'
 import * as UserActionCreators from '../../actions/user'
 import * as EventActionCreators from '../../actions/event'
+import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
 import PaymentImages from './PaymentImages'
 import Spinner from '../Spinner/Spinner'
@@ -198,18 +199,21 @@ class PaymentForm extends React.Component {
     const {
       props: {
         dispatch,
-        history
+        history,
+        User
       }
     } = this
-
+    const {form} = this.refs
     const currentPlan = this.state.currentPlan
 
     if (!currentPlan) {
       return
     }
 
+    const internalPlanUuid = currentPlan.get('internalPlanUuid')
+
     let buttonLabel = getI18n().planCodes.action
-    if (currentPlan && currentPlan.get('internalPlanUuid') === config.netsize.internalPlanUuid) {
+    if (currentPlan && internalPlanUuid === config.netsize.internalPlanUuid) {
       buttonLabel = getI18n().planCodes.actionMobile
     }
 
@@ -228,7 +232,6 @@ class PaymentForm extends React.Component {
       }
     }
 
-
     return (<div className="row">
         <div className="col-md-12">
           <button
@@ -240,7 +243,9 @@ class PaymentForm extends React.Component {
           >{buttonLabel}
           </button>
           <button
-            className="button-cancel-subscription pull-right" {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}</button>
+            className="button-cancel-subscription pull-right"
+            {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}
+          </button>
         </div>
       </div>
     )
@@ -311,27 +316,16 @@ class PaymentForm extends React.Component {
   async onSubmit (e) {
     const {
       props: {
-        User
+        User,
+        dispatch
       }
     } = this
 
     e.preventDefault()
+
     const {droits, cgu, firstName, lastName, methodForm} = this.refs
     const self = this
     const user = User.get('user')
-
-    this.setState({
-      error: null
-    })
-
-    this.disableForm(true)
-
-    if (!cgu.state.switched || !droits.state.switched) {
-      return this.error({
-        message: getI18n().payment.errors.checkbox,
-        fields: ['cgu', 'droits']
-      })
-    }
 
     let billingInfo = {
       internalPlanUuid: this.state.internalPlanUuid,
@@ -339,14 +333,41 @@ class PaymentForm extends React.Component {
       lastName: lastName && lastName.getValue()
     }
 
-    try {
-      let subBillingInfo = await methodForm.submit(billingInfo, this.state.currentPlan)
-      billingInfo = _.merge(billingInfo, subBillingInfo)
-      await this.submitSubscription(billingInfo)
-    } catch (err) {
+    Q.fcall(()=> {
 
+      if (!user) {
+        const promiseLogin = new Promise((resolve)=> {
+          dispatch(ModalActionCreators.open({
+            target: 'showSignup',
+            cb: resolve
+          }))
+        })
+        return promiseLogin
+      }
+      return user
+    })
+      .then(()=> {
+        this.setState({
+          error: null
+        })
+
+        this.disableForm(true)
+
+        if (!cgu.state.switched || !droits.state.switched) {
+          throw new Error({
+            message: getI18n().payment.errors.checkbox,
+            fields: ['cgu', 'droits']
+          })
+        }
+
+        return methodForm.submit(billingInfo, this.state.currentPlan)
+      })
+      .then((subBillingInfo)=> {
+        billingInfo = _.merge(billingInfo, subBillingInfo)
+        return this.submitSubscription(billingInfo)
+      }).catch((err)=> {
       self.error(err)
-    }
+    })
   }
 
 
