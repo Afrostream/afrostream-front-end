@@ -33,7 +33,10 @@ class BraintreeForm extends CouponForm {
   }
 
   async submit (billingInfo, currentPlan) {
-    const self = this
+    const {
+      props:{provider}
+    }=this
+    const {couponCode} = this.refs
     return await new Promise(
       (resolve, reject) => {
         //Detect si le payment via la lib braintree est dispo
@@ -53,10 +56,10 @@ class BraintreeForm extends CouponForm {
             onPaymentMethodReceived: (payload)=> {
               console.log(payload)
               return resolve({
-                billingProviderName: 'braintree',
+                billingProviderName: provider,
                 subOpts: {
                   customerBankAccountToken: payload.nonce,
-                  couponCode: self.refs.couponCode.value
+                  couponCode: couponCode.getValue()
                 }
               })
               // retrieve nonce from payload.nonce

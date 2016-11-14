@@ -9,10 +9,11 @@ import IBAN from 'iban'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
 import TextField from 'material-ui/TextField'
+import CouponForm from './CouponForm'
 
 const {gocardless} = config
 
-class GocardlessForm extends React.Component {
+class GocardlessForm extends CouponForm {
 
   constructor (props) {
     super(props)
@@ -23,6 +24,9 @@ class GocardlessForm extends React.Component {
   }
 
   async submit (billingInfo) {
+    const {
+      props:{provider}
+    }=this
     const {iban, country} = this.refs
     let self = this
     let ibanValue = iban.getValue()
@@ -66,7 +70,7 @@ class GocardlessForm extends React.Component {
                 modal: false
               })
               return resolve({
-                billingProviderName: 'gocardless',
+                billingProviderName: provider,
                 subOpts: {
                   customerBankAccountToken: response.customer_bank_account_tokens.id,
                   iban: ibanValue
@@ -125,6 +129,7 @@ class GocardlessForm extends React.Component {
             hintText="ex. FR14 2004 1010 0505 0001 3M02 606" required/>
         </div>
         <CountrySelect ref="country"/>
+        {this.renderPromoCode()}
       </div>
     )
   }

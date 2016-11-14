@@ -13,6 +13,10 @@ class PaypalForm extends RecurlyForm {
   }
 
   async submit (billingInfo, currentPlan) {
+    const {
+      props:{provider}
+    }=this
+
     const {couponCode} = this.refs
 
     const self = this
@@ -32,7 +36,7 @@ class PaypalForm extends RecurlyForm {
           return resolve(_.merge({
             'recurly-token': token.id,
             //NEW BILLING API
-            billingProviderName: 'recurly',
+            billingProviderName: provider,
             subOpts: {
               customerBankAccountToken: token.id,
               couponCode: couponCode.getValue()

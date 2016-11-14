@@ -143,16 +143,17 @@ class PaymentMethod extends React.Component {
     let methods = []
 
     let allMethods = {
-      netsize: (<NetsizeForm key="method-netsize" ref="netsize" {...this.props}
+      netsize: (<NetsizeForm key="method-netsize" ref="netsize" provider="netsize" {...this.props}
                              selected={this.state.method === Methods.NETSIZE}/>),
-      recurly: (<RecurlyForm key="method-recurly" ref="recurly" {...this.props}
+      recurly: (<RecurlyForm key="method-recurly" ref="recurly" provider="recurly" {...this.props}
                              selected={this.state.method === Methods.RECURLY}/>),
-      stripe: (<StripeForm key="method-stripe" ref="stripe" {...this.props}
+      stripe: (<StripeForm key="method-stripe" ref="stripe" provider="stripe" {...this.props}
                            selected={this.state.method === Methods.STRIPE}/>),
-      braintree: (<BraintreeForm key="method-paypal" ref="paypal" {...this.props}
+      braintree: (<BraintreeForm key="method-paypal" ref="paypal" provider="paypal" {...this.props}
                                  selected={this.state.method === Methods.PAYPAL} planLabel={this.props.planLabel}/>),
-      cashway: (<CashwayForm key="method-cashway" ref="cashway" {...this.props}/>),
-      gocardless: (<GocardlessForm key="method-gocardless" ref="gocardless"
+      cashway: (<CashwayForm key="method-cashway" ref="cashway" provider="cashway" {...this.props}/>),
+      gocardless: (<GocardlessForm key="method-gocardless" ref="gocardless" provider="gocardless"
+                                   {...this.props}
                                    selected={this.state.method === Methods.GOCARDLESS}/>)
     }
 

@@ -3,8 +3,9 @@ import ReactDOM from'react-dom'
 import classSet from 'classnames'
 import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import CouponForm from './CouponForm'
 
-class NetsizeForm extends React.Component {
+class NetsizeForm extends CouponForm {
 
   constructor (props, context) {
     super(props, context)
@@ -23,7 +24,7 @@ class NetsizeForm extends React.Component {
 
   async submit (billingInfo, currentPlan) {
     const {
-      props:{}
+      props:{provider}
     }=this
 
     return await new Promise(
@@ -32,7 +33,7 @@ class NetsizeForm extends React.Component {
           internalPlanUuid: billingInfo.internalPlanUuid,
           currency: currentPlan.get('currency'),
           amount: currentPlan.get('amount'),
-          billingProviderName: 'netsize'
+          billingProviderName: provider
         })
       }
     )

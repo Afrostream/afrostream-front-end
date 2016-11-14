@@ -16,6 +16,21 @@ class CouponForm extends React.Component {
     }
   }
 
+  componentDidMount () {
+    this.attachTooltip()
+  }
+
+  componentDidUpdate () {
+    this.attachTooltip()
+  }
+
+  attachTooltip () {
+    if (this.refs.couponContainer) {
+      $(this.refs.couponContainer).tooltip()
+    }
+  }
+
+
   async checkCoupon (value) {
     const {
       props: {
@@ -54,13 +69,27 @@ class CouponForm extends React.Component {
   renderPromoCode () {
     const {
       props: {
-        Billing
+        Billing,
+        plan,
+        provider
       }
     } = this
+
+    let isCouponCodeCompatible = false
+
+    if (plan) {
+      const providerPlans = plan.get('providerPlans')
+      const currentProvider = providerPlans.find((prov) => prov.get('provider').get('providerName') === provider)
+      if (currentProvider) {
+        isCouponCodeCompatible = currentProvider.get('isCouponCodeCompatible')
+      }
+    }
+
     let coupon = Billing.get('coupon')
     let couponName = ''
     let couponIcon = 'zmdi-block'
     let inputAttributes = {
+      disabled: Boolean(!isCouponCodeCompatible),
       onChange: (event, payload) => {
         clearTimeout(this.updateTimeout)
         this.updateTimeout = setTimeout(()=> {
@@ -86,7 +115,11 @@ class CouponForm extends React.Component {
     }
 
     return (
-      <div className="col-md-12">
+      <div className="col-md-12"
+           data-original-title={getI18n().payment.promo.disabledLabel}
+           ref="couponContainer"
+           data-placement="top"
+           data-toggle="tooltip">
         <div className="row no-padding">
           <div className="col-md-11">
             <TextField
@@ -122,6 +155,11 @@ class CouponForm extends React.Component {
   render () {
     return this.renderPromoCode()
   }
+}
+
+
+CouponForm.propTypes = {
+  provider: React.PropTypes.string.isRequired
 }
 
 export default CouponForm

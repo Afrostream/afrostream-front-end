@@ -72,6 +72,9 @@ class StripeForm extends CouponForm {
   }
 
   async submit (billingInfo, currentPlan) {
+    const {
+      props:{provider}
+    }=this
     const {cardNumber, expiration, cvc, couponCode, country} = this.refs
     const {month, year} = Payment.fns.cardExpiryVal(expiration.getValue())
 
@@ -102,10 +105,10 @@ class StripeForm extends CouponForm {
             return reject(response.error)
           }
           return resolve({
-            billingProviderName: 'stripe',
+            billingProviderName: provider,
             subOpts: {
               customerBankAccountToken: response.id,
-              couponCode: couponCode.value
+              couponCode: couponCode.getvalue()
             }
           })
         })

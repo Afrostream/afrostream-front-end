@@ -113,6 +113,7 @@
     },
     "promo": {
       "label": "Code promo (optionnel)",
+      "disabledLabel": "Les codes promotionnels ne sont pas compatibles avec ce mode de paiement.",
       "activate": "Attention, il s’agit d’un coupon qui peut s’activer directement en cliquant ici",
       "placeHolder": "Entrez votre code"
     },

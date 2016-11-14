@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import * as BillingActionCreators from '../../../actions/billing'
+import CouponForm from './CouponForm'
 
-class CashwayForm extends React.Component {
+class CashwayForm extends CouponForm {
 
   constructor (props) {
     super(props)
@@ -18,14 +19,16 @@ class CashwayForm extends React.Component {
 
     const {
       props: {
-        dispatch
+        dispatch,
+        provider
       }
     } = this
 
-    const billingProviderName = 'cashway'
+    const {couponCode} = this.refs
+
 
     return await dispatch(BillingActionCreators.getCouponCampaigns({
-      billingProviderName
+      provider
     }))
       .then(({res: {body: {couponsCampaigns = []}}}) => {
 
@@ -38,7 +41,7 @@ class CashwayForm extends React.Component {
         }
 
         return dispatch(BillingActionCreators.createCoupon({
-          billingProviderName: billingProviderName,
+          billingProviderName: provider,
           lastName: billingInfo.lastName,
           firstName: billingInfo.firstName,
           couponsCampaignBillingUuid: couponCampaign.couponsCampaignBillingUuid
@@ -50,9 +53,9 @@ class CashwayForm extends React.Component {
           throw new Error('Error on create coupon')
         }
         return {
-          billingProviderName: billingProviderName,
+          billingProviderName: provider,
           subOpts: {
-            couponCode: coupon.code
+            couponCode: couponCode.getValue()
           }
         }
       })

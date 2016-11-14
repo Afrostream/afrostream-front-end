@@ -9,7 +9,7 @@ import window from 'global/window'
 import CouponForm from './CouponForm'
 import TextField from 'material-ui/TextField'
 import Payment from 'payment'
-const J = Payment.J
+//const J = Payment.J
 class RecurlyForm extends CouponForm {
 
   constructor (props, context) {
@@ -72,6 +72,10 @@ class RecurlyForm extends CouponForm {
   }
 
   async submit (billingInfo, currentPlan) {
+    const {
+      props:{provider}
+    }=this
+
     const {cardNumber, expiration, cvc, couponCode, country} = this.refs
     const {month, year} = Payment.fns.cardExpiryVal(expiration.getValue())
 
@@ -113,10 +117,10 @@ class RecurlyForm extends CouponForm {
             return reject(err)
           }
           return resolve({
-            billingProviderName: 'recurly',
+            billingProviderName: provider,
             subOpts: {
               customerBankAccountToken: token.id,
-              couponCode: couponCode.value
+              couponCode: couponCode.getValue()
             }
           })
         })
