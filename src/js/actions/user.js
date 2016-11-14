@@ -41,7 +41,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         actionDispatcher(FBActionCreators.getFriendList())
 
         return async ()=> {
-          if (!planCode) {
+          if (!planCode && !donePath) {
             if (status && status !== 'active') {
               donePath = `/select-plan/none/${status}`
             }

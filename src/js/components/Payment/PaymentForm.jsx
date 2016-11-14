@@ -200,10 +200,8 @@ class PaymentForm extends React.Component {
       props: {
         dispatch,
         history,
-        User
       }
     } = this
-    const {form} = this.refs
     const currentPlan = this.state.currentPlan
 
     if (!currentPlan) {
@@ -339,6 +337,7 @@ class PaymentForm extends React.Component {
         const promiseLogin = new Promise((resolve)=> {
           dispatch(ModalActionCreators.open({
             target: 'showSignup',
+            donePath: `/select-plan/${billingInfo.internalPlanUuid}/checkout`,
             cb: resolve
           }))
         })
