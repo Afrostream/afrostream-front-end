@@ -330,7 +330,7 @@
     }
   }
 
-  .email, .username, .password, .repeatPassword {
+  .email, .coupon, .username, .password, .repeatPassword {
     .input-box {
       position: relative;
       height: 50px;
@@ -364,7 +364,7 @@
     -webkit-box-shadow: inset 0 0 0px 9999px white,
     0 0 8px rgba(102, 175, 233, 0.6);
   }
-
+  .coupon input,
   .email input, .username input, .password input, .repeatPassword input {
     box-sizing: border-box;
     padding: 16px 10px;
@@ -381,6 +381,9 @@
     &:focus {
       background: #fff;
     }
+  }
+  .coupon input {
+    max-width: 100%;
   }
 
   input::-webkit-input-placeholder {
@@ -422,7 +425,8 @@
     overflow: hidden;
   }
 
-  .email input {
+  .email input,
+  .coupon input {
     border-bottom: 0;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -762,7 +766,7 @@
   .inputs {
     border: 0 !important;
 
-    .email, .username, .password, .repeatPassword {
+    .email, .coupon, .username, .password, .repeatPassword {
       border: 0;
     }
 

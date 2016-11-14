@@ -6,8 +6,8 @@ import MenuItem from 'material-ui/MenuItem'
 class CountrySelect extends React.Component {
 
   constructor (props) {
-    super(props);
-    this.state = {value: getI18n().payment.country.defaultValue};
+    super(props)
+    this.state = {value: getI18n().payment.country.defaultValue}
   }
 
   getValue () {

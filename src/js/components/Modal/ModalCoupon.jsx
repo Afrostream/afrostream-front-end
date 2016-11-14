@@ -116,7 +116,8 @@ class ModalCoupon extends ModalComponent {
       })
       .catch((err) => {
         console.log('Error coupon ', err)
-        const errorCode = (err.code && self.getTitle('errors')[error.code])
+        const code = err.code || err.status
+        const errorCode = (code && self.getTitle('errors')[code])
         this.setState({
           success: false,
           loading: false,
@@ -137,10 +138,6 @@ class ModalCoupon extends ModalComponent {
   }
 
   getForm () {
-    if (this.state.error) {
-      return
-    }
-
     if (this.state.success) {
       return (<div className="notloggedin mode">
         <div className="instructions">{this.getTitle('successText')}</div>
@@ -201,13 +198,13 @@ class ModalCoupon extends ModalComponent {
     }
 
     return (
-      <div className="email">
-        <label htmlFor="easy_email" className="sad-placeholder">
+      <div className="coupon">
+        <label htmlFor="coupon" className="sad-placeholder">
           {this.getTitle('emailPlaceholder')}
         </label>
         <div className="input-box">
           <i className="icon-barcode"></i>
-          <input name="email" ref="coupon" id="easy_email" type="text" className="input-coupon" required
+          <input name="coupon" ref="coupon" id="coupon" type="text" className="input-coupon" required
                  defaultValue={coupon ? coupon.get('code') : ''}
                  placeholder={this.getTitle('couponPlaceholder')}
                  title={this.getTitle('couponPlaceholder')}/>
