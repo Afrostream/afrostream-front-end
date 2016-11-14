@@ -45,7 +45,7 @@ class HomePage extends React.Component {
           })
 
           if (!firstPlan) {
-            firstPlan = validPlans.get(0)
+            firstPlan = validPlans.first()
           }
 
           if (firstPlan) {
