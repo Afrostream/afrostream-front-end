@@ -166,7 +166,8 @@ a.active {
     }
 
     .content-padding {
-      padding: @header-height (@app-padding * 5) (@app-padding * 5) !important;
+      padding: @app-padding * 5 !important;
+      .isMobile({ padding: @app-padding-mobile !important; });
     }
 
     .brand-grey {
