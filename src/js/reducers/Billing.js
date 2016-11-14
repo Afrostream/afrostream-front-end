@@ -60,7 +60,6 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.Billing.couponValidate](state, {res}) {
-
     if (!res) {
       return state
     }
@@ -71,11 +70,9 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.Billing.couponActivate](state, {res}) {
-
     if (!res) {
       return state
     }
-    const data = res.body
     return state.merge({
       ['coupon']: null
     })

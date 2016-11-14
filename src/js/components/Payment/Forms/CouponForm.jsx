@@ -5,11 +5,12 @@ import TextField from 'material-ui/TextField'
 import * as BillingActionCreators from '../../../actions/billing'
 import config from '../../../../../config'
 import { Link } from 'react-router'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
 class CouponForm extends React.Component {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this.state = {
       validCoupon: false,
       fetching: false
@@ -25,8 +26,9 @@ class CouponForm extends React.Component {
   }
 
   attachTooltip () {
-    if (this.refs.couponContainer) {
-      $(this.refs.couponContainer).tooltip()
+    const {couponContainer} = this.refs
+    if (couponContainer) {
+      $(couponContainer).tooltip()
     }
   }
 
@@ -34,9 +36,14 @@ class CouponForm extends React.Component {
   async checkCoupon (value) {
     const {
       props: {
-        dispatch
+        dispatch,
+        selected
       }
     } = this
+
+    if (!value || !selected) {
+      return
+    }
 
     let formData = {
       billingProviderName: config.sponsors.billingProviderName,
@@ -45,6 +52,7 @@ class CouponForm extends React.Component {
     this.setState({
       fetching: true
     })
+
     //Validate coupon
     return await dispatch(BillingActionCreators.couponValidate(formData))
       .then(({
@@ -54,13 +62,14 @@ class CouponForm extends React.Component {
           }
         }
       }) => {
-        let validCoupon = coupon && coupon.status === 'waiting'
+        const validCoupon = coupon && coupon.status === 'waiting'
         this.setState({
           validCoupon,
           fetching: false
         })
       }).catch((e)=> {
         this.setState({
+          validCoupon: false,
           fetching: false
         })
       })
@@ -75,17 +84,19 @@ class CouponForm extends React.Component {
       }
     } = this
 
+    const providerSelected = provider
     let isCouponCodeCompatible = false
 
     if (plan) {
       const providerPlans = plan.get('providerPlans')
-      const currentProvider = providerPlans.find((prov) => prov.get('provider').get('providerName') === provider)
+      const currentProvider = providerPlans.find((prov) => prov.get('provider').get('providerName') === providerSelected)
       if (currentProvider) {
         isCouponCodeCompatible = currentProvider.get('isCouponCodeCompatible')
       }
     }
 
     let coupon = Billing.get('coupon')
+    let validCoupon = this.state.validCoupon
     let couponName = ''
     let couponIcon = 'zmdi-block'
     let inputAttributes = {
@@ -103,6 +114,7 @@ class CouponForm extends React.Component {
       const providers = coupon.get('internalCouponsCampaign').get('providers')
       const couponCampeign = coupon.get('campaign')
       const couponType = couponCampeign.get('couponsCampaignType')
+      validCoupon = coupon && coupon.get('status') === 'waiting'
       inputAttributes.defaultValue = couponCode
       if (couponType !== 'promo') {
         couponName = (
@@ -115,39 +127,45 @@ class CouponForm extends React.Component {
     }
 
     return (
-      <div className="col-md-12"
-           data-original-title={getI18n().payment.promo.disabledLabel}
-           ref="couponContainer"
-           data-placement="top"
-           data-toggle="tooltip">
-        <div className="row no-padding">
-          <div className="col-md-11">
-            <TextField
-              floatingLabelFixed={true}
-              fullWidth={true}
-              type="text"
-              data-billing="coupon_code"
-              name="coupon_code"
-              id="coupon_code"
-              ref="couponCode"
-              floatingLabelText={getI18n().payment.promo.label}
-              {...inputAttributes}
-              hintText={getI18n().payment.promo.placeHolder}
-            />
-          </div>
-          <div className="col-md-1">
-            <i className={`zmdi coupon-check
-                          ${couponIcon }
-                          zmdi-hc-2x`}
-               aria-hidden=" true"/>
-            {this.state.fetching && <Spinner/>}
+      <div className="panel-group">
+        <div className="panel">
+          <div className="row no-padding">
+            <div className="col-md-12"
+                 data-original-title={getI18n().payment.promo.disabledLabel}
+                 ref="couponContainer"
+                 data-placement="top"
+                 data-toggle="tooltip">
+              <div className="row no-padding">
+                <div className="col-md-11">
+                  <TextField
+                    floatingLabelFixed={true}
+                    fullWidth={true}
+                    type="text"
+                    data-billing="coupon_code"
+                    name="coupon_code"
+                    id="coupon_code"
+                    ref="couponCode"
+                    floatingLabelText={getI18n().payment.promo.label}
+                    {...inputAttributes}
+                    hintText={getI18n().payment.promo.placeHolder}
+                  />
+                </div>
+                <div className="col-md-1">
+                  <i className={`zmdi coupon-check
+                                ${couponIcon }
+                                zmdi-hc-2x`}
+                     aria-hidden=" true"/>
+                  {this.state.fetching && <Spinner/>}
+                </div>
+              </div>
+              {validCoupon && <div className="row no-padding">
+                <div className="col-md-12 coupon-desc">
+                  {couponName}
+                </div>
+              </div>}
+            </div>
           </div>
         </div>
-        {this.state.validCoupon && <div className="row no-padding">
-          <div className="col-md-12 coupon-desc">
-            {couponName}
-          </div>
-        </div>}
       </div>
     )
   }
@@ -159,6 +177,7 @@ class CouponForm extends React.Component {
 
 
 CouponForm.propTypes = {
+  selected: React.PropTypes.bool.isRequired,
   provider: React.PropTypes.string.isRequired
 }
 

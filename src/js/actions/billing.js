@@ -86,6 +86,12 @@ export function couponValidate (data) {
         path: `/api/billings/coupons`,
         params: data,
         passToken: true
+      }).catch((err)=> {
+        return {
+          body: {
+            coupon: null
+          }
+        }
       })
     })
   }

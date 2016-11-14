@@ -90,7 +90,7 @@ class GocardlessForm extends CouponForm {
   }
 
   static propTypes = {
-    selected: React.PropTypes.bool,
+    selected: React.PropTypes.bool.isRequired,
     planCode: React.PropTypes.string,
     planLabel: React.PropTypes.string
   }

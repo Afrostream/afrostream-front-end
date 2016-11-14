@@ -151,7 +151,8 @@ class PaymentMethod extends React.Component {
                            selected={this.state.method === Methods.STRIPE}/>),
       braintree: (<BraintreeForm key="method-paypal" ref="paypal" provider="paypal" {...this.props}
                                  selected={this.state.method === Methods.PAYPAL} planLabel={this.props.planLabel}/>),
-      cashway: (<CashwayForm key="method-cashway" ref="cashway" provider="cashway" {...this.props}/>),
+      cashway: (<CashwayForm key="method-cashway" ref="cashway" provider="cashway" {...this.props}
+                             selected={this.state.method === Methods.CASHWAY}/>),
       gocardless: (<GocardlessForm key="method-gocardless" ref="gocardless" provider="gocardless"
                                    {...this.props}
                                    selected={this.state.method === Methods.GOCARDLESS}/>)

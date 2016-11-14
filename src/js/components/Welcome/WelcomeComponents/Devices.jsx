@@ -26,7 +26,7 @@ class Devices extends React.Component {
           <div className="device-element-image">
             <div className="visual">
               <img className="hidden-phone"
-                   src="https://images.cdn.afrostream.net/production/poster/2016/08/44d9f393719a65321620-devices-fullHD.png?fit=crop&w=600&fm=jpg&q=65"/>
+                   src="https://images.cdn.afrostream.net/production/poster/2016/08/44d9f393719a65321620-devices-fullHD.png?fit=crop&w=600&fm=jpg&q=65&bg=#131313"/>
             </div>
           </div>
           <div className="device-element-text">
