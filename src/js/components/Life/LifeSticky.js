@@ -41,7 +41,7 @@ class LifeSticky extends Component {
     } = this
 
     const user = User.get('user')
-    if (!user) {
+    if (!user || user.get('token').get('role') !== 'admin') {
       return <div />
     }
     return (

@@ -66,7 +66,7 @@ class LifeHome extends Component {
         <div className="row-fluid no-padding brand-grey">
           {children || <LifeTheme {...this.props}/>}
         </div>
-        <LifeSticky />
+        <LifeSticky {...this.props}/>
       </div>
     )
   }
