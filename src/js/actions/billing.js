@@ -237,7 +237,7 @@ export function getInternalplans ({
   return (dispatch, getState, actionDispatcher) => {
     return async api => {
       let isMobile = false
-      let forcedInternalPlanUuid = internalPlanUuid
+      let forcedInternalPlanUuid = internalPlanUuid !== 'none' && internalPlanUuid
       if (canUseDOM) {
         const userAgent = (window.navigator && navigator.userAgent) || ''
         let agent = new MobileDetect(userAgent)
