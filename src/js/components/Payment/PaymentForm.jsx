@@ -394,11 +394,11 @@ class PaymentForm extends React.Component {
       })
       .then(()=> {
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
-      }).catch(({response = {body: {error, code, message}}}) => {
+      }).catch(({response : {body: {error, code, message}}}) => {
         let globalMessage = getI18n().payment.errors.global
 
         if (error) {
-          globalMessage = message
+          globalMessage = error.message || message
         }
 
         if (code) {

@@ -233,12 +233,12 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
                 }
               }
             })
-          } catch (err) {
+          } catch (error) {
             //Format resut
             return reject({
               response: {
                 body: {
-                  message: err.message || err.stack
+                  error
                 }
               }
             })
@@ -258,12 +258,13 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
             if (!~event.origin.indexOf(config.domain.host)) return
             beforeUnload(event.data && event.data.data, internalPlan)
           }, false)
-        } catch (err) {
+        } catch (error) {
           //Format resut
           return reject({
             response: {
               body: {
-                message: err.message || err.stack
+                error,
+                code: 30
               }
             }
           })

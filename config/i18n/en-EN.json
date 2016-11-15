@@ -397,6 +397,10 @@
       "expired": "Le code a déjà été utilisé."
     },
     "errors": {
+      "30": {
+        "name": "POPUP_ERROR",
+        "message": "Une popup a été bloquée, veuillez modifier vos paramètres navigateur et autoriser les popup"
+      },
       "50": {
         "name": "COUPON_CODE_NOT_FOUND",
         "message": "Le code n'a pas été trouvé."
