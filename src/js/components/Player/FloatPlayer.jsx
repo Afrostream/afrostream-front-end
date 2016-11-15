@@ -749,7 +749,6 @@ class FloatPlayer extends React.Component {
         left: 0
       }
 
-    //FIXME why position 157 ?
     position.transform = `translate3d(${position.left}px, ${elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
 
     this.ticking = false

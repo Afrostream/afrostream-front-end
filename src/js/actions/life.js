@@ -26,12 +26,16 @@ export function fetchThemes (fetchThemeId) {
   }
 }
 
-export function wrappPin (url) {
+export function wrappPin (scrapUrl) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.wrappPin,
       res: await api({
-        path: `/api/life/pins`,
+        path: `/api/life/pins/scrap`,
+        method: 'POST',
+        params: {
+          scrapUrl
+        }
       })
     })
   }

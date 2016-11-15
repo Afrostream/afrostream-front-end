@@ -11,6 +11,16 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
+  [ActionTypes.Life.wrappPin](state, {res}) {
+    if (!res) {
+      return state
+    }
+    const data = res.body
+    return state.merge({
+      [`life/wrap`]: data
+    })
+  },
+
   [ActionTypes.Life.fetchThemes](state, {res, themeId}) {
     if (!res) {
       return state

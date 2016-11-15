@@ -133,6 +133,7 @@ export default {
   }),
 
   Life: keyMirror({
+    wrappPin: null,
     fetchThemes: null,
     fetchSpots: null,
     fetchPins: null,

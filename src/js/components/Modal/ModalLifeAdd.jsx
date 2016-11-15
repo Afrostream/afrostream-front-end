@@ -1,11 +1,16 @@
 import React from 'react'
 import ModalComponent from './ModalComponent'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
 import config from '../../../../config'
 import { getI18n } from '../../../../config/i18n'
 import Q from 'q'
 import TextField from 'material-ui/TextField'
 import * as LifeActionCreators from '../../actions/life'
+import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
+import ReactImgix from '../Image/ReactImgix'
+import { extractImg } from '../../lib/utils'
 
 import {
   Step,
@@ -38,6 +43,7 @@ if (process.env.BROWSER) {
   require('./ModalLifeAdd.less')
 }
 
+@connect(({Life}) => ({Life}))
 class ModalLifeAdd extends ModalComponent {
 
   state = {
@@ -87,6 +93,23 @@ class ModalLifeAdd extends ModalComponent {
     })
   }
 
+  renderStepFinal () {
+    const {props:{Life}} =this
+    const scrappedData = Life.get(`life/wrap`)
+    if (!scrappedData) {
+      return
+    }
+    return (<div>
+      <label className="pin-label">{scrappedData.get('title')}</label>
+      <TextField className="pin-description"
+                 defaultValue={scrappedData.get('description')}
+                 fullWidth={true}
+                 multiLine={true}
+                 hintText="Ajouter une description"/>
+      <ReactImgix src={scrappedData.get('imageUrl')}/>
+    </div>)
+  }
+
   validateUrl (event, payload) {
     const {props:{dispatch}} =this
     const {regex} = this.state.network
@@ -109,6 +132,48 @@ class ModalLifeAdd extends ModalComponent {
         error
       })
     })
+  }
+
+  handleNext = () => {
+    const {stepIndex} = this.state
+    this.setState({
+      stepIndex: stepIndex + 1,
+      finished: stepIndex >= 2,
+    })
+  }
+
+  handlePrev = () => {
+    const {stepIndex} = this.state;
+    if (stepIndex > 0) {
+      this.setState({stepIndex: stepIndex - 1})
+    }
+  }
+
+  renderStepActions (step) {
+    const {stepIndex} = this.state
+
+    return (
+      <div style={{margin: '12px 0'}}>
+        {step > 0 && (
+          <FlatButton
+            label="Retour"
+            disabled={stepIndex === 0}
+            disableTouchRipple={true}
+            disableFocusRipple={true}
+            onTouchTap={this.handlePrev}
+            style={{color: '#FFFFFF'}}
+          />
+        )}
+        <RaisedButton
+          label={stepIndex === 2 ? 'Envoyer' : 'Suivant'}
+          disableTouchRipple={true}
+          disableFocusRipple={true}
+          primary={true}
+          onTouchTap={this.handleNext}
+          style={{marginRight: 12, color: '#FFFFFF'}}
+        />
+      </div>
+    );
   }
 
   render () {
@@ -156,6 +221,14 @@ class ModalLifeAdd extends ModalComponent {
                                          fullWidth={true}
                                          onChange={::this.validateUrl}
                                          style={{color: '#FFFFFFF'}}/>
+                              {this.renderStepActions(1)}
+                            </StepContent>
+                          </Step>
+                          <Step>
+                            <StepLabel style={{color: '#FFFFFFF'}}>{getI18n().life.modal.step3}</StepLabel>
+                            <StepContent>
+                              {this.renderStepFinal()}
+                              {this.renderStepActions(2)}
                             </StepContent>
                           </Step>
                         </Stepper>
