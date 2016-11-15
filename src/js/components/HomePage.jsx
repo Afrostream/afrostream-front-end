@@ -35,21 +35,21 @@ class HomePage extends React.Component {
         let donePath = `${isCash ? '/cash' : ''}/select-plan`
         if (status && status !== 'active') {
           donePath = `${donePath}/none/${status}`
-        }
-        let validPlans = Billing.get(`internalPlans`)
-        if (validPlans) {
+        } else {
+          let validPlans = Billing.get(`internalPlans`)
+          if (validPlans) {
+            let firstPlan = validPlans.find((plan)=> {
+              let planUuid = plan.get('internalPlanUuid')
+              return planUuid === config.netsize.internalPlanUuid
+            })
 
-          let firstPlan = validPlans.find((plan)=> {
-            let planUuid = plan.get('internalPlanUuid')
-            return planUuid === config.netsize.internalPlanUuid
-          })
+            if (!firstPlan) {
+              firstPlan = validPlans.first()
+            }
 
-          if (!firstPlan) {
-            firstPlan = validPlans.first()
-          }
-
-          if (firstPlan) {
-            donePath = `${donePath}/${firstPlan.get('internalPlanUuid')}/checkout`
+            if (firstPlan) {
+              donePath = `${donePath}/${firstPlan.get('internalPlanUuid')}/checkout`
+            }
           }
         }
         history.push(donePath)

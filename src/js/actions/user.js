@@ -44,30 +44,31 @@ const mergeProfile = function (data, getState, actionDispatcher) {
           if (!planCode && !donePath) {
             if (status && status !== 'active') {
               donePath = `/select-plan/none/${status}`
+            } else {
+              //get InternalPlan
+              await actionDispatcher(BillingActionCreators.getInternalplans({
+                contextBillingUuid: 'common',
+                passToken: true,
+                reload: true,
+                userId: userMerged._id
+              })).then(({res: {body = []}}) => {
+                if (body) {
+
+                  let firstPlan = _.find(body, (plan)=> {
+                    let planUuid = plan.internalPlanUuid
+                    return planUuid === config.netsize.internalPlanUuid
+                  })
+
+                  if (!firstPlan) {
+                    firstPlan = _.head(body)
+                  }
+
+                  if (firstPlan) {
+                    donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
+                  }
+                }
+              })
             }
-            //get InternalPlan
-            await actionDispatcher(BillingActionCreators.getInternalplans({
-              contextBillingUuid: 'common',
-              passToken: true,
-              reload: true,
-              userId: userMerged._id
-            })).then(({res: {body = []}}) => {
-              if (body) {
-
-                let firstPlan = _.find(body, (plan)=> {
-                  let planUuid = plan.internalPlanUuid
-                  return planUuid === config.netsize.internalPlanUuid
-                })
-
-                if (!firstPlan) {
-                  firstPlan = _.head(body)
-                }
-
-                if (firstPlan) {
-                  donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
-                }
-              }
-            })
           }
 
           if (donePath) {
