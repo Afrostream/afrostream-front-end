@@ -2,11 +2,14 @@ import React, { PropTypes, Component } from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import * as LifeActionCreators from '../../actions/life'
+import * as IntercomActionCreators from '../../actions/intercom'
 import * as EventActionCreators from '../../actions/event'
 import LifeTheme from './LifeTheme'
 import SubNavigation from '../Header/SubNavigation'
 import { withRouter } from 'react-router'
+import config from '../../../../config'
 
+const {intercom:{lifeAppID}} = config
 if (process.env.BROWSER) {
   require('./LifeHome.less')
 }
@@ -32,6 +35,19 @@ class LifeHome extends Component {
   constructor (props, context) {
     super(props, context)
   }
+
+  componentDidMount () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    dispatch(IntercomActionCreators.createIntercom({
+      'feature_type': 'life'
+    }))
+  }
+
 
   render () {
     const {
