@@ -145,14 +145,20 @@
       border-bottom: @gray-lighter solid 1px;
       background-color: lighten(@gray-lighter, 4%);
       .panel-collapse {
+        background-color: lighten(@gray-lighter, 4%);
+        width: 100%;
+        float: left;
       }
     }
     .payment-method-details {
-      line-height: 2;
-      padding: 5px 0 5px 0;
+      line-height: 4;
+      //padding: 5px 0 5px 0;
       text-align: left;
       background-color: lighten(@gray-lighter, 1%);
       .accordion-toggle {
+        width: 100%;
+        display: inline-block;
+        border-bottom: 1px solid darken(@gray-lighter, 3%);
         label {
           color: @color-purple-1;
           cursor: pointer;
@@ -168,7 +174,7 @@
           content: "\f2f2"; /* adjust as needed, taken from bootstrap.css */
           float: left; /* adjust as needed */
           color: @color-indigo; /* adjust as needed */
-          margin: -10px 10px 10px 10px;
+          margin: 5px 10px 5px 10px;
           font-size: 4em;
         }
         &.collapsed {
