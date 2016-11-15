@@ -133,7 +133,8 @@ const client = {
     //}
   ],
   payment: {
-    default: 'recurly'
+    default: 'recurly',
+    order: ['recurly', 'stripe', 'gocardless', 'braintree', 'paypal', 'applepay', 'googlepay', 'carrier_billing', 'bitcoin']
   },
   //add alerts to front (same as cookies)
   alerts: [],

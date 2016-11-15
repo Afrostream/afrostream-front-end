@@ -160,7 +160,9 @@ class PaymentMethod extends React.Component {
 
     if (plan) {
       let providers = plan.get('providerPlans')
-      providers.map((provider, key)=> {
+      providers.sortBy((provider, key)=> {
+        return config.payment.order.indexOf(key)
+      }).map((provider, key)=> {
         if (allMethods.hasOwnProperty(key)) {
           methods.push(allMethods[key])
         }
