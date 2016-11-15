@@ -5,7 +5,6 @@ import { getToken, storeToken } from '../lib/storage'
 import config from '../../../config/'
 import window from 'global/window'
 import _ from 'lodash'
-import qs from 'qs'
 
 export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {
@@ -248,16 +247,27 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
         }
         let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
-        oauthPopup.onbeforeunload = (e) => {
-          intervalCheck = setTimeout(()=> {
-            beforeUnload(null, internalPlan)
-          }, 1000)
+        try {
+          oauthPopup.onbeforeunload = (e) => {
+            intervalCheck = setTimeout(()=> {
+              beforeUnload(null, internalPlan)
+            }, 1000)
+          }
+          window[eventMethod](messageEvent, (event) => {
+            console.log('received response:  ', event.data, event.origin, config.domain.host)
+            if (!~event.origin.indexOf(config.domain.host)) return
+            beforeUnload(event.data && event.data.data, internalPlan)
+          }, false)
+        } catch (err) {
+          //Format resut
+          return reject({
+            response: {
+              body: {
+                message: err.message || err.stack
+              }
+            }
+          })
         }
-        window[eventMethod](messageEvent, (event) => {
-          console.log('received response:  ', event.data, event.origin, config.domain.host)
-          if (!~event.origin.indexOf(config.domain.host)) return
-          beforeUnload(event.data && event.data.data, internalPlan)
-        }, false)
       })
     }
   }
