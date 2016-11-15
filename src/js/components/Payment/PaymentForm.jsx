@@ -55,27 +55,16 @@ class PaymentForm extends React.Component {
 
     const {
       props: {
-        router,
         Billing,
-        location,
         params: {planCode}
       }
     } = this
 
-    let {query} = location
+    let plan = Billing.get(`internalPlans/${planCode}`)
 
-    let isCash = router.isActive('cash')
-
-    let planCodes = Billing.get(`internalPlans/${isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')}`)
-
-    if (!planCodes) {
+    if (!plan) {
       return false
     }
-
-    let plan = planCodes.find((plan) => {
-      return planCode === plan.get('internalPlanUuid')
-    })
-
     return plan
   }
 
@@ -140,7 +129,7 @@ class PaymentForm extends React.Component {
       }
     } = this
 
-    const currentPlan = this.hasPlan()
+    const currentPlan = this.state.currentPlan
 
     if (currentPlan && currentPlan.get('internalPlanUuid') === config.netsize.internalPlanUuid) {
       return

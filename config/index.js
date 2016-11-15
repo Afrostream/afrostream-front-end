@@ -53,7 +53,7 @@ const config = _.merge(
      * Front-End Server
      */
     server: {
-      host: 'localhost',
+      host: '0.0.0.0',
       ip: process.env.IP || undefined,
       port: process.env.PORT ||
       process.env.USER === 'marc' && 80 || // (to bind 80: sudo setcap cap_net_bind_service=+ep `which node`)
@@ -71,7 +71,7 @@ const config = _.merge(
      * WebpackDevServer
      */
     webpackDevServer: {
-      host: 'localhost',
+      host: '0.0.0.0',
       port: 8081
     },
 
@@ -79,7 +79,7 @@ const config = _.merge(
      * browserSync
      */
     browserSyncServer: {
-      host: 'localhost',
+      host: '0.0.0.0',
       port: 8082
     }
   }, client)

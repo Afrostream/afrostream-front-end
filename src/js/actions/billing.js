@@ -226,6 +226,7 @@ export function getCouponCampaigns (params) {
  */
 export function getInternalplans ({
   contextBillingUuid = 'common',
+  internalPlanUuid = null,
   passToken = true,
   reload = false,
   checkMobile = true,
@@ -236,6 +237,7 @@ export function getInternalplans ({
   return (dispatch, getState, actionDispatcher) => {
     return async api => {
       let isMobile = false
+      let forcedInternalPlanUuid = internalPlanUuid
       if (canUseDOM) {
         const userAgent = (window.navigator && navigator.userAgent) || ''
         let agent = new MobileDetect(userAgent)
@@ -243,8 +245,13 @@ export function getInternalplans ({
       }
       //ONLY for common context,not cashway
       if (contextBillingUuid === 'common' && isMobile && checkMobile) {
+        forcedInternalPlanUuid = config.netsize.internalPlanUuid
+      }
+
+      //Get internalplan from params
+      if (forcedInternalPlanUuid) {
         return await api({
-          path: `/api/billings/internalplan/${config.netsize.internalPlanUuid}`,
+          path: `/api/billings/internalplan/${forcedInternalPlanUuid}`,
           passToken
         }).then(({body})=> {
           return {
@@ -257,19 +264,6 @@ export function getInternalplans ({
             }
           }
         })
-      }
-
-      let readyPlans = getState().Billing.get(`internalPlans/${contextBillingUuid}`)
-
-      if (readyPlans && !reload) {
-        console.log('plans already present in data store')
-        return {
-          type: ActionTypes.Billing.getInternalplans,
-          contextBillingUuid,
-          res: {
-            body: readyPlans.toJS()
-          }
-        }
       }
 
       actionDispatcher({
@@ -285,10 +279,10 @@ export function getInternalplans ({
       if (contextBillingUuid === 'common') {
         const user = getState().User.get('user')
         const filterUserReferenceUuid = user && user.get('_id') || userId
-        console.log('filterUserReferenceUuid', filterUserReferenceUuid)
         if (filterUserReferenceUuid) {
           try {
-            country = await getCountry()
+            country = await
+              getCountry()
           } catch (err) {
             console.error('getInternalplans error requesting /auth/geo ', err)
           }

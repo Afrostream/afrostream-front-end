@@ -13,14 +13,14 @@ if (process.env.BROWSER) {
   require('./PaymentPage.less')
 }
 
-@prepareRoute(async function ({store, location, router}) {
+@prepareRoute(async function ({store, location, router, params:{planCode}}) {
   let {query} = location
   let isCash = router && router.isActive('cash')
   let contextBillingUuid = isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')
   let country = query && query.contextCountry
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(BillingActionCreators.getInternalplans({contextBillingUuid, country}))
+    store.dispatch(BillingActionCreators.getInternalplans({internalPlanUuid: planCode, contextBillingUuid, country}))
   ])
 })
 @connect(({Intercom, User}) => ({Intercom, User}))
@@ -46,7 +46,7 @@ class PaymentPage extends React.Component {
   }
 
   render () {
-    const {props: {User, children}} = this
+    const {props: {children}} = this
 
     return (
       <div className="row-fluid brand-bg">

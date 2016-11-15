@@ -31,12 +31,18 @@ export default createReducer(initialState, {
     if (!res) {
       return state
     }
-    const data = res.body
-    return state.merge({
+    const data = res.body || []
+
+    let mergedValues = {
       [`internalPlans/${contextBillingUuid}/plans__res`]: res,
       [`internalPlans/${contextBillingUuid}`]: data,
       [`internalPlans`]: data
+    }
+
+    _.forEach(data, (plan)=> {
+      return mergedValues[`internalPlans/${plan.internalPlanUuid}`] = plan
     })
+    return state.merge(mergedValues)
   },
 
   [ActionTypes.Billing.subscribe](state, {res}) {
