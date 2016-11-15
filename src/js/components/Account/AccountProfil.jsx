@@ -140,7 +140,7 @@ class AccountProfil extends React.Component {
             this.updateUserHandler(section.key, date)
           }
         }
-        let selectedDate = sectionValue && new Date(sectionValue)
+        let selectedDate = (sectionValue && new Date(sectionValue) || new Date())
         element = <DatePicker value={selectedDate}
                               autoOk={true}
                               locale="fr-FR"
@@ -177,7 +177,7 @@ class AccountProfil extends React.Component {
             this.updateUserHandler(section.key, isInputChecked)
           }
         }
-        element = <Checkbox checked={sectionValue} {...inputAttributes} {...{label}}/>
+        element = <Checkbox checked={isEnable} {...inputAttributes} {...{label}}/>
         break
       case 'toggle':
 

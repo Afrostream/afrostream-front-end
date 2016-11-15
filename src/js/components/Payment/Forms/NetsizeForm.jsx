@@ -51,6 +51,7 @@ class NetsizeForm extends CouponForm {
     return (
 
       <div className="row" ref="netsizeForm">
+        {this.renderPromoCode()}
         <h5 className="col-md-12">
           {getI18n().payment.mobile.text.replace('{submitBtn}', getI18n().planCodes.actionMobile)}
         </h5>
