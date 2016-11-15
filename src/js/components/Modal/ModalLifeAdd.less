@@ -1,0 +1,38 @@
+@import (reference) '../../../styles/config.less';
+
+#lock.theme-default.pin .panel {
+  .mode {
+    padding: 1em;
+    color: @brand-primary;
+    background-color: lighten(@color-black-2, 5%);
+    .isMobile({ display: flex; padding: 1em 0 1em 0; });
+  }
+  .pin-btn {
+    background-color: transparent;
+    position: relative;
+    color: @brand-primary;
+    background-color: lighten(@color-black-2, 5%);
+    flex: 1;
+    min-width: 6em;
+    font-family: @font-family-base;
+    padding: 1em;
+    &:hover {
+      color: fade(@color-yellow, 70%);
+    }
+    .isMobile({ min-width: 3em; span {
+      display: none;
+    } });
+
+    &:before {
+      padding: 0.1em;
+      .isMobile({ padding: 0; });
+      font-family: @font-awasome;
+      font-size: 3em;
+      .isMobile({ font-size: 2em; });
+    }
+  }
+
+  .fa .facebook {
+    background-color: #3b5998;
+  }
+}

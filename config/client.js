@@ -181,7 +181,8 @@ const client = {
   },
   intercom: {
     url: 'https://widget.intercom.io/widget/',
-    appID: 'k3klwkxq'
+    appID: 'k3klwkxq',
+    lifeFeature: 'life'
   },
   movies: {
     isNew: {
@@ -216,6 +217,34 @@ const client = {
         active: isBoolean(process.env.OAUTH_ORANGE_ENABLED || true)
       }
     ]
+  },
+  life: {
+    networks: {
+      youtube: {
+        enabled: true,
+        icon: 'fa fa-youtube',
+        title: 'Youtube',
+        regex: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/i,
+      },
+      spotify: {
+        enabled: true,
+        icon: 'fa fa-spotify',
+        title: 'Spotify',
+        regex: /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:track\/|\?uri=spotify:track:)((\w|-){22})/,
+      },
+      soundcloud: {
+        enabled: true,
+        icon: 'fa fa-soundcloud',
+        title: 'Soundcloud',
+        regex: /^https?:\/\/soundcloud\.com\/\S+\/\S+$/i,
+      },
+      instagram: {
+        enabled: true,
+        icon: 'fa fa-instagram',
+        title: 'Instagram',
+        regex: /(https?:\/\/)?([\w\.]*)instagram\.com\/([a-zA-Z0-9_-]*)$/,
+      }
+    }
   },
   social: {
     networks: {

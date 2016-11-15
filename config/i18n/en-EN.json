@@ -479,6 +479,12 @@
     "title": "Partager"
   },
   "life": {
+    "modal": {
+      "title": "Que voulez vous partager à la communauté ?",
+      "step1": "Choisir une source",
+      "step2": "Copier/coller l'url source",
+      "step3": "Completer les informations"
+    },
     "metas": {
       "title": "{themes} | Afrostream Life",
       "description": "Afrostream Life est le média dédié au meilleur de la culture afro-américaine, africaine et afro-caribéenne."

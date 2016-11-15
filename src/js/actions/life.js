@@ -26,6 +26,17 @@ export function fetchThemes (fetchThemeId) {
   }
 }
 
+export function wrappPin (url) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Life.wrappPin,
+      res: await api({
+        path: `/api/life/pins`,
+      })
+    })
+  }
+}
+
 export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
     let readyPins = getState().Life.get(`life/pins/`)

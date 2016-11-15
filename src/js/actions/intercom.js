@@ -44,7 +44,6 @@ export function createIntercom (settings = {'feature_type': null}) {
             var w = window
             var ic = w.Intercom
             if (typeof ic === 'function') {
-              console.log(appID)
               ic('reattach_activator')
               ic('update', {
                 app_id: appId

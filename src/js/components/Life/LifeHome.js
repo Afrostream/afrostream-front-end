@@ -4,12 +4,13 @@ import { connect } from 'react-redux'
 import * as LifeActionCreators from '../../actions/life'
 import * as IntercomActionCreators from '../../actions/intercom'
 import * as EventActionCreators from '../../actions/event'
+import LifeSticky from './LifeSticky'
 import LifeTheme from './LifeTheme'
 import SubNavigation from '../Header/SubNavigation'
 import { withRouter } from 'react-router'
 import config from '../../../../config'
 
-const {intercom:{lifeAppID}} = config
+const {intercom:{lifeFeature}} = config
 if (process.env.BROWSER) {
   require('./LifeHome.less')
 }
@@ -44,7 +45,7 @@ class LifeHome extends Component {
     } = this
 
     dispatch(IntercomActionCreators.createIntercom({
-      'feature_type': 'life'
+      'feature_type': lifeFeature
     }))
   }
 
@@ -65,6 +66,7 @@ class LifeHome extends Component {
         <div className="row-fluid no-padding brand-grey">
           {children || <LifeTheme {...this.props}/>}
         </div>
+        <LifeSticky />
       </div>
     )
   }

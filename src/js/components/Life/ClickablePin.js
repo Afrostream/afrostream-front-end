@@ -88,7 +88,12 @@ class ClickablePin extends Component {
     if (!acl) {
       e.preventDefault()
       const modalRole = this.targetRole()
-      return dispatch(ModalActionCreators.open({target: `life-${modalRole}`, donePath, closable: true}))
+      return dispatch(ModalActionCreators.open({
+        target: `life-${modalRole}`,
+        donePath,
+        closable: true,
+        className: 'large'
+      }))
     }
 
 
@@ -137,6 +142,7 @@ class ClickablePin extends Component {
       case 'image':
         e.preventDefault()
         dispatch(ModalActionCreators.open({
+          className: 'large',
           target: 'image', data: Immutable.fromJS({
             src: extractImg({data, key: 'image', width: 900})
           })

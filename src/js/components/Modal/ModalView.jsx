@@ -10,6 +10,7 @@ import ModalSponsors from './ModalSponsors'
 import ModalPlayer from './ModalPlayer'
 import ModalImage from './ModalImage'
 import ModalComponent from './ModalComponent'
+import ModalLifeAdd from './ModalLifeAdd'
 import { SelectPlan } from '../../components/Payment/'
 import { withRouter } from 'react-router'
 
@@ -91,7 +92,7 @@ class ModalView extends React.Component {
         break
       case 'player':
         return (
-          <ModalPlayer closable={closable} {...this.props} data={data}/>
+          <ModalPlayer {...{closable, cb, type, className, data}} {...this.props}/>
         )
         break
       case 'image':
@@ -102,8 +103,11 @@ class ModalView extends React.Component {
       //LIFE ACL
       case 'life-premium':
       case 'life-vip':
-        return <ModalComponent closable={closable} className="large" {...this.props}><SelectPlan {...this.props}
-                                                                                                 showImages={false}/></ModalComponent>
+        return <ModalComponent {...{closable, cb, type, className, data}} {...this.props}><SelectPlan {...this.props}
+                                                                                                      showImages={false}/></ModalComponent>
+        break
+      case 'life-add':
+        return <ModalLifeAdd {...{closable, cb, type, className, data}} {...this.props} />
         break
       default:
         return <div />
