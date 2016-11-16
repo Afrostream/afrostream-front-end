@@ -26,7 +26,7 @@ class LifePinView extends LifePin {
 
   hasEvent = function (elm, type) {
     var ev = elm.dataset.events
-    if (!ev) return false;
+    if (!ev) return false
 
     return (new RegExp(type)).test(ev)
   }

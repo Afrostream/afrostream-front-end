@@ -54,107 +54,76 @@ class Breadcrumbs extends React.Component {
     return name
   }
 
-  _processRoute (route, routesLength, crumbsLength, isRoot, createElement) {
+  _processRoute (route, createElement, makeLink) {
     //if there is no route path defined and we are set to hide these then do so
     if (!route.path && this.props.hideNoPath) return null
-
-    let separator = ''
-    let paramName = ''
-    let pathValue = ''
+    let elements = []
     let name = this._resolveRouteName(route)
-    if (name &&
-      'excludes' in this.props &&
-      this.props.excludes.some(item => item === name)) return null
-
-    let makeLink = true
-
-    // don't make link if route doesn't have a child route
-    if (makeLink) {
-      makeLink = route.childRoutes ? true : false
-      makeLink = route.childRoutes || routesLength !== (crumbsLength + 1)
-    }
-
-    // set up separator
-    separator = routesLength !== (crumbsLength + 1) ? this.props.separator : ''
-    if (!makeLink) separator = ''
-
-    // don't make link if route has a disabled breadcrumblink prop
-    if (route.hasOwnProperty('breadcrumblink')) {
-      makeLink = route.breadcrumblink
-    }
-
-    // find param name (if provided)
-    if (this.props.params) {
-      paramName = Object.keys(this.props.params).map((param) => {
-        pathValue = param
-        return this.props.params[param]
+    if (name) {
+      if ('excludes' in this.props &&
+        this.props.excludes.some(item => item === name)) {
+        return null
+      }
+      elements.push({
+        name,
+        link: route.path
       })
     }
+
 
     // Replace route param with real param (if provided)
     let path = route.path
     path = path.replace(/\(/g, '')
     path = path.replace(/\)/g, '')
     let splittedPath = path.split('/')
-    let currentKey = splittedPath[splittedPath.length - 1]
+    splittedPath = _.remove(splittedPath, (path)=>!~this.props.excludes.indexOf(path))
     let keyValue
-
     splittedPath.map((link)=> {
       if (link.substring(0, 1) == ':') {
         if (this.props.params) {
+          //const initialPath = _.reduce(splittedPath, (start, link)=> {
+          //  return start + '/' + link
+          //})
           keyValue = Object.keys(this.props.params).map((param) => {
             return this.props.params[param]
           })
-          let pathWithParam = splittedPath.map((link)=> {
-            if (link.substring(0, 1) == ':') {
-              return keyValue && keyValue.shift()
-            } else {
-              return link
+
+          const copyKeyValue = _.clone(keyValue)
+
+          let pathWithParam = splittedPath.map((path, key)=> {
+            const takeValues = _.take(copyKeyValue, key)
+            const subLink = takeValues && _.reduce(takeValues, (start, next)=> {
+                return (next && start + '/' + next) || start
+              })
+            let name = path
+            if (path.substring(0, 1) == ':') {
+              name = keyValue && keyValue.shift()
+              return {name, link: '/' + subLink}
             }
+            return null
           })
 
-          pathWithParam = _.remove(pathWithParam, undefined)
-
-          path = pathWithParam.reduce((start, link)=> {
-            if (link) {
-              return start + '/' + link
-            }
-          })
-
-          if (!route.staticName && currentKey.substring(0, 1) == ':')
-            name = pathWithParam.reduce((start, link)=> {
-              return link
-            })
-
-          if (typeof route.prettifyParam === 'function') {
-            name = route.prettifyParam(name)
-          }
+          pathWithParam = _.remove(pathWithParam, (path)=> (path && path.name))
+          elements = _.remove(pathWithParam, (path)=>!parseInt(path.name))
         }
       }
     })
 
-    if (name) {
-      if (this.props.prettify) {
-        // Note: this could be replaced with a more complex prettifier
-        console.log('prettifying')
-        name = name.replace(/-/g, ' ')
-        name = name.replace(/\w\S*/g, function (txt) {
-          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-        })
-      }
-
-      var itemClass = this.props.itemClass
-      if (makeLink) {
-        var link = !createElement ? name :
-          React.createElement(Link, {
-            to: route.path,
-          }, name)
-      } else {
-        link = name
-        itemClass += ' ' + this.props.activeItemClass
-      }
-      return !createElement ? link :
-        React.createElement(this.props.itemElement, {className: itemClass, key: Math.random() * 100}, link, separator)
+    if (elements.length) {
+      return _.map(elements, (path, key)=> {
+        var itemClass = this.props.itemClass
+        if (makeLink || key < elements.length - 1) {
+          var link = !createElement ? path.link :
+            React.createElement(Link, {
+              to: path.link,
+            }, path.name)
+        } else {
+          link = path.name
+          itemClass += ' ' + this.props.activeItemClass
+        }
+        return !createElement ? link :
+          React.createElement(this.props.itemElement, {className: itemClass, key: Math.random() * 100}, link)
+      })
     }
 
     return null
@@ -163,20 +132,15 @@ class Breadcrumbs extends React.Component {
 
   _buildRoutes (routes, createElement) {
     let crumbs = []
-    let isRoot = routes[1] && routes[1].hasOwnProperty('path')
     let parentPath = '/'
-
+    let isRoot = routes[1] && routes[1].hasOwnProperty('path')
     let routesWithExclude = []
     routes.forEach((_route, index) => {
       let route = Object.assign({}, _route)
-      if (typeof _route.prettifyParam === 'function') {
-        route.prettifyParam = _route.prettifyParam
-      }
       if ('props' in route && 'path' in route.props) {
         route.path = route.props.path
         route.children = route.props.children
         route.name = route.props.name
-        route.prettifyParam = route.props.prettifyParam
       }
       if (route.path) {
         if (route.path.charAt(0) === '/') {
@@ -218,7 +182,7 @@ class Breadcrumbs extends React.Component {
         route.path = parentPath
       }
 
-      let result = this._processRoute(route, routes.length, crumbs.length, isRoot, createElement)
+      let result = this._processRoute(route, createElement, !crumbs.length)
 
       if (result) {
         crumbs.push(result)

@@ -33,7 +33,7 @@ export default function prepareRoute (prepareFn) {
         } = this
 
         if (!shallowEqual(nextProps.route, route), !shallowEqual(nextProps.params, params)) {
-          let lang = nextProps.routes && nextProps.routes.length > 3 && nextProps.routes[3].path
+          let lang = nextProps.routes && nextProps.routes.length > 3 && nextProps.routes[3].lang
           let nextParams = nextProps.params || {}
           nextParams.lang = lang
           prepareFn({
@@ -52,7 +52,7 @@ export default function prepareRoute (prepareFn) {
           context: {store},
           props: {params, location, router, routes, route, categoryId}
         } = this
-        let lang = routes && routes.length > 3 && routes[3].path
+        let lang = routes && routes.length > 3 && routes[3].lang
         let nextParams = params || {}
         nextParams.lang = lang
 

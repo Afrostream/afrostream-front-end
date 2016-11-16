@@ -843,6 +843,7 @@ class FloatPlayer extends React.Component {
       if (seasonData) {
         infos.seasonNumber = seasonData.get('seasonNumber')
       }
+
       renderData = episodeData ? episodeData : movieData
 
       chatMode = Event.get('showChat')
@@ -898,12 +899,12 @@ class FloatPlayer extends React.Component {
               <label className="tag video-infos_episode">{`Épisode ${infos.episodeNumber}`}</label> : ''}
           </div>
           {<RateComponent {...{videoId}}/>}
-          <div className="player-buttons">
+          {renderData && <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
             <ShareButton />
             <RaisedButton onClick={::this.showKoment} label="Commenter" primary={true}
                           icon={<i className="zmdi zmdi-comment-more"></i>}/>
-          </div>
+          </div>}
           {videoDuration ?
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
         </div>}

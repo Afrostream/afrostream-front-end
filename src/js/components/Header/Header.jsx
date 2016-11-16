@@ -70,12 +70,14 @@ class Header extends React.Component {
     const chatMode = Event.get('showChat')
     const pinned = Event.get('pinHeader')
     const user = User.get('user')
+    let excludedBreacrumbsRoutes = ['home', 'player', 'search', 'pin']
     let planCode
     if (user) {
       planCode = user.get('planCode')
+      excludedBreacrumbsRoutes.shift()
     }
 
-    let hasHistory = !this.state.isIOS && user && (location.pathname.length > 1)
+    //let hasHistory = !this.state.isIOS && user && (location.pathname.length > 1)
 
     const isOnLife = router.isActive('life')
 
@@ -91,6 +93,7 @@ class Header extends React.Component {
       //|| router.isActive('couponregister')
       //|| router.isActive('parrainage')
     }
+
 
     return (
       <Headroom tolerance={5} offset={200} classes={{
@@ -120,13 +123,12 @@ class Header extends React.Component {
             <Breadcrumbs
               routes={this.props.routes}
               params={this.props.params}
-              excludes={['app', 'player', 'search']}
+              excludes={excludedBreacrumbsRoutes}
               displayMissingText="Accueil"
               hideNoPath={true}
               displayMissing={false}
               setDocumentTitle={false}
               wrapperClass="nav breadcrumbs"
-              separator=""
               itemClass="step"
               wrapperElement="ul"
               activeItemClass="active"

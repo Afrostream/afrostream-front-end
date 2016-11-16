@@ -26,7 +26,7 @@ class BrowseMenu extends React.Component {
     }
 
     return (
-      <SubNavigation {...{themesList}} to="/browse/genre/{_id}/{slug}"/>
+      <SubNavigation {...{themesList}} to="/category/{_id}/{slug}"/>
     )
   }
 }

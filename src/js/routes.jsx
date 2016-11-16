@@ -24,7 +24,7 @@ const langs = ['fr', 'en']
 
 const buildSubRoutes = function () {
   return _.map(langs, (lang) =>
-    <Route key={lang} path={lang}>
+    <Route key={lang} path={lang} lang={lang}>
       {buildRoutes(lang)}
     </Route>
   )
@@ -39,7 +39,7 @@ const buildHome = function (lang) {
              component={CancelSubscription}/>
     </Route>,
     <Route key={`${lang}-sponsorship`} name="sponsorship" path="parrainage" component={SponsorsPage}/>,
-    <Route key={`${lang}-browse`} name="browse" path="browse/genre(/:categoryId)(/:categorySlug)"
+    <Route key={`${lang}-category`} name="category" path="category(/:categoryId)(/:categorySlug)"
            component={BrowseGenrePage}/>,
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
@@ -60,7 +60,7 @@ const buildHome = function (lang) {
   const langRoutes = buildSubRoutes()
   homeRoutes.unshift(langRoutes)
 
-  return (<Route key={`${lang}-home`} path="/" component={HomePage}>
+  return (<Route key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
     {homeRoutes}
   </Route>)
 
@@ -87,8 +87,8 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={LoginPage}/>,
     <Route key={`${lang}-login`} name="login" path="login" component={LoginPage}/>,
     <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
-    <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeHome} breadcrumblink={true}>
-      <Route name="life-community" path="community" component={Life.LifeCommunity}>
+    <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeHome}>
+      <Route name="community" path="community" component={Life.LifeCommunity}>
         <Route name="lifeUserInfos" path=":lifeUserId(/:lifeUserName)" component={Life.LifeUserInfos}/>
       </Route>
       <Route name="lifePin" path="pin/:pinId(/:pinSlug)" component={Life.LifePinView}/>
@@ -104,6 +104,7 @@ const buildRoutes = function (lang) {
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
     <Redirect key={`${lang}-redirect`} from="blog" to="life"/>,
+    <Redirect key={`${lang}-redirect`} from="/browse/**/*" to="category"/>,
     //push subroutes after static routes
     buildHome(lang),
     <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
@@ -114,7 +115,7 @@ const buildRoutes = function (lang) {
 }
 
 export default (
-  <Route name="app" component={Application} breadcrumblink={true}>
+  <Route name="app" component={Application}>
     {buildRoutes()}
   </Route>
 )

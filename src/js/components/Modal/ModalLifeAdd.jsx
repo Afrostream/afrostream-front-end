@@ -143,7 +143,7 @@ class ModalLifeAdd extends ModalComponent {
   }
 
   handlePrev = () => {
-    const {stepIndex} = this.state;
+    const {stepIndex} = this.state
     if (stepIndex > 0) {
       this.setState({stepIndex: stepIndex - 1})
     }
@@ -173,7 +173,7 @@ class ModalLifeAdd extends ModalComponent {
           style={{marginRight: 12, color: '#FFFFFF'}}
         />
       </div>
-    );
+    )
   }
 
   render () {

@@ -36,7 +36,7 @@
 
   z-index: @nav-z + 3;
   .transition(all 0.35s linear);
-  .animation(playerMove 0.35s linear);
+  .animation(playerMove 0.35s ease forwards);
 
   &.unpinned {
     .player-container:not(.vjs-fullscreen) {
@@ -53,7 +53,7 @@
 
   &.pinned {
     .transition(none);
-    .animation(playerMovePin 0.35s linear);
+    .animation(playerMovePin 0.35s ease forwards);
     z-index: @nav-z;
     margin: 0;
     .wrapper {
