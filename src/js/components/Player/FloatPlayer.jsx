@@ -822,7 +822,11 @@ class FloatPlayer extends React.Component {
     let seasonData
     let videoDuration
     let csa
-    let infos
+    let infos = {
+      title: '',
+      seasonNumber: 0,
+      episodeNumber: 0
+    }
     let renderData
     let chatMode
     let titleStyle

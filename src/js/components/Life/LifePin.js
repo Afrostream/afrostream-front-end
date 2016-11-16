@@ -35,7 +35,7 @@ class LifePin extends ClickablePin {
 
     const type = data.get('type')
 
-    let imageUrl = extractImg({data, key: 'image', width: imageWidth, height: imageHeight, fit: 'min'})
+    let imageUrl = extractImg({data, key: 'image', width: imageWidth, height: imageHeight, fit: 'crop'})
 
     const pinnedDate = moment(data.get('date'))
     const pinnedUser = data.get('user')
