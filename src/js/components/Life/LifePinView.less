@@ -15,9 +15,16 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
+    width: 100%;
+    .aspect-ratio(16, 9);
     .isMobile({ width: 100% !important; });
     img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       margin: 0;
+      top: 0;
+      bottom: 0;
     }
     .ta-insert-video-btn {
       .btn-play();
@@ -48,6 +55,7 @@
       vertical-align: middle;
       text-align: center;
       margin: 0;
+      padding: 0.3em;
       font-size: 3em;
       .isMobile({ font-size: 1.5em; });
     }
@@ -127,13 +135,14 @@
     iframe,
     img {
       max-width: 100%;
+      .isMobile({ width: 100% !important; });
     }
     img.media-object {
       max-width: inherit;
     }
     p,
     img {
-      margin: 0 0 1.5em;
+      margin: 0.5em 0 0.5em 0;
     }
 
     .hClass (@index) when (@index > 0) {
