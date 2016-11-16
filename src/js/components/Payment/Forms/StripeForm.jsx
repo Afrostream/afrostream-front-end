@@ -108,7 +108,7 @@ class StripeForm extends CouponForm {
             billingProviderName: provider,
             subOpts: {
               customerBankAccountToken: response.id,
-              couponCode: couponCode.getvalue()
+              couponCode: couponCode.getValue()
             }
           })
         })
