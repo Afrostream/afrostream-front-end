@@ -8,6 +8,9 @@ import ModalCoupon from './ModalCoupon'
 import ModalCashwayPlan from './ModalCashwayPlan'
 import ModalSponsors from './ModalSponsors'
 import ModalPlayer from './ModalPlayer'
+import ModalImage from './ModalImage'
+import ModalComponent from './ModalComponent'
+
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -29,12 +32,13 @@ class ModalView extends React.Component {
       }
     } = this
 
-    const target = Modal.get('target')
+    const type = Modal.get('target')
     const closable = Modal.get('closable')
     const data = Modal.get('data')
     const cb = Modal.get('cb')
+    const className = Modal.get('className')
 
-    switch (target) {
+    switch (type) {
       case 'newsletter':
         return (
           <ModalNewsletter closable={closable} {...this.props}
@@ -61,27 +65,32 @@ class ModalView extends React.Component {
       case 'showProvider':
       case 'linkProvider':
         return (
-          <ModalLogin type={target} closable={closable} cb={cb} {...this.props}/>
+          <ModalLogin {...{closable, cb, type, className}} {...this.props}/>
         )
         break
       case 'redeemCoupon':
         return (
-          <ModalCoupon type={target} closable={closable} {...this.props}/>
+          <ModalCoupon {...{closable, cb, type, className}} {...this.props}/>
         )
         break
       case 'strategy':
         return (
-          <ModalSocial closable={closable} {...this.props} data={data}/>
+          <ModalSocial {...{closable, cb, type, className, data}} {...this.props} />
         )
         break
       case 'sponsorship':
         return (
-          <ModalSponsors closable={closable} {...this.props} data={data}/>
+          <ModalSponsors {...{closable, cb, type, className, data}} {...this.props} />
         )
         break
       case 'player':
         return (
-          <ModalPlayer closable={closable} {...this.props} data={data}/>
+          <ModalPlayer {...{closable, cb, type, className, data}} {...this.props} />
+        )
+        break
+      case 'image':
+        return (
+          <ModalImage {...{closable, cb, type, className, data}} {...this.props} />
         )
         break
       default:

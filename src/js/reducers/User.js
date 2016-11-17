@@ -140,10 +140,11 @@ export default createReducer(initialState, {
   },
 
   // #### SPLASH ####
-  [ActionTypes.User.setSplash](state, {splashId, user}) {
+  [ActionTypes.User.setSplash](state, {user}) {
     if (!user) {
       return state
     }
+
     return state.merge({
       ['user']: user
     })

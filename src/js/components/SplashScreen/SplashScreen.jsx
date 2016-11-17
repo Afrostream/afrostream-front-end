@@ -5,8 +5,10 @@ import { connect } from 'react-redux'
 import config from '../../../../config'
 import classNames from 'classnames'
 import { prepareRoute } from '../../decorators'
+import * as ModalActionCreators from '../../actions/modal'
 import * as ConfigActionCreators from '../../actions/config'
 import * as UserActionCreators from '../../actions/user'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
 if (process.env.BROWSER) {
   require('./SplashScreen.less')
@@ -23,51 +25,26 @@ class SplashScreen extends React.Component {
     splash: false
   }
 
-  splash = null
-
-  timeoutSplash = 0
-
-  componentDidMount () {
-    const elTarget = ReactDOM.findDOMNode(this)
-    elTarget.addEventListener('mousewheel', ::this.mouseWheelHandler)
-    elTarget.addEventListener('DOMMouseScroll', ::this.mouseWheelHandler)
-  }
-
-  handleClose (e) {
-    e.preventDefault()
-    this.mouseWheelHandler()
-  }
-
-  mouseWheelHandler () {
-    clearTimeout(this.timeoutSplash)
-
-    const elTarget = ReactDOM.findDOMNode(this)
-    elTarget.removeEventListener('mousewheel', ::this.mouseWheelHandler)
-    elTarget.removeEventListener('DOMMouseScroll', ::this.mouseWheelHandler)
-
-    this.timeoutSplash = setTimeout(()=> {
-      this.hideSplash()
-    }, 200)
+  componentWillReceiveProps (nextProps) {
+    if (!shallowEqual(nextProps.User, this.props.User)) {
+      this.getSplash()
+    }
   }
 
   hideSplash () {
-    clearTimeout(this.timeoutSplash)
-    this.setState({splash: true})
     const {
       props: {
         dispatch
       }
     } = this
 
-    if (this.splash) {
-      dispatch(UserActionCreators.setSplash(this.splash.get('_id')))
-      this.splash = null
-    }
+    dispatch(UserActionCreators.setSplash(this.state.splash.get('_id')))
   }
 
-  renderSplash () {
+  getSplash () {
     const {
       props: {
+        dispatch,
         Config,
         User
       }
@@ -77,14 +54,19 @@ class SplashScreen extends React.Component {
     const user = User.get('user')
     const splashs = Config.get(`/config/splash`)
 
-
     if (!user || !splashs || !splashs.size) {
       return
     }
 
-    const splashList = splashs.filter((splash)=> {
-      return splash && splash.get('type') === 'screen'
+    let splashList = splashs.filter((splash)=> {
+      return ~'screen,modal'.indexOf(splash.get('type'))
     })
+
+    splashList = splashList.filter((splash)=> {
+      const splashRole = splash.get('role')
+      return !splashRole || user.get(splashRole)
+    })
+
 
     let canSponsorshipSubscription = false
     const subscriptionsStatus = user.get('subscriptionsStatus')
@@ -92,6 +74,7 @@ class SplashScreen extends React.Component {
       const subscriptions = subscriptionsStatus.get('subscriptions')
       canSponsorshipSubscription = Boolean(subscriptions && subscriptions.filter((a) => a.get('isActive') === 'yes' && a.get('inTrial') === 'no').size)
     }
+
     //FIXME not all splash are blocked if user payed so add filter option in config
     if (!canSponsorshipSubscription) {
       return
@@ -101,33 +84,48 @@ class SplashScreen extends React.Component {
 
     let splash = splashList.find((spl) => {
       const splashId = spl.get('_id')
+      let userHasShowedSplash = false
       if (userSplashList) {
-        const userHasShowedSplash = userSplashList.find((usrSplash)=> {
+        userHasShowedSplash = userSplashList.find((usrSplash)=> {
           return usrSplash.get('_id') === splashId
         })
-        return !userHasShowedSplash
       }
-      return true
+      return !userHasShowedSplash
     })
 
 
-    if (!splash) {
+    if (!splash || splash === this.state.splash) {
       return
     }
 
-    this.splash = splash
+    const splashType = splash.get('type')
+    if (splashType === 'modal') {
+      dispatch(ModalActionCreators.open({
+        target: 'image',
+        className: 'large',
+        data: splash,
+        cb: this.hideSplash.bind(this)
+      }))
+    }
 
+    this.setState({
+      splash
+    })
+
+  }
+
+  renderSplash () {
+    const splash = this.state.splash
+    if (!splash) {
+      return
+    }
     let imageStyle = {backgroundImage: `url(${splash.get('src')}?crop=faces&fit=clip&w=1080&q=${config.images.quality}&fm=${config.images.type})`}
 
     let splashClass = {
       'splash': true,
       'splash-image': true,
-      'slide-top': this.state.splash
+      'slide-top': splash
     }
-
-    this.timeoutSplash = setTimeout(()=> {
-      this.hideSplash()
-    }, 60000)
 
     return (
       <a href={splash.get('link')} onClick={::this.hideSplash}>
@@ -137,17 +135,21 @@ class SplashScreen extends React.Component {
   }
 
   render () {
-
+    const splash = this.state.splash
     let closeClass = classNames({
       'close': true,
-      'hidden': this.state.splash || !this.splash
+      'hidden': splash
     })
 
+    if (!splash || splash.get('type') !== 'screen') {
+      return <div />
+    }
     return (
       <div className="splash-screen">
-        <a className={closeClass} href="#" onClick={::this.handleClose}><i
-          className="zmdi zmdi-close-circle-o zmdi-hc-2x"></i></a>
-        {this.renderSplash()}
+        <a className={closeClass} href="#" onClick={::this.handleClose}>
+          <i className="zmdi zmdi-close-circle-o zmdi-hc-2x"/>
+        </a>
+        {this.renderSplash()}}
       </div>
     )
   }

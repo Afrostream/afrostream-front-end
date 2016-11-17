@@ -11,13 +11,14 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Modal.open](state, {target, closable, donePath, data, cb}) {
+  [ActionTypes.Modal.open](state, {target, closable, donePath, data, cb, className}) {
     return state.merge({
       target,
       closable,
       donePath,
       data,
-      cb
+      cb,
+      className
     })
   },
 
@@ -27,7 +28,8 @@ export default createReducer(initialState, {
       closable: true,
       donePath: null,
       data: null,
-      cb: null
+      cb: null,
+      className: null
     })
   }
 

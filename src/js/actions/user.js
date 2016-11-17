@@ -5,6 +5,8 @@ import * as FBActionCreators from './facebook'
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { push, isActive } from 'redux-router'
+import { mergeFbUserInfo } from '../lib/utils'
+
 import _ from 'lodash'
 import config from '../../../config'
 
@@ -29,15 +31,8 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         let subscriptionsStatus = userMerged.subscriptionsStatus
         let status = subscriptionsStatus && subscriptionsStatus.status
         userMerged.user_id = userMerged._id || userMerged.user_id
-        if (userMerged.facebook) {
-          userMerged.picture = `//graph.facebook.com/${userMerged.facebook.id}/picture`
-          userMerged.name = userMerged.name || userMerged.facebook.name
-          userMerged.nickname = userMerged.nickname || userMerged.facebook.nickname
-        } else {
-          userMerged.picture = `/avatar/${userMerged.email || userMerged.name}`
-        }
         userMerged.splashList = userMerged.splashList || []
-
+        userMerged = mergeFbUserInfo(userMerged)
         actionDispatcher(FBActionCreators.getFriendList())
 
         return async ()=> {
@@ -234,7 +229,7 @@ export function setSplash (splashId) {
 
     if (!user) {
       return {
-        type: ActionTypes.User.setSplash,
+        type: ActionTypes.User.setSplash
       }
     }
 
@@ -246,6 +241,14 @@ export function setSplash (splashId) {
     }])
 
     splashList = _.uniqBy(splashList, '_id')
+
+    let tmpUser = user.toJS()
+    tmpUser.splashList = splashList
+
+    actionDispatcher({
+      type: ActionTypes.User.setSplash,
+      user: tmpUser
+    })
 
     return actionDispatcher(put({
       splashList

@@ -1,34 +1,26 @@
 import React from 'react'
-import * as ModalActionCreators from '../../actions/modal'
+import { connect } from 'react-redux'
 import classNames from 'classnames'
+import ModalComponent from './ModalComponent'
+import { Link } from '../Utils'
+import ReactImgix from '../Image/ReactImgix'
 
-class ModalComponent extends React.Component {
+class ModalImage extends ModalComponent {
 
-  static contextTypes = {
-    location: React.PropTypes.object,
-    history: React.PropTypes.object
-  }
-
-  componentWillUnmount () {
-    if (!this.props.closable) {
-      this.closeModal()
-    }
+  constructor (props) {
+    super(props)
   }
 
   closeModal () {
-    if (this.props.dispatch) {
-      this.props.dispatch(ModalActionCreators.close())
+    const {props:{cb}} =this
+    super.closeModal()
+    if (cb) {
+      cb()
     }
   }
 
-  handleClose (e) {
-    e.stopPropagation()
-    e.preventDefault()
-    this.closeModal()
-  }
-
-
   render () {
+    const {props:{data}} =this
 
     let closeClass = classNames({
       'close': true,
@@ -55,7 +47,13 @@ class ModalComponent extends React.Component {
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
-                      {this.props.children}
+                      <div className="modal-image-container">
+                        <div className="content">
+                          <Link to={data.get('link')} onClick={::this.handleClose}>
+                            <ReactImgix className="modal-image" src={data.get('src')} bg={true}/>
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -68,18 +66,4 @@ class ModalComponent extends React.Component {
   }
 }
 
-ModalComponent.propTypes = {
-  dispatch: React.PropTypes.func,
-  closable: React.PropTypes.bool,
-  modal: React.PropTypes.bool,
-  className: React.PropTypes.string
-
-}
-
-ModalComponent.defaultProps = {
-  closable: true,
-  modal: true,
-  className: ''
-}
-
-export default ModalComponent
+export default ModalImage
