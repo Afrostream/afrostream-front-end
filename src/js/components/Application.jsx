@@ -14,6 +14,7 @@ import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
 
+import * as EventActionCreator from '../actions/event'
 import * as LifeActionCreators from '../actions/life'
 import * as CategoryActionCreators from '../actions/category'
 import * as MovieActionCreators from '../actions/movie'
@@ -83,7 +84,7 @@ class Application extends React.Component {
 
   render () {
 
-    const {props: {children, Event, Modal, User}} = this
+    const {props: {dispatch, children, Event, Modal, User}} = this
     const user = User.get('user')
     const docked = Boolean(user)
     const toggled = Event.get('sideBarToggled')
@@ -112,6 +113,11 @@ class Application extends React.Component {
             open={Boolean(snackMessage)}
             message={snackMessage.get('message')}
             autoHideDuration={4000}
+            onRequestClose={
+              (e) => {
+                dispatch(EventActionCreator.snackMessage(null))
+              }
+            }
           />}
         </div>
       </MuiThemeProvider>
