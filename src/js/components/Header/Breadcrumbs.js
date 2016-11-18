@@ -14,9 +14,8 @@ import { Router, Route, Link } from 'react-router'
 
 class Breadcrumbs extends React.Component {
 
-  constructor () {
-    super()
-    this.displayName = 'Breadcrumbs'
+  constructor (props, context) {
+    super(props, context)
   }
 
   _getDisplayName (route) {
@@ -55,6 +54,10 @@ class Breadcrumbs extends React.Component {
   }
 
   _processRoute (route, createElement, makeLink) {
+    const {
+      context: {store}
+    } = this
+
     //if there is no route path defined and we are set to hide these then do so
     if (!route.path && this.props.hideNoPath) return null
     let elements = []
@@ -69,8 +72,7 @@ class Breadcrumbs extends React.Component {
         link: route.path
       })
     }
-
-
+    const params = this.props.params
     // Replace route param with real param (if provided)
     let path = route.path
     path = path.replace(/\(/g, '')
@@ -80,25 +82,52 @@ class Breadcrumbs extends React.Component {
     let keyValue
     splittedPath.map((link)=> {
       if (link.substring(0, 1) == ':') {
-        if (this.props.params) {
+        if (params) {
           //const initialPath = _.reduce(splittedPath, (start, link)=> {
           //  return start + '/' + link
           //})
-          keyValue = Object.keys(this.props.params).map((param) => {
-            return this.props.params[param]
+          keyValue = _.map(params, (paramValue, key) => {
+            if (~this.props.excludes.indexOf(key) || !paramValue) {
+              return
+            }
+            let name = paramValue
+            let hasNumber
+            let value
+            switch (key) {
+              case  'seasonId':
+                value = store.getState().Season.get(`seasons/${paramValue}`)
+                hasNumber = value && value.size && `S${value.get('seasonNumber')}`
+                break
+              case  'episodeId':
+                value = store.getState().Episode.get(`episodes/${paramValue}`)
+                hasNumber = value && value.size && value && `E${value.get('episodeNumber')}`
+                break
+              default:
+                break
+            }
+            if (hasNumber) {
+              name = hasNumber
+            }
+
+            return {
+              value: paramValue,
+              name
+            }
           })
+
+          keyValue = _.remove(keyValue, undefined)
 
           const copyKeyValue = _.clone(keyValue)
 
           let pathWithParam = splittedPath.map((path, key)=> {
             const takeValues = _.take(copyKeyValue, key)
             const subLink = takeValues && _.reduce(takeValues, (start, next)=> {
-                return (next && start + '/' + next) || start
+                return (next && (start.value || start) + '/' + next.value) || (start.value || start)
               })
             let name = path
-            if (path.substring(0, 1) == ':') {
-              name = keyValue && keyValue.shift()
-              return {name, link: '/' + subLink}
+            if (keyValue && keyValue.length && path.substring(0, 1) == ':') {
+              const kV = keyValue.shift()
+              return {name: kV.name || name, link: '/' + subLink}
             }
             return null
           })
@@ -255,7 +284,8 @@ Breadcrumbs.defaultProps = {
  */
 Breadcrumbs.contextTypes = {
   routes: React.PropTypes.array,
-  params: React.PropTypes.array
+  params: React.PropTypes.array,
+  store: React.PropTypes.object.isRequired
 }
 
 module.exports = Breadcrumbs

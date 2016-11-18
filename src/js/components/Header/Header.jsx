@@ -70,7 +70,7 @@ class Header extends React.Component {
     const chatMode = Event.get('showChat')
     const pinned = Event.get('pinHeader')
     const user = User.get('user')
-    let excludedBreacrumbsRoutes = ['home', 'player', 'search', 'pin']
+    let excludedBreacrumbsRoutes = ['home', 'player', 'search', 'pin', 'seasonSlug']
     let planCode
     if (user) {
       planCode = user.get('planCode')
@@ -121,8 +121,8 @@ class Header extends React.Component {
           </nav>
           <nav className="float--left float-bottom-mobile" role="navigation">
             <Breadcrumbs
-              routes={this.props.routes}
-              params={this.props.params}
+              {...this.context}
+              {...this.props}
               excludes={excludedBreacrumbsRoutes}
               displayMissingText="Accueil"
               hideNoPath={true}
