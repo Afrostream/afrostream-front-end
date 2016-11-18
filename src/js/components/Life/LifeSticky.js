@@ -24,7 +24,7 @@ class LifeSticky extends Component {
     stickyWrapper.classList.add('clicked')
     setTimeout(()=> {
       dispatch(ModalActionCreators.open({target: 'life-add', className: 'medium', cb: this.close.bind(this)}))
-    }, 1500)
+    }, 1000)
   }
 
   close () {
