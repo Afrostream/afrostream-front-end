@@ -1,4 +1,4 @@
-import { proxy, avatar, sharing } from './api'
+import { proxy, avatar, sharing, log } from './api'
 import auth from './auth'
 import config from '../../config'
 import fs from 'fs'
@@ -111,6 +111,10 @@ export default function routes (app, buildPath) {
   // PROXY
   // --------------------------------------------------
   app.use('/proxy', proxy)
+
+  // PROXY
+  // --------------------------------------------------
+  app.use('/log', log)
 
   // AVATAR
   // --------------------------------------------------

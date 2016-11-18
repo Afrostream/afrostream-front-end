@@ -10,6 +10,7 @@ export default function (api, history, initialState) {
     applyMiddleware(
       middleWare.promise.bind(null, api),
       middleWare.raven,
+      middleWare.tracker,
       middleWare.logger
     ),
     reduxReactRouter({

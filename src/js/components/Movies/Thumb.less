@@ -1,6 +1,7 @@
 @import (reference) '../../../styles/config.less';
 
 .thumb {
+  color: @brand-primary;
   padding: @thumb-margin;
   position: relative;
   text-align: left;
@@ -134,7 +135,7 @@
   .thumb-buttons {
     position: absolute;
     z-index: 3;
-    bottom: 10px;
+    bottom: 20px;
     right: 11px;
     opacity: 0;
     visibility: hidden;
@@ -142,6 +143,9 @@
 
     .btn {
       margin: 5px 5px 5px 0px;
+      &:hover {
+        color: lighten(@brand-primary, 5%)
+      }
     }
   }
 }
