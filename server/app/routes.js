@@ -1,6 +1,5 @@
+import { proxy, avatar, sharing } from './api'
 import auth from './auth'
-import avatar from './api/avatar'
-import sharing from './api/sharing'
 import config from '../../config'
 import fs from 'fs'
 import path from 'path'
@@ -93,6 +92,7 @@ export default function routes (app, buildPath) {
     res.noCache()
     res.json({date: new Date()})
   })
+
   app.get('/test/cache', (req, res) => {
     res.cache()
     res.json({date: new Date()})
@@ -103,9 +103,14 @@ export default function routes (app, buildPath) {
     res.redirect(301, path.join(hostname, '/life'))
   })
 
+
   // OAUTH
   // --------------------------------------------------
   app.use('/auth', auth)
+
+  // PROXY
+  // --------------------------------------------------
+  app.use('/proxy', proxy)
 
   // AVATAR
   // --------------------------------------------------

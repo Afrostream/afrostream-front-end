@@ -31,5 +31,10 @@ export default createReducer(initialState, {
     return state.merge({
       ['sideBarToggled']: !toggled
     })
+  },
+  [ActionTypes.Event.snackMessage](state, {data}) {
+    return state.merge({
+      ['snackMessage']: data
+    })
   }
 })

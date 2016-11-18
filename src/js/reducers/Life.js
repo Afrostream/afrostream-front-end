@@ -11,13 +11,23 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Life.wrappPin](state, {res}) {
+  [ActionTypes.Life.wrappPin](state, {original, proxified}) {
+    if (!original || !proxified) {
+      return state
+    }
+    return state.merge({
+      [`life/wrap/original`]: original,
+      [`life/wrap`]: proxified
+    })
+  },
+
+  [ActionTypes.Life.publishPin](state, {res}) {
     if (!res) {
       return state
     }
     const data = res.body
     return state.merge({
-      [`life/wrap`]: data
+      [`life/wrap`]: null
     })
   },
 

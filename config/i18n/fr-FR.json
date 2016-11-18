@@ -22,8 +22,9 @@
       "title": "Vos films et séries afro préférés quand vous voulez où vous voulez en illimité",
       "action": "Démarrez votre semaine d'essai offerte",
       "features": [
-        "En version française ou avec des sous-titres en français",
-        "Aucune publicité, aucune interruption",
+        "Sans engagement",
+        "La première semaine est offerte",
+        "Disponible sur ordinateur, tablette, smartphone et box",
         "Profitez d'une image haute qualité"
       ]
     },
@@ -521,7 +522,12 @@
       "title": "Que voulez vous partager à la communauté ?",
       "step1": "Choisir une source",
       "step2": "Copier/coller l'url source",
-      "step3": "Completer les informations"
+      "step3": "Completer les informations",
+      "success": "Votre publication a été envoyée, merci pour votre participation",
+      "errors": {
+        "url": "L' url n' est pas valide",
+        "post": "Une erreur interne est survenue. Merci de contacter le support à support@afrostream.tv ."
+      }
     },
     "metas": {
       "title": "{themes} | Afrostream Life",

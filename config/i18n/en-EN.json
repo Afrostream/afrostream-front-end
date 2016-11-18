@@ -483,7 +483,12 @@
       "title": "Que voulez vous partager à la communauté ?",
       "step1": "Choisir une source",
       "step2": "Copier/coller l'url source",
-      "step3": "Completer les informations"
+      "step3": "Completer les informations",
+      "success": "Votre publication a été envoyée, merci pour votre participation",
+      "errors": {
+        "url": "L' url n' est pas valide",
+        "post": "Une erreur interne est survenue. Merci de contacter le support à support@afrostream.tv ."
+      }
     },
     "metas": {
       "title": "{themes} | Afrostream Life",

@@ -2,6 +2,18 @@ import window from 'global/window'
 import config from '../../../config'
 import _ from 'lodash'
 
+function deepMap (obj, iterator, context) {
+  return _.transform(obj, function (result, val, key) {
+    result[key] = _.isObject(val) ?
+      deepMap(val, iterator, context) :
+      iterator.call(context, val, key, obj)
+  })
+}
+
+_.mixin({
+  deepMap
+})
+
 export function btoa (x) {
   if (window.btoa) {
     return window.btoa(x)

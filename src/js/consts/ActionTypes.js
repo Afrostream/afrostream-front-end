@@ -85,7 +85,8 @@ export default {
     toggleSideBar: null,
     userActive: null,
     showChat: null,
-    pinHeader: null
+    pinHeader: null,
+    snackMessage: null
   }),
 
   Intercom: keyMirror({
@@ -133,6 +134,7 @@ export default {
   }),
 
   Life: keyMirror({
+    publishPin: null,
     wrappPin: null,
     fetchThemes: null,
     fetchSpots: null,

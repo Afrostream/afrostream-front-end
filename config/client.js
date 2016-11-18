@@ -243,6 +243,12 @@ const client = {
         icon: 'fa fa-instagram',
         title: 'Instagram',
         regex: /(https?:\/\/)?([\w\.]*)instagram\.com\/([a-zA-Z0-9_-]*)$/,
+      },
+      website: {
+        enabled: true,
+        icon: 'fa fa-newspaper-o',
+        title: 'Article',
+        regex: /^((https?:)(\/\/\/?)([\w]*(?::[\w]*)?@)?([\d\w\.-]+)(?::(\d+))?)?([\/\\\w\.()-]*)?(?:([?][^#]*)?(#.*)?)*/,
       }
     }
   },

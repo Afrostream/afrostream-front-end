@@ -71,13 +71,15 @@ class MovieInfo extends LoadVideo {
     const link = this.getLink()
     return (
       <div ref="slContainer" className={classes}>
-        <div ref="slBackground" className="movie-background" style={imageStyles}>
-          <div className="afrostream-movie__mask"/>
+        <div className="movie-info_content">
+          <div ref="slBackground" className="movie-background" style={imageStyles}>
+            <div className="afrostream-movie__mask"/>
+          </div>
+          <Link to={link}>
+            <div className="btn-play"/>
+          </Link>
+          {data ? <Billboard {...{active, data, dataId, maxLength, load}} /> : ''}
         </div>
-        <Link to={link}>
-          <div className="btn-play"/>
-        </Link>
-        {data ? <Billboard {...{active, data, dataId, maxLength, load}} /> : ''}
       </div>
     )
   }

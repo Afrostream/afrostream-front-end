@@ -263,7 +263,7 @@ class SideBar extends React.Component {
               className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}
             </Link></li>
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
-              className="zmdi zmdi-accounts"/>Actualité</Link></li>
+              className="glyphicon glyphicon-fire"/>Buzz</Link></li>
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/community"><i
               className="zmdi zmdi-accounts-list-alt"/>Communauté</Link></li>
             {/*<li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i*/}

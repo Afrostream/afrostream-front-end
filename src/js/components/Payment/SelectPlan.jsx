@@ -110,9 +110,9 @@ class SelectPlan extends React.Component {
             const inputSignupAction = {
               onClick: event => ::this.openModal(internalPlanUuid)
             }
-            value = (<button className="btn btn-plan" {...inputSignupAction}>{`${buttonLabel}`}</button>)
+            value = (<button className="btn btn-plan full-width" {...inputSignupAction}>{`${buttonLabel}`}</button>)
           } else {
-            value = (<Link className="btn btn-plan"
+            value = (<Link className="btn btn-plan full-width"
                            to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${internalPlanQuery}`}>{`${buttonLabel}`}</Link>)
           }
 
@@ -274,7 +274,7 @@ class SelectPlan extends React.Component {
 
     if (!plans || !plans.size) {
       return (
-        <div className="container plan-container">
+        <div className="container-fluid plan-container">
           <div className="choose-plan">{getI18n().planCodes.noPlans}</div>
         </div>
       )

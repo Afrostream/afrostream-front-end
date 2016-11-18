@@ -49,6 +49,15 @@ class LifeHome extends Component {
     }))
   }
 
+  componentWillUnmount () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+    dispatch(IntercomActionCreators.removeIntercom())
+  }
+
 
   render () {
     const {

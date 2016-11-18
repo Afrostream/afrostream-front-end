@@ -24,11 +24,19 @@ export function showChat (show) {
     }
   }
 }
+
 export function toggleSideBar (toggled) {
   return (dispatch, getState) => {
     return {
       type: ActionTypes.Event.toggleSideBar,
       toggled
     }
+  }
+}
+
+export function snackMessage (data) {
+  return {
+    type: ActionTypes.Event.snackMessage,
+    data
   }
 }

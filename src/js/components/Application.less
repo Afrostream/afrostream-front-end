@@ -95,7 +95,6 @@ a.active {
 #page-content-wrapper {
   background: @brand-grey;
   width: 100%;
-
   &.container,
   &.container-fluid {
     height: 100%;
@@ -190,6 +189,9 @@ a.active {
       content: none;
     }
   }
+  .full-width {
+    width: 100%;
+  }
 }
 
 .container {
@@ -198,4 +200,6 @@ a.active {
 
 .imgix {
   transition: background 0.2s linear;
+  max-width: 100%;
+  max-height: 100%;
 }

@@ -7,6 +7,7 @@ import SplashScreen from './SplashScreen/SplashScreen'
 import AlertMessage from './Alert/AlertMessage'
 import FloatPlayer from './Player/FloatPlayer'
 import ModalView from './Modal/ModalView'
+import Snackbar from 'material-ui/Snackbar'
 import classNames from 'classnames'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
@@ -86,6 +87,7 @@ class Application extends React.Component {
     const user = User.get('user')
     const docked = Boolean(user)
     const toggled = Event.get('sideBarToggled')
+    const snackMessage = Event.get('snackMessage')
     const hasPopup = Modal.get('target')
     let appClasses = classNames({
       'app': true,
@@ -106,6 +108,11 @@ class Application extends React.Component {
           </SideBar>
           <FloatPlayer {...this.props}/>
           <ModalView {...this.props}/>
+          {snackMessage && <Snackbar
+            open={Boolean(snackMessage)}
+            message={snackMessage.get('message')}
+            autoHideDuration={4000}
+          />}
         </div>
       </MuiThemeProvider>
     )

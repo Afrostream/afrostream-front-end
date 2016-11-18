@@ -2,16 +2,39 @@
 
 #lock.theme-default.pin .panel {
   .mode {
+    text-align: left;
     padding: 1em;
     color: @brand-primary;
-    background-color: lighten(@color-black-2, 15%);
+    background-color: lighten(@color-black-2, 5%);
     .isMobile({ display: flex; padding: 1em 0 1em 0; });
+    .spinner {
+      font-size: 0.8em;
+      left: 90%;
+    }
+
+    button,
+    button span {
+      color: @brand-primary !important;
+    }
+
+  }
+  .stepper {
+    width: 100%;
+  }
+
+  .step-buttons {
+
+  }
+  //material stepper display
+  .step-buttons > div > div > div > div {
+    display: flex;
+    padding: 2.5em 0 .5em 0;
   }
   .pin-btn {
     background-color: transparent;
     position: relative;
     color: @brand-primary;
-    background-color: lighten(@color-black-2, 5%);
+    background-color: lighten(@color-black-2, 10%);
     flex: 1;
     min-width: 6em;
     font-family: @font-family-base;
@@ -19,9 +42,6 @@
     &:hover {
       color: fade(@color-yellow, 70%);
     }
-    .isMobile({ min-width: 3em; span {
-      display: none;
-    } });
 
     &:before {
       padding: 0.1em;
@@ -35,11 +55,8 @@
       height: 1.8em;
     }
     .pin-description {
-
+      color: @brand-primary;
     }
   }
 
-  .fa .facebook {
-    background-color: #3b5998;
-  }
 }

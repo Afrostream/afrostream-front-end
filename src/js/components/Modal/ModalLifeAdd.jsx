@@ -4,20 +4,24 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 import config from '../../../../config'
 import { getI18n } from '../../../../config/i18n'
+import _ from 'lodash'
 import Q from 'q'
 import TextField from 'material-ui/TextField'
+import * as EventActionCreator from '../../actions/event'
 import * as LifeActionCreators from '../../actions/life'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
+import Spinner from '../Spinner/Spinner'
 import ReactImgix from '../Image/ReactImgix'
-import { extractImg } from '../../lib/utils'
 
 import {
   Step,
+  StepButton,
   Stepper,
   StepLabel,
   StepContent,
 } from 'material-ui/Stepper'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
 const {life} = config
 
@@ -26,6 +30,8 @@ const textInputStyle = {
   floatingLabel: {
     color: '#FFFFFF'
   }, errorStyle: {
+    color: '#FFFFFF'
+  }, hintStyle: {
     color: '#FFFFFF'
   },
   floatingLabelStyle: {
@@ -47,6 +53,7 @@ if (process.env.BROWSER) {
 class ModalLifeAdd extends ModalComponent {
 
   state = {
+    scrapping: false,
     finished: false,
     stepIndex: 0
   }
@@ -63,10 +70,88 @@ class ModalLifeAdd extends ModalComponent {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    const scrappedData = nextProps.Life.get(`life/wrap`)
+    if (!shallowEqual(scrappedData, this.props.Life.get(`life/wrap`))) {
+      this.setState({
+        scrapped: Boolean(scrappedData)
+      })
+    }
+  }
+
+  componentDidMount () {
+    this.attachTooltip()
+  }
+
+  componentDidUpdate () {
+    this.attachTooltip()
+  }
+
+  attachTooltip () {
+    $('[data-toggle="tooltip"]').tooltip()
+  }
+
   async pinType (network) {
     this.setState({
       network,
       stepIndex: 1
+    })
+  }
+
+
+  handleNext = () => {
+    const {props:{dispatch, Life}} =this
+    const {description} =this.refs
+    const {stepIndex, finished} = this.state
+    if (finished) {
+      const scrappedData = Life.get(`life/wrap/original`)
+      return dispatch(LifeActionCreators.publishPin(_.merge(scrappedData.toJS(), {
+        description: description.getValue()
+      }))).then(()=> {
+        dispatch(EventActionCreator.snackMessage({message: getI18n().life.modal.success}))
+        this.closeModal()
+      }).catch((err)=> {
+        dispatch(EventActionCreator.snackMessage(err || {message: getI18n().life.modal.errors.post}))
+        this.closeModal()
+      })
+    }
+    this.setState({
+      stepIndex: stepIndex + 1
+    })
+  }
+
+  handlePrev = () => {
+    const {stepIndex} = this.state
+    if (stepIndex > 0) {
+      this.setState({stepIndex: stepIndex - 1})
+    }
+  }
+
+  validateUrl (event, payload) {
+    const {props:{dispatch}} =this
+    const {regex} = this.state.network
+    this.setState({scrapping: true})
+    Q.fcall(()=> {
+      return payload.match(regex)
+    }).then((match)=> {
+      if (!match) {
+        throw new Error(getI18n().life.modal.errors.url)
+      }
+      return payload
+    }).then((url)=> {
+      return dispatch(LifeActionCreators.wrappPin(url))
+    }).then(()=> {
+      this.setState({
+        stepIndex: 2,
+        finished: true,
+        scrapping: false
+      })
+    }).catch((error)=> {
+      this.setState({
+        error,
+        finished: false,
+        scrapping: false
+      })
     })
   }
 
@@ -84,12 +169,13 @@ class ModalLifeAdd extends ModalComponent {
 
       shareButtonClass[network.icon] = true
 
-      return (<div className={classNames(shareButtonClass)} type="button" data-toggle="tooltip"
-                   data-placement="top"
-                   title={network.title}
-                   key={`pin-btn-${network.icon}`} {...inputAttributes}>
-        {this.props.showLabel && <span>{network.label}</span>}
-      </div>)
+      return (
+        <div className={classNames(shareButtonClass)} type="button"
+             data-toggle="tooltip"
+             data-placement="top"
+             title={network.title}
+             key={`pin-btn-${network.icon}`} {...inputAttributes}>
+        </div>)
     })
   }
 
@@ -99,62 +185,39 @@ class ModalLifeAdd extends ModalComponent {
     if (!scrappedData) {
       return
     }
-    return (<div>
-      <label className="pin-label">{scrappedData.get('title')}</label>
-      <TextField className="pin-description"
-                 defaultValue={scrappedData.get('description')}
-                 fullWidth={true}
-                 multiLine={true}
-                 hintText="Ajouter une description"/>
-      <ReactImgix src={scrappedData.get('imageUrl')}/>
+    return (<div className="row no-padding">
+      <div className="col-md-12">
+        <div className="row">
+          <div className="col-md-2">
+            <label className="pin-label">Titre : </label>
+          </div>
+          <div className="col-md-10">
+            <span className="pin-label">{scrappedData.get('title')}</span>
+          </div>
+        </div>
+      </div>
+      <div className="col-md-9 col-xs-9 ">
+        <TextField className="pin-description"
+                   ref="description"
+                   defaultValue={scrappedData.get('description')}
+                   fullWidth={true}
+                   multiLine={true}
+                   textareaStyle={textInputStyle}
+                   hintText="Ajouter une description"/>
+      </div>
+      <div className="col-md-3 col-xs-3">
+        <ReactImgix src={scrappedData.get('imageUrl')}/>
+      </div>
     </div>)
   }
 
-  validateUrl (event, payload) {
-    const {props:{dispatch}} =this
-    const {regex} = this.state.network
-
-    Q.fcall(()=> {
-      return payload.match(regex)
-    }).then((match)=> {
-      if (!match) {
-        throw new Error('l\ url indiqué n\'est pas valide')
-      }
-      return payload
-    }).then((url)=> {
-      return dispatch(LifeActionCreators.wrappPin(url))
-    }).then((match)=> {
-      this.setState({
-        stepIndex: 2
-      })
-    }).catch((error)=> {
-      this.setState({
-        error
-      })
-    })
-  }
-
-  handleNext = () => {
-    const {stepIndex} = this.state
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    })
-  }
-
-  handlePrev = () => {
-    const {stepIndex} = this.state
-    if (stepIndex > 0) {
-      this.setState({stepIndex: stepIndex - 1})
-    }
-  }
 
   renderStepActions (step) {
-    const {stepIndex} = this.state
+    const {stepIndex, finished} = this.state
 
     return (
       <div style={{margin: '12px 0'}}>
-        {step > 0 && (
+        {step > 0 && !finished && (
           <FlatButton
             label="Retour"
             disabled={stepIndex === 0}
@@ -178,7 +241,7 @@ class ModalLifeAdd extends ModalComponent {
 
   render () {
 
-    const {finished, stepIndex} = this.state
+    const {finished, error, stepIndex, scrapping} = this.state
 
     let closeClass = classNames({
       'close': true,
@@ -207,25 +270,31 @@ class ModalLifeAdd extends ModalComponent {
                     </div>
                     <div className="mode-container">
                       <div className="mode">
-                        <Stepper activeStep={stepIndex} orientation="vertical">
-                          <Step>
-                            <StepLabel style={{color: '#FFFFFFF'}}>{getI18n().life.modal.step1}</StepLabel>
-                            <StepContent>
+                        <Stepper className="stepper" style={{width: '100%'}} activeStep={stepIndex}
+                                 orientation="vertical">
+                          <Step disabled={scrapping}>
+                            <StepButton onClick={() => this.setState({stepIndex: 0})}
+                            >{getI18n().life.modal.step1}</StepButton>
+                            <StepContent className="step-buttons">
                               {this.getButtons()}
                             </StepContent>
                           </Step>
-                          <Step>
-                            <StepLabel style={{color: '#FFFFFFF'}}>{getI18n().life.modal.step2}</StepLabel>
+                          <Step disabled={scrapping}>
+                            <StepButton onClick={() => stepIndex > 1 && this.setState({stepIndex: 1})}
+                            >{getI18n().life.modal.step2}</StepButton>
                             <StepContent>
+                              {error && <span className="warn">{error.message}</span>}
                               <TextField hintText={getI18n().life.modal.step2}
                                          fullWidth={true}
+                                         disabled={this.state.scrapping}
                                          onChange={::this.validateUrl}
-                                         style={{color: '#FFFFFFF'}}/>
-                              {this.renderStepActions(1)}
+                                         inputStyle={textInputStyle}/>
+                              {this.state.scrapping && <Spinner />}
+                              {/*{this.renderStepActions(1)}*/}
                             </StepContent>
                           </Step>
-                          <Step>
-                            <StepLabel style={{color: '#FFFFFFF'}}>{getI18n().life.modal.step3}</StepLabel>
+                          <Step disabled={stepIndex === 2}>
+                            <StepButton>{getI18n().life.modal.step3}</StepButton>
                             <StepContent>
                               {this.renderStepFinal()}
                               {this.renderStepActions(2)}

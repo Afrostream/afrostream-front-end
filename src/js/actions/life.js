@@ -1,5 +1,7 @@
 import ActionTypes from '../consts/ActionTypes'
 import { notFoundPost } from './notFoundAction'
+import _ from 'lodash'
+import URL from 'url'
 
 export function fetchThemes (fetchThemeId) {
   return (dispatch, getState) => {
@@ -28,22 +30,59 @@ export function fetchThemes (fetchThemeId) {
 
 export function wrappPin (scrapUrl) {
   return (dispatch, getState) => {
-    return async api => ({
-      type: ActionTypes.Life.wrappPin,
-      res: await api({
+    return async api => {
+      let original = null
+      let proxified = null
+      await api({
         path: `/api/life/pins/scrap`,
         method: 'POST',
+        passToken: true,
         params: {
           scrapUrl
         }
+      }).then(({body})=> {
+        original = body
+        proxified = _.clone(body)
+
+        //find http in all values and proxify it in ssl
+        _.deepMap(proxified, (value)=> {
+          const url = URL.parse(value || '')
+          if (value && url.protocol === 'http:') {
+            value = `/proxy?url=${encodeURIComponent(value)}`
+          }
+          return value
+        })
       })
-    })
+
+      return {
+        type: ActionTypes.Life.wrappPin,
+        original,
+        proxified
+      }
+    }
   }
 }
 
-export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
+export function publishPin (data) {
   return (dispatch, getState) => {
-    let readyPins = getState().Life.get(`life/pins/`)
+    return async api => {
+      return {
+        type: ActionTypes.Life.publishPin,
+        res: await api({
+          path: `/api/life/pins`,
+          method: 'POST',
+          params: data,
+          passToken: true
+        })
+      }
+    }
+  }
+}
+
+export function fetchPins ({limit = 21, startIndex = 0, stopIndex = 3}) {
+  return (dispatch, getState) => {
+    let readyPins = getState().Life.get(`life/pins/`
+    )
     if (readyPins) {
       console.log('Life pins already present in data store')
       return {
@@ -56,7 +95,9 @@ export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
     return async api => ({
       type: ActionTypes.Life.fetchPins,
       res: await api({
-        path: `/api/life/pins`,
+        path: `/api/life/pins`
+
+        ,
         params: {
           limit
         }
@@ -65,9 +106,11 @@ export function fetchPins ({limit = 20, startIndex = 0, stopIndex = 3}) {
   }
 }
 
-export function fetchSpots ({limit = 20, startIndex = 0, stopIndex = 3}) {
+export function fetchSpots ({limit = 21, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
-    let readySpots = getState().Life.get(`life/spots/`)
+    let readySpots = getState().Life.get(
+      `life/spots/`
+    )
     if (readySpots) {
       console.log('Life spots already present in data store')
       return {
@@ -89,7 +132,7 @@ export function fetchSpots ({limit = 20, startIndex = 0, stopIndex = 3}) {
   }
 }
 
-export function fetchUsers (fetchUserId, {limit = 20, startIndex = 0, stopIndex = 3}) {
+export function fetchUsers (fetchUserId, {limit = 21, startIndex = 0, stopIndex = 3}) {
   const lifeUserId = fetchUserId || ''
 
   return (dispatch, getState) => {
@@ -97,7 +140,9 @@ export function fetchUsers (fetchUserId, {limit = 20, startIndex = 0, stopIndex 
       type: ActionTypes.Life.fetchUsers,
       lifeUserId,
       res: await api({
-        path: `/api/life/users/${lifeUserId || ''}`,
+        path: `/api/life/users/${lifeUserId || ''}`
+
+        ,
         params: {
           limit
         }
@@ -108,7 +153,9 @@ export function fetchUsers (fetchUserId, {limit = 20, startIndex = 0, stopIndex 
 
 export function fetchPin (pinId) {
   return (dispatch, getState) => {
-    let readyPin = getState().Life.get(`life/pins/${pinId}`)
+    let readyPin = getState().Life.get(
+      `life/pins/${pinId}`
+    )
     if (readyPin) {
       console.log('Life pin already present in data store')
       return {
@@ -123,7 +170,11 @@ export function fetchPin (pinId) {
     return async api => ({
       type: ActionTypes.Life.fetchPin,
       pinId,
-      res: await api({path: `/api/life/pins/${pinId}`, params: {filterCountry: false}}).catch(notFoundPost)
+      res: await api({
+        path: `/api/life/pins/${pinId}`
+
+        , params: {filterCountry: false}
+      }).catch(notFoundPost)
     })
   }
 }
