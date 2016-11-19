@@ -19,6 +19,7 @@ import ShareButton from '../Share/ShareButton'
 import RateComponent from '../Recommendation/RateComponent'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import * as FacebookActionCreators from '../../actions/facebook'
 import * as PlayerActionCreators from '../../actions/player'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
@@ -514,7 +515,20 @@ class FloatPlayer extends React.Component {
    * Start track video on start
    */
   onFirstPlay () {
+    const {
+      props: {
+        dispatch, params:{videoId}
+      }
+    } = this
+
     this.trackVideo()
+    const stored = this.getStoredPlayer()
+    //TRACK video
+    if (videoId && stored && stored.socialSharing) {
+      dispatch(FacebookActionCreators.watchVideo({
+        duration: this.player.duration()
+      }))
+    }
   }
 
   onFullScreenHandler () {
