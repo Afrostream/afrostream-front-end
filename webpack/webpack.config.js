@@ -71,6 +71,7 @@ const webpackConfig = {
       'bootstrap',
       'raven-js',
       'mobile-detect',
+      'q',
       'qs',
       'material-ui',
       './src/js/lib/localStoragePolyfill',
