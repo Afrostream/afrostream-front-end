@@ -43,6 +43,7 @@ const buildHome = function (lang) {
            component={BrowseGenrePage}/>,
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
+    <Redirect key={`${lang}-redirect-browse`} from="browse/**/*" to="category"/>,
     <Route key={`${lang}-movie`}
            name="movie"
            path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
@@ -60,9 +61,9 @@ const buildHome = function (lang) {
   const langRoutes = buildSubRoutes()
   homeRoutes.unshift(langRoutes)
 
-  return (<Route key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
+  return (<IndexRoute key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
     {homeRoutes}
-  </Route>)
+  </IndexRoute>)
 
 }
 const buildRoutes = function (lang) {
@@ -103,8 +104,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-payment`} name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
-    <Redirect key={`${lang}-redirect-blog`} from="/blog/**/*" to="life"/>,
-    <Redirect key={`${lang}-redirect-browse`} from="/browse/**/*" to="category"/>,
+    <Redirect key={`${lang}-redirect-blog`} from="blog/**/*" to="life"/>,
     //push subroutes after static routes
     buildHome(lang),
     <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
