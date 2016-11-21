@@ -36,9 +36,10 @@
 
   z-index: @nav-z + 3;
   .transition(all 0.35s linear);
-  .isNotMobile({ .animation(playerMove 0.35s ease); });
+  //.isNotMobile({ .animation(playerMove 0.35s ease); });
 
   &.unpinned {
+    z-index: @nav-z + 3;
     .player-container:not(.vjs-fullscreen) {
       font-size: 8px;
       .vjs-remaining-time {
@@ -53,7 +54,7 @@
 
   &.pinned {
     .transition(none);
-    .isNotMobile({ .animation(playerMovePin 0.35s ease); });
+    //.isNotMobile({ .animation(playerMovePin 0.35s ease); });
     z-index: @nav-z;
     margin: 0;
     .wrapper {
