@@ -166,7 +166,9 @@ export default () => {
                 }
 
                 if (params.videoId) {
-                  metas.type = episodeData ? 'video.episode' : 'video.other'
+                  //metas.type = episodeData ? 'video.episode' : 'video.video'
+                  //FIXME change type whaen accessible video 30s
+                  metas.type = 'video.other'
                 }
 
                 //si on a les données de l'episode alors, on remplace les infos affichées
