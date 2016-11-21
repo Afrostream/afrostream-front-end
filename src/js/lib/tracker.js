@@ -14,7 +14,5 @@ export function track (data) {
     img.onload = (e) => handleComplete(img)
     img.onerror = (e) => handleComplete(img)
     img.src = `/log/pixel?${qs.stringify(data)}`
-  } else {
-    console.log('Don\'t track from server')
   }
 }

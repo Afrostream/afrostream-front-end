@@ -61,9 +61,9 @@ const buildHome = function (lang) {
   const langRoutes = buildSubRoutes()
   homeRoutes.unshift(langRoutes)
 
-  return (<IndexRoute key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
+  return (<Route key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
     {homeRoutes}
-  </IndexRoute>)
+  </Route>)
 
 }
 const buildRoutes = function (lang) {
