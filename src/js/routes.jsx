@@ -57,7 +57,7 @@ const buildHome = function (lang) {
   const langRoutes = buildSubRoutes()
   homeRoutes.unshift(langRoutes)
 
-  return (<Route key={`${lang}-home`} path="/" component={HomePage}>
+  return (<Route key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
     {homeRoutes}
   </Route>)
 
@@ -93,7 +93,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-payment`} name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
-    <Redirect key={`${lang}-redirect`} from="blog" to="/"/>,
+    <Redirect key={`${lang}-redirect`} from="blog/**/*" to="/"/>,
     //push subroutes after static routes
     buildHome(lang),
     <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
