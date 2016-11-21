@@ -757,7 +757,7 @@ class FloatPlayer extends React.Component {
     }
 
     const playerData = data || Player.get('/player/data')
-    const target = playerData && playerData.get('target') || this.refs.container
+    const target = playerData && playerData.get('target')
     const elVisible = this.player && target && isElementInViewPort(target, 0.60)
 
     let position = elVisible && target && target.getBoundingClientRect() || {

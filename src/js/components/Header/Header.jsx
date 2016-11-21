@@ -70,7 +70,7 @@ class Header extends React.Component {
     const chatMode = Event.get('showChat')
     const pinned = Event.get('pinHeader')
     const user = User.get('user')
-    let excludedBreacrumbsRoutes = ['home', 'player', 'search', 'pin', 'seasonSlug']
+    let excludedBreacrumbsRoutes = ['home', 'player', 'search', 'pinId', 'movieId', 'seasonSlug', 'videoId']
     let planCode
     if (user) {
       planCode = user.get('planCode')
