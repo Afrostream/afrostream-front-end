@@ -103,8 +103,8 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-payment`} name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
-    <Redirect key={`${lang}-redirect`} from="blog" to="life"/>,
-    <Redirect key={`${lang}-redirect`} from="/browse/**/*" to="category"/>,
+    <Redirect key={`${lang}-redirect-blog`} from="/blog/**/*" to="life"/>,
+    <Redirect key={`${lang}-redirect-browse`} from="/browse/**/*" to="category"/>,
     //push subroutes after static routes
     buildHome(lang),
     <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
