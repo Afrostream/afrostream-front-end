@@ -22,12 +22,6 @@ export default () => {
 
       static defaultProps = {}
 
-      state = {
-        title: config.metadata.title,
-        meta: config.metadata.metas,
-        link: []
-      }
-
       render () {
         const {props: {children}} = this
         let metas = this.getMetadata()
@@ -209,57 +203,68 @@ export default () => {
 
         metas.meta.push({
           property: 'og:title',
-          content: metas.title
+          content: metas.title,
+          override: true
         })
         metas.meta.push({
           name: 'twitter:title',
-          content: metas.title
+          content: metas.title,
+          override: true
         })
 
         if (metas.description) {
           metas.meta.push({
             name: 'description',
-            content: metas.description
+            content: metas.description,
+            override: true
           })
 
           metas.meta.push({
             property: 'og:description',
-            content: metas.description
+            content: metas.description,
+            override: true
           })
           metas.meta.push({
             name: 'twitter:description',
-            content: metas.description
+            content: metas.description,
+            override: true
           })
         }
 
         metas.meta.push({
           property: 'og:type',
-          content: metas.type
+          content: metas.type,
+          override: true
         })
 
 
         metas.meta.push({
           property: 'og:image',
-          content: image
+          content: image,
+          override: true
         })
 
         metas.meta.push({
           name: 'twitter:image:src',
-          content: image
+          content: image,
+          override: true
         })
 
 
         metas.link.push({
           rel: 'canonical',
-          href: metas.slug
+          href: metas.slug,
+          override: true
         })
         metas.meta.push({
           property: 'og:url',
-          content: metas.slug
+          content: metas.slug,
+          override: true
         })
         metas.meta.push({
           name: 'twitter:site',
-          content: metas.slug
+          content: metas.slug,
+          override: true
         })
 
         return metas

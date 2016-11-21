@@ -26,10 +26,6 @@ const config = _.merge(
           content: '@afrostream'
         },
         {
-          property: 'og:type',
-          content: 'website'
-        },
-        {
           property: 'og:site_name',
           content: 'Afrostream'
         },

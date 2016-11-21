@@ -128,7 +128,7 @@
     "react-dom": "^15.3.2",
     "react-ga": "^2.1.1",
     "react-headrooms": "^1.0.4",
-    "react-helmet": "^3.1.0",
+    "react-helmet": "^3.2.2",
     "react-imgix": "^5.0.0",
     "react-list": "^0.8.0",
     "react-pure-render": "^1.0.2",
