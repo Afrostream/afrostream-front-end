@@ -19,7 +19,7 @@ if (process.env.BROWSER) {
 @connect(({Category}) => ({Category}))
 class Spots extends React.Component {
 
-  renderMovie (data) {
+  renderMovie (data, index) {
     let dataId = data.get('_id')
 
     let params = {
@@ -35,7 +35,7 @@ class Spots extends React.Component {
       share={false}
       preload={true}
       id={dataId}
-      key={`data-thumb-${dataId}`}
+      key={`data-thumb-${dataId}-${index}`}
       {...params}
       {...this.props}
       {...{data, dataId}}  />)
@@ -68,8 +68,8 @@ class Spots extends React.Component {
     let uniqSpots = _.uniq(recoList, (o)=> {
       return o['_id']
     })
-
-    let categoriesList = Immutable.fromJS(uniqSpots)
+    //get only 8 mea
+    let categoriesList = Immutable.fromJS(_.take(uniqSpots, 8))
 
     let info = getI18n(params.lang).home.spots
 
@@ -80,7 +80,7 @@ class Spots extends React.Component {
 
     return (
       <div className="container spots-list">
-        <h2>{info.title}</h2>
+        <h2 className="browse-categorie_list_label">{info.title}</h2>
         <div className={classSet(listClass)}>
           {categoriesList && categoriesList.map((movie, i) => this.renderMovie(movie, i)).toJS()}
         </div>

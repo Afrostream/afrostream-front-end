@@ -39,5 +39,14 @@ export default createReducer(initialState, {
     return state.merge({
       [`invitableFriends`]: res
     })
+  },
+
+  [ActionTypes.Facebook.watchVideo](state, {res}) {
+    if (!res) {
+      return state
+    }
+    return state.merge({
+      [`watchVideo`]: res
+    })
   }
 })

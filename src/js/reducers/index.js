@@ -1,5 +1,4 @@
 export { default as router } from './Router'
-export { default as Blog } from './Blog'
 export { default as User } from './User'
 export { default as Slides } from './Slides'
 export { default as Movie } from './Movie'

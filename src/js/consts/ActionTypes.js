@@ -127,6 +127,7 @@ export default {
 
   Facebook: keyMirror({
     initialized: null,
+    watchVideo: null,
     getFriends: null,
     getFriendList: null,
     getInvitableFriends: null

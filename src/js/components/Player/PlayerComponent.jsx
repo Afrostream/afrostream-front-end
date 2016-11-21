@@ -12,6 +12,7 @@ import shallowEqual from 'react-pure-render/shallowEqual'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
+import * as FacebookActionCreators from '../../actions/facebook'
 import * as UserActionCreators from '../../actions/user'
 import Spinner from '../Spinner/Spinner'
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
@@ -223,6 +224,24 @@ class PlayerComponent extends Component {
    */
   onFirstPlay () {
     this.trackVideo()
+  }
+
+  onFirstPlay () {
+    const {
+      props: {
+        dispatch, videoId
+      }
+    } = this
+
+    this.trackVideo()
+    const stored = this.getStoredPlayer()
+    //TRACK video
+    //FIXME connect le share une fois la demande approuvée
+    if (videoId && stored && stored.socialSharing) {
+      dispatch(FacebookActionCreators.watchVideo({
+        duration: this.player.duration()
+      }))
+    }
   }
 
   /**

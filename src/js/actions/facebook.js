@@ -1,5 +1,6 @@
 import ActionTypes from '../consts/ActionTypes'
 import _ from 'lodash'
+import qs from 'qs'
 import window from 'global/window'
 /**
  * Get list friendlist
@@ -64,6 +65,46 @@ export function getFriends () {
             }
             return resolve({
               type: ActionTypes.Facebook.getFriends,
+              res: response.data
+            })
+          }
+        )
+      })
+    }
+  }
+}
+
+export function watchVideo ({
+  duration,
+  created_time,
+}) {
+  return (dispatch, getState) => {
+    const auth = getState().Facebook.get('auth')
+    if (!auth || auth.get('status') !== 'connected') {
+      return {
+        type: ActionTypes.Facebook.watchVideo,
+        res: []
+      }
+    }
+    /* make the API call */
+    return async () => {
+      return await new Promise((resolve, reject) => {
+
+        let creationDate = created_time || new Date()
+        window.FB.api(
+          `/me/video.watches`,
+          'POST',
+          {
+            video: window.location,
+            created_time: creationDate,
+            expires_in: new Date(Date.now() + 1000 * (duration)).toISOString()
+          },
+          (response) => {
+            if (!response || response.error) {
+              return reject(response.error)
+            }
+            return resolve({
+              type: ActionTypes.Facebook.watchVideo,
               res: response.data
             })
           }
