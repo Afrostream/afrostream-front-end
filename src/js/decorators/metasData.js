@@ -166,7 +166,7 @@ export default () => {
                 }
 
                 if (params.videoId) {
-                  metas.type = episodeData ? 'video.episode' : 'video.movie'
+                  metas.type = episodeData ? 'video.episode' : 'video.other'
                 }
 
                 //si on a les données de l'episode alors, on remplace les infos affichées
