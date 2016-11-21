@@ -517,19 +517,20 @@ class FloatPlayer extends React.Component {
   onFirstPlay () {
     const {
       props: {
-        dispatch, params:{videoId}
+        dispatch, params:{videoId}, User
       }
     } = this
 
     this.trackVideo()
     const stored = this.getStoredPlayer()
+    const user = User.get('user')
     //TRACK video
     //FIXME connect le share une fois la demande approuvée
-    //if (videoId && stored && stored.socialSharing) {
-    //  dispatch(FacebookActionCreators.watchVideo({
-    //    duration: this.player.duration()
-    //  }))
-    //}
+    if (videoId && stored && user && user.get('socialSharing') === true) {
+      dispatch(FacebookActionCreators.watchVideo({
+        duration: this.player.duration()
+      }))
+    }
   }
 
   onFullScreenHandler () {
