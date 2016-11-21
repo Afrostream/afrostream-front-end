@@ -58,6 +58,7 @@ class BraintreeForm extends CouponForm {
               return resolve({
                 billingProviderName: provider,
                 subOpts: {
+                  countryCode: payload.countryCodeAlpha2,
                   customerBankAccountToken: payload.nonce,
                   couponCode: couponCode.getValue()
                 }
@@ -67,6 +68,7 @@ class BraintreeForm extends CouponForm {
             paypal: {
               planId: billingInfo.internalPlanUuid,
               singleUse: false,
+              enableShippingAddress: true,
               amount: parseFloat(currentPlan.get('amount').replace(/,/, '.')),
               currency: currentPlan.get('currency'),
               locale: `${moment.locale()}_${moment.locale().toUpperCase()}`,
