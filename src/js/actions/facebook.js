@@ -96,8 +96,8 @@ export function watchVideo ({
           'POST',
           {
             video: window.location,
-            created_time: creationDate,
-            expires_in: new Date(Date.now() + 1000 * (duration)).toISOString()
+            created_time: creationDate.getTime(),
+            expires_in: duration
           },
           (response) => {
             if (!response || response.error) {
