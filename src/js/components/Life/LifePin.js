@@ -58,50 +58,50 @@ class LifePin extends ClickablePin {
     brickStyle[type] = true
     cardTypeIcon[type] = true
 
-    return (<article className={classSet(brickStyle)}>
-      <Link to={data.get('originalUrl')} onClick={
-        (e) =>::this.clickHandlerPin(e, data)
-      }>
-        <div className="brick-content">
-          <div className="brick-background">
-            <ReactImgix className="brick-background_image" src={imageUrl} bg={true}/>
-            <div className="brick-background_mask"/>
-            {isPremium && (<div className="premium-flag">
-              <div className="premium-flag__header-label"> Accès {pinRole}</div>
-            </div>)}
+    return (<Link to={data.get('originalUrl')} className={classSet(brickStyle)} onClick={
+      (e) =>::this.clickHandlerPin(e, data)
+    } onTouchTap={
+      (e) =>::this.clickHandlerPin(e, data)
+    }>
+      <div className="brick-content">
+        <div className="brick-background">
+          <ReactImgix className="brick-background_image" src={imageUrl} bg={true}/>
+          <div className="brick-background_mask"/>
+          {isPremium && (<div className="premium-flag">
+            <div className="premium-flag__header-label"> Accès {pinRole}</div>
+          </div>)}
 
-          </div>
-          <div className="card-body">
-            <div className="card-meta">
-              {themes && themes.map((theme, a)=><div key={`data-card-theme-${a}`}
-                                                     className="card-theme">{theme.get('label')}</div>)}
-            </div>
-            <div className="card-info">
-              <div target="_self">{data.get('title')}</div>
-            </div>
-            <div className="card-description">
-              {description}
-            </div>
-            <div className="card-date">
-              {
-                `${pinnedDate.format('L')}`
-              }
-              {pinnedUser &&
-              ` - ${pinnedUser.get('nickname')}`
-              }
-            </div>
-            {!showBubble && <div className="card-bubbles">
-              {pinnedUser && <div className="card-bubble card-bubble-user">
-                <img src={pinnedUser.get('picture')}
-                     alt="user-button"
-                     className="icon-user"/>
-              </div>}
-              <div className={classSet(cardTypeIcon)}/>
-            </div>}
-          </div>
         </div>
-      </Link>
-    </article>)
+        <div className="card-body">
+          <div className="card-meta">
+            {themes && themes.map((theme, a)=><div key={`data-card-theme-${a}`}
+                                                   className="card-theme">{theme.get('label')}</div>)}
+          </div>
+          <div className="card-info">
+            <div target="_self">{data.get('title')}</div>
+          </div>
+          <div className="card-description">
+            {description}
+          </div>
+          <div className="card-date">
+            {
+              `${pinnedDate.format('L')}`
+            }
+            {pinnedUser &&
+            ` - ${pinnedUser.get('nickname')}`
+            }
+          </div>
+          {!showBubble && <div className="card-bubbles">
+            {pinnedUser && <div className="card-bubble card-bubble-user">
+              <img src={pinnedUser.get('picture')}
+                   alt="user-button"
+                   className="icon-user"/>
+            </div>}
+            <div className={classSet(cardTypeIcon)}/>
+          </div>}
+        </div>
+      </div>
+    </Link>)
   }
 }
 
