@@ -3,8 +3,9 @@ import { Link as ReactLink } from 'react-router'
 import document from 'global/document'
 import window from 'global/window'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import Tappable from 'react-tappable'
 
-class Link extends React.Component {
+class Link extends Tappable {
 
   parseTo (to) {
     if (!canUseDOM) {
@@ -20,11 +21,6 @@ class Link extends React.Component {
       return toLocation
     }
     return window.location.host === toLocation.host
-  }
-
-  handleClick (event) {
-    if (this.props.onClick) this.props.onClick(event)
-    if (event.defaultPrevented) return
   }
 
   render () {

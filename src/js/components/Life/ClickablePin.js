@@ -1,16 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import config from '../../../../config'
-import moment from 'moment'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
 import { slugify, extractImg } from '../../lib/utils'
-import { Link } from '../Utils'
-import classSet from 'classnames'
 import Immutable from 'immutable'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-
-const {images} =config
 
 if (canUseDOM) {
   var ReactGA = require('react-ga')
@@ -95,7 +90,6 @@ class ClickablePin extends Component {
         className: 'large'
       }))
     }
-
 
     if (data.get('body')) {
       e.preventDefault()

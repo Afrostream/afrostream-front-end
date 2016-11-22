@@ -60,8 +60,6 @@ class LifePin extends ClickablePin {
 
     return (<Link to={data.get('originalUrl')} className={classSet(brickStyle)} onClick={
       (e) =>::this.clickHandlerPin(e, data)
-    } onTouchTap={
-      (e) =>::this.clickHandlerPin(e, data)
     }>
       <div className="brick-content">
         <div className="brick-background">

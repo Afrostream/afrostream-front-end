@@ -46,7 +46,6 @@ class LifePinView extends LifePin {
         if (add) element.dataset.events += ',' + type
         else element.dataset.events = element.dataset.events.replace(new RegExp(type), '')
         element[`${add ? 'add' : 'remove'}EventListener`]('click', ::this.videoClickHandler)
-        element[`${add ? 'add' : 'remove'}EventListener`]('tap', ::this.videoClickHandler)
       })
     }
   }

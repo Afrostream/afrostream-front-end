@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "afrostream-node-request": "git+https://afrostream-tech:d51e355769ddd0fd212084c35fb99f71ab4146b2@github.com/Afrostream/afrostream-node-request.git#v2.5.0",
-    "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.25",
+    "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.26",
     "autoprefixer-core": "^5.2.1",
     "autoprefixer-loader": "^2.0.0",
     "babel-cli": "^6.11.4",
@@ -136,6 +136,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "react-tap-event-plugin": "^1.0.0",
+    "react-tappable": "^0.8.4",
     "react-virtualized": "^7.24.3",
     "redux": "^3.5.2",
     "redux-devtools": "^2.1.2",
