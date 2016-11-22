@@ -3,15 +3,47 @@ import * as ModalActionCreators from '../../actions/modal'
 import * as WaitingUsersActionCreators from '../../actions/waitingUsers'
 import ModalComponent from './ModalComponent'
 import classNames from 'classnames'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 class ModalGeoWall extends ModalComponent {
+
+  constructor (props, context) {
+    super(props, context)
+  }
+
+
+  state = {
+    sended: false,
+    email: ''
+  }
+
+  initState () {
+    this.setState({
+      sended: false,
+      email: ''
+    })
+  }
 
   handleSubmit (e) {
     e.stopPropagation()
     e.preventDefault()
     const email = this.refs.email.value
-    this.props.dispatch(WaitingUsersActionCreators.create(email))
-    this.props.dispatch(ModalActionCreators.close())
+    this.props.dispatch(WaitingUsersActionCreators.create(email)).then(()=> {
+      this.setState({
+        sended: true,
+        email: email
+      })
+      setTimeout(::this.initState, 10000)
+    })
+
+  }
+
+  handleClose (e) {
+    if (this.props.closable) {
+      super.handleClose(e)
+    }
   }
 
   render () {
@@ -22,25 +54,43 @@ class ModalGeoWall extends ModalComponent {
       'hide': !this.props.closable
     })
 
+    let popupClass = classNames({
+      'popup': this.props.modal
+    })
+
+    let overlayClass = classNames({
+      'overlay': this.props.modal,
+      'widget': !this.props.modal,
+      'active': true
+    })
+
+    let panelClass = {
+      'panel onestep active': true,
+    }
+
+    const classType = 'geoWall'
+
+    panelClass[this.props.className] = true
+
     return (
       <div className="lock-container">
-        <div id="lock" className="lock theme-default geoWall">
-          <div className="signin">
-            <div className="popup">
-              <div className="overlay active">
+        <div id="lock" className="lock theme-default">
+          <div className={classType}>
+            <div className={popupClass}>
+              <div className={overlayClass}>
                 <div className="centrix">
-                  <div id="onestep" className="panel onestep active">
+                  <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{this.props.header}</h1>
+                      <FormattedMessage tagName="h1" id={`${this.props.header}`}/>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">
                         <form onSubmit={::this.handleSubmit}>
                           <div className="instructions">
-                            {this.props.instructions}
+                            <FormattedMessage id={`${this.props.instructions}`}/>
                           </div>
                           <div className="emailPassword">
                             <div className="inputs">
@@ -57,7 +107,9 @@ class ModalGeoWall extends ModalComponent {
                               </div>
                             </div>
                           </div>
-                          <button type="submit" className="primary next">{this.props.action}</button>
+                          <button type="submit" className="primary next">
+                            <FormattedMessage id={`${this.props.action}`}/>
+                          </button>
                         </form>
                       </div>
                     </div>
@@ -76,14 +128,18 @@ ModalGeoWall.propTypes = {
   header: React.PropTypes.string,
   instructions: React.PropTypes.string,
   action: React.PropTypes.string,
+  result: React.PropTypes.string,
   dispatch: React.PropTypes.func,
-  closable: React.PropTypes.bool
+  closable: React.PropTypes.bool,
+  modal: React.PropTypes.bool
 }
 
 ModalGeoWall.defaultProps = {
-  header: 'Coming Soon',
-  instructons: 'Enter your details below and be the first to get notified when we launch there :',
-  action: 'Notify me'
+  header: '',
+  instructons: '',
+  action: '',
+  result: '',
+  modal: true
 }
 
 export default ModalGeoWall

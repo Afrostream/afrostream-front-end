@@ -45,7 +45,7 @@ const config = _.merge(
     domain: {
       host: process.env.DOMAIN_HOST || 'localhost'
     },
-    subdomain : process.env.SUBDOMAIN || 'www',
+    subdomain: process.env.SUBDOMAIN || 'www',
     /**
      * Front-End Server
      */
@@ -68,7 +68,7 @@ const config = _.merge(
      * WebpackDevServer
      */
     webpackDevServer: {
-      host: '192.168.1.85',
+      host: '0.0.0.0',
       port: 8081
     },
     // List of user roles
@@ -77,7 +77,7 @@ const config = _.merge(
      * browserSync
      */
     browserSyncServer: {
-      host: '192.168.1.85',
+      host: '0.0.0.0',
       port: 8082
     }
   }, client)

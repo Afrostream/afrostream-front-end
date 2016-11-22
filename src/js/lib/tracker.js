@@ -2,7 +2,6 @@ import qs from 'qs'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 function handleComplete (img) {
-  console.log('tracking img complete : ', img && img.src)
   img.onload = null
   img.onerror = null
   img = null

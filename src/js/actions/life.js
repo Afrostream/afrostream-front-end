@@ -79,7 +79,7 @@ export function publishPin (data) {
   }
 }
 
-export function fetchPins ({limit = 21, startIndex = 0, stopIndex = 3}) {
+export function fetchPins ({limit = 22, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
     let readyPins = getState().Life.get(`life/pins/`
     )
@@ -106,7 +106,7 @@ export function fetchPins ({limit = 21, startIndex = 0, stopIndex = 3}) {
   }
 }
 
-export function fetchSpots ({limit = 21, startIndex = 0, stopIndex = 3}) {
+export function fetchSpots ({limit = 22, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
     let readySpots = getState().Life.get(
       `life/spots/`
@@ -132,7 +132,7 @@ export function fetchSpots ({limit = 21, startIndex = 0, stopIndex = 3}) {
   }
 }
 
-export function fetchUsers (fetchUserId, {limit = 21, startIndex = 0, stopIndex = 3}) {
+export function fetchUsers (fetchUserId, {limit = 22, startIndex = 0, stopIndex = 3}) {
   const lifeUserId = fetchUserId || ''
 
   return (dispatch, getState) => {

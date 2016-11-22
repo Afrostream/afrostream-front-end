@@ -6,8 +6,10 @@ import * as EventActionCreators from '../../actions/event'
 import SearchInput from './../Search/SearchBox'
 import FavoritesButton from './../Favorites/FavoritesButton'
 import BrowseButton from './../Browse/BrowseButton'
-import { getI18n } from '../../../../config/i18n'
 import { Link } from 'react-router'
+import {
+  FormattedMessage
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./UserButton.less')
@@ -79,12 +81,12 @@ class UserButton extends React.Component {
       <ul className="nav">
         <li className="hidden-xs">
           <button role="button" className="btn-signup pull-right" {...inputSignupAction}>
-            <span>{getI18n(params.lang).signup.title}</span>
+            <FormattedMessage id="signup.title"/>
           </button>
         </li>
         <li>
           <button role="button" className="btn-signin pull-right"  {...inputSigninAction}>
-            <span>{getI18n(params.lang).signin.title}</span>
+            <FormattedMessage id="signin.title"/>
           </button>
         </li>
       </ul>)

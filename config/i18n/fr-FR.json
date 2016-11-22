@@ -1,4 +1,26 @@
 {
+  "lang": {
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "quality": {
+    "4": "HD",
+    "3": "Normal",
+    "2": "Moyen",
+    "1": "Bas",
+    "0": "Auto"
+  },
+  "menu": {
+    "home": "Accueil",
+    "streaming": "Streaming",
+    "life": "Buzz",
+    "community": "Communauté",
+    "favoris": "Favoris",
+    "last": "Nouveautés",
+    "sponsorship": "Parrainage",
+    "profil": "Mon profil",
+    "logout": "Se deconnecter"
+  },
   "home": {
     "title": "Les meilleurs films et séries\nafro-américains et africains.\nEn illimité.",
     "action": "PROFITEZ D'UNE SEMAINE<br />OFFERTE",
@@ -21,12 +43,12 @@
     "devices": {
       "title": "Vos films et séries afro préférés quand vous voulez où vous voulez en illimité",
       "action": "Démarrez votre semaine d'essai offerte",
-      "features": [
-        "Sans engagement",
-        "La première semaine est offerte",
-        "Disponible sur ordinateur, tablette, smartphone et box",
-        "Profitez d'une image haute qualité"
-      ]
+      "features": {
+        "engagment": "Sans engagement",
+        "free": "La première semaine est offerte",
+        "box": "Disponible sur ordinateur, tablette, smartphone et box",
+        "hd": "Profitez d'une image haute qualité"
+      }
     },
     "spots": {
       "title": "Aperçu de notre catalogue",
@@ -37,6 +59,9 @@
       "baseline": "Service uniquement disponible en France, DOM-TOM,Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.",
       "link": "Les réponses à vos questions"
     }
+  },
+  "browse": {
+    "last": "Derniers ajouts"
   },
   "footer": {
     "legals": "Mentions légales",
@@ -76,6 +101,18 @@
     "oauth2": {
       "title": "BOXES"
     }
+  },
+  "newsletter": {
+    "header": "Newsletter",
+    "instructions": "Me tenir informé par email",
+    "result": "Merci, vous êtes désormais inscrit à nos newsletters",
+    "action": "Envoyer"
+  },
+  "geowall": {
+    "header": "Ce service n'est pas disponible dans votre pays",
+    "instructions": "Me tenir informé par email",
+    "result": "Merci, nous vous tiendrons informés",
+    "action": "Envoyer"
   },
   "storesLocator": {
     "title": "Vous cherchez un buraliste pour vous abonner à Afrostream ?",
@@ -130,8 +167,7 @@
     "name": "Votre Prénom",
     "lastName": "Votre Nom",
     "country": {
-      "label": "Pays",
-      "defaultValue": "FR"
+      "label": "Pays"
     },
     "promo": {
       "label": "Code promo (optionnel)",
@@ -304,9 +340,9 @@
       "statusLabel": "Status",
       "cancelLabel": "Annuler",
       "periods": {
-        "year": "An",
+        "year": "An(s)",
         "month": "Mois",
-        "day": "Jours"
+        "day": "Jour(s)"
       },
       "status": {
         "canceled": "Annulé",
@@ -344,12 +380,14 @@
     "title": "Se connecter",
     "action": "Se connecter",
     "all": "Afficher tout",
+    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
     "providers": "Vous êtes abonné chez un opérateur ({providers}) ?",
     "strategyEmailEmpty": "Le courriel est vide.",
     "strategyEmailInvalid": "Le courriel n'est pas valide.",
     "strategyDomainInvalid": "Le domaine {domain} n'a pas été configuré.",
     "signinText": "Se connecter",
     "signupText": "Inscrivez-vous",
+    "successText": "Vous êtes correctement connecté",
     "cancelAction": "Annuler",
     "forgotText": "Vous avez oublié votre mot de passe ?",
     "emailPlaceholder": "Courriel",
@@ -388,7 +426,6 @@
     "action": "Démarrez",
     "emailPlaceholder": "Courriel",
     "passwordPlaceholder": "Créer un mot de passe",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
     "footerText": "",
     "signupOnSSODomainErrorText": "Ce domaine {domain} a été configuré pour le Single Sign On et vous ne pouvez pas créer de compte. Essayez de vous connecter à un compte existant.",
     "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion.",

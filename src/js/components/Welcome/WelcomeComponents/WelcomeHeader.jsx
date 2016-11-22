@@ -3,10 +3,8 @@ import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames'
 import config from '../../../../../config'
-import { getI18n } from '../../../../../config/i18n'
 import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
-import { withRouter } from 'react-router'
 import window from 'global/window'
 import ReactImgix from '../../Image/ReactImgix'
 
@@ -47,14 +45,14 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        Movie, Season, Episode, params
+        Movie, Season, Episode, params, intl
       }
     } = this
     let {movieId, seasonId, episodeId, lang} = params
 
     let info = {
-      title: getI18n(lang).home.title,
-      action: getI18n(lang).home.action,
+      title: intl.formatMessage({id: 'home.title'}),
+      action: 'home.action',
       poster: `${metadata.screen && metadata.screen.image || metadata.shareImage}`,
       logo: `${metadata.screen && metadata.screen.logo}`,
       movie: {
@@ -154,4 +152,4 @@ WelcomeHeader.propTypes = {
 
 WelcomeHeader.defaultProps = {}
 
-export default withRouter(WelcomeHeader)
+export default WelcomeHeader

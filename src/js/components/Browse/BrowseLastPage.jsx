@@ -9,7 +9,7 @@ if (process.env.BROWSER) {
   require('./BrowseLastPage.less')
 }
 @prepareRoute(async function ({store}) {
-  return await Promise.all( [
+  return await Promise.all([
     store.dispatch(MovieActionCreators.getLast())
   ])
 })
@@ -33,12 +33,10 @@ class BrowseLastPage extends React.Component {
       return (<Spinner />)
     }
 
-    const label = 'Derniers ajouts'
-
     return (<div className="browse-categorie_list">
 
       <MoviesSlider axis="y"
-                    key={`last-movies`} {...this.props} {...{dataList, label}} />
+                    key={`last-movies`} label="browse.last" {...this.props} {...{dataList}} />
     </div>)
   }
 

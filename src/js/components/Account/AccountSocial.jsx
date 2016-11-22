@@ -1,10 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getI18n } from '../../../../config/i18n'
 import Toggle from 'material-ui/Toggle'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
 import config from '../../../../config'
+import {
+  FormattedMessage,
+  FormattedHTMLMessage
+} from 'react-intl'
 
 const {oauth2}= config
 
@@ -57,12 +60,14 @@ class AccountSocial extends React.Component {
           this.synchroniseHandler({isSynchro: !payload, strategy: strategy.name})
         }
       }
-      const title = getI18n().account.oauth2.link.replace('{strategy}', strategy.name)
       return (<div className="row" key={`${strategy.name}-synchro`}>
           <div className="col-xs-2 col-md-2 text-center">
             <i className={strategy.icon}/>
           </div>
-          <div className="col-xs-8 col-md-8" dangerouslySetInnerHTML={{__html: title}}/>
+          <div className="col-xs-8 col-md-8">
+            <FormattedHTMLMessage
+              id={ `account.oauth2.link` } values={{strategy: strategy.name}}/>
+          </div>
           <div className="col-xs-2 col-md-2">
             <Toggle
               toggled={isSynchro}
@@ -87,12 +92,10 @@ class AccountSocial extends React.Component {
       return <div />
     }
 
-    let title = getI18n().account.profile['synchro']
-
     return (
       <div className={`account-details__container col-md-${col}`}>
         <div className="panel-profil">
-          <div className="pannel-header">{title}</div>
+          <div className="pannel-header"><FormattedMessage id={ `account.profile.synchro` }/></div>
           <div className="row-fluid row-profil">
             {this.getSocialProvider(user)}
           </div>

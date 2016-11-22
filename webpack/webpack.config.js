@@ -2,6 +2,7 @@ import webpack, { DefinePlugin, BannerPlugin } from 'webpack'
 import autoprefixer from 'autoprefixer-core'
 import path from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import ReactIntlPlugin from'react-intl-webpack-plugin'
 import config from '../config'
 import { merge } from 'lodash'
 import herokuConfig from '../app.json'
@@ -95,7 +96,7 @@ const webpackConfig = {
       {
         test: /\.jsx?$/,
         loaders: ['babel-loader'],
-        exclude: [node_modules_dir]
+        exclude: [node_modules_dir],
       },
       {
         test: /\.js$/, // include .js files
@@ -177,6 +178,7 @@ const webpackConfig = {
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
       koment: 'koment-js',
       videojs: 'video.js',

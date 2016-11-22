@@ -5,6 +5,9 @@ import { ArrowStepper } from '../Slider'
 import Thumb from '../Movies/Thumb'
 import ReactList from 'react-list'
 import { AutoSizer, ColumnSizer, VirtualScroll, Grid, Collection } from 'react-virtualized'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./MoviesSlider.less')
@@ -165,7 +168,7 @@ class MoviesSlider extends React.Component {
       return (
         <div className={this.props.className}>
           {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
-          {label ? <div className="movies-list__selection">{label}</div> : ''}
+          {label ? <div className="movies-list__selection"><FormattedMessage id={label}/></div> : ''}
           <div className="slider-container">
             <ReactList
               ref="react-list"

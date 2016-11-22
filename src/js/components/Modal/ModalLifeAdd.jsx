@@ -3,7 +3,6 @@ import ModalComponent from './ModalComponent'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import Q from 'q'
 import TextField from 'material-ui/TextField'
@@ -13,6 +12,9 @@ import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Spinner from '../Spinner/Spinner'
 import ReactImgix from '../Image/ReactImgix'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 import {
   Step,
@@ -100,7 +102,7 @@ class ModalLifeAdd extends ModalComponent {
 
 
   handleNext = () => {
-    const {props:{dispatch, Life}} =this
+    const {props:{dispatch, Life, intl}} =this
     const {description} =this.refs
     const {stepIndex, finished} = this.state
     if (finished) {
@@ -108,10 +110,10 @@ class ModalLifeAdd extends ModalComponent {
       return dispatch(LifeActionCreators.publishPin(_.merge(scrappedData.toJS(), {
         description: description.getValue()
       }))).then(()=> {
-        dispatch(EventActionCreator.snackMessage({message: getI18n().life.modal.success}))
+        dispatch(EventActionCreator.snackMessage({message: 'life.modal.success'}))
         this.closeModal()
       }).catch((err)=> {
-        dispatch(EventActionCreator.snackMessage(err || {message: getI18n().life.modal.errors.post}))
+        dispatch(EventActionCreator.snackMessage(err || {message: 'life.modal.errors.post'}))
         this.closeModal()
       })
     }
@@ -135,7 +137,7 @@ class ModalLifeAdd extends ModalComponent {
       return payload.match(regex)
     }).then((match)=> {
       if (!match) {
-        throw new Error(getI18n().life.modal.errors.url)
+        throw new Error('life.modal.errors.url')
       }
       return payload
     }).then((url)=> {
@@ -241,7 +243,7 @@ class ModalLifeAdd extends ModalComponent {
 
   render () {
 
-    const {finished, error, stepIndex, scrapping} = this.state
+    const {finished, error, stepIndex, scrapping, intl} = this.state
 
     let closeClass = classNames({
       'close': true,
@@ -265,7 +267,7 @@ class ModalLifeAdd extends ModalComponent {
                   <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
                     <div className="header top-header">
-                      <h1>{getI18n().life.modal.title}</h1>
+                      <FormattedMessage tagName="h1" id={`life.modal.title`}/>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
@@ -273,18 +275,21 @@ class ModalLifeAdd extends ModalComponent {
                         <Stepper className="stepper" style={{width: '100%'}} activeStep={stepIndex}
                                  orientation="vertical">
                           <Step disabled={scrapping}>
-                            <StepButton onClick={() => this.setState({stepIndex: 0})}
-                            >{getI18n().life.modal.step1}</StepButton>
+                            <StepButton
+                              onClick={() => this.setState({stepIndex: 0})}>
+                              <FormattedMessage id={`life.modal.step1`}/>
+                            </StepButton>
                             <StepContent className="step-buttons">
                               {this.getButtons()}
                             </StepContent>
                           </Step>
                           <Step disabled={scrapping}>
-                            <StepButton onClick={() => stepIndex > 1 && this.setState({stepIndex: 1})}
-                            >{getI18n().life.modal.step2}</StepButton>
+                            <StepButton
+                              onClick={() => stepIndex > 1 && this.setState({stepIndex: 1})}>
+                              <FormattedMessage id={`life.modal.step2`}/></StepButton>
                             <StepContent>
                               {error && <span className="warn">{error.message}</span>}
-                              <TextField hintText={getI18n().life.modal.step2}
+                              <TextField hintText={intl.formatMessage({id: 'life.modal.step2'})}
                                          fullWidth={true}
                                          disabled={this.state.scrapping}
                                          onChange={::this.validateUrl}
@@ -294,7 +299,7 @@ class ModalLifeAdd extends ModalComponent {
                             </StepContent>
                           </Step>
                           <Step disabled={stepIndex === 2}>
-                            <StepButton>{getI18n().life.modal.step3}</StepButton>
+                            <StepButton><FormattedMessage id={`life.modal.step3`}/></StepButton>
                             <StepContent>
                               {this.renderStepFinal()}
                               {this.renderStepActions(2)}

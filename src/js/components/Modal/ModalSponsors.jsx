@@ -4,12 +4,14 @@ import { prepareRoute } from '../../decorators'
 import ModalComponent from './ModalComponent'
 import classNames from 'classnames'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
 import { encodeSafeUrl } from '../../lib/utils'
 import Immutable from 'immutable'
 import * as BillingActionCreators from '../../actions/billing'
 import * as FBActionCreators from '../../actions/facebook'
 import * as ModalActionCreators from '../../actions/modal'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 const {couponsCampaignBillingUuid, couponsCampaignType, billingProviderName} = config.sponsors
 
@@ -52,13 +54,7 @@ class ModalSponsors extends ModalComponent {
   }
 
   getTitle (key = 'title') {
-    const {
-      props: {
-        params
-      }
-    } = this
-
-    return getI18n(params.lang)['sponsors'][key] || ''
+    return <FormattedMessage id={`sponsors.${key}`}/>
   }
 
   generateCoupon (event) {
@@ -126,7 +122,7 @@ class ModalSponsors extends ModalComponent {
         userReferenceUuid: user.get('_id'),
         billingProviderName,
         couponsCampaignBillingUuid
-      },false)
+      }, false)
 
       let shareData = Immutable.fromJS({
         title: `Parrainage`,

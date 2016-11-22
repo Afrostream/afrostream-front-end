@@ -4,10 +4,13 @@ import { createHistory } from 'history'
 import withScroll from 'scroll-behavior'
 import Router from './components/Router'
 import { Provider } from 'react-redux'
+import { IntlProvider } from 'react-intl-redux'
+import { addLocaleData, FormattedMessage } from 'react-intl'
 import createStore from './lib/createStore'
 import createAPI from './lib/createAPI'
 import request from 'superagent'
 import moment from 'moment'
+import _ from 'lodash'
 import qs from 'qs'
 import config from '../../config'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
@@ -15,14 +18,20 @@ import { getCountry } from './lib/geo'
 import * as UserActionCreators from './actions/user'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
+import { getI18n } from '../../config/i18n'
+import frLocaleData from 'react-intl/locale-data/fr'
+import enLocaleData from 'react-intl/locale-data/en'
+
+addLocaleData([
+  ...frLocaleData,
+  ...enLocaleData,
+])
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin()
 
 const {apiClient, heroku} = config
-
-//Set locale date //TODO une fois le site multilingue formater au pays courant
-moment.locale('fr')
 
 if (canUseDOM) {
   require('bootstrap')
@@ -32,7 +41,6 @@ if (canUseDOM) {
 
 const history = withScroll(createHistory())
 
-
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
 // for these different by checking all of them
@@ -41,7 +49,13 @@ const language = (navigator.languages && navigator.languages[0]) ||
   navigator.userLanguage || 'fr'
 
 // Split locales with a region code
-const locale = language.toLowerCase().split(/[_-]+/)[0]
+const locale = __INITIAL_STATE__ && __INITIAL_STATE__.intl && __INITIAL_STATE__.intl.locale || language.toLowerCase().split(/[_-]+/)[0]
+// Try full locale, fallback to locale without region code, fallback to en
+const messages = _.flattenJson(getI18n(locale))
+
+//Set locale date //TODO une fois le site multilingue formater au pays courant
+moment.locale(locale)
+
 
 function initSite (country) {
   const api = createAPI(
@@ -87,8 +101,10 @@ function initSite (country) {
   store.dispatch(UserActionCreators.getProfile())
 
   ReactDOM.render(
-    <Provider {...{store}}>
-      <Router />
+    <Provider {...{store}} >
+      <IntlProvider {...{locale, messages}}>
+        <Router />
+      </IntlProvider>
     </Provider>,
     document.getElementById('main')
   )
@@ -97,5 +113,6 @@ function initSite (country) {
 getCountry().then((country)=> {
   initSite(country)
 }).catch((err)=> {
+  console.log('Get Geo error', err)
   initSite()
 })

@@ -4,6 +4,10 @@ import WelcomePage from './Welcome/WelcomePage'
 import BrowsePage from './Browse/BrowsePage'
 import { withRouter } from 'react-router'
 import config from '../../../config'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 @connect(({User, Billing}) => ({User, Billing}))
 class HomePage extends React.Component {
@@ -60,12 +64,13 @@ class HomePage extends React.Component {
   render () {
     const {props: {User, children}} = this
     const user = User.get('user')
+
     if (user) {
       if (children) {
         return children
       }
       else {
-        return (<BrowsePage key="browse-page"/>)
+        return (<BrowsePage key="browse-page"  {...this.props}/>)
       }
     } else {
       return (<WelcomePage {...this.props} key="welcome-page"/>)
@@ -75,8 +80,9 @@ class HomePage extends React.Component {
 
 
 HomePage.propTypes = {
+  intl: intlShape.isRequired,
   history: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired
 }
 
-export default withRouter(HomePage)
+export default withRouter(injectIntl(HomePage))

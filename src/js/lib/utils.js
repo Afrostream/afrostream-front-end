@@ -10,8 +10,21 @@ function deepMap (obj, iterator, context) {
   })
 }
 
+function flattenJson (x, result = {}, prefix) {
+  if (_.isObject(x)) {
+    _.each(x, function (v, k) {
+      flattenJson(v, result, prefix ? prefix + '.' + k : k)
+    })
+  } else {
+    result[prefix] = x
+  }
+  return result
+}
+
+
 _.mixin({
-  deepMap
+  deepMap,
+  flattenJson
 })
 
 export function btoa (x) {

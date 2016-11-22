@@ -71,20 +71,20 @@ const client = {
           key: 'playerAudio',
           type: 'select',
           icon: 'zmdi zmdi-hearing',
-          list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
+          list: [{label: 'lang.fr', value: 'fra'}, {label: 'lang.en', value: 'eng'}]
         },
         {
           key: 'playerCaption', type: 'select', icon: 'zmdi zmdi-view-subtitles',
-          list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
+          list: [{label: 'lang.fr', value: 'fra'}, {label: 'lang.en', value: 'eng'}]
         },
         {
           key: 'playerQuality', type: 'select', icon: 'zmdi zmdi-router',
           list: [
-            {label: 'HD', value: 4},
-            {label: 'Normal', value: 3},
-            {label: 'Moyen', value: 2},
-            {label: 'Bas', value: 1},
-            {label: 'Auto', value: 0}]
+            {label: 'quality.4', value: 4},
+            {label: 'quality.3', value: 3},
+            {label: 'quality.2', value: 2},
+            {label: 'quality.1', value: 1},
+            {label: 'quality.0', value: 0}]
         },
         {key: 'playerKoment', type: 'toggle', icon: 'zmdi zmdi-comment-more'},
         {key: 'playerAutoNext', type: 'toggle', icon: 'zmdi zmdi-skip-next'}

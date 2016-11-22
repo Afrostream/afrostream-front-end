@@ -59,7 +59,7 @@ class SelectPlan extends React.Component {
   getPlanCol (label) {
 
     const {
-      props : {router, User, Billing}
+      props : {router, User, Billing, intl}
     } = this
 
     let isCash = router.isActive('cash')
@@ -119,10 +119,11 @@ class SelectPlan extends React.Component {
           break
 
         case 'price':
+          let period = `/${plan.get('periodLength')} ${intl.formatMessage({id: `account.billing.periods.${plan.get('periodUnit')}`})}`
           value = (<div className="select-plan_price">
             {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
             <span className="select-plan_period">
-              {`/${plan.get('periodLength')}${getI18n().account.billing.periods[plan.get('periodUnit')]}`}
+              {period}
             </span>
           </div>)
           break

@@ -4,7 +4,6 @@ export default function ({getState}) {
   return (next) => (action) => {
 
     const user = getState().User.get('user')
-
     track({
       type: 'redux',
       action: action.type,

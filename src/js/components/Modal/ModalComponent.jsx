@@ -30,17 +30,18 @@ class ModalComponent extends React.Component {
 
   render () {
 
+    const {props:{children, closable, className}} =this
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
-      'hide': !this.props.closable
+      'hide': !closable
     })
 
     let panelClass = {
       'panel onestep active': true,
     }
 
-    panelClass[this.props.className] = true
+    panelClass[className] = true
 
     return (
       <div className="lock-container">
@@ -55,7 +56,7 @@ class ModalComponent extends React.Component {
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
-                      {this.props.children}
+                      {children && children}
                     </div>
                   </div>
                 </div>

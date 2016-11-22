@@ -14,6 +14,7 @@ export default function prepareRoute (prepareFn) {
       }
 
       static propsTypes = {
+        intl: PropTypes.object.isRequired,
         location: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired,
         router: PropTypes.object.isRequired,
@@ -35,7 +36,7 @@ export default function prepareRoute (prepareFn) {
         if (!shallowEqual(nextProps.route, route), !shallowEqual(nextProps.params, params)) {
           let lang = nextProps.routes && nextProps.routes.length > 3 && nextProps.routes[3].lang
           let nextParams = nextProps.params || {}
-          nextParams.lang = lang
+          nextParams.lang = lang || (window && window.navigator.language)
           prepareFn({
             store,
             location,
@@ -54,7 +55,7 @@ export default function prepareRoute (prepareFn) {
         } = this
         let lang = routes && routes.length > 3 && routes[3].lang
         let nextParams = params || {}
-        nextParams.lang = lang
+        nextParams.lang = lang || (window && window.navigator.language)
 
         prepareFn({store, location, params: nextParams, router, route, categoryId})
       }

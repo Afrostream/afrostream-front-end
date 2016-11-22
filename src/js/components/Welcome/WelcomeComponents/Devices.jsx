@@ -1,7 +1,9 @@
 import React from 'react'
 import SignUpButton from '../../User/SignUpButton'
-import { getI18n } from '../../../../../config/i18n'
 import _ from 'lodash'
+import {
+  FormattedMessage
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./Devices.less')
@@ -14,11 +16,16 @@ class Devices extends React.Component {
 
     const {
       props: {
-        params
+        intl
       }
     } = this
 
-    let info = getI18n(params.lang).home.devices
+    const featuresList = [
+      'engagment',
+      'free',
+      'box',
+      'hd'
+    ]
 
     return (
       <section className="devices">
@@ -30,14 +37,17 @@ class Devices extends React.Component {
             </div>
           </div>
           <div className="device-element-text">
-            <h2>{info.title}</h2>
+            <FormattedMessage tagName="h2" id="home.devices.title"/>
             <ul className="features-list">
               {
-                _.map(info.features, (feature, key)=>(
-                  <li key={key} className="features-item"><i className="zmdi zmdi-check"></i>{feature}</li>))
+                _.map(featuresList, (feature, key)=>(
+                  <li key={key} className="features-item">
+                    <i className="zmdi zmdi-check"/>
+                    <FormattedMessage id={`home.devices.features.${feature}`}/>
+                  </li>))
               }
             </ul>
-            <SignUpButton label={info.action}/>
+            <SignUpButton label="home.devices.action"/>
           </div>
         </div>
       </section>

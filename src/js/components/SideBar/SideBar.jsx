@@ -10,8 +10,9 @@ import SearchInput from './../Search/SearchBox'
 import classSet from 'classnames'
 import window from 'global/window'
 import MobileDetect from 'mobile-detect'
-
-const {featuresFlip} = config
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./SideBar.less')
@@ -64,9 +65,11 @@ class SideBar extends React.Component {
 
   getUserConnectedButtons (user, type) {
 
+    let authorized
     let planCode
     let canSponsorshipSubscription = false
     if (user) {
+      authorized = user.get('authorized') && user.get('planCode')
       planCode = user.get('planCode')
       const subscriptionsStatus = user.get('subscriptionsStatus')
       if (subscriptionsStatus) {
@@ -81,43 +84,45 @@ class SideBar extends React.Component {
     let el
     switch (type) {
       case 'favoris':
-        el = planCode && (
+        el = authorized && (
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i
-              className="zmdi zmdi-favorite"/>Favoris</Link>
+              className="zmdi zmdi-favorite"/><FormattedMessage id={ 'menu.favoris' }/></Link>
             </li>)
         break
       case 'last':
-        el = planCode && (
+        el = authorized && (
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/last"><i
-              className="zmdi zmdi-movie-alt"/>Nouveautés</Link></li>)
+              className="zmdi zmdi-movie-alt"/><FormattedMessage id={ 'menu.last' }/></Link></li>)
         break
       case 'sponsorship':
-        el = featuresFlip.sponsorship && canSponsorshipSubscription && (
+        el = authorized && canSponsorshipSubscription && (
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/parrainage"><i
-              className="zmdi zmdi-star"/>Parrainage</Link>
+              className="zmdi zmdi-star"/><FormattedMessage id={ 'menu.sponsorship' }/></Link>
             </li>)
         break
       case 'browse':
-        el = planCode && <BrowseMenu/>
+        el = authorized && <BrowseMenu/>
         break
       case 'search':
-        el = planCode && <SearchInput defaultOpen={true}/>
+        el = authorized && <SearchInput defaultOpen={true}/>
         break
       case 'compte':
         el = (<li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/compte"><img
-          src={user.get('picture')}
-          alt="50x50"
-          id="userButtonImg"
-          className="icon-user"/> Mon
-          profil</Link></li>)
+            src={user.get('picture')}
+            alt="50x50"
+            id="userButtonImg"
+            className="icon-user"/><FormattedMessage id={ 'menu.profil' }/></Link></li>
+        )
         break
       case 'logout':
-        el = (<ul className="sidebar-nav">
-          <li role="separator" className="divider"></li>
-          <li><Link activeClassName="active" to="/" onClick={::this.logout}><i className="zmdi zmdi-lock-toggled"/>Se
-            deconnecter</Link></li>
-          <li role="separator" className="divider"></li>
-        </ul>)
+        el = (
+          <ul className="sidebar-nav">
+            <li role="separator" className="divider"></li>
+            <li><Link activeClassName="active" to="/" onClick={::this.logout}><i
+              className="zmdi zmdi-lock-toggled"/><FormattedMessage id={ 'menu.logout' }/></Link></li>
+            <li role="separator" className="divider"></li>
+          </ul>
+        )
         break
       default:
         el = ''
@@ -260,15 +265,13 @@ class SideBar extends React.Component {
           <ul className="sidebar-nav">
             {this.getUserConnectedButtons(user, 'compte')}
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/"><i
-              className="zmdi zmdi-tv-play"/>{user ? 'Streaming' : 'Accueil'}
+              className="zmdi zmdi-tv-play"/><FormattedMessage
+              id={ `menu.${user && user.get('authorized') ? 'streaming' : 'home'}` }/>
             </Link></li>
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
-              className="glyphicon glyphicon-fire"/>Buzz</Link></li>
+              className="glyphicon glyphicon-fire"/><FormattedMessage id={ 'menu.life' }/></Link></li>
             <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/community"><i
-              className="zmdi zmdi-accounts-list-alt"/>Communauté</Link></li>
-            {/*<li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/experience"><i*/}
-            {/*className="zmdi zmdi-gamepad"/>Expérience</Link>*/}
-            {/*</li>*/}
+              className="zmdi zmdi-accounts-list-alt"/><FormattedMessage id={ 'menu.community' }/></Link></li>
             {this.getUserConnectedButtons(user, 'favoris')}
             {this.getUserConnectedButtons(user, 'last')}
             {this.getUserConnectedButtons(user, 'sponsorship')}

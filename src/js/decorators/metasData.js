@@ -3,7 +3,6 @@ import Helmet from 'react-helmet'
 import config from '../../../config'
 import _ from 'lodash'
 import qs from 'qs'
-import { getI18n } from '../../../config/i18n'
 import { extractImg } from '../lib/utils'
 
 export default () => {
@@ -36,7 +35,7 @@ export default () => {
       getdata () {
         const {
           context: {store},
-          props: {params, location}
+          props: {params, location, intl}
         } = this
 
         let {lang} = params
@@ -83,8 +82,8 @@ export default () => {
               themes = _.join(themesFlat.toJS(), ' - ')
             }
 
-            metas.title = getI18n(lang).life.metas.title
-            metas.description = getI18n(lang).life.metas.description
+            metas.title = intl.formatMessage({id: 'life.metas.title'})
+            metas.description = intl.formatMessage({id: 'life.metas.description'})
 
             break
 
@@ -100,8 +99,8 @@ export default () => {
                   //Replace global
                   //title = title.replace(/{planName}/g, plan.get('name'))
                   //synopsis = synopsis.replace(/{planDescription}/g, plan.get('description'))
-                  metas.title = getI18n(lang).sponsors.metas.title
-                  metas.description = getI18n(lang).sponsors.metas.description
+                  metas.title = intl.formatMessage({id: 'sponsors.metas.title'})
+                  metas.description = intl.formatMessage({id: 'sponsors.metas.description'})
                   data = plan
                 }
               }
@@ -138,11 +137,11 @@ export default () => {
                 movieTitle = movieData.get('title')
 
                 if (type === 'movie') {
-                  metas.title = getI18n(lang).home.movie.title
-                  metas.description = getI18n(lang).home.movie.description
+                  metas.title = intl.formatMessage({id: 'home.movie.title'})
+                  metas.description = intl.formatMessage({id: 'home.movie.description'})
                 } else {
-                  metas.title = getI18n(lang).home.serie.title
-                  metas.description = getI18n(lang).home.serie.description
+                  metas.title = intl.formatMessage({id: 'home.serie.title'})
+                  metas.description = intl.formatMessage({id: 'home.serie.description'})
                 }
 
                 let actorsList = movieData.get('actors')
@@ -154,14 +153,14 @@ export default () => {
                 }
 
                 if (seasonData) {
-                  metas.title = getI18n(lang).home.season.title
-                  metas.description = getI18n(lang).home.season.description
+                  metas.title = intl.formatMessage({id: 'home.season.title'})
+                  metas.description = intl.formatMessage({id: 'home.season.description'})
                   seasonNumber = seasonData.get('seasonNumber')
                 }
 
                 if (episodeData) {
-                  metas.title = getI18n(lang).home.episode.title
-                  metas.description = getI18n(lang).home.episode.description
+                  metas.title = intl.formatMessage({id: 'home.episode.title'})
+                  metas.description =intl.formatMessage({id: 'home.episode.description'})
                   episodeNumber = episodeData.get('episodeNumber')
                 }
 

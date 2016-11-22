@@ -21,6 +21,12 @@ import * as MovieActionCreators from '../actions/movie'
 import * as SeasonActionCreators from '../actions/season'
 import * as EpisodeActionCreators from '../actions/episode'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
+
 import {
   red500,
   grey200,
@@ -84,7 +90,7 @@ class Application extends React.Component {
 
   render () {
 
-    const {props: {dispatch, children, Event, Modal, User}} = this
+    const {props: {dispatch, children, Event, Modal, User, intl}} = this
     const user = User.get('user')
     const docked = Boolean(user)
     const toggled = Event.get('sideBarToggled')
@@ -111,7 +117,7 @@ class Application extends React.Component {
           <ModalView {...this.props}/>
           {snackMessage && <Snackbar
             open={Boolean(snackMessage)}
-            message={snackMessage.get('message')}
+            message={intl.formatMessage({id: snackMessage.get('message')})}
             autoHideDuration={4000}
             onRequestClose={
               (e) => {
@@ -126,8 +132,9 @@ class Application extends React.Component {
 }
 
 Application.propTypes = {
+  intl: intlShape.isRequired,
   location: React.PropTypes.object,
   history: React.PropTypes.object
 }
 
-export default withRouter(Application)
+export default withRouter(injectIntl(Application))

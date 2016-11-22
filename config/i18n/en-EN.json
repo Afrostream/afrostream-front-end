@@ -1,15 +1,38 @@
 {
+  "lang": {
+    "fr": "French",
+    "en": "English"
+  },
+  "quality": {
+    "4": "HD",
+    "3": "Normal",
+    "2": "Medium",
+    "1": "Low",
+    "0": "Auto"
+  },
+  "menu": {
+    "home": "Home",
+    "streaming": "Streaming",
+    "life": "Buzz",
+    "community": "Community",
+    "favoris": "Bookmark",
+    "last": "News",
+    "sponsorship": "Sponsorship",
+    "profil": "Profile",
+    "logout": "Sign out"
+  },
   "home": {
     "title": "The Best Black Films and TV Series",
     "action": "START YOUR FIRST <br /> WEEK FREE",
     "devices": {
       "title": "Your favorite Black films and series in unlimited access when you want and where you want.",
       "action": "Sign up now !",
-      "features": [
-        "In French or Subtitled in French",
-        "No publicity, No interruptions",
-        "Enjoy a high quality image"
-      ]
+      "features": {
+        "engagment": "Without engagement",
+        "free": "The first week is offered",
+        "box": "Available on computer, tablet, smartphone and box",
+        "hd": "Enjoy a high quality image"
+      }
     },
     "spots": {
       "title": "Preview our catalog",
@@ -21,8 +44,11 @@
       "link": "The answers to your questions."
     }
   },
+  "browse": {
+    "last": "Latest additions"
+  },
   "footer": {
-    "legals": "Legal",
+    "legals": "Legals",
     "support": {
       "title": "HELP",
       "help": "Contact",
@@ -31,7 +57,7 @@
       "policy": "Privacy policy"
     },
     "recharge": {
-      "title": "RECHARGE",
+      "title": "REFILL",
       "stores": "Stores locator",
       "cashway": "Payment in cash with ",
       "coupon": "Coupon"
@@ -51,7 +77,7 @@
       "android": "Andoid"
     },
     "social": {
-      "title": "SUIVEZ-NOUS",
+      "title": "FOLLOW US",
       "facebook": "Facebook",
       "twitter": "Twitter",
       "newsletter": "Newsletter"
@@ -60,35 +86,54 @@
       "title": "BOXES"
     }
   },
-  "loadingTitle": "Veuillez patienter...",
-  "close": "Fermer",
-  "windowsAuthTitle": "Connexion Windows",
-  "invalid": "Invalide",
-  "mustMatch": "Doit correspondre",
-  "loginSocialButton": "S'identifier avec {connection:title}",
-  "signupSocialButton": "S'inscrire avec {connection:title}",
-  "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
+  "newsletter": {
+    "header": "Newsletter",
+    "instructions": "Keep me informed by email",
+    "result": "Thank you, you are now subscribed to our newsletters",
+    "action": "Send"
+  },
+  "geowall": {
+    "header": "Coming Soon",
+    "instructions": "Enter your details below and be the first to get notified when we launch there :",
+    "result": "Thank you",
+    "action": "Notify me"
+  },
+  "storesLocator": {
+    "title": "Are you looking for a store to subscribe to Afrostream?",
+    "description": "You can now subscribe to Afrostream in store. Check out the map and find the store nearest you.",
+    "where": "Where to find a store?",
+    "inputFind": "City...",
+    "find": "Find a point of sale"
+  },
+  "loadingTitle": "Please wait...",
+  "close": "Close",
+  "windowsAuthTitle": "Windows Connection",
+  "invalid": "Invalid",
+  "mustMatch": "Must match",
+  "loginSocialButton": "Sign in with {connection:title}",
+  "signupSocialButton": "Register with {connection:title}",
+  "networkError": "Server unreachable. <br/> Please try again.",
   "planCodes": {
     "cash": {
-      "selectTitle": "Choisissez votre formule"
+      "selectTitle": "Choose your plan"
     },
-    "selectTitle": "Choisissez votre formule et profitez de",
-    "onePlanTitle": "Votre formule",
-    "freePeriodLabel": "7 jours d'essai",
-    "title": "Formule",
+    "selectTitle": "Choose your plan and enjoy",
+    "onePlanTitle": "Your plan",
+    "freePeriodLabel": "7 days trial",
+    "title": "Plan",
     "action": "Choose this offer",
-    "actionMobile": "Paiement via votre facture téléphonique",
-    "noMobilePlans": "Choisir un autre mode de paiement",
+    "actionMobile": "Payment by phone",
+    "noMobilePlans": "Choose another payment method",
     "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",
     "cashway-coupon-oneyear": "Formule Sérénité - 59,99€ pour 1 an de films et séries afro",
     "afrostreammonthly": "Formule Mensuel - 7 jours d’essai puis 6,99€ par mois sans engagement",
     "afrostreamambassadeurs2": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "afrostreamambassadeurs": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "infos": {
-      "coupon": "Coupon valide {couponName}",
-      "formule": "Formule",
+      "coupon": "Coupon valid {couponName}",
+      "formule": "Plan",
       "prelevementMensuel": "Automatic debit payment",
-      "price": "Tarif",
+      "price": "Price",
       "trialEnabled": "7 day free trial",
       "internalMaxScreens": "Available simultaneously screen{s}",
       "internalMobile": "Watch on your computer, smartphone and tablet",
@@ -98,210 +143,236 @@
     }
   },
   "history": {
-    "label": "Reprendre la lecture"
+    "label": "Resume reading"
   },
   "search": {
-    "noData": "La recherche n'a trouvé aucun resultat"
+    "noData": "The search found no results."
   },
   "payment": {
-    "methodHeader": "Choisissez votre methode de payment",
-    "name": "Votre Prénom",
-    "lastName": "Votre Nom",
+    "methodHeader": "Choose your payment method",
+    "name": "Your first name",
+    "lastName": "Your name",
     "country": {
-      "label": "Pays",
-      "defaultValue": "FR"
+      "label": "Country"
     },
     "promo": {
-      "label": "Code promo (optionnel)",
-      "disabledLabel": "Les codes promotionnels ne sont pas compatibles avec ce mode de paiement.",
-      "activate": "Attention, il s’agit d’un coupon qui peut s’activer directement en cliquant ici",
-      "placeHolder": "Entrez votre code"
+      "label": "Promo code (optional)",
+      "disabledLabel": "Promotional codes are not compatible with this method of payment.",
+      "activate": "Attention, this is a coupon that can be activated directly by clicking here",
+      "placeHolder": "Enter your code"
     },
     "virement": {
-      "label": "Paiement par prélèvement bancaire SEPA",
+      "label": "Payment by direct debit SEPA",
       "mandat": {
-        "title": "Vérifiez que vos informations sont correctes",
-        "info": "Mandat de prélèvement SEPA",
-        "creancierLabel": "Créancier",
-        "creancierName": "Nom",
-        "creancierAdress": "Adresse",
+        "title": "Make sure your information is correct",
+        "info": "SEPA Debit MandateA",
+        "creancierLabel": "Creditor",
+        "creancierName": "Name",
+        "creancierAdress": "Adress",
         "ibanLabel": "IBAN",
-        "ibanDetent": "Détenteur",
-        "ibanRef": "Référence",
-        "ibanRefDispo": "Disponible par mail après confirmation",
+        "ibanDetent": "Holder",
+        "ibanRef": "Reference",
+        "ibanRefDispo": "Available by mail after confirmation",
         "ibanDate": "Date",
-        "submit": "Confirmer",
-        "cancel": "Annuler",
-        "cgu": "Afrostream apparaîtra sur votre relevé bancaire.\n Nous vous informerons par email 3 jours avant la date du prélèvement.\nEn signant ce mandat de prélèvement, vous autorisez (A) GC re Afrostream à envoyer des instructions à votre banque pour débiter votre compte, et (B) votre banque à débiter votre compte conformément aux instructions de GC re Afrostream.\nVous bénéficiez d’un droit de remboursement par votre banque selon les conditions décrites dans la convention que vous avez passée avec elle. Toute demande de remboursement doit être présentée dans les 8 semaines suivant la date de débit de votre compte.\nVos droits concernant le mandat ci-dessus sont expliqués dans un document que vous pouvez obtenir auprès de votre banque."
+        "submit": "Confirme",
+        "cancel": "Cancel",
+        "cgu": "Afrostream will appear on your bank statement \n We will notify you by e-mail 3 days before the date of the debit. \n A signing this debit mandate, you authorize GC re Afrostream to send instructions to your bank to debit your account, And (B) your bank to debit your account in accordance with GC Re Afrostream's instructions. \n You are entitled to reimbursement by your bank in accordance with the terms and conditions set forth in the agreement with you. All claims must be submitted within 8 weeks of the debit date of your account. \n Your rights to the above mandate are explained in a document that you can obtain from your bank."
       }
     },
     "creditCard": {
-      "label": "Paiement par carte bancaire",
-      "cvv": "Code sécurité",
+      "label": "Payment by credit card",
+      "cvv": "security code",
       "cvcPlaceHolder": "123",
-      "exp": "Date de validité",
+      "exp": "Date of validity",
       "expPlaceHolder": "MM/AA",
-      "number": "Numéro de carte",
+      "number": "Card number",
       "placeHolder": "1234 5678 8901 1234"
     },
     "mobile": {
-      "label": "Paiement via votre facture téléphonique",
-      "text": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Mobile"
+      "label": "Payment by phone",
+      "text": "To complete the subscription, click the \"{submitBtn} \" button and use your Mobile account"
     },
     "paypal": {
-      "label": "Paiement par Paypal",
-      "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Paypal"
+      "label": "Payment by Paypal",
+      "paypalText": "To finalize the subscription, click the \"{submitBtn} \" button and use your Paypal account"
     },
     "future": {
-      "title": "Vous y êtes presque !",
+      "title": "You're almost there!",
       "link": "mailto:support@afrostream.tv",
-      "linkMessage": "Pour toute questions, veuillez contacter notre support technique",
-      "message": "Plus qu’une dernière étape. Dès réception de votre paiement, nous vous donnerons accès à tous les films et séries en illimité.",
+      "linkMessage": "If you have any questions, please contact our technical support.",
+      "message": "More than a final step. Upon receipt of your payment, we will give you access to all movies and series in unlimited.",
       "links": [
         {
-          "label": "Choisir un autre mode de paiement",
+          "label": "Choose another payment method",
           "target": "/select-plan"
         }
       ]
     },
     "expired": {
-      "title": "Votre abonnement a expiré",
+      "title": "Your subscription has expired",
       "link": "mailto:support@afrostream.tv",
-      "linkMessage": "Pour toute questions, veuillez contacter notre support technique",
+      "linkMessage": "If you have any questions, please contact our technical support.",
       "message": "",
       "links": [
         {
-          "label": "Vous pouvez à tout moment vous réabonner en allant ici",
+          "label": "You can resubscribe at any time by going here",
           "target": "/select-plan"
         },
         {
-          "label": "Vous pouvez aussi payer chez un buraliste ! cliquez ici",
+          "label": "You can also pay with a builder! click here",
           "image": "/images/payment/cashway-inline.png",
           "target": "/cash"
         }
       ]
     },
     "cashway": {
-      "recupCode": "Récuperez votre code barre (envoyé par mail) ou ",
-      "recupCodeAction": "cliquez ici",
-      "rdv": "RDV chez un partenaire CASHWAY ",
-      "showMap": "voir la carte",
-      "partner": "Présentez votre code-barre et payez pour valider votre abonnement"
+      "recupCode": "Retrieve your barcode (sent by mail) or",
+      "recupCodeAction": "click here",
+      "rdv": "Meeting with a CASHWAY partner",
+      "showMap": "see the map",
+      "partner": "Present your barcode and pay to validate your subscription"
     },
     "errors": {
       "noLib": {
-        "title": "Paiement indisponible",
+        "title": "Payment unavailable",
         "link": "mailto:support@afrostream.tv",
-        "linkMessage": "Si le probleme persiste, veuillez contacter notre support technique",
-        "message": "Le paiement est momentanément indisponible,veuillez nous en éxcuser et recommencer l'opération ultérieurement."
+        "linkMessage": "If the problem persists, please contact our technical support",
+        "message": "The payment is temporarily unavailable, please excuse us and restart the operation later."
       },
-      "cancelled": "Transaction annulée",
-      "checkbox": "Vous devez cocher toutes les cases pour confirmer l‘abonnement.",
-      "card": "Veuillez contacter votre banque ou utilisez une autre carte.",
-      "coupon": "Le code promo n’ est pas ou plus valide pour cette formule.",
-      "already": "Vous avez deja souscrit à cette formule.",
-      "global": "Une erreur inconnue s’ est produite, veuillez recommencer.",
-      "fields": "Les champs indiqués semblent invalides : ",
-      "abo": "Erreur lors de la création de l’abonnement : ",
-      "exludedCard": "Ce type ne carte n‘est pas pris en charge actuellement",
-      "retry": "Merci de réessayer"
+      "cancelled": "Transaction canceled",
+      "checkbox": "You must check all the boxes to confirm the subscription.",
+      "card": "Please contact your bank or use another card.",
+      "coupon": "The coupon code is not valid for this formula.",
+      "already": "You have already subscribed to this formula.",
+      "global": "An unknown error occurred, please try again.",
+      "fields": "The fields shown appear to be invalid: ",
+      "abo": "Error creating the subscription:",
+      "exludedCard": "This type does not currently support card",
+      "retry": "Please try again"
     },
     "cgu": {
-      "label": "J'accepte les Conditions Générales d'Utilisation",
-      "link": "(En savoir plus)"
+      "label": "I accept the general terms of use",
+      "link": "(Learn more)"
     },
     "droits": {
-      "label": "Je renonce au droit de rétractation",
-      "link": "Télécharger le formulaire de rétractation"
+      "label": "I waive the right of retraction",
+      "link": "Download the cancellation form"
     }
   },
   "account": {
-    "header": "Mon compte",
+    "header": "My account",
     "user": {
-      "header": "MES INFORMATIONS PERSONNELLES",
-      "password": "Mot de passe",
-      "updatePassword": "Modifier mon mot de passe",
-      "updateEmail": "Modifier mon email",
-      "updateProfil": "Modifier mon profil"
+      "header": "MY PERSONAL INFORMATION",
+      "password": "Password",
+      "updatePassword": "Change my password",
+      "updateEmail": "Edit my email",
+      "updateProfil": "Edit my profile"
     },
     "plan": {
-      "header": "DÉTAIL DU FORFAIT",
-      "updatePlan": "Changer de forfait",
-      "cancelPlan": "Interrompre votre abonnement"
+      "header": "PACKAGE DETAIL",
+      "updatePlan": "Change Package",
+      "cancelPlan": "Suspend your subscription"
     },
     "oauth2": {
-      "header": "Profils liés",
-      "link": "Lier mon profil <b>{strategy}</b> à mon compte Afrostream",
-      "on": "Lier mon profil",
-      "off": "Ne plus lier mon profil"
+      "header": "Related profiles",
+      "link": "Link my profile <b> {strategy} </b> to my Afrostream account",
+      "on": "Link my profile",
+      "off": "off"
+    },
+    "profile": {
+      "password": "Change my password",
+      "picture": "Edit my avatar",
+      "profile": "Personal information",
+      "birthDate": "Date of birth",
+      "nickname": "Username",
+      "first_name": "Name",
+      "last_name": "First name",
+      "gender": "Sex",
+      "telephone": "Phone number",
+      "email": "Email",
+      "synchro": "Synchronized Accounts",
+      "social": "Social sharing",
+      "socialSharing": "Share my friends with my business",
+      "player": "Video settings",
+      "playerAudio": "Audio language",
+      "playerCaption": "Subtitles",
+      "playerQuality": "Read quality",
+      "playerKoment": "Show comments automatically",
+      "playerAutoNext": "Switch to next episode automatically",
+      "emailOptIn": "I would like to receive exclusive offers from partners selected by Afrostream",
+      "emailNewsletter": "I want to receive promotions and news about Afrostream",
+      "men": "Man",
+      "women": "Woman",
+      "on": "On",
+      "off": "Off"
     },
     "cancel": {
-      "active": {
-        "header": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",
-        "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
+      "info": "The cancellation will be effective as of the end of the current billing period, {endDate}",
+      "status": {
+        "active": "Are you sure you no longer want to see Afro movies and series?",
+        "canceled": "Votre abonnement été annulé.",
+        "unCancelable": "Votre abonnement ne peut être annulé."
       },
-      "canceled": {
-        "header": "Votre abonnement été annulé.",
-        "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}"
-      },
-      "submitBtn": "Confirmer l'interruption",
-      "cancelBtn": "Continuer l'abonnement"
+      "submitBtn": "Confirm interrupt",
+      "cancelBtn": "Continue the subscription"
     },
     "billing": {
-      "header": "Détails de facturation",
+      "header": "Billing Information",
       "dateLabel": "Date",
       "decriptionLabel": "Description",
-      "periodLabel": "Période de service",
-      "methodLabel": "Mode de paiement",
+      "periodLabel": "Period of service",
+      "methodLabel": "Payment method",
       "statusLabel": "Status",
       "periods": {
-        "year": "An",
-        "month": "Mois",
-        "day": "Days"
+        "year": "Year(s)",
+        "month": "Month",
+        "day": "Day(s)"
       },
       "status": {
-        "canceled": "Annulé",
-        "active": "En cours",
-        "expired": "Expiré",
-        "future": "En attente de paiement",
-        "pending": "En attente"
+        "canceled": "Canceled",
+        "active": "In progress",
+        "expired": "Expired",
+        "future": "Waiting for payment",
+        "pending": "Waiting"
       }
     }
   },
   "favorites": {
-    "noData": "Aucun Favoris ajouté à mon profil",
-    "labelPage": "Mes Favoris"
+    "noData": "No Favorites added to my profile",
+    "labelPage": "My Favourites"
   },
   "share": {
-    "label": "Partager avec mes amis",
-    "labelBtn": "Partager"
+    "label": "Share with friends",
+    "labelBtn": "Share"
   },
   "next": {
-    "label": "Épisode suivant dans {seconds} secondes",
-    "goBackBtn": "Retour à la video",
-    "labelLike": "Avez vous aimé cet épisode ?"
+    "label": "Next episode in {seconds} seconds",
+    "goBackBtn": "Back to video",
+    "labelLike": "Did you like this episode?"
   },
   "recommendation": {
-    "noData": "Aucune Recommandation",
-    "labelPage": "Nous vous recommandons :",
-    "labelLike": "Avez vous aimé {movieType} ?",
-    "typeEpisode": "cet épisode",
-    "typeMovie": "ce film",
-    "typeSerie": "cette serie",
-    "like": "J'ai aimé",
-    "dislike": "Je n'ai pas aimé"
+    "noData": "No Recommendations",
+    "labelPage": "We recommend you :",
+    "labelLike": "Did you like {movieType}?",
+    "typeEpisode": "this episode",
+    "typeMovie": "this movie",
+    "typeSerie": "this series",
+    "like": "I loved",
+    "dislike": "I did not like"
   },
   "signin": {
     "title": "Sign in",
     "action": "Sign In",
     "actionDomain": "Log in to {domain}",
     "all": "Not your account?",
+    "headerText": "Please enter your email and password",
     "providers": "You are subscribed to an operator ({providers}) ?",
     "strategyEmailEmpty": "The email is empty.",
     "strategyEmailInvalid": "The email is invalid.",
     "strategyDomainInvalid": "The domain {domain} has not been set up.",
     "signinText": "Log In",
     "signupText": "Sign Up",
+    "successText": "You are connected correctly",
     "cancelAction": "Cancel",
     "forgotText": "Don't remember your password?",
     "footerText": "",
@@ -324,20 +395,20 @@
     "userConsentFailed": "Permissions were not granted. Try again.",
     "loginProvider": "Connect with {strategy}",
     "language": {
-      "email": "Doit etre un email valide",
-      "password": "Le mot de passe",
-      "repeat_password": "Le mot de passe de verification",
-      "min": "doit contenir au minimum 6 caracteres",
-      "max": "doit contenir au maximum 50 caracteres",
-      "same": "doit correspondre",
-      "empty": "est requis"
+      "email": "Must be a valid email",
+      "password": "The password",
+      "repeat_password": "The verification password",
+      "min": "Must contain at least 6 characters",
+      "max": "Must contain a maximum of 50 characters",
+      "same": "must match",
+      "empty": "is required"
     },
-    "Unauthorized": "Impossible de se connecter",
-    "invalid_grant": "Courriel ou mot de passe incorrect.",
-    "Error: strategy error": "Impossible de se connecter",
-    "Error: The specified email address is already in use.": "Email déja existant",
-    "Error: Your profile is already linked to another user": "Votre profile facebook est deja lié a un autre compte",
-    "Error: No user found, please associate your profile after being connected": "Aucun utilisateur lié ,veuillez vous connecter puis lier votre profil dans \"mon compte\""
+    "Unauthorized": "Impossible to connect",
+    "invalid_grant": "Incorrect email or password.",
+    "Error: strategy error": "Impossible to connect",
+    "Error: The specified email address is already in use.": "Email already existing",
+    "Error: Your profile is already linked to another user": "Your facebook profile is already linked to another account",
+    "Error: No user found, please associate your profile after being connected": "No linked user, please login and then link your profile to \"my account \""
   },
   "signup": {
     "description": "",
@@ -349,7 +420,6 @@
     "usernamePlaceholder": "Username",
     "passwordPlaceholder": "Create a Password",
     "cancelAction": "Cancel",
-    "headerText": "Please enter your email and password",
     "footerText": "",
     "serverErrorText": "There was an error processing the signup.",
     "userExistsErrorText": "The user already exists.",
@@ -357,169 +427,169 @@
     "usernameInUseErrorText": "The username is already in use.",
     "invalidPassword": "Password is too weak.",
     "passwordStrength": {
-      "nonEmpty": "Un mot de passe non vide est requis",
-      "lengthAtLeast": "Au moins %d caractères",
-      "shouldContain": "Doit contenir:",
-      "containsAtLeast": "Contient au moins %d des %d types de caractères suivants :",
-      "lowerCase": "Caractères minuscules (a-z)",
-      "upperCase": "Caractères majuscules (A-Z)",
-      "numbers": "Chiffres (0-9)",
-      "specialCharacters": "Caractères spéciaux (ex. : !@#$%^&*)",
-      "identicalChars": "Pas plus de %d caractères identiques à la suite (ex. : \"%s\" n'est pas autorisé)"
+      "nonEmpty": "A non-empty password is required",
+      "lengthAtLeast": "At least %d characters",
+      "shouldContain": "Must contain:",
+      "containsAtLeast": "Contains at least %d of the following %d character types:",
+      "lowerCase": "Lower case characters (a-z)",
+      "upperCase": "Uppercase characters (A-Z)",
+      "numbers": "Numbers (0-9)",
+      "specialCharacters": "Special Characters (ex. : !@#$%^&*)",
+      "identicalChars": "Not more than %d identical characters following (ex. : \"%s\" is not authorized)"
     }
   },
   "reset": {
-    "title": "Réinitialiser votre mot de passe",
-    "action": "Envoyer",
-    "emailPlaceholder": "Courriel",
-    "passwordPlaceholder": "Nouveau mot de passe",
-    "repeatPasswordPlaceholder": "Confirmer le nouveau mot de passe",
-    "cancelAction": "Annuler",
-    "successText": "Vous venez de recevoir un courriel vous indiquant comment réinitialiser votre mot de passe.",
-    "enterSamePasswordText": "S'il vous plaît entrez le même mot de passe.",
-    "headerText": "Veuillez saisir votre courriel et mot de passe. Nous vous enverrons un courriel pour confirmer le changement de mot de passe.",
-    "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe.",
-    "userDoesNotExistErrorText": "Utilisateur introuvable.",
-    "invalidPassword": "Le mot de passe n'est pas valide."
+    "title": "Reset your password",
+    "action": "Send",
+    "emailPlaceholder": "E-mail address",
+    "passwordPlaceholder": "New Password",
+    "repeatPasswordPlaceholder": "Confirm the new password",
+    "cancelAction": "Cancel",
+    "successText": "You have just received an email telling you how to reset your password.",
+    "enterSamePasswordText": "Please enter the same password.",
+    "headerText": "Please enter your email address and password. We will send you an email to confirm the change of password.",
+    "serverErrorText": "Error processing los password reset.",
+    "userDoesNotExistErrorText": "User not found.",
+    "invalidPassword": "The password is invalid."
   },
   "coupon": {
     "title": "Use your coupon",
     "action": "Submit",
     "next": "Next",
     "couponPlaceholder": "Coupon",
-    "successText": "Votre coupon est validé, vous pouvez profiter pleinement de votre compte Afrostream",
+    "successText": "Your coupon is validated, you can take full advantage of your Afrostream account",
     "headerText": "Enter coupon code to start your Afrostream subscription.",
     "couponInvalid": "Please contact us at support@afrostream.tv",
-    "serverErrorText": "Erreur de traitement los de réinitialisation du mot de passe.",
+    "serverErrorText": "Error processing los password reset.",
     "status": {
-      "redeemed": "Le code a déjà été utilisé.",
-      "pending": "Le code est en attente.",
-      "expired": "Le code a déjà été utilisé."
+      "redeemed": "The code has already been used.",
+      "pending": "The code is on hold.",
+      "expired": "The code has already been used."
     },
     "errors": {
       "30": {
         "name": "POPUP_ERROR",
-        "message": "Une popup a été bloquée, veuillez modifier vos paramètres navigateur et autoriser les popup"
+        "message": "A popup has been blocked, please change your browser settings and allow popup"
       },
       "50": {
         "name": "COUPON_CODE_NOT_FOUND",
-        "message": "Le code n'a pas été trouvé."
+        "message": "The code was not found."
       },
       "60": {
         "name": "SEPA_IBAN_INVALID",
-        "message": "compte IBAN banni (processus manuel)"
+        "message": "IBAN account banned (manual process)"
       },
       "200": {
         "name": "CASHWAY_COUPON_ONE_BY_USER_FOR_EACH_CAMPAIGN",
-        "message": "codes CASHWAY : 1 seul d'une campagne / compte"
+        "message": "CASHWAY codes: 1 only one campaign / account"
       },
       "400": {
         "name": "AFR_COUPON_SPS_SELF_FORBIDDEN",
-        "message": "codes de sponsoring : 1 seul / compte"
+        "message": "Sponsorship codes: 1 only / account"
       },
       "401": {
         "name": "AFR_COUPON_SPS_RECIPIENT_ALREADY_SPONSORED",
-        "message": "codes de sponsoring : 1 seul / compte"
+        "message": "Sponsorship codes: 1 only / account"
       },
       "402": {
         "name": "AFR_COUPON_SPS_RECIPIENT_ACTIVE_FORBIDDEN",
-        "message": "sponsoriser un abonné actif est INTERDIT"
+        "message": "To sponsor an active subscriber is FORBIDDEN"
       },
       "404": {
         "name": "NOT FOUND",
-        "message": "Le coupon n’a pas été trouvé"
+        "message": "The coupon was not found"
       },
       "420": {
         "name": "SUBS_AUTO_ALREADY_EXISTS",
-        "message": "Lorsqu'une personne abonnée à un plan renouvelable essaie de s'abonner à nouveau."
+        "message": "When a subscriber to a renewable plan tries to subscribe again."
       },
       "421": {
         "name": "SUBS_FUTURE_ALREADY_EXISTS",
-        "message": "Lorsqu'une personne prend un abonnement alors qu'il y a déjà un abonnement à venir."
+        "message": "When a person takes a subscription when there is already an upcoming subscription."
       },
       "433": {
         "name": "ALREADY_SUBSCRIBE",
-        "message": "Vous êtes deja abonné."
+        "message": "Already subscribed."
       },
       "450": {
         "name": "COUPON_REDEEMED",
-        "message": "Le code a déjà été utilisé."
+        "message": "The code has already been used."
       },
       "451": {
         "name": "COUPON_EXPIRED",
-        "message": "Le code a expiré."
+        "message": "The code has expired."
       },
       "452": {
         "name": "COUPON_PENDING",
-        "message": "Le code est en attente."
+        "message": "The code is on hold."
       },
       "453": {
         "name": "COUPON_NOT_READY",
-        "message": "Le code n'est pas prêt."
+        "message": "The code is not ready."
       },
       "454": {
         "name": "COUPON_PROVIDER_INCOMPATIBLE",
-        "message": "Le code n'est pas utilisable avec ce provider."
+        "message": "The code can not be used with this provider."
       },
       "455": {
         "name": "COUPON_INTERNALPLAN_INCOMPATIBLE",
-        "message": "Le code n'est pas utilisable avec ce plan."
+        "message": "The code can not be used with this plan."
       },
       "456": {
         "name": "COUPON_ALREADY_LINKED",
-        "message": "Le code n'est pas utilisable."
+        "message": "The code can not be used."
       }
     }
   },
   "relog": {
-    "title": "Reconnectez-vous",
-    "action": "Reconnectez-vous"
+    "title": "Reconnect",
+    "action": "Reconnect"
   },
   "social": {
-    "title": "Partager"
+    "title": "Share"
   },
   "life": {
     "modal": {
-      "title": "Que voulez vous partager à la communauté ?",
-      "step1": "Choisir une source",
-      "step2": "Copier/coller l'url source",
-      "step3": "Completer les informations",
-      "success": "Votre publication a été envoyée, merci pour votre participation",
+      "title": "What do you want to share with the community ?",
+      "step1": "Choose a source",
+      "step2": "Copy / paste source url",
+      "step3": "Complete information",
+      "success": "Your publication has been sent, thank you for your participation",
       "errors": {
-        "url": "L' url n' est pas valide",
-        "post": "Une erreur interne est survenue. Merci de contacter le support à support@afrostream.tv ."
+        "url": "The url is not valid",
+        "post": "An internal error occurred. Please contact support@afrostream.tv."
       }
     },
     "metas": {
       "title": "{themes} | Afrostream Life",
-      "description": "Afrostream Life est le média dédié au meilleur de la culture afro-américaine, africaine et afro-caribéenne."
+      "description": "Afrostream Life is the media dedicated to the best of Afro-American, African and Afro-Caribbean culture."
     }
   },
   "sponsors": {
-    "title": "Mes amis parrainés",
-    "headerText": "Faites profiter vos amis de \"{couponInfos}\"",
+    "title": "My friends",
+    "headerText": "Bring your friends to \"{couponInfos}\"",
     "metas": {
-      "title": "14 jours de streaming offerts",
-      "description": "Inscrivez-vous dès maintenant pour bénéficier de 14 jours d’abonnement à Afrostream offerts."
+      "title": "14 days of streaming offered",
+      "description": "Sign up now to receive 14 days subscription to Afrostream."
     },
-    "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
-    "placeHolder": "Parrainer un ami",
-    "emailField": "Son email",
-    "max": "Vous avez atteint le nombre maximum d'amis parrainés",
-    "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",
+    "activeAccount": "You must have an active account to sponsor a friend",
+    "placeHolder": "Sponsor a friend",
+    "emailField": "His email",
+    "max": "You have reached the maximum number of sponsored friends",
+    "shareDesc": "For any subscription to Afrostream with this coupon.",
     "status": {
-      "redeemed": "Votre ami à un compte Afrostream",
-      "active": "Votre ami à validé son coupon",
-      "waiting": "Votre ami n'a toujours pas activé son coupon"
+      "redeemed": "Your friend to an Afrostream account",
+      "active": "Your friend has validated his coupon",
+      "waiting": "Your friend has not activated his coupon yet"
     },
     "errors": {
-      "error": "Vous ne pouvez plus parrainer actuellement.",
-      "self sponsorship is forbidden": "Vous ne pouvez pas vous parrainer",
-      "recipient that has an active subscription cannot be sponsored": "Cet email à déja été parrainé ou a déja un compte actif"
+      "error": "You can no longer sponsor.",
+      "self sponsorship is forbidden": "You can not sponsor",
+      "recipient that has an active subscription cannot be sponsored": "This email has already been sponsored or already has an active account"
     },
     "validation": {
-      "email": "Doit etre un email valide",
-      "empty": "est requis"
+      "email": "Must be a valid email",
+      "empty": "is required"
     }
   },
   "press": {

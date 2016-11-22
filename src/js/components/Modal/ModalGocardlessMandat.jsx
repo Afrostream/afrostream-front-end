@@ -4,7 +4,9 @@ import ModalComponent from './ModalComponent'
 import moment from 'moment'
 import classNames from 'classnames'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 const {gocardless} = config
 
@@ -29,7 +31,7 @@ class ModalGocardlessMandat extends ModalComponent {
   }
 
   i18n (key = 'title') {
-    return getI18n().payment.virement.mandat[key] || ''
+    return <FormattedMessage id={`payment.virement.mandat.${key}`}/>
   }
 
   render () {

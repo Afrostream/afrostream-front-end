@@ -19,23 +19,6 @@ if (process.env.BROWSER) {
 @connect(({Event, User}) => ({Event, User}))
 class Header extends React.Component {
 
-  state = {
-    pinned: this.props.pinned,
-    isIOS: false
-  }
-
-  componentDidMount () {
-    window.addEventListener('scroll', this.updatePin.bind(this))
-    this.setState({
-      isIOS: window.navigator.userAgent.match(/(iPod|iPhone|iPad)/i)
-    })
-    this.updatePin()
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this.updatePin.bind(this))
-  }
-
   toggleSideBar () {
     const {
       props: {
@@ -46,23 +29,13 @@ class Header extends React.Component {
     dispatch(EventActionCreators.toggleSideBar(false))
   }
 
-  updatePin () {
-    let pin = window.pageYOffset
-    if (pin !== this.state.pinned) {
-      this.setState({
-        pinned: !!(pin)
-      })
-    }
-  }
-
   render () {
 
     const {
       props: {
         Event,
         User,
-        router,
-        location
+        router
       }
     } = this
 
@@ -70,14 +43,12 @@ class Header extends React.Component {
     const chatMode = Event.get('showChat')
     const pinned = Event.get('pinHeader')
     const user = User.get('user')
-    let excludedBreacrumbsRoutes = ['home', 'player', 'search', 'pinId', 'movieId', 'seasonSlug', 'videoId']
+    let excludedBreacrumbsRoutes = ['home', 'player', 'search', 'lang', 'pinId', 'movieId', 'seasonSlug', 'videoId']
     let planCode
     if (user) {
       planCode = user.get('planCode')
       excludedBreacrumbsRoutes.shift()
     }
-
-    //let hasHistory = !this.state.isIOS && user && (location.pathname.length > 1)
 
     const isOnLife = router.isActive('life')
 
@@ -86,12 +57,6 @@ class Header extends React.Component {
       'topbar-life': isOnLife,
       'topbar-hidden': !chatMode && hiddenMode && router.isActive('player'),
       'topbar-fixed-color': true
-      //'topbar-fixed-color': chatMode || pinned || this.state.pinned
-      //|| router.isActive('recherche')
-      //|| router.isActive('player')
-      //|| router.isActive('compte')
-      //|| router.isActive('couponregister')
-      //|| router.isActive('parrainage')
     }
 
 
@@ -145,12 +110,9 @@ class Header extends React.Component {
 
 Header.propTypes = {
   location: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
-  pinned: React.PropTypes.bool
+  history: React.PropTypes.object.isRequired
 }
 
-Header.defaultProps = {
-  pinned: false
-}
+Header.defaultProps = {}
 
 export default withRouter(Header)

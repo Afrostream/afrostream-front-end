@@ -2,12 +2,14 @@ import React from 'react'
 import ModalComponent from './ModalComponent'
 import classNames from 'classnames'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import { detectUA } from '../Player/PlayerUtils'
 import { shorten } from '../../lib/bitly'
 import qs from 'qs'
 import window from 'global/window'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 const {social, bitly, metadata} = config
 
@@ -268,7 +270,7 @@ class ModalSocial extends ModalComponent {
                     {/*HEADER*/}
                     {this.props.modal && <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{getI18n().social.title}</h1>
+                      <FormattedMessage tagName="h1" id={`social.title`}/>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>}
                     <div className="mode-container">

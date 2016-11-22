@@ -1,13 +1,17 @@
 import React from 'react'
-import { getI18n } from '../../../../config/i18n'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
+import moment from 'moment'
+
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 class CountrySelect extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {value: getI18n().payment.country.defaultValue}
+    this.state = {value: moment.locale()}
   }
 
   getValue () {
@@ -22,7 +26,8 @@ class CountrySelect extends React.Component {
 
     return (
       <div className="col-md-4">
-        <label className="form-label" htmlFor="country">{getI18n().payment.country.label}</label>
+        <FormattedMessage tagName="label" className="form-label"
+                          htmlFor="country" id="payment.country.label"/>
         <DropDownMenu className="card-country" ref="country" id="country" name="country" required
                       onChange={::this.handleChange}
                       autoWidth={false}

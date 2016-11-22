@@ -9,10 +9,12 @@ import * as UserActionCreators from '../../actions/user'
 import * as IntercomActionCreators from '../../actions/intercom'
 import ModalComponent from './ModalComponent'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import { withRouter } from 'react-router'
 const {oauth2}= config
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less')
@@ -267,15 +269,11 @@ class ModalLogin extends ModalComponent {
     return keyType
   }
 
-  getTitle (key = 'title') {
-    const {
-      props: {
-        params
-      }
-    } = this
-
+  getTitle (key = 'title', values = {}) {
+    const {props:{intl}} =this
     let keyType = this.getI18n()
-    return getI18n(params.lang)[keyType][key] || ''
+    return intl.formatMessage({id: `${keyType}.${key}`}, values) || ''
+    return <FormattedMessage id={`${keyType}.${key}`} {...{values}}/>
   }
 
   getForm () {
@@ -328,7 +326,7 @@ class ModalLogin extends ModalComponent {
         <form noValidate="" onSubmit={::this.handleSubmit}>
 
           {social ? this.getStrategy({name: 'facebook'}) : null}
-          {social ? <div className="separator"><span>ou</span></div> : null}
+          {social ? <div className="separator"><span>{this.getTitle('separatorText')}</span></div> : null}
 
           <div className="instructions">{this.getTitle('headerText')}</div>
           {formTemplate}
@@ -342,9 +340,8 @@ class ModalLogin extends ModalComponent {
 
     return (
       <div className="collapse-social">
-        <div className="iconlist hide"><p className="hide">... ou connectez-vous à l'aide de</p></div>
         {_.filter(oauth2.providers, filterObj).map((strategy)=> {
-          const title = this.getTitle('loginProvider').replace('{strategy}', strategy.name)
+          const title = this.getTitle('loginProvider', {strategy: strategy.name})
           const inputAttributes = {
             onClick: event => ::this.oauthStrategy(strategy.name)
           }
@@ -431,7 +428,7 @@ class ModalLogin extends ModalComponent {
           {this.getPassword()}
         </div>
         <div className="sso-notice-container hide">
-          <i className="icon-budicon"></i><span className="sso-notice">Single Sign-on enabled</span>
+          <i className="icon-budicon"/><span className="sso-notice">Single Sign-on enabled</span>
         </div>
         <div className="action">
           <button type="submit" className="primary next" disabled={!::this.isValid}>{this.getTitle('action')}</button>
@@ -458,7 +455,7 @@ class ModalLogin extends ModalComponent {
                 {this.getTitle('repeatPasswordPlaceholder')}
               </label>
               <div className="input-box">
-                <i className="icon-budicon"></i>
+                <i className="icon-budicon"/>
                 <input name="repeat_password" ref="repeat_password" id="reset_easy_repeat_password" type="password"
                        required
                        onChange={::this.handleInputChange}
@@ -492,7 +489,7 @@ class ModalLogin extends ModalComponent {
     }
 
     return <a href="#" onClick={::this.showProviderAction}
-              className="forgot-pass btn-xsmall">{this.getTitle('providers').replace('{providers}', providers.join(','))}</a>
+              className="forgot-pass btn-xsmall">{this.getTitle('providers', {providers: providers.join(',')})}</a>
   }
 
   getProvider () {

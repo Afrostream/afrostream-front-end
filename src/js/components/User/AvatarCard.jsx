@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
-import { getI18n } from '../../../../config/i18n'
 import { Link } from 'react-router'
 
 if (process.env.BROWSER) {

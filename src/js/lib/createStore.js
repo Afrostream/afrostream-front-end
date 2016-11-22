@@ -3,6 +3,8 @@ import { reduxReactRouter, routerStateReducer } from 'redux-router'
 import * as middleWare from '../middleware'
 import * as reducers from '../reducers'
 import { push } from 'redux-router'
+import { intlReducer } from 'react-intl-redux'
+import _ from 'lodash'
 
 export default function (api, history, initialState) {
 
@@ -18,7 +20,17 @@ export default function (api, history, initialState) {
     })
   )(createStore)
 
-  const reducer = combineReducers(reducers)
+  const reducer = combineReducers({
+    ...reducers,
+    intl: intlReducer
+  })
 
-  return createStoreWithMiddleware(reducer, initialState)
+  const mergedState = _.merge({
+    intl: {
+      defaultLocale: 'en',
+      locale: 'fr'
+    }
+  }, initialState)
+
+  return createStoreWithMiddleware(reducer, mergedState)
 }

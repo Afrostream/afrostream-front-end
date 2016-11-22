@@ -2,6 +2,9 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import { withRouter } from 'react-router'
+import {
+  FormattedHTMLMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./SignUpButton.less')
@@ -11,8 +14,11 @@ if (process.env.BROWSER) {
 class SignUpButton extends React.Component {
 
   render () {
-    return (<button className={this.props.className} type=" button" onClick={::this.showLock}
-                    dangerouslySetInnerHTML={{__html: this.props.label}}/>)
+    return (<button className={this.props.className}
+                    type="button"
+                    onClick={::this.showLock}>
+      <FormattedHTMLMessage id={this.props.label}/>
+    </button>)
   }
 
   showLock () {

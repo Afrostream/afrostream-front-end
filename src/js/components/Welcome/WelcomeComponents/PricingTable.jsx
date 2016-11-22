@@ -2,11 +2,13 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../../actions/modal'
 import { Link } from 'react-router'
-import { getI18n } from '../../../../../config/i18n'
 import { formatPrice, isBoolean } from '../../../lib/utils'
 import ModalCoupon from '../../Modal/ModalCoupon'
 import _ from 'lodash'
 import { withRouter } from 'react-router'
+import {
+  FormattedMessage
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./PricingTable.less')
@@ -48,7 +50,6 @@ class PricingTable extends React.Component {
       }
     } = this
 
-    let getI18nionnary = getI18n(params.lang)
     let cols = [
       'formule',
       'name',
@@ -78,18 +79,20 @@ class PricingTable extends React.Component {
       let value = ''
       switch (label) {
         case 'formule':
-          value = getI18nionnary.planCodes.infos[label] || ''
+          value = <FormattedMessage id={`planCodes.infos.${label}`}/>
           break
         case 'prelevementMensuel':
           if (plan.get('periodUnit') === 'month') {
-            value = <div className="plan-highlight">{getI18nionnary.planCodes.infos[label]}</div>
+            value = <div className="plan-highlight"><FormattedMessage id={`planCodes.infos.${label}`}/></div>
           }
           break
         case 'internalActionLabel':
           const inputSignupAction = {
             onClick: event => ::this.openModal(internalPlanUuid)
           }
-          value = (<button className="btn-plan" {...inputSignupAction}>{`${getI18nionnary.planCodes.action}`}</button>)
+          value = (<button className="btn-plan" {...inputSignupAction}>
+            <FormattedMessage id={`planCodes.action`}/>
+          </button>)
           break
         case 'price':
           value = `${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}/${plan.get('periodLength')}${getI18nionnary.account.billing.periods[plan.get('periodUnit')]}`
@@ -172,8 +175,6 @@ class PricingTable extends React.Component {
       }
     } = this
 
-    let info = getI18n(params.lang).home.plans
-
     let validPlans = this.getPlans()
 
     if (!validPlans) {
@@ -182,11 +183,11 @@ class PricingTable extends React.Component {
 
     return (
       <div key={`line-plan-baseline`} className={`col col-xs-12 col-sm-12 col-md-${(12 - (validPlans.size + 1) * 3)}`}>
-        <h1>
-          <span className="pricing-header-purple">{info.title}</span>
+        <h1 className="pricing-header-purple">
+          <FormattedMessage id="home.plans.title"/>
         </h1>
         <div className="pricing-baseline">{info.baseline}
-          <Link to="/faq">{info.link}</Link>
+          <Link to="/faq"><FormattedMessage id="home.plans.link"/></Link>
         </div>
       </div>)
   }

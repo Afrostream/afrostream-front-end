@@ -15,33 +15,34 @@ if (process.env.BROWSER) {
   let {query} = location
   let {data} = query
 
-  let method
+  let target = 'show'
+  let closable = true
   switch (location.pathname) {
     case '/signup':
-      method = 'showSignup'
+      target = 'showSignup'
       break
     case '/signin':
-      method = 'showSignin'
+      target = 'showSignin'
       break
     case '/newsletter':
-      method = 'newsletter'
+      target = 'newsletter'
       break
     case '/parrainage':
-      method = 'sponsorship'
+      target = 'sponsorship'
       break
     case '/coupon':
       if (data) {
         const decodedData = decodeSafeUrl(data)
         await store.dispatch(BillingActionCreators.createCoupon(decodedData))
       }
-      method = 'redeemCoupon'
+      target = 'redeemCoupon'
       break
     default :
-      method = 'show'
+      target = 'geowall'
       break
   }
 
-  await store.dispatch(ModalActionCreators.open({target: method}))
+  await store.dispatch(ModalActionCreators.open({target, closable}))
 })
 @connect(({User}) => ({User}))
 class LoginPage extends React.Component {
@@ -60,7 +61,7 @@ class LoginPage extends React.Component {
 
   render () {
 
-    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`}
+    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type}&blur=10)`}
 
     return (
       <div className="row-fluid">
@@ -73,6 +74,16 @@ class LoginPage extends React.Component {
       </div>
     )
   }
+}
+
+LoginPage.propTypes = {
+  modalType: React.PropTypes.string,
+  closable: React.PropTypes.bool
+}
+
+LoginPage.defaultProps = {
+  modalType: 'signin',
+  closable: true
 }
 
 export default LoginPage

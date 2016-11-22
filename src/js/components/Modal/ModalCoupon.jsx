@@ -4,10 +4,12 @@ import classNames from 'classnames'
 import * as UserActionCreators from '../../actions/user'
 import * as BillingActionCreators from '../../actions/billing'
 import ModalComponent from './ModalComponent'
-import { getI18n } from '../../../../config/i18n'
 import SignUpButton from '../User/SignUpButton'
 import { withRouter } from 'react-router'
 import config from '../../../../config'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 @connect(({Billing, User}) => ({Billing, User}))
 class ModalCoupon extends ModalComponent {
@@ -129,13 +131,7 @@ class ModalCoupon extends ModalComponent {
   }
 
   getTitle (key = 'title') {
-    const {
-      props: {
-        params
-      }
-    } = this
-
-    return getI18n(params.lang).coupon[key] || ''
+    return <FormattedMessage id={`coupon.${key}`}/>
   }
 
   getForm () {
@@ -148,9 +144,9 @@ class ModalCoupon extends ModalComponent {
 
     if (this.state.signInOrUp) {
       return (<div className="notloggedin mode">
-        <SignUpButton className="primary next" target="showSignup" to="/" label={getI18n().signup.title}
+        <SignUpButton className="primary next" target="showSignup" to="/" label={'signup.title'}
                       cb={::this.finalyse}/>
-        <SignUpButton className="primary next" target="showSignin" to="/" label={getI18n().signin.title}
+        <SignUpButton className="primary next" target="showSignin" to="/" label={'signin.title'}
                       cb={::this.finalyse}/>
       </div>)
     }
@@ -201,7 +197,7 @@ class ModalCoupon extends ModalComponent {
     return (
       <div className="coupon">
         <label htmlFor="coupon" className="sad-placeholder">
-          {this.getTitle('emailPlaceholder')}
+          {this.getTitle('couponPlaceholder')}
         </label>
         <div className="input-box">
           <i className="icon-barcode"></i>

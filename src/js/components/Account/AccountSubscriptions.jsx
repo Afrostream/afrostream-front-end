@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getI18n } from '../../../../config/i18n'
 import moment from 'moment'
 import { Link } from 'react-router'
 import { formatPrice } from '../../lib/utils'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import LinearProgress from 'material-ui/LinearProgress'
 import RaisedButton from 'material-ui/RaisedButton'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./AccountSubscriptions.less')
@@ -21,7 +23,8 @@ class AccountSubscriptions extends React.Component {
   render () {
     const {
       props: {
-        Billing
+        Billing,
+        intl
       }
     } = this
 
@@ -43,7 +46,6 @@ class AccountSubscriptions extends React.Component {
     if (!subscriptionsList) {
       return <div />
     }
-    let title = getI18n().account.plan.header
 
     let currentSubscription = subscriptionsList.find((obj)=> {
       return obj.get('isActive') === 'yes' && obj.get('isCancelable')
@@ -55,20 +57,20 @@ class AccountSubscriptions extends React.Component {
     return (
       <div className="account-details__container col-md-12">
         <div className="panel-profil">
-          <div className="pannel-header">{title}</div>
+          <div className="pannel-header"><FormattedMessage id={ 'account.plan.header' }/></div>
           <div className="row-fluid row-profil">
             {isCancelable &&
             <Link to={`/compte/cancel-subscription/${uuid}`} disabled={!isCancelable} style={style}>
-              <RaisedButton label={getI18n().account.plan.cancelPlan}/></Link>
+              <RaisedButton label={<FormattedMessage id={ 'account.plan.cancelPlan' }/>}/></Link>
             }
             <Table displayRowCheckbox={false} style={{padding: '0'}}>
               <TableHeader style={{border: 'none'}} adjustForCheckbox={false} displaySelectAll={false}>
                 <TableRow style={{border: 'none'}} selectable={false}>
-                  <TableHeaderColumn>{getI18n().account.billing.dateLabel}</TableHeaderColumn>
-                  <TableHeaderColumn>{getI18n().account.billing.decriptionLabel}</TableHeaderColumn>
-                  <TableHeaderColumn>{getI18n().account.billing.periodLabel}</TableHeaderColumn>
-                  <TableHeaderColumn>{getI18n().account.billing.methodLabel}</TableHeaderColumn>
-                  <TableHeaderColumn>{getI18n().account.billing.statusLabel}</TableHeaderColumn>
+                  <TableHeaderColumn><FormattedMessage id={ `account.billing.dateLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn><FormattedMessage id={ `account.billing.decriptionLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn><FormattedMessage id={ `account.billing.periodLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn><FormattedMessage id={ `account.billing.methodLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn><FormattedMessage id={ `account.billing.statusLabel`}/></TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={false}>
@@ -80,7 +82,7 @@ class AccountSubscriptions extends React.Component {
                     let internalPlan = subscription.get('internalPlan')
                     let providerPlan = subscription.get('provider')
                     //PERIOD
-                    let period = `${internalPlan.get('periodLength')} ${getI18n().account.billing.periods[internalPlan.get('periodUnit')]}`
+                    let period = `${internalPlan.get('periodLength')} ${intl.formatMessage({id: `account.billing.periods.${internalPlan.get('periodUnit')}`})}`
                     let now = moment()
                     let activeDate = moment(subscription.get('subPeriodStartedDate'))
                     let endDate = moment(subscription.get('subPeriodEndsDate'))
@@ -101,14 +103,15 @@ class AccountSubscriptions extends React.Component {
                       case 'expired':
                       case 'future':
                       case 'canceled':
-                        statusLabel = getI18n().account.billing.status[subscriptionStatus]
+                        statusLabel = subscriptionStatus
                         break
                       case 'pending':
                       case 'pending_active':
                       case 'pending_canceled':
                       case 'pending_expired':
                       case 'requesting_canceled':
-                        statusLabel = getI18n().account.billing.status['pending']
+                      default:
+                        statusLabel = 'pending'
                         break
                     }
 
@@ -124,7 +127,8 @@ class AccountSubscriptions extends React.Component {
                         </TableRowColumn>
                         <TableRowColumn><img src={providerLogo} alt={providerName}
                                              className="img-responsive"/></TableRowColumn>
-                        <TableRowColumn>{statusLabel}</TableRowColumn>
+                        <TableRowColumn><FormattedMessage
+                          id={ `account.billing.status.${statusLabel}` }/></TableRowColumn>
                       </TableRow>)
                   }
                 ).toJS()}

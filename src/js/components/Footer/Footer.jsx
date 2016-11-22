@@ -6,6 +6,10 @@ import { withRouter } from 'react-router'
 import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import config from '../../../../config'
+import { updateIntl } from 'react-intl-redux'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./Footer.less')
@@ -16,6 +20,21 @@ class Footer extends React.Component {
   constructor (props) {
     super(props)
     this.year = new Date().getFullYear()
+  }
+
+  switchLang (e, locale) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+    e.preventDefault()
+    const messages = _.flattenJson(getI18n(locale))
+
+    dispatch(updateIntl({
+      locale,
+      messages
+    }))
   }
 
   render () {
@@ -44,129 +63,151 @@ class Footer extends React.Component {
       <footer className={classSet(footerClasses)}>
         <div className="links row-fluid">
           <div className={`get-help col-xs-12 col-md-2`}>
-            <h4>{labels.support.title}</h4>
+            <FormattedMessage tagName="h4"
+                              id={ 'footer.support.title' }/>
             <ul className="footer-links">
               <li>
                 <Link className="footer-link" to="/faq">
-                  {labels.support.faq}
+                  <FormattedMessage
+                    id={ 'footer.support.faq' }
+                  />
                 </Link>
               </li>
               <li>
                 <Link className="footer-link" to="/cgu">
-                  {labels.support.cgu}
+                  <FormattedMessage
+                    id={ 'footer.support.cgu' }
+                  />
                 </Link>
               </li>
               <li>
                 <Link className="footer-link" to="/policy">
-                  {labels.support.policy}
+                  <FormattedMessage
+                    id={ 'footer.support.policy' }
+                  />
                 </Link>
               </li>
               <li>
                 <a className="footer-link" href="mailto:support@afrostream.tv">
-                  {labels.support.help}
+                  <FormattedMessage
+                    id={ 'footer.support.help' }
+                  />
                 </a>
               </li>
               <li>
-                <a className="footer-link" href={`/${switchLangRoute}`}>
+                <a className="footer-link" href={`/${switchLangRoute}`}
+                   onClick={e=>::this.switchLang(e, switchLangRoute)}>
                   <span className={`flag-icon flag-icon-${switchLang}`}></span>
                 </a>
               </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-4 padding-left-paiement hidden-xs">
-            <h4>{labels.recharge.title}</h4>
+            <FormattedMessage tagName="h4"
+                              id={ 'footer.recharge.title' }/>
             <ul className="footer-links">
               <li>
                 <Link className="footer-link" to="/cash">
-                  {labels.recharge.cashway}<img src="/images/payment/cashway-inline-white.png" width="60"
-                                                className="img-responsive"/>
+                  <FormattedMessage
+                    id={ 'footer.recharge.cashway' }
+                  />
+                  <img src="/images/payment/cashway-inline-white.png" width="60"
+                       className="img-responsive"/>
                 </Link>
               </li>
               <li>
                 <Link className="footer-link" to="/store-locator">
-                  {labels.recharge.stores}
+                  <FormattedMessage
+                    id={ 'footer.recharge.stores' }
+                  />
                 </Link>
               </li>
               <li>
                 <Link className="footer-link" to="/coupon">
-                  {labels.recharge.coupon}
+                  <FormattedMessage
+                    id={ 'footer.recharge.coupon' }
+                  />
                 </Link>
               </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2 hidden-xs">
-            <h4>{labels.pro.title}</h4>
+            <FormattedMessage tagName="h4"
+                              id={ 'footer.pro.title' }/>
+
             <ul className="footer-links">
               <li>
                 <Link className="footer-link" to="/company/jobs">
-                  {labels.pro.jobs}
+                  <FormattedMessage id={ 'footer.pro.jobs' }/>
                 </Link>
               </li>
               <li>
                 <Link className="footer-link" to="/submit-content">
-                  {labels.pro.submit}
+                  <FormattedMessage id={ 'footer.pro.submit' }/>
                 </Link>
               </li>
               <li>
                 <a className="footer-link"
                    href="mailto:presse@afrostream.tv?subject=Contact">
-                  {labels.pro.press}
+                  <FormattedMessage id={ 'footer.pro.press' }/>
                 </a>
               </li>
               <li>
                 <Link className="footer-link" to="/company/press">
-                  {labels.pro.mediaKit}
+                  <FormattedMessage id={ 'footer.pro.mediaKit' }/>
                 </Link>
               </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2 hidden-xs">
-            <h4> {labels.apps.title}</h4>
+            <FormattedMessage tagName="h4"
+                              id={ 'footer.apps.title' }/>
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
                    target="_blank">
-                  {labels.apps.ios} <i className="zmdi zmdi-apple"></i>
+                  <FormattedMessage id={ 'footer.apps.ios' }/><i className="zmdi zmdi-apple"/>
                 </a>
               </li>
               <li>
                 <a className="footer-link"
                    href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
                    target="_blank">
-                  {labels.apps.android} <i className="zmdi zmdi-android"></i>
+                  <FormattedMessage id={ 'footer.apps.android' }/><i className="zmdi zmdi-android"/>
                 </a>
               </li>
               <li>
                 <a className="footer-link"
                    href="https://boutique.orange.fr/tv/pass-video"
                    target="_blank">
-                  Orange <i className="zmdi zmdi-orange"></i>
+                  Orange <i className="zmdi zmdi-orange"/>
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="https://www.services.bouyguestelecom.fr/television/svod_afrostream"
                    target="_blank">
-                  Bouygues <i className="zmdi zmdi-bouygues"></i>
+                  Bouygues <i className="zmdi zmdi-bouygues"/>
                 </a>
               </li>
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2 hidden-xs">
-            <h4>{labels.social.title}</h4>
+            <FormattedMessage tagName="h4"
+                              id={ 'footer.social.title' }/>
             <ul className="footer-links">
               <li>
                 <a className="footer-link" href="https://www.facebook.com/afrostreamtv?fref=ts">
-                  {labels.social.facebook} <i className="zmdi zmdi-facebook"></i>
+                  <FormattedMessage id={ 'footer.social.facebook' }/><i className="zmdi zmdi-facebook"/>
                 </a>
               </li>
               <li>
                 <a className="footer-link" href="https://twitter.com/intent/user?screen_name=AFROSTREAM">
-                  {labels.social.twitter} <i className="zmdi zmdi-twitter"></i>
+                  <FormattedMessage id={ 'footer.social.twitter' }/><i className="zmdi zmdi-twitter"/>
                 </a>
               </li>
               <li>
                 <Link className="footer-link" to="/newsletter">
-                  {labels.social.newsletter}
+                  <FormattedMessage id={ 'footer.social.newsletter' }/>
                 </Link>
               </li>
             </ul>
@@ -179,7 +220,7 @@ class Footer extends React.Component {
               Copyright &copy; Afrostream Inc. {this.year}
             </div>
             <div className="get-help col-md-6">
-              <Link to="/legals"> {labels.legals}</Link>
+              <Link to="/legals"><FormattedMessage id={ 'footer.legals' }/></Link>
             </div>
           </div>
         </div>

@@ -5,11 +5,14 @@ import { useRouterHistory, match } from 'react-router'
 import request from 'superagent'
 import config from '../../config'
 import qs from 'qs'
+import { getI18n } from '../../config/i18n'
+import { getPreferredLocales } from './locale'
 import createStore from '../../src/js/lib/createStore'
 import createAPI from '../../src/js/lib/createAPI'
 import routes from '../../src/js/routes'
 import { RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
+import { IntlProvider } from 'react-intl-redux'
 import PrettyError from 'pretty-error'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import Helmet from 'react-helmet'
@@ -21,7 +24,7 @@ export default function render (req, res, layout, {payload}) {
   const {path} = req
   const history = useRouterHistory(useQueries(createMemoryHistory))();
   const location = history.createLocation(req.url)
-
+  const preferredLocale = getPreferredLocales(req)
   const api = createAPI(
     /**
      * Server's createRequest() method
@@ -72,7 +75,17 @@ export default function render (req, res, layout, {payload}) {
           let {params, location, routes} = renderProps
           let route = routes && routes[routes.length - 1]
           const langs = ['fr', 'en']
-          params.lang = langs[routes && routes.length > 2 && routes[2].path] || langs[0]
+          // Try full locale, fallback to locale without region code, fallback to en
+          const routeParamLang = langs[routes && routes.length > 2 && routes[2].path]
+          const language = (preferredLocale && preferredLocale[0]) ||
+            routeParamLang || langs[0]
+
+          // Split locales with a region code
+          const locale = language.toLowerCase().split(/[_-]+/)[0]
+          const messages = _.flattenJson(getI18n(locale))
+          params.lang = locale
+
+          console.log('preferredLocale : ', preferredLocale, locale)
 
           const prepareRouteMethods = _.map(renderProps.components, component =>
           component && component.prepareRoute)
@@ -90,7 +103,9 @@ export default function render (req, res, layout, {payload}) {
 
           const body = ReactDOMServer.renderToStaticMarkup(
             <Provider {...{store}}>
-              <RouterContext {...{...renderProps}} />
+              <IntlProvider {...{messages, locale}}>
+                <RouterContext {...{...renderProps}} />
+              </IntlProvider>
             </Provider>
           )
 

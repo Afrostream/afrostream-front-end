@@ -5,7 +5,6 @@ import { prepareRoute } from '../../decorators'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import classSet from 'classnames'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
 import * as BillingActionCreators from '../../actions/billing'
 import * as UserActionCreators from '../../actions/user'
 import * as EventActionCreators from '../../actions/event'
@@ -26,6 +25,9 @@ import * as ReactFB from '../../lib/fbEvent'
 import Q from 'q'
 import TextField from 'material-ui/TextField'
 import Checkbox from 'material-ui/Checkbox'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 const {gocarlessApi, recurlyApi, stripeApi, braintreeApi} = config
 if (process.env.BROWSER) {
@@ -48,7 +50,7 @@ class PaymentForm extends React.Component {
     hasLib: true,
     subscriptionStatus: 0,
     loading: false,
-    pageHeader: getI18n().payment.header
+    pageHeader: 'payment.header'
   }
 
   hasPlan () {
@@ -152,7 +154,7 @@ class PaymentForm extends React.Component {
 
     const {
       props: {
-        User
+        User, intl
       }
     } = this
 
@@ -188,7 +190,7 @@ class PaymentForm extends React.Component {
                 autoComplete="given-name"
                 name="first-name"
                 defaultValue={firstName}
-                floatingLabelText={getI18n().payment.name} required
+                floatingLabelText={intl.formatMessage({id: 'payment.name'})} required
                 disabled={this.state.disabledForm}/>
             </div>
             <div className="col-md-6">
@@ -203,7 +205,8 @@ class PaymentForm extends React.Component {
                 autoComplete="surname"
                 name="last-name"
                 defaultValue={lastName}
-                floatingLabelText={getI18n().payment.lastName} required
+                floatingLabelText={intl.formatMessage({id: 'payment.lastName'})}
+                required
                 disabled={this.state.disabledForm}/>
             </div>
           </div>
@@ -227,9 +230,9 @@ class PaymentForm extends React.Component {
 
     const internalPlanUuid = currentPlan.get('internalPlanUuid')
 
-    let buttonLabel = getI18n().planCodes.action
+    let buttonLabel = 'planCodes.action'
     if (currentPlan && internalPlanUuid === config.netsize.internalPlanUuid) {
-      buttonLabel = getI18n().planCodes.actionMobile
+      buttonLabel = 'planCodes.actionMobile'
     }
 
     const inputChangeAction = {
@@ -249,24 +252,31 @@ class PaymentForm extends React.Component {
 
     return (<div className="row">
         <div className="col-md-12">
-          <button
-            id="subscribe"
+          <FormattedMessage
+            tagName="button"
+            id={buttonLabel}
             type="submit"
             form="subscription-create"
             className="button-create-subscription pull-right"
             disabled={this.state.disabledForm}
-          >{buttonLabel}
-          </button>
-          <button
+          />
+          <FormattedMessage
+            id="planCodes.noMobilePlans"
+            tagName="button"
             className="button-cancel-subscription pull-right"
-            {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}
-          </button>
+            {...inputChangeAction}>
+          </FormattedMessage>
         </div>
       </div>
     )
   }
 
   renderDroits () {
+    const {
+      props: {
+        intl
+      }
+    } = this
 
     let checkClass = {
       'form-group': true,
@@ -276,30 +286,41 @@ class PaymentForm extends React.Component {
     }
 
     return (<div className="row">
-      <div className={classSet(checkClass)}>
-        <Checkbox
-          type="checkbox"
-          className="checkbox"
-          name="droit-retractation"
-          id="droit-retractation"
-          ref="droits"
-          disabled={this.state.disabledForm}
-          required
-          label={getI18n().payment.droits.label}
-        />
-        <div className="checkbox-label">
-          <a href="/pdfs/formulaire-retractation.pdf"
-             target="_blank">{getI18n().payment.droits.link}</a>
-          <a ref="droitstip" className="my-tool-tip"
-             data-original-title={getI18n().payment.droits.tooltip}
-             data-placement="top"
-             data-toggle="tooltip"><i className="zmdi zmdi-help"/></a>
+        <div className={classSet(checkClass)}>
+          <Checkbox
+            type="checkbox"
+            className="checkbox"
+            name="droit-retractation"
+            id="droit-retractation"
+            ref="droits"
+            disabled={this.state.disabledForm}
+            required
+            label={intl.formatMessage({id: 'payment.droits.label'})}
+          />
+          <div className="checkbox-label">
+            <a href="/pdfs/formulaire-retractation.pdf"
+               target="_blank">
+              <FormattedMessage id="payment.droits.link"/>
+            </a>
+            <a ref="droitstip" className="my-tool-tip"
+               data-original-title={intl.formatMessage({id: 'payment.droits.tooltip'})}
+               data-placement="top"
+               data-toggle="tooltip">
+              <i className="zmdi zmdi-help"/>
+              <FormattedMessage id="payment.droits.link"/>
+            </a>
+          </div>
         </div>
       </div>
-    </div>)
+    )
   }
 
   renderCGU () {
+    const {
+      props: {
+        intl
+      }
+    } = this
 
     let checkClass = {
       'form-group': true,
@@ -318,11 +339,13 @@ class PaymentForm extends React.Component {
           id="accept-conditions-generales"
           disabled={this.state.disabledForm}
           required
-          label={getI18n().payment.cgu.label}
+          label={intl.formatMessage({id: 'payment.cgu.label'})}
         />
-        <div className="checkbox-label"><a
-          href="/pdfs/conditions-utilisation.pdf"
-          target="_blank">{getI18n().payment.cgu.link}</a>
+        <div className="checkbox-label">
+          <a href="/pdfs/conditions-utilisation.pdf"
+             target="_blank">
+            <FormattedMessage id="payment.cgu.link"/>
+          </a>
         </div>
       </div>
     </div>)
@@ -332,7 +355,8 @@ class PaymentForm extends React.Component {
     const {
       props: {
         User,
-        dispatch
+        dispatch,
+        intl
       }
     } = this
 
@@ -371,7 +395,7 @@ class PaymentForm extends React.Component {
 
         if (!cgu.state.switched || !droits.state.switched) {
           throw new Error({
-            message: getI18n().payment.errors.checkbox,
+            message: intl.formatMessage({id: 'payment.errors.checkbox'}),
             fields: ['cgu', 'droits']
           })
         }
@@ -392,6 +416,7 @@ class PaymentForm extends React.Component {
       props: {
         dispatch,
         router,
+        intl,
         params: {planCode}
       }
     } = this
@@ -423,14 +448,14 @@ class PaymentForm extends React.Component {
       .then(() => {
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch(({response : {body: {error, code, message}}}) => {
-        let globalMessage = getI18n().payment.errors.global
+        let globalMessage = intl.formatMessage({id: 'payment.errors.global'})
 
         if (error) {
           globalMessage = error.message || message
         }
 
         if (code) {
-          const errorCode = (self && getI18n().coupon.errors[code])
+          const errorCode = (self && intl.formatMessage({id: `coupon.errors.${code}`}))
           if (errorCode && errorCode.message) {
             globalMessage = `${errorCode.message} [${code}]`
           }
@@ -444,6 +469,13 @@ class PaymentForm extends React.Component {
 
   // A simple error handling function to expose errors to the customer
   error (err) {
+
+    const {
+      props: {
+        intl,
+      }
+    } = this
+
     let formatError = err
     if (err instanceof Array) {
       formatError = err[0]
@@ -451,7 +483,7 @@ class PaymentForm extends React.Component {
     this.disableForm(false)
     this.setState({
       error: {
-        message: formatError.message || getI18n().payment.errors.fields,
+        message: formatError.message || intl.formatMessage({id: `coupon.errors.fields`}),
         fields: formatError.fields || []
       }
     })
@@ -487,6 +519,16 @@ class PaymentForm extends React.Component {
                      planLabel={planLabel}/>)
   }
 
+  getI18n (key) {
+    const {
+      props: {
+        intl,
+      }
+    } = this
+
+    return intl.formatMessage({id: key})
+  }
+
   renderForm () {
 
     var spinnerClasses = {
@@ -498,7 +540,7 @@ class PaymentForm extends React.Component {
       return <div />
     }
 
-    const planLabel = `${getI18n().planCodes.title} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
+    const planLabel = `${this.getI18n(`planCodes.title`)} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
 
     return (
       <div className="payment-wrapper">
@@ -535,10 +577,10 @@ class PaymentForm extends React.Component {
 
     if (!this.state.hasLib) {
       return (<PaymentError
-        title={getI18n().payment.errors.noLib.title}
-        message={getI18n().payment.errors.noLib.message}
-        link={getI18n().payment.errors.noLib.message}
-        linkMessage={getI18n().payment.errors.noLib.linkMessage}
+        title={`payment.errors.noLib.title`}
+        message={`payment.errors.noLib.message`}
+        link={`payment.errors.noLib.message`}
+        linkMessage={`payment.errors.noLib.linkMessage`}
       />)
     }
 
@@ -549,11 +591,11 @@ class PaymentForm extends React.Component {
       case 'expired':
         return (
           <div className="payment-wrapper">
-            <PaymentError title={getI18n().payment.expired.title}
-                          message={getI18n().payment.expired.message}
-                          link={getI18n().payment.expired.link}
-                          linkMessage={getI18n().payment.expired.linkMessage}
-                          links={getI18n().payment.expired.links}
+            <PaymentError title={`payment.expired.title`}
+                          message={`payment.expired.message`}
+                          link={`payment.expired.link`}
+                          linkMessage={`payment.expired.linkMessage`}
+                          links={`payment.expired.links`}
             />
             <PaymentImages />
           </div>)
@@ -561,11 +603,11 @@ class PaymentForm extends React.Component {
       case 'future':
         return (
           <div className="payment-wrapper">
-            <PaymentError title={getI18n().payment.future.title}
-                          message={getI18n().payment.future.message}
-                          link={getI18n().payment.future.link}
-                          linkMessage={getI18n().payment.future.linkMessage}
-                          links={getI18n().payment.future.links}
+            <PaymentError title={`payment.future.title`}
+                          message={`payment.future.message`}
+                          link={`payment.future.link`}
+                          linkMessage={`payment.future.linkMessage`}
+                          links={`payment.future.links`}
             />
             <CashwayEndPage />
           </div>)
@@ -574,8 +616,8 @@ class PaymentForm extends React.Component {
         return (
           <div className="payment-wrapper">
             <PaymentError
-              title={getI18n().payment.errors.abo}
-              linkMessage={getI18n().payment.errors.retry}
+              title={`payment.errors.abo`}
+              linkMessage={`payment.errors.retry`}
               message={this.state.message}/>
           </div>)
         break
