@@ -32,6 +32,17 @@ if (canUseDOM) {
 
 const history = withScroll(createHistory())
 
+
+// Define user's language. Different browsers have the user locale defined
+// on different fields on the `navigator` object, so we make sure to account
+// for these different by checking all of them
+const language = (navigator.languages && navigator.languages[0]) ||
+  navigator.language ||
+  navigator.userLanguage || 'fr'
+
+// Split locales with a region code
+const locale = language.toLowerCase().split(/[_-]+/)[0]
+
 function initSite (country) {
   const api = createAPI(
     /**
@@ -49,7 +60,7 @@ function initSite (country) {
       pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '')
       let url = `${apiClient.urlPrefix}${pathname}`
       query.from = query.from || heroku.appName
-      query.country = query.country || country || '--'
+      query.country = query.country || country || locale.toUpperCase() || '--'
       if (legacy) {
         url = url.replace(apiClient.urlPrefix, `${apiClient.protocol}://${apiClient.authority}`)
       }
