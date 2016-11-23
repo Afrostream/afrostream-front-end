@@ -123,7 +123,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
         let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
         oauthPopup.onbeforeunload = (e) => {
-          intervalCheck = setTimeout(()=> {
+          intervalCheck = setTimeout(() => {
             beforeUnload(null)
           }, 1000)
         }
@@ -249,7 +249,7 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
         try {
           oauthPopup.onbeforeunload = (e) => {
-            intervalCheck = setTimeout(()=> {
+            intervalCheck = setTimeout(() => {
               beforeUnload(null, internalPlan)
             }, 1000)
           }

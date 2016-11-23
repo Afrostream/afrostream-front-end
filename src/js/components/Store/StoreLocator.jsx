@@ -6,6 +6,10 @@ import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
 import TextField from 'material-ui/TextField'
 import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
+import {
   purple800
 } from 'material-ui/styles/colors'
 import {
@@ -197,4 +201,8 @@ class StoreLocator extends React.Component {
   }
 }
 
-export default scriptLoader(gmapApi)(withRouter(StoreLocator))
+StoreLocator.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default scriptLoader(gmapApi)(withRouter(injectIntl(StoreLocator)))

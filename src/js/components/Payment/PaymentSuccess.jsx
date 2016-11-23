@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as UserActionCreators from '../../actions/user'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 
 @connect(({User}) => ({User}))
 class PaymentSuccess extends React.Component {

@@ -47,7 +47,7 @@ export default createReducer(initialState, {
     }
     const pins = res.body
 
-    const mappedUserPins = _.map(pins, (pin)=> {
+    const mappedUserPins = _.map(pins, (pin) => {
       pin.user = mergeFbUserInfo(pin.user)
       return pin
     })

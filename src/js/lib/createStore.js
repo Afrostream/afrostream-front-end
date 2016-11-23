@@ -5,6 +5,17 @@ import * as reducers from '../reducers'
 import { push } from 'redux-router'
 import { intlReducer } from 'react-intl-redux'
 import _ from 'lodash'
+import { addLocaleData } from 'react-intl'
+
+import frLocaleData from 'react-intl/locale-data/fr'
+import enLocaleData from 'react-intl/locale-data/en'
+
+const localesData = [
+  ...frLocaleData,
+  ...enLocaleData,
+]
+
+addLocaleData(localesData)
 
 export default function (api, history, initialState) {
 
@@ -27,8 +38,8 @@ export default function (api, history, initialState) {
 
   const mergedState = _.merge({
     intl: {
-      defaultLocale: 'en',
-      locale: 'fr'
+      defaultLocale: 'fr',
+      locales: localesData
     }
   }, initialState)
 

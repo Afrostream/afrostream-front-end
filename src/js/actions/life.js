@@ -40,12 +40,12 @@ export function wrappPin (scrapUrl) {
         params: {
           scrapUrl
         }
-      }).then(({body})=> {
+      }).then(({body}) => {
         original = body
         proxified = _.clone(body)
 
         //find http in all values and proxify it in ssl
-        _.deepMap(proxified, (value)=> {
+        proxified = _.deepMap(proxified, (value) => {
           const url = URL.parse(value || '')
           if (value && url.protocol === 'http:') {
             value = `/proxy?url=${encodeURIComponent(value)}`

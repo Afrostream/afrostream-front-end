@@ -12,7 +12,6 @@ import SponsorsPage from './components/Sponsors/SponsorsPage'
 import SearchPage from './components/Search/SearchPage'
 import StoreLocator from './components/Store/StoreLocator'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
-import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
 import * as Life from './components/Life'
 import AccountPage from './components/Account/AccountPage'
@@ -24,7 +23,7 @@ const langs = ['fr', 'en']
 
 const buildSubRoutes = function () {
   return _.map(langs, (lang) =>
-    <Route key={lang} path={lang} lang={lang}>
+    <Route key={lang} name="lang" path={lang} lang={lang}>
       {buildRoutes(lang)}
     </Route>
   )
@@ -60,7 +59,7 @@ const buildHome = function (lang) {
   const langRoutes = buildSubRoutes()
   homeRoutes.unshift(langRoutes)
 
-  return (<Route key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
+  return (<Route key={`${lang}-home`} path="/" name="home" component={HomePage}>
     {homeRoutes}
   </Route>)
 
@@ -81,7 +80,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.StaticRoute}/>,
     <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.StaticRoute}/>,
     <Route key={`${lang}-policy`} name="policy" path="policy" component={Static.StaticRoute}/>,
-    <Route key={`${lang}-reset`} name="reset" path="reset" component={ResetPasswordPage}/>,
+    <Route key={`${lang}-reset`} name="reset" path="reset" component={LoginPage}/>,
     <Route key={`${lang}-signin`} name="signin" path="signin" component={LoginPage}/>,
     <Route key={`${lang}-signup`} name="signup" path="signup" component={LoginPage}/>,
     <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={LoginPage}/>,

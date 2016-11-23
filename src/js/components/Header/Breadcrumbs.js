@@ -19,6 +19,8 @@ class Breadcrumbs extends React.Component {
   }
 
   _getDisplayName (route) {
+    const {props:{intl}} =this
+
     let name = null
 
     if (typeof route.getDisplayName === 'function') {
@@ -41,6 +43,14 @@ class Breadcrumbs extends React.Component {
 
     if (!name && this.props.displayMissing) {
       name = this.props.displayMissingText
+    }
+
+    if (name) {
+      const keyI18n = `routes.${name}`
+      const hasI18n = intl.messages[keyI18n]
+      if (hasI18n) {
+        name = intl.formatMessage({id: keyI18n}, {}) || name
+      }
     }
 
     return name
@@ -92,7 +102,9 @@ class Breadcrumbs extends React.Component {
             let value
             switch (key) {
               case  'movieId':
-              case  'movieSlug':
+                //case  'movieSlug':
+                value = store.getState().Movie.get(`movies/${paramValue}`)
+                hasNumber = value && value.size && `${value.get('title')}`
                 break
               case  'seasonId':
                 //case  'seasonSlug':

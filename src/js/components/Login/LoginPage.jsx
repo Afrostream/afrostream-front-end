@@ -10,35 +10,41 @@ import * as ModalActionCreators from '../../actions/modal'
 if (process.env.BROWSER) {
   require('./LoginPage.less')
 }
-@prepareRoute(async function ({store, location}) {
+@prepareRoute(async function ({store, location, params}) {
 
+  let {lang} = params
   let {query} = location
   let {data} = query
 
+  const langPath = lang && `${lang}/` || ''
   let target = 'show'
   let closable = true
+
   switch (location.pathname) {
-    case '/signup':
-      target = 'showSignup'
+    case `/${langPath}reset`:
+      target = `showReset`
       break
-    case '/signin':
-      target = 'showSignin'
+    case `/${langPath}signup`:
+      target = `showSignup`
       break
-    case '/newsletter':
-      target = 'newsletter'
+    case `/${langPath}signin`:
+      target = `showSignin`
       break
-    case '/parrainage':
-      target = 'sponsorship'
+    case `/${langPath}newsletter`:
+      target = `newsletter`
       break
-    case '/coupon':
+    case `/${langPath}parrainage`:
+      target = `sponsorship`
+      break
+    case `/${langPath}coupon`:
       if (data) {
         const decodedData = decodeSafeUrl(data)
         await store.dispatch(BillingActionCreators.createCoupon(decodedData))
       }
-      target = 'redeemCoupon'
+      target = `redeemCoupon`
       break
     default :
-      target = 'geowall'
+      target = `geowall`
       break
   }
 
@@ -61,7 +67,7 @@ class LoginPage extends React.Component {
 
   render () {
 
-    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type}&blur=10)`}
+    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=1280&q=${config.images.quality}&fm=${config.images.type}&blur=50)`}
 
     return (
       <div className="row-fluid">

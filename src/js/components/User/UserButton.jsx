@@ -6,7 +6,7 @@ import * as EventActionCreators from '../../actions/event'
 import SearchInput from './../Search/SearchBox'
 import FavoritesButton from './../Favorites/FavoritesButton'
 import BrowseButton from './../Browse/BrowseButton'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import {
   FormattedMessage
 } from 'react-intl'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import { formatPrice } from '../../lib/utils'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import LinearProgress from 'material-ui/LinearProgress'

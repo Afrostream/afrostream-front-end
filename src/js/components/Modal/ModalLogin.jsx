@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from'react-dom'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import * as OauthActionCreator from '../../actions/oauth'
 import * as ModalActionCreator from '../../actions/modal'
 import * as UserActionCreators from '../../actions/user'
@@ -12,9 +12,6 @@ import config from '../../../../config'
 import _ from 'lodash'
 import { withRouter } from 'react-router'
 const {oauth2}= config
-import {
-  FormattedMessage,
-} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./ModalLogin.less')
@@ -86,9 +83,8 @@ class ModalLogin extends ModalComponent {
     }
 
     if (!isValid) {
-      const i18nValidMess = this.getTitle('language')
-      let label = i18nValidMess[targetName]
-      let errMess = i18nValidMess[valitationType]
+      let label = this.getTitle(`language.${targetName}`)
+      let errMess = this.getTitle(`language.${valitationType}`)
       errors[targetName] = label + ' ' + errMess
     }
     this.setState({
@@ -129,7 +125,7 @@ class ModalLogin extends ModalComponent {
     }
 
     let formData = this.state
-    _.forEach(valitations, (name)=> {
+    _.forEach(valitations, (name) => {
       let domNode = ReactDOM.findDOMNode(this.refs[name])
       if (domNode) {
         formData[name] = domNode.value
@@ -269,13 +265,6 @@ class ModalLogin extends ModalComponent {
     return keyType
   }
 
-  getTitle (key = 'title', values = {}) {
-    const {props:{intl}} =this
-    let keyType = this.getI18n()
-    return intl.formatMessage({id: `${keyType}.${key}`}, values) || ''
-    return <FormattedMessage id={`${keyType}.${key}`} {...{values}}/>
-  }
-
   getForm () {
     if (this.state.loading) {
       return (<div className="loading mode">
@@ -340,7 +329,7 @@ class ModalLogin extends ModalComponent {
 
     return (
       <div className="collapse-social">
-        {_.filter(oauth2.providers, filterObj).map((strategy)=> {
+        {_.filter(oauth2.providers, filterObj).map((strategy) => {
           const title = this.getTitle('loginProvider', {strategy: strategy.name})
           const inputAttributes = {
             onClick: event => ::this.oauthStrategy(strategy.name)
@@ -483,7 +472,7 @@ class ModalLogin extends ModalComponent {
 
   getProviderForm () {
 
-    const providers = _.filter(oauth2.providers, {active: true, social: false}).map((provider)=>provider.name)
+    const providers = _.filter(oauth2.providers, {active: true, social: false}).map((provider) => provider.name)
     if (!providers.length) {
       return
     }

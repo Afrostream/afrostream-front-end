@@ -3,6 +3,7 @@ import { Link as ReactLink } from 'react-router'
 import document from 'global/document'
 import window from 'global/window'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import { withRouter } from 'react-router'
 
 class Link extends React.Component {
 
@@ -28,15 +29,24 @@ class Link extends React.Component {
   }
 
   render () {
-    const {to, children, ...rest} = this.props
+    const {store} = this.context
+    const {to, children, router, ...rest} = this.props
+    const state = store.getState()
+    const {intl:{locale, defaultLocale}}= state
+    const lang = /*router && router.isActive(locale) && */locale
     const toLocation = this.parseTo(to)
     const isInternal = this.isInternal(toLocation)
+    const toWithLang = `${lang && lang !== defaultLocale && ('/' + lang) || ''}${toLocation.pathname}`
     if (isInternal) {
-      return (<ReactLink to={toLocation.pathname} {...rest}>{children}</ReactLink>)
+      return (<ReactLink to={toWithLang} {...rest}>{children}</ReactLink>)
     } else {
       return (<a href={to} target="_blank" {...rest}>{children}</a>)
     }
   }
+}
+
+Link.contextTypes = {
+  store: PropTypes.object.isRequired
 }
 
 Link.propTypes = {
@@ -44,4 +54,4 @@ Link.propTypes = {
   onClick: PropTypes.func,
 }
 
-export default Link
+export default withRouter(Link)

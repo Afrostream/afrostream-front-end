@@ -9,9 +9,6 @@ import Immutable from 'immutable'
 import * as BillingActionCreators from '../../actions/billing'
 import * as FBActionCreators from '../../actions/facebook'
 import * as ModalActionCreators from '../../actions/modal'
-import {
-  FormattedMessage,
-} from 'react-intl'
 
 const {couponsCampaignBillingUuid, couponsCampaignType, billingProviderName} = config.sponsors
 
@@ -41,6 +38,10 @@ class ModalSponsors extends ModalComponent {
     loading: false
   }
 
+  constructor (props) {
+    super(props)
+  }
+
   componentDidMount () {
     this.attachTooltip()
   }
@@ -53,8 +54,8 @@ class ModalSponsors extends ModalComponent {
     $('.check').tooltip()
   }
 
-  getTitle (key = 'title') {
-    return <FormattedMessage id={`sponsors.${key}`}/>
+  getI18n () {
+    return 'sponsors'
   }
 
   generateCoupon (event) {
@@ -147,7 +148,7 @@ class ModalSponsors extends ModalComponent {
 
     return <div className={classNames(classCheck)}
                 data-container=".panel"
-                title={`${this.getTitle('status')[status]}`}>
+                title={`${this.getTitle(`status/${status}`)}`}>
       <i className="zmdi zmdi-check"/></div>
   }
 
@@ -200,7 +201,7 @@ class ModalSponsors extends ModalComponent {
     const plan = coupon.get('couponsCampaign').get('internalPlan')
 
     const inputProps = {
-      onClick: e =>::this.sharePlan(plan)
+      onClick: e => ::this.sharePlan(plan)
     }
     return <button className="generate-btn" {...inputProps} >{this.getTitle('share')}</button>
   }
@@ -258,16 +259,12 @@ class ModalSponsors extends ModalComponent {
   }
 }
 
-ModalSponsors
-  .propTypes = {
+ModalSponsors.propTypes = {
   data: React.PropTypes.object
 }
 
-ModalSponsors
-  .defaultProps = {
+ModalSponsors.defaultProps = {
   data: null
 }
 
-export
-default
-ModalSponsors
+export default ModalSponsors

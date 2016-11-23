@@ -1,8 +1,13 @@
 import React from 'react'
 import * as ModalActionCreators from '../../actions/modal'
 import classNames from 'classnames'
+import { I18n } from '../Utils'
 
-class ModalComponent extends React.Component {
+class ModalComponent extends I18n {
+
+  constructor (props, context) {
+    super(props, context)
+  }
 
   static contextTypes = {
     location: React.PropTypes.object,
@@ -19,6 +24,10 @@ class ModalComponent extends React.Component {
     if (this.props.dispatch) {
       this.props.dispatch(ModalActionCreators.close())
     }
+  }
+
+  getI18n () {
+    return 'modal'
   }
 
   handleClose (e) {
@@ -74,7 +83,6 @@ ModalComponent.propTypes = {
   closable: React.PropTypes.bool,
   modal: React.PropTypes.bool,
   className: React.PropTypes.string
-
 }
 
 ModalComponent.defaultProps = {

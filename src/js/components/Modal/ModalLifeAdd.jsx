@@ -109,10 +109,10 @@ class ModalLifeAdd extends ModalComponent {
       const scrappedData = Life.get(`life/wrap/original`)
       return dispatch(LifeActionCreators.publishPin(_.merge(scrappedData.toJS(), {
         description: description.getValue()
-      }))).then(()=> {
+      }))).then(() => {
         dispatch(EventActionCreator.snackMessage({message: 'life.modal.success'}))
         this.closeModal()
-      }).catch((err)=> {
+      }).catch((err) => {
         dispatch(EventActionCreator.snackMessage(err || {message: 'life.modal.errors.post'}))
         this.closeModal()
       })
@@ -130,25 +130,25 @@ class ModalLifeAdd extends ModalComponent {
   }
 
   validateUrl (event, payload) {
-    const {props:{dispatch}} =this
+    const {props:{dispatch, intl}} =this
     const {regex} = this.state.network
     this.setState({scrapping: true})
-    Q.fcall(()=> {
+    Q.fcall(() => {
       return payload.match(regex)
-    }).then((match)=> {
+    }).then((match) => {
       if (!match) {
-        throw new Error('life.modal.errors.url')
+        throw new Error(intl.formatMessage({id: 'life.modal.errors.url'}))
       }
       return payload
-    }).then((url)=> {
+    }).then((url) => {
       return dispatch(LifeActionCreators.wrappPin(url))
-    }).then(()=> {
+    }).then(() => {
       this.setState({
         stepIndex: 2,
         finished: true,
         scrapping: false
       })
-    }).catch((error)=> {
+    }).catch((error) => {
       this.setState({
         error,
         finished: false,
@@ -187,6 +187,7 @@ class ModalLifeAdd extends ModalComponent {
     if (!scrappedData) {
       return
     }
+    const imageUrl = scrappedData.get('imageUrl')
     return (<div className="row no-padding">
       <div className="col-md-12">
         <div className="row">
@@ -207,9 +208,9 @@ class ModalLifeAdd extends ModalComponent {
                    textareaStyle={textInputStyle}
                    hintText="Ajouter une description"/>
       </div>
-      <div className="col-md-3 col-xs-3">
-        <ReactImgix src={scrappedData.get('imageUrl')}/>
-      </div>
+      {imageUrl && <div className="col-md-3 col-xs-3">
+        <ReactImgix src={imageUrl}/>
+      </div>}
     </div>)
   }
 
@@ -242,8 +243,8 @@ class ModalLifeAdd extends ModalComponent {
   }
 
   render () {
-
-    const {finished, error, stepIndex, scrapping, intl} = this.state
+    const {props:{intl}} =this
+    const {finished, error, stepIndex, scrapping} = this.state
 
     let closeClass = classNames({
       'close': true,

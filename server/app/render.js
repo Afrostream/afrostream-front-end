@@ -18,7 +18,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import Helmet from 'react-helmet'
 import _ from 'lodash'
 const pretty = new PrettyError()
-const {apps, apiServer} = config
+const {apps, apiServer, heroku} = config
 
 export default function render (req, res, layout, {payload}) {
   const {path} = req
@@ -38,6 +38,11 @@ export default function render (req, res, layout, {payload}) {
      */
     ({method, headers = {}, pathname = '', query = {}, body = {}, local = false}) => {
       var url = `${apiServer.urlPrefix}${pathname}`
+
+      query.from = query.from || heroku.appName
+      query.country = query.country || country || locale.toUpperCase() || '--'
+      query.language = query.locale || locale || locale.toUpperCase() || '--'
+
       if (local) {
         url = pathname
       }
@@ -71,21 +76,20 @@ export default function render (req, res, layout, {payload}) {
           return res.status(404)
             .send('Not found')
         } else {
-
+          const state = store.getState()
           let {params, location, routes} = renderProps
           let route = routes && routes[routes.length - 1]
-          const langs = ['fr', 'en']
+          const {intl} = state
           // Try full locale, fallback to locale without region code, fallback to en
-          const routeParamLang = langs[routes && routes.length > 2 && routes[2].path]
-          const language = (preferredLocale && preferredLocale[0]) ||
-            routeParamLang || langs[0]
-
+          const routeParamLang = _.find(routes, (route) => route.lang)
+          const language = (routeParamLang && routeParamLang.lang) || (preferredLocale && preferredLocale[0]) || intl.defaultLocale
           // Split locales with a region code
           const locale = language.toLowerCase().split(/[_-]+/)[0]
           const messages = _.flattenJson(getI18n(locale))
+
           params.lang = locale
 
-          console.log('preferredLocale : ', preferredLocale, locale)
+          console.log('preferredLocale : ', language, preferredLocale, locale)
 
           const prepareRouteMethods = _.map(renderProps.components, component =>
           component && component.prepareRoute)
@@ -103,13 +107,19 @@ export default function render (req, res, layout, {payload}) {
 
           const body = ReactDOMServer.renderToStaticMarkup(
             <Provider {...{store}}>
-              <IntlProvider {...{messages, locale}}>
+              <IntlProvider key="intl" {...{messages, locale}}>
                 <RouterContext {...{...renderProps}} />
               </IntlProvider>
             </Provider>
           )
 
-          const initialState = store.getState()
+          const initialState = _.merge({
+            intl: {
+              locale
+            }
+          }, state)
+
+
           let metadata = Helmet.rewind()
 
           return res.render(layout, {

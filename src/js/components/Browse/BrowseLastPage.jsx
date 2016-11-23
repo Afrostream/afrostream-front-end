@@ -4,6 +4,10 @@ import { connect } from 'react-redux'
 import * as MovieActionCreators from '../../actions/movie'
 import MoviesSlider from '../Movies/MoviesSlider'
 import Spinner from '../Spinner/Spinner'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./BrowseLastPage.less')
@@ -49,4 +53,8 @@ class BrowseLastPage extends React.Component {
   }
 }
 
-export default BrowseLastPage
+BrowseLastPage.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default injectIntl(BrowseLastPage)

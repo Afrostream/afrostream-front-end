@@ -4,11 +4,12 @@ import config from '../../../config'
 import _ from 'lodash'
 import qs from 'qs'
 import { extractImg } from '../lib/utils'
+import { I18n } from '../components/Utils'
 
 export default () => {
 
   return (MetasDataComponent) => {
-    class MetasDataDecorator extends Component {
+    class MetasDataDecorator extends I18n {
 
       static contextTypes = {
         store: PropTypes.object.isRequired
@@ -35,7 +36,7 @@ export default () => {
       getdata () {
         const {
           context: {store},
-          props: {params, location, intl}
+          props: {params, location}
         } = this
 
         let {lang} = params
@@ -76,14 +77,14 @@ export default () => {
             }
 
             if (themesList) {
-              let themesFlat = themesList.map((theme)=> {
+              let themesFlat = themesList.map((theme) => {
                 return theme.get('label')
               })
               themes = _.join(themesFlat.toJS(), ' - ')
             }
 
-            metas.title = intl.formatMessage({id: 'life.metas.title'})
-            metas.description = intl.formatMessage({id: 'life.metas.description'})
+            metas.title = this.getTitle('life.metas.title', {themes})
+            metas.description = this.getTitle('life.metas.description')
 
             break
 
@@ -99,8 +100,8 @@ export default () => {
                   //Replace global
                   //title = title.replace(/{planName}/g, plan.get('name'))
                   //synopsis = synopsis.replace(/{planDescription}/g, plan.get('description'))
-                  metas.title = intl.formatMessage({id: 'sponsors.metas.title'})
-                  metas.description = intl.formatMessage({id: 'sponsors.metas.description'})
+                  metas.title = this.getTitle('sponsors.metas.title')
+                  metas.description = this.getTitle('sponsors.metas.description')
                   data = plan
                 }
               }
@@ -116,6 +117,7 @@ export default () => {
                 let seasonData
                 let videoData
                 let episodeData
+
 
                 if (params.videoId) {
                   videoData = store.getState().Video.get(`videos/${params.videoId}`)
@@ -136,33 +138,41 @@ export default () => {
                 let type = movieData.get('type')
                 movieTitle = movieData.get('title')
 
-                if (type === 'movie') {
-                  metas.title = intl.formatMessage({id: 'home.movie.title'})
-                  metas.description = intl.formatMessage({id: 'home.movie.description'})
-                } else {
-                  metas.title = intl.formatMessage({id: 'home.serie.title'})
-                  metas.description = intl.formatMessage({id: 'home.serie.description'})
-                }
-
                 let actorsList = movieData.get('actors')
                 if (actorsList) {
-                  let actorsFlat = actorsList.map((actor)=> {
+                  let actorsFlat = actorsList.map((actor) => {
                     return `${actor.get('firstName')} ${actor.get('lastName')}`
                   })
                   actors = _.join(actorsFlat.toJS(), ',')
                 }
 
-                if (seasonData) {
-                  metas.title = intl.formatMessage({id: 'home.season.title'})
-                  metas.description = intl.formatMessage({id: 'home.season.description'})
-                  seasonNumber = seasonData.get('seasonNumber')
+                if (type === 'movie') {
+                  metas.title = this.getTitle('home.movie.title', {movieName: movieTitle})
+                  metas.description = this.getTitle('home.movie.description', {
+                    movieName: movieTitle,
+                    actors: actors
+                  })
+                } else {
+                  metas.title = this.getTitle('home.serie.title', {serieName: movieTitle})
+                  metas.description = this.getTitle('home.serie.description', {serieName: movieTitle})
                 }
 
                 if (episodeData) {
-                  metas.title = intl.formatMessage({id: 'home.episode.title'})
-                  metas.description =intl.formatMessage({id: 'home.episode.description'})
+                  metas.title = this.getTitle('home.episode.title', {})
+                  metas.description = this.getTitle('home.episode.description', {})
                   episodeNumber = episodeData.get('episodeNumber')
                 }
+
+                if (seasonData) {
+                  seasonNumber = seasonData.get('seasonNumber')
+                  metas.title = this.getTitle('home.season.title', {serieName: movieTitle, seasonNumber})
+                  metas.description = this.getTitle('home.season.description', {
+                    episodeNumber,
+                    seasonNumber,
+                    serieName: movieTitle
+                  })
+                }
+
 
                 if (params.videoId) {
                   //metas.type = episodeData ? 'video.episode' : 'video.video'
@@ -176,20 +186,6 @@ export default () => {
             }
             break
         }
-
-        if (movieTitle) {
-          metas.title = metas.title.replace(/{serieName}/g, movieTitle)
-          metas.title = metas.title.replace(/{movieName}/g, movieTitle)
-          metas.description = metas.description.replace(/{movieName}/g, movieTitle)
-          metas.description = metas.description.replace(/{serieName}/g, movieTitle)
-        }
-        metas.title = metas.title.replace(/{episodeNumber}/g, episodeNumber)
-        metas.title = metas.title.replace(/{seasonNumber}/g, seasonNumber)
-        metas.title = metas.title.replace(/{themes}/g, themes)
-        metas.description = metas.description.replace(/{episodeNumber}/g, episodeNumber)
-        metas.description = metas.description.replace(/{seasonNumber}/g, seasonNumber)
-        metas.description = metas.description.replace(/{actors}/g, actors)
-
 
         return {metas, data}
       }

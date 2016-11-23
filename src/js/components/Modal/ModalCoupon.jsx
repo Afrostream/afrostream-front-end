@@ -130,8 +130,10 @@ class ModalCoupon extends ModalComponent {
       })
   }
 
-  getTitle (key = 'title') {
-    return <FormattedMessage id={`coupon.${key}`}/>
+  getTitle (key = 'title', values = {}) {
+    const {props:{intl}} =this
+    let keyType = 'coupon'
+    return intl.formatMessage({id: `${keyType}.${key}`}, values) || ''
   }
 
   getForm () {

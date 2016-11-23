@@ -23,6 +23,9 @@ import * as FacebookActionCreators from '../../actions/facebook'
 import * as PlayerActionCreators from '../../actions/player'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./FloatPlayer.less')
@@ -96,7 +99,7 @@ class FloatPlayer extends React.Component {
       if (!videoData) {
         return
       }
-      this.destroyPlayer().then(()=> {
+      this.destroyPlayer().then(() => {
         this.initPlayer(videoData)
       })
     }
@@ -204,7 +207,7 @@ class FloatPlayer extends React.Component {
     }
 
     //on force dash en tech par default pour tous les browsers )
-    playerData.sources = _.sortBy(playerData.sources, (k)=> {
+    playerData.sources = _.sortBy(playerData.sources, (k) => {
       return k.type !== 'application/dash+xml'
     })
 
@@ -217,10 +220,10 @@ class FloatPlayer extends React.Component {
       }
       //Safari 8 can't play dashjs
       if (browserVersion.version >= 538 && browserVersion.version <= 600) {
-        playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
+        playerData.techOrder = _.sortBy(playerData.techOrder, (k) => {
           return k !== 'html5'
         })
-        playerData.sources = _.sortBy(playerData.sources, (k)=> {
+        playerData.sources = _.sortBy(playerData.sources, (k) => {
           return k.type === 'application/dash+xml'
         })
       }
@@ -230,10 +233,10 @@ class FloatPlayer extends React.Component {
     //Fix android live hls only
     //Fix ios hls only
     if (mobileVersion.is('iOS') || mobileVersion.match('playstation|xbox') || (mobileVersion.is('AndroidOS') && isLive)) {
-      playerData.sources = _.sortBy(playerData.sources, (k)=> {
+      playerData.sources = _.sortBy(playerData.sources, (k) => {
         return k.type === 'application/dash+xml'
       })
-      playerData.techOrder = _.sortBy(playerData.techOrder, (k)=> {
+      playerData.techOrder = _.sortBy(playerData.techOrder, (k) => {
         return k !== 'html5'
       })
     }
@@ -426,7 +429,7 @@ class FloatPlayer extends React.Component {
     const videoTracking = this.getStoredPlayer()
     const storedCaption = videoTracking.playerCaption
 
-    let player = await videojs('afrostream-player', playerData).ready(()=> {
+    let player = await videojs('afrostream-player', playerData).ready(() => {
         if (storedCaption) {
           let tracks = player.textTracks() // get list of tracks
           if (!tracks) {
@@ -629,7 +632,7 @@ class FloatPlayer extends React.Component {
         key = 'bitrate'
         break
     }
-    const selectedTrack = _.find(tracks, (track)=> {
+    const selectedTrack = _.find(tracks, (track) => {
       switch (type) {
         case 'caption' :
           return track.mode === 'showing'
@@ -904,7 +907,7 @@ class FloatPlayer extends React.Component {
         <a className={closeClass} href="#" onClick={::this.handleClose}><i className="zmdi zmdi-hc-2x zmdi-close"/></a>
         <div ref="wrapper" className="wrapper"/>
         {videoData && <div className={classSet(videoInfoClasses)}>
-          <div className="video-infos_label">Vous regardez</div>
+          <div className="video-infos_label"><FormattedMessage id="player.watch"/></div>
           <div className="video-infos_title">{infos.title}
             {<CsaIcon {...{csa}}/>}
           </div>
@@ -918,7 +921,11 @@ class FloatPlayer extends React.Component {
           {renderData && <div className="player-buttons">
             <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
             <ShareButton />
-            <RaisedButton onClick={::this.showKoment} label="Commenter" primary={true}
+            <RaisedButton onClick={::this.showKoment}
+                          label={
+                            <FormattedMessage id="comment.label"/>
+                          }
+                          primary={true}
                           icon={<i className="zmdi zmdi-comment-more"></i>}/>
           </div>}
           {videoDuration ?

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { connect } from 'react-redux'
 import LoadVideo from '../LoadVideo'

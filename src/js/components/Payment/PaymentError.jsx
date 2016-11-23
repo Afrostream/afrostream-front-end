@@ -3,17 +3,16 @@ import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import * as UserActionCreators from '../../actions/user'
 import * as IntercomActionCreators from '../../actions/intercom'
-import { Link } from 'react-router'
+import { Link, I18n } from '../Utils'
 import _ from 'lodash'
 
 import {
   intlShape,
-  injectIntl,
-  FormattedMessage
+  injectIntl
 } from 'react-intl'
 
 @connect(({User}) => ({User}))
-class PaymentError extends React.Component {
+class PaymentError extends I18n {
 
   componentWillUnmount () {
     const {
@@ -48,13 +47,13 @@ class PaymentError extends React.Component {
 
     return (
       <div className="payment-error">
-        <FormattedMessage tagName="h3" id={this.props.title}/>
-        <FormattedMessage tagName="h4" id={this.props.message}/>
+        <h3> {this.getTitle(this.props.title)}</h3>
+        <h4>{this.getTitle(this.props.message)}</h4>
         <p className="error">
           {this.renderLinks()}
-          <a href={this.props.link}>
-            <FormattedMessage id={this.props.linkMessage}/>
-          </a>
+          <Link to={this.props.link}>
+            {this.getTitle(this.props.linkMessage)}
+          </Link>
         </p>
       </div>
     )

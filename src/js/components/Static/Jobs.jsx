@@ -2,7 +2,7 @@ import React from 'react'
 import { prepareRoute } from '../../decorators'
 import * as EventActionCreators from '../../actions/event'
 import * as JobActionCreators from '../../actions/job'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import { connect } from 'react-redux'
 
 @prepareRoute(async function ({store}) {

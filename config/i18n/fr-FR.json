@@ -1,4 +1,44 @@
 {
+  "routes": {
+    "app": "app",
+    "home": "accueil",
+    "company": "companie",
+    "companynomatch": "companie",
+    "about": "a-propos",
+    "jobs": "jobs",
+    "job": "job",
+    "press": "presse",
+    "faq": "faq",
+    "submit": "soumettre",
+    "legals": "legals",
+    "cgu": "cgu",
+    "policy": "politique",
+    "reset": "reset",
+    "signin": "se-connecter",
+    "signup": "s-inscrire",
+    "coupon": "coupon",
+    "login": "se-connecter",
+    "newsletter": "newsletter",
+    "life": "life",
+    "community": "communaute",
+    "lifeUserInfos": "infos",
+    "lifePin": "pin",
+    "lifeTheme": "theme",
+    "store": "store",
+    "cash": "cash",
+    "cashPayment": "cashPayment",
+    "cashPayment": "cashPayment",
+    "cashPaymentMethod": "cashPaymentMethod",
+    "payment": "payment",
+    "paymentMethod": "paymentMethod",
+    "search": "search",
+    "compte": "compte",
+    "cancelSubscription": "cancelSubscription",
+    "sponsorship": "sponsorship",
+    "category": "categorie",
+    "last": "derniers",
+    "favoris": "favoris"
+  },
   "lang": {
     "fr": "Français",
     "en": "Anglais"
@@ -144,12 +184,13 @@
     "afrostreamambassadeurs2": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "afrostreamambassadeurs": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "infos": {
+      "internalActionLabel": "",
       "coupon": "Coupon valide {couponName}",
       "formule": "Formule",
       "prelevementMensuel": "Prélèvement mensuel",
       "price": "Tarif",
       "trialEnabled": "7 jours d'essai offert",
-      "internalMaxScreens": "Écran{s} disponible{s} en simultané",
+      "internalMaxScreens": "Écran(s) disponible(s) en simultané",
       "internalMobile": "Sur votre ordinateur, smartphone et tablette",
       "internalUnlimited": "Films et séries TV en illimité",
       "internalEngagment": "Sans engagement au delà de la période initiale",
@@ -354,10 +395,13 @@
     }
   },
   "favorites": {
+    "add": "Ajouter à mes favoris",
+    "delete": "Supprimer de mes favoris",
     "noData": "Aucun Favoris ajouté à mon profil",
     "labelPage": "Mes Favoris"
   },
   "share": {
+    "tooltip": "Recommander",
     "label": "Partager avec mes amis",
     "labelBtn": "Partager"
   },
@@ -365,6 +409,12 @@
     "label": "Épisode suivant dans {seconds} secondes",
     "goBackBtn": "Retour à la video",
     "labelLike": "Avez vous aimé cet épisode ?"
+  },
+  "comment": {
+    "label": "Commenter"
+  },
+  "player": {
+    "watch": "Vous regardez"
   },
   "recommendation": {
     "noData": "Aucune Recommandation",

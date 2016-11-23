@@ -4,14 +4,18 @@ import config from '../../../../config'
 import ModalSponsors from '../Modal/ModalSponsors'
 import { formatPrice, isBoolean } from '../../lib/utils'
 const {couponsCampaignBillingUuid} = config.sponsors
-import { getI18n } from '../../../../config/i18n'
+import { I18n } from '../Utils'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./SponsorsPage.less')
 }
 
 @connect(({Billing, User}) => ({Billing, User}))
-class SponsorsPage extends React.Component {
+class SponsorsPage extends I18n {
 
   state = {
     isMobile: false,
@@ -51,14 +55,8 @@ class SponsorsPage extends React.Component {
     </div>
   }
 
-  getTitle (key = 'title') {
-    const {
-      props: {
-        params
-      }
-    } = this
-
-    return getI18n(params.lang)['sponsors'][key] || ''
+  getI18n () {
+    return 'sponsors'
   }
 
   render () {
@@ -83,4 +81,8 @@ class SponsorsPage extends React.Component {
   }
 }
 
-export default SponsorsPage
+SponsorsPage.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default injectIntl(SponsorsPage)

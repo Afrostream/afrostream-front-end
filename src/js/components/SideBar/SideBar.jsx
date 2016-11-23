@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import config from '../../../../config'
 import BrowseMenu from './../Browse/BrowseMenu'
 import SearchInput from './../Search/SearchBox'
@@ -85,18 +85,19 @@ class SideBar extends React.Component {
     switch (type) {
       case 'favoris':
         el = authorized && (
-            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i
               className="zmdi zmdi-favorite"/><FormattedMessage id={ 'menu.favoris' }/></Link>
             </li>)
         break
       case 'last':
         el = authorized && (
-            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/last"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/last"><i
               className="zmdi zmdi-movie-alt"/><FormattedMessage id={ 'menu.last' }/></Link></li>)
         break
       case 'sponsorship':
         el = authorized && canSponsorshipSubscription && (
-            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/parrainage"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)}
+                      to="/parrainage"><i
               className="zmdi zmdi-star"/><FormattedMessage id={ 'menu.sponsorship' }/></Link>
             </li>)
         break
@@ -107,7 +108,8 @@ class SideBar extends React.Component {
         el = authorized && <SearchInput defaultOpen={true}/>
         break
       case 'compte':
-        el = (<li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/compte"><img
+        el = (
+          <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/compte"><img
             src={user.get('picture')}
             alt="50x50"
             id="userButtonImg"
@@ -118,7 +120,7 @@ class SideBar extends React.Component {
         el = (
           <ul className="sidebar-nav">
             <li role="separator" className="divider"></li>
-            <li><Link activeClassName="active" to="/" onClick={::this.logout}><i
+            <li><Link activeClassName="active" onlyActiveOnIndex to="/" onClick={::this.logout}><i
               className="zmdi zmdi-lock-toggled"/><FormattedMessage id={ 'menu.logout' }/></Link></li>
             <li role="separator" className="divider"></li>
           </ul>
@@ -264,13 +266,14 @@ class SideBar extends React.Component {
           <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
           <ul className="sidebar-nav">
             {this.getUserConnectedButtons(user, 'compte')}
-            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/"><i
               className="zmdi zmdi-tv-play"/><FormattedMessage
               id={ `menu.${user && user.get('authorized') ? 'streaming' : 'home'}` }/>
             </Link></li>
-            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
               className="glyphicon glyphicon-fire"/><FormattedMessage id={ 'menu.life' }/></Link></li>
-            <li><Link activeClassName="active" onClick={(e)=>::this.onSetOpen(false)} to="/life/community"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)}
+                      to="/life/community"><i
               className="zmdi zmdi-accounts-list-alt"/><FormattedMessage id={ 'menu.community' }/></Link></li>
             {this.getUserConnectedButtons(user, 'favoris')}
             {this.getUserConnectedButtons(user, 'last')}

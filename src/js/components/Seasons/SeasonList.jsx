@@ -5,6 +5,10 @@ import Spinner from '../Spinner/Spinner'
 import SeasonTabButton from './SeasonTabButton'
 import * as SeasonActionCreators from '../../actions/season'
 import MoviesSlider from '../Movies/MoviesSlider'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./SeasonList.less')
@@ -105,4 +109,8 @@ class SeasonList extends React.Component {
   }
 }
 
-export default SeasonList
+SeasonList.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default injectIntl(SeasonList)

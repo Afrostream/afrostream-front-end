@@ -5,9 +5,7 @@ import { ArrowStepper } from '../Slider'
 import Thumb from '../Movies/Thumb'
 import ReactList from 'react-list'
 import { AutoSizer, ColumnSizer, VirtualScroll, Grid, Collection } from 'react-virtualized'
-import {
-  FormattedMessage,
-} from 'react-intl'
+import { I18n } from '../Utils'
 
 if (process.env.BROWSER) {
   require('./MoviesSlider.less')
@@ -16,7 +14,7 @@ if (process.env.BROWSER) {
 const GUTTER_SIZE = 3
 const CELL_WIDTH = 160
 
-class MoviesSlider extends React.Component {
+class MoviesSlider extends I18n {
 
   constructor (props, context) {
     super(props, context)
@@ -168,7 +166,7 @@ class MoviesSlider extends React.Component {
       return (
         <div className={this.props.className}>
           {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
-          {label ? <div className="movies-list__selection"><FormattedMessage id={label}/></div> : ''}
+          {label ? <div className="movies-list__selection">{this.getTitle(label)}</div> : ''}
           <div className="slider-container">
             <ReactList
               ref="react-list"
@@ -185,7 +183,7 @@ class MoviesSlider extends React.Component {
     return (
       <div className={this.props.className}>
         {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
-        {label ? <div className="movies-list__selection">{label}</div> : ''}
+        {label ? <div className="movies-list__selection">{this.getTitle(label)}</div> : ''}
         <AutoSizer className="slider-container" disableHeight>
           {({width}) => (
             <ColumnSizer

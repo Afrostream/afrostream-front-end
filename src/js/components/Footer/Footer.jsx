@@ -1,11 +1,9 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import classSet from 'classnames'
-import { withRouter } from 'react-router'
+import { withRouter, Link } from 'react-router'
 import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
-import config from '../../../../config'
 import { updateIntl } from 'react-intl-redux'
 import {
   FormattedMessage,
@@ -17,8 +15,8 @@ if (process.env.BROWSER) {
 @connect()
 class Footer extends React.Component {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this.year = new Date().getFullYear()
   }
 
@@ -28,7 +26,7 @@ class Footer extends React.Component {
         dispatch
       }
     } = this
-    e.preventDefault()
+    //e.preventDefault()
     const messages = _.flattenJson(getI18n(locale))
 
     dispatch(updateIntl({
@@ -43,22 +41,21 @@ class Footer extends React.Component {
       props: {
         params,
         router,
-        routes
+        routes,
+        intl
       }
     } = this
 
-    let {lang} = params
+    let {locale} = intl
 
-    let labels = getI18n(lang).footer
-    let switchLang = lang === 'en' ? 'fr' : 'us'
-    let switchLangRoute = lang === 'en' ? 'fr' : 'en'
+    let switchLang = locale === 'en' ? 'fr' : 'us'
+    let switchLangRoute = locale === 'en' ? 'fr' : 'en'
     let hasPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player'))
 
     let footerClasses = {
       'footer': true,
       'footer-hidden': hasPlayer
     }
-
     return (
       <footer className={classSet(footerClasses)}>
         <div className="links row-fluid">
@@ -95,10 +92,10 @@ class Footer extends React.Component {
                 </a>
               </li>
               <li>
-                <a className="footer-link" href={`/${switchLangRoute}`}
-                   onClick={e=>::this.switchLang(e, switchLangRoute)}>
+                <Link className="footer-link" to={`/${switchLangRoute}`}
+                      onClick={e=>::this.switchLang(e, switchLangRoute)}>
                   <span className={`flag-icon flag-icon-${switchLang}`}></span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -227,6 +224,10 @@ class Footer extends React.Component {
       </footer>
     )
   }
+}
+
+Footer.contextTypes = {
+  store: PropTypes.object.isRequired
 }
 
 Footer.propTypes = {

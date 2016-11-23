@@ -2,6 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import MoviesSlider from '../Movies/MoviesSlider'
 import config from '../../../../config'
+import {
+  intlShape,
+  injectIntl,
+  FormattedMessage
+} from 'react-intl'
+
 const {favorites} =config
 
 if (process.env.BROWSER) {
@@ -19,7 +25,15 @@ class FavoritesList extends React.Component {
     if (!dataList) {
       return
     }
-    return <MoviesSlider key={`favorite-${slug}`} {...{dataList, label, slug, type, thumbW, thumbH, load}} />
+    return <MoviesSlider {...this.props} key={`favorite-${slug}`} {...{
+      dataList,
+      label,
+      slug,
+      type,
+      thumbW,
+      thumbH,
+      load
+    }} />
   }
 
   render () {
@@ -47,4 +61,8 @@ class FavoritesList extends React.Component {
   }
 }
 
-export default FavoritesList
+FavoritesList.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default injectIntl(FavoritesList)

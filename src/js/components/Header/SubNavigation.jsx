@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import Headroom from 'react-headrooms'

@@ -5,7 +5,7 @@ import withScroll from 'scroll-behavior'
 import Router from './components/Router'
 import { Provider } from 'react-redux'
 import { IntlProvider } from 'react-intl-redux'
-import { addLocaleData, FormattedMessage } from 'react-intl'
+
 import createStore from './lib/createStore'
 import createAPI from './lib/createAPI'
 import request from 'superagent'
@@ -19,13 +19,7 @@ import * as UserActionCreators from './actions/user'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import { getI18n } from '../../config/i18n'
-import frLocaleData from 'react-intl/locale-data/fr'
-import enLocaleData from 'react-intl/locale-data/en'
 
-addLocaleData([
-  ...frLocaleData,
-  ...enLocaleData,
-])
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -41,21 +35,20 @@ if (canUseDOM) {
 
 const history = withScroll(createHistory())
 
+const {intl:{defaultLocale, locale, locales}} = __INITIAL_STATE__
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
 // for these different by checking all of them
-const language = (navigator.languages && navigator.languages[0]) ||
+const language = locale || (navigator.languages && navigator.languages[0]) ||
   navigator.language ||
-  navigator.userLanguage || 'fr'
-
+  navigator.userLanguage || defaultLocale
 // Split locales with a region code
-const locale = __INITIAL_STATE__ && __INITIAL_STATE__.intl && __INITIAL_STATE__.intl.locale || language.toLowerCase().split(/[_-]+/)[0]
+const clientLocale = language.toLowerCase().split(/[_-]+/)[0]
 // Try full locale, fallback to locale without region code, fallback to en
-const messages = _.flattenJson(getI18n(locale))
+const messages = _.flattenJson(getI18n(clientLocale))
 
 //Set locale date //TODO une fois le site multilingue formater au pays courant
-moment.locale(locale)
-
+moment.locale(clientLocale)
 
 function initSite (country) {
   const api = createAPI(
@@ -75,6 +68,7 @@ function initSite (country) {
       let url = `${apiClient.urlPrefix}${pathname}`
       query.from = query.from || heroku.appName
       query.country = query.country || country || locale.toUpperCase() || '--'
+      query.language = query.locale || locale.toUpperCase() || '--'
       if (legacy) {
         url = url.replace(apiClient.urlPrefix, `${apiClient.protocol}://${apiClient.authority}`)
       }
@@ -102,7 +96,7 @@ function initSite (country) {
 
   ReactDOM.render(
     <Provider {...{store}} >
-      <IntlProvider {...{locale, messages}}>
+      <IntlProvider key="intl" {...{locale: clientLocale, messages, locale}}>
         <Router />
       </IntlProvider>
     </Provider>,
@@ -110,9 +104,9 @@ function initSite (country) {
   )
 }
 
-getCountry().then((country)=> {
+getCountry().then((country) => {
   initSite(country)
-}).catch((err)=> {
+}).catch((err) => {
   console.log('Get Geo error', err)
   initSite()
 })

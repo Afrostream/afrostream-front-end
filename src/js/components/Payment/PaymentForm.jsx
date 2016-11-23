@@ -25,8 +25,10 @@ import * as ReactFB from '../../lib/fbEvent'
 import Q from 'q'
 import TextField from 'material-ui/TextField'
 import Checkbox from 'material-ui/Checkbox'
+import { I18n } from '../Utils'
 import {
   FormattedMessage,
+  injectIntl
 } from 'react-intl'
 
 const {gocarlessApi, recurlyApi, stripeApi, braintreeApi} = config
@@ -40,7 +42,7 @@ if (process.env.BROWSER) {
     store.dispatch(EventActionCreators.pinHeader(true))
   ])
 })
-class PaymentForm extends React.Component {
+class PaymentForm extends I18n {
 
   constructor (props) {
     super(props)
@@ -134,8 +136,7 @@ class PaymentForm extends React.Component {
   componentWillReceiveProps (nextProps) {
     const {
       props: {
-        Billing,
-        User
+        Billing
       }
     } = this
 
@@ -154,7 +155,7 @@ class PaymentForm extends React.Component {
 
     const {
       props: {
-        User, intl
+        User
       }
     } = this
 
@@ -190,7 +191,7 @@ class PaymentForm extends React.Component {
                 autoComplete="given-name"
                 name="first-name"
                 defaultValue={firstName}
-                floatingLabelText={intl.formatMessage({id: 'payment.name'})} required
+                floatingLabelText={this.getTitle('payment.name')} required
                 disabled={this.state.disabledForm}/>
             </div>
             <div className="col-md-6">
@@ -205,7 +206,7 @@ class PaymentForm extends React.Component {
                 autoComplete="surname"
                 name="last-name"
                 defaultValue={lastName}
-                floatingLabelText={intl.formatMessage({id: 'payment.lastName'})}
+                floatingLabelText={this.getTitle('payment.lastName')}
                 required
                 disabled={this.state.disabledForm}/>
             </div>
@@ -220,6 +221,9 @@ class PaymentForm extends React.Component {
       props: {
         dispatch,
         history,
+        params:{
+          lang
+        }
       }
     } = this
     const currentPlan = this.state.currentPlan
@@ -229,7 +233,7 @@ class PaymentForm extends React.Component {
     }
 
     const internalPlanUuid = currentPlan.get('internalPlanUuid')
-
+    const originPath = this.getPath()
     let buttonLabel = 'planCodes.action'
     if (currentPlan && internalPlanUuid === config.netsize.internalPlanUuid) {
       buttonLabel = 'planCodes.actionMobile'
@@ -245,38 +249,32 @@ class PaymentForm extends React.Component {
           reload: true,
           checkMobile: false
         })).then(() => {
-          history.push('/select-plan')
+          history.push(`${originPath}/select-plan`)
         })
       }
     }
 
     return (<div className="row">
         <div className="col-md-12">
-          <FormattedMessage
-            tagName="button"
-            id={buttonLabel}
+          <button
+            id="subscribe"
             type="submit"
             form="subscription-create"
             className="button-create-subscription pull-right"
-            disabled={this.state.disabledForm}
-          />
-          <FormattedMessage
-            id="planCodes.noMobilePlans"
-            tagName="button"
+            disabled={this.state.disabledForm}>
+            {this.getTitle(buttonLabel)}
+          </button>
+          <button
             className="button-cancel-subscription pull-right"
             {...inputChangeAction}>
-          </FormattedMessage>
+            {this.getTitle('planCodes.noMobilePlans')}
+          </button>
         </div>
       </div>
     )
   }
 
   renderDroits () {
-    const {
-      props: {
-        intl
-      }
-    } = this
 
     let checkClass = {
       'form-group': true,
@@ -295,7 +293,7 @@ class PaymentForm extends React.Component {
             ref="droits"
             disabled={this.state.disabledForm}
             required
-            label={intl.formatMessage({id: 'payment.droits.label'})}
+            label={this.getTitle('payment.droits.label')}
           />
           <div className="checkbox-label">
             <a href="/pdfs/formulaire-retractation.pdf"
@@ -303,11 +301,10 @@ class PaymentForm extends React.Component {
               <FormattedMessage id="payment.droits.link"/>
             </a>
             <a ref="droitstip" className="my-tool-tip"
-               data-original-title={intl.formatMessage({id: 'payment.droits.tooltip'})}
+               data-original-title={this.getTitle('payment.droits.tooltip')}
                data-placement="top"
                data-toggle="tooltip">
               <i className="zmdi zmdi-help"/>
-              <FormattedMessage id="payment.droits.link"/>
             </a>
           </div>
         </div>
@@ -316,11 +313,6 @@ class PaymentForm extends React.Component {
   }
 
   renderCGU () {
-    const {
-      props: {
-        intl
-      }
-    } = this
 
     let checkClass = {
       'form-group': true,
@@ -339,7 +331,7 @@ class PaymentForm extends React.Component {
           id="accept-conditions-generales"
           disabled={this.state.disabledForm}
           required
-          label={intl.formatMessage({id: 'payment.cgu.label'})}
+          label={this.getTitle('payment.cgu.label')}
         />
         <div className="checkbox-label">
           <a href="/pdfs/conditions-utilisation.pdf"
@@ -355,8 +347,7 @@ class PaymentForm extends React.Component {
     const {
       props: {
         User,
-        dispatch,
-        intl
+        dispatch
       }
     } = this
 
@@ -395,7 +386,7 @@ class PaymentForm extends React.Component {
 
         if (!cgu.state.switched || !droits.state.switched) {
           throw new Error({
-            message: intl.formatMessage({id: 'payment.errors.checkbox'}),
+            message: this.getTitle('payment.errors.checkbox'),
             fields: ['cgu', 'droits']
           })
         }
@@ -410,19 +401,30 @@ class PaymentForm extends React.Component {
     })
   }
 
+  getPath () {
+    const {
+      props: {
+        router,
+        params: {lang}
+      }
+    } = this
+
+    let isCash = router.isActive('cash')
+    return `${isCash ? '/cash' : ''}${lang ? '/' + lang : ''}`
+  }
 
   async submitSubscription (formData) {
     const {
       props: {
         dispatch,
         router,
-        intl,
         params: {planCode}
       }
     } = this
 
     const self = this
     let isCash = router.isActive('cash')
+    const originPath = this.getPath()
 
     return Q()
       .then(() => {
@@ -446,35 +448,29 @@ class PaymentForm extends React.Component {
         return dispatch(UserActionCreators.getProfile())
       })
       .then(() => {
-        self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
+        self.props.history.push(`${originPath}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch(({response : {body: {error, code, message}}}) => {
-        let globalMessage = intl.formatMessage({id: 'payment.errors.global'})
+        let globalMessage = this.getTitle('payment.errors.global')
 
         if (error) {
           globalMessage = error.message || message
         }
 
         if (code) {
-          const errorCode = (self && intl.formatMessage({id: `coupon.errors.${code}`}))
-          if (errorCode && errorCode.message) {
-            globalMessage = `${errorCode.message} [${code}]`
+          const errorCode = (self && this.getTitle(`coupon.errors.${code}.message`))
+          if (errorCode) {
+            globalMessage = `${errorCode} [${code}]`
           }
         }
 
 
         self.disableForm(false, 2, globalMessage)
-        self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/error`)
+        self.props.history.push(`${originPath}/select-plan/${planCode}/error`)
       })
   }
 
   // A simple error handling function to expose errors to the customer
   error (err) {
-
-    const {
-      props: {
-        intl,
-      }
-    } = this
 
     let formatError = err
     if (err instanceof Array) {
@@ -483,7 +479,7 @@ class PaymentForm extends React.Component {
     this.disableForm(false)
     this.setState({
       error: {
-        message: formatError.message || intl.formatMessage({id: `coupon.errors.fields`}),
+        message: formatError.message || this.getTitle(`coupon.errors.fields`),
         fields: formatError.fields || []
       }
     })
@@ -519,16 +515,6 @@ class PaymentForm extends React.Component {
                      planLabel={planLabel}/>)
   }
 
-  getI18n (key) {
-    const {
-      props: {
-        intl,
-      }
-    } = this
-
-    return intl.formatMessage({id: key})
-  }
-
   renderForm () {
 
     var spinnerClasses = {
@@ -540,7 +526,7 @@ class PaymentForm extends React.Component {
       return <div />
     }
 
-    const planLabel = `${this.getI18n(`planCodes.title`)} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
+    const planLabel = `${this.getTitle(`planCodes.title`)} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
 
     return (
       <div className="payment-wrapper">
@@ -634,4 +620,4 @@ PaymentForm.propTypes = {
 
 export default  scriptLoader(
   [stripeApi, recurlyApi, gocarlessApi, braintreeApi]
-)(withRouter(PaymentForm))
+)(withRouter(injectIntl(PaymentForm)))

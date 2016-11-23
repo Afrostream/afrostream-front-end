@@ -89,7 +89,6 @@ class Header extends React.Component {
               {...this.context}
               {...this.props}
               excludes={excludedBreacrumbsRoutes}
-              displayMissingText="Accueil"
               hideNoPath={true}
               displayMissing={false}
               setDocumentTitle={false}

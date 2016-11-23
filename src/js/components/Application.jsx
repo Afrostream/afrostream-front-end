@@ -84,8 +84,8 @@ if (process.env.BROWSER) {
 @connect(({Event, User, Modal}) => ({Event, User, Modal}))
 class Application extends React.Component {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
   }
 
   render () {

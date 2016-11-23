@@ -5,12 +5,16 @@ import * as CategoryActionCreators from '../../actions/category'
 import MoviesSlider from '../Movies/MoviesSlider'
 import Spinner from '../Spinner/Spinner'
 import NoMatch from '../NoMatch'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./BrowseGenrePage.less')
 }
 @prepareRoute(async function ({store, params: {categoryId}}) {
-  return await Promise.all( [
+  return await Promise.all([
     store.dispatch(CategoryActionCreators.getCategory(categoryId))
   ])
 })
@@ -21,6 +25,7 @@ class BrowseGenrePage extends React.Component {
   constructor (props) {
     super(props)
   }
+
   renderList () {
     const {
       props: {
@@ -64,4 +69,8 @@ class BrowseGenrePage extends React.Component {
   }
 }
 
-export default BrowseGenrePage
+BrowseGenrePage.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default injectIntl(BrowseGenrePage)

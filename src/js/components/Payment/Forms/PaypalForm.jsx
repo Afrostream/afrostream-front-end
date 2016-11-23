@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import classSet from 'classnames'
-import { getI18n } from '../../../../../config/i18n'
 import RecurlyForm from './RecurlyForm'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
@@ -61,7 +60,7 @@ class PaypalForm extends RecurlyForm {
       <div className="row">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
-          {getI18n().payment.paypal.paypalText.replace('{submitBtn}', getI18n().planCodes.action)}
+          {this.getTitle('payment.paypal.paypalText', {submitBtn: this.getTitle('planCodes.action')})}
         </h5>
       </div>
     )
@@ -83,7 +82,7 @@ class PaypalForm extends RecurlyForm {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{getI18n().payment.paypal.label}</label>
+            <label className="form-label">{this.getTitle('payment.paypal.label')}</label>
             <img src="/images/payment/paypal.png"/>
           </div>
         </div>

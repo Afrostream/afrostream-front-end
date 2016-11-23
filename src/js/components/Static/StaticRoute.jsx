@@ -31,9 +31,9 @@ class StaticRoute extends React.Component {
 
   render () {
     return (
-      <div className="row-fluid static-route content-padding brand-grey">
+      <div className="row-fluid static-route ">
         <i className="zmdi zmdi-print zmdi-hc-4x" onClick={::this.print}></i>
-        <div className="content" dangerouslySetInnerHTML={this.renderPage()}/>
+        <div className="container content-padding" dangerouslySetInnerHTML={this.renderPage()}/>
       </div>
     )
   }

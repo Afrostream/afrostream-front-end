@@ -8,6 +8,9 @@ import * as BillingActionCreators from '../../actions/billing'
 import WelcomePage from '../Welcome/WelcomePage'
 import SelectPlan from './SelectPlan'
 import { withRouter } from 'react-router'
+import {
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./PaymentPage.less')
@@ -63,4 +66,4 @@ PaymentPage.propTypes = {
   history: React.PropTypes.object.isRequired
 }
 
-export default withRouter(PaymentPage)
+export default withRouter(injectIntl(PaymentPage))

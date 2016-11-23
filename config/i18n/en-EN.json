@@ -1,4 +1,44 @@
 {
+  "routes": {
+    "app": "app",
+    "home": "home",
+    "company": "company",
+    "companynomatch": "company",
+    "about": "about",
+    "jobs": "jobs",
+    "job": "job",
+    "press": "press",
+    "faq": "faq",
+    "submit": "submit",
+    "legals": "legals",
+    "cgu": "cgu",
+    "policy": "policy",
+    "reset": "reset",
+    "signin": "signin",
+    "signup": "signup",
+    "coupon": "coupon",
+    "login": "login",
+    "newsletter": "newsletter",
+    "life": "life",
+    "community": "community",
+    "lifeUserInfos": "infos",
+    "lifePin": "pin",
+    "lifeTheme": "theme",
+    "store": "store",
+    "cash": "cash",
+    "cashPayment": "cashPayment",
+    "cashPayment": "cashPayment",
+    "cashPaymentMethod": "cashPaymentMethod",
+    "payment": "payment",
+    "paymentMethod": "paymentMethod",
+    "search": "search",
+    "compte": "compte",
+    "cancelSubscription": "cancelSubscription",
+    "sponsorship": "sponsorship",
+    "category": "category",
+    "last": "last",
+    "favoris": "favorites"
+  },
   "lang": {
     "fr": "French",
     "en": "English"
@@ -130,12 +170,13 @@
     "afrostreamambassadeurs2": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "afrostreamambassadeurs": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "infos": {
+      "internalActionLabel": "",
       "coupon": "Coupon valid {couponName}",
       "formule": "Plan",
       "prelevementMensuel": "Automatic debit payment",
       "price": "Price",
       "trialEnabled": "7 day free trial",
-      "internalMaxScreens": "Available simultaneously screen{s}",
+      "internalMaxScreens": "Available simultaneously screen(s)",
       "internalMobile": "Watch on your computer, smartphone and tablet",
       "internalUnlimited": "Unlimited movies and TV shows",
       "internalEngagment": "Cancel Anytime after the first month",
@@ -256,7 +297,8 @@
     },
     "droits": {
       "label": "I waive the right of retraction",
-      "link": "Download the cancellation form"
+      "link": "Download the cancellation form",
+      "tooltip": "A consumed month can not be refunded"
     }
   },
   "account": {
@@ -338,10 +380,13 @@
     }
   },
   "favorites": {
+    "add": "Add to my favorites",
+    "delete": "Remove from my favorites",
     "noData": "No Favorites added to my profile",
     "labelPage": "My Favourites"
   },
   "share": {
+    "tooltip": "Recommend",
     "label": "Share with friends",
     "labelBtn": "Share"
   },
@@ -349,6 +394,12 @@
     "label": "Next episode in {seconds} seconds",
     "goBackBtn": "Back to video",
     "labelLike": "Did you like this episode?"
+  },
+  "comment": {
+    "label": "Comment"
+  },
+  "player": {
+    "watch": "You watch"
   },
   "recommendation": {
     "noData": "No Recommendations",

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import * as BillingActionCreators from '../../actions/billing'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import moment from 'moment'
 import PaymentImages from '../Payment/PaymentImages'
 import { withRouter } from 'react-router'

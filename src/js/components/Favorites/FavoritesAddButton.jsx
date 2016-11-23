@@ -4,13 +4,18 @@ import { connect } from 'react-redux'
 import * as UserActionCreators from '../../actions/user'
 import classSet from 'classnames'
 import Spinner from '../Spinner/Spinner'
+import { I18n } from '../Utils'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./FavoritesAddButton.less')
 }
 
 @connect(({User}) => ({User}))
-class FavoritesAddButton extends React.Component {
+class FavoritesAddButton extends I18n {
 
   constructor (props) {
     super(props)
@@ -65,12 +70,12 @@ class FavoritesAddButton extends React.Component {
     let type = this.getType() === 'episode' ? 'episodes' : 'movies'
 
     dispatch(UserActionCreators[`setFavorites`](type, active, dataId))
-      .then(()=> {
+      .then(() => {
         self.setState({
           pendingFavorite: false
         })
       })
-      .catch(()=> {
+      .catch(() => {
         self.setState({
           pendingFavorite: false
         })
@@ -104,13 +109,15 @@ class FavoritesAddButton extends React.Component {
       onClick: event => ::this.setFavorite(!isFavorite, dataId)
     }
 
+    const titleLabel = this.getTitle(`${isFavorite ? 'favorites.add' : 'favorites.delete'}`)
+
     return (<div className="btn favorite-add_button" type="button" data-toggle="tooltip"
                  data-placement="top" ref="data"
-                 title={`${isFavorite ? 'Supprimer de' : 'Ajouter à' } mes favoris`}  {...inputAttributes}>
+                 title={titleLabel}  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>
       {this.state.pendingFavorite ? <Spinner /> : ''}
     </div>)
   }
 }
 
-export default FavoritesAddButton
+export default injectIntl(FavoritesAddButton)

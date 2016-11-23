@@ -16,6 +16,11 @@ if (process.env.BROWSER) {
 
 class ModalGocardlessMandat extends ModalComponent {
 
+  constructor (props, context) {
+    super(props, context)
+  }
+  
+
   submit () {
     let element = ReactDOM.findDOMNode(this)
     if (element) {
@@ -30,8 +35,8 @@ class ModalGocardlessMandat extends ModalComponent {
     }
   }
 
-  i18n (key = 'title') {
-    return <FormattedMessage id={`payment.virement.mandat.${key}`}/>
+  getI18n () {
+    return 'payment.virement.mandat'
   }
 
   render () {
@@ -55,15 +60,15 @@ class ModalGocardlessMandat extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{this.i18n('title')}</h1>
-                      <h2 >{this.i18n('info')}</h2>
+                      <h1>{this.getTitle('title')}</h1>
+                      <h2 >{this.getTitle('info')}</h2>
                       <a className={closeClass} href="#" onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">
                         <div className="row">
                           <div className="col-md-12">
-                            <label>{this.i18n('creancierLabel')}</label>
+                            <label>{this.getTitle('creancierLabel')}</label>
                           </div>
                           <div className="col-md-12">
                             {gocardless.creancier.id}
@@ -71,7 +76,7 @@ class ModalGocardlessMandat extends ModalComponent {
                         </div>
                         <div className="row">
                           <div className="col-md-12">
-                            <label> {this.i18n('creancierName')}</label>
+                            <label> {this.getTitle('creancierName')}</label>
                           </div>
                           <div className="col-md-12">
                             {gocardless.creancier.name}
@@ -79,7 +84,7 @@ class ModalGocardlessMandat extends ModalComponent {
                         </div>
                         <div className="row">
                           <div className="col-md-12">
-                            <label> {this.i18n('creancierAdress')}</label>
+                            <label> {this.getTitle('creancierAdress')}</label>
                           </div>
                           <div className="col-md-12">
                             {gocardless.creancier.adress}
@@ -88,7 +93,7 @@ class ModalGocardlessMandat extends ModalComponent {
                         <div className="divider"/>
                         <div className="row">
                           <div className="col-md-12">
-                            <label>{this.i18n('ibanLabel')}</label>
+                            <label>{this.getTitle('ibanLabel')}</label>
                           </div>
                           <div className="col-md-12">
                             {this.props.data.iban}
@@ -96,7 +101,7 @@ class ModalGocardlessMandat extends ModalComponent {
                         </div>
                         <div className="row">
                           <div className="col-md-12">
-                            <label> {this.i18n('ibanDetent')}</label>
+                            <label> {this.getTitle('ibanDetent')}</label>
                           </div>
                           <div className="col-md-12">
                             {this.props.data.account_holder_name}
@@ -104,16 +109,16 @@ class ModalGocardlessMandat extends ModalComponent {
                         </div>
                         <div className="row">
                           <div className="col-md-12">
-                            <label>{this.i18n('ibanRef')}</label>
+                            <label>{this.getTitle('ibanRef')}</label>
                           </div>
                           <div className="col-md-12">
-                            {this.i18n('ibanRefDispo')}
+                            {this.getTitle('ibanRefDispo')}
                           </div>
                         </div>
                         <div className="divider"/>
                         <div className="row">
                           <div className="col-md-12">
-                            <label>{this.i18n('ibanDate')}</label>
+                            <label>{this.getTitle('ibanDate')}</label>
                           </div>
                           <div className="col-md-12">
                             {dateNow}
@@ -121,17 +126,17 @@ class ModalGocardlessMandat extends ModalComponent {
                         </div>
                         <div className="divider"/>
                         <div className="row-fluid cgu">
-                          {this.i18n('cgu')}
+                          {this.getTitle('cgu')}
                         </div>
                       </div>
                     </div>
                     <div className="action">
                       <button name="submit-btn" type="submit" className="primary next" onClick={::this.submit}>
-                        {this.i18n('submit')}
+                        {this.getTitle('submit')}
                       </button>
                       <div className="options">
                         <a href="#" onClick={::this.cancel}
-                           className="centered btn-small cancel">{this.i18n('cancel')}</a>
+                           className="centered btn-small cancel">{this.getTitle('cancel')}</a>
                       </div>
                     </div>
                   </div>

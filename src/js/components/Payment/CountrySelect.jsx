@@ -1,7 +1,6 @@
 import React from 'react'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
-import moment from 'moment'
 
 import {
   FormattedMessage,
@@ -11,7 +10,7 @@ class CountrySelect extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {value: moment.locale()}
+    this.state = {value: 'FR'}
   }
 
   getValue () {
@@ -25,11 +24,12 @@ class CountrySelect extends React.Component {
   render () {
 
     return (
-      <div className="col-md-4">
-        <FormattedMessage tagName="label" className="form-label"
-                          htmlFor="country" id="payment.country.label"/>
-        <DropDownMenu className="card-country" ref="country" id="country" name="country" required
+      <div className="col-md-4 country-form">
+        <label className="form-label"
+               htmlFor="country"><FormattedMessage id="payment.country.label"/></label>
+        <DropDownMenu className="card-country" ref="country" id="country" name="country"
                       onChange={::this.handleChange}
+                      required
                       autoWidth={false}
                       style={{width: '100%'}}
                       value={this.state.value}>

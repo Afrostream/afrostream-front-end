@@ -296,7 +296,8 @@ ModalSocial.propTypes = {
 
 ModalSocial.defaultProps = {
   showLabel: false,
-  data: null
+  data: null,
+  modal: true
 }
 
 export default ModalSocial
