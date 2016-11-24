@@ -36,16 +36,16 @@ export default function render (req, res, layout, {payload}) {
      * on query, then you can assign accessToken (get from req) to query object
      * before calling API
      */
-    ({method, headers = {}, pathname = '', query = {}, body = {}, local = false}) => {
+    ({method, headers = {}, pathname = '', query = {}, body = {}, local = false, locale = '--'}) => {
       var url = `${apiServer.urlPrefix}${pathname}`
 
       query.from = query.from || heroku.appName
-      query.country = query.country || country || locale.toUpperCase() || '--'
-      query.language = query.locale || locale || locale.toUpperCase() || '--'
 
       if (local) {
         url = pathname
       }
+
+      console.log('url : ', url)
 
       //FIX HW disallow body null and return 502
       if (method === 'GET') {

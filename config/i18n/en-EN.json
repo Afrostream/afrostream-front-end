@@ -154,21 +154,14 @@
   "signupSocialButton": "Register with {connection:title}",
   "networkError": "Server unreachable. <br/> Please try again.",
   "planCodes": {
-    "cash": {
-      "selectTitle": "Choose your plan"
-    },
-    "selectTitle": "Choose your plan and enjoy",
+    "selectTitle": "Choose your plan",
     "onePlanTitle": "Your plan",
-    "freePeriodLabel": "7 days trial",
+    "noPlans": "Auncune formule n'est possible dans votre pays",
+    "noMobilePlans": "Choose another payment method",
+    "freePeriodLabel": "and enjoy {trialPeriodLength} {trialPeriodUnit} test",
     "title": "Plan",
     "action": "Choose this offer",
     "actionMobile": "Payment by phone",
-    "noMobilePlans": "Choose another payment method",
-    "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",
-    "cashway-coupon-oneyear": "Formule Sérénité - 59,99€ pour 1 an de films et séries afro",
-    "afrostreammonthly": "Formule Mensuel - 7 jours d’essai puis 6,99€ par mois sans engagement",
-    "afrostreamambassadeurs2": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
-    "afrostreamambassadeurs": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "infos": {
       "internalActionLabel": "",
       "coupon": "Coupon valid {couponName}",

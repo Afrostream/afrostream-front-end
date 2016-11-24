@@ -62,13 +62,13 @@ function initSite (country) {
       query = {},
       body = {},
       legacy = false,
-      local = false
+      local = false,
+      locale = '--'
     }) => {
       pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '')
       let url = `${apiClient.urlPrefix}${pathname}`
       query.from = query.from || heroku.appName
       query.country = query.country || country || locale.toUpperCase() || '--'
-      query.language = query.locale || locale.toUpperCase() || '--'
       if (legacy) {
         url = url.replace(apiClient.urlPrefix, `${apiClient.protocol}://${apiClient.authority}`)
       }
