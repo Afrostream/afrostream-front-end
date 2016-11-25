@@ -68,6 +68,30 @@ class PaymentForm extends React.Component {
     return plan
   }
 
+  setupUser () {
+    const {
+      props: {
+        User,
+        dispatch
+      }
+    } = this
+    let currentPlan = this.hasPlan()
+    if (!currentPlan) {
+      return
+    }
+
+    let internalPlanUuid = currentPlan.get('internalPlanUuid')
+    const user = User.get('user')
+    if (!user) {
+      dispatch(ModalActionCreators.open({
+        target: 'showSignup',
+        donePath: `/select-plan/${internalPlanUuid}/checkout`
+      }))
+    } else {
+      dispatch(ModalActionCreators.close())
+    }
+  }
+
   setupPlan () {
     let currentPlan = this.hasPlan()
     if (!currentPlan) {
@@ -75,6 +99,7 @@ class PaymentForm extends React.Component {
     }
 
     let internalPlanUuid = currentPlan.get('internalPlanUuid')
+
     this.setState({
       internalPlanUuid: internalPlanUuid,
       currentPlan: currentPlan
@@ -89,6 +114,7 @@ class PaymentForm extends React.Component {
   }
 
   componentDidMount () {
+    this.setupUser()
     this.setupPlan()
     this.attachTooltip()
   }
@@ -106,7 +132,8 @@ class PaymentForm extends React.Component {
   componentWillReceiveProps (nextProps) {
     const {
       props: {
-        Billing
+        Billing,
+        User
       }
     } = this
 
@@ -130,8 +157,9 @@ class PaymentForm extends React.Component {
     } = this
 
     const currentPlan = this.state.currentPlan
+    const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid')
 
-    if (currentPlan && currentPlan.get('internalPlanUuid') === config.netsize.internalPlanUuid) {
+    if (currentPlan && internalPlanUuid === config.netsize.internalPlanUuid) {
       return
     }
 
@@ -213,7 +241,7 @@ class PaymentForm extends React.Component {
           passToken: true,
           reload: true,
           checkMobile: false
-        })).then(()=> {
+        })).then(() => {
           history.push('/select-plan')
         })
       }
@@ -320,10 +348,10 @@ class PaymentForm extends React.Component {
       lastName: lastName && lastName.getValue()
     }
 
-    Q.fcall(()=> {
+    Q.fcall(() => {
 
       if (!user) {
-        const promiseLogin = new Promise((resolve)=> {
+        const promiseLogin = new Promise((resolve) => {
           dispatch(ModalActionCreators.open({
             target: 'showSignup',
             donePath: `/select-plan/${billingInfo.internalPlanUuid}/checkout`,
@@ -334,7 +362,7 @@ class PaymentForm extends React.Component {
       }
       return user
     })
-      .then(()=> {
+      .then(() => {
         this.setState({
           error: null
         })
@@ -350,10 +378,10 @@ class PaymentForm extends React.Component {
 
         return methodForm.submit(billingInfo, this.state.currentPlan)
       })
-      .then((subBillingInfo)=> {
+      .then((subBillingInfo) => {
         billingInfo = _.merge(billingInfo, subBillingInfo)
         return this.submitSubscription(billingInfo)
-      }).catch((err)=> {
+      }).catch((err) => {
       self.error(err)
     })
   }
@@ -372,7 +400,7 @@ class PaymentForm extends React.Component {
     let isCash = router.isActive('cash')
 
     return Q()
-      .then(()=> {
+      .then(() => {
         if (formData.billingProviderName === 'netsize') {
           return dispatch(OAuthActionCreators.netsizeCheck({internalPlan: formData}))
         }
@@ -392,7 +420,7 @@ class PaymentForm extends React.Component {
         //On merge les infos en faisant un new call a getProfile
         return dispatch(UserActionCreators.getProfile())
       })
-      .then(()=> {
+      .then(() => {
         self.props.history.push(`${isCash ? '/cash' : ''}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch(({response : {body: {error, code, message}}}) => {
         let globalMessage = getI18n().payment.errors.global
@@ -429,9 +457,9 @@ class PaymentForm extends React.Component {
     })
 
     const containerDom = ReactDOM.findDOMNode(this)
-    _.forEach(formatError.fields, (errorField)=> {
+    _.forEach(formatError.fields, (errorField) => {
       let fields = Query.querySelectorAll(containerDom, `[data-billing=${errorField}]`)
-      _.forEach(fields, (field)=> {
+      _.forEach(fields, (field) => {
         DomClass.addClass(field, 'has-error')
       })
     })
@@ -446,7 +474,7 @@ class PaymentForm extends React.Component {
     })
     const containerDom = ReactDOM.findDOMNode(this)
     let fields = Query.querySelectorAll(containerDom, '[data-billing]')
-    _.forEach(fields, (field)=> {
+    _.forEach(fields, (field) => {
       DomClass.removeClass(field, 'has-error')
     })
   }

@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes'
+import * as ModalActionCreators from './modal'
 import * as OAuthActionCreators from './oauth'
 import * as BillingActionCreators from './billing'
 import * as FBActionCreators from './facebook'
@@ -69,6 +70,8 @@ const mergeProfile = function (data, getState, actionDispatcher) {
           if (donePath) {
             actionDispatcher(push(donePath))
           }
+
+          actionDispatcher(ModalActionCreators.close())
 
           return _.merge(data, {
             user: userMerged
