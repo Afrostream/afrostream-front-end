@@ -25,7 +25,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
     return await api({
       path: `/api/users/me`,
       passToken: true
-    }).then((userInfos)=> {
+    }).then((userInfos) => {
         let userMerged = userInfos.body || {}
         let planCode = userMerged.planCode
         let subscriptionsStatus = userMerged.subscriptionsStatus
@@ -35,7 +35,7 @@ const mergeProfile = function (data, getState, actionDispatcher) {
         userMerged = mergeFbUserInfo(userMerged)
         actionDispatcher(FBActionCreators.getFriendList())
 
-        return async ()=> {
+        return async () => {
           if (!planCode && !donePath) {
             if (status && status !== 'active') {
               donePath = `/select-plan/none/${status}`
@@ -49,12 +49,12 @@ const mergeProfile = function (data, getState, actionDispatcher) {
               })).then(({res: {body = []}}) => {
                 if (body) {
 
-                  let firstPlan = _.find(body, (plan)=> {
+                  let firstPlan = _.find(body, (plan) => {
                     let planUuid = plan.internalPlanUuid
                     return planUuid === config.netsize.internalPlanUuid
                   })
 
-                  if (!firstPlan) {
+                  if (!firstPlan && config.featuresFlip.redirectAllPlans) {
                     firstPlan = _.head(body)
                   }
 
@@ -204,7 +204,7 @@ export function setFavorites (type, active, id) {
         })
       }
 
-      let index = await list.findIndex((obj)=> {
+      let index = await list.findIndex((obj) => {
         return obj.get('_id') == id
       })
 

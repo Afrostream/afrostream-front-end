@@ -38,12 +38,12 @@ class HomePage extends React.Component {
         } else {
           let validPlans = Billing.get(`internalPlans`)
           if (validPlans) {
-            let firstPlan = validPlans.find((plan)=> {
+            let firstPlan = validPlans.find((plan) => {
               let planUuid = plan.get('internalPlanUuid')
               return planUuid === config.netsize.internalPlanUuid
             })
 
-            if (!firstPlan) {
+            if (!firstPlan && config.featuresFlip.redirectAllPlans) {
               firstPlan = validPlans.first()
             }
 

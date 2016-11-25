@@ -32,7 +32,8 @@ const protData = {
 const client = {
   featuresFlip: {
     sponsorship: true,
-    koment: true
+    koment: true,
+    redirectAllPlans: false
   },
   userProfile: {
     keys: {
