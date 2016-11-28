@@ -20,8 +20,7 @@ class LifeUsersList extends Component {
       }
     } = this
 
-    const lifeUsersList = Life.get(`life/users/${lifeUserId || ''}`)
-    return lifeUsersList
+    return Life.get(`life/users/${lifeUserId || ''}`)
   }
 
   renderItem ({data, key, index}) {
@@ -31,7 +30,7 @@ class LifeUsersList extends Component {
 
     const user = data
     return (
-      <div className="col-md-3" {...{key}}>
+      <div className="col-md-3 col-xs-4" {...{key}}>
         <AvatarCard className="avatar-card col-md-3" {...{user}} {...this.props} />
       </div>
     )
@@ -45,11 +44,12 @@ class LifeUsersList extends Component {
     const lifeUsersList = this.getUsers()
 
     const classList = {
-      'life-community-list': true
+      'life-community-list': true,
+      'row no-padding': true
     }
 
     return (<div className={classSet(classList)}>
-      {lifeUsersList && lifeUsersList.map((data, index) =>this.renderItem({
+      {lifeUsersList && lifeUsersList.map((data, index) => this.renderItem({
         data,
         index,
         key: `life-list-user--${index}`

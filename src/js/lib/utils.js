@@ -332,8 +332,9 @@ export const series = (...tasks) => (each) => (cb) => {
 }
 
 
-export function slugify (text) {
-  return text.toString().toLowerCase()
+export function slugify (text = '') {
+  let slugVal = text || ''
+  return slugVal.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
     .replace(/\-\-+/g, '-')         // Replace multiple - with single -

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
 import { Link } from '../Utils'
+import { slugify } from '../../lib/utils'
 import config from '../../../../config'
 import BrowseMenu from './../Browse/BrowseMenu'
 import SearchInput from './../Search/SearchBox'
@@ -85,18 +86,18 @@ class SideBar extends React.Component {
     switch (type) {
       case 'favoris':
         el = authorized && (
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/favoris"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/favoris"><i
               className="zmdi zmdi-favorite"/><FormattedMessage id={ 'menu.favoris' }/></Link>
             </li>)
         break
       case 'last':
         el = authorized && (
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/last"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/last"><i
               className="zmdi zmdi-movie-alt"/><FormattedMessage id={ 'menu.last' }/></Link></li>)
         break
       case 'sponsorship':
         el = authorized && canSponsorshipSubscription && (
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)}
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
                       to="/parrainage"><i
               className="zmdi zmdi-star"/><FormattedMessage id={ 'menu.sponsorship' }/></Link>
             </li>)
@@ -107,13 +108,20 @@ class SideBar extends React.Component {
       case 'search':
         el = authorized && <SearchInput defaultOpen={true}/>
         break
-      case 'compte':
+      case 'profile':
         el = (
-          <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/compte"><img
+          <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
+                    to={`/life/community/${user.get('_id')}/${slugify(user.get('nickname'))}`}><img
             src={user.get('picture')}
             alt="50x50"
             id="userButtonImg"
             className="icon-user"/><FormattedMessage id={ 'menu.profil' }/></Link></li>
+        )
+        break
+      case 'compte':
+        el = (
+          <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/compte"><i
+            className="fa fa-cog"/><FormattedMessage id={ 'menu.params' }/></Link></li>
         )
         break
       case 'logout':
@@ -265,19 +273,20 @@ class SideBar extends React.Component {
         <div className="sidebar-wrapper" style={sidebarStyle}>
           <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
           <ul className="sidebar-nav">
-            {this.getUserConnectedButtons(user, 'compte')}
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/"><i
+            {this.getUserConnectedButtons(user, 'profile')}
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/"><i
               className="zmdi zmdi-tv-play"/><FormattedMessage
               id={ `menu.${user && user.get('authorized') ? 'streaming' : 'home'}` }/>
             </Link></li>
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)} to="/life"><i
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/life"><i
               className="glyphicon glyphicon-fire"/><FormattedMessage id={ 'menu.life' }/></Link></li>
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e)=>::this.onSetOpen(false)}
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
                       to="/life/community"><i
               className="zmdi zmdi-accounts-list-alt"/><FormattedMessage id={ 'menu.community' }/></Link></li>
             {this.getUserConnectedButtons(user, 'favoris')}
             {this.getUserConnectedButtons(user, 'last')}
             {this.getUserConnectedButtons(user, 'sponsorship')}
+            {this.getUserConnectedButtons(user, 'compte')}
           </ul>
           {this.getUserConnectedButtons(user, 'logout')}
         </div>

@@ -23,11 +23,6 @@ class Link extends React.Component {
     return window.location.host === toLocation.host
   }
 
-  handleClick (event) {
-    if (this.props.onClick) this.props.onClick(event)
-    if (event.defaultPrevented) return
-  }
-
   render () {
     const {store} = this.context
     const {to, children, router, ...rest} = this.props
@@ -50,8 +45,7 @@ Link.contextTypes = {
 }
 
 Link.propTypes = {
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  onClick: PropTypes.func,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 }
 
 export default withRouter(Link)

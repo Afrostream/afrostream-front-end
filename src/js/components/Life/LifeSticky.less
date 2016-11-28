@@ -17,6 +17,7 @@
 .life-sticky {
   position: fixed;
   right: 0;
+  top: 0;
   bottom: 0;
   z-index: @nav-z-header + 3;
 
@@ -28,12 +29,13 @@
     opacity: .8;
   }
 
-  @pin-size: 60px;
+  @pin-size: 40px;
 
-  .zmdi {
+  .fa {
     color: @brand-primary;
     &:before {
-      font-size: 4em;
+      padding: 0.1em;
+      font-size: 2em;
     }
   }
 
@@ -45,7 +47,7 @@
     width: @pin-size;
     height: @pin-size;
     position: fixed;
-    bottom: 8em;
+    top: 1em;
     right: 20px;
     display: flex;
     align-items: center;
@@ -85,7 +87,7 @@
   }
 
   .rippling {
-    animation: .3s rippling 1;
+    animation: .1s rippling 1;
   }
 
   .layer {

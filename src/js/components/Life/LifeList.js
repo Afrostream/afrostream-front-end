@@ -33,7 +33,7 @@ class LifeList extends Component {
 
     //const listSize = (pinsList.size + Math.min(Math.round(pinsList.size / this.props.moduloSpots), spotList.size))
     let mergedList = pinsList
-    pinsList.forEach((spot, index)=> {
+    pinsList.forEach((spot, index) => {
       const canInsertSpot = this.canInsertSpot(spotList, index)
       if (canInsertSpot) {
         const randIndex = _.random(0, spotList.size - 1)
@@ -59,7 +59,7 @@ class LifeList extends Component {
     let spotList = spots || (lifeTheme && lifeTheme.get('spots'))
 
     if (spotList) {
-      spotList = spotList.filter((spot)=> {
+      spotList = spotList.filter((spot) => {
         return spot.get('type') === 'banner'
       })
     }
@@ -102,7 +102,7 @@ class LifeList extends Component {
     const imageWidth = highlightFirst ? sizes[Math.min(index, 1)] : sizes[1]
     const showBubble = !index
     return (
-      <LifePin {...{data, imageWidth, showBubble, key}} {...this.props} />
+      <LifePin {...{data, imageWidth, showBubble, key, index}} {...this.props} />
     )
   }
 
@@ -130,7 +130,7 @@ class LifeList extends Component {
     }
 
     return (<div className={classSet(classList)}>
-      {!virtual && pinsList.map((data, index) =>this.renderItem({
+      {!virtual && pinsList.map((data, index) => this.renderItem({
         data,
         index,
         key: `life-list-theme-${themeId}-${index}`

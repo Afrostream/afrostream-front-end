@@ -22,7 +22,7 @@ class LifeSticky extends Component {
     const {stickyBtn, stickyWrapper} =this.refs
     stickyBtn.classList.add('rippling')
     stickyWrapper.classList.add('clicked')
-    setTimeout(()=> {
+    setTimeout(() => {
       dispatch(ModalActionCreators.open({target: 'life-add', className: 'medium', cb: this.close.bind(this)}))
     }, 1000)
   }
@@ -54,7 +54,7 @@ class LifeSticky extends Component {
         <div className="life-sticky">
           <div className="button-wrapper" ref="stickyWrapper">
             <div className="layer"></div>
-            <button className="main-button zmdi zmdi-plus" ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
+            <button className="main-button fa fa-pencil-square-o" ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
               <div className="ripple"></div>
             </button>
           </div>

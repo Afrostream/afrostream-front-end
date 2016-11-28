@@ -132,7 +132,7 @@ export function fetchSpots ({limit = 22, startIndex = 0, stopIndex = 3}) {
   }
 }
 
-export function fetchUsers (fetchUserId, {limit = 22, startIndex = 0, stopIndex = 3}) {
+export function fetchUsers (fetchUserId, {limit = 200, startIndex = 0, stopIndex = 3}) {
   const lifeUserId = fetchUserId || ''
 
   return (dispatch, getState) => {
@@ -140,9 +140,7 @@ export function fetchUsers (fetchUserId, {limit = 22, startIndex = 0, stopIndex 
       type: ActionTypes.Life.fetchUsers,
       lifeUserId,
       res: await api({
-        path: `/api/life/users/${lifeUserId || ''}`
-
-        ,
+        path: `/api/life/users/${lifeUserId || ''}`,
         params: {
           limit
         }

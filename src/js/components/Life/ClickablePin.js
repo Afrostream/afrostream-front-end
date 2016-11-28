@@ -68,32 +68,34 @@ class ClickablePin extends Component {
     return config.userRoles.indexOf(config.userRoles[userRole]) >= config.userRoles.indexOf(roleRequired)
   }
 
+  getUrl (data) {
+    const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
+    return data.get('targetUrl') || pinUrl || '/life'
+  }
+
   clickHandlerPin (e, data) {
     const {
       props: {
-        dispatch,
-        history
+        dispatch
       }
     } = this
     const pinRole = data.get('role') || config.userRoles[1]
     const acl = this.validRole(pinRole)
-    const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
-    const donePath = data.get('targetUrl') || pinUrl || '/life'
+    const pinUrl = this.getUrl(data)
 
     if (!acl) {
       e.preventDefault()
       const modalRole = this.targetRole()
       return dispatch(ModalActionCreators.open({
         target: `life-${modalRole}`,
-        donePath,
+        pinUrl,
         closable: true,
         className: 'large'
       }))
     }
 
     if (data.get('body')) {
-      e.preventDefault()
-      return history.push(pinUrl)
+      return
     }
 
     const target = e.currentTarget || e.target
@@ -127,10 +129,6 @@ class ClickablePin extends Component {
             }]
           })
         }))
-        break
-      case 'article':
-        e.preventDefault()
-        history.push(pinUrl)
         break
 
       case 'image':

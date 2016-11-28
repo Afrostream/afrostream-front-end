@@ -130,10 +130,7 @@
 }
 
 .animated.slideDown {
-  -webkit-animation-name: slideDown;
-  -moz-animation-name: slideDown;
-  -o-animation-name: slideDown;
-  animation-name: slideDown;
+  .isNotMobile({ -webkit-animation-name: slideDown; -moz-animation-name: slideDown; -o-animation-name: slideDown; animation-name: slideDown; });
 }
 
 @-webkit-keyframes slideUp {
@@ -189,10 +186,7 @@
 }
 
 .animated.slideUp {
-  -webkit-animation-name: slideUp;
-  -moz-animation-name: slideUp;
-  -o-animation-name: slideUp;
-  animation-name: slideUp;
+  .isNotMobile({ -webkit-animation-name: slideUp; -moz-animation-name: slideUp; -o-animation-name: slideUp; animation-name: slideUp; });
 }
 
 .toolbar {

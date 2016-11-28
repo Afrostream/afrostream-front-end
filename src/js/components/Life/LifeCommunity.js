@@ -32,7 +32,7 @@ class LifeCommunity extends Component {
       return children
     }
     return (
-      <div className="life-theme">
+      <div className="life-theme life-community">
         <LifeUsersList {...this.props}/>
       </div>
     )

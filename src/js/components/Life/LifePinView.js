@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import config from '../../../../config'
 import moment from 'moment'
 import _ from 'lodash'
 import LifePin from './LifePin'
@@ -9,9 +10,13 @@ import LifeSpot from './LifeSpot'
 import Immutable from 'immutable'
 import AvatarCard from '../User/AvatarCard'
 import ModalSocial from '../Modal/ModalSocial'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import document from 'global/document'
 import ReactImgix from '../Image/ReactImgix'
 import shallowEqual from 'react-pure-render/shallowEqual'
+import scriptLoader from '../../lib/script-loader'
+
+const {addThisApi, addThis} = config
 
 if (process.env.BROWSER) {
   require('./LifePinView.less')
@@ -35,7 +40,7 @@ class LifePinView extends LifePin {
     const players = document.querySelectorAll('.ta-insert-video')
     const type = 'click'
     if (players) {
-      _.forEach(players, (element)=> {
+      _.forEach(players, (element) => {
         if (!element.dataset.events) element.dataset.events = ''
         const has = this.hasEvent(element, type)
 
@@ -54,6 +59,10 @@ class LifePinView extends LifePin {
     if (!shallowEqual(nextProps.params.pinId, this.props.params.pinId)) {
       this.addRemoveEvent()
     }
+
+    if (nextProps.isScriptLoaded && !this.props.isScriptLoaded) { // load finished
+      window['addthis'].init()
+    }
   }
 
   componentWillUnmount () {
@@ -62,10 +71,23 @@ class LifePinView extends LifePin {
 
   componentDidUpdate () {
     this.addRemoveEvent()
+    this.initAddThis()
   }
 
   componentDidMount () {
     this.addRemoveEvent()
+    this.initAddThis()
+  }
+
+  initAddThis () {
+    //Detect si le payment via la lib recurly est dispo
+    let addLib = window['addthis']
+    if (canUseDOM && addLib) {
+      const addthis_config = {}
+      addthis_config.pubid = addThis.publicKey
+      addLib.init()
+      addLib.toolbox('.addthis_toolbox')
+    }
   }
 
   videoClickHandler (e) {
@@ -107,9 +129,14 @@ class LifePinView extends LifePin {
     }
     const pinThemesList = data.get('themes')
     const allThemesList = Life.get(`life/themes/`)
-    const spots = pinThemesList && pinThemesList.flatMap((theme)=> {
+
+    if (!pinThemesList || !allThemesList) {
+      return (<div />)
+    }
+
+    const spots = pinThemesList && pinThemesList.flatMap((theme) => {
         const themeId = theme.get('_id')
-        const themesSpots = allThemesList.find((theme)=> {
+        const themesSpots = allThemesList.find((theme) => {
           return theme.get('_id') === themeId
         })//Life.get(`life/themes/${themeId}`)
         if (themesSpots) {
@@ -141,11 +168,14 @@ class LifePinView extends LifePin {
           <div className="row no-padding">
             <div className="col-md-9 col-xs-9 no-padding">
               <section dangerouslySetInnerHTML={{__html: data.get('body')}}/>
-              <ModalSocial {...this.props} closable={false} modal={false} showLabel={true}/>
+              {
+                /*<ModalSocial {...this.props} closable={false} modal={false} showLabel={true}/>*/
+              }
+              <div className="addthis_inline_share_toolbox"/>
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
-              {spots && spots.map((data, key)=><LifeSpot {...{data, key}} {...this.props} />).toJS()}
+              {spots && spots.map((data, key) => <LifeSpot {...{data, key}} {...this.props} />).toJS()}
             </div>
           </div>
         </div>
@@ -154,4 +184,6 @@ class LifePinView extends LifePin {
   }
 }
 
-export default LifePinView
+export default  scriptLoader(
+  [addThisApi]
+)(LifePinView)

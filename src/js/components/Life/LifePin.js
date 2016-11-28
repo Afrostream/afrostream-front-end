@@ -26,6 +26,7 @@ class LifePin extends ClickablePin {
 
     const {
       props:{
+        index,
         data,
         showBubble,
         imageWidth,
@@ -35,18 +36,26 @@ class LifePin extends ClickablePin {
 
     const type = data.get('type')
 
-    let imageUrl = extractImg({data, key: 'image', width: imageWidth, height: imageHeight, fit: 'crop'})
-
     const pinnedDate = moment(data.get('date'))
     const pinnedUser = data.get('user')
     const description = data.get('description')
     const themes = data.get('themes')
     const pinRole = data.get('role')
     const isPremium = pinRole === 'premium' || pinRole === 'vip'
+    const isFull = !index || !(description && description.length)
+
+    let imageUrl = extractImg({
+      data,
+      key: 'image',
+      width: imageWidth,
+      height: imageHeight,
+      crop: isFull && index ? 'entropy' : 'faces',
+      fit: 'crop'
+    })
 
     const brickStyle = {
       'brick': true,
-      'full': !(description && description.length),
+      'full': isFull,
       'premium': isPremium
     }
 
@@ -58,8 +67,8 @@ class LifePin extends ClickablePin {
     brickStyle[type] = true
     cardTypeIcon[type] = true
 
-    return (<Link to={data.get('originalUrl')} className={classSet(brickStyle)} onClick={
-      (e) =>::this.clickHandlerPin(e, data)
+    return (<Link to={this.getUrl(data)} className={classSet(brickStyle)} onClick={
+      (e) => ::this.clickHandlerPin(e, data)
     }>
       <div className="brick-content">
         <div className="brick-background">
@@ -72,8 +81,8 @@ class LifePin extends ClickablePin {
         </div>
         <div className="card-body">
           <div className="card-meta">
-            {themes && themes.map((theme, a)=><div key={`data-card-theme-${a}`}
-                                                   className="card-theme">{theme.get('label')}</div>)}
+            {themes && themes.map((theme, a) => <div key={`data-card-theme-${a}`}
+                                                     className="card-theme">{theme.get('label')}</div>)}
           </div>
           <div className="card-info">
             <div target="_self">{data.get('title')}</div>
@@ -105,6 +114,7 @@ class LifePin extends ClickablePin {
 
 LifePin.propTypes = {
   data: PropTypes.instanceOf(Immutable.Map),
+  index: PropTypes.number,
   imageHeight: PropTypes.number,
   imageWidth: PropTypes.number,
   showBubble: PropTypes.bool,
@@ -114,6 +124,7 @@ LifePin.propTypes = {
 
 
 LifePin.defaultProps = {
+  index: 0,
   imageWidth: 1080,
   imageHeight: 500,
   showBubble: true

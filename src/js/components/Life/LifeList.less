@@ -106,7 +106,7 @@
     //width: 350px;
     width: 33.33%;
     max-width: 33.33%;
-    .isNotMobile({ min-height: @minBrickHeight; });
+    min-height: @minBrickHeight;
     //max-height: 70vh;
     vertical-align: top;
     cursor: pointer;
@@ -371,7 +371,6 @@
       &:first-child {
         width: 100%;
         max-width: 100%;
-        min-height: @minBrickHeight;
         .brick-full();
         .card-body {
           .card-bubbles {

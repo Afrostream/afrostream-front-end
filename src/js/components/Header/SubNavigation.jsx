@@ -41,6 +41,9 @@ class SubNavigation extends Component {
       }
     } = this
 
+    if (!themesList) {
+      return (<div />)
+    }
     return (
       <Headroom tolerance={5} offset={200} classes={{
         initial: 'animated',
@@ -48,7 +51,7 @@ class SubNavigation extends Component {
         unpinned: 'slideUpSubHeader'
       }}>
         <ul className="sub-navigation">
-          {themesList && themesList.map((theme, i)=> {
+          {themesList && themesList.map((theme, i) => {
 
               let mapTo = to
               mapTo = mapTo.replace(/{_id}/g, theme.get('_id'))
@@ -97,7 +100,7 @@ class SubNavigation extends Component {
 
 
 SubNavigation.propTypes = {
-  themesList: PropTypes.instanceOf(Immutable.List).isRequired,
+  themesList: PropTypes.instanceOf(Immutable.List),
   to: PropTypes.string.isRequired,
 }
 
