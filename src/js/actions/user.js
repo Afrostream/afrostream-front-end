@@ -14,7 +14,7 @@ import _ from 'lodash'
 import config from '../../../config'
 
 const mergeProfile = function ({api, data, getState, dispatch}) {
-  return async ()=> {
+  return async () => {
 
     //HAS TOKEN STORED
     let donePath = getState().Modal.get('donePath')
@@ -78,12 +78,12 @@ const mergeProfile = function ({api, data, getState, dispatch}) {
         })).then(({res: {body = []}}) => {
           if (body) {
 
-            let firstPlan = _.find(body, (plan)=> {
+            let firstPlan = _.find(body, (plan) => {
               let planUuid = plan.internalPlanUuid
               return planUuid === config.netsize.internalPlanUuid
             })
 
-            if (!firstPlan  && config.featuresFlip.redirectAllPlans) {
+            if (!firstPlan && config.featuresFlip.redirectAllPlans) {
               firstPlan = _.head(body)
             }
 
@@ -110,11 +110,6 @@ const mergeProfile = function ({api, data, getState, dispatch}) {
       user
     })
 
-        }
-
-
-      }
-    )
     //}).catch((e)=> {
     //  console.log(e, 'remove user data')
     //  //FIXME replace logout method
@@ -317,16 +312,25 @@ export function getProfile () {
       await dispatch(OAuthActionCreators.getIdToken())
       const user = getState().User.get('user')
       return async () => {
-        return await mergeProfile({
-            api,
-            data: {
-              type: ActionTypes.User.getProfile,
-              user: null
-            },
-            getState,
-            dispatch
+        try {
+          return await mergeProfile({
+              api,
+              data: {
+                type: ActionTypes.User.getProfile,
+                user: null
+              },
+              getState,
+              dispatch
+            }
+          )
+        } catch (err) {
+          console.log('Error merge profile :', err.message)
+          return {
+            type: ActionTypes.User.getProfile,
+            user: null
           }
-        )
+        }
+
       }
     }
   }
