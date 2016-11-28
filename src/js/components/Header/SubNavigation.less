@@ -93,7 +93,9 @@
 
 .toolbar-sub-navigation {
   font-size: 2em;
-  text-transform: uppercase;
+  &:first-letter {
+    text-transform: uppercase;
+  }
 }
 
 &.animated.slideUpSubHeader {
@@ -123,7 +125,9 @@
   font-family: @font-oswald;
   font-size: 1.8em;
   .isMobile({ height: @sub-navigation-height-mobile; font-size: 1.3em; });
-  text-transform: uppercase;
+  &:first-letter {
+    text-transform: uppercase;
+  }
   display: inline-block;
   list-style: none;
   cursor: default;

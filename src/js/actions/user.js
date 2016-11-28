@@ -1,5 +1,4 @@
 import ActionTypes from '../consts/ActionTypes'
-import * as ModalActionCreators from './modal'
 import { isAuthorized } from '../lib/geo'
 import * as ModalActionCreators from './modal'
 import * as OAuthActionCreators from './oauth'
