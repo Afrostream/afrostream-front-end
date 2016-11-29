@@ -128,7 +128,7 @@ class SideBar extends React.Component {
         el = (
           <ul className="sidebar-nav">
             <li role="separator" className="divider"></li>
-            <li><Link activeClassName="active" onlyActiveOnIndex to="/" onClick={::this.logout}><i
+            <li><Link to="/" onClick={::this.logout}><i
               className="zmdi zmdi-lock-toggled"/><FormattedMessage id={ 'menu.logout' }/></Link></li>
             <li role="separator" className="divider"></li>
           </ul>
@@ -276,7 +276,7 @@ class SideBar extends React.Component {
             {this.getUserConnectedButtons(user, 'profile')}
             <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/"><i
               className="zmdi zmdi-tv-play"/><FormattedMessage
-              id={ `menu.${user && user.get('authorized') ? 'streaming' : 'home'}` }/>
+              id={ `menu.streaming` }/>
             </Link></li>
             <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/life"><i
               className="glyphicon glyphicon-fire"/><FormattedMessage id={ 'menu.life' }/></Link></li>

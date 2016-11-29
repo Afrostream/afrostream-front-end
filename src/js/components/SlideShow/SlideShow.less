@@ -9,18 +9,27 @@
   //height: 66vh;
 
   .slick-slider {
-    position: absolute;
-    .fullHeight();
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     .slick-arrow {
       display: none;
     }
     .slick-list {
-      position: absolute;
-      .fullHeight();
+      position: relative;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
     }
     .slick-track {
-      position: absolute;
-      .fullHeight();
+      position: relative;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
     }
 
     //.slick-slide {
@@ -153,7 +162,7 @@
 
 @media @tablet {
   .slide-show {
-    min-height: 56vh;
+    //min-height: 56vh;
     .isLandscape({ min-height: 76vh; });
     .pagination {
       left: @app-padding-mobile;
@@ -170,8 +179,13 @@
 
 @media @mobile {
   .slide-show {
+    min-height: inherit;
     .movie {
-      min-height: 46vh;
+      //min-height: 46vh;
+      min-height: inherit;
+      &.serie {
+        min-height: inherit;
+      }
     }
     .isLandscape({ min-height: 70vh; });
 
@@ -179,11 +193,9 @@
       right: 0;
     }
     .pager {
-      height: 8px;
-      width: 8px;
-      text-indent: 100%;
-      white-space: nowrap;
-      overflow: hidden;
+      left: @app-padding-mobile;
+      right: @app-padding-mobile;
+      text-align: right;
     }
 
     .movie {

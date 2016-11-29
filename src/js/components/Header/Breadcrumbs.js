@@ -88,9 +88,9 @@ class Breadcrumbs extends React.Component {
     path = path.replace(/\(/g, '')
     path = path.replace(/\)/g, '')
     let splittedPath = path.split('/')
-    splittedPath = _.remove(splittedPath, (path)=>!~this.props.excludes.indexOf(path))
+    splittedPath = _.remove(splittedPath, (path) => !~this.props.excludes.indexOf(path))
     let keyValue
-    splittedPath.map((link)=> {
+    splittedPath.map((link) => {
       if (link.substring(0, 1) == ':') {
         if (params) {
           //const initialPath = _.reduce(splittedPath, (start, link)=> {
@@ -105,6 +105,11 @@ class Breadcrumbs extends React.Component {
                 //case  'movieSlug':
                 value = store.getState().Movie.get(`movies/${paramValue}`)
                 hasNumber = value && value.size && `${value.get('title')}`
+                break
+              case  'themeId':
+                //case  'themeSlug':
+                value = store.getState().Life.get(`themes/${paramValue}`)
+                hasNumber = value && value.size && `${value.get('label')}`
                 break
               case  'seasonId':
                 //case  'seasonSlug':
@@ -133,17 +138,17 @@ class Breadcrumbs extends React.Component {
             }
           })
 
-          keyValue = _.remove(keyValue, (item)=> {
+          keyValue = _.remove(keyValue, (item) => {
             return item && item.value
           })
 
           const copyKeyValue = _.clone(keyValue)
 
-          keyValue = _.remove(keyValue, (item)=> {
+          keyValue = _.remove(keyValue, (item) => {
             return !item.excluded
           })
 
-          let pathWithParam = splittedPath.map((path, key)=> {
+          let pathWithParam = splittedPath.map((path, key) => {
             //const itemIndex = _.findIndex(copyKeyValue, (item)=> {
             //  return item.key === path.replace(':', '')
             //})
@@ -152,7 +157,7 @@ class Breadcrumbs extends React.Component {
             //    return next && ( ((start.value || start) + '/' + (next.value || next))) || start.value
             //  })
             let subLink = ''
-            _.forEach(takeValues, (item)=> {
+            _.forEach(takeValues, (item) => {
               return subLink += `/${item.value}`
             })
             let name = path
@@ -171,9 +176,9 @@ class Breadcrumbs extends React.Component {
     })
 
     if (elements.length) {
-      return _.map(elements, (path, key)=> {
+      return _.map(elements, (path, key) => {
         var itemClass = this.props.itemClass
-        if (makeLink || key < elements.length - 1) {
+        if (makeLink || route.childRoutes && route.childRoutes.length || key < elements.length - 1) {
           var link = !createElement ? path.link :
             React.createElement(Link, {
               to: path.link || path,

@@ -27,7 +27,6 @@
     "store": "store",
     "cash": "cash",
     "cashPayment": "cashPayment",
-    "cashPayment": "cashPayment",
     "cashPaymentMethod": "cashPaymentMethod",
     "payment": "payment",
     "paymentMethod": "paymentMethod",
@@ -601,7 +600,7 @@
     "title": "Partager"
   },
   "life": {
-    "stycky": {
+    "sticky": {
       "tooltip": "Poster une url"
     },
     "modal": {
@@ -617,7 +616,7 @@
     },
     "metas": {
       "title": "{themes} Afrostream Life",
-      "description": "Afrostream Life est le média dédié au meilleur de la culture afro-américaine, africaine et afro-caribéenne."
+      "description": "Le média social de la créativité afro"
     }
   },
   "sponsors": {

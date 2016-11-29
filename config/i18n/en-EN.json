@@ -594,7 +594,7 @@
     "title": "Share"
   },
   "life": {
-    "stycky": {
+    "sticky": {
       "tooltip": "Post content"
     },
     "modal": {
@@ -609,8 +609,8 @@
       }
     },
     "metas": {
-      "title": "{themes} | Afrostream Life",
-      "description": "Afrostream Life is the media dedicated to the best of Afro-American, African and Afro-Caribbean culture."
+      "title": "{themes} Afrostream Life",
+      "description": "The social media for black creativity"
     }
   },
   "sponsors": {

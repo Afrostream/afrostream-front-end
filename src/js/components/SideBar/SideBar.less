@@ -34,7 +34,9 @@
     width: @sidebar-width;
     margin: 0;
     list-style: none;
-    .isMobile({ padding: @header-height-mobile 0 0 0; });
+    &:first-of-type {
+      .isMobile({ padding: @header-height-mobile 0 0 0; });
+    }
 
     .icon-user {
       border-radius: 50px;
@@ -139,7 +141,7 @@
 
   .sidebar-wrapper {
     padding-top: 15px;
-    .sidebar-nav {
+    .sidebar-nav:first-of-type {
       padding: (@app-padding * 0.5) 0 0 0;
     }
   }

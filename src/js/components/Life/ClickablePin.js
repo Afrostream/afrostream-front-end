@@ -17,6 +17,13 @@ class ClickablePin extends Component {
     super(props, context)
   }
 
+  likePin (e) {
+    const {
+      props: {}
+    } = this
+    e.preventDefault()
+  }
+
   /**
    * Checks if the user role meets the minimum requirements of the route
    */

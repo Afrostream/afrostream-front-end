@@ -270,6 +270,16 @@
             font-size: 2em;
             color: @brand-primary;
           }
+          &.like {
+            &:before {
+              content: "\f08a";
+            }
+            &:hover:before {
+              color: @color-like;
+              content: "\f004";
+            }
+
+          }
           &.pin {
             &:before {
               content: "\f08d";
