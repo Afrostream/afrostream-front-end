@@ -2,15 +2,33 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import Headroom from 'react-headrooms'
+import { I18n } from '../Utils'
+
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./LifeSticky.less')
 }
 @connect(({Life, User}) => ({Life, User}))
-class LifeSticky extends Component {
+class LifeSticky extends I18n {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  componentDidMount () {
+    this.attachTooltip()
+  }
+
+  componentDidUpdate () {
+    this.attachTooltip()
+  }
+
+  attachTooltip () {
+    $(this.refs.stickyBtn).tooltip()
   }
 
   stickyAdd () {
@@ -24,7 +42,7 @@ class LifeSticky extends Component {
     stickyWrapper.classList.add('clicked')
     setTimeout(() => {
       dispatch(ModalActionCreators.open({target: 'life-add', className: 'medium', cb: this.close.bind(this)}))
-    }, 1000)
+    }, 300)
   }
 
   close () {
@@ -54,7 +72,11 @@ class LifeSticky extends Component {
         <div className="life-sticky">
           <div className="button-wrapper" ref="stickyWrapper">
             <div className="layer"></div>
-            <button className="main-button fa fa-pencil-square-o" ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
+            <button className="main-button fa fa-pencil-square-o"
+                    data-toggle="tooltip"
+                    data-placement="left"
+                    title={this.getTitle('life.sticky.tooltip')}
+                    ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
               <div className="ripple"></div>
             </button>
           </div>
@@ -64,4 +86,4 @@ class LifeSticky extends Component {
   }
 }
 
-export default LifeSticky
+export default injectIntl(LifeSticky)

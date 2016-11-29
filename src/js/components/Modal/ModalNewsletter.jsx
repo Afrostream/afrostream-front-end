@@ -88,7 +88,7 @@ class ModalNewsletter extends ModalGeoWall {
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
                       <FormattedMessage tagName="h1" id={`${this.props.header}`}/>
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a className={closeClass}  onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">

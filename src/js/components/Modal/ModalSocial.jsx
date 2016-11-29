@@ -271,7 +271,7 @@ class ModalSocial extends ModalComponent {
                     {this.props.modal && <div className="header top-header ">
                       <div className="bg-gradient"></div>
                       <FormattedMessage tagName="h1" id={`social.title`}/>
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a className={closeClass}  onClick={::this.handleClose}></a>
                     </div>}
                     <div className="mode-container">
                       <div className="mode">

@@ -601,6 +601,9 @@
     "title": "Partager"
   },
   "life": {
+    "stycky": {
+      "tooltip": "Poster une url"
+    },
     "modal": {
       "title": "Que voulez vous partager à la communauté ?",
       "step1": "Choisir une source",
@@ -613,7 +616,7 @@
       }
     },
     "metas": {
-      "title": "{themes} | Afrostream Life",
+      "title": "{themes} Afrostream Life",
       "description": "Afrostream Life est le média dédié au meilleur de la culture afro-américaine, africaine et afro-caribéenne."
     }
   },

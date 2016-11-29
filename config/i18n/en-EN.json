@@ -594,6 +594,9 @@
     "title": "Share"
   },
   "life": {
+    "stycky": {
+      "tooltip": "Post content"
+    },
     "modal": {
       "title": "What do you want to share with the community ?",
       "step1": "Choose a source",

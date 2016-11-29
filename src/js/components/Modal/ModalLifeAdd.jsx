@@ -269,7 +269,7 @@ class ModalLifeAdd extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header">
                       <FormattedMessage tagName="h1" id={`life.modal.title`}/>
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a className={closeClass}  onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">

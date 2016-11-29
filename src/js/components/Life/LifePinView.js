@@ -38,7 +38,7 @@ class LifePinView extends LifePin {
   }
 
   addRemoveEvent (add = true) {
-    const players = document.querySelectorAll('.ta-insert-video,img')
+    const players = document.querySelectorAll('.ta-insert-video,.life-pin .article-content img')
     const type = 'click'
     if (players) {
       _.forEach(players, (element) => {

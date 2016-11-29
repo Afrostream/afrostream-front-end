@@ -240,7 +240,7 @@ class ModalSponsors extends ModalComponent {
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
                       <h1>{`${this.getTitle('title')} ${sponsorsList && '(' + sponsorsList.size + ')' }` }</h1>
-                      <a ref="closeEl" className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a ref="closeEl" className={closeClass}  onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">

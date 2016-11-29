@@ -68,9 +68,13 @@ export default () => {
         switch (true) {
           case Boolean(~location.pathname.indexOf('/life')) :
 
-            const themesList = store.getState().Life.get(`life/themes/`)
+            let themesList = store.getState().Life.get(`life/themes/`)
+
             if (params.pinId) {
               data = store.getState().Life.get(`life/pins/${params.pinId}`)
+              if (data) {
+                themesList = data.get(themes)
+              }
             }
             if (params.themeId) {
               data = store.getState().Life.get(`life/themes/${params.themeId}`)
@@ -81,6 +85,7 @@ export default () => {
                 return theme.get('label')
               })
               themes = _.join(themesFlat.toJS(), ' - ')
+              themes += ' | '
             }
 
             metas.title = this.getTitle('life.metas.title', {themes})

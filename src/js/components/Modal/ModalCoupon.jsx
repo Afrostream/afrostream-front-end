@@ -267,7 +267,7 @@ class ModalCoupon extends ModalComponent {
                       <div className="bg-gradient"></div>
                       <h1>{this.getTitle()}</h1>
                       <h2 className={errClass}>{this.state.error}</h2>
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a className={closeClass}  onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       {this.getForm()}
