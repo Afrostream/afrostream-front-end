@@ -1,19 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import * as PlayerActionCreators from '../../actions/player'
-import * as ModalActionCreators from '../../actions/modal'
-import { slugify, extractImg } from '../../lib/utils'
+import { extractImg } from '../../lib/utils'
 import { Link } from '../Utils'
 import ClickablePin from './ClickablePin'
 import classSet from 'classnames'
 import ReactImgix from '../Image/ReactImgix'
 import Immutable from 'immutable'
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-
-if (canUseDOM) {
-  var ReactGA = require('react-ga')
-}
 
 @connect(({Life, User}) => ({Life, User}))
 class LifePin extends ClickablePin {

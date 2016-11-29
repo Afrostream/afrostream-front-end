@@ -8,7 +8,6 @@ import SignUpButton from '../../User/SignUpButton'
 import window from 'global/window'
 import ReactImgix from '../../Image/ReactImgix'
 import SlideShow from '../../SlideShow/SlideShow'
-import {  extractImg } from '../../../lib/utils'
 
 const {metadata, images} =config
 
@@ -50,7 +49,7 @@ class WelcomeHeader extends React.Component {
         Movie, Season, Episode, params, intl
       }
     } = this
-    let {movieId, seasonId, episodeId, lang} = params
+    let {movieId, seasonId, episodeId} = params
 
     let info = {
       title: intl.formatMessage({id: 'home.title'}),
