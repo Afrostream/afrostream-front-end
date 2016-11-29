@@ -40,7 +40,7 @@ class UserButton extends React.Component {
 
     if (token) {
       if (user) {
-        return  <ul className="nav" />
+        return <ul className="nav"/>
         //return (
         //  <ul className="nav">
         //    <li>
@@ -80,7 +80,7 @@ class UserButton extends React.Component {
 
     return (
       <ul className="nav">
-        <li className="hidden-xs">
+        <li>
           <button role="button" className="btn-signup pull-right" {...inputSignupAction}>
             <FormattedMessage id="signup.title"/>
           </button>

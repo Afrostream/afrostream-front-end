@@ -1,62 +1,68 @@
 @import (reference) '../../../styles/config.less';
 
-#lock.theme-default.pin .panel {
-  .mode {
-    text-align: left;
-    padding: 1em;
-    color: @brand-primary;
-    background-color: lighten(@color-black-2, 5%);
-    .isMobile({ display: flex; padding: 1em 0 1em 0; });
-    .spinner {
-      font-size: 0.8em;
-      left: 90%;
+#lock.theme-default.pin {
+  .panel {
+    .mode-container {
+      background-color: lighten(@color-black-2, 5%) !important;
     }
-
-    button,
-    button span {
-      color: @brand-primary !important;
-    }
-
-  }
-  .stepper {
-    width: 100%;
-  }
-
-  .step-buttons {
-
-  }
-  //material stepper display
-  .step-buttons > div > div > div > div {
-    display: flex;
-    padding: 2.5em 0 .5em 0;
-  }
-  .pin-btn {
-    background-color: transparent;
-    position: relative;
-    color: @brand-primary;
-    background-color: lighten(@color-black-2, 10%);
-    flex: 1;
-    min-width: 6em;
-    font-family: @font-family-base;
-    padding: 1em;
-    &:hover {
-      color: fade(@color-yellow, 70%);
-    }
-
-    &:before {
-      padding: 0.1em;
-      .isMobile({ padding: 0; });
-      font-family: @font-awasome;
-      font-size: 3em;
-      .isMobile({ font-size: 2em; });
-    }
-
-    .pin-label {
-      height: 1.8em;
-    }
-    .pin-description {
+    .mode {
+      text-align: left;
+      padding: 1em;
       color: @brand-primary;
-    }
-  }
+      background-color: lighten(@color-black-2, 5%);
+      .isMobile({ display: flex; padding: 1em 0 1em 0; flex-wrap: wrap; });
+      .spinner {
+        font-size: 0.8em;
+        left: 90%;
+      }
 
+      button,
+      button span {
+        color: @brand-primary !important;
+      }
+
+    }
+    .stepper {
+      width: 100%;
+    }
+
+    .step-buttons {
+
+    }
+    //material stepper display
+    .step-buttons > div > div > div > div {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 2.5em 0 .5em 0;
+    }
+    .pin-btn {
+      background-color: transparent;
+      position: relative;
+      color: @brand-primary;
+      background-color: lighten(@color-black-2, 10%);
+      flex: 1;
+      min-width: 6em;
+      font-family: @font-family-base;
+      padding: 1em;
+      &:hover {
+        color: fade(@color-yellow, 70%);
+      }
+
+      &:before {
+        padding: 0.1em;
+        .isMobile({ padding: 0; });
+        font-family: @font-awasome;
+        font-size: 3em;
+        .isMobile({ font-size: 2em; });
+      }
+
+      .pin-label {
+        height: 1.8em;
+      }
+      .pin-description {
+        color: @brand-primary;
+      }
+    }
+
+  }
 }
