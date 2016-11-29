@@ -26,19 +26,21 @@ class HomePage extends React.Component {
 
   checkAuth () {
     const {
-      props: {location, history, router, User, Billing}
+      props: {intl, history, router, User, Billing}
     } = this
-
+    const {locale, defaultLocale}= intl
     const user = User.get('user')
     if (user) {
       let isCash = router.isActive('cash')
       let planCode = user.get('planCode')
       let subscriptionsStatus = user.get('subscriptionsStatus')
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null
-      if (!planCode && (location.pathname !== '/compte')) {
-        let donePath = `${isCash ? '/cash' : ''}/select-plan`
+      let langRoute = `${locale && locale !== defaultLocale && ('/' + locale) || ''}`
+      const noRedirectRoute = router.isActive(`${langRoute}/compte`) || router.isActive(`${langRoute}/life`)
+      if (!planCode && !noRedirectRoute) {
+        let donePath = `${langRoute}${isCash ? '/cash' : ''}/select-plan`
         if (status && status !== 'active') {
-          donePath = `${donePath}/none/${status}`
+          donePath = `${langRoute}/none/${status}`
         } else {
           let validPlans = Billing.get(`internalPlans`)
           if (validPlans) {
@@ -52,7 +54,7 @@ class HomePage extends React.Component {
             }
 
             if (firstPlan) {
-              donePath = `${donePath}/${firstPlan.get('internalPlanUuid')}/checkout`
+              donePath = `${langRoute}/${firstPlan.get('internalPlanUuid')}/checkout`
             }
           }
         }
@@ -78,6 +80,10 @@ class HomePage extends React.Component {
   }
 }
 
+
+HomePage.contextTypes = {
+  store: PropTypes.object.isRequired
+}
 
 HomePage.propTypes = {
   intl: intlShape.isRequired,

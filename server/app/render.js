@@ -82,7 +82,9 @@ export default function render (req, res, layout, {payload}) {
           const {intl} = state
           // Try full locale, fallback to locale without region code, fallback to en
           const routeParamLang = _.find(routes, (route) => route.lang)
-          const language = (routeParamLang && routeParamLang.lang) || /*(preferredLocale && preferredLocale[0])*/ || intl.defaultLocale
+          //TODO FIXME render locale server whith preferredLocale
+          const language = (routeParamLang && routeParamLang.lang) || (preferredLocale && preferredLocale[0]) || intl.defaultLocale
+          //const language = (routeParamLang && routeParamLang.lang) || intl.defaultLocale
           // Split locales with a region code
           const locale = language.toLowerCase().split(/[_-]+/)[0]
           const messages = _.flattenJson(getI18n(locale))

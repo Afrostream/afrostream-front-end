@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
-
+import classSet from 'classnames'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
@@ -13,7 +13,7 @@ if (process.env.BROWSER) {
   require('./AvatarCard.less')
 }
 
-@connect(({}) => ({}))
+@connect(({User}) => ({User}))
 class AvatarCard extends React.Component {
 
   onError (e) {
@@ -23,7 +23,9 @@ class AvatarCard extends React.Component {
   render () {
     const {
       props: {
-        user
+        user,
+        User,
+        upload
       }
     } = this
 
@@ -31,16 +33,27 @@ class AvatarCard extends React.Component {
 
     const pins = user.get('lifePins')
 
+    const gloBalUser = User.get('user')
+
     const nickName = user.get('nickname')
+    const id = user.get('_id')
 
     const propsTo = {
-      to: `/life/community/${user.get('_id')}/${slugify(nickName)}`
+      to: `/life/community/${id}/${slugify(nickName)}`
+    }
+
+    const isCurrentUser = gloBalUser && gloBalUser.get('_id') === id
+
+    const avatarClass = {
+      'avatar': true,
+      'avatar-upload': upload || isCurrentUser
     }
     return (
       <div className={this.props.className}>
         <Link {...propsTo}>
-          <div className="avatar">
-            <ReactImgix className="avatar-card__background_image" src={`${imageUrl}?type=large`} bg={true} onError={this.onError} alt="user-avatar"/>
+          <div className={classSet(avatarClass)}>
+            {imageUrl && <ReactImgix className="avatar-card__background_image" src={`${imageUrl}?type=large`} bg={true}
+                                     onError={this.onError} alt="user-avatar"/>}
           </div>
           <div className="content">
             <p>{user.get('nickname')}</p>
@@ -55,11 +68,13 @@ class AvatarCard extends React.Component {
 
 AvatarCard.propTypes = {
   user: PropTypes.instanceOf(Immutable.Map),
+  upload: PropTypes.bool,
   className: PropTypes.string
 }
 
 AvatarCard.defaultProps = {
   user: null,
+  upload: false,
   className: 'avatar-card'
 }
 

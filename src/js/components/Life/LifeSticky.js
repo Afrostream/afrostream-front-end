@@ -5,7 +5,6 @@ import Headroom from 'react-headrooms'
 import { I18n } from '../Utils'
 
 import {
-  intlShape,
   injectIntl
 } from 'react-intl'
 
@@ -59,29 +58,22 @@ class LifeSticky extends I18n {
     } = this
 
     const user = User.get('user')
-    if (!user || user.get('token').get('role') !== 'admin') {
+    if (!user) {
       return <div />
     }
     return (
-      <Headroom disableInlineStyles={true} tolerance={5} offset={200} classes={{
-        initial: 'headroom',
-        pinned: 'headroom--pinned',
-        unpinned: 'headroom--unpinned',
-        bottom: 'headroom--bottom'
-      }}>
-        <div className="life-sticky">
-          <div className="button-wrapper" ref="stickyWrapper">
-            <div className="layer"></div>
-            <button className="main-button fa fa-pencil-square-o"
-                    data-toggle="tooltip"
-                    data-placement="left"
-                    title={this.getTitle('life.sticky.tooltip')}
-                    ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
-              <div className="ripple"></div>
-            </button>
-          </div>
+      <div className="life-sticky">
+        <div className="button-wrapper" ref="stickyWrapper">
+          <div className="layer"></div>
+          <button className="main-button fa fa-pencil-square-o"
+                  data-toggle="tooltip"
+                  data-placement="left"
+                  title={this.getTitle('life.sticky.tooltip')}
+                  ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
+            <div className="ripple"></div>
+          </button>
         </div>
-      </Headroom>
+      </div>
     )
   }
 }

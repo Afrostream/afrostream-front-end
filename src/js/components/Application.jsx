@@ -60,7 +60,7 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
 
-  await store.dispatch(CategoryActionCreators.getMenu())
+  store.dispatch(CategoryActionCreators.getMenu())
 
   store.dispatch(CategoryActionCreators.getSpots())
 
