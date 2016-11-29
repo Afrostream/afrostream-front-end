@@ -7,6 +7,34 @@
   padding: @header-height 0 0 0;
   min-height: 66vh;
   //height: 66vh;
+
+  .slick-slider {
+    position: absolute;
+    .fullHeight();
+    .slick-arrow {
+      display: none;
+    }
+    .slick-list {
+      position: absolute;
+      .fullHeight();
+    }
+    .slick-track {
+      position: absolute;
+      .fullHeight();
+    }
+
+    //.slick-slide {
+    //  float: left;
+    //  height: 100%;
+    //  min-height: 1px;
+    //}
+    //.slick-list, .slick-slider, .slick-track {
+    //  .fullHeight();
+    //  position: relative;
+    //  display: block;
+    //}
+
+  }
   .movie {
     //min-height: 100% !important;
     //height: 100% !important;
@@ -14,6 +42,7 @@
 
   .movie {
     //position: absolute;
+    position: relative;
     .fullHeight();
 
     .rsr-container {
@@ -60,38 +89,52 @@
   }
 
   .pager {
-    @color-purple-alpha: rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.4);
-    background-color: @color-purple-alpha;
-    display: inline-block;
-    font-family: @font-light;
-    font-size: 1.3em;
-    line-height: 1.6;
-    height: 25px;
-    margin: 5px;
-    padding: 1px;
-    text-indent: -9000px;
-    white-space: nowrap;
-    width: 25px;
-    color: @brand-primary;
-    border-radius: 100%;
-    border: 1px solid;
-    cursor: pointer;
-    .transition(all 0.2s);
-    &:hover,
-    &:focus,
-    &.pager--active,
-    &:active {
-      font-family: @font-roman;
-      background-color: @color-yellow;
-      border: 1px solid @color-purple-alpha;
-      color: @color-purple;
+    position: absolute;
+    bottom: @app-padding;
+    left: @app-padding;
+    li {
+      position: relative;
+      @color-purple-alpha: rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.4);
+      background-color: @color-purple-alpha;
+      display: inline-block;
+      font-family: @font-light;
+      font-size: 1.8em;
+      line-height: 1.6;
+      height: 1em;
+      width: 1em;
+      margin: 0.2em;
+      padding: 1px;
+      text-indent: -9000px;
+      white-space: nowrap;
+      color: @brand-primary;
+      border-radius: 50%;
+      border: 1px solid;
+      cursor: pointer;
+      .transition(all 0.2s);
+      &:hover,
+      &:focus,
+      &.pager--active,
+      &.slick-active,
+      &:active {
+        font-family: @font-roman;
+        background-color: @color-yellow;
+        border: 1px solid @color-purple-alpha;
+        color: @color-purple;
+      }
+      button {
+        font-size: 0.4em;
+        background: none;
+        border: none;
+        position: absolute;
+        .fullHeight();
+      }
     }
   }
 }
 
 @media (min-width: 768px) {
   .slide-show {
-    min-height: 36vw;
+    //min-height: 46vw;
   }
 }
 
@@ -127,7 +170,9 @@
 
 @media @mobile {
   .slide-show {
-    min-height: 46vh;
+    .movie {
+      min-height: 46vh;
+    }
     .isLandscape({ min-height: 70vh; });
 
     .pagination {

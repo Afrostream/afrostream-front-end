@@ -37,28 +37,6 @@ class LifeHome extends Component {
     super(props, context)
   }
 
-  componentDidMount () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
-    dispatch(IntercomActionCreators.createIntercom({
-      'feature_type': lifeFeature
-    }))
-  }
-
-  componentWillUnmount () {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-    dispatch(IntercomActionCreators.removeIntercom())
-  }
-
-
   render () {
     const {
       props: {

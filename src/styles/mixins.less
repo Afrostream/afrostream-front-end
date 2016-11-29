@@ -102,6 +102,15 @@
   background: -o-linear-gradient(top, @startColor, @endColor);
 }
 
+.aspect-ratio-w(@width, @height) {
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: (@height / @width) * 100%;
+  }
+}
+
 .aspect-ratio(@width, @height) {
   position: relative;
   &:before {

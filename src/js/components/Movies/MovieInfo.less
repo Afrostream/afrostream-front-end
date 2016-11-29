@@ -30,6 +30,20 @@
       height: 100%;
       vertical-align: middle;
     }
+
+  }
+
+  .afrostream-movie__logo {
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    right: -10em;
+    top: -10em;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    .aspect-ratio-w(16, 9);
+    .isMobile({ width: 100%; max-width: 100%; right: inherit });
   }
 
   > a {
@@ -54,8 +68,7 @@
     background-size: cover;
     background-position: 50% 0%;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    .isMobile({ background-attachment: scroll });
+    background-attachment: scroll;
     .afrostream-movie__mask {
       position: absolute;
       top: 0;

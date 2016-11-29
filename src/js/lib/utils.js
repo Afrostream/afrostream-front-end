@@ -403,6 +403,7 @@ export function extractImg ({
   keys = [],
   width = 1024,
   height = 780,
+  format = 'jpg',
   fit = 'clip',
   crop = 'entropy'
 }) {
@@ -435,7 +436,7 @@ export function extractImg ({
 
   }
 
-  imageUrl = `${config.images.urlPrefix}${imageUrl}?&crop=${crop}&fit=${fit}&w=${width}&h=${height}&q=${config.images.quality}&fm=${config.images.type}`
+  imageUrl = `${config.images.urlPrefix}${imageUrl}?&crop=${crop}&fit=${fit}&w=${width}&h=${height}&q=${config.images.quality}&fm=${format || config.images.type}`
 
   return imageUrl
 
