@@ -6,6 +6,7 @@ import _ from 'lodash'
 import LifePin from './LifePin'
 import { extractImg } from '../../lib/utils'
 import * as PlayerActionCreators from '../../actions/player'
+import * as ModalActionCreators from '../../actions/modal'
 import LifeSpot from './LifeSpot'
 import Immutable from 'immutable'
 import AvatarCard from '../User/AvatarCard'
@@ -37,7 +38,7 @@ class LifePinView extends LifePin {
   }
 
   addRemoveEvent (add = true) {
-    const players = document.querySelectorAll('.ta-insert-video')
+    const players = document.querySelectorAll('.ta-insert-video,img')
     const type = 'click'
     if (players) {
       _.forEach(players, (element) => {
@@ -50,7 +51,7 @@ class LifePinView extends LifePin {
 
         if (add) element.dataset.events += ',' + type
         else element.dataset.events = element.dataset.events.replace(new RegExp(type), '')
-        element[`${add ? 'add' : 'remove'}EventListener`]('click', ::this.videoClickHandler)
+        element[`${add ? 'add' : 'remove'}EventListener`]('click', ::this.elementClickHandler)
       })
     }
   }
@@ -90,7 +91,7 @@ class LifePinView extends LifePin {
     }
   }
 
-  videoClickHandler (e) {
+  elementClickHandler (e) {
     const {
       props: {
         dispatch
@@ -99,18 +100,30 @@ class LifePinView extends LifePin {
     e.preventDefault()
 
     const target = e.currentTarget || e.target
+
     const targetUrl = target.getAttribute('ta-insert-video')
     const targetType = target.getAttribute('ta-insert-type')
-    dispatch(PlayerActionCreators.loadPlayer({
-      data: Immutable.fromJS({
-        target,
-        autoplay: true,
-        sources: [{
-          src: targetUrl,
-          type: `video/${targetType}`
-        }]
-      })
-    }))
+
+    if (targetType) {
+      dispatch(PlayerActionCreators.loadPlayer({
+        data: Immutable.fromJS({
+          target,
+          autoplay: true,
+          sources: [{
+            src: targetUrl,
+            type: `video/${targetType}`
+          }]
+        })
+      }))
+    }
+    else {
+      dispatch(ModalActionCreators.open({
+        className: 'large',
+        target: 'image', data: Immutable.fromJS({
+          src: e.target.src
+        })
+      }))
+    }
   }
 
   render () {

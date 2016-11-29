@@ -20,17 +20,18 @@
     padding: 0.3em;
     max-width: 100%;
     margin: 0 auto;
-    //.aspect-ratio(4, 3);
-
+    .aspect-ratio(1, 1);
     width: 10em;
-    height: 10em;
     img,
     .avatar-card__background_image {
+      position: absolute;
+      top: 0.3em;
+      left: 0.3em;
+      bottom: 0.3em;
+      right: 0.3em;
       background-position: 50% 50%;
       background-repeat: no-repeat;
       background-size: cover;
-      height: 100%;
-      width: 100%;
       border-radius: 50%;
       border: 5px solid fade(@color-indigo, 90%);
     }

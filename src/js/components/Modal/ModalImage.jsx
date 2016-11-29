@@ -49,9 +49,9 @@ class ModalImage extends ModalComponent {
                     <div className="mode-container">
                       <div className="modal-image-container">
                         <div className="content">
-                          <Link to={data.get('link')}>
-                            <ReactImgix className="modal-image" src={data.get('src')} bg={true}/>
-                          </Link>
+                          {/*<Link to={data.get('link')}>*/}
+                          <ReactImgix className="modal-image" src={data.get('src')} bg={true}/>
+                          {/*</Link>*/}
                         </div>
                       </div>
                     </div>
