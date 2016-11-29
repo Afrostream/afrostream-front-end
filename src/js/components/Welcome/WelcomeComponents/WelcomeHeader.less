@@ -2,15 +2,18 @@
 
 .welcome-header {
   width: 100%;
-  min-height: 80vh;
   .slide-show {
-    min-height: 80vh;
+    padding: 0;
+    .movie {
+      .isMobile({ min-height: 66vh; });
+    }
     .movie .movie-info_content {
       vertical-align: bottom;
     }
     .subscribe-button {
       vertical-align: bottom;
       margin: 1em 0 1em 0;
+      .isMobile({ font-size: 1em; });
     }
   }
   padding-top: @header-height;

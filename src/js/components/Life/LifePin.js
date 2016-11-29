@@ -98,7 +98,7 @@ class LifePin extends ClickablePin {
                    className="icon-user"/>
             </div>}
             <div className={classSet(cardTypeIcon)}/>
-            <div className="card-bubble card-bubble-type like" onClick={::this.likePin}/>
+            {/*<div className="card-bubble card-bubble-type like" onClick={::this.likePin}/>*/}
           </div>}
         </div>
       </div>

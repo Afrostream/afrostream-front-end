@@ -62,19 +62,20 @@ if (process.env.BROWSER) {
 
   await store.dispatch(CategoryActionCreators.getMenu())
 
+  store.dispatch(CategoryActionCreators.getSpots())
+
   if (movieId && movieId !== 'undefined') {
-    await store.dispatch(MovieActionCreators.getMovie(movieId))
+    store.dispatch(MovieActionCreators.getMovie(movieId))
   }
   if (seasonId && seasonId !== 'undefined') {
-    await store.dispatch(SeasonActionCreators.getSeason(seasonId))
+    store.dispatch(SeasonActionCreators.getSeason(seasonId))
   }
 
   if (episodeId && episodeId !== 'undefined') {
-    await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
+    store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 
-  await store.dispatch(LifeActionCreators.fetchThemes())
-
+  store.dispatch(LifeActionCreators.fetchThemes())
 })
 
 @metasData()
