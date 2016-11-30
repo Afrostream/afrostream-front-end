@@ -16,6 +16,7 @@ import document from 'global/document'
 import ReactImgix from '../Image/ReactImgix'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import scriptLoader from '../../lib/script-loader'
+import { StickyContainer, Sticky } from 'react-sticky'
 
 const {addThisApi, addThis} = config
 
@@ -86,6 +87,13 @@ class LifePinView extends LifePin {
     if (canUseDOM && addLib) {
       let configAddLib = window['addthis_config'] = window['addthis_config'] || {}
       configAddLib.pubid = addThis.publicKey
+
+      let shareAddLib = window['addthis_share'] = window['addthis_share'] || {}
+      shareAddLib = {
+        shorteners: {
+          bitly: {}
+        }
+      }
 
       addLib.init()
       addLib.toolbox('.addthis_toolbox')
@@ -189,7 +197,14 @@ class LifePinView extends LifePin {
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
-              {spots && spots.map((data, key) => <LifeSpot {...{data, key}} {...this.props} />).toJS()}
+              <StickyContainer>
+                <Sticky>
+                  {spots && spots.map((data, key) => <LifeSpot {...{
+                    data,
+                    key
+                  }} {...this.props} />).toJS()}
+                </Sticky>
+              </StickyContainer>
             </div>
           </div>
         </div>
