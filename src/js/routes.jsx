@@ -21,12 +21,14 @@ import _ from 'lodash'
 
 const langs = ['fr', 'en']
 
-const buildSubRoutes = function () {
-  return _.map(langs, (lang) =>
-    <Route key={lang} name="lang" path={lang} lang={lang}>
+const buildLangsRoutes = function () {
+  let allRoutes = _.map(langs, (lang) =>
+    <Route key={lang} name="lang" path={`/${lang}`} lang={lang}>
       {buildRoutes(lang)}
-    </Route>
+    </Route>,
   )
+  allRoutes.push(buildRoutes())
+  return allRoutes
 }
 
 const buildHome = function (lang) {
@@ -53,15 +55,22 @@ const buildHome = function (lang) {
     </Route>
   ]
 
-  if (lang) {
-    return homeRoutes
-  }
-  const langRoutes = buildSubRoutes()
-  homeRoutes.unshift(langRoutes)
+  //if (!lang) {
+  //  const langRoutes = buildLangsRoutes()
+  //  homeRoutes.unshift(langRoutes)
+  //}
 
-  return (<Route key={`${lang}-home`} path="/" name="home" component={HomePage}>
+  let settings = {}
+
+  //if (!lang) {
+  //  settings.path = '/'
+  //}
+
+  const finalRoutes = (<IndexRoute key={`${lang}-home`} {...settings} name="home" component={HomePage}>
     {homeRoutes}
-  </Route>)
+  </IndexRoute>)
+
+  return finalRoutes
 
 }
 const buildRoutes = function (lang) {
@@ -115,6 +124,6 @@ const buildRoutes = function (lang) {
 
 export default (
   <Route name="app" component={Application}>
-    {buildRoutes()}
+    {buildLangsRoutes()}
   </Route>
 )

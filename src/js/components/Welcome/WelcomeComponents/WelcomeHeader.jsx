@@ -128,12 +128,13 @@ class WelcomeHeader extends React.Component {
       <section className={classSet(welcomeClassesSet)}>
         {!movieData && <SlideShow dots={false}/>}
         {movieData && [
-          <ReactImgix className="afrostream-movie__poster" src={posterImg} bg={true}>
+          <ReactImgix key="welcome-pgm" className="afrostream-movie__poster" src={posterImg} bg={true}>
             <div className="afrostream-movie__mask"/>
             {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
           </ReactImgix>,
-          <SignUpButton className="subscribe-button subscribe-button-mobile" label={info.action}/>,
-          <div className="afrostream-movie">
+          <SignUpButton key="welcome-pgm-signup" className="subscribe-button subscribe-button-mobile"
+                        label={info.action}/>,
+          <div key="welcome-pgm-movie" className="afrostream-movie">
             <div className="afrostream-movie__info">
               <h1>{info.movie.title}</h1>
               <div className='detail-text'>{info.movie.synopsis}</div>

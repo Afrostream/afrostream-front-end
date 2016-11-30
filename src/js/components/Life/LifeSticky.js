@@ -67,7 +67,7 @@ class LifeSticky extends I18n {
           <div className="layer"></div>
           <button className="main-button fa fa-pencil-square-o"
                   data-toggle="tooltip"
-                  data-placement="left"
+                  data-placement="bottom"
                   title={this.getTitle('life.sticky.tooltip')}
                   ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
             <div className="ripple"></div>

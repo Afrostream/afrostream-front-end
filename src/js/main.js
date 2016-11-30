@@ -1,11 +1,9 @@
 import React from'react'
 import ReactDOM from'react-dom'
-import { createHistory } from 'history'
-import withScroll from 'scroll-behavior'
 import Router from './components/Router'
 import { Provider } from 'react-redux'
 import { IntlProvider } from 'react-intl-redux'
-
+import { browserHistory } from 'react-router'
 import createStore from './lib/createStore'
 import createAPI from './lib/createAPI'
 import request from 'superagent'
@@ -33,7 +31,7 @@ if (canUseDOM) {
   require('./lib/localStoragePolyfill')
 }
 
-const history = withScroll(createHistory())
+const history = browserHistory
 
 const {intl:{defaultLocale, locale, locales}} = __INITIAL_STATE__
 // Define user's language. Different browsers have the user locale defined
