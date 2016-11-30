@@ -89,7 +89,7 @@ let serverConfig = merge({}, {
   },
   externals: nodeModules,
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json', '.node']
+    extensions: ['.js', '.jsx', '.json', '.node']
   },
 
   node: {

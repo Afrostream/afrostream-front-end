@@ -1879,18 +1879,7 @@
       "version": "0.3.0"
     },
     "flat-cache": {
-      "version": "1.2.1",
-      "dependencies": {
-        "del": {
-          "version": "2.2.2"
-        },
-        "glob": {
-          "version": "7.1.1"
-        },
-        "globby": {
-          "version": "5.0.0"
-        }
-      }
+      "version": "1.2.1"
     },
     "flatten": {
       "version": "0.0.1"
@@ -2330,15 +2319,6 @@
     },
     "is-number": {
       "version": "2.1.0"
-    },
-    "is-path-cwd": {
-      "version": "1.0.0"
-    },
-    "is-path-in-cwd": {
-      "version": "1.0.0"
-    },
-    "is-path-inside": {
-      "version": "1.0.0"
     },
     "is-plain-obj": {
       "version": "1.1.0"
@@ -4084,6 +4064,14 @@
         }
       }
     },
+    "react-router-scroll": {
+      "version": "0.4.1",
+      "dependencies": {
+        "warning": {
+          "version": "3.0.0"
+        }
+      }
+    },
     "react-side-effect": {
       "version": "1.0.2",
       "dependencies": {
@@ -4404,7 +4392,12 @@
       "version": "1.2.1"
     },
     "scroll-behavior": {
-      "version": "0.8.2"
+      "version": "0.9.1",
+      "dependencies": {
+        "dom-helpers": {
+          "version": "3.0.0"
+        }
+      }
     },
     "section-iterator": {
       "version": "2.0.0"
