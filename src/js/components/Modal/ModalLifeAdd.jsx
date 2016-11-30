@@ -23,6 +23,7 @@ import {
   StepLabel,
   StepContent,
 } from 'material-ui/Stepper'
+
 import shallowEqual from 'react-pure-render/shallowEqual'
 
 const {life} = config
@@ -172,7 +173,7 @@ class ModalLifeAdd extends ModalComponent {
       shareButtonClass[network.icon] = true
 
       return (
-        <div className={classNames(shareButtonClass)} type="button"
+        <div className={classNames(shareButtonClass)}
              data-toggle="tooltip"
              data-placement="top"
              title={network.title}
@@ -188,6 +189,8 @@ class ModalLifeAdd extends ModalComponent {
       return
     }
     const imageUrl = scrappedData.get('imageUrl')
+
+    debugger
     return (<div className="row no-padding">
       <div className="col-md-12">
         <div className="row">
@@ -269,7 +272,7 @@ class ModalLifeAdd extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header">
                       <FormattedMessage tagName="h1" id={`life.modal.title`}/>
-                      <a className={closeClass}  onClick={::this.handleClose}></a>
+                      <a className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">

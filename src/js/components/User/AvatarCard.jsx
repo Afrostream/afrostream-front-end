@@ -20,6 +20,33 @@ class AvatarCard extends React.Component {
     e.target.src = require('../../../assets/images/default/134x200.jpg')
   }
 
+  syncFB () {
+    const {
+      props: {
+        dispatch,
+        User
+      }
+    } = this
+
+    const user = User.get('user')
+    const strategy = 'facebook'
+    if (user.get(strategy)) {
+      return
+    }
+    dispatch(OAuthActionCreators.strategy({strategy, isSynchro: user.get(strategy)}))
+      .then(() => {
+        dispatch(UserActionCreators.getProfile())
+        this.setState({
+          fetching: false
+        })
+      }).catch(() => {
+      this.setState({
+        fetching: false
+      })
+    })
+
+  }
+
   render () {
     const {
       props: {
@@ -39,7 +66,12 @@ class AvatarCard extends React.Component {
     const id = user.get('_id')
 
     const propsTo = {
-      to: `/life/community/${id}/${slugify(nickName)}`
+      to: `/life/community/${id}/${slugify(nickName)}`,
+      onClick: () => {
+        if (isCurrentUser) {
+          this.syncFB()
+        }
+      }
     }
 
     const isCurrentUser = gloBalUser && gloBalUser.get('_id') === id
@@ -48,6 +80,7 @@ class AvatarCard extends React.Component {
       'avatar': true,
       'avatar-upload': upload || isCurrentUser
     }
+
     return (
       <div className={this.props.className}>
         <Link {...propsTo}>

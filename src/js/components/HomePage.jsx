@@ -40,7 +40,7 @@ class HomePage extends React.Component {
       if (!planCode && !noRedirectRoute) {
         let donePath = `${langRoute}${isCash ? '/cash' : ''}/select-plan`
         if (status && status !== 'active') {
-          donePath = `${langRoute}/none/${status}`
+          donePath = `${donePath}/none/${status}`
         } else {
           let validPlans = Billing.get(`internalPlans`)
           if (validPlans) {
@@ -54,7 +54,7 @@ class HomePage extends React.Component {
             }
 
             if (firstPlan) {
-              donePath = `${langRoute}/${firstPlan.get('internalPlanUuid')}/checkout`
+              donePath = `${donePath}/${firstPlan.get('internalPlanUuid')}/checkout`
             }
           }
         }

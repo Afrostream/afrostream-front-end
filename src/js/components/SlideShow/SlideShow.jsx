@@ -52,7 +52,7 @@ class SlideShow extends React.Component {
       vertical: false,
       arrows: false,
       dotsClass: 'pager'
-    };
+    }
 
     return (
       <div className="slide-show" ref="slC">

@@ -112,7 +112,7 @@ const client = {
     '//smartplugin.youbora.com/v5/javascript/videojs5/5.1.3/sp.min.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
-  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#async=1',
+  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#async=1&pubid=ra-583c553b01382bdf',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
   gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
