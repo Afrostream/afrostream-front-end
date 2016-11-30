@@ -39,7 +39,7 @@ class LifePinView extends LifePin {
   }
 
   addRemoveEvent (add = true) {
-    const players = document.querySelectorAll('.ta-insert-video,.life-pin .article-content img')
+    const players = document.querySelectorAll('.ta-insert-video,.life-pin .article-content .col-left img')
     const type = 'click'
     if (players) {
       _.forEach(players, (element) => {
@@ -188,7 +188,7 @@ class LifePinView extends LifePin {
         </div>
         <div className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
           <div className="row no-padding">
-            <div className="col-md-9 col-xs-9 no-padding">
+            <div className="col-md-9 col-xs-9 no-padding col-left">
               <div className="addthis_toolbox addthis_default_style"/>
               <section dangerouslySetInnerHTML={{__html: data.get('body')}}/>
               {
