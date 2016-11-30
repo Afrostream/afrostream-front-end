@@ -16,14 +16,25 @@ const {browserSyncServer: {bSyncHost, bSyncPort}} = config
 
 const webpackDevServerUrl = `http://${host}:${port}`
 let clientConfig = merge({}, webpackConfig, {
-  debug: true,
   devServer: {
-    quiet: true, // add
     historyApiFallback: true,
-    noInfo: true,
+    compress: false,
+    inline: true,
     hot: true,
-    watch: true,
-    progress: true
+    stats: {
+      assets: true,
+      children: false,
+      chunks: false,
+      hash: false,
+      modules: false,
+      publicPath: false,
+      timings: true,
+      version: false,
+      warnings: true,
+      colors: {
+        green: '\u001b[32m',
+      }
+    }
   }
 })
 
@@ -49,7 +60,7 @@ clientConfig.plugins.push(
   //})
 )
 
-clientConfig.module.loaders[0].loaders.unshift('react-hot')
+//clientConfig.module.loaders[0].loaders.unshift('react-hot')
 
 //
 // Configuration for the server-side bundle (server.js)
@@ -69,15 +80,15 @@ let serverConfig = merge({}, webpackConfig, {
       {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
       {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
     ],
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       }
     ]

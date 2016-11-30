@@ -27,7 +27,7 @@ const AUTOPREFIXER_BROWSERS = [
 const assetsPath = path.resolve(__dirname, '../dist/')
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 let hash = null
-
+const productionMode = process.env.NODE_ENV === 'production'
 //
 // Common configuration chunk to be used for both
 // client-side (app.js) and server-side (server.js) bundles
@@ -36,7 +36,7 @@ const {webpackDevServer: {host, port}} = config
 const webpackDevServerUrl = `http://${host}:${port}`
 
 const webpackConfig = {
-  devtool: '#inline-eval-cheap-source-map',
+  devtool: 'eval-source-map',
   output: {
     path: assetsPath,
     publicPath: `${webpackDevServerUrl}/static/`,
@@ -70,7 +70,6 @@ const webpackConfig = {
       'jquery',
       'payment',
       'bootstrap',
-      'raven-js',
       'mobile-detect',
       'q',
       'qs',
@@ -80,80 +79,84 @@ const webpackConfig = {
     ]
   },
   resolve: {
-    modules: ['node_modules'],
-    extensions: ['', '.js', '.jsx', '.json']
+    modules: [node_modules_dir],
+    extensions: ['.js', '.jsx', '.json']
   },
   stats: {
     colors: true,
     chunks: false
   },
   module: {
-    preLoaders: [
-      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
-      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
-    ],
-    loaders: [
+    //FIXME webpack2 config error
+    //preLoaders: [
+    //  {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
+    //  {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
+    //],
+    rules: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.json$/,
-        loaders: ['json']
+        use: ['json-loader']
       },
       {
         test: /\.css$/,
-        loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
+        use: [ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader'})],
         include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader!postcss-loader!less-loader'
+        })
       },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
+        use: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /.(woff|woff2)([\?]?.*)$/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
+        use: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /.ttf([\?]?.*)$/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+        use: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /.eot([\?]?.*)$/,
-        loader: 'file-loader?name=[name].[ext]?[hash]'
+        use: 'file-loader?name=[name].[ext]?[hash]'
       },
       {
         test: /vtt\.js$/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
+        use: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /video\.js/,
-        loader: 'expose?videojs',
+        use: 'expose-loader?videojs',
         include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /koment-js$/,
-        loader: 'expose?koment',
+        use: 'expose-loader?koment',
         include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
-        test: /jquery\.js$/, loader: 'expose?$'
+        test: /jquery\.js$/, use: 'expose-loader?$'
       },
       {
-        test: /jquery\.js$/, loader: 'expose?jQuery'
+        test: /jquery\.js$/, use: 'expose-loader?jQuery'
       },
       {
-        test: /jquery\.js$/, loader: 'expose?jquery'
+        test: /jquery\.js$/, use: 'expose-loader?jquery'
       }
     ],
     exprContextCritical: false
@@ -173,12 +176,21 @@ const webpackConfig = {
       names: ['player', 'vendor'],
       minChunks: 2
     }),
+    new webpack.LoaderOptionsPlugin({
+      debug: !productionMode,
+      minimize: productionMode,
+      sourceMap: !productionMode,
+      options: {
+        postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
+      }
+    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new ReactIntlPlugin(),
+
     new webpack.ProvidePlugin({
       koment: 'koment-js',
       videojs: 'video.js',
@@ -214,9 +226,7 @@ const webpackConfig = {
         SUBDOMAIN: JSON.stringify(process.env.SUBDOMAIN)
       }
     })
-  ],
-
-  postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
+  ]
 }
 
 export default webpackConfig

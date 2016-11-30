@@ -12,7 +12,7 @@ const productionMode = process.env.NODE_ENV === 'production'
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 let clientConfig = merge({}, webpackConfig, {
-  devtool: productionMode ? 'hidden-source-map' : 'eval',
+  devtool: productionMode ? 'hidden-source-map' : 'eval-source-map',
   output: {
     publicPath: `/static/`,
     filename: '[name].js',
@@ -101,17 +101,17 @@ let serverConfig = merge({}, {
 
   module: {
     noParse: /node_modules\/json-schema\/lib\/validate\.js/,
-    loaders: [
+    rules: [
       {test: /\.node$/, loader: 'node-loader'},
       {test: /\.json$/, loader: 'json'},
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
