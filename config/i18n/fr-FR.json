@@ -1,7 +1,6 @@
 {
   "routes": {
-    "app": "app",
-    "home": "accueil",
+    "app": "accueil",
     "company": "companie",
     "companynomatch": "companie",
     "about": "a-propos",
@@ -601,7 +600,7 @@
   },
   "life": {
     "sticky": {
-      "tooltip": "Poster une url"
+      "tooltip": "Poster du contenu"
     },
     "modal": {
       "title": "Que voulez vous partager à la communauté ?",

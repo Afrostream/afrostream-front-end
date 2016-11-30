@@ -24,8 +24,8 @@ class LifeSpot extends ClickablePin {
 
     const imageUrl = extractImg({data, key: 'image', imageWidth})
 
-    return ( <Link to={data.get('targetUrl')} onClick={
-      (e) =>::this.clickHandlerPin(e, data)
+    return ( <Link to={data.get('targetUrl')} className={data.get('type')} onClick={
+      (e) => ::this.clickHandlerPin(e, data)
     }>
       <img className={`life-spot ${className}`} src={imageUrl} width={data.get('displayWidth')}/>
     </Link>)

@@ -15,11 +15,11 @@ import MovieInfo from '../Movies/MovieInfo'
 if (process.env.BROWSER) {
   require('./SlideShow.less')
 }
-@prepareRoute(async function ({store}) {
-  return await Promise.all([
-    store.dispatch(CategoryActionCreators.getSpots())
-  ])
-})
+//@prepareRoute(async function ({store}) {
+//  return await Promise.all([
+//    store.dispatch(CategoryActionCreators.getSpots())
+//  ])
+//})
 @connect(({Category, Slides}) => ({Category, Slides}))
 class SlideShow extends React.Component {
 
@@ -44,8 +44,10 @@ class SlideShow extends React.Component {
     }
 
     const settings = {
+      autoplay: this.props.autoplay,
       dots: this.props.dots,
-      infinite: false,
+      infinite: this.props.infinite,
+      autoplaySpeed: this.props.autoplaySpeed,
       speed: 500,
       vertical: false,
       arrows: false,
@@ -69,10 +71,16 @@ class SlideShow extends React.Component {
 
 SlideShow.propTypes = {
   history: React.PropTypes.object,
-  dots: React.PropTypes.bool
+  dots: React.PropTypes.bool,
+  autoplay: React.PropTypes.bool,
+  infinite: React.PropTypes.bool,
+  speed: React.PropTypes.number
 }
 
 SlideShow.defaultProps = {
-  dots: true
+  dots: true,
+  autoplay: false,
+  infinite: false,
+  speed: 5000
 }
 export default withRouter(SlideShow)

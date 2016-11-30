@@ -87,7 +87,7 @@ class SideBar extends React.Component {
       case 'favoris':
         el = authorized && (
             <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/favoris"><i
-              className="zmdi zmdi-favorite"/><FormattedMessage id={ 'menu.favoris' }/></Link>
+              className="glyphicon glyphicon-plus"/><FormattedMessage id={ 'menu.favoris' }/></Link>
             </li>)
         break
       case 'last':

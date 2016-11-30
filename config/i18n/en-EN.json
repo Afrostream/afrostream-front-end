@@ -1,7 +1,6 @@
 {
   "routes": {
-    "app": "app",
-    "home": "home",
+    "app": "home",
     "company": "company",
     "companynomatch": "company",
     "about": "about",
@@ -32,7 +31,7 @@
     "payment": "payment",
     "paymentMethod": "paymentMethod",
     "search": "search",
-    "compte": "compte",
+    "compte": "account",
     "cancelSubscription": "cancelSubscription",
     "sponsorship": "sponsorship",
     "category": "category",

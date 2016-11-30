@@ -24,13 +24,6 @@ class MovieInfo extends LoadVideo {
 
   constructor (props) {
     super(props)
-    this.state = {
-      isMobile: false,
-      size: {
-        height: 1280,
-        width: 800
-      }
-    }
   }
 
   static propTypes = {
@@ -72,7 +65,8 @@ class MovieInfo extends LoadVideo {
       data,
       key: 'poster',
       crop: 'faces',
-      fit: 'crop'
+      fit: 'crop',
+      height: 'none'
     })
 
     const link = this.getLink()

@@ -23,7 +23,7 @@ const langs = ['fr', 'en']
 
 const buildLangsRoutes = function () {
   let allRoutes = _.map(langs, (lang) =>
-    <Route key={lang} name="lang" path={`/${lang}`} lang={lang}>
+    <Route key={lang} name="lang" path={lang} lang={lang}>
       {buildRoutes(lang)}
     </Route>,
   )
@@ -52,23 +52,13 @@ const buildHome = function (lang) {
              name="player"
              path=":videoId"
              component={PlayerPage}/>
-    </Route>
+    </Route>,
+    <IndexRoute key={`${lang}-home-index`} component={HomePage}/>
   ]
 
-  //if (!lang) {
-  //  const langRoutes = buildLangsRoutes()
-  //  homeRoutes.unshift(langRoutes)
-  //}
-
-  let settings = {}
-
-  //if (!lang) {
-  //  settings.path = '/'
-  //}
-
-  const finalRoutes = (<IndexRoute key={`${lang}-home`} {...settings} name="home" component={HomePage}>
+  const finalRoutes = (<Route key={`${lang}-home`} component={HomePage}>
     {homeRoutes}
-  </IndexRoute>)
+  </Route>)
 
   return finalRoutes
 
@@ -114,8 +104,7 @@ const buildRoutes = function (lang) {
     <Redirect key={`${lang}-redirect-blog`} from="/blog/**/*" to="life"/>,
     <Redirect key={`${lang}-redirect-browse`} from="/browse/**/*" to="category"/>,
     //push subroutes after static routes
-    buildHome(lang),
-    <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
+    buildHome(lang)
   ]
 
   return subRoutes
@@ -123,7 +112,8 @@ const buildRoutes = function (lang) {
 }
 
 export default (
-  <Route name="app" component={Application}>
+  <Route name="app" path="/" component={Application}>
     {buildLangsRoutes()}
+    <Route path="*" name="nomatch" component={NoMatch}/>
   </Route>
 )
