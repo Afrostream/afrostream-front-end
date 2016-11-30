@@ -1,13 +1,15 @@
 import React, { PropTypes } from 'react'
 import * as BillingActionCreators from '../../actions/billing'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { getI18n } from '../../../../config/i18n'
+import { Link } from '../Utils'
 import moment from 'moment'
 import PaymentImages from '../Payment/PaymentImages'
 import { withRouter } from 'react-router'
 import { isBoolean } from '../../lib/utils'
 import RaisedButton from 'material-ui/RaisedButton'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./CancelSubscription.less')
@@ -81,19 +83,16 @@ class CancelSubscription extends React.Component {
     let isCancelable = isBoolean(currentSubscription.get('isCancelable'))
     let subStatus = currentSubscription.get('subStatus')
     let activeSubscription = currentSubscription && subStatus !== 'canceled' && isCancelable
-    let status = currentSubscription.get('status')
 
     if (!isCancelable) {
-      status = 'unCancelable'
+      subStatus = 'unCancelable'
     }
 
-    let header = getI18n().account.cancel.status[status]
 
     let endDate
     if (currentSubscription) {
       endDate = moment(currentSubscription.get('subPeriodEndsDate')).format('LLL')
     }
-    let infos = getI18n().account.cancel.info.replace(/{endDate}/gm, endDate)
 
     const inputAttributes = {
       onClick: event => ::this.cancelSubscription(currentSubscription)
@@ -103,21 +102,22 @@ class CancelSubscription extends React.Component {
       <div className="account-credit-card">
         <div className="row account-details">
           <div className="col-md-12">
-            <h1>{header}</h1>
+            <FormattedMessage tagName="h1" id={`account.cancel.status.${subStatus}`}/>
           </div>
         </div>
         <div className="col-md-12">
           <div className="row account-details__info">
-            {infos}
+            <FormattedMessage id={`account.cancel.info`} values={{endDate}}/>
           </div>
         </div>
         { activeSubscription &&
         <div className="row">
           <div className="col-md-12">
-            <RaisedButton {...inputAttributes} label={getI18n().account.cancel.submitBtn} secondary={true} style={style}
+            <RaisedButton {...inputAttributes} label={<FormattedMessage id={`account.cancel.submitBtn`}/>}
+                          secondary={true} style={style}
                           disabled={this.state.pending}/>
             <Link to="/">
-              <RaisedButton label={getI18n().account.cancel.cancelBtn} style={style}
+              <RaisedButton label={<FormattedMessage id={`account.cancel.cancelBtn`}/>} style={style}
                             disabled={this.state.pending}/>
             </Link>
           </div>

@@ -3,12 +3,18 @@ import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import classSet from 'classnames'
 import RaisedButton from 'material-ui/RaisedButton'
+import { I18n } from '../Utils'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
+
 if (process.env.BROWSER) {
   require('./ShareButton.less')
 }
 
 @connect(({Modal}) => ({Modal}))
-class ShareButton extends React.Component {
+class ShareButton extends I18n {
 
   constructor (props) {
     super(props)
@@ -55,7 +61,7 @@ class ShareButton extends React.Component {
     }
     return (<button className="btn share_button" type="button" data-toggle="tooltip" ref="data"
                     data-placement="top"
-                    title={this.props.tooltip}  {...inputAttributes}>
+                    title={this.getTitle(this.props.tooltip)}  {...inputAttributes}>
       <i className={classSet(favoriteClass)}></i>
       {this.getLabel()}
     </button>)
@@ -75,7 +81,7 @@ ShareButton.defaultProps = {
   description: null,
   title: null,
   label: '',
-  tooltip: 'Recommander'
+  tooltip: 'share.tooltip'
 }
 
-export default ShareButton
+export default injectIntl(ShareButton)

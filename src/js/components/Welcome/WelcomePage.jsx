@@ -9,8 +9,6 @@ import * as EventActionCreators from '../../actions/event'
 import * as MovieActionCreators from '../../actions/movie'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as BillingActionCreators from '../../actions/billing'
-import { withRouter } from 'react-router'
-import qs from 'qs'
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less')
@@ -36,14 +34,17 @@ if (process.env.BROWSER) {
   return await store.dispatch(BillingActionCreators.getInternalplans({contextBillingUuid, country, passToken: false}))
 })
 class WelcomePage extends React.Component {
+  constructor (props) {
+    super(props)
+  }
 
   render () {
     return (
       <div className="welcome-page">
-        <WelcomeHeader {...this.props}/>
-        <Devices {...this.props}/>
-        <SelectPlan {...this.props} showImages={false}/>
-        <Spots {...this.props}/>
+        <WelcomeHeader {...this.props}/>,
+        <Devices {...this.props} />,
+        <SelectPlan {...this.props} showImages={false}/>,
+        <Spots {...this.props}/>,
         <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
       </div>
     )
@@ -55,4 +56,4 @@ WelcomePage.propTypes = {
   location: React.PropTypes.object.isRequired
 }
 
-export default withRouter(WelcomePage)
+export default WelcomePage

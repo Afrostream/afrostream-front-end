@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import Poster from './Poster'
 import { connect } from 'react-redux'
 import classSet from 'classnames'

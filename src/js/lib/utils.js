@@ -2,6 +2,31 @@ import window from 'global/window'
 import config from '../../../config'
 import _ from 'lodash'
 
+function deepMap (obj, iterator, context) {
+  return _.transform(obj, function (result, val, key) {
+    result[key] = _.isObject(val) ?
+      deepMap(val, iterator, context) :
+      iterator.call(context, val, key, obj)
+  })
+}
+
+function flattenJson (x, result = {}, prefix) {
+  if (_.isObject(x)) {
+    _.each(x, function (v, k) {
+      flattenJson(v, result, prefix ? prefix + '.' + k : k)
+    })
+  } else {
+    result[prefix] = x
+  }
+  return result
+}
+
+
+_.mixin({
+  deepMap,
+  flattenJson
+})
+
 export function btoa (x) {
   if (window.btoa) {
     return window.btoa(x)
@@ -307,8 +332,9 @@ export const series = (...tasks) => (each) => (cb) => {
 }
 
 
-export function slugify (text) {
-  return text.toString().toLowerCase()
+export function slugify (text = '') {
+  let slugVal = text || ''
+  return slugVal.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
     .replace(/\-\-+/g, '-')         // Replace multiple - with single -
@@ -377,6 +403,7 @@ export function extractImg ({
   keys = [],
   width = 1024,
   height = 780,
+  format = 'jpg',
   fit = 'clip',
   crop = 'entropy'
 }) {
@@ -409,7 +436,7 @@ export function extractImg ({
 
   }
 
-  imageUrl = `${config.images.urlPrefix}${imageUrl}?&crop=${crop}&fit=${fit}&w=${width}&h=${height}&q=${config.images.quality}&fm=${config.images.type}`
+  imageUrl = `${config.images.urlPrefix}${imageUrl}?&crop=${crop}&fit=${fit}&w=${width}&h=${height}&q=${config.images.quality}&fm=${format || config.images.type}`
 
   return imageUrl
 

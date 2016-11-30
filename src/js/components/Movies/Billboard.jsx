@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { connect } from 'react-redux'
 import LoadVideo from '../LoadVideo'
@@ -7,12 +7,15 @@ import ShareButton from '../Share/ShareButton'
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import RateComponent from '../Recommendation/RateComponent'
 import CsaIcon from './CsaIcon'
+import ReactImgix from '../Image/ReactImgix'
+import { extractImg } from '../../lib/utils'
+import SignUpButton from '../User/SignUpButton'
 
 if (process.env.BROWSER) {
   require('./Billboard.less')
 }
 
-@connect(({Movie, Season}) => ({Movie, Season}))
+@connect(({Movie, Season, User}) => ({Movie, Season, User}))
 class Billboard extends LoadVideo {
 
   constructor (props) {
@@ -121,7 +124,7 @@ class Billboard extends LoadVideo {
 
   render () {
     const {
-      props: {data, maxLength}
+      props: {User, data, maxLength}
     } = this
 
     if (!data) {
@@ -171,6 +174,27 @@ class Billboard extends LoadVideo {
 
     let link = this.getLink()
 
+
+    const user = User.get('user')
+
+    let logo = data.get('logo') && extractImg({
+        data,
+        key: 'logo',
+        fit: 'none',
+        width: 500,
+        height: 380,
+        format: 'png'
+      })
+
+
+    if (!user) {
+      return (
+        <div className="billboard-infos">
+          {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
+          <SignUpButton className="subscribe-button" label="home.action"/>
+        </div>
+      )
+    }
 
     return (
       <div className="billboard-infos">

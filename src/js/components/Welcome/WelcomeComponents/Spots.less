@@ -3,24 +3,37 @@
 .spots-list {
   text-align: center;
   position: relative;
-  background-color: @color-indigo;
   width: 100%;
   padding: @thumb-margin 0 @thumb-margin 0;
+
   .browse-categorie_list_label {
+    text-transform: uppercase;
+    color: @brand-primary;
     font-size: 2em;
     font-family: @font-thin;
     text-transform: uppercase;
     margin: 10px @app-padding 10px @app-padding;
     .isMobile({ margin: 10px @app-padding-mobile 10px @app-padding-mobile; });
   }
-  .thumb {
-    float: left;
-    .isMobile({ width: 100%; });
-  }
 
   .movies-data-list.spots {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
     .movies-list__selection {
       font-size: 2.7em;
+    }
+
+    .thumb {
+      float: left;
+      order: 0;
+      flex: 1 1 auto;
+      //flex-basis: 270px; /* default value */
+      flex-grow: 0;
+      align-self: auto;
+      .isMobile({ width: 50%; });
     }
   }
 }

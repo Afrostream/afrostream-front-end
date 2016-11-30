@@ -12,7 +12,7 @@ const productionMode = process.env.NODE_ENV === 'production'
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 let clientConfig = merge({}, webpackConfig, {
-  devtool: productionMode ? 'hidden-source-map' : 'cheap-eval-source-map',
+  devtool: productionMode ? 'hidden-source-map' : 'eval-source-map',
   output: {
     publicPath: `/static/`,
     filename: '[name].js',
@@ -89,7 +89,7 @@ let serverConfig = merge({}, {
   },
   externals: nodeModules,
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json', '.node']
+    extensions: ['.js', '.jsx', '.json', '.node']
   },
 
   node: {
@@ -101,17 +101,17 @@ let serverConfig = merge({}, {
 
   module: {
     noParse: /node_modules\/json-schema\/lib\/validate\.js/,
-    loaders: [
+    rules: [
       {test: /\.node$/, loader: 'node-loader'},
       {test: /\.json$/, loader: 'json'},
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
@@ -125,12 +125,12 @@ let serverConfig = merge({}, {
   target: 'node',
 
   plugins: [
+    new webpack.IgnorePlugin(/\.(css|less|sass|gif|jpg|png|svg|favicon|ico|swf|xap)$/),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['server'],
+      name: 'server',
+      filename: 'server.js',
       minChunks: Infinity
     }),
-    new webpack.IgnorePlugin(/\.(css|less|sass|gif|jpg|png|svg|favicon|ico|swf|xap)$/),
-    new webpack.optimize.CommonsChunkPlugin('server', 'server.js'),
   ],
 
   devtool: 'source-map'

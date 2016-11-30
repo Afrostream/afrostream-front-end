@@ -2,7 +2,7 @@ import React from 'react'
 import { prepareRoute } from '../../decorators'
 import * as EventActionCreators from '../../actions/event'
 import * as JobActionCreators from '../../actions/job'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import { connect } from 'react-redux'
 
 @prepareRoute(async function ({store}) {
@@ -53,7 +53,7 @@ class Jobs extends React.Component {
     return (
       <div id="react-blog">
         <section className="backstage-section bg-linear" id="jobs">
-          <div className="container-fluid container-no-padding">
+          <div className="container-fluid no-padding">
             <div className="column-right">
               <h2 className="heading-2">Jobs</h2>
               {children ? children : this.renderJobs()}

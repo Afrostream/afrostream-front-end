@@ -1,6 +1,7 @@
 @import (reference) '../../../styles/config.less';
 
 .billboard-infos {
+  width: 100%;
   z-index: 5;
   position: relative;
   display: inline-block;
@@ -13,6 +14,7 @@
   margin-top: @header-height;
   font-size: 1.2em;
   a {
+    color: @brand-primary;
     text-decoration: none;
     display: block;
   }
@@ -25,10 +27,11 @@
       }
     }
   }
+
   .billboard-title {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
     font-family: @font-book;
-    font-size: 4.5em;
+    font-size: 3em;
     line-height: 1;
     text-transform: uppercase;
   }
@@ -61,7 +64,7 @@
     font-size: 1em;
     border-radius: 2px;
     padding: 3px 8px 3px 8px;
-    margin: 0 10px 0 0;
+    margin: 1em 10px 1em 0;
     display: inherit;
     color: @color-indigo;
     font-weight: 400;
@@ -94,6 +97,7 @@
 
 @media @mobile {
   .billboard-infos {
+    max-width: 100%;
     margin-top: @header-height-mobile;
     padding: @app-padding-mobile;
   }

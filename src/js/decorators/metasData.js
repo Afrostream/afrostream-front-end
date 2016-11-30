@@ -3,13 +3,13 @@ import Helmet from 'react-helmet'
 import config from '../../../config'
 import _ from 'lodash'
 import qs from 'qs'
-import { getI18n } from '../../../config/i18n'
 import { extractImg } from '../lib/utils'
+import { I18n } from '../components/Utils'
 
 export default () => {
 
   return (MetasDataComponent) => {
-    class MetasDataDecorator extends Component {
+    class MetasDataDecorator extends I18n {
 
       static contextTypes = {
         store: PropTypes.object.isRequired
@@ -68,23 +68,28 @@ export default () => {
         switch (true) {
           case Boolean(~location.pathname.indexOf('/life')) :
 
-            const themesList = store.getState().Life.get(`life/themes/`)
+            let themesList = store.getState().Life.get(`life/themes/`)
+
             if (params.pinId) {
               data = store.getState().Life.get(`life/pins/${params.pinId}`)
+              if (data) {
+                themesList = data.get(themes)
+              }
             }
             if (params.themeId) {
               data = store.getState().Life.get(`life/themes/${params.themeId}`)
             }
 
             if (themesList) {
-              let themesFlat = themesList.map((theme)=> {
+              let themesFlat = themesList.map((theme) => {
                 return theme.get('label')
               })
               themes = _.join(themesFlat.toJS(), ' - ')
+              themes += ' | '
             }
 
-            metas.title = getI18n(lang).life.metas.title
-            metas.description = getI18n(lang).life.metas.description
+            metas.title = this.getTitle('life.metas.title', {themes})
+            metas.description = this.getTitle('life.metas.description')
 
             break
 
@@ -100,8 +105,8 @@ export default () => {
                   //Replace global
                   //title = title.replace(/{planName}/g, plan.get('name'))
                   //synopsis = synopsis.replace(/{planDescription}/g, plan.get('description'))
-                  metas.title = getI18n(lang).sponsors.metas.title
-                  metas.description = getI18n(lang).sponsors.metas.description
+                  metas.title = this.getTitle('sponsors.metas.title')
+                  metas.description = this.getTitle('sponsors.metas.description')
                   data = plan
                 }
               }
@@ -117,6 +122,7 @@ export default () => {
                 let seasonData
                 let videoData
                 let episodeData
+
 
                 if (params.videoId) {
                   videoData = store.getState().Video.get(`videos/${params.videoId}`)
@@ -137,33 +143,41 @@ export default () => {
                 let type = movieData.get('type')
                 movieTitle = movieData.get('title')
 
-                if (type === 'movie') {
-                  metas.title = getI18n(lang).home.movie.title
-                  metas.description = getI18n(lang).home.movie.description
-                } else {
-                  metas.title = getI18n(lang).home.serie.title
-                  metas.description = getI18n(lang).home.serie.description
-                }
-
                 let actorsList = movieData.get('actors')
                 if (actorsList) {
-                  let actorsFlat = actorsList.map((actor)=> {
+                  let actorsFlat = actorsList.map((actor) => {
                     return `${actor.get('firstName')} ${actor.get('lastName')}`
                   })
                   actors = _.join(actorsFlat.toJS(), ',')
                 }
 
-                if (seasonData) {
-                  metas.title = getI18n(lang).home.season.title
-                  metas.description = getI18n(lang).home.season.description
-                  seasonNumber = seasonData.get('seasonNumber')
+                if (type === 'movie') {
+                  metas.title = this.getTitle('home.movie.title', {movieName: movieTitle})
+                  metas.description = this.getTitle('home.movie.description', {
+                    movieName: movieTitle,
+                    actors: actors
+                  })
+                } else {
+                  metas.title = this.getTitle('home.serie.title', {serieName: movieTitle})
+                  metas.description = this.getTitle('home.serie.description', {serieName: movieTitle})
                 }
 
                 if (episodeData) {
-                  metas.title = getI18n(lang).home.episode.title
-                  metas.description = getI18n(lang).home.episode.description
+                  metas.title = this.getTitle('home.episode.title', {})
+                  metas.description = this.getTitle('home.episode.description', {})
                   episodeNumber = episodeData.get('episodeNumber')
                 }
+
+                if (seasonData) {
+                  seasonNumber = seasonData.get('seasonNumber')
+                  metas.title = this.getTitle('home.season.title', {serieName: movieTitle, seasonNumber})
+                  metas.description = this.getTitle('home.season.description', {
+                    episodeNumber,
+                    seasonNumber,
+                    serieName: movieTitle
+                  })
+                }
+
 
                 if (params.videoId) {
                   //metas.type = episodeData ? 'video.episode' : 'video.video'
@@ -177,20 +191,6 @@ export default () => {
             }
             break
         }
-
-        if (movieTitle) {
-          metas.title = metas.title.replace(/{serieName}/g, movieTitle)
-          metas.title = metas.title.replace(/{movieName}/g, movieTitle)
-          metas.description = metas.description.replace(/{movieName}/g, movieTitle)
-          metas.description = metas.description.replace(/{serieName}/g, movieTitle)
-        }
-        metas.title = metas.title.replace(/{episodeNumber}/g, episodeNumber)
-        metas.title = metas.title.replace(/{seasonNumber}/g, seasonNumber)
-        metas.title = metas.title.replace(/{themes}/g, themes)
-        metas.description = metas.description.replace(/{episodeNumber}/g, episodeNumber)
-        metas.description = metas.description.replace(/{seasonNumber}/g, seasonNumber)
-        metas.description = metas.description.replace(/{actors}/g, actors)
-
 
         return {metas, data}
       }

@@ -4,12 +4,16 @@ import { connect } from 'react-redux'
 import * as MovieActionCreators from '../../actions/movie'
 import MoviesSlider from '../Movies/MoviesSlider'
 import Spinner from '../Spinner/Spinner'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./BrowseLastPage.less')
 }
 @prepareRoute(async function ({store}) {
-  return await Promise.all( [
+  return await Promise.all([
     store.dispatch(MovieActionCreators.getLast())
   ])
 })
@@ -33,12 +37,10 @@ class BrowseLastPage extends React.Component {
       return (<Spinner />)
     }
 
-    const label = 'Derniers ajouts'
-
     return (<div className="browse-categorie_list">
 
       <MoviesSlider axis="y"
-                    key={`last-movies`} {...this.props} {...{dataList, label}} />
+                    key={`last-movies`} label="browse.last" {...this.props} {...{dataList}} />
     </div>)
   }
 
@@ -51,4 +53,8 @@ class BrowseLastPage extends React.Component {
   }
 }
 
-export default BrowseLastPage
+BrowseLastPage.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default injectIntl(BrowseLastPage)

@@ -29,6 +29,15 @@
   @media (max-width: 750px) {
     @rules();
   }
+  //@media @mobile {
+  //  @rules();
+  //}
+  //@media @tablet {
+  //  @rules();
+  //}
+  //@media @highdensityTablet {
+  //  @rules();
+  //}
 }
 
 // If device is a mobile one
@@ -91,6 +100,15 @@
   background: -moz-linear-gradient(top, @startColor, @endColor);
   background: -ms-linear-gradient(top, @startColor, @endColor);
   background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+.aspect-ratio-w(@width, @height) {
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: (@height / @width) * 100%;
+  }
 }
 
 .aspect-ratio(@width, @height) {

@@ -2,7 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import MoviesSlider from '../Movies/MoviesSlider'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
+import {
+  intlShape,
+  injectIntl,
+  FormattedMessage
+} from 'react-intl'
+
 const {favorites} =config
 
 if (process.env.BROWSER) {
@@ -20,7 +25,15 @@ class FavoritesList extends React.Component {
     if (!dataList) {
       return
     }
-    return <MoviesSlider key={`favorite-${slug}`} {...{dataList, label, slug, type, thumbW, thumbH, load}} />
+    return <MoviesSlider {...this.props} key={`favorite-${slug}`} {...{
+      dataList,
+      label,
+      slug,
+      type,
+      thumbW,
+      thumbH,
+      load
+    }} />
   }
 
   render () {
@@ -32,13 +45,15 @@ class FavoritesList extends React.Component {
 
     const favoritesDataMovies = User.get('favorites/movies')
     const favoritesDataEpisodes = User.get('favorites/episodes')
-    let labelPage = getI18n().favorites['labelPage']
+    let labelPage = 'favorites.labelPage'
     if ((!favoritesDataMovies || !favoritesDataMovies.size) && (!favoritesDataEpisodes || !favoritesDataEpisodes.size)) {
-      labelPage = getI18n().favorites['noData']
+      labelPage = 'favorites.noData'
     }
     return (
-      <div className="favorites-list">
-        <div className="favorites-list__label">{labelPage}</div>
+      <div className="favorites-list container brand-grey">
+        <div className="favorites-list__label">
+          <FormattedMessage id={labelPage}/>
+        </div>
         { this.renderList(favoritesDataMovies, 'Films / Series', 'movies') }
         { this.renderList(favoritesDataEpisodes, 'Episodes', 'episodes', 'episode', 200, 110, true) }
       </div>
@@ -46,4 +61,8 @@ class FavoritesList extends React.Component {
   }
 }
 
-export default FavoritesList
+FavoritesList.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default injectIntl(FavoritesList)

@@ -4,16 +4,37 @@
   position: relative;
   background-color: @background-color-base;
   .fullHeight();
-  padding: @header-height @app-padding;
-  margin-top: -10px;
+  padding: @header-height 0 0 0;
   min-height: 66vh;
-  .movie {
-    min-height: 100% !important;
-    height: 100% !important;
+
+  .slick-slider {
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    .slick-arrow {
+      display: none;
+    }
+    .slick-list {
+      position: relative;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+    .slick-track {
+      position: relative;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
   }
 
   .movie {
-    position: absolute;
+    position: relative;
     .fullHeight();
 
     .rsr-container {
@@ -60,38 +81,52 @@
   }
 
   .pager {
-    @color-purple-alpha: rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.4);
-    background-color: @color-purple-alpha;
-    display: inline-block;
-    font-family: @font-light;
-    font-size: 1.3em;
-    line-height: 1.6;
-    height: 25px;
-    margin: 5px;
-    padding: 1px;
-    text-indent: -9000px;
-    white-space: nowrap;
-    width: 25px;
-    color: @brand-primary;
-    border-radius: 100%;
-    border: 1px solid;
-    cursor: pointer;
-    .transition(all 0.2s);
-    &:hover,
-    &:focus,
-    &.pager--active,
-    &:active {
-      font-family: @font-roman;
-      background-color: @color-yellow;
-      border: 1px solid @color-purple-alpha;
-      color: @color-purple;
+    position: absolute;
+    bottom: @app-padding;
+    left: @app-padding;
+    li {
+      position: relative;
+      @color-purple-alpha: rgba(red(@color-purple), green(@color-purple), blue(@color-purple), 0.4);
+      background-color: @color-purple-alpha;
+      display: inline-block;
+      font-family: @font-light;
+      font-size: 1.8em;
+      line-height: 1.6;
+      height: 1em;
+      width: 1em;
+      margin: 0.2em;
+      padding: 1px;
+      text-indent: -9000px;
+      white-space: nowrap;
+      color: @brand-primary;
+      border-radius: 50%;
+      border: 1px solid;
+      cursor: pointer;
+      .transition(all 0.2s);
+      &:hover,
+      &:focus,
+      &.pager--active,
+      &.slick-active,
+      &:active {
+        font-family: @font-roman;
+        background-color: @color-yellow;
+        border: 1px solid @color-purple-alpha;
+        color: @color-purple;
+      }
+      button {
+        font-size: 0.4em;
+        background: none;
+        border: none;
+        position: absolute;
+        .fullHeight();
+      }
     }
   }
 }
 
 @media (min-width: 768px) {
   .slide-show {
-    min-height: 36vw;
+    //min-height: 46vw;
   }
 }
 
@@ -110,7 +145,7 @@
 
 @media @tablet {
   .slide-show {
-    min-height: 56vh;
+    //min-height: 56vh;
     .isLandscape({ min-height: 76vh; });
     .pagination {
       left: @app-padding-mobile;
@@ -127,24 +162,30 @@
 
 @media @mobile {
   .slide-show {
-    min-height: 46vh;
+    min-height: inherit;
+    .movie {
+      //min-height: 46vh;
+      min-height: inherit;
+      &.serie {
+        min-height: inherit;
+      }
+    }
     .isLandscape({ min-height: 70vh; });
 
     .pagination {
       right: 0;
     }
     .pager {
-      height: 8px;
-      width: 8px;
-      text-indent: 100%;
-      white-space: nowrap;
-      overflow: hidden;
+      left: @app-padding-mobile;
+      right: @app-padding-mobile;
+      text-align: right;
     }
 
     .movie {
       .btn-play {
-        font-size: 5em;
-        top: 35%;
+        //font-size: 5em;
+        //top: 35%;
+        display: none;
       }
       .movie-background {
         position: absolute;
@@ -154,6 +195,7 @@
         margin: 0;
       }
       .billboard-infos {
+        max-width: 100%;
         margin-bottom: 20px;
         .billboard-synopsis {
           display: none;

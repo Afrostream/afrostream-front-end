@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import MoviesSlider from './MoviesSlider'
-import { getI18n } from '../../../../config/i18n'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./UserMoviesList.less')
@@ -25,7 +28,7 @@ class UserMoviesList extends React.Component {
     if (!dataList) {
       return (<div />)
     }
-    const label = getI18n().history.label
+    const label = 'history.label'
     const slug = 'history'
     const showTitle = true
     const showDescription = false
@@ -39,6 +42,7 @@ class UserMoviesList extends React.Component {
     return (
       <div className="user-movie-history">
         <MoviesSlider
+          {...this.props}
           className="user-movie-history_list movies-data-list"
           key={`user-movie-history`} {...{
           dataList,
@@ -59,4 +63,7 @@ class UserMoviesList extends React.Component {
   }
 }
 
-export default UserMoviesList
+UserMoviesList.propTypes = {
+  intl: intlShape.isRequired
+}
+export default injectIntl(UserMoviesList)

@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { getI18n } from '../../../../config/i18n'
+import { Link } from '../Utils'
 import RaisedButton from 'material-ui/RaisedButton'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 @connect(({User, Billing}) => ({User, Billing}))
 class AccountPassword extends React.Component {
@@ -22,11 +24,13 @@ class AccountPassword extends React.Component {
     return (
       <div className={`account-details__container col-md-${col}`}>
         <div className="panel-profil">
-          <div className="pannel-header">{`${getI18n().account.user.password} : ******`}</div>
+          <div className="pannel-header"><FormattedMessage tagName="h1"
+                                                           id={ 'account.user.password'} defaultMessage="******"/>
+          </div>
           <div className="row-fluid row-profil">
             <div className="col-md-12">
               <Link to="/reset">
-                <RaisedButton label={getI18n().account.user.updatePassword}/></Link>
+                <RaisedButton label={<FormattedMessage id={ 'account.user.updatePassword' }/>}/></Link>
             </div>
           </div>
         </div>

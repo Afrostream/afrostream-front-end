@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Immutable from 'immutable';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from '../Utils';
 import classSet from 'classnames';
 import * as CategoryActionCreators from '../../actions/category';
 

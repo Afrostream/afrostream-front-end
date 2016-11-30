@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getI18n } from '../../../../config/i18n'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import config from '../../../../config'
 import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
@@ -13,6 +12,10 @@ import MenuItem from 'material-ui/MenuItem'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import Checkbox from 'material-ui/Checkbox'
 import RaisedButton from 'material-ui/RaisedButton'
+import AvatarCard from '../User/AvatarCard'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 import areIntlLocalesSupported from 'intl-locales-supported'
 
@@ -39,8 +42,8 @@ if (process.env.BROWSER) {
 @connect(({User}) => ({User}))
 class AccountProfil extends React.Component {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this.state = {fetching: false}
   }
 
@@ -101,12 +104,14 @@ class AccountProfil extends React.Component {
   renderFormElement (section) {
     const {
       props: {
-        User
+        User,
+        intl
       }
     } = this
 
     const user = User.get('user')
-    const label = getI18n().account.profile[section.key]
+    const hasFacebook = Boolean(user && user.get('facebook'))
+    const label = intl.formatMessage({id: `account.profile.${section.key}`})
     const sectionValue = user.get(section.key) || ''
     const icon = section.icon || ''
     const isEnable = Boolean(sectionValue)
@@ -127,11 +132,11 @@ class AccountProfil extends React.Component {
           onClick: (event) => this.syncFB()
         }
         element = <div className="row-fluid">
-          <img className="img-responsive" {...inputAttributes} src={`${user.get('picture')}?type=large`}/>
+          <AvatarCard user={user} {...inputAttributes}/>
           <RaisedButton {...{label}} {...inputAttributes} style={{
             marginTop: 20,
             minWidth: 200
-          }} disabled={user.get('facebook')}/>
+          }} disabled={hasFacebook}/>
         </div>
         break
       case 'date':
@@ -161,13 +166,15 @@ class AccountProfil extends React.Component {
                             defaultSelected={section.defaultSelected}
                             valueSelected={sectionValue || section.defaultSelected}>
             {section.list.map((item, key) =><RadioButton style={{width: '30%'}} value={item.value}
-                                                         label={ getI18n().account.profile[item.value]}
+                                                         label={ <FormattedMessage
+                                                           id={`account.profile.${item.value}`}/>}
                                                          key={`${key}-item-radio`}/>)}
           </RadioButtonGroup>
         break
       case 'select':
         element = <SelectField value={sectionValue} {...inputAttributes} floatingLabelText={label}>
-          {section.list.map((item, key) =><MenuItem value={item.value} primaryText={item.label}
+          {section.list.map((item, key) =><MenuItem value={item.value}
+                                                    primaryText={intl.formatMessage({id: item.label})}
                                                     key={item.value}/>)}
         </SelectField>
         break
@@ -234,20 +241,23 @@ class AccountProfil extends React.Component {
   renderUserProfile () {
     const {
       props: {
-        profile
+        profile,
+        intl
       }
     } = this
 
     //GET SECTIONS
-    const title = getI18n().account.profile[profile]
     const sections = userProfile.keys[profile]
     return (<div className="panel-profil" key={`${profile}-profile`}>
-      <div className="pannel-header">{title}</div>
+      <div className="pannel-header">
+        <FormattedMessage
+          id={ `account.profile.${profile}` }/>
+      </div>
       <div className="row-fluid row-profil">
         {sections.map((section)=> {
           return (<div className={`col-md-${section.col ? section.col : 6}`} key={`${section.key}-section`}>
               <div className="row-fluid">
-                <div className="col-md-12">
+                <div className="col-md-12 no-padding">
                   {this.renderFormElement(section)}
                 </div>
               </div>
@@ -280,7 +290,6 @@ class AccountProfil extends React.Component {
     )
   }
 }
-
 
 AccountProfil.propTypes = {
   profile: React.PropTypes.string.isRequired,

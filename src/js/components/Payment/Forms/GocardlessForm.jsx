@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import classSet from 'classnames'
 import config from '../../../../../config'
-import { getI18n } from '../../../../../config/i18n'
 import CountrySelect from './../CountrySelect'
 import ModalGocardlessMandat from './../../Modal/ModalGocardlessMandat'
 import IBAN from 'iban'
@@ -81,7 +80,7 @@ class GocardlessForm extends CouponForm {
               self.setState({
                 modal: false
               })
-              error.message = getI18n().payment.errors.cancelled
+              error.message = this.getTitle('payment.errors.cancelled')
               return reject(error)
             })
           }
@@ -153,7 +152,7 @@ class GocardlessForm extends CouponForm {
           <ModalGocardlessMandat ref="modal" {...this.props} data={this.state.modalData}/> : ''}
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{getI18n().payment.virement.label}</label>
+            <label className="form-label">{this.getTitle('payment.virement.label')}</label>
             <img src="/images/payment/virement.jpg"/>
           </div>
         </div>

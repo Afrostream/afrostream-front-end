@@ -1,0 +1,206 @@
+@import (reference) '../../../styles/config.less';
+@import (reference) '../../../styles/btn-play';
+
+#page-content-wrapper .container-fluid.life-pin {
+  min-height: 100%;
+  margin: (@header-height + 30px) auto;
+  .isMobile({ margin: (@header-height + 30px) auto; });
+}
+
+.life-pin {
+  width: 100%;
+  position: relative;
+
+  .ta-insert-video {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    width: 100%;
+    .aspect-ratio(16, 9);
+    .isMobile({ width: 100% !important; });
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      top: 0;
+      bottom: 0;
+    }
+    .ta-insert-video-btn {
+      .btn-play();
+      font-size: 4em;
+      cursor: pointer;
+      display: block;
+    }
+  }
+
+  .pin-header {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    font-family: @font-oswald;
+    color: #fff;
+    text-align: center;
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      padding-top: 46.47%;
+      .isMobile({ padding-top: 76.47%; });
+    }
+
+    .pin-header-content {
+      display: inline-block;
+      position: relative;
+      vertical-align: middle;
+      text-align: center;
+      margin: 0;
+      padding: 0.3em;
+      font-size: 3em;
+      .isMobile({ font-size: 1.5em; });
+    }
+
+    .pin-header-background {
+      &:before {
+        display: block;
+        content: '';
+        width: 100%;
+        padding-top: 56.25%;
+      }
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      .pin-header-background_image {
+        transform: scale(1);
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+      }
+      .pin-header-background_mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        .gradient(fade(#000000, 20), fade(#000000, 40));
+      }
+
+      .bkdate {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 5px 10px;
+        width: 65px;
+        text-align: center;
+        font-weight: 600;
+        color: #fff;
+        background-color: fade(@color-black-2, 10%);
+        text-transform: uppercase;
+        .day {
+          font-size: 2em;
+          line-height: 2em;
+          border-bottom: 0.1em solid #fff;
+        }
+        .month {
+          font-size: 1.5em;
+          line-height: 1.5em;
+        }
+      }
+    }
+  }
+
+  .container-fluid {
+    margin-top: 30px;
+  }
+  .article-content {
+    font-family: @font-book;
+    font-size: 16px;
+    color: @color-black-2;
+    text-align: justify;
+  }
+  section {
+
+    a {
+      color: @color-indigo;
+    }
+    padding: @app-padding;
+    iframe,
+    img {
+      max-width: 100%;
+      .isMobile({ width: 100% !important; });
+    }
+    img.media-object {
+      max-width: inherit;
+    }
+    p,
+    img {
+      margin: 0.5em 0 0.5em 0;
+    }
+
+    .hClass (@index) when (@index > 0) {
+      h@{index} {
+        font-family: @font-oswald;
+        font-size: 2.0em + (1em / @index);
+        .isMobile({ font-size: 1.4em + (0.4em / @index); });
+      }
+      .hClass(@index - 1);
+    }
+    .hClass(6);
+
+    p:first-of-type {
+      &:first-letter {
+        font-family: @font-oswald;
+        float: left;
+        font-size: 3.8em;
+        .isMobile({ font-size: 2.5em; });
+        padding: 0 15px 0 15px;
+      }
+    }
+
+    blockquote {
+      background: @color-grey;
+      border-left: 10px solid @color-purple-1;
+      margin: 1.5em 10px 1.5em 10px;
+      padding: 1.8em 10px;
+      quotes: "\201C" "\201D" "\2018" "\2019";
+    }
+    blockquote:before {
+      color: @color-purple-1;
+      content: open-quote;
+      font-size: 4em;
+      line-height: 0.1em;
+      margin-right: 0.25em;
+      vertical-align: -0.4em;
+    }
+    blockquote p {
+      display: inline;
+    }
+  }
+
+  #lock.theme-default .panel {
+    box-shadow: none;
+    .mode {
+      text-align: left;
+    }
+    &.onestep {
+      width: 100%;
+    }
+    .share_button {
+    }
+  }
+
+  .col-right {
+    .avatar-card,
+    .life-spot {
+      margin: 0 0 1em 0;
+    }
+  }
+}

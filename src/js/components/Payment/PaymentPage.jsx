@@ -8,6 +8,9 @@ import * as BillingActionCreators from '../../actions/billing'
 import WelcomePage from '../Welcome/WelcomePage'
 import SelectPlan from './SelectPlan'
 import { withRouter } from 'react-router'
+import {
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./PaymentPage.less')
@@ -50,7 +53,7 @@ class PaymentPage extends React.Component {
 
     return (
       <div className="row-fluid brand-bg">
-        <div className="container brand-bg">
+        <div className="container brand-bg content-padding">
           {children ? children : <SelectPlan {...this.props}/>}
         </div>
       </div>
@@ -63,4 +66,4 @@ PaymentPage.propTypes = {
   history: React.PropTypes.object.isRequired
 }
 
-export default withRouter(PaymentPage)
+export default withRouter(injectIntl(PaymentPage))

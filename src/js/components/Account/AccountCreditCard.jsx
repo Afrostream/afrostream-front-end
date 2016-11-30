@@ -2,7 +2,7 @@ import React from 'react'
 import { prepareRoute } from '../../decorators'
 import * as UserActionCreators from '../../actions/user'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import config from '../../../../config'
 
 if (process.env.BROWSER) {

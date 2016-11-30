@@ -1,8 +1,13 @@
 import React from 'react'
 import * as ModalActionCreators from '../../actions/modal'
 import classNames from 'classnames'
+import { I18n } from '../Utils'
 
-class ModalComponent extends React.Component {
+class ModalComponent extends I18n {
+
+  constructor (props, context) {
+    super(props, context)
+  }
 
   static contextTypes = {
     location: React.PropTypes.object,
@@ -21,6 +26,10 @@ class ModalComponent extends React.Component {
     }
   }
 
+  getI18n () {
+    return 'modal'
+  }
+
   handleClose (e) {
     e.stopPropagation()
     e.preventDefault()
@@ -30,17 +39,18 @@ class ModalComponent extends React.Component {
 
   render () {
 
+    const {props:{children, closable, className}} =this
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
-      'hide': !this.props.closable
+      'hide': !closable
     })
 
     let panelClass = {
       'panel onestep active': true,
     }
 
-    panelClass[this.props.className] = true
+    panelClass[className] = true
 
     return (
       <div className="lock-container">
@@ -52,10 +62,10 @@ class ModalComponent extends React.Component {
                   <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
                     <div className="header top-header">
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a className={closeClass}  onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
-                      {this.props.children}
+                      {children && children}
                     </div>
                   </div>
                 </div>
@@ -73,7 +83,6 @@ ModalComponent.propTypes = {
   closable: React.PropTypes.bool,
   modal: React.PropTypes.bool,
   className: React.PropTypes.string
-
 }
 
 ModalComponent.defaultProps = {

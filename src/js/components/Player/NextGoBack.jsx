@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from'react-dom'
-import { getI18n } from '../../../../config/i18n'
+import { I18n } from '../Utils'
 
 if (process.env.BROWSER) {
   require('./NextGoBack.less')
 }
 
 
-class NextGoBack extends React.Component {
+class NextGoBack extends I18n {
   constructor (props, context) {
     super(props, context)
   }
@@ -21,7 +21,7 @@ class NextGoBack extends React.Component {
 
   render () {
     return (
-      <button className="btn btn-end__video" onClick={::this.goBackHandler}>{getI18n().next.goBackBtn}</button>
+      <button className="btn btn-end__video" onClick={::this.goBackHandler}>{this.getTitle('next.goBackBtn')}</button>
     )
   }
 }

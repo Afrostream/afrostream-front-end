@@ -8,14 +8,14 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.Event.createIntercom](state, { intercom }) {
+  [ActionTypes.Event.createIntercom](state, {intercom, appId, type}) {
     return state.merge({
-      ['intercom']: intercom
+      [`intercom/${appId}/${type}`]: intercom
     })
   },
-  [ActionTypes.Event.removeIntercom](state, { intercom }) {
+  [ActionTypes.Event.removeIntercom](state, {intercom, appId, type}) {
     return state.merge({
-      ['intercom']: intercom
+      [`intercom/${appId}/${type}`]: intercom
     })
   }
 })

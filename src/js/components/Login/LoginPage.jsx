@@ -10,38 +10,45 @@ import * as ModalActionCreators from '../../actions/modal'
 if (process.env.BROWSER) {
   require('./LoginPage.less')
 }
-@prepareRoute(async function ({store, location}) {
+@prepareRoute(async function ({store, location, params}) {
 
+  let {lang} = params
   let {query} = location
   let {data} = query
 
-  let method
+  const langPath = lang && `${lang}/` || ''
+  let target = 'show'
+  let closable = true
+
   switch (location.pathname) {
-    case '/signup':
-      method = 'showSignup'
+    case `/${langPath}reset`:
+      target = `showReset`
       break
-    case '/signin':
-      method = 'showSignin'
+    case `/${langPath}signup`:
+      target = `showSignup`
       break
-    case '/newsletter':
-      method = 'newsletter'
+    case `/${langPath}signin`:
+      target = `showSignin`
       break
-    case '/parrainage':
-      method = 'sponsorship'
+    case `/${langPath}newsletter`:
+      target = `newsletter`
       break
-    case '/coupon':
+    case `/${langPath}parrainage`:
+      target = `sponsorship`
+      break
+    case `/${langPath}coupon`:
       if (data) {
         const decodedData = decodeSafeUrl(data)
         await store.dispatch(BillingActionCreators.createCoupon(decodedData))
       }
-      method = 'redeemCoupon'
+      target = `redeemCoupon`
       break
     default :
-      method = 'show'
+      target = `geowall`
       break
   }
 
-  await store.dispatch(ModalActionCreators.open({target: method}))
+  await store.dispatch(ModalActionCreators.open({target, closable}))
 })
 @connect(({User}) => ({User}))
 class LoginPage extends React.Component {
@@ -60,7 +67,7 @@ class LoginPage extends React.Component {
 
   render () {
 
-    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`}
+    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=1280&q=${config.images.quality}&fm=${config.images.type}&blur=50)`}
 
     return (
       <div className="row-fluid">
@@ -73,6 +80,16 @@ class LoginPage extends React.Component {
       </div>
     )
   }
+}
+
+LoginPage.propTypes = {
+  modalType: React.PropTypes.string,
+  closable: React.PropTypes.bool
+}
+
+LoginPage.defaultProps = {
+  modalType: 'signin',
+  closable: true
 }
 
 export default LoginPage

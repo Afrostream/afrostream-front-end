@@ -3,7 +3,6 @@ import ReactDOM from'react-dom'
 import CountrySelect from './../CountrySelect'
 import classSet from 'classnames'
 import config from '../../../../../config'
-import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
 import CouponForm from './CouponForm'
@@ -87,7 +86,7 @@ class RecurlyForm extends CouponForm {
 
     //Excluded cart type message
     if (~excludedCards.indexOf(Payment.fns.cardType(cardNumber))) {
-      throw new Error(getI18n().payment.errors.exludedCard)
+      throw new Error(this.getTitle('payment.errors.exludedCard'))
     }
     let recurlyInfo = {
       'plan-code': billingInfo.internalPlanUuid,
@@ -151,8 +150,8 @@ class RecurlyForm extends CouponForm {
                 name="number"
                 id="number"
                 autoComplete="cc-number"
-                floatingLabelText={getI18n().payment.creditCard.number}
-                hintText={getI18n().payment.creditCard.placeHolder} required/>
+                floatingLabelText={this.getTitle('payment.creditCard.number')}
+                hintText={this.getTitle('payment.creditCard.placeHolder')} required/>
             </div>
             <CountrySelect ref="country"/>
           </div>
@@ -168,8 +167,8 @@ class RecurlyForm extends CouponForm {
                 maxLength="9"
                 name="expiration" id="expiration"
                 autoComplete="cc-exp"
-                floatingLabelText={getI18n().payment.creditCard.exp}
-                hintText={getI18n().payment.creditCard.expPlaceHolder} required/>
+                floatingLabelText={this.getTitle('payment.creditCard.exp')}
+                hintText={this.getTitle('payment.creditCard.expPlaceHolder')} required/>
             </div>
             <div className="col-md-6">
               <TextField
@@ -179,8 +178,8 @@ class RecurlyForm extends CouponForm {
                 ref="cvc"
                 name="cvv" id="cvv"
                 autoComplete="off"
-                floatingLabelText={getI18n().payment.creditCard.cvv}
-                hintText={getI18n().payment.creditCard.cvcPlaceHolder} required/>
+                floatingLabelText={this.getTitle('payment.creditCard.cvv')}
+                hintText={this.getTitle('payment.creditCard.cvcPlaceHolder')} required/>
             </div>
           </div>
         </div>
@@ -205,7 +204,7 @@ class RecurlyForm extends CouponForm {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{getI18n().payment.creditCard.label}</label>
+            <label className="form-label">{this.getTitle('payment.creditCard.label')}</label>
             <img src="/images/payment/bank-cards.png"/>
           </div>
         </div>

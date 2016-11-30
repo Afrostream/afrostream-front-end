@@ -2,12 +2,14 @@ import React from 'react'
 import ModalComponent from './ModalComponent'
 import classNames from 'classnames'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
 import _ from 'lodash'
 import { detectUA } from '../Player/PlayerUtils'
 import { shorten } from '../../lib/bitly'
 import qs from 'qs'
 import window from 'global/window'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 const {social, bitly, metadata} = config
 
@@ -235,11 +237,21 @@ class ModalSocial extends ModalComponent {
                    data-placement="top"
                    title={network.title}
                    key={`share-btn-${network.icon}`} {...inputAttributes}>
+        {this.props.showLabel && <span>{network.label}</span>}
       </div>)
     })
   }
 
   render () {
+
+    let popupClass = classNames({
+      'popup': this.props.modal
+    })
+
+    let overlayClass = classNames({
+      'overlay': this.props.modal,
+      'active': true
+    })
 
     let closeClass = classNames({
       'close': true,
@@ -251,16 +263,16 @@ class ModalSocial extends ModalComponent {
       <div className="lock-container">
         <div id="lock" className="lock theme-default social">
           <div className="signin">
-            <div className="popup">
-              <div className="overlay active">
+            <div className={popupClass}>
+              <div className={overlayClass}>
                 <div className="centrix">
                   <div id="onestep" className="panel onestep active">
                     {/*HEADER*/}
-                    <div className="header top-header ">
+                    {this.props.modal && <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{getI18n().social.title}</h1>
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
-                    </div>
+                      <FormattedMessage tagName="h1" id={`social.title`}/>
+                      <a className={closeClass}  onClick={::this.handleClose}></a>
+                    </div>}
                     <div className="mode-container">
                       <div className="mode">
                         {this.getShareButtons()}
@@ -278,11 +290,14 @@ class ModalSocial extends ModalComponent {
 }
 
 ModalSocial.propTypes = {
+  showLabel: React.PropTypes.bool,
   data: React.PropTypes.object
 }
 
 ModalSocial.defaultProps = {
-  data: null
+  showLabel: false,
+  data: null,
+  modal: true
 }
 
 export default ModalSocial

@@ -1,18 +1,30 @@
 @import (reference) '../../../styles/config.less';
 
 #lock.theme-default.social .panel {
+  .mode {
+    .isMobile({ display: flex; padding: 1em 0 1em 0; });
+  }
   .share_button {
     background-color: transparent;
     position: relative;
     border-radius: 0;
     color: #FFF;
-    width: 45px;
+    flex: 1;
+    min-width: 4em;
+    font-family: @font-family-base;
+    padding: 1em;
     &:hover {
       color: fade(@color-yellow, 70%);
     }
-    font: normal normal normal 1.5em/1 'Material-Design-Iconic-Font';
-    .isMobile({ width: 3em; });
+    .isMobile({ min-width: 3em; span {
+      display: none;
+    } });
+
     &:before {
+      padding: 0.5em;
+      .isMobile({ padding: 0; });
+      font-family: @font-material;
+      font-size: 1.3em;
       .isMobile({ font-size: 2em; });
     }
   }

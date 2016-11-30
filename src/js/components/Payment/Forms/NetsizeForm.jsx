@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import classSet from 'classnames'
-import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import CouponForm from './CouponForm'
 
@@ -53,7 +52,7 @@ class NetsizeForm extends CouponForm {
       <div className="row" ref="netsizeForm">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
-          {getI18n().payment.mobile.text.replace('{submitBtn}', getI18n().planCodes.actionMobile)}
+          {this.getTitle('payment.mobile.text', {submitBtn: this.getTitle('planCodes.actionMobile')}) }
         </h5>
       </div>
     )
@@ -75,7 +74,7 @@ class NetsizeForm extends CouponForm {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{getI18n().payment.mobile.label}</label>
+            <label className="form-label">{this.getTitle('payment.mobile.label')}</label>
             <i className="zmdi zmdi-hc-2x zmdi-smartphone-android"/>
           </div>
         </div>

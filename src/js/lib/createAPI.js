@@ -88,7 +88,7 @@ async function promiseCalls ({createRequest, data, reject, resolve}) {
   console.log('promiseCalls', data)
   return await new Promise((allRes, allRej) => {
     createRequest(data)
-      .end((err, res)=> {
+      .end((err, res) => {
         if (err) {
           reject(err)
           return allRej(err)
@@ -169,9 +169,9 @@ export default function createAPI (createRequest) {
             console.log('token is expired, try to get new one, buffer stack : ', promiseStack.length)
             if (promiseStack.length === 1) {
               //get new token
-              return fetchToken(true).then(()=> {
+              return fetchToken(true).then(() => {
                 //try to call all promises
-                return Promise.map(promiseStack, promiseCalls).then(()=> {
+                return Promise.map(promiseStack, promiseCalls).then(() => {
                   console.log('all http calls done ,buffer stack : ', promiseStack.length)
                   //clear buffer
                   promiseStack = []

@@ -10,7 +10,8 @@ import ModalSponsors from './ModalSponsors'
 import ModalPlayer from './ModalPlayer'
 import ModalImage from './ModalImage'
 import ModalComponent from './ModalComponent'
-
+import ModalLifeAdd from './ModalLifeAdd'
+import { SelectPlan } from '../../components/Payment/'
 import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
@@ -28,7 +29,7 @@ class ModalView extends React.Component {
   render () {
     const {
       props: {
-        Modal
+        Modal, params:{lang}
       }
     } = this
 
@@ -37,19 +38,17 @@ class ModalView extends React.Component {
     const data = Modal.get('data')
     const cb = Modal.get('cb')
     const className = Modal.get('className')
-
     switch (type) {
       case 'newsletter':
+      case 'geowall':
+        const header = `${type}.header`
+        const instructions = `${type}.instructions`
+        const result = `${type}.result`
+        const action = `${type}.action`
         return (
           <ModalNewsletter closable={closable} {...this.props}
-                           header="Newsletter"
-                           instructions="Me tenir informé par email"
-                           action="Envoyer"/>
-        )
-        break
-      case 'geoWall':
-        return (
-          <ModalGeoWall closable={closable} {...this.props}/>
+                           {...{header, instructions, result, action}}
+          />
         )
         break
       case 'cashway':
@@ -64,6 +63,7 @@ class ModalView extends React.Component {
       case 'showRelog':
       case 'showProvider':
       case 'linkProvider':
+      case 'life-user':
         return (
           <ModalLogin {...{closable, cb, type, className}} {...this.props}/>
         )
@@ -88,10 +88,24 @@ class ModalView extends React.Component {
           <ModalPlayer {...{closable, cb, type, className, data}} {...this.props} />
         )
         break
+      case 'player':
+        return (
+          <ModalPlayer {...{closable, cb, type, className, data}} {...this.props}/>
+        )
+        break
       case 'image':
         return (
           <ModalImage {...{closable, cb, type, className, data}} {...this.props} />
         )
+        break
+      //LIFE ACL
+      case 'life-premium':
+      case 'life-vip':
+        return <ModalComponent {...{closable, cb, type, className, data}} {...this.props}><SelectPlan {...this.props}
+                                                                                                      showImages={false}/></ModalComponent>
+        break
+      case 'life-add':
+        return <ModalLifeAdd {...{closable, cb, type, className, data}} {...this.props} />
         break
       default:
         return <div />

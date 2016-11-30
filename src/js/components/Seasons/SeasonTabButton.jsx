@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import * as SeasonActionCreators from '../../actions/season'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 
 @connect(({Season}) => ({Season}))
 class SeasonTabButton extends Component {

@@ -4,7 +4,6 @@ import { prepareRoute } from '../../decorators'
 import ModalComponent from './ModalComponent'
 import classNames from 'classnames'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
 import { encodeSafeUrl } from '../../lib/utils'
 import Immutable from 'immutable'
 import * as BillingActionCreators from '../../actions/billing'
@@ -39,6 +38,10 @@ class ModalSponsors extends ModalComponent {
     loading: false
   }
 
+  constructor (props) {
+    super(props)
+  }
+
   componentDidMount () {
     this.attachTooltip()
   }
@@ -51,14 +54,8 @@ class ModalSponsors extends ModalComponent {
     $('.check').tooltip()
   }
 
-  getTitle (key = 'title') {
-    const {
-      props: {
-        params
-      }
-    } = this
-
-    return getI18n(params.lang)['sponsors'][key] || ''
+  getI18n () {
+    return 'sponsors'
   }
 
   generateCoupon (event) {
@@ -126,7 +123,7 @@ class ModalSponsors extends ModalComponent {
         userReferenceUuid: user.get('_id'),
         billingProviderName,
         couponsCampaignBillingUuid
-      },false)
+      }, false)
 
       let shareData = Immutable.fromJS({
         title: `Parrainage`,
@@ -151,7 +148,7 @@ class ModalSponsors extends ModalComponent {
 
     return <div className={classNames(classCheck)}
                 data-container=".panel"
-                title={`${this.getTitle('status')[status]}`}>
+                title={`${this.getTitle(`status/${status}`)}`}>
       <i className="zmdi zmdi-check"/></div>
   }
 
@@ -204,7 +201,7 @@ class ModalSponsors extends ModalComponent {
     const plan = coupon.get('couponsCampaign').get('internalPlan')
 
     const inputProps = {
-      onClick: e =>::this.sharePlan(plan)
+      onClick: e => ::this.sharePlan(plan)
     }
     return <button className="generate-btn" {...inputProps} >{this.getTitle('share')}</button>
   }
@@ -243,7 +240,7 @@ class ModalSponsors extends ModalComponent {
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
                       <h1>{`${this.getTitle('title')} ${sponsorsList && '(' + sponsorsList.size + ')' }` }</h1>
-                      <a ref="closeEl" className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a ref="closeEl" className={closeClass}  onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">
@@ -262,16 +259,12 @@ class ModalSponsors extends ModalComponent {
   }
 }
 
-ModalSponsors
-  .propTypes = {
+ModalSponsors.propTypes = {
   data: React.PropTypes.object
 }
 
-ModalSponsors
-  .defaultProps = {
+ModalSponsors.defaultProps = {
   data: null
 }
 
-export
-default
-ModalSponsors
+export default ModalSponsors

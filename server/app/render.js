@@ -5,23 +5,26 @@ import { useRouterHistory, match } from 'react-router'
 import request from 'superagent'
 import config from '../../config'
 import qs from 'qs'
+import { getI18n } from '../../config/i18n'
+import { getPreferredLocales } from './locale'
 import createStore from '../../src/js/lib/createStore'
 import createAPI from '../../src/js/lib/createAPI'
 import routes from '../../src/js/routes'
 import { RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
+import { IntlProvider } from 'react-intl-redux'
 import PrettyError from 'pretty-error'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import Helmet from 'react-helmet'
 import _ from 'lodash'
 const pretty = new PrettyError()
-const {apps, apiServer} = config
+const {apps, apiServer, heroku} = config
 
 export default function render (req, res, layout, {payload}) {
   const {path} = req
   const history = useRouterHistory(useQueries(createMemoryHistory))();
   const location = history.createLocation(req.url)
-
+  const preferredLocale = getPreferredLocales(req)
   const api = createAPI(
     /**
      * Server's createRequest() method
@@ -33,11 +36,16 @@ export default function render (req, res, layout, {payload}) {
      * on query, then you can assign accessToken (get from req) to query object
      * before calling API
      */
-    ({method, headers = {}, pathname = '', query = {}, body = {}, local = false}) => {
+    ({method, headers = {}, pathname = '', query = {}, body = {}, local = false, locale = '--'}) => {
       var url = `${apiServer.urlPrefix}${pathname}`
+
+      query.from = query.from || heroku.appName
+
       if (local) {
         url = pathname
       }
+
+      console.log('url : ', url)
 
       //FIX HW disallow body null and return 502
       if (method === 'GET') {
@@ -68,11 +76,22 @@ export default function render (req, res, layout, {payload}) {
           return res.status(404)
             .send('Not found')
         } else {
-
+          const state = store.getState()
           let {params, location, routes} = renderProps
           let route = routes && routes[routes.length - 1]
-          const langs = ['fr', 'en']
-          params.lang = langs[routes && routes.length > 2 && routes[2].path] || langs[0]
+          const {intl} = state
+          // Try full locale, fallback to locale without region code, fallback to en
+          const routeParamLang = _.find(routes, (route) => route.lang)
+          //TODO FIXME render locale server whith preferredLocale
+          const language = (routeParamLang && routeParamLang.lang) || (preferredLocale && preferredLocale[0]) || intl.defaultLocale
+          //const language = (routeParamLang && routeParamLang.lang) || intl.defaultLocale
+          // Split locales with a region code
+          const locale = language.toLowerCase().split(/[_-]+/)[0]
+          const messages = _.flattenJson(getI18n(locale))
+
+          params.lang = locale
+
+          console.log('preferredLocale : ', language, preferredLocale, locale)
 
           const prepareRouteMethods = _.map(renderProps.components, component =>
           component && component.prepareRoute)
@@ -90,11 +109,19 @@ export default function render (req, res, layout, {payload}) {
 
           const body = ReactDOMServer.renderToStaticMarkup(
             <Provider {...{store}}>
-              <RouterContext {...{...renderProps}} />
+              <IntlProvider key="intl" {...{messages, locale}}>
+                <RouterContext {...{...renderProps}} />
+              </IntlProvider>
             </Provider>
           )
 
-          const initialState = store.getState()
+          const initialState = _.merge({
+            intl: {
+              locale
+            }
+          }, state)
+
+
           let metadata = Helmet.rewind()
 
           return res.render(layout, {

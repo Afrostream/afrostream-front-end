@@ -9,7 +9,8 @@
   /*
  * Sticky footer
  */
-
+  z-index: @nav-z + 3;
+  padding-top: 10px;
   width: 100%;
   position: relative;
   display: inline-block;
@@ -22,6 +23,9 @@
   }
   ul {
     padding: 0;
+  }
+  a {
+    color: @brand-primary;
   }
   .links {
 
@@ -62,9 +66,10 @@
     width: 100%;
     min-height: 30px;
     line-height: 30px;
-    background-color: #442E4F;
+    background-color: lighten(@background-footer, 5%);
     position: relative;
     display: inline-block;
+    color: @white-base;
     .get-help {
       text-align: center;
     }

@@ -2,10 +2,12 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import { getI18n } from '../../../../config/i18n'
 import * as EventActionCreators from '../../actions/event'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./CashwayEndPage.less')
@@ -39,7 +41,7 @@ class CashwayEndPage extends React.Component {
       }
     } = this
 
-    dispatch(ModalActionCreators.open({target:'cashway'}))
+    dispatch(ModalActionCreators.open({target: 'cashway'}))
   }
 
   render () {
@@ -76,9 +78,12 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-1.jpg" alt="code_bare_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{getI18n().payment.cashway.recupCode}
+                    <div className="container_title">
+                      <FormattedMessage id={`payment.cashway.recupCode`}/>
                       <a target="_blank" href={subOpts.get('couponCodeUrl')}>
-                        {getI18n().payment.cashway.recupCodeAction}</a></div>
+                        <FormattedMessage id={`payment.cashway.recupCodeAction`}/>
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -88,8 +93,11 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-4.jpg" alt="money_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{getI18n().payment.cashway.rdv}(<a href="#"
-                                                                                   onClick={::this.showPlan}>{getI18n().payment.cashway.showMap}</a>)
+                    <div className="container_title">
+                      <FormattedMessage id={`payment.cashway.rdv`}/>
+                      <a href="#" onClick={::this.showPlan}>
+                        <FormattedMessage id={`payment.cashway.showMap`}/>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -100,7 +108,8 @@ class CashwayEndPage extends React.Component {
                      src="/images/payment/cashway/step-2.jpg" alt="validate_ccm"/>
                 <div className="row-fluid">
                   <div className="col-md-12">
-                    <div className="container_title">{getI18n().payment.cashway.partner}
+                    <div className="container_title">
+                      <FormattedMessage id={`payment.cashway.partner`}/>
                     </div>
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes'
+import { isAuthorized } from '../lib/geo'
 import * as ModalActionCreators from './modal'
 import * as OAuthActionCreators from './oauth'
 import * as BillingActionCreators from './billing'
@@ -11,77 +12,103 @@ import { mergeFbUserInfo } from '../lib/utils'
 import _ from 'lodash'
 import config from '../../../config'
 
-const mergeProfile = function (data, getState, actionDispatcher) {
+const mergeProfile = function ({api, data, getState, dispatch}) {
+  return async () => {
 
-  const token = getState().OAuth.get('token')
-  let donePath = getState().Modal.get('donePath')
+    //HAS TOKEN STORED
+    let donePath = getState().Modal.get('donePath')
+    let user = null
+    dispatch(pendingUser(true))
+    const token = getState().OAuth.get('token')
 
-  if (!token) {
-    return data
-  }
+    if (!token) {
+      throw new Error('No token present')
+      return data
+    }
 
-  return async api => {
-    actionDispatcher(pendingUser(true))
-    //try {
-    return await api({
+    //GET USER INFO
+
+    await api({
       path: `/api/users/me`,
       passToken: true
-    }).then((userInfos) => {
-        let userMerged = userInfos.body || {}
-        let planCode = userMerged.planCode
-        let subscriptionsStatus = userMerged.subscriptionsStatus
-        let status = subscriptionsStatus && subscriptionsStatus.status
-        userMerged.user_id = userMerged._id || userMerged.user_id
-        userMerged.splashList = userMerged.splashList || []
-        userMerged = mergeFbUserInfo(userMerged)
-        actionDispatcher(FBActionCreators.getFriendList())
+    }).then(({body}) => {
+      user = body
+    })
 
-        return async () => {
-          if (!planCode && !donePath) {
-            if (status && status !== 'active') {
-              donePath = `/select-plan/none/${status}`
-            } else {
-              //get InternalPlan
-              await actionDispatcher(BillingActionCreators.getInternalplans({
-                contextBillingUuid: 'common',
-                passToken: true,
-                reload: true,
-                userId: userMerged._id
-              })).then(({res: {body = []}}) => {
-                if (body) {
+    if (!user) {
+      throw new Error('No user found')
+    }
 
-                  let firstPlan = _.find(body, (plan) => {
-                    let planUuid = plan.internalPlanUuid
-                    return planUuid === config.netsize.internalPlanUuid
-                  })
 
-                  if (!firstPlan && config.featuresFlip.redirectAllPlans) {
-                    firstPlan = _.head(body)
-                  }
+    //GEOLOC
 
-                  if (firstPlan) {
-                    donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
-                  }
-                }
-              })
+    user.authorized = true
+    try {
+      user.authorized = await isAuthorized()
+    } catch (err) {
+      console.error('Error requesting /auth/geo ', err)
+    }
+
+    //if (!authorized) {
+    //  dispatch(ModalActionCreators.open({target: 'geoWall'}))
+    //  throw new Error('User not authorized Geoloc /auth/geo ')
+    //}
+
+    //MERGE USER DATA
+    let subscriptionsStatus = user.subscriptionsStatus
+    let status = subscriptionsStatus && subscriptionsStatus.status
+    user.status = status
+    user.user_id = user._id || user.user_id
+    user.splashList = user.splashList || []
+    user = mergeFbUserInfo(user)
+    dispatch(FBActionCreators.getFriendList())
+
+    let planCode = user.planCode
+    if (!planCode && !donePath) {
+      if (user.status && user.status !== 'active') {
+        donePath = `/select-plan/none/${user.status}`
+      } else {
+        //get InternalPlan
+        await dispatch(BillingActionCreators.getInternalplans({
+          contextBillingUuid: 'common',
+          passToken: true,
+          reload: true,
+          userId: user._id
+        })).then(({res: {body = []}}) => {
+          if (body) {
+
+            let firstPlan = _.find(body, (plan) => {
+              let planUuid = plan.internalPlanUuid
+              return planUuid === config.netsize.internalPlanUuid
+            })
+
+            if (!firstPlan && config.featuresFlip.redirectAllPlans) {
+              firstPlan = _.head(body)
             }
+
+            if (firstPlan) {
+              donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
+            }
+
+            return donePath
           }
-
-          if (donePath) {
-            actionDispatcher(push(donePath))
-          }
-
-          actionDispatcher(ModalActionCreators.close())
-
-          return _.merge(data, {
-            user: userMerged
-          })
-
-        }
-
-
+        })
       }
-    )
+    }
+
+    if (donePath) {
+      dispatch(push(donePath))
+    }
+
+
+    dispatch(ModalActionCreators.close())
+    dispatch(pendingUser(false))
+
+
+    return _.merge(data, {
+      user
+    })
+
     //}).catch((e)=> {
     //  console.log(e, 'remove user data')
     //  //FIXME replace logout method
@@ -114,6 +141,7 @@ export function getHistory () {
     })
   }
 }
+
 /**
  * put user
  * @returns {Function}
@@ -139,6 +167,7 @@ export function put (data) {
     })
   }
 }
+
 /**
  * Get favorites movies/episodes for user
  * @param type
@@ -271,20 +300,36 @@ export function pendingUser (pending) {
     pending
   }
 }
+
 /**
  * Get profile from afrostream
  * @returns {Function}
  */
 export function getProfile () {
-  return (dispatch, getState, actionDispatcher) => {
+  return (api, getState, dispatch) => {
     return async () => {
-      await actionDispatcher(OAuthActionCreators.getIdToken())
+      await dispatch(OAuthActionCreators.getIdToken())
       const user = getState().User.get('user')
       return async () => {
-        return await mergeProfile({
-          type: ActionTypes.User.getProfile,
-          user: null
-        }, getState, actionDispatcher)
+        try {
+          return await mergeProfile({
+              api,
+              data: {
+                type: ActionTypes.User.getProfile,
+                user: null
+              },
+              getState,
+              dispatch
+            }
+          )
+        } catch (err) {
+          console.log('Error merge profile :', err.message)
+          return {
+            type: ActionTypes.User.getProfile,
+            user: null
+          }
+        }
+
       }
     }
   }

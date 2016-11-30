@@ -2,13 +2,14 @@ import React from 'react'
 import { prepareRoute } from '../../decorators'
 import * as BillingActionCreators from '../../actions/billing'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { getI18n } from '../../../../config/i18n'
 import AccountSubscriptions from './AccountSubscriptions'
 import AccountSocial from './AccountSocial'
-import AccountPassword from './AccountPassword'
 import AccountProfil from './AccountProfil'
-
+import {
+  FormattedMessage,
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./AccountPage.less')
@@ -23,6 +24,10 @@ if (process.env.BROWSER) {
 class AccountPage extends React.Component {
 
   state = {cardNumber: null}
+
+  constructor (props, context) {
+    super(props, context)
+  }
 
   renderChilds () {
     const {
@@ -42,12 +47,13 @@ class AccountPage extends React.Component {
 
     return (
       <div>
-        <h1>{getI18n().account.header}</h1>
-        <AccountProfil profile="profile"/>
-        <AccountProfil profile="social"/>
+        <FormattedMessage tagName="h1"
+                          id={ 'account.header' }/>
+        <AccountProfil profile="profile" {...this.props}/>
+        <AccountProfil profile="social" {...this.props}/>
         <AccountSocial />
-        <AccountProfil profile="player"/>
-        <AccountSubscriptions />
+        <AccountProfil profile="player" {...this.props}/>
+        <AccountSubscriptions {...this.props}/>
       </div>
     )
   }
@@ -62,4 +68,8 @@ class AccountPage extends React.Component {
   }
 }
 
-export default AccountPage
+AccountPage.propTypes = {
+  intl: intlShape.isRequired
+}
+
+export default injectIntl(AccountPage)

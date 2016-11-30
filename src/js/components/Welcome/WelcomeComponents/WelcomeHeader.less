@@ -1,17 +1,21 @@
 @import (reference) '../../../../styles/config.less';
 
-.aspect-ratio(@width, @height) {
-  &:before {
-    display: block;
-    content: "";
-    width: 100%;
-    padding-top: (@height / @width) * 100%;
-  }
-}
-
 .welcome-header {
   width: 100%;
-  min-height: 80vh;
+  .slide-show {
+    padding: 0;
+    .movie {
+      .isMobile({ min-height: 66vh; });
+    }
+    .movie .movie-info_content {
+      vertical-align: bottom;
+    }
+    .subscribe-button {
+      vertical-align: bottom;
+      margin: 1em 0 1em 0;
+      .isMobile({ font-size: 1em; });
+    }
+  }
   padding-top: @header-height;
   .isMobile({ padding-top: @header-height-mobile; });
   //@media all and (min-width: @screen-sm-min) {
@@ -52,19 +56,6 @@
       .afrostream-movie__mask {
         .isWideScreen({ background-color: fade(#000, 20%); });
       }
-    }
-
-    .afrostream-movie__logo {
-      position: absolute;
-      width: 40%;
-      max-width: 40%;
-      right: 5em;
-      top: 8em;
-      background-position: center center;
-      background-size: contain;
-      background-repeat: no-repeat;
-      .aspect-ratio(16, 9);
-      .isMobile({ width: 100%; max-width: 100%; right: inherit });
     }
   }
 

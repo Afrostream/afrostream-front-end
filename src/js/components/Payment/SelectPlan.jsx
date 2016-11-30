@@ -1,20 +1,23 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import { connect } from 'react-redux'
 import PaymentImages from './PaymentImages'
-import { getI18n } from '../../../../config/i18n'
 import config from '../../../../config'
 import _ from 'lodash'
 import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
-
+import { I18n } from '../Utils'
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
 }
 @connect(({User, Billing, OAuth}) => ({User, Billing, OAuth}))
-class SelectPlan extends React.Component {
+class SelectPlan extends I18n {
+
+  constructor (props, context) {
+    super(props, context)
+  }
 
   openModal (internalPlanUuid) {
     const {
@@ -73,7 +76,7 @@ class SelectPlan extends React.Component {
     let user = User.get('user')
     let coupon = Billing.get('coupon')
 
-    return validPlans.map((plan, key)=> {
+    return validPlans.map((plan, key) => {
       const internalPlanUuid = plan.get('internalPlanUuid')
 
       let objVal = plan.get(label)
@@ -97,32 +100,33 @@ class SelectPlan extends React.Component {
       switch (label) {
 
         case 'formule':
-          value = getI18n().planCodes.infos[label] || ''
+          value = this.getTitle(`planCodes.infos.${label}`)
           break
 
         case 'internalActionLabel':
           const internalPlanQuery = this.getInternalQuery()
-          let buttonLabel = getI18n().planCodes.action
+          let buttonLabel = this.getTitle(`planCodes.action`)
           if (plan && internalPlanUuid === config.netsize.internalPlanUuid) {
-            buttonLabel = getI18n().planCodes.actionMobile
+            buttonLabel = this.getTitle(`planCodes.infos.actionMobile`)
           }
           if (!user) {
             const inputSignupAction = {
               onClick: event => ::this.openModal(internalPlanUuid)
             }
-            value = (<button className="btn btn-plan" {...inputSignupAction}>{`${buttonLabel}`}</button>)
+            value = (<button className="btn btn-plan full-width" {...inputSignupAction}>{`${buttonLabel}`}</button>)
           } else {
-            value = (<Link className="btn btn-plan"
+            value = (<Link className="btn btn-plan full-width"
                            to={`${isCash ? '/cash' : ''}/select-plan/${plan.get('internalPlanUuid')}/checkout${internalPlanQuery}`}>{`${buttonLabel}`}</Link>)
           }
 
           break
 
         case 'price':
+          let period = `/${plan.get('periodLength')} ${this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`)}`
           value = (<div className="select-plan_price">
             {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
             <span className="select-plan_period">
-              {`/${plan.get('periodLength')}${getI18n().account.billing.periods[plan.get('periodUnit')]}`}
+            {period}
             </span>
           </div>)
           break
@@ -137,8 +141,11 @@ class SelectPlan extends React.Component {
       }
 
       return (
-        <div key={`col-plan-${label}-${key}`}
-             className={`col col-xs-${(12 / validPlans.size)} col-sm-${(12 / validPlans.size)} col-md-2 no-padding pull-right`}>
+        <div key={`col-plan-${label}-${key}`
+        }
+             className={
+               `col col-xs-${(12 / validPlans.size)} col-sm-${(12 / validPlans.size)} col-md-2 no-padding pull-right`
+             }>
           {value}
         </div>
       )
@@ -158,18 +165,29 @@ class SelectPlan extends React.Component {
       return
     }
 
-    let labelDisplay = getI18n().planCodes.infos[label]
+    let labelDisplay = ''
 
-    if (label === 'coupon') {
-      const coupon = Billing.get('coupon')
-      if (coupon && coupon.size) {
-        const couponName = coupon.get('campaign').get('name')
-        labelDisplay = labelDisplay.replace(/{couponName}/g, couponName)
-      }
+    switch (label) {
+      case 'coupon':
+        const coupon = Billing.get('coupon')
+        if (coupon && coupon.size) {
+          const couponName = coupon.get('campaign').get('name')
+          labelDisplay = labelDisplay.replace(/{couponName}/g, couponName)
+        }
+        break
+      case 'internalActionLabel':
+        break
+      default:
+        labelDisplay = this.getTitle(`planCodes.infos.${label}`)
+        break
     }
 
     return (
-      <div key={`line-plan-${label}`} className={`col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`}>
+      <div key={
+        `line-plan-${label}`
+      } className={
+        `col col-xs-12 col-sm-12 col-md-${(12 - validPlans.size * 2)}`
+      }>
         {labelDisplay}
       </div>)
   }
@@ -185,7 +203,7 @@ class SelectPlan extends React.Component {
     let validPlans = this.getPlans()
     let netsizePlan
     if (validPlans) {
-      netsizePlan = validPlans.filter((plan)=> {
+      netsizePlan = validPlans.filter((plan) => {
         const internalPlanUuid = plan.get('internalPlanUuid')
         return internalPlanUuid === config.netsize.internalPlanUuid
       }).first()
@@ -210,7 +228,9 @@ class SelectPlan extends React.Component {
     return (<div className="row">
       <div className="col-md-12 text-center">
         <button
-          className="btn btn-plan" {...inputChangeAction}>{`${getI18n().planCodes.noMobilePlans}`}</button>
+          className="btn btn-plan" {...inputChangeAction}>{
+          `${this.getTitle(`planCodes.noMobilePlans`)}`
+        }</button>
       </div>
     </div>)
   }
@@ -220,21 +240,32 @@ class SelectPlan extends React.Component {
     let validPlans = this.getPlans()
     let periodTrialLabel = ''
     if (validPlans) {
-      let trialPeriodPlan = validPlans.filter((plan)=> {
+      let trialPeriodPlan = validPlans.filter((plan) => {
         return isBoolean(plan.get('trialEnabled'))
       }).first()
       if (trialPeriodPlan) {
-        periodTrialLabel = getI18n().planCodes.freePeriodLabel
-        let trialUnit = getI18n().account.billing.periods[trialPeriodPlan.get('trialPeriodUnit')]
-        periodTrialLabel = periodTrialLabel.replace('{trialPeriodLength}', trialPeriodPlan.get('trialPeriodLength'))
-        periodTrialLabel = periodTrialLabel.replace('{trialPeriodUnit}', trialUnit)
+        const trialPeriodLength = trialPeriodPlan.get('trialPeriodLength')
+        const trialPeriodUnit = this.getTitle(
+          `account.billing.periods.${trialPeriodPlan.get('trialPeriodUnit')}`
+        )
+        periodTrialLabel = this.getTitle(
+          `planCodes.freePeriodLabel`
+          , {
+            trialPeriodLength,
+            trialPeriodUnit
+          })
       }
 
     }
 
+    const chooseLabel = this.getTitle(
+      `planCodes.${validPlans && validPlans.size > 1 ? 'selectTitle' : 'onePlanTitle'}`
+    )
     return <div
-      className="choose-plan">{getI18n().planCodes[validPlans && validPlans.size > 1 ? 'selectTitle' : 'onePlanTitle']}
-      {!isCash && <span className="choose-plan__bolder">{` ${periodTrialLabel}`}</span>}
+      className="choose-plan">{chooseLabel}
+      {!isCash && <span className="choose-plan__bolder">{
+        ` ${periodTrialLabel}`
+      }</span>}
     </div>
   }
 
@@ -273,9 +304,13 @@ class SelectPlan extends React.Component {
     ]
 
     if (!plans || !plans.size) {
+
+      const noPlanLabel = this.getTitle(
+        `planCodes.noPlans`
+      )
       return (
-        <div className="plan-container">
-          <div className="choose-plan">{getI18n().planCodes.noPlans}</div>
+        <div className="container-fluid plan-container">
+          <div className="choose-plan">{noPlanLabel}</div>
         </div>
       )
     }
@@ -287,7 +322,9 @@ class SelectPlan extends React.Component {
 
         <div className="select-plan">
           {_.map(cols, (value, key) =>
-            <div key={`line-plan-${key}`} className=" row">
+            <div key={
+              `line-plan-${key}`
+            } className=" row">
               {this.getLabel(value)}
               {this.getPlanCol(value)}
             </div>
