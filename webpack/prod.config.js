@@ -125,14 +125,11 @@ let serverConfig = merge({}, {
   target: 'node',
 
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'server',
-      minChunks: Infinity
-    }),
     new webpack.IgnorePlugin(/\.(css|less|sass|gif|jpg|png|svg|favicon|ico|swf|xap)$/),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'server',
-      filename: 'server.js'
+      filename: 'server.js',
+      minChunks: Infinity
     }),
   ],
 
