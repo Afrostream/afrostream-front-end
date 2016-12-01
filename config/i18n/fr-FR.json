@@ -600,6 +600,7 @@
   },
   "life": {
     "sticky": {
+      "nbpost": "Nombre de posts : {pins}",
       "tooltip": "Poster du contenu"
     },
     "modal": {

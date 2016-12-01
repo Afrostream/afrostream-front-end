@@ -594,6 +594,7 @@
   },
   "life": {
     "sticky": {
+      "nbpost": "Number of post : {pins}",
       "tooltip": "Post content"
     },
     "modal": {

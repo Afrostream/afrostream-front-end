@@ -8,13 +8,18 @@ import * as EventActionCreators from '../../actions/event'
 import { Link } from '../Utils'
 import { slugify } from '../../lib/utils'
 import ReactImgix from '../Image/ReactImgix'
+import { I18n } from '../Utils'
+
+import {
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./AvatarCard.less')
 }
 
 @connect(({User}) => ({User}))
-class AvatarCard extends React.Component {
+class AvatarCard extends I18n {
 
   onError (e) {
     e.target.src = require('../../../assets/images/default/134x200.jpg')
@@ -90,7 +95,7 @@ class AvatarCard extends React.Component {
           </div>
           <div className="content">
             <p>{user.get('nickname')}</p>
-            {pins && <p>{`Nombre de posts : ${pins.size}`}</p>}
+            {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size})}</p>}
           </div>
         </Link>
       </div>
@@ -111,4 +116,4 @@ AvatarCard.defaultProps = {
   className: 'avatar-card'
 }
 
-export default AvatarCard
+export default injectIntl(AvatarCard)

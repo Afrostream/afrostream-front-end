@@ -184,7 +184,7 @@ class LifePinView extends LifePin {
             <h1> {data.get('title')}</h1>
           </div>
         </div>
-        <div className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
+        <StickyContainer className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
           <div className="row no-padding">
             <div className="col-md-9 col-xs-9 no-padding col-left">
               <section dangerouslySetInnerHTML={{__html: data.get('body')}}/>
@@ -195,17 +195,17 @@ class LifePinView extends LifePin {
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
-              <StickyContainer>
-                <Sticky>
+              <Sticky >
+                <div className="spot-lists">
                   {spots && spots.map((data, key) => <LifeSpot {...{
                     data,
                     key
                   }} {...this.props} />).toJS()}
-                </Sticky>
-              </StickyContainer>
+                </div>
+              </Sticky>
             </div>
           </div>
-        </div>
+        </StickyContainer>
       </article>
     )
   }
