@@ -3,7 +3,7 @@
 .welcome-header {
   width: 100%;
   position: relative;
-  padding-top: @header-height;
+  padding: @header-height 0 @header-height 0;
   position: relative;
   text-align: center;
   color: @white-base;
@@ -62,9 +62,9 @@
       left: 0;
       bottom: 0;
       right: 0;
-      //background-color: fade(#000, 30%);
+      background-color: fade(#000, 20%);
       //.isMobile({ .gradient(#000, transparent); background-color: none; });
-      .horizontal-gradient(transparent, 20%, #000, 60%);
+      //.horizontal-gradient(transparent, 20%, #000, 60%);
     }
 
     &.overlay {

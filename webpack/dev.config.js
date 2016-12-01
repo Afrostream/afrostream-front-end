@@ -21,10 +21,10 @@ let clientConfig = merge({}, webpackConfig, {
     quiet: true, // add
     hot: true,
     watchOptions: {
-      ignored: /node_modules/
+      ignored: node_modules_dir
     },
     clientLogLevel: 'none',
-    https: true
+    https: false
   }
 })
 
