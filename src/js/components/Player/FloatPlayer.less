@@ -77,6 +77,16 @@
     .vjs-tech {
       color: #FFFFFF;
     }
+
+    // Native tracks
+    video::-webkit-media-text-track-display {
+      .transform(translateY(-5em));
+    }
+
+    // Move captions down when controls aren't being shown
+    .video-js.vjs-user-inactive.vjs-playing video::-webkit-media-text-track-display {
+      .transform(translateY(-3em));
+    }
   }
 
   .close {
