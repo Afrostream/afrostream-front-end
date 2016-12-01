@@ -147,6 +147,8 @@ class ClickablePin extends Component {
           })
         }))
         break
+      default:
+        break
     }
     //call ga click
     ReactGA.modalview(pinUrl)

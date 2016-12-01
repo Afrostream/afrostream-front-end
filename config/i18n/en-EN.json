@@ -26,11 +26,11 @@
     "store": "store",
     "cash": "cash",
     "cashPayment": "cashPayment",
-    "cashPayment": "cashPayment",
     "cashPaymentMethod": "cashPaymentMethod",
     "payment": "payment",
     "paymentMethod": "paymentMethod",
     "search": "search",
+    "history": "history",
     "compte": "account",
     "cancelSubscription": "cancelSubscription",
     "sponsorship": "sponsorship",
@@ -59,6 +59,7 @@
     "sponsorship": "Sponsorship",
     "profil": "Profile",
     "params": "Account",
+    "history": "History",
     "logout": "Sign out"
   },
   "home": {
@@ -177,10 +178,15 @@
     }
   },
   "history": {
+    "pageLabel": "My Playback History",
     "label": "Resume reading"
   },
   "search": {
     "noData": "The search found no results."
+  },
+  "thumb": {
+    "episodeLabel": "Episode {episodeNumber} - {title}",
+    "seasonLabel": "Saison {seasonNumber} - {title}"
   },
   "payment": {
     "methodHeader": "Choose your payment method",

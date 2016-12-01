@@ -23,6 +23,7 @@ class MoviesSlider extends I18n {
 
   static propTypes = {
     dataList: PropTypes.instanceOf(Immutable.List),
+    virtual: React.PropTypes.bool,
     favorite: React.PropTypes.bool,
     share: React.PropTypes.bool,
     selectedId: React.PropTypes.string,
@@ -40,6 +41,7 @@ class MoviesSlider extends I18n {
     axis: 'x',
     className: 'movies-data-list',
     rowHeight: 200,
+    virtual: false,
     share: false,
     favorite: true
   }
@@ -131,7 +133,7 @@ class MoviesSlider extends I18n {
       return this.renderBlock(data)
     }
     return (
-      <div className="block" key={`data-block-${columnIndex}`}>{data.map((item)=> {
+      <div className="block" key={`data-block-${columnIndex}`}>{data.map((item) => {
         return this.renderBlock(item)
       })}</div>
     )
@@ -140,6 +142,7 @@ class MoviesSlider extends I18n {
   render () {
     const {
       props: {
+        virtual,
         dataList,
         selectedId,
         label,
@@ -162,7 +165,7 @@ class MoviesSlider extends I18n {
       })
     }
 
-    if (axis === 'y') {
+    if (axis === 'y' && !virtual) {
       return (
         <div className={this.props.className}>
           {slug ? <div id={slug} className="movies-list__anchor"/> : ''}

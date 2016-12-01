@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
+import { I18n } from './Utils'
 
-export default class LoadVideo extends Component {
+export default class LoadVideo extends I18n {
 
   static propTypes = {
     data: PropTypes.instanceOf(Immutable.Map),

@@ -30,7 +30,7 @@ class BrowsePage extends React.Component {
         {authorized && [
           <BrowseMenu key="browse-menu"/>,
           <SlideShow key="slide-show"/>,
-          <UserMoviesList key="user-movies-list"/>,
+          <UserMoviesList key="user-movies-list" limit={5}/>,
           <MoviesList key="movies-list"/>
         ]}
       </div>

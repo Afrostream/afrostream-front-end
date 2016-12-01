@@ -5,6 +5,7 @@ import MoviePage from './components/Movies/MoviePage'
 import PlayerPage from './components/Player/PlayerPage'
 import LoginPage from './components/Login/LoginPage'
 import HomePage from './components/HomePage'
+import BrowseHistoryPage from './components/Browse/BrowseHistoryPage'
 import BrowseLastPage from './components/Browse/BrowseLastPage'
 import BrowseGenrePage from './components/Browse/BrowseGenrePage'
 import FavoritesPage from './components/Favorites/FavoritesPage'
@@ -43,6 +44,7 @@ const buildHome = function (lang) {
     <Route key={`${lang}-category`} name="category" path="category(/:categoryId)(/:categorySlug)"
            component={BrowseGenrePage}/>,
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
+    <Route key={`${lang}-history`} name="history" path="history" component={BrowseHistoryPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
     <Route key={`${lang}-movie`}
            name="movie"

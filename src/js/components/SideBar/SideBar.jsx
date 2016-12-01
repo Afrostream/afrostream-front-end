@@ -105,6 +105,11 @@ class SideBar extends React.Component {
       case 'browse':
         el = authorized && <BrowseMenu/>
         break
+      case 'history':
+        el = authorized && (
+            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/history"><i
+              className="fa fa-history"/><FormattedMessage id={ 'menu.history' }/></Link></li>)
+        break
       case 'search':
         el = authorized && <SearchInput defaultOpen={true}/>
         break
@@ -285,6 +290,7 @@ class SideBar extends React.Component {
               className="zmdi zmdi-accounts-list-alt"/><FormattedMessage id={ 'menu.community' }/></Link></li>
             {this.getUserConnectedButtons(user, 'favoris')}
             {this.getUserConnectedButtons(user, 'last')}
+            {this.getUserConnectedButtons(user, 'history')}
             {this.getUserConnectedButtons(user, 'sponsorship')}
             {this.getUserConnectedButtons(user, 'compte')}
           </ul>

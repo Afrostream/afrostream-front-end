@@ -136,7 +136,10 @@ export function getHistory () {
       type: ActionTypes.User.getHistory,
       res: await api({
         path: `/api/users/${user.get('_id')}/history`,
-        passToken: true
+        passToken: true,
+        params: {
+          limit: 100
+        }
       })
     })
   }

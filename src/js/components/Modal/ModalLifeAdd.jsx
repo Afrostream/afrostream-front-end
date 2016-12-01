@@ -190,7 +190,6 @@ class ModalLifeAdd extends ModalComponent {
     }
     const imageUrl = scrappedData.get('imageUrl')
 
-    debugger
     return (<div className="row no-padding">
       <div className="col-md-12">
         <div className="row">

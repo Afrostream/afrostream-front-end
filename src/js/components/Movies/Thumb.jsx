@@ -70,11 +70,11 @@ class Thumb extends Poster {
     switch (type) {
       case 'episode':
         if (episodeNumber) {
-          title = `Épisode ${episodeNumber} - ${title}`
+          title = this.getTitle('thumb.episodeLabel', {episodeNumber, title})
         }
         break
       case 'season':
-        title = `Saison ${seasonNumber} - ${title}`
+        title = this.getTitle('thumb.seasonLabel', {seasonNumber, title})
         break
       default:
         break
@@ -90,8 +90,8 @@ class Thumb extends Poster {
     }
 
     return (<div ref="info" className="thumb-info">
-      {showTitle ? <div className="thumb-info__title">{title}</div> : '' }
-      {showDescription ? <div className="thumb-info__synopsis">{synopsis}</div> : '' }
+      {showTitle && <div className="thumb-info__title">{title}</div>  }
+      {showDescription && <div className="thumb-info__synopsis">{synopsis}</div>  }
     </div>)
   }
 

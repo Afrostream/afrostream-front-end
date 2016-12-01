@@ -31,6 +31,7 @@
     "paymentMethod": "methode",
     "search": "recherche",
     "compte": "compte",
+    "history": "mon-historique",
     "cancelSubscription": "annuler",
     "sponsorship": "parrainage",
     "category": "categorie",
@@ -58,6 +59,7 @@
     "sponsorship": "Inviter des amis",
     "profil": "Mon profil",
     "params": "Mon Compte",
+    "history": "Mon historique",
     "logout": "Se deconnecter"
   },
   "home": {
@@ -192,10 +194,15 @@
     }
   },
   "history": {
+    "pageLabel": "Mon historique de lecture",
     "label": "Reprendre la lecture"
   },
   "search": {
     "noData": "La recherche n'a trouvé aucun resultat"
+  },
+  "thumb": {
+    "episodeLabel": "Épisode {episodeNumber} - {title}",
+    "seasonLabel": "Saison {seasonNumber} - {title}"
   },
   "payment": {
     "methodHeader": "Choisissez votre methode de payment",
