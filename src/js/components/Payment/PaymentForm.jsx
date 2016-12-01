@@ -80,6 +80,7 @@ class PaymentForm extends I18n {
       }
     } = this
     let currentPlan = this.hasPlan()
+
     if (!currentPlan) {
       return
     }
@@ -103,11 +104,6 @@ class PaymentForm extends I18n {
     }
 
     let internalPlanUuid = currentPlan.get('internalPlanUuid')
-
-    this.setState({
-      internalPlanUuid: internalPlanUuid,
-      currentPlan: currentPlan
-    })
 
     ReactFB.track({
       event: 'InitiateCheckout', params: {
@@ -136,7 +132,8 @@ class PaymentForm extends I18n {
   componentWillReceiveProps (nextProps) {
     const {
       props: {
-        Billing
+        Billing,
+        params
       }
     } = this
 
@@ -146,7 +143,7 @@ class PaymentForm extends I18n {
       })
     }
 
-    if (!shallowEqual(nextProps.Billing, Billing)) {
+    if (!shallowEqual(nextProps.Billing, Billing) || !shallowEqual(nextProps.params, params)) {
       this.setupPlan()
     }
   }
@@ -159,7 +156,7 @@ class PaymentForm extends I18n {
       }
     } = this
 
-    const currentPlan = this.state.currentPlan
+    const currentPlan = this.hasPlan()
     const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid')
 
     if (currentPlan && internalPlanUuid === config.netsize.internalPlanUuid) {
@@ -226,7 +223,7 @@ class PaymentForm extends I18n {
         }
       }
     } = this
-    const currentPlan = this.state.currentPlan
+    const currentPlan = this.hasPlan()
 
     if (!currentPlan) {
       return
@@ -356,9 +353,12 @@ class PaymentForm extends I18n {
     const {droits, cgu, firstName, lastName, methodForm} = this.refs
     const self = this
     const user = User.get('user')
+    const currentPlan = this.hasPlan()
+
+    const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid') || this.props.params.internalPlanUuid
 
     let billingInfo = {
-      internalPlanUuid: this.state.internalPlanUuid,
+      internalPlanUuid,
       firstName: firstName && firstName.getValue(),
       lastName: lastName && lastName.getValue()
     }
@@ -391,7 +391,9 @@ class PaymentForm extends I18n {
           })
         }
 
-        return methodForm.submit(billingInfo, this.state.currentPlan)
+        const currentPlan = this.hasPlan()
+
+        return methodForm.submit(billingInfo, currentPlan)
       })
       .then((subBillingInfo) => {
         billingInfo = _.merge(billingInfo, subBillingInfo)
@@ -508,10 +510,12 @@ class PaymentForm extends I18n {
   }
 
   renderPaymentMethod (planLabel) {
+    const currentPlan = this.hasPlan()
+    const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid') || this.props.params.internalPlanUuid
     return (
       <PaymentMethod ref="methodForm"
-                     plan={this.state.currentPlan}
-                     planCode={this.state.internalPlanUuid} {...this.props}
+                     plan={currentPlan}
+                     planCode={internalPlanUuid} {...this.props}
                      planLabel={planLabel}/>)
   }
 
@@ -522,11 +526,12 @@ class PaymentForm extends I18n {
       'spinner-loading': this.state.loading
     }
 
-    if (!this.state.currentPlan) {
+    const currentPlan = this.hasPlan()
+    if (!currentPlan) {
       return <div />
     }
 
-    const planLabel = `${this.getTitle(`planCodes.title`)} ${this.state.currentPlan.get('name')} ${this.state.currentPlan.get('description')}`
+    const planLabel = `${this.getTitle(`planCodes.title`)} ${currentPlan.get('name')} ${currentPlan.get('description')}`
 
     return (
       <div className="payment-wrapper">

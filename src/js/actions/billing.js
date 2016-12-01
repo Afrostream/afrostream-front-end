@@ -86,7 +86,7 @@ export function couponValidate (data) {
         path: `/api/billings/coupons`,
         params: data,
         passToken: true
-      }).catch((err)=> {
+      }).catch((err) => {
         actionDispatcher({
           type: ActionTypes.Billing.couponValidate,
           res: {
@@ -145,7 +145,7 @@ export function couponActivate () {
     }
 
     return async () => {
-      return await actionDispatcher(this.subscribe(billingInfo)).then(()=> {
+      return await actionDispatcher(this.subscribe(billingInfo)).then(() => {
         return ({
           type: ActionTypes.Billing.couponActivate,
         })
@@ -247,13 +247,12 @@ export function getInternalplans ({
       if (contextBillingUuid === 'common' && isMobile && checkMobile) {
         forcedInternalPlanUuid = config.netsize.internalPlanUuid
       }
-
       //Get internalplan from params
       if (forcedInternalPlanUuid) {
         return await api({
           path: `/api/billings/internalplan/${forcedInternalPlanUuid}`,
           passToken
-        }).then(({body})=> {
+        }).then(({body}) => {
           return {
             type: ActionTypes.Billing.getInternalplans,
             contextBillingUuid: 'common',

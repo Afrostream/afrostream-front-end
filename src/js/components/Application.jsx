@@ -60,22 +60,22 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
 
-  store.dispatch(CategoryActionCreators.getMenu())
+  await store.dispatch(CategoryActionCreators.getMenu())
 
-  store.dispatch(CategoryActionCreators.getSpots())
+  await store.dispatch(CategoryActionCreators.getSpots())
 
   if (movieId && movieId !== 'undefined') {
-    store.dispatch(MovieActionCreators.getMovie(movieId))
+    await store.dispatch(MovieActionCreators.getMovie(movieId))
   }
   if (seasonId && seasonId !== 'undefined') {
-    store.dispatch(SeasonActionCreators.getSeason(seasonId))
+    await store.dispatch(SeasonActionCreators.getSeason(seasonId))
   }
 
   if (episodeId && episodeId !== 'undefined') {
-    store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
+    await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 
-  store.dispatch(LifeActionCreators.fetchThemes())
+  return store.dispatch(LifeActionCreators.fetchThemes())
 })
 
 @metasData()
