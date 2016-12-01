@@ -129,6 +129,9 @@ export default () => {
                 }
                 if (params.seasonId) {
                   seasonData = store.getState().Season.get(`seasons/${params.seasonId}`)
+                  if (seasonData) {
+                    seasonNumber = seasonData.get('seasonNumber')
+                  }
                 }
 
                 if (params.episodeId) {
@@ -137,6 +140,9 @@ export default () => {
                   }
                   else {
                     episodeData = store.getState().Episode.get(`episodes/${params.episodeId}`)
+                  }
+                  if (episodeData) {
+                    episodeNumber = episodeData.get('episodeNumber')
                   }
                 }
 
@@ -163,16 +169,23 @@ export default () => {
                 }
 
                 if (episodeData) {
-                  metas.title = this.getTitle('home.episode.title', {})
-                  metas.description = this.getTitle('home.episode.description', {})
-                  episodeNumber = episodeData.get('episodeNumber')
+                  metas.title = this.getTitle('home.episode.title', {
+                    serieName: movieTitle,
+                    seasonNumber,
+                    episodeNumber
+                  })
+                  metas.description = this.getTitle('home.episode.description', {
+                    serieName: movieTitle,
+                    seasonNumber,
+                    episodeNumber
+                  })
                 }
 
                 if (seasonData) {
-                  seasonNumber = seasonData.get('seasonNumber')
+                  const episodes = seasonData.get('episodes')
                   metas.title = this.getTitle('home.season.title', {serieName: movieTitle, seasonNumber})
                   metas.description = this.getTitle('home.season.description', {
-                    episodeNumber,
+                    episodesNumber: episodes && episodes.size || '',
                     seasonNumber,
                     serieName: movieTitle
                   })

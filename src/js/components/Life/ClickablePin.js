@@ -77,7 +77,7 @@ class ClickablePin extends Component {
 
   getUrl (data) {
     const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
-    return data.get('targetUrl') || pinUrl || '/life'
+    return data.get('originalUrl') || pinUrl || '/life'
   }
 
   clickHandlerPin (e, data) {

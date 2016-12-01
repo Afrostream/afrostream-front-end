@@ -122,8 +122,6 @@ class FloatPlayer extends React.Component {
     const user = User.get('user')
     let token = OAuth.get('token')
 
-    await this.generateDomTag(videoData)
-
     let videoOptions = videoData.toJS()
     //ADD MOVIE INFO
     const movie = Movie.get(`movies/${movieId}`)
@@ -181,6 +179,8 @@ class FloatPlayer extends React.Component {
       videoOptions.komentData = komentData
       //END KOMENT
     }
+
+    await this.generateDomTag(videoOptions)
     //MERGE PLAYER DATA API
     let apiPlayerConfig = Player.get(`/player/config`)
     let apiPlayerConfigJs = {}
@@ -661,12 +661,12 @@ class FloatPlayer extends React.Component {
     const storedCaption = videoTracking.playerCaption
     let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537))
     let excludeBrowser = excludeSafari
-    let captions = excludeBrowser && videoData.get('captions')
+    let captions = excludeBrowser && videoData.captions
     let hasSubtiles = captions ? captions.size : false
 
     let wrapper = ReactDOM.findDOMNode(this.refs.wrapper)
     let elementType = 'video'
-    switch (videoData.get('type')) {
+    switch (videoData.type) {
       case 'rich':
       case 'audio':
         elementType = 'audio'
