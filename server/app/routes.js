@@ -1,6 +1,5 @@
+import { proxy, avatar, sharing, log } from './api'
 import auth from './auth'
-import avatar from './api/avatar'
-import sharing from './api/sharing'
 import config from '../../config'
 import fs from 'fs'
 import path from 'path'
@@ -14,11 +13,12 @@ const fsPromise = Promise.promisifyAll(fs)
 
 // --------------------------------------------------
 
+const env = process.env.NODE_ENV || 'development'
+const {webpackDevServer: {host, port}} = config
+const hostname = (env === 'development') ? `//${host}:${port}` : ''
 
 export default function routes (app, buildPath) {
 
-
-  const env = process.env.NODE_ENV || 'development'
 
   function parseMD5Files () {
     const buildFiles = ['vendor.js', 'player.js', 'main.js', 'main.css']
@@ -54,8 +54,6 @@ export default function routes (app, buildPath) {
     let loadType = type === 'js' ? 'javascript' : type
     res.noCache()
     res.header('Content-type', `text/${loadType}`)
-    let {webpackDevServer: {host, port}} = config
-    const hostname = (env === 'development') ? `//${host}:${port}` : ''
     // Js files
     let templateStr = ''
     let fileLoader = ''
@@ -80,7 +78,7 @@ export default function routes (app, buildPath) {
   // --------------------------------------------------
   app.get('/sitemap.xml', (req, res) => {
     res.header('Content-Type', 'application/xml')
-    res.sendFile(path.join(staticPath, 'sitemap.xml'))
+    res.sendFile(path.join(hostname, 'sitemap.xml'))
   })
 
   //show headers
@@ -94,14 +92,29 @@ export default function routes (app, buildPath) {
     res.noCache()
     res.json({date: new Date()})
   })
+
   app.get('/test/cache', (req, res) => {
     res.cache()
     res.json({date: new Date()})
   })
 
+  //Old routes
+  app.get('/blog*', (req, res) => {
+    res.redirect(301, path.join(hostname, '/life'))
+  })
+
+
   // OAUTH
   // --------------------------------------------------
   app.use('/auth', auth)
+
+  // PROXY
+  // --------------------------------------------------
+  app.use('/proxy', proxy)
+
+  // PROXY
+  // --------------------------------------------------
+  app.use('/log', log)
 
   // AVATAR
   // --------------------------------------------------

@@ -3,7 +3,6 @@ import ReactDOM from'react-dom'
 import classSet from 'classnames'
 import config from '../../../../../config'
 import moment from 'moment'
-import { getI18n } from '../../../../../config/i18n'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
 import CouponForm from './CouponForm'
@@ -74,7 +73,7 @@ class BraintreeForm extends CouponForm {
               locale: `${moment.locale()}_${moment.locale().toUpperCase()}`,
               headless: true,
               onAuthorizationDismissed: () => {
-                error.message = getI18n().payment.errors.cancelled
+                error.message = this.getTitle('payment.errors.cancelled')
                 return reject(error)
               },
             }
@@ -98,7 +97,7 @@ class BraintreeForm extends CouponForm {
       <div className="row">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
-          {getI18n().payment.paypal.paypalText.replace('{submitBtn}', getI18n().planCodes.action)}
+          {this.getTitle('payment.paypal.paypalText', {submitBtn: this.getTitle('planCodes.action')})}
         </h5>
       </div>
     )
@@ -120,7 +119,7 @@ class BraintreeForm extends CouponForm {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{getI18n().payment.paypal.label}</label>
+            <label className="form-label">{this.getTitle('payment.paypal.label')}</label>
             <img src="/images/payment/paypal.png"/>
           </div>
         </div>

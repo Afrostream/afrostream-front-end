@@ -3,8 +3,15 @@ import ModalGeoWall from './ModalGeoWall'
 import * as WaitingUsersActionCreators from '../../actions/waitingUsers'
 import classNames from 'classnames'
 import { withRouter } from 'react-router'
+import {
+  FormattedMessage,
+} from 'react-intl'
 
 class ModalNewsletter extends ModalGeoWall {
+
+  constructor (props, context) {
+    super(props, context)
+  }
 
   state = {
     sended: false,
@@ -51,24 +58,42 @@ class ModalNewsletter extends ModalGeoWall {
       'hide': !this.props.closable
     })
 
+    let popupClass = classNames({
+      'popup': this.props.modal
+    })
+
+    let overlayClass = classNames({
+      'overlay': this.props.modal,
+      'widget': !this.props.modal,
+      'active': true
+    })
+
+    let panelClass = {
+      'panel onestep active': true,
+    }
+
+    const classType = 'geoWall'
+
+    panelClass[this.props.className] = true
+
     return (
       <div className="lock-container">
         <div id="lock" className="lock theme-default geoWall">
-          <div className="signin">
-            <div className="popup">
-              <div className="overlay active">
+          <div className={classType}>
+            <div className={popupClass}>
+              <div className={overlayClass}>
                 <div className="centrix">
-                  <div id="onestep" className="panel onestep active">
+                  <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{this.props.header}</h1>
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <FormattedMessage tagName="h1" id={`${this.props.header}`}/>
+                      <a className={closeClass}  onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">
                         <div className="instructions">
-                          Merci, vous êtes désormais inscrit à nos newsletters
+                          {this.props.result}
                         </div>
                       </div>
                     </div>
@@ -86,6 +111,10 @@ class ModalNewsletter extends ModalGeoWall {
 
 ModalNewsletter.propTypes = {
   history: React.PropTypes.object.isRequired
+}
+
+ModalNewsletter.defaultProps = {
+  modal: true
 }
 
 export default withRouter(ModalNewsletter)

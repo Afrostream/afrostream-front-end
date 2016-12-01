@@ -38,7 +38,7 @@ const client = {
   userProfile: {
     keys: {
       profile: [
-        {key: 'picture', type: 'picture', col: 4},
+        {key: 'picture', type: 'picture', col: 12},
         {key: 'nickname', type: 'text', col: 8},
         {key: 'last_name', type: 'text', autoComplete: 'surname', col: 4},
         {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 4},
@@ -71,20 +71,20 @@ const client = {
           key: 'playerAudio',
           type: 'select',
           icon: 'zmdi zmdi-hearing',
-          list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
+          list: [{label: 'lang.fr', value: 'fra'}, {label: 'lang.en', value: 'eng'}]
         },
         {
           key: 'playerCaption', type: 'select', icon: 'zmdi zmdi-view-subtitles',
-          list: [{label: 'Francais', value: 'fra'}, {label: 'Anglais', value: 'eng'}]
+          list: [{label: 'lang.fr', value: 'fra'}, {label: 'lang.en', value: 'eng'}]
         },
         {
           key: 'playerQuality', type: 'select', icon: 'zmdi zmdi-router',
           list: [
-            {label: 'HD', value: 4},
-            {label: 'Normal', value: 3},
-            {label: 'Moyen', value: 2},
-            {label: 'Bas', value: 1},
-            {label: 'Auto', value: 0}]
+            {label: 'quality.4', value: 4},
+            {label: 'quality.3', value: 3},
+            {label: 'quality.2', value: 2},
+            {label: 'quality.1', value: 1},
+            {label: 'quality.0', value: 0}]
         },
         {key: 'playerKoment', type: 'toggle', icon: 'zmdi zmdi-comment-more'},
         {key: 'playerAutoNext', type: 'toggle', icon: 'zmdi zmdi-skip-next'}
@@ -112,6 +112,7 @@ const client = {
     '//smartplugin.youbora.com/v5/javascript/videojs5/5.1.3/sp.min.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
+  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#async=1&pubid=ra-583c553b01382bdf',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
   gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
@@ -160,6 +161,9 @@ const client = {
     quality: 65,
     type: 'jpg'
   },
+  addThis: {
+    publicKey: 'ra-583c553b01382bdf'
+  },
   netsize: {
     internalPlanUuid: 'nsafrostreammonthly'
   },
@@ -181,7 +185,8 @@ const client = {
   },
   intercom: {
     url: 'https://widget.intercom.io/widget/',
-    appID: 'k3klwkxq'
+    appID: 'k3klwkxq',
+    lifeFeature: 'life'
   },
   movies: {
     isNew: {
@@ -217,6 +222,40 @@ const client = {
       }
     ]
   },
+  life: {
+    networks: {
+      youtube: {
+        enabled: true,
+        icon: 'fa fa-youtube',
+        title: 'Youtube',
+        regex: /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/i,
+      },
+      spotify: {
+        enabled: true,
+        icon: 'fa fa-spotify',
+        title: 'Spotify',
+        regex: /https?:\/\/(?:embed\.|open\.)(?:spotify\.com\/)(?:track\/|\?uri=spotify:track:)((\w|-){22})/,
+      },
+      soundcloud: {
+        enabled: true,
+        icon: 'fa fa-soundcloud',
+        title: 'Soundcloud',
+        regex: /^https?:\/\/soundcloud\.com\/\S+\/\S+$/i,
+      },
+      instagram: {
+        enabled: true,
+        icon: 'fa fa-instagram',
+        title: 'Instagram',
+        regex: /(https?:\/\/)?([\w\.]*)instagram\.com\/([a-zA-Z0-9_-]*)$/,
+      },
+      website: {
+        enabled: true,
+        icon: 'fa fa-newspaper-o',
+        title: 'Article',
+        regex: /^((https?:)(\/\/\/?)([\w]*(?::[\w]*)?@)?([\d\w\.-]+)(?::(\d+))?)?([\/\\\w\.()-]*)?(?:([?][^#]*)?(#.*)?)*/,
+      }
+    }
+  },
   social: {
     networks: {
       facebook: {
@@ -224,6 +263,7 @@ const client = {
         icon: 'zmdi-facebook',
         url: 'https://www.facebook.com/sharer/sharer.php',
         title: 'Facebook',
+        label: 'Share',
         params: {
           u: '{url}',
           s: 'En ce moment je regarde "{title}" sur @afrostream'
@@ -236,6 +276,7 @@ const client = {
       whatsapp: {
         enabled: true,     // Enable WhatsApp. [Default: true],
         mobile: true,
+        label: 'Share',
         icon: 'zmdi-whatsapp',
         title: 'Whatsapp',
         url: 'whatsapp://send',
@@ -248,6 +289,7 @@ const client = {
       },
       twitter: {
         enabled: true,      // Enable Twitter. [Default: true]
+        label: 'Tweet',
         icon: 'zmdi-twitter',
         url: 'https://twitter.com/intent/tweet',
         title: 'Twitter',
@@ -263,6 +305,7 @@ const client = {
       googlePlus: {
         enabled: true, // Enable Google+. [Default: true]
         icon: 'zmdi-google-plus',
+        label: 'Share',
         title: 'Google +',
         url: 'https://plus.google.com/share',
         params: {
@@ -276,6 +319,7 @@ const client = {
       email: {
         enabled: true,     // Enable Email. [Default: true]
         icon: 'zmdi-email',
+        label: 'Email',
         title: 'email',
         url: 'mailto:',
         params: {
@@ -443,7 +487,7 @@ const client = {
       'transactionCode': 'front'
     },
     'defaultVolume': 0.65,
-    'techOrder': ['dash', 'html5', 'dashas']
+    'techOrder': ['dash', 'html5', 'dashas', 'youtube', 'soundcloud', 'vimeo', 'spotify', 'deezer']
   }
 }
 

@@ -5,10 +5,16 @@ import * as EventActionCreators from '../../actions/event'
 import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
 import TextField from 'material-ui/TextField'
-import { getI18n } from '../../../../config/i18n'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 import {
   purple800
 } from 'material-ui/styles/colors'
+import {
+  FormattedMessage
+} from 'react-intl'
 
 const {gmapApi} = config
 
@@ -164,7 +170,7 @@ class StoreLocator extends React.Component {
 
   render () {
 
-    const {props: {children}} = this
+    const {props: {children, intl}} = this
 
     if (children) {
       return children
@@ -174,18 +180,19 @@ class StoreLocator extends React.Component {
       <div className="row-fluid store-locator-page">
         <div className="container-fluid brand-bg">
           <section className="info">
-            <h2>{getI18n().storesLocator.title}</h2>
-            <p>{getI18n().storesLocator.description}</p>
+            <FormattedMessage tagName="h2" id="storesLocator.title"/>
+            <FormattedMessage tagName="p" id="storesLocator.description"/>
           </section>
           <section>
-            <h3>{getI18n().storesLocator.where}</h3>
+            <FormattedMessage tagName="h3" id="storesLocator.where"/>
             <TextField id="map-search" defaultValue={this.state.location} onChange={::this.searchLocation}
                        floatingLabelFixed={true}
                        floatingLabelStyle={textStyle}
                        disabledStyle={textStyle}
                        hintStyle={textStyle}
                        underlineStyle={textStyle}
-                       hintText={getI18n().storesLocator.inputFind} floatingLabelText={getI18n().storesLocator.find}/>
+                       hintText={intl.formatMessage({id: 'storesLocator.inputFind'})}
+                       floatingLabelText={intl.formatMessage({id: 'storesLocator.find'})}/>
             <div id="map-canvas" className="map-canvas"></div>
           </section>
         </div>
@@ -194,11 +201,8 @@ class StoreLocator extends React.Component {
   }
 }
 
-export
-default
+StoreLocator.propTypes = {
+  intl: intlShape.isRequired
+}
 
-scriptLoader(gmapApi)
-
-(
-  withRouter(StoreLocator)
-)
+export default scriptLoader(gmapApi)(withRouter(injectIntl(StoreLocator)))

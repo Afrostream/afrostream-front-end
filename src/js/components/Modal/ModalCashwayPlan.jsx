@@ -58,7 +58,7 @@ class ModalCashwayPlan extends ModalComponent {
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
                       <h1>{this.props.header}</h1>
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">

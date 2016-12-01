@@ -2,6 +2,7 @@ import webpack, { DefinePlugin, BannerPlugin } from 'webpack'
 import autoprefixer from 'autoprefixer-core'
 import path from 'path'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import ReactIntlPlugin from'react-intl-webpack-plugin'
 import config from '../config'
 import { merge } from 'lodash'
 import herokuConfig from '../app.json'
@@ -35,7 +36,7 @@ const {webpackDevServer: {host, port}} = config
 const webpackDevServerUrl = `http://${host}:${port}`
 
 const webpackConfig = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: '#inline-eval-cheap-source-map',
   output: {
     path: assetsPath,
     publicPath: `${webpackDevServerUrl}/static/`,
@@ -71,6 +72,7 @@ const webpackConfig = {
       'bootstrap',
       'raven-js',
       'mobile-detect',
+      'q',
       'qs',
       'material-ui',
       './src/js/lib/localStoragePolyfill',
@@ -94,19 +96,12 @@ const webpackConfig = {
       {
         test: /\.jsx?$/,
         loaders: ['babel-loader'],
-        exclude: [node_modules_dir]
+        exclude: [node_modules_dir],
       },
       {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader'],
         exclude: [node_modules_dir]
-      },
-      {
-        test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
-        include: [
-          path.join(__dirname, '../node_modules/dashjs'),
-        ]
       },
       {
         test: /\.json$/,
@@ -183,6 +178,7 @@ const webpackConfig = {
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
     new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
       koment: 'koment-js',
       videojs: 'video.js',
@@ -214,7 +210,8 @@ const webpackConfig = {
         FB_TRACKING_ID: JSON.stringify(process.env.FB_TRACKING_ID),
         GA_TRACKING_ID: JSON.stringify(process.env.GA_TRACKING_ID),
         YOUBORA_ID: JSON.stringify(process.env.YOUBORA_ID),
-        SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID)
+        SPONSORSHIP_BILLING_UUID: JSON.stringify(process.env.SPONSORSHIP_BILLING_UUID),
+        SUBDOMAIN: JSON.stringify(process.env.SUBDOMAIN)
       }
     })
   ],

@@ -6,8 +6,10 @@ import classSet from 'classnames'
 import Thumb from '../../../components/Movies/Thumb'
 import SignUpButton from '../../User/SignUpButton'
 import * as CategoryActionCreators from '../../../actions/category'
-import { getI18n } from '../../../../../config/i18n'
 import _ from 'lodash'
+import {
+  FormattedMessage
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./Spots.less')
@@ -71,8 +73,6 @@ class Spots extends React.Component {
     //get only 8 mea
     let categoriesList = Immutable.fromJS(_.take(uniqSpots, 8))
 
-    let info = getI18n(params.lang).home.spots
-
     let listClass = {
       'movies-data-list': true,
       'spots': true
@@ -80,12 +80,14 @@ class Spots extends React.Component {
 
     return (
       <div className="container spots-list">
-        <h2 className="browse-categorie_list_label">{info.title}</h2>
+        <h2 className="browse-categorie_list_label">
+          <FormattedMessage id="home.spots.title"/>
+        </h2>
         <div className={classSet(listClass)}>
           {categoriesList && categoriesList.map((movie, i) => this.renderMovie(movie, i)).toJS()}
         </div>
         <div className="container sign-up__container">
-          <SignUpButton label={info.action}/>
+          <SignUpButton label={'home.spots.action'}/>
         </div>
       </div>
     )

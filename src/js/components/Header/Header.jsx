@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import Headroom from 'react-headrooms'
 import UserButton from './../User/UserButton'
-import GoBack from './../GoBack/GoBack'
 import SmartBanner from './SmartBanner'
+import SearchInput from './../Search/SearchBox'
 import classSet from 'classnames'
 import config from '../../../../config'
 import { withRouter } from 'react-router'
 import window from 'global/window'
-
+import * as EventActionCreators from '../../actions/event'
+import Breadcrumbs from './Breadcrumbs'
 const {apps} = config
 
 if (process.env.BROWSER) {
@@ -19,30 +19,14 @@ if (process.env.BROWSER) {
 @connect(({Event, User}) => ({Event, User}))
 class Header extends React.Component {
 
-  state = {
-    pinned: this.props.pinned,
-    isIOS: false
-  }
+  toggleSideBar () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
 
-  componentDidMount () {
-    window.addEventListener('scroll', this.updatePin.bind(this))
-    this.setState({
-      isIOS: window.navigator.userAgent.match(/(iPod|iPhone|iPad)/i)
-    })
-    this.updatePin()
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this.updatePin.bind(this))
-  }
-
-  updatePin () {
-    let pin = window.pageYOffset
-    if (pin !== this.state.pinned) {
-      this.setState({
-        pinned: !!(pin)
-      })
-    }
+    dispatch(EventActionCreators.toggleSideBar(false))
   }
 
   render () {
@@ -51,8 +35,7 @@ class Header extends React.Component {
       props: {
         Event,
         User,
-        router,
-        location
+        router
       }
     } = this
 
@@ -60,24 +43,22 @@ class Header extends React.Component {
     const chatMode = Event.get('showChat')
     const pinned = Event.get('pinHeader')
     const user = User.get('user')
+    let excludedBreacrumbsRoutes = ['home', 'player', 'search', 'lang', 'pinId', 'movieId', 'seasonSlug', 'videoId']
     let planCode
     if (user) {
       planCode = user.get('planCode')
+      excludedBreacrumbsRoutes.shift()
     }
 
-    let hasHistory = !this.state.isIOS && user && (location.pathname.length > 1)
+    const isOnLife = router.isActive('life')
 
     let sliderClasses = {
-      'navbar': true,
-      'navbar-default': true,
-      'navbar-fixed-top': true,
-      'navbar-hidden': !chatMode && hiddenMode,
-      'navbar-fixed-color': chatMode || pinned || this.state.pinned
-      || router.isActive('recherche')
-      || router.isActive('compte')
-      || router.isActive('couponregister')
-      || router.isActive('parrainage')
+      'topbar': true,
+      'topbar-life': isOnLife,
+      'topbar-hidden': !chatMode && hiddenMode && router.isActive('player'),
+      'topbar-fixed-color': true
     }
+
 
     return (
       <Headroom tolerance={5} offset={200} classes={{
@@ -85,18 +66,42 @@ class Header extends React.Component {
         pinned: 'slideDown',
         unpinned: 'slideUp'
       }}>
-        <div className={classSet(sliderClasses)}>
-          {planCode ? <SmartBanner {...apps.params}/> : ''}
-          <div className="container-fluid">
-            <nav className="nav-collapse" role="navigation">
-              { hasHistory ? <div className="nav navbar-nav navbar-left"><GoBack {...this.props}/></div> : ''}
-              <Link className="navbar-brand" to="/">
-                <img src="/images/logo.png" alt="Afrostream.tv"/>
-              </Link>
-              <UserButton {...this.props}/>
-            </nav>
-          </div>
-        </div>
+
+        <header className={classSet(sliderClasses)}>
+          {/*{planCode && <SmartBanner {...apps.params}/>}*/}
+          <nav className="float--left" role="navigation">
+            <ul className="nav">
+              <li>
+                <button role="button" className="btn-home" onClick={::this.toggleSideBar}>
+                  <i className="open-menu-icon zmdi zmdi-menu"/>
+                  <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
+                </button>
+              </li>
+              {user && <li>
+                <SearchInput/>
+              </li>}
+
+
+            </ul>
+          </nav>
+          <nav className="float--left float-bottom-mobile" role="navigation">
+            <Breadcrumbs
+              {...this.context}
+              {...this.props}
+              excludes={excludedBreacrumbsRoutes}
+              hideNoPath={true}
+              displayMissing={false}
+              setDocumentTitle={false}
+              wrapperClass="nav breadcrumbs"
+              itemClass="step"
+              wrapperElement="ul"
+              activeItemClass="active"
+              itemElement="li"/>
+          </nav>
+          <nav className="float--right" role="navigation">
+            <UserButton {...this.props}/>
+          </nav>
+        </header>
       </Headroom>
     )
   }
@@ -104,12 +109,9 @@ class Header extends React.Component {
 
 Header.propTypes = {
   location: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
-  pinned: React.PropTypes.bool
+  history: React.PropTypes.object.isRequired
 }
 
-Header.defaultProps = {
-  pinned: false
-}
+Header.defaultProps = {}
 
 export default withRouter(Header)

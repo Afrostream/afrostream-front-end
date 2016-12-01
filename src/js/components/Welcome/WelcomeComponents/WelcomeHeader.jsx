@@ -1,16 +1,13 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import * as ModalActionCreators from '../../../actions/modal'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames'
 import config from '../../../../../config'
-import { getI18n } from '../../../../../config/i18n'
-import _ from 'lodash'
 import MobileDetect from 'mobile-detect'
 import SignUpButton from '../../User/SignUpButton'
-import { withRouter } from 'react-router'
-import Player from '../../Player/Player'
 import window from 'global/window'
+import ReactImgix from '../../Image/ReactImgix'
+import SlideShow from '../../SlideShow/SlideShow'
 
 const {metadata, images} =config
 
@@ -49,14 +46,14 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        Movie, Season, Episode, params
+        Movie, Season, Episode, params, intl
       }
     } = this
-    let {movieId, seasonId, episodeId, lang} = params
+    let {movieId, seasonId, episodeId} = params
 
     let info = {
-      title: getI18n(lang).home.title,
-      action: getI18n(lang).home.action,
+      title: intl.formatMessage({id: 'home.title'}),
+      action: 'home.action',
       poster: `${metadata.screen && metadata.screen.image || metadata.shareImage}`,
       logo: `${metadata.screen && metadata.screen.logo}`,
       movie: {
@@ -64,6 +61,7 @@ class WelcomeHeader extends React.Component {
         synopsis: ''
       }
     }
+
     let trailer
     let movieData
     //let videoData
@@ -116,7 +114,6 @@ class WelcomeHeader extends React.Component {
       info.logo = null
     }
     let posterImg = `${images.urlPrefix}${info.poster}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
-    let imageStyle = {backgroundImage: `url(${posterImg})`}
     let logoImg = `${images.urlPrefix}${info.logo}?crop=faces&fit=clip&w=500&q=70&fm=png`
     let logoStyle = {backgroundImage: `url(${logoImg})`}
 
@@ -129,26 +126,26 @@ class WelcomeHeader extends React.Component {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        {trailer && <Player src={{src: trailer, type: 'video/youtube'}}
-                            options={{autoplay: true, poster: posterImg}}/> }
-
-        {!trailer && <div className="afrostream-movie__poster" style={imageStyle}>
-          <div className="afrostream-movie__mask"/>
-          {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
-        </div>}
-        {movieData ? <SignUpButton className="subscribe-button subscribe-button-mobile" label={info.action}/> : ''}
-        <div className="afrostream-movie">
-          <div className="afrostream-movie__info">
-            <h1>{info.movie.title}</h1>
-            <div className='detail-text'>{info.movie.synopsis}</div>
-          </div>
-          <div className="afrostream-movie__subscribe">
-            <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
-              return (<span key={`statement-${i}`}>{statement}</span>)
-            })}</div>
-            <SignUpButton label={info.action}/>
-          </div>
-        </div>
+        {!movieData && <SlideShow dots={false} autoplay={true} infinite={false}/>}
+        {movieData && [
+          <ReactImgix key="welcome-pgm" className="afrostream-movie__poster" src={posterImg} bg={true}>
+            <div className="afrostream-movie__mask"/>
+            {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
+          </ReactImgix>,
+          <SignUpButton key="welcome-pgm-signup" className="subscribe-button subscribe-button-mobile"
+                        label={info.action}/>,
+          <div key="welcome-pgm-movie" className="afrostream-movie">
+            <div className="afrostream-movie__info">
+              <h1>{info.movie.title}</h1>
+              <div className='detail-text'>{info.movie.synopsis}</div>
+            </div>
+            <div className="afrostream-movie__subscribe">
+              <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
+                return (<span key={`statement-${i}`}>{statement}</span>)
+              })}</div>
+              <SignUpButton label={info.action}/>
+            </div>
+          </div>] }
       </section>
     )
   }
@@ -160,4 +157,4 @@ WelcomeHeader.propTypes = {
 
 WelcomeHeader.defaultProps = {}
 
-export default withRouter(WelcomeHeader)
+export default WelcomeHeader

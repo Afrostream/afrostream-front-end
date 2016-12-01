@@ -1,18 +1,21 @@
 @import (reference) '../../../styles/config.less';
 
 .thumb {
+  color: @brand-primary;
   padding: @thumb-margin;
   position: relative;
   text-align: left;
   vertical-align: top;
   overflow: hidden;
   width: @thumb-width + (@thumb-margin * 2);
-  flex: 1;
+  //flex: 1;
+  flex: 1 1 auto;
   &.episode {
     width: @thumb-width-episode;
     a {
       .thumb-background {
         height: @thumb-height-episode;
+        padding-top: inherit;
       }
       .thumb-new__item {
         background-image: url(../../../assets/images/movie/label-nouveau-episode.png);
@@ -28,14 +31,17 @@
     a {
       .thumb-background {
         height: @thumb-height-adspot;
+        padding-top: inherit;
       }
       .thumb-info {
         position: absolute;
         bottom: 0;
         padding: 10px;
+        color: @brand-primary;
         .thumb-info__title {
           font-family: @font-heavy;
-          font-size: 4em;
+          font-size: 3em;
+          line-height: 1;
           text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
       }
@@ -63,7 +69,8 @@
       float: left;
       white-space: normal;
       box-sizing: inherit;
-      color: @brand-primary;
+      //color: @brand-primary;
+      color: @color-indigo;
 
       &__title,
       &__synopsis {
@@ -84,13 +91,18 @@
       left: 0;
       bottom: 0;
       right: 0;
-      height: @thumb-height;
+      //height: @thumb-height;
+      padding-top: 143%;
       vertical-align: middle;
       background-image: url(../../../assets/images/default/134x200.jpg);
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
       cursor: pointer;
+
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      overflow: hidden;
+
       .transition(opacity 0.1s linear);
       .btn-play {
         .transition(opacity 0.1s linear);
@@ -123,7 +135,7 @@
   .thumb-buttons {
     position: absolute;
     z-index: 3;
-    bottom: 10px;
+    bottom: 20px;
     right: 11px;
     opacity: 0;
     visibility: hidden;
@@ -131,6 +143,9 @@
 
     .btn {
       margin: 5px 5px 5px 0px;
+      &:hover {
+        color: lighten(@brand-primary, 5%)
+      }
     }
   }
 }

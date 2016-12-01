@@ -1,12 +1,14 @@
 @import (reference) '../../../styles/config.less';
 
 .welcome-page {
+  background-color: @background-color-base;
   .mode-container {
     .isNotMobile({ width: 50%; });
     margin: 0 auto;
+    padding: @header-height;
   }
   .plan-container {
     padding: 3em;
-    .isMobile({ padding: 50px 0 50px 0; });
+    .isMobile({ padding: 0; });
   }
 }

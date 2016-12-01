@@ -6,21 +6,34 @@
 =======================================*/
 @popup-padding: 30px;
 @line-separator-color: #c6c6c6;
-@popup-radius: 1px;
+@popup-radius: 0;
 @popup-bg-alpha: 50%;
 @pannel-padding: 0px;
 
 #lock.theme-default,
 #widget {
+
+  &.lock.player {
+    position: fixed;
+    background: none;
+  }
+
   .overlay {
     background: @background-color-base;
     background: fade(@background-color-base, @popup-bg-alpha);
   }
+
   .panel {
     font-family: @font-family-base;
     background: lighten(@color-grey, 5%);
     color: @brand-label;
     border-radius: @popup-radius;
+
+    max-height: 90%;
+    overflow: auto;
+
+    .mode {
+    }
     &.medium {
       width: 50%;
     }

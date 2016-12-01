@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 
 if (process.env.BROWSER) {
   require('./FavoritesButton.less')

@@ -1,17 +1,18 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
 import Thumb from '../../components/Movies/Thumb'
 import NextGoBack from './NextGoBack'
 import RateComponent from '../Recommendation/RateComponent'
 import ShareButton from '../Share/ShareButton'
+import { I18n } from '../Utils'
+
 if (process.env.BROWSER) {
   require('./NextEpisode.less')
 }
 const {images} =config
 
-class NextEpisode extends React.Component {
+class NextEpisode extends I18n {
 
   constructor (props) {
     super(props)
@@ -47,12 +48,12 @@ class NextEpisode extends React.Component {
       <div className="next-episode">
         <div className="next-episode__background" style={imageStyles}/>
         <div className="next-episode__content">
-          <div className="next-episode__label">{getI18n().share.label}</div>
+          <div className="next-episode__label">{this.getTitle('share.label')}</div>
           <ShareButton />
-          <div className="next-episode__label">{getI18n().next.labelLike}</div>
+          <div className="next-episode__label">{this.getTitle('next.labelLike')}</div>
           <RateComponent {...{videoId}}/>
           {this.props.auto ? <div
-            className="next-episode__label">{`${getI18n().next.label.replace('{seconds}', this.props.time)}`}</div> : '' }
+            className="next-episode__label">{`${this.getTitle('next.label', {seconds: this.props.time})}`}</div> : '' }
           <div className="next-episode__thumbs">
             <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135} type="episode"/>
           </div>

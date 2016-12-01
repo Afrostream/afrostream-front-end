@@ -2,42 +2,51 @@
 @import '../../../styles/btn-play.less';
 
 .movie {
-  display: inline-block;
   position: relative;
   background-color: @background-color-base;
   .fullHeight();
   //padding: @header-height @app-padding @app-padding @app-padding;
   //.isMobile({ padding: @header-height-mobile @app-padding-mobile @app-padding-mobile @app-padding-mobile; });
   float: none;
-  height: 100%;
-  width: 100%;
-  vertical-align: middle;
   min-height: 100vh;
   //Firefox fix
-  height: 100vh;
+  //height: 100vh;
   overflow: hidden;
   &.serie {
-    min-height: 75vh;
+    min-height: 65vh;
     //Firefox fix
-    height: 75vh;
+    //height: 75vh;
   }
-  &:before {
-    content: '';
-    display: inline-block;
+  display: table;
+  .movie-info_content {
+    display: table-cell;
+    position: relative;
     height: 100%;
+    width: 100%;
     vertical-align: middle;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+
   }
-  &:after {
-    content: '';
-    background-image: url(../../../assets/images/shadow-bottom.png);
-    background-repeat: repeat-x;
-    background-position: center bottom;
+
+  .afrostream-movie__logo {
     position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 150px;
+    width: 100%;
+    max-width: 40%;
+    right: 1em;
+    top: 1em;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    .aspect-ratio-w(16, 9);
+    .isMobile({ width: 100%; max-width: 100%; right: inherit });
   }
+
   > a {
     position: absolute;
     //z-index: 0;
@@ -60,8 +69,7 @@
     background-size: cover;
     background-position: 50% 0%;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    .isMobile({ background-attachment: scroll });
+    background-attachment: scroll;
     .afrostream-movie__mask {
       position: absolute;
       top: 0;
@@ -69,19 +77,6 @@
       bottom: 0;
       right: 0;
       background-color: fade(#000, 50%);
-    }
-    &:after {
-      content: '';
-      background-image: url(../../../assets/images/shadow.png);
-      background-repeat: no-repeat;
-      background-position: center top;
-      background-size: cover;
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      z-index: 1;
     }
   }
   &.movie--btn_play {
@@ -94,7 +89,6 @@
 
 @media @mobile,@tablet {
   .movie {
-    //padding: @header-height @app-padding-mobile @app-padding-mobile @app-padding-mobile;
     .btn-play {
       z-index: 2;
       top: 30%;
@@ -104,7 +98,7 @@
 
 @media @mobile {
   .movie {
-    min-height: auto;
+    //min-height: inherit;
     height: auto;
     &:before {
       //content: none;
@@ -115,9 +109,9 @@
       }
     }
     &.serie {
-      min-height: 65vh;
+      //min-height: 65vh;
       //Firefox fix
-      height: 65vh;
+      //height: 65vh;
     }
 
     &:not(.serie) {

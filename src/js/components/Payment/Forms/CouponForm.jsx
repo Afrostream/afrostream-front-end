@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react'
-import { getI18n } from '../../../../../config/i18n'
 import Spinner from '../../Spinner/Spinner'
 import TextField from 'material-ui/TextField'
 import * as BillingActionCreators from '../../../actions/billing'
 import config from '../../../../../config'
-import { Link } from 'react-router'
+import { Link, I18n } from '../../Utils'
 import shallowEqual from 'react-pure-render/shallowEqual'
 
-class CouponForm extends React.Component {
+class CouponForm extends I18n {
 
   constructor (props, context) {
     super(props, context)
@@ -93,7 +92,7 @@ class CouponForm extends React.Component {
           validCoupon,
           fetching: false
         })
-      }).catch((e)=> {
+      }).catch((e) => {
         this.setState({
           validCoupon: false,
           fetching: false
@@ -120,7 +119,7 @@ class CouponForm extends React.Component {
       disabled: Boolean(!isCouponCodeCompatible),
       onChange: (event, payload) => {
         clearTimeout(this.updateTimeout)
-        this.updateTimeout = setTimeout(()=> {
+        this.updateTimeout = setTimeout(() => {
           this.checkCoupon(payload)
         }, 200)
       }
@@ -128,7 +127,7 @@ class CouponForm extends React.Component {
 
     if (!isCouponCodeCompatible) {
       toolTipAttribute = _.merge({
-        'data-original-title': getI18n().payment.promo.disabledLabel,
+        'data-original-title': this.getTitle('payment.promo.disabledLabel'),
         'data-placement': 'top',
         'data-toggle': 'tooltip'
       })
@@ -143,7 +142,8 @@ class CouponForm extends React.Component {
       inputAttributes.defaultValue = couponCode
       if (couponType !== 'promo') {
         couponName = (
-          <Link className="coupon-warning" to={`/coupon?code=${couponCode}`}>{getI18n().payment.promo.activate}</Link>)
+          <Link className="coupon-warning"
+                to={`/coupon?code=${couponCode}`}>{this.getTitle('payment.promo.activate')}</Link>)
         couponIcon = 'zmdi-alert-triangle'
       } else {
         couponIcon = 'zmdi-check'
@@ -163,9 +163,9 @@ class CouponForm extends React.Component {
               name="coupon_code"
               id="coupon_code"
               ref="couponCode"
-              floatingLabelText={getI18n().payment.promo.label}
+              floatingLabelText={this.getTitle('payment.promo.label')}
               {...inputAttributes}
-              hintText={getI18n().payment.promo.placeHolder}
+              hintText={this.getTitle('payment.promo.placeHolder')}
             />
           </div>
           <div className="col-md-1">

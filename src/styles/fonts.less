@@ -1,6 +1,8 @@
 @import ( reference ) './for';
 @import (less) '../../node_modules/material-design-iconic-font/less/material-design-iconic-font.less';
+@import (less) '../../node_modules/font-awesome/less/font-awesome.less';
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
+@import url(//fonts.googleapis.com/css?family=Oswald);
 
 /**
  * Font-face mixin
@@ -38,19 +40,30 @@
 // -----------------------------------------------------------------------------
 
 @font-family-base: 'Open Sans', 'DIN-30640-Std', Helvetica, Arial, 'Lucida Grande', sans-serif;
+@font-oswald: 'Oswald', Helvetica, Arial, 'Lucida Grande', sans-serif;
 @font-light: "FtraLt", Helvetica, sans-serif;
 @font-thin: "FtraLh", Helvetica, sans-serif;
 @font-book: "FtraBk", Helvetica, sans-serif;
 @font-heavy: "FtraHv", Helvetica, sans-serif;
 @font-roman: "Futura", Helvetica, sans-serif;
 @font-black: "FtraBd", Helvetica, sans-serif;
+@font-material: "Material-Design-Iconic-Font";
+@font-awasome: "FontAwesome";
+@font-bootstrap: "Glyphicons Regular";
 
 .body-font() {
   font-family: @font-family-base;
-  line-height: 1;
+  //line-height: 1;
+  font-weight: 100;
+  font-size: 12px;
+  //line-height: 1.4;
+  color: @color-black-2;
 }
 
 .zmdi {
+
+  font-weight: bolder;
+
   &.zmdi-bouygues {
     background-image: url(../assets/images/strategy/bouygues-strategy.png);
     background-size: contain;

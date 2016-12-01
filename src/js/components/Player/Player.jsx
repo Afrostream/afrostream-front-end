@@ -115,9 +115,6 @@ class Player extends React.Component {
   }
 
   setVideoPlayerSrc (src) {
-    if (!this._player) {
-      return
-    }
     this._player.src(src)
   }
 
@@ -144,10 +141,9 @@ class Player extends React.Component {
 
   unmountVideoPlayer () {
     this.removeResizeEventListener()
-    if (!this._player) {
-      return
+    if (this._player) {
+      this._player.dispose()
     }
-    this._player.dispose()
   }
 
   addEndlessMode () {

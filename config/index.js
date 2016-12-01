@@ -45,6 +45,7 @@ const config = _.merge(
     domain: {
       host: process.env.DOMAIN_HOST || 'localhost'
     },
+    subdomain: process.env.SUBDOMAIN || 'www',
     /**
      * Front-End Server
      */
@@ -70,7 +71,8 @@ const config = _.merge(
       host: '0.0.0.0',
       port: 8081
     },
-
+    // List of user roles
+    userRoles: ['free', 'user', 'premium', 'vip'],
     /**
      * browserSync
      */

@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom'
 import StackBlur from 'stackblur-canvas'
 import React, { Component, PropTypes } from 'react'
+import URL from 'url'
+import config from '../../../../config'
 
 const roundToNearest = (size, precision) => precision * Math.ceil(size / precision)
 
@@ -115,7 +117,7 @@ export default class ReactImgix extends Component {
     }
 
     var shortOptions = Object.assign({}, DEFAULT_OPTIONS)
-    Object.keys(longOptions).forEach((key)=> {
+    Object.keys(longOptions).forEach((key) => {
       var val = longOptions[key]
       key = encodeURIComponent(key)
       shortOptions[key] = val
@@ -144,7 +146,10 @@ export default class ReactImgix extends Component {
     //_src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=30`)
     //_src = _src.replace(/&w=([1-9][0-9]*|0)/g, `&w=20`)
     //_src = _src.replace(/&h=([1-9][0-9]*|0)/g, `&h=20`)
-    _src += '&blur=800'
+    const url = URL.parse(_src)
+    if (~config.images.urlPrefix.indexOf(url.hostname)) {
+      _src += '&blur=800'
+    }
 
     let srcSet = ''
     let _component = component

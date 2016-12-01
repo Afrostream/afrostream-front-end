@@ -6,6 +6,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import ShareButton from '../Share/ShareButton'
 import _ from 'lodash'
+import { extractImg } from '../../lib/utils'
 
 const Status = {
   PENDING: 'pending',
@@ -93,20 +94,20 @@ class Poster extends LoadVideo {
       }
     }
 
-    let type = this.getType()
-    let thumb = data.get(type === 'movie' ? 'thumb' : 'poster')
-    if (!thumb) {
-      return
-    }
+    const type = this.getType()
+    const extractType = (type === 'movie' ? 'thumb' : 'poster')
 
-    let path = thumb.get('path')
+    const imageUrl = extractImg({
+      data,
+      key: extractType,
+      width: thumbW,
+      height: thumbH,
+      fit: 'min'
+    })
 
-    if (!path) {
-      return
-    }
-
-    let rect = this.extractProfile(thumb, '16:31')
-    let imageStyles = `${config.images.urlPrefix}${path}?w=${thumbW}&h=${thumbH}&q=${config.images.quality}&fm=${config.images.type}&facepad=1.5${rect}`
+    const thumb = data.get(extractType)
+    const rect = this.extractProfile(thumb, '16:31')
+    const imageStyles = `${imageUrl}&facepad=1.5${rect}`
 
     if (this.props.preload) {
 

@@ -12,8 +12,8 @@ import SponsorsPage from './components/Sponsors/SponsorsPage'
 import SearchPage from './components/Search/SearchPage'
 import StoreLocator from './components/Store/StoreLocator'
 import { PaymentPage, PaymentForm, CashwayPage } from './components/Payment/'
-import ResetPasswordPage from './components/ResetPassword/ResetPasswordPage'
 import * as Static from './components/Static'
+import * as Life from './components/Life'
 import AccountPage from './components/Account/AccountPage'
 import CancelSubscription from './components/Account/CancelSubscription'
 import NoMatch from './components/NoMatch'
@@ -21,12 +21,14 @@ import _ from 'lodash'
 
 const langs = ['fr', 'en']
 
-const buildSubRoutes = function () {
-  return _.map(langs, (lang) =>
-    <Route key={lang} path={lang} lang={lang}>
+const buildLangsRoutes = function () {
+  let allRoutes = _.map(langs, (lang) =>
+    <Route key={lang} name="lang" path={lang} lang={lang}>
       {buildRoutes(lang)}
-    </Route>
+    </Route>,
   )
+  allRoutes.push(buildRoutes())
+  return allRoutes
 }
 
 const buildHome = function (lang) {
@@ -38,28 +40,27 @@ const buildHome = function (lang) {
              component={CancelSubscription}/>
     </Route>,
     <Route key={`${lang}-sponsorship`} name="sponsorship" path="parrainage" component={SponsorsPage}/>,
-    <Route key={`${lang}-browse`} name="browse" path="browse/genre(/:categoryId)(/:categorySlug)"
+    <Route key={`${lang}-category`} name="category" path="category(/:categoryId)(/:categorySlug)"
            component={BrowseGenrePage}/>,
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
-    <Route key={`${lang}-movie`} name="movie"
-           path=":movieId(\\d+)(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
+    <Route key={`${lang}-movie`}
+           name="movie"
+           path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
            component={MoviePage}>,
-      <Route key={`${lang}-player`} name="player"
+      <Route key={`${lang}-player`}
+             name="player"
              path=":videoId"
              component={PlayerPage}/>
-    </Route>
+    </Route>,
+    <IndexRoute key={`${lang}-home-index`} component={HomePage}/>
   ]
 
-  if (lang) {
-    return homeRoutes
-  }
-  const langRoutes = buildSubRoutes()
-  homeRoutes.unshift(langRoutes)
-
-  return (<Route key={`${lang}-home`} path="/" name="accueil" component={HomePage}>
+  const finalRoutes = (<Route key={`${lang}-home`} component={HomePage}>
     {homeRoutes}
   </Route>)
+
+  return finalRoutes
 
 }
 const buildRoutes = function (lang) {
@@ -78,12 +79,19 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.StaticRoute}/>,
     <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.StaticRoute}/>,
     <Route key={`${lang}-policy`} name="policy" path="policy" component={Static.StaticRoute}/>,
-    <Route key={`${lang}-reset`} name="reset" path="reset" component={ResetPasswordPage}/>,
+    <Route key={`${lang}-reset`} name="reset" path="reset" component={LoginPage}/>,
     <Route key={`${lang}-signin`} name="signin" path="signin" component={LoginPage}/>,
     <Route key={`${lang}-signup`} name="signup" path="signup" component={LoginPage}/>,
     <Route key={`${lang}-coupon`} name="coupon" path="coupon" component={LoginPage}/>,
     <Route key={`${lang}-login`} name="login" path="login" component={LoginPage}/>,
     <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
+    <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeHome}>
+      <Route name="community" path="community" component={Life.LifeCommunity}>
+        <Route name="lifeUserInfos" path=":lifeUserId(/:lifeUserName)" component={Life.LifeUserInfos}/>
+      </Route>
+      <Route name="lifePin" path="pin/:pinId(/:pinSlug)" component={Life.LifePinView}/>
+      <Route name="lifeTheme" path=":themeId(/:themeSlug)" component={Life.LifeTheme}/>
+    </Route>,
     <Route key={`${lang}-store`} name="store" path="store-locator" component={StoreLocator}/>,
     <Route key={`${lang}-cash`} name="cash" path="cash" component={CashwayPage}>,
       <Route name="cashPayment" path="select-plan" component={PaymentPage}>
@@ -93,10 +101,10 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-payment`} name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
-    <Redirect key={`${lang}-redirect`} from="blog/**/*" to="/"/>,
+    <Redirect key={`${lang}-redirect-blog`} from="/blog/**/*" to="life"/>,
+    <Redirect key={`${lang}-redirect-browse`} from="/browse/**/*" to="category"/>,
     //push subroutes after static routes
-    buildHome(lang),
-    <Route key={`${lang}-nomatch`} path="*" name="nomatch" component={NoMatch}/>
+    buildHome(lang)
   ]
 
   return subRoutes
@@ -104,7 +112,8 @@ const buildRoutes = function (lang) {
 }
 
 export default (
-  <Route name="app" component={Application}>
-    {buildRoutes()}
+  <Route name="app" path="/" component={Application}>
+    {buildLangsRoutes()}
+    <Route path="*" name="nomatch" component={NoMatch}/>
   </Route>
 )

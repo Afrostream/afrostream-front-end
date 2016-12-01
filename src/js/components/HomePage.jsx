@@ -4,6 +4,10 @@ import WelcomePage from './Welcome/WelcomePage'
 import BrowsePage from './Browse/BrowsePage'
 import { withRouter } from 'react-router'
 import config from '../../../config'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 @connect(({User, Billing}) => ({User, Billing}))
 class HomePage extends React.Component {
@@ -22,17 +26,19 @@ class HomePage extends React.Component {
 
   checkAuth () {
     const {
-      props: {location, history, router, User, Billing}
+      props: {intl, history, router, User, Billing}
     } = this
-
+    const {locale, defaultLocale}= intl
     const user = User.get('user')
     if (user) {
       let isCash = router.isActive('cash')
       let planCode = user.get('planCode')
       let subscriptionsStatus = user.get('subscriptionsStatus')
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null
-      if (!planCode && (location.pathname !== '/compte')) {
-        let donePath = `${isCash ? '/cash' : ''}/select-plan`
+      let langRoute = `${locale && locale !== defaultLocale && ('/' + locale) || ''}`
+      const noRedirectRoute = router.isActive(`${langRoute}/compte`) || router.isActive(`${langRoute}/life`)
+      if (!planCode && !noRedirectRoute) {
+        let donePath = `${langRoute}${isCash ? '/cash' : ''}/select-plan`
         if (status && status !== 'active') {
           donePath = `${donePath}/none/${status}`
         } else {
@@ -60,12 +66,13 @@ class HomePage extends React.Component {
   render () {
     const {props: {User, children}} = this
     const user = User.get('user')
+
     if (user) {
       if (children) {
         return children
       }
       else {
-        return (<BrowsePage key="browse-page"/>)
+        return (<BrowsePage key="browse-page"  {...this.props}/>)
       }
     } else {
       return (<WelcomePage {...this.props} key="welcome-page"/>)
@@ -74,9 +81,14 @@ class HomePage extends React.Component {
 }
 
 
+HomePage.contextTypes = {
+  store: PropTypes.object.isRequired
+}
+
 HomePage.propTypes = {
+  intl: intlShape.isRequired,
   history: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired
 }
 
-export default withRouter(HomePage)
+export default withRouter(injectIntl(HomePage))

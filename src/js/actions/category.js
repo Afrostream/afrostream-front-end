@@ -7,10 +7,7 @@ export function getAllSpots () {
     if (readySpots) {
       console.log('spots already present in data store')
       return {
-        type: ActionTypes.Category.getAllSpots,
-        res: {
-          body: readySpots.toJS()
-        }
+        type: ActionTypes.Category.getAllSpots
       }
     }
 
@@ -34,10 +31,7 @@ export function getSpots (categoryId) {
       console.log('spots already present in data store', categoryId)
       return {
         type: ActionTypes.Category.getSpots,
-        categoryId,
-        res: {
-          body: readySpot.toJS()
-        }
+        categoryId
       }
     }
 

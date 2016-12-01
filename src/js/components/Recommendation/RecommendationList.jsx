@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getI18n } from '../../../../config/i18n'
 import Thumb from '../../components/Movies/Thumb'
 import NextGoBack from '../Player/NextGoBack'
 import RateComponent from './RateComponent'
 import ShareButton from '../Share/ShareButton'
 import * as RecoActionCreators from '../../actions/reco'
+import { I18n } from '../Utils'
 
 if (process.env.BROWSER) {
   require('./RecommendationList.less')
@@ -13,7 +13,7 @@ if (process.env.BROWSER) {
 
 
 @connect(({User, Video}) => ({User, Video}))
-class RecommendationList extends React.Component {
+class RecommendationList extends I18n {
 
   constructor (props) {
     super(props)
@@ -36,7 +36,6 @@ class RecommendationList extends React.Component {
     } = this
     const video = Video.get(`videos/${videoId}`)
     const movie = video.get('movie')
-    const getI18nReco = getI18n().recommendation
     let type = 'serie'
     if (movie) {
       type = movie.get('type')
@@ -44,17 +43,17 @@ class RecommendationList extends React.Component {
     let labelMovie = ''
     switch (type) {
       case 'movie':
-        labelMovie = getI18nReco.typeMovie
+        labelMovie = this.getTitle('recommendation.typeMovie')
         break
       case 'serie':
-        labelMovie = getI18nReco.typeSerie
+        labelMovie = this.getTitle('recommendation.typeSerie')
         break
       default:
-        labelMovie = getI18nReco.typeEpisode
+        labelMovie = this.getTitle('recommendation.typeEpisode')
         break
     }
 
-    return getI18nReco.labelLike.replace('{movieType}', labelMovie)
+    return this.getTitle('recommendation.labelLike', {movieType: labelMovie})
   }
 
   renderList () {
@@ -81,16 +80,15 @@ class RecommendationList extends React.Component {
         videoId
       }
     } = this
-    const getI18nReco = getI18n().recommendation
 
     return (
       <div className="recommendation-list">
         <div className="recommendation-list__content">
-          <div className="recommendation-list__label">{getI18n().share.label}</div>
+          <div className="recommendation-list__label">{this.getTitle('share.label')}</div>
           <ShareButton/>
           <div className="recommendation-list__label">{this.renderLabel()}</div>
           <RateComponent {...{videoId}}/>
-          <div className="recommendation-list__label">{getI18nReco.labelPage}</div>
+          <div className="recommendation-list__label">{this.getTitle('recommendation.labelPage')}</div>
           <div className="recommendation-list__thumbs">
             { this.renderList() }
           </div>

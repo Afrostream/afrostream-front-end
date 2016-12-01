@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { prepareRoute } from '../../decorators'
@@ -9,6 +9,11 @@ import { ArrowStepper } from '../Slider'
 import MoviesSlider from './MoviesSlider'
 import classSet from 'classnames'
 import { AutoSizer, ColumnSizer, Grid } from 'react-virtualized'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
+
 
 @prepareRoute(async function ({store, categoryId}) {
   store.dispatch(CategoryActionCreators.getCategory(categoryId))
@@ -95,7 +100,7 @@ class CategorySlider extends MoviesSlider {
     return (
       <div className={classSet(listClass)}>
         {slug && <div id={slug} className="movies-list__anchor"/>}
-        {label && <Link to={`/browse/genre/${categoryId}/${catSlug}`} className="movies-list__selection">{label}</Link>}
+        {label && <Link to={`/genre/${categoryId}/${catSlug}`} className="movies-list__selection">{label}</Link>}
         {category && dataList ?
           <AutoSizer className="slider-container" disableHeight>
             {({width}) => (
@@ -110,7 +115,7 @@ class CategorySlider extends MoviesSlider {
                   <ArrowStepper columnCount={dataList.size}>
                     {({onScroll, columnCount, scrollLeft}) => (
                       <Grid
-                        ref="reactGrid"
+                        ref={registerChild}
                         cellRenderer={::this.renderItem}
                         columnWidth={::this.getColumnWidth}
                         columnCount={columnCount}
@@ -134,11 +139,12 @@ class CategorySlider extends MoviesSlider {
 }
 
 CategorySlider.propTypes = {
-  categoryId: React.PropTypes.number
+  categoryId: React.PropTypes.number,
+  intl: intlShape.isRequired
 }
 
 CategorySlider.defaultProps = {
   categoryId: null
 }
 
-export default CategorySlider
+export default injectIntl(CategorySlider)

@@ -1,4 +1,65 @@
 {
+  "routes": {
+    "app": "accueil",
+    "company": "companie",
+    "companynomatch": "companie",
+    "about": "a-propos",
+    "jobs": "jobs",
+    "job": "job",
+    "press": "presse",
+    "faq": "faq",
+    "submit": "soumettre",
+    "legals": "legals",
+    "cgu": "cgu",
+    "policy": "politique",
+    "reset": "reset",
+    "signin": "se-connecter",
+    "signup": "s-inscrire",
+    "coupon": "coupon",
+    "login": "se-connecter",
+    "newsletter": "newsletter",
+    "life": "life",
+    "community": "communaute",
+    "lifeUserInfos": "infos",
+    "lifePin": "pin",
+    "lifeTheme": "theme",
+    "store": "store",
+    "cash": "cash",
+    "cashPayment": "cashPayment",
+    "cashPaymentMethod": "cashPaymentMethod",
+    "payment": "payment",
+    "paymentMethod": "paymentMethod",
+    "search": "search",
+    "compte": "compte",
+    "cancelSubscription": "cancelSubscription",
+    "sponsorship": "sponsorship",
+    "category": "categorie",
+    "last": "derniers",
+    "favoris": "favoris"
+  },
+  "lang": {
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "quality": {
+    "4": "HD",
+    "3": "Normal",
+    "2": "Moyen",
+    "1": "Bas",
+    "0": "Auto"
+  },
+  "menu": {
+    "home": "Accueil",
+    "streaming": "Streaming",
+    "life": "Life",
+    "community": "Communauté",
+    "favoris": "Favoris",
+    "last": "Nouveautés",
+    "sponsorship": "Inviter des amis",
+    "profil": "Mon profil",
+    "params": "Mon Compte",
+    "logout": "Se deconnecter"
+  },
   "home": {
     "title": "Les meilleurs films et séries\nafro-américains et africains.\nEn illimité.",
     "action": "PROFITEZ D'UNE SEMAINE<br />OFFERTE",
@@ -21,11 +82,12 @@
     "devices": {
       "title": "Vos films et séries afro préférés quand vous voulez où vous voulez en illimité",
       "action": "Démarrez votre semaine d'essai offerte",
-      "features": [
-        "En version française ou avec des sous-titres en français",
-        "Aucune publicité, aucune interruption",
-        "Profitez d'une image haute qualité"
-      ]
+      "features": {
+        "engagment": "Sans engagement",
+        "free": "La première semaine est offerte",
+        "box": "Disponible sur ordinateur, tablette, smartphone et box",
+        "hd": "Profitez d'une image haute qualité"
+      }
     },
     "spots": {
       "title": "Aperçu de notre catalogue",
@@ -36,6 +98,9 @@
       "baseline": "Service uniquement disponible en France, DOM-TOM,Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.",
       "link": "Les réponses à vos questions"
     }
+  },
+  "browse": {
+    "last": "Derniers ajouts"
   },
   "footer": {
     "legals": "Mentions légales",
@@ -53,7 +118,7 @@
       "coupon": "Coupon"
     },
     "pro": {
-      "title": "PRO",
+      "title": "CORPORATE",
       "blog": "Blog",
       "press": "Presse",
       "investissor": "Investisseurs",
@@ -75,6 +140,18 @@
     "oauth2": {
       "title": "BOXES"
     }
+  },
+  "newsletter": {
+    "header": "Newsletter",
+    "instructions": "Me tenir informé par email",
+    "result": "Merci, vous êtes désormais inscrit à nos newsletters",
+    "action": "Envoyer"
+  },
+  "geowall": {
+    "header": "Ce service n'est pas disponible dans votre pays",
+    "instructions": "Me tenir informé par email",
+    "result": "Merci, nous vous tiendrons informés",
+    "action": "Envoyer"
   },
   "storesLocator": {
     "title": "Vous cherchez un buraliste pour vous abonner à Afrostream ?",
@@ -100,18 +177,14 @@
     "title": "Formule",
     "action": "Choisir cette offre",
     "actionMobile": "Payer via votre facture téléphonique",
-    "cashway-coupon-3months": "Formule 3 Mois - soit 10,00€ par mois sans engagement",
-    "cashway-coupon-oneyear": "Formule Sérénité - 59,99€ pour 1 an de films et séries afro",
-    "afrostreammonthly": "Formule Mensuel - 7 jours d’essai puis 6,99€ par mois sans engagement",
-    "afrostreamambassadeurs2": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
-    "afrostreamambassadeurs": "Formule Sérénité - 7 jours d’essai puis 59,99€ pour 1 an de films et séries afro",
     "infos": {
+      "internalActionLabel": "",
       "coupon": "Coupon valide {couponName}",
       "formule": "Formule",
       "prelevementMensuel": "Prélèvement mensuel",
       "price": "Tarif",
       "trialEnabled": "7 jours d'essai offert",
-      "internalMaxScreens": "Écran{s} disponible{s} en simultané",
+      "internalMaxScreens": "Écran(s) disponible(s) en simultané",
       "internalMobile": "Sur votre ordinateur, smartphone et tablette",
       "internalUnlimited": "Films et séries TV en illimité",
       "internalEngagment": "Sans engagement au delà de la période initiale",
@@ -129,8 +202,7 @@
     "name": "Votre Prénom",
     "lastName": "Votre Nom",
     "country": {
-      "label": "Pays",
-      "defaultValue": "FR"
+      "label": "Pays"
     },
     "promo": {
       "label": "Code promo (optionnel)",
@@ -303,9 +375,9 @@
       "statusLabel": "Status",
       "cancelLabel": "Annuler",
       "periods": {
-        "year": "An",
+        "year": "An(s)",
         "month": "Mois",
-        "day": "Jours"
+        "day": "Jour(s)"
       },
       "status": {
         "canceled": "Annulé",
@@ -317,10 +389,13 @@
     }
   },
   "favorites": {
+    "add": "Ajouter à mes favoris",
+    "delete": "Supprimer de mes favoris",
     "noData": "Aucun Favoris ajouté à mon profil",
     "labelPage": "Mes Favoris"
   },
   "share": {
+    "tooltip": "Recommander",
     "label": "Partager avec mes amis",
     "labelBtn": "Partager"
   },
@@ -328,6 +403,12 @@
     "label": "Épisode suivant dans {seconds} secondes",
     "goBackBtn": "Retour à la video",
     "labelLike": "Avez vous aimé cet épisode ?"
+  },
+  "comment": {
+    "label": "Commenter"
+  },
+  "player": {
+    "watch": "Vous regardez"
   },
   "recommendation": {
     "noData": "Aucune Recommandation",
@@ -343,12 +424,14 @@
     "title": "Se connecter",
     "action": "Se connecter",
     "all": "Afficher tout",
+    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
     "providers": "Vous êtes abonné chez un opérateur ({providers}) ?",
     "strategyEmailEmpty": "Le courriel est vide.",
     "strategyEmailInvalid": "Le courriel n'est pas valide.",
     "strategyDomainInvalid": "Le domaine {domain} n'a pas été configuré.",
     "signinText": "Se connecter",
     "signupText": "Inscrivez-vous",
+    "successText": "Vous êtes correctement connecté",
     "cancelAction": "Annuler",
     "forgotText": "Vous avez oublié votre mot de passe ?",
     "emailPlaceholder": "Courriel",
@@ -387,7 +470,6 @@
     "action": "Démarrez",
     "emailPlaceholder": "Courriel",
     "passwordPlaceholder": "Créer un mot de passe",
-    "headerText": "Veuillez entrer votre courriel et créer un mot de passe",
     "footerText": "",
     "signupOnSSODomainErrorText": "Ce domaine {domain} a été configuré pour le Single Sign On et vous ne pouvez pas créer de compte. Essayez de vous connecter à un compte existant.",
     "serverErrorText": "Nous avions déja enregistré votre courriel. Pour finaliser votre abonnement, cliquer sur le bouton connexion.",
@@ -515,6 +597,27 @@
   },
   "social": {
     "title": "Partager"
+  },
+  "life": {
+    "sticky": {
+      "nbpost": "Nombre de posts : {pins}",
+      "tooltip": "Poster du contenu"
+    },
+    "modal": {
+      "title": "Que voulez vous partager à la communauté ?",
+      "step1": "Choisir une source",
+      "step2": "Copier/coller l'url source",
+      "step3": "Completer les informations",
+      "success": "Votre publication a été envoyée, merci pour votre participation",
+      "errors": {
+        "url": "L' url n' est pas valide",
+        "post": "Une erreur interne est survenue. Merci de contacter le support à support@afrostream.tv ."
+      }
+    },
+    "metas": {
+      "title": "{themes} Afrostream Life",
+      "description": "Le média social de la créativité afro"
+    }
   },
   "sponsors": {
     "title": "Mes amis parrainés",

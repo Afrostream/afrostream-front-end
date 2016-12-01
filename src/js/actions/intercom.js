@@ -1,9 +1,12 @@
 import ActionTypes from '../consts/ActionTypes'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import config from '../../../config'
+import _ from 'lodash'
 import window from 'global/window'
 
-export function createIntercom () {
+export function createIntercom (settings = {'feature_type': null}) {
+  const appId = config.intercom.appID
+  const type = settings['feature_type']
   return (dispatch, getState) => {
     if (!document) {
       return {
@@ -11,26 +14,28 @@ export function createIntercom () {
         intercom: null
       }
     }
-    let ic = getState().Intercom.get('intercom')
+    let ic = getState().Intercom.get(`intercom/${appId}/${type}`)
     if (ic) {
       ic('show')
       return {
         type: ActionTypes.Intercom.createIntercom,
-        intercom: ic
+        intercom: ic,
+        appId,
+        type
       }
     }
     return async intercom =>(
       await new Promise(
         (resolve, reject) => {
 
-          window.intercomSettings = {
-            app_id: config.intercom.appID
-          }
+          window.intercomSettings = _.merge({
+            app_id: appId
+          }, settings)
 
           var script = document.createElement('script')
           script.type = 'text/javascript'
           script.async = true
-          script.src = config.intercom.url + config.intercom.appID
+          script.src = config.intercom.url + appId
           // Attach the script tag to the document head
           var s = document.getElementsByTagName('script')[0]
           s.parentNode.insertBefore(script, s)
@@ -39,22 +44,25 @@ export function createIntercom () {
             var w = window
             var ic = w.Intercom
             if (typeof ic === 'function') {
-              console.log(config.intercom.appID)
               ic('reattach_activator')
               ic('update', {
-                app_id: config.intercom.appID
+                app_id: appId
               })
             }
 
             return resolve({
               type: ActionTypes.Intercom.createIntercom,
-              intercom: ic
+              intercom: ic,
+              appId,
+              type
             })
           }
-          script.onerror = function (event) {
+          script.onerror = function () {
             return reject({
               type: ActionTypes.Intercom.createIntercom,
-              intercom: {}
+              intercom: {},
+              appId,
+              type
             })
           }
           // (old) MSIE browsers may call 'onreadystatechange' instead of 'onload'

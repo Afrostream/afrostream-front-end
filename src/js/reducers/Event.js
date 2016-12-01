@@ -26,10 +26,15 @@ export default createReducer(initialState, {
       ['showChat']: show
     })
   },
-  [ActionTypes.Event.toggleSideBar](state, {}) {
-    let toggled = state.get('sideBarToggled')
+  [ActionTypes.Event.toggleSideBar](state, {toggled}) {
+    toggled = toggled || state.get('sideBarToggled')
     return state.merge({
       ['sideBarToggled']: !toggled
+    })
+  },
+  [ActionTypes.Event.snackMessage](state, {data}) {
+    return state.merge({
+      ['snackMessage']: data
     })
   }
 })

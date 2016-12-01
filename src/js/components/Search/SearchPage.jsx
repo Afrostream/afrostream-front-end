@@ -2,8 +2,7 @@ import React, { PropTypes }  from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import config from '../../../../config'
-import { getI18n } from '../../../../config/i18n'
-import { Link } from 'react-router'
+import { Link } from '../Utils'
 import _ from 'lodash'
 import * as SearchActionCreators from '../../actions/search'
 import * as UserActionCreators from '../../actions/user'
@@ -12,6 +11,11 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import MoviesSlider from '../Movies/MoviesSlider'
 import { withRouter } from 'react-router'
+import { I18n } from '../Utils'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 
 const {search} = config
 
@@ -24,7 +28,7 @@ if (process.env.BROWSER) {
 })
 
 @connect(({Search}) => ({Search}))
-class SearchPage extends React.Component {
+class SearchPage extends I18n {
 
   constructor (props, context) {
     super(props, context)
@@ -60,10 +64,10 @@ class SearchPage extends React.Component {
 
   renderMovies (movies, fetching) {
     if (!movies || !movies.size) {
-      return fetching ? '' : getI18n().search['noData']
+      return fetching ? '' : <span>{this.getTitle('search.noData')}</span>
     }
 
-    return <MoviesSlider key={`search-movie`} dataList={movies} axis="y"/>
+    return <MoviesSlider {...this.props} key={`search-movie`} dataList={movies} axis="y"/>
 
   }
 
@@ -111,7 +115,7 @@ class SearchPage extends React.Component {
       <ReactCSSTransitionGroup transitionName="search" className="row-fluid search-page" transitionEnterTimeout={300}
                                transitionLeaveTimeout={300} component="div">
         <div className="search-result">
-          {moviesFetching ? <div className="spinner-search"><Spinner /></div> : ''}
+          {moviesFetching && <div className="spinner-search"><Spinner /></div>}
           {actors}
           {movies}
         </div>
@@ -121,7 +125,8 @@ class SearchPage extends React.Component {
 }
 
 SearchPage.propTypes = {
-  location: React.PropTypes.object.isRequired
+  location: React.PropTypes.object.isRequired,
+  intl: intlShape.isRequired
 }
 
-export default withRouter(SearchPage)
+export default withRouter(injectIntl(SearchPage))

@@ -44,14 +44,14 @@ class ModalImage extends ModalComponent {
                   <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
                     <div className="header top-header">
-                      <a className={closeClass} href="#" onClick={::this.handleClose}></a>
+                      <a className={closeClass}  onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="modal-image-container">
                         <div className="content">
-                          <Link to={data.get('link')}>
-                            <ReactImgix className="modal-image" src={data.get('src')} bg={true}/>
-                          </Link>
+                          {/*<Link to={data.get('link')}>*/}
+                          <ReactImgix className="modal-image" src={data.get('src')} bg={true}/>
+                          {/*</Link>*/}
                         </div>
                       </div>
                     </div>

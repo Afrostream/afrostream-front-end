@@ -6,6 +6,8 @@
 
 @zmdi-font-path: "../../../src/assets/fonts";
 @md-font-path: "../../../src/assets/fonts";
+
+@menu-open-duration: 0.2s;
 //
 // Colors
 // -----------------------------------------------------------------------------
@@ -38,24 +40,26 @@
 @color-purple-2: #9952AE;
 @color-purple-3: #522575;
 @color-mea: #009bff;
+@color-like: #ff0f20;
 @color-purple-transparent: rgba(102, 55, 116, 0.5);
 
 @brand-grey: #e0e0e0;
 @brand-warn: #F88C03;
 @brand-error: #ff3f34;
 @brand-primary: #FFFFFF;
-@brand-secondary: #9c9c9c;
+@brand-secondary: #C2C2CA;
 @brand-black: #2a1533;
 @brand-label: @color-indigo;
 @brand-thumbs: @color-indigo;
 @brand-bg: #FFFFFF;
 @brand-grey: @color-grey;
 @brand-footer: #b1b1b1;
+@brand-thumbs: @color-grey;
 
 // set the primary color palette for this theme
-@background-color-base: @color-purple;
-@background-footer: @color-purple;
-@background-page: @color-indigo;
+@background-color-base: @color-black-2;
+@background-footer: lighten(@color-black-2, 3%);
+@background-page: @color-black-2;
 
 @btn-radius: 0px;
 
@@ -87,13 +91,16 @@
 @thumb-height-adspot: (@thumb-height + @thumb-margin)  * 2;
 
 @nav-z: 1030;
+@nav-z-header: @nav-z + 5;
 @max-content-width: 1280px;
 @app-padding: 10px;
 @app-padding-mobile: 10px;
-@footer-height: 100px;
-@header-height: 72px;
+@footer-height: 150px;
+@header-height: 70px;
 @header-height-mobile: 65px;
-@sidebar-width: 150px;
+@sub-navigation-height: 60px;
+@sub-navigation-height-mobile: @sub-navigation-height - 10px;
+@sidebar-width: 250px;
 
 @tour-overlay-z: 1000000;
 
@@ -108,6 +115,9 @@
 @screen-md-min: 992px;
 // Medium screen / desktop
 @screen-lg-min: 1200px;
+@highdensityTablet: ~"only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (-webkit-min-device-pixel-ratio: 2)",
+~"only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (min--moz-device-pixel-ratio: 2)",
+~"only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (min-device-pixel-ratio: 2)";
 // Large screen / wide desktop
 @highdensity: ~"only screen and (-webkit-min-device-pixel-ratio: 1.5)",
 ~"only screen and (min--moz-device-pixel-ratio: 1.5)",

@@ -61,7 +61,11 @@ export default {
   }),
 
   Player: keyMirror({
-    getConfig: null
+    getConfig: null,
+    setFullScreen: null,
+    setPlayer: null,
+    loadPlayer: null,
+    killPlayer: null
   }),
 
   Config: keyMirror({
@@ -81,7 +85,8 @@ export default {
     toggleSideBar: null,
     userActive: null,
     showChat: null,
-    pinHeader: null
+    pinHeader: null,
+    snackMessage: null
   }),
 
   Intercom: keyMirror({
@@ -100,11 +105,6 @@ export default {
   Modal: keyMirror({
     open: null,
     close: null
-  }),
-
-  Blog: keyMirror({
-    fetchAll: null,
-    fetchPost: null
   }),
 
   Job: keyMirror({
@@ -131,5 +131,15 @@ export default {
     getFriends: null,
     getFriendList: null,
     getInvitableFriends: null
+  }),
+
+  Life: keyMirror({
+    publishPin: null,
+    wrappPin: null,
+    fetchThemes: null,
+    fetchSpots: null,
+    fetchPins: null,
+    fetchPin: null,
+    fetchUsers: null
   })
 }
