@@ -21,6 +21,15 @@
   }
 
   .pin-btn_icon {
+    &:hover {
+      .content {
+        .transition(all .2s linear);
+        background-color: @color-black-2;
+        i {
+          color: @brand-primary;
+        }
+      }
+    }
     cursor: pointer;
     position: relative;
     display: inline-block;
@@ -34,12 +43,6 @@
     width: 10em;
     .transition(all .2s linear);
 
-    &:hover {
-      background-color: @color-black-2;
-      .avatar-card__background_image {
-        opacity: 0.3;
-      }
-    }
     .content {
       margin: 0.3em;
       border-radius: 50%;

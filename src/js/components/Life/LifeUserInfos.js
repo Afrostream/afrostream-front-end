@@ -31,8 +31,8 @@ class LifeUserInfos extends Component {
           <div className="col-md-4 col-md-offset-2">
             <AvatarCard {...{user}} {...this.props} />
           </div>
-          <div className="col-md-4 col-md-offset-2">
-            <PinButton buttonClass="fa fa-thumb-tack" label="life.sticky.tooltip" {...this.props} />
+          <div className="col-md-4">
+            <PinButton buttonClass="fa fa-pencil-square-o" label="life.sticky.tooltip" {...this.props} />
           </div>
         </div>
         {pins &&
