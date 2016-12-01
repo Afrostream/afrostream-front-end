@@ -23,7 +23,7 @@ let clientConfig = merge({}, webpackConfig, {
     historyApiFallback: true,
     noInfo: true,
     watch: true,
-    progress: true
+    progress: true,
     watchOptions: {
       ignored: node_modules_dir
     },
