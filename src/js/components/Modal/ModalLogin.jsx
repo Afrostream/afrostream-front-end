@@ -33,6 +33,11 @@ class ModalLogin extends ModalComponent {
     }
   }
 
+  handleClose (e) {
+    super.handleClose(e)
+    this.props.history.push(`/`)
+  }
+
   componentDidMount () {
     const {
       props: {dispatch, location}
@@ -399,7 +404,7 @@ class ModalLogin extends ModalComponent {
           <button name="submit-btn" type="submit" className="primary next"
                   disabled={!::this.isValid}>{this.getTitle('action')}</button>
           <div className="options">
-            <a  onClick={::this.cancelAction}
+            <a onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
           </div>
         </div>
@@ -461,7 +466,7 @@ class ModalLogin extends ModalComponent {
           <button type="submit" className="primary next"
                   disabled={!::this.isValid}>{this.getTitle('action')}</button>
           <div className="options">
-            <a  onClick={::this.cancelAction}
+            <a onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
           </div>
         </div>
@@ -477,7 +482,7 @@ class ModalLogin extends ModalComponent {
       return
     }
 
-    return <a  onClick={::this.showProviderAction}
+    return <a onClick={::this.showProviderAction}
               className="forgot-pass btn-xsmall">{this.getTitle('providers', {providers: providers.join(',')})}</a>
   }
 
@@ -491,7 +496,7 @@ class ModalLogin extends ModalComponent {
         </div>
         <div className="action">
           <div className="options">
-            <a  onClick={::this.cancelAction}
+            <a onClick={::this.cancelAction}
                className="centered btn-small cancel">{this.getTitle('cancelAction')}</a>
           </div>
         </div>
@@ -547,7 +552,7 @@ class ModalLogin extends ModalComponent {
                       <h1>{this.getTitle()}</h1>
                       <h2 className={errClass}>{this.state.error}</h2>
                       <h2 className={successClass}>{this.getTitle('successText')}</h2>
-                      <a className={closeClass}  onClick={::this.handleClose}></a>
+                      <a className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       {this.getForm()}

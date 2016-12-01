@@ -98,10 +98,10 @@ const mergeProfile = function ({api, data, getState, dispatch}) {
 
     if (donePath) {
       dispatch(push(donePath))
+      dispatch(ModalActionCreators.close())
     }
 
 
-    dispatch(ModalActionCreators.close())
     dispatch(pendingUser(false))
 
 
