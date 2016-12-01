@@ -189,9 +189,12 @@ class Billboard extends LoadVideo {
 
     if (!user) {
       return (
-        <div className="billboard-infos">
+        <div className="billboard-no-users">
           {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
-          <SignUpButton className="subscribe-button" label="home.action"/>
+          <div className="billboard-infos text-left">
+            <div className="billboard-title billboard-row">{title}</div>
+            <SignUpButton className="subscribe-button" label="home.action"/>
+          </div>
         </div>
       )
     }

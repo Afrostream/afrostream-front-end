@@ -35,12 +35,9 @@ class SlideShow extends React.Component {
     } = this
 
     const categoryId = Category.get(`categoryId`)
-    if (!categoryId) {
-      return (<Spinner />)
-    }
-    const category = Category.get(`categorys/${categoryId}/spots`)
-    if (!category || !category.size) {
-      return (<Spinner />)
+    let category
+    if (categoryId) {
+      category = Category.get(`categorys/${categoryId}/spots`)
     }
 
     const settings = {
@@ -56,6 +53,8 @@ class SlideShow extends React.Component {
 
     return (
       <div className="slide-show" ref="slC">
+        {!category && <Spinner />}
+        {category &&
         <Slider {...settings}>
           {category.map((data) => <div key={`slide-${data.get('_id')}`}><MovieInfo
             active={true}
@@ -63,7 +62,7 @@ class SlideShow extends React.Component {
             load={true}
             showBtn={true}
             { ...{data}}/></div>)}
-        </Slider>
+        </Slider>}
       </div>
     )
   }
