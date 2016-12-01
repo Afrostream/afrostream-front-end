@@ -28,10 +28,10 @@ class LifeUserInfos extends Component {
     }
     return (<div key="life-themes-list" className="life-theme">
         <div className="row text-center">
-          <div className="col-md-4 col-md-offset-2">
+          <div className="col-md-4 col-xs-6 col-md-offset-2">
             <AvatarCard {...{user}} {...this.props} />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 col-xs-6 ">
             <PinButton buttonClass="fa fa-pencil-square-o" label="life.sticky.tooltip" {...this.props} />
           </div>
         </div>
