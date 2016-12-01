@@ -49,8 +49,10 @@
     .isMobile({ top: @header-height-mobile; });
     bottom: 0;
     background-image: url(../../../../assets/images/default/1920x815.jpg);
-    background-position: center top;
-    background-size: contain;
+    //background-position: center top;
+    //background-size: contain;
+    background-position: center center;
+    background-size: cover;
     background-repeat: no-repeat;
     &:not(.overlay) {
       background-position: left top;
@@ -62,14 +64,14 @@
       left: 0;
       bottom: 0;
       right: 0;
-      background-color: fade(#000, 20%);
+      background-color: fade(#000, 40%);
       //.isMobile({ .gradient(#000, transparent); background-color: none; });
       //.horizontal-gradient(transparent, 20%, #000, 60%);
     }
 
     &.overlay {
       .afrostream-movie__mask {
-        .isWideScreen({ background-color: fade(#000, 20%); });
+        .isWideScreen({ background-color: fade(#000, 40%); });
       }
     }
   }
