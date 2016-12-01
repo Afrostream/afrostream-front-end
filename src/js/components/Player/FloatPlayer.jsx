@@ -127,6 +127,7 @@ class FloatPlayer extends React.Component {
     const movie = Movie.get(`movies/${movieId}`)
     let posterImgObj = {}
     let chromecastOptions = {}
+    let komentData
 
     if (movie) {
       const posterImg = extractImg({
@@ -147,7 +148,7 @@ class FloatPlayer extends React.Component {
         }
       }
       //KOMENT
-      let komentData = {
+      komentData = {
         open: true,
         videoId,
         controlBar: {
@@ -164,7 +165,7 @@ class FloatPlayer extends React.Component {
           token: token && token.get('access_token'),
           avatar: user.get('picture')
         }),
-        languages: config.player.languages
+        languages: _.clone(config.player.languages)
       }
 
       if (user && user.get('nickname')) {
@@ -176,11 +177,12 @@ class FloatPlayer extends React.Component {
         komentData.open = user.get('playerKoment')
       }
 
-      videoOptions.komentData = komentData
+      //videoOptions.komentData = komentData
+
       //END KOMENT
     }
 
-    await this.generateDomTag(videoOptions)
+    await this.generateDomTag(videoOptions, komentData)
     //MERGE PLAYER DATA API
     let apiPlayerConfig = Player.get(`/player/config`)
     let apiPlayerConfigJs = {}
@@ -653,7 +655,7 @@ class FloatPlayer extends React.Component {
     return selectedTrack ? selectedTrack[key] : null
   }
 
-  async generateDomTag (videoData) {
+  async generateDomTag (videoData, komentData) {
     console.log('player : generate dom tag')
     const ua = detectUA()
     const mobileVersion = ua.getMobile()
@@ -681,9 +683,9 @@ class FloatPlayer extends React.Component {
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
 
-    if (videoData.komentData) {
+    if (komentData) {
       try {
-        video.setAttribute('data-setup', JSON.stringify(videoData.komentData))
+        video.setAttribute('data-setup', JSON.stringify(komentData))
       } catch (e) {
         console.log('parse koment json error', e)
       }
