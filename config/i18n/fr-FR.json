@@ -606,6 +606,10 @@
     "title": "Partager"
   },
   "life": {
+    "welcome": {
+      "label": "Le média social \n de la créativité \n afro",
+      "action": "Découvre \n gratuitement"
+    },
     "sticky": {
       "nbpost": "Nombre de posts : {pins}",
       "tooltip": "Poster du contenu"

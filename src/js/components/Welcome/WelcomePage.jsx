@@ -1,6 +1,7 @@
 import React from 'react'
 import { prepareRoute } from '../../decorators'
 import WelcomeHeader from './WelcomeComponents/WelcomeHeader'
+import WelcomeLife from './WelcomeComponents/WelcomeLife'
 import Spots from './WelcomeComponents/Spots'
 import Devices from './WelcomeComponents/Devices'
 import { SelectPlan } from '../../components/Payment/'
@@ -41,10 +42,11 @@ class WelcomePage extends React.Component {
   render () {
     return (
       <div className="welcome-page">
-        <WelcomeHeader {...this.props}/>,
-        <Devices {...this.props} />,
-        <SelectPlan {...this.props} showImages={false}/>,
-        <Spots {...this.props}/>,
+        <WelcomeHeader {...this.props}/>
+        <Devices {...this.props} />
+        <WelcomeLife {...this.props} />
+        <SelectPlan {...this.props} showImages={false}/>
+        <Spots {...this.props}/>
         <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
       </div>
     )

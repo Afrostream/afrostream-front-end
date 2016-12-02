@@ -223,6 +223,7 @@ const client = {
     ]
   },
   life: {
+    welcome: '/production/life/promo-4bis-2.jpg',
     networks: {
       youtube: {
         enabled: true,

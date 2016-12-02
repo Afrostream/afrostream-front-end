@@ -599,6 +599,10 @@
     "title": "Share"
   },
   "life": {
+    "welcome": {
+      "label": "The social \nmedia for black \ncreativity",
+      "action": "Join for free"
+    },
     "sticky": {
       "nbpost": "Number of post : {pins}",
       "tooltip": "Post content"
