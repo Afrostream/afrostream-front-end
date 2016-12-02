@@ -31,11 +31,11 @@
   //  height: 100%;
   //  vertical-align: middle;
   //}
-  &:hover {
-    .afrostream-movie__poster {
-      opacity: 0.5;
-    }
-  }
+  //&:hover {
+  //  .afrostream-movie__poster {
+  //    opacity: 0.5;
+  //  }
+  //}
   .afrostream-movie__poster {
     .transition(opacity 0.3s, linear);
     position: absolute;
@@ -56,13 +56,27 @@
       left: 0;
       bottom: 0;
       right: 0;
-      background-color: fade(#000, 50%);
+      background-color: fade(#000, 30%);
+      .isMobile({ .gradient(#000, transparent); background-color: none; });
     }
 
     &.overlay {
       .afrostream-movie__mask {
         .isWideScreen({ background-color: fade(#000, 20%); });
       }
+    }
+
+    .afrostream-movie__logo {
+      .aspect-ratio(16, 9);
+      position: absolute;
+      width: 40%;
+      max-width: 40%;
+      right: 5em;
+      top: 8em;
+      background-position: center center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      .isMobile({ top: 0; width: 100%; max-width: 100%; right: inherit });
     }
   }
 

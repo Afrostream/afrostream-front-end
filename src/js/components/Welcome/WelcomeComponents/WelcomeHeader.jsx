@@ -130,8 +130,6 @@ class WelcomeHeader extends React.Component {
           <div className="afrostream-movie__mask"/>
           {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
         </ReactImgix>
-        <SignUpButton key="welcome-pgm-signup" className="subscribe-button subscribe-button-mobile"
-                      label={info.action}/>
         <div key="welcome-pgm-movie" className="afrostream-movie">
           <div className="afrostream-movie__info">
             <h1>{info.movie.title}</h1>
@@ -144,6 +142,8 @@ class WelcomeHeader extends React.Component {
             <SignUpButton label={info.action}/>
           </div>
         </div>
+        {movieData && <SignUpButton key="welcome-pgm-signup" className="subscribe-button subscribe-button-mobile"
+                                    label={info.action}/>}
       </section>
     )
   }

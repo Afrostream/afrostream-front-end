@@ -186,7 +186,7 @@
   },
   "thumb": {
     "episodeLabel": "Episode {episodeNumber} - {title}",
-    "seasonLabel": "Saison {seasonNumber} - {title}"
+    "seasonLabel": "Season {seasonNumber} - {title}"
   },
   "payment": {
     "methodHeader": "Choose your payment method",
