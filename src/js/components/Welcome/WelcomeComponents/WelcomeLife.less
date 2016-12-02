@@ -21,10 +21,18 @@
     .transition(opacity 0.3s, linear);
     position: absolute;
     .fullHeight();
-    background-position: 0 0;
+    background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
+    .afrostream-life__mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
 
+      .isMobile({ background-color: fade(#000, 20%); });
+    }
   }
   .afrostream-logo {
     position: relative;
@@ -59,7 +67,7 @@
     margin: @app-padding;
     position: absolute;
     bottom: 1em;
-    .isMobile({ position: relative; right: inherit; bottom: inherit; });
+    .isMobile({ margin: 0; position: relative; right: inherit; bottom: inherit; });
   }
 
 }

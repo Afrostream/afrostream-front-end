@@ -35,7 +35,9 @@ class WelcomeLife extends I18n {
     return (
       <section className={classSet(welcomeClassesSet)}>
         <Link to="/life">
-          <ReactImgix key="welcome-life" className="welcome-life_img" src={posterImg} bg={true}/>
+          <ReactImgix key="welcome-life" className="welcome-life_img" src={posterImg} bg={true}>
+            <div className="afrostream-life__mask"/>
+          </ReactImgix>
           <ReactImgix src={`/images/logo-life.png`} alt="afrostream-logo" className="afrostream-logo"/>
           <div className="welcome-life_acroche">
             <div className="welcome-life_accroche">
