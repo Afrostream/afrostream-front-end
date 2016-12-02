@@ -25,16 +25,17 @@ class ClickablePin extends Component {
     e.preventDefault()
   }
 
-  removePin (data) {
+  removePin (e) {
     const {
-      props: {dispatch}
+      props: {dispatch, data}
     } = this
-
-    const pinId = data.get(pinId)
+    if (e) {
+      e.preventDefault()
+    }
 
     return dispatch(ModalActionCreators.open({
-      target: 'pin-remove',
-      cb: dispatch(LifeActionCreators.removePin(pinId))
+      target: 'life-remove',
+      data
     }))
   }
 

@@ -21,10 +21,16 @@ class PinButton extends I18n {
       props: {
         dispatch,
         target,
-        data
+        data,
+        action
       }
     } = this
     e.preventDefault()
+
+    if (action) {
+      return
+    }
+
     dispatch(ModalActionCreators.open({target, className: 'large', data}))
   }
 
@@ -47,6 +53,7 @@ class PinButton extends I18n {
 
 PinButton.propTypes = {
   data: PropTypes.instanceOf(Immutable.Map),
+  action: React.PropTypes.func,
   target: PropTypes.string,
   label: PropTypes.string,
   className: PropTypes.string,

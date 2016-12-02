@@ -40,6 +40,10 @@ class ModalComponent extends I18n {
     return
   }
 
+  renderTitle () {
+    return this.props.title && <h1>{this.getTitle(this.props.title)}</h1>
+  }
+
   renderFooter () {
     return
   }
@@ -69,12 +73,14 @@ class ModalComponent extends I18n {
                   <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
                     <div className="header top-header">
+                      {this.renderTitle()}
                       <a className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
-                      {children && children}
-                      {!children && this.renderContent()}
-                      {!children && this.renderFooter()}
+                      <div className="mode">
+                        {this.renderContent()}
+                        {this.renderFooter()}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -91,7 +97,9 @@ ModalComponent.propTypes = {
   dispatch: React.PropTypes.func,
   closable: React.PropTypes.bool,
   modal: React.PropTypes.bool,
-  className: React.PropTypes.string
+  title: React.PropTypes.string,
+  className: React.PropTypes.string,
+  cb: React.PropTypes.func
 }
 
 ModalComponent.defaultProps = {

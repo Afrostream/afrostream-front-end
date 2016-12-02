@@ -31,6 +31,16 @@ export default createReducer(initialState, {
     })
   },
 
+  [ActionTypes.Life.removePin](state, {res}) {
+    if (!res) {
+      return state
+    }
+
+    return state.merge({
+      [`life/wrap`]: null
+    })
+  },
+
   [ActionTypes.Life.fetchThemes](state, {res, themeId}) {
     if (!res) {
       return state

@@ -3,6 +3,8 @@ import ModalComponent from './ModalComponent'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import * as LifeActionCreators from '../../actions/life'
+import * as EventActionCreators from '../../actions/event'
+
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import {
@@ -20,29 +22,36 @@ class ModalLifeRemove extends ModalComponent {
     super(props, context)
   }
 
-  closeModal () {
-    const {props:{cb}} =this
-    super.closeModal()
-    if (cb) {
-      cb()
+  finalyse () {
+    const {props:{data, dispatch}} =this
+    if (data) {
+      const pinId = data.get('_id')
+      return dispatch(LifeActionCreators.removePin(pinId)).then(() => {
+        dispatch(EventActionCreator.snackMessage({message: 'life.modal.removeSuccess'}))
+        this.closeModal()
+      })
     }
+    this.closeModal()
   }
 
-  renderContent () {
-    return
+  getI18n () {
+    return 'life'
   }
 
-  render () {
+
+  renderFooter () {
     return ([
       <FlatButton
-        label="Cancel"
+        key="remove-pin-cancel"
+        label={this.getTitle('modal.cancelAction')}
         primary={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={::this.handleClose}
       />,
       <FlatButton
-        label="Discard"
+        key="remove-pin-action"
+        label={this.getTitle('modal.okAction')}
         primary={true}
-        onTouchTap={this.handleClose}
+        onTouchTap={::this.finalyse}
       />
     ])
   }

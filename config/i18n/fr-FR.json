@@ -621,6 +621,10 @@
       "step2": "Copier/coller l'url source",
       "step3": "Completer les informations",
       "success": "Votre publication a été envoyée, merci pour votre participation",
+      "removeSuccess": "Votre publication a été supprimé",
+      "removeTitle": "Voulez vous vraiment supprimer ce contenu ?",
+      "cancelAction": "Annuler",
+      "okAction": "Ok",
       "errors": {
         "url": "L' url n' est pas valide",
         "post": "Une erreur interne est survenue. Merci de contacter le support à support@afrostream.tv ."

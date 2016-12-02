@@ -134,6 +134,7 @@ export default {
   }),
 
   Life: keyMirror({
+    removePin: null,
     publishPin: null,
     wrappPin: null,
     fetchThemes: null,

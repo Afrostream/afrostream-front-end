@@ -64,8 +64,12 @@ export function wrappPin (scrapUrl) {
 }
 
 export function publishPin (data) {
-  return (dispatch, getState) => {
-    return async api => {
+  return (api, getState, dispatch) => {
+
+    const user = getState().User.get('user')
+    const userId = user && user.get('_id')
+
+    return async () => {
       return {
         type: ActionTypes.Life.publishPin,
         res: await api({
@@ -73,6 +77,33 @@ export function publishPin (data) {
           method: 'POST',
           params: data,
           passToken: true
+        }).then(() => {
+          if (userId) {
+            dispatch(fetchUsers(userId, {}))
+          }
+        })
+      }
+    }
+  }
+}
+
+export function removePin (pinId) {
+  return (api, getState, dispatch) => {
+
+    const user = getState().User.get('user')
+    const userId = user && user.get('_id')
+
+    return async () => {
+      return {
+        type: ActionTypes.Life.removePin,
+        res: await api({
+          path: `/api/life/pins/${pinId}`,
+          method: 'DELETE',
+          passToken: true
+        }).then(() => {
+          if (userId) {
+            dispatch(fetchUsers(userId, {}))
+          }
         })
       }
     }
@@ -81,8 +112,7 @@ export function publishPin (data) {
 
 export function fetchPins ({limit = 22, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
-    let readyPins = getState().Life.get(`life/pins/`
-    )
+    let readyPins = getState().Life.get(`life/pins/`)
     if (readyPins) {
       console.log('Life pins already present in data store')
       return {

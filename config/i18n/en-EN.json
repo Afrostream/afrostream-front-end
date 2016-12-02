@@ -614,6 +614,10 @@
       "step2": "Copy / paste source url",
       "step3": "Complete information",
       "success": "Your publication has been sent, thank you for your participation",
+      "removeSuccess": "Your publication has been removed",
+      "removeTitle": "Are you sure you want to delete this content ?",
+      "cancelAction": "Cancel",
+      "okAction": "Ok",
       "errors": {
         "url": "The url is not valid",
         "post": "An internal error occurred. Please contact support@afrostream.tv."

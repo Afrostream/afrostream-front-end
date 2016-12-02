@@ -124,7 +124,7 @@ class ModalView extends React.Component {
         return <ModalLifeAdd {...{closable, cb, type, className, data}} {...this.props} />
         break
       case 'life-remove':
-        return <ModalLifeRemove {...{closable, cb, type, className, data}} {...this.props} />
+        return <ModalLifeRemove title="modal.removeTitle" {...{closable, cb, type, className, data}} {...this.props} />
         break
       default:
         return <div />

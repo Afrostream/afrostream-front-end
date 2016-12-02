@@ -58,7 +58,8 @@ class ModalLifeAdd extends ModalComponent {
   state = {
     scrapping: false,
     finished: false,
-    stepIndex: 0
+    stepIndex: 0,
+    descriptionLength: 0
   }
 
   constructor (props, context) {
@@ -182,6 +183,12 @@ class ModalLifeAdd extends ModalComponent {
     })
   }
 
+  descriptionChangeHandler (event, payload) {
+    this.setState({
+      descriptionLength: payload.length
+    })
+  }
+
   renderStepFinal () {
     const {props:{Life}} =this
     const scrappedData = Life.get(`life/wrap`)
@@ -208,9 +215,10 @@ class ModalLifeAdd extends ModalComponent {
                    defaultValue={scrappedData.get('description')}
                    fullWidth={true}
                    multiLine={true}
+                   onChange={::this.descriptionChangeHandler}
                    textareaStyle={textInputStyle}
                    hintText="Ajouter une description"/>
-        <span>{`${this.refs.description.getValue().length} / 255`}</span>
+        <span>{`${this.state.descriptionLength} / 255`}</span>
       </div>
       {imageUrl && <div className="col-md-3 col-xs-3">
         <ReactImgix src={imageUrl}/>

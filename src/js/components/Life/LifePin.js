@@ -111,7 +111,7 @@ class LifePin extends ClickablePin {
                                      label="life.sticky.remove"
                                      target="life-remove"
                                      {...this.props}
-                                     {...{data}}/>}
+                                     onClick={::this.removePin}/>}
       </div>
     </Link>)
   }
