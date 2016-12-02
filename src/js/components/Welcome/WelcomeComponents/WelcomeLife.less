@@ -3,7 +3,7 @@
 .welcome-life {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 500px;
   padding: @app-padding;
   a,
   a:focus,
@@ -35,7 +35,7 @@
     &:before {
       content: "";
       width: 150px;
-      height: 13px;
+      height: 15px;
       background-color: @brand-primary;
       position: relative;
       display: block;
@@ -44,7 +44,7 @@
     position: relative;
     margin: 0 0.5em 0 0.5em;
     color: @color-yellow;
-    font-size: 3em;
+    font-size: 4em;
     font-family: @font-book;
     font-weight: bold;
     span {
@@ -56,10 +56,9 @@
   }
   .subscribe-button {
     vertical-align: bottom;
-    margin: 1em 0 1em 0;
+    margin: @app-padding;
     position: absolute;
     bottom: 1em;
-    right: 30%;
     .isMobile({ position: relative; right: inherit; bottom: inherit; });
   }
 

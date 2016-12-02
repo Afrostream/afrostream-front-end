@@ -608,7 +608,11 @@
   "life": {
     "welcome": {
       "label": "Le média social \n de la créativité \n afro",
-      "action": "Découvrez \n gratuitement"
+      "action": "Découvre \n gratuitement"
+    },
+    "welcomeMobile": {
+      "label": "Musique \n Lifestyle \n Inspiration \n Art & Culture...",
+      "action": "Rejoins nous"
     },
     "sticky": {
       "nbpost": "Nombre de posts : {pins}",

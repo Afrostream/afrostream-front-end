@@ -603,6 +603,10 @@
       "label": "The social \nmedia for black \ncreativity",
       "action": "Join for free"
     },
+    "welcomeMobile": {
+      "label": "Music \n Lifestyle \n Inspiration \n Art & Culture...",
+      "action": "Join us"
+    },
     "sticky": {
       "nbpost": "Number of post : {pins}",
       "tooltip": "Post content",

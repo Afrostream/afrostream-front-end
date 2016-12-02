@@ -7,7 +7,7 @@ import ReactImgix from '../../Image/ReactImgix'
 import config from '../../../../../config'
 import { Link }from '../../Utils'
 
-const {life, images} =config
+const {images} =config
 import { I18n } from '../../Utils'
 import {
   injectIntl
@@ -30,7 +30,7 @@ class WelcomeLife extends I18n {
       'welcome-life': true
     }
 
-    let posterImg = `${images.urlPrefix}${life.welcome}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}`
+    let posterImg = `${images.urlPrefix}${this.props.imageUrl}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}&txt=(c) DR&txtclr=fff&txtsize=10&markalpha=70&txtalign=bottom,left`
 
     return (
       <section className={classSet(welcomeClassesSet)}>
@@ -39,20 +39,24 @@ class WelcomeLife extends I18n {
           <ReactImgix src={`/images/logo-life.png`} alt="afrostream-logo" className="afrostream-logo"/>
           <div className="welcome-life_acroche">
             <div className="welcome-life_accroche">
-              {this.getTitle('life.welcome.label').split('\n').map((statement, i) => {
+              {this.getTitle(this.props.title).split('\n').map((statement, i) => {
                 return (<span key={`statement-${i}`}>{statement}</span>)
               })}
             </div>
           </div>
           <SignUpButton key="welcome-pgm-signup" className="subscribe-button"
-                        label="life.welcome.action"/>
+                        label={this.props.action}/>
         </Link>
       </section>
     )
   }
 }
 
-WelcomeLife.propTypes = {}
+WelcomeLife.propTypes = {
+  title: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  action: PropTypes.string.isRequired
+}
 
 WelcomeLife.defaultProps = {}
 
