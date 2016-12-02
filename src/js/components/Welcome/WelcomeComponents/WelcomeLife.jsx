@@ -30,7 +30,7 @@ class WelcomeLife extends I18n {
       'welcome-life': true
     }
 
-    let posterImg = `${images.urlPrefix}${this.props.imageUrl}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}&txt=(c) DR&txtclr=fff&txtsize=10&markalpha=70&txtalign=bottom,left`
+    let posterImg = `${images.urlPrefix}${this.props.imageUrl}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}&txt=©DR&txtclr=fff&txtsize=10&markalpha=70&txtalign=bottom,left`
 
     return (
       <section className={classSet(welcomeClassesSet)}>

@@ -224,7 +224,7 @@ const client = {
   },
   life: {
     welcome: '/production/life/promo-4bis-2.jpg',
-    welcomeMobile: '/production/life/promo-5.jpg',
+    welcomeMobile: '/production/life/promo-5-2.jpg',
     networks: {
       youtube: {
         enabled: true,
