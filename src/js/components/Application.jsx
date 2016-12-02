@@ -39,6 +39,7 @@ import {
   purple900
 } from 'material-ui/styles/colors'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import { ScrollContainer } from 'react-router-scroll'
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -75,7 +76,7 @@ if (process.env.BROWSER) {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 
-  return store.dispatch(LifeActionCreators.fetchThemes())
+  return await store.dispatch(LifeActionCreators.fetchThemes())
 })
 
 @metasData()

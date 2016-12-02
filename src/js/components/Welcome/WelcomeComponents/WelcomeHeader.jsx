@@ -142,8 +142,6 @@ class WelcomeHeader extends React.Component {
             <SignUpButton label={info.action}/>
           </div>
         </div>
-        {movieData && <SignUpButton key="welcome-pgm-signup" className="subscribe-button subscribe-button-mobile"
-                                    label={info.action}/>}
       </section>
     )
   }
