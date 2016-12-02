@@ -78,15 +78,16 @@
       color: #FFFFFF;
     }
 
-    // Native tracks
-    video::-webkit-media-text-track-display {
-      .transform(translateY(-7em));
-    }
+  }
+  //FIX TRACKS POSITION outside player
+  // Native tracks
+  video::-webkit-media-text-track-display {
+    .transform(translateY(-5em));
+  }
 
-    // Move captions down when controls aren't being shown
-    .video-js.vjs-user-inactive.vjs-playing video::-webkit-media-text-track-display {
-      .transform(translateY(-5em));
-    }
+  // Move captions down when controls aren't being shown
+  .video-js.vjs-user-inactive.vjs-playing video::-webkit-media-text-track-display {
+    .transform(translateY(-3em));
   }
 
   .close {
