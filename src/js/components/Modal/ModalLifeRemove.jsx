@@ -1,15 +1,11 @@
 import React from 'react'
 import ModalComponent from './ModalComponent'
 import { connect } from 'react-redux'
-import classNames from 'classnames'
 import * as LifeActionCreators from '../../actions/life'
+
 import * as EventActionCreators from '../../actions/event'
 
-import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
-import {
-  FormattedMessage,
-} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./ModalLifeRemove.less')
@@ -27,7 +23,7 @@ class ModalLifeRemove extends ModalComponent {
     if (data) {
       const pinId = data.get('_id')
       return dispatch(LifeActionCreators.removePin(pinId)).then(() => {
-        dispatch(EventActionCreator.snackMessage({message: 'life.modal.removeSuccess'}))
+        dispatch(EventActionCreators.snackMessage({message: 'life.modal.removeSuccess'}))
         this.closeModal()
       })
     }

@@ -473,7 +473,7 @@
   },
   "signup": {
     "description": "",
-    "title": "Nouveau compte",
+    "title": "Créer un compte",
     "action": "Démarrez",
     "emailPlaceholder": "Courriel",
     "passwordPlaceholder": "Créer un mot de passe",
