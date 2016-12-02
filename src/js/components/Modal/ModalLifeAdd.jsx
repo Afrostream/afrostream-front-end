@@ -193,7 +193,7 @@ class ModalLifeAdd extends ModalComponent {
     const {props:{Life}} =this
     const scrappedData = Life.get(`life/wrap`)
     if (!scrappedData) {
-      return
+      return <div />
     }
     const imageUrl = scrappedData.get('imageUrl')
 
