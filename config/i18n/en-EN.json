@@ -165,7 +165,7 @@
     "actionMobile": "Payment by phone",
     "infos": {
       "internalActionLabel": "",
-      "coupon": "Coupon valid {couponName}",
+      "coupon": "Valid coupon : '{couponName}'",
       "formule": "Plan",
       "prelevementMensuel": "Automatic debit payment",
       "price": "Price",
@@ -605,7 +605,8 @@
     },
     "sticky": {
       "nbpost": "Number of post : {pins}",
-      "tooltip": "Post content"
+      "tooltip": "Post content",
+      "remove": "Remove content"
     },
     "modal": {
       "title": "What do you want to share with the community ?",

@@ -16,13 +16,16 @@ if (process.env.BROWSER) {
 @connect(({}) => ({}))
 class PinButton extends I18n {
 
-  onClickHandler () {
+  onClickHandler (e) {
     const {
       props: {
-        dispatch
+        dispatch,
+        target,
+        data
       }
     } = this
-    dispatch(ModalActionCreators.open({target: 'life-add', className: 'large'}))
+    e.preventDefault()
+    dispatch(ModalActionCreators.open({target, className: 'large', data}))
   }
 
   render () {
@@ -43,12 +46,15 @@ class PinButton extends I18n {
 }
 
 PinButton.propTypes = {
+  data: PropTypes.instanceOf(Immutable.Map),
+  target: PropTypes.string,
   label: PropTypes.string,
   className: PropTypes.string,
   buttonClass: PropTypes.string
 }
 
 PinButton.defaultProps = {
+  target: 'life-add',
   label: '',
   className: '',
   buttonClass: 'zmdi zmdi-pin'

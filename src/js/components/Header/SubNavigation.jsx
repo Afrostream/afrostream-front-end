@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { Link } from '../Utils'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
-import Headroom from 'react-headrooms'
+import Headroom from 'react-headroom'
 import Immutable from 'immutable'
 import { ArrowStepper } from '../Slider'
 import { AutoSizer, ColumnSizer, CellMeasurer, Grid } from 'react-virtualized'
@@ -45,11 +45,7 @@ class SubNavigation extends Component {
       return (<div />)
     }
     return (
-      <Headroom tolerance={5} offset={200} classes={{
-        initial: 'animated',
-        pinned: 'slideDownSubHeader',
-        unpinned: 'slideUpSubHeader'
-      }}>
+      <Headroom disableInlineStyles>
         <ul className="sub-navigation">
           {themesList && themesList.map((theme, i) => {
 

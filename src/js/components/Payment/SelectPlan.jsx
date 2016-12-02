@@ -107,7 +107,7 @@ class SelectPlan extends I18n {
           const internalPlanQuery = this.getInternalQuery()
           let buttonLabel = this.getTitle(`planCodes.action`)
           if (plan && internalPlanUuid === config.netsize.internalPlanUuid) {
-            buttonLabel = this.getTitle(`planCodes.infos.actionMobile`)
+            buttonLabel = this.getTitle(`planCodes.actionMobile`)
           }
           if (!user) {
             const inputSignupAction = {
@@ -172,7 +172,7 @@ class SelectPlan extends I18n {
         const coupon = Billing.get('coupon')
         if (coupon && coupon.size) {
           const couponName = coupon.get('campaign').get('name')
-          labelDisplay = labelDisplay.replace(/{couponName}/g, couponName)
+          labelDisplay = this.getTitle(`planCodes.infos.${label}`, {couponName})
         }
         break
       case 'internalActionLabel':

@@ -1,122 +1,14 @@
 @import (reference) '../../../styles/config.less';
 
-@-webkit-keyframes slideUpSubHeader {
-  0% {
-    -webkit-transform: translateY(0);
-  }
-
-  100% {
-    -webkit-transform: translateY(-@header-height);
-  }
-}
-
-@-moz-keyframes slideUpSubHeader {
-  0% {
-    -moz-transform: translateY(0);
-  }
-
-  100% {
-    -moz-transform: translateY(-@header-height);
-  }
-}
-
-@-o-keyframes slideUpSubHeader {
-  0% {
-    -o-transform: translateY(0);
-  }
-
-  100% {
-    -o-transform: translateY(-@header-height);
-  }
-}
-
-@keyframes slideUpSubHeader {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(-@header-height);
-  }
-}
-
-@-webkit-keyframes slideDownSubHeader {
-  0% {
-    -webkit-transform: translateY(-@header-height);
-  }
-
-  100% {
-    -webkit-transform: translateY(0);
-  }
-}
-
-@-moz-keyframes slideDownSubHeader {
-  0% {
-    -moz-transform: translateY(-@header-height);
-  }
-
-  100% {
-    -moz-transform: translateY(0);
-  }
-}
-
-@-o-keyframes slideDownSubHeader {
-  0% {
-    -o-transform: translateY(-@header-height);
-  }
-
-  100% {
-    -o-transform: translateY(0);
-  }
-}
-
-@keyframes slideDownSubHeader {
-  0% {
-    transform: translateY(-@header-height);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.animated.slideDownSubHeader {
-  -webkit-animation-duration: 0.4s;
-  -moz-animation-duration: 0.4s;
-  -o-animation-duration: 0.4s;
-  animation-duration: 0.4s;
-  -webkit-animation-name: slideDownSubHeader;
-  -moz-animation-name: slideDownSubHeader;
-  -o-animation-name: slideDownSubHeader;
-  animation-name: slideDownSubHeader;
-}
-
-.toolbar-sub-navigation {
-  font-size: 2em;
-  &:first-letter {
-    text-transform: uppercase;
-  }
-}
-
-&.animated.slideUpSubHeader {
-  -webkit-animation-duration: 0.2s;
-  -moz-animation-duration: 0.2s;
-  -o-animation-duration: 0.2s;
-  animation-duration: 0.2s;
-  -webkit-animation-name: slideUpSubHeader;
-  -moz-animation-name: slideUpSubHeader;
-  -o-animation-name: slideUpSubHeader;
-  animation-name: slideUpSubHeader;
-}
-
 .sub-navigation {
-  position: fixed;
+  //transform: translateY(-@header-height);
+  //position: relative;
   left: 0;
   right: 0;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-  top: @header-height;
+  top: 0;
   height: @sub-navigation-height;
   z-index: @nav-z + 2;
   padding: 0.2em;

@@ -169,7 +169,7 @@ class LifePinView extends LifePin {
     let imageUrl = extractImg({data, key: 'image', width: 1280, height: 720, fit: 'min'})
 
     return (
-      <article className="row no-padding brand-bg life-pin">
+      <article className="brand-bg life-pin">
         <div ref="pinHeader" className="pin-header">
           <div className="pin-header-background">
             <ReactImgix className="pin-header-background_image" src={imageUrl} bg={true}/>
@@ -195,7 +195,7 @@ class LifePinView extends LifePin {
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
-              <Sticky >
+              <Sticky bottomOffset={150}>
                 <div className="spot-lists">
                   {spots && spots.map((data, key) => <LifeSpot {...{
                     data,

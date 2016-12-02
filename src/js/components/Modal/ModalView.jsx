@@ -11,8 +11,11 @@ import ModalPlayer from './ModalPlayer'
 import ModalImage from './ModalImage'
 import ModalComponent from './ModalComponent'
 import ModalLifeAdd from './ModalLifeAdd'
+import ModalLifeRemove from './ModalLifeRemove'
 import { SelectPlan } from '../../components/Payment/'
 import { withRouter } from 'react-router'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 if (process.env.BROWSER) {
   require('./ModalView.less')
@@ -32,6 +35,19 @@ class ModalView extends React.Component {
         Modal, params:{lang}
       }
     } = this
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Discard"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+    ]
 
     const type = Modal.get('target')
     const closable = Modal.get('closable')
@@ -106,6 +122,9 @@ class ModalView extends React.Component {
         break
       case 'life-add':
         return <ModalLifeAdd {...{closable, cb, type, className, data}} {...this.props} />
+        break
+      case 'life-remove':
+        return <ModalLifeRemove {...{closable, cb, type, className, data}} {...this.props} />
         break
       default:
         return <div />

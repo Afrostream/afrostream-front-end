@@ -181,7 +181,7 @@
     "actionMobile": "Payer via votre facture téléphonique",
     "infos": {
       "internalActionLabel": "",
-      "coupon": "Coupon valide {couponName}",
+      "coupon": "Coupon valide : '{couponName}'",
       "formule": "Formule",
       "prelevementMensuel": "Prélèvement mensuel",
       "price": "Tarif",
@@ -612,7 +612,8 @@
     },
     "sticky": {
       "nbpost": "Nombre de posts : {pins}",
-      "tooltip": "Poster du contenu"
+      "tooltip": "Poster du contenu",
+      "remove": "Supprimer ce contenu"
     },
     "modal": {
       "title": "Que voulez vous partager à la communauté ?",

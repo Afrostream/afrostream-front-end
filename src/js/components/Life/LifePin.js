@@ -7,6 +7,7 @@ import ClickablePin from './ClickablePin'
 import classSet from 'classnames'
 import ReactImgix from '../Image/ReactImgix'
 import Immutable from 'immutable'
+import PinButton from './PinButton'
 
 @connect(({Life, User}) => ({Life, User}))
 class LifePin extends ClickablePin {
@@ -21,14 +22,19 @@ class LifePin extends ClickablePin {
       props:{
         index,
         data,
+        isCurrentUser,
         showBubble,
         imageWidth,
-        imageHeight
+        imageHeight,
+        params:{
+          lifeUserId
+        },
+        User
       }
     } = this
 
     const type = data.get('type')
-
+    const gloBalUser = User.get(`user`)
     const pinnedDate = moment(data.get('date'))
     const pinnedUser = data.get('user')
     const description = data.get('description')
@@ -101,12 +107,18 @@ class LifePin extends ClickablePin {
             {/*<div className="card-bubble card-bubble-type like" onClick={::this.likePin}/>*/}
           </div>}
         </div>
+        {isCurrentUser && <PinButton buttonClass="fa fa-trash"
+                                     label="life.sticky.remove"
+                                     target="life-remove"
+                                     {...this.props}
+                                     {...{data}}/>}
       </div>
     </Link>)
   }
 }
 
 LifePin.propTypes = {
+  isCurrentUser: PropTypes.bool,
   data: PropTypes.instanceOf(Immutable.Map),
   index: PropTypes.number,
   imageHeight: PropTypes.number,
@@ -118,6 +130,7 @@ LifePin.propTypes = {
 
 
 LifePin.defaultProps = {
+  isCurrentUser: false,
   index: 0,
   imageWidth: 1080,
   imageHeight: 500,

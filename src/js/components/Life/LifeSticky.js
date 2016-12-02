@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
-import Headroom from 'react-headrooms'
 import { I18n } from '../Utils'
 
 import {

@@ -36,6 +36,13 @@ class ModalComponent extends I18n {
     this.closeModal()
   }
 
+  renderContent () {
+    return
+  }
+
+  renderFooter () {
+    return
+  }
 
   render () {
 
@@ -62,10 +69,12 @@ class ModalComponent extends I18n {
                   <div id="onestep" className={classNames(panelClass)}>
                     {/*HEADER*/}
                     <div className="header top-header">
-                      <a className={closeClass}  onClick={::this.handleClose}></a>
+                      <a className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       {children && children}
+                      {!children && this.renderContent()}
+                      {!children && this.renderFooter()}
                     </div>
                   </div>
                 </div>

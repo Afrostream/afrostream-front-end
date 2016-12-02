@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Headroom from 'react-headrooms'
+import Headroom from 'react-headroom'
 import UserButton from './../User/UserButton'
 import SmartBanner from './SmartBanner'
 import SearchInput from './../Search/SearchBox'
@@ -61,11 +61,7 @@ class Header extends React.Component {
 
 
     return (
-      <Headroom tolerance={5} offset={200} classes={{
-        initial: 'animated',
-        pinned: 'slideDown',
-        unpinned: 'slideUp'
-      }}>
+      <Headroom disableInlineStyles>
 
         <header className={classSet(sliderClasses)}>
           {/*{planCode && <SmartBanner {...apps.params}/>}*/}

@@ -204,11 +204,13 @@ class ModalLifeAdd extends ModalComponent {
       <div className="col-md-9 col-xs-9 ">
         <TextField className="pin-description"
                    ref="description"
+                   maxLength={255}
                    defaultValue={scrappedData.get('description')}
                    fullWidth={true}
                    multiLine={true}
                    textareaStyle={textInputStyle}
                    hintText="Ajouter une description"/>
+        <span>{`${this.refs.description.getValue().length} / 255`}</span>
       </div>
       {imageUrl && <div className="col-md-3 col-xs-3">
         <ReactImgix src={imageUrl}/>

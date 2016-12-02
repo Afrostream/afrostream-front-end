@@ -48,12 +48,12 @@ class LifeHome extends Component {
     const themesList = Life.get('life/themes/')
 
     return (
-      <div className="container-fluid no-padding life-themes brand-grey">
+      <div className="row-fluid no-padding">
         <SubNavigation {...{themesList}} to="/life/{_id}/{slug}"/>
-        <div className="row-fluid no-padding brand-grey">
+        <div className="container-fluid no-padding life-home life-themes brand-grey">
           {children || <LifeTheme {...this.props}/>}
+          <LifeSticky {...this.props}/>
         </div>
-        <LifeSticky {...this.props}/>
       </div>
     )
   }

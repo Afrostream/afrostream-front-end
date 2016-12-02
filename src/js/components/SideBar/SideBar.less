@@ -154,8 +154,12 @@
     left: @sidebar-width;
   }
 
-  .docked .sub-navigation {
-    padding-left: @sidebar-width;
+  .docked #page-content-wrapper {
+    .headroom {
+      margin-left: @sidebar-width;
+    }
+    .sub-navigation {
+    }
   }
 }
 
@@ -165,8 +169,12 @@
     left: 0;
   }
 
-  .docked .sub-navigation {
-    padding-left: 0;
+  .docked #page-content-wrapper {
+    .headroom {
+      margin-left: 0;
+    }
+    .sub-navigation {
+    }
   }
 }
 

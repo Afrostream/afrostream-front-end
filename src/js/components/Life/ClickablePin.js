@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import config from '../../../../config'
+import * as LifeActionCreators from '../../actions/life'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
 import { slugify, extractImg } from '../../lib/utils'
@@ -22,6 +23,19 @@ class ClickablePin extends Component {
       props: {}
     } = this
     e.preventDefault()
+  }
+
+  removePin (data) {
+    const {
+      props: {dispatch}
+    } = this
+
+    const pinId = data.get(pinId)
+
+    return dispatch(ModalActionCreators.open({
+      target: 'pin-remove',
+      cb: dispatch(LifeActionCreators.removePin(pinId))
+    }))
   }
 
   /**

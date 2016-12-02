@@ -148,6 +148,7 @@ class LifeList extends Component {
 }
 
 LifeList.propTypes = {
+  isCurrentUser: PropTypes.bool,
   moduloSpots: PropTypes.number,
   highlightFirst: PropTypes.bool,
   virtual: PropTypes.bool,
@@ -163,6 +164,7 @@ LifeList.propTypes = {
 
 
 LifeList.defaultProps = {
+  isCurrentUser: false,
   moduloSpots: 6,
   highlightFirst: true,
   virtual: true,

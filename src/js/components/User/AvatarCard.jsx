@@ -95,7 +95,7 @@ class AvatarCard extends I18n {
           </div>
           <div className="content">
             <p>{user.get('nickname')}</p>
-            {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size})}</p>}
+            {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size.toString()})}</p>}
           </div>
         </Link>
       </div>

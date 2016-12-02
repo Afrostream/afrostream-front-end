@@ -43,12 +43,12 @@ class ModalCoupon extends ModalComponent {
     } = this
 
     return await dispatch(BillingActionCreators.couponActivate())
-      .then(()=> {
+      .then(() => {
         return dispatch(UserActionCreators.getProfile())
-      }).then(()=> {
+      }).then(() => {
         return this.props.history.push('/')
-      }).catch(({response:{body:{error, code, message}}})=> {
-        const errorCode = (code && this.getTitle('errors')[code])
+      }).catch(({response:{body:{error, code, message}}}) => {
+        const errorCode = (code && this.getTitle(`errors.${code}`))
         return this.setState({
           success: false,
           loading: false,
@@ -106,10 +106,10 @@ class ModalCoupon extends ModalComponent {
           return this.finalyse()
         }
         //coupon invalid
-        throw new Error(self.getTitle('status')[status] || self.getTitle('couponInvalid'))
+        throw new Error(self.getTitle(`status.${status}`) || self.getTitle('couponInvalid'))
       })
       //Get updated profile
-      .then(()=> {
+      .then(() => {
         this.setState({
           loading: false,
           signInOrUp: !user,
@@ -120,20 +120,18 @@ class ModalCoupon extends ModalComponent {
       .catch((err) => {
         console.log('Error coupon ', err)
         const code = err.code || err.status
-        const errorCode = (code && self.getTitle('errors')[code])
+        const errorCode = (code && self.getTitle(`errors.${code}.message`))
         this.setState({
           success: false,
           loading: false,
           signInOrUp: false,
-          error: (errorCode && errorCode.message ) || (err.message || err.error) || self.getTitle('couponInvalid')
+          error: (errorCode) || (err.message || err.error) || self.getTitle('couponInvalid')
         })
       })
   }
 
-  getTitle (key = 'title', values = {}) {
-    const {props:{intl}} =this
-    let keyType = 'coupon'
-    return intl.formatMessage({id: `${keyType}.${key}`}, values) || ''
+  getI18n () {
+    return 'coupon'
   }
 
   getForm () {
@@ -265,9 +263,9 @@ class ModalCoupon extends ModalComponent {
                     {/*HEADER*/}
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
-                      <h1>{this.getTitle()}</h1>
+                      <h1>{this.getTitle('title')}</h1>
                       <h2 className={errClass}>{this.state.error}</h2>
-                      <a className={closeClass}  onClick={::this.handleClose}></a>
+                      <a className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       {this.getForm()}

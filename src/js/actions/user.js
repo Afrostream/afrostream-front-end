@@ -12,110 +12,108 @@ import { mergeFbUserInfo } from '../lib/utils'
 import _ from 'lodash'
 import config from '../../../config'
 
-const mergeProfile = function ({api, data, getState, dispatch}) {
-  return async () => {
+async function mergeProfile ({api, data, getState, dispatch}) {
 
-    //HAS TOKEN STORED
-    let donePath = getState().Modal.get('donePath')
-    let user = null
-    dispatch(pendingUser(true))
-    const token = getState().OAuth.get('token')
+  //HAS TOKEN STORED
+  let donePath = getState().Modal.get('donePath')
+  let user = null
+  dispatch(pendingUser(true))
+  const token = getState().OAuth.get('token')
 
-    if (!token) {
-      throw new Error('No token present')
-      return data
-    }
-
-    //GET USER INFO
-
-    await api({
-      path: `/api/users/me`,
-      passToken: true
-    }).then(({body}) => {
-      user = body
-    })
-
-    if (!user) {
-      throw new Error('No user found')
-    }
-
-
-    //GEOLOC
-
-    user.authorized = true
-    try {
-      user.authorized = await isAuthorized()
-    } catch (err) {
-      console.error('Error requesting /auth/geo ', err)
-    }
-
-    //if (!authorized) {
-    //  dispatch(ModalActionCreators.open({target: 'geoWall'}))
-    //  throw new Error('User not authorized Geoloc /auth/geo ')
-    //}
-
-    //MERGE USER DATA
-    let subscriptionsStatus = user.subscriptionsStatus
-    let status = subscriptionsStatus && subscriptionsStatus.status
-    user.status = status
-    user.user_id = user._id || user.user_id
-    user.splashList = user.splashList || []
-    user = mergeFbUserInfo(user)
-    dispatch(FBActionCreators.getFriendList())
-
-    let planCode = user.planCode
-    if (!planCode && !donePath) {
-      if (user.status && user.status !== 'active') {
-        donePath = `/select-plan/none/${user.status}`
-      } else {
-        //get InternalPlan
-        await dispatch(BillingActionCreators.getInternalplans({
-          contextBillingUuid: 'common',
-          passToken: true,
-          reload: true,
-          userId: user._id
-        })).then(({res: {body = []}}) => {
-          if (body) {
-
-            let firstPlan = _.find(body, (plan) => {
-              let planUuid = plan.internalPlanUuid
-              return planUuid === config.netsize.internalPlanUuid
-            })
-
-            if (!firstPlan && config.featuresFlip.redirectAllPlans) {
-              firstPlan = _.head(body)
-            }
-
-            if (firstPlan) {
-              donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
-            }
-
-            return donePath
-          }
-        })
-      }
-    }
-
-    if (donePath) {
-      dispatch(push(donePath))
-      dispatch(ModalActionCreators.close())
-    }
-
-
-    dispatch(pendingUser(false))
-
-
-    return _.merge(data, {
-      user
-    })
-
-    //}).catch((e)=> {
-    //  console.log(e, 'remove user data')
-    //  //FIXME replace logout method
-    //  actionDispatcher(OAuthActionCreators.logOut())
-    //  return data
-    //})
+  if (!token) {
+    throw new Error('No token present')
+    return data
   }
+
+  //GET USER INFO
+
+  await api({
+    path: `/api/users/me`,
+    passToken: true
+  }).then(({body}) => {
+    user = body
+  })
+
+  if (!user) {
+    throw new Error('No user found')
+  }
+
+
+  //GEOLOC
+
+  user.authorized = true
+  try {
+    user.authorized = await isAuthorized()
+  } catch (err) {
+    console.error('Error requesting /auth/geo ', err)
+  }
+
+  //if (!authorized) {
+  //  dispatch(ModalActionCreators.open({target: 'geoWall'}))
+  //  throw new Error('User not authorized Geoloc /auth/geo ')
+  //}
+
+  //MERGE USER DATA
+  let subscriptionsStatus = user.subscriptionsStatus
+  let status = subscriptionsStatus && subscriptionsStatus.status
+  user.status = status
+  user.user_id = user._id || user.user_id
+  user.splashList = user.splashList || []
+  user = mergeFbUserInfo(user)
+  dispatch(FBActionCreators.getFriendList())
+
+  let planCode = user.planCode
+  if (!planCode && !donePath) {
+    if (user.status && user.status !== 'active') {
+      donePath = `/select-plan/none/${user.status}`
+    } else {
+      //get InternalPlan
+      await dispatch(BillingActionCreators.getInternalplans({
+        contextBillingUuid: 'common',
+        passToken: true,
+        reload: true,
+        userId: user._id
+      })).then(({res: {body = []}}) => {
+        if (body) {
+
+          let firstPlan = _.find(body, (plan) => {
+            let planUuid = plan.internalPlanUuid
+            return planUuid === config.netsize.internalPlanUuid
+          })
+
+          if (!firstPlan && config.featuresFlip.redirectAllPlans) {
+            firstPlan = _.head(body)
+          }
+
+          if (firstPlan) {
+            donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
+          }
+
+          return donePath
+        }
+      })
+    }
+  }
+
+  if (donePath) {
+    dispatch(push(donePath))
+    dispatch(ModalActionCreators.close())
+  }
+
+
+  dispatch(pendingUser(false))
+
+
+  return _.merge(data, {
+    user
+  })
+
+  //}).catch((e)=> {
+  //  console.log(e, 'remove user data')
+  //  //FIXME replace logout method
+  //  actionDispatcher(OAuthActionCreators.logOut())
+  //  return data
+  //})
 }
 
 /**
