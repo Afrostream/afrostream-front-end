@@ -10,7 +10,7 @@ const config = _.merge(
       shareImage: '/production/image/2016/12/blackIshMea.jpg',
       defaultImage: '/production/image/2016/12/ba3bbe6e104fa55c10aa-1920x1080.jpg',
       screen: {
-        image: '/production/screen/blackish-home-v4.jpg',
+        image: '/production/screen/blackish-home-v5.jpg',
         logo: ''
       },
       metas: [
