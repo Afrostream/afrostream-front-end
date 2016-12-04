@@ -35,7 +35,7 @@ class ModalLogin extends ModalComponent {
 
   handleClose (e) {
     super.handleClose(e)
-    this.props.history.push(`/`)
+    //this.props.history.push(`/`)
   }
 
   componentDidMount () {

@@ -84,7 +84,7 @@ export default () => {
             else if (params.themeId) {
               data = store.getState().Life.get(`life/themes/${params.themeId}`)
               if (data) {
-                themesList = Immutable.List(data)
+                themesList = Immutable.List([data])
               }
             }
 
