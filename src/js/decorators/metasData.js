@@ -69,14 +69,17 @@ export default () => {
           case Boolean(~location.pathname.indexOf('/life')) :
 
             let themesList = store.getState().Life.get(`life/themes/`)
-
+            let defaultTitle = ''
+            let defaultDescription = this.getTitle('life.metas.description')
             if (params.pinId) {
               data = store.getState().Life.get(`life/pins/${params.pinId}`)
               if (data) {
                 themesList = data.get(themes)
+                defaultDescription = data.get('description') || defaultDescription
+                defaultTitle = data.get('title') || defaultTitle
               }
             }
-            if (params.themeId) {
+            else if (params.themeId) {
               data = store.getState().Life.get(`life/themes/${params.themeId}`)
             }
 
@@ -88,9 +91,8 @@ export default () => {
               themes += ' | '
             }
 
-            metas.title = this.getTitle('life.metas.title', {themes})
-            metas.description = this.getTitle('life.metas.description')
-
+            metas.title = this.getTitle('life.metas.title', {themes,defaultTitle})
+            metas.description = defaultDescription
             break
 
           case Boolean(~location.pathname.indexOf('/coupon')) :
