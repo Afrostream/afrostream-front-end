@@ -1,41 +1,34 @@
 import React, { PropTypes } from 'react'
 import { Link as ReactLink } from 'react-router'
-import document from 'global/document'
-import window from 'global/window'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import { withRouter } from 'react-router'
+import URL from 'url'
+import _ from 'lodash'
+
+import {
+  injectIntl
+} from 'react-intl'
 
 class Link extends React.Component {
 
   parseTo (to) {
-    if (!canUseDOM) {
-      return to
-    }
-    let parser = document.createElement('a')
-    parser.href = to
-    return parser
+    return URL.parse(to)
   }
 
   isInternal (toLocation) {
-    if (!canUseDOM) {
-      return toLocation
-    }
-    return window.location.host === toLocation.host
+    return !toLocation.host
   }
 
   render () {
-    const {store} = this.context
-    const {to, children, router, ...rest} = this.props
-    const state = store.getState()
-    const {intl:{locale, defaultLocale}}= state
-    const lang = /*router && router.isActive(locale) && */locale
+    const {to, children, intl, ...rest} = this.props
+    const {locale, defaultLocale}= intl
     const toLocation = this.parseTo(to)
     const isInternal = this.isInternal(toLocation)
-    const toWithLang = `${lang && lang !== defaultLocale && ('/' + lang) || ''}${toLocation.pathname}`
+    const toWithLang = `${locale && locale !== defaultLocale && ('/' + locale) || ''}${toLocation.pathname}`
     if (isInternal) {
       return (<ReactLink to={toWithLang} {...rest}>{children}</ReactLink>)
     } else {
-      return (<a href={to} target="_blank" {...rest}>{children}</a>)
+      const restOmit = _.omit(rest, ['activeClassName', 'onlyActiveOnIndex', 'intl'])
+      return (<a href={toLocation.href} target="_blank" {...restOmit}>{children}</a>)
     }
   }
 }
@@ -48,4 +41,4 @@ Link.propTypes = {
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 }
 
-export default withRouter(Link)
+export default injectIntl(Link)

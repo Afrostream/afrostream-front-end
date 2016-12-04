@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react'
+import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import config from '../../../../config'
 import moment from 'moment'
 import _ from 'lodash'
 import LifePin from './LifePin'
 import { extractImg } from '../../lib/utils'
+import * as LifeActionCreators from '../../actions/life'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
 import LifeSpot from './LifeSpot'
@@ -24,6 +26,11 @@ if (process.env.BROWSER) {
   require('./LifePinView.less')
 }
 
+@prepareRoute(async function ({store, params:{pinId}}) {
+  if (pinId) {
+    return await store.dispatch(LifeActionCreators.fetchPin(pinId))
+  }
+})
 @connect(({Life, User}) => ({Life, User}))
 class LifePinView extends LifePin {
 

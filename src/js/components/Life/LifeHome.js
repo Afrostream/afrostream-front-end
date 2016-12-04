@@ -16,19 +16,11 @@ if (process.env.BROWSER) {
 }
 
 @prepareRoute(async function ({store, params:{themeId, pinId}}) {
-  await Promise.all([
+  return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(LifeActionCreators.fetchPins({})),
     store.dispatch(LifeActionCreators.fetchSpots({}))
   ])
-
-  if (themeId) {
-    await store.dispatch(LifeActionCreators.fetchThemes(themeId))
-  }
-  if (pinId) {
-    await store.dispatch(LifeActionCreators.fetchPin(pinId))
-  }
-
 })
 @connect(({Life}) => ({Life}))
 class LifeHome extends Component {

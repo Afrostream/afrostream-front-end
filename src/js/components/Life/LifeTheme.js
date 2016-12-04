@@ -1,8 +1,15 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import LifeList from './LifeList'
 import { withRouter } from 'react-router'
+import { prepareRoute } from '../../decorators'
+import LifeList from './LifeList'
+import * as LifeActionCreators from '../../actions/life'
 
+@prepareRoute(async function ({store, params:{themeId}}) {
+  if (themeId) {
+    return await store.dispatch(LifeActionCreators.fetchThemes(themeId))
+  }
+})
 @connect(({Life, User}) => ({Life, User}))
 class LifeTheme extends Component {
 

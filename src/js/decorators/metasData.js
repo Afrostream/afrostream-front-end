@@ -5,7 +5,7 @@ import _ from 'lodash'
 import qs from 'qs'
 import { extractImg } from '../lib/utils'
 import { I18n } from '../components/Utils'
-
+import Immutable from 'immutable'
 export default () => {
 
   return (MetasDataComponent) => {
@@ -52,6 +52,7 @@ export default () => {
           title: _.cloneDeep(config.metadata.title),
           description: _.cloneDeep(config.metadata.description),
           meta: _.cloneDeep(config.metadata.metas),
+          htmlAttributes: {lang},
           type: 'website',
           link: [],
           slug
@@ -77,21 +78,24 @@ export default () => {
                 themesList = data.get(themes)
                 defaultDescription = data.get('description') || defaultDescription
                 defaultTitle = data.get('title') || defaultTitle
+                metas.type = 'article'
               }
             }
             else if (params.themeId) {
               data = store.getState().Life.get(`life/themes/${params.themeId}`)
+              if (data) {
+                themesList = Immutable.List(data)
+              }
             }
 
             if (themesList) {
               let themesFlat = themesList.map((theme) => {
                 return theme.get('label')
               })
-              themes = _.join(themesFlat.toJS(), ' - ')
-              themes += ' | '
+              themes = _.join(themesFlat.toJS(), ' - ') + ' |'
             }
-
-            metas.title = this.getTitle('life.metas.title', {themes,defaultTitle})
+            metas.htmlAttributes.prefix = 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#'
+            metas.title = this.getTitle('life.metas.title', {themes, defaultTitle})
             metas.description = defaultDescription
             break
 
@@ -197,6 +201,7 @@ export default () => {
                 if (params.videoId) {
                   //metas.type = episodeData ? 'video.episode' : 'video.video'
                   //FIXME change type whaen accessible video 30s
+                  metas.htmlAttributes.prefix = 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# video: http://ogp.me/ns/video#'
                   metas.type = 'video.other'
                 }
 
