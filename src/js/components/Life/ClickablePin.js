@@ -91,7 +91,7 @@ class ClickablePin extends Component {
   }
 
   getUrl (data) {
-    const pinUrl = `/life/pin/${data.get('_id')}${slugify('/' + data.get('title'))}`
+    const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
     return data.get('originalUrl') || pinUrl || '/life' || '#'
   }
 
