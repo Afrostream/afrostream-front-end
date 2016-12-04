@@ -635,7 +635,7 @@
       }
     },
     "metas": {
-      "title": "{themes} Afrostream Life",
+      "title": "{themes} Afrostream Life {defaultTitle}",
       "description": "Le média social de la créativité afro"
     }
   },
