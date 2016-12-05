@@ -11,6 +11,7 @@ import { isElementInViewPort } from '../../lib/utils'
 import classSet from 'classnames'
 const {featuresFlip} = config
 import { slugify, extractImg } from '../../lib/utils'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import { Billboard, CsaIcon } from '../Movies'

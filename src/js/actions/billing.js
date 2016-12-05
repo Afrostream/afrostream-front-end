@@ -40,6 +40,11 @@ export function subscribe (data) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.subscribe,
+      statsd: {
+        method: 'increment',
+        key: 'billing.plan.subscribe',
+        value: 1
+      },
       res: await api({
         path: `/api/billings/subscriptions`,
         method: 'POST',
@@ -82,6 +87,11 @@ export function couponValidate (data) {
   return (dispatch, getState, actionDispatcher) => {
     return async api => ({
       type: ActionTypes.Billing.couponValidate,
+      statsd: {
+        method: 'increment',
+        key: 'billing.coupon.validate',
+        value: 1
+      },
       res: await api({
         path: `/api/billings/coupons`,
         params: data,

@@ -125,9 +125,7 @@ export function fetchPins ({limit = 22, startIndex = 0, stopIndex = 3}) {
     return async api => ({
       type: ActionTypes.Life.fetchPins,
       res: await api({
-        path: `/api/life/pins`
-
-        ,
+        path: `/api/life/pins`,
         params: {
           limit
         }
