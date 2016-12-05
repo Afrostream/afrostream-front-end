@@ -69,7 +69,7 @@ const webpackConfig = {
       'jquery',
       'payment',
       'bootstrap',
-      'raven',
+      'raven-js',
       'mobile-detect',
       'q',
       'qs',

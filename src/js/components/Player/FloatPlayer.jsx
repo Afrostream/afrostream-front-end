@@ -10,7 +10,6 @@ import window from 'global/window'
 import { isElementInViewPort } from '../../lib/utils'
 import classSet from 'classnames'
 const {featuresFlip} = config
-import Raven from 'raven-js'
 import { slugify, extractImg } from '../../lib/utils'
 
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
@@ -29,6 +28,10 @@ import {
 
 if (process.env.BROWSER) {
   require('./FloatPlayer.less')
+}
+
+if (canUseDOM) {
+  var Raven = require('raven-js')
 }
 
 @connect(({Config, OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
