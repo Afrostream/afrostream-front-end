@@ -77,7 +77,7 @@ export default () => {
               if (data) {
                 themesList = data.get(themes)
                 defaultDescription = data.get('description') || defaultDescription
-                defaultTitle = data.get('title') || defaultTitle
+                defaultTitle = '| ' + (data.get('title') || defaultTitle)
                 metas.type = 'article'
               }
             }
@@ -225,13 +225,11 @@ export default () => {
 
         metas.meta.push({
           property: 'og:title',
-          content: metas.title,
-          override: true
+          content: metas.title
         })
         metas.meta.push({
           name: 'twitter:title',
-          content: metas.title,
-          override: true
+          content: metas.title
         })
 
         if (metas.description) {
