@@ -2,7 +2,7 @@ import _ from 'lodash'
 import config from '../../../config'
 import anr from 'afrostream-node-request'
 const {apiServer} = config
-const request = anr.create({baseUrl:apiServer.urlPrefix, filter:null});
+const request = anr.create({baseUrl: apiServer.urlPrefix, filter: null})
 
 /**
  * call request on external api
@@ -30,7 +30,7 @@ export function getData (req, path, requestOptions) {
         qs: req.query || {},
         body: req.body,
         uri: path,
-        context: { req: req },
+        context: {req: req},
         forwardedHeaders: {
           'Access-Token': 'Access-Token'
         }
@@ -53,11 +53,11 @@ export async function getBodyWithoutAuth (...args) {
 }
 
 export function proxy (req, res, queryOptions) {
-   request(
+  request(
     _.merge(
       {
         method: req.method,
-        context: { req: req },
+        context: {req: req},
         qs: req.query,
         body: req.body,
         uri: req.originalUrl,
@@ -80,7 +80,7 @@ export function proxy (req, res, queryOptions) {
 export function fwd (res) {
   return function (err, data) {
     if (err) {
-      res.status(500).json({error: err.message || 'unknown error' })
+      res.status(500).json({error: err.message || 'unknown error'})
     } else {
       var backendResponse = data[0]
         , backendBody = data[1]

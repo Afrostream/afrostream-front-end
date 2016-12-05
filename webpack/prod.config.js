@@ -65,7 +65,7 @@ let clientConfig = merge({}, webpackConfig, {
   )
 })
 
-delete clientConfig.module.preLoaders;
+delete clientConfig.module.preLoaders
 
 let nodeModules = {}
 fs.readdirSync(node_modules_dir)

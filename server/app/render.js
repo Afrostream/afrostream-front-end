@@ -22,7 +22,7 @@ const {apps, apiServer, heroku} = config
 
 export default function render (req, res, layout, {payload}) {
   const {path} = req
-  const history = useRouterHistory(useQueries(createMemoryHistory))();
+  const history = useRouterHistory(useQueries(createMemoryHistory))()
   const location = history.createLocation(req.url)
   const preferredLocale = getPreferredLocales(req)
   const api = createAPI(

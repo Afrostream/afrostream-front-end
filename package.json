@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "app": "./node_modules/.bin/babel-node server/app",
-    "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc server",
+    "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc .",
     "clean": "rm -rf dist && mkdir dist",
     "build:prod": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --progress --verbose --display-error-details --config webpack/prod.config.js",
     "build": "npm run clean && npm run build:prod",

@@ -9,8 +9,8 @@ import herokuConfig from '../app.json'
 
 // chargement de la conf de staging (lorsque l'on est en local)
 if (process.env.LOAD_STAGING) {
-  delete herokuConfig.env.NODE_ENV;
-  process.env = merge(process.env, herokuConfig.env);
+  delete herokuConfig.env.NODE_ENV
+  process.env = merge(process.env, herokuConfig.env)
 }
 
 const AUTOPREFIXER_BROWSERS = [
