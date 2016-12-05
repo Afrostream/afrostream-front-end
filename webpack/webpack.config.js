@@ -65,7 +65,6 @@ const webpackConfig = {
       'lodash',
       'moment',
       'classnames',
-      'raven-js',
       'superagent',
       'jquery',
       'payment',
