@@ -16,6 +16,38 @@ class LifePin extends ClickablePin {
     super(props, context)
   }
 
+  renderBubbles () {
+    const {
+      props:{
+        data,
+        pinnedUser,
+        showBubble
+      }
+    } = this
+
+    const type = data.get('type')
+
+    const cardTypeIcon = {
+      'card-bubble': true,
+      'card-bubble-type': true
+    }
+    cardTypeIcon[type] = true
+
+    if (showBubble) {
+      return
+    }
+
+    return (<div className="card-bubbles">
+      {pinnedUser && <div className="card-bubble card-bubble-user">
+        <img src={pinnedUser.get('picture')}
+             alt="user-button"
+             className="icon-user"/>
+      </div>}
+      <div className={classSet(cardTypeIcon)}/>
+      {/*<div className="card-bubble card-bubble-type like" onClick={::this.likePin}/>*/}
+    </div>)
+  }
+
   render () {
 
     const {
@@ -23,25 +55,19 @@ class LifePin extends ClickablePin {
         index,
         data,
         isCurrentUser,
-        showBubble,
         imageWidth,
-        imageHeight,
-        params:{
-          lifeUserId
-        },
-        User
+        imageHeight
       }
-    } = this
+    }= this
 
     const type = data.get('type')
-    const gloBalUser = User.get(`user`)
     const pinnedDate = moment(data.get('date'))
     const pinnedUser = data.get('user')
     const description = data.get('description')
     const themes = data.get('themes')
     const pinRole = data.get('role')
     const isPremium = pinRole === 'premium' || pinRole === 'vip'
-    const isFull = !index || !(description && description.length)
+    const isFull = true
 
     let imageUrl = extractImg({
       data,
@@ -58,13 +84,7 @@ class LifePin extends ClickablePin {
       'premium': isPremium
     }
 
-    const cardTypeIcon = {
-      'card-bubble': true,
-      'card-bubble-type': true
-    }
-
     brickStyle[type] = true
-    cardTypeIcon[type] = true
 
     return (<Link to={this.getUrl(data)} className={classSet(brickStyle)} onClick={
       (e) => ::this.clickHandlerPin(e, data)
@@ -76,7 +96,6 @@ class LifePin extends ClickablePin {
           {isPremium && (<div className="premium-flag">
             <div className="premium-flag__header-label"> Accès {pinRole}</div>
           </div>)}
-
         </div>
         <div className="card-body">
           <div className="card-meta">
@@ -86,6 +105,10 @@ class LifePin extends ClickablePin {
           <div className="card-info">
             <div target="_self">{data.get('title')}</div>
           </div>
+          {this.renderBubbles()}
+        </div>
+        {description && <div className="card-sub-info">
+          {this.renderBubbles()}
           <div className="card-description">
             {description}
           </div>
@@ -97,16 +120,8 @@ class LifePin extends ClickablePin {
             ` - ${pinnedUser.get('nickname')}`
             }
           </div>
-          {!showBubble && <div className="card-bubbles">
-            {pinnedUser && <div className="card-bubble card-bubble-user">
-              <img src={pinnedUser.get('picture')}
-                   alt="user-button"
-                   className="icon-user"/>
-            </div>}
-            <div className={classSet(cardTypeIcon)}/>
-            {/*<div className="card-bubble card-bubble-type like" onClick={::this.likePin}/>*/}
-          </div>}
-        </div>
+
+        </div>}
         {isCurrentUser && <PinButton buttonClass="fa fa-trash"
                                      label="life.sticky.remove"
                                      target="life-remove"

@@ -47,7 +47,6 @@ const client = {
           type: 'radio',
           icon: 'zmdi zmdi-female',
           iconRight: 'zmdi zmdi-male-alt',
-          defaultSelected: 'women',
           list: [{value: 'women'}, {value: 'men'}]
         },
         {

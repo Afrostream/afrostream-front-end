@@ -7,10 +7,11 @@
 
 @keyframes brickmoveUp {
   0% {
+    opacity: 0;
+    .transform(translateY(500px));
   }
   100% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
+    .transform(translateY(0));
     opacity: 1;
   }
 }
@@ -73,25 +74,10 @@
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    //justify-content: space-between;
   }
   a.banner {
     width: 100%;
   }
-  //.brick:not(:first-child) {
-  //  opacity: 0;
-  //  .transform(translate3D(0, @yUpSize, 0));
-  //  .animation(brickmoveUp 0.25s ease forwards);
-  //  &:nth-child(3n+2) {
-  //    animation-delay: 0.1s;
-  //  }
-  //  &:nth-child(3n+3) {
-  //    animation-delay: 0.2s;
-  //  }
-  //  &:nth-child(3n+4) {
-  //    animation-delay: 0.3s;
-  //  }
-  //}
 
   .life-player {
     margin: 0 auto;
@@ -102,38 +88,45 @@
 
     display: inline-block;
     display: flex;
-    //width: 350px;
     width: 33.33%;
     max-width: 33.33%;
     min-height: @minBrickHeight;
-    //max-height: 70vh;
     vertical-align: top;
     cursor: pointer;
-    //overflow: hidden;
-    //margin: 0 auto;
     font-family: @font-oswald;
-
     //ZOOM TRANSITION
     //ZOOM effect
     -webkit-transform-style: preserve-3d;
     -webkit-perspective: 1000;
 
-    //.isMobile({ margin-bottom: 1em; });
     &:hover {
-      //z-index: 20;
-      //z-index: @nav-z + 3;
-      .brick-content {
-        //.isNotMobile({ .transform(translate3D(0, 0, 1em)); box-shadow: 0px 0px 16px -2px rgba(0, 0, 0, 0.75); });
-      }
       .pin-btn {
         visibility: visible;
         opacity: 1;
         background-color: fade(@color-black-2, 30%);
       }
-      .brick-background_mask {
-        .gradient(fade(@color-black-2, 30), fade(@color-black-2, 30));
+
+      //HOVER EFFECT
+      .brick-background {
+
+        .brick-background_mask {
+          background-color: fade(@color-black-2, 30%);
+        }
+
+        .premium-flag {
+          .premium-flag__header-label {
+            width: 100%;
+          }
+        }
+      }
+
+      .card-sub-info {
+        opacity: 1;
+        visibility: visible;
+        .transform(translateY(0));
       }
     }
+    //END HOVER
 
     .pin-btn {
       .fullHeight();
@@ -166,11 +159,18 @@
       margin: @gap-brick;
       .isMobile({ margin: 0; position: absolute; });
       position: absolute;
+      &:before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+      }
       width: 100%;
       height: 100%;
       background-color: @color-grey;
       box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
     }
+
     .brick-background {
       .brick-background_image {
         background-position: 50% 25%;
@@ -195,13 +195,13 @@
       top: 0;
       bottom: 0;
       .brick-background_mask {
-        .transition(background 0.2s, linear);
+        .transition(background 0.2s linear);
         position: absolute;
         top: 0;
         left: 0;
         bottom: 0;
         right: 0;
-        .gradient(fade(#000000, 20), fade(#000000, 60));
+        .gradient(fade(@color-black-2, 20), fade(@color-black-2, 60));
       }
     }
 
@@ -256,13 +256,18 @@
         line-height: 1.5em;
       }
     }
-    .card-body {
+
+    .card-body,
+    .card-sub-info {
       position: relative;
       vertical-align: middle;
       display: inline-block;
       color: @color-black-2;
       width: 100%;
       padding: 10px;
+
+      .transition(all 0.5s linear);
+
       .card-bubbles {
         position: absolute;
         text-align: right;
@@ -271,7 +276,7 @@
         top: 0;
         margin-top: -@cardTypeSize / 2;
         display: inline-block;
-        z-index: @nav-z + 1;
+        //z-index: @nav-z + 1;
         .card-bubble {
           text-align: center;
           display: inline-block;
@@ -352,6 +357,7 @@
           }
         }
       }
+
       .card-meta {
         font-size: 1.2em;
         line-height: 1.3;
@@ -364,6 +370,7 @@
           font-family: @font-oswald;
         }
       }
+
       .card-info {
         position: relative;
         padding: 0.5em 0 0.5em 0;
@@ -381,11 +388,37 @@
           font-family: @font-material;
         }
       }
+    }
+
+    .card-sub-info {
+      position: absolute;
+
+      opacity: 0;
+      visibility: hidden;
+
+      padding: 10px;
+      width: 100%;
+      min-height: 30%;
+      max-height: 50%;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      display: flex;
+      flex-direction: column;
+
+      background-color: @brand-primary;
+      box-shadow: 0 -1px 2px rgba(0, 0, 0, .2);
+
+      .transition(all 0.2s ease-out);
+      .transform(translateY(100px));
+
       .card-description {
         padding: 1em 0 1em 0;
         font-size: 1.3em;
         font-family: @font-family-base;
         text-align: justify;
+        flex: 1;
       }
       .card-date {
         padding: 1.5em;

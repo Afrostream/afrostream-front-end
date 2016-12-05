@@ -1,4 +1,4 @@
-import { proxy, avatar, sharing, log } from './api'
+import { proxy, avatar, sharing, log, statsd } from './api'
 import auth from './auth'
 import config from '../../config'
 import fs from 'fs'
@@ -23,7 +23,7 @@ export default function routes (app, buildPath) {
   function parseMD5Files () {
     const buildFiles = ['vendor.js', 'player.js', 'main.js', 'main.css']
     let promisedMd5 = []
-    _.map(buildFiles, (file)=> {
+    _.map(buildFiles, (file) => {
       if (env === 'development') {
         return promisedMd5.push({
           file: file,
@@ -42,13 +42,13 @@ export default function routes (app, buildPath) {
 
 
   let hashFiles = []
-  hashFiles = parseMD5Files().then((res)=> {
+  hashFiles = parseMD5Files().then((res) => {
     hashFiles = res
   })
 // Render layout
   const bootstrapFiles = function (res, type) {
     const matchType = new RegExp(`.${type}$`)
-    let files = _.filter(hashFiles, (item)=> {
+    let files = _.filter(hashFiles, (item) => {
       return item.file.match(matchType)
     })
     let loadType = type === 'js' ? 'javascript' : type
@@ -123,6 +123,10 @@ export default function routes (app, buildPath) {
   // SHARING
   // --------------------------------------------------
   app.use('/sharing', sharing)
+
+  // STATSD
+  // --------------------------------------------------
+  app.use('/statsd', statsd)
   // SHARING
   // --------------------------------------------------
 

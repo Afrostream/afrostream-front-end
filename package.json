@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "afrostream-node-request": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-request.git#v2.5.0",
+    "afrostream-node-statsd": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-statsd.git#v1.3.0",
     "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.26",
     "autoprefixer-core": "^5.2.1",
     "autoprefixer-loader": "^2.0.0",
@@ -124,7 +125,7 @@
     "pretty-error": "^1.2.0",
     "q": "^1.4.1",
     "qs": "^3.1.0",
-    "raven-js": "^3.8.1",
+    "raven": "^0.12.3",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-shallow-compare": "^15.3.2",
