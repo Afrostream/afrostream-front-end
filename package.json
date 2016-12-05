@@ -18,6 +18,9 @@
     "shrink": "shrinkwarp --ignore fsevents",
     "postshrinkwrap": "npm run shrink"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "keywords": [
     "react",
     "redux"
