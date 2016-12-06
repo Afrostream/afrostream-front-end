@@ -662,11 +662,9 @@ class FloatPlayer extends React.Component {
   async generateDomTag (videoData, komentData) {
     console.log('player : generate dom tag')
     const ua = detectUA()
-    const mobileVersion = ua.getMobile()
     const videoTracking = this.getStoredPlayer()
     const storedCaption = videoTracking.playerCaption
-    let excludeSafari = (!ua.isSafari() || (ua.isSafari() && ua.getBrowser().version === 537))
-    let excludeBrowser = excludeSafari
+    let excludeBrowser = !(ua.isSafari() || (ua.isSafari() && !ua.getBrowser().version === 537) || ua.isChrome())
     let captions = excludeBrowser && videoData.captions
     let hasSubtiles = captions ? captions.size : false
 
