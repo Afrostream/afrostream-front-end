@@ -128,12 +128,12 @@ class WelcomeHeader extends React.Component {
       <section className={classSet(welcomeClassesSet)}>
         <ReactImgix key="welcome-pgm" className="afrostream-movie__poster" src={posterImg} bg={true}>
           <div className="afrostream-movie__mask"/>
-          {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
         </ReactImgix>
         <div key="welcome-pgm-movie" className="afrostream-movie">
+          {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
           <div className="afrostream-movie__info">
-            <h1>{info.movie.title}</h1>
-            <div className='detail-text'>{info.movie.synopsis}</div>
+            {info.movie.title && <h1>{info.movie.title}</h1>}
+            {info.movie.synopsis && <div className='detail-text'>{info.movie.synopsis}</div>}
           </div>
           <div className="afrostream-movie__subscribe">
             <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {

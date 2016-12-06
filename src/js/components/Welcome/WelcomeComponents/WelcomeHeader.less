@@ -39,13 +39,16 @@
   .afrostream-movie__poster {
     .transition(opacity 0.3s, linear);
     position: absolute;
+    .isMobile({ bottom: 50%; });
     left: 0;
     right: 0;
-    top: 0;
+    top: @header-height;
+    .isMobile({ top: @header-height-mobile; });
     bottom: 0;
     background-image: url(../../../../assets/images/default/1920x815.jpg);
     background-position: center top;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     &:not(.overlay) {
       background-position: left top;
     }
@@ -56,8 +59,9 @@
       left: 0;
       bottom: 0;
       right: 0;
-      background-color: fade(#000, 30%);
-      .isMobile({ .gradient(#000, transparent); background-color: none; });
+      //background-color: fade(#000, 30%);
+      //.isMobile({ .gradient(#000, transparent); background-color: none; });
+      .isNotMobile({ .horizontal-gradient(transparent, 20%, #000, 100%); });
     }
 
     &.overlay {
@@ -66,18 +70,18 @@
       }
     }
 
-    .afrostream-movie__logo {
-      .aspect-ratio(16, 9);
-      position: absolute;
-      width: 40%;
-      max-width: 40%;
-      right: 5em;
-      top: 8em;
-      background-position: center center;
-      background-size: contain;
-      background-repeat: no-repeat;
-      .isMobile({ top: 0; width: 100%; max-width: 100%; right: inherit });
-    }
+  }
+
+  .afrostream-movie__logo {
+    .aspect-ratio(16, 9);
+    //position: absolute;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    .isMobile({ top: 0; padding-left: 10%; background-position: right center; });
   }
 
   .afrostream-movie {
@@ -88,10 +92,9 @@
     max-width: 100%;
     margin: @header-height @app-padding @app-padding @app-padding;
     @media all and (max-width: @screen-sm-min) {
-      margin: @header-height @app-padding-mobile @app-padding-mobile @app-padding-mobile;
+      margin: @app-padding;
     }
     .afrostream-movie__info {
-      min-height: 100px;
       h1 {
         font-family: @font-thin;
         color: @white-base;
@@ -124,6 +127,7 @@
       font-family: @font-book;
       font-weight: bold;
       font-size: 3.5em;
+      .isMobile({ font-size: 3em; });
       line-height: 1.2em;
       margin: 1em 0 1em 0;
       text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
