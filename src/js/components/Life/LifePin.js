@@ -20,13 +20,12 @@ class LifePin extends ClickablePin {
     const {
       props:{
         data,
-        pinnedUser,
         showBubble
       }
     } = this
 
     const type = data.get('type')
-
+    const pinnedUser = data.get('user')
     const cardTypeIcon = {
       'card-bubble': true,
       'card-bubble-type': true

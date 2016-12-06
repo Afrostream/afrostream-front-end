@@ -88,6 +88,7 @@
 
     display: inline-block;
     display: flex;
+    position: relative;
     width: 33.33%;
     max-width: 33.33%;
     min-height: @minBrickHeight;
@@ -155,6 +156,7 @@
     //END ZOOM TRANSITION
 
     .brick-content {
+      overflow: hidden;
       text-align: center;
       margin: @gap-brick;
       .isMobile({ margin: 0; position: absolute; });
