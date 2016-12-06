@@ -22,8 +22,8 @@ export function getFriendList () {
 
         let friendList = getState().Facebook.get('friends')
         if (!friendList) {
-          await actionDispatcher(this.getFriends()).then((data)=> {
-            friendList = data.res
+          await actionDispatcher(this.getFriends()).then((data) => {
+            friendList = data && data.res
           })
         }
 
