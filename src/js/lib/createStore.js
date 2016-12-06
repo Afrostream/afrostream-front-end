@@ -21,8 +21,8 @@ export default function (api, history, initialState) {
 
   const createStoreWithMiddleware = compose(
     applyMiddleware(
+      middleWare.statsd.bind(null),
       middleWare.promise.bind(null, api),
-      middleWare.statsd,
       middleWare.raven,
       middleWare.tracker,
       middleWare.logger

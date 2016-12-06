@@ -96,17 +96,17 @@ export function couponValidate (data) {
         path: `/api/billings/coupons`,
         params: data,
         passToken: true
-      }).catch((err) => {
-        actionDispatcher({
-          type: ActionTypes.Billing.couponValidate,
-          res: {
-            body: {
-              coupon: null
-            }
-          }
-        })
-        throw err
-      })
+      })/*.catch((err) => {
+       actionDispatcher({
+       type: ActionTypes.Billing.couponValidate,
+       res: {
+       body: {
+       coupon: null
+       }
+       }
+       })
+       throw err
+       })*/
     })
   }
 }
