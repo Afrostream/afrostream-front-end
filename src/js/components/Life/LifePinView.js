@@ -80,7 +80,7 @@ class LifePinView extends LifePin {
 
   componentDidUpdate () {
     this.addRemoveEvent()
-    //this.initAddThis()
+    this.initAddThis()
   }
 
   componentDidMount () {
