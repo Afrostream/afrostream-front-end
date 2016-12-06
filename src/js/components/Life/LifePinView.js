@@ -9,6 +9,7 @@ import { extractImg } from '../../lib/utils'
 import * as LifeActionCreators from '../../actions/life'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
+import Spinner from '../Spinner/Spinner'
 import LifeSpot from './LifeSpot'
 import Immutable from 'immutable'
 import AvatarCard from '../User/AvatarCard'
@@ -152,20 +153,16 @@ class LifePinView extends LifePin {
 
     const data = Life.get(`life/pins/${pinId}`)
     if (!data) {
-      return (<div />)
+      return (<Spinner />)
     }
     const pinThemesList = data.get('themes')
     const allThemesList = Life.get(`life/themes/`)
 
-    if (!pinThemesList || !allThemesList) {
-      return (<div />)
-    }
-
     const spots = pinThemesList && pinThemesList.flatMap((theme) => {
         const themeId = theme.get('_id')
-        const themesSpots = allThemesList.find((theme) => {
-          return theme.get('_id') === themeId
-        })//Life.get(`life/themes/${themeId}`)
+        const themesSpots = allThemesList && allThemesList.find((theme) => {
+            return theme.get('_id') === themeId
+          })//Life.get(`life/themes/${themeId}`)
         if (themesSpots) {
           return themesSpots.get('spots')
         }
