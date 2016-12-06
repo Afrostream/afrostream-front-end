@@ -74,6 +74,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
         reload: true,
         userId: user._id
       })).then(({res: {body = []}}) => {
+
         if (body) {
 
           let firstPlan = _.find(body, (plan) => {

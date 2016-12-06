@@ -99,6 +99,11 @@ export function couponValidate (data) {
       })/*.catch((err) => {
        actionDispatcher({
        type: ActionTypes.Billing.couponValidate,
+       statsd: {
+       method: 'increment',
+       key: 'billing.coupon.validate',
+       value: 1
+       },
        res: {
        body: {
        coupon: null

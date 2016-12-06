@@ -44,7 +44,9 @@ class PaymentMethod extends React.Component {
     if (plan) {
       providers = plan.get('providerPlans')
       if (providers && providers.size) {
-        providerDefault = providers.first().get('provider').get('providerName')
+        providerDefault = providers.sortBy((provider, key) => {
+          return config.payment.order.indexOf(key)
+        }).first().get('provider').get('providerName')
       }
     }
 
@@ -160,9 +162,9 @@ class PaymentMethod extends React.Component {
 
     if (plan) {
       let providers = plan.get('providerPlans')
-      providers.sortBy((provider, key)=> {
+      providers.sortBy((provider, key) => {
         return config.payment.order.indexOf(key)
-      }).map((provider, key)=> {
+      }).map((provider, key) => {
         if (allMethods.hasOwnProperty(key)) {
           methods.push(allMethods[key])
         }

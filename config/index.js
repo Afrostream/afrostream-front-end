@@ -9,8 +9,8 @@ const config = _.merge(
       description: 'Profitez d\'une sélection des meilleurs films & séries afro à regarder en illimité sur tous vos écrans grâce à Afrostream, la première semaine est offerte.',
       shareImage: '/production/poster/2016/03/b8a6db25a04982c88a2b-438302.jpg',
       screen: {
-        image: '/production/screen/sexless-home-season2.jpg',
-        logo: '/production/screen/sexless-SAISON-2-logo.jpg',
+        image: '/production/screen/blackish-home.jpg',
+        logo: '/production/screen/blackish-logo.png',
       },
       metas: [
         {

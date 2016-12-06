@@ -10,6 +10,7 @@ import config from '../../../../config'
 import {
   FormattedMessage,
 } from 'react-intl'
+import Q from 'q'
 
 @connect(({Billing, User}) => ({Billing, User}))
 class ModalCoupon extends ModalComponent {
@@ -42,7 +43,10 @@ class ModalCoupon extends ModalComponent {
       }
     } = this
 
-    return await dispatch(BillingActionCreators.couponActivate())
+    return await Q()
+      .then(() => {
+        return dispatch(BillingActionCreators.couponActivate())
+      })
       .then(() => {
         return dispatch(UserActionCreators.getProfile())
       }).then(() => {
@@ -89,7 +93,10 @@ class ModalCoupon extends ModalComponent {
     })
 
     //Validate coupon
-    return await dispatch(BillingActionCreators.couponValidate(formData))
+    return await Q()
+      .then(() => {
+        return dispatch(BillingActionCreators.couponValidate(formData))
+      })
       .then(({
         res:{
           body:{

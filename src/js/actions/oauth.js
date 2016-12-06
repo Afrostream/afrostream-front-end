@@ -11,6 +11,11 @@ export function signin (form) {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
       type: ActionTypes.OAuth.signin,
+      statsd: {
+        method: 'increment',
+        key: 'oauth.signin',
+        value: 1
+      },
       res: await api({path: `/auth/signin`, method: 'POST', params: form})
     })
   }
@@ -21,6 +26,11 @@ export function signup (form) {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
       type: ActionTypes.OAuth.signup,
+      statsd: {
+        method: 'increment',
+        key: 'oauth.signup',
+        value: 1
+      },
       res: await api({path: `/auth/signup`, method: 'POST', params: form})
     })
   }
@@ -31,6 +41,11 @@ export function reset (form) {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
       type: ActionTypes.OAuth.reset,
+      statsd: {
+        method: 'increment',
+        key: 'oauth.reset',
+        value: 1
+      },
       res: await api({
         path: `/auth/reset`,
         method: 'POST',
@@ -286,7 +301,12 @@ export function logOut () {
     })
     actionDispatcher(push('/'))
     return {
-      type: ActionTypes.OAuth.logOut
+      type: ActionTypes.OAuth.logOut,
+      statsd: {
+        method: 'increment',
+        key: 'oauth.logout',
+        value: 1
+      }
     }
   }
 }
