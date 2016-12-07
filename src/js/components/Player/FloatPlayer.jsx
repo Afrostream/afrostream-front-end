@@ -322,21 +322,6 @@ class FloatPlayer extends React.Component {
         initialBitrate: qualityList[playerQuality]
       })
 
-      //YOUBORA PLUGIN (metrics QOS)
-      playerData.dash = _.merge(playerData.dash || {}, {
-        youbora: {
-          username: userId,
-          media: {
-            title: videoSlug,
-            duration: videoData.get('duration'),
-            isLive: isLive
-          },
-          properties: {
-            content_id: videoData.get('_id'),
-          }
-        }
-      })
-
       //Tracking
       const videoTracking = this.getStoredPlayer()
       if (videoTracking) {
@@ -370,7 +355,20 @@ class FloatPlayer extends React.Component {
         contentId: videoSlug
       }
     })
-
+    //YOUBORA PLUGIN (metrics QOS)
+    playerData.dash = _.merge(playerData.dash || {}, {
+      youbora: {
+        username: userId,
+        media: {
+          title: videoSlug,
+          duration: videoData.get('duration'),
+          isLive: isLive
+        },
+        properties: {
+          content_id: videoData.get('_id'),
+        }
+      }
+    })
     return playerData
   }
 
