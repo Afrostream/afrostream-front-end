@@ -424,6 +424,12 @@ const client = {
         'fragmentLoaderRetryAttempts': 3,
         'fragmentLoaderRetryInterval': 1000
       },
+      'youbora': {
+        'accountCode': process.env.YOUBORA_ID || '',
+        'enableAnalytics': true,
+        'httpSecure': true,
+        'transactionCode': 'front'
+      },
       'protData': protData
     },
     'languages': {
@@ -481,12 +487,6 @@ const client = {
         'title': 'Title',
         'subtitle': 'Subtitle'
       }
-    },
-    'youbora': {
-      'accountCode': process.env.YOUBORA_ID || '',
-      'enableAnalytics': true,
-      'httpSecure': true,
-      'transactionCode': 'front'
     },
     'defaultVolume': 0.65,
     'techOrder': ['dash', 'html5', 'dashas', 'youtube', 'soundcloud', 'vimeo', 'spotify', 'deezer']
