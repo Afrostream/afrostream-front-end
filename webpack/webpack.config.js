@@ -48,8 +48,8 @@ const webpackConfig = {
     // Set up an ES6-ish environment
     polyfill: 'babel-polyfill',
     main: './src/js/main',
+    vtt: 'videojs-vtt.js',
     player: [
-      'videojs-vtt.js',
       'dashjs',
       'video.js',
       'koment-js',
