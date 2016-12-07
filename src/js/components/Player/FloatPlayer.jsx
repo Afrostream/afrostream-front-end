@@ -612,7 +612,7 @@ class FloatPlayer extends React.Component {
       playerBitrate: playerBitrate,
       playerPosition: playerPosition
     }
-    //player.youbora.plugin.data.media.bitrate = playerBitrate
+    player.youbora.plugin.data.media.bitrate = playerBitrate
     dispatch(RecoActionCreators.trackVideo(data, videoId))
     this.trackTimeout = setTimeout(::this.trackVideo, 60000)
   }
