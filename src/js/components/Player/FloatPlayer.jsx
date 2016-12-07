@@ -321,6 +321,22 @@ class FloatPlayer extends React.Component {
         bolaEnabled: !playerQuality,
         initialBitrate: qualityList[playerQuality]
       })
+
+      //YOUBORA PLUGIN (metrics QOS)
+      playerData.dash = _.merge(playerData.dash || {}, {
+        youbora: {
+          username: userId,
+          media: {
+            title: videoSlug,
+            duration: videoData.get('duration'),
+            isLive: isLive
+          },
+          properties: {
+            content_id: videoData.get('_id'),
+          }
+        }
+      })
+
       //Tracking
       const videoTracking = this.getStoredPlayer()
       if (videoTracking) {
@@ -352,18 +368,6 @@ class FloatPlayer extends React.Component {
     playerData.streamroot = _.merge(playerData.dash, _.clone(playerData.streamroot), {
       p2pConfig: {
         contentId: videoSlug
-      }
-    })
-
-    playerData.youbora = _.merge(playerData.youbora || {}, {
-      username: userId,
-      media: {
-        title: videoSlug,
-        duration: videoData.get('duration'),
-        isLive: isLive
-      },
-      properties: {
-        content_id: videoData.get('_id'),
       }
     })
 
@@ -454,10 +458,6 @@ class FloatPlayer extends React.Component {
 
     if (featuresFlip.koment && player.tech_.el_) {
       player.koment = await koment(player.tech_.el_)
-    }
-    //youbora data
-    if (player.youbora) {
-      player.youbora(playerData.youbora)
     }
 
     videojs.on(window, 'scroll', ::this.requestTick)
@@ -612,7 +612,7 @@ class FloatPlayer extends React.Component {
       playerBitrate: playerBitrate,
       playerPosition: playerPosition
     }
-    player.youbora.plugin.data.media.bitrate = playerBitrate
+    //player.youbora.plugin.data.media.bitrate = playerBitrate
     dispatch(RecoActionCreators.trackVideo(data, videoId))
     this.trackTimeout = setTimeout(::this.trackVideo, 60000)
   }

@@ -136,23 +136,23 @@ const webpackConfig = {
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
-        test: /video\.js/,
-        loader: 'expose?videojs',
+        test: /video\.js$/,
+        loader: 'expose-loader?videojs',
         include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
         test: /koment-js$/,
-        loader: 'expose?koment',
+        loader: 'expose-loader?koment',
         include: [path.join(node_modules_dir, 'afrostream-player')]
       },
       {
-        test: /jquery\.js$/, loader: 'expose?$'
+        test: /jquery\.js$/, loader: 'expose-loader?$'
       },
       {
-        test: /jquery\.js$/, loader: 'expose?jQuery'
+        test: /jquery\.js$/, loader: 'expose-loader?jQuery'
       },
       {
-        test: /jquery\.js$/, loader: 'expose?jquery'
+        test: /jquery\.js$/, loader: 'expose-loader?jquery'
       }
     ],
     exprContextCritical: false
@@ -161,12 +161,10 @@ const webpackConfig = {
     net: 'empty',
     tls: 'empty',
     dns: 'empty'
-  }
-  ,
+  },
   externals: {
     'window': 'Window'
-  }
-  ,
+  },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       names: ['player', 'vendor'],
