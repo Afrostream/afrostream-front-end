@@ -88,7 +88,6 @@ function initSite (country) {
     }
   )
 
-  debugger
   /* global __INITIAL_STATE__:true */
   const store = createStore(api, history, __INITIAL_STATE__)
 
