@@ -126,7 +126,7 @@
     "pretty-error": "^1.2.0",
     "q": "^1.4.1",
     "qs": "^3.1.0",
-    "raven-js": "^3.8.1",
+    "raven-js": "^3.9.0",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-shallow-compare": "^15.3.2",

@@ -179,17 +179,12 @@ export function fetchUsers (fetchUserId, {limit = 200, startIndex = 0, stopIndex
 
 export function fetchPin (pinId) {
   return (dispatch, getState) => {
-    let readyPin = getState().Life.get(
-      `life/pins/${pinId}`
-    )
+    let readyPin = getState().Life.get(`life/pins/${pinId}`)
     if (readyPin) {
       console.log('Life pin already present in data store')
       return {
         type: ActionTypes.Life.fetchPin,
-        pinId,
-        res: {
-          body: readyPin.toJS()
-        }
+        pinId
       }
     }
     console.log('fetchPin ', pinId)

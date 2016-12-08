@@ -96,6 +96,7 @@ class Breadcrumbs extends React.Component {
           //const initialPath = _.reduce(splittedPath, (start, link)=> {
           //  return start + '/' + link
           //})
+          const pinId = params.pinId
           keyValue = _.map(params, (paramValue, key) => {
             let name = paramValue
             let hasNumber
@@ -119,7 +120,15 @@ class Breadcrumbs extends React.Component {
               case  'episodeId':
                 //case  'episodeSlug':
                 value = store.getState().Episode.get(`episodes/${paramValue}`)
-                hasNumber = value && value.size && value && `E${value.get('episodeNumber')}`
+                hasNumber = value && value.size && `E${value.get('episodeNumber')}`
+                break
+              case  'pinId':
+              case  'pinSlug':
+
+
+                value = store.getState().Life.get(`life/pins/${pinId}`)
+                hasNumber = value && value.size && `${value.get('title')}`
+                console.log(hasNumber)
                 break
               default:
                 break

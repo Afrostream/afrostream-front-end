@@ -54,7 +54,7 @@ class CategorySlider extends MoviesSlider {
       return this.renderBlock(data)
     }
     return (
-      <div className="block" key={`data-block-${columnIndex}`}>{data.map((item)=> {
+      <div className="block" key={`data-block-${columnIndex}`}>{data.map((item) => {
         return this.renderBlock(item)
       }).toJS()}</div>
     )
@@ -84,11 +84,11 @@ class CategorySlider extends MoviesSlider {
       catSlug = category.get('slug')
 
       //check if list has one spot
-      dataList.map((item)=> {
+      dataList.map((item) => {
         if (item instanceof Immutable.Map) {
           return
         }
-        const findSpot = item.find((movie)=> {
+        const findSpot = item.find((movie) => {
           return movie.get('adSpot')
         })
         if (findSpot) {
@@ -102,34 +102,17 @@ class CategorySlider extends MoviesSlider {
         {slug && <div id={slug} className="movies-list__anchor"/>}
         {label && <Link to={`/genre/${categoryId}/${catSlug}`} className="movies-list__selection">{label}</Link>}
         {category && dataList ?
-          <AutoSizer className="slider-container" disableHeight>
+          <AutoSizer disableHeight>
             {({width}) => (
-              <ColumnSizer
-                ref="reactList"
-                cellSizeAndPositionGetter={::this.getRowHeight}
-                columnMaxWidth={240}
-                columnMinWidth={160}
+              <Grid
+                cellRenderer={::this.renderItem}
+                columnWidth={::this.getColumnWidth}
                 columnCount={dataList.size}
-                width={width}>
-                {({adjustedWidth, getColumnWidth, registerChild, columnCount}) => (
-                  <ArrowStepper columnCount={dataList.size}>
-                    {({onScroll, columnCount, scrollLeft}) => (
-                      <Grid
-                        ref={registerChild}
-                        cellRenderer={::this.renderItem}
-                        columnWidth={::this.getColumnWidth}
-                        columnCount={columnCount}
-                        rowHeight={listClass.spots ? 440 : 220}
-                        height={listClass.spots ? 440 : 220}
-                        rowCount={1}
-                        onScroll={onScroll}
-                        scrollLeft={scrollLeft}
-                        width={adjustedWidth}
-                      />
-                    )}
-                  </ArrowStepper>
-                )}
-              </ColumnSizer>
+                rowHeight={listClass.spots ? 440 : 220}
+                height={listClass.spots ? 440 : 220}
+                rowCount={1}
+                width={width}
+              />
             )}
           </AutoSizer>
           : null}

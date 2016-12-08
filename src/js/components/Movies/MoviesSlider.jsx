@@ -191,8 +191,8 @@ class MoviesSlider extends I18n {
           {({width}) => (
             <ColumnSizer
               ref="react-list"
-              columnMaxWidth={210}
-              columnMinWidth={210}
+              columnMaxWidth={240}
+              columnMinWidth={160}
               columnCount={dataList.size}
               width={width}>
               {({adjustedWidth, getColumnWidth, registerChild}) => (

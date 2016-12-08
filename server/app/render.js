@@ -115,12 +115,7 @@ export default function render (req, res, layout, {payload}) {
             </Provider>
           )
 
-          const initialState = _.merge({
-            intl: {
-              locale
-            }
-          }, state)
-
+          const initialState = store.getState()
 
           let metadata = Helmet.rewind()
 
