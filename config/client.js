@@ -109,7 +109,7 @@ const client = {
    */
   externalsJs: [
     '//www.gstatic.com/cv/js/sender/v1/cast_sender.js',
-    '//smartplugin.youbora.com/v5/javascript/videojs5/5.1.3/sp.min.js'
+    '//smartplugin.youbora.com/v5/javascript/dashjs/5.3.2/sp.min.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
   addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#async=1&pubid=ra-583c553b01382bdf@shortener=bitly#bitly.login=afrostream#bitly.apiKey=' + process.env.BITLY_API_KEY,
@@ -424,6 +424,12 @@ const client = {
         'fragmentLoaderRetryAttempts': 3,
         'fragmentLoaderRetryInterval': 1000
       },
+      'youbora': {
+        'accountCode': process.env.YOUBORA_ID || '',
+        'enableAnalytics': true,
+        'httpSecure': true,
+        'transactionCode': 'front'
+      },
       'protData': protData
     },
     'languages': {
@@ -481,12 +487,6 @@ const client = {
         'title': 'Title',
         'subtitle': 'Subtitle'
       }
-    },
-    'youbora': {
-      'accountCode': process.env.YOUBORA_ID || '',
-      'enableAnalytics': true,
-      'httpSecure': true,
-      'transactionCode': 'front'
     },
     'defaultVolume': 0.65,
     'techOrder': ['dash', 'html5', 'dashas', 'youtube', 'soundcloud', 'vimeo', 'spotify', 'deezer']

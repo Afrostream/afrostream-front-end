@@ -300,9 +300,9 @@
       "resolved": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-statsd.git#1e38aa4dc156f1a77bfff03360774a16ea70d84e"
     },
     "afrostream-player": {
-      "version": "2.2.26",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.26",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#24f9ace91f36346eea1fc33b18409ff8a2ccbba8"
+      "version": "2.2.29",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.29",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#8affa59a675955f974e9f5511fb9be4739f99d29"
     },
     "after": {
       "version": "0.8.1"
@@ -1273,7 +1273,7 @@
       "version": "2.1.0"
     },
     "cowsay": {
-      "version": "1.1.8"
+      "version": "1.1.9"
     },
     "cpr": {
       "version": "1.1.2"
@@ -1559,7 +1559,7 @@
       "version": "1.1.1"
     },
     "ejs": {
-      "version": "2.5.3"
+      "version": "2.5.5"
     },
     "ejsify": {
       "version": "1.0.0",
@@ -5082,7 +5082,7 @@
       "version": "2.0.0"
     },
     "streamroot-dashjs-p2p-wrapper": {
-      "version": "1.7.4"
+      "version": "1.8.4"
     },
     "strict-uri-encode": {
       "version": "1.1.0"

@@ -17,6 +17,8 @@ npm run dev
 npm run staging
 ```
 
+Run localhost:3000 in browser 
+
 ##Deploy
 ```
 git push 

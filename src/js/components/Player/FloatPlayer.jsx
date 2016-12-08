@@ -321,6 +321,7 @@ class FloatPlayer extends React.Component {
         bolaEnabled: !playerQuality,
         initialBitrate: qualityList[playerQuality]
       })
+
       //Tracking
       const videoTracking = this.getStoredPlayer()
       if (videoTracking) {
@@ -354,19 +355,20 @@ class FloatPlayer extends React.Component {
         contentId: videoSlug
       }
     })
-
-    playerData.youbora = _.merge(playerData.youbora || {}, {
-      username: userId,
-      media: {
-        title: videoSlug,
-        duration: videoData.get('duration'),
-        isLive: isLive
-      },
-      properties: {
-        content_id: videoData.get('_id'),
+    //YOUBORA PLUGIN (metrics QOS)
+    playerData.dash = _.merge(playerData.dash || {}, {
+      youbora: {
+        username: userId,
+        media: {
+          title: videoSlug,
+          duration: videoData.get('duration'),
+          isLive: isLive
+        },
+        properties: {
+          content_id: videoData.get('_id'),
+        }
       }
     })
-
     return playerData
   }
 
@@ -454,10 +456,6 @@ class FloatPlayer extends React.Component {
 
     if (featuresFlip.koment && player.tech_.el_) {
       player.koment = await koment(player.tech_.el_)
-    }
-    //youbora data
-    if (player.youbora) {
-      player.youbora(playerData.youbora)
     }
 
     videojs.on(window, 'scroll', ::this.requestTick)
