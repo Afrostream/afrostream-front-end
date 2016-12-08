@@ -399,7 +399,10 @@
     "label": "Comment"
   },
   "player": {
-    "watch": "You watch"
+    "watch": "You watch",
+    "koment": {
+      "info": "Commment video now"
+    }
   },
   "recommendation": {
     "noData": "No Recommendations",

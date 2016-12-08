@@ -416,7 +416,10 @@
     "label": "Commenter"
   },
   "player": {
-    "watch": "Vous regardez"
+    "watch": "Vous regardez",
+    "koment": {
+      "info": "Vous pouvez desormais commenter les video"
+    }
   },
   "recommendation": {
     "noData": "Aucune Recommandation",

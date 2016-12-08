@@ -4548,6 +4548,9 @@
         }
       }
     },
+    "serialize-javascript": {
+      "version": "1.3.0"
+    },
     "serve-favicon": {
       "version": "2.3.2"
     },

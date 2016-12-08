@@ -9,7 +9,6 @@ import { detectUA } from './PlayerUtils'
 import window from 'global/window'
 import { isElementInViewPort } from '../../lib/utils'
 import classSet from 'classnames'
-const {featuresFlip} = config
 import { slugify, extractImg } from '../../lib/utils'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
@@ -23,9 +22,12 @@ import * as FacebookActionCreators from '../../actions/facebook'
 import * as PlayerActionCreators from '../../actions/player'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
+import { I18n } from '../Utils'
 import {
-  FormattedMessage,
+  injectIntl
 } from 'react-intl'
+
+const {featuresFlip} = config
 
 if (process.env.BROWSER) {
   require('./FloatPlayer.less')
@@ -46,7 +48,7 @@ if (canUseDOM) {
   User,
   Player
 }))
-class FloatPlayer extends React.Component {
+class FloatPlayer extends I18n {
 
   state = {
     elVisible: false,
@@ -161,7 +163,7 @@ class FloatPlayer extends React.Component {
         komentToggle: {
           attributes: {
             'data-position': 'left',
-            'data-intro': 'Vous pouvez desormais commenter les video'
+            'data-intro': this.getTitle('player.koment.info')
           }
         }
       },
@@ -946,4 +948,4 @@ FloatPlayer.defaultProps = {
   className: '',
   float: true
 }
-export default FloatPlayer
+export default injectIntl(FloatPlayer)

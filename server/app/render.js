@@ -17,6 +17,7 @@ import PrettyError from 'pretty-error'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import Helmet from 'react-helmet'
 import _ from 'lodash'
+import serializeJs from 'serialize-javascript'
 
 const pretty = new PrettyError()
 const {apps, apiServer, heroku} = config
@@ -116,9 +117,8 @@ export default function render (req, res, layout, {payload}) {
             </Provider>
           )
 
-          const initialState = _.merge({
-            intl: {locale}
-          }, state)
+          const storeState = _.merge({intl: {locale}}, store.getState())
+          const initialState = serializeJs(storeState, {isJSON: true})
 
           let metadata = Helmet.rewind()
 
