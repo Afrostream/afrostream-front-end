@@ -380,7 +380,7 @@
       "decriptionLabel": "Description",
       "periodLabel": "Période de service",
       "methodLabel": "Mode de paiement",
-      "statusLabel": "Status",
+      "statusLabel": "Statut",
       "cancelLabel": "Annuler",
       "periods": {
         "year": "An(s)",
