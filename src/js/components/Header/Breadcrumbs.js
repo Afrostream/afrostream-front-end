@@ -123,17 +123,12 @@ class Breadcrumbs extends React.PureComponent {
                 value = store.getState().Episode.get(`episodes/${paramValue}`)
                 hasNumber = value && value.size && value && `E${value.get('episodeNumber')}`
                 break
-              case  'pinId':
-                //case  'life Pin':
-                value = store.getState().Life.get(`life/pins/`)
-                fullTitles.pin = value && value.find(function(pin) {
-                  return pin.get('_id') == paramValue
-                }).get('title')
-                break
               case 'pinSlug':
-                if (!!fullTitles.pin) {
-                  name = fullTitles.pin
-                  fullTitles.pin = null
+                value = store.getState().Life.get(`life/pins/`)
+                if (value) {
+                  name = value && value.find(function(pin) {
+                    return pin.get('_id') == params['pinId']
+                  }).get('title')
                 } else {
                   paramValue = null
                 }
