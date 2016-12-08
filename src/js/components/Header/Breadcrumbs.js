@@ -12,7 +12,7 @@ import React from 'react'
 import _ from 'lodash'
 import { Router, Route, Link } from 'react-router'
 
-class Breadcrumbs extends React.Component {
+class Breadcrumbs extends React.PureComponent {
 
   constructor (props, context) {
     super(props, context)
@@ -90,6 +90,8 @@ class Breadcrumbs extends React.Component {
     let splittedPath = path.split('/')
     splittedPath = _.remove(splittedPath, (path) => !~this.props.excludes.indexOf(path))
     let keyValue
+    // Necessary for Life Pins
+    let fullTitles = {}
     splittedPath.map((link) => {
       if (link.substring(0, 1) == ':') {
         if (params) {
@@ -121,6 +123,16 @@ class Breadcrumbs extends React.Component {
                 value = store.getState().Episode.get(`episodes/${paramValue}`)
                 hasNumber = value && value.size && value && `E${value.get('episodeNumber')}`
                 break
+              case 'pinSlug':
+                value = store.getState().Life.get(`life/pins/`)
+                if (value) {
+                  name = value && value.find(function(pin) {
+                    return pin.get('_id') == params['pinId']
+                  }).get('title')
+                } else {
+                  paramValue = null
+                }
+                break
               default:
                 break
             }
@@ -137,7 +149,6 @@ class Breadcrumbs extends React.Component {
               excluded
             }
           })
-
           keyValue = _.remove(keyValue, (item) => {
             return item && item.value
           })
