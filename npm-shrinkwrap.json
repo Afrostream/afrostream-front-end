@@ -1182,7 +1182,7 @@
       }
     },
     "concurrently": {
-      "version": "0.1.1",
+      "version": "3.1.0",
       "dependencies": {
         "ansi-regex": {
           "version": "0.2.1"
@@ -1199,17 +1199,8 @@
         "commander": {
           "version": "2.6.0"
         },
-        "cross-spawn": {
-          "version": "0.2.9"
-        },
         "has-ansi": {
           "version": "0.1.0"
-        },
-        "lodash": {
-          "version": "3.1.0"
-        },
-        "lru-cache": {
-          "version": "2.7.3"
         },
         "strip-ansi": {
           "version": "0.3.0"
@@ -3746,6 +3737,7 @@
     },
     "pkg-config": {
       "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/pkg-config/-/pkg-config-1.1.1.tgz",
       "dependencies": {
         "find-root": {
           "version": "1.0.0"
@@ -4988,6 +4980,9 @@
     "source-map-support": {
       "version": "0.4.6"
     },
+    "spawn-default-shell": {
+      "version": "1.1.0"
+    },
     "spdx-correct": {
       "version": "1.0.2"
     },
@@ -5292,6 +5287,9 @@
           "version": "1.1.14"
         }
       }
+    },
+    "tree-kill": {
+      "version": "1.1.0"
     },
     "trim": {
       "version": "0.0.1"
