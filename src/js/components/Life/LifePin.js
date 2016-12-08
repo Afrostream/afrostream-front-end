@@ -74,7 +74,7 @@ class LifePin extends ClickablePin {
       width: imageWidth,
       height: imageHeight,
       crop: isFull && index ? 'entropy' : 'faces',
-      fit: 'crop'
+      fit: 'min'
     })
 
     const brickStyle = {

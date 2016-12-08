@@ -13,7 +13,6 @@
     "browser": true
   },
   "rules": {
-    "no-undef": 1,
     "no-debugger": 1,
     "new-parens": 0,
     "no-shadow": 0,

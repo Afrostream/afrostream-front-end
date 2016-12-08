@@ -12,10 +12,10 @@
 
 @keyframes playerMove {
   0% {
-    z-index: @nav-z + 3;
+    z-index: @nav-z + 4;
   }
   100% {
-    z-index: @nav-z + 3;
+    z-index: @nav-z + 4;
     .transform(translate3d(0, 0, 0));
   }
 }
@@ -34,12 +34,12 @@
   // ***
   //padding: 0.5em;
 
-  z-index: @nav-z + 3;
+  z-index: @nav-z + 4;
   .transition(all 0.35s linear);
   //.isNotMobile({ .animation(playerMove 0.35s ease); });
 
   &.unpinned {
-    z-index: @nav-z + 3;
+    z-index: @nav-z + 4;
     .player-container:not(.vjs-fullscreen) {
       font-size: 8px;
       .vjs-remaining-time {

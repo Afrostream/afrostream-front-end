@@ -89,7 +89,7 @@ function initSite (country) {
   )
 
   /* global __INITIAL_STATE__:true */
-  const store = createStore(api, history, __INITIAL_STATE__)
+  const store = createStore(api, history, __INITIAL_STATE__, true)
 
   store.dispatch(UserActionCreators.getProfile())
 

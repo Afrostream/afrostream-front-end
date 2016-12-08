@@ -92,9 +92,10 @@ class Application extends React.Component {
 
   render () {
 
-    const {props: {dispatch, children, Event, Modal, User, intl}} = this
+    const {props: {router, dispatch, children, Event, Modal, User, intl}} = this
+    const isOnLife = router.isActive('life')
     const user = User.get('user')
-    const docked = Boolean(user)
+    const docked = Boolean(user || (canUseDOM && isOnLife))
     const toggled = Event.get('sideBarToggled')
     const snackMessage = Event.get('snackMessage')
     const hasPopup = Modal.get('target')
