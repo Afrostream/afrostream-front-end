@@ -20,6 +20,7 @@ addLocaleData(localesData)
 export default function (api, history, initialState, isClient) {
   /* global __REDUX_DEVTOOLS_EXTENSION_COMPOSE__:true */
   const composeEnhancers = isClient && __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
   const createStoreWithMiddleware = composeEnhancers(
     applyMiddleware(
       //middleWare.statsd.bind(null),

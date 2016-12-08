@@ -1,7 +1,6 @@
 import Q from 'q'
 import _ from 'lodash'
 import { statsd } from '../lib/tracker'
-import analytics from 'redux-analytics';
 
 async function pomisifyStatsd (next, action) {
   return await Q(next(action))
