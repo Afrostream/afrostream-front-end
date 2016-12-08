@@ -118,8 +118,6 @@ export default function render (req, res, layout, {payload}) {
 
           let initialState = state
 
-          console.log(initialState)
-
           let initialLocale = {
             intl: {locale}
           }
