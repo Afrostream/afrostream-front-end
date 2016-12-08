@@ -33,7 +33,8 @@ if (canUseDOM) {
 
 const history = browserHistory
 
-const {intl:{defaultLocale, locale, locales}} = __INITIAL_STATE__
+/* global __INITIAL_LOCALE__:true */
+const {intl:{defaultLocale, locale}} = __INITIAL_LOCALE__
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
 // for these different by checking all of them
@@ -87,9 +88,8 @@ function initSite (country) {
         .send(body)
     }
   )
-
   /* global __INITIAL_STATE__:true */
-  const store = createStore(api, history, __INITIAL_STATE__, true)
+  const store = createStore(api, history, __INITIAL_STATE__)
 
   store.dispatch(UserActionCreators.getProfile())
 

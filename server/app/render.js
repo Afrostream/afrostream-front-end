@@ -17,6 +17,7 @@ import PrettyError from 'pretty-error'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import Helmet from 'react-helmet'
 import _ from 'lodash'
+
 const pretty = new PrettyError()
 const {apps, apiServer, heroku} = config
 
@@ -115,11 +116,13 @@ export default function render (req, res, layout, {payload}) {
             </Provider>
           )
 
-          const initialState = _.merge({
-            intl: {
-              locale
-            }
-          }, store.getState())
+          let initialState = state
+
+          console.log(initialState)
+
+          let initialLocale = {
+            intl: {locale}
+          }
 
           let metadata = Helmet.rewind()
 
@@ -135,7 +138,8 @@ export default function render (req, res, layout, {payload}) {
             share: {
               twitterUrl: 'http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text='
             },
-            initialState
+            initialState,
+            initialLocale
           })
         }
       } catch (err) {

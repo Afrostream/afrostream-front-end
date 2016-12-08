@@ -17,11 +17,9 @@ const localesData = [
 
 addLocaleData(localesData)
 
-export default function (api, history, initialState, isClient) {
-  /* global __REDUX_DEVTOOLS_EXTENSION_COMPOSE__:true */
-  const composeEnhancers = isClient && __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+export default function (api, history, initialState) {
 
-  const createStoreWithMiddleware = composeEnhancers(
+  const createStoreWithMiddleware = compose(
     applyMiddleware(
       //middleWare.statsd.bind(null),
       middleWare.promise.bind(null, api),

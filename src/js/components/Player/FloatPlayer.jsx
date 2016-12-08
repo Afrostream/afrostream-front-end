@@ -131,7 +131,6 @@ class FloatPlayer extends React.Component {
     const movie = Movie.get(`movies/${movieId}`)
     let posterImgObj = {}
     let chromecastOptions = {}
-    let komentData
 
     if (movie) {
       const posterImg = extractImg({
@@ -151,39 +150,37 @@ class FloatPlayer extends React.Component {
           subtitle: movie.get('synopsis')
         }
       }
-      //KOMENT
-      komentData = {
-        open: true,
-        videoId,
-        controlBar: {
-          komentToggle: {
-            attributes: {
-              'data-position': 'left',
-              'data-intro': 'Vous pouvez desormais commenter les video'
-            }
-          }
-        },
-        user: (user && {
-          id: user.get('_id').toString(),
-          provider: config.domain.host,
-          token: token && token.get('access_token'),
-          avatar: user.get('picture')
-        }),
-        languages: _.clone(config.player.languages)
-      }
-
-      if (user && user.get('nickname')) {
-        komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
-      }
-
-      //L'user a choisi de ne pas afficher les comentaires par default
-      if (user && user.get('playerKoment')) {
-        komentData.open = user.get('playerKoment')
-      }
-
-      //videoOptions.komentData = komentData
-
       //END KOMENT
+    }
+
+    //KOMENT
+    let komentData = {
+      open: true,
+      videoId: videoId || videoData.videoId,
+      controlBar: {
+        komentToggle: {
+          attributes: {
+            'data-position': 'left',
+            'data-intro': 'Vous pouvez desormais commenter les video'
+          }
+        }
+      },
+      user: (user && {
+        id: user.get('_id').toString(),
+        provider: config.domain.host,
+        token: token && token.get('access_token'),
+        avatar: user.get('picture')
+      }),
+      languages: _.clone(config.player.languages)
+    }
+
+    if (user && user.get('nickname')) {
+      komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
+    }
+
+    //L'user a choisi de ne pas afficher les comentaires par default
+    if (user && user.get('playerKoment')) {
+      komentData.open = user.get('playerKoment')
     }
 
     await this.generateDomTag(videoOptions, komentData)

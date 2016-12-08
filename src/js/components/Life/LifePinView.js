@@ -123,6 +123,7 @@ class LifePinView extends LifePin {
       dispatch(PlayerActionCreators.loadPlayer({
         data: Immutable.fromJS({
           target,
+          videoId: targetUrl,
           autoplay: true,
           sources: [{
             src: targetUrl,

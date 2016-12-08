@@ -8,6 +8,7 @@ const config = _.merge(
       title: 'AFROSTREAM | Les meilleurs films et séries afro en illimité',
       description: 'Profitez d\'une sélection des meilleurs films & séries afro à regarder en illimité sur tous vos écrans grâce à Afrostream, la première semaine est offerte.',
       shareImage: '/production/poster/2016/03/b8a6db25a04982c88a2b-438302.jpg',
+      defaultImage: '/production/image/2016/12/ba3bbe6e104fa55c10aa-1920x1080.jpg',
       screen: {
         image: '/production/screen/blackish-v2.jpg',
         logo: '/production/screen/blackish-logo-2.png',

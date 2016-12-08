@@ -95,6 +95,8 @@ class Breadcrumbs extends React.PureComponent {
     splittedPath.map((link) => {
       if (link.substring(0, 1) == ':') {
         if (params) {
+
+          const {pinId} =params
           //const initialPath = _.reduce(splittedPath, (start, link)=> {
           //  return start + '/' + link
           //})
@@ -121,17 +123,11 @@ class Breadcrumbs extends React.PureComponent {
               case  'episodeId':
                 //case  'episodeSlug':
                 value = store.getState().Episode.get(`episodes/${paramValue}`)
-                hasNumber = value && value.size && value && `E${value.get('episodeNumber')}`
+                hasNumber = value && value.size && `E${value.get('episodeNumber')}`
                 break
               case 'pinSlug':
-                value = store.getState().Life.get(`life/pins/`)
-                if (value) {
-                  name = value && value.find(function(pin) {
-                    return pin.get('_id') == params['pinId']
-                  }).get('title')
-                } else {
-                  paramValue = null
-                }
+                value = pinId && store.getState().Life.get(`life/pins/${pinId}`)
+                hasNumber = value && value.size && value.get('title')
                 break
               default:
                 break

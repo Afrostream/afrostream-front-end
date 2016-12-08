@@ -408,7 +408,7 @@ export function extractImg ({
   crop = 'entropy'
 }) {
   let thumb
-  let imageUrl = config.metadata.shareImage
+  let imageUrl = config.metadata.defaultImage
   if (data) {
 
     const imageUrlExplicit = data.get('imageUrl')
