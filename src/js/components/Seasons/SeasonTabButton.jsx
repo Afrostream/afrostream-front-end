@@ -6,7 +6,7 @@ import classSet from 'classnames'
 import * as SeasonActionCreators from '../../actions/season'
 import { Link } from '../Utils'
 
-@connect(({Season}) => ({Season}))
+@connect(({Season, Movie}) => ({Season, Movie}))
 class SeasonTabButton extends Component {
 
   static propTypes = {
@@ -18,7 +18,7 @@ class SeasonTabButton extends Component {
   render () {
     const {
       props: {
-        active, index, season,
+        Movie, active, index, season,
         params:{
           movieId,
           movieSlug
@@ -36,10 +36,12 @@ class SeasonTabButton extends Component {
     const seasonNumber = season.get('seasonNumber')
     const shortTitle = season.get('shortTitle')
 
+    const movie = Movie.get(`movies/${movieId}`)
+
     //:movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)
     return (
-      <Link className={classes}
-            to={`/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}`}>{shortTitle ? shortTitle : ('SAISON ' + seasonNumber)}</Link>
+      <Link className={classes} activeClassName="active"
+            to={`/${movieId}/${movieSlug || movie.get('slug')}/${seasonId}/${seasonSlug}`}>{shortTitle ? shortTitle : ('SAISON ' + seasonNumber)}</Link>
     )
   }
 
