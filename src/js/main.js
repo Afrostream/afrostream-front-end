@@ -33,8 +33,8 @@ if (canUseDOM) {
 
 const history = browserHistory
 
-/* global __INITIAL_LOCALE__:true */
-const {intl:{defaultLocale, locale}} = __INITIAL_LOCALE__
+/* global __INITIAL_STATE__:true */
+const {intl:{defaultLocale, locale}} = __INITIAL_STATE__
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
 // for these different by checking all of them

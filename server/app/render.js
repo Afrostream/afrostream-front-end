@@ -116,11 +116,9 @@ export default function render (req, res, layout, {payload}) {
             </Provider>
           )
 
-          let initialState = state
-
-          let initialLocale = {
+          const initialState = _.merge({
             intl: {locale}
-          }
+          }, state)
 
           let metadata = Helmet.rewind()
 
@@ -136,8 +134,7 @@ export default function render (req, res, layout, {payload}) {
             share: {
               twitterUrl: 'http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text='
             },
-            initialState,
-            initialLocale
+            initialState
           })
         }
       } catch (err) {
