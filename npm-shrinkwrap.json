@@ -4322,6 +4322,9 @@
     "react-intl-webpack-plugin": {
       "version": "0.0.3"
     },
+    "react-lazyload": {
+      "version": "2.2.0"
+    },
     "react-list": {
       "version": "0.8.0"
     },
@@ -4385,7 +4388,7 @@
       }
     },
     "react-virtualized": {
-      "version": "7.24.3"
+      "version": "8.7.1"
     },
     "read-all-stream": {
       "version": "3.1.0"
