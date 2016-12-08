@@ -10,9 +10,13 @@
  */
 import React from 'react'
 import _ from 'lodash'
+import { I18n } from '../Utils'
+import {
+  injectIntl,
+} from 'react-intl'
 import { Router, Route, Link } from 'react-router'
 
-class Breadcrumbs extends React.PureComponent {
+class Breadcrumbs extends I18n {
 
   constructor (props, context) {
     super(props, context)
@@ -116,12 +120,12 @@ class Breadcrumbs extends React.PureComponent {
               case  'seasonId':
                 //case  'seasonSlug':
                 value = store.getState().Season.get(`seasons/${paramValue}`)
-                hasNumber = value && value.size && `S${value.get('seasonNumber')}`
-                break
+                hasNumber = value && value.size && this.getTitle('breadcrumbs.seasonLabel', { seasonNumber: value.get('seasonNumber') })
+                console.warn ('season has number', hasNumber)
               case  'episodeId':
                 //case  'episodeSlug':
                 value = store.getState().Episode.get(`episodes/${paramValue}`)
-                hasNumber = value && value.size && value && `E${value.get('episodeNumber')}`
+                hasNumber = value && value.size && this.getTitle('breadcrumbs.episodeLabel', { episodeNumber: value.get('episodeNumber') })
                 break
               case 'pinSlug':
                 value = store.getState().Life.get(`life/pins/`)
@@ -336,4 +340,4 @@ Breadcrumbs.contextTypes = {
   store: React.PropTypes.object.isRequired
 }
 
-module.exports = Breadcrumbs
+module.exports = injectIntl(Breadcrumbs)

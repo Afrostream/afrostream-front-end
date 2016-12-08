@@ -83,4 +83,4 @@ BrowseHistoryPage.propTypes = {
   intl: intlShape.isRequired
 }
 
-export default injectIntl(BrowseHistoryPage)
+export default BrowseHistoryPage

@@ -4,6 +4,9 @@
     "ecmascript": 6,
     "jsx": true
   },
+  "globals": {
+    "window": true
+  },
   "plugins": [
     "react"
   ],
