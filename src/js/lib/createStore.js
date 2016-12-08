@@ -6,7 +6,6 @@ import { push } from 'redux-router'
 import { intlReducer } from 'react-intl-redux'
 import _ from 'lodash'
 import { addLocaleData } from 'react-intl'
-import window from 'global/window'
 
 import frLocaleData from 'react-intl/locale-data/fr'
 import enLocaleData from 'react-intl/locale-data/en'
