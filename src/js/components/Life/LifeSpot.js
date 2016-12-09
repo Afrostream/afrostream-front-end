@@ -4,12 +4,24 @@ import { extractImg } from '../../lib/utils'
 import { Link } from '../Utils'
 import Immutable from 'immutable'
 import ClickablePin from './ClickablePin'
+import * as LifeActionCreators from '../../actions/life'
 
 @connect(({Life, User}) => ({Life, User}))
 class LifeSpot extends ClickablePin {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  clickHandlerPin (e, data) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    dispatch(LifeActionCreators.spotClick(data.get('_id')))
+    super.clickHandlerPin(e, data)
   }
 
   render () {

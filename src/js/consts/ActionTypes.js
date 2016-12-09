@@ -134,6 +134,7 @@ export default {
   }),
 
   Life: keyMirror({
+    spotClick: null,
     removePin: null,
     publishPin: null,
     wrappPin: null,

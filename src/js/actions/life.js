@@ -177,6 +177,21 @@ export function fetchUsers (fetchUserId, {limit = 200, startIndex = 0, stopIndex
   }
 }
 
+export function spotClick (spotId) {
+  return async api => ({
+    type: ActionTypes.Life.spotClick,
+    spotId,
+    meta: {
+      analytics: {
+        type: 'life.spot.click',
+        payload: {
+          spotId
+        }
+      }
+    }
+  })
+}
+
 export function fetchPin (pinId) {
   return (dispatch, getState) => {
     let readyPin = getState().Life.get(

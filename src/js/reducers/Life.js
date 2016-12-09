@@ -96,5 +96,9 @@ export default createReducer(initialState, {
     return state.merge({
       [`life/users/${lifeUserId}`]: data
     })
+  },
+
+  [ActionTypes.Life.spotClick](state, {spotId}) {
+    return state
   }
 })
