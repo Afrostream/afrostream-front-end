@@ -24,7 +24,8 @@ import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
 import { I18n } from '../Utils'
 import {
-  injectIntl
+  injectIntl,
+  FormattedMessage
 } from 'react-intl'
 
 const {featuresFlip} = config
@@ -113,6 +114,8 @@ class FloatPlayer extends I18n {
     if (nextProps.location.pathname !== this.props.location.pathname) {
       this.updatePlayerPosition()
     }
+
+    this.props.User.get('user') && !nextProps.User.get('user') && this.destroyPlayer();
   }
 
   async getPlayerData (videoData) {

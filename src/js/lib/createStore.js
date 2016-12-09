@@ -6,6 +6,7 @@ import { push } from 'redux-router'
 import { intlReducer } from 'react-intl-redux'
 import _ from 'lodash'
 import { addLocaleData } from 'react-intl'
+import window from 'global/window'
 
 import frLocaleData from 'react-intl/locale-data/fr'
 import enLocaleData from 'react-intl/locale-data/en'
@@ -19,7 +20,8 @@ addLocaleData(localesData)
 
 export default function (api, history, initialState) {
 
-  const createStoreWithMiddleware = compose(
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
+  const createStoreWithMiddleware = composeEnhancers(
     applyMiddleware(
       //middleWare.statsd.bind(null),
       middleWare.promise.bind(null, api),
