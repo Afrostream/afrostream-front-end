@@ -93,8 +93,6 @@ export default function render (req, res, layout, {payload}) {
 
           params.lang = locale
 
-          console.log('preferredLocale : ', language, preferredLocale, locale)
-
           const prepareRouteMethods = _.map(renderProps.components, component =>
           component && component.prepareRoute)
 
