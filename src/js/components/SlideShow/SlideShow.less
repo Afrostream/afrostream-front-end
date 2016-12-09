@@ -5,37 +5,22 @@
   background-color: @background-color-base;
   .fullHeight();
   padding: @header-height 0 0 0;
-  max-height: 76vh;
-
-  .slick-slider {
-    position: relative;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    .slick-arrow {
-      display: none;
-    }
-    .slick-list {
-      position: relative;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-    }
-    .slick-track {
-      position: relative;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-    }
-
-  }
 
   .movie {
     position: relative;
+    display: inline-block;
+    min-height: 66vh;
     .fullHeight();
+    .btn-play {
+      //font-size: 5em;
+      //top: 35%;
+      display: none;
+    }
+    .movie-info_content {
+      display: inline-block;
+      position: absolute;
+    }
+
     .rsr-container {
       .rsr__star {
         height: 20px !important;
@@ -44,6 +29,7 @@
     .billboard-infos {
       vertical-align: bottom;
       margin-bottom: 50px;
+      max-width: 85%;
     }
   }
 
@@ -150,10 +136,11 @@
       left: @app-padding-mobile;
     }
     .movie {
-      .btn-play {
-        left: 70%;
-        top: 35%;
-        .isLandscape({ left: 70%; top: 50%; });
+      .billboard-infos {
+        .isLandscape({ margin-top: @app-padding-mobile; .billboard-synopsis {
+          display: none;
+        } });
+
       }
     }
   }
@@ -161,15 +148,18 @@
 
 @media @mobile {
   .slide-show {
-    min-height: inherit;
+
     .movie {
-      //min-height: 46vh;
-      min-height: inherit;
-      &.serie {
-        min-height: inherit;
+      min-height: 46vh;
+
+      .billboard-infos {
+        .isLandscape({ margin-top: @app-padding-mobile; .billboard-synopsis {
+          display: none;
+        } });
+
       }
+
     }
-    .isLandscape({ min-height: 70vh; });
 
     .pagination {
       right: 0;
@@ -181,11 +171,6 @@
     }
 
     .movie {
-      .btn-play {
-        //font-size: 5em;
-        //top: 35%;
-        display: none;
-      }
       .movie-background {
         position: absolute;
         top: 0;

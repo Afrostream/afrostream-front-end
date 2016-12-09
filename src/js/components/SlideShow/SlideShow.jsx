@@ -46,7 +46,7 @@ class SlideShow extends React.Component {
       infinite: this.props.infinite,
       autoplaySpeed: this.props.autoplaySpeed,
       speed: 500,
-      adaptiveHeight: false,
+      adaptiveHeight: true,
       vertical: false,
       arrows: false,
       dotsClass: 'pager'
