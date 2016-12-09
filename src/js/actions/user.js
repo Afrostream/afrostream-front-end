@@ -41,28 +41,29 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 
   //GEOLOC
 
-  user.authorized = true
-  try {
-    user.authorized = await isAuthorized()
-  } catch (err) {
-    console.error('Error requesting /auth/geo ', err)
-  }
-
-  //if (!authorized) {
-  //  dispatch(ModalActionCreators.open({target: 'geoWall'}))
-  //  throw new Error('User not authorized Geoloc /auth/geo ')
-  //}
-
   //MERGE USER DATA
   let subscriptionsStatus = user.subscriptionsStatus
   let status = subscriptionsStatus && subscriptionsStatus.status
   user.status = status
   user.user_id = user._id || user.user_id
   user.splashList = user.splashList || []
+  user.authorized = true
   user = mergeFbUserInfo(user)
   dispatch(FBActionCreators.getFriendList())
-
   let planCode = user.planCode
+  try {
+    user.authorized = await isAuthorized()
+  } catch (err) {
+    console.error('Error requesting /auth/geo ', err)
+  }
+  //Si l'user est geobloqué, on regarde si il a un plan en cours,
+  //si c'est le cas on lui laisse l'acces au site
+  if (!user.authorized) {
+    user.authorized = planCode && user.status === 'active'
+    //  dispatch(ModalActionCreators.open({target: 'geoWall'}))
+    //  throw new Error('User not authorized Geoloc /auth/geo ')
+  }
+
   if (!planCode && !donePath) {
     if (user.status && user.status !== 'active') {
       donePath = `/select-plan/none/${user.status}`
