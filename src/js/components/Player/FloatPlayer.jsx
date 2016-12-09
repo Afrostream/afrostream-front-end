@@ -115,7 +115,7 @@ class FloatPlayer extends I18n {
       this.updatePlayerPosition()
     }
 
-    this.props.User.get('user') && !nextProps.User.get('user') && this.destroyPlayer();
+    this.props.User.get('user') && !nextProps.User.get('user') && this.destroyPlayer()
   }
 
   async getPlayerData (videoData) {
