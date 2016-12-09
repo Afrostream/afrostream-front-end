@@ -119,7 +119,7 @@ export default function render (req, res, layout, {payload}) {
 
           const storeState = _.merge({intl: {locale}}, store.getState())
           const initialState = serializeJs(storeState, {isJSON: true})
-          console.log('initialState', initialState)
+
           let metadata = Helmet.rewind()
 
           return res.render(layout, {
