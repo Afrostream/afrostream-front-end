@@ -38,7 +38,6 @@
     color: #FFFFFF;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     .card-info {
-      padding: 1.5em 0 1.5em 0;
       font-size: 2.6em;
       &:after {
         content: none;
@@ -83,7 +82,37 @@
     margin: 0 auto;
     padding: @gap-brick
   }
+  //HOVER EFFECT only descktop
+  .isNotMobile({ .brick {
+    &:not(:first-of-type) {
+      &:hover {
+        .pin-btn {
+          visibility: visible;
+          opacity: 1;
+          background-color: fade(@color-black-2, 30%);
+        }
 
+        .brick-background {
+
+          .brick-background_mask {
+            background-color: fade(@color-black-2, 30%);
+          }
+
+          .premium-flag {
+            .premium-flag__header-label {
+              width: 100%;
+            }
+          }
+        }
+        .card-sub-info {
+          opacity: 1;
+          visibility: visible;
+          .transform(translateY(0));
+        }
+      }
+    }
+  } });
+  //END HOVER
   .brick {
 
     display: inline-block;
@@ -99,35 +128,6 @@
     //ZOOM effect
     -webkit-transform-style: preserve-3d;
     -webkit-perspective: 1000;
-
-    &:hover {
-      .pin-btn {
-        visibility: visible;
-        opacity: 1;
-        background-color: fade(@color-black-2, 30%);
-      }
-
-      //HOVER EFFECT
-      .brick-background {
-
-        .brick-background_mask {
-          background-color: fade(@color-black-2, 30%);
-        }
-
-        .premium-flag {
-          .premium-flag__header-label {
-            width: 100%;
-          }
-        }
-      }
-
-      .card-sub-info {
-        opacity: 1;
-        visibility: visible;
-        .transform(translateY(0));
-      }
-    }
-    //END HOVER
 
     .pin-btn {
       .fullHeight();
@@ -259,10 +259,16 @@
       }
     }
 
+    &:first-of-type {
+      .card-body {
+        vertical-align: middle;
+      }
+    }
+
     .card-body,
     .card-sub-info {
       position: relative;
-      vertical-align: middle;
+      vertical-align: bottom;
       display: inline-block;
       color: @color-black-2;
       width: 100%;
@@ -437,6 +443,7 @@
     }
 
   }
+
   .brick {
     .isMobile({ width: 100%; max-width: 100%; });
   }
