@@ -15,7 +15,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { getCountry } from './lib/geo'
 import * as UserActionCreators from './actions/user'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-
+import { deserialize } from './lib/utils'
 import { getI18n } from '../../config/i18n'
 
 
@@ -32,9 +32,9 @@ if (canUseDOM) {
 }
 
 const history = browserHistory
-
 /* global __INITIAL_STATE__:true */
-const {intl:{defaultLocale, locale}} = __INITIAL_STATE__
+const state = deserialize(__INITIAL_STATE__)
+const {intl:{defaultLocale, locale}} = state
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
 // for these different by checking all of them
@@ -89,7 +89,7 @@ function initSite (country) {
     }
   )
   /* global __INITIAL_STATE__:true */
-  const store = createStore(api, history, __INITIAL_STATE__)
+  const store = createStore(api, history, state)
 
   store.dispatch(UserActionCreators.getProfile())
 

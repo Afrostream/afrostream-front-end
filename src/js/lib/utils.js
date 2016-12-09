@@ -397,6 +397,10 @@ export function getOffset (el) {
   }
 }
 
+export function deserialize (serializedJavascript) {
+  return eval('(' + serializedJavascript + ')')
+}
+
 export function extractImg ({
   data,
   key,
