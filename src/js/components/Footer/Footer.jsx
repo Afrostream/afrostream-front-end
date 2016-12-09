@@ -133,11 +133,11 @@ class Footer extends React.Component {
                               id={ 'footer.pro.title' }/>
 
             <ul className="footer-links">
-              <li>
+              {/*<li>
                 <Link className="footer-link" to="/company/jobs">
                   <FormattedMessage id={ 'footer.pro.jobs' }/>
                 </Link>
-              </li>
+              </li>*/}
               <li>
                 <Link className="footer-link" to="/submit-content">
                   <FormattedMessage id={ 'footer.pro.submit' }/>
@@ -149,11 +149,11 @@ class Footer extends React.Component {
                   <FormattedMessage id={ 'footer.pro.press' }/>
                 </a>
               </li>
-              <li>
+              {/*<li>
                 <Link className="footer-link" to="/company/press">
                   <FormattedMessage id={ 'footer.pro.mediaKit' }/>
                 </Link>
-              </li>
+              </li>*/}
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2 hidden-xs">
