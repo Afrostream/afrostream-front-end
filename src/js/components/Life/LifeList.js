@@ -34,14 +34,12 @@ class LifeList extends Component {
     //const listSize = (pinsList.size + Math.min(Math.round(pinsList.size / this.props.moduloSpots), spotList.size))
     let mergedList = pinsList
     pinsList.forEach((spot, index) => {
-      const canInsertSpot = this.canInsertSpot(spotList, index)
-      if (canInsertSpot) {
-        const randIndex = _.random(0, spotList.size - 1)
-        const spot = spotList.get(randIndex)
+      const spotIndex = this.canInsertSpot(spotList, index)
+      if (spotIndex) {
+        const spot = spotList.get(spotIndex - 1)
         mergedList = mergedList.insert(index, spot)
       }
     })
-
     return mergedList
   }
 
@@ -69,8 +67,10 @@ class LifeList extends Component {
   canInsertSpot (spotList, index) {
     const firstPage = Number(index <= this.props.moduloSpots)
     const listIndex = index + 1
-    const hasMaxSpots = ((listIndex / this.props.moduloSpots) >= spotList.size)
-    return spotList && !((listIndex + firstPage) % this.props.moduloSpots) && !hasMaxSpots
+    const spotIndex = Math.round(listIndex / this.props.moduloSpots)
+    const hasMaxSpots = (spotIndex > spotList.size)
+
+    return spotList && !((listIndex + firstPage) % this.props.moduloSpots) && !hasMaxSpots && spotIndex
   }
 
   renderInfiniteItem (index, key) {
