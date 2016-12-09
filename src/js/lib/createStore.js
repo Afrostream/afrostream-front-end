@@ -11,22 +11,16 @@ import window from 'global/window'
 import frLocaleData from 'react-intl/locale-data/fr'
 import enLocaleData from 'react-intl/locale-data/en'
 
+
 const localesData = [
   ...frLocaleData,
   ...enLocaleData,
 ]
 
 addLocaleData(localesData)
-
 export default function (api, history, initialState) {
 
-  let composeEnhancers
-  if (process.env.NODE_ENV === 'production') {
-    composeEnhancers = compose
-  } else {
-    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
-  }
-   
+  const composeEnhancers = process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
   const createStoreWithMiddleware = composeEnhancers(
     applyMiddleware(
       //middleWare.statsd.bind(null),
