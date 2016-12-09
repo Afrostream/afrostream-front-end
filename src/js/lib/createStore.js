@@ -20,8 +20,6 @@ const localesData = [
 addLocaleData(localesData)
 export default function (api, history, initialState) {
 
-  console.log('nodeENV', process.env.NODE_ENV)
-
   const composeEnhancers = process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
   const createStoreWithMiddleware = composeEnhancers(
     applyMiddleware(
