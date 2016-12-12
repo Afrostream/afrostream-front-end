@@ -15,7 +15,7 @@ class Link extends React.Component {
   }
 
   isInternal (toLocation) {
-    return !toLocation.host
+    return !toLocation.host && toLocation.href && !~toLocation.href.indexOf('mailto')
   }
 
   render () {

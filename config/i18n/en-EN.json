@@ -246,29 +246,14 @@
       "link": "mailto:support@afrostream.tv",
       "linkMessage": "If you have any questions, please contact our technical support.",
       "message": "More than a final step. Upon receipt of your payment, we will give you access to all movies and series in unlimited.",
-      "links": [
-        {
-          "label": "Choose another payment method",
-          "target": "/select-plan"
-        }
-      ]
+      "links": "<a href='/en/select-plan'>Choose another payment method</a>"
     },
     "expired": {
       "title": "Your subscription has expired",
       "link": "mailto:support@afrostream.tv",
       "linkMessage": "If you have any questions, please contact our technical support.",
-      "message": "",
-      "links": [
-        {
-          "label": "You can resubscribe at any time by going here",
-          "target": "/select-plan"
-        },
-        {
-          "label": "You can also pay with a builder! click here",
-          "image": "/images/payment/cashway-inline.png",
-          "target": "/cash"
-        }
-      ]
+      "message": "You can join us at any time",
+      "links": "<a href='/en/select-plan'>You can resubscribe at any time by going here</a><a href='/en/cash'>You can also pay with a builder! click here<img src='/images/payment/cashway-inline.png' /></a>"
     },
     "cashway": {
       "recupCode": "Retrieve your barcode (sent by mail) or",
