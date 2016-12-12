@@ -48,7 +48,7 @@ class CountDown extends I18n {
 
   _formatTime(time, debug) {
       const timeString = '' + time
-      if (String(timeString).length === 1) {
+      if (timeString.length === 1) {
           return '0' + timeString
       }
       return timeString
