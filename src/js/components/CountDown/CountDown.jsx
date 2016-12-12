@@ -99,7 +99,7 @@ CountDown.propTypes = {
     interval: React.PropTypes.number,
     // Position of the children content, at the 'top' of the countdown or at the 'bottom', defaults to 'bottom'
     contentPosition: React.PropTypes.oneOf(['top', 'bottom']),
-    // Date and hour of the incoming event, formatted for Date.parse() : "YYYY-MM-DD HH:MM"
+    // Date and hour of the incoming event, formatted for Date.parse() : "YYYY-MM-DD HH:MM [GMT]"
     eventTime: React.PropTypes.string.isRequired,
     // Supplementary optional text displayed in the countdown when it attains 0
     eventAvailableText: React.PropTypes.string
