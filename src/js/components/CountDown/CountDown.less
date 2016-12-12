@@ -1,0 +1,41 @@
+@import (reference) '../../../styles/config.less';
+
+.countdown-content {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.countdown-timer {
+    font-size: 40px;
+    text-align: center;
+    // border: 1px solid @color-black-2;
+    background-color: @plan-blue-color;
+    color: white;
+    padding-top: 24px;
+    padding-bottom: 34px;
+    margin-bottom: 40px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
+
+    .countdown-number-row, .countdown-text-row {
+        display: flex;
+
+        span {
+            flex: 1;
+        }
+    }
+
+    .countdown-number-row {
+        font-size: 68px;
+    }
+
+    .countdown-text-row {
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    .event-available-text {
+        margin-top: 24px;
+        font-size: 28px;
+    }
+}

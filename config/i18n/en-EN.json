@@ -189,6 +189,12 @@
     "episodeLabel": "Episode {episodeNumber}",
     "seasonLabel": "Season {seasonNumber}"
   },
+  "countdown": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
   "thumb": {
     "episodeLabel": "Episode {episodeNumber} - {title}",
     "seasonLabel": "Season {seasonNumber} - {title}"

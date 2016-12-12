@@ -8,6 +8,7 @@ import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
+import CountDown from '../CountDown/CountDown'
 import { I18n } from '../Utils'
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
@@ -317,6 +318,16 @@ class SelectPlan extends I18n {
 
     return (
       <div className="plan-container">
+
+        <CountDown 
+          eventTime="2017-01-01"
+          eventAvailableText="Bravo !!! C'est le moment !!"
+          contentPosition="bottom"
+        >
+          <h2>Contenu supplémentaire du de test pour CountDown</h2>
+          <p>mettez ici ce que vous voulez : {this.getTitle(`planCodes.actionMobile`)}</p>
+
+        </CountDown>
 
         {this.getHeader()}
 
