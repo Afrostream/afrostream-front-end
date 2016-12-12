@@ -617,7 +617,7 @@
       }
     },
     "metas": {
-      "title": "{themes} Afrostream Life {defaultTitle}",
+      "title": "{themes} {defaultTitle} Afrostream Life",
       "description": "The social media for black creativity"
     }
   },

@@ -77,7 +77,7 @@ export default () => {
               if (data) {
                 themesList = data.get(themes)
                 defaultDescription = data.get('description') || defaultDescription
-                defaultTitle = '| ' + (data.get('title') || defaultTitle)
+                defaultTitle = `${(data.get('title') || defaultTitle)} |`
                 metas.type = 'article'
               }
             }
