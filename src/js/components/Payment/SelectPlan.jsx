@@ -319,15 +319,15 @@ class SelectPlan extends I18n {
     return (
       <div className="plan-container">
 
-        <CountDown 
+        {/* TODO: Faire l'indegration finale liée a la config une fois les infos supplémentaires recues'*/}
+        {/*<CountDown 
           eventTime="2017-01-01"
           eventAvailableText="Bravo !!! C'est le moment !!"
-          contentPosition="bottom"
         >
           <h2>Contenu supplémentaire du de test pour CountDown</h2>
           <p>mettez ici ce que vous voulez : {this.getTitle(`planCodes.actionMobile`)}</p>
 
-        </CountDown>
+        </CountDown>*/}
 
         {this.getHeader()}
 

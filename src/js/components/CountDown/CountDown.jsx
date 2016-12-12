@@ -107,7 +107,7 @@ CountDown.propTypes = {
 
 CountDown.defaultProps = {
     interval: 1000,
-    contentPosition: 'bottom'
+    contentPosition: 'top'
 }
 
 export default injectIntl(CountDown)
