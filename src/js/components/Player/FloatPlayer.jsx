@@ -176,7 +176,7 @@ class FloatPlayer extends I18n {
         token: token && token.get('access_token'),
         avatar: user.get('picture')
       }),
-      languages: _.clone(config.player.languages)
+      languages: config.player.languages
     }
 
     if (user && user.get('nickname')) {
