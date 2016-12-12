@@ -9,17 +9,23 @@
  *
  */
 import React from 'react'
+import { connect } from 'react-redux'
+import { I18n } from '../Utils'
+import {
+  injectIntl,
+} from 'react-intl'
 import _ from 'lodash'
 import { Router, Route, Link } from 'react-router'
 
-class Breadcrumbs extends React.PureComponent {
+@connect(({Life, Movie, Season, Episode}) => ({Life, Movie, Season, Episode}))
+class Breadcrumbs extends I18n {
 
   constructor (props, context) {
     super(props, context)
   }
 
   _getDisplayName (route) {
-    const {props:{intl}} =this
+    const { props: {intl} } = this
 
     let name = null
 
@@ -65,7 +71,12 @@ class Breadcrumbs extends React.PureComponent {
 
   _processRoute (route, createElement, makeLink) {
     const {
-      context: {store}
+      props: {
+        Life,
+        Movie,
+        Season,
+        Episode
+      }
     } = this
 
     //if there is no route path defined and we are set to hide these then do so
@@ -96,7 +107,7 @@ class Breadcrumbs extends React.PureComponent {
       if (link.substring(0, 1) == ':') {
         if (params) {
 
-          const {pinId} =params
+          const {pinId, lifeUserId} =params
           //const initialPath = _.reduce(splittedPath, (start, link)=> {
           //  return start + '/' + link
           //})
@@ -107,27 +118,27 @@ class Breadcrumbs extends React.PureComponent {
             switch (key) {
               case  'movieId':
                 //case  'movieSlug':
-                value = store.getState().Movie.get(`movies/${paramValue}`)
-                hasNumber = value && value.size && `${value.get('title')}`
+                hasNumber = Movie && Movie.getIn([`movies/${paramValue}`, 'title'], false)
                 break
               case  'themeId':
                 //case  'themeSlug':
-                value = store.getState().Life.get(`themes/${paramValue}`)
-                hasNumber = value && value.size && `${value.get('label')}`
+                hasNumber = Life && Life.getIn([`themes/${paramValue}`, 'label'], false)
                 break
               case  'seasonId':
                 //case  'seasonSlug':
-                value = store.getState().Season.get(`seasons/${paramValue}`)
-                hasNumber = value && value.size && `S${value.get('seasonNumber')}`
+                value = Season && Season.getIn([`seasons/${paramValue}`, 'seasonNumber'], false)
+                hasNumber = value && this.getTitle('breadcrumbs.seasonLabel', { seasonNumber: value })
                 break
               case  'episodeId':
                 //case  'episodeSlug':
-                value = store.getState().Episode.get(`episodes/${paramValue}`)
-                hasNumber = value && value.size && `E${value.get('episodeNumber')}`
+                value = Episode && Episode.getIn([`episodes/${paramValue}`, 'episodeNumber'], false)
+                hasNumber = value && this.getTitle('breadcrumbs.episodeLabel', { episodeNumber: value })
                 break
               case 'pinSlug':
-                value = pinId && store.getState().Life.get(`life/pins/${pinId}`)
-                hasNumber = value && value.size && value.get('title')
+                hasNumber = Life && Life.getIn([`life/pins/${pinId}`, 'title'], false)
+                break
+              case 'lifeUserName':
+                hasNumber = Life && Life.getIn([`life/users/${lifeUserId}`, 'nickname'], false)
                 break
               default:
                 break
@@ -136,7 +147,7 @@ class Breadcrumbs extends React.PureComponent {
               name = hasNumber
             }
 
-            const excluded = Boolean(this.props.excludes.some(item => item === key) /*|| _.isMatch(this.props.excludes, key)*/ || !paramValue || parseInt(name))
+            const excluded = Boolean(this.props.excludes.some(item => item === key) || hasNumber === false || !paramValue || parseInt(name))
 
             return {
               key,
@@ -332,4 +343,4 @@ Breadcrumbs.contextTypes = {
   store: React.PropTypes.object.isRequired
 }
 
-module.exports = Breadcrumbs
+module.exports = injectIntl(Breadcrumbs)

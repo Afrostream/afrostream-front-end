@@ -201,6 +201,10 @@
   "search": {
     "noData": "La recherche n'a trouvé aucun resultat"
   },
+  "breadcrumbs": {
+    "episodeLabel": "Épisode {episodeNumber}",
+    "seasonLabel": "Saison {seasonNumber}"
+  },
   "thumb": {
     "episodeLabel": "Épisode {episodeNumber} - {title}",
     "seasonLabel": "Saison {seasonNumber} - {title}"
