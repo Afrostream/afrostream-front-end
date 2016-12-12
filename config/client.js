@@ -118,6 +118,12 @@ const client = {
   gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
   stripeApi: '//js.stripe.com/v2/',
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
+  wecatchupApi: {
+    url: '//www.wecashup.cloud/temp/2-form/js/MobileMoney.js',
+    attributes: {
+      'data-receiver-uid': 'bzmSSCP8WqUMDDH4sPb2w8hB14F2'
+    }
+  },
   promoCodes: [
     //{
     //  code: 'AFROLOVER',

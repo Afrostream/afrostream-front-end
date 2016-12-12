@@ -257,7 +257,7 @@ class PaymentForm extends I18n {
             id="subscribe"
             type="submit"
             form="subscription-create"
-            className="button-create-subscription pull-right"
+            className="button-create-subscription pull-right wecashup_button"
             disabled={this.state.disabledForm}>
             {this.getTitle(buttonLabel)}
           </button>
@@ -624,5 +624,5 @@ PaymentForm.propTypes = {
 }
 
 export default  scriptLoader(
-  [stripeApi, recurlyApi, gocarlessApi, braintreeApi]
+  [stripeApi, recurlyApi, gocarlessApi, braintreeApi, wecatchupApi]
 )(withRouter(injectIntl(PaymentForm)))

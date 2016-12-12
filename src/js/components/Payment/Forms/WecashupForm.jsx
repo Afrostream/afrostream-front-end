@@ -54,6 +54,21 @@ class WecashupForm extends CouponForm {
         <h5 className="col-md-12">
           {this.getTitle('payment.mobile.text', {submitBtn: this.getTitle('planCodes.actionMobile')}) }
         </h5>
+        <script async src="https://www.wecashup.cloud/temp/2-form/js/MobileMoney.js" class="wecashup_button"
+                data-receiver-uid="YOUR_merchant_uid"
+                data-receiver-public-key="YOUR_MERCHANT_PUBLIC_KEY"
+                data-transaction-receiver-total-amount="TOTAL_AMOUNT_OF_THE_TRANSACTION"
+                data-transaction-receiver-currency="CURRENCY_OF_THE_MERCHANT"
+                data-name="NAME_OF_YOUR_APPLICATION"
+                data-transaction-receiver-reference="MERCHANT_TRANSACTION_REFERENCE"
+                data-transaction-sender-reference="CUSTOMER_TRANSACTION_REFERENCE"
+                data-style="1"
+                data-image="https://www.wecashup.cloud/temp/2-form/img/home.png"
+                data-cash="true"
+                data-telecom="true"
+                data-m-wallet="false"
+                data-split="false">
+        </script>
       </div>
     )
   }
