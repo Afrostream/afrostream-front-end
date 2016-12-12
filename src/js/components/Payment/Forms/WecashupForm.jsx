@@ -1,16 +1,70 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
+import Immutable from'immutable'
 import classSet from 'classnames'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import _ from 'lodash'
 import CouponForm from './CouponForm'
+import config from '../../../../../config'
+import { addRemoveEvent } from '../../../lib/utils'
+import { startLoadingScripts } from '../../../lib/script-loader'
+const {
+  wecashupApi
+} = config
 
 class WecashupForm extends CouponForm {
 
   constructor (props, context) {
     super(props, context)
     this.state = {
-      hasLib: true
+      hasLib: false
     }
+  }
+
+  componentDidMount () {
+    super.componentDidMount()
+
+    const {props:{plan}} =this
+
+    if (this.state.isScriptLoadSucceed || this.state.isScriptPending) {
+      return
+    }
+
+    this.setState({
+      isScriptPending: true
+    })
+
+    startLoadingScripts([_.merge(wecashupApi, {
+      attributes: {
+        'data-transaction-receiver-total-amount': (plan.get('amountInCents') / 100).toFixed(2),
+        'data-transaction-receiver-currency': plan.get('currency'),
+        'data-transaction-sender-reference': plan.get('internalPlanUuid')
+      }
+    })], err => {
+      this.setState({
+        isScriptPending: false,
+        isScriptLoaded: true,
+        hasLib: true,
+        isScriptLoadSucceed: !err
+      })
+
+      const paymentMethod = document.querySelectorAll(`.${wecashupApi.attributes.class}`)
+      if (paymentMethod && paymentMethod.length > 1) {
+        const buttonEl = paymentMethod[1]
+        buttonEl.classList.add('pull-right')
+        debugger
+        addRemoveEvent('click', buttonEl, true, ::this.onClickHandler)
+      }
+    })
+  }
+
+  onClickHandler (e) {
+    debugger
+    e.stopImmediatePropagation()
+    e.preventDefault()
+    let event = new CustomEvent('submit', {})
+    e.target.dispatchEvent(event)
+
   }
 
   static propTypes = {
@@ -41,7 +95,7 @@ class WecashupForm extends CouponForm {
   onHeaderClick () {
     let clickHeader = ReactDOM.findDOMNode(this)
     if (clickHeader) {
-      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'netsize', bubbles: true}))
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'wecatchup', bubbles: true}))
     }
   }
 
@@ -49,26 +103,11 @@ class WecashupForm extends CouponForm {
     if (!this.props.selected) return
     return (
 
-      <div className="row" ref="netsizeForm">
+      <div className="row">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {this.getTitle('payment.mobile.text', {submitBtn: this.getTitle('planCodes.actionMobile')}) }
         </h5>
-        <script async src="https://www.wecashup.cloud/temp/2-form/js/MobileMoney.js" class="wecashup_button"
-                data-receiver-uid="YOUR_merchant_uid"
-                data-receiver-public-key="YOUR_MERCHANT_PUBLIC_KEY"
-                data-transaction-receiver-total-amount="TOTAL_AMOUNT_OF_THE_TRANSACTION"
-                data-transaction-receiver-currency="CURRENCY_OF_THE_MERCHANT"
-                data-name="NAME_OF_YOUR_APPLICATION"
-                data-transaction-receiver-reference="MERCHANT_TRANSACTION_REFERENCE"
-                data-transaction-sender-reference="CUSTOMER_TRANSACTION_REFERENCE"
-                data-style="1"
-                data-image="https://www.wecashup.cloud/temp/2-form/img/home.png"
-                data-cash="true"
-                data-telecom="true"
-                data-m-wallet="false"
-                data-split="false">
-        </script>
       </div>
     )
   }
@@ -102,6 +141,12 @@ class WecashupForm extends CouponForm {
       </div>
     )
   }
+}
+
+WecashupForm.propTypes = {
+  plan: PropTypes.instanceOf(Immutable.Map),
+  planCode: React.PropTypes.string,
+  planLabel: React.PropTypes.string
 }
 
 export default WecashupForm

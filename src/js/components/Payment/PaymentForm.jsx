@@ -35,8 +35,7 @@ const {
   gocarlessApi,
   recurlyApi,
   stripeApi,
-  braintreeApi,
-  wecatchupApi
+  braintreeApi
 } = config
 
 if (process.env.BROWSER) {
@@ -224,12 +223,12 @@ class PaymentForm extends I18n {
     const {
       props: {
         dispatch,
-        history,
-        params:{
-          lang
-        }
+        history
       }
     } = this
+
+    const {methodForm} = this.refs
+
     const currentPlan = this.hasPlan()
 
     if (!currentPlan) {
@@ -260,14 +259,14 @@ class PaymentForm extends I18n {
 
     return (<div className="row">
         <div className="col-md-12">
-          <button
+          {methodForm && methodForm.method !== methodForm.WECASHUP && <button
             id="subscribe"
             type="submit"
             form="subscription-create"
             className="button-create-subscription pull-right wecashup_button"
             disabled={this.state.disabledForm}>
             {this.getTitle(buttonLabel)}
-          </button>
+          </button>}
           <button
             className="button-cancel-subscription pull-right"
             {...inputChangeAction}>
@@ -635,7 +634,6 @@ export default  scriptLoader(
     stripeApi,
     recurlyApi,
     gocarlessApi,
-    braintreeApi,
-    wecatchupApi
+    braintreeApi
   ]
 )(withRouter(injectIntl(PaymentForm)))

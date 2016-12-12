@@ -2,7 +2,15 @@ import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
 import Immutable from 'immutable'
 import config from '../../../../config'
-import { RecurlyForm, GocardlessForm, CashwayForm, StripeForm, BraintreeForm, NetsizeForm } from './Forms'
+import {
+  RecurlyForm,
+  GocardlessForm,
+  CashwayForm,
+  StripeForm,
+  BraintreeForm,
+  NetsizeForm,
+  WecashupForm
+} from './Forms'
 
 const {payment} = config
 
@@ -16,7 +24,8 @@ const Methods = {
   RECURLY: 'recurly',
   STRIPE: 'stripe',
   PAYPAL: 'paypal',
-  CASHWAY: 'cashway'
+  CASHWAY: 'cashway',
+  WECASHUP: 'wecashup'
 }
 
 class PaymentMethod extends React.Component {
@@ -51,29 +60,6 @@ class PaymentMethod extends React.Component {
     }
 
     return plan && providers && providers.size && providerDefault
-  }
-
-  hasLib () {
-    switch (this.state.method) {
-      case  Methods.NETSIZE:
-        return this.refs.netsize.hasLib()
-        break
-      case  Methods.GOCARDLESS:
-        return this.refs.gocardless.hasLib()
-        break
-      case  Methods.STRIPE:
-        return this.refs.stripe.hasLib()
-        break
-      case  Methods.RECURLY:
-        return this.refs.recurly.hasLib()
-        break
-      case  Methods.PAYPAL:
-        return this.refs.paypal.hasLib()
-
-      case  Methods.CASHWAY:
-        return this.refs.cashway.hasLib()
-        break
-    }
   }
 
   method () {
@@ -119,6 +105,9 @@ class PaymentMethod extends React.Component {
       case  Methods.CASHWAY:
         return await this.refs.cashway.submit(billingInfo, currentPlan)
         break
+      case  Methods.WECASHUP:
+        return await this.refs.wecashup.submit(billingInfo, currentPlan)
+        break
     }
   }
 
@@ -157,7 +146,10 @@ class PaymentMethod extends React.Component {
                              selected={this.state.method === Methods.CASHWAY}/>),
       gocardless: (<GocardlessForm key="method-gocardless" ref="gocardless" provider="gocardless"
                                    {...this.props}
-                                   selected={this.state.method === Methods.GOCARDLESS}/>)
+                                   selected={this.state.method === Methods.GOCARDLESS}/>),
+      wecashup: (<WecashupForm key="method-wecashup" ref="wecashup" provider="wecashup"
+                               {...this.props}
+                               selected={this.state.method === Methods.WECASHUP}/>)
     }
 
     if (plan) {
