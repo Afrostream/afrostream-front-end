@@ -65,36 +65,36 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   }
 
   if (!planCode && !donePath) {
-    if (user.status && user.status !== 'active') {
-      donePath = `/select-plan/none/${user.status}`
-    } else {
-      //get InternalPlan
-      await dispatch(BillingActionCreators.getInternalplans({
-        contextBillingUuid: 'common',
-        passToken: true,
-        reload: true,
-        userId: user._id
-      })).then(({res: {body = []}}) => {
+    //if (user.status && user.status !== 'active') {
+    //  donePath = `/select-plan/none/${user.status}`
+    //} else {
+    //get InternalPlan
+    await dispatch(BillingActionCreators.getInternalplans({
+      contextBillingUuid: 'common',
+      passToken: true,
+      reload: true,
+      userId: user._id
+    })).then(({res: {body = []}}) => {
 
-        if (body) {
+      if (body) {
 
-          let firstPlan = _.find(body, (plan) => {
-            let planUuid = plan.internalPlanUuid
-            return planUuid === config.netsize.internalPlanUuid
-          })
+        let firstPlan = _.find(body, (plan) => {
+          let planUuid = plan.internalPlanUuid
+          return planUuid === config.netsize.internalPlanUuid
+        })
 
-          if (!firstPlan && config.featuresFlip.redirectAllPlans) {
-            firstPlan = _.head(body)
-          }
-
-          if (firstPlan) {
-            donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
-          }
-
-          return donePath
+        if (!firstPlan && config.featuresFlip.redirectAllPlans) {
+          firstPlan = _.head(body)
         }
-      })
-    }
+
+        if (firstPlan) {
+          donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
+        }
+
+        return donePath
+      }
+    })
+    //}
   }
 
   if (donePath) {

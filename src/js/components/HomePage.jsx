@@ -36,7 +36,7 @@ class HomePage extends React.Component {
       let subscriptionsStatus = user.get('subscriptionsStatus')
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null
       let langRoute = `${locale && locale !== defaultLocale && ('/' + locale) || ''}`
-      const noRedirectRoute = router.isActive(`${langRoute}/compte`) || router.isActive(`${langRoute}/life`)
+      const noRedirectRoute = router.isActive(`${langRoute}/compte`) || router.isActive(`${langRoute}/life`) || router.isActive(`${langRoute}/select-plan`)
       if (!planCode && !noRedirectRoute) {
         let donePath = `${langRoute}${isCash ? '/cash' : ''}/select-plan`
         if (status && status !== 'active') {
