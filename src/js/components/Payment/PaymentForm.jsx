@@ -31,7 +31,14 @@ import {
   injectIntl
 } from 'react-intl'
 
-const {gocarlessApi, recurlyApi, stripeApi, braintreeApi} = config
+const {
+  gocarlessApi,
+  recurlyApi,
+  stripeApi,
+  braintreeApi,
+  wecatchupApi
+} = config
+
 if (process.env.BROWSER) {
   require('./PaymentForm.less')
 }
@@ -624,5 +631,11 @@ PaymentForm.propTypes = {
 }
 
 export default  scriptLoader(
-  [stripeApi, recurlyApi, gocarlessApi, braintreeApi, wecatchupApi]
+  [
+    stripeApi,
+    recurlyApi,
+    gocarlessApi,
+    braintreeApi,
+    wecatchupApi
+  ]
 )(withRouter(injectIntl(PaymentForm)))
