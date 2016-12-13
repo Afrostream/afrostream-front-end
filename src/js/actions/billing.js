@@ -259,7 +259,7 @@ export function getInternalplans ({
         isMobile = agent.mobile()
       }
       //ONLY for common context,not cashway
-      if (contextBillingUuid === 'common' && isMobile && checkMobile) {
+      if (contextBillingUuid === 'common' && isMobile && checkMobile && !forcedInternalPlanUuid) {
         forcedInternalPlanUuid = config.netsize.internalPlanUuid
       }
       //Get internalplan from params
