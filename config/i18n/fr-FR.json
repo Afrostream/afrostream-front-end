@@ -253,6 +253,10 @@
       "label": "Payer via votre facture téléphonique",
       "text": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Mobile"
     },
+    "wecashup": {
+      "label": "Payer via Mobile Money Ⓡ",
+      "text": "Pour finaliser la souscription, cliquer sur le bouton \"Payer via Mobile Money Ⓡ \"."
+    },
     "paypal": {
       "label": "Paiement par Paypal",
       "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Paypal"

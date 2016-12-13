@@ -237,6 +237,10 @@
       "label": "Payment by phone",
       "text": "To complete the subscription, click the \"{submitBtn} \" button and use your Mobile account"
     },
+    "wecashup": {
+      "label": "Payer by Mobile Money Ⓡ",
+      "text": "To complete the subscription, click the \"Payer by Mobile Money Ⓡ \"."
+    },
     "paypal": {
       "label": "Payment by Paypal",
       "paypalText": "To finalize the subscription, click the \"{submitBtn} \" button and use your Paypal account"
