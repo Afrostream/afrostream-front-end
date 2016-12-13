@@ -217,8 +217,6 @@ class SelectPlan extends I18n {
       onClick: event => {
         //get InternalPlan
         dispatch(BillingActionCreators.getInternalplans({
-          contextBillingUuid: 'common',
-          passToken: true,
           reload: true,
           checkMobile: false
         }))
