@@ -253,14 +253,16 @@ export function getInternalplans ({
     return async api => {
       let isMobile = false
       let forcedInternalPlanUuid = internalPlanUuid !== 'none' && internalPlanUuid
+      let forcedContextBillingUuid = contextBillingUuid
       if (canUseDOM) {
         const userAgent = (window.navigator && navigator.userAgent) || ''
         let agent = new MobileDetect(userAgent)
         isMobile = agent.mobile()
       }
-      //ONLY for common context,not cashway
-      if (contextBillingUuid === 'common' && isMobile && checkMobile && !forcedInternalPlanUuid) {
-        forcedInternalPlanUuid = config.netsize.internalPlanUuid
+      //ONLY for common && mobile devices context,not cashway
+      if (forcedContextBillingUuid === 'common' && isMobile && checkMobile && !forcedInternalPlanUuid) {
+        //forcedInternalPlanUuid = config.netsize.internalPlanUuid
+        forcedContextBillingUuid = 'mobile'
       }
       //Get internalplan from params
       if (forcedInternalPlanUuid) {
@@ -286,17 +288,17 @@ export function getInternalplans ({
       })
 
       let params = {
-        contextBillingUuid,
-        country
+        contextBillingUuid: forcedContextBillingUuid,
+        country,
+        contextCountry: country
       }
       //ONLY for common context,not cashway
-      if (contextBillingUuid === 'common') {
+      if (forcedContextBillingUuid === 'common') {
         const user = getState().User.get('user')
         const filterUserReferenceUuid = user && user.get('_id') || userId
         if (filterUserReferenceUuid) {
           try {
-            country = await
-              getCountry()
+            country = await getCountry()
           } catch (err) {
             console.error('getInternalplans error requesting /auth/geo ', err)
           }
