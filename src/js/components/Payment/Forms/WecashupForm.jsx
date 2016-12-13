@@ -1,16 +1,112 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from'react-dom'
+import Immutable from'immutable'
 import classSet from 'classnames'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import _ from 'lodash'
 import CouponForm from './CouponForm'
+import config from '../../../../../config'
+import { addRemoveEvent } from '../../../lib/utils'
+import { startLoadingScripts } from '../../../lib/script-loader'
+const {
+  wecashupApi
+} = config
 
 class WecashupForm extends CouponForm {
 
   constructor (props, context) {
     super(props, context)
     this.state = {
-      hasLib: true
+      hasLib: false
     }
+  }
+
+  checkSubmitBtnInterval () {
+    try {
+      const wcashupClass = `.${wecashupApi.attributes.class}`
+      const wcatchupBtnClass = `${wcashupClass.replace('_', '-')}.valid`
+      const submitBtns = document.querySelectorAll(wcashupClass)
+      if (submitBtns && submitBtns.length > 1) {
+        const buttonElSubmit = submitBtns[0]
+        let buttonWCUPEl = document.querySelector(wcatchupBtnClass)
+        if (!buttonWCUPEl || !buttonWCUPEl.parentNode) {
+          return
+        }
+        console.log('element find', buttonWCUPEl)
+        clearInterval(this.wecashupBtnCheckInterval)
+        let cloneButtonEl = buttonWCUPEl.cloneNode(true)
+        cloneButtonEl.setAttribute('type', 'submit')
+        //let cloneButtonEl = buttonWCUPEl
+        buttonWCUPEl.parentNode.removeChild(buttonWCUPEl)
+        cloneButtonEl = buttonElSubmit.parentNode.insertBefore(cloneButtonEl, buttonElSubmit.nextSibling)
+        buttonElSubmit.classList.add('hidden')
+        cloneButtonEl.classList.add('pull-right')
+        //cloneButtonEl.disabled = true
+        addRemoveEvent('click', cloneButtonEl, true, ::this.onClickHandler)
+      }
+    } catch (err) {
+      clearInterval(this.wecashupBtnCheckInterval)
+      throw  err
+    }
+  }
+
+  componentDidMount () {
+    super.componentDidMount()
+
+    const {props:{plan}} =this
+
+    if (this.state.isScriptLoadSucceed || this.state.isScriptPending) {
+      return
+    }
+
+    this.setState({
+      isScriptPending: true
+    })
+
+    startLoadingScripts([_.merge(wecashupApi, {
+      attributes: {
+        'data-transaction-receiver-total-amount': (plan.get('amountInCents') / 100).toFixed(2),
+        'data-transaction-receiver-currency': plan.get('currency'),
+        'data-transaction-sender-reference': plan.get('internalPlanUuid')
+      }
+    })], err => {
+      this.setState({
+        isScriptPending: false,
+        isScriptLoaded: true,
+        hasLib: true,
+        isScriptLoadSucceed: !err
+      })
+
+      if (err) {
+        throw err
+      }
+      this.wecashupBtnCheckInterval = setInterval(() => {
+        this.checkSubmitBtnInterval()
+      }, 200)
+
+    })
+  }
+
+  onClickHandler (e) {
+
+    const {props :{form}} =this
+    const isFormValid = form && form.checkValidity()
+    if (!isFormValid) {
+      let event = document.createEvent('CustomEvent')
+      event.initCustomEvent('submit', true, true, {})
+      form.dispatchEvent(event)
+      console.log('payment form not valid')
+      e.preventDefault()
+    }
+    //e.stopImmediatePropagation()
+    //const submitBtns = document.querySelectorAll(`.${wecashupApi.attributes.class}`)
+    //if (submitBtns && submitBtns.length > 1) {
+    //  const buttonEl = submitBtns[1]
+    //  let event = document.createEvent('CustomEvent')
+    //  event.initCustomEvent('click', true, true, {})
+    //  buttonEl.dispatchEvent(event)
+    //}
+
   }
 
   static propTypes = {
@@ -25,15 +121,14 @@ class WecashupForm extends CouponForm {
     const {
       props:{provider}
     }=this
-
     return await new Promise(
       (resolve) => {
-        return resolve({
-          internalPlanUuid: billingInfo.internalPlanUuid,
-          currency: currentPlan.get('currency'),
-          amount: currentPlan.get('amount'),
-          billingProviderName: provider
-        })
+        //return resolve({
+        //  internalPlanUuid: billingInfo.internalPlanUuid,
+        //  currency: currentPlan.get('currency'),
+        //  amount: currentPlan.get('amount'),
+        //  billingProviderName: provider
+        //})
       }
     )
   }
@@ -41,7 +136,7 @@ class WecashupForm extends CouponForm {
   onHeaderClick () {
     let clickHeader = ReactDOM.findDOMNode(this)
     if (clickHeader) {
-      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'netsize', bubbles: true}))
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'wecatchup', bubbles: true}))
     }
   }
 
@@ -49,7 +144,7 @@ class WecashupForm extends CouponForm {
     if (!this.props.selected) return
     return (
 
-      <div className="row" ref="netsizeForm">
+      <div className="row">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {this.getTitle('payment.mobile.text', {submitBtn: this.getTitle('planCodes.actionMobile')}) }
@@ -87,6 +182,12 @@ class WecashupForm extends CouponForm {
       </div>
     )
   }
+}
+
+WecashupForm.propTypes = {
+  plan: PropTypes.instanceOf(Immutable.Map),
+  planCode: React.PropTypes.string,
+  planLabel: React.PropTypes.string
 }
 
 export default WecashupForm

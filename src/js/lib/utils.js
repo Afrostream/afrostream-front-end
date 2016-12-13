@@ -240,12 +240,15 @@ export const isFunction = val => typeof val === 'function'
 export const noop = _ => {
 }
 
-export const newScript = (src) => (cb) => {
+export const newScript = (src, att = [], targetEl = document.body) => (cb) => {
   const script = document.createElement('script')
   script.src = src
+  _.forEach(att, (value, key) => {
+    script.setAttribute(key, value)
+  })
   script.addEventListener('load', () => cb(null, src))
   script.addEventListener('error', () => cb(true, src))
-  document.body.appendChild(script)
+  targetEl.appendChild(script)
   return script
 }
 
@@ -444,4 +447,25 @@ export function extractImg ({
 
   return imageUrl
 
+}
+
+
+export function hasEvent (elm, type) {
+  var ev = elm.dataset.events
+  if (!ev) return false
+
+  return (new RegExp(type)).test(ev)
+}
+
+export function addRemoveEvent (type, element, add = true, method) {
+  if (!element.dataset.events) element.dataset.events = ''
+  const has = hasEvent(element, type)
+
+  if ((add && has) || (!add && !has)) {
+    return
+  }
+
+  if (add) element.dataset.events += ',' + type
+  else element.dataset.events = element.dataset.events.replace(new RegExp(type), '')
+  element[`${add ? 'add' : 'remove'}EventListener`](type, method)
 }

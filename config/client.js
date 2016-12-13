@@ -118,6 +118,22 @@ const client = {
   gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
   stripeApi: '//js.stripe.com/v2/',
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
+  wecashupApi: {
+    url: '//www.wecashup.cloud/temp/2-form/js/MobileMoney.js',
+    attributes: {
+      'class': 'wecashup_button',
+      'async': true,
+      'data-receiver-uid': process.env.NODE_ENV !== 'production' ? 'bzmSSCP8WqUMDDH4sPb2w8hB14F2' : 'nZpRMzyIg2Tgh7o2nIK2heGkfVB2',
+      'data-receiver-public-key': process.env.NODE_ENV !== 'production' ? 'NoZ7voE0KDRSBnxaB7oqcGdWQnrLVxAZm9NLiEIMyYvq' : 'SM3xFy5l31t9HD5XuosCfNuhZvNNhEQHNexLu4VjPtu3',
+      'data-name': 'afrostream',
+      'data-style': 1,
+      'data-image': '//www.wecashup.cloud/temp/2-form/img/home.png',
+      'data-cash': true,
+      'data-telecom': true,
+      'data-m-wallet': false,
+      'data-split': true
+    }
+  },
   promoCodes: [
     //{
     //  code: 'AFROLOVER',
