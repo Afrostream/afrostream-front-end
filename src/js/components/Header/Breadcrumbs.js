@@ -108,7 +108,7 @@ class Breadcrumbs extends I18n {
       if (link.substring(0, 1) == ':') {
         if (params) {
 
-          const {pinId, themeId, episodeId, seasonId, movieId, lifeUserId} =params
+          const {pinId, themeId, episodeId, seasonId, movieId, lifeUserId} = params
           //const initialPath = _.reduce(splittedPath, (start, link)=> {
           //  return start + '/' + link
           //})
@@ -198,7 +198,7 @@ class Breadcrumbs extends I18n {
     if (elements.length) {
       return _.map(elements, (path, key) => {
         var itemClass = this.props.itemClass
-        if (key < elements.length - 1 || path.link === '/') {
+        if (makeLink || route.childRoutes && route.childRoutes.length || key < elements.length - 1) {
           var link = !createElement ? path.link :
             React.createElement(Link, {
               to: path.link || path,
