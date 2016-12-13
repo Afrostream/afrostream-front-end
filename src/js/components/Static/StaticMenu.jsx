@@ -4,6 +4,9 @@ import { withRouter } from 'react-router'
 import classSet from 'classnames'
 import window from 'global/window'
 import { I18n } from '../Utils'
+import {
+  injectIntl,
+} from 'react-intl'
 class StaticMenu extends I18n {
 
 
@@ -81,7 +84,7 @@ class StaticMenu extends I18n {
       }
     } = this
 
-    let pressMenu = this.getTitle('menu')
+    let pressMenu = this.getTitleAsObject('press.menu')
     let mapKeys = Object.keys(pressMenu)
     let keys = _.map(mapKeys, (value, key)=> {
       const data = pressMenu[value]
@@ -106,7 +109,7 @@ class StaticMenu extends I18n {
         <div id="nav-anchor"></div>
         <nav>
           <ul className="company-menu-list" role="tablist">
-            {this.renderLink()}
+            {::this.renderLink()}
           </ul>
         </nav>
       </div>
@@ -119,4 +122,4 @@ StaticMenu.propTypes = {
   location: React.PropTypes.object.isRequired
 }
 
-export default withRouter(StaticMenu)
+export default injectIntl(withRouter(StaticMenu))
