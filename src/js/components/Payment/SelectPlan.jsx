@@ -316,18 +316,24 @@ class SelectPlan extends I18n {
       )
     }
 
+    // const {
+    //   internalPlansCountDownDateFrom,
+    //   internalPlansCountDownDateTo,
+    //   intenalPlansTitleText,
+    //   intenalPlansDescriptionText
+    // } = config.internalPlansCountDown
+
     return (
       <div className="plan-container">
 
         {/* TODO: Faire l'indegration finale liée a la config une fois les infos supplémentaires recues'*/}
-        {/*<CountDown 
+        <CountDown 
           eventTime="2017-01-01"
           eventAvailableText="Bravo !!! C'est le moment !!"
         >
-          <h2>Contenu supplémentaire du de test pour CountDown</h2>
-          <p>mettez ici ce que vous voulez : {this.getTitle(`planCodes.actionMobile`)}</p>
+          <img src="https://placekitten.com/800/300" />
 
-        </CountDown>*/}
+        </CountDown>
 
         {this.getHeader()}
 

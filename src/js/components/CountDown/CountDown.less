@@ -1,40 +1,78 @@
 @import (reference) '../../../styles/config.less';
 
-.countdown-content {
-    margin-top: 24px;
-    margin-bottom: 24px;
-    text-align: center;
-}
+.countdown-wrapper {
+   margin-bottom: 24px;
+   text-align: center;
+   box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
+   margin-bottom: 24px;
 
-.countdown-timer {
-    font-size: 40px;
-    text-align: center;
-    background-color: @subscriber-color;
-    color: white;
-    padding-top: 24px;
-    padding-bottom: 34px;
-    margin-bottom: 40px;
-    box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
-
-    .countdown-number-row, .countdown-text-row {
-        display: flex;
-
-        span {
-            flex: 1;
+   .countdown-content {
+        img {
+            width: 100%;
         }
     }
 
-    .countdown-number-row {
-        font-size: 68px;
-    }
+    .countdown-timer {
+        font-size: 40px;
+        
+        background-color: @subscriber-color;
+        color: white;
+        padding-top: 24px;
+        padding-bottom: 24px;
+        
 
-    .countdown-text-row {
-        font-size: 16px;
-        text-transform: uppercase;
-    }
+        .countdown-number-row, .countdown-text-row {
+            display: flex;
+            align-items: baseline;
+            flex-flow: row-wrap;
 
-    .event-available-text {
-        margin-top: 24px;
-        font-size: 28px;
+            span {
+                flex: 1;
+            }
+        }
+
+        .countdown-number-row {
+            font-size: 24px;
+
+            .countdown-text-unit {
+                font-size: 16px;
+                text-transform: uppercase;
+
+                &.countdown-prez {
+                    flex: 3;
+                }
+            }
+        }
+
+        .countdown-text-row {
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .event-available-text {
+            margin-top: 24px;
+            font-size: 28px;
+        }
     }
+}
+
+@media @desktop {
+    .countdown-wrapper {
+        .countdown-timer {
+            font-size: 18px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+
+            .countdown-number-row {
+                font-size: 18px;
+
+                .countdown-text-unit {
+                    &.countdown-prez {
+                        flex: 4;
+                    }
+                }
+            }
+        }
+    }
+    
 }

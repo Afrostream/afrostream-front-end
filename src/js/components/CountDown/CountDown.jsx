@@ -65,21 +65,23 @@ class CountDown extends I18n {
 
   _renderCountDown({ days, hours, minutes, seconds }, children) {
       return(
-          <div>
+          <div className="countdown-wrapper">
             {this.props.contentPosition === 'top' && <div className="countdown-content">{children}</div>}
             <div className="countdown-timer">
                 <div className="countdown-number-row">
-                    <span>{days}</span>
-                    <span>{hours}</span>
-                    <span>{minutes}</span>
-                    <span>{seconds}</span>
+                    <span className="countdown-text-unit countdown-prez">{this.props.beforeText}</span>
+                    <span>{days} <span className="countdown-text-unit">{this.getTitle('countdown.days')}</span></span>
+                    <span>{hours} <span className="countdown-text-unit">{this.getTitle('countdown.hours')}</span></span>
+                    <span>{minutes} <span className="countdown-text-unit">{this.getTitle('countdown.minutes')}</span></span>
+                    <span>{seconds} <span className="countdown-text-unit">{this.getTitle('countdown.seconds')}</span></span>
+                    <span className="countdown-text-unit countdown-prez">{this.props.afterText}</span>
                 </div>
-                <div className="countdown-text-row">
+                {/*<div className="countdown-text-row">
                     <span>{this.getTitle('countdown.days')}</span>
                     <span>{this.getTitle('countdown.hours')}</span>
                     <span>{this.getTitle('countdown.minutes')}</span>
                     <span>{this.getTitle('countdown.seconds')}</span>
-                </div>
+                </div>*/}
                 {this.state.eventAvailableText && <div className="event-available-text">
                     {this.state.eventAvailableText}
                 </div>}
@@ -107,7 +109,9 @@ CountDown.propTypes = {
 
 CountDown.defaultProps = {
     interval: 1000,
-    contentPosition: 'top'
+    contentPosition: 'bottom',
+    beforeText: 'Plus que',
+    afterText: 'pour en profiter'
 }
 
 export default injectIntl(CountDown)

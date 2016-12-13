@@ -72,6 +72,7 @@ class Breadcrumbs extends I18n {
   _processRoute (route, createElement, makeLink) {
     const {
       props: {
+        excludes,
         Life,
         Movie,
         Season,
@@ -93,7 +94,7 @@ class Breadcrumbs extends I18n {
         link: route.path
       })
     }
-    const params = this.props.params
+    const { params }  = this.props
     // Replace route param with real param (if provided)
     let path = route.path
     path = path.replace(/\(/g, '')
@@ -107,7 +108,7 @@ class Breadcrumbs extends I18n {
       if (link.substring(0, 1) == ':') {
         if (params) {
 
-          const {pinId, lifeUserId} =params
+          const {pinId, themeId, episodeId, seasonId, movieId, lifeUserId} =params
           //const initialPath = _.reduce(splittedPath, (start, link)=> {
           //  return start + '/' + link
           //})
@@ -116,22 +117,23 @@ class Breadcrumbs extends I18n {
             let hasNumber
             let value
             switch (key) {
-              case  'movieId':
-                //case  'movieSlug':
-                hasNumber = Movie && Movie.getIn([`movies/${paramValue}`, 'title'], false)
+              //case  'movieId':
+              case  'movieSlug':
+                hasNumber = Movie && Movie.getIn([`movies/${movieId}`, 'title'], false)
                 break
-              case  'themeId':
-                //case  'themeSlug':
-                hasNumber = Life && Life.getIn([`themes/${paramValue}`, 'label'], false)
+              //case  'themeId':
+              case  'themeSlug':
+                hasNumber = Life && Life.getIn([`themes/${themeId}`, 'label'], false)
                 break
-              case  'seasonId':
-                //case  'seasonSlug':
-                value = Season && Season.getIn([`seasons/${paramValue}`, 'seasonNumber'], false)
+              //case  'seasonId':
+              case  'seasonSlug':
+                value = Season && Season.getIn([`seasons/${seasonId}`, 'seasonNumber'], false)
                 hasNumber = value && this.getTitle('breadcrumbs.seasonLabel', { seasonNumber: value })
+                //paramValue = 
                 break
-              case  'episodeId':
-                //case  'episodeSlug':
-                value = Episode && Episode.getIn([`episodes/${paramValue}`, 'episodeNumber'], false)
+              //case  'episodeId':
+              case  'episodeSlug':
+                value = Episode && Episode.getIn([`episodes/${episodeId}`, 'episodeNumber'], false)
                 hasNumber = value && this.getTitle('breadcrumbs.episodeLabel', { episodeNumber: value })
                 break
               case 'pinSlug':
@@ -147,7 +149,7 @@ class Breadcrumbs extends I18n {
               name = hasNumber
             }
 
-            const excluded = Boolean(this.props.excludes.some(item => item === key) || hasNumber === false || !paramValue || parseInt(name))
+            const excluded = Boolean(this.props.excludes.some(item => item === key) || hasNumber === false || !paramValue )
 
             return {
               key,
@@ -179,7 +181,7 @@ class Breadcrumbs extends I18n {
               return subLink += `/${item.value}`
             })
             let name = path
-            if (keyValue && keyValue.length && path.substring(0, 1) == ':') {
+            if (!excludes.includes(path.substr(1)) && keyValue && keyValue.length && path.substring(0, 1) == ':') {
               const kV = keyValue.shift()
               return {name: kV.name || name, link: subLink}
             }
@@ -196,7 +198,7 @@ class Breadcrumbs extends I18n {
     if (elements.length) {
       return _.map(elements, (path, key) => {
         var itemClass = this.props.itemClass
-        if (makeLink || route.childRoutes && route.childRoutes.length || key < elements.length - 1) {
+        if (key < elements.length - 1 || path.link === '/') {
           var link = !createElement ? path.link :
             React.createElement(Link, {
               to: path.link || path,

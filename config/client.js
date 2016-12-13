@@ -167,6 +167,12 @@ const client = {
   netsize: {
     internalPlanUuid: 'nsafrostreammonthly'
   },
+  internalPlansCountDown: {
+    internalPlansCountDownDateFrom: '',
+    internalPlansCountDownDateTo: '',
+    intenalPlansTitleText: '',
+    intenalPlansDescriptionText: ''
+  },
   sentry: {
     dns: process.env.SENTRY_DSN || '',
     config: {}
@@ -489,7 +495,7 @@ const client = {
       }
     },
     'defaultVolume': 0.65,
-    'techOrder': ['dash', 'html5', 'dashas', 'youtube', 'soundcloud', 'vimeo', 'spotify', 'deezer']
+    'techOrder': ['dash', 'html5', 'dashas', 'youtube', 'soundcloud', 'vimeo', 'spotify', 'deezer'],
   }
 }
 
