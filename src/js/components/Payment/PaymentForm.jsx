@@ -194,7 +194,8 @@ class PaymentForm extends I18n {
                 autoComplete="given-name"
                 name="first-name"
                 defaultValue={firstName}
-                floatingLabelText={this.getTitle('payment.name')} required
+                floatingLabelText={this.getTitle('payment.name')}
+                required
                 disabled={this.state.disabledForm}/>
             </div>
             <div className="col-md-6">
@@ -259,8 +260,7 @@ class PaymentForm extends I18n {
 
     return (<div className="row">
         <div className="col-md-12">
-          {methodForm && methodForm.method !== methodForm.WECASHUP && <button
-            id="subscribe"
+          {methodForm && methodForm.method() !== methodForm.WECASHUP && <button
             type="submit"
             form="subscription-create"
             className="button-create-subscription pull-right wecashup_button"
@@ -355,8 +355,9 @@ class PaymentForm extends I18n {
     } = this
 
     e.preventDefault()
+    this.disableForm(false)
 
-    const {droits, cgu, firstName, lastName, methodForm} = this.refs
+    const {droits, cgu, firstName, lastName, methodForm, form} = this.refs
     const self = this
     const user = User.get('user')
     const currentPlan = this.hasPlan()
@@ -388,16 +389,29 @@ class PaymentForm extends I18n {
           error: null
         })
 
-        this.disableForm(true)
+
+        const isFormValid = form && form.checkValidity()
+        if (!isFormValid) {
+          let errorEl
+          _.forEach(form.elements, (element) => {
+            const elementValid = element.checkValidity()
+            if (!elementValid) {
+              //element.setCustomValidity('Invalid')
+              //validationMessage
+              errorEl = element.labels && element.labels.length && element.labels[0].innerHTML || element.name
+            }
+            return elementValid
+          })
+          throw new Error(this.getTitle('payment.errors.fields', {fields: errorEl}))
+        }
 
         if (!cgu.state.switched || !droits.state.switched) {
-          throw new Error({
-            message: this.getTitle('payment.errors.checkbox'),
-            fields: ['cgu', 'droits']
-          })
+          throw new Error(this.getTitle('payment.errors.checkbox'))
         }
 
         const currentPlan = this.hasPlan()
+
+        this.disableForm(true)
 
         return methodForm.submit(billingInfo, currentPlan)
       })
@@ -479,7 +493,6 @@ class PaymentForm extends I18n {
 
   // A simple error handling function to expose errors to the customer
   error (err) {
-
     let formatError = err
     if (err instanceof Array) {
       formatError = err[0]
@@ -520,6 +533,7 @@ class PaymentForm extends I18n {
     const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid') || this.props.params.internalPlanUuid
     return (
       <PaymentMethod ref="methodForm"
+                     form={this.refs.form}
                      plan={currentPlan}
                      planCode={internalPlanUuid} {...this.props}
                      planLabel={planLabel}/>)

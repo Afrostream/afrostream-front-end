@@ -21,6 +21,35 @@ class WecashupForm extends CouponForm {
     }
   }
 
+  checkSubmitBtnInterval () {
+    try {
+      const wcashupClass = `.${wecashupApi.attributes.class}`
+      const wcatchupBtnClass = `${wcashupClass.replace('_', '-')}.valid`
+      const submitBtns = document.querySelectorAll(wcashupClass)
+      if (submitBtns && submitBtns.length > 1) {
+        const buttonElSubmit = submitBtns[0]
+        let buttonWCUPEl = document.querySelector(wcatchupBtnClass)
+        if (!buttonWCUPEl || !buttonWCUPEl.parentNode) {
+          return
+        }
+        console.log('element find', buttonWCUPEl)
+        clearInterval(this.wecashupBtnCheckInterval)
+        let cloneButtonEl = buttonWCUPEl.cloneNode(true)
+        cloneButtonEl.setAttribute('type', 'submit')
+        //let cloneButtonEl = buttonWCUPEl
+        buttonWCUPEl.parentNode.removeChild(buttonWCUPEl)
+        cloneButtonEl = buttonElSubmit.parentNode.insertBefore(cloneButtonEl, buttonElSubmit.nextSibling)
+        buttonElSubmit.classList.add('hidden')
+        cloneButtonEl.classList.add('pull-right')
+        //cloneButtonEl.disabled = true
+        addRemoveEvent('click', cloneButtonEl, true, ::this.onClickHandler)
+      }
+    } catch (err) {
+      clearInterval(this.wecashupBtnCheckInterval)
+      throw  err
+    }
+  }
+
   componentDidMount () {
     super.componentDidMount()
 
@@ -48,22 +77,35 @@ class WecashupForm extends CouponForm {
         isScriptLoadSucceed: !err
       })
 
-      const paymentMethod = document.querySelectorAll(`.${wecashupApi.attributes.class}`)
-      if (paymentMethod && paymentMethod.length > 1) {
-        const buttonEl = paymentMethod[1]
-        buttonEl.classList.add('pull-right')
-        debugger
-        addRemoveEvent('click', buttonEl, true, ::this.onClickHandler)
+      if (err) {
+        throw err
       }
+      this.wecashupBtnCheckInterval = setInterval(() => {
+        this.checkSubmitBtnInterval()
+      }, 200)
+
     })
   }
 
   onClickHandler (e) {
-    debugger
-    e.stopImmediatePropagation()
-    e.preventDefault()
-    let event = new CustomEvent('submit', {})
-    e.target.dispatchEvent(event)
+
+    const {props :{form}} =this
+    const isFormValid = form && form.checkValidity()
+    if (!isFormValid) {
+      let event = document.createEvent('CustomEvent')
+      event.initCustomEvent('submit', true, true, {})
+      form.dispatchEvent(event)
+      console.log('payment form not valid')
+      e.preventDefault()
+    }
+    //e.stopImmediatePropagation()
+    //const submitBtns = document.querySelectorAll(`.${wecashupApi.attributes.class}`)
+    //if (submitBtns && submitBtns.length > 1) {
+    //  const buttonEl = submitBtns[1]
+    //  let event = document.createEvent('CustomEvent')
+    //  event.initCustomEvent('click', true, true, {})
+    //  buttonEl.dispatchEvent(event)
+    //}
 
   }
 
@@ -79,15 +121,14 @@ class WecashupForm extends CouponForm {
     const {
       props:{provider}
     }=this
-
     return await new Promise(
       (resolve) => {
-        return resolve({
-          internalPlanUuid: billingInfo.internalPlanUuid,
-          currency: currentPlan.get('currency'),
-          amount: currentPlan.get('amount'),
-          billingProviderName: provider
-        })
+        //return resolve({
+        //  internalPlanUuid: billingInfo.internalPlanUuid,
+        //  currency: currentPlan.get('currency'),
+        //  amount: currentPlan.get('amount'),
+        //  billingProviderName: provider
+        //})
       }
     )
   }

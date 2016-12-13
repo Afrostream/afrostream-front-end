@@ -6,7 +6,7 @@ const loadedScript = []
 const pendingScripts = {}
 let failedScript = []
 
-export function startLoadingScripts (scripts, onComplete = noop) {
+export function startLoadingScripts (scripts, onComplete = noop, targetEl) {
   // sequence load
   const loadNewScript = (source) => {
 
@@ -23,7 +23,7 @@ export function startLoadingScripts (scripts, onComplete = noop) {
         callbacks.push(taskComplete)
         pendingScripts[src] = callbacks
         if (callbacks.length === 1) {
-          return newScript(src, att)(err => {
+          return newScript(src, att, targetEl)(err => {
             pendingScripts[src].forEach(cb => cb(err, src))
             delete pendingScripts[src]
           })

@@ -240,7 +240,7 @@ export const isFunction = val => typeof val === 'function'
 export const noop = _ => {
 }
 
-export const newScript = (src, att = []) => (cb) => {
+export const newScript = (src, att = [], targetEl = document.body) => (cb) => {
   const script = document.createElement('script')
   script.src = src
   _.forEach(att, (value, key) => {
@@ -248,7 +248,7 @@ export const newScript = (src, att = []) => (cb) => {
   })
   script.addEventListener('load', () => cb(null, src))
   script.addEventListener('error', () => cb(true, src))
-  document.body.appendChild(script)
+  targetEl.appendChild(script)
   return script
 }
 

@@ -176,12 +176,14 @@ class PaymentMethod extends React.Component {
 }
 
 PaymentMethod.propTypes = {
+  form: PropTypes.object,
   plan: PropTypes.instanceOf(Immutable.Map),
   planCode: React.PropTypes.string,
   planLabel: React.PropTypes.string
 }
 
 PaymentMethod.defaultProps = {
+  form: null,
   plan: null,
   planCode: null,
   planLabel: null
