@@ -147,7 +147,7 @@ class WecashupForm extends CouponForm {
       <div className="row">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
-          {this.getTitle('payment.mobile.text', {submitBtn: this.getTitle('planCodes.actionMobile')}) }
+          {this.getTitle('payment.wecashup.text') }
         </h5>
       </div>
     )
@@ -169,7 +169,7 @@ class WecashupForm extends CouponForm {
       <div className={classSet(classPanel)}>
         <div className="payment-method-details">
           <div className={classSet(classHeader)} onClick={::this.onHeaderClick}>
-            <label className="form-label">{this.getTitle('payment.mobile.label')}</label>
+            <label className="form-label">{this.getTitle('payment.wecashup.label')}</label>
             <i className="zmdi zmdi-hc-2x zmdi-smartphone-android"/>
           </div>
         </div>

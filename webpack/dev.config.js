@@ -4,9 +4,9 @@ import webpackConfig from './webpack.config'
 import config from '../config'
 import path from 'path'
 //
-import Dashboard from 'webpack-dashboard'
 import DashboardPlugin from 'webpack-dashboard/plugin'
-//const dashboard = new Dashboard()
+import Dashboard from 'webpack-dashboard'
+const dashboard = new Dashboard()
 //
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 // Configuration for the client-side bundle (app.js)
