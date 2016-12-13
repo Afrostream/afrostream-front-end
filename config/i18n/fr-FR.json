@@ -1,8 +1,8 @@
 {
   "routes": {
     "app": "accueil",
-    "company": "companie",
-    "companynomatch": "companie",
+    "company": "compagnie",
+    "companynomatch": "compagnie",
     "about": "a-propos",
     "jobs": "jobs",
     "job": "job",
