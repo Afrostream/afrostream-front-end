@@ -77,8 +77,10 @@ class ModalLifeAdd extends ModalComponent {
   componentWillReceiveProps (nextProps) {
     const scrappedData = nextProps.Life.get(`life/wrap`)
     if (!shallowEqual(scrappedData, this.props.Life.get(`life/wrap`))) {
+      const description = scrappedData && scrappedData.get('description')
       this.setState({
-        scrapped: Boolean(scrappedData)
+        scrapped: Boolean(scrappedData),
+        descriptionLength: description && description.length
       })
     }
   }
