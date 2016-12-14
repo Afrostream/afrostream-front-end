@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 import URL from 'url'
 import config from '../../../../config'
 import MobileDetect from 'mobile-detect'
+import window from 'global/window'
 
 const roundToNearest = (size, precision) => precision * Math.ceil(size / precision)
 
