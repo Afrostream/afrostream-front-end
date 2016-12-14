@@ -41,7 +41,7 @@ class WelcomeLifeSlider extends React.Component {
                          action="life.welcomeMobile.action"
                          imageUrl={life.welcomeMobile}/>
           </div>
-        </Slider>}
+        </Slider>
       </div>
     )
   }
