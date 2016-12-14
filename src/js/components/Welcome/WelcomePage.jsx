@@ -47,6 +47,7 @@ class WelcomePage extends React.Component {
     return (
       <div className="welcome-page">
         <WelcomeHeader {...this.props}/>
+        <InternalPlansCountDown {...this.props} />
         <Devices {...this.props} />
         <WelcomeLife {...this.props}
                      title="life.welcome.label"
@@ -56,7 +57,6 @@ class WelcomePage extends React.Component {
                      title="life.welcomeMobile.label"
                      action="life.welcomeMobile.action"
                      imageUrl={life.welcomeMobile}/>
-        <InternalPlansCountDown {...this.props} />
         <SelectPlan {...this.props} showImages={false}/>
         <Spots {...this.props}/>
         <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
