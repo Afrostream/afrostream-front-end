@@ -206,6 +206,7 @@
     "seasonLabel": "Saison {seasonNumber}"
   },
   "countdown": {
+    "action": "J'en profite",
     "days": "J",
     "hours": "H",
     "minutes": "M",

@@ -190,6 +190,7 @@
     "seasonLabel": "Season {seasonNumber}"
   },
   "countdown": {
+    "action": "GO !",
     "days": "D",
     "hours": "H",
     "minutes": "M",

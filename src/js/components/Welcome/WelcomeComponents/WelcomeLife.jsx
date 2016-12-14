@@ -6,12 +6,12 @@ import SignUpButton from '../../User/SignUpButton'
 import ReactImgix from '../../Image/ReactImgix'
 import config from '../../../../../config'
 import { Link }from '../../Utils'
-
-const {images} =config
 import { I18n } from '../../Utils'
 import {
   injectIntl
 } from 'react-intl'
+
+const {images} =config
 
 if (process.env.BROWSER) {
   require('./WelcomeLife.less')

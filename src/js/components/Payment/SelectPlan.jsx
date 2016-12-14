@@ -9,9 +9,11 @@ import { withRouter } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
 import { I18n } from '../Utils'
+
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
 }
+
 @connect(({User, Billing, OAuth}) => ({User, Billing, OAuth}))
 class SelectPlan extends I18n {
 
