@@ -4,7 +4,6 @@ import Immutable from'immutable'
 import classSet from 'classnames'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import _ from 'lodash'
-import shallowEqual from 'react-pure-render/shallowEqual'
 import CouponForm from './CouponForm'
 import config from '../../../../../config'
 import { addRemoveEvent } from '../../../lib/utils'
@@ -29,13 +28,20 @@ class WecashupForm extends CouponForm {
       const wcatchupBtnClass = `${wcashupClass.replace('_', '-')}.valid`
       const submitBtns = document.querySelectorAll(wcashupClass)
       let buttonWCUPEl = document.querySelector(wcatchupBtnClass)
-      debugger
       if (submitBtns && submitBtns.length > 1) {
         const buttonElSubmit = submitBtns[0]
-        buttonElSubmit.classList.toggle('hidden')
+        if (nextProps.selected) {
+          buttonElSubmit.classList.add('hidden')
+        } else {
+          buttonElSubmit.classList.remove('hidden')
+        }
       }
       if (buttonWCUPEl) {
-        buttonWCUPEl.classList.toggle('hidden')
+        if (nextProps.selected) {
+          buttonWCUPEl.classList.remove('hidden')
+        } else {
+          buttonWCUPEl.classList.add('hidden')
+        }
       }
 
     }
@@ -119,15 +125,6 @@ class WecashupForm extends CouponForm {
       console.log('payment form not valid')
       e.preventDefault()
     }
-    //e.stopImmediatePropagation()
-    //const submitBtns = document.querySelectorAll(`.${wecashupApi.attributes.class}`)
-    //if (submitBtns && submitBtns.length > 1) {
-    //  const buttonEl = submitBtns[1]
-    //  let event = document.createEvent('CustomEvent')
-    //  event.initCustomEvent('click', true, true, {})
-    //  buttonEl.dispatchEvent(event)
-    //}
-
   }
 
   static propTypes = {
@@ -142,6 +139,9 @@ class WecashupForm extends CouponForm {
     const {
       props:{provider}
     }=this
+
+    //todo await postmessage with token infos dispatched from auth/wecashup/callback
+
     return await new Promise(
       (resolve) => {
         //return resolve({
@@ -156,8 +156,8 @@ class WecashupForm extends CouponForm {
 
   onHeaderClick () {
     let clickHeader = ReactDOM.findDOMNode(this)
-    if (clickHeader) {
-      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'wecatchup', bubbles: true}))
+    if (clickHeader && !this.props.selected) {
+      clickHeader.dispatchEvent(new CustomEvent('changemethod', {'detail': 'wecashup', bubbles: true}))
     }
   }
 

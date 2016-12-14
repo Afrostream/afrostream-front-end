@@ -36,7 +36,8 @@ import {
   purple600,
   purple700,
   purple800,
-  purple900
+  purple900,
+  red400
 } from 'material-ui/styles/colors'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { ScrollContainer } from 'react-router-scroll'
@@ -119,6 +120,7 @@ class Application extends React.Component {
           <FloatPlayer {...this.props}/>
           <ModalView {...this.props}/>
           {snackMessage && <Snackbar
+            style={{backgroundColor: snackMessage.get('type') === 'error' ? red400 : '#333333'}}
             open={Boolean(snackMessage)}
             message={intl.formatMessage({id: snackMessage.get('message')})}
             autoHideDuration={4000}

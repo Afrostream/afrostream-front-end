@@ -165,9 +165,9 @@ class PaymentForm extends I18n {
     const currentPlan = this.hasPlan()
     const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid')
 
-    if (currentPlan && internalPlanUuid === config.netsize.internalPlanUuid) {
-      return
-    }
+    //if (currentPlan && internalPlanUuid === config.netsize.internalPlanUuid) {
+    //  return
+    //}
 
     const user = User.get('user')
     let firstName = ''
@@ -493,6 +493,9 @@ class PaymentForm extends I18n {
 
   // A simple error handling function to expose errors to the customer
   error (err) {
+
+    const {props : {dispatch}} =this
+
     let formatError = err
     if (err instanceof Array) {
       formatError = err[0]
@@ -512,6 +515,8 @@ class PaymentForm extends I18n {
         DomClass.addClass(field, 'has-error')
       })
     })
+
+    //dispatch(EventActionCreators.snackMessage({message: formatError.message, type: 'error'}))
   }
 
   disableForm (disabled, status = 0, message = '') {
