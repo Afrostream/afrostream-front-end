@@ -64,7 +64,6 @@ class LifePinView extends LifePin {
 
   componentDidUpdate () {
     this.addEvent()
-    this.initAddThis()
   }
 
   componentDidMount () {
@@ -84,8 +83,8 @@ class LifePinView extends LifePin {
         bitly: {}
       }
 
-      addLib.init()
       addLib.toolbox('.addthis_inline_share_toolbox')
+      addLib.init()
     }
   }
 
