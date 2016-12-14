@@ -43,7 +43,7 @@ class LifePinView extends LifePin {
     const players = document.querySelectorAll('.ta-insert-video,.life-pin .article-content .col-left img')
     if (players) {
       _.forEach(players, (element) => {
-        addRemoveEvent('click', element, add, e => ::this.elementClickHandler)
+        addRemoveEvent('click', element, add, ::this.elementClickHandler)
       })
     }
   }

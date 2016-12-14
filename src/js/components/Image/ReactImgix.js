@@ -166,9 +166,6 @@ export default class ReactImgix extends Component {
       //Adding blur effect
       _src = _src.replace(/&blur=([1-9][0-9]*|0)/g, ``)
       _src += '&blur=800'
-      //Replace quality
-      _src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=50`)
-
       //Replace width
       const regexWidth = /&w=([1-9][0-9]*|0)/g
       const matchWith = _src.match(regexWidth)
