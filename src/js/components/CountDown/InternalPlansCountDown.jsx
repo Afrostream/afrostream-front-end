@@ -47,11 +47,12 @@ class InternalPlansCountDown extends React.Component {
     const countdown = this.renderCountDown()
     if (!user) {
       return (
-        <div onClick={() => ::this.openModal(internalPlanUuid, internalPlanQuery)}>{countdown}</div>
+        <div className={`${this.props.className}`}
+             onClick={() => ::this.openModal(internalPlanUuid, internalPlanQuery)}>{countdown}</div>
       )
     }
     return (
-      <div className="no-hover"><Link
+      <div className={`no-hover ${this.props.className}`}><Link
         to={`/select-plan/${internalPlanUuid}/checkout${internalPlanQuery}`}>{countdown}</Link></div>
     )
   }
@@ -60,16 +61,18 @@ class InternalPlansCountDown extends React.Component {
 
     const presentTime = new Date().getTime()
     const startTime = new Date(internalPlansCountDown.countDownDateFrom).getTime()
-
-    if (presentTime - startTime >= 0) return this.renderProperLink()
-    return null
+    const endTime = new Date(internalPlansCountDown.countDownDateTo).getTime()
+    if (presentTime - startTime >= 0 && presentTime - endTime <= 0) return this.renderProperLink()
+    return this.props.children || <div />
   }
 }
 
 InternalPlansCountDown.propTypes = {
+  className: React.PropTypes.string,
   action: React.PropTypes.string
 }
 InternalPlansCountDown.defaultProps = {
+  className: '',
   action: 'countdown.action'
 }
 

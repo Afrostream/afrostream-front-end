@@ -47,9 +47,12 @@ class NetsizeForm extends CouponForm {
 
   getForm () {
     if (!this.props.selected) return
+
+
     return (
 
       <div className="row" ref="netsizeForm">
+        <img src="/images/payment/netsize-operators.png"/>
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {this.getTitle('payment.mobile.text', {submitBtn: this.getTitle('planCodes.actionMobile')}) }

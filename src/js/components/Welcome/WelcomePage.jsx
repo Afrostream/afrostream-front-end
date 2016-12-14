@@ -2,7 +2,7 @@ import React from 'react'
 import { prepareRoute } from '../../decorators'
 import config from '../../../../config'
 import WelcomeHeader from './WelcomeComponents/WelcomeHeader'
-import WelcomeLife from './WelcomeComponents/WelcomeLife'
+import WelcomeLifeSlider from './WelcomeComponents/WelcomeLifeSlider'
 import Spots from './WelcomeComponents/Spots'
 import Devices from './WelcomeComponents/Devices'
 import { SelectPlan } from '../../components/Payment/'
@@ -13,7 +13,6 @@ import * as MovieActionCreators from '../../actions/movie'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as BillingActionCreators from '../../actions/billing'
 
-const {life, images} =config
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less')
@@ -46,17 +45,11 @@ class WelcomePage extends React.Component {
   render () {
     return (
       <div className="welcome-page">
-        <WelcomeHeader {...this.props}/>
-        <InternalPlansCountDown {...this.props} />
+        <InternalPlansCountDown className="welcome-header" {...this.props} >
+          <WelcomeHeader {...this.props}/>
+        </InternalPlansCountDown>
         <Devices {...this.props} />
-        <WelcomeLife {...this.props}
-                     title="life.welcome.label"
-                     action="life.welcome.action"
-                     imageUrl={life.welcome}/>
-        <WelcomeLife {...this.props}
-                     title="life.welcomeMobile.label"
-                     action="life.welcomeMobile.action"
-                     imageUrl={life.welcomeMobile}/>
+        <WelcomeLifeSlider dots={false} autoplay={true}/>
         <SelectPlan {...this.props} showImages={false}/>
         <Spots {...this.props}/>
         <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
