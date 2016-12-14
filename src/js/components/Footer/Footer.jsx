@@ -144,10 +144,9 @@ class Footer extends React.Component {
                 </Link>
               </li>
               <li>
-                <a className="footer-link"
-                   href="mailto:presse@afrostream.tv?subject=Contact">
+                <Link className="footer-link" to="/company/press">
                   <FormattedMessage id={ 'footer.pro.press' }/>
-                </a>
+                </Link>
               </li>
               {/*<li>
                 <Link className="footer-link" to="/company/press">

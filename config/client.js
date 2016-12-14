@@ -183,6 +183,13 @@ const client = {
   netsize: {
     internalPlanUuid: 'nsafrostreammonthly'
   },
+  internalPlansCountDown: {
+    countDownDateFrom: '2016-12-14 01:00',
+    countDownDateTo: '2017-01-01',
+    imageUrl:'/production/image/2016/12/Banner+Promo+Valide.png',
+    internalPlanUuid: 'afrostreamannually-active',
+    internalPlanQuery: ''
+  },
   sentry: {
     dns: process.env.SENTRY_DSN || '',
     config: {}
@@ -505,7 +512,7 @@ const client = {
       }
     },
     'defaultVolume': 0.65,
-    'techOrder': ['dash', 'html5', 'dashas', 'youtube', 'soundcloud', 'vimeo', 'spotify', 'deezer']
+    'techOrder': ['dash', 'html5', 'dashas', 'youtube', 'soundcloud', 'vimeo', 'spotify', 'deezer'],
   }
 }
 

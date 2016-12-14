@@ -4,6 +4,9 @@ import { withRouter } from 'react-router'
 import classSet from 'classnames'
 import window from 'global/window'
 import { I18n } from '../Utils'
+import {
+  injectIntl,
+} from 'react-intl'
 class StaticMenu extends I18n {
 
 
@@ -34,7 +37,7 @@ class StaticMenu extends I18n {
         }
         try {
 
-          var divPos = $(theID) && $(theID).offset().top // get the offset of the div from the top of page
+          var divPos = $(theID) && $(theID).offset() && $(theID).offset().top // get the offset of the div from the top of page
           var divHeight = $(theID).height() // get the height of the div in question
           if (windowPos >= divPos && windowPos < (divPos + divHeight)) {
             $(`a[href="${theID}"]`).addClass('active')
@@ -81,7 +84,7 @@ class StaticMenu extends I18n {
       }
     } = this
 
-    let pressMenu = this.getTitle('menu')
+    let pressMenu = this.getTitleAsObject('press.menu')
     let mapKeys = Object.keys(pressMenu)
     let keys = _.map(mapKeys, (value, key)=> {
       const data = pressMenu[value]
@@ -106,7 +109,7 @@ class StaticMenu extends I18n {
         <div id="nav-anchor"></div>
         <nav>
           <ul className="company-menu-list" role="tablist">
-            {this.renderLink()}
+            {::this.renderLink()}
           </ul>
         </nav>
       </div>
@@ -119,4 +122,4 @@ StaticMenu.propTypes = {
   location: React.PropTypes.object.isRequired
 }
 
-export default withRouter(StaticMenu)
+export default injectIntl(withRouter(StaticMenu))

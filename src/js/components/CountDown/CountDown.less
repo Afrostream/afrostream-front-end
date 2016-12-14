@@ -1,0 +1,132 @@
+@import (reference) '../../../styles/config.less';
+
+.countdown-wrapper {
+   margin-bottom: 24px;
+   text-align: center;
+   box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
+   margin-bottom: 24px;
+
+   .countdown-content {
+        img {
+            width: 100%;
+        }
+    }
+
+    .countdown-timer {
+        font-size: 40px;
+        
+        background-color: @plan-red-color;
+        color: white;
+        padding-top: 24px;
+        padding-bottom: 24px;
+        
+
+        .countdown-number-row, .countdown-text-row {
+            display: flex;
+            align-items: baseline;
+            flex-flow: row-wrap;
+
+            span {
+                flex: 1;
+            }
+        }
+
+        .countdown-number-row {
+            font-size: 24px;
+
+            .countdown-text-unit {
+                font-size: 16px;
+                text-transform: uppercase;
+
+                &.countdown-prez {
+                    flex: 3;
+                }
+            }
+        }
+
+        .countdown-text-row {
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .event-available-text {
+            margin-top: 24px;
+            font-size: 28px;
+        }
+    }
+}
+
+@media @mobile {
+    .countdown-wrapper {
+        .countdown-timer {
+            font-size: 18px;
+            padding-top: 14px;
+            padding-bottom: 14px;
+
+            .countdown-number-row {
+                font-size: 18px;
+
+                .countdown-text-unit {
+                    font-size: 14px;
+                    &.countdown-prez {
+                        flex: 4;
+                    }
+                }
+            }
+        }
+    }   
+}
+
+@media @desktop {
+    .countdown-wrapper {
+        .countdown-timer {
+            font-size: 18px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+
+            .countdown-number-row {
+                font-size: 18px;
+
+                .countdown-text-unit {
+                    &.countdown-prez {
+                        flex: 4;
+                    }
+                }
+            }
+        }
+    }  
+}
+@media @desktop-xl {
+    .countdown-wrapper {
+        .countdown-timer {
+            .countdown-number-row {
+                font-size: 30px;
+                .countdown-text-unit {
+                    &.countdown-prez {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }  
+}
+.welcome-page {
+    .countdown-wrapper {
+        margin: 0;
+        cursor: pointer
+    }
+    @media @desktop-xl {
+        .countdown-wrapper {
+            .countdown-timer {
+                .countdown-number-row {
+                    font-size: 42px;
+                    .countdown-text-unit {
+                        &.countdown-prez {
+                            font-size: 26px;
+                        }
+                    }
+                }
+            }
+        }  
+    }
+}
