@@ -1,7 +1,10 @@
 import express from 'express'
 import { proxy } from '../../api/api-front'
+import * as controller from './wecashup.controller'
 
 const router = express.Router()
+
+router.get('/final-callback', controller.callback)
 
 router.use(function (req, res) {
   res.noCache()
