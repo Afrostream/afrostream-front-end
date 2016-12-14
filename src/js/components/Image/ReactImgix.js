@@ -168,15 +168,13 @@ export default class ReactImgix extends Component {
       _src += '&blur=800'
       //Replace quality
       _src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=50`)
-      //Replace width
-      _src = _src.replace(/&w=([1-9][0-9]*|0)/g, `&w=200`)
 
-      //Replace max size
+      //Replace width
       const regexWidth = /&w=([1-9][0-9]*|0)/g
       const matchWith = _src.match(regexWidth)
       if (matchWith) {
         const size = parseInt(matchWith[0].replace('&w=', ''))
-        const windowSize = (window && window.innerWidth) || 500
+        const windowSize = (window && window.innerWidth) || 1024
         _src = _src.replace(regexWidth, `&w=${Math.min(windowSize, size)}`)
       }
 
