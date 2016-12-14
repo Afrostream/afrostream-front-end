@@ -6,6 +6,7 @@ import WelcomeLife from './WelcomeComponents/WelcomeLife'
 import Spots from './WelcomeComponents/Spots'
 import Devices from './WelcomeComponents/Devices'
 import { SelectPlan } from '../../components/Payment/'
+import InternalPlansCountDown from '../CountDown/InternalPlansCountDown'
 import ModalCoupon from '../Modal/ModalCoupon'
 import * as EventActionCreators from '../../actions/event'
 import * as MovieActionCreators from '../../actions/movie'
@@ -55,6 +56,7 @@ class WelcomePage extends React.Component {
                      title="life.welcomeMobile.label"
                      action="life.welcomeMobile.action"
                      imageUrl={life.welcomeMobile}/>
+        <InternalPlansCountDown {...this.props} />
         <SelectPlan {...this.props} showImages={false}/>
         <Spots {...this.props}/>
         <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>

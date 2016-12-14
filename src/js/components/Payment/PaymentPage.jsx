@@ -7,6 +7,7 @@ import * as IntercomActionCreators from '../../actions/intercom'
 import * as BillingActionCreators from '../../actions/billing'
 import WelcomePage from '../Welcome/WelcomePage'
 import SelectPlan from './SelectPlan'
+import InternalPlansCountDown from '../CountDown/InternalPlansCountDown'
 import { withRouter } from 'react-router'
 import {
   injectIntl
@@ -53,11 +54,12 @@ class PaymentPage extends React.Component {
     const {props: {children}} = this
 
     return (
-      <div className="row-fluid brand-bg">
-        <div className="container brand-bg content-padding">
-          {children ? children : <SelectPlan {...this.props}/>}
+        <div className="row-fluid brand-bg">
+          <div className="container brand-bg content-padding">
+            <InternalPlansCountDown />
+            {children ? children : <SelectPlan {...this.props}/>}
+          </div>
         </div>
-      </div>
     )
   }
 }

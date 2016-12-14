@@ -8,7 +8,6 @@ import { formatPrice, isBoolean } from '../../lib/utils'
 import { withRouter } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
-import CountDown from '../CountDown/CountDown'
 import { I18n } from '../Utils'
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
@@ -316,24 +315,8 @@ class SelectPlan extends I18n {
       )
     }
 
-    // const {
-    //   internalPlansCountDownDateFrom,
-    //   internalPlansCountDownDateTo,
-    //   intenalPlansTitleText,
-    //   intenalPlansDescriptionText
-    // } = config.internalPlansCountDown
-
     return (
       <div className="plan-container">
-
-        {/* TODO: Faire l'indegration finale liée a la config une fois les infos supplémentaires recues'*/}
-        <CountDown 
-          eventTime="2017-01-01"
-          eventAvailableText="Bravo !!! C'est le moment !!"
-        >
-          <img src="https://placekitten.com/800/300" />
-
-        </CountDown>
 
         {this.getHeader()}
 

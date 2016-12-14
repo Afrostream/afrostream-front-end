@@ -168,10 +168,11 @@ const client = {
     internalPlanUuid: 'nsafrostreammonthly'
   },
   internalPlansCountDown: {
-    internalPlansCountDownDateFrom: '',
-    internalPlansCountDownDateTo: '',
-    intenalPlansTitleText: '',
-    intenalPlansDescriptionText: ''
+    countDownDateFrom: '2016-12-14 01:00',
+    countDownDateTo: '2017-01-01',
+    imageUrl:'/production/image/2016/12/Banner+Promo+Valide.png',
+    internalPlanUuid: 'afrostreamannually-active',
+    internalPlanQuery: ''
   },
   sentry: {
     dns: process.env.SENTRY_DSN || '',
