@@ -3,6 +3,7 @@ import StackBlur from 'stackblur-canvas'
 import React, { Component, PropTypes } from 'react'
 import URL from 'url'
 import config from '../../../../config'
+import MobileDetect from 'mobile-detect'
 
 const roundToNearest = (size, precision) => precision * Math.ceil(size / precision)
 
@@ -56,10 +57,12 @@ export default class ReactImgix extends Component {
     auto: ['format'],
     generateSrcSet: true
   }
+
   state = {
     width: null,
     height: null,
-    mounted: false
+    mounted: false,
+    isMobile: false
   }
 
   createLoader () {
@@ -92,6 +95,11 @@ export default class ReactImgix extends Component {
   }
 
   componentDidMount () {
+    const ua = this.detectUA()
+    const isMobile = ua.phone()
+    this.setState({
+      isMobile
+    })
     this.createLoader()
   }
 
@@ -126,6 +134,11 @@ export default class ReactImgix extends Component {
     return this.constructUrl(src, shortOptions)
   }
 
+  detectUA () {
+    const userAgent = (navigator && navigator.userAgent.toLowerCase()) || ''
+    return new MobileDetect(userAgent)
+  }
+
   render () {
     const {
       aggressiveLoad,
@@ -146,10 +159,32 @@ export default class ReactImgix extends Component {
     //_src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=30`)
     //_src = _src.replace(/&w=([1-9][0-9]*|0)/g, `&w=20`)
     //_src = _src.replace(/&h=([1-9][0-9]*|0)/g, `&h=20`)
+
     const url = URL.parse(_src)
     if (~config.images.urlPrefix.indexOf(url.hostname)) {
+      //Adding blur effect
+      _src = _src.replace(/&blur=([1-9][0-9]*|0)/g, ``)
       _src += '&blur=800'
+      //Replace quality
+      _src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=50`)
+      //Replace width
+      _src = _src.replace(/&w=([1-9][0-9]*|0)/g, `&w=200`)
+
+      //Replace max size
+      const regexWidth = /&w=([1-9][0-9]*|0)/g
+      const matchWith = _src.match(regexWidth)
+      if (matchWith) {
+        const size = parseInt(matchWith[0].replace('&w=', ''))
+        const windowSize = (window && window.innerWidth) || 500
+        _src = _src.replace(regexWidth, `&w=${Math.min(windowSize, size)}`)
+      }
+
+      if (this.state.isMobile) {
+        //Replace quality
+        _src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=50`)
+      }
     }
+
 
     let srcSet = ''
     let _component = component

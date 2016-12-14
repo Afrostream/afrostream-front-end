@@ -4,6 +4,7 @@ import Immutable from'immutable'
 import classSet from 'classnames'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import _ from 'lodash'
+import shallowEqual from 'react-pure-render/shallowEqual'
 import CouponForm from './CouponForm'
 import config from '../../../../../config'
 import { addRemoveEvent } from '../../../lib/utils'
@@ -20,6 +21,26 @@ class WecashupForm extends CouponForm {
       hasLib: false
     }
   }
+
+  componentWillReceiveProps (nextProps) {
+    super.componentWillReceiveProps(nextProps)
+    if (nextProps.selected !== this.props.selected) {
+      const wcashupClass = `.${wecashupApi.attributes.class}`
+      const wcatchupBtnClass = `${wcashupClass.replace('_', '-')}.valid`
+      const submitBtns = document.querySelectorAll(wcashupClass)
+      let buttonWCUPEl = document.querySelector(wcatchupBtnClass)
+      debugger
+      if (submitBtns && submitBtns.length > 1) {
+        const buttonElSubmit = submitBtns[0]
+        buttonElSubmit.classList.toggle('hidden')
+      }
+      if (buttonWCUPEl) {
+        buttonWCUPEl.classList.toggle('hidden')
+      }
+
+    }
+  }
+
 
   checkSubmitBtnInterval () {
     try {
