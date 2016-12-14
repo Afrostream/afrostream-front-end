@@ -49,7 +49,7 @@ class WelcomePage extends React.Component {
           <WelcomeHeader {...this.props}/>
         </InternalPlansCountDown>
         <Devices {...this.props} />
-        <WelcomeLifeSlider dots={false} autoplay={true}/>
+        <WelcomeLifeSlider dots={false} autoplay={true} infinite={true}/>
         <SelectPlan {...this.props} showImages={false}/>
         <Spots {...this.props}/>
         <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
