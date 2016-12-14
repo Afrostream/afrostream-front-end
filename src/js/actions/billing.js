@@ -246,22 +246,34 @@ export function getInternalplans ({
   reload = false,
   checkMobile = true,
   userId = null,
-  country = 'FR'
+  country
 }) {
 
   return (dispatch, getState, actionDispatcher) => {
     return async api => {
       let isMobile = false
       let forcedInternalPlanUuid = internalPlanUuid !== 'none' && internalPlanUuid
+      let forcedContextBillingUuid = contextBillingUuid
+      let forcedCountry = country
       if (canUseDOM) {
         const userAgent = (window.navigator && navigator.userAgent) || ''
         let agent = new MobileDetect(userAgent)
         isMobile = agent.mobile()
       }
-      //ONLY for common context,not cashway
-      if (contextBillingUuid === 'common' && isMobile && checkMobile) {
-        forcedInternalPlanUuid = config.netsize.internalPlanUuid
+      //ONLY for common && mobile devices context,not cashway
+      if (forcedContextBillingUuid === 'common' && isMobile && checkMobile && !forcedInternalPlanUuid) {
+        //forcedInternalPlanUuid = config.netsize.internalPlanUuid
+        forcedContextBillingUuid = 'mobile'
       }
+
+      if (!forcedCountry) {
+        try {
+          forcedCountry = getState().country //await getCountry()
+        } catch (err) {
+          console.error('getInternalplans error requesting /auth/geo ', err)
+        }
+      }
+
       //Get internalplan from params
       if (forcedInternalPlanUuid) {
         return await api({
@@ -270,7 +282,7 @@ export function getInternalplans ({
         }).then(({body}) => {
           return {
             type: ActionTypes.Billing.getInternalplans,
-            contextBillingUuid: 'common',
+            contextBillingUuid,
             res: {
               body: [
                 body
@@ -286,24 +298,20 @@ export function getInternalplans ({
       })
 
       let params = {
-        contextBillingUuid,
-        country
+        contextBillingUuid: forcedContextBillingUuid,
+        country: forcedCountry,
+        contextCountry: forcedCountry
       }
+
       //ONLY for common context,not cashway
       if (contextBillingUuid === 'common') {
         const user = getState().User.get('user')
         const filterUserReferenceUuid = user && user.get('_id') || userId
         if (filterUserReferenceUuid) {
-          try {
-            country = await
-              getCountry()
-          } catch (err) {
-            console.error('getInternalplans error requesting /auth/geo ', err)
-          }
-
           params = {
             filterEnabled: true,
-            country,
+            country: forcedCountry,
+            contextCountry: forcedCountry,
             filterUserReferenceUuid
           }
         }

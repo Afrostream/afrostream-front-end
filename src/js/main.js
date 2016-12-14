@@ -88,8 +88,9 @@ function initSite (country) {
         .send(body)
     }
   )
+
   /* global __INITIAL_STATE__:true */
-  const store = createStore(api, history, state)
+  const store = createStore(api, history, state, country)
 
   store.dispatch(UserActionCreators.getProfile())
 

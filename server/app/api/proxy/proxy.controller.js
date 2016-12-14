@@ -5,6 +5,7 @@ const proxy = httpProxy.createProxyServer({
 
 exports.proxy = function (req, res) {
   proxy.web(req, res, {
-    target: req.query.url
+    target: req.query.url,
+    ignorePath: true
   })
 }

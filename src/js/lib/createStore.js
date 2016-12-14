@@ -17,8 +17,17 @@ const localesData = [
   ...enLocaleData,
 ]
 
+const countryReducer = function (state = '--', action) {
+
+  if (action.type !== '@@country/UPDATE') {
+    return state
+  }
+
+  return state.merge(state, action.payload)
+}
+
 addLocaleData(localesData)
-export default function (api, history, initialState) {
+export default function (api, history, initialState, country) {
 
   const composeEnhancers = process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
   const createStoreWithMiddleware = composeEnhancers(
@@ -36,7 +45,8 @@ export default function (api, history, initialState) {
 
   const reducer = combineReducers({
     ...reducers,
-    intl: intlReducer
+    intl: intlReducer,
+    country: countryReducer
   })
 
   const mergedState = _.merge({
@@ -44,7 +54,7 @@ export default function (api, history, initialState) {
       defaultLocale: 'fr',
       locales: localesData
     }
-  }, initialState)
+  }, initialState, {country})
 
   return createStoreWithMiddleware(reducer, mergedState)
 }

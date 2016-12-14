@@ -52,6 +52,15 @@ export function wrappPin (scrapUrl) {
           }
           return value
         })
+
+        const maxLength = 255
+        if (proxified.description && proxified.description.length >= maxLength) {
+          let cutIndex = proxified.description.indexOf(' ', maxLength)
+          if (cutIndex !== -1) {
+            let shortDescription = proxified.description.substring(0, cutIndex) + '...'
+            proxified.description = shortDescription
+          }
+        }
       })
 
       return {

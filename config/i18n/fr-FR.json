@@ -259,6 +259,10 @@
       "label": "Payer via votre facture téléphonique",
       "text": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Mobile"
     },
+    "wecashup": {
+      "label": "Payer via Mobile Money Ⓡ",
+      "text": "Pour finaliser la souscription, cliquer sur le bouton \"Payer via Mobile Money Ⓡ \"."
+    },
     "paypal": {
       "label": "Paiement par Paypal",
       "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Paypal"
@@ -297,7 +301,7 @@
       "coupon": "Le code promo n’ est pas ou plus valide pour cette formule.",
       "already": "Vous avez deja souscrit à cette formule.",
       "global": "Une erreur inconnue s’ est produite, veuillez recommencer.",
-      "fields": "Les champs indiqués semblent invalides : ",
+      "fields": "Les champs indiqués semblent invalides : {fields}",
       "abo": "Erreur lors de la création de l’abonnement : ",
       "exludedCard": "Ce type ne carte n‘est pas pris en charge actuellement",
       "retry": "Merci de réessayer"

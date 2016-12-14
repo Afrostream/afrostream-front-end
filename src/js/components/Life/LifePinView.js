@@ -5,7 +5,7 @@ import config from '../../../../config'
 import moment from 'moment'
 import _ from 'lodash'
 import LifePin from './LifePin'
-import { extractImg } from '../../lib/utils'
+import { extractImg, hasEvent, addRemoveEvent } from '../../lib/utils'
 import * as LifeActionCreators from '../../actions/life'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
@@ -39,35 +39,18 @@ class LifePinView extends LifePin {
     super(props, context)
   }
 
-  hasEvent = function (elm, type) {
-    var ev = elm.dataset.events
-    if (!ev) return false
-
-    return (new RegExp(type)).test(ev)
-  }
-
-  addRemoveEvent (add = true) {
+  addEvent (add = true) {
     const players = document.querySelectorAll('.ta-insert-video,.life-pin .article-content .col-left img')
-    const type = 'click'
     if (players) {
       _.forEach(players, (element) => {
-        if (!element.dataset.events) element.dataset.events = ''
-        const has = this.hasEvent(element, type)
-
-        if ((add && has) || (!add && !has)) {
-          return
-        }
-
-        if (add) element.dataset.events += ',' + type
-        else element.dataset.events = element.dataset.events.replace(new RegExp(type), '')
-        element[`${add ? 'add' : 'remove'}EventListener`]('click', ::this.elementClickHandler)
+        addRemoveEvent('click', element, add, ::this.elementClickHandler)
       })
     }
   }
 
   componentWillReceiveProps (nextProps) {
     if (!shallowEqual(nextProps.params.pinId, this.props.params.pinId)) {
-      this.addRemoveEvent()
+      this.addEvent()
     }
 
     if (nextProps.isScriptLoaded && !this.props.isScriptLoaded) { // load finished
@@ -76,16 +59,15 @@ class LifePinView extends LifePin {
   }
 
   componentWillUnmount () {
-    this.addRemoveEvent(false)
+    this.addEvent(false)
   }
 
   componentDidUpdate () {
-    this.addRemoveEvent()
-    this.initAddThis()
+    this.addEvent()
   }
 
   componentDidMount () {
-    this.addRemoveEvent()
+    this.addEvent()
     this.initAddThis()
   }
 
@@ -101,8 +83,8 @@ class LifePinView extends LifePin {
         bitly: {}
       }
 
-      addLib.init()
       addLib.toolbox('.addthis_inline_share_toolbox')
+      addLib.init()
     }
   }
 

@@ -226,6 +226,15 @@
       padding: 15px 0 15px 0;
     }
 
+    form:invalid {
+      .wecashup-button.valid,
+      .button-create-subscription {
+        background-color: @brand-warn;
+        //background-color: @brand-grey;
+      }
+    }
+
+    .wecashup-button.valid,
     .button-cancel-subscription,
     .button-create-subscription {
       font-weight: bold;
@@ -235,8 +244,12 @@
       border-radius: @btn-radius;
       border: none;
       margin: 1em;
-      float: left;
+      float: right !important;
       .isMobile({ float: inherit; });
+      &:disabled {
+        background-color: @brand-grey;
+        color: darken(@brand-grey, 30%);
+      }
     }
 
     .button-cancel-subscription {

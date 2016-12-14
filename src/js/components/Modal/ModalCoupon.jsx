@@ -52,12 +52,12 @@ class ModalCoupon extends ModalComponent {
       }).then(() => {
         return this.props.history.push('/')
       }).catch(({response:{body:{error, code, message}}}) => {
-        const errorCode = (code && this.getTitle(`errors.${code}`))
+        const errorCode = (code && this.getTitle(`errors.${code}.message`))
         return this.setState({
           success: false,
           loading: false,
           signInOrUp: false,
-          error: (errorCode && `${errorCode.message} [${code}]`) || error || message || this.getTitle('couponInvalid')
+          error: (code && `${errorCode} [${code}]`) || error || message || this.getTitle('couponInvalid')
         })
       })
   }

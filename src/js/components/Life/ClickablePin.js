@@ -116,7 +116,8 @@ class ClickablePin extends Component {
       }))
     }
 
-    if (data.get('body')) {
+    //if article /zap and go to article page
+    if (data.get('type') === 'article') {
       return
     }
 
