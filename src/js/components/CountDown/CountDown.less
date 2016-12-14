@@ -75,6 +75,16 @@
 
 @media @mobile {
   .countdown-wrapper {
+
+    .countdown-content {
+      .subscribe-button {
+        position: relative;
+        left: inherit;
+        margin: 0;
+        bottom: 0;
+      }
+    }
+
     .countdown-timer {
       font-size: 18px;
       padding-top: 14px;
@@ -86,6 +96,9 @@
         .countdown-text-unit {
           font-size: 14px;
           &.countdown-prez {
+            &:first-of-type {
+              flex: 2;
+            }
             flex: 4;
           }
         }
