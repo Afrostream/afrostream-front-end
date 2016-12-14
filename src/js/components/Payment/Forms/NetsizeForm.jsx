@@ -51,8 +51,10 @@ class NetsizeForm extends CouponForm {
 
     return (
 
-      <div className="row" ref="netsizeForm">
-        <img src="/images/payment/netsize-operators.png"/>
+      <div className="row-fluid" ref="netsizeForm">
+        <div className="col-md-12">
+          <img src="/images/payment/netsize-operators.png"/>
+        </div>
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {this.getTitle('payment.mobile.text', {submitBtn: this.getTitle('planCodes.actionMobile')}) }

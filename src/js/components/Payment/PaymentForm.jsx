@@ -280,13 +280,12 @@ class PaymentForm extends I18n {
   renderDroits () {
 
     let checkClass = {
-      'form-group': true,
       'col-md-12': true,
       'checkbox': true,
       'checkbox-has-error': this.state.error ? ~this.state.error.fields.indexOf('droits') : false
     }
 
-    return (<div className="row">
+    return (<div className="row-fluid">
         <div className={classSet(checkClass)}>
           <Checkbox
             type="checkbox"
@@ -318,13 +317,12 @@ class PaymentForm extends I18n {
   renderCGU () {
 
     let checkClass = {
-      'form-group': true,
       'col-md-12': true,
       'checkbox': true,
       'checkbox-has-error': this.state.error ? ~this.state.error.fields.indexOf('cgu') : false
     }
 
-    return (<div className="row">
+    return (<div className="row-fluid">
       <div className={classSet(checkClass)}>
         <Checkbox
           type="checkbox"
