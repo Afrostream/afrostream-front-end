@@ -109,7 +109,7 @@ class FavoritesAddButton extends I18n {
       onClick: event => ::this.setFavorite(!isFavorite, dataId)
     }
 
-    const titleLabel = this.getTitle(`${isFavorite ? 'favorites.add' : 'favorites.delete'}`)
+    const titleLabel = this.getTitle(`${!isFavorite ? 'favorites.add' : 'favorites.delete'}`)
 
     return (<div className="btn favorite-add_button" type="button" data-toggle="tooltip"
                  data-placement="top" ref="data"
