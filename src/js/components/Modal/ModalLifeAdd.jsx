@@ -114,10 +114,12 @@ class ModalLifeAdd extends ModalComponent {
       return dispatch(LifeActionCreators.publishPin(_.merge(scrappedData.toJS(), {
         description: description.getValue()
       }))).then(() => {
+        dispatch(LifeActionCreators.fetchUsers(null, {}))
         dispatch(EventActionCreator.snackMessage({message: 'life.modal.success'}))
         this.closeModal()
       }).catch((err) => {
-        dispatch(EventActionCreator.snackMessage(err || {message: 'life.modal.errors.post'}))
+        console.log('life post error', err)
+        dispatch(EventActionCreator.snackMessage({message: 'life.modal.errors.post'}))
         this.closeModal()
       })
     }

@@ -55,11 +55,16 @@ export function wrappPin (scrapUrl) {
 
         const maxLength = 255
         if (proxified.description && proxified.description.length >= maxLength) {
-          let cutIndex = proxified.description.indexOf(' ', maxLength)
-          if (cutIndex !== -1) {
-            let shortDescription = proxified.description.substring(0, cutIndex) + '...'
-            proxified.description = shortDescription
-          }
+          let shortDescription = proxified.description.substring(0, maxLength - 3) + '...'
+          proxified.description = shortDescription
+        }
+
+      }).catch((e) => {
+        console.log('wrapp error', e)
+        return {
+          type: ActionTypes.Life.wrappPin,
+          original,
+          proxified
         }
       })
 
@@ -86,10 +91,6 @@ export function publishPin (data) {
           method: 'POST',
           params: data,
           passToken: true
-        }).then(() => {
-          if (userId) {
-            dispatch(fetchUsers(userId, {}))
-          }
         })
       }
     }
@@ -170,9 +171,10 @@ export function fetchSpots ({limit = 22, startIndex = 0, stopIndex = 3}) {
 }
 
 export function fetchUsers (fetchUserId, {limit = 200, startIndex = 0, stopIndex = 3}) {
-  const lifeUserId = fetchUserId || ''
 
   return (dispatch, getState) => {
+    const currentUser = getState().User.get('user')
+    const lifeUserId = fetchUserId || currentUser && currentUser.get('_id')
     return async api => ({
       type: ActionTypes.Life.fetchUsers,
       lifeUserId,
