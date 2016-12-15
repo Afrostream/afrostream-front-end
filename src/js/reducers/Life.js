@@ -9,6 +9,24 @@ const initialState = Immutable.fromJS({
   'life/pins': null
 })
 
+/**
+ * Used in _.reduce to fill the arrays of blocs
+ */
+const accumulateInBloc = function (finalResult = [], bloc, key) {
+  // By default, 1 page = 1 bloc
+  let maxBloc = key ? 3 : 1
+
+
+  _.last(finalResult).push(bloc)
+
+  const finalLength = _.last(finalResult).length
+  if (finalLength === maxBloc) {
+    finalResult.push([])
+  }
+
+  return finalResult
+}
+
 export default createReducer(initialState, {
 
   [ActionTypes.Life.wrappPin](state, {original, proxified}) {
@@ -46,6 +64,9 @@ export default createReducer(initialState, {
       return state
     }
     const data = res.body
+
+    data.pins = _(data.pins).reduce(accumulateInBloc, [[]])
+
     return state.merge({
       [`life/themes/${themeId}`]: data
     })
@@ -57,10 +78,7 @@ export default createReducer(initialState, {
     }
     const pins = res.body
 
-    const mappedUserPins = _.map(pins, (pin) => {
-      pin.user = mergeFbUserInfo(pin.user)
-      return pin
-    })
+    const mappedUserPins = _(pins).reduce(accumulateInBloc, [[]])
 
     return state.merge({
       [`life/pins/`]: mappedUserPins

@@ -6,6 +6,15 @@ import LifePin from './LifePin'
 import LifeSpot from './LifeSpot'
 import _ from 'lodash'
 import ReactList from 'react-list'
+import {
+  InfiniteLoader,
+  AutoSizer,
+  VirtualScroll,
+  Grid,
+  List,
+  CellMeasurer,
+  WindowScroller
+} from 'react-virtualized'
 
 if (process.env.BROWSER) {
   require('./LifeList.less')
@@ -65,12 +74,11 @@ class LifeList extends Component {
   }
 
   canInsertSpot (spotList, index) {
-    const firstPage = Number(index <= this.props.moduloSpots)
     const listIndex = index + 1
     const spotIndex = Math.round(listIndex / this.props.moduloSpots)
     const hasMaxSpots = (spotIndex > spotList.size)
 
-    return spotList && !((listIndex + firstPage) % this.props.moduloSpots) && !hasMaxSpots && spotIndex
+    return spotList && !((listIndex) % this.props.moduloSpots) && !hasMaxSpots && spotIndex
   }
 
   renderInfiniteItem (index, key) {
@@ -87,7 +95,35 @@ class LifeList extends Component {
 
   }
 
-  renderItem ({data, key, index}) {
+  getRowHeight ({index}) {
+    const pinsList = this.getPins()
+    const block = pinsList.get(index)
+    let firstEl
+    if (block instanceof Immutable.Map) {
+      firstEl = block
+    }
+    else {
+      firstEl = block && block.get(0)
+    }
+    const typeItem = firstEl && firstEl.get('type')
+
+    let heightEl = 500
+    switch (typeItem) {
+      case 'spot':
+      case 'banner':
+        heightEl = 300
+        break
+      default:
+        break
+    }
+    return heightEl
+  }
+
+  renderCell ({columnIndex, key, rowIndex, style}) {
+    return this.renderItem({index: rowIndex, key})
+  }
+
+  renderBlock (data, index, key) {
     const {
       props: {
         highlightFirst
@@ -98,18 +134,58 @@ class LifeList extends Component {
       900,
       350
     ]
-
+    //const index = columnIndex
     const imageWidth = highlightFirst ? sizes[Math.min(index, 1)] : sizes[1]
     const showBubble = !index
+    const typeItem = data.get('type')
+
+    switch (typeItem) {
+      case 'spot':
+      case 'banner':
+        return <LifeSpot {...{data, key}} {...this.props} />
+        break
+      default:
+        return <LifePin {...{data, imageWidth, showBubble, key, index}} {...this.props} />
+        break
+    }
+  }
+
+  renderItem ({index, key}) {
+    const {
+      props: {
+        dataList
+      }
+    } = this
+
+    const pinsList = this.getPins()
+    const data = pinsList && pinsList.get(index)
+
+    if (data instanceof Immutable.Map) {
+      return this.renderBlock(data, index, key)
+    }
     return (
-      <LifePin {...{data, imageWidth, showBubble, key, index}} {...this.props} />
+      <div className="block" {...{key}} >{data.map((item, k) => {
+        return this.renderBlock(item, index, k)
+      })}</div>
     )
   }
+
 
   renderSpot ({data, key}) {
     return (
       <LifeSpot {...{data, key}} {...this.props} />
     )
+  }
+
+
+  isRowLoaded ({index}) {
+    const pinsList = this.getPins()
+    return pinsList && !!pinsList.get(index)
+
+  }
+
+  loadMoreRows ({startIndex, stopIndex}) {
+    debugger
   }
 
   render () {
@@ -120,6 +196,7 @@ class LifeList extends Component {
         highlightFirst
       }
     } = this
+
     const pinsList = this.getPins()
 
     const classList = {
@@ -129,21 +206,61 @@ class LifeList extends Component {
       'virtual': virtual
     }
 
-    return (<div className={classSet(classList)}>
-      {!virtual && pinsList.map((data, index) => this.renderItem({
-        data,
-        index,
-        key: `life-list-theme-${themeId}-${index}`
+    if (!pinsList) {
+      return <div />
+    }
 
-      })).toJS()}
-      {virtual && <ReactList
-        ref="react-pins-list"
-        axis="y"
-        itemRenderer={::this.renderInfiniteItem}
-        length={pinsList.size}
-        type={'simple'}
-      />}
-    </div>)
+    return (
+      <div className={classSet(classList)}>
+        <WindowScroller>
+          {({height, isScrolling, scrollTop}) => (
+            <InfiniteLoader
+              isRowLoaded={::this.isRowLoaded}
+              loadMoreRows={::this.loadMoreRows}
+              rowCount={pinsList.size}>
+              {({onRowsRendered, registerChild}) => (
+                <AutoSizer disableHeight>
+                  {({width}) => (
+                    <CellMeasurer
+                      cellRenderer={::this.renderCell}
+                      columnCount={1}
+                      rowCount={pinsList.size}
+                      width={width}
+                    >
+                      {({getRowHeight, getColumnWidth}) => (
+                        /*{
+                         <Grid
+                         cellRenderer={::this.renderCell}
+                         columnWidth={getColumnWidth}
+                         columnCount={1}
+                         overscanColumnCount={0}
+                         overscanRowCount={0}
+                         rowCount={pinsList.size}
+                         rowHeight={getRowHeight}
+                         autoHeight
+                         height={height}
+                         width={width}
+                         />
+                         }*/
+                        <List
+                          rowRenderer={::this.renderItem}
+                          columnCount={3}
+                          rowCount={pinsList.size}
+                          rowHeight={getRowHeight}
+                          height={height}
+                          autoHeight
+                          width={width}
+                        />
+                      )}
+                    </CellMeasurer>
+                  )}
+                </AutoSizer>
+              )}
+            </InfiniteLoader>
+          )}
+        </WindowScroller>
+      </div>
+    )
   }
 }
 
@@ -165,7 +282,7 @@ LifeList.propTypes = {
 
 LifeList.defaultProps = {
   isCurrentUser: false,
-  moduloSpots: 6,
+  moduloSpots: 3,
   highlightFirst: true,
   virtual: true,
   pins: null,

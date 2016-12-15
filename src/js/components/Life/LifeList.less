@@ -67,6 +67,15 @@
 }
 
 .life-list {
+
+  .block {
+    display: flex;
+    flex-wrap: nowrap;
+    .brick {
+      flex: 1;
+    }
+  }
+
   &.flat,
     //&.virtual > div > div > div {
   &.virtual > div {
@@ -74,8 +83,11 @@
     display: flex;
     flex-wrap: wrap;
   }
+
   a.banner {
     width: 100%;
+    height: auto;
+    display: block;
   }
 
   .life-player {
