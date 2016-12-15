@@ -26,9 +26,9 @@
       margin-left: -100px;
       bottom: 0.5em;
       font-size: 2em;
-      background-color: @plan-red-color;
+      background-color: @subscriber-color;
       font-family: @font-book;
-      border: 1px solid @plan-red-color;
+      border: 1px solid @subscriber-color;
     }
   }
 
@@ -37,8 +37,8 @@
 
     background-color: @plan-red-color;
     color: white;
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 8px;
+    padding-bottom: 12px;
 
     .countdown-number-row, .countdown-text-row {
       display: flex;
@@ -95,8 +95,6 @@
 
     .countdown-timer {
       font-size: 18px;
-      padding-top: 14px;
-      padding-bottom: 14px;
 
       .countdown-number-row {
         font-size: 18px;
@@ -107,7 +105,42 @@
             &:first-of-type {
               flex: 2;
             }
+            &:last-of-type{
+              display: none;
+            }
             flex: 4;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media @tablet {
+  .countdown-wrapper {
+
+    .countdown-content {
+      .subscribe-button {
+        position: relative;
+        left: inherit;
+        margin: 0;
+        bottom: 0;
+      }
+    }
+
+    .countdown-timer {
+      font-size: 18px;
+
+      .countdown-number-row {
+        font-size: 18px;
+
+        .countdown-text-unit {
+          font-size: 14px;
+          &.countdown-prez {
+            &:first-of-type {
+              flex: 2;
+            }
+            flex: 3;
           }
         }
       }
@@ -119,8 +152,6 @@
   .countdown-wrapper {
     .countdown-timer {
       font-size: 18px;
-      padding-top: 16px;
-      padding-bottom: 16px;
 
       .countdown-number-row {
         font-size: 18px;

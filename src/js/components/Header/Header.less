@@ -217,6 +217,9 @@ header {
             height: 100%;
             display: inline-block;
             &.btn-home {
+              @media @mobile {
+                width: @sidebar-width - 70px;
+              }
               width: @sidebar-width - 50px;
               img {
                 .isMobile({ max-width: 80%; });
