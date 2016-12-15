@@ -45,7 +45,7 @@ class WelcomePage extends React.Component {
   render () {
     return (
       <div className="welcome-page">
-        <InternalPlansCountDown className="welcome-header" action="countdown.action" {...this.props} >
+        <InternalPlansCountDown className="welcome-header" {...this.props} >
           <WelcomeHeader {...this.props}/>
         </InternalPlansCountDown>
         <Devices {...this.props} />
