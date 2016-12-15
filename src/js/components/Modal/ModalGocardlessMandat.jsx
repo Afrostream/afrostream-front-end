@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import ModalComponent from './ModalComponent'
 import moment from 'moment'
 import classNames from 'classnames'

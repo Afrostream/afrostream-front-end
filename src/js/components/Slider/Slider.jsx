@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames'
 

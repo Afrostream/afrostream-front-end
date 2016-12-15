@@ -1,6 +1,6 @@
 import React from 'react'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import config from '../../../../config'
 import classNames from 'classnames'

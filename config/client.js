@@ -184,7 +184,7 @@ const client = {
     internalPlanUuid: 'nsafrostreammonthly'
   },
   internalPlansCountDown: {
-    countDownDateFrom: '2016-12-12 01:00',
+    countDownDateFrom: '2016-12-12',
     countDownDateTo: '2017-01-01',
     imageUrl: '/production/image/2016/12/promo-noel-v5-{lang}.jpg',
     internalPlanUuid: 'afrostreamannually-active',

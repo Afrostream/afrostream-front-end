@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import classSet from 'classnames'
 import config from '../../../../../config'
 import moment from 'moment'

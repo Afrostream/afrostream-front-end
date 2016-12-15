@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import shallowCompare from 'react-addons-shallow-compare'
 import classSet from 'classnames'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 
 if (canUseDOM) {
   require('gsap')

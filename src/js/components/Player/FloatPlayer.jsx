@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import Immutable from 'immutable'
 import _ from 'lodash'
 import shallowEqual from 'react-pure-render/shallowEqual'

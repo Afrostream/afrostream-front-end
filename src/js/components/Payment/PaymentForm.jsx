@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import shallowEqual from 'react-pure-render/shallowEqual'

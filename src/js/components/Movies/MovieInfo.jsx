@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import { Link } from '../Utils'
 import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'

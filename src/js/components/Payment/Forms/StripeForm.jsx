@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import config from '../../../../../config'
 import window from 'global/window'
 import RecurlyForm from './RecurlyForm'

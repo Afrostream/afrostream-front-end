@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from'react-dom'
+import ReactDOM from 'react-dom'
 import classSet from 'classnames'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import CouponForm from './CouponForm'
