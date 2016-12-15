@@ -4,9 +4,6 @@ import ModalComponent from './ModalComponent'
 import moment from 'moment'
 import classNames from 'classnames'
 import config from '../../../../config'
-import {
-  FormattedMessage,
-} from 'react-intl'
 
 const {gocardless} = config
 
@@ -62,7 +59,7 @@ class ModalGocardlessMandat extends ModalComponent {
                       <div className="bg-gradient"></div>
                       <h1>{this.getTitle('title')}</h1>
                       <h2 >{this.getTitle('info')}</h2>
-                      <a className={closeClass}  onClick={::this.handleClose}></a>
+                      <a className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">
@@ -135,7 +132,7 @@ class ModalGocardlessMandat extends ModalComponent {
                         {this.getTitle('submit')}
                       </button>
                       <div className="options">
-                        <a  onClick={::this.cancel}
+                        <a onClick={::this.cancel}
                            className="centered btn-small cancel">{this.getTitle('cancel')}</a>
                       </div>
                     </div>
