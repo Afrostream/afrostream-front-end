@@ -24,6 +24,7 @@ class ModalLifeRemove extends ModalComponent {
       const pinId = data.get('_id')
       return dispatch(LifeActionCreators.removePin(pinId)).then(() => {
         dispatch(EventActionCreators.snackMessage({message: 'life.modal.removeSuccess'}))
+        dispatch(LifeActionCreators.fetchUsers(null, {}))
         this.closeModal()
       })
     }
