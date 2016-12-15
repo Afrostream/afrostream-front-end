@@ -172,8 +172,7 @@ InternalPlansCountDown.propTypes = {
   action: React.PropTypes.string
 }
 InternalPlansCountDown.defaultProps = {
-  className: '',
-  action: 'countdown.action'
+  className: ''
 }
 
 
