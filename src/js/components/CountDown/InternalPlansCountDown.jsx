@@ -111,7 +111,7 @@ class InternalPlansCountDown extends React.Component {
     window.removeEventListener('resize', ::this.resizeSnow)
   }
 
-  openModal (uuid, query) {
+  openModal (donePath) {
     const {
       props: {
         dispatch
@@ -120,7 +120,7 @@ class InternalPlansCountDown extends React.Component {
 
     dispatch(ModalActionCreators.open({
       target: 'showSignup',
-      donePath: `/select-plan/${uuid}/checkout${query}`
+      donePath
     }))
   }
 
@@ -143,15 +143,17 @@ class InternalPlansCountDown extends React.Component {
     const user = this.props.User.get('user')
     const {internalPlanUuid, internalPlanQuery} = internalPlansCountDown
     const countdown = this.renderCountDown()
+    let targetPlan = '/select-plan' + (internalPlanUuid && `/${internalPlanUuid}/checkout${internalPlanQuery}` || '')
     if (!user) {
       return (
         <div className={`${this.props.className}`}
-             onClick={() => ::this.openModal(internalPlanUuid, internalPlanQuery)}>{countdown}</div>
+             onClick={() => ::this.openModal(targetPlan)}>{countdown}</div>
       )
     }
     return (
       <div className={`no-hover ${this.props.className}`}><Link
-        to={`/select-plan/${internalPlanUuid}/checkout${internalPlanQuery}`}>{countdown}</Link></div>
+        to={targetPlan}>{countdown}</Link>
+      </div>
     )
   }
 
