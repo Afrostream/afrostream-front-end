@@ -26,8 +26,8 @@ class InternalPlansCountDown extends React.Component {
     const ctx = snowCVX.getContext('2d')
     const container = ReactDOM.findDOMNode(this)
 
-    let w = ctx.width = container.clientWidth
-    let h = ctx.height = container.clientHeight
+    this.snowW = ctx.width = container.clientWidth
+    this.snowH = ctx.height = container.clientHeight
 
     let snow, arr = []
     let num = 300, tsc = 1, sp = 1
@@ -35,8 +35,8 @@ class InternalPlansCountDown extends React.Component {
 
     const initSnow = () => {
       window.requestAnimationFrame(initSnow)
-      ctx.clearRect(0, 0, w, h)
-      ctx.fillRect(0, 0, w, h)
+      ctx.clearRect(0, 0, this.snowW, this.snowH)
+      ctx.fillRect(0, 0, this.snowW, this.snowH)
       ctx.fill()
       for (let i = 0; i < arr.length; ++i) {
         f = arr[i]
@@ -44,9 +44,9 @@ class InternalPlansCountDown extends React.Component {
         f.t = f.t >= Math.PI * 2 ? 0 : f.t
         f.y += f.sp
         f.x += Math.sin(f.t * tsc) * (f.sz * .3)
-        if (f.y > h + 50) f.y = -Math.random() * mv
-        if (f.x > w + mv) f.x = -mv
-        if (f.x < -mv) f.x = w + mv
+        if (f.y > this.snowH + 100) f.y = -10 - Math.random() * mv
+        if (f.x > this.snowW + mv) f.x = -mv
+        if (f.x < -mv) f.x = this.snowW + mv
         try {
           f.draw()
         } catch (e) {
@@ -75,8 +75,8 @@ class InternalPlansCountDown extends React.Component {
 
     for (let i = 0; i < num; ++i) {
       snow = new Flake()
-      snow.y = Math.random() * (h + 50)
-      snow.x = Math.random() * w
+      snow.y = Math.random() * (this.snowH + 50)
+      snow.x = Math.random() * this.snowW
       snow.t = Math.random() * (Math.PI * 2)
       snow.sz = (100 / (10 + (Math.random() * 100))) * sc
       snow.sp = (Math.pow(snow.sz * .8, 2) * .15) * sp
@@ -87,14 +87,28 @@ class InternalPlansCountDown extends React.Component {
     initSnow()
 
     /*________________________________________*/
-    window.addEventListener('resize', () => {
-      w = ctx.width = container.clientWidth
-      h = ctx.height = container.clientHeight
-    }, false)
+    window.addEventListener('resize', ::this.resizeSnow)
+  }
+
+  resizeSnow () {
+    const {snowCVX} = this.refs
+
+    if (!snowCVX) {
+      return
+    }
+    const ctx = snowCVX.getContext('2d')
+    const container = ReactDOM.findDOMNode(this)
+
+    this.snowW = ctx.width = container.clientWidth
+    this.snowH = ctx.height = container.clientHeight
   }
 
   componentDidMount () {
     this.drawSnow()
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', ::this.resizeSnow)
   }
 
   openModal (uuid, query) {
