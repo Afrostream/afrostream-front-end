@@ -14,7 +14,7 @@ import {
 
 const {images, internalPlansCountDown} = config
 
-@connect(({User}) => ({User}))
+@connect(({User, Billing}) => ({User, Billing}))
 class InternalPlansCountDown extends React.Component {
 
   drawSnow () {
@@ -30,7 +30,7 @@ class InternalPlansCountDown extends React.Component {
     this.snowH = ctx.height = container.clientHeight
 
     let snow, arr = []
-    let num = 300, tsc = 1, sp = 1
+    let num = 500, tsc = 1, sp = 1
     let sc = 0.8, t = 0, mv = 20, min = 1, f = null
 
     const initSnow = () => {
@@ -63,7 +63,7 @@ class InternalPlansCountDown extends React.Component {
 
       this.draw = function () {
         this.g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.sz)
-        this.g.addColorStop(0, 'hsla(255,255%,255%,0.4)')
+        this.g.addColorStop(0, 'hsla(255,255%,255%,0.6)')
         this.g.addColorStop(1, 'hsla(255,255%,255%,0)')
         ctx.moveTo(this.x, this.y)
         ctx.fillStyle = this.g
@@ -111,7 +111,7 @@ class InternalPlansCountDown extends React.Component {
     window.removeEventListener('resize', ::this.resizeSnow)
   }
 
-  openModal (uuid, query) {
+  openModal (donePath) {
     const {
       props: {
         dispatch
@@ -120,7 +120,7 @@ class InternalPlansCountDown extends React.Component {
 
     dispatch(ModalActionCreators.open({
       target: 'showSignup',
-      donePath: `/select-plan/${uuid}/checkout${query}`
+      donePath
     }))
   }
 
@@ -140,18 +140,31 @@ class InternalPlansCountDown extends React.Component {
   }
 
   renderProperLink () {
-    const user = this.props.User.get('user')
+
+    const {props:{User, Billing}} =this
+    const user = User.get('user')
     const {internalPlanUuid, internalPlanQuery} = internalPlansCountDown
     const countdown = this.renderCountDown()
+    const validPlans = Billing.get(`internalPlans/common`)
+    const annualPlan = validPlans && validPlans.find((plan) => {
+        const planUuid = plan.get('internalPlanUuid')
+        return ~planUuid.indexOf(internalPlanUuid)
+      })
+
+    const targetConfigPlanUuid = annualPlan && annualPlan.get('internalPlanUuid') || internalPlanUuid
+
+    let targetPlan = '/select-plan' + (targetConfigPlanUuid && `/${targetConfigPlanUuid}/checkout${internalPlanQuery}` || '')
+
     if (!user) {
       return (
         <div className={`${this.props.className}`}
-             onClick={() => ::this.openModal(internalPlanUuid, internalPlanQuery)}>{countdown}</div>
+             onClick={() => ::this.openModal(targetPlan)}>{countdown}</div>
       )
     }
     return (
       <div className={`no-hover ${this.props.className}`}><Link
-        to={`/select-plan/${internalPlanUuid}/checkout${internalPlanQuery}`}>{countdown}</Link></div>
+        to={targetPlan}>{countdown}</Link>
+      </div>
     )
   }
 
