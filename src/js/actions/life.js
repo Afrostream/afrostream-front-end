@@ -91,6 +91,10 @@ export function publishPin (data) {
           method: 'POST',
           params: data,
           passToken: true
+        }).then(() => {
+          if (userId) {
+            dispatch(fetchUsers(userId, {}))
+          }
         })
       }
     }
@@ -172,9 +176,8 @@ export function fetchSpots ({limit = 22, startIndex = 0, stopIndex = 3}) {
 
 export function fetchUsers (fetchUserId, {limit = 200, startIndex = 0, stopIndex = 3}) {
 
+  const lifeUserId = fetchUserId || ''
   return (dispatch, getState) => {
-    const currentUser = getState().User.get('user')
-    const lifeUserId = fetchUserId || currentUser && currentUser.get('_id')
     return async api => ({
       type: ActionTypes.Life.fetchUsers,
       lifeUserId,
