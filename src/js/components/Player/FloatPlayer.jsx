@@ -279,7 +279,7 @@ class FloatPlayer extends I18n {
       }
       //encode data to pass it into drmtoday
       if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
-        let protUser = window.atob(JSON.stringify({
+        let protUser = window.btoa(JSON.stringify({
           userId: userId,
           sessionId: token.get('access_token'),
           merchant: 'afrostream'
