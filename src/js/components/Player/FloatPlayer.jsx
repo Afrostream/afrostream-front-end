@@ -55,7 +55,7 @@ class FloatPlayer extends I18n {
     elVisible: false,
     position: {},
     numLoad: 0,
-    old: {}
+    savedData: {}
   }
 
   constructor (props) {
@@ -73,7 +73,7 @@ class FloatPlayer extends I18n {
     numLoad++
     this.state = {
       elVisible: false,
-      old: {},
+      savedData: {},
       size: {
         height: 1920,
         width: 815
@@ -114,10 +114,11 @@ class FloatPlayer extends I18n {
     }
 
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      !this.state.old.pathname && this.setState({
-        old: {
+      this.state.elVisible && this.setState({
+        savedData: {
           pathname: this.props.location.pathname,
-          position: this.state.position
+          position: this.state.position,
+          videoId: this.props.params.videoId
         }
       })
       this.updatePlayerPosition()
@@ -597,7 +598,7 @@ class FloatPlayer extends I18n {
    * Track User video playing
    */
   trackVideo () {
-    const {
+    let {
       props: {
         dispatch, params:{videoId}
       }
@@ -606,6 +607,7 @@ class FloatPlayer extends I18n {
     clearTimeout(this.trackTimeout)
 
     const player = this.player
+    videoId = videoId || this.state.savedData.videoId
     if (!player || !videoId) {
       return
     }
@@ -755,11 +757,9 @@ class FloatPlayer extends I18n {
 
   handleReopen() {
     
-    const { pathname } = this.state.old
+    const { pathname } = this.state.savedData
     this.destroyPlayer()
-    this.setState({ old: {} }, () => {
-      this.props.router.push(pathname)
-    })
+    this.props.router.push(pathname)
   }
 
   getType (data) {
@@ -931,7 +931,7 @@ class FloatPlayer extends I18n {
     return (
       <div className={classSet(classFloatPlayer)} style={position} ref="container">
         <a className={closeClass} href="#" onClick={::this.handleClose}><i className="zmdi zmdi-hc-2x zmdi-close"/></a>
-        <a className={reopenClass}href="#" onClick={::this.handleReopen}><i className="zmdi zmdi-hc-2x zmdi-open-in-new"/></a>
+        <a className={reopenClass} href="#" onClick={::this.handleReopen}><i className="zmdi zmdi-hc-2x zmdi-open-in-new"/></a>
         <div ref="wrapper" className="wrapper"/>
         {videoData && <div className={classSet(videoInfoClasses)}>
           <div className="video-infos_label"><FormattedMessage id="player.watch"/></div>
