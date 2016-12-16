@@ -55,6 +55,7 @@ class Header extends React.Component {
       'episodeId',
       'seasonId',
       'videoId',
+      'categoryId',
       'lifeUserId',
       'planCode'
     ]
