@@ -114,13 +114,13 @@ class FloatPlayer extends I18n {
     }
 
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.state.elVisible && this.setState({
-        savedData: {
-          pathname: this.props.location.pathname,
-          position: this.state.position,
-          videoId: this.props.params.videoId
-        }
-      })
+      //this.state.elVisible && this.setState({
+      //  savedData: {
+      //    pathname: this.props.location.pathname,
+      //    position: this.state.position,
+      //    videoId: this.props.params.videoId
+      //  }
+      //})
       this.updatePlayerPosition()
     }
 
@@ -607,7 +607,7 @@ class FloatPlayer extends I18n {
     clearTimeout(this.trackTimeout)
 
     const player = this.player
-    videoId = videoId || this.state.savedData.videoId
+    //videoId = videoId || this.state.savedData.videoId
     if (!player || !videoId) {
       return
     }
@@ -756,7 +756,6 @@ class FloatPlayer extends I18n {
   }
 
   handleReopen () {
-
     const {pathname} = this.state.savedData
     this.destroyPlayer()
     this.props.router.push(pathname)
@@ -858,7 +857,7 @@ class FloatPlayer extends I18n {
 
     let reopenClass = classSet({
       'reopen': true,
-      'hide': !this.player
+      'hide': true//!this.player
     })
 
     const videoData = Video.get(`videos/${videoId}`)
