@@ -30,11 +30,22 @@ class InternalPlansCountDown extends React.Component {
     this.snowH = ctx.height = container.clientHeight
 
     let snow, arr = []
-    let num = 500, tsc = 1, sp = 1
+    let num = 200, tsc = 1, sp = 1
     let sc = 0.8, t = 0, mv = 20, min = 1, f = null
 
+    /**
+     * Calls rAF if it's not already
+     * been done already
+     */
+    const requestTick = () => {
+      if (!this.ticking) {
+        requestAnimationFrame(initSnow)
+        this.ticking = true
+      }
+    }
+
+
     const initSnow = () => {
-      window.requestAnimationFrame(initSnow)
       ctx.clearRect(0, 0, this.snowW, this.snowH)
       ctx.fillRect(0, 0, this.snowW, this.snowH)
       ctx.fill()
@@ -53,6 +64,7 @@ class InternalPlansCountDown extends React.Component {
           console.log('Draw snow err')
         }
       }
+      this.ticking = false
     }
 
     let Flake = function () {
@@ -63,8 +75,8 @@ class InternalPlansCountDown extends React.Component {
 
       this.draw = function () {
         this.g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.sz)
-        this.g.addColorStop(0, 'hsla(255,255%,255%,0.6)')
-        this.g.addColorStop(1, 'hsla(255,255%,255%,0)')
+        this.g.addColorStop(0, 'rgba(255,255,255,0.6)')
+        this.g.addColorStop(1, 'rgba(255,255,255,0)')
         ctx.moveTo(this.x, this.y)
         ctx.fillStyle = this.g
         ctx.beginPath()
@@ -84,7 +96,7 @@ class InternalPlansCountDown extends React.Component {
       arr.push(snow)
     }
 
-    initSnow()
+    this.intervallSnow = setInterval(requestTick, 50)
 
     /*________________________________________*/
     window.addEventListener('resize', ::this.resizeSnow)
@@ -108,6 +120,7 @@ class InternalPlansCountDown extends React.Component {
   }
 
   componentWillUnmount () {
+    clearInterval(this.intervallSnow)
     window.removeEventListener('resize', ::this.resizeSnow)
   }
 
@@ -131,7 +144,7 @@ class InternalPlansCountDown extends React.Component {
       <CountDown
         eventTime={internalPlansCountDown.countDownDateTo}
       >
-        <ReactImgix src={countdownImg}/>
+        <ReactImgix src={countdownImg} blur={false}/>
         {this.props.action && <SignUpButton key="welcome-pgm-signup" className="subscribe-button"
                                             label={this.props.action}/>}
         <canvas ref="snowCVX"/>

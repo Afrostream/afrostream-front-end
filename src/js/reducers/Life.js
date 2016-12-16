@@ -6,7 +6,8 @@ import createReducer from '../lib/createReducer'
 
 const initialState = Immutable.fromJS({
   'life/themes': null,
-  'life/pins': null
+  'life/pins': null,
+  'life/pins/res': []
 })
 
 /**
@@ -16,11 +17,12 @@ const accumulateInBloc = function (finalResult = [], bloc, key) {
   // By default, 1 page = 1 bloc
   let maxBloc = key ? 3 : 1
 
-  //const finalLength = _.last(finalResult).length
-  //if (finalLength === maxBloc) {
-  //  finalResult.push([])
-  //}
   _.last(finalResult).push(bloc)
+
+  const finalLength = _.last(finalResult).length
+  if (finalLength === maxBloc) {
+    finalResult.push([])
+  }
 
   return finalResult
 }
@@ -41,7 +43,6 @@ export default createReducer(initialState, {
     if (!res) {
       return state
     }
-    const data = res.body
     return state.merge({
       [`life/wrap`]: null
     })
@@ -63,7 +64,13 @@ export default createReducer(initialState, {
     }
     const data = res.body
 
-    data.pins = _(data.pins).reduce(accumulateInBloc, [[]])
+    if (Array.isArray(data)) {
+      _.forEach(data, (theme) => {
+        theme.pins = _(theme.pins).reduce(accumulateInBloc, [[]])
+      })
+    } else {
+      data.pins = _(data.pins).reduce(accumulateInBloc, [[]])
+    }
 
     return state.merge({
       [`life/themes/${themeId}`]: data
@@ -75,8 +82,12 @@ export default createReducer(initialState, {
       return state
     }
     const pins = res.body
-    const mappedUserPins = _(pins).reduce(accumulateInBloc, [[]])
+
+    const savedPins = state.get(`life/pins/res`)
+    const mappedUserPins = _(savedPins.toJS().concat(pins)).reduce(accumulateInBloc, [[]])
+
     return state.merge({
+      [`life/pins/res`]: pins,
       [`life/pins/`]: mappedUserPins
     })
   },

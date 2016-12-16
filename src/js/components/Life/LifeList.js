@@ -4,6 +4,7 @@ import classSet from 'classnames'
 import Immutable from 'immutable'
 import LifePin from './LifePin'
 import LifeSpot from './LifeSpot'
+import * as LifeActionCreators from '../../actions/life'
 import _ from 'lodash'
 import ReactList from 'react-list'
 import {
@@ -134,6 +135,10 @@ class LifeList extends Component {
       900,
       350
     ]
+
+    if (!data || !data.size) {
+      return <div className="brick" {...{key}}/>
+    }
     //const index = columnIndex
     const imageWidth = highlightFirst ? sizes[Math.min(index, 1)] : sizes[1]
     const showBubble = !index
@@ -174,12 +179,21 @@ class LifeList extends Component {
 
   isRowLoaded ({index}) {
     const pinsList = this.getPins()
-    return pinsList && !!pinsList.get(index)
-
+    const isLoaded = pinsList && !!pinsList.get(index)
+    console.log('isRowLoaded : ', index, isLoaded)
+    return isLoaded
   }
 
   loadMoreRows ({startIndex, stopIndex}) {
-    debugger
+
+    const {
+      props: {
+        dispatch,
+        themeId
+      }
+    } = this
+
+    return dispatch(LifeActionCreators.fetchPins({startIndex: startIndex, stopIndex}))
   }
 
   render () {
@@ -211,7 +225,7 @@ class LifeList extends Component {
             <InfiniteLoader
               isRowLoaded={::this.isRowLoaded}
               loadMoreRows={::this.loadMoreRows}
-              rowCount={pinsList.size}>
+              rowCount={300000}>
               {({onRowsRendered, registerChild}) => (
                 <AutoSizer disableHeight>
                   {({width}) => (

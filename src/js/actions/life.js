@@ -121,21 +121,22 @@ export function removePin (pinId) {
   }
 }
 
-export function fetchPins ({limit = 22, startIndex = 0, stopIndex = 3}) {
+export function fetchPins ({limit = 6, startIndex = 0, stopIndex = 3}) {
   return (dispatch, getState) => {
-    let readyPins = getState().Life.get(`life/pins/`)
-    if (readyPins) {
-      console.log('Life pins already present in data store')
-      return {
-        type: ActionTypes.Life.fetchPins,
-      }
-    }
+    //let readyPins = getState().Life.get(`life/pins/`)
+    //if (readyPins) {
+    //  console.log('Life pins already present in data store')
+    //  return {
+    //    type: ActionTypes.Life.fetchPins,
+    //  }
+    //}
     return async api => ({
       type: ActionTypes.Life.fetchPins,
       res: await api({
         path: `/api/life/pins`,
         params: {
-          limit
+          limit,
+          offset: startIndex
         }
       })
     })

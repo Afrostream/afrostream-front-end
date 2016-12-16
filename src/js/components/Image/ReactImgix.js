@@ -40,6 +40,7 @@ export default class ReactImgix extends Component {
     fit: PropTypes.string,
     auto: PropTypes.array,
     faces: PropTypes.bool,
+    blur: PropTypes.bool,
     aggressiveLoad: PropTypes.bool,
     fluid: PropTypes.bool,
     children: PropTypes.any,
@@ -52,6 +53,7 @@ export default class ReactImgix extends Component {
     bg: false,
     fluid: true,
     aggressiveLoad: false,
+    blur: true,
     faces: true,
     fit: 'crop',
     entropy: false,
@@ -164,8 +166,10 @@ export default class ReactImgix extends Component {
     const url = URL.parse(_src)
     if (~config.images.urlPrefix.indexOf(url.hostname)) {
       //Adding blur effect
-      _src = _src.replace(/&blur=([1-9][0-9]*|0)/g, ``)
-      _src += '&blur=800'
+      if (this.props.blur) {
+        _src = _src.replace(/&blur=([1-9][0-9]*|0)/g, ``)
+        _src += '&blur=800'
+      }
       //Replace width
       const regexWidth = /&w=([1-9][0-9]*|0)/g
       const matchWith = _src.match(regexWidth)
