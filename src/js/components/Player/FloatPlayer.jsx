@@ -18,6 +18,8 @@ import ShareButton from '../Share/ShareButton'
 import RateComponent from '../Recommendation/RateComponent'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import { withRouter } from 'react-router'
+
 import * as FacebookActionCreators from '../../actions/facebook'
 import * as PlayerActionCreators from '../../actions/player'
 import * as EventActionCreators from '../../actions/event'
@@ -758,7 +760,7 @@ class FloatPlayer extends I18n {
   handleReopen () {
     const {pathname} = this.state.savedData
     this.destroyPlayer()
-    this.props.router.push(pathname)
+    this.props.history.push(pathname)
   }
 
   getType (data) {
@@ -965,6 +967,7 @@ class FloatPlayer extends I18n {
 
 
 FloatPlayer.propTypes = {
+  history: React.PropTypes.object.isRequired,
   data: PropTypes.instanceOf(Immutable.Map),
   float: PropTypes.bool,
   className: PropTypes.string,
@@ -974,4 +977,4 @@ FloatPlayer.defaultProps = {
   className: '',
   float: true
 }
-export default injectIntl(FloatPlayer)
+export default withRouter(injectIntl(FloatPlayer))
