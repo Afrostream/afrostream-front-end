@@ -5,6 +5,7 @@ import * as UserActionCreators from '../../actions/user'
 import classSet from 'classnames'
 import Spinner from '../Spinner/Spinner'
 import { I18n } from '../Utils'
+import ReactTooltip from 'react-tooltip'
 import {
   intlShape,
   injectIntl
@@ -22,17 +23,11 @@ class FavoritesAddButton extends I18n {
     this.state = {pendingFavorite: false}
   }
 
-  componentDidMount () {
-    this.attachTooltip()
-  }
 
   componentDidUpdate () {
-    this.attachTooltip()
+    ReactTooltip.rebuild()
   }
 
-  attachTooltip () {
-    $(this.refs.data).tooltip()
-  }
 
   static propTypes = {
     data: PropTypes.instanceOf(Immutable.Map),
@@ -111,13 +106,20 @@ class FavoritesAddButton extends I18n {
 
     const titleLabel = this.getTitle(`${!isFavorite ? 'favorites.add' : 'favorites.delete'}`)
 
-    return (<div className="btn favorite-add_button" type="button" data-toggle="tooltip"
-                 data-placement="top" ref="data"
-                 title={titleLabel}  {...inputAttributes}>
-      <i className={classSet(favoriteClass)}></i>
-      {this.state.pendingFavorite ? <Spinner /> : ''}
-    </div>)
+    return (
+      <div>
+        <div className="btn favorite-add_button" data-tip={titleLabel} data-for={`fav-${dataId}`} {...inputAttributes}>
+          <i className={classSet(favoriteClass)}></i>
+          {this.state.pendingFavorite ? <Spinner /> : ''}
+        </div>
+        <ReactTooltip id={`fav-${dataId}`} class="fav-tooltip" place={this.props.direction} type="dark" effect="solid" getContent={[() => titleLabel, 100]}/>
+      </div>
+    )
   }
+}
+
+FavoritesAddButton.defaultProps = {
+  direction: 'top'
 }
 
 export default injectIntl(FavoritesAddButton)

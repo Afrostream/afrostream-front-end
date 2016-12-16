@@ -4365,6 +4365,9 @@
         }
       }
     },
+    "react-tooltip": {
+      "version": "3.2.2"
+    },
     "react-virtualized": {
       "version": "7.24.3"
     },

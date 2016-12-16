@@ -42,7 +42,7 @@ class Billboard extends LoadVideo {
       return
     }
 
-    return (<FavoritesAddButton {...{data, dataId}}/>)
+    return (<FavoritesAddButton direction="right" {...{data, dataId}}/>)
   }
 
   getShareButton () {
@@ -56,7 +56,7 @@ class Billboard extends LoadVideo {
 
     let link = this.getLink()
 
-    return <ShareButton link={link} title={data.get('title')} description={data.get('synopsis')}/>
+    return <ShareButton direction="right" link={link} title={data.get('title')} description={data.get('synopsis')}/>
   }
 
   getGenre (tags) {
