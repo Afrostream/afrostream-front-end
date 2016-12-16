@@ -123,17 +123,19 @@ class Thumb extends Poster {
     }
 
     return (
-      <div ref="thumb" className={classSet(thumbClass)}
-           onMouseEnter={::this.triggerOver}
-           onMouseLeave={::this.triggerOut}>
-        <Link to={link}>
-          <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
-            {this.getBtnPlay()}
-            {this.getNew()}
-          </div>
-          {this.getInfos()}
-        </Link>
-        {this.getButtons()}
+      <div className="thumb-wrapper">
+        <div ref="thumb" className={classSet(thumbClass)}
+            onMouseEnter={::this.triggerOver}
+            onMouseLeave={::this.triggerOut}>
+          <Link to={link}>
+            <div ref="thumbBackground" className="thumb-background" style={imageStyles}>
+              {this.getBtnPlay()}
+              {this.getNew()}
+            </div>
+            {this.getInfos()}
+          </Link>
+          {this.getButtons()}
+        </div>
       </div>
     )
   }

@@ -148,6 +148,7 @@
     "react-sticky": "^5.0.5",
     "react-tap-event-plugin": "^2.0.1",
     "react-tappable": "^0.8.4",
+    "react-tooltip": "^3.2.2",
     "react-virtualized": "^7.24.3",
     "redux": "^3.6.0",
     "redux-devtools": "^3.3.1",

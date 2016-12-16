@@ -4,6 +4,7 @@ import * as ModalActionCreators from '../../actions/modal'
 import classSet from 'classnames'
 import RaisedButton from 'material-ui/RaisedButton'
 import { I18n } from '../Utils'
+import ReactTooltip from 'react-tooltip'
 import {
   intlShape,
   injectIntl
@@ -20,17 +21,11 @@ class ShareButton extends I18n {
     super(props)
   }
 
-  componentDidMount () {
-    this.attachTooltip()
-  }
 
   componentDidUpdate () {
-    this.attachTooltip()
+    ReactTooltip.rebuild()
   }
 
-  attachTooltip () {
-    $(this.refs.data).tooltip()
-  }
 
   getLabel () {
     if (!this.props.label) {
@@ -59,12 +54,16 @@ class ShareButton extends I18n {
     const inputAttributes = {
       onClick: event => ::this.sharePopup()
     }
-    return (<button className="btn share_button" type="button" data-toggle="tooltip" ref="data"
-                    data-placement="top"
-                    title={this.getTitle(this.props.tooltip)}  {...inputAttributes}>
-      <i className={classSet(favoriteClass)}></i>
-      {this.getLabel()}
-    </button>)
+    return (
+      <div>   
+        <button className="btn share_button" type="button" 
+          data-tip={this.getTitle(this.props.tooltip)}  {...inputAttributes}>
+          <i className={classSet(favoriteClass)}></i>
+          {this.getLabel()}
+        </button>
+        <ReactTooltip class="fav-tooltip" place={this.props.direction} type="dark" effect="solid" />
+      </div>
+    )
   }
 }
 
@@ -81,7 +80,8 @@ ShareButton.defaultProps = {
   description: null,
   title: null,
   label: '',
-  tooltip: 'share.tooltip'
+  tooltip: 'share.tooltip',
+  direction: 'top'
 }
 
 export default injectIntl(ShareButton)
