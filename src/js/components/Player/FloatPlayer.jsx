@@ -946,8 +946,8 @@ class FloatPlayer extends I18n {
           </div>
           {<RateComponent {...{videoId}}/>}
           {renderData && <div className="player-buttons">
-            <FavoritesAddButton data={renderData} dataId={renderData.get('_id')}/>
-            <ShareButton />
+            <FavoritesAddButton direction="right" data={renderData} dataId={renderData.get('_id')}/>
+            <ShareButton direction="right" />
             <RaisedButton onClick={::this.showKoment}
                           label={
                             <FormattedMessage id="comment.label"/>
