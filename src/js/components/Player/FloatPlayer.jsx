@@ -145,7 +145,7 @@ class FloatPlayer extends I18n {
     const movie = Movie.get(`movies/${movieId}`)
     let posterImgObj = {}
     let chromecastOptions = {}
-
+    let komentData = null
     if (movie) {
       const posterImg = extractImg({
         data: movie,
@@ -165,38 +165,38 @@ class FloatPlayer extends I18n {
         }
       }
       //END KOMENT
-    }
 
-    //KOMENT
-    let komentData = {
-      open: true,
-      videoId: videoId || videoData.videoId,
-      controlBar: {
-        komentToggle: {
-          attributes: {
-            'data-position': 'left',
-            'data-intro': this.getTitle('player.koment.info')
+
+      //KOMENT
+      komentData = {
+        open: true,
+        videoId: videoId || videoData.videoId,
+        controlBar: {
+          komentToggle: {
+            attributes: {
+              'data-position': 'left',
+              'data-intro': this.getTitle('player.koment.info')
+            }
           }
-        }
-      },
-      user: (user && {
-        id: user.get('_id').toString(),
-        provider: config.domain.host,
-        token: token && token.get('access_token'),
-        avatar: user.get('picture')
-      }),
-      languages: config.player.languages
-    }
+        },
+        user: (user && {
+          id: user.get('_id').toString(),
+          provider: config.domain.host,
+          token: token && token.get('access_token'),
+          avatar: user.get('picture')
+        }),
+        languages: config.player.languages
+      }
 
-    if (user && user.get('nickname')) {
-      komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
-    }
+      if (user && user.get('nickname')) {
+        komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
+      }
 
-    //L'user a choisi de ne pas afficher les comentaires par default
-    if (user && user.get('playerKoment')) {
-      komentData.open = user.get('playerKoment')
+      //L'user a choisi de ne pas afficher les comentaires par default
+      if (user && user.get('playerKoment')) {
+        komentData.open = user.get('playerKoment')
+      }
     }
-
     await this.generateDomTag(videoOptions, komentData)
     //MERGE PLAYER DATA API
     let apiPlayerConfig = Player.get(`/player/config`)
@@ -755,9 +755,9 @@ class FloatPlayer extends I18n {
 
   }
 
-  handleReopen() {
-    
-    const { pathname } = this.state.savedData
+  handleReopen () {
+
+    const {pathname} = this.state.savedData
     this.destroyPlayer()
     this.props.router.push(pathname)
   }
@@ -931,7 +931,8 @@ class FloatPlayer extends I18n {
     return (
       <div className={classSet(classFloatPlayer)} style={position} ref="container">
         <a className={closeClass} href="#" onClick={::this.handleClose}><i className="zmdi zmdi-hc-2x zmdi-close"/></a>
-        <a className={reopenClass} href="#" onClick={::this.handleReopen}><i className="zmdi zmdi-hc-2x zmdi-open-in-new"/></a>
+        <a className={reopenClass} href="#" onClick={::this.handleReopen}><i
+          className="zmdi zmdi-hc-2x zmdi-open-in-new"/></a>
         <div ref="wrapper" className="wrapper"/>
         {videoData && <div className={classSet(videoInfoClasses)}>
           <div className="video-infos_label"><FormattedMessage id="player.watch"/></div>
@@ -947,7 +948,7 @@ class FloatPlayer extends I18n {
           {<RateComponent {...{videoId}}/>}
           {renderData && <div className="player-buttons">
             <FavoritesAddButton direction="right" data={renderData} dataId={renderData.get('_id')}/>
-            <ShareButton direction="right" />
+            <ShareButton direction="right"/>
             <RaisedButton onClick={::this.showKoment}
                           label={
                             <FormattedMessage id="comment.label"/>
