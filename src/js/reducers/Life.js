@@ -6,8 +6,26 @@ import createReducer from '../lib/createReducer'
 
 const initialState = Immutable.fromJS({
   'life/themes': null,
-  'life/pins': null
+  'life/pins': null,
+  'life/pins/res': []
 })
+
+/**
+ * Used in _.reduce to fill the arrays of blocs
+ */
+const accumulateInBloc = function (finalResult = [], bloc, key) {
+  // By default, 1 page = 1 bloc
+  let maxBloc = key ? 3 : 1
+
+  _.last(finalResult).push(bloc)
+
+  const finalLength = _.last(finalResult).length
+  if (finalLength === maxBloc) {
+    finalResult.push([])
+  }
+
+  return finalResult
+}
 
 export default createReducer(initialState, {
 
@@ -25,7 +43,6 @@ export default createReducer(initialState, {
     if (!res) {
       return state
     }
-    const data = res.body
     return state.merge({
       [`life/wrap`]: null
     })
@@ -46,35 +63,37 @@ export default createReducer(initialState, {
       return state
     }
     const data = res.body
+
     return state.merge({
       [`life/themes/${themeId}`]: data
     })
   },
 
-  [ActionTypes.Life.fetchPins](state, {res}) {
+  [ActionTypes.Life.fetchPins](state, {res, themeId}) {
     if (!res) {
       return state
     }
     const pins = res.body
 
-    const mappedUserPins = _.map(pins, (pin) => {
-      pin.user = mergeFbUserInfo(pin.user)
-      return pin
-    })
+    const savedPins = state.get(`life/pins/${themeId}`) || Immutable.fromJS([])
+    //const mappedUserPins = _(savedPins.toJS().concat(pins)).reduce(accumulateInBloc, [[]])
+    const mappedUserPins = _.concat(savedPins.toJS(), pins)
+    //const mappedUserPins = savedPins.concat(Immutable.fromJS(pins))
 
     return state.merge({
-      [`life/pins/`]: mappedUserPins
+      [`life/pins/res`]: pins,
+      [`life/pins/${themeId}`]: mappedUserPins
     })
   },
 
-  [ActionTypes.Life.fetchSpots](state, {res}) {
+  [ActionTypes.Life.fetchSpots](state, {res, themeId}) {
     if (!res) {
       return state
     }
     const spots = res.body
 
     return state.merge({
-      [`life/spots/`]: spots
+      [`life/spots/${themeId}`]: spots
     })
   },
 

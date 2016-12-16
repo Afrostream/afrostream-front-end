@@ -12,9 +12,6 @@ export function fetchThemes (fetchThemeId) {
       return {
         type: ActionTypes.Life.fetchThemes,
         themeId,
-        res: {
-          body: readyThemes.toJS()
-        }
       }
     }
     return async api => ({
@@ -124,50 +121,52 @@ export function removePin (pinId) {
   }
 }
 
-export function fetchPins ({limit = 22, startIndex = 0, stopIndex = 3}) {
+export function fetchPins ({themeId, limit = 7, offset = 0}) {
   return (dispatch, getState) => {
-    let readyPins = getState().Life.get(`life/pins/`)
-    if (readyPins) {
-      console.log('Life pins already present in data store')
-      return {
-        type: ActionTypes.Life.fetchPins,
-        res: {
-          body: readyPins.toJS()
-        }
-      }
-    }
+    //let readyPins = getState().Life.get(`life/pins/`)
+    //if (readyPins) {
+    //  console.log('Life pins already present in data store')
+    //  return {
+    //    type: ActionTypes.Life.fetchPins,
+    //    res: {
+    //      body: readyPins.toJS()
+    //    }
+    //  }
+    //}
     return async api => ({
       type: ActionTypes.Life.fetchPins,
+      themeId,
       res: await api({
         path: `/api/life/pins`,
         params: {
-          limit
+          limit,
+          offset,
+          themeId
         }
       })
     })
   }
 }
 
-export function fetchSpots ({limit = 22, startIndex = 0, stopIndex = 3}) {
+export function fetchSpots ({themeId, limit = 22, offset = 0}) {
   return (dispatch, getState) => {
-    let readySpots = getState().Life.get(
-      `life/spots/`
-    )
-    if (readySpots) {
-      console.log('Life spots already present in data store')
-      return {
-        type: ActionTypes.Life.fetchSpots,
-        res: {
-          body: readySpots.toJS()
-        }
-      }
-    }
+    //let readySpots = getState().Life.get(
+    //  `life/spots/`
+    //)
+    //if (readySpots) {
+    //  console.log('Life spots already present in data store')
+    //  return {
+    //    type: ActionTypes.Life.fetchSpots,
+    //  }
+    //}
     return async api => ({
       type: ActionTypes.Life.fetchSpots,
+      themeId,
       res: await api({
         path: `/api/life/spots`,
         params: {
-          limit
+          limit,
+          themeId
         }
       })
     })

@@ -2,8 +2,10 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import Immutable from 'immutable'
+import Spinner from '../Spinner/Spinner'
 import LifePin from './LifePin'
 import LifeSpot from './LifeSpot'
+import * as LifeActionCreators from '../../actions/life'
 import _ from 'lodash'
 import ReactList from 'react-list'
 
@@ -15,6 +17,8 @@ class LifeList extends Component {
 
   constructor (props) {
     super(props)
+    this.pending = []
+    this.isLoading = false
   }
 
   getPins () {
@@ -26,20 +30,20 @@ class LifeList extends Component {
       }
     } = this
 
-    const lifeTheme = Life.get(`life/themes/${themeId}`)
-
-    const pinsList = pins || (lifeTheme && lifeTheme.get('pins')) || Immutable.fromJS([])
-    const spotList = this.getSpots()
+    //const lifeTheme = Life.get(`life/pins/${themeId}`)
+    //
+    //const pinsList = pins || (lifeTheme && lifeTheme.get('pins')) || Immutable.fromJS([])
+    //const spotList = this.getSpots()
 
     //const listSize = (pinsList.size + Math.min(Math.round(pinsList.size / this.props.moduloSpots), spotList.size))
-    let mergedList = pinsList
-    pinsList.forEach((spot, index) => {
-      const spotIndex = this.canInsertSpot(spotList, index)
-      if (spotIndex) {
-        const spot = spotList.get(spotIndex - 1)
-        mergedList = mergedList.insert(index, spot)
-      }
-    })
+    let mergedList = pins
+    //pinsList.forEach((spot, index) => {
+    //  const spotIndex = this.canInsertSpot(spotList, index)
+    //  if (spotIndex) {
+    //    const spot = spotList.get(spotIndex - 1)
+    //    mergedList = mergedList.insert(index, spot)
+    //  }
+    //})
     return mergedList
   }
 
@@ -52,15 +56,16 @@ class LifeList extends Component {
       }
     } = this
 
-    const lifeTheme = Life.get(`life/themes/${themeId}`)
+    let spotList = spots
 
-    let spotList = spots || (lifeTheme && lifeTheme.get('spots'))
+    //let spotList = spots || (lifeTheme && lifeTheme.get('spots'))
 
     if (spotList) {
       spotList = spotList.filter((spot) => {
         return spot.get('type') === 'banner'
       })
     }
+
     return spotList || Immutable.fromJS([])
   }
 
@@ -76,6 +81,12 @@ class LifeList extends Component {
   renderInfiniteItem (index, key) {
     const pinsList = this.getPins()
     const data = pinsList.get(index)
+
+    if (!data) {
+      this.request(index)
+      return <div className="brick" {...{key}} />
+    }
+
     const typeItem = data.get('type')
     switch (typeItem) {
       case 'spot':
@@ -112,6 +123,22 @@ class LifeList extends Component {
     )
   }
 
+  request (index) {
+    const {
+      props: {
+        dispatch,
+        themeId
+      }
+    } = this
+
+    if (this.isLoading) return
+    this.isLoading = true
+    return dispatch(LifeActionCreators.fetchPins({offset: index}))
+      .then(() => {
+        this.isLoading = false
+      })
+  }
+
   render () {
     const {
       props: {
@@ -140,7 +167,8 @@ class LifeList extends Component {
         ref="react-pins-list"
         axis="y"
         itemRenderer={::this.renderInfiniteItem}
-        length={pinsList.size}
+        items={pinsList}
+        length={pinsList.size + 1}
         type={'simple'}
       />}
     </div>)
