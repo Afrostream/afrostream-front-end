@@ -16,13 +16,11 @@ const accumulateInBloc = function (finalResult = [], bloc, key) {
   // By default, 1 page = 1 bloc
   let maxBloc = key ? 3 : 1
 
-
+  //const finalLength = _.last(finalResult).length
+  //if (finalLength === maxBloc) {
+  //  finalResult.push([])
+  //}
   _.last(finalResult).push(bloc)
-
-  const finalLength = _.last(finalResult).length
-  if (finalLength === maxBloc) {
-    finalResult.push([])
-  }
 
   return finalResult
 }
@@ -77,9 +75,7 @@ export default createReducer(initialState, {
       return state
     }
     const pins = res.body
-
     const mappedUserPins = _(pins).reduce(accumulateInBloc, [[]])
-
     return state.merge({
       [`life/pins/`]: mappedUserPins
     })

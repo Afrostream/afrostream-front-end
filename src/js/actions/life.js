@@ -12,9 +12,6 @@ export function fetchThemes (fetchThemeId) {
       return {
         type: ActionTypes.Life.fetchThemes,
         themeId,
-        res: {
-          body: readyThemes.toJS()
-        }
       }
     }
     return async api => ({
@@ -131,9 +128,6 @@ export function fetchPins ({limit = 22, startIndex = 0, stopIndex = 3}) {
       console.log('Life pins already present in data store')
       return {
         type: ActionTypes.Life.fetchPins,
-        res: {
-          body: readyPins.toJS()
-        }
       }
     }
     return async api => ({
@@ -157,9 +151,6 @@ export function fetchSpots ({limit = 22, startIndex = 0, stopIndex = 3}) {
       console.log('Life spots already present in data store')
       return {
         type: ActionTypes.Life.fetchSpots,
-        res: {
-          body: readySpots.toJS()
-        }
       }
     }
     return async api => ({

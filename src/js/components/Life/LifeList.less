@@ -461,14 +461,18 @@
   }
 
   &.hightlight-first {
-    .brick {
+    .block {
       &:first-child {
-        width: 100%;
-        max-width: 100%;
-        .brick-full();
-        .card-body {
-          .card-bubbles {
-            display: none;
+        .brick {
+          &:first-child {
+            width: 100%;
+            max-width: 100%;
+            .brick-full();
+            .card-body {
+              .card-bubbles {
+                display: none;
+              }
+            }
           }
         }
       }

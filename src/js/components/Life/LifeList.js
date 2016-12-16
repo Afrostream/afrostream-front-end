@@ -151,15 +151,9 @@ class LifeList extends Component {
   }
 
   renderItem ({index, key}) {
-    const {
-      props: {
-        dataList
-      }
-    } = this
 
     const pinsList = this.getPins()
     const data = pinsList && pinsList.get(index)
-
     if (data instanceof Immutable.Map) {
       return this.renderBlock(data, index, key)
     }
@@ -202,8 +196,8 @@ class LifeList extends Component {
     const classList = {
       'life-list': true,
       'hightlight-first': highlightFirst,
-      'flat': !virtual,
-      'virtual': virtual
+      //'flat': !virtual,
+      //'virtual': virtual
     }
 
     if (!pinsList) {
@@ -221,38 +215,37 @@ class LifeList extends Component {
               {({onRowsRendered, registerChild}) => (
                 <AutoSizer disableHeight>
                   {({width}) => (
-                    <CellMeasurer
-                      cellRenderer={::this.renderCell}
-                      columnCount={1}
+                    /*<CellMeasurer
+                     cellRenderer={::this.renderCell}
+                     columnCount={1}
+                     rowCount={pinsList.size}
+                     width={width}
+                     >
+                     {({getRowHeight, getColumnWidth}) => (
+                     <Grid
+                     cellRenderer={::this.renderCell}
+                     columnWidth={getColumnWidth}
+                     columnCount={1}
+                     overscanColumnCount={0}
+                     overscanRowCount={0}
+                     rowCount={pinsList.size}
+                     rowHeight={getRowHeight}
+                     autoHeight
+                     height={height}
+                     width={width}
+                     />*/
+                    <List
+                      ref={registerChild}
+                      onRowsRendered={onRowsRendered}
+                      rowRenderer={::this.renderItem}
                       rowCount={pinsList.size}
+                      rowHeight={500}
+                      height={height}
+                      autoHeight
                       width={width}
-                    >
-                      {({getRowHeight, getColumnWidth}) => (
-                        /*{
-                         <Grid
-                         cellRenderer={::this.renderCell}
-                         columnWidth={getColumnWidth}
-                         columnCount={1}
-                         overscanColumnCount={0}
-                         overscanRowCount={0}
-                         rowCount={pinsList.size}
-                         rowHeight={getRowHeight}
-                         autoHeight
-                         height={height}
-                         width={width}
-                         />
-                         }*/
-                        <List
-                          rowRenderer={::this.renderItem}
-                          columnCount={3}
-                          rowCount={pinsList.size}
-                          rowHeight={getRowHeight}
-                          height={height}
-                          autoHeight
-                          width={width}
-                        />
-                      )}
-                    </CellMeasurer>
+                    />
+                    /*)}
+                     </CellMeasurer>*/
                   )}
                 </AutoSizer>
               )}

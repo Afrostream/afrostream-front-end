@@ -87,7 +87,7 @@ class CountDown extends I18n {
                 </div>}
             </div>
             {this.props.contentPosition === 'bottom' && <div className="countdown-content">{children}</div>}
-          </div> 
+          </div>
       )
   }
 
