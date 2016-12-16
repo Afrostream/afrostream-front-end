@@ -343,7 +343,7 @@ class FloatPlayer extends I18n {
           duration: duration
         })
 
-        if (position > 300 && position < (duration - 300)) {
+        if (position > 10 && position < (duration - 10)) {
           playerData.starttime = position
         }
         if (videoTracking.playerCaption) {
