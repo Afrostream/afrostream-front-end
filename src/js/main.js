@@ -84,6 +84,7 @@ function initSite (country) {
 
       return request(method, url)
         .query(qs.stringify(query))
+        .withCredentials()
         .set(headers)
         .send(body)
     }
