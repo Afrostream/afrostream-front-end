@@ -90,6 +90,7 @@ export default class LoadVideo extends I18n {
       }
       episodeId = dataValue.get('_id')
       episodeSlug = dataValue.get('slug')
+      videoId = dataValue.get('videoId')
 
       link = `/${movieId}/${movieSlug}/${seasonId}/${seasonSlug}/${episodeId}/${episodeSlug}`
     }
