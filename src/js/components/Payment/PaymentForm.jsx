@@ -620,6 +620,7 @@ class PaymentForm extends I18n {
                           link={`payment.expired.link`}
                           linkMessage={`payment.expired.linkMessage`}
                           links={`payment.expired.links`}
+                          willRedirect
             />
             <PaymentImages />
           </div>)

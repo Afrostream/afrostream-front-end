@@ -32,20 +32,22 @@ class PaymentError extends I18n {
     }, 2000)
   }
 
-  componentWillMount(nextProps) {
-      let i = 5
-      if (!this.checker) {
-        this.checker = setInterval(() => {
-          if (i > 0) {
-            i--
-            if (this.props.User.get('user')) {
-              ::this.timedRedirect('/select-plan')
+  componentWillMount() {
+      if (this.props.willRedirect) {
+        let i = 5
+        if (!this.checker) {
+          this.checker = setInterval(() => {
+            if (i > 0) {
+              i--
+              if (this.props.User.get('user')) {
+                ::this.timedRedirect('/select-plan')
+              }
+            } else {
+              ::this.timedRedirect('/life')
             }
-          } else {
-            ::this.timedRedirect('/life')
-          }
-        }, 1000)
-      }
+          }, 1000)
+        }
+      }     
   }
 
   renderLinks () {
@@ -91,7 +93,8 @@ PaymentError.propTypes = {
   link: React.PropTypes.string,
   linkMessage: React.PropTypes.string,
   links: React.PropTypes.string,
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
+  willRedirect: React.PropTypes.bool
 }
 
 PaymentError.defaultProps = {
