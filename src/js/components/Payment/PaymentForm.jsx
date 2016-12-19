@@ -93,7 +93,6 @@ class PaymentForm extends I18n {
 
     let internalPlanUuid = currentPlan.get('internalPlanUuid')
     const user = User.get('user')
-    console.warn('yolo ?');
     if (!user) {
       dispatch(ModalActionCreators.open({
         target: 'showSignup',

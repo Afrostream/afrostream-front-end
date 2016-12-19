@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import * as UserActionCreators from '../../actions/user'
@@ -21,6 +22,29 @@ class PaymentError extends I18n {
       }
     } = this
     dispatch(IntercomActionCreators.removeIntercom())
+  }
+
+  timedRedirect(route) {
+    clearInterval(this.checker)
+    setTimeout(() => {
+      browserHistory.push(route)
+    }, 2000)
+  }
+
+  componentWillMount(nextProps) {
+      let i = 5
+      if (!this.checker) {
+        this.checker = setInterval(() => {
+          if (i > 0) {
+            i--
+            if (this.props.User.get('user')) {
+              ::this.timedRedirect('/select-plan')
+            }
+          } else {
+            ::this.timedRedirect('/life')
+          }
+        }, 1000)
+      }
   }
 
   renderLinks () {
