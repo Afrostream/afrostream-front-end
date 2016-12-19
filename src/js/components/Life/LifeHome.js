@@ -18,8 +18,8 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, params:{themeId, pinId}}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchPins({})),
-    store.dispatch(LifeActionCreators.fetchSpots({}))
+    store.dispatch(LifeActionCreators.fetchPins({themeId})),
+    store.dispatch(LifeActionCreators.fetchSpots({themeId}))
   ])
 })
 @connect(({Life}) => ({Life}))

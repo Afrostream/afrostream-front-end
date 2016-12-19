@@ -7,7 +7,8 @@ import * as LifeActionCreators from '../../actions/life'
 
 @prepareRoute(async function ({store, params:{themeId}}) {
   if (themeId) {
-    return await store.dispatch(LifeActionCreators.fetchThemes(themeId))
+    //return await store.dispatch(LifeActionCreators.fetchThemes(themeId))
+    return await store.dispatch(LifeActionCreators.fetchPins({themeId}))
   }
 })
 @connect(({Life, User}) => ({Life, User}))
