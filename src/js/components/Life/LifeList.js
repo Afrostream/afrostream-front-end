@@ -83,7 +83,7 @@ class LifeList extends Component {
     const data = pinsList.get(index)
 
     if (!data) {
-      this.request(index)
+      this.fetchPins(index)
       return <div className="brick" {...{key}} />
     }
 
@@ -123,7 +123,7 @@ class LifeList extends Component {
     )
   }
 
-  request (index) {
+  fetchPins (index) {
     const {
       props: {
         dispatch,
@@ -133,7 +133,7 @@ class LifeList extends Component {
 
     if (this.isLoading) return
     this.isLoading = true
-    return dispatch(LifeActionCreators.fetchPins({offset: index}))
+    return dispatch(LifeActionCreators.fetchPins({themeId, offset: index}))
       .then(() => {
         this.isLoading = false
       })

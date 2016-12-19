@@ -77,7 +77,7 @@ export default createReducer(initialState, {
 
     const savedPins = state.get(`life/pins/${themeId}`) || Immutable.fromJS([])
     //const mappedUserPins = _(savedPins.toJS().concat(pins)).reduce(accumulateInBloc, [[]])
-    const mappedUserPins = _.concat(savedPins.toJS(), pins)
+    const mappedUserPins = _.unionBy(savedPins.toJS(), pins, '_id')
     //const mappedUserPins = savedPins.concat(Immutable.fromJS(pins))
 
     return state.merge({
