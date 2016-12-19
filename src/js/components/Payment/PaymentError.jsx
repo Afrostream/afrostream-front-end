@@ -22,6 +22,7 @@ class PaymentError extends I18n {
       }
     } = this
     dispatch(IntercomActionCreators.removeIntercom())
+    clearInterval(this.checker)
   }
 
   timedRedirect(route) {
@@ -45,10 +46,6 @@ class PaymentError extends I18n {
           }
         }, 1000)
       }
-  }
-  
-  componentWillUnmount() {
-    clearInterval(this.checker)
   }
 
   renderLinks () {
