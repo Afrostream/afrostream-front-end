@@ -10,10 +10,10 @@ if (process.env.BROWSER) {
   require('./LifeCommunity.less')
 }
 
-@prepareRoute(async function ({store, params:{lifeUserId}}) {
+@prepareRoute(async function ({store}) {
   await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchUsers(lifeUserId, {}))
+    store.dispatch(LifeActionCreators.fetchUsers({}))
   ])
 
 })

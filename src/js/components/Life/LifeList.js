@@ -6,7 +6,6 @@ import Spinner from '../Spinner/Spinner'
 import LifePin from './LifePin'
 import LifeSpot from './LifeSpot'
 import * as LifeActionCreators from '../../actions/life'
-import _ from 'lodash'
 import ReactList from 'react-list'
 
 if (process.env.BROWSER) {
@@ -24,17 +23,11 @@ class LifeList extends Component {
   getPins () {
     const {
       props: {
-        Life,
-        themeId,
         pins,
         spots
       }
     } = this
 
-    //const lifeTheme = Life.get(`life/pins/${themeId}`)
-    //
-    //const pinsList = pins || (lifeTheme && lifeTheme.get('pins')) || Immutable.fromJS([])
-    //const listSize = (pinsList.size + Math.min(Math.round(pinsList.size / this.props.moduloSpots), spotList.size))
     const spotList = spots
     let mergedList = pins
     pins.forEach((spot, index) => {
@@ -50,16 +43,11 @@ class LifeList extends Component {
   getSpots () {
     const {
       props: {
-        Life,
-        themeId,
         spots
       }
     } = this
 
     let spotList = spots
-
-    //let spotList = spots || (lifeTheme && lifeTheme.get('spots'))
-
     if (spotList) {
       spotList = spotList.filter((spot) => {
         return spot.get('type') === 'banner'
@@ -70,6 +58,9 @@ class LifeList extends Component {
   }
 
   canInsertSpot (spotList, index) {
+    if (!spotList) {
+      return false
+    }
     const firstPage = Number(index <= this.props.moduloSpots)
     const listIndex = index + 1
     const spotIndex = Math.round(listIndex / this.props.moduloSpots)
@@ -127,13 +118,22 @@ class LifeList extends Component {
     const {
       props: {
         dispatch,
-        themeId
+        themeId,
+        userId,
+        moduloSpots,
+        highlightFirst
       }
     } = this
 
     if (this.isLoading) return
     this.isLoading = true
-    return dispatch(LifeActionCreators.fetchPins({themeId, offset: index}))
+
+    const pinsList = this.getPins()
+    const nbSpot = pinsList && pinsList.filter(pin => ~'spot|banner'.indexOf(pin.get('type'))).size
+    const firstPage = Number(index <= this.props.moduloSpots && highlightFirst)
+    const limit = moduloSpots + (firstPage)
+
+    return dispatch(LifeActionCreators.fetchPins({themeId, userId, limit, offset: index - nbSpot}))
       .then(() => {
         this.isLoading = false
       })
@@ -143,7 +143,6 @@ class LifeList extends Component {
     const {
       props: {
         virtual,
-        themeId,
         highlightFirst
       }
     } = this
@@ -157,20 +156,15 @@ class LifeList extends Component {
     }
 
     return (<div className={classSet(classList)}>
-      {!virtual && pinsList.map((data, index) => this.renderItem({
-        data,
-        index,
-        key: `life-list-theme-${themeId}-${index}`
-
-      })).toJS()}
-      {virtual && <ReactList
+      <ReactList
         ref="react-pins-list"
         axis="y"
         itemRenderer={::this.renderInfiniteItem}
         items={pinsList}
         length={pinsList.size + 1}
+        threshold={500}
         type={'simple'}
-      />}
+      />
     </div>)
   }
 }
@@ -186,6 +180,10 @@ LifeList.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]),
+  userId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   history: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired
 }
@@ -197,8 +195,7 @@ LifeList.defaultProps = {
   highlightFirst: true,
   virtual: true,
   pins: null,
-  spots: null,
-  themeId: ''
+  spots: null
 }
 
 export default LifeList

@@ -90,7 +90,7 @@ export function publishPin (data) {
           passToken: true
         }).then(() => {
           if (userId) {
-            dispatch(fetchUsers(userId, {}))
+            dispatch(fetchUsers({userId}))
           }
         })
       }
@@ -121,27 +121,19 @@ export function removePin (pinId) {
   }
 }
 
-export function fetchPins ({themeId, limit = 7, offset = 0}) {
+export function fetchPins ({themeId, userId, limit = 7, offset = 0}) {
   return (dispatch, getState) => {
-    //let readyPins = getState().Life.get(`life/pins/`)
-    //if (readyPins) {
-    //  console.log('Life pins already present in data store')
-    //  return {
-    //    type: ActionTypes.Life.fetchPins,
-    //    res: {
-    //      body: readyPins.toJS()
-    //    }
-    //  }
-    //}
     return async api => ({
       type: ActionTypes.Life.fetchPins,
       themeId,
+      userId,
       res: await api({
         path: `/api/life/pins`,
         params: {
           limit,
           offset,
-          themeId
+          themeId,
+          userId
         }
       })
     })
@@ -173,17 +165,17 @@ export function fetchSpots ({themeId, limit = 22, offset = 0}) {
   }
 }
 
-export function fetchUsers (fetchUserId, {limit = 200, startIndex = 0, stopIndex = 3}) {
+export function fetchUsers ({userId, limit = 50, offset}) {
 
-  const lifeUserId = fetchUserId || ''
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.fetchUsers,
-      lifeUserId,
+      userId,
       res: await api({
-        path: `/api/life/users/${lifeUserId || ''}`,
+        path: `/api/life/users/${userId || ''}`,
         params: {
-          limit
+          limit,
+          offset
         }
       })
     })

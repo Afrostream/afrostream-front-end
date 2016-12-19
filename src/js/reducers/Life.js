@@ -69,20 +69,18 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.fetchPins](state, {res, themeId}) {
+  [ActionTypes.Life.fetchPins](state, {res, themeId, userId}) {
     if (!res) {
       return state
     }
     const pins = res.body
 
-    const savedPins = state.get(`life/pins/${themeId}`) || Immutable.fromJS([])
-    //const mappedUserPins = _(savedPins.toJS().concat(pins)).reduce(accumulateInBloc, [[]])
-    const mappedUserPins = _.unionBy(savedPins.toJS(), pins, '_id')
-    //const mappedUserPins = savedPins.concat(Immutable.fromJS(pins))
+    const savePath = userId || themeId
+    let savedPins = state.get(`life/pins/${savePath}`)
+    let mappedUserPins = _.unionBy(savedPins && savedPins.toJS() || [], pins, '_id')
 
     return state.merge({
-      [`life/pins/res`]: pins,
-      [`life/pins/${themeId}`]: mappedUserPins
+      [`life/pins/${savePath}`]: mappedUserPins
     })
   },
 
@@ -97,7 +95,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.fetchPin](state, {res, pinId}) {
+  [ActionTypes.Life.fetchPin](state, {res, pinId, userId}) {
     if (!res) {
       return state
     }
@@ -107,13 +105,13 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.fetchUsers](state, {res, lifeUserId}) {
+  [ActionTypes.Life.fetchUsers](state, {res, userId}) {
     if (!res) {
       return state
     }
     const data = res.body
     return state.merge({
-      [`life/users/${lifeUserId}`]: data
+      [`life/users/${userId}`]: data
     })
   },
 

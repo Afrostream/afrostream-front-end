@@ -15,11 +15,9 @@ if (process.env.BROWSER) {
   require('./LifeHome.less')
 }
 
-@prepareRoute(async function ({store, params:{themeId, pinId}}) {
+@prepareRoute(async function ({store}) {
   return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchPins({themeId})),
-    store.dispatch(LifeActionCreators.fetchSpots({themeId}))
+    store.dispatch(EventActionCreators.pinHeader(true))
   ])
 })
 @connect(({Life}) => ({Life}))
@@ -43,7 +41,7 @@ class LifeHome extends Component {
       <div className="row-fluid no-padding">
         <SubNavigation {...{themesList}} to="/life/{_id}/{slug}"/>
         <div className="container-fluid no-padding life-home life-themes brand-grey">
-          {children || <LifeTheme {...this.props}/>}
+          {children}
           <LifeSticky {...this.props}/>
         </div>
       </div>
