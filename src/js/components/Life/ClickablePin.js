@@ -101,7 +101,7 @@ class ClickablePin extends Component {
         dispatch
       }
     } = this
-    const pinRole = data.get('role') || config.userRoles[0]
+    const pinRole = data.get('role') || config.userRoles[1]
     const acl = this.validRole(pinRole)
     const pinUrl = this.getUrl(data)
 

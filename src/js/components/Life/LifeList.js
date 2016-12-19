@@ -26,24 +26,24 @@ class LifeList extends Component {
       props: {
         Life,
         themeId,
-        pins
+        pins,
+        spots
       }
     } = this
 
     //const lifeTheme = Life.get(`life/pins/${themeId}`)
     //
     //const pinsList = pins || (lifeTheme && lifeTheme.get('pins')) || Immutable.fromJS([])
-    //const spotList = this.getSpots()
-
     //const listSize = (pinsList.size + Math.min(Math.round(pinsList.size / this.props.moduloSpots), spotList.size))
+    const spotList = spots
     let mergedList = pins
-    //pinsList.forEach((spot, index) => {
-    //  const spotIndex = this.canInsertSpot(spotList, index)
-    //  if (spotIndex) {
-    //    const spot = spotList.get(spotIndex - 1)
-    //    mergedList = mergedList.insert(index, spot)
-    //  }
-    //})
+    pins.forEach((spot, index) => {
+      const spotIndex = this.canInsertSpot(spotList, index)
+      if (spotIndex) {
+        const spot = spotList.get(spotIndex - 1)
+        mergedList = mergedList.insert(index, spot)
+      }
+    })
     return mergedList
   }
 
