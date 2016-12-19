@@ -46,6 +46,10 @@ class PaymentError extends I18n {
         }, 1000)
       }
   }
+  
+  componentWillUnmount() {
+    clearInterval(this.checker)
+  }
 
   renderLinks () {
     const {
