@@ -116,17 +116,26 @@ class FloatPlayer extends I18n {
     }
 
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      //this.state.elVisible && this.setState({
+      // this.state.elVisible && !this.state.savedData.location && this.setState({
       //  savedData: {
       //    pathname: this.props.location.pathname,
-      //    position: this.state.position,
       //    videoId: this.props.params.videoId
       //  }
-      //})
+      // })
+      
       this.updatePlayerPosition()
     }
 
     this.props.User.get('user') && !nextProps.User.get('user') && this.destroyPlayer()
+  }
+
+  saveVideoData() {
+    this.setState({
+      savedData: {
+         pathname: this.props.location.pathname,
+         videoId: this.props.params.videoId
+       }
+    })
   }
 
   async getPlayerData (videoData) {
@@ -428,7 +437,7 @@ class FloatPlayer extends I18n {
         this.container.removeEventListener('gobacknext', ::this.backNextHandler)
         this.container.addEventListener('gobacknext', ::this.backNextHandler)
       }
-
+      ::this.saveVideoData()
       return this.player
     } catch (err) {
       console.log('player : ', err)
@@ -609,7 +618,7 @@ class FloatPlayer extends I18n {
     clearTimeout(this.trackTimeout)
 
     const player = this.player
-    //videoId = videoId || this.state.savedData.videoId
+    videoId = videoId || this.state.savedData.videoId
     if (!player || !videoId) {
       return
     }
@@ -758,8 +767,8 @@ class FloatPlayer extends I18n {
   }
 
   handleReopen () {
-    const {pathname} = this.state.savedData
-    this.destroyPlayer()
+    const {pathname, videoId} = this.state.savedData
+    videoId && this.destroyPlayer();
     this.props.history.push(pathname)
   }
 
@@ -828,6 +837,10 @@ class FloatPlayer extends I18n {
     }
   }
 
+  hideReopenButton() {
+    
+  }
+
   render () {
     const {
       props: {
@@ -854,12 +867,12 @@ class FloatPlayer extends I18n {
 
     let closeClass = classSet({
       'close': true,
-      'hide': !this.player
+      'hide': !this.player && !this.state.savedData.pathname
     })
 
     let reopenClass = classSet({
       'reopen': true,
-      'hide': true//!this.player
+      'hide': this.state.elVisible
     })
 
     const videoData = Video.get(`videos/${videoId}`)
