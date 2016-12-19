@@ -189,4 +189,6 @@ PaymentMethod.defaultProps = {
   planLabel: null
 }
 
+PaymentMethod.Methods = Methods
+
 export default PaymentMethod

@@ -450,12 +450,12 @@ class PaymentForm extends I18n {
     return Q()
       .then(() => {
         switch (formData.billingProviderName) {
-          case 'netsize':
-          case 'wecashup':
+          case PaymentMethod.Methods.NETSIZE:
+          case PaymentMethod.Methods.WECASHUP:
             return dispatch(OAuthActionCreators.cookieCheck({
               strategy: formData.billingProviderName,
               internalPlan: formData,
-              modalType: formData.billingProviderName === 'wecashup' ? 'ajax' : 'popup'
+              modalType: formData.billingProviderName === PaymentMethod.Methods.WECASHUP ? 'ajax' : 'popup'
             }))
             break
           default:

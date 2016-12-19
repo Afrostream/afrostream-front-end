@@ -211,7 +211,7 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
 
         switch (modalType) {
           case 'ajax':
-            oauthPopup = request('GET', url)
+            oauthPopup = request('GET', url).end()
             break
           default:
             oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
