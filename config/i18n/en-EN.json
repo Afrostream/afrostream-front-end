@@ -534,8 +534,8 @@
         "message": "IBAN account banned (manual process)"
       },
       "200": {
-        "name": "CASHWAY_COUPON_ONE_BY_USER_FOR_EACH_CAMPAIGN",
-        "message": "CASHWAY codes: 1 only one campaign / account"
+        "name": "TRANSACTION_DECLINED",
+        "message": "Your transaction was declined. Please use a different card or contact your bank"
       },
       "400": {
         "name": "AFR_COUPON_SPS_SELF_FORBIDDEN",

@@ -255,6 +255,7 @@ export function getInternalplans ({
       let forcedInternalPlanUuid = internalPlanUuid !== 'none' && internalPlanUuid
       let forcedContextBillingUuid = contextBillingUuid
       let forcedCountry = country
+
       if (canUseDOM) {
         const userAgent = (window.navigator && navigator.userAgent) || ''
         let agent = new MobileDetect(userAgent)

@@ -14,6 +14,9 @@ import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
 
+import injectTapEventPlugin from 'react-tap-event-plugin'
+
+
 import * as EventActionCreator from '../actions/event'
 import * as LifeActionCreators from '../actions/life'
 import * as CategoryActionCreators from '../actions/category'
@@ -55,6 +58,9 @@ const muiTheme = getMuiTheme({
   }
 })
 
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin()
 
 if (process.env.BROWSER) {
   require('./Application.less')

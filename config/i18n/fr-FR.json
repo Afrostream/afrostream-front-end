@@ -541,8 +541,8 @@
         "message": "compte IBAN banni (processus manuel)"
       },
       "200": {
-        "name": "CASHWAY_COUPON_ONE_BY_USER_FOR_EACH_CAMPAIGN",
-        "message": "codes CASHWAY : 1 seul d'une campagne / compte"
+        "name": "TRANSACTION_DECLINED",
+        "message": "Votre transaction a été refusée. Veuillez utiliser une autre carte ou contacter votre banque"
       },
       "400": {
         "name": "AFR_COUPON_SPS_SELF_FORBIDDEN",
