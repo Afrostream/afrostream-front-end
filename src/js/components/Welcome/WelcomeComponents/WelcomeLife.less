@@ -39,6 +39,7 @@
     z-index: 1;
     padding-top: @app-padding;
     width: 30%;
+    .isMobile({ width: 100%; });
   }
   .welcome-life_accroche {
     &:before {
@@ -52,6 +53,7 @@
     }
     position: relative;
     margin: 0 0.5em 0 0.5em;
+    .isMobile({ margin: 0 0.5em 1em 0.5em; });
     color: @color-yellow;
     font-size: 4em;
     font-family: @font-book;

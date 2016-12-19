@@ -354,6 +354,7 @@ class PaymentForm extends I18n {
     } = this
 
     e.preventDefault()
+
     this.disableForm(false)
 
     const {droits, cgu, firstName, lastName, methodForm, form} = this.refs
@@ -411,7 +412,6 @@ class PaymentForm extends I18n {
         const currentPlan = this.hasPlan()
 
         this.disableForm(true)
-
         return methodForm.submit(billingInfo, currentPlan)
       })
       .then((subBillingInfo) => {
@@ -449,10 +449,19 @@ class PaymentForm extends I18n {
 
     return Q()
       .then(() => {
-        if (formData.billingProviderName === 'netsize') {
-          return dispatch(OAuthActionCreators.netsizeCheck({internalPlan: formData}))
+        switch (formData.billingProviderName) {
+          case PaymentMethod.Methods.NETSIZE:
+          case PaymentMethod.Methods.WECASHUP:
+            return dispatch(OAuthActionCreators.cookieCheck({
+              strategy: formData.billingProviderName,
+              internalPlan: formData,
+              modalType: formData.billingProviderName === PaymentMethod.Methods.WECASHUP ? 'ajax' : 'popup'
+            }))
+            break
+          default:
+            return dispatch(BillingActionCreators.subscribe(formData))
+            break
         }
-        return dispatch(BillingActionCreators.subscribe(formData))
       })
       .then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
         ReactFB.track({
@@ -611,6 +620,7 @@ class PaymentForm extends I18n {
                           link={`payment.expired.link`}
                           linkMessage={`payment.expired.linkMessage`}
                           links={`payment.expired.links`}
+                          willRedirect
             />
             <PaymentImages />
           </div>)

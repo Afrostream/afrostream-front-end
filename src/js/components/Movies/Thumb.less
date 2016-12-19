@@ -1,19 +1,16 @@
 @import (reference) '../../../styles/config.less';
-.thumb-wrapper {
-  position: relative;
-}
+
 .thumb {
+  position: relative;
   color: @brand-primary;
   padding: @thumb-margin;
-  
+
   text-align: left;
   vertical-align: top;
-  overflow: hidden;
   width: @thumb-width + (@thumb-margin * 2);
   //flex: 1;
   flex: 1 1 auto;
   &.episode {
-    overflow: hidden;
     width: @thumb-width-episode;
     height: @thumb-height-episode + 70px;
     a {

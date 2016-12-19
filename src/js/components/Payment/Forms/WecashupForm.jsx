@@ -118,12 +118,13 @@ class WecashupForm extends CouponForm {
 
     const {props :{form}} =this
     const isFormValid = form && form.checkValidity()
+    let event = document.createEvent('CustomEvent')
+    event.initCustomEvent('submit', true, true, {})
+    form.dispatchEvent(event)
+
     if (!isFormValid) {
-      let event = document.createEvent('CustomEvent')
-      event.initCustomEvent('submit', true, true, {})
-      form.dispatchEvent(event)
-      console.log('payment form not valid')
       e.preventDefault()
+      console.log('payment form not valid')
     }
   }
 
@@ -144,12 +145,12 @@ class WecashupForm extends CouponForm {
 
     return await new Promise(
       (resolve) => {
-        //return resolve({
-        //  internalPlanUuid: billingInfo.internalPlanUuid,
-        //  currency: currentPlan.get('currency'),
-        //  amount: currentPlan.get('amount'),
-        //  billingProviderName: provider
-        //})
+        return resolve({
+          internalPlanUuid: billingInfo.internalPlanUuid,
+          currency: currentPlan.get('currency'),
+          amount: currentPlan.get('amount'),
+          billingProviderName: provider
+        })
       }
     )
   }
