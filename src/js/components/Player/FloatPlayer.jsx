@@ -843,6 +843,9 @@ class FloatPlayer extends I18n {
           movieId,
           videoId
         }
+      },
+      state: {
+        savedData
       }
     } = this
 
@@ -861,7 +864,7 @@ class FloatPlayer extends I18n {
 
     let reopenClass = classSet({
       'reopen': true,
-      'hide': this.state.elVisible || this.state.savedData.pathname === this.props.location.pathname
+      'hide': this.state.elVisible || !savedData.videoId || savedData.pathname === this.props.location.pathname
     })
 
     const videoData = Video.get(`videos/${videoId}`)
