@@ -2,7 +2,6 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import Immutable from 'immutable'
-import Spinner from '../Spinner/Spinner'
 import LifePin from './LifePin'
 import LifeSpot from './LifeSpot'
 import * as LifeActionCreators from '../../actions/life'
@@ -16,7 +15,6 @@ class LifeList extends Component {
 
   constructor (props) {
     super(props)
-    this.pending = []
     this.isLoading = false
   }
 

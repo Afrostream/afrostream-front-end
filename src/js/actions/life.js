@@ -121,19 +121,19 @@ export function removePin (pinId) {
   }
 }
 
-export function fetchPins ({themeId, userId, limit = 7, offset = 0}) {
+export function fetchPins ({themeId, lifeUserId, limit = 7, offset = 0}) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.fetchPins,
       themeId,
-      userId,
+      lifeUserId,
       res: await api({
         path: `/api/life/pins`,
         params: {
           limit,
           offset,
           themeId,
-          userId
+          userId: lifeUserId
         }
       })
     })
@@ -165,14 +165,14 @@ export function fetchSpots ({themeId, limit = 22, offset = 0}) {
   }
 }
 
-export function fetchUsers ({userId, limit = 50, offset}) {
+export function fetchUsers ({lifeUserId, limit = 50, offset}) {
 
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.fetchUsers,
-      userId,
+      lifeUserId,
       res: await api({
-        path: `/api/life/users/${userId || ''}`,
+        path: `/api/life/users/${lifeUserId || ''}`,
         params: {
           limit,
           offset
