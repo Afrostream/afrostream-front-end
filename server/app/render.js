@@ -93,8 +93,9 @@ export default function render (req, res, layout, {payload}) {
 
           params.lang = locale
 
-          const prepareRouteMethods = _.map(renderProps.components, component =>
-          component && component.prepareRoute)
+          const prepareRouteMethods = _.map(renderProps.components, (component) => {
+            return component && (component.WrappedComponent && component.WrappedComponent.prepareRoute) || component.prepareRoute
+          })
 
           for (let prepareRoute of prepareRouteMethods) {
             if (!prepareRoute) {

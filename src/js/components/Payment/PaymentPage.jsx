@@ -63,9 +63,6 @@ class PaymentPage extends React.Component {
   }
 }
 
-PaymentPage.propTypes = {
-  location: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired
-}
+PaymentPage.propTypes = {}
 
 export default withRouter(injectIntl(PaymentPage))
