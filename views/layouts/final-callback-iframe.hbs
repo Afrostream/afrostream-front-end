@@ -10,6 +10,16 @@
 <div id="main">
   <script type="text/javascript">
     var response = JSON.parse(atob(location.hash && location.hash.substr(1)))
+
+    // postpone close :
+    //  we let 200ms to mobile app to catch the document.location.href change
+    setTimeout(function () {
+      try {
+        window && window.opener && window.opener.postMessage(netsizeResponse, '*'); //send the message and target URI
+      } catch (e) { /* Blocked a frame with origin X from accessing a frame with origin Y */
+      }
+    }, 200); // enough ?
+
   </script>
   FIXME
 </div>

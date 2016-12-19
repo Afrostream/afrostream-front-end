@@ -2,6 +2,7 @@ import ActionTypes from '../consts/ActionTypes'
 import * as UserActionCreators from './user'
 import { push } from 'redux-router'
 import { getToken, storeToken } from '../lib/storage'
+import request from 'superagent'
 import config from '../../../config/'
 import window from 'global/window'
 import _ from 'lodash'
@@ -163,22 +164,22 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
   }
 }
 
-export function netsizeCheck ({internalPlan = {}}) {
+export function cookieCheck ({modalType = 'popup', strategy = 'netsize', internalPlan = {}}) {
   return (dispatch, getState, actionDispatcher) => {
     //return async api => ({
     //  type: ActionTypes.OAuth.netsizeCheck,
     //  res: await api({path: `/auth/netsize/check`, method: 'GET', passToken: true, local: true})
     //})
-    return actionDispatcher(netsizeSubscribe({path: 'check', internalPlan}))
+    return actionDispatcher(mobileSubscribe({strategy, modalType, path: 'check', internalPlan}))
   }
 }
 
-const encodeUrlCallbackNetsize = function (token, path, callback) {
-  return encodeURIComponent(`https://${config.domain.host}/auth/netsize/${path}?access_token=${token}${callback ? '&returnUrl=' + callback : ''}`)
+const encodeUrlCallback = function (strategy, token, path, callback) {
+  return encodeURIComponent(`https://${config.domain.host}/auth/${strategy}/${path}?access_token=${token}${callback ? '&returnUrl=' + callback : ''}`)
 }
 
 
-export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', internalPlan = {}}) {
+export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', internalPlan = {}, modalType = 'popup'}) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
 
@@ -188,11 +189,11 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
     //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
     if (token) {
       const accessToken = token.get('access_token')
-      const finalCB = encodeUrlCallbackNetsize(accessToken, 'final-callback')
+      const finalCB = encodeUrlCallback(strategy, accessToken, 'final-callback')
       url = `${url}?access_token=${accessToken}`
 
       if (path === 'check') {
-        url = `${url}&returnUrl=${encodeUrlCallbackNetsize(accessToken, 'subscribe', finalCB)}`
+        url = `${url}&returnUrl=${encodeUrlCallback(strategy, accessToken, 'subscribe', finalCB)}`
       } else {
         url = `${url}&returnUrl=${finalCB}`
       }
@@ -204,8 +205,19 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
       left = (window.outerWidth - width) / 2
 
     return async () => {
+
       return await new Promise((resolve, reject) => {
-        let oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
+        let oauthPopup
+
+        switch (modalType) {
+          case 'ajax':
+            oauthPopup = request('GET', url)
+            break
+          default:
+            oauthPopup = window.open(url, 'strategy_oauth', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left)
+            break
+        }
+
         let intervalCheck = 0
 
         let beforeUnload = (data, plan) => {
@@ -263,10 +275,12 @@ export function netsizeSubscribe ({strategy = 'netsize', path = 'subscribe', int
         let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
         try {
-          oauthPopup.onbeforeunload = (e) => {
-            intervalCheck = setTimeout(() => {
-              beforeUnload(null, internalPlan)
-            }, 1000)
+          if (oauthPopup && oauthPopup.onbeforeunload) {
+            oauthPopup.onbeforeunload = (e) => {
+              intervalCheck = setTimeout(() => {
+                beforeUnload(null, internalPlan)
+              }, 1000)
+            }
           }
           window[eventMethod](messageEvent, (event) => {
             console.log('received response:  ', event.data, event.origin, config.domain.host)
