@@ -51,9 +51,6 @@ class LifePin extends ClickablePin {
     }
     cardTypeIcon[type] = true
 
-    if (showBubble) {
-      return
-    }
     const pinId = data.get('_id')
     const nbLikes = data.get('likes')
     const currentUser = User.get('user')
@@ -69,7 +66,6 @@ class LifePin extends ClickablePin {
       'liked': liked,
       'disabled': !currentUser
     }
-
     return (<div className="card-bubbles">
       {pinnedUser && <div className="card-bubble card-bubble-user">
         <img src={pinnedUser.get('picture')}

@@ -21,8 +21,7 @@ class LifeList extends Component {
   getPins () {
     const {
       props: {
-        pins,
-        spots
+        pins
       }
     } = this
 
@@ -100,9 +99,8 @@ class LifeList extends Component {
     ]
 
     const imageWidth = highlightFirst ? sizes[Math.min(index, 1)] : sizes[1]
-    const showBubble = !index
     return (
-      <LifePin {...{data, imageWidth, showBubble, key, index}} {...this.props} />
+      <LifePin {...{data, imageWidth, key, index}} {...this.props} />
     )
   }
 

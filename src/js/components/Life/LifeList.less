@@ -225,6 +225,8 @@
       bottom: 0;
       visibility: hidden;
       opacity: 0;
+
+      .isMobile({ visibility: visible; opacity: 1; top: 0; bottom: inherit });
       .content {
         color: @brand-primary;
       }
@@ -643,7 +645,11 @@
         .brick-full();
         .card-body {
           .card-bubbles {
-            //display: none;
+            .card-bubble {
+              &:not(.like) {
+                display: none;
+              }
+            }
           }
         }
       }
