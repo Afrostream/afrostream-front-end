@@ -5,7 +5,7 @@ import { prepareRoute } from '../../decorators'
 import LifeList from './LifeList'
 import * as LifeActionCreators from '../../actions/life'
 
-@prepareRoute(async function ({store, params:{themeId, pinId}}) {
+@prepareRoute(async function ({store, params:{themeId}}) {
   return await Promise.all([
     store.dispatch(LifeActionCreators.fetchPins({themeId})),
     store.dispatch(LifeActionCreators.fetchSpots({themeId}))

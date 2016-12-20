@@ -5,6 +5,91 @@
 @yUpSize: 50px;
 @minBrickHeight: 500px;
 
+// Animations
+@keyframes heartPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}
+
+@keyframes heartUnlike {
+  50% {
+    transform: scale(.75);
+  }
+}
+
+@keyframes heartFloatMain-1 {
+  0% {
+    opacity: 0;
+    transform: translate(0) rotate(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(0, -25px) rotate(-20deg);
+  }
+}
+
+@keyframes heartFloatMain-2 {
+  0% {
+    opacity: 0;
+    transform: translate(0) rotate(0) scale(0);
+  }
+  50% {
+    opacity: .9;
+    transform: translate(-10px, -38px) rotate(25deg) scale(1);
+  }
+}
+
+@keyframes heartFloatSub-1 {
+  0% {
+    visibility: hidden;
+    transform: translate(0) rotate(0);
+  }
+  50% {
+    visibility: visible;
+    transform: translate(13px, -13px) rotate(30deg);
+  }
+}
+
+@keyframes heartFloatSub-2 {
+  0% {
+    visibility: hidden;
+    transform: translate(0) rotate(0);
+  }
+  50% {
+    visibility: visible;
+    transform: translate(18px, -10px) rotate(55deg);
+  }
+}
+
+@keyframes heartFloatSub-3 {
+  0% {
+    visibility: hidden;
+    transform: translate(0) rotate(0);
+  }
+  50% {
+    visibility: visible;
+    transform: translate(-10px, -10px) rotate(-40deg);
+  }
+  100% {
+    transform: translate(-50px, 0);
+  }
+}
+
+@keyframes heartFloatSub-4 {
+  0% {
+    visibility: hidden;
+    transform: translate(0) rotate(0);
+  }
+  50% {
+    visibility: visible;
+    transform: translate(2px, -18px) rotate(-25deg);
+  }
+}
+
 @keyframes brickmoveUp {
   0% {
     opacity: 0;
@@ -286,6 +371,7 @@
         display: inline-block;
         //z-index: @nav-z + 1;
         .card-bubble {
+          position: relative;
           text-align: center;
           display: inline-block;
           border: 2px solid @brand-primary;
@@ -310,14 +396,88 @@
             line-height: 2;
             font-size: 2em;
             color: @brand-primary;
+            position: absolute;
+            left: 0;
+            right: 0;
           }
           &.like {
+            overflow: inherit;
             &:before {
               content: "\f08a";
             }
+            &.liked:before,
             &:hover:before {
               color: @color-like;
               content: "\f004";
+            }
+
+            &.liked {
+              animation: heartPulse .25s @bezier both;
+
+              .heart {
+                font-family: @font-awasome;
+                color: @color-like;
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 3em;
+                height: 3em;
+                opacity: 0;
+
+                &::before, &::after {
+                  font-family: @font-awasome;
+                  color: @color-like;
+                  content: "\f004";
+                  background: inherit;
+                  background-size: 100%;
+                  width: inherit;
+                  height: inherit;
+                  display: inherit;
+                  position: relative;
+                  top: inherit;
+                  left: inherit;
+                  opacity: 0;
+                }
+              }
+
+              @bezier: cubic-bezier(.175, .885, .32, 1.275);
+
+              .heart-animation-1 {
+                animation: heartFloatMain-1 1s @bezier both;
+
+                &::before, &::after {
+                  width: 2em;
+                  height: 2em;
+                  visibility: hidden;
+                }
+                &::before {
+                  opacity: .6;
+                  animation: heartFloatSub-1 1s .25s @bezier both;
+                }
+                &::after {
+                  animation: heartFloatSub-2 1s .15s @bezier both;
+                  opacity: .75;
+                }
+              }
+
+              .heart-animation-2 {
+                animation: heartFloatMain-2 1s .1s @bezier both;
+
+                &::before, &::after {
+                  width: 1.7em;
+                  height: 1.7em;
+                  visibility: hidden;
+                }
+                &::before {
+                  animation: heartFloatSub-3 1s .25s @bezier both;
+                  opacity: .25;
+                }
+                &::after {
+                  animation: heartFloatSub-4 1s .15s @bezier both;
+                  opacity: .4;
+                }
+              }
             }
 
           }

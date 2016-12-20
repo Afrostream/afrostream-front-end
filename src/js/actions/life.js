@@ -121,6 +121,56 @@ export function removePin (pinId) {
   }
 }
 
+export function fetchUserLikes () {
+  return (api, getState, dispatch) => {
+    const user = getState().User.get('user')
+    if (!user) {
+      return {
+        type: ActionTypes.Life.fetchUserLikes
+      }
+    }
+    const lifeUserId = user && user.get('_id')
+    return async () => {
+      return {
+        type: ActionTypes.Life.fetchUserLikes,
+        lifeUserId,
+        res: await api({
+          path: `/api/life/users/${lifeUserId}/pins`,
+          passToken: true,
+          params: {
+            liked: true
+          }
+        })
+      }
+    }
+  }
+}
+
+export function likePin ({data, liked}) {
+  return (api, getState, dispatch) => {
+
+    const user = getState().User.get('user')
+    const lifeUserId = user && user.get('_id')
+    const pinId = data && data.get('_id')
+
+    return async () => {
+      return {
+        type: ActionTypes.Life.likePin,
+        pinId,
+        lifeUserId,
+        res: await api({
+          path: `/api/life/users/${lifeUserId}/pins/${pinId}`,
+          method: 'PUT',
+          passToken: true,
+          params: {
+            liked
+          }
+        })
+      }
+    }
+  }
+}
+
 export function fetchSpots ({themeId, limit = 22, offset = 0}) {
   return (dispatch, getState) => {
     return async api => ({

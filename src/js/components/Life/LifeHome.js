@@ -2,22 +2,19 @@ import React, { PropTypes, Component } from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import * as LifeActionCreators from '../../actions/life'
-import * as IntercomActionCreators from '../../actions/intercom'
 import * as EventActionCreators from '../../actions/event'
 import LifeSticky from './LifeSticky'
-import LifeTheme from './LifeTheme'
 import SubNavigation from '../Header/SubNavigation'
 import { withRouter } from 'react-router'
-import config from '../../../../config'
 
-const {intercom:{lifeFeature}} = config
 if (process.env.BROWSER) {
   require('./LifeHome.less')
 }
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true))
+    store.dispatch(EventActionCreators.pinHeader(true)),
+    store.dispatch(LifeActionCreators.fetchUserLikes())
   ])
 })
 @connect(({Life}) => ({Life}))

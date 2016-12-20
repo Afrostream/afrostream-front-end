@@ -18,11 +18,20 @@ class ClickablePin extends Component {
     super(props, context)
   }
 
-  likePin (e) {
+  likePin (e, liked) {
     const {
-      props: {}
+      props: {dispatch, data}
     } = this
-    e.preventDefault()
+    if (e) {
+      e.preventDefault()
+      e.target.classList.toggle('liked')
+    }
+
+    return dispatch(LifeActionCreators.likePin({
+      liked,
+      data
+    }))
+
   }
 
   removePin (e) {

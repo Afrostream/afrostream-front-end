@@ -135,6 +135,35 @@ export default createReducer(initialState, {
     })
   },
 
+  [ActionTypes.Life.fetchUserLikes](state, {res, lifeUserId}) {
+
+    if (!res) {
+      return state
+    }
+
+    const pins = res.body
+
+    return state.merge({
+      [`life/users/${lifeUserId}/pins/likes`]: pins
+    })
+  },
+
+  [ActionTypes.Life.likePin](state, {res, lifeUserId, pinId}) {
+    if (!res) {
+      return state
+    }
+
+    const likedPin = res.body
+
+    const savedLikePins = state.get(`life/users/${lifeUserId}/pins/likes`)
+    //let updatePins = savedLikePins && savedLikePins.find((pin) => pin.get('pinId') === pinId)
+    const mergedLikePins = _.unionBy([likedPin], savedLikePins && savedLikePins.toJS() || [], '_id')
+
+    return state.merge({
+      [`life/users/${lifeUserId}/pins/likes`]: mergedLikePins
+    })
+  },
+
   [ActionTypes.Life.spotClick](state, {spotId}) {
     return state
   }
