@@ -58,7 +58,7 @@ class LifePin extends ClickablePin {
              className="icon-user"/>
       </div>}
       <div className={classSet(cardTypeIcon)}/>
-      {<div className={classSet(likeTypeIcon)} onClick={ e => ::this.likePin(e, !liked)}>
+      {currentUser && <div className={classSet(likeTypeIcon)} onClick={ e => ::this.likePin(e, !liked)}>
         <div className="heart heart-animation-1"/>
         <div className="heart heart-animation-2"/>
       </div>}
