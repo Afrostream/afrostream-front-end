@@ -121,36 +121,8 @@ export function removePin (pinId) {
   }
 }
 
-export function fetchPins ({themeId, lifeUserId, limit = 7, offset = 0}) {
-  return (dispatch, getState) => {
-    return async api => ({
-      type: ActionTypes.Life.fetchPins,
-      themeId,
-      lifeUserId,
-      res: await api({
-        path: `/api/life/pins`,
-        params: {
-          limit,
-          offset,
-          themeId,
-          userId: lifeUserId
-        }
-      })
-    })
-  }
-}
-
 export function fetchSpots ({themeId, limit = 22, offset = 0}) {
   return (dispatch, getState) => {
-    //let readySpots = getState().Life.get(
-    //  `life/spots/`
-    //)
-    //if (readySpots) {
-    //  console.log('Life spots already present in data store')
-    //  return {
-    //    type: ActionTypes.Life.fetchSpots,
-    //  }
-    //}
     return async api => ({
       type: ActionTypes.Life.fetchSpots,
       themeId,
@@ -164,6 +136,42 @@ export function fetchSpots ({themeId, limit = 22, offset = 0}) {
     })
   }
 }
+
+export function fetchPins ({themeId, limit = 7, offset = 0}) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Life.fetchPins,
+      themeId,
+      res: await api({
+        path: `/api/life/pins`,
+        params: {
+          limit,
+          offset,
+          themeId
+        }
+      })
+    })
+  }
+}
+
+export function fetchUserPins ({lifeUserId, limit = 50, offset}) {
+
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Life.fetchUserPins,
+      lifeUserId,
+      res: await api({
+        path: `/api/life/pins`,
+        params: {
+          userId: lifeUserId,
+          limit,
+          offset
+        }
+      })
+    })
+  }
+}
+
 
 export function fetchUsers ({lifeUserId, limit = 50, offset}) {
 

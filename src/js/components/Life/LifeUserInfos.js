@@ -9,8 +9,8 @@ import * as LifeActionCreators from '../../actions/life'
 
 @prepareRoute(async function ({store, params:{lifeUserId}}) {
   await Promise.all([
-    store.dispatch(LifeActionCreators.fetchUsers({userId: lifeUserId})),
-    store.dispatch(LifeActionCreators.fetchPins({userId: lifeUserId}))
+    store.dispatch(LifeActionCreators.fetchUsers({lifeUserId})),
+    store.dispatch(LifeActionCreators.fetchUserPins({lifeUserId}))
   ])
 
 })
@@ -33,8 +33,7 @@ class LifeUserInfos extends Component {
     const gloBalUser = User.get(`user`)
     const user = Life.get(`life/users/${lifeUserId}`)
     //FIXME il n'y a pas le nombre exact de pins uand on charge par la route life/pins
-    const pins = user && user.get('lifePins')//Life.get(`life/pins/${lifeUserId}`)
-
+    const pins = Life.get(`life/users/${lifeUserId}/pins`)
 
     if (!pins) {
       return <div />

@@ -142,6 +142,7 @@ export default {
     fetchSpots: null,
     fetchPins: null,
     fetchPin: null,
-    fetchUsers: null
+    fetchUsers: null,
+    fetchUserPins: null
   })
 }
