@@ -52,12 +52,14 @@ class BraintreeForm extends CouponForm {
             onError: (err) => {
               return reject(err)
             },
-            onPaymentMethodReceived: (payload)=> {
+            onPaymentMethodReceived: (payload) => {
               console.log(payload)
               return resolve({
                 billingProviderName: provider,
+                billingInfoOpts: {
+                  countryCode: payload.countryCodeAlpha2
+                },
                 subOpts: {
-                  countryCode: payload.countryCodeAlpha2,
                   customerBankAccountToken: payload.nonce,
                   couponCode: couponCode.getValue()
                 }
