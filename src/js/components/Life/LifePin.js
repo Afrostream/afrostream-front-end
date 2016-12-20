@@ -19,8 +19,7 @@ class LifePin extends ClickablePin {
   likePin (e, liked) {
     const {
       props:{
-        User,
-        dispatch
+        User
       }
     } = this
 
@@ -29,6 +28,7 @@ class LifePin extends ClickablePin {
     if (currentUser) {
       super.likePin(e, liked)
     } else {
+      e.preventDefault()
       this.modalLogin()
     }
   }
