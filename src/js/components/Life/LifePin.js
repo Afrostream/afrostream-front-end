@@ -20,7 +20,9 @@ class LifePin extends ClickablePin {
     const {
       props:{
         data,
-        showBubble
+        showBubble,
+        Life,
+        User
       }
     } = this
 
@@ -35,6 +37,19 @@ class LifePin extends ClickablePin {
     if (showBubble) {
       return
     }
+    const pinId = data.get('_id')
+    const currentUser = User.get('user')
+    const lifeUserId = currentUser && currentUser.get('_id')
+    const likedPins = lifeUserId && Life.get(`life/users/${lifeUserId}/pins/likes`)
+    const likedPin = likedPins && likedPins.find((pin) => pin.get('pinId') === pinId)
+    const liked = likedPin && likedPin.get('liked')
+
+    const likeTypeIcon = {
+      'card-bubble': true,
+      'card-bubble-type': true,
+      'like': true,
+      'liked': liked
+    }
 
     return (<div className="card-bubbles">
       {pinnedUser && <div className="card-bubble card-bubble-user">
@@ -43,7 +58,10 @@ class LifePin extends ClickablePin {
              className="icon-user"/>
       </div>}
       <div className={classSet(cardTypeIcon)}/>
-      {/*<div className="card-bubble card-bubble-type like" onClick={::this.likePin}/>*/}
+      {<div className={classSet(likeTypeIcon)} onClick={ e => ::this.likePin(e, !liked)}>
+        <div className="heart heart-animation-1"/>
+        <div className="heart heart-animation-2"/>
+      </div>}
     </div>)
   }
 

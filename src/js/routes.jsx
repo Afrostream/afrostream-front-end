@@ -93,6 +93,7 @@ const buildRoutes = function (lang) {
       </Route>
       <Route name="lifePin" path="pin/:pinId(/:pinSlug)" component={Life.LifePinView}/>
       <Route name="lifeTheme" path=":themeId(/:themeSlug)" component={Life.LifeTheme}/>
+      <IndexRoute key={`${lang}-life-index`} component={Life.LifeTheme}/>
     </Route>,
     <Route key={`${lang}-store`} name="store" path="store-locator" component={StoreLocator}/>,
     <Route key={`${lang}-cash`} name="cash" path="cash" component={CashwayPage}>,

@@ -4,7 +4,16 @@ import LifeList from './LifeList'
 import { withRouter } from 'react-router'
 import AvatarCard from '../User/AvatarCard'
 import PinButton from './PinButton'
+import { prepareRoute } from '../../decorators'
+import * as LifeActionCreators from '../../actions/life'
 
+@prepareRoute(async function ({store, params:{lifeUserId}}) {
+  await Promise.all([
+    store.dispatch(LifeActionCreators.fetchUsers({lifeUserId})),
+    store.dispatch(LifeActionCreators.fetchUserPins({lifeUserId}))
+  ])
+
+})
 @connect(({Life, User}) => ({Life, User}))
 class LifeUserInfos extends Component {
 
@@ -23,8 +32,8 @@ class LifeUserInfos extends Component {
 
     const gloBalUser = User.get(`user`)
     const user = Life.get(`life/users/${lifeUserId}`)
-    const pins = user && user.get('lifePins')
-
+    //FIXME il n'y a pas le nombre exact de pins uand on charge par la route life/pins
+    const pins = Life.get(`life/users/${lifeUserId}/pins`)
 
     if (!pins) {
       return <div />
@@ -49,7 +58,7 @@ class LifeUserInfos extends Component {
         </div>
         {pins &&
         <div className="col-md-12 no-padding">
-          <LifeList {...this.props} {...{pins, isCurrentUser}} virtual={true} highlightFirst={false}
+          <LifeList {...this.props} {...{pins, userId: lifeUserId, isCurrentUser}} highlightFirst={false}
                     key={`life-theme-pins`}/>
         </div>}
       </div>

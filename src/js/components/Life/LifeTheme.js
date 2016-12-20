@@ -6,9 +6,10 @@ import LifeList from './LifeList'
 import * as LifeActionCreators from '../../actions/life'
 
 @prepareRoute(async function ({store, params:{themeId}}) {
-  if (themeId) {
-    return await store.dispatch(LifeActionCreators.fetchThemes(themeId))
-  }
+  return await Promise.all([
+    store.dispatch(LifeActionCreators.fetchPins({themeId})),
+    store.dispatch(LifeActionCreators.fetchSpots({themeId}))
+  ])
 })
 @connect(({Life, User}) => ({Life, User}))
 class LifeTheme extends Component {
@@ -27,12 +28,13 @@ class LifeTheme extends Component {
       }
     } = this
 
-    const themesList = Life.get(`life/themes/${themeId || ''}`)
-    const pins = themeId ? themesList && themesList.get('pins') : Life.get('life/pins/')
-    const spots = themeId ? themesList && themesList.get('spots') : Life.get('life/spots/')
+    const pins = Life.get(`life/pins/${themeId}`)
+    const spots = Life.get(`life/spots/${themeId}`)
+    //const pins = themeId ? themesList && themesList.get('pins') : Life.get('life/pins/')
+    //const spots = themeId ? themesList && themesList.get('spots') : Life.get('life/spots/')
 
     return (<div key="life-themes-list" className="life-theme">
-      {pins && <LifeList {...this.props} {...{pins, spots, themeId}} virtual={true} key={`life-theme-pins`}/>}
+      {pins && <LifeList {...this.props} {...{pins, spots, themeId}} key={`life-theme-pins`}/>}
     </div>)
   }
 }
