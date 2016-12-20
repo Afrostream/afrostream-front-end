@@ -6,6 +6,7 @@ import * as EventActionCreators from '../../actions/event'
 import LifeSticky from './LifeSticky'
 import SubNavigation from '../Header/SubNavigation'
 import { withRouter } from 'react-router'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
 if (process.env.BROWSER) {
   require('./LifeHome.less')
@@ -17,11 +18,23 @@ if (process.env.BROWSER) {
     store.dispatch(LifeActionCreators.fetchUserLikes())
   ])
 })
-@connect(({Life}) => ({Life}))
+@connect(({Life, User}) => ({Life, User}))
 class LifeHome extends Component {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const {
+      props: {
+        dispatch,
+        User
+      }
+    } = this
+    if (!shallowEqual(nextProps.User.get('user'), User.get('user'))) {
+      dispatch(LifeActionCreators.fetchUserLikes())
+    }
   }
 
   render () {
