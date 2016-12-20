@@ -26,7 +26,7 @@ class LifeList extends Component {
       }
     } = this
 
-    const spotList = spots
+    const spotList = this.getSpots()
     let mergedList = pins
     pins.forEach((spot, index) => {
       const spotIndex = this.canInsertSpot(spotList, index)
