@@ -22,6 +22,7 @@ class ClickablePin extends Component {
     const {
       props: {dispatch, data}
     } = this
+
     if (e) {
       e.preventDefault()
       e.target.classList.toggle('liked')
@@ -102,6 +103,19 @@ class ClickablePin extends Component {
   getUrl (data) {
     const pinUrl = `/life/pin/${data.get('_id')}/${slugify(data.get('title'))}`
     return data.get('originalUrl') || pinUrl || '/life' || '#'
+  }
+
+  modalLogin () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+    return dispatch(ModalActionCreators.open({
+      target: `life-user`,
+      closable: true,
+      className: 'large'
+    }))
   }
 
   clickHandlerPin (e, data) {

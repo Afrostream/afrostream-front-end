@@ -16,6 +16,23 @@ class LifePin extends ClickablePin {
     super(props, context)
   }
 
+  likePin (e, liked) {
+    const {
+      props:{
+        User,
+        dispatch
+      }
+    } = this
+
+    const currentUser = User.get('user')
+
+    if (currentUser) {
+      super.likePin(e, liked)
+    } else {
+      this.modalLogin()
+    }
+  }
+
   renderBubbles () {
     const {
       props:{
@@ -38,6 +55,7 @@ class LifePin extends ClickablePin {
       return
     }
     const pinId = data.get('_id')
+    const nbLikes = data.get('likes')
     const currentUser = User.get('user')
     const lifeUserId = currentUser && currentUser.get('_id')
     const likedPins = lifeUserId && Life.get(`life/users/${lifeUserId}/pins/likes`)
@@ -48,7 +66,8 @@ class LifePin extends ClickablePin {
       'card-bubble': true,
       'card-bubble-type': true,
       'like': true,
-      'liked': liked
+      'liked': liked,
+      'disabled': !currentUser
     }
 
     return (<div className="card-bubbles">
@@ -58,10 +77,11 @@ class LifePin extends ClickablePin {
              className="icon-user"/>
       </div>}
       <div className={classSet(cardTypeIcon)}/>
-      {currentUser && <div className={classSet(likeTypeIcon)} onClick={ e => ::this.likePin(e, !liked)}>
+      <div className={classSet(likeTypeIcon)} onClick={(e) => ::this.likePin(e, !liked)}>
         <div className="heart heart-animation-1"/>
         <div className="heart heart-animation-2"/>
-      </div>}
+        {nbLikes > 0 && <div className="like-badge-number">{nbLikes}</div>}
+      </div>
     </div>)
   }
 
