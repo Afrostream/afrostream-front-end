@@ -17,8 +17,9 @@ class LifePin extends ClickablePin {
   }
 
   likePin (e, liked) {
-    const {
+    let {
       props:{
+        data,
         User
       }
     } = this
@@ -37,7 +38,6 @@ class LifePin extends ClickablePin {
     const {
       props:{
         data,
-        showBubble,
         Life,
         User
       }

@@ -16,6 +16,9 @@
 }
 
 @keyframes heartUnlike {
+  0% {
+    transform: scale(1);
+  }
   50% {
     transform: scale(.75);
   }
@@ -121,7 +124,7 @@
   }
   .card-body {
     color: #FFFFFF;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+
     .card-info {
       font-size: 2.6em;
       &:after {
@@ -411,6 +414,8 @@
           }
           &.like {
 
+            animation: heartUnlike .25s @bezier both;
+
             &:before {
               content: "\f004";
               color: @brand-primary;
@@ -573,6 +578,7 @@
         padding: 0.5em 0 0.5em 0;
         font-size: 1.8em;
         line-height: 1.5;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         &:after {
           content: '';
           width: 3em;

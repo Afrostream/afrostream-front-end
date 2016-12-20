@@ -156,11 +156,24 @@ export default createReducer(initialState, {
     const likedPin = res.body
 
     const savedLikePins = state.get(`life/users/${lifeUserId}/pins/likes`)
-    //let updatePins = savedLikePins && savedLikePins.find((pin) => pin.get('pinId') === pinId)
     const mergedLikePins = _.unionBy([likedPin], savedLikePins && savedLikePins.toJS() || [], '_id')
 
+    //Update model pins
+    //TODO make dictionnary for pinslist model
+
+    //const savedPins = state.get(`life/pins/user/${lifeUserId}`)
+    //debugger
+    //const storedPins = savedPins && savedPins.map((pin) => {
+    //    if (pin.get('_id') === pinId) {
+    //      const nbLikes = pin.get('likes')
+    //      pin = pin.set('likes', nbLikes + (res.body.liked ? 1 : -1))
+    //    }
+    //    return pin
+    //  })
+
     return state.merge({
-      [`life/users/${lifeUserId}/pins/likes`]: mergedLikePins
+      [`life/users/${lifeUserId}/pins/likes`]: mergedLikePins,
+      //[`life/pins/user/${lifeUserId}`]: storedPins
     })
   },
 
