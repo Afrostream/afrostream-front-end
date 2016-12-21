@@ -21,11 +21,17 @@
   .app.lock-open {
 
     & > * {
-      display: none;
+      z-index: 0;
     }
 
     .lock-container {
       display: block;
+      z-index: 2;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 
