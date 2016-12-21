@@ -97,17 +97,6 @@ class Application extends React.Component {
     super(props, context)
   }
 
-  componentDidMount () {
-    if (canUseDOM) {
-      outdatedBrowser({
-        bgColor: '#f25648',
-        color: '#ffffff',
-        lowerThan: 'transform',
-        languagePath: '/outdated.html'
-      })
-    }
-  }
-
   render () {
 
     const {props: {router, dispatch, children, Event, Modal, User, intl}} = this

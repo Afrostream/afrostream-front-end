@@ -14,11 +14,23 @@ import config from '../../config'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { getCountry } from './lib/geo'
 import * as UserActionCreators from './actions/user'
+import document from 'global/document'
 
 import { deserialize } from './lib/utils'
 import { getI18n } from '../../config/i18n'
 
 const {apiClient, heroku} = config
+
+if (canUseDOM) {
+  $(document).ready(() => {
+    outdatedBrowser({
+      bgColor: '#f25648',
+      color: '#ffffff',
+      lowerThan: 'transform',
+      languagePath: '/outdated.html'
+    })
+  })
+}
 
 const history = browserHistory
 /* global __INITIAL_STATE__:true */
