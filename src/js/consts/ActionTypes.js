@@ -10,8 +10,8 @@ export default {
     reset: null,
     strategy: null,
     logOut: null,
-    netsizeCheck: null,
-    netsizeSubscribe: null
+    mobileCheck: null,
+    mobileSubscribe: null
   }),
 
   Billing: keyMirror({
@@ -142,6 +142,9 @@ export default {
     fetchSpots: null,
     fetchPins: null,
     fetchPin: null,
-    fetchUsers: null
+    fetchUserLikes: null,
+    likePin: null,
+    fetchUsers: null,
+    fetchUserPins: null
   })
 }

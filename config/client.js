@@ -119,7 +119,8 @@ const client = {
   stripeApi: '//js.stripe.com/v2/',
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   wecashupApi: {
-    url: '//www.wecashup.cloud/temp/2-form/js/MobileMoney.js',
+    url: '//www.wecashup.cloud/live/2-form/js/MobileMoney.js',
+    modalClass:'featherlight',
     attributes: {
       'class': 'wecashup_button',
       'async': true,
@@ -127,7 +128,7 @@ const client = {
       'data-receiver-public-key': process.env.NODE_ENV !== 'production' ? 'NoZ7voE0KDRSBnxaB7oqcGdWQnrLVxAZm9NLiEIMyYvq' : 'SM3xFy5l31t9HD5XuosCfNuhZvNNhEQHNexLu4VjPtu3',
       'data-name': 'afrostream',
       'data-style': 1,
-      'data-image': '//www.wecashup.cloud/temp/2-form/img/home.png',
+      'data-image': '//www.wecashup.cloud/live/2-form/img/home.png',
       'data-cash': true,
       'data-telecom': true,
       'data-m-wallet': false,

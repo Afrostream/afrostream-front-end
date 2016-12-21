@@ -136,6 +136,15 @@ class WecashupForm extends CouponForm {
     selected: false
   }
 
+  onSuccess () {
+    //On success try to close wecashupModal
+    const wcashupClass = `.${wecashupApi.modalClass}`
+    const modalOverlay = document.querySelector(wcashupClass)
+    if (modalOverlay) {
+      modalOverlay.classList.add('hidden')
+    }
+  }
+
   async submit (billingInfo, currentPlan) {
     const {
       props:{provider}
@@ -166,7 +175,7 @@ class WecashupForm extends CouponForm {
     if (!this.props.selected) return
     return (
 
-      <div className="row">
+      <div className="row-fluid">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {this.getTitle('payment.wecashup.text') }

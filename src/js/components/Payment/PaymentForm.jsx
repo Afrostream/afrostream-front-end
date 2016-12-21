@@ -444,6 +444,8 @@ class PaymentForm extends I18n {
     } = this
 
     const self = this
+    const {methodForm} = this.refs
+
     let isCash = router.isActive('cash')
     const originPath = this.getPath()
 
@@ -474,6 +476,8 @@ class PaymentForm extends I18n {
         })
 
         self.disableForm(false, 1)
+
+        return methodForm.onSuccess()
         //On merge les infos en faisant un new call a getProfile
         return dispatch(UserActionCreators.getProfile())
       })

@@ -2,6 +2,9 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import AvatarCard from '../User/AvatarCard'
+import ReactList from 'react-list'
+import * as LifeActionCreators from '../../actions/life'
+
 if (process.env.BROWSER) {
   require('./LifeUsersList.less')
 }
@@ -10,6 +13,7 @@ class LifeUsersList extends Component {
 
   constructor (props) {
     super(props)
+    this.isLoading = false
   }
 
   getUsers () {
@@ -20,15 +24,42 @@ class LifeUsersList extends Component {
       }
     } = this
 
-    return Life.get(`life/users/${lifeUserId || ''}`)
+    return Life.get(`life/users/${lifeUserId}`)
   }
 
-  renderItem ({data, key, index}) {
+  fetchUsers (index) {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+
+    if (this.isLoading) return
+    this.isLoading = true
+
+    return dispatch(LifeActionCreators.fetchUsers({offset: index}))
+      .then(() => {
+        this.isLoading = false
+      })
+  }
+
+  renderItem (index, key) {
     const {
       props: {}
     } = this
 
-    const user = data
+    const {
+      props: {}
+    } = this
+
+    const lifeUsersList = this.getUsers()
+    const user = lifeUsersList.get(index)
+
+    if (!user) {
+      this.fetchUsers(index)
+      return <div className="col-md-3 col-xs-4" {...{key}} />
+    }
+
     return (
       <div className="col-md-3 col-xs-4" {...{key}}>
         <AvatarCard className="avatar-card col-md-3" {...{user}} {...this.props} />
@@ -49,12 +80,14 @@ class LifeUsersList extends Component {
     }
 
     return (<div className={classSet(classList)}>
-      {lifeUsersList && lifeUsersList.map((data, index) => this.renderItem({
-        data,
-        index,
-        key: `life-list-user--${index}`
-
-      })).toJS()}
+      {lifeUsersList && <ReactList
+        ref="react-user-list"
+        axis="y"
+        itemRenderer={::this.renderItem}
+        items={lifeUsersList}
+        length={lifeUsersList.size + 1 }
+        type={'simple'}
+      />}
     </div>)
   }
 }

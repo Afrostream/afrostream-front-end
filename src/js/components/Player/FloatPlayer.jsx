@@ -115,14 +115,16 @@ class FloatPlayer extends I18n {
       })
     }
 
-    if (nextProps.location.pathname !== this.props.location.pathname) {      
+
+    if (nextProps.location.pathname !== this.props.location.pathname) {
       this.updatePlayerPosition()
     }
 
     this.props.User.get('user') && !nextProps.User.get('user') && this.destroyPlayer()
   }
 
-  saveVideoData() {
+
+  saveVideoData () {
     this.setState({
       savedData: {
          pathname: this.props.location.pathname,
@@ -281,7 +283,7 @@ class FloatPlayer extends I18n {
       }
       //encode data to pass it into drmtoday
       if (token && playerData.drm && playerData.dash && playerData.dash.protData) {
-        let protUser = window.atob(JSON.stringify({
+        let protUser = window.btoa(JSON.stringify({
           userId: userId,
           sessionId: token.get('access_token'),
           merchant: 'afrostream'
@@ -761,7 +763,7 @@ class FloatPlayer extends I18n {
 
   handleReopen () {
     const {pathname, videoId} = this.state.savedData
-    this.destroyPlayer();
+    this.destroyPlayer()
     this.props.history.push(pathname)
   }
 

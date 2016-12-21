@@ -74,23 +74,23 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.OAuth.netsizeCheck](state, {res}) {
+  [ActionTypes.OAuth.mobileCheck](state, {res, strategy}) {
     if (!res) {
       return state
     }
     const data = res.body
     return state.merge({
-      [`netsize/check`]: data
+      [`mobile/${strategy}/check`]: data
     })
   },
 
-  [ActionTypes.OAuth.netsizeSubscribe](state, {res}) {
+  [ActionTypes.OAuth.mobileSubscribe](state, {res, strategy}) {
     if (!res) {
       return state
     }
     const data = res.body
     return state.merge({
-      [`netsize/subscribe`]: data
+      [`mobile/${strategy}/subscribe`]: data
     })
   }
 

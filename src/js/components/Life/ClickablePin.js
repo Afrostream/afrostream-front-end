@@ -18,11 +18,21 @@ class ClickablePin extends Component {
     super(props, context)
   }
 
-  likePin (e) {
+  likePin (e, liked) {
     const {
-      props: {}
+      props: {dispatch, data}
     } = this
-    e.preventDefault()
+
+    if (e) {
+      e.preventDefault()
+      e.target.classList.toggle('liked')
+    }
+
+    return dispatch(LifeActionCreators.likePin({
+      liked,
+      data
+    }))
+
   }
 
   removePin (e) {
@@ -95,13 +105,26 @@ class ClickablePin extends Component {
     return data.get('originalUrl') || pinUrl || '/life' || '#'
   }
 
+  modalLogin () {
+    const {
+      props: {
+        dispatch
+      }
+    } = this
+    return dispatch(ModalActionCreators.open({
+      target: `life-user`,
+      closable: true,
+      className: 'large'
+    }))
+  }
+
   clickHandlerPin (e, data) {
     const {
       props: {
         dispatch
       }
     } = this
-    const pinRole = data.get('role') || config.userRoles[0]
+    const pinRole = data.get('role') || config.userRoles[1]
     const acl = this.validRole(pinRole)
     const pinUrl = this.getUrl(data)
 

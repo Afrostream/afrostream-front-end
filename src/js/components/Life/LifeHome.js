@@ -2,31 +2,39 @@ import React, { PropTypes, Component } from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import * as LifeActionCreators from '../../actions/life'
-import * as IntercomActionCreators from '../../actions/intercom'
 import * as EventActionCreators from '../../actions/event'
 import LifeSticky from './LifeSticky'
-import LifeTheme from './LifeTheme'
 import SubNavigation from '../Header/SubNavigation'
 import { withRouter } from 'react-router'
-import config from '../../../../config'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
-const {intercom:{lifeFeature}} = config
 if (process.env.BROWSER) {
   require('./LifeHome.less')
 }
 
-@prepareRoute(async function ({store, params:{themeId, pinId}}) {
+@prepareRoute(async function ({store}) {
   return await Promise.all([
     store.dispatch(EventActionCreators.pinHeader(true)),
-    store.dispatch(LifeActionCreators.fetchPins({})),
-    store.dispatch(LifeActionCreators.fetchSpots({}))
+    store.dispatch(LifeActionCreators.fetchUserLikes())
   ])
 })
-@connect(({Life}) => ({Life}))
+@connect(({Life, User}) => ({Life, User}))
 class LifeHome extends Component {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const {
+      props: {
+        dispatch,
+        User
+      }
+    } = this
+    if (!shallowEqual(nextProps.User.get('user'), User.get('user'))) {
+      dispatch(LifeActionCreators.fetchUserLikes())
+    }
   }
 
   render () {
@@ -43,7 +51,7 @@ class LifeHome extends Component {
       <div className="row-fluid no-padding">
         <SubNavigation {...{themesList}} to="/life/{_id}/{slug}"/>
         <div className="container-fluid no-padding life-home life-themes brand-grey">
-          {children || <LifeTheme {...this.props}/>}
+          {children}
           <LifeSticky {...this.props}/>
         </div>
       </div>

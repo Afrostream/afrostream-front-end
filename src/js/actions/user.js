@@ -105,7 +105,6 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 
   dispatch(pendingUser(false))
 
-
   return _.merge(data, {
     user
   })

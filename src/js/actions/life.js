@@ -12,9 +12,6 @@ export function fetchThemes (fetchThemeId) {
       return {
         type: ActionTypes.Life.fetchThemes,
         themeId,
-        res: {
-          body: readyThemes.toJS()
-        }
       }
     }
     return async api => ({
@@ -93,7 +90,7 @@ export function publishPin (data) {
           passToken: true
         }).then(() => {
           if (userId) {
-            dispatch(fetchUsers(userId, {}))
+            dispatch(fetchUsers({userId}))
           }
         })
       }
@@ -124,59 +121,110 @@ export function removePin (pinId) {
   }
 }
 
-export function fetchPins ({limit = 22, startIndex = 0, stopIndex = 3}) {
-  return (dispatch, getState) => {
-    let readyPins = getState().Life.get(`life/pins/`)
-    if (readyPins) {
-      console.log('Life pins already present in data store')
+export function fetchUserLikes () {
+  return (api, getState, dispatch) => {
+    const user = getState().User.get('user')
+    if (!user) {
       return {
-        type: ActionTypes.Life.fetchPins,
-        res: {
-          body: readyPins.toJS()
-        }
+        type: ActionTypes.Life.fetchUserLikes
       }
     }
-    return async api => ({
-      type: ActionTypes.Life.fetchPins,
-      res: await api({
-        path: `/api/life/pins`,
-        params: {
-          limit
-        }
-      })
-    })
+    const lifeUserId = user && user.get('_id')
+    return async () => {
+      return {
+        type: ActionTypes.Life.fetchUserLikes,
+        lifeUserId,
+        res: await api({
+          path: `/api/life/users/${lifeUserId}/pins`,
+          passToken: true,
+          params: {
+            liked: true
+          }
+        })
+      }
+    }
   }
 }
 
-export function fetchSpots ({limit = 22, startIndex = 0, stopIndex = 3}) {
-  return (dispatch, getState) => {
-    let readySpots = getState().Life.get(
-      `life/spots/`
-    )
-    if (readySpots) {
-      console.log('Life spots already present in data store')
+export function likePin ({data, liked}) {
+  return (api, getState, dispatch) => {
+
+    const user = getState().User.get('user')
+    const lifeUserId = user && user.get('_id')
+    const pinId = data && data.get('_id')
+
+    return async () => {
       return {
-        type: ActionTypes.Life.fetchSpots,
-        res: {
-          body: readySpots.toJS()
-        }
+        type: ActionTypes.Life.likePin,
+        pinId,
+        lifeUserId,
+        res: await api({
+          path: `/api/life/users/${lifeUserId}/pins/${pinId}`,
+          method: 'PUT',
+          passToken: true,
+          params: {
+            liked
+          }
+        })
       }
     }
+  }
+}
+
+export function fetchSpots ({themeId, limit = 22, offset = 0}) {
+  return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.fetchSpots,
+      themeId,
       res: await api({
         path: `/api/life/spots`,
         params: {
-          limit
+          limit,
+          themeId
         }
       })
     })
   }
 }
 
-export function fetchUsers (fetchUserId, {limit = 200, startIndex = 0, stopIndex = 3}) {
+export function fetchPins ({themeId, limit = 7, offset = 0}) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Life.fetchPins,
+      themeId,
+      res: await api({
+        path: `/api/life/pins`,
+        params: {
+          limit,
+          offset,
+          themeId
+        }
+      })
+    })
+  }
+}
 
-  const lifeUserId = fetchUserId || ''
+export function fetchUserPins ({lifeUserId, limit = 50, offset}) {
+
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Life.fetchUserPins,
+      lifeUserId,
+      res: await api({
+        path: `/api/life/pins`,
+        params: {
+          userId: lifeUserId,
+          limit,
+          offset
+        }
+      })
+    })
+  }
+}
+
+
+export function fetchUsers ({lifeUserId, limit = 50, offset}) {
+
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.fetchUsers,
@@ -184,7 +232,8 @@ export function fetchUsers (fetchUserId, {limit = 200, startIndex = 0, stopIndex
       res: await api({
         path: `/api/life/users/${lifeUserId || ''}`,
         params: {
-          limit
+          limit,
+          offset
         }
       })
     })
