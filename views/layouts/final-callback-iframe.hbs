@@ -9,18 +9,26 @@
 
 <div id="main">
   <script type="text/javascript">
+
+    if (window.opener) {
+      window.opener.focus();
+    }
+
     var serverResponse = {{{json data}}};
     try {
       serverResponse = JSON.parse(atob(location.hash && location.hash.substr(1)))
     } catch (e) {
+      console.log('error parsing response : ', e)
     }
 
     // postpone close :
     //  we let 200ms to mobile app to catch the document.location.href change
     setTimeout(function () {
       try {
-        window.postMessage(serverResponse, '*'); //send the message and target URI
+        var oppener = window.parent || window.opener
+        oppener.postMessage(serverResponse, '*'); //send the message and target URI
       } catch (e) { /* Blocked a frame with origin X from accessing a frame with origin Y */
+        console.log('error postmessage : ', e)
       }
     }, 200); // enough ?
 
