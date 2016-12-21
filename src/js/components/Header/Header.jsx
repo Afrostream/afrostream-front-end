@@ -57,7 +57,8 @@ class Header extends React.Component {
       'videoId',
       'categoryId',
       'lifeUserId',
-      'planCode'
+      'planCode',
+      'subscriptionBillingUuid'
     ]
 
     let planCode

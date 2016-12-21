@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import * as BillingActionCreators from '../../actions/billing'
+import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { Link } from '../Utils'
 import moment from 'moment'
@@ -19,7 +20,7 @@ const style = {
   margin: 12
 }
 
-@connect(({Billing}) => ({Billing}))
+@connect(({Billing, User}) => ({Billing, User}))
 class CancelSubscription extends React.Component {
   constructor (props, context) {
     super(props, context)
@@ -30,6 +31,29 @@ class CancelSubscription extends React.Component {
 
   static contextTypes = {
     history: PropTypes.object.isRequired
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      Billing,
+      User,
+      params:{
+        subscriptionBillingUuid
+      },
+      location: {
+        pathname
+      }
+    } = nextProps
+
+    const subscriptionsList = Billing.get('subscriptions')
+    const user = User.get('user')
+    if (!subscriptionsList || !user) {
+      return 
+    }
+
+    if (!subscriptionBillingUuid) {
+      browserHistory.push(`${pathname}/${this.getUserSubscription(user)}`)
+    }
   }
 
   cancelSubscription (subscription) {
@@ -59,23 +83,47 @@ class CancelSubscription extends React.Component {
       })
   }
 
+  getUserSubscription(user) {
+    let subscription =  user.getIn(['subscriptionsStatus', 'subscriptions'])
+      .filter(sub => {
+        return sub.get('isActive') === 'yes' && sub.get('isCancellable') === 'yes'
+      })
+      .first()
+
+    if (!subscription) {
+      subscription = user.getIn(['subscriptionsStatus', 'subscriptions'])
+      .filter(sub => {
+        return sub.get('isActive') === 'yes'
+      })
+      .first()
+      
+    }
+
+    return subscription.get('subscriptionBillingUuid')
+  }
+
   render () {
     const {
       props: {
         Billing,
+        User,
         params:{
           subscriptionBillingUuid
+        },
+        location: {
+          pathname
         }
       }
     } = this
 
     const subscriptionsList = Billing.get('subscriptions')
-
-    if (!subscriptionsList) {
+    const user = User.get('user')
+    if (!subscriptionsList || !user || !subscriptionBillingUuid) {
       return (
         <div />
       )
     }
+
     let currentSubscription = subscriptionsList.find((obj)=> {
       return obj.get('subscriptionBillingUuid') == subscriptionBillingUuid
     })
