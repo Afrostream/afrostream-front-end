@@ -19,7 +19,7 @@
     //  we let 200ms to mobile app to catch the document.location.href change
     setTimeout(function () {
       try {
-        window && window.opener && window.opener.postMessage(serverResponse, '*'); //send the message and target URI
+        window.postMessage(serverResponse, '*'); //send the message and target URI
       } catch (e) { /* Blocked a frame with origin X from accessing a frame with origin Y */
       }
     }, 200); // enough ?
