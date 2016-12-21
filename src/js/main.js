@@ -20,20 +20,6 @@ import { getI18n } from '../../config/i18n'
 
 const {apiClient, heroku} = config
 
-if (canUseDOM) {
-  //require('bootstrap')
-  //require('./lib/customEventPolyfill')
-  //require('./lib/localStoragePolyfill')
-  //require('outdated-browser/outdatedbrowser/outdatedbrowser')
-  //
-  outdatedBrowser({
-    bgColor: '#f25648',
-    color: '#ffffff',
-    lowerThan: 'transform',
-    languagePath: '/outdated.html'
-  })
-}
-
 const history = browserHistory
 /* global __INITIAL_STATE__:true */
 const state = deserialize(__INITIAL_STATE__)
