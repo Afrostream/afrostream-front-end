@@ -95,6 +95,16 @@ class PaymentMethod extends React.Component {
     }
   }
 
+  onError () {
+    switch (this.state.method) {
+      case  Methods.WECASHUP:
+        return this.refs.wecashup.onError()
+        break
+      default:
+        break
+    }
+  }
+
   async submit (billingInfo, currentPlan) {
     switch (this.state.method) {
       case  Methods.NETSIZE:
