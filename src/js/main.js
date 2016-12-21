@@ -21,10 +21,10 @@ import { getI18n } from '../../config/i18n'
 const {apiClient, heroku} = config
 
 if (canUseDOM) {
-  require('bootstrap')
-  require('./lib/customEventPolyfill')
-  require('./lib/localStoragePolyfill')
-  require('outdatedBrowser')
+  //require('bootstrap')
+  //require('./lib/customEventPolyfill')
+  //require('./lib/localStoragePolyfill')
+  //require('outdated-browser')
   outdatedBrowser({
     bgColor: '#f25648',
     color: '#ffffff',
