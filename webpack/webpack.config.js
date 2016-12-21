@@ -181,7 +181,17 @@ const webpackConfig = {
       },
       {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
-        loaders: ['exports-loader?outdatedBrowser', 'expose-loader?outdatedBrowser', 'imports?this=>window'],
+        loader: 'expose-loader?outdatedBrowser',
+        include: [path.join(node_modules_dir, 'outdated-browser/outdatedbrowser')]
+      },
+      {
+        test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
+        loaders: ['imports?this=>window'],
+        include: [path.join(node_modules_dir, 'outdated-browser/outdatedbrowser')]
+      },
+      {
+        test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
+        loaders: ['exports-loader?outdatedBrowser'],
         include: [path.join(node_modules_dir, 'outdated-browser/outdatedbrowser')]
       },
     ],

@@ -24,7 +24,7 @@ if (canUseDOM) {
   //require('bootstrap')
   //require('./lib/customEventPolyfill')
   //require('./lib/localStoragePolyfill')
-  require('outdated-browser/outdatedbrowser/outdatedbrowser')
+  //require('outdated-browser/outdatedbrowser/outdatedbrowser')
   //
   outdatedBrowser({
     bgColor: '#f25648',
