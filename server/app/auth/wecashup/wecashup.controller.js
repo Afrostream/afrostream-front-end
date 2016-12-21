@@ -2,11 +2,15 @@ import { getData, fwd } from '../../api/api-front'
 
 export async function callback (req, res) {
   res.noCache()
+
+  console.log('kookoo : ', req.cookies)
+
   getData(req, '/auth/wecashup/callback', {
     followRedirect: false,
     method: 'POST',
     headers: {
-      cookie: req.get('cookie'),
+      'Set-Cookie': req.cookies,
+      'Cookie': req.cookies,
       'content-type': 'application/json'
     }
   }).nodeify(fwd(res))
