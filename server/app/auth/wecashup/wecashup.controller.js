@@ -5,7 +5,10 @@ export async function callback (req, res) {
   getData(req, '/auth/wecashup/callback', {
     followRedirect: false,
     method: 'POST',
-    headers: {'content-type': 'application/json'}
+    headers: {
+      cookie: req.get('cookie'),
+      'content-type': 'application/json'
+    }
   }).nodeify(fwd(res))
 
 }
@@ -14,9 +17,13 @@ export async function finalCallback (req, res) {
   res.noCache()
   const layout = 'layouts/final-callback-iframe'
 
-  const {cookies:{wecashup = null}} = res
+  const wecashupData = res.cookies && res.cookies.wecashup
 
   res.status(res.statusCode || 200).render(layout, {
-    statusMessage: (res.statusMessage || {subStatus: cookies.wecashup, transactionId: cookies.wecashup})
+    data: ({
+      statusMessage: res.statusMessage,
+      statusCode: res.statusCode,
+      data: {success: true, subStatus: wecashupData, transactionId: wecashupData}
+    })
   })
 }

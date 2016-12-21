@@ -477,7 +477,7 @@ class PaymentForm extends I18n {
 
         self.disableForm(false, 1)
 
-        return methodForm.onSuccess()
+        methodForm.onSuccess()
         //On merge les infos en faisant un new call a getProfile
         return dispatch(UserActionCreators.getProfile())
       })
@@ -499,6 +499,7 @@ class PaymentForm extends I18n {
 
 
         self.disableForm(false, 2, globalMessage)
+        methodForm.onError()
         self.props.history.push(`${originPath}/select-plan/${planCode}/error`)
       })
   }

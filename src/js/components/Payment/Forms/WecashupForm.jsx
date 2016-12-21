@@ -137,6 +137,14 @@ class WecashupForm extends CouponForm {
   }
 
   onSuccess () {
+    this.hideOverlay()
+  }
+
+  onError () {
+    this.hideOverlay()
+  }
+
+  hideOverlay () {
     //On success try to close wecashupModal
     const wcashupClass = `.${wecashupApi.modalClass}`
     const modalOverlay = document.querySelector(wcashupClass)

@@ -408,6 +408,7 @@ export function extractImg ({
   data,
   key,
   keys = [],
+  defaultImage,
   width = 1280,
   height = 'none',
   format = 'jpg',
@@ -415,7 +416,7 @@ export function extractImg ({
   crop = 'entropy'
 }) {
   let thumb
-  let imageUrl = config.metadata.defaultImage
+  let imageUrl = defaultImage || config.metadata.defaultImage
   if (data) {
 
     const imageUrlExplicit = data.get('imageUrl')
