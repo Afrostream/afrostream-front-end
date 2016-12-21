@@ -4,7 +4,8 @@ import * as controller from './wecashup.controller'
 
 const router = express.Router()
 
-router.get('/final-callback', controller.callback)
+router.get('/final-callback', controller.finalCallback)
+router.post('/callback', controller.callback)
 
 router.use(function (req, res) {
   res.noCache()

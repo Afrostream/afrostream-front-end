@@ -1,8 +1,10 @@
 import _ from 'lodash'
+import Q from 'q'
 import config from '../../../config'
+import request from 'request'
 import anr from 'afrostream-node-request'
 const {apiServer} = config
-const request = anr.create({baseUrl: apiServer.urlPrefix, filter: null})
+const anrRequest = anr.create({baseUrl: apiServer.urlPrefix, filter: null})
 
 /**
  * call request on external api
@@ -10,7 +12,7 @@ const request = anr.create({baseUrl: apiServer.urlPrefix, filter: null})
  * @param path
  */
 export async function getExternal (req, requestOptions) {
-  return await request(
+  return await anrRequest(
     _.merge({
         method: 'POST'
       },
@@ -24,7 +26,7 @@ export async function getExternal (req, requestOptions) {
  * @param path
  */
 export function getData (req, path, requestOptions) {
-  return request(
+  return anrRequest(
     _.merge(
       {
         qs: req.query || {},
@@ -53,7 +55,7 @@ export async function getBodyWithoutAuth (...args) {
 }
 
 export function proxy (req, res, queryOptions) {
-  request(
+  anrRequest(
     _.merge(
       {
         method: req.method,
