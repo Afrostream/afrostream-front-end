@@ -4,7 +4,6 @@ import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import { Link } from '../Utils'
 import moment from 'moment'
-import * as ModalActionCreators from '../../actions/modal'
 import PaymentImages from '../Payment/PaymentImages'
 import { withRouter } from 'react-router'
 import { isBoolean } from '../../lib/utils'
@@ -82,19 +81,6 @@ class CancelSubscription extends React.Component {
           pending: false
         })
       })
-  }
-
-  openModal (donePath) {
-    const {
-      props: {
-        dispatch
-      }
-    } = this
-
-    dispatch(ModalActionCreators.open({
-      target: 'showSignup',
-      donePath
-    }))
   }
 
   getUserSubscription(user) {
