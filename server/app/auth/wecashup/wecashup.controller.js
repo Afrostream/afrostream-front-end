@@ -14,6 +14,8 @@ export async function finalCallback (req, res) {
   res.noCache()
   const layout = 'layouts/final-callback-iframe'
 
-  console.log('body', res.body, req.body)
-  res.status(res.statusCode).render(layout, {})
+  console.log('result', res)
+  res.status(res.statusCode).render(layout, {
+    statusMessage: res.statusMessage
+  })
 }

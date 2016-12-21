@@ -166,7 +166,7 @@ class WecashupForm extends CouponForm {
     if (!this.props.selected) return
     return (
 
-      <div className="row">
+      <div className="row-fluid">
         {this.renderPromoCode()}
         <h5 className="col-md-12">
           {this.getTitle('payment.wecashup.text') }
