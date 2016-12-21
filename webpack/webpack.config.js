@@ -193,7 +193,7 @@ const webpackConfig = {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
         loaders: ['exports-loader?outdatedBrowser'],
         include: [path.join(node_modules_dir, 'outdated-browser/outdatedbrowser')]
-      },
+      }
     ],
     exprContextCritical: false
   },
