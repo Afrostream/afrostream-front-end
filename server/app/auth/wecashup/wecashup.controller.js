@@ -20,7 +20,7 @@ export async function finalCallback (req, res) {
     data: ({
       statusMessage: res.statusMessage,
       statusCode: res.statusCode,
-      data: {success: true, error: res.body.error, subStatus: wecashupData, transactionId: wecashupData}
+      data: {success: true, subStatus: wecashupData, transactionId: wecashupData}
     })
   })
 }
