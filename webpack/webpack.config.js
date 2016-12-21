@@ -77,19 +77,39 @@ const webpackConfig = {
       'mobile-detect',
       'q',
       'qs',
+      'outdated-browser/outdatedbrowser/outdatedbrowser',
       'material-ui',
-      'outdatedBrowser',
       './src/js/lib/localStoragePolyfill',
       './src/js/lib/customEventPolyfill'
     ]
   },
   resolve: {
-    modules: ['node_modules'],
-    extensions: ['', '.js', '.jsx', '.json']
+    modulesDirectories: [
+      'src',
+      'server',
+      'node_modules',
+    ],
+    extensions: ['.js', '.jsx', '.json', ''],
+    loaderExtensions: ['.js', ''],
+    loaderPostfixes: [''],
+    unsafeCache: true,
+    postfixes: ['']
   },
+  profile: true,
   stats: {
-    colors: true,
-    chunks: false
+    hash: true,
+    version: true,
+    timings: true,
+    assets: true,
+    chunks: true,
+    modules: true,
+    reasons: true,
+    children: true,
+    source: false,
+    errors: true,
+    errorDetails: true,
+    warnings: true,
+    publicPath: true
   },
   module: {
     preLoaders: [
@@ -99,12 +119,12 @@ const webpackConfig = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        loaders: ['babel-loader?cacheDirectory'],
         exclude: [node_modules_dir],
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
+        loaders: ['babel-loader?cacheDirectory'],
         exclude: [node_modules_dir]
       },
       {
@@ -158,7 +178,12 @@ const webpackConfig = {
       },
       {
         test: /jquery\.js$/, loader: 'expose-loader?jquery'
-      }
+      },
+      {
+        test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
+        loaders: ['exports-loader?outdatedBrowser', 'expose-loader?outdatedBrowser', 'imports?this=>window'],
+        include: [path.join(node_modules_dir, 'outdated-browser/outdatedbrowser')]
+      },
     ],
     exprContextCritical: false
   },
@@ -167,9 +192,9 @@ const webpackConfig = {
     tls: 'empty',
     dns: 'empty'
   },
-  externals: {
-    'window': 'Window'
-  },
+  //externals: {
+  //  'window': 'Window'
+  //},
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       names: ['player', 'vendor'],

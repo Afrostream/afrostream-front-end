@@ -115,19 +115,19 @@ class FloatPlayer extends I18n {
       })
     }
 
-    if (nextProps.location.pathname !== this.props.location.pathname) {      
+    if (nextProps.location.pathname !== this.props.location.pathname) {
       this.updatePlayerPosition()
     }
 
     this.props.User.get('user') && !nextProps.User.get('user') && this.destroyPlayer()
   }
 
-  saveVideoData() {
+  saveVideoData () {
     this.setState({
       savedData: {
-         pathname: this.props.location.pathname,
-         videoId: this.props.params.videoId
-       }
+        pathname: this.props.location.pathname,
+        videoId: this.props.params.videoId
+      }
     })
   }
 
@@ -761,7 +761,7 @@ class FloatPlayer extends I18n {
 
   handleReopen () {
     const {pathname, videoId} = this.state.savedData
-    this.destroyPlayer();
+    this.destroyPlayer()
     this.props.history.push(pathname)
   }
 

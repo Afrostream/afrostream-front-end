@@ -24,12 +24,13 @@ if (canUseDOM) {
   //require('bootstrap')
   //require('./lib/customEventPolyfill')
   //require('./lib/localStoragePolyfill')
-  //require('outdated-browser')
+  require('outdated-browser/outdatedbrowser/outdatedbrowser')
+  //
   outdatedBrowser({
     bgColor: '#f25648',
     color: '#ffffff',
     lowerThan: 'transform',
-    languagePath: ''
+    languagePath: '/outdated.html'
   })
 }
 

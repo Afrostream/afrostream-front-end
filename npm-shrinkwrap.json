@@ -1757,6 +1757,14 @@
     "expand-range": {
       "version": "1.8.2"
     },
+    "exports-loader": {
+      "version": "0.6.3",
+      "dependencies": {
+        "source-map": {
+          "version": "0.1.43"
+        }
+      }
+    },
     "expose-loader": {
       "version": "0.7.1"
     },
@@ -2235,6 +2243,9 @@
     },
     "immutable": {
       "version": "3.8.1"
+    },
+    "imports-loader": {
+      "version": "0.7.0"
     },
     "imurmurhash": {
       "version": "0.1.4"
