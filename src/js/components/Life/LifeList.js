@@ -72,7 +72,7 @@ class LifeList extends Component {
 
     if (!data) {
       this.fetchPins(index)
-      return <div className="brick" {...{key}} />
+      return <div {...{key}} />
     }
 
     const typeItem = data.get('type')
