@@ -5,7 +5,10 @@ export async function callback (req, res) {
   getData(req, '/auth/wecashup/callback', {
     followRedirect: false,
     method: 'POST',
-    headers: {'content-type': 'application/json'}
+    headers: {
+      cookie: req.get('cookie'),
+      'content-type': 'application/json'
+    }
   }).nodeify(fwd(res))
 
 }
