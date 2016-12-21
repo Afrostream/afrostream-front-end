@@ -157,8 +157,8 @@
     "action": "Envoyer"
   },
   "storesLocator": {
-    "title": "Vous cherchez un buraliste pour vous abonner à Afrostream ?",
-    "description": "Vous pouvez désormais vous abonner à Afrostream dans les bureaux de tabac. Consultez la carte et trouvez le bureau de tabac le plus proche de chez vous.",
+    "title": "Abonnez-vous à Afrostream au coin de la rue",
+    "description": "Il n’a jamais été aussi simple de s’abonner à Afrostream. Vous pouvez désormais vous rendre chez un buraliste et vous abonner pour 1 (6,99€) ou 3 mois (18,99€) à Afrostream.<br/><br/>Trouvez le bureau de tabac le plus proche de chez vous grâce à cette carte et profitez des meilleurs films et séries afro.",
     "where": "Où trouver un buraliste ?",
     "inputFind": "Ville...",
     "find": "Trouver un point de vente"

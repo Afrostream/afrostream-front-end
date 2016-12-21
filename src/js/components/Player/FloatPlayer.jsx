@@ -516,7 +516,7 @@ class FloatPlayer extends I18n {
             this.player = null
             this.playerInit = false
             console.log('player : destroyed player')
-            //dispatch(PlayerActionCreators.killPlayer()).then(()=> {
+            dispatch(PlayerActionCreators.killPlayer())
             this.requestTick(true)
             resolve(null)
           }, 0)
