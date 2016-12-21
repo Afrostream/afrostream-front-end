@@ -221,7 +221,12 @@ export default () => {
         const data = extractData.data
         const metas = extractData.metas
 
-        let image = extractImg({data, keys: ['poster', 'thumb', 'image'], width: 1120})
+        let image = extractImg({
+          data,
+          defaultImage: config.metadata.shareImage,
+          keys: ['poster', 'thumb', 'image'],
+          width: 1120
+        })
 
         metas.meta.push({
           property: 'og:title',
