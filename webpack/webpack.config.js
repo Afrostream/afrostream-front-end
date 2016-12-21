@@ -78,6 +78,7 @@ const webpackConfig = {
       'q',
       'qs',
       'material-ui',
+      'outdatedBrowser',
       './src/js/lib/localStoragePolyfill',
       './src/js/lib/customEventPolyfill'
     ]

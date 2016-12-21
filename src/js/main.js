@@ -24,6 +24,13 @@ if (canUseDOM) {
   require('bootstrap')
   require('./lib/customEventPolyfill')
   require('./lib/localStoragePolyfill')
+  require('outdatedBrowser')
+  outdatedBrowser({
+    bgColor: '#f25648',
+    color: '#ffffff',
+    lowerThan: 'transform',
+    languagePath: ''
+  })
 }
 
 const history = browserHistory

@@ -166,10 +166,6 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
 
 export function cookieCheck ({modalType = 'popup', strategy = 'netsize', internalPlan = {}}) {
   return (dispatch, getState, actionDispatcher) => {
-    //return async api => ({
-    //  type: ActionTypes.OAuth.netsizeCheck,
-    //  res: await api({path: `/auth/netsize/check`, method: 'GET', passToken: true, local: true})
-    //})
     return actionDispatcher(mobileSubscribe({strategy, modalType, path: 'check', internalPlan}))
   }
 }
@@ -246,18 +242,19 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
                   body: {
                     error: error.error,
                     message: error.message || error.error,
-                    code: error.netsizeErrorCode || error.netsizeStatusCode,
+                    code: error.netsizeErrorCode || error.netsizeStatusCode || error.code,
                   }
                 }
               })
             }
             //Format resut
             return resolve({
-              type: ActionTypes.OAuth.netsizeSubscribe,
+              type: ActionTypes.OAuth.mobileSubscribe,
+              strategy,
               res: {
                 body: {
-                  subStatus: data.netsizeStatusCode,
-                  transactionId: data.netsizeTransactionId,
+                  subStatus: data.netsizeStatusCode || data.subStatus,
+                  transactionId: data.netsizeTransactionId || data.transactionId,
                   internalPlan: plan
                 }
               }

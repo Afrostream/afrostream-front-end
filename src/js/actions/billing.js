@@ -62,7 +62,7 @@ export function cancelSubscription (subscription) {
     if (plan) {
       let planUuid = plan.get('internalPlanUuid')
       if (planUuid === config.netsize.internalPlanUuid) {
-        return actionDispatcher(OAuthActionCreators.netsizeSubscribe({path: 'unsubscribe'}))
+        return actionDispatcher(OAuthActionCreators.mobileSubscribe({path: 'unsubscribe'}))
       }
     }
     return async api => ({

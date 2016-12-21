@@ -10,8 +10,8 @@ export default {
     reset: null,
     strategy: null,
     logOut: null,
-    netsizeCheck: null,
-    netsizeSubscribe: null
+    mobileCheck: null,
+    mobileSubscribe: null
   }),
 
   Billing: keyMirror({
