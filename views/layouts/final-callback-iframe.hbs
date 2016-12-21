@@ -10,6 +10,10 @@
 <div id="main">
   <script type="text/javascript">
     var serverResponse = {{{json statusMessage}}};
+    try {
+      serverResponse = JSON.parse(atob(location.hash && location.hash.substr(1)))
+    } catch (e) {
+    }
 
     // postpone close :
     //  we let 200ms to mobile app to catch the document.location.href change

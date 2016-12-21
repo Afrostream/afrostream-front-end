@@ -14,7 +14,8 @@ export async function finalCallback (req, res) {
   res.noCache()
   const layout = 'layouts/final-callback-iframe'
 
-  const {cookies} = res
+  const {cookies:{wecashup = null}} = res
+
   res.status(res.statusCode || 200).render(layout, {
     statusMessage: (res.statusMessage || {subStatus: cookies.wecashup, transactionId: cookies.wecashup})
   })
