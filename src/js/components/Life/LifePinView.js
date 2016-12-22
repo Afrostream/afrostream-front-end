@@ -21,7 +21,7 @@ import shallowEqual from 'react-pure-render/shallowEqual'
 import scriptLoader from '../../lib/script-loader'
 import { StickyContainer, Sticky } from 'react-sticky'
 
-const {addThisApi, addThis} = config
+const {addThisApi, addThis, bitly} = config
 
 if (process.env.BROWSER) {
   require('./LifePinView.less')
@@ -68,7 +68,9 @@ class LifePinView extends LifePin {
 
   componentDidMount () {
     this.addEvent()
-    this.initAddThis()
+    $(document).ready(() => {
+      this.initAddThis()
+    })
   }
 
   initAddThis () {
@@ -80,10 +82,13 @@ class LifePinView extends LifePin {
 
       window['addthis_share'] = window['addthis_share'] || {}
       window['addthis_share'].shorteners = {
-        bitly: {}
+        bitly: {
+          login: bitly.login,
+          apiKey: bitly.apiKey
+        }
       }
 
-      addLib.toolbox('.addthis_inline_share_toolbox')
+      addLib.toolbox('.addthis_inline_share_toolbox_apql')
       addLib.init()
     }
   }
@@ -178,7 +183,8 @@ class LifePinView extends LifePin {
               {
                 /*<ModalSocial {...this.props} closable={false} modal={false} showLabel={true}/>*/
               }
-              <div className="addthis_inline_share_toolbox"/>
+              <div className="addthis_inline_share_toolbox_apql"/>
+              <div class="addthis_relatedposts_inline"/>
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}

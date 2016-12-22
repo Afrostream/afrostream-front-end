@@ -112,7 +112,7 @@ const client = {
     '//smartplugin.youbora.com/v5/javascript/dashjs/5.3.2/sp.min.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
-  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#async=1&pubid=ra-583c553b01382bdf@shortener=bitly#bitly.login=afrostream#bitly.apiKey=' + process.env.BITLY_API_KEY,
+  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#async=1#pubid=ra-583c553b01382bdf#shortener=bitly#bitly.login=afrostream#bitly.apiKey=' + process.env.BITLY_API_KEY,
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
   gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
@@ -120,7 +120,7 @@ const client = {
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   wecashupApi: {
     url: '//www.wecashup.cloud/live/2-form/js/MobileMoney.js',
-    modalClass:'featherlight',
+    modalClass: 'featherlight',
     attributes: {
       'class': 'wecashup_button',
       'async': true,
@@ -381,6 +381,7 @@ const client = {
     appName: process.env.HEROKU_APP_NAME || 'afrostream-dev'
   },
   bitly: {
+    login: 'afrostream',
     apiKey: process.env.BITLY_API_KEY || '',
     clientId: process.env.BITLY_CLIENT_ID || '',
     apiSecret: process.env.BITLY_API_SECRET || '',
