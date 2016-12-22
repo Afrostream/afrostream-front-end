@@ -2,20 +2,23 @@ import React, { PropTypes }  from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import config from '../../../../config'
-import { Link } from '../Utils'
-import _ from 'lodash'
+import { Link, I18n } from '../Utils'
 import * as SearchActionCreators from '../../actions/search'
 import * as UserActionCreators from '../../actions/user'
 import Spinner from '../Spinner/Spinner'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import MoviesSlider from '../Movies/MoviesSlider'
+import ReactImgix from '../Image/ReactImgix'
+import LifeList from '../Life/LifeList'
 import { withRouter } from 'react-router'
-import { I18n } from '../Utils'
+import { extractImg } from '../../lib/utils'
+
 import {
   intlShape,
   injectIntl
 } from 'react-intl'
+
 
 const {search} = config
 
@@ -59,39 +62,85 @@ class SearchPage extends I18n {
       return
     }
 
-    dispatch(SearchActionCreators.fetchMovies(search))
+    dispatch(SearchActionCreators.fetchAll(search))
   }
 
-  renderMovies (movies, fetching) {
+  renderMovies (movies) {
+
     if (!movies || !movies.size) {
-      return fetching ? '' : <span>{this.getTitle('search.noData')}</span>
+      return
     }
 
-    return <MoviesSlider {...this.props} key={`search-movie`} dataList={movies} axis="y"/>
+    return (<div key={`search-movie`} className="col-md-5">
+      <MoviesSlider {...this.props} dataList={movies} axis="y"/>
+    </div>)
 
   }
 
-  renderActors (movies) {
-    if (!movies || !movies.size) {
-      return ''
+  renderActors (actors) {
+    if (!actors || !actors.size) {
+      return
     }
 
-    let moviesJs = movies.toJS()
-    let flatActors = _.flatten(_.map(moviesJs, (movie) => {
-      return movie.actors || []
-    }))
-    let uniqActors = _.uniq(_.map(flatActors, (actor) => {
-      return `${actor.firstName} ${actor.lastName}`
-    }))
-
-    let actors = _.take(_.map(uniqActors, ((actor, i) =><Link key={`search-actor-${i}`} to="recherche"
-                                                              query={{search: actor}}
-                                                              className="actors">{`${actor}`}</Link>)), 10)
     return (
-      <div>
-        {actors}
+      <div key={`search-actors`} className="col-md-2">
+        {actors.map((actor, i) => {
+
+          const imageUrl = extractImg({data: actor, key: 'picture', width: 200})
+          const actorName = `${actor.get('firstName')} ${actor.get('lastName')}`
+          return ( <Link key={`search-actor-${i}`} to="recherche"
+                         query={{search: actorName}}
+                         className="actors">
+            {imageUrl &&
+            <div className="image-actor"><ReactImgix className="avatar-card__background_image" src={`${imageUrl}`}
+                                                     bg={true}
+                                                     onError={this.onError} alt="user-avatar"/></div>}
+            <div className="actor-name">{actorName}</div>
+          </Link>)
+        })
+        }
       </div>
     )
+  }
+
+  renderPins (pins) {
+    if (!pins || !pins.size) {
+      return
+    }
+
+    return (
+      <div key={`search-pins`} className="col-md-5">
+        <LifeList highlightFirst={false} over={false} {...this.props} {...{pins}}/>
+      </div>
+    )
+  }
+
+  renderRows () {
+    const {
+      props: {Search}
+    } = this
+
+    const searchFetched = Search.get(`search`)
+
+    if (!searchFetched) {
+      return
+    }
+
+    const searchRows = searchFetched && searchFetched.get('rows')
+
+    return searchRows && searchRows.map((search) => {
+        switch (search.get('index')) {
+          case 'movies':
+            return this.renderMovies(search.get('hits'))
+            break
+          case 'lifePins':
+            return this.renderPins(search.get('hits'))
+            break
+          case 'actors':
+            return this.renderActors(search.get('hits'))
+            break
+        }
+      })
   }
 
   render () {
@@ -99,25 +148,14 @@ class SearchPage extends I18n {
       props: {Search}
     } = this
 
-    const moviesFetched = Search.get(`search`)
-    const moviesFetching = Search.get(`fetching`)
-
-    let hits
-    let movies
-    let actors
-    if (moviesFetched) {
-      hits = moviesFetched.get('hits')
-      movies = this.renderMovies(hits, moviesFetching)
-      actors = this.renderActors(hits)
-    }
+    const fetching = Search.get(`fetching`)
 
     return (
       <ReactCSSTransitionGroup transitionName="search" className="row-fluid search-page" transitionEnterTimeout={300}
                                transitionLeaveTimeout={300} component="div">
-        <div className="search-result">
-          {moviesFetching && <div className="spinner-search"><Spinner /></div>}
-          {actors}
-          {movies}
+        <div className="search-result row">
+          {fetching && <div className="spinner-search"><Spinner /></div>}
+          {this.renderRows()}
         </div>
       </ReactCSSTransitionGroup>
     )
