@@ -232,7 +232,7 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
               //Format resut
               let error = _.merge({
                 error: 0,
-                message: 'Error: netsize error',
+                message: (typeof data.error === 'string' && data.error) || 'Error: mobile error',
                 netsizeErrorCode: 0,
                 netsizeStatusCode: 0
               }, data || {})
