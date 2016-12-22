@@ -64,11 +64,13 @@
         .card-bubble {
           width: 2em;
           height: 2em;
+          .isMobile({ width: 3em; height: 3em; });
           &:before {
-            font-size: 1em;
+            .isNotMobile({ font-size: 1em; });
+            .isMobile({ line-height: 1.5; });
           }
           .like-badge-number {
-            font-size: 0.4em;
+            .isNotMobile({ font-size: 0.4em; });
           }
         }
       }
