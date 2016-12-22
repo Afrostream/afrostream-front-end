@@ -39,5 +39,30 @@
 {{/each}}
 <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 <div id="outdated"></div>
+<script type="text/javascript">
+  //event listener: DOM ready
+  function addLoadEvent (func) {
+    var oldonload = window.onload;
+    if (typeof window.onload != 'function') {
+      window.onload = func;
+    } else {
+      window.onload = function () {
+        if (oldonload) {
+          oldonload();
+        }
+        func();
+      }
+    }
+  }
+  //call plugin function after DOM ready
+  addLoadEvent(function () {
+    outdatedBrowser({
+      bgColor: '#e5b508',
+      color: '#ffffff',
+      lowerThan: 'transform',
+      languagePath: '/outdated.html'
+    })
+  });
+</script>
 </body>
 </html>
