@@ -20,19 +20,36 @@ class ClickablePin extends Component {
 
   likePin (e, liked) {
     const {
-      props: {dispatch, data}
+      props: {
+        dispatch,
+        data,
+        User,
+        Life,
+        params:{
+          pinId
+        }
+      }
     } = this
 
-    if (e) {
+    const pin = data || Life.get(`life/pins/${pinId}`)
+
+    const currentUser = User.get('user')
+
+    if (currentUser) {
+
+      if (e) {
+        e.preventDefault()
+        e.target.classList.toggle('liked')
+      }
+
+      return dispatch(LifeActionCreators.likePin({
+        liked,
+        data: pin
+      }))
+    } else {
       e.preventDefault()
-      e.target.classList.toggle('liked')
+      this.modalLogin()
     }
-
-    return dispatch(LifeActionCreators.likePin({
-      liked,
-      data
-    }))
-
   }
 
   removePin (e) {

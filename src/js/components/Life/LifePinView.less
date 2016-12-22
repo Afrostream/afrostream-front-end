@@ -23,6 +23,8 @@
       margin: 0;
       top: 0;
       bottom: 0;
+      max-height: 100%;
+      max-width: 100%;
     }
     .ta-insert-video-btn {
       .btn-play();
@@ -56,6 +58,20 @@
       padding: 0.3em;
       font-size: 3em;
       .isMobile({ font-size: 1.5em; });
+
+      .card-bubbles {
+        position: relative;
+        .card-bubble {
+          width: 2em;
+          height: 2em;
+          &:before {
+            font-size: 1em;
+          }
+          .like-badge-number {
+            font-size: 0.4em;
+          }
+        }
+      }
     }
 
     .pin-header-background {

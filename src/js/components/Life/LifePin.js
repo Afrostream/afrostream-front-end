@@ -16,24 +16,6 @@ class LifePin extends ClickablePin {
     super(props, context)
   }
 
-  likePin (e, liked) {
-    let {
-      props:{
-        data,
-        User
-      }
-    } = this
-
-    const currentUser = User.get('user')
-
-    if (currentUser) {
-      super.likePin(e, liked)
-    } else {
-      e.preventDefault()
-      this.modalLogin()
-    }
-  }
-
   renderBubbles () {
     const {
       props:{
