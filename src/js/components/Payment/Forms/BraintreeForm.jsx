@@ -56,7 +56,7 @@ class BraintreeForm extends CouponForm {
               console.log(payload)
               return resolve({
                 billingProviderName: provider,
-                billingInfoOpts: {
+                billingInfo: {
                   countryCode: payload.details.billingAddress.countryCodeAlpha2
                 },
                 subOpts: {
