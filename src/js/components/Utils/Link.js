@@ -28,7 +28,7 @@ class Link extends React.Component {
       return (<ReactLink to={toWithLang} {...rest}>{children}</ReactLink>)
     } else {
       const restOmit = _.omit(rest, ['activeClassName', 'onlyActiveOnIndex', 'intl'])
-      return (<a href={toLocation.href} target="_blank" {...restOmit}>{children}</a>)
+      return (<a href={toLocation.href} rel="nofollow" target="_blank" {...restOmit}>{children}</a>)
     }
   }
 }
