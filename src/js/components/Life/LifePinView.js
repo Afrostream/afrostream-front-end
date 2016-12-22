@@ -68,15 +68,13 @@ class LifePinView extends ClickablePin {
 
   componentDidMount () {
     this.addEvent()
-    $(document).ready(() => {
-      this.initAddThis()
-    })
+    this.initAddThis()
   }
 
   initAddThis () {
     //Detect si le payment via la lib recurly est dispo
     let addLib = window['addthis']
-    if (canUseDOM && addLib) {
+    if (addLib) {
       window['addthis_config'] = window['addthis_config'] || {}
       window['addthis_config'].pubid = addThis.publicKey
 
@@ -88,8 +86,7 @@ class LifePinView extends ClickablePin {
         }
       }
 
-      addLib.toolbox('.addthis_inline_share_toolbox_apql')
-      addLib.init()
+      window['addthis'].init()
     }
   }
 
@@ -215,12 +212,12 @@ class LifePinView extends ClickablePin {
         <StickyContainer className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
           <div className="row no-padding">
             <div className="col-md-9 col-xs-9 no-padding col-left">
+              <a id="atcounter"></a>
+
+              <div className="addthis_toolbox addthis_inline_share_toolbox_apql"/>
+              <div className="addthis_toolbox addthis_relatedposts_inline"/>
+
               <section dangerouslySetInnerHTML={{__html: data.get('body')}}/>
-              {
-                /*<ModalSocial {...this.props} closable={false} modal={false} showLabel={true}/>*/
-              }
-              <div className="addthis_inline_share_toolbox_apql"/>
-              <div className="addthis_relatedposts_inline"/>
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
