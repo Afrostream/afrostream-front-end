@@ -154,7 +154,7 @@
   "mustMatch": "Must match",
   "loginSocialButton": "Sign in with {connection:title}",
   "signupSocialButton": "Register with {connection:title}",
-  "networkError": "Server unreachable. <br/> Please try again.",
+  "networkError": "Server unreachable. Please try again.",
   "planCodes": {
     "selectTitle": "Choose your plan",
     "onePlanTitle": "Your plan",

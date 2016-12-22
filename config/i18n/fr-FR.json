@@ -158,7 +158,7 @@
   },
   "storesLocator": {
     "title": "Abonnez-vous à Afrostream au coin de la rue",
-    "description": "Il n’a jamais été aussi simple de s’abonner à Afrostream. Vous pouvez désormais vous rendre chez un buraliste et vous abonner pour 1 (6,99€) ou 3 mois (18,99€) à Afrostream.<br/><br/>Trouvez le bureau de tabac le plus proche de chez vous grâce à cette carte et profitez des meilleurs films et séries afro.",
+    "description": "Il n’a jamais été aussi simple de s’abonner à Afrostream. Vous pouvez désormais vous rendre chez un buraliste et vous abonner pour 1 (6,99€) ou 3 mois (18,99€) à Afrostream.Trouvez le bureau de tabac le plus proche de chez vous grâce à cette carte et profitez des meilleurs films et séries afro.",
     "where": "Où trouver un buraliste ?",
     "inputFind": "Ville...",
     "find": "Trouver un point de vente"
@@ -170,7 +170,7 @@
   "mustMatch": "Doit correspondre",
   "loginSocialButton": "S'identifier avec {connection:title}",
   "signupSocialButton": "S'inscrire avec {connection:title}",
-  "networkError": "Serveur inaccessible.<br/>Veuillez réessayer.",
+  "networkError": "Serveur inaccessible.Veuillez réessayer.",
   "planCodes": {
     "selectTitle": "Choisissez votre formule",
     "onePlanTitle": "Votre formule",

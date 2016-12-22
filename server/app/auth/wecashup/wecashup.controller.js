@@ -2,6 +2,7 @@ import { getData, fwd } from '../../api/api-front'
 
 export async function callback (req, res) {
   res.noCache()
+
   getData(req, '/auth/wecashup/callback', {
     followRedirect: false,
     method: 'POST',

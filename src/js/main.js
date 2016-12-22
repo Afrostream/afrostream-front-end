@@ -14,6 +14,7 @@ import config from '../../config'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { getCountry } from './lib/geo'
 import * as UserActionCreators from './actions/user'
+import document from 'global/document'
 
 import { deserialize } from './lib/utils'
 import { getI18n } from '../../config/i18n'
@@ -21,16 +22,13 @@ import { getI18n } from '../../config/i18n'
 const {apiClient, heroku} = config
 
 if (canUseDOM) {
-  //require('bootstrap')
-  //require('./lib/customEventPolyfill')
-  //require('./lib/localStoragePolyfill')
-  //require('outdated-browser/outdatedbrowser/outdatedbrowser')
-  //
-  outdatedBrowser({
-    bgColor: '#f25648',
-    color: '#ffffff',
-    lowerThan: 'transform',
-    languagePath: '/outdated.html'
+  $(document).ready(() => {
+    outdatedBrowser({
+      bgColor: '#f25648',
+      color: '#ffffff',
+      lowerThan: 'transform',
+      languagePath: '/outdated.html'
+    })
   })
 }
 
