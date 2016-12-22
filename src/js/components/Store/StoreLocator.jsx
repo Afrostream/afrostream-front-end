@@ -13,7 +13,8 @@ import {
   purple800
 } from 'material-ui/styles/colors'
 import {
-  FormattedMessage
+  FormattedMessage,
+  FormattedHTMLMessage
 } from 'react-intl'
 
 const {gmapApi} = config
@@ -181,7 +182,7 @@ class StoreLocator extends React.Component {
         <div className="container-fluid brand-bg">
           <section className="info">
             <FormattedMessage tagName="h2" id="storesLocator.title"/>
-            <FormattedMessage tagName="p" id="storesLocator.description"/>
+            <FormattedHTMLMessage tagName="p" id="storesLocator.description"/>
           </section>
           <section>
             <FormattedMessage tagName="h3" id="storesLocator.where"/>
