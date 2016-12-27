@@ -281,7 +281,7 @@ class FloatPlayer extends I18n {
 
 
     playerData.sources = _.forEach(playerData.sources, (k) => {
-      if (k.src.indexOf('pblackish')) {
+      if (~k.src.indexOf('pblackish')) {
         k.src = k.src.replace(/.ism/g, '-drm.ism')
         playerData.drm = true
       }
