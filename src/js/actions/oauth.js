@@ -6,6 +6,7 @@ import request from 'superagent'
 import config from '../../../config/'
 import window from 'global/window'
 import _ from 'lodash'
+import qs from 'qs'
 
 export function signin (form) {
   return (dispatch, getState, actionDispatcher) => {
@@ -181,18 +182,16 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
 
     const token = getState().OAuth.get('token')
     let url = `https://${config.domain.host}/auth/${strategy}/${path}`
-
     //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
     if (token) {
+      let query = _.merge({}, internalPlan)
       const accessToken = token.get('access_token')
       const finalCB = encodeUrlCallback(strategy, accessToken, 'final-callback')
-      url = `${url}?access_token=${accessToken}`
-
-      if (path === 'check') {
-        url = `${url}&returnUrl=${encodeUrlCallback(strategy, accessToken, 'subscribe', finalCB)}`
-      } else {
-        url = `${url}&returnUrl=${finalCB}`
-      }
+      query = _.merge(query, internalPlan, {
+        'access_token': accessToken,
+        'returnUrl': path === 'check' ? encodeUrlCallback(strategy, accessToken, 'subscribe', finalCB) : finalCB
+      })
+      url = `${url}?${qs.stringify(query)}`
     }
 
     let width = 600,
@@ -232,7 +231,7 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
               //Format resut
               let error = _.merge({
                 error: 0,
-                message: 'Error: netsize error',
+                message: (typeof data.error === 'string' && data.error) || 'Error: mobile error',
                 netsizeErrorCode: 0,
                 netsizeStatusCode: 0
               }, data || {})

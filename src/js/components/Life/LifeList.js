@@ -89,7 +89,8 @@ class LifeList extends Component {
   renderItem ({data, key, index}) {
     const {
       props: {
-        highlightFirst
+        highlightFirst,
+        over
       }
     } = this
 
@@ -189,6 +190,7 @@ LifeList.defaultProps = {
   isCurrentUser: false,
   moduloSpots: 6,
   highlightFirst: true,
+  over: true,
   virtual: true,
   pins: null,
   spots: null

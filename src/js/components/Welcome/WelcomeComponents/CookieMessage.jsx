@@ -1,5 +1,5 @@
 import React from 'react'
-import {canUseDOM} from 'fbjs/lib/ExecutionEnvironment'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 if (process.env.BROWSER) {
   require('./CookieMessage.less')
@@ -12,7 +12,7 @@ class CookieMessage extends React.Component {
     isCookieSet: 'true'
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let isCookieAccepted = this.isCookieAccepted()
 
     if (isCookieAccepted !== 'true') {
@@ -20,7 +20,7 @@ class CookieMessage extends React.Component {
     }
   }
 
-  isCookieAccepted() {
+  isCookieAccepted () {
     let isCookieAccepted = null
 
     if (canUseDOM) {
@@ -29,14 +29,14 @@ class CookieMessage extends React.Component {
     return isCookieAccepted
   }
 
-  setCookieToken() {
+  setCookieToken () {
     if (canUseDOM) {
       localStorage.setItem('afrostreamAcceptedCookies', 'true')
       this.setState({isCookieSet: 'true'})
     }
   }
 
-  render() {
+  render () {
 
     if (this.state.isCookieSet === 'true') {
 
@@ -46,12 +46,14 @@ class CookieMessage extends React.Component {
 
       return (
         <div className="alert-message">
+          <div dangerouslySetInnerHTML={{__html: '<!--googleoff: all-->'}}/>
           Afrostream utilise des cookies pour vous proposer des contenus et services
-          adaptés à vos centres d'intérêts. <a href="/articles/cookies_policy.pdf"
+          adaptés à vos centres d'intérêts. <a href="/articles/cookies_policy.pdf" no
                                                onClick={this.setCookieToken.bind(this)} target="_blank">En savoir
           plus</a>
           <button className="alert-button" onClick={::this.setCookieToken}>OK
           </button>
+          <div dangerouslySetInnerHTML={{__html: '<!--googleon: all-->'}}/>
         </div>
       )
     }

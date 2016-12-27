@@ -16,24 +16,6 @@ class LifePin extends ClickablePin {
     super(props, context)
   }
 
-  likePin (e, liked) {
-    let {
-      props:{
-        data,
-        User
-      }
-    } = this
-
-    const currentUser = User.get('user')
-
-    if (currentUser) {
-      super.likePin(e, liked)
-    } else {
-      e.preventDefault()
-      this.modalLogin()
-    }
-  }
-
   renderBubbles () {
     const {
       props:{
@@ -87,6 +69,7 @@ class LifePin extends ClickablePin {
       props:{
         index,
         data,
+        over,
         isCurrentUser,
         imageWidth,
         imageHeight
@@ -140,7 +123,7 @@ class LifePin extends ClickablePin {
           </div>
           {this.renderBubbles()}
         </div>
-        {description && <div className="card-sub-info">
+        {description && over && <div className="card-sub-info">
           {this.renderBubbles()}
           <div className="card-description">
             {description}
@@ -171,6 +154,7 @@ LifePin.propTypes = {
   index: PropTypes.number,
   imageHeight: PropTypes.number,
   imageWidth: PropTypes.number,
+  over: PropTypes.bool,
   showBubble: PropTypes.bool,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
@@ -182,6 +166,7 @@ LifePin.defaultProps = {
   index: 0,
   imageWidth: 1080,
   imageHeight: 500,
+  over: true,
   showBubble: true
 }
 

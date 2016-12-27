@@ -3,9 +3,10 @@ import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import config from '../../../../config'
 import moment from 'moment'
+import classSet from 'classnames'
 import _ from 'lodash'
-import LifePin from './LifePin'
-import { extractImg, hasEvent, addRemoveEvent } from '../../lib/utils'
+import ClickablePin from './ClickablePin'
+import { extractImg, addRemoveEvent } from '../../lib/utils'
 import * as LifeActionCreators from '../../actions/life'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
@@ -13,7 +14,6 @@ import Spinner from '../Spinner/Spinner'
 import LifeSpot from './LifeSpot'
 import Immutable from 'immutable'
 import AvatarCard from '../User/AvatarCard'
-import ModalSocial from '../Modal/ModalSocial'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import document from 'global/document'
 import ReactImgix from '../Image/ReactImgix'
@@ -21,7 +21,7 @@ import shallowEqual from 'react-pure-render/shallowEqual'
 import scriptLoader from '../../lib/script-loader'
 import { StickyContainer, Sticky } from 'react-sticky'
 
-const {addThisApi, addThis} = config
+const {addThisApi, addThis, bitly} = config
 
 if (process.env.BROWSER) {
   require('./LifePinView.less')
@@ -33,14 +33,14 @@ if (process.env.BROWSER) {
   }
 })
 @connect(({Life, User}) => ({Life, User}))
-class LifePinView extends LifePin {
+class LifePinView extends ClickablePin {
 
   constructor (props, context) {
     super(props, context)
   }
 
   addEvent (add = true) {
-    const players = document.querySelectorAll('.ta-insert-video,.life-pin .article-content .col-left img')
+    const players = document.querySelectorAll('.ta-insert-video,.life-pin .article-content .col-left p img')
     if (players) {
       _.forEach(players, (element) => {
         addRemoveEvent('click', element, add, ::this.elementClickHandler)
@@ -74,17 +74,19 @@ class LifePinView extends LifePin {
   initAddThis () {
     //Detect si le payment via la lib recurly est dispo
     let addLib = window['addthis']
-    if (canUseDOM && addLib) {
+    if (addLib) {
       window['addthis_config'] = window['addthis_config'] || {}
       window['addthis_config'].pubid = addThis.publicKey
 
       window['addthis_share'] = window['addthis_share'] || {}
       window['addthis_share'].shorteners = {
-        bitly: {}
+        bitly: {
+          login: bitly.login,
+          apiKey: bitly.apiKey
+        }
       }
 
-      addLib.toolbox('.addthis_inline_share_toolbox')
-      addLib.init()
+      window['addthis'].init()
     }
   }
 
@@ -122,6 +124,41 @@ class LifePinView extends LifePin {
         })
       }))
     }
+  }
+
+  renderBubbles (data) {
+    const {
+      props:{
+        Life,
+        User
+      }
+    } = this
+
+    const type = data.get('type')
+    const pinnedUser = data.get('user')
+
+    const pinId = data.get('_id')
+    const nbLikes = data.get('likes')
+    const currentUser = User.get('user')
+    const lifeUserId = currentUser && currentUser.get('_id')
+    const likedPins = lifeUserId && Life.get(`life/users/${lifeUserId}/pins/likes`)
+    const likedPin = likedPins && likedPins.find((pin) => pin.get('pinId') === pinId)
+    const liked = likedPin && likedPin.get('liked')
+
+    const likeTypeIcon = {
+      'card-bubble': true,
+      'card-bubble-type': true,
+      'like': true,
+      'liked': liked,
+      'disabled': !currentUser
+    }
+    return (<div className="card-bubbles">
+      <div className={classSet(likeTypeIcon)} onClick={(e) => ::this.likePin(e, !liked)}>
+        <div className="heart heart-animation-1"/>
+        <div className="heart heart-animation-2"/>
+        {nbLikes > 0 && <div className="like-badge-number">{nbLikes}</div>}
+      </div>
+    </div>)
   }
 
   render () {
@@ -169,16 +206,18 @@ class LifePinView extends LifePin {
           </div>
           <div className="pin-header-content">
             <h1> {data.get('title')}</h1>
+            {this.renderBubbles(data)}
           </div>
         </div>
         <StickyContainer className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
           <div className="row no-padding">
             <div className="col-md-9 col-xs-9 no-padding col-left">
+              <a id="atcounter"></a>
+
+              <div className="addthis_toolbox addthis_inline_share_toolbox_apql"/>
+              <div className="addthis_toolbox addthis_relatedposts_inline"/>
+
               <section dangerouslySetInnerHTML={{__html: data.get('body')}}/>
-              {
-                /*<ModalSocial {...this.props} closable={false} modal={false} showLabel={true}/>*/
-              }
-              <div className="addthis_inline_share_toolbox"/>
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
