@@ -116,11 +116,11 @@ class FloatPlayer extends I18n {
 
 
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      if(nextProps.params.videoId) {
+      if (nextProps.params.videoId) {
         this.destroyPlayer().then(() => {
           this.initPlayer(videoData)
         })
-      } 
+      }
       this.updatePlayerPosition()
     }
 
@@ -131,10 +131,10 @@ class FloatPlayer extends I18n {
   saveVideoData () {
     return this.setState({
       savedData: {
-         pathname: this.props.location.pathname,
-         videoId: this.props.params.videoId
-       }
-    }, () => this.player )
+        pathname: this.props.location.pathname,
+        videoId: this.props.params.videoId
+      }
+    }, () => this.player)
   }
 
   async getPlayerData (videoData) {
@@ -146,6 +146,7 @@ class FloatPlayer extends I18n {
     } = this
 
     console.log('player : Get player data')
+
     let userId
     const user = User.get('user')
     let token = OAuth.get('token')
@@ -275,6 +276,16 @@ class FloatPlayer extends I18n {
     playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
 
     playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
+
+    //Hack drm blackish
+
+
+    playerData.sources = _.forEach(playerData.sources, (k) => {
+      if (k.src.indexOf('pblackish')) {
+        k.src = k.src.replace(/.ism/g, '-drm.ism')
+        playerData.drm = true
+      }
+    })
 
     if (user) {
       userId = user.get('user_id')
