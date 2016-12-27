@@ -74,7 +74,7 @@ class FloatPlayer extends I18n {
     let numLoad = this.state.numLoad
     numLoad++
     this.state = {
-      elVisible: false,
+      elVisible: true,
       savedData: {},
       size: {
         height: 1920,
@@ -104,9 +104,8 @@ class FloatPlayer extends I18n {
     //    this.initPlayer(videoData)
     //  })
     //}
-
-    if (!shallowEqual(nextProps.Player.get('/player/data'), this.props.Player.get('/player/data'))) {
-      const videoData = nextProps.Player.get('/player/data')
+    const videoData = nextProps.Player.get('/player/data')
+    if (nextProps.Player.get('/player/data') !== this.props.Player.get('/player/data')) {
       if (!videoData) {
         return
       }
@@ -117,6 +116,11 @@ class FloatPlayer extends I18n {
 
 
     if (nextProps.location.pathname !== this.props.location.pathname) {
+      if(nextProps.params.videoId) {
+        this.destroyPlayer().then(() => {
+          this.initPlayer(videoData)
+        })
+      } 
       this.updatePlayerPosition()
     }
 
@@ -125,12 +129,12 @@ class FloatPlayer extends I18n {
 
 
   saveVideoData () {
-    this.setState({
+    return this.setState({
       savedData: {
          pathname: this.props.location.pathname,
          videoId: this.props.params.videoId
        }
-    })
+    }, () => this.player )
   }
 
   async getPlayerData (videoData) {
@@ -432,8 +436,7 @@ class FloatPlayer extends I18n {
         this.container.removeEventListener('gobacknext', ::this.backNextHandler)
         this.container.addEventListener('gobacknext', ::this.backNextHandler)
       }
-      ::this.saveVideoData()
-      return this.player
+      return this.saveVideoData()
     } catch (err) {
       console.log('player : ', err)
       return this.playerInit = false
