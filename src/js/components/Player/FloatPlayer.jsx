@@ -270,8 +270,8 @@ class FloatPlayer extends I18n {
     }
 
     //VTT flash vtt.js
-    playerData['vtt.js'] = ''
-    //playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
+    //playerData['vtt.js'] = ''
+    playerData['vtt.js'] = require('videojs-vtt.js/dist/vtt.js')
     // ==== END hacks config
     playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
 
