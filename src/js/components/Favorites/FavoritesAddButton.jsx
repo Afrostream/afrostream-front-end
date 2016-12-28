@@ -107,13 +107,14 @@ class FavoritesAddButton extends I18n {
     const titleLabel = this.getTitle(`${!isFavorite ? 'favorites.add' : 'favorites.delete'}`)
 
     return (
-      <div>
-        <div className="btn favorite-add_button" data-tip={titleLabel} data-for={`fav-${dataId}`} {...inputAttributes}>
-          <i className={classSet(favoriteClass)}></i>
-          {this.state.pendingFavorite ? <Spinner /> : ''}
-        </div>
-        <ReactTooltip id={`fav-${dataId}`} class="fav-tooltip" place={this.props.direction} type="dark" effect="solid" getContent={[() => titleLabel, 100]}/>
-      </div>
+      <button className="btn favorite-add_button" type="button" data-tip={titleLabel}
+              data-for={`fav-${dataId}`} {...inputAttributes}>
+        <i className={classSet(favoriteClass)}></i>
+        {this.state.pendingFavorite ? <Spinner /> : ''}
+        <ReactTooltip id={`fav-${dataId}`} class="fav-tooltip" place={this.props.direction} type="dark"
+                      effect="solid"
+                      getContent={[() => titleLabel, 100]}/>
+      </button>
     )
   }
 }

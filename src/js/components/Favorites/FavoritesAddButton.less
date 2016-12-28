@@ -3,7 +3,7 @@
 .btn.favorite-add_button {
   background-color: fade(@color-indigo, 70%);
   position: relative;
-  margin: 5px 5px 3px 0px;
+  margin: 5px 5px 5px 0px;
   border-radius: 5% !important;
   width: 40px;
 
@@ -24,5 +24,13 @@
   }
   .spinner {
     font-size: 1em;
+  }
+
+  .__react_component_tooltip.place-top {
+    left: 3px !important;
+    &:before,
+    &:after {
+      left: 15%;
+    }
   }
 }
