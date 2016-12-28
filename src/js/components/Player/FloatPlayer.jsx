@@ -220,7 +220,7 @@ class FloatPlayer extends I18n {
     }
     let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfigJs))
     //merge all configs
-    let playerData = _.merge(playerConfig, videoOptions)
+    let playerData = _.merge(playerConfig, videoOptions, komentData)
     // ==== START hacks config
     let isLive = playerData.hasOwnProperty('live') && playerData.live
     const ua = detectUA()
@@ -493,10 +493,6 @@ class FloatPlayer extends I18n {
       }
     )
 
-    if (featuresFlip.koment && player.tech_.el_) {
-      player.koment = await koment(player.tech_.el_)
-    }
-
     videojs.on(window, 'scroll', ::this.requestTick)
     videojs.on(window, 'resize', ::this.requestTick)
     player.on('error', ::this.triggerError)
@@ -697,7 +693,7 @@ class FloatPlayer extends I18n {
     return selectedTrack ? selectedTrack[key] : null
   }
 
-  async generateDomTag (videoData, komentData) {
+  async generateDomTag (videoData) {
     console.log('player : generate dom tag')
     const ua = detectUA()
     const videoTracking = this.getStoredPlayer()
@@ -722,14 +718,6 @@ class FloatPlayer extends I18n {
     //video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
-
-    if (komentData) {
-      try {
-        video.setAttribute('data-setup', JSON.stringify(komentData))
-      } catch (e) {
-        console.log('parse koment json error', e)
-      }
-    }
 
     if (hasSubtiles) {
       captions.map((caption) => {
