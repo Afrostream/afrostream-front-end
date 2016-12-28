@@ -180,7 +180,6 @@ class FloatPlayer extends I18n {
 
       //KOMENT
       komentData = {
-        videoId: videoId || videoData.videoId,
         komentBar: {
           komentToggle: {
             attributes: {
@@ -190,6 +189,7 @@ class FloatPlayer extends I18n {
           }
         },
         koment: {
+          videoId: videoId || videoData.videoId,
           open: true,
           user: (user && {
             id: user.get('_id').toString(),
@@ -209,7 +209,7 @@ class FloatPlayer extends I18n {
         komentData.koment.open = user.get('playerKoment')
       }
     }
-    await this.generateDomTag(videoOptions, komentData)
+    await this.generateDomTag(videoOptions)
     //MERGE PLAYER DATA API
     let apiPlayerConfig = Player.get(`/player/config`)
     let apiPlayerConfigJs = {}
