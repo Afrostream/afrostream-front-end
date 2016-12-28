@@ -205,7 +205,7 @@ class FloatPlayer extends I18n {
       }
 
       //L'user a choisi de ne pas afficher les comentaires par default
-      if (user && user.get('playerKoment')) {
+      if (user) {
         komentData.koment.open = user.get('playerKoment')
       }
     }
