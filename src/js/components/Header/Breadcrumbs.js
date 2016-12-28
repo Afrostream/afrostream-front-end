@@ -181,7 +181,7 @@ class Breadcrumbs extends I18n {
               return subLink += `/${item.value}`
             })
             let name = path
-            if (!excludes.includes(path.substr(1)) && keyValue && keyValue.length && path.substring(0, 1) == ':') {
+            if (!_.includes(excludes, path.substr(1)) && keyValue && keyValue.length && path.substring(0, 1) == ':') {
               const kV = keyValue.shift()
               return {name: kV.name || name, link: subLink}
             }
