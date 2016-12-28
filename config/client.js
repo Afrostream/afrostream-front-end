@@ -1,23 +1,25 @@
 import { isBoolean } from '../src/js/lib/utils'
 
+const drmTodayStaging = process.env.NODE_ENV !== 'production' && 'staging.' || ''
+
 const protData = {
   'com.widevine.alpha': {
     'drmtoday': true,
-    'serverURL': 'https://lic.staging.drmtoday.com/license-proxy-widevine/cenc/',
+    'serverURL': `https://lic.${drmTodayStaging}drmtoday.com/license-proxy-widevine/cenc/`,
     'httpRequestHeaders': {
       'dt-custom-data': ''
     }
   },
   'com.microsoft.playready': {
     'drmtoday': true,
-    'serverURL': 'https://lic.staging.drmtoday.com/license-proxy-headerauth/drmtoday/RightsManager.asmx',
+    'serverURL': `https://lic.${drmTodayStaging}drmtoday.com/license-proxy-headerauth/drmtoday/RightsManager.asmx`,
     'httpRequestHeaders': {
       'http-header-CustomData': ''
     }
   },
   'com.adobe.flashaccess': {
     'drmtoday': true,
-    'serverURL': 'https://lic.staging.drmtoday.com/flashaccess/LicenseTrigger/v1',
+    'serverURL': `https://lic.${drmTodayStaging}drmtoday.com/flashaccess/LicenseTrigger/v1`,
     'httpRequestHeaders': {
       'customData': null
     }

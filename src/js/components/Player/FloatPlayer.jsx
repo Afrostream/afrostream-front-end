@@ -116,11 +116,11 @@ class FloatPlayer extends I18n {
 
 
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      if(nextProps.params.videoId) {
+      if (nextProps.params.videoId) {
         this.destroyPlayer().then(() => {
           this.initPlayer(videoData)
         })
-      } 
+      }
       this.updatePlayerPosition()
     }
 
@@ -131,10 +131,10 @@ class FloatPlayer extends I18n {
   saveVideoData () {
     return this.setState({
       savedData: {
-         pathname: this.props.location.pathname,
-         videoId: this.props.params.videoId
-       }
-    }, () => this.player )
+        pathname: this.props.location.pathname,
+        videoId: this.props.params.videoId
+      }
+    }, () => this.player)
   }
 
   async getPlayerData (videoData) {
@@ -146,6 +146,7 @@ class FloatPlayer extends I18n {
     } = this
 
     console.log('player : Get player data')
+
     let userId
     const user = User.get('user')
     let token = OAuth.get('token')
@@ -179,9 +180,8 @@ class FloatPlayer extends I18n {
 
       //KOMENT
       komentData = {
-        open: true,
         videoId: videoId || videoData.videoId,
-        controlBar: {
+        komentBar: {
           komentToggle: {
             attributes: {
               'data-position': 'left',
@@ -189,22 +189,24 @@ class FloatPlayer extends I18n {
             }
           }
         },
-        user: (user && {
-          id: user.get('_id').toString(),
-          provider: config.domain.host,
-          token: token && token.get('access_token'),
-          avatar: user.get('picture')
-        }),
-        languages: config.player.languages
+        koment: {
+          open: true,
+          user: (user && {
+            id: user.get('_id').toString(),
+            provider: config.domain.host,
+            token: token && token.get('access_token'),
+            avatar: user.get('picture')
+          }),
+        }
       }
 
       if (user && user.get('nickname')) {
-        komentData.user = _.merge(komentData.user, {nickname: user.get('nickname')})
+        komentData.koment.user = _.merge(komentData.koment.user, {nickname: user.get('nickname')})
       }
 
       //L'user a choisi de ne pas afficher les comentaires par default
       if (user && user.get('playerKoment')) {
-        komentData.open = user.get('playerKoment')
+        komentData.koment.open = user.get('playerKoment')
       }
     }
     await this.generateDomTag(videoOptions, komentData)
@@ -224,8 +226,12 @@ class FloatPlayer extends I18n {
     const ua = detectUA()
     let browserVersion = ua.getBrowser()
     let mobileVersion = ua.getMobile()
+    let canUseDrms = true
 
     if (ua.isIE()) {
+
+      canUseDrms = browserVersion > 11
+
       playerData.html5 = {
         nativeCaptions: false,
         nativeTextTracks: false
@@ -238,7 +244,12 @@ class FloatPlayer extends I18n {
       return k.type !== 'application/dash+xml'
     })
 
+    if (ua.isFirefox()) {
+      canUseDrms = browserVersion > 47
+    }
+
     if (ua.isSafari()) {
+      canUseDrms = false
       //Fix Safari < 6.2 can't play hls
       if (browserVersion.version < 537 || (isLive && browserVersion.version === 537 )) {
         playerData.techOrder = _.sortBy(playerData.techOrder, (k) => {
@@ -275,6 +286,14 @@ class FloatPlayer extends I18n {
     playerData.dashas.swf = require('afrostream-player/dist/dashas.swf')
 
     playerData.chromecast = _.merge(playerData.chromecast || {}, chromecastOptions)
+
+    //Hack drm blackish
+    playerData.sources = _.forEach(playerData.sources, (k) => {
+      if (canUseDrms && ~k.src.indexOf('pblackish')) {
+        k.src = k.src.replace(/.ism/g, '-drm.ism')
+        playerData.drm = true
+      }
+    })
 
     if (user) {
       userId = user.get('user_id')
