@@ -175,9 +175,8 @@ class FloatPlayer extends I18n {
           subtitle: movie.get('synopsis')
         }
       }
-      //END KOMENT
-
-
+    }
+    if (user) {
       //KOMENT
       komentData = {
         komentBar: {
@@ -199,16 +198,13 @@ class FloatPlayer extends I18n {
           }),
         }
       }
-
-      if (user && user.get('nickname')) {
+      if (user.get('nickname')) {
         komentData.koment.user = _.merge(komentData.koment.user, {nickname: user.get('nickname')})
       }
-
       //L'user a choisi de ne pas afficher les comentaires par default
-      if (user) {
-        komentData.koment.open = user.get('playerKoment')
-      }
+      komentData.koment.open = user.get('playerKoment')
     }
+
     await this.generateDomTag(videoOptions)
     //MERGE PLAYER DATA API
     let apiPlayerConfig = Player.get(`/player/config`)
