@@ -82,8 +82,6 @@ function initSite (country) {
   /* global __INITIAL_STATE__:true */
   const store = createStore(api, history, state, country)
 
-  store.dispatch(UserActionCreators.getProfile())
-
   ReactDOM.render(
     <Provider {...{store}} >
       <IntlProvider key="intl" {...{locale: clientLocale, messages, locale}}>
@@ -92,6 +90,8 @@ function initSite (country) {
     </Provider>,
     document.getElementById('main')
   )
+
+  store.dispatch(UserActionCreators.getProfile())
 }
 
 getCountry().then((country) => {

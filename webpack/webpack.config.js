@@ -80,7 +80,8 @@ const webpackConfig = {
       'outdated-browser/outdatedbrowser/outdatedbrowser',
       'material-ui',
       './src/js/lib/localStoragePolyfill',
-      './src/js/lib/customEventPolyfill'
+      './src/js/lib/customEventPolyfill',
+      './src/js/lib/requestAnimationFramePolyfill'
     ]
   },
   resolve: {
