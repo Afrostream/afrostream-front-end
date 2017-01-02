@@ -92,7 +92,7 @@ class RecommendationList extends I18n {
           <div className="recommendation-list__thumbs">
             { this.renderList() }
           </div>
-          <NextGoBack />
+          <NextGoBack {...this.props} />
         </div>
       </div>
     )
