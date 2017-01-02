@@ -640,7 +640,7 @@ class FloatPlayer extends I18n {
 
           // Video Metadata (cleared with 'videochange' event)
           video_id: videoData.videoId,
-          video_title: videoData.get('title'),
+          video_title: videoSlug,
           video_variant_name: videoSlug,
           video_content_type: videoData.get('type'),
           video_language_code: intl.locale,
