@@ -52,10 +52,6 @@ class LifePinView extends ClickablePin {
     if (!shallowEqual(nextProps.params.pinId, this.props.params.pinId)) {
       this.addEvent()
     }
-
-    if (nextProps.isScriptLoaded && !this.props.isScriptLoaded) { // load finished
-      window['addthis'].init()
-    }
   }
 
   componentWillUnmount () {
@@ -68,26 +64,6 @@ class LifePinView extends ClickablePin {
 
   componentDidMount () {
     this.addEvent()
-    this.initAddThis()
-  }
-
-  initAddThis () {
-    //Detect si le payment via la lib recurly est dispo
-    let addLib = window['addthis']
-    if (addLib) {
-      window['addthis_config'] = window['addthis_config'] || {}
-      window['addthis_config'].pubid = addThis.publicKey
-
-      window['addthis_share'] = window['addthis_share'] || {}
-      window['addthis_share'].shorteners = {
-        bitly: {
-          login: bitly.login,
-          apiKey: bitly.apiKey
-        }
-      }
-
-      window['addthis'].init()
-    }
   }
 
   elementClickHandler (e) {
@@ -212,12 +188,10 @@ class LifePinView extends ClickablePin {
         <StickyContainer className="container-fluid no-padding brand-bg article-content" style={{margin: 0}}>
           <div className="row no-padding">
             <div className="col-md-9 col-xs-9 no-padding col-left">
-              <a id="atcounter"></a>
-
               <div className="addthis_toolbox addthis_inline_share_toolbox_apql"/>
-              <div className="addthis_toolbox addthis_relatedposts_inline"/>
-
               <section dangerouslySetInnerHTML={{__html: data.get('body')}}/>
+              <div className="addthis_toolbox addthis_inline_share_toolbox_apql"/>
+              <div className="addthis_toolbox addthis_relatedposts_inline_zl50"/>
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}

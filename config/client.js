@@ -111,11 +111,12 @@ const client = {
    * Front-End Server
    */
   externalsJs: [
+    '//www.gstatic.com/firebasejs/live/3.0/firebase.js',
     '//www.gstatic.com/cv/js/sender/v1/cast_sender.js',
     '//smartplugin.youbora.com/v5/javascript/dashjs/5.3.2/sp.min.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
-  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#async=1',
+  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-583c553b01382bdf',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
   gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
