@@ -95,15 +95,6 @@ class FloatPlayer extends I18n {
 
   componentWillReceiveProps (nextProps) {
 
-    //if (nextProps.data && (!shallowEqual(nextProps.data, this.props.data))) {
-    //  const videoData = nextProps.data
-    //  if (!videoData) {
-    //    return
-    //  }
-    //  this.destroyPlayer().then(()=> {
-    //    this.initPlayer(videoData)
-    //  })
-    //}
     const videoData = nextProps.Player.get('/player/data')
     if (nextProps.Player.get('/player/data') !== this.props.Player.get('/player/data')) {
       if (!videoData) {
@@ -140,17 +131,18 @@ class FloatPlayer extends I18n {
   async getPlayerData (videoData) {
     const {
       props: {
-        OAuth, Player, User, Movie,
+        OAuth, Player, User, Movie, playerId,
+        intl,
         params:{movieId, videoId}
       }
     } = this
 
     console.log('player : Get player data')
 
-    let userId
     const user = User.get('user')
     let token = OAuth.get('token')
 
+    let userId = user && user.get('_id')
     let videoOptions = videoData.toJS()
     //ADD MOVIE INFO
     const movie = Movie.get(`movies/${movieId}`)
@@ -188,7 +180,7 @@ class FloatPlayer extends I18n {
           }
         },
         koment: {
-          videoId: videoId || videoData.videoId,
+          videoId: videoData.videoId,
           open: true,
           user: (user && {
             id: user.get('_id').toString(),
@@ -292,11 +284,6 @@ class FloatPlayer extends I18n {
     })
 
     if (user) {
-      userId = user.get('user_id')
-      let splitUser = typeof userId === 'string' ? userId.split('|') : [userId]
-      userId = _.find(splitUser, (val) => {
-        return parseInt(val, 10)
-      })
       if (playerData.metrics) {
         playerData.metrics.user_id = userId
       }
@@ -405,6 +392,31 @@ class FloatPlayer extends I18n {
         }
       }
     })
+
+
+    //MUX QOS Initialize mux monitoring
+    playerData.plugins = _.merge(playerData.plugins || {}, {
+      mux: {
+        data: {
+          page_type: 'watchpage',
+          viewer_user_id: userId, // ex: '12345'
+          // Player Metadata
+          player_init_time: Date.now(),
+
+          // Video Metadata (cleared with 'videochange' event)
+          video_id: videoData.videoId,
+          video_title: videoData.get('title'),
+          video_variant_name: videoSlug,
+          video_content_type: videoData.get('type'),
+          video_language_code: intl.locale,
+          video_duration: videoData.get('duration'),
+          video_stream_type: isLive ? 'live' : 'on-demand',
+          video_encoding_variant: '', // ex: 'Variant 1'
+          video_cdn: '' // ex: 'Fastly', 'Akamai'
+        }
+      }
+    })
+
     return playerData
   }
 
@@ -709,9 +721,8 @@ class FloatPlayer extends I18n {
         break
     }
     let video = document.createElement('video')
-    video.id = 'afrostream-player'
+    video.id = this.props.playerId
     video.className = 'player-container video-js vjs-fluid vjs-afrostream-skin vjs-big-play-centered'
-    //video.className = `player-container video-js vjs-fluid vjs-big-play-centered`
     video.crossOrigin = true
     video.setAttribute('crossorigin', true)
 
@@ -983,10 +994,12 @@ FloatPlayer.propTypes = {
   history: React.PropTypes.object.isRequired,
   data: PropTypes.instanceOf(Immutable.Map),
   float: PropTypes.bool,
+  playerId: PropTypes.string,
   className: PropTypes.string,
 }
 
 FloatPlayer.defaultProps = {
+  playerId: 'afrostream-player',
   className: '',
   float: true
 }

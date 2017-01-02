@@ -1,7 +1,8 @@
 import { isBoolean } from '../src/js/lib/utils'
 
-const drmTodayStaging = process.env.NODE_ENV !== 'production' && 'staging.' || ''
-
+const isProduction = process.env.NODE_ENV === 'production'
+const drmTodayStaging = !isProduction && 'staging.' || ''
+const playerPackage = require('afrostream-player/package.json')
 const protData = {
   'com.widevine.alpha': {
     'drmtoday': true,
@@ -395,6 +396,16 @@ const client = {
     }
   },
   player: {
+    plugins: {
+      mux: {
+        debug: !isProduction,
+        data: {
+          'property_key': isProduction ? 'a_PjG6XMl-D-SkS2H-ygrHpYo' : 'gXlHgJvAkN15beJpBEcO8z1CR',
+          'player_name': playerPackage.name,
+          'player_version': playerPackage.version,
+        }
+      }
+    },
     'autoplay': true,
     'controls': true,
     'language': 'fr',

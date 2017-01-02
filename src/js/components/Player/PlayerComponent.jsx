@@ -101,8 +101,9 @@ class PlayerComponent extends Component {
     }
 
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
-      dispatch(PlayerActionCreators.killPlayer()).then(()=> {
+      dispatch(PlayerActionCreators.killPlayer()).then(() => {
         let videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
+        videoData = videoData.set('type', videoData.get('type'))
         videoData = videoData.set('videoId', videoId)
         videoData = videoData.set('target', this.refs.wrapper)
 
@@ -393,7 +394,7 @@ class PlayerComponent extends Component {
       return
     }
 
-    const splashList = splashs.filter((splash)=> {
+    const splashList = splashs.filter((splash) => {
       return splash && splash.get('type') === 'bubble'
     })
 
@@ -402,7 +403,7 @@ class PlayerComponent extends Component {
     let splash = splashList.find((spl) => {
       const splashId = spl.get('_id')
       if (userSplashList) {
-        const userHasShowedSplash = userSplashList.find((usrSplash)=> {
+        const userHasShowedSplash = userSplashList.find((usrSplash) => {
           return usrSplash.get('_id') === splashId
         })
         return !userHasShowedSplash
@@ -421,7 +422,7 @@ class PlayerComponent extends Component {
     }
 
     const inputProps = {
-      onClick: e =>::this.hideSplash(splash.get('_id'))
+      onClick: e => ::this.hideSplash(splash.get('_id'))
     }
 
     return (

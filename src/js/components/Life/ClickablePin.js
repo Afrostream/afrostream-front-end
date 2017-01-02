@@ -162,12 +162,17 @@ class ClickablePin extends Component {
     }
 
     const target = e.currentTarget || e.target
-    switch (data.get('type')) {
+
+    const type = data.get('type')
+
+    switch (type) {
       case 'video':
         e.preventDefault()
         //dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
+            type,
+            duration: NaN,
             autoplay: true,
             target: target,
             sources: [{
@@ -184,6 +189,8 @@ class ClickablePin extends Component {
         //dispatch(PlayerActionCreators.killPlayer())
         dispatch(PlayerActionCreators.loadPlayer({
           data: Immutable.fromJS({
+            type,
+            duration: NaN,
             autoplay: true,
             target: target,
             sources: [{

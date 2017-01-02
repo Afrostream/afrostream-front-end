@@ -161,7 +161,7 @@ export default function createAPI (createRequest) {
           NProgress.done()
         }
         if (err) {
-          console.log(err)
+          console.log(err.message)
           if (err.status === 401 && err.message === 'Unauthorized') {
             //push data in buffer http calls promise
             promiseStack.push({createRequest, data, reject, resolve})

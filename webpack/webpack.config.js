@@ -53,7 +53,7 @@ const webpackConfig = {
       'dashjs',
       'video.js',
       'koment-js',
-      'afrostream-player',
+      'afrostream-player'
     ],
     vendor: [
       'react',
