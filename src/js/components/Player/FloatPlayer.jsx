@@ -20,10 +20,15 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import { withRouter } from 'react-router'
 
+import * as EpisodeActionCreators from '../../actions/episode'
 import * as FacebookActionCreators from '../../actions/facebook'
 import * as PlayerActionCreators from '../../actions/player'
 import * as EventActionCreators from '../../actions/event'
 import * as RecoActionCreators from '../../actions/reco'
+
+import NextEpisode from './NextEpisode'
+import RecommendationList from '../Recommendation/RecommendationList'
+
 import { I18n } from '../Utils'
 import {
   injectIntl,
@@ -96,7 +101,15 @@ class FloatPlayer extends I18n {
   componentWillReceiveProps (nextProps) {
 
     const videoData = nextProps.Player.get('/player/data')
-    if (nextProps.Player.get('/player/data') !== this.props.Player.get('/player/data')) {
+
+    if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
+      this.setState({
+        nextAuto: true,
+        numLoad: 0
+      })
+    }
+
+    if (!shallowEqual(nextProps.Player.get('/player/data'), this.props.Player.get('/player/data'))) {
       if (!videoData) {
         return
       }
@@ -126,6 +139,217 @@ class FloatPlayer extends I18n {
         videoId: this.props.params.videoId
       }
     }, () => this.player)
+  }
+
+  onTimeUpdate () {
+    const {
+      props: {
+        User,
+        params:{
+          videoId
+        }
+      }
+    } = this
+
+    if (!config.reco.enabled) {
+      return
+    }
+
+    const user = User.get('user')
+
+    if (user && user.get('playerAutoNext') === false) {
+      return
+    }
+
+    let currentTime = this.player.currentTime()
+    let currentDuration = this.state.duration || this.player.duration() || 0
+    if (!currentDuration) {
+      return
+    }
+    let duration = currentDuration - config.reco.time
+    //Si l'episode est trop court on attends la fin de episode et on switch au bout de 10 sec
+    let time = Math.round(currentDuration - currentTime, 10)
+    if (duration < 200) {
+      duration = currentDuration - 1
+    }
+    let nextReco = currentTime >= duration
+    if (nextReco !== this.state.nextReco) {
+      if (time === 0 && this.state.nextAuto) {
+        return this.promiseLoadNextVideo(9)
+      }
+      this.setState({
+        nextReco: time + 9
+      })
+    }
+  }
+
+  getNextLink () {
+    return this.player && this.player.options().controlBar.nextVideoButton && this.player.options().controlBar.nextVideoButton.link
+  }
+
+  promiseLoadNextVideo (time = 9) {
+    this.player.off('timeupdate')
+    clearInterval(this.promiseLoadNextTimeout)
+    this.promiseLoadNextTimeout = setInterval(function () {
+      let loadNextTime = time--
+      this.setState({
+        nextReco: loadNextTime
+      })
+      if (loadNextTime === 0) {
+        this.loadNextVideo()
+      }
+    }.bind(this), 1000)
+  }
+
+  loadNextVideo () {
+    const {
+      props: {
+        history
+      }
+    } = this
+
+    if (!this.nextEpisode) return
+
+    clearInterval(this.promiseLoadNextTimeout)
+    let nextLink = this.getNextLink()
+    this.backNextHandler()
+    this.destroyPlayer()
+    history.push(nextLink)
+  }
+
+  async getNextEpisode () {
+    const {
+      props: {
+        Video,
+        Movie,
+        Season,
+        Episode,
+        dispatch,
+        params:{
+          videoId,
+          movieId,
+          episodeId,
+          seasonId
+        }
+      }
+    } = this
+
+    const movieData = Movie.get(`movies/${movieId}`)
+    if (!movieData) {
+      return
+    }
+    const videoData = Video.get(`videos/${videoId}`)
+    if (!videoData) {
+      return
+    }
+    let episodeData = videoData.get('episode')
+    if (!episodeData) {
+      return
+    }
+    if (!seasonId) {
+      return
+    }
+    let seasonData = Season.get(`seasons/${seasonId}`)
+    if (!seasonData) {
+      return
+    }
+    let nextEpisode
+    let nextEpisodeId
+    let episodeIndex
+    let episodesList = seasonData.get('episodes')
+
+    if (!episodesList) {
+      return
+    }
+    episodeIndex = await episodesList.findIndex((obj) => {
+      return obj.get('_id') == episodeId
+    })
+
+    nextEpisode = episodesList.get(episodeIndex + 1)
+    if (nextEpisode) {
+      return {
+        season: seasonData,
+        episode: nextEpisode
+      }
+    }
+    //try to load next season
+    let seasonList = movieData.get('seasons')
+    let seasonIndex = await seasonList.findIndex((obj) => {
+      return obj.get('_id') == seasonId
+    })
+    if (seasonIndex < 0) {
+      return
+    }
+    let nextSeason = await seasonList.get(seasonIndex + 1)
+    if (!nextSeason) {
+      return
+    }
+
+    episodesList = nextSeason.get('episodes')
+    if (episodesList && episodesList.size) {
+      nextEpisode = episodesList.first()
+      if (!nextEpisode) {
+        return
+      }
+    }
+    //Try to fetch next episode
+    nextEpisodeId = nextEpisode.get('_id')
+    let fetchEpisode = Episode.get(`episodes/${nextEpisodeId}`)
+    if (!fetchEpisode) {
+      try {
+        //L'episode n'a jamais été chargé , on le fetch
+        fetchEpisode = await dispatch(EpisodeActionCreators.getEpisode(nextEpisodeId)).then((result) => {
+          if (!result || !result.res) {
+            return null
+          }
+          return Immutable.fromJS(result.res.body)
+        })
+      } catch (err) {
+        console.log('player : ', err)
+      }
+    }
+    return {
+      season: nextSeason,
+      episode: fetchEpisode
+    }
+  }
+
+  //TODO refactor and split method
+  async getNextVideo () {
+    const {
+      props: {
+        Movie,
+        params:{
+          videoId,
+          movieId
+        }
+      }
+    } = this
+
+    const movieData = Movie.get(`movies/${movieId}`)
+    this.nextEpisode = await this.getNextEpisode()
+    if (!this.nextEpisode) {
+      return null
+    }
+    let season = this.nextEpisode.season
+    let episode = this.nextEpisode.episode
+    if (!episode) {
+      return null
+    }
+    let nextVideo = episode.get('videoId') || episode.get('video').get('_id')
+    let poster = extractImg({
+      data: episode,
+      key: 'poster',
+      width: 150,
+      height: 80
+    })
+    let link = `/${movieData.get('_id')}/${movieData.get('slug')}/${season.get('_id')}/${season.get('slug')}/${episode.get('_id')}/${episode.get('slug')}/${nextVideo}`
+    return {
+      link: link,
+      title: episode.get('title'),
+      poster
+    }
+
   }
 
   async getPlayerData (videoData) {
@@ -209,6 +433,19 @@ class FloatPlayer extends I18n {
     let playerConfig = _.merge(_.cloneDeep(config.player), _.cloneDeep(apiPlayerConfigJs))
     //merge all configs
     let playerData = _.merge(playerConfig, videoOptions, komentData)
+
+    try {
+      let nextButton = await this.getNextVideo()
+      if (nextButton) {
+        playerData.controlBar = _.merge(playerData.controlBar, {
+          nextVideoButton: nextButton
+        })
+      }
+
+    } catch (e) {
+      console.log('player : Next video error', e)
+    }
+
     // ==== START hacks config
     let isLive = playerData.hasOwnProperty('live') && playerData.live
     const ua = detectUA()
@@ -217,9 +454,7 @@ class FloatPlayer extends I18n {
     let canUseDrms = true
 
     if (ua.isIE()) {
-
       canUseDrms = browserVersion > 11
-
       playerData.html5 = {
         nativeCaptions: false,
         nativeTextTracks: false
@@ -421,8 +656,7 @@ class FloatPlayer extends I18n {
   }
 
   backNextHandler () {
-    const player = this.player
-    player.off('timeupdate')
+    this.player.off('timeupdate')
     clearInterval(this.promiseLoadNextTimeout)
     this.setState({
       nextReco: false
@@ -458,7 +692,7 @@ class FloatPlayer extends I18n {
       this.props.dispatch(PlayerActionCreators.setPlayer(this.player))
       //On ajoute l'ecouteur au nextvideo automatique
       console.log('player : generatePlayer complete', this.player)
-      this.container = ReactDOM.findDOMNode(videoData.get('target'))
+      this.container = ReactDOM.findDOMNode(this.refs.container)
       if (this.container) {
         this.container.removeEventListener('gobacknext', ::this.backNextHandler)
         this.container.addEventListener('gobacknext', ::this.backNextHandler)
@@ -508,8 +742,10 @@ class FloatPlayer extends I18n {
     player.on('userinactive', ::this.triggerUserActive)
     player.on('firstplay', ::this.onFirstPlay)
     player.on('ended', ::this.clearTrackVideo)
+    player.on('timeupdate', ::this.onTimeUpdate)
     player.on('seeked', ::this.trackVideo)
     player.on('fullscreenchange', ::this.onFullScreenHandler)
+    player.on('next', ::this.loadNextVideo)
 
     this.requestTick(true)
     return player
@@ -536,8 +772,10 @@ class FloatPlayer extends I18n {
         this.player.off('useractive')
         this.player.off('userinactive')
         this.player.off('ended')
+        this.player.off('timeupdate')
         this.player.off('seeked')
         this.player.off('error')
+        this.player.off('next')
         this.player.one('dispose', () => {
           setTimeout(() => {
             console.log('player : destroy player', this.player)
@@ -654,7 +892,6 @@ class FloatPlayer extends I18n {
       playerBitrate: playerBitrate,
       playerPosition: playerPosition
     }
-    //player.youbora.plugin.data.media.bitrate = playerBitrate
     dispatch(RecoActionCreators.trackVideo(data, videoId))
     this.trackTimeout = setTimeout(::this.trackVideo, 60000)
   }
@@ -803,7 +1040,7 @@ class FloatPlayer extends I18n {
     }
 
     const playerData = data || Player.get('/player/data')
-    const target = playerData && playerData.get('target')
+    const target = playerData && playerData.get('target') || document.getElementById('player-container')
     const elVisible = this.player && target && isElementInViewPort(target, 0.60)
 
     let position = elVisible && target && target.getBoundingClientRect() || {
@@ -847,6 +1084,29 @@ class FloatPlayer extends I18n {
       player.koment.toggleMenu(true)
       player.koment.toggleEdit(true)
     }
+  }
+
+  getNextComponent () {
+    const {
+      props: {
+        params: {
+          videoId
+        }
+      }
+    } = this
+
+    if (!this.state.nextReco || !config.reco.enabled || !videoId) {
+      return
+    }
+
+    let nextEpisode = this.nextEpisode
+    let time = this.state.nextReco
+    let auto = this.state.nextAuto
+    if (nextEpisode) {
+      let episode = nextEpisode.episode
+      return (<NextEpisode {...{episode, videoId, time, auto}} {...this.props}/>)
+    }
+    return (<RecommendationList {...{videoId}} {...this.props}/>)
   }
 
   render () {
@@ -984,6 +1244,7 @@ class FloatPlayer extends I18n {
           {videoDuration ?
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}
         </div>}
+        {this.getNextComponent()}
       </div>
     )
   }

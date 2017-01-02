@@ -9,11 +9,8 @@ import * as PlayerActionCreators from '../../actions/player'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as UserActionCreators from '../../actions/user'
 import Spinner from '../Spinner/Spinner'
-import NextEpisode from './NextEpisode'
-import RecommendationList from '../Recommendation/RecommendationList'
 import { withRouter } from 'react-router'
 import window from 'global/window'
-import FloatPlayer from '../Player/FloatPlayer'
 
 if (process.env.BROWSER) {
   require('./PlayerComponent.less')
@@ -38,10 +35,6 @@ class PlayerComponent extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      numLoad: 0
-    }
-
     this.initState()
   }
 
@@ -71,18 +64,6 @@ class PlayerComponent extends Component {
 
   }
 
-  //componentDidUpdate () {
-  //  const {props:{dispatch, videoId}} = this
-  //  if (this.videoData) {
-  //    this.videoData = this.videoData.set('target', this.refs.wrapper)
-  //    this.videoData = this.videoData.set('videoId', videoId)
-  //    dispatch(PlayerActionCreators.loadPlayer({
-  //      data: this.videoData
-  //    }))
-  //    this.videoData = null;
-  //  }
-  //}
-
   componentWillUnmount () {
     const {props:{dispatch}} = this
     dispatch(PlayerActionCreators.killPlayer())
@@ -93,264 +74,15 @@ class PlayerComponent extends Component {
 
     const {props:{dispatch, videoId}} = this
 
-    if (!shallowEqual(nextProps.movieId, this.props.movieId)) {
-      this.setState({
-        nextAuto: true,
-        numLoad: 0
-      })
-    }
-
     if (!shallowEqual(nextProps.Video, this.props.Video)) {
       dispatch(PlayerActionCreators.killPlayer()).then(() => {
         let videoData = nextProps.Video.get(`videos/${nextProps.videoId}`)
         videoData = videoData.set('type', videoData.get('type'))
         videoData = videoData.set('videoId', videoId)
         videoData = videoData.set('target', this.refs.wrapper)
-
         dispatch(PlayerActionCreators.loadPlayer({
           data: videoData
         }))
-      })
-    }
-
-  }
-
-  getLazyImageUrl (data, type = 'poster') {
-    let imgData = data.get(type)
-    if (!imgData) {
-      return
-    }
-
-    return imgData.get('path')
-  }
-
-  backNextHandler () {
-    const player = this.player()
-    player.off('timeupdate')
-    clearInterval(this.promiseLoadNextTimeout)
-    this.setState({
-      nextReco: false
-    })
-  }
-
-  getNextComponent () {
-    const {
-      props: {
-        videoId
-      }
-    } = this
-
-    if (!this.state.nextReco || !config.reco.enabled) {
-      return
-    }
-    let nextEpisode = this.nextEpisode
-    let time = this.state.nextReco
-    let auto = this.state.nextAuto
-    if (nextEpisode) {
-      let episode = nextEpisode.episode
-      return (<NextEpisode {...{episode, videoId, time, auto}}/>)
-    }
-    return (<RecommendationList {...{videoId}}/>)
-  }
-
-  getNextLink () {
-    const player = this.player()
-    return player && player.options().controlBar.nextVideoButton && player.options().controlBar.nextVideoButton.link
-  }
-
-  //TODO refactor and split method
-  async getNextVideo () {
-    const {
-      props: {
-        Movie,
-        videoId,
-        movieId
-      }
-    } = this
-
-    const movieData = Movie.get(`movies/${movieId}`)
-    this.nextEpisode = await this.getNextEpisode()
-    if (!this.nextEpisode) {
-      return null
-    }
-    let season = this.nextEpisode.season
-    let episode = this.nextEpisode.episode
-    if (!episode) {
-      return null
-    }
-    let nextVideo = episode.get('videoId') || episode.get('video').get('_id')
-    let posterImg = this.getLazyImageUrl(episode)
-    let link = `/${movieData.get('_id')}/${movieData.get('slug')}/${season.get('_id')}/${season.get('slug')}/${episode.get('_id')}/${episode.get('slug')}/${nextVideo}`
-    return {
-      link: link,
-      title: episode.get('title'),
-      poster: `${config.images.urlPrefix}${posterImg}?crop=faces&fit=min&w=150&h=80&q=60&fm=${config.images.type}`
-    }
-
-  }
-
-  async getNextEpisode () {
-    const {
-      props: {
-        Video,
-        Movie,
-        Season,
-        Episode,
-        videoId,
-        movieId,
-        episodeId,
-        seasonId,
-        dispatch
-      }
-    } = this
-
-    const movieData = Movie.get(`movies/${movieId}`)
-    if (!movieData) {
-      return
-    }
-    const videoData = Video.get(`videos/${videoId}`)
-    if (!videoData) {
-      return
-    }
-    let episodeData = videoData.get('episode')
-    if (!episodeData) {
-      return
-    }
-    if (!seasonId) {
-      return
-    }
-    let seasonData = Season.get(`seasons/${seasonId}`)
-    if (!seasonData) {
-      return
-    }
-    let nextEpisode
-    let nextEpisodeId
-    let episodeIndex
-    let episodesList = seasonData.get('episodes')
-
-    if (!episodesList) {
-      return
-    }
-    episodeIndex = await episodesList.findIndex((obj) => {
-      return obj.get('_id') == episodeId
-    })
-
-    nextEpisode = episodesList.get(episodeIndex + 1)
-    if (nextEpisode) {
-      return {
-        season: seasonData,
-        episode: nextEpisode
-      }
-    }
-    //try to load next season
-    let seasonList = movieData.get('seasons')
-    let seasonIndex = await seasonList.findIndex((obj) => {
-      return obj.get('_id') == seasonId
-    })
-    if (seasonIndex < 0) {
-      return
-    }
-    let nextSeason = await seasonList.get(seasonIndex + 1)
-    if (!nextSeason) {
-      return
-    }
-
-    episodesList = nextSeason.get('episodes')
-    if (episodesList && episodesList.size) {
-      nextEpisode = episodesList.first()
-      if (!nextEpisode) {
-        return
-      }
-    }
-    //Try to fetch next episode
-    nextEpisodeId = nextEpisode.get('_id')
-    let fetchEpisode = Episode.get(`episodes/${nextEpisodeId}`)
-    if (!fetchEpisode) {
-      try {
-        //L'episode n'a jamais été chargé , on le fetch
-        fetchEpisode = await dispatch(EpisodeActionCreators.getEpisode(nextEpisodeId)).then((result) => {
-          if (!result || !result.res) {
-            return null
-          }
-          return Immutable.fromJS(result.res.body)
-        })
-      } catch (err) {
-        console.log('player : ', err)
-      }
-    }
-    return {
-      season: nextSeason,
-      episode: fetchEpisode
-    }
-  }
-
-
-  promiseLoadNextVideo (time = 9) {
-    const player = this.player()
-    player.off('timeupdate')
-    clearInterval(this.promiseLoadNextTimeout)
-    this.promiseLoadNextTimeout = setInterval(function () {
-      let loadNextTime = time--
-      this.setState({
-        nextReco: loadNextTime
-      })
-      if (loadNextTime === 0) {
-        this.loadNextVideo()
-      }
-    }.bind(this), 1000)
-  }
-
-  loadNextVideo () {
-    const {
-      props: {
-        history,
-        router
-      }
-    } = this
-
-    if (!this.nextEpisode) return
-
-    clearInterval(this.promiseLoadNextTimeout)
-    let nextLink = this.getNextLink()
-    this.backNextHandler()
-    router.push(nextLink)
-  }
-
-  onTimeUpdate () {
-    const {
-      props: {
-        User
-      }
-    } = this
-
-    if (!config.reco.enabled) {
-      return
-    }
-
-    const user = User.get('user')
-
-    if (user && user.get('playerAutoNext') === false) {
-      return
-    }
-    const player = this.player()
-    let currentTime = player.currentTime()
-    let currentDuration = this.state.duration || player.duration() || 0
-    if (!currentDuration) {
-      return
-    }
-    let duration = currentDuration - config.reco.time
-    //Si l'episode est trop court on attends la fin de episode et on switch au bout de 10 sec
-    let time = Math.round(currentDuration - currentTime, 10)
-    if (duration < 200) {
-      duration = currentDuration - 1
-    }
-    let nextReco = currentTime >= duration
-    if (nextReco !== this.state.nextReco) {
-      if (time === 0 && this.state.nextAuto) {
-        return this.promiseLoadNextVideo(9)
-      }
-      this.setState({
-        nextReco: time + 9
       })
     }
   }
@@ -441,7 +173,6 @@ class PlayerComponent extends Component {
   render () {
     const {
       props: {
-        Event,
         Video,
         videoId
       }
@@ -455,8 +186,7 @@ class PlayerComponent extends Component {
 
     return (
       <div className="player">
-        <div ref="wrapper" className="wrapper"/>
-        {this.getNextComponent()}
+        <div ref="wrapper" className="wrapper" id="player-container"/>
         {this.renderSplashs()}
       </div>
     )

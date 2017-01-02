@@ -53,11 +53,11 @@ class NextEpisode extends I18n {
           <div className="next-episode__label">{this.getTitle('next.labelLike')}</div>
           <RateComponent {...{videoId}}/>
           {this.props.auto ? <div
-            className="next-episode__label">{`${this.getTitle('next.label', {seconds: this.props.time})}`}</div> : '' }
+              className="next-episode__label">{`${this.getTitle('next.label', {seconds: this.props.time})}`}</div> : '' }
           <div className="next-episode__thumbs">
             <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135} type="episode"/>
           </div>
-          <NextGoBack />
+          <NextGoBack {...this.props} />
         </div>
       </div>
     )
