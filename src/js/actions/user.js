@@ -187,17 +187,6 @@ export function getFavorites (type = 'movies') {
       }
     }
 
-    let readyFavorites = getState().User.get(`favorites/${type}`)
-    if (readyFavorites) {
-      console.log(`favorites ${type} already present in data store`)
-      return {
-        type: returnTypeAction,
-        res: {
-          body: readyFavorites.toJS()
-        }
-      }
-    }
-
     return async api => ({
       type: returnTypeAction,
       res: await api({

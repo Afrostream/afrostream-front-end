@@ -6,14 +6,6 @@ import URL from 'url'
 export function fetchThemes (fetchThemeId) {
   return (dispatch, getState) => {
     const themeId = fetchThemeId || ''
-    let readyThemes = getState().Life.get(`life/themes/${themeId}`)
-    if (readyThemes) {
-      console.log('Life themes already present in data store')
-      return {
-        type: ActionTypes.Life.fetchThemes,
-        themeId,
-      }
-    }
     return async api => ({
       type: ActionTypes.Life.fetchThemes,
       themeId,
@@ -257,19 +249,6 @@ export function spotClick (spotId) {
 
 export function fetchPin (pinId) {
   return (dispatch, getState) => {
-    let readyPin = getState().Life.get(
-      `life/pins/${pinId}`
-    )
-    if (readyPin) {
-      console.log('Life pin already present in data store')
-      return {
-        type: ActionTypes.Life.fetchPin,
-        pinId,
-        res: {
-          body: readyPin.toJS()
-        }
-      }
-    }
     console.log('fetchPin ', pinId)
     return async api => ({
       type: ActionTypes.Life.fetchPin,

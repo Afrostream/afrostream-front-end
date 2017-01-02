@@ -143,18 +143,6 @@ export function getRecommendations (route = 'player', videoId = 'home') {
       }
     }
 
-    let readyReco = getState().User.get(`reco/${videoId}`)
-    if (readyReco) {
-      console.log(`Recos ${route} ${videoId} already present in data store`)
-      return {
-        type: ActionTypes.User.getRecommendations,
-        videoId,
-        res: {
-          body: readyReco.toJS()
-        }
-      }
-    }
-
     let recoList = []
     let categories = getState().Category.get(`categorys/spots`)
     categories.map((categorie)=> {
