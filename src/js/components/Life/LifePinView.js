@@ -74,8 +74,9 @@ class LifePinView extends ClickablePin {
 
   reloadAddThis () {
     //Detect si le payment via la lib recurly est dispo
-    if (window['addthis'] && window['addthis'].layers) {
-      window['addthis'].layers.refresh()
+    let addLib = window['addthis']
+    if (addLib && addLib.layers && addLib.layers.refresh) {
+      addLib.layers.refresh()
     }
   }
 
