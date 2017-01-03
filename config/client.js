@@ -116,7 +116,7 @@ const client = {
     '//smartplugin.youbora.com/v5/javascript/dashjs/5.3.2/sp.min.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
-  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-583c553b01382bdf',
+  addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-583c553b01382bdf#shortener=bitly#bitly.login=afrostream#bitly.apiKey=' + process.env.BITLY_API_KEY,
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
   gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
@@ -511,8 +511,8 @@ const client = {
         'Chapters': 'Chapitres',
         'You aborted the media playback': 'Vous avez interrompu la lecture de la vidéo.',
         'A network error caused the media download to fail part-way.': 'Une erreur de réseau a interrompu le téléchargement de la vidéo.',
-        'The media could not be loaded, either because the server or network failed or because the format is not supported.': 'Cette vidéo n\'a pas pu être chargée, soit parce que le serveur ou le réseau a échoué ou parce que le format n\'est pas reconnu. Essayez de mettre à jour votre navigateur ou telechargez le plugin flash player : https://get.adobe.com/fr/flashplayer/',
-        'The media playback was aborted due to a corruption problem or because the media used features your browser did not support.': 'La lecture de la vidéo a été interrompue à cause d\'un problème de corruption ou parce que la vidéo utilise des fonctionnalités non prises en charge par votre navigateur.',
+        'The media could not be loaded, either because the server or network failed or because the format is not supported.': 'Cette vidéo n\'a pas pu être chargée, soit parce que le serveur ou le réseau a échoué ou parce que le format n\'est pas reconnu. Essayez de mettre à jour votre navigateur ici http://outdatedbrowser.com',
+        'The media playback was aborted due to a corruption problem or because the media used features your browser did not support.': 'La lecture de la vidéo a été interrompue à cause d\'un problème de corruption ou parce que la vidéo utilise des fonctionnalités non prises en charge par votre navigateur. Essayez de mettre à jour votre navigateur ici http://outdatedbrowser.com',
         'No compatible source was found for this media.': 'Aucune source compatible n\'a été trouvée pour cette vidéo.'
       }
     },

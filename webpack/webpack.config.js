@@ -48,7 +48,6 @@ const webpackConfig = {
     // Set up an ES6-ish environment
     polyfill: 'babel-polyfill',
     main: './src/js/main',
-    vtt: 'videojs-vtt.js/dist/vtt.min.js',
     player: [
       'dashjs',
       'video.js',
@@ -159,7 +158,7 @@ const webpackConfig = {
       },
       {
         test: /videojs-vtt\.js$/,
-        loader: 'file-loader?name=[name].[ext]?[hash]'
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /video\.js$/,
