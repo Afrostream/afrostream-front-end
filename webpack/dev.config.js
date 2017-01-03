@@ -3,7 +3,6 @@ import { merge } from 'lodash'
 import webpackConfig from './webpack.config'
 import config from '../config'
 import path from 'path'
-import ProgressBarPlugin from 'progress-bar-webpack-plugin'
 //
 // import DashboardPlugin from 'webpack-dashboard/plugin'
 // import Dashboard from 'webpack-dashboard'
@@ -43,10 +42,14 @@ clientConfig.plugins.push(
   // new DashboardPlugin(dashboard.setData),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin(),
-  new ProgressBarPlugin({
-    format: '  build [:bar] :percent (:elapsed seconds)',
-    clear: false,
-    width: 60
+  new webpack.ProgressPlugin(function (percentage, message) {
+    var MOVE_LEFT = new Buffer('1b5b3130303044', 'hex').toString()
+    var CLEAR_LINE = new Buffer('1b5b304b', 'hex').toString()
+    process.stdout.write(CLEAR_LINE + Math.round(percentage * 100) + '% :' + message + MOVE_LEFT)
+    if (percentage === 1) {
+      console.log('');
+      console.log('webpack: bundle build is now finished.');
+    }
   })
   //new BrowserSyncPlugin({
   //  host: bSyncHost,
