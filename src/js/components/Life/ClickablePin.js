@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import config from '../../../../config'
+import * as FacebookActionCreators from '../../actions/facebook'
 import * as LifeActionCreators from '../../actions/life'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
@@ -41,6 +42,9 @@ class ClickablePin extends Component {
         e.preventDefault()
         e.target.classList.toggle('liked')
       }
+
+      //like facebook
+      dispatch(FacebookActionCreators.like({}))
 
       return dispatch(LifeActionCreators.likePin({
         liked,

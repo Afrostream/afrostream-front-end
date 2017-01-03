@@ -57,5 +57,14 @@ export default createReducer(initialState, {
     return state.merge({
       [`readNews`]: res
     })
+  },
+
+  [ActionTypes.Facebook.like](state, {res}) {
+    if (!res) {
+      return state
+    }
+    return state.merge({
+      [`like`]: res
+    })
   }
 })

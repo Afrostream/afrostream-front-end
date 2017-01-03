@@ -138,7 +138,42 @@ export function readNews ({
             created_time: creationDate.getTime()
           },
           (response) => {
-            debugger
+            if (!response || response.error) {
+              return reject(response.error)
+            }
+            return resolve({
+              type: ActionTypes.Facebook.readNews,
+              res: response.data
+            })
+          }
+        )
+      })
+    }
+  }
+}
+
+export function like ({}) {
+  return (dispatch, getState) => {
+    const auth = getState().Facebook.get('auth')
+    if (!auth || auth.get('status') !== 'connected') {
+      return {
+        type: ActionTypes.Facebook.readNews,
+        res: []
+      }
+    }
+    /* make the API call */
+    return async () => {
+      return await new Promise((resolve, reject) => {
+
+        let creationDate = created_time || new Date()
+        window.FB.api(
+          `/me/og.like`,
+          'POST',
+          {
+            object: window.location,
+            created_time: creationDate.getTime()
+          },
+          (response) => {
             if (!response || response.error) {
               return reject(response.error)
             }

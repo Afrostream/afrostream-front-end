@@ -32,7 +32,7 @@ if (process.env.BROWSER) {
   if (pinId) {
     return await Promise.all([
       store.dispatch(LifeActionCreators.fetchPin(pinId)),
-      store.dispatch(FacebookActionCreators.readNews({})),
+      store.dispatch(FacebookActionCreators.readNews({}))
     ])
   }
 })
@@ -194,7 +194,6 @@ class LifePinView extends ClickablePin {
             <div className="col-md-9 col-xs-9 no-padding col-left">
               <div className="addthis_toolbox addthis_inline_share_toolbox_apql"/>
               <section dangerouslySetInnerHTML={{__html: data.get('body')}}/>
-              <div className="addthis_toolbox addthis_inline_share_toolbox_apql"/>
               <div className="addthis_toolbox addthis_relatedposts_inline_zl50"/>
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
