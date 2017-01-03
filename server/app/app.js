@@ -11,6 +11,7 @@ import allowOrigin from './middlewares/middleware-allowcrossdomain'
 import cacheHandler from './middlewares/middleware-cachehandler'
 import { forceSSL, forceWWW } from './middlewares/middleware-redirect'
 const app = express()
+
 // Serve static files
 // --------------------------------------------------
 

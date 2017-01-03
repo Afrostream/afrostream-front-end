@@ -68,7 +68,7 @@ const client = {
         {key: 'password', type: 'password', col: 6},
       ],
       social: [
-        {key: 'webPushNotifications', type: 'toggle', icon: 'zmdi zmdi-notifications', col: 12},
+        {key: 'webPushNotificationsData', type: 'toggle', icon: 'zmdi zmdi-notifications', col: 12},
         {key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
       player: [
         {
