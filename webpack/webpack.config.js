@@ -157,7 +157,7 @@ const webpackConfig = {
         loader: 'file-loader?name=[name].[ext]?[hash]'
       },
       {
-        test: /videojs-vtt\.js$/,
+        test: /videojs-vtt\.js/,
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
