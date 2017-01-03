@@ -208,7 +208,7 @@ const webpackConfig = {
   //},
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['player', 'vendor'],
+      names: ['player', 'vendor', 'vtt'],
       minChunks: 2
     }),
     new webpack.optimize.DedupePlugin(),
