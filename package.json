@@ -107,7 +107,7 @@
     "js-base64": "^2.1.9",
     "json-loader": "^0.5.4",
     "less": "^2.5.1",
-    "less-loader": "^2.2.0",
+    "less-loader": "^2.2.3",
     "lesshat": "^3.0.2",
     "lodash": "^4.13.1",
     "material-design-iconic-font": "^2.2.0",

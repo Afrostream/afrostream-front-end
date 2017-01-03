@@ -48,7 +48,7 @@ class CookieMessage extends React.Component {
         <div className="alert-message">
           <div dangerouslySetInnerHTML={{__html: '<!--googleoff: all-->'}}/>
           Afrostream utilise des cookies pour vous proposer des contenus et services
-          adaptés à vos centres d'intérêts. <a href="/articles/cookies_policy.pdf" no
+          adaptés à vos centres d'intérêts. <a href="/articles/cookies_policy.pdf"
                                                onClick={this.setCookieToken.bind(this)} target="_blank">En savoir
           plus</a>
           <button className="alert-button" onClick={::this.setCookieToken}>OK
