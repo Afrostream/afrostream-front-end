@@ -64,10 +64,20 @@ class LifePinView extends ClickablePin {
 
   componentDidUpdate () {
     this.addEvent()
+    this.reloadAddThis()
   }
 
   componentDidMount () {
     this.addEvent()
+    this.reloadAddThis()
+  }
+
+  reloadAddThis () {
+    //Detect si le payment via la lib recurly est dispo
+    let addLib = window['addthis']
+    if (addLib && addLib.layers && addLib.layers.refresh) {
+      addLib.layers.refresh()
+    }
   }
 
   elementClickHandler (e) {
@@ -199,7 +209,7 @@ class LifePinView extends ClickablePin {
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
               <Sticky bottomOffset={150}>
-                <div className="addthis_inline_share_toolbox_ubvc"/>
+                <div className="addthis_toolbox addthis_inline_share_toolbox_ubvc"/>
                 <div className="spot-lists">
                   {spots && spots.map((data, key) => <LifeSpot {...{
                     data,
