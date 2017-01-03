@@ -135,10 +135,10 @@ export function readNews ({
           'POST',
           {
             article: window.location,
-            created_time: creationDate.getTime(),
-            expires_in: duration
+            created_time: creationDate.getTime()
           },
           (response) => {
+            debugger
             if (!response || response.error) {
               return reject(response.error)
             }

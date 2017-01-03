@@ -200,6 +200,7 @@ class LifePinView extends ClickablePin {
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard user={pinnedUser}/>}
               <Sticky bottomOffset={150}>
+                <div className="addthis_inline_share_toolbox_ubvc"/>
                 <div className="spot-lists">
                   {spots && spots.map((data, key) => <LifeSpot {...{
                     data,
