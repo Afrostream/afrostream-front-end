@@ -48,5 +48,14 @@ export default createReducer(initialState, {
     return state.merge({
       [`watchVideo`]: res
     })
+  },
+
+  [ActionTypes.Facebook.readNews](state, {res}) {
+    if (!res) {
+      return state
+    }
+    return state.merge({
+      [`readNews`]: res
+    })
   }
 })

@@ -7,6 +7,7 @@ import classSet from 'classnames'
 import _ from 'lodash'
 import ClickablePin from './ClickablePin'
 import { extractImg, addRemoveEvent } from '../../lib/utils'
+import * as FacebookActionCreators from '../../actions/facebook'
 import * as LifeActionCreators from '../../actions/life'
 import * as PlayerActionCreators from '../../actions/player'
 import * as ModalActionCreators from '../../actions/modal'
@@ -29,7 +30,10 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store, params:{pinId}}) {
   if (pinId) {
-    return await store.dispatch(LifeActionCreators.fetchPin(pinId))
+    return await Promise.all([
+      store.dispatch(LifeActionCreators.fetchPin(pinId)),
+      store.dispatch(FacebookActionCreators.readNews({})),
+    ])
   }
 })
 @connect(({Life, User}) => ({Life, User}))
