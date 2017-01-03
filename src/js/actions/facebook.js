@@ -167,7 +167,7 @@ export function like ({}) {
 
         let creationDate = created_time || new Date()
         window.FB.api(
-          `/me/og.like`,
+          `/me/og.likes`,
           'POST',
           {
             object: window.location,
