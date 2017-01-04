@@ -22,7 +22,6 @@ import NoMatch from './components/NoMatch'
 //STATIC
 import Footer from './components/Footer/Footer'
 import MovieList from './components/Movies/MoviesList'
-import PricingTable from './components/Welcome/WelcomeComponents/PricingTable'
 import Spots from './components/Welcome/WelcomeComponents/Spots'
 
 const langs = ['fr', 'en']
@@ -121,7 +120,6 @@ const buildRoutes = function (lang) {
 
 export const staticRoutes = [
   <Route name="footer" path="footer" component={Footer}/>,
-  <Route name="pricingTable" path="pricing" component={PricingTable}/>,
   <Route name="movieList" path="movies/list" component={MovieList}/>,
   <Route name="spotsList" path="categorys/spots" component={Spots}/>
 ]
