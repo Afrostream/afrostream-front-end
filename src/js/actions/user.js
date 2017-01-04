@@ -44,13 +44,15 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   //MERGE USER DATA
   let subscriptionsStatus = user.subscriptionsStatus
   let status = subscriptionsStatus && subscriptionsStatus.status
+  let userSubscriptions = subscriptionsStatus && subscriptionsStatus.subscriptions
+  let planCode = user.planCode
   user.status = status
+  user.isActive = planCode && userSubscriptions && _.find(userSubscriptions || [], (subscription) => subscription.isActive === 'yes')
   user.user_id = user._id || user.user_id
   user.splashList = user.splashList || []
   user.authorized = true
   user = mergeFbUserInfo(user)
   dispatch(FBActionCreators.getFriendList())
-  let planCode = user.planCode
   try {
     user.authorized = await isAuthorized()
   } catch (err) {
@@ -59,7 +61,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   //Si l'user est geobloqué, on regarde si il a un plan en cours,
   //si c'est le cas on lui laisse l'acces au site
   if (!user.authorized) {
-    user.authorized = planCode && user.status === 'active'
+    user.authorized = user.isActive
     //  dispatch(ModalActionCreators.open({target: 'geoWall'}))
     //  throw new Error('User not authorized Geoloc /auth/geo ')
   }
