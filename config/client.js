@@ -164,7 +164,14 @@ const client = {
   //add alerts to front (same as cookies)
   alerts: [],
   google: {
-    analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
+    analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
+    firebase: {
+      apiKey: 'AIzaSyBJ3H7rJHdhaLg8KfkjvwxvwDhbrbR4NpI',
+      authDomain: 'afrostream-86e6c.firebaseapp.com',
+      databaseURL: 'https://afrostream-86e6c.firebaseio.com',
+      storageBucket: 'afrostream-86e6c.appspot.com',
+      messagingSenderId: '6652169699'
+    }
   },
   facebook: {
     appId: '828887693868980',

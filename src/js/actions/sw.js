@@ -1,6 +1,12 @@
+//import { firebase } from 'firebase'
 import ActionTypes from '../consts/ActionTypes'
 import * as EventActionCreators from './event'
 import config from '../../../config'
+
+//firebase.initializeApp(google.firebase)
+//
+//const {apiClient, heroku, google} = config
+//const messaging = firebase.messaging()
 
 export function setPushNotifications (value) {
   return (dispatch, getState, actionDispatcher) => {
@@ -21,9 +27,8 @@ export function setPushNotifications (value) {
           return swReg.pushManager.subscribe({userVisibleOnly: true})
         })
         .then((subscription) => {
-          console.log('Subscription Notification', subscription)
           if (subscription) {
-            console.log('Subscription endpoint', subscription.endpoint)
+            console.log('Subscription Notification', subscription.toJSON())
           }
           return {
             type: ActionTypes.SW.setPushNotifications,
@@ -33,6 +38,23 @@ export function setPushNotifications (value) {
           console.log(err)
           actionDispatcher(EventActionCreators.showError(err))
         })
+      //return await messaging.requestPermission()
+      //  .then(() => {
+      //    return messaging.getToken()
+      //  })
+      //  .then((subscription) => {
+      //    console.log('Subscription Notification', subscription)
+      //    if (subscription) {
+      //      console.log('Subscription endpoint', subscription.endpoint)
+      //    }
+      //    return {
+      //      type: ActionTypes.SW.setPushNotifications,
+      //      value: value && subscription && subscription.toJSON() || null
+      //    }
+      //  }).catch((err) => {
+      //    console.log(err)
+      //    actionDispatcher(EventActionCreators.showError(err))
+      //  })
     }
   }
 }

@@ -206,6 +206,10 @@ class AccountProfil extends React.Component {
           }
         }
 
+        if (section.key === 'webPushNotificationsData') {
+          inputAttributes.disabled = !Notification || Notification.permission === 'denied'
+        }
+
         element = <Toggle
           iconStyle={{
             fill: '#FF9800'
