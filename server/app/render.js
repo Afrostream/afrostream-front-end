@@ -126,28 +126,46 @@ export default function render (req, res, layout, {payload}) {
             </Provider>
           )
 
+          const componentHtml = ReactDOMServer.renderToString(
+            <Provider {...{store}}>
+              <IntlProvider key="intl" {...{messages, locale}}>
+                <RouterContext {...{...renderProps, location}} childRoutes={routes}/>
+              </IntlProvider>
+            </Provider>
+          )
+
           const storeState = _.merge({intl: {locale}}, store.getState())
           const initialState = serializeJs(storeState, {isJSON: true})
 
-          //console.log('initialState', initialState)
-          //console.log('preferredLocale : ', language, preferredLocale, locale)
+          const format = req.query.format
 
           let metadata = Helmet.rewind()
 
-          return res.render(layout, {
-            ...payload,
-            title: metadata.title,
-            meta: metadata.meta,
-            name: 'Afrostream',
-            link: metadata.link,
-            iosAppId: apps.iosAppId,
-            androidAppId: apps.androidAppId,
-            body,
-            share: {
-              twitterUrl: 'http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text='
-            },
-            initialState
-          })
+          switch (format) {
+            case 'json':
+              return res.json({
+                html: componentHtml,
+                state: initialState
+              })
+              break
+            default:
+              return res.render(layout, {
+                ...payload,
+                componentHtml,
+                title: metadata.title,
+                meta: metadata.meta,
+                name: 'Afrostream',
+                link: metadata.link,
+                iosAppId: apps.iosAppId,
+                androidAppId: apps.androidAppId,
+                body,
+                share: {
+                  twitterUrl: 'http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text='
+                },
+                initialState
+              })
+              break
+          }
         }
       } catch (err) {
         Helmet.rewind()
