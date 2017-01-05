@@ -36,6 +36,16 @@ const buildLangsRoutes = function () {
   return allRoutes
 }
 
+const buildLangsStaticRoutes = function () {
+  let allRoutes = _.map(langs, (lang) =>
+    <Route key={lang} name="lang" path={lang} lang={lang}>
+      {buildStaticRoutes(lang)}
+    </Route>,
+  )
+  allRoutes = _.concat(allRoutes, buildStaticRoutes())
+  return allRoutes
+}
+
 const buildHome = function (lang) {
   const homeRoutes = [
     <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
@@ -118,15 +128,22 @@ const buildRoutes = function (lang) {
 
 }
 
-export const staticRoutes = [
-  <Route name="footer" path="footer" component={Footer}/>,
-  <Route name="movieList" path="movies/list" component={MovieList}/>,
-  <Route name="spotsList" path="categorys/spots" component={Spots}/>
-]
+const buildStaticRoutes = function (lang) {
+  let subRoutes = [
+    <Route key={`${lang}-footer`} name="footer" path="footer" isStatic={true} component={Footer}/>,
+    <Route key={`${lang}-movieList`} name="movieList" path="movies/list" isStatic={true} component={MovieList}/>,
+    <Route key={`${lang}-spotsList`} name="spotsList" path="categorys/spots" isStatic={true} component={Spots}/>
+  ]
+  return subRoutes
+}
 
-export default (
+export const staticRoutes = buildLangsStaticRoutes()
+
+export const routes = (
   <Route name="app" path="/" component={Application}>
     {buildLangsRoutes()}
     <Route path="*" name="nomatch" component={NoMatch}/>
   </Route>
 )
+
+export default routes

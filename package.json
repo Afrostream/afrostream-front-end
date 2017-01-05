@@ -90,7 +90,6 @@
     "fbjs": "^0.8.3",
     "file-loader": "^0.8.4",
     "font-awesome": "^4.6.3",
-    "fs": "0.0.1-security",
     "global": "https://registry.npmjs.org/global/-/global-4.3.0.tgz",
     "gsap": "^1.17.0",
     "handlebars": "^4.0.5",

@@ -9,7 +9,7 @@ import { getI18n } from '../../config/i18n'
 import { getPreferredLocales } from './locale'
 import createStore from '../../src/js/lib/createStore'
 import createAPI from '../../src/js/lib/createAPI'
-import routes from '../../src/js/routes'
+import { routes as dynamikRoutes, staticRoutes } from  '../../src/js/routes'
 import { RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
 import { IntlProvider } from 'react-intl-redux'
@@ -22,7 +22,8 @@ import serializeJs from 'serialize-javascript'
 const pretty = new PrettyError()
 const {apps, apiServer, heroku} = config
 
-export default function render (req, res, layout, {payload}) {
+export default function render (req, res, layout, {payload, isStatic}) {
+  const routes = isStatic ? staticRoutes : dynamikRoutes
   const {path} = req
   const history = useRouterHistory(useQueries(createMemoryHistory))()
   const location = history.createLocation(req.url)
@@ -64,7 +65,6 @@ export default function render (req, res, layout, {payload}) {
     }
   )
 
-  const store = createStore(api, history)
 
   match({
       routes,
@@ -75,12 +75,14 @@ export default function render (req, res, layout, {payload}) {
           res.redirect(301, redirectLocation.pathname + redirectLocation.search)
         } else if (err) {
           throw err
-        } else if (renderProps === null) {
-          return res.status(404)
-            .send('Not found')
+        } else if (renderProps === null || !renderProps) {
+          return res.status(404).render('layouts/404')
         } else {
+          const store = createStore(api, history)
           const state = store.getState()
+
           let {params, location, routes} = renderProps
+
           let route = routes && routes[routes.length - 1]
           const {intl} = state
           // Try full locale, fallback to locale without region code, fallback to en
@@ -105,7 +107,6 @@ export default function render (req, res, layout, {payload}) {
             return result
           }, [])
 
-          console.log('prepareRouteMethods : ', prepareRouteMethods.length)
 
           for (let prepareRoute of prepareRouteMethods) {
             if (!prepareRoute) {
@@ -126,7 +127,7 @@ export default function render (req, res, layout, {payload}) {
             </Provider>
           )
 
-          const componentHtml = ReactDOMServer.renderToString(
+          const componentHtml = ReactDOMServer.renderToStaticMarkup(
             <Provider {...{store}}>
               <IntlProvider key="intl" {...{messages, locale}}>
                 <RouterContext {...{...renderProps, location}} childRoutes={routes}/>
@@ -137,8 +138,10 @@ export default function render (req, res, layout, {payload}) {
           const storeState = _.merge({intl: {locale}}, store.getState())
           const initialState = serializeJs(storeState, {isJSON: true})
 
-          const format = req.query.format
+          //console.log('initialState', initialState)
+          //console.log('preferredLocale : ', language, preferredLocale, locale)
 
+          const format = req.query.format
           let metadata = Helmet.rewind()
 
           switch (format) {

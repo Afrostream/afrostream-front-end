@@ -10,9 +10,11 @@ router.get('/*', function (req, res) {
     initialState: {},
     componentHtml: ''
   }
+  const isStatic = true
 
   RenderStatic(req, res, layout, {
-    payload
+    payload,
+    isStatic
   })
 })
 

@@ -120,7 +120,7 @@ class Application extends React.Component {
           <SideBar {...{toggled, docked}} {...this.props}>
             <div id="page-content-wrapper" className="container-fluid">
               {children}
-              <Footer {...this.props} staticRoute={'components/footer?format=json'}/>
+              <Footer {...this.props} />
             </div>
           </SideBar>
           <FloatPlayer {...this.props}/>

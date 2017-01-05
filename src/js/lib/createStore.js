@@ -26,6 +26,15 @@ const countryReducer = function (state = '--', action) {
   return state.merge(state, action.payload)
 }
 
+const staticReducer = function (state = {}, action) {
+
+  if (action.type !== '@@static/UPDATE') {
+    return state
+  }
+
+  return state.merge(state, action.payload)
+}
+
 addLocaleData(localesData)
 export default function (api, history, initialState, country) {
 
@@ -46,7 +55,8 @@ export default function (api, history, initialState, country) {
   const reducer = combineReducers({
     ...reducers,
     intl: intlReducer,
-    country: countryReducer
+    country: countryReducer,
+    ...staticReducer
   })
 
   const mergedState = _.merge({

@@ -23,12 +23,20 @@ export async function isAuthorized () {
   })
 }
 
-export async function getCountry () {
+export async function getCountry (callback = null) {
   return await new Promise((resolve, reject) => {
     const url = protocol + '://' + authority + '/auth/geo'
+    let query = {}
+
+    if (callback) {
+      query = {
+        callback
+      }
+    }
 
     request
       .get(url)
+      .query(query)
       .type('json')
       .end((err, response) => {
         if (err) {
@@ -42,4 +50,8 @@ export async function getCountry () {
         resolve('FR')
       })
   })
+}
+
+export async function loadCallBack (data) {
+  alert(data.foo)
 }

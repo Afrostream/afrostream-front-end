@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import { withRouter, Link } from 'react-router'
@@ -7,13 +7,17 @@ import _ from 'lodash'
 import { updateIntl } from 'react-intl-redux'
 import {
   FormattedMessage,
+  injectIntl
 } from 'react-intl'
+import { prepareStatic } from '../../decorators'
 
 if (process.env.BROWSER) {
   require('./Footer.less')
 }
+
+@prepareStatic('components/footer')
 @connect()
-class Footer extends React.Component {
+class Footer extends Component {
 
   constructor (props, context) {
     super(props, context)
@@ -26,7 +30,6 @@ class Footer extends React.Component {
         dispatch
       }
     } = this
-    //e.preventDefault()
     const messages = _.flattenJson(getI18n(locale))
 
     dispatch(updateIntl({
@@ -93,7 +96,7 @@ class Footer extends React.Component {
               </li>
               <li>
                 <Link className="footer-link" to={`/${switchLangRoute}`}
-                      onClick={e=>::this.switchLang(e, switchLangRoute)}>
+                      onClick={e => ::this.switchLang(e, switchLangRoute)}>
                   <span className={`flag-icon flag-icon-${switchLang}`}></span>
                 </Link>
               </li>
@@ -134,10 +137,10 @@ class Footer extends React.Component {
 
             <ul className="footer-links">
               {/*<li>
-                <Link className="footer-link" to="/company/jobs">
-                  <FormattedMessage id={ 'footer.pro.jobs' }/>
-                </Link>
-              </li>*/}
+               <Link className="footer-link" to="/company/jobs">
+               <FormattedMessage id={ 'footer.pro.jobs' }/>
+               </Link>
+               </li>*/}
               <li>
                 <Link className="footer-link" to="/submit-content">
                   <FormattedMessage id={ 'footer.pro.submit' }/>
@@ -149,10 +152,10 @@ class Footer extends React.Component {
                 </Link>
               </li>
               {/*<li>
-                <Link className="footer-link" to="/company/press">
-                  <FormattedMessage id={ 'footer.pro.mediaKit' }/>
-                </Link>
-              </li>*/}
+               <Link className="footer-link" to="/company/press">
+               <FormattedMessage id={ 'footer.pro.mediaKit' }/>
+               </Link>
+               </li>*/}
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2 hidden-xs">
@@ -233,4 +236,4 @@ Footer.propTypes = {
   history: PropTypes.object
 }
 
-export default withRouter(Footer)
+export default withRouter(injectIntl(Footer))

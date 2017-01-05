@@ -1,4 +1,4 @@
-import { proxy, avatar, sharing, log, statsd, component } from './api'
+import { proxy, avatar, sharing, log, statsd, component, geo } from './api'
 import auth from './auth'
 import config from '../../config'
 import fs from 'fs'
@@ -21,7 +21,7 @@ export default function routes (app, buildPath) {
 
 
   function parseMD5Files () {
-    const buildFiles = ['vendor.js', 'player.js', 'main.js', 'main.css']
+    const buildFiles = ['common.js', 'vendor.js', 'player.js', 'main.js', 'main.css']
     let promisedMd5 = []
     _.map(buildFiles, (file) => {
       if (env === 'development') {
@@ -59,7 +59,7 @@ export default function routes (app, buildPath) {
     let fileLoader = ''
     switch (type) {
       case 'js':
-        fileLoader = `document.write('<scr' + 'ipt src="{url}"></scr' + 'ipt>');`
+        fileLoader = `document.write('<scr' + 'ipt src="{url}" async></scr' + 'ipt>');`
         break
       case 'css':
         fileLoader = ' @import url("{url}") screen;'
@@ -103,7 +103,9 @@ export default function routes (app, buildPath) {
     res.redirect(301, path.join(hostname, '/life'))
   })
 
-
+  // OAUTH
+  // --------------------------------------------------
+  app.use('/geo', geo)
   // OAUTH
   // --------------------------------------------------
   app.use('/auth', auth)
