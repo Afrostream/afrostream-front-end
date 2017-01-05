@@ -38,11 +38,11 @@ export default function render (req, res, layout, {payload}) {
      * on query, then you can assign accessToken (get from req) to query object
      * before calling API
      */
-    ({method, headers = {}, pathname = '', query = {}, body = {}, local = false, locale = 'FR'}) => {
+    ({method, headers = {}, pathname = '', query = {}, body = {}, local = false, locale = 'whatever'}) => {
       var url = `${apiServer.urlPrefix}${pathname}`
 
       query.from = query.from || heroku.appName
-      query.country = query.country || locale.toUpperCase() || '--'
+      query.country = query.country || locale.toUpperCase() || 'whatever'
 
       if (local) {
         url = pathname
