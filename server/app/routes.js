@@ -21,7 +21,17 @@ export default function routes (app, buildPath) {
 
 
   function parseMD5Files () {
-    const buildFiles = ['common.js', 'vendor.js', 'player.js', 'main.js', 'main.css']
+    //FIXME get all webpack chunk files dynamicaly
+    const buildFiles = [
+      'common.js',
+      'init.js',
+      'storage.js',
+      'geo.js',
+      'vendor.js',
+      'player.js',
+      'main.js',
+      'main.css'
+    ]
     let promisedMd5 = []
     _.map(buildFiles, (file) => {
       if (env === 'development') {
@@ -59,7 +69,7 @@ export default function routes (app, buildPath) {
     let fileLoader = ''
     switch (type) {
       case 'js':
-        fileLoader = `document.write('<scr' + 'ipt src="{url}" async></scr' + 'ipt>');`
+        fileLoader = `document.write('<scr' + 'ipt src="{url}" ></scr' + 'ipt>');`
         break
       case 'css':
         fileLoader = ' @import url("{url}") screen;'

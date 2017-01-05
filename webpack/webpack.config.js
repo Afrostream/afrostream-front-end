@@ -69,7 +69,7 @@ const webpackConfig = {
       'koment-js',
       'afrostream-player'
     ],
-    commons: [
+    vendor: [
       'react',
       'react-dom',
       'react-router',
@@ -184,14 +184,6 @@ const webpackConfig = {
         include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {
-        test: /geo$/,
-        loader: 'expose-loader?geo'
-      },
-      {
-        test: /storage/,
-        loader: 'expose-loader?storage'
-      },
-      {
         test: /jquery\.js$/, loader: 'expose-loader?$'
       },
       {
@@ -230,15 +222,28 @@ const webpackConfig = {
   //},
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      names: ['player', 'commons', 'common'],
-      minChunks: Infinity
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
-      chunks: ['geo', 'storage', 'init'],
-      minChunks: 2
+      chunks: ['geo', 'storage', 'init']
     }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['player', 'vendor', 'common'],
+      minChunks: 3
+    }),
+
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'player',
+    //  names: ['player']
+    //}),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'vendor',
+    //  names: ['commons', 'common'],
+    //  minChunks: 2
+    //}),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'common',
+    //  chunks: ['geo', 'storage', 'init']
+    //}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
