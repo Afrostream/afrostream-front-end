@@ -179,10 +179,11 @@ class ModalLifeAdd extends ModalComponent {
 
       return (
         <div className={classNames(shareButtonClass)}
-             key={`pin-btn-${network.icon}`} {...inputAttributes}>
+             key={`pin-btn-${network.icon}`}
+             data-tip={network.title}
+             {...inputAttributes}>
           <ReactTooltip place="top" type="dark"
-                        effect="solid"
-                        getContent={network.title}/>
+                        effect="solid"/>
         </div>)
     })
   }

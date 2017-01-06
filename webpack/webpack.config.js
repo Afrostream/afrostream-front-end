@@ -237,8 +237,7 @@ const webpackConfig = {
 
     new webpack.optimize.CommonsChunkPlugin({
       names: ['player', 'vendor', 'common'],
-      minChunks: 3,
-      async: true
+      minChunks: 3
     }),
     ///+++
     //new webpack.optimize.CommonsChunkPlugin({

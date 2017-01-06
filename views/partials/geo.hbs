@@ -29,7 +29,7 @@
   geoData = getGeo();
 
   if (!geoData) {
-    document.write('<src' + 'ipt src="' + url + '&callback=' + randCallback + '"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="' + url + '?callback=' + randCallback + '"></scr' + 'ipt>');
   } else {
     __GEO_STATE__ = {
       country: geoData.country

@@ -143,10 +143,9 @@ class CouponForm extends I18n {
     }
 
     return (
-      <div className="col-md-12" ref="couponContainer">
+      <div className="col-md-12" ref="couponContainer" data-tip={this.getTitle('payment.promo.disabledLabel')}>
         { !isCouponCodeCompatible && <ReactTooltip place="top" type="dark"
-                                                   effect="solid"
-                                                   getContent={this.getTitle('payment.promo.disabledLabel')}/> }
+                                                   effect="solid"/> }
         <div className="row no-padding">
           <div className="col-md-11">
             <TextField

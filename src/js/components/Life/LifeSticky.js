@@ -66,11 +66,11 @@ class LifeSticky extends I18n {
           <div className="layer"></div>
           <button className="main-button fa fa-pencil-square-o"
                   data-for={`sticky-btn`}
+                  data-tip={this.getTitle('life.sticky.tooltip')}
                   ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
             <div className="ripple"></div>
             <ReactTooltip id={`sticky-btn`} class="sticky-tooltip" place="bottom" type="dark"
-                          effect="solid"
-                          getContent={this.getTitle('life.sticky.tooltip')}/>
+                          effect="solid"/>
           </button>
         </div>
       </div>

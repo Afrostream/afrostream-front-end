@@ -24,9 +24,10 @@ const {apps, apiServer, heroku} = config
 
 export default function render (req, res, layout, {payload, isStatic}) {
   const routes = isStatic ? staticRoutes : dynamikRoutes
-  const {path} = req
   const history = useRouterHistory(useQueries(createMemoryHistory))()
   const location = history.createLocation(req.url)
+  const {query} = location
+  const country = query.country
   const preferredLocale = getPreferredLocales(req)
   const api = createAPI(
     /**
@@ -43,8 +44,9 @@ export default function render (req, res, layout, {payload, isStatic}) {
       var url = `${apiServer.urlPrefix}${pathname}`
 
       query.from = query.from || heroku.appName
-      query.country = query.country || 'whatever'
+      query.country = query.country || locale || 'whatever'
 
+      console.log('server call query : ', query)
       if (local) {
         url = pathname
       }
@@ -78,7 +80,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
         } else if (renderProps === null || !renderProps) {
           return res.status(404).render('layouts/404')
         } else {
-          const store = createStore(api, history)
+          const store = createStore(api, history, {}, country)
           const state = store.getState()
 
           let {params, location, routes} = renderProps
@@ -146,7 +148,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
 
           switch (format) {
             case 'json':
-              return res.json({
+              return res.jsonp({
                 html: componentHtml,
                 state: initialState
               })

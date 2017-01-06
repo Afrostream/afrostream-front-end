@@ -1,0 +1,18 @@
+<script>
+  var url = '/';
+  var randCallback = 'body' + String(Math.round(Math.random() * 100000));
+
+  window[randCallback] = function (bodyContent) {
+    console.log('body', bodyContent);
+    const mainDiv = document.getElementById('main')
+    mainDiv.innerHTML = bodyContent.html
+  }
+
+  if (__GEO_STATE__) {
+    document.write('<scr' + 'ipt src="' + url + '?country=' + __GEO_STATE__.country + '&format=json&callback=' + randCallback + '"></scr' + 'ipt>');
+  } else {
+    __GEO_STATE__ = {
+      country: geoData.country
+    }
+  }
+</script>

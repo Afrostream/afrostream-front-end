@@ -148,10 +148,10 @@ class ModalSponsors extends ModalComponent {
     }
 
     return <div className={classNames(classCheck)}
-                data-container=".panel">
+                data-container=".panel"
+                data-tip={this.getTitle(`status/${status}`)}>
       <ReactTooltip place="top" type="dark"
-                    effect="solid"
-                    getContent={this.getTitle(`status/${status}`)}/>
+                    effect="solid"/>
       <i className="zmdi zmdi-check"/></div>
   }
 

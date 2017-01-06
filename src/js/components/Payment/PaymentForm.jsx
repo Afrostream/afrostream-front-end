@@ -306,11 +306,11 @@ class PaymentForm extends I18n {
                target="_blank">
               <FormattedMessage id="payment.droits.link"/>
             </a>
-            <a ref="droitstip" className="my-tool-tip">
+            <a ref="droitstip" className="my-tool-tip"
+               data-tip={this.getTitle('payment.droits.tooltip')}>
               <i className="zmdi zmdi-help"/>
               <ReactTooltip place="top" type="dark"
-                            effect="solid"
-                            getContent={this.getTitle('payment.droits.tooltip')}/>
+                            effect="solid"/>
             </a>
           </div>
         </div>

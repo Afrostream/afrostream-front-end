@@ -37,7 +37,7 @@ export default function routes (app, buildPath) {
       {file: 'storage.js'},
       {file: 'geo.js'},
       {file: 'vendor.js'},
-      {file: 'player.js', async: true},
+      {file: 'player.js'},
       {file: 'main.js'},
       {file: 'main.css'}
     ]
