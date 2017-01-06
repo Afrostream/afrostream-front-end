@@ -85,10 +85,19 @@ export default function render (req, res, layout, {payload, isStatic}) {
           //if Subscribed params, init state with faked user
           let user = null
           if (subscribed) {
-            user = {}
+            user = {
+              planCode: subscribed,
+              picture: '/images/default/carre.jpg'
+            }
+          }
+          let geo = {
+            countryCode: '--'
+          }
+          if (country) {
+            geo.countryCode = country
           }
           // *** Init Store
-          const store = createStore(api, history, {}, country, user)
+          const store = createStore(api, history, {}, geo, user)
           const state = store.getState()
 
           let {params, location, routes} = renderProps

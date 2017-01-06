@@ -48,7 +48,6 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   let planCode = user.planCode
   user.status = status
   user.isActive = planCode && userSubscriptions && _.find(userSubscriptions || [], (subscription) => subscription.isActive === 'yes')
-  user.user_id = user._id || user.user_id
   user.splashList = user.splashList || []
   user.authorized = true
   user = mergeFbUserInfo(user)

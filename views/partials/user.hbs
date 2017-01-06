@@ -1,9 +1,7 @@
 <script>
   var tokenData;
   var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/api/users/me';
-  var __USER_STATE__ = {
-    _id: null
-  };
+  var __USER_STATE__ = {};
 
   function getToken () {
     var storageId = '{{{config "apiClient.token"}}}';
@@ -29,6 +27,10 @@
 
   if (tokenData && tokenData.access_token) {
     var accessToken = tokenData.access_token;
-    document.write('<scr' + 'ipt src="' + url + '?' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
+    try {
+      document.write('<scr' + 'ipt src="' + url + '?' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
+    } catch (err) {
+      console.log('User prerender Error : ', err.message)
+    }
   }
 </script>

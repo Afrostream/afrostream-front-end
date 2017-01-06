@@ -11,14 +11,11 @@
   <meta name="version" content="Afrostream ({{{version}}})">
   <meta name="msapplication-TileColor" content="#17071d">
   <meta name="application-name" content="{{{name}}}">
-
   <meta name="apple-itunes-app" content="{{{iosAppId}}}">
   <meta name="google-play-app" content="{{{androidAppId}}}">
   <link rel="apple-touch-icon" href="/images/icon175x175.jpeg">
   <link rel="android-touch-icon" href="/images/icon175x175.jpeg">
-
   {{{link}}}
-
   <link rel="stylesheet" href="/bootstrap.css" type="text/css">
   <!-- End Facebook Pixel Code -->
 
@@ -27,19 +24,16 @@
   <!-- End GCM manifest app -->
 </head>
 <body>
-{{hash}}
+{{> geo}}
+{{> user}}
 <div id="main">
   {{{body}}}
 </div>
-{{> geo}}
-{{> user}}
 <script>
   __INITIAL_STATE__ = {{{json-stringify initialState}}};
 </script>
 {{> body}}
-
 <script src="/bootstrap.js" type="text/javascript"></script>
-
 <!-- javascripts externals -->
 {{#each externalsJs}}
 <script async defer src="{{.}}" type="text/javascript"></script>

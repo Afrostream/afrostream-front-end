@@ -15,6 +15,14 @@ export function storeToken (oauthData) {
   return oauthData
 }
 
+export function storeGeo (geoData) {
+  const storageId = apiClient.geo
+  if (geoData) {
+    localStorage.setItem(storageId, JSON.stringify(geoData))
+  }
+  return geoData
+}
+
 export function getToken () {
   const storageId = apiClient.token
   let storedData = localStorage.getItem(storageId)

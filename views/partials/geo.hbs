@@ -3,11 +3,11 @@
   var randCallback = 'geo' + String(Math.round(Math.random() * 100000));
   var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/auth/geo';
   var __GEO_STATE__ = {
-    country: '--'
+    countryCode: '--'
   };
+  var storageId = '{{{config "apiClient.geo"}}}';
 
   function getGeo () {
-    var storageId = '{{{config "apiClient.geo"}}}';
     var storedData = localStorage.getItem(storageId);
     var resultData = null;
     if (storedData) {
@@ -20,18 +20,32 @@
     return resultData;
   }
 
+  function storeGeo (geoData) {
+    if (geoData) {
+      try {
+        localStorage.setItem(storageId, JSON.stringify(geoData));
+      } catch (err) {
+        console.log('save geo data error');
+      }
+    }
+    return geoData;
+  }
+
   window[randCallback] = function (infoGeo) {
     console.log('infoGeo', infoGeo);
     __GEO_STATE__ = infoGeo;
+    storeGeo(infoGeo);
   }
 
   geoData = getGeo();
 
   if (!geoData) {
-    document.write('<scr' + 'ipt src="' + url + '?callback=' + randCallback + '"></scr' + 'ipt>');
+    try {
+      document.write('<scr' + 'ipt src="' + url + '?callback=' + randCallback + '"></scr' + 'ipt>');
+    } catch (err) {
+      console.log('Geo prerender Error : ', err.message)
+    }
   } else {
-    __GEO_STATE__ = {
-      country: geoData.country
-    };
+    __GEO_STATE__ = geoData;
   }
 </script>

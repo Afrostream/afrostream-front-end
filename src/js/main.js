@@ -25,7 +25,7 @@ const history = browserHistory
 /* global __GEO_STATE__:true */
 /* global __USER_STATE__:true */
 /* global __INITIAL_STATE__:true */
-const state = _.merge(deserialize(__INITIAL_STATE__), __GEO_STATE__, __USER_STATE__)
+const state = _.merge(__INITIAL_STATE__, __GEO_STATE__, __USER_STATE__)
 const {intl:{defaultLocale, locale}} = state
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
@@ -94,6 +94,7 @@ function initSite () {
   )
 
   store.dispatch(UserActionCreators.getProfile())
+  getCountry()
 }
 
 initSite()

@@ -106,6 +106,7 @@ class Application extends React.Component {
     const toggled = Event.get('sideBarToggled')
     const snackMessage = Event.get('snackMessage')
     const hasPopup = Modal.get('target')
+
     let appClasses = classNames({
       'app': true,
       'lock-open': hasPopup

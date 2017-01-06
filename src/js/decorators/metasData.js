@@ -45,7 +45,10 @@ export default () => {
         let slug = `${config.metadata.domain}${location.pathname !== '/' ? location.pathname : '' }`
 
         if (query) {
-          slug = `${slug}?${qs.stringify(query)}`
+          var querystring = qs.stringify(query)
+          if (querystring && querystring.length) {
+            slug = `${slug}?${querystring}`
+          }
         }
 
         let metas = {

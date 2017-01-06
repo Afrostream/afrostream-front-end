@@ -238,7 +238,7 @@ const webpackConfig = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'player',
       chunks: ['player'],
-      async: true
+      //async: true
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
