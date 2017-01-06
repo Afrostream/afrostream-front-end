@@ -91,7 +91,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
             }
           }
           let geo = {
-            countryCode: '--'
+            countryCode: 'whatever'
           }
           if (country) {
             geo.countryCode = country
