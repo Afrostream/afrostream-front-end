@@ -20,17 +20,21 @@
   }
 
   window[randCallback] = function (bodyContent) {
-    __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state));
-    const mainDiv = document.getElementById('main')
-    console.log('body', __INITIAL_STATE__);
-    mainDiv.innerHTML = bodyContent.html
+    try {
+      __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state));
+      const mainDiv = document.getElementById('main')
+      console.log('body', __INITIAL_STATE__);
+      mainDiv.innerHTML = bodyContent.html
+    } catch (err) {
+      console.log('Geo callback jsonp error')
+    }
   }
 
   if (__GEO_STATE__) {
-    document.write('<scr' + 'ipt src="' + url + '?country=' + __GEO_STATE__.country + '&format=json&callback=' + randCallback + '"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt src="' + url + '?country=' + __GEO_STATE__.country + '&format=json&callback=' + randCallback + '&subscribed=' + __USER_STATE__._id + '"></scr' + 'ipt>');
   } else {
     __GEO_STATE__ = {
       country: geoData.country
-    }
+    };
   }
 </script>

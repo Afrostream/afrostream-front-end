@@ -28,6 +28,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
   const location = history.createLocation(req.url)
   const {query} = location
   const country = query.country
+  const subscribed = query.subscribed
   const preferredLocale = getPreferredLocales(req)
   const api = createAPI(
     /**
@@ -80,7 +81,14 @@ export default function render (req, res, layout, {payload, isStatic}) {
         } else if (renderProps === null || !renderProps) {
           return res.status(404).render('layouts/404')
         } else {
-          const store = createStore(api, history, {}, country)
+          // *** FAKE USER *** ///
+          //if Subscribed params, init state with faked user
+          let user = null
+          if (subscribed) {
+            user = {}
+          }
+          // *** Init Store
+          const store = createStore(api, history, {}, country, user)
           const state = store.getState()
 
           let {params, location, routes} = renderProps

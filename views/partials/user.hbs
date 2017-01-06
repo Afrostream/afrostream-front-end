@@ -1,20 +1,22 @@
 <script>
+  var tokenData;
   var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/api/users/me';
-  var __USER_STATE__ = {};
-  var tokenData = null;
+  var __USER_STATE__ = {
+    _id: null
+  };
 
   function getToken () {
     var storageId = '{{{config "apiClient.token"}}}';
     var storedData = localStorage.getItem(storageId);
-    var tokenData = null;
+    var resultData = null;
     if (storedData) {
       try {
-        tokenData = JSON.parse(storedData);
+        resultData = JSON.parse(storedData);
       } catch (err) {
         console.log('deserialize oauth data error');
       }
     }
-    return tokenData
+    return resultData;
   }
 
   var randCallback = 'user' + String(Math.round(Math.random() * 100000));

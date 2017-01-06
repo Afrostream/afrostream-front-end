@@ -1,9 +1,10 @@
 <script>
+  var geoData;
+  var randCallback = 'geo' + String(Math.round(Math.random() * 100000));
   var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/auth/geo';
   var __GEO_STATE__ = {
     country: '--'
   };
-  var geoData = null;
 
   function getGeo () {
     var storageId = '{{{config "apiClient.geo"}}}';
@@ -16,10 +17,8 @@
         console.log('deserialize oauth data error');
       }
     }
-    return resultData
+    return resultData;
   }
-
-  var randCallback = 'geo' + String(Math.round(Math.random() * 100000));
 
   window[randCallback] = function (infoGeo) {
     console.log('infoGeo', infoGeo);
@@ -33,6 +32,6 @@
   } else {
     __GEO_STATE__ = {
       country: geoData.country
-    }
+    };
   }
 </script>
