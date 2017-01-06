@@ -28,7 +28,7 @@
   if (tokenData && tokenData.access_token) {
     var accessToken = tokenData.access_token;
     try {
-      document.write('<scr' + 'ipt src="' + url + '?' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt src="' + url + '?afro_token=' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
     } catch (err) {
       console.log('User prerender Error : ', err.message)
     }
