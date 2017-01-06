@@ -12,6 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Spinner from '../Spinner/Spinner'
 import ReactImgix from '../Image/ReactImgix'
+import ReactTooltip from 'react-tooltip'
 import {
   FormattedMessage,
 } from 'react-intl'
@@ -94,7 +95,7 @@ class ModalLifeAdd extends ModalComponent {
   }
 
   attachTooltip () {
-    $('[data-toggle="tooltip"]').tooltip()
+    ReactTooltip.rebuild()
   }
 
   async pinType (network) {
@@ -178,10 +179,10 @@ class ModalLifeAdd extends ModalComponent {
 
       return (
         <div className={classNames(shareButtonClass)}
-             data-toggle="tooltip"
-             data-placement="top"
-             title={network.title}
              key={`pin-btn-${network.icon}`} {...inputAttributes}>
+          <ReactTooltip place="top" type="dark"
+                        effect="solid"
+                        getContent={network.title}/>
         </div>)
     })
   }

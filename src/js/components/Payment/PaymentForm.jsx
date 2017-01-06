@@ -26,6 +26,7 @@ import Q from 'q'
 import TextField from 'material-ui/TextField'
 import Checkbox from 'material-ui/Checkbox'
 import { I18n } from '../Utils'
+import ReactTooltip from 'react-tooltip'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import {
   FormattedMessage,
@@ -135,9 +136,7 @@ class PaymentForm extends I18n {
   }
 
   attachTooltip () {
-    if (this.refs.droitstip) {
-      $(this.refs.droitstip).tooltip()
-    }
+    ReactTooltip.rebuild()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -307,11 +306,11 @@ class PaymentForm extends I18n {
                target="_blank">
               <FormattedMessage id="payment.droits.link"/>
             </a>
-            <a ref="droitstip" className="my-tool-tip"
-               data-original-title={this.getTitle('payment.droits.tooltip')}
-               data-placement="top"
-               data-toggle="tooltip">
+            <a ref="droitstip" className="my-tool-tip">
               <i className="zmdi zmdi-help"/>
+              <ReactTooltip place="top" type="dark"
+                            effect="solid"
+                            getContent={this.getTitle('payment.droits.tooltip')}/>
             </a>
           </div>
         </div>

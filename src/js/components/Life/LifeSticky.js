@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import { I18n } from '../Utils'
-
+import ReactTooltip from 'react-tooltip'
 import {
   injectIntl
 } from 'react-intl'
@@ -26,7 +26,7 @@ class LifeSticky extends I18n {
   }
 
   attachTooltip () {
-    $(this.refs.stickyBtn).tooltip()
+    ReactTooltip.rebuild()
   }
 
   stickyAdd () {
@@ -65,11 +65,12 @@ class LifeSticky extends I18n {
         <div className="button-wrapper" ref="stickyWrapper">
           <div className="layer"></div>
           <button className="main-button fa fa-pencil-square-o"
-                  data-toggle="tooltip"
-                  data-placement="bottom"
-                  title={this.getTitle('life.sticky.tooltip')}
+                  data-for={`sticky-btn`}
                   ref="stickyBtn" onClick={ e => ::this.stickyAdd()}>
             <div className="ripple"></div>
+            <ReactTooltip id={`sticky-btn`} class="sticky-tooltip" place="bottom" type="dark"
+                          effect="solid"
+                          getContent={this.getTitle('life.sticky.tooltip')}/>
           </button>
         </div>
       </div>

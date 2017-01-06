@@ -70,6 +70,8 @@ const webpackConfig = {
       'afrostream-player'
     ],
     vendor: [
+      'superagent',
+      'lodash',
       'react',
       'react-dom',
       'react-router',
@@ -221,6 +223,13 @@ const webpackConfig = {
   //  'window': 'Window'
   //},
   plugins: [
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  names: ['player', 'vendor'],
+    //  minChunks: 2,
+    //  async: true
+    //}),
+
+    ///+++
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
       chunks: ['geo', 'storage', 'init']
@@ -231,7 +240,7 @@ const webpackConfig = {
       minChunks: 3,
       async: true
     }),
-
+    ///+++
     //new webpack.optimize.CommonsChunkPlugin({
     //  name: 'player',
     //  names: ['player']
