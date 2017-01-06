@@ -2,6 +2,9 @@ import keyMirror from 'fbjs/lib/keyMirror'
 
 export default {
 
+  Geo: keyMirror({
+    getGeo: null
+  }),
   OAuth: keyMirror({
     refresh: null,
     getIdToken: null,
