@@ -2,9 +2,27 @@
   var url = '/';
   var randCallback = 'body' + String(Math.round(Math.random() * 100000));
 
+  var deserializeState = function (serializedJavascript) {
+    return eval('(' + serializedJavascript + ')')
+  }
+
+  var extendState = function (origin, add) {
+    if (!add || (typeof add !== 'object' && add !== null)) {
+      return origin;
+    }
+
+    var keys = Object.keys(add);
+    var i = keys.length;
+    while (i--) {
+      origin[keys[i]] = add[keys[i]];
+    }
+    return origin;
+  }
+
   window[randCallback] = function (bodyContent) {
-    console.log('body', bodyContent);
+    __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state));
     const mainDiv = document.getElementById('main')
+    console.log('body', __INITIAL_STATE__);
     mainDiv.innerHTML = bodyContent.html
   }
 

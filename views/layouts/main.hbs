@@ -35,6 +35,9 @@
 <!--<script src="/user.js" type="text/javascript"></script>-->
 {{> geo}}
 {{> user}}
+<script>
+  __INITIAL_STATE__ = {{{json-stringify initialState}}};
+</script>
 {{> body}}
 
 <!--<script>-->
@@ -44,9 +47,6 @@
 <!--document.body.innerHTML = data.html-->
 <!--});-->
 <!--</script>-->
-<script>
-  __INITIAL_STATE__ = {{{json-stringify initialState}}};
-</script>
 <script src="/bootstrap.js" type="text/javascript"></script>
 
 <!-- javascripts externals -->
