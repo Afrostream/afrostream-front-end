@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
   var url = '/';
   var randCallback = 'body' + String(Math.round(Math.random() * 100000));
 
@@ -30,7 +30,7 @@
   }
 
   if (__GEO_STATE__) {
-    document.write('<scr' + 'ipt src="' + url + '?format=json&callback=' + randCallback + (__GEO_STATE__ && __GEO_STATE__.countryCode && '&country=' + __GEO_STATE__.countryCode || '') + (__USER_STATE__.planCode && '&subscribed=' + __USER_STATE__.planCode || '') + '"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json&callback=' + randCallback + (__GEO_STATE__ && __GEO_STATE__.countryCode && '&country=' + __GEO_STATE__.countryCode || '') + (__USER_STATE__ && __USER_STATE__.planCode && '&subscribed=' + __USER_STATE__.planCode || '') + '"></scr' + 'ipt>');
   } else {
     __GEO_STATE__ = {
       country: geoData.country

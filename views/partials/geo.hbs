@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
   var geoData;
   var randCallback = 'geo' + String(Math.round(Math.random() * 100000));
   var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/auth/geo';
@@ -41,7 +41,7 @@
 
   if (!geoData) {
     try {
-      document.write('<scr' + 'ipt src="' + url + '?callback=' + randCallback + '"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?callback=' + randCallback + '"></scr' + 'ipt>');
     } catch (err) {
       console.log('Geo prerender Error : ', err.message)
     }

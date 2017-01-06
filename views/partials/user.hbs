@@ -1,9 +1,10 @@
-<script>
+<script type="text/javascript">
   var tokenData;
   var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/api/users/me';
-  var __USER_STATE__ = {};
+  var __USER_STATE__ = null;
 
   function getToken () {
+    var randCallback = 'user' + String(Math.round(Math.random() * 100000));
     var storageId = '{{{config "apiClient.token"}}}';
     var storedData = localStorage.getItem(storageId);
     var resultData = null;
@@ -17,9 +18,8 @@
     return resultData;
   }
 
-  var randCallback = 'user' + String(Math.round(Math.random() * 100000));
-
   window[randCallback] = function (infoUser) {
+    console.log('Set user data', infoUser);
     __USER_STATE__ = infoUser;
   }
 
@@ -28,7 +28,7 @@
   if (tokenData && tokenData.access_token) {
     var accessToken = tokenData.access_token;
     try {
-      document.write('<scr' + 'ipt src="' + url + '?afro_token=' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?afro_token=' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
     } catch (err) {
       console.log('User prerender Error : ', err.message)
     }

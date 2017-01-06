@@ -11,12 +11,15 @@ export default function (api, {getState, dispatch}) {
         return _r(action((data) => {
           const state = getState()
           //Pass locale to all calls
-          const {intl:{locale}, Geo:{geo:{countryCode}}} = state
+          const {intl:{locale}, Geo:{geo}} = state
           if (locale) {
             data = _.merge({params: {language: locale.toUpperCase()}}, data)
           }
-          if (countryCode) {
-            data = _.merge({params: {country: countryCode}}, data)
+          if (geo) {
+            const country = geo.get('countryCode')
+            if (country) {
+              data = _.merge({params: {country}}, data)
+            }
           }
           return api(data)
         }, getState, dispatch))
