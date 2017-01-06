@@ -1,7 +1,9 @@
 import path from 'path'
 import expressHandlebars from 'express-handlebars'
 import handlebars from 'handlebars'
+import config from '../../config'
 import routes from './routes'
+import _ from 'lodash'
 import express from 'express'
 import favicon from 'serve-favicon'
 import compression from 'compression'
@@ -52,8 +54,16 @@ handlebars.registerHelper('json-stringify', ::JSON.stringify)
 handlebars.registerHelper('json', function (context) {
   return JSON.stringify(context)
 })
+handlebars.registerHelper('config', function (context) {
+  return _.get(config, context);
+})
 
-app.engine('hbs', expressHandlebars())
+app.engine('hbs', expressHandlebars({
+  extname: '.hbs',
+  partialsDir: [
+    'views/partials/'
+  ]
+}))
 app.set('view engine', 'hbs')
 app.set('etag', false)
 app.set('x-powered-by', false)

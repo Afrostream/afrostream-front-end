@@ -23,7 +23,7 @@ export async function isAuthorized () {
   })
 }
 
-export async function getCountry (callback = null) {
+export async function getCountry (callback) {
   return await new Promise((resolve, reject) => {
     const url = protocol + '://' + authority + '/auth/geo'
     let query = {}
@@ -53,5 +53,6 @@ export async function getCountry (callback = null) {
 }
 
 export async function loadCallBack (data) {
-  alert(data.foo)
+  alert('ok')
+  console.log('json parse')
 }

@@ -36,7 +36,7 @@ const staticReducer = function (state = {}, action) {
 }
 
 addLocaleData(localesData)
-export default function (api, history, initialState, country) {
+export default function (api, history, initialState) {
 
   const composeEnhancers = process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
   const createStoreWithMiddleware = composeEnhancers(
@@ -64,7 +64,7 @@ export default function (api, history, initialState, country) {
       defaultLocale: 'fr',
       locales: localesData
     }
-  }, initialState, {country})
+  }, initialState)
 
   return createStoreWithMiddleware(reducer, mergedState)
 }

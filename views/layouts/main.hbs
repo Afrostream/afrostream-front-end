@@ -28,13 +28,22 @@
 </head>
 <body>
 {{hash}}
-
 <div id="main">{{{body}}}</div>
+<!--<script src="/geo.js" type="text/javascript"></script>-->
+<!--<script src="/user.js" type="text/javascript"></script>-->
+{{> geo}}
+{{> user}}
 
+<!--<script>-->
+<!--var url = "https://www.afrostream.tv/components/lecomposantquivabien?country='+country+'&subscribed='+subscribed";-->
+<!--document.body.innerHTML = '';-->
+<!--XHR.get(url, function (data) {-->
+<!--document.body.innerHTML = data.html-->
+<!--});-->
+<!--</script>-->
 <script>
   __INITIAL_STATE__ = {{{json-stringify initialState}}};
 </script>
-
 <script src="/bootstrap.js" type="text/javascript"></script>
 
 <!-- javascripts externals -->

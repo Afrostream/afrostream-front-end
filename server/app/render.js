@@ -43,7 +43,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
       var url = `${apiServer.urlPrefix}${pathname}`
 
       query.from = query.from || heroku.appName
-      query.country = query.country || locale.toUpperCase() || 'whatever'
+      query.country = query.country || 'whatever'
 
       if (local) {
         url = pathname

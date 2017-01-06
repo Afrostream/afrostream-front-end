@@ -182,7 +182,8 @@ const client = {
     protocol: process.env.API_CLIENT_PROTOCOL || 'http',
     authority: process.env.API_CLIENT_AUTHORITY || 'localhost:3002',
     urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002',
-    token: 'accessToken'
+    token: 'accessToken',
+    geo: 'geo'
   },
   images: {
     protocol: process.env.API_IMAGES_PROTOCOL || 'http',

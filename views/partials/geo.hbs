@@ -1,0 +1,38 @@
+<script>
+  var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/auth/geo';
+  var __GEO_STATE__ = {
+    country: '--'
+  };
+  var geoData = null;
+
+  function getGeo () {
+    var storageId = '{{{config "apiClient.geo"}}}';
+    var storedData = localStorage.getItem(storageId);
+    var resultData = null;
+    if (storedData) {
+      try {
+        resultData = JSON.parse(storedData);
+      } catch (err) {
+        console.log('deserialize oauth data error');
+      }
+    }
+    return resultData
+  }
+
+  var randCallback = 'geo' + String(Math.round(Math.random() * 100000));
+
+  window[randCallback] = function (infoGeo) {
+    console.log('infoGeo', infoGeo);
+    __GEO_STATE__ = infoGeo;
+  }
+
+  geoData = getGeo();
+
+  if (!geoData) {
+    document.write('<src' + 'ipt src="' + url + '&callback=' + randCallback + '"></scr' + 'ipt>');
+  } else {
+    __GEO_STATE__ = {
+      country: geoData.country
+    }
+  }
+</script>

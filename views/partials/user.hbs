@@ -1,0 +1,32 @@
+<script>
+  var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/api/users/me';
+  var __USER_STATE__ = {};
+  var tokenData = null;
+
+  function getToken () {
+    var storageId = '{{{config "apiClient.token"}}}';
+    var storedData = localStorage.getItem(storageId);
+    var tokenData = null;
+    if (storedData) {
+      try {
+        tokenData = JSON.parse(storedData);
+      } catch (err) {
+        console.log('deserialize oauth data error');
+      }
+    }
+    return tokenData
+  }
+
+  var randCallback = 'user' + String(Math.round(Math.random() * 100000));
+
+  window[randCallback] = function (infoUser) {
+    __USER_STATE__ = infoUser;
+  }
+
+  tokenData = getToken();
+
+  if (tokenData && tokenData.access_token) {
+    var accessToken = tokenData.access_token;
+    document.write('<src' + 'ipt src="' + url + '?' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
+  }
+</script>

@@ -1,4 +1,13 @@
-import { proxy, avatar, sharing, log, statsd, component, geo } from './api'
+import {
+  proxy,
+  avatar,
+  sharing,
+  log,
+  statsd,
+  component,
+  geo,
+  user
+} from './api'
 import auth from './auth'
 import config from '../../config'
 import fs from 'fs'
@@ -23,26 +32,28 @@ export default function routes (app, buildPath) {
   function parseMD5Files () {
     //FIXME get all webpack chunk files dynamicaly
     const buildFiles = [
-      'common.js',
-      'init.js',
-      'storage.js',
-      'geo.js',
-      'vendor.js',
-      'player.js',
-      'main.js',
-      'main.css'
+      {file: 'common.js'},
+      {file: 'init.js'},
+      {file: 'storage.js'},
+      {file: 'geo.js'},
+      {file: 'vendor.js'},
+      {file: 'player.js', async: true},
+      {file: 'main.js'},
+      {file: 'main.css'}
     ]
     let promisedMd5 = []
-    _.map(buildFiles, (file) => {
+    _.map(buildFiles, (item) => {
       if (env === 'development') {
         return promisedMd5.push({
-          file: file,
-          hash: md5(file)
+          async: item.async || false,
+          file: item.file,
+          hash: md5(item.file)
         })
       }
-      promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, file)).then((buf) => {
+      promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, item.file)).then((buf) => {
         return {
-          file: file,
+          async: item.async || false,
+          file: item.file,
           hash: md5(buf)
         }
       }))
@@ -69,7 +80,7 @@ export default function routes (app, buildPath) {
     let fileLoader = ''
     switch (type) {
       case 'js':
-        fileLoader = `document.write('<scr' + 'ipt src="{url}" ></scr' + 'ipt>');`
+        fileLoader = `document.write('<scr' + 'ipt src="{url}" {async}></scr' + 'ipt>');`
         break
       case 'css':
         fileLoader = ' @import url("{url}") screen;'
@@ -78,7 +89,9 @@ export default function routes (app, buildPath) {
         break
     }
     _.map(files, (item) => {
-      templateStr += fileLoader.replace('{url}', `${hostname}/static/${item.file}?${item.hash}`)
+      let sourceFile = fileLoader.replace(/{url}/, `${hostname}/static/${item.file}?${item.hash}`)
+      sourceFile = sourceFile.replace(/{async}/, item.async ? 'async' : '')
+      templateStr += sourceFile
     })
 
     return templateStr
@@ -115,9 +128,6 @@ export default function routes (app, buildPath) {
 
   // OAUTH
   // --------------------------------------------------
-  app.use('/geo', geo)
-  // OAUTH
-  // --------------------------------------------------
   app.use('/auth', auth)
 
   // PROXY
@@ -147,6 +157,14 @@ export default function routes (app, buildPath) {
   // COMPONENTS
   // --------------------------------------------------
   app.use('/components', component)
+
+  // GEO
+  // --------------------------------------------------
+  app.use('/geo.js', geo)
+
+  // USER
+  // --------------------------------------------------
+  app.use('/user.js', user)
 
   // BOOTSTRAP
   // --------------------------------------------------
