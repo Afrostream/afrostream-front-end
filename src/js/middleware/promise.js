@@ -11,7 +11,7 @@ export default function (api, {getState, dispatch}) {
         return _r(action((data) => {
           const state = getState()
           //Pass locale to all calls
-          const {intl:{locale}, Geo:{countryCode}} = state
+          const {intl:{locale}, Geo:{geo:{countryCode}}} = state
           if (locale) {
             data = _.merge({params: {language: locale.toUpperCase()}}, data)
           }
