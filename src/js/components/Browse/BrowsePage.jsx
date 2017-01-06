@@ -23,7 +23,6 @@ class BrowsePage extends React.Component {
     const {props: {User}} = this
     const user = User.get('user')
     const authorized = user && user.get('authorized')
-
     return (
       <div className="row-fluid">
         {!authorized && <LoginPage modalType="newsletter" closable={false} {...this.props}/>}

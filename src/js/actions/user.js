@@ -125,7 +125,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 export function getHistory () {
   return (dispatch, getState) => {
     const user = getState().User.get('user')
-    if (!user) {
+    if (!user || !user.get('_id')) {
       return {
         type: ActionTypes.User.getHistory,
         res: null
@@ -181,7 +181,8 @@ export function getFavorites (type = 'movies') {
     const user = getState().User.get('user')
     const capitType = _.capitalize(type)
     const returnTypeAction = ActionTypes.User[`getFavorites${capitType}`]
-    if (!user) {
+
+    if (!user || !user.get('_id')) {
       return {
         type: returnTypeAction,
         res: null

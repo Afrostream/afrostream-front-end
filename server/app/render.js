@@ -86,6 +86,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
           let user = null
           if (subscribed) {
             user = {
+              authorized: true,
               planCode: subscribed,
               picture: '/images/default/carre.jpg'
             }
