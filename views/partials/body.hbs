@@ -23,7 +23,6 @@
     try {
       __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state));
       const mainDiv = document.getElementById('main')
-      console.log('body', __INITIAL_STATE__);
       mainDiv.innerHTML = bodyContent.html
     } catch (err) {
       console.log('Geo callback jsonp error')
