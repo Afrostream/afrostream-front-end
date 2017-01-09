@@ -26,6 +26,7 @@ import Q from 'q'
 import TextField from 'material-ui/TextField'
 import Checkbox from 'material-ui/Checkbox'
 import { I18n } from '../Utils'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import {
   FormattedMessage,
   injectIntl
@@ -40,6 +41,9 @@ const {
 
 if (process.env.BROWSER) {
   require('./PaymentForm.less')
+}
+if (canUseDOM) {
+  var ReactGA = require('react-ga')
 }
 
 @connect(({User, Billing, OAuth}) => ({User, Billing, OAuth}))
@@ -473,6 +477,14 @@ class PaymentForm extends I18n {
             'currency': currency,
             'value': amount
           }
+        })
+
+        //call ga click
+        ReactGA.event({
+          category: 'Billing',
+          action: 'Payment Success',
+          label: planCode,
+          value: amount
         })
 
         self.disableForm(false, 1)
