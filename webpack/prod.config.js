@@ -63,9 +63,9 @@ let clientConfig = merge({}, webpackConfig, {
       regExp: /\.js$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
-    })
-    //,new OfflinePlugin(merge(webpackConfig.sw, {})
-  ))
+    }),
+    //new OfflinePlugin(merge(webpackConfig.sw, {}))
+  )
 })
 
 delete clientConfig.module.preLoaders
