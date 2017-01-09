@@ -3,7 +3,7 @@
   var randCallback = 'user' + String(Math.round(Math.random() * 100000));
   var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/api/users/me';
   var __USER_STATE__ = null;
-  var mainDiv = document.body
+  var bodyDiv = document.body;
 
   function getToken () {
     var storageId = '{{{config "apiClient.token"}}}';
@@ -19,10 +19,6 @@
     return resultData;
   }
 
-  //HIDE content fro flickering
-  if (mainDiv && mainDiv.classList) {
-    mainDiv.classList.add('hidden')
-  }
 
   window[randCallback] = function (infoUser) {
     console.log('Set user data', infoUser);
@@ -34,8 +30,16 @@
   if (tokenData && tokenData.access_token) {
     var accessToken = tokenData.access_token;
     try {
+      //HIDE content fro flickering
+      if (bodyDiv && bodyDiv.classList) {
+        bodyDiv.classList.add('hidden')
+      }
       document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?afro_token=' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
     } catch (err) {
+      //HIDE content fro flickering
+      if (bodyDiv && bodyDiv.classList) {
+        bodyDiv.classList.remove('hidden')
+      }
       console.log('User prerender Error : ', err.message)
     }
   }

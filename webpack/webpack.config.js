@@ -225,11 +225,9 @@ const webpackConfig = {
   //},
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['player'],
-      async: true
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor']
+      names: ['player', 'vendor'],
+      async: process.env.NODE_ENV === 'production',
+      minChunks: 2
     }),
 
     ///+++

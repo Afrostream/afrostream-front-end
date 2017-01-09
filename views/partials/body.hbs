@@ -1,48 +1,78 @@
 <script type="text/javascript">
   var url = '/';
   var randCallback = 'body' + String(Math.round(Math.random() * 100000));
-  var mainDiv = document.body
+  var mainDiv = document.getElementById('main');
+  var bodyDiv = document.body;
 
   var deserializeState = function (serializedJavascript) {
     return eval('(' + serializedJavascript + ')')
   }
 
-  var extendState = function (obj1, obj2) {
-    if (!obj2) {
-      return obj1;
+  var extendState = function () {
+
+    // Variables
+    var extended = {};
+    var deep = false;
+    var i = 0;
+    var length = arguments.length;
+
+    // Check if a deep merge
+    if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+      deep = arguments[0];
+      i++;
     }
-    for (var key in obj2) {
-      if (Object.prototype.hasOwnProperty.call(obj2, key)) {
-        obj1[key] = obj1[key] || obj2[key];
+
+    // Merge the object into the extended object
+    var merge = function (obj) {
+      for (var prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+          // If deep merge and property is an object, merge properties
+          if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+            extended[prop] = extendState(true, extended[prop], obj[prop]);
+          } else {
+            extended[prop] = obj[prop];
+          }
+        }
       }
+    };
+
+    // Loop through each object and conduct a merge
+    for (; i < length; i++) {
+      var obj = arguments[i];
+      merge(obj);
     }
-    return obj1;
+
+    return extended;
+
   };
 
   window[randCallback] = function (bodyContent) {
     try {
       __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state), {
         User: {
-          user: extendState(__USER_STATE__, {
-            authorized: true,
-            picture: '/images/default/carre.jpg'
-          })
+          user: extendState({
+              authorized: true,
+              picture: '/images/default/carre.jpg'
+            },
+            __USER_STATE__)
         }
       });
+      debugger
       mainDiv.innerHTML = bodyContent.html;
-      mainDiv.classList.remove('hidden')
+      bodyDiv.classList.remove('hidden')
     } catch
       (err) {
       console.log('Geo callback jsonp error')
-      mainDiv.classList.remove('hidden')
+      bodyDiv.classList.remove('hidden')
     }
   }
 
   if (__GEO_STATE__) {
-    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json&location=' + window.location.pathname + '&callback=' + randCallback + (__GEO_STATE__ && __GEO_STATE__.countryCode && '&country=' + __GEO_STATE__.countryCode || '') + (__USER_STATE__ && __USER_STATE__.planCode && '&subscribed=' + __USER_STATE__.planCode || '') + '"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=' + randCallback + (__GEO_STATE__ && __GEO_STATE__.countryCode && '&country=' + __GEO_STATE__.countryCode || '') + (__USER_STATE__ && __USER_STATE__.planCode && '&subscribed=' + __USER_STATE__.planCode || '') + '"></scr' + 'ipt>');
   } else {
     __GEO_STATE__ = {
       country: geoData.country
     };
+    bodyDiv.classList.remove('hidden')
   }
 </script>

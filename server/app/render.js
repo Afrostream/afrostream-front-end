@@ -26,6 +26,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
   const routes = isStatic ? staticRoutes : dynamikRoutes
   const history = useRouterHistory(useQueries(createMemoryHistory))()
   const location = history.createLocation(req.query.location || req.url)
+  console.log(req.query.location || req.url)
   const {query} = location
   const country = query.country
   const subscribed = query.subscribed
