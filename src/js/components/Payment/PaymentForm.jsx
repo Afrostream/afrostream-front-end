@@ -484,7 +484,7 @@ class PaymentForm extends I18n {
           category: 'Billing',
           action: 'Payment Success',
           label: planCode,
-          value: amountInCents * 0.01
+          value: parseInt(amountInCents) * 0.01
         })
 
         self.disableForm(false, 1)
