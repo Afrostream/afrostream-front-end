@@ -59,9 +59,7 @@ export function trackVideo (data, videoId) {
 
     let postData = _.merge({
       dateLastRead: now,
-      playerPosition: 0,
-      playerAudio: 'fra',
-      playerCaption: 'fra'
+      playerPosition: 0
     }, data)
 
     if (dataUserVideo) {

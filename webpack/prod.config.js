@@ -4,6 +4,7 @@ import webpackConfig from './webpack.config'
 import { merge } from 'lodash'
 import path from 'path'
 import fs from 'fs'
+import OfflinePlugin from 'offline-plugin'
 
 const assetsPath = path.resolve(__dirname, '../dist')
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
@@ -61,8 +62,9 @@ let clientConfig = merge({}, webpackConfig, {
       regExp: /\.js$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
-    })
-  )
+    }),
+    new OfflinePlugin(merge(webpackConfig.sw, {})
+    ))
 })
 
 delete clientConfig.module.preLoaders

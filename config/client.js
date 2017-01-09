@@ -67,7 +67,9 @@ const client = {
         {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 8},
         {key: 'password', type: 'password', col: 6},
       ],
-      social: [{key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
+      social: [
+        {key: 'webPushNotificationsData', type: 'toggle', icon: 'zmdi zmdi-notifications', col: 12},
+        {key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
       player: [
         {
           key: 'playerAudio',
@@ -162,7 +164,14 @@ const client = {
   //add alerts to front (same as cookies)
   alerts: [],
   google: {
-    analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**'
+    analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
+    firebase: {
+      apiKey: 'AIzaSyBJ3H7rJHdhaLg8KfkjvwxvwDhbrbR4NpI',
+      authDomain: 'afrostream-86e6c.firebaseapp.com',
+      databaseURL: 'https://afrostream-86e6c.firebaseio.com',
+      storageBucket: 'afrostream-86e6c.appspot.com',
+      messagingSenderId: '6652169699'
+    }
   },
   facebook: {
     appId: '828887693868980',

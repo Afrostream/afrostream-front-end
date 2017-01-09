@@ -8,6 +8,14 @@ export function userActive (active) {
     }
   }
 }
+export function showError (error) {
+  return (dispatch, getState) => {
+    return {
+      type: ActionTypes.Event.showError,
+      error
+    }
+  }
+}
 export function pinHeader (pin) {
   return (dispatch, getState) => {
     return {

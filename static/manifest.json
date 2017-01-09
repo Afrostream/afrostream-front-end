@@ -1,0 +1,19 @@
+{
+  "name": "Afrostream push notification",
+  "short_name": "Afrostream push",
+  "icons": [
+    {
+      "src": "images/icon175x175.jpeg",
+      "sizes": "175x175",
+      "type": "image/jpeg"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "gcm_user_visible_only": true,
+  "gcm_sender_id": "1055101774560",
+  "permissions": [
+    "gcm"
+  ]
+}
