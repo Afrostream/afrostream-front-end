@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
+import * as SWActionCreators from '../../actions/sw'
+
 import { Link } from '../Utils'
 import config from '../../../../config'
 import TextField from 'material-ui/TextField'
@@ -61,11 +63,11 @@ class AccountProfil extends React.Component {
     let putData = {}
     putData[key] = value
     dispatch(UserActionCreators.updateUserProfile(putData))
-      .then(()=> {
+      .then(() => {
         this.setState({
           fetching: false
         })
-      }).catch(()=> {
+      }).catch(() => {
       this.setState({
         fetching: false
       })
@@ -87,12 +89,12 @@ class AccountProfil extends React.Component {
       return
     }
     dispatch(OAuthActionCreators.strategy({strategy, isSynchro: user.get(strategy)}))
-      .then(()=> {
+      .then(() => {
         dispatch(UserActionCreators.getProfile())
         this.setState({
           fetching: false
         })
-      }).catch(()=> {
+      }).catch(() => {
       this.setState({
         fetching: false
       })
@@ -105,6 +107,7 @@ class AccountProfil extends React.Component {
     const {
       props: {
         User,
+        dispatch,
         intl
       }
     } = this
@@ -165,17 +168,17 @@ class AccountProfil extends React.Component {
                             name={section.key}
                             defaultSelected={section.defaultSelected}
                             valueSelected={sectionValue || section.defaultSelected}>
-            {section.list.map((item, key) =><RadioButton style={{width: '30%'}} value={item.value}
-                                                         label={ <FormattedMessage
-                                                           id={`account.profile.${item.value}`}/>}
-                                                         key={`${key}-item-radio`}/>)}
+            {section.list.map((item, key) => <RadioButton style={{width: '30%'}} value={item.value}
+                                                          label={ <FormattedMessage
+                                                            id={`account.profile.${item.value}`}/>}
+                                                          key={`${key}-item-radio`}/>)}
           </RadioButtonGroup>
         break
       case 'select':
         element = <SelectField value={sectionValue} {...inputAttributes} floatingLabelText={label}>
-          {section.list.map((item, key) =><MenuItem value={item.value}
-                                                    primaryText={intl.formatMessage({id: item.label})}
-                                                    key={item.value}/>)}
+          {section.list.map((item, key) => <MenuItem value={item.value}
+                                                     primaryText={intl.formatMessage({id: item.label})}
+                                                     key={item.value}/>)}
         </SelectField>
         break
       case 'checkbox':
@@ -194,8 +197,17 @@ class AccountProfil extends React.Component {
             if (section.key === 'gender') {
               value = payload ? 'man' : 'woman'
             }
+            if (section.key === 'webPushNotificationsData') {
+              return dispatch(SWActionCreators.setPushNotifications(payload)).then(({value}) => {
+                this.updateUserHandler(section.key, value)
+              })
+            }
             this.updateUserHandler(section.key, value)
           }
+        }
+
+        if (section.key === 'webPushNotificationsData') {
+          inputAttributes.disabled = !Notification || Notification.permission === 'denied'
         }
 
         element = <Toggle
@@ -215,7 +227,7 @@ class AccountProfil extends React.Component {
         inputAttributes = {
           onChange: (event, payload) => {
             clearTimeout(this.updateTimeout)
-            this.updateTimeout = setTimeout(()=> {
+            this.updateTimeout = setTimeout(() => {
 
               this.updateUserHandler(section.key, payload)
             }, 1500)
@@ -254,7 +266,7 @@ class AccountProfil extends React.Component {
           id={ `account.profile.${profile}` }/>
       </div>
       <div className="row-fluid row-profil">
-        {sections.map((section)=> {
+        {sections.map((section) => {
           return (<div className={`col-md-${section.col ? section.col : 6}`} key={`${section.key}-section`}>
               <div className="row-fluid">
                 <div className="col-md-12 no-padding">

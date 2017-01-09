@@ -81,9 +81,14 @@ export default {
     getEpisode: null
   }),
 
+  SW: keyMirror({
+    setPushNotifications: null
+  }),
+
   Event: keyMirror({
     toggleSideBar: null,
     userActive: null,
+    showError: null,
     showChat: null,
     pinHeader: null,
     snackMessage: null
