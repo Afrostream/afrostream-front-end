@@ -55,15 +55,18 @@
               picture: '/images/default/carre.jpg'
             },
             __USER_STATE__)
+        },
+        Event: {
+          isMobile: typeof window === 'object' && 'ontouchstart' in window
         }
       });
-      debugger
       mainDiv.innerHTML = bodyContent.html;
       bodyDiv.classList.remove('hidden')
     } catch
       (err) {
       console.log('Geo callback jsonp error')
       bodyDiv.classList.remove('hidden')
+      debugger
     }
   }
 

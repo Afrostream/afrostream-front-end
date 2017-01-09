@@ -101,8 +101,9 @@ class Application extends React.Component {
 
     const {props: {router, dispatch, children, Event, Modal, User, intl}} = this
     const isOnLife = router.isActive('life')
+    const isMobile = Event.get('isMobile')
     const user = User.get('user')
-    const docked = Boolean(user || (canUseDOM && isOnLife))
+    const docked = !isMobile && (isOnLife || user)
     const toggled = Event.get('sideBarToggled')
     const snackMessage = Event.get('snackMessage')
     const hasPopup = Modal.get('target')

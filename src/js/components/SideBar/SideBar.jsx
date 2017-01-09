@@ -241,7 +241,7 @@ class SideBar extends React.Component {
       overlayStyle.transition = 'none'
       contentStyle.transition = 'none'
     }
-    else if (this.props.docked && !useTouch) {
+    else if (this.props.docked) {
 //    show sidebar
       if (this.state.sidebarWidth !== 0) {
         sidebarStyle.transform = `translateX(0%)`
