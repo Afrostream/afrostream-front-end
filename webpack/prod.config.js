@@ -9,7 +9,7 @@ const assetsPath = path.resolve(__dirname, '../dist')
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 const productionMode = process.env.NODE_ENV === 'production'
 
-require('offline-plugin/runtime').install()
+//require('offline-plugin/runtime').install()
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
@@ -63,9 +63,9 @@ let clientConfig = merge({}, webpackConfig, {
       regExp: /\.js$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
-    }),
-    new OfflinePlugin(merge(webpackConfig.sw, {})
-    ))
+    })
+    //,new OfflinePlugin(merge(webpackConfig.sw, {})
+  ))
 })
 
 delete clientConfig.module.preLoaders
