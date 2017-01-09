@@ -469,7 +469,7 @@ class PaymentForm extends I18n {
             break
         }
       })
-      .then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount}}}}) => {
+      .then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount, amountInCents}}}}) => {
         ReactFB.track({
           event: 'CompleteRegistration', params: {
             'content_name': internalPlanUuid,
@@ -484,7 +484,7 @@ class PaymentForm extends I18n {
           category: 'Billing',
           action: 'Payment Success',
           label: planCode,
-          value: amount
+          value: amountInCents * 0.01
         })
 
         self.disableForm(false, 1)
