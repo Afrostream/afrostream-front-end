@@ -5,10 +5,11 @@ import { merge } from 'lodash'
 import path from 'path'
 import fs from 'fs'
 import OfflinePlugin from 'offline-plugin'
-
 const assetsPath = path.resolve(__dirname, '../dist')
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 const productionMode = process.env.NODE_ENV === 'production'
+
+require('offline-plugin/runtime').install()
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
