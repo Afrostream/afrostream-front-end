@@ -32,12 +32,12 @@ export default function routes (app, buildPath) {
   function parseMD5Files () {
     //FIXME get all webpack chunk files dynamicaly
     const buildFiles = [
-      {file: 'common.js'},
-      {file: 'init.js'},
-      {file: 'storage.js'},
-      {file: 'geo.js'},
+      //{file: 'common.js'},
+      //{file: 'init.js'},
+      //{file: 'storage.js'},
+      //{file: 'geo.js'},
       {file: 'vendor.js'},
-      {file: 'player.js'},
+      {file: 'player.js', async: true},
       {file: 'main.js'},
       {file: 'main.css'}
     ]

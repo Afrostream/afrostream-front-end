@@ -3,7 +3,14 @@ import https from 'https'
 import pem from 'pem'
 import config from '../../config'
 import app from './app'
-
+//import { merge } from 'lodash'
+//import herokuConfig from '../../app.json'
+//// chargement de la conf de staging (lorsque l'on est en local)
+//if (process.env.LOAD_STAGING) {
+//  delete herokuConfig.env.NODE_ENV
+//  process.env = merge(process.env, herokuConfig.env)
+//  console.log('load staging : ', process.env.API_CLIENT_AUTHORITY)
+//}
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
 // user agent is not known.

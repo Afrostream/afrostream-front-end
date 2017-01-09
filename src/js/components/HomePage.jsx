@@ -66,7 +66,6 @@ class HomePage extends React.Component {
   render () {
     const {props: {User, children}} = this
     const user = User.get('user')
-
     if (user) {
       if (children) {
         return children

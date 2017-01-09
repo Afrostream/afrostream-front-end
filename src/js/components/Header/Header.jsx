@@ -10,6 +10,7 @@ import { withRouter } from 'react-router'
 import window from 'global/window'
 import * as EventActionCreators from '../../actions/event'
 import Breadcrumbs from './Breadcrumbs'
+
 const {apps} = config
 
 if (process.env.BROWSER) {

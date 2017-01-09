@@ -50,18 +50,18 @@ const webpackConfig = {
   entry: {
     // Set up an ES6-ish environment
     polyfill: 'babel-polyfill',
-    init: [
-      'superagent',
-      'lodash',
-      './src/js/lib/utils'
-    ],
-    geo: [
-      './src/js/lib/geo'
-    ],
-    storage: [
-      './src/js/lib/storage',
-      './src/js/lib/localStoragePolyfill'
-    ],
+    //init: [
+    //  'superagent',
+    //  'lodash',
+    //  './src/js/lib/utils'
+    //],
+    //geo: [
+    //  './src/js/lib/geo'
+    //],
+    //storage: [
+    //  './src/js/lib/storage',
+    //  './src/js/lib/localStoragePolyfill'
+    //],
     main: './src/js/main',
     player: [
       'dashjs',
@@ -94,6 +94,7 @@ const webpackConfig = {
       'qs',
       'outdated-browser/outdatedbrowser/outdatedbrowser',
       'material-ui',
+      './src/js/lib/localStoragePolyfill',
       './src/js/lib/customEventPolyfill',
       './src/js/lib/requestAnimationFramePolyfill'
     ]
@@ -223,28 +224,29 @@ const webpackConfig = {
   //  'window': 'Window'
   //},
   plugins: [
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  names: ['player', 'vendor'],
-    //  minChunks: 2,
-    //  async: true
-    //}),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['player'],
+      async: true
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor']
+    }),
 
     ///+++
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
-      chunks: ['geo', 'storage', 'init']
-    }),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'common',
+    //  chunks: ['geo', 'storage', 'init']
+    //}),
 
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'player',
-      chunks: ['player'],
-      //async: true
-    }),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'player',
+    //  chunks: ['player'],
+    //}),
 
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['player', 'vendor', 'common'],
-      minChunks: 3
-    }),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  names: ['player', 'vendor', 'common'],
+    //  minChunks: 3
+    //}),
     ///+++
     //new webpack.optimize.CommonsChunkPlugin({
     //  name: 'player',
