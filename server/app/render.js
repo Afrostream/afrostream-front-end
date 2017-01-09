@@ -91,6 +91,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
               picture: '/images/default/carre.jpg'
             }
           }
+
           let geo = {
             countryCode: 'whatever'
           }
@@ -98,9 +99,9 @@ export default function render (req, res, layout, {payload, isStatic}) {
             geo.countryCode = country
           }
           // *** Init Store
-          const store = createStore(api, history, {}, geo, user)
+          const store = createStore(api, history, {Geo: {geo}, User: {user}})
           const state = store.getState()
-
+          console.log('state : ', state)
           let {params, location, routes} = renderProps
 
           let route = routes && routes[routes.length - 1]

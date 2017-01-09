@@ -1,10 +1,11 @@
 <script type="text/javascript">
   var tokenData;
+  var randCallback = 'user' + String(Math.round(Math.random() * 100000));
   var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/api/users/me';
   var __USER_STATE__ = null;
+  var mainDiv = document.body
 
   function getToken () {
-    var randCallback = 'user' + String(Math.round(Math.random() * 100000));
     var storageId = '{{{config "apiClient.token"}}}';
     var storedData = localStorage.getItem(storageId);
     var resultData = null;
@@ -16,6 +17,11 @@
       }
     }
     return resultData;
+  }
+
+  //HIDE content fro flickering
+  if (mainDiv && mainDiv.classList) {
+    mainDiv.classList.add('hidden')
   }
 
   window[randCallback] = function (infoUser) {

@@ -83,7 +83,6 @@ function initSite () {
 
   /* global __INITIAL_STATE__:true */
   const store = createStore(api, history, state)
-
   ReactDOM.render(
     <Provider {...{store}} >
       <IntlProvider key="intl" {...{locale: clientLocale, messages, locale}}>

@@ -3,7 +3,7 @@ import ActionTypes from '../consts/ActionTypes'
 import createReducer from '../lib/createReducer'
 
 const initialState = Immutable.fromJS({
-  geo: null
+  'geo': null
 })
 
 export default createReducer(initialState, {

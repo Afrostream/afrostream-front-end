@@ -14,6 +14,14 @@ import config from '../../../config'
 
 async function mergeProfile ({api, data, getState, dispatch}) {
 
+  //if data fetched from server return direct informations
+  if (!canUseDOM) {
+    console.log('User infos from server user =>  ', user)
+    return _.merge(data, {
+      user
+    })
+  }
+
   //HAS TOKEN STORED
   let donePath = getState().Modal.get('donePath')
   let user = null
@@ -51,7 +59,9 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   user.splashList = user.splashList || []
   user.authorized = true
   user = mergeFbUserInfo(user)
+
   dispatch(FBActionCreators.getFriendList())
+
   try {
     user.authorized = await isAuthorized()
   } catch (err) {

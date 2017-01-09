@@ -179,8 +179,8 @@ const client = {
     analyticsKey: process.env.FB_TRACKING_ID || 'FB-*******-**'
   },
   apiClient: {
-    protocol: process.env.API_CLIENT_PROTOCOL || 'http',
-    authority: process.env.API_CLIENT_AUTHORITY || 'localhost:3002',
+    protocol: process.env.API_CLIENT_PROTOCOL || 'https',
+    authority: process.env.API_CLIENT_AUTHORITY || 'afr-api-v1-staging.herokuapp.com',
     urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002',
     token: 'accessToken',
     geo: 'geo'

@@ -1,31 +1,40 @@
 <script type="text/javascript">
   var url = '/';
   var randCallback = 'body' + String(Math.round(Math.random() * 100000));
+  var mainDiv = document.body
 
   var deserializeState = function (serializedJavascript) {
     return eval('(' + serializedJavascript + ')')
   }
 
-  var extendState = function (origin, add) {
-    if (!add || (typeof add !== 'object' && add !== null)) {
-      return origin;
+  var extendState = function (obj1, obj2) {
+    if (!obj2) {
+      return obj1;
     }
-
-    var keys = Object.keys(add);
-    var i = keys.length;
-    while (i--) {
-      origin[keys[i]] = add[keys[i]];
+    for (var key in obj2) {
+      if (Object.prototype.hasOwnProperty.call(obj2, key)) {
+        obj1[key] = obj1[key] || obj2[key];
+      }
     }
-    return origin;
-  }
+    return obj1;
+  };
 
   window[randCallback] = function (bodyContent) {
     try {
-      __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state));
-      const mainDiv = document.getElementById('main')
-      mainDiv.innerHTML = bodyContent.html
-    } catch (err) {
+      __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state), {
+        User: {
+          user: extendState(__USER_STATE__, {
+            authorized: true,
+            picture: '/images/default/carre.jpg'
+          })
+        }
+      });
+      mainDiv.innerHTML = bodyContent.html;
+      mainDiv.classList.remove('hidden')
+    } catch
+      (err) {
       console.log('Geo callback jsonp error')
+      mainDiv.classList.remove('hidden')
     }
   }
 

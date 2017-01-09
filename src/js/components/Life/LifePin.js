@@ -107,7 +107,7 @@ class LifePin extends ClickablePin {
     }>
       <div className="brick-content">
         <div className="brick-background">
-          <ReactImgix className="brick-background_image" src={imageUrl} bg={true}/>
+          <ReactImgix className="brick-background_image" src={imageUrl} bg={true} blur={false}/>
           <div className="brick-background_mask"/>
           {isPremium && (<div className="premium-flag">
             <div className="premium-flag__header-label"> Accès {pinRole}</div>
