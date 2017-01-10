@@ -1,5 +1,6 @@
 import config from '../../../config'
 import { storeGeo } from '../lib/storage'
+import Q from 'q'
 import request from 'superagent'
 const {apiClient: {protocol, authority}} = config
 
