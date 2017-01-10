@@ -1,5 +1,5 @@
 import express from 'express'
-import controller from './geo.controller.js'
+import * as controller from './bundle.controller'
 
 const router = express.Router()
 

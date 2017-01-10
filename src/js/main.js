@@ -93,7 +93,6 @@ function initSite () {
   )
 
   store.dispatch(UserActionCreators.getProfile())
-  getCountry()
 }
 
 initSite()

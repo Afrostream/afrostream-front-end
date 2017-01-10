@@ -14,40 +14,31 @@ import config from '../../../config'
 
 async function mergeProfile ({api, data, getState, dispatch}) {
 
-  //if data fetched from server return direct informations
-  if (!canUseDOM) {
-    console.log('User infos from server user =>  ', user)
-    return _.merge(data, {
-      user
-    })
-  }
-
   //HAS TOKEN STORED
   let donePath = getState().Modal.get('donePath')
-  let user = null
+  let user = getState().User.get('user')
   dispatch(pendingUser(true))
-  const token = getState().OAuth.get('token')
-
-  if (!token) {
-    throw new Error('No token present')
-    return data
-  }
+  //const token = getState().OAuth.get('token')
+  //
+  //if (!token) {
+  //  throw new Error('No token present')
+  //  return data
+  //}
 
   //GET USER INFO
 
-  await api({
-    path: `/api/users/me`,
-    passToken: true
-  }).then(({body}) => {
-    user = body
-  })
+  if (!user) {
+    await api({
+      path: `/api/users/me`,
+      passToken: true
+    }).then(({body}) => {
+      user = body
+    })
+  }
 
   if (!user) {
     throw new Error('No user found')
   }
-
-
-  //GEOLOC
 
   //MERGE USER DATA
   let subscriptionsStatus = user.subscriptionsStatus
@@ -62,8 +53,9 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 
   dispatch(FBActionCreators.getFriendList())
 
+  //GEOLOC
   try {
-    user.authorized = await isAuthorized()
+    user.authorized = getState().Geo.geo && getState().Geo.geo.get('authorized')//await isAuthorized()
   } catch (err) {
     console.error('Error requesting /auth/geo ', err)
   }

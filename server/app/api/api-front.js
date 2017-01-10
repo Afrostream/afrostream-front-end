@@ -1,7 +1,5 @@
 import _ from 'lodash'
-import Q from 'q'
 import config from '../../../config'
-import request from 'request'
 import anr from 'afrostream-node-request'
 const {apiServer} = config
 const anrRequest = anr.create({baseUrl: apiServer.urlPrefix, filter: null})

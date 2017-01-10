@@ -55,8 +55,14 @@ handlebars.registerHelper('json', function (context) {
   return JSON.stringify(context)
 })
 handlebars.registerHelper('config', function (context) {
-  return _.get(config, context);
+  return _.get(config, context)
 })
+handlebars.registerHelper('_', function () {
+  var options = [].pop.call(arguments)
+  var func = [].shift.call(arguments)
+  return _[func].apply(_, arguments)
+})
+
 
 app.engine('hbs', expressHandlebars({
   extname: '.hbs',

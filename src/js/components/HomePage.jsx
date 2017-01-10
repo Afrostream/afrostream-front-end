@@ -9,7 +9,7 @@ import {
   injectIntl
 } from 'react-intl'
 
-@connect(({User, Billing}) => ({User, Billing}))
+@connect(({User, Billing, Geo}) => ({User, Billing, Geo}))
 class HomePage extends React.Component {
 
   componentWillReceiveProps () {

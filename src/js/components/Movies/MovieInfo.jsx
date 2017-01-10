@@ -73,7 +73,7 @@ class MovieInfo extends LoadVideo {
     return (
       <div ref="slContainer" className={classes}>
         <div className="movie-info_content">
-          <ReactImgix ref="slBackground" bg={true} src={imageUrl} className="movie-background">
+          <ReactImgix ref="slBackground" bg={true} blur={false} src={imageUrl} className="movie-background">
             <div className="afrostream-movie__mask"/>
           </ReactImgix>
           {user && <Link to={link}>

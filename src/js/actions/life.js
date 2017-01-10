@@ -122,6 +122,12 @@ export function fetchUserLikes () {
       }
     }
     const lifeUserId = user && user.get('_id')
+
+    if (!lifeUserId) {
+      return {
+        type: ActionTypes.Life.fetchUserLikes
+      }
+    }
     return async () => {
       return {
         type: ActionTypes.Life.fetchUserLikes,

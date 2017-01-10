@@ -49,33 +49,27 @@
   window[randCallback] = function (bodyContent) {
     try {
       __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state), {
-        User: {
-          user: extendState({
-              authorized: true,
-              picture: '/images/default/carre.jpg'
-            },
-            __USER_STATE__)
-        },
         Event: {
           isMobile: typeof window === 'object' && 'ontouchstart' in window
         }
-      });
+      }, __BUNDLE_STATE__);
       mainDiv.innerHTML = bodyContent.html;
-      bodyDiv.classList.remove('hidden')
-    } catch
-      (err) {
-      console.log('Geo callback jsonp error')
-      bodyDiv.classList.remove('hidden')
-      debugger
+      bodyDiv.classList.remove('hidden');
+    } catch (err) {
+      console.log('Body callback jsonp error', err);
+      bodyDiv.classList.remove('hidden');
     }
   }
 
-  if (__GEO_STATE__) {
-    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=' + randCallback + (__GEO_STATE__ && __GEO_STATE__.countryCode && '&country=' + __GEO_STATE__.countryCode || '') + (__USER_STATE__ && __USER_STATE__.planCode && '&subscribed=' + __USER_STATE__.planCode || '') + '"></scr' + 'ipt>');
+  if (window['__BUNDLE_STATE__']) {
+    var countryCodeParam = (__BUNDLE_STATE__.Geo && __BUNDLE_STATE__.Geo.geo.countryCode && '&country=' + __BUNDLE_STATE__.Geo.geo.countryCode || '')
+    var userPlanParam = (__BUNDLE_STATE__.User && __BUNDLE_STATE__.User.user && __BUNDLE_STATE__.User.user.planCode && '&subscribed=' + __BUNDLE_STATE__.User.user.planCode || '')
+    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=' + randCallback + countryCodeParam + userPlanParam + '"></scr' + 'ipt>');
   } else {
-    __GEO_STATE__ = {
-      country: geoData.country
-    };
-    bodyDiv.classList.remove('hidden')
+    window['__BUNDLE_STATE__'] = {
+      Geo: {geo: {countryCode: '--'}},
+      User: {user: null},
+    }
+    window[randCallback]({});
   }
 </script>

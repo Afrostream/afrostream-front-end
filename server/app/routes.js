@@ -4,9 +4,7 @@ import {
   sharing,
   log,
   statsd,
-  component,
-  geo,
-  user
+  component
 } from './api'
 import auth from './auth'
 import config from '../../config'
@@ -157,14 +155,6 @@ export default function routes (app, buildPath) {
   // COMPONENTS
   // --------------------------------------------------
   app.use('/components', component)
-
-  // GEO
-  // --------------------------------------------------
-  app.use('/geo.js', geo)
-
-  // USER
-  // --------------------------------------------------
-  app.use('/user.js', user)
 
   // BOOTSTRAP
   // --------------------------------------------------
