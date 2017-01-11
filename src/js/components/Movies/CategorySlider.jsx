@@ -82,8 +82,6 @@ class CategorySlider extends MoviesSlider {
 
     const category = Category.get(`categorys/${categoryId}`)
 
-    console.log('render category : ', Boolean(category))
-
     if (category) {
       dataList = category.get('mergeSpotsWithMovies')
       catSlug = category.get('slug')

@@ -23,6 +23,7 @@ export async function isAuthorized () {
           storeGeo(geo)
           return resolve(false)
         }
+        return resolve(true)
       })
       .catch((err) => {
         return reject(err)

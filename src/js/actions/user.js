@@ -66,7 +66,6 @@ async function mergeProfile ({api, data, getState, dispatch}) {
     //  dispatch(ModalActionCreators.open({target: 'geoWall'}))
     //  throw new Error('User not authorized Geoloc /auth/geo ')
   }
-
   if (!planCode && !donePath) {
     //if (user.status && user.status !== 'active') {
     //  donePath = `/select-plan/none/${user.status}`
