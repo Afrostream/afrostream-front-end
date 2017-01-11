@@ -25,7 +25,7 @@ const history = browserHistory
 /* global __GEO_STATE__:true */
 /* global __USER_STATE__:true */
 /* global __INITIAL_STATE__:true */
-const state = __INITIAL_STATE__
+const state = typeof __INITIAL_STATE__ === 'string' && deserialize(__INITIAL_STATE__) || __INITIAL_STATE__
 const {intl:{defaultLocale, locale}} = state
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account

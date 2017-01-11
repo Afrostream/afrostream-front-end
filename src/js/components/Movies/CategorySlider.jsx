@@ -22,6 +22,7 @@ import {
 class CategorySlider extends MoviesSlider {
 
   constructor (props) {
+
     super(props)
   }
 
@@ -54,7 +55,7 @@ class CategorySlider extends MoviesSlider {
       return this.renderBlock(data)
     }
     return (
-      <div className="block" key={`data-block-${columnIndex}`}>{data.map((item)=> {
+      <div className="block" key={`data-block-${columnIndex}`}>{data.map((item) => {
         return this.renderBlock(item)
       }).toJS()}</div>
     )
@@ -69,6 +70,7 @@ class CategorySlider extends MoviesSlider {
         slug
       }
     } = this
+    console.log('render category : ', categoryId)
     let listClass = {
       'movies-data-list': true,
       'spots': false
@@ -78,17 +80,17 @@ class CategorySlider extends MoviesSlider {
     let catSlug
 
     const category = Category.get(`categorys/${categoryId}`)
-
+    console.log('render category : ', Boolean(category))
     if (category) {
       dataList = category.get('mergeSpotsWithMovies')
       catSlug = category.get('slug')
 
       //check if list has one spot
-      dataList.map((item)=> {
+      dataList.map((item) => {
         if (item instanceof Immutable.Map) {
           return
         }
-        const findSpot = item.find((movie)=> {
+        const findSpot = item.find((movie) => {
           return movie.get('adSpot')
         })
         if (findSpot) {

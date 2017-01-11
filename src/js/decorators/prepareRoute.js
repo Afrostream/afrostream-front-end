@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import shallowEqual from 'react-pure-render/shallowEqual'
 
-export default function prepareRoute (prepareFn) {
+export default function prepareRoute (prepareFn = () => {
+}) {
 
   return DecoratedComponent =>
 

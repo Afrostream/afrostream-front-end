@@ -12,11 +12,6 @@ if (process.env.BROWSER) {
   require('./PaymentImages.less')
 }
 
-@prepareRoute(async function ({store}) {
-  return await Promise.all([
-    store.dispatch(CategoryActionCreators.getMeaList())
-  ])
-})
 @connect(({Category}) => ({Category}))
 class PaymentImages extends React.Component {
 
@@ -30,28 +25,31 @@ class PaymentImages extends React.Component {
       }
     } = this
 
-    let categories = Category.get('meaList')
+    let categories = Category.get('categorys/spots')
 
     if (!categories) {
       return (<div/>)
     }
 
-    let selectionMovies = Immutable.fromJS([])
-
-    _.forEach(catIds, (id)=> {
-      let categorie = categories.find(function (obj) {
-        return obj.get('_id') === id
-      })
-      if (categorie) {
-        selectionMovies = selectionMovies.concat(categorie.get('movies'))
+    let recoList = []
+    categories.map((categorie) => {
+      let catMovies = categorie.get('adSpots')
+      if (catMovies) {
+        recoList = _.concat(recoList, catMovies.toJS())
       }
     })
+
+    let uniqSpots = _.uniq(recoList, (o) => {
+      return o['_id']
+    })
+    //get only 8 mea
+    let selectionMovies = Immutable.fromJS(_.take(uniqSpots, 8))
 
     return (
       <div>
         <div className="payment-pages__thumbs-row">
           {selectionMovies ? selectionMovies.map((data, i) => <Poster
-            key={`movie-payment-a-${i}`} {...{data}}/>).toJS() : ''}
+              key={`movie-payment-a-${i}`} {...{data}}/>).toJS() : ''}
         </div>
       </div>
     )

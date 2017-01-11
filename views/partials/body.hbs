@@ -63,6 +63,7 @@
       bodyDiv.classList.remove('hidden');
     } catch (err) {
       console.log('Body callback jsonp error', err);
+      __INITIAL_STATE__ = deserializeState(__INITIAL_STATE__)
       bodyDiv.classList.remove('hidden');
     }
   }
@@ -70,7 +71,7 @@
   if (window['__BUNDLE_STATE__']) {
     var countryCodeParam = (__BUNDLE_STATE__.Geo && __BUNDLE_STATE__.Geo.geo.countryCode && '&country=' + __BUNDLE_STATE__.Geo.geo.countryCode || '')
     var userPlanParam = (__BUNDLE_STATE__.User && __BUNDLE_STATE__.User.user && __BUNDLE_STATE__.User.user.planCode && '&subscribed=' + __BUNDLE_STATE__.User.user.planCode || '')
-    var isMobileParam = (isMobile ? '&isMobile=' + isMobile || '')
+    var isMobileParam = (isMobile && '&isMobile=' + isMobile || '')
     document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=' + randCallback + countryCodeParam + userPlanParam + isMobileParam + '"></scr' + 'ipt>');
   } else {
     window['__BUNDLE_STATE__'] = {

@@ -3,6 +3,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import shallowCompare from 'react-addons-shallow-compare'
 import classSet from 'classnames'
 import ReactDOM from 'react-dom'
+import _ from 'lodash'
 
 if (canUseDOM) {
   require('gsap')
@@ -92,7 +93,7 @@ export default class ArrowStepper extends Component {
     return <div ref="progressTracker" className={classSet(classProgress)}>
       <ul>
         {
-          _.times(this._nbProgressTip, (id)=> {
+          _.times(this._nbProgressTip, (id) => {
 
             const isActive = id === this.state.tipActive
             const classTip = {
@@ -173,7 +174,7 @@ export default class ArrowStepper extends Component {
    */
   handleMouseDown (direction) {
     this.direction = direction
-    this.clickTimer = setTimeout(()=>this.singleScroll(), this.clickDelay)
+    this.clickTimer = setTimeout(() => this.singleScroll(), this.clickDelay)
   }
 
   /**

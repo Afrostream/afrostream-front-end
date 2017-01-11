@@ -1,5 +1,6 @@
 import ActionTypes from '../consts/ActionTypes'
 import { notFoundCategory } from './notFoundAction'
+import _ from 'lodash'
 
 export function getAllSpots () {
   return (dispatch, getState) => {
@@ -15,7 +16,6 @@ export function getSpots (categoryId) {
 
     //TODO recuperation de l'id top
     const defaultCategory = getState().Category.get('categoryId')
-    console.log('defaultCategory', defaultCategory)
     categoryId = categoryId || defaultCategory
 
     return async api => ({
@@ -54,10 +54,30 @@ export function getMeaList () {
 }
 
 export function getMenu () {
-  return (dispatch, getState) => {
-    return async api => ({
-      type: ActionTypes.Category.getMenu,
-      res: await api({path: `/api/categorys/menu`})
-    })
+  return (api, getState, dispatch) => {
+    return async api => {
+
+      const menuRes = await api({path: `/api/categorys/menu`})
+
+      const resultData = menuRes.body
+
+      try {
+
+        await Promise.all(_(resultData).chain()
+          .take(4)
+          .map((category) => {
+            console.log('category', category._id)
+            return dispatch(this.getCategory(category._id))
+          })
+          .value())
+      } catch (err) {
+        console.log('Promise categories fail : ', err)
+      }
+
+      return {
+        type: ActionTypes.Category.getMenu,
+        res: menuRes
+      }
+    }
   }
 }

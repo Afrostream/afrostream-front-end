@@ -117,17 +117,21 @@ export default function render (req, res, layout, {payload, isStatic}) {
 
           params.lang = locale
 
-          const prepareRouteMethods = _.reduce(renderProps.components, (result, component) => {
-            if (component && component.prepareRoute) {
-              result.push(component.prepareRoute)
+          const recursiveFunction = function (collection, result) {
+            if (collection.prepareRoute) {
+              result.push(collection.prepareRoute)
             }
-            if (component && (component.WrappedComponent && component.WrappedComponent.prepareRoute)) {
-              result.push(component.WrappedComponent.prepareRoute)
+            if (collection.WrappedComponent) {
+              recursiveFunction(collection.WrappedComponent, result);
             }
+          };
 
+          const prepareRouteMethods = _.reduce(renderProps.components, (result, component) => {
+            recursiveFunction(component, result)
             return result
           }, [])
 
+          console.log('prepareRouteMethods : ', prepareRouteMethods.length)
 
           for (let prepareRoute of prepareRouteMethods) {
             if (!prepareRoute) {
