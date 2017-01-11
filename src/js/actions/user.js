@@ -55,7 +55,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 
   //GEOLOC
   try {
-    user.authorized = getState().Geo.geo && getState().Geo.geo.get('authorized')//await isAuthorized()
+    user.authorized = getState().Geo.geo && (getState().Geo.geo.get('authorized')) || await isAuthorized()
   } catch (err) {
     console.error('Error requesting /auth/geo ', err)
   }

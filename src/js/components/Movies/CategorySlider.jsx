@@ -51,6 +51,7 @@ class CategorySlider extends MoviesSlider {
     const category = Category.get(`categorys/${categoryId}`)
     const dataList = category.get('mergeSpotsWithMovies')
     let data = dataList.get(columnIndex)
+    console.log('renderItem category : ', Boolean(data))
     if (data instanceof Immutable.Map) {
       return this.renderBlock(data)
     }
@@ -80,7 +81,9 @@ class CategorySlider extends MoviesSlider {
     let catSlug
 
     const category = Category.get(`categorys/${categoryId}`)
+
     console.log('render category : ', Boolean(category))
+
     if (category) {
       dataList = category.get('mergeSpotsWithMovies')
       catSlug = category.get('slug')

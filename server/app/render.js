@@ -152,18 +152,10 @@ export default function render (req, res, layout, {payload, isStatic}) {
             </Provider>
           )
 
-          const componentHtml = ReactDOMServer.renderToStaticMarkup(
-            <Provider {...{store}}>
-              <IntlProvider key="intl" {...{messages, locale}}>
-                <RouterContext {...{...renderProps, location}} childRoutes={routes}/>
-              </IntlProvider>
-            </Provider>
-          )
-
           const storeState = _.merge({intl: {locale}}, store.getState())
           const initialState = serializeJs(storeState, {isJSON: true})
 
-          //console.log('initialState', initialState)
+          console.log('initialState ok')
           //console.log('preferredLocale : ', language, preferredLocale, locale)
 
           const format = req.query.format
@@ -171,10 +163,20 @@ export default function render (req, res, layout, {payload, isStatic}) {
 
           switch (format) {
             case 'json':
+
+              const componentHtml = ReactDOMServer.renderToStaticMarkup(
+                <Provider {...{store}}>
+                  <IntlProvider key="intl" {...{messages, locale}}>
+                    <RouterContext {...{...renderProps, location}} childRoutes={routes}/>
+                  </IntlProvider>
+                </Provider>
+              )
+
               return res.jsonp({
                 html: componentHtml,
                 state: initialState
               })
+
               break
             default:
               return res.render(layout, {
