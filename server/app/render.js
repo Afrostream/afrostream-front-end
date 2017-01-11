@@ -144,7 +144,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
             }
           }
 
-          const body = ReactDOMServer.renderToStaticMarkup(
+          const body = ReactDOMServer.renderToString(
             <Provider {...{store}}>
               <IntlProvider key="intl" {...{messages, locale}}>
                 <RouterContext {...{...renderProps}} />
@@ -164,7 +164,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
           switch (format) {
             case 'json':
 
-              const componentHtml = ReactDOMServer.renderToStaticMarkup(
+              const componentHtml = ReactDOMServer.renderToString(
                 <Provider {...{store}}>
                   <IntlProvider key="intl" {...{messages, locale}}>
                     <RouterContext {...{...renderProps, location}} childRoutes={routes}/>

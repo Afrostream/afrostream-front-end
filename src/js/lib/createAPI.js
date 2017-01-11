@@ -60,6 +60,10 @@ export async function fetchToken (refresh = false) {
     return tokenData
   }
 
+  if (!tokenData || !tokenData.refresh_token) {
+    throw new Error('No refresh token availlable, refresh error')
+  }
+
   let url = `${apiClient.urlPrefix}/auth/refresh`
   let body = {
     grant_type: 'refresh_token',
