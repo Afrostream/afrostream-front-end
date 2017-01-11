@@ -28,6 +28,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
   const location = history.createLocation(req.query.location || req.url)
   const {query} = location
   const country = query.country
+  const isMobile = query.isMobile
   const subscribed = query.subscribed
   const preferredLocale = getPreferredLocales(req)
   const api = createAPI(
@@ -99,7 +100,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
             geo.countryCode = country
           }
           // *** Init Store
-          const store = createStore(api, history, {Geo: {geo}, User: {user}})
+          const store = createStore(api, history, {Geo: {geo}, User: {user}, Event: {isMobile}})
           const state = store.getState()
           let {params, location, routes} = renderProps
 
