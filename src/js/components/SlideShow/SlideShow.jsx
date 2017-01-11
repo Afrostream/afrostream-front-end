@@ -1,25 +1,13 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { prepareRoute } from '../../decorators'
-import SlidesContainer from './Slides'
-import Pagination from './Pagination'
 import Spinner from '../Spinner/Spinner'
 import Slider from 'react-slick'
-import * as SlidesActionCreators from '../../actions/slides'
-import * as CategoryActionCreators from '../../actions/category'
-import config from '../../../../config'
 import { withRouter } from 'react-router'
 import MovieInfo from '../Movies/MovieInfo'
 
 if (process.env.BROWSER) {
   require('./SlideShow.less')
 }
-//@prepareRoute(async function ({store}) {
-//  return await Promise.all([
-//    store.dispatch(CategoryActionCreators.getSpots())
-//  ])
-//})
 @connect(({Category, Slides}) => ({Category, Slides}))
 class SlideShow extends React.Component {
 
