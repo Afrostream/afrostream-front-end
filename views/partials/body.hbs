@@ -72,12 +72,12 @@
     var countryCodeParam = (__BUNDLE_STATE__.Geo && __BUNDLE_STATE__.Geo.geo.countryCode && '&country=' + __BUNDLE_STATE__.Geo.geo.countryCode || '')
     var userPlanParam = (__BUNDLE_STATE__.User && __BUNDLE_STATE__.User.user && __BUNDLE_STATE__.User.user.planCode && '&subscribed=' + __BUNDLE_STATE__.User.user.planCode || '')
     var isMobileParam = (isMobile && '&isMobile=' + isMobile || '')
-    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=jsonpCallbackBody' + countryCodeParam + userPlanParam + isMobileParam + '"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=' + jsonpCallbackBody + countryCodeParam + userPlanParam + isMobileParam + '"></scr' + 'ipt>');
   } else {
     window['__BUNDLE_STATE__'] = {
       Geo: {geo: {countryCode: '--'}},
       User: {user: null},
     }
-    window['jsonpCallbackBody']({});
+    window[jsonpCallbackBody]({});
   }
 </script>
