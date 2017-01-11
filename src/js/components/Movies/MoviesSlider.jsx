@@ -90,7 +90,7 @@ class MoviesSlider extends I18n {
       }
     }
 
-    console.log('render category thumb : ', dataId)
+    //console.log('render category thumb : ', dataId)
 
     return (
       <Thumb

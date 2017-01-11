@@ -17,6 +17,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   //HAS TOKEN STORED
   let donePath = getState().Modal.get('donePath')
   let user = getState().User.get('user')
+  const {location:{query}} = getState().router
   dispatch(pendingUser(true))
   //const token = getState().OAuth.get('token')
   //
@@ -97,6 +98,12 @@ async function mergeProfile ({api, data, getState, dispatch}) {
       }
     })
     //}
+  }
+
+  //ADD FAVORITE
+  if (query && query.addFavoriteMovie) {
+    //addFavoriteMovie=true&movieId=IDDUMOVIE
+    dispatch(setFavorites('movies', true, query.addFavoriteMovie))
   }
 
   if (donePath) {

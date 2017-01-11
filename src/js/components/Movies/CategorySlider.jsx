@@ -51,7 +51,7 @@ class CategorySlider extends MoviesSlider {
     const category = Category.get(`categorys/${categoryId}`)
     const dataList = category.get('mergeSpotsWithMovies')
     let data = dataList.get(columnIndex)
-    console.log('renderItem category : ', Boolean(data))
+    //console.log('renderItem category : ', Boolean(data))
     if (data instanceof Immutable.Map) {
       return this.renderBlock(data)
     }
@@ -71,7 +71,7 @@ class CategorySlider extends MoviesSlider {
         slug
       }
     } = this
-    console.log('render category : ', categoryId)
+    //console.log('render category : ', categoryId)
     let listClass = {
       'movies-data-list': true,
       'spots': false
