@@ -1,6 +1,6 @@
 <script type="text/javascript">
   var url = '/';
-  var randCallback = 'body' + String(Math.round(Math.random() * 100000));
+  var jsonpCallbackBody = 'jsonpCallbackBody';
   var mainDiv = document.getElementById('main');
   var bodyDiv = document.body;
   var isMobile = typeof window === 'object' && 'ontouchstart' in window
@@ -46,7 +46,7 @@
 
   };
 
-  window[randCallback] = function (bodyContent) {
+  window['jsonpCallbackBody'] = function (bodyContent) {
     try {
       __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state), {
         Event: {
@@ -72,12 +72,12 @@
     var countryCodeParam = (__BUNDLE_STATE__.Geo && __BUNDLE_STATE__.Geo.geo.countryCode && '&country=' + __BUNDLE_STATE__.Geo.geo.countryCode || '')
     var userPlanParam = (__BUNDLE_STATE__.User && __BUNDLE_STATE__.User.user && __BUNDLE_STATE__.User.user.planCode && '&subscribed=' + __BUNDLE_STATE__.User.user.planCode || '')
     var isMobileParam = (isMobile && '&isMobile=' + isMobile || '')
-    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=' + randCallback + countryCodeParam + userPlanParam + isMobileParam + '"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=jsonpCallbackBody' + countryCodeParam + userPlanParam + isMobileParam + '"></scr' + 'ipt>');
   } else {
     window['__BUNDLE_STATE__'] = {
       Geo: {geo: {countryCode: '--'}},
       User: {user: null},
     }
-    window[randCallback]({});
+    window['jsonpCallbackBody']({});
   }
 </script>
