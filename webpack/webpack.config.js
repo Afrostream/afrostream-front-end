@@ -61,6 +61,7 @@ const webpackConfig = {
     player: [
       'dashjs',
       'video.js',
+      'koment-js',
       'afrostream-player'
     ],
     vendor: [
@@ -170,6 +171,11 @@ const webpackConfig = {
       {
         test: /video\.js$/,
         loader: 'expose-loader?videojs',
+        include: [path.join(nodeModulesPath, 'afrostream-player')]
+      },
+      {
+        test: /koment-js$/,
+        loader: 'expose-loader?koment',
         include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {
