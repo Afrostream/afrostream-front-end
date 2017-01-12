@@ -92,7 +92,6 @@ export default {
     toggleSideBar: null,
     userActive: null,
     showError: null,
-    showChat: null,
     snackMessage: null
   }),
 

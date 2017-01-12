@@ -279,7 +279,7 @@ class SideBar extends React.Component {
           <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
           <ul className="sidebar-nav">
             {this.getUserConnectedButtons(user, 'profile')}
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/"><i
+            <li><Link activeClassName="active" onClick={(e) => ::this.onSetOpen(false)} to="/"><i
               className="zmdi zmdi-tv-play"/><FormattedMessage
               id={ `menu.streaming` }/>
             </Link></li>

@@ -1176,8 +1176,6 @@ class FloatPlayer extends I18n {
 
       renderData = episodeData ? episodeData : movieData
 
-      chatMode = Event.get('showChat')
-
       const textLength = infos.title.length
 
       if (textLength < 20) {

@@ -17,15 +17,6 @@ export function showError (error) {
   }
 }
 
-export function showChat (show) {
-  return (dispatch, getState) => {
-    return {
-      type: ActionTypes.Event.showChat,
-      show
-    }
-  }
-}
-
 export function toggleSideBar (toggled) {
   return (dispatch, getState) => {
     return {

@@ -6,6 +6,10 @@ import Headroom from 'react-headroom'
 import Immutable from 'immutable'
 import { ArrowStepper } from '../Slider'
 import { AutoSizer, ColumnSizer, CellMeasurer, Grid } from 'react-virtualized'
+import {
+  FormattedMessage,
+} from 'react-intl'
+
 
 if (process.env.BROWSER) {
   require('./SubNavigation.less')
@@ -49,7 +53,8 @@ class SubNavigation extends Component {
         <ul className="sub-navigation">
           <li key={`theme-streaming`}>
             <Link activeClassName="active"
-                  to="/">Streaming</Link>
+                  to="/"><FormattedMessage
+              id={ `menu.streaming` }/></Link>
           </li>
           {themesList && themesList.map((theme, i) => {
 

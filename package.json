@@ -41,7 +41,7 @@
     "node-notifier": "^4.2.3",
     "nodemon": "^1.9.2",
     "react-hot-loader": "^1.3.0",
-    "shrinkwarp": "^2.0.0",
+    "shrinkwarp": "git+https://github.com/evocateur/shrinkwarp.git",
     "webpack-dashboard": "^0.2.0",
     "webpack-dev-server": "^1.15.0",
     "webshot": "^0.18.0"

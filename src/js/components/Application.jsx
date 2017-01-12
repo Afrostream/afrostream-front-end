@@ -90,7 +90,7 @@ if (process.env.BROWSER) {
 @analytics()
 @fbSDK()
 @fbTracking()
-@connect(({Event, User, Modal}) => ({Event, User, Modal}))
+@connect(({Event, User, Modal, Config}) => ({Event, User, Modal, Config}))
 class Application extends React.Component {
 
   constructor (props, context) {
@@ -115,7 +115,6 @@ class Application extends React.Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={appClasses}>
-          <SplashScreen />
           <AlertMessage />
           <Header {...this.props}/>
           <SideBar {...{toggled, docked}} {...this.props}>

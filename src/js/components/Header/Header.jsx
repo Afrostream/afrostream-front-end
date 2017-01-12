@@ -2,12 +2,10 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Headroom from 'react-headroom'
 import UserButton from './../User/UserButton'
-import SmartBanner from './SmartBanner'
 import SearchInput from './../Search/SearchBox'
 import classSet from 'classnames'
 import config from '../../../../config'
 import { withRouter } from 'react-router'
-import window from 'global/window'
 import * as EventActionCreators from '../../actions/event'
 import Breadcrumbs from './Breadcrumbs'
 
@@ -41,7 +39,6 @@ class Header extends React.Component {
     } = this
 
     const hiddenMode = !Event.get('userActive')
-    const chatMode = Event.get('showChat')
     const user = User.get('user')
 
     let excludedBreacrumbsRoutes = [
@@ -68,11 +65,12 @@ class Header extends React.Component {
     }
 
     const isOnLife = router.isActive('life')
+    const isOnPlayer = router.isActive('player')
 
     let sliderClasses = {
       'topbar': true,
       'topbar-life': isOnLife,
-      'topbar-hidden': !chatMode && hiddenMode && router.isActive('player'),
+      'topbar-hidden': hiddenMode /*&& isOnPlayer*/,
       'topbar-fixed-color': true
     }
 
