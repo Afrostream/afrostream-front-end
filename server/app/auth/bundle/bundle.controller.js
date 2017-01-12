@@ -92,8 +92,8 @@ exports.index = async function (req, res) {
   res.noCache()
 
   return Q.all([
-    getGeoInfo(req, initialState).then(r => r, err => console.log(err)),
-    getUserInfo(req, initialState).then(r => r, err => console.log(err))
+    getGeoInfo(req, initialState).then(r => r, err => console.log(JSON.stringify(err))),
+    getUserInfo(req, initialState).then(r => r, err => console.log(JSON.stringify(err)))
   ]).then(() => {
       res.status(200).jsonp({initialState})
     },
