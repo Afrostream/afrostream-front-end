@@ -468,7 +468,14 @@ class PaymentForm extends I18n {
             break
         }
       })
-      .then(({res:{body:{subStatus, internalPlan:{internalPlanUuid, currency, amount, amountInCents}}}}) => {
+      .then(({res:{body:{subStatus}}}) => {
+
+        const currentPlan = this.hasPlan()
+        const internalPlanUuid = currentPlan.get('internalPlanUuid')
+        const currency = currentPlan.get('currency')
+        const amount = currentPlan.get('amount')
+        const currencyConversions = currentPlan.get('currencyConversions')
+
         ReactFB.track({
           event: 'CompleteRegistration', params: {
             'content_name': internalPlanUuid,
@@ -482,8 +489,8 @@ class PaymentForm extends I18n {
         ReactGA.event({
           category: 'Billing',
           action: 'Payment Success',
-          label: planCode,
-          value: parseInt(amountInCents) * 0.01
+          label: internalPlanUuid,
+          value: currencyConversions && currencyConversions.EUR && currencyConversions.EUR.amount
         })
 
         self.disableForm(false, 1)

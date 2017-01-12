@@ -15,14 +15,14 @@
   <meta name="google-play-app" content="{{{androidAppId}}}">
   <link rel="apple-touch-icon" href="/images/icon175x175.jpeg">
   <link rel="android-touch-icon" href="/images/icon175x175.jpeg">
+  <!-- GCM manifest app -->
+  {{#each initJs}}
+    {{{inlineScript this}}}
+  {{/each}}
   {{{link}}}
   <link rel="stylesheet" href="/bootstrap.css" type="text/css">
-  <!-- End Facebook Pixel Code -->
-
-  <!-- GCM manifest app -->
-  <link rel="manifest" href="/manifest.json">
   <!-- End GCM manifest app -->
-  <script src="/init.js" type="text/javascript"></script>
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body>
 {{> bundle}}

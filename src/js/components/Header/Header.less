@@ -222,7 +222,7 @@ header {
               }
               width: @sidebar-width - 50px;
               img {
-                .isMobile({ max-width: 80%; });
+                max-width: 80%;
               }
               background: @color-black-2;
             }
@@ -245,14 +245,12 @@ header {
   }
 
   .open-menu-icon {
-    display: none;
+    display: inline-block;
     width: 10%;
     color: #fff;
-    .isMobile({ display: inline-block; });
     margin: 0;
     padding: 0;
     font-size: 2em;
     vertical-align: middle;
-    .isNotMobile({ display: none; });
   }
 }

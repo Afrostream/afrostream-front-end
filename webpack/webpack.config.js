@@ -50,7 +50,6 @@ const webpackConfig = {
   entry: {
     // Set up an ES6-ish environment
     polyfill: [
-      //'babel-polyfill',
       './src/js/lib/localStoragePolyfill',
       './src/js/lib/customEventPolyfill',
       './src/js/lib/requestAnimationFramePolyfill',
@@ -58,13 +57,6 @@ const webpackConfig = {
     mobile: [
       'mobile-detect'
     ],
-    //geo: [
-    //  './src/js/lib/geo'
-    //],
-    //storage: [
-    //  './src/js/lib/storage',
-    //  './src/js/lib/localStoragePolyfill'
-    //],
     main: './src/js/main',
     player: [
       'dashjs',

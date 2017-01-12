@@ -39,23 +39,32 @@ export default function routes (app, buildPath) {
     {file: 'main.css'}
   ]
 
-  function parseMD5Files (files) {
+  function parseMD5Files (files, inline) {
 
     let promisedMd5 = []
+    let fileInfo
     _.map(files, (item) => {
       if (env === 'development') {
-        return promisedMd5.push({
+        fileInfo = {
           async: item.async || false,
           file: item.file,
           hash: md5(item.file)
-        })
+        }
+        if (inline) {
+          fileInfo = `${hostname}/static/${fileInfo.file}`
+        }
+        return promisedMd5.push(fileInfo)
       }
       promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, item.file)).then((buf) => {
-        return {
+        fileInfo = {
           async: item.async || false,
           file: item.file,
           hash: md5(buf)
         }
+        if (inline) {
+          return `${hostname}/static/${fileInfo.file}?${fileInfo.hash}`
+        }
+        return fileInfo
       }))
     })
     return Promise.all(promisedMd5)
@@ -64,7 +73,7 @@ export default function routes (app, buildPath) {
 
   let hashInitFiles = []
   let hashBuildFiles = []
-  parseMD5Files(initFiles).then((res) => {
+  parseMD5Files(initFiles, true).then((res) => {
     hashInitFiles = res
   })
   parseMD5Files(buildFiles).then((res) => {
@@ -165,10 +174,6 @@ export default function routes (app, buildPath) {
   // BOOTSTRAP
   // --------------------------------------------------
 
-  app.get('/init.js', (req, res) => {
-    res.send(bootstrapFiles(res, 'js', hashInitFiles))
-  })
-
   app.get('/bootstrap.js', (req, res) => {
     res.send(bootstrapFiles(res, 'js', hashBuildFiles))
   })
@@ -181,14 +186,15 @@ export default function routes (app, buildPath) {
   // RENDER
   // --------------------------------------------------
   app.get('/*', (req, res) => {
-    //set .noCache() to caching site
+    //set .noCache() to uncaching site
 
     res.cache()
     const externalsJs = config.externalsJs
-
+    const initJs = hashInitFiles
     // Render
     const layout = 'layouts/main'
     const payload = {
+      initJs,
       externalsJs,
       initialState: {},
       body: ''

@@ -103,7 +103,7 @@ class Application extends React.Component {
     const isOnLife = router.isActive('life')
     const isMobile = Event.get('isMobile')
     const user = User.get('user')
-    const docked = Boolean(!isMobile && (isOnLife || user))
+    const docked = false//Boolean(!isMobile && (isOnLife || user))
     const toggled = Event.get('sideBarToggled')
     const snackMessage = Event.get('snackMessage')
     const hasPopup = Modal.get('target')

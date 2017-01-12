@@ -1829,6 +1829,9 @@
         }
       }
     },
+    "express-handlebars-inline-script": {
+      "version": "0.0.1"
+    },
     "express-session": {
       "version": "1.14.2",
       "dependencies": {

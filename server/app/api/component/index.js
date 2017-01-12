@@ -4,6 +4,7 @@ import RenderStatic from '../../render'
 const router = express.Router()
 
 router.get('/*', function (req, res) {
+  res.cache()
   // Render
   const layout = 'layouts/component-static'
   const payload = {

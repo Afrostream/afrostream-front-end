@@ -1,6 +1,7 @@
 import path from 'path'
 import expressHandlebars from 'express-handlebars'
 import handlebars from 'handlebars'
+import inlineScript from 'express-handlebars-inline-script'
 import config from '../../config'
 import routes from './routes'
 import _ from 'lodash'
@@ -53,6 +54,7 @@ app.use(errorHandler)
 // --------------------------------------------------
 
 handlebars.registerHelper('json-stringify', ::JSON.stringify)
+handlebars.registerHelper('json-stringify', ::JSON.stringify)
 handlebars.registerHelper('json', function (context) {
   return JSON.stringify(context)
 })
@@ -70,7 +72,14 @@ app.engine('hbs', expressHandlebars({
   extname: '.hbs',
   partialsDir: [
     'views/partials/'
-  ]
+  ],
+  helpers: {
+    inlineScript: process.env.NODE_ENV === 'production' ?
+      // will inline the script by reading the file and generating a script tag
+      inlineScript.inline :
+      // noinline generates a script tag with the src set to the path passed
+      inlineScript.noinline
+  }
 }))
 app.set('view engine', 'hbs')
 app.set('etag', false)
