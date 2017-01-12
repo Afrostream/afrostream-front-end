@@ -25,8 +25,9 @@ function errorHandler (err, req, res, next) {
   res.status(500)
   res.render('error', {error: err})
 }
-
 app.set('startDate', new Date())
+app.set('x-powered-by', false);
+app.set('etag', false);
 //
 app.use(forceSSL())
 app.use(forceWWW())

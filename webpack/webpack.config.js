@@ -226,7 +226,7 @@ const webpackConfig = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['player', 'vendor', 'init'],
-      //async: process.env.NODE_ENV === 'production',
+      async: process.env.NODE_ENV === 'production',
       minChunks: 3
     }),
 
@@ -266,7 +266,6 @@ const webpackConfig = {
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
-      koment: 'koment-js',
       MobileDetect: 'mobile-detect',
       videojs: 'video.js',
       $: 'jquery',
