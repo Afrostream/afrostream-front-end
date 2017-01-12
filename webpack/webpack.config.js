@@ -225,9 +225,9 @@ const webpackConfig = {
     //  minChunks: 2
     //}),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['player', 'vendor', 'mobile', 'polyfill', 'init'],
+      names: ['player', 'vendor'],
       //async: process.env.NODE_ENV === 'production',
-      //minChunks: 2
+      minChunks: 2
     }),
 
     ///+++
