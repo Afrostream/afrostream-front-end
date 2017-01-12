@@ -115,6 +115,7 @@ class Application extends React.Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={appClasses}>
+          <SplashScreen />
           <AlertMessage />
           <Header {...this.props}/>
           <SideBar {...{toggled, docked}} {...this.props}>
