@@ -1,7 +1,6 @@
 import path from 'path'
 import expressHandlebars from 'express-handlebars'
 import handlebars from 'handlebars'
-import inlineScript from 'express-handlebars-inline-script'
 import config from '../../config'
 import routes from './routes'
 import _ from 'lodash'
