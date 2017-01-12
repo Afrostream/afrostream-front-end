@@ -44,14 +44,14 @@ export default function routes (app, buildPath) {
     let promisedMd5 = []
     let fileInfo
     _.map(files, (item) => {
-      if (env === 'development') {
+      if (env !== 'production') {
         fileInfo = {
           async: item.async || false,
           file: item.file,
           hash: md5(item.file)
         }
         if (inline) {
-          fileInfo = `${hostname}/static/${fileInfo.file}`
+          fileInfo.file = path.join(hostname, 'static', fileInfo.file)
         }
         return promisedMd5.push(fileInfo)
       }
@@ -61,9 +61,11 @@ export default function routes (app, buildPath) {
           file: item.file,
           hash: md5(buf)
         }
+
         if (inline) {
-          return `${hostname}/static/${fileInfo.file}?${fileInfo.hash}`
+          fileInfo.file = buf.toString()
         }
+
         return fileInfo
       }))
     })

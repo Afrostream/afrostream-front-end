@@ -188,11 +188,6 @@ class LifePinView extends ClickablePin {
           <div className="pin-header-background">
             <ReactImgix className="pin-header-background_image" src={imageUrl} bg={true}/>
             <div className="pin-header-background_mask"/>
-
-            <div className="bkdate">
-              <div className="day">{pinnedDate.format('DD')}</div>
-              <div className="month">{pinnedDate.format('MMM')}</div>
-            </div>
           </div>
           <div className="pin-header-content">
             <h1> {data.get('title')}</h1>

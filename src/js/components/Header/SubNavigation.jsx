@@ -47,6 +47,10 @@ class SubNavigation extends Component {
     return (
       <Headroom disableInlineStyles>
         <ul className="sub-navigation">
+          <li key={`theme-streaming`}>
+            <Link activeClassName="active"
+                  to="/">Streaming</Link>
+          </li>
           {themesList && themesList.map((theme, i) => {
 
               let mapTo = to

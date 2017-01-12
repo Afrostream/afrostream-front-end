@@ -86,7 +86,6 @@
     "express": "^4.13.3",
     "express-cluster": "0.0.4",
     "express-handlebars": "^3.0.0",
-    "express-handlebars-inline-script": "0.0.1",
     "express-session": "^1.11.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "fbjs": "^0.8.3",
