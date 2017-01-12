@@ -18,7 +18,7 @@ export async function getGeo ({query = {}}) {
 
 export async function isAuthorized () {
   return await new Promise((resolve, reject) => {
-    getGeo()
+    getGeo({})
       .then((geo) => {
         if (geo &&
           geo.authorized === false) {
@@ -35,7 +35,7 @@ export async function isAuthorized () {
 
 export async function getCountry () {
   return await new Promise((resolve, reject) => {
-    getGeo()
+    getGeo({})
       .then((geo) => {
         if (geo && geo.countryCode) {
           storeGeo(geo)
