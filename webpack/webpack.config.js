@@ -261,6 +261,7 @@ const webpackConfig = {
     new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
       MobileDetect: 'mobile-detect',
+      videojs: 'video.js',
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery'
