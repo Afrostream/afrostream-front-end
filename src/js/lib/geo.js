@@ -4,10 +4,11 @@ import Q from 'q'
 import request from 'superagent'
 const {apiClient: {protocol, authority}} = config
 
-export async function getGeo () {
+export async function getGeo ({query = {}}) {
   const url = protocol + '://' + authority + '/auth/geo'
   return Q(request
     .get(url)
+    .query({query})
     .type('json')
     .then((response) => {
       return response.body

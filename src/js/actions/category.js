@@ -61,18 +61,18 @@ export function getMenu () {
 
       const resultData = menuRes.body
 
-      //try {
-      //
-      //  await Promise.all(_(resultData).chain()
-      //    .take(4)
-      //    .map((category) => {
-      //      console.log('category', category._id)
-      //      return dispatch(this.getCategory(category._id))
-      //    })
-      //    .value())
-      //} catch (err) {
-      //  console.log('Promise categories fail : ', err)
-      //}
+      try {
+
+        await Promise.all(_(resultData).chain()
+          .take(4)
+          .map((category) => {
+            console.log('category', category._id)
+            return dispatch(this.getCategory(category._id))
+          })
+          .value())
+      } catch (err) {
+        console.log('Promise categories fail : ', err)
+      }
 
       return {
         type: ActionTypes.Category.getMenu,
