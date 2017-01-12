@@ -84,9 +84,6 @@
 
   window[randCallback] = function (data) {
     try {
-//      if (data.error) {
-//        console.log('infoBundle', JSON.stringify(data.error));
-//      }
       __BUNDLE_STATE__ = extendState(__BUNDLE_STATE__, data.initialState);
       setStorage('{{{config "apiClient.geo"}}}', __BUNDLE_STATE__.Geo.geo);
       setStorage('{{{config "apiClient.token"}}}', __BUNDLE_STATE__.OAuth.token);

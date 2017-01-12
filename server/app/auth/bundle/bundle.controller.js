@@ -91,13 +91,13 @@ exports.index = async function (req, res) {
   res.noCache()
 
   return Q.all([
-    getGeoInfo(req, initialState),
-    getUserInfo(req, initialState)
+    getGeoInfo(req, initialState).then(r => r, err => console.log(err)),
+    getUserInfo(req, initialState).then(r => r, err => console.log(err))
   ]).then(() => {
       res.status(200).jsonp({initialState})
     },
     error => {
       console.log('Get Bundle error', error)
-      res.status(200).jsonp({error, initialState})
+      res.status(500).jsonp({error, initialState})
     })
 }
