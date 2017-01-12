@@ -9,7 +9,6 @@ import createAPI from './lib/createAPI'
 import request from 'superagent'
 import moment from 'moment'
 import _ from 'lodash'
-import qs from 'qs'
 import config from '../../config'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { getCountry } from './lib/geo'
@@ -70,12 +69,12 @@ function initSite () {
       //FIX HW disallow body null and return 502
       if (method === 'GET') {
         return request(method, url)
-          .query(qs.stringify(query))
+          .query(query)
           .set(headers)
       }
 
       return request(method, url)
-        .query(qs.stringify(query))
+        .query(query)
         .set(headers)
         .send(body)
     }

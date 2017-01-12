@@ -4,7 +4,6 @@ import { createMemoryHistory, useQueries } from 'history'
 import { useRouterHistory, match } from 'react-router'
 import request from 'superagent'
 import config from '../../config'
-import qs from 'qs'
 import { getI18n } from '../../config/i18n'
 import { getPreferredLocales } from './locale'
 import createStore from '../../src/js/lib/createStore'
@@ -58,12 +57,12 @@ export default function render (req, res, layout, {payload, isStatic}) {
       //FIX HW disallow body null and return 502
       if (method === 'GET') {
         return request(method, url)
-          .query(qs.stringify(query))
+          .query(query)
           .set(headers)
       }
 
       return request(method, url)
-        .query(qs.stringify(query))
+        .query(query)
         .set(headers)
         .send(body)
     }

@@ -9,7 +9,7 @@ export async function getGeo ({query = {}}) {
   const url = protocol + '://' + authority + '/auth/geo'
   return Q(request
     .get(url)
-    .query(qs.stringify(query))
+    .query(query)
     .type('json')
     .then((response) => {
       return response.body

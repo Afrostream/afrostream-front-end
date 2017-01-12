@@ -24,9 +24,10 @@ export async function fetchToken (refreshToken) {
 
 export async function getGeoInfo (req, initialState) {
   return getGeo({
-    ip: req.userIp
+    query: {
+      ip: req.userIp
+    }
   }).then((geo) => {
-    console.log(geo)
     initialState = _.merge(initialState, {Geo: {geo}})
   })
 }
