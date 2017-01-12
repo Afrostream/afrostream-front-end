@@ -26,21 +26,23 @@ const hostname = (env === 'development') ? `//${host}:${port}` : ''
 
 export default function routes (app, buildPath) {
 
+  const initFiles = [
+    {file: 'init.js'},
+    {file: 'polyfill.js'},
+    {file: 'mobile.js'}
+  ]
+  //FIXME get all webpack chunk files dynamicaly
+  const buildFiles = [
+    {file: 'vendor.js'},
+    {file: 'player.js'},
+    {file: 'main.js'},
+    {file: 'main.css'}
+  ]
 
-  function parseMD5Files () {
-    //FIXME get all webpack chunk files dynamicaly
-    const buildFiles = [
-      //{file: 'common.js'},
-      //{file: 'init.js'},
-      //{file: 'storage.js'},
-      //{file: 'geo.js'},
-      {file: 'vendor.js'},
-      {file: 'player.js'},
-      {file: 'main.js'},
-      {file: 'main.css'}
-    ]
+  function parseMD5Files (files) {
+
     let promisedMd5 = []
-    _.map(buildFiles, (item) => {
+    _.map(files, (item) => {
       if (env === 'development') {
         return promisedMd5.push({
           async: item.async || false,
@@ -60,14 +62,18 @@ export default function routes (app, buildPath) {
   }
 
 
-  let hashFiles = []
-  hashFiles = parseMD5Files().then((res) => {
-    hashFiles = res
+  let hashInitFiles = []
+  let hashBuildFiles = []
+  parseMD5Files(initFiles).then((res) => {
+    hashInitFiles = res
+  })
+  parseMD5Files(buildFiles).then((res) => {
+    hashBuildFiles = res
   })
 // Render layout
-  const bootstrapFiles = function (res, type) {
+  const bootstrapFiles = function (res, type, bootstrapFiles) {
     const matchType = new RegExp(`.${type}$`)
-    let files = _.filter(hashFiles, (item) => {
+    let files = _.filter(bootstrapFiles, (item) => {
       return item.file.match(matchType)
     })
     let loadType = type === 'js' ? 'javascript' : type
@@ -159,12 +165,16 @@ export default function routes (app, buildPath) {
   // BOOTSTRAP
   // --------------------------------------------------
 
+  app.get('/init.js', (req, res) => {
+    res.send(bootstrapFiles(res, 'js', hashInitFiles))
+  })
+
   app.get('/bootstrap.js', (req, res) => {
-    res.send(bootstrapFiles(res, 'js'))
+    res.send(bootstrapFiles(res, 'js', hashBuildFiles))
   })
 
   app.get('/bootstrap.css', (req, res) => {
-    res.send(bootstrapFiles(res, 'css'))
+    res.send(bootstrapFiles(res, 'css', hashBuildFiles))
   })
   // BOOTSTRAP
   // --------------------------------------------------

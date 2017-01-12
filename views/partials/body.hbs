@@ -1,9 +1,10 @@
 <script type="text/javascript">
   var url = '/';
+  var md = new MobileDetect(window.navigator.userAgent);
   var jsonpCallbackBody = 'jsonpCallbackBody';
   var mainDiv = document.getElementById('main');
   var bodyDiv = document.body;
-  var isMobile = typeof window === 'object' && 'ontouchstart' in window
+  var isMobile = md.mobile();
   var deserializeState = function (serializedJavascript) {
     return eval('(' + serializedJavascript + ')')
   }

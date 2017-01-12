@@ -9,6 +9,7 @@ import favicon from 'serve-favicon'
 import compression from 'compression'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import userIp from 'afrostream-node-middleware-userip'
 import allowOrigin from './middlewares/middleware-allowcrossdomain'
 import cacheHandler from './middlewares/middleware-cachehandler'
 import { forceSSL, forceWWW } from './middlewares/middleware-redirect'
@@ -38,6 +39,7 @@ app.use('/static', function (req, res, next) {
   res.isStatic()
   next()
 })
+app.use(userIp());
 app.use(express.static(staticPath))
 app.use('/static', express.static(buildPath))
 app.use(favicon(path.join(staticPath, 'favicon.ico')))

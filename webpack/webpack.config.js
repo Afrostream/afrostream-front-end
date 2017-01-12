@@ -49,12 +49,15 @@ const webpackConfig = {
   },
   entry: {
     // Set up an ES6-ish environment
-    polyfill: 'babel-polyfill',
-    //init: [
-    //  'superagent',
-    //  'lodash',
-    //  './src/js/lib/utils'
-    //],
+    polyfill: [
+      //'babel-polyfill',
+      './src/js/lib/localStoragePolyfill',
+      './src/js/lib/customEventPolyfill',
+      './src/js/lib/requestAnimationFramePolyfill',
+    ],
+    mobile: [
+      'mobile-detect'
+    ],
     //geo: [
     //  './src/js/lib/geo'
     //],
@@ -93,10 +96,7 @@ const webpackConfig = {
       'q',
       'qs',
       'outdated-browser/outdatedbrowser/outdatedbrowser',
-      'material-ui',
-      './src/js/lib/localStoragePolyfill',
-      './src/js/lib/customEventPolyfill',
-      './src/js/lib/requestAnimationFramePolyfill'
+      'material-ui'
     ]
   },
   resolve: {
@@ -182,9 +182,7 @@ const webpackConfig = {
         include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {
-        test: /koment-js$/,
-        loader: 'expose-loader?koment',
-        include: [path.join(nodeModulesPath, 'afrostream-player')]
+        test: /mobile-detect/, loader: 'expose-loader?MobileDetect'
       },
       {
         test: /jquery\.js$/, loader: 'expose-loader?$'
@@ -225,7 +223,12 @@ const webpackConfig = {
   //},
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['player', 'vendor'],
+      name: 'init',
+      chunks: ['mobile', 'polyfill'],
+      minChunks: 2
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['player', 'vendor', 'init'],
       async: process.env.NODE_ENV === 'production',
       minChunks: 2
     }),
@@ -266,6 +269,7 @@ const webpackConfig = {
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
+      MobileDetect: 'mobile-detect',
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery'

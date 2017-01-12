@@ -22,6 +22,11 @@
         }
       }
     },
+    "afrostream-node-middleware-userip": {
+      "version": "1.0.0",
+      "from": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-middleware-userip.git#v1.0.0",
+      "resolved": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-middleware-userip.git#dd685a221bc027bffb0a47d50f6795930d2e872b"
+    },
     "afrostream-node-request": {
       "version": "2.5.0",
       "from": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-request.git#v2.5.0",
@@ -2337,6 +2342,9 @@
     },
     "invert-kv": {
       "version": "1.0.0"
+    },
+    "ip": {
+      "version": "1.1.4"
     },
     "ipaddr.js": {
       "version": "1.1.1"
