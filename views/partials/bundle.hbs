@@ -1,0 +1,115 @@
+<script type="text/javascript">
+  var geoData;
+  var tokenData;
+  var randCallback = 'bundle' + String(Math.round(Math.random() * 100000));
+  var url = '/auth/bundle';
+  var bodyDiv = document.body;
+
+  var __BUNDLE_STATE__ = {
+    Geo: {
+      geo: {
+        countryCode: '--'
+      }
+    },
+    User: {
+      user: null
+    },
+    OAuth: {
+      token: null
+    }
+  };
+
+  var extendState = function () {
+
+    // Variables
+    var extended = {};
+    var deep = false;
+    var i = 0;
+    var length = arguments.length;
+
+    // Check if a deep merge
+    if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+      deep = arguments[0];
+      i++;
+    }
+
+    // Merge the object into the extended object
+    var merge = function (obj) {
+      for (var prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+          // If deep merge and property is an object, merge properties
+          if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+            extended[prop] = extendState(true, extended[prop], obj[prop]);
+          } else {
+            extended[prop] = obj[prop];
+          }
+        }
+      }
+    };
+
+    // Loop through each object and conduct a merge
+    for (; i < length; i++) {
+      var obj = arguments[i];
+      merge(obj);
+    }
+
+    return extended;
+
+  };
+
+  function getStorage (key) {
+    var storedData = localStorage.getItem(key);
+    var resultData = null;
+    if (storedData) {
+      try {
+        resultData = JSON.parse(storedData);
+      } catch (err) {
+        console.log('deserialize ' + key + ' data error');
+      }
+    }
+    return resultData;
+  }
+
+  function setStorage (key, data) {
+    if (data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch (err) {
+        console.log('save ' + key + ' data error');
+      }
+    }
+    return data;
+  }
+
+
+  window[randCallback] = function (data) {
+    try {
+//      if (data.error) {
+//        console.log('infoBundle', JSON.stringify(data.error));
+//      }
+      __BUNDLE_STATE__ = extendState(__BUNDLE_STATE__, data.initialState);
+      setStorage('{{{config "apiClient.geo"}}}', __BUNDLE_STATE__.Geo.geo);
+      setStorage('{{{config "apiClient.token"}}}', __BUNDLE_STATE__.OAuth.token);
+    } catch (err) {
+      console.log('Bundle prerender Error : ', err.message)
+    }
+  }
+
+  geoData = getStorage('{{{config "apiClient.geo"}}}');
+  tokenData = getStorage('{{{config "apiClient.token"}}}');
+
+  var countryCodeParam = (geoData && geoData.countryCode && '&countryCode=' + geoData.countryCode || '')
+  var tokenParam = (tokenData && tokenData.access_token && '&access_token=' + tokenData.access_token || '')
+  var refreshParam = (tokenData && tokenData.refresh_token && '&refresh_token=' + tokenData.refresh_token || '')
+
+  try {
+    //HIDE content fro flickering
+    if (bodyDiv && bodyDiv.classList) {
+      bodyDiv.classList.add('hidden')
+    }
+    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?callback=' + randCallback + countryCodeParam + tokenParam + refreshParam + '"></scr' + 'ipt>');
+  } catch (err) {
+    console.log('Bundle prerender Error : ', err.message)
+  }
+
+</script>

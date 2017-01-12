@@ -1,6 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'
-import { prepareRoute } from '../../../decorators'
+import { prepareRoute, prepareStatic } from '../../../decorators'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import Thumb from '../../../components/Movies/Thumb'
@@ -18,6 +18,7 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store}) {
   return store.dispatch(CategoryActionCreators.getAllSpots())
 })
+@prepareStatic('components/categorys/spots')
 @connect(({Category}) => ({Category}))
 class Spots extends React.Component {
 
@@ -49,8 +50,7 @@ class Spots extends React.Component {
   render () {
     const {
       props: {
-        Category,
-        params
+        Category
       }
     } = this
 
@@ -60,14 +60,14 @@ class Spots extends React.Component {
       return (<div />)
     }
     let recoList = []
-    categories.map((categorie)=> {
+    categories.map((categorie) => {
       let catMovies = categorie.get('adSpots')
       if (catMovies) {
         recoList = _.concat(recoList, catMovies.toJS())
       }
     })
 
-    let uniqSpots = _.uniq(recoList, (o)=> {
+    let uniqSpots = _.uniq(recoList, (o) => {
       return o['_id']
     })
     //get only 8 mea

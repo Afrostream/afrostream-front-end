@@ -1,12 +1,15 @@
 import path from 'path'
 import expressHandlebars from 'express-handlebars'
 import handlebars from 'handlebars'
+import config from '../../config'
 import routes from './routes'
+import _ from 'lodash'
 import express from 'express'
 import favicon from 'serve-favicon'
 import compression from 'compression'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import userIp from 'afrostream-node-middleware-userip'
 import allowOrigin from './middlewares/middleware-allowcrossdomain'
 import cacheHandler from './middlewares/middleware-cachehandler'
 import { forceSSL, forceWWW } from './middlewares/middleware-redirect'
@@ -36,6 +39,7 @@ app.use('/static', function (req, res, next) {
   res.isStatic()
   next()
 })
+app.use(userIp());
 app.use(express.static(staticPath))
 app.use('/static', express.static(buildPath))
 app.use(favicon(path.join(staticPath, 'favicon.ico')))
@@ -52,8 +56,22 @@ handlebars.registerHelper('json-stringify', ::JSON.stringify)
 handlebars.registerHelper('json', function (context) {
   return JSON.stringify(context)
 })
+handlebars.registerHelper('config', function (context) {
+  return _.get(config, context)
+})
+handlebars.registerHelper('_', function () {
+  var options = [].pop.call(arguments)
+  var func = [].shift.call(arguments)
+  return _[func].apply(_, arguments)
+})
 
-app.engine('hbs', expressHandlebars())
+
+app.engine('hbs', expressHandlebars({
+  extname: '.hbs',
+  partialsDir: [
+    'views/partials/'
+  ]
+}))
 app.set('view engine', 'hbs')
 app.set('etag', false)
 app.set('x-powered-by', false)

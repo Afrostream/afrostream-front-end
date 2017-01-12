@@ -25,7 +25,8 @@ class Thumb extends Poster {
     showDescription: React.PropTypes.bool,
     showTitle: React.PropTypes.bool,
     type: React.PropTypes.string,
-    fit: React.PropTypes.string
+    fit: React.PropTypes.string,
+    crop: React.PropTypes.string
   }
 
   static defaultProps = {
@@ -37,7 +38,8 @@ class Thumb extends Poster {
     showDescription: true,
     showTitle: true,
     type: 'movie',
-    fit: 'min'
+    fit: 'min',
+    crop: 'faces'
   }
 
   triggerOver () {

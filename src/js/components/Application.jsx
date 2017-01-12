@@ -101,8 +101,9 @@ class Application extends React.Component {
 
     const {props: {router, dispatch, children, Event, Modal, User, intl}} = this
     const isOnLife = router.isActive('life')
+    const isMobile = Event.get('isMobile')
     const user = User.get('user')
-    const docked = Boolean(user || (canUseDOM && isOnLife))
+    const docked = Boolean(!isMobile && (isOnLife || user))
     const toggled = Event.get('sideBarToggled')
     const snackMessage = Event.get('snackMessage')
     const hasPopup = Modal.get('target')
@@ -120,7 +121,7 @@ class Application extends React.Component {
           <SideBar {...{toggled, docked}} {...this.props}>
             <div id="page-content-wrapper" className="container-fluid">
               {children}
-              <Footer {...this.props}/>
+              <Footer {...this.props} />
             </div>
           </SideBar>
           <FloatPlayer {...this.props}/>

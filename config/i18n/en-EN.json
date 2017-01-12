@@ -66,6 +66,22 @@
   "home": {
     "title": "The Best Black Films and TV Series",
     "action": "START YOUR FIRST <br /> WEEK FREE",
+    "movie": {
+      "title": "{movieName} | The movie streaming on AFROSTREAM",
+      "description": "Watch {movieName}, movie with {actors} streaming on all your screens with AFROSTREAM"
+    },
+    "serie": {
+      "title": "{serieName} | The TV series en streaming on AFROSTREAM",
+      "description": "Watch the episodes of TV series {serieName} streaming and unlimited on all your screens with AFROSTREAM."
+    },
+    "season": {
+      "title": "{serieName} | The season {seasonNumber} streaming on AFROSTREAM",
+      "description": "Watch the {episodesNumber} episodes of the {seasonNumber} TV series {serieName} streaming and unlimited on all your screens with AFROSTREAM."
+    },
+    "episode": {
+      "title": "{serieName} | Season {seasonNumber} Episode {episodeNumber} streaming on AFROSTREAM",
+      "description": "Watch the {episodeNumber} season {seasonNumber} episode of {serieName} streaming on all your screens with AFROSTREAM."
+    },
     "devices": {
       "title": "Your favorite Black films and series in unlimited access when you want and where you want.",
       "action": "Sign up now !",

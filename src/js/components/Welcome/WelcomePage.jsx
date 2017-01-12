@@ -45,13 +45,11 @@ class WelcomePage extends React.Component {
   render () {
     return (
       <div className="welcome-page">
-        <InternalPlansCountDown className="welcome-header" {...this.props} >
-          <WelcomeHeader {...this.props}/>
-        </InternalPlansCountDown>
+        <WelcomeHeader {...this.props}/>
         <Devices {...this.props} />
         <WelcomeLifeSlider dots={false} autoplay={true} infinite={true}/>
         <SelectPlan {...this.props} showImages={false}/>
-        <Spots {...this.props}/>
+        <Spots {...this.props} />
         <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
       </div>
     )

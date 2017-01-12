@@ -9,6 +9,7 @@ import Immutable from 'immutable'
 import * as BillingActionCreators from '../../actions/billing'
 import * as FBActionCreators from '../../actions/facebook'
 import * as ModalActionCreators from '../../actions/modal'
+import ReactTooltip from 'react-tooltip'
 
 const {couponsCampaignBillingUuid, couponsCampaignType, billingProviderName} = config.sponsors
 
@@ -51,7 +52,7 @@ class ModalSponsors extends ModalComponent {
   }
 
   attachTooltip () {
-    $('.check').tooltip()
+    ReactTooltip.rebuild()
   }
 
   getI18n () {
@@ -148,7 +149,9 @@ class ModalSponsors extends ModalComponent {
 
     return <div className={classNames(classCheck)}
                 data-container=".panel"
-                title={`${this.getTitle(`status/${status}`)}`}>
+                data-tip={this.getTitle(`status/${status}`)}>
+      <ReactTooltip place="top" type="dark"
+                    effect="solid"/>
       <i className="zmdi zmdi-check"/></div>
   }
 
@@ -240,7 +243,7 @@ class ModalSponsors extends ModalComponent {
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
                       <h1>{`${this.getTitle('title')} ${sponsorsList && '(' + sponsorsList.size + ')' }` }</h1>
-                      <a ref="closeEl" className={closeClass}  onClick={::this.handleClose}></a>
+                      <a ref="closeEl" className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">

@@ -1,25 +1,14 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { prepareRoute } from '../../decorators'
-import SlidesContainer from './Slides'
-import Pagination from './Pagination'
 import Spinner from '../Spinner/Spinner'
 import Slider from 'react-slick'
-import * as SlidesActionCreators from '../../actions/slides'
-import * as CategoryActionCreators from '../../actions/category'
-import config from '../../../../config'
 import { withRouter } from 'react-router'
 import MovieInfo from '../Movies/MovieInfo'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 if (process.env.BROWSER) {
   require('./SlideShow.less')
 }
-//@prepareRoute(async function ({store}) {
-//  return await Promise.all([
-//    store.dispatch(CategoryActionCreators.getSpots())
-//  ])
-//})
 @connect(({Category, Slides}) => ({Category, Slides}))
 class SlideShow extends React.Component {
 
@@ -55,7 +44,7 @@ class SlideShow extends React.Component {
     return (
       <div className="slide-show" ref="slC">
         {!category && <Spinner />}
-        {category &&
+        {canUseDOM && category &&
         <Slider {...settings}>
           {category.map((data) => <div key={`slide-${data.get('_id')}`}><MovieInfo
             active={true}
@@ -64,6 +53,12 @@ class SlideShow extends React.Component {
             showBtn={true}
             { ...{data}}/></div>)}
         </Slider>}
+        {!canUseDOM && category && category.size && <div><MovieInfo
+          active={true}
+          maxLength={200}
+          load={true}
+          showBtn={true}
+          data={category.first()}/></div>}
       </div>
     )
   }

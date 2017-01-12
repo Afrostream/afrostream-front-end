@@ -47,6 +47,7 @@
     "webshot": "^0.18.0"
   },
   "dependencies": {
+    "afrostream-node-middleware-userip": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-middleware-userip.git#v1.0.0",
     "afrostream-node-request": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-request.git#v2.5.0",
     "afrostream-node-statsd": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-statsd.git#v1.3.0",
     "afrostream-player": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.38",
@@ -90,10 +91,9 @@
     "fbjs": "^0.8.3",
     "file-loader": "^0.8.4",
     "font-awesome": "^4.6.3",
-    "fs": "0.0.1-security",
     "global": "https://registry.npmjs.org/global/-/global-4.3.0.tgz",
     "gsap": "^1.17.0",
-    "handlebars": "^4.0.5",
+    "handlebars": "^4.0.6",
     "hash-webpack-plugin": "0.0.5",
     "history": "^2.1.2",
     "hoist-non-react-statics": "^1.0.5",
@@ -164,7 +164,7 @@
     "stats-webpack-plugin": "^0.4.2",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.12.3",
-    "superagent": "^1.2.0",
+    "superagent": "^3.3.1",
     "transform-loader": "^0.2.2",
     "ua-parser": "^0.3.5",
     "url": "^0.11.0",

@@ -206,7 +206,7 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
 
         switch (modalType) {
           case 'ajax':
-            oauthPopup = request('GET', url).end((err, res) => {
+            oauthPopup = request.get(url).then(() => {
               actionDispatcher(UserActionCreators.pendingUser(false))
             })
             break

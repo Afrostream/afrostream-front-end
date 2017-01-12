@@ -1,0 +1,84 @@
+<script type="text/javascript">
+  var url = '/';
+  var md = new MobileDetect(window.navigator.userAgent);
+  var jsonpCallbackBody = 'jsonpCallbackBody';
+  var mainDiv = document.getElementById('main');
+  var bodyDiv = document.body;
+  var isMobile = md.mobile();
+  var deserializeState = function (serializedJavascript) {
+    return eval('(' + serializedJavascript + ')')
+  }
+
+  var extendState = function () {
+
+    // Variables
+    var extended = {};
+    var deep = false;
+    var i = 0;
+    var length = arguments.length;
+
+    // Check if a deep merge
+    if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+      deep = arguments[0];
+      i++;
+    }
+
+    // Merge the object into the extended object
+    var merge = function (obj) {
+      for (var prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+          // If deep merge and property is an object, merge properties
+          if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+            extended[prop] = extendState(true, extended[prop], obj[prop]);
+          } else {
+            extended[prop] = obj[prop];
+          }
+        }
+      }
+    };
+
+    // Loop through each object and conduct a merge
+    for (; i < length; i++) {
+      var obj = arguments[i];
+      merge(obj);
+    }
+
+    return extended;
+
+  };
+
+  window['jsonpCallbackBody'] = function (bodyContent) {
+    try {
+      __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state), {
+        Event: {
+          isMobile
+        }
+      }, __BUNDLE_STATE__);
+
+      mainDiv.innerHTML = bodyContent.html;
+      var pictureUser = __INITIAL_STATE__.User && __INITIAL_STATE__.User.user && __INITIAL_STATE__.User.user.picture;
+      var userButtonImg = document.getElementById('userButtonImg');
+      if (userButtonImg && pictureUser) {
+        userButtonImg.src = pictureUser;
+      }
+      bodyDiv.classList.remove('hidden');
+    } catch (err) {
+      console.log('Body callback jsonp error', err);
+      __INITIAL_STATE__ = deserializeState(__INITIAL_STATE__)
+      bodyDiv.classList.remove('hidden');
+    }
+  }
+
+  if (window['__BUNDLE_STATE__']) {
+    var countryCodeParam = (__BUNDLE_STATE__.Geo && __BUNDLE_STATE__.Geo.geo.countryCode && '&country=' + __BUNDLE_STATE__.Geo.geo.countryCode || '')
+    var userPlanParam = (__BUNDLE_STATE__.User && __BUNDLE_STATE__.User.user && __BUNDLE_STATE__.User.user.planCode && '&subscribed=' + __BUNDLE_STATE__.User.user.planCode || '')
+    var isMobileParam = (isMobile && '&isMobile=' + isMobile || '')
+    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=jsonpCallbackBody' + countryCodeParam + userPlanParam + isMobileParam + '"></scr' + 'ipt>');
+  } else {
+    window['__BUNDLE_STATE__'] = {
+      Geo: {geo: {countryCode: '--'}},
+      User: {user: null},
+    }
+    window['jsonpCallbackBody']({});
+  }
+</script>

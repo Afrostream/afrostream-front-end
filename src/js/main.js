@@ -22,8 +22,10 @@ import { getI18n } from '../../config/i18n'
 const {apiClient, heroku} = config
 
 const history = browserHistory
+/* global __GEO_STATE__:true */
+/* global __USER_STATE__:true */
 /* global __INITIAL_STATE__:true */
-const state = deserialize(__INITIAL_STATE__)
+const state = typeof __INITIAL_STATE__ === 'string' && deserialize(__INITIAL_STATE__) || __INITIAL_STATE__
 const {intl:{defaultLocale, locale}} = state
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account
@@ -39,7 +41,7 @@ const messages = _.flattenJson(getI18n(clientLocale))
 //Set locale date //TODO une fois le site multilingue formater au pays courant
 moment.locale(clientLocale)
 
-function initSite (country) {
+function initSite () {
   const api = createAPI(
     /**
      * Client's createRequest() method
@@ -57,7 +59,7 @@ function initSite (country) {
       pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '')
       let url = `${apiClient.urlPrefix}${pathname}`
       query.from = query.from || heroku.appName
-      query.country = query.country || country || locale.toUpperCase() || '--'
+      query.country = query.country || '--'
       if (legacy) {
         url = url.replace(apiClient.urlPrefix, `${apiClient.protocol}://${apiClient.authority}`)
       }
@@ -80,8 +82,7 @@ function initSite (country) {
   )
 
   /* global __INITIAL_STATE__:true */
-  const store = createStore(api, history, state, country)
-
+  const store = createStore(api, history, state)
   ReactDOM.render(
     <Provider {...{store}} >
       <IntlProvider key="intl" {...{locale: clientLocale, messages, locale}}>
@@ -94,9 +95,4 @@ function initSite (country) {
   store.dispatch(UserActionCreators.getProfile())
 }
 
-getCountry().then((country) => {
-  initSite(country)
-}).catch((err) => {
-  console.log('Get Geo error', err)
-  initSite()
-})
+initSite()

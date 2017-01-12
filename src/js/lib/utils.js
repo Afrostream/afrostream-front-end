@@ -350,13 +350,9 @@ export function mergeFbUserInfo (user) {
     return null
   }
   if (user.facebook) {
-    //user.picture = `//graph.facebook.com/${user.facebook.id}/picture`
     user.name = user.name || user.facebook.name
     user.nickname = user.nickname || user.facebook.nickname
   }
-  //else {
-  //user.picture = `/avatar/${user.email || user.name}`
-  //}
   return user
 }
 

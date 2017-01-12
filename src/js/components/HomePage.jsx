@@ -9,7 +9,7 @@ import {
   injectIntl
 } from 'react-intl'
 
-@connect(({User, Billing}) => ({User, Billing}))
+@connect(({User, Billing, Geo}) => ({User, Billing, Geo}))
 class HomePage extends React.Component {
 
   componentWillReceiveProps () {
@@ -66,7 +66,6 @@ class HomePage extends React.Component {
   render () {
     const {props: {User, children}} = this
     const user = User.get('user')
-
     if (user) {
       if (children) {
         return children

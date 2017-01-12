@@ -16,30 +16,30 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 
   //HAS TOKEN STORED
   let donePath = getState().Modal.get('donePath')
-  let user = null
+  let user = getState().User.get('user')
+  const {location:{query}} = getState().router
   dispatch(pendingUser(true))
-  const token = getState().OAuth.get('token')
-
-  if (!token) {
-    throw new Error('No token present')
-    return data
-  }
+  //const token = getState().OAuth.get('token')
+  //
+  //if (!token) {
+  //  throw new Error('No token present')
+  //  return data
+  //}
 
   //GET USER INFO
 
-  await api({
-    path: `/api/users/me`,
-    passToken: true
-  }).then(({body}) => {
-    user = body
-  })
+  if (!user) {
+    await api({
+      path: `/api/users/me`,
+      passToken: true
+    }).then(({body}) => {
+      user = body
+    })
+  }
 
   if (!user) {
     throw new Error('No user found')
   }
-
-
-  //GEOLOC
 
   //MERGE USER DATA
   let subscriptionsStatus = user.subscriptionsStatus
@@ -48,13 +48,15 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   let planCode = user.planCode
   user.status = status
   user.isActive = planCode && userSubscriptions && _.find(userSubscriptions || [], (subscription) => subscription.isActive === 'yes')
-  user.user_id = user._id || user.user_id
   user.splashList = user.splashList || []
   user.authorized = true
   user = mergeFbUserInfo(user)
+
   dispatch(FBActionCreators.getFriendList())
+
+  //GEOLOC
   try {
-    user.authorized = await isAuthorized()
+    user.authorized = getState().Geo.geo && (getState().Geo.geo.get('authorized')) || await isAuthorized()
   } catch (err) {
     console.error('Error requesting /auth/geo ', err)
   }
@@ -65,7 +67,6 @@ async function mergeProfile ({api, data, getState, dispatch}) {
     //  dispatch(ModalActionCreators.open({target: 'geoWall'}))
     //  throw new Error('User not authorized Geoloc /auth/geo ')
   }
-
   if (!planCode && !donePath) {
     //if (user.status && user.status !== 'active') {
     //  donePath = `/select-plan/none/${user.status}`
@@ -99,6 +100,12 @@ async function mergeProfile ({api, data, getState, dispatch}) {
     //}
   }
 
+  //ADD FAVORITE
+  if (query && query.addFavoriteMovie) {
+    //addFavoriteMovie=true&movieId=IDDUMOVIE
+    dispatch(setFavorites('movies', true, query.addFavoriteMovie))
+  }
+
   if (donePath) {
     dispatch(push(donePath))
     dispatch(ModalActionCreators.close())
@@ -126,7 +133,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 export function getHistory () {
   return (dispatch, getState) => {
     const user = getState().User.get('user')
-    if (!user) {
+    if (!user || !user.get('_id')) {
       return {
         type: ActionTypes.User.getHistory,
         res: null
@@ -182,7 +189,8 @@ export function getFavorites (type = 'movies') {
     const user = getState().User.get('user')
     const capitType = _.capitalize(type)
     const returnTypeAction = ActionTypes.User[`getFavorites${capitType}`]
-    if (!user) {
+
+    if (!user || !user.get('_id')) {
       return {
         type: returnTypeAction,
         res: null

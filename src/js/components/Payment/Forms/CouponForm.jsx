@@ -5,6 +5,7 @@ import * as BillingActionCreators from '../../../actions/billing'
 import config from '../../../../../config'
 import { Link, I18n } from '../../Utils'
 import shallowEqual from 'react-pure-render/shallowEqual'
+import ReactTooltip from 'react-tooltip'
 
 class CouponForm extends I18n {
 
@@ -53,7 +54,7 @@ class CouponForm extends I18n {
     const {couponContainer} = this.refs
     let isCouponCodeCompatible = this.isCouponCodeCompatible()
     if (couponContainer && !isCouponCodeCompatible) {
-      $(couponContainer).tooltip()
+      ReactTooltip.rebuild()
     }
   }
 
@@ -113,8 +114,6 @@ class CouponForm extends I18n {
     let couponName = ''
     let couponIcon = 'zmdi-block'
 
-    let toolTipAttribute = {}
-
     let inputAttributes = {
       disabled: Boolean(!isCouponCodeCompatible),
       onChange: (event, payload) => {
@@ -123,14 +122,6 @@ class CouponForm extends I18n {
           this.checkCoupon(payload)
         }, 200)
       }
-    }
-
-    if (!isCouponCodeCompatible) {
-      toolTipAttribute = _.merge({
-        'data-original-title': this.getTitle('payment.promo.disabledLabel'),
-        'data-placement': 'top',
-        'data-toggle': 'tooltip'
-      })
     }
 
     if (coupon && coupon.size) {
@@ -152,7 +143,9 @@ class CouponForm extends I18n {
     }
 
     return (
-      <div className="col-md-12" ref="couponContainer" {...toolTipAttribute}>
+      <div className="col-md-12" ref="couponContainer" data-tip={this.getTitle('payment.promo.disabledLabel')}>
+        { !isCouponCodeCompatible && <ReactTooltip place="top" type="dark"
+                                                   effect="solid"/> }
         <div className="row no-padding">
           <div className="col-md-11">
             <TextField

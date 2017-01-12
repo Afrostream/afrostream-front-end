@@ -1,0 +1,53 @@
+<script type="text/javascript">
+  var tokenData;
+  var randCallback = 'user' + String(Math.round(Math.random() * 100000));
+  var randErrorCallback = 'user' + String(Math.round(Math.random() * 100000));
+  var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/api/users/me';
+  var __USER_STATE__ = null;
+  var bodyDiv = document.body;
+
+  function getToken () {
+    var storageId = '{{{config "apiClient.token"}}}';
+    var storedData = localStorage.getItem(storageId);
+    var resultData = null;
+    if (storedData) {
+      try {
+        resultData = JSON.parse(storedData);
+      } catch (err) {
+        console.log('deserialize oauth data error');
+      }
+    }
+    return resultData;
+  }
+
+
+  window[randCallback] = function (infoUser) {
+    console.log('Set user data', infoUser);
+    __USER_STATE__ = infoUser;
+    debugger
+  }
+
+  window[randErrorCallback] = function (error) {
+    debugger
+  }
+
+  tokenData = getToken();
+
+  if (tokenData && tokenData.access_token) {
+    var accessToken = tokenData.access_token;
+    try {
+      //HIDE content fro flickering
+      if (bodyDiv && bodyDiv.classList) {
+        bodyDiv.classList.add('hidden')
+      }
+      document.write('<scr' + 'ipt type="text/javascript" onerror="+randErrorCallback+" src="' + url + '?afro_token=' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
+    } catch (err) {
+      debugger
+      //HIDE content fro flickering
+      if (bodyDiv && bodyDiv.classList) {
+        bodyDiv.classList.remove('hidden')
+      }
+      console.log('User prerender Error : ', err.message)
+    }
+  }
+</script>

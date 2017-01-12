@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import { Route, Redirect, IndexRoute } from 'react-router'
 import Application from './components/Application'
 import MoviePage from './components/Movies/MoviePage'
@@ -18,7 +19,10 @@ import * as Life from './components/Life'
 import AccountPage from './components/Account/AccountPage'
 import CancelSubscription from './components/Account/CancelSubscription'
 import NoMatch from './components/NoMatch'
-import _ from 'lodash'
+//STATIC
+import Footer from './components/Footer/Footer'
+import MovieList from './components/Movies/MoviesList'
+import Spots from './components/Welcome/WelcomeComponents/Spots'
 
 const langs = ['fr', 'en']
 
@@ -29,6 +33,16 @@ const buildLangsRoutes = function () {
     </Route>,
   )
   allRoutes.push(buildRoutes())
+  return allRoutes
+}
+
+const buildLangsStaticRoutes = function () {
+  let allRoutes = _.map(langs, (lang) =>
+    <Route key={lang} name="lang" path={lang} lang={lang}>
+      {buildStaticRoutes(lang)}
+    </Route>,
+  )
+  allRoutes = _.concat(allRoutes, buildStaticRoutes())
   return allRoutes
 }
 
@@ -114,9 +128,22 @@ const buildRoutes = function (lang) {
 
 }
 
-export default (
+const buildStaticRoutes = function (lang) {
+  let subRoutes = [
+    <Route key={`${lang}-footer`} name="footer" path="footer" isStatic={true} component={Footer}/>,
+    <Route key={`${lang}-movieList`} name="movieList" path="movies/list" isStatic={true} component={MovieList}/>,
+    <Route key={`${lang}-spotsList`} name="spotsList" path="categorys/spots" isStatic={true} component={Spots}/>
+  ]
+  return subRoutes
+}
+
+export const staticRoutes = buildLangsStaticRoutes()
+
+export const routes = (
   <Route name="app" path="/" component={Application}>
     {buildLangsRoutes()}
     <Route path="*" name="nomatch" component={NoMatch}/>
   </Route>
 )
+
+export default routes

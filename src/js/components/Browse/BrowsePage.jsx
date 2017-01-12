@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { prepareRoute } from '../../decorators'
 import * as EventActionCreators from '../../actions/event'
 import * as UserActionCreators from '../../actions/user'
@@ -14,16 +15,15 @@ import LoginPage from '../Login/LoginPage'
     store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(EventActionCreators.userActive(true))
   ])
-
   store.dispatch(UserActionCreators.getFavorites('movies'))
   store.dispatch(UserActionCreators.getHistory())
 })
+@connect(({User}) => ({User}))
 class BrowsePage extends React.Component {
   render () {
     const {props: {User}} = this
     const user = User.get('user')
     const authorized = user && user.get('authorized')
-
     return (
       <div className="row-fluid">
         {!authorized && <LoginPage modalType="newsletter" closable={false} {...this.props}/>}

@@ -33,7 +33,7 @@ class CancelSubscription extends React.Component {
     history: PropTypes.object.isRequired
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     const {
       Billing,
       User,
@@ -48,7 +48,7 @@ class CancelSubscription extends React.Component {
     const subscriptionsList = Billing.get('subscriptions')
     const user = User.get('user')
     if (!subscriptionsList || !user) {
-      return 
+      return
     }
 
     if (!subscriptionBillingUuid) {
@@ -73,18 +73,18 @@ class CancelSubscription extends React.Component {
     })
 
     dispatch(BillingActionCreators.cancelSubscription(subscription))
-      .then(()=> {
+      .then(() => {
         dispatch(BillingActionCreators.getSubscriptions())
       })
-      .catch((err)=> {
+      .catch((err) => {
         this.setState({
           pending: false
         })
       })
   }
 
-  getUserSubscription(user) {
-    let subscription =  user.getIn(['subscriptionsStatus', 'subscriptions'])
+  getUserSubscription (user) {
+    let subscription = user.getIn(['subscriptionsStatus', 'subscriptions'])
       .filter(sub => {
         return sub.get('isActive') === 'yes' && sub.get('isCancellable') === 'yes'
       })
@@ -92,11 +92,11 @@ class CancelSubscription extends React.Component {
 
     if (!subscription) {
       subscription = user.getIn(['subscriptionsStatus', 'subscriptions'])
-      .filter(sub => {
-        return sub.get('isActive') === 'yes'
-      })
-      .first()
-      
+        .filter(sub => {
+          return sub.get('isActive') === 'yes'
+        })
+        .first()
+
     }
 
     return subscription.get('subscriptionBillingUuid')
@@ -124,7 +124,7 @@ class CancelSubscription extends React.Component {
       )
     }
 
-    let currentSubscription = subscriptionsList.find((obj)=> {
+    let currentSubscription = subscriptionsList.find((obj) => {
       return obj.get('subscriptionBillingUuid') == subscriptionBillingUuid
     })
 
@@ -172,7 +172,7 @@ class CancelSubscription extends React.Component {
         </div>
         }
 
-        <PaymentImages catIds={[18, 17]}/>
+        <PaymentImages />
 
       </div>
     )

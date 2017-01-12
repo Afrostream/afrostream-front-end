@@ -1,4 +1,11 @@
-import { proxy, avatar, sharing, log, statsd } from './api'
+import {
+  proxy,
+  avatar,
+  sharing,
+  log,
+  statsd,
+  component
+} from './api'
 import auth from './auth'
 import config from '../../config'
 import fs from 'fs'
@@ -19,20 +26,34 @@ const hostname = (env === 'development') ? `//${host}:${port}` : ''
 
 export default function routes (app, buildPath) {
 
+  const initFiles = [
+    {file: 'init.js'},
+    {file: 'polyfill.js'},
+    {file: 'mobile.js'}
+  ]
+  //FIXME get all webpack chunk files dynamicaly
+  const buildFiles = [
+    {file: 'vendor.js'},
+    {file: 'player.js'},
+    {file: 'main.js'},
+    {file: 'main.css'}
+  ]
 
-  function parseMD5Files () {
-    const buildFiles = ['vendor.js', 'player.js', 'main.js', 'main.css']
+  function parseMD5Files (files) {
+
     let promisedMd5 = []
-    _.map(buildFiles, (file) => {
+    _.map(files, (item) => {
       if (env === 'development') {
         return promisedMd5.push({
-          file: file,
-          hash: md5(file)
+          async: item.async || false,
+          file: item.file,
+          hash: md5(item.file)
         })
       }
-      promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, file)).then((buf) => {
+      promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, item.file)).then((buf) => {
         return {
-          file: file,
+          async: item.async || false,
+          file: item.file,
           hash: md5(buf)
         }
       }))
@@ -41,14 +62,18 @@ export default function routes (app, buildPath) {
   }
 
 
-  let hashFiles = []
-  hashFiles = parseMD5Files().then((res) => {
-    hashFiles = res
+  let hashInitFiles = []
+  let hashBuildFiles = []
+  parseMD5Files(initFiles).then((res) => {
+    hashInitFiles = res
+  })
+  parseMD5Files(buildFiles).then((res) => {
+    hashBuildFiles = res
   })
 // Render layout
-  const bootstrapFiles = function (res, type) {
+  const bootstrapFiles = function (res, type, bootstrapFiles) {
     const matchType = new RegExp(`.${type}$`)
-    let files = _.filter(hashFiles, (item) => {
+    let files = _.filter(bootstrapFiles, (item) => {
       return item.file.match(matchType)
     })
     let loadType = type === 'js' ? 'javascript' : type
@@ -59,7 +84,7 @@ export default function routes (app, buildPath) {
     let fileLoader = ''
     switch (type) {
       case 'js':
-        fileLoader = `document.write('<scr' + 'ipt src="{url}"></scr' + 'ipt>');`
+        fileLoader = `document.write('<scr' + 'ipt src="{url}" {async}></scr' + 'ipt>');`
         break
       case 'css':
         fileLoader = ' @import url("{url}") screen;'
@@ -68,7 +93,9 @@ export default function routes (app, buildPath) {
         break
     }
     _.map(files, (item) => {
-      templateStr += fileLoader.replace('{url}', `${hostname}/static/${item.file}?${item.hash}`)
+      let sourceFile = fileLoader.replace(/{url}/, `${hostname}/static/${item.file}?${item.hash}`)
+      sourceFile = sourceFile.replace(/{async}/, item.async ? 'async' : '')
+      templateStr += sourceFile
     })
 
     return templateStr
@@ -103,7 +130,6 @@ export default function routes (app, buildPath) {
     res.redirect(301, path.join(hostname, '/life'))
   })
 
-
   // OAUTH
   // --------------------------------------------------
   app.use('/auth', auth)
@@ -132,15 +158,23 @@ export default function routes (app, buildPath) {
 
   app.use('/alive', alive)
 
+  // COMPONENTS
+  // --------------------------------------------------
+  app.use('/components', component)
+
   // BOOTSTRAP
   // --------------------------------------------------
 
+  app.get('/init.js', (req, res) => {
+    res.send(bootstrapFiles(res, 'js', hashInitFiles))
+  })
+
   app.get('/bootstrap.js', (req, res) => {
-    res.send(bootstrapFiles(res, 'js'))
+    res.send(bootstrapFiles(res, 'js', hashBuildFiles))
   })
 
   app.get('/bootstrap.css', (req, res) => {
-    res.send(bootstrapFiles(res, 'css'))
+    res.send(bootstrapFiles(res, 'css', hashBuildFiles))
   })
   // BOOTSTRAP
   // --------------------------------------------------

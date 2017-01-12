@@ -1,5 +1,4 @@
 import ActionTypes from '../consts/ActionTypes'
-import { getCountry } from '../lib/geo'
 import { merge } from 'lodash'
 import config from '../../../config/'
 import * as OAuthActionCreators from './oauth'
@@ -269,7 +268,7 @@ export function getInternalplans ({
 
       if (!forcedCountry) {
         try {
-          forcedCountry = getState().country //await getCountry()
+          forcedCountry = getState().country
         } catch (err) {
           console.error('getInternalplans error requesting /auth/geo ', err)
         }

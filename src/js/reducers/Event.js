@@ -3,6 +3,7 @@ import ActionTypes from '../consts/ActionTypes'
 import createReducer from '../lib/createReducer'
 
 const initialState = Immutable.fromJS({
+  isMobile: false,
   userActive: true,
   pinHeader: false,
   showChat: false,

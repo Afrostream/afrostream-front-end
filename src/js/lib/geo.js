@@ -1,45 +1,48 @@
 import config from '../../../config'
+import { storeGeo } from '../lib/storage'
+import Q from 'q'
 import request from 'superagent'
 const {apiClient: {protocol, authority}} = config
 
+export async function getGeo () {
+  const url = protocol + '://' + authority + '/auth/geo'
+  return Q(request
+    .get(url)
+    .type('json')
+    .then((response) => {
+      return response.body
+    }))
+}
+
 export async function isAuthorized () {
   return await new Promise((resolve, reject) => {
-    const url = protocol + '://' + authority + '/auth/geo'
-
-    request
-      .get(url)
-      .type('json')
-      .end((err, response) => {
-        if (err) {
-          return reject(err)
-        }
-        if (response && response.body &&
-          response.body.authorized === false) {
+    getGeo()
+      .then((geo) => {
+        if (geo &&
+          geo.authorized === false) {
+          storeGeo(geo)
           return resolve(false)
         }
-        // undefined, error, or true => true.
-        resolve(true)
+        return resolve(true)
+      })
+      .catch((err) => {
+        return reject(err)
       })
   })
 }
 
 export async function getCountry () {
   return await new Promise((resolve, reject) => {
-    const url = protocol + '://' + authority + '/auth/geo'
-
-    request
-      .get(url)
-      .type('json')
-      .end((err, response) => {
-        if (err) {
-          return reject(err)
+    getGeo()
+      .then((geo) => {
+        if (geo && geo.countryCode) {
+          storeGeo(geo)
+          return resolve(geo.countryCode)
         }
-        if (response && response.body &&
-          response.body.countryCode) {
-          return resolve(response.body.countryCode)
-        }
-        // undefined, error, or true => true.
-        resolve('FR')
+        return resolve('FR')
+      })
+      .catch((err) => {
+        return reject(err)
       })
   })
 }

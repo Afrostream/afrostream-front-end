@@ -9,7 +9,8 @@ import window from 'global/window'
 export function getFriendList () {
   return (dispatch, getState, actionDispatcher) => {
     const auth = getState().Facebook.get('auth')
-    if (!auth || auth.get('status') !== 'connected') {
+    const user = getState().User.get('user')
+    if (!auth || auth.get('status') !== 'connected' || !user || !user.get('_id')) {
       return {
         type: ActionTypes.Facebook.getFriendList,
         res: []

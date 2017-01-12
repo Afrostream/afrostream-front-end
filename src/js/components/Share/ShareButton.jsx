@@ -56,10 +56,11 @@ class ShareButton extends I18n {
     }
     return (
       <button className="btn share_button" type="button"
-              data-tip={this.getTitle(this.props.tooltip)}  {...inputAttributes}>
+              data-tip={this.getTitle(this.props.tooltip)}
+              {...inputAttributes}>
         <i className={classSet(favoriteClass)}></i>
         {this.getLabel()}
-        <ReactTooltip class="fav-tooltip" place={this.props.direction} type="dark" effect="solid"/>
+        <ReactTooltip className="fav-tooltip" place={this.props.direction} type="dark" effect="solid"/>
       </button>
     )
   }

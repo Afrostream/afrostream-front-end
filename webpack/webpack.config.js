@@ -25,7 +25,9 @@ const AUTOPREFIXER_BROWSERS = [
 ]
 
 const assetsPath = path.resolve(__dirname, '../dist/')
-const node_modules_dir = path.resolve(__dirname, '../node_modules')
+const nodeModulesPath = path.resolve(__dirname, '../node_modules')
+const srcPath = path.resolve(__dirname, '../src')
+const serverPath = path.resolve(__dirname, '../server')
 let hash = null
 
 //
@@ -47,7 +49,22 @@ const webpackConfig = {
   },
   entry: {
     // Set up an ES6-ish environment
-    polyfill: 'babel-polyfill',
+    polyfill: [
+      //'babel-polyfill',
+      './src/js/lib/localStoragePolyfill',
+      './src/js/lib/customEventPolyfill',
+      './src/js/lib/requestAnimationFramePolyfill',
+    ],
+    mobile: [
+      'mobile-detect'
+    ],
+    //geo: [
+    //  './src/js/lib/geo'
+    //],
+    //storage: [
+    //  './src/js/lib/storage',
+    //  './src/js/lib/localStoragePolyfill'
+    //],
     main: './src/js/main',
     player: [
       'dashjs',
@@ -56,6 +73,8 @@ const webpackConfig = {
       'afrostream-player'
     ],
     vendor: [
+      'superagent',
+      'lodash',
       'react',
       'react-dom',
       'react-router',
@@ -66,10 +85,9 @@ const webpackConfig = {
       'redux',
       'fbjs/lib/ExecutionEnvironment',
       'history',
-      'lodash',
       'moment',
       'classnames',
-      'superagent',
+      'xhr',
       'jquery',
       'payment',
       'bootstrap',
@@ -78,17 +96,14 @@ const webpackConfig = {
       'q',
       'qs',
       'outdated-browser/outdatedbrowser/outdatedbrowser',
-      'material-ui',
-      './src/js/lib/localStoragePolyfill',
-      './src/js/lib/customEventPolyfill',
-      './src/js/lib/requestAnimationFramePolyfill'
+      'material-ui'
     ]
   },
   resolve: {
     modulesDirectories: [
-      'src',
-      'server',
-      'node_modules',
+      srcPath,
+      serverPath,
+      nodeModulesPath,
     ],
     extensions: ['.js', '.jsx', '.json', ''],
     loaderExtensions: ['.js', ''],
@@ -114,19 +129,19 @@ const webpackConfig = {
   },
   module: {
     preLoaders: [
-      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
-      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
+      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [nodeModulesPath]},
+      {test: /\.js$/, loader: 'eslint-loader', exclude: [nodeModulesPath]}
     ],
     loaders: [
       {
         test: /\.jsx?$/,
         loaders: ['babel-loader?cacheDirectory'],
-        exclude: [node_modules_dir],
+        exclude: [nodeModulesPath],
       },
       {
         test: /\.js$/, // include .js files
         loaders: ['babel-loader?cacheDirectory'],
-        exclude: [node_modules_dir]
+        exclude: [nodeModulesPath]
       },
       {
         test: /\.json$/,
@@ -135,7 +150,7 @@ const webpackConfig = {
       {
         test: /\.css$/,
         loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
-        include: [path.join(node_modules_dir, 'afrostream-player')]
+        include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {
         test: /\.less$/,
@@ -164,12 +179,10 @@ const webpackConfig = {
       {
         test: /video\.js$/,
         loader: 'expose-loader?videojs',
-        include: [path.join(node_modules_dir, 'afrostream-player')]
+        include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {
-        test: /koment-js$/,
-        loader: 'expose-loader?koment',
-        include: [path.join(node_modules_dir, 'afrostream-player')]
+        test: /mobile-detect/, loader: 'expose-loader?MobileDetect'
       },
       {
         test: /jquery\.js$/, loader: 'expose-loader?$'
@@ -183,22 +196,24 @@ const webpackConfig = {
       {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
         loader: 'expose-loader?outdatedBrowser',
-        include: [path.join(node_modules_dir, 'outdated-browser/outdatedbrowser')]
+        include: [path.join(nodeModulesPath, 'outdated-browser/outdatedbrowser')]
       },
       {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
         loaders: ['imports?this=>window'],
-        include: [path.join(node_modules_dir, 'outdated-browser/outdatedbrowser')]
+        include: [path.join(nodeModulesPath, 'outdated-browser/outdatedbrowser')]
       },
       {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
         loaders: ['exports-loader?outdatedBrowser'],
-        include: [path.join(node_modules_dir, 'outdated-browser/outdatedbrowser')]
+        include: [path.join(nodeModulesPath, 'outdated-browser/outdatedbrowser')]
       }
     ],
     exprContextCritical: false
   },
   node: {
+    __dirname: true,
+    fs: 'empty',
     net: 'empty',
     tls: 'empty',
     dns: 'empty'
@@ -208,9 +223,45 @@ const webpackConfig = {
   //},
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['player', 'vendor'],
+      name: 'init',
+      chunks: ['mobile', 'polyfill'],
       minChunks: 2
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['player', 'vendor', 'init'],
+      async: process.env.NODE_ENV === 'production',
+      minChunks: 2
+    }),
+
+    ///+++
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'common',
+    //  chunks: ['geo', 'storage', 'init']
+    //}),
+
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'player',
+    //  chunks: ['player'],
+    //}),
+
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  names: ['player', 'vendor', 'common'],
+    //  minChunks: 3
+    //}),
+    ///+++
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'player',
+    //  names: ['player']
+    //}),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'vendor',
+    //  names: ['commons', 'common'],
+    //  minChunks: 2
+    //}),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'common',
+    //  chunks: ['geo', 'storage', 'init']
+    //}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
@@ -218,13 +269,13 @@ const webpackConfig = {
     new ExtractTextPlugin('[name].css', {allChunks: true}),
     new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
-      koment: 'koment-js',
-      videojs: 'video.js',
+      MobileDetect: 'mobile-detect',
       $: 'jquery',
       jQuery: 'jquery',
       'window.$': 'jquery'
     }),
     new webpack.DefinePlugin({
+      'global.GENTLY': false,
       'process.env': {
         NODE_ENV: `${JSON.stringify(process.env.NODE_ENV || 'development')}`,
         DOMAIN_HOST: JSON.stringify(process.env.DOMAIN_HOST),

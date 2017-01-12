@@ -23,23 +23,10 @@ class WelcomeHeader extends React.Component {
     this.state = {
       isMobile: true,
       size: {
-        width: 1280,
+        width: 1080,
         height: 500
       }
     }
-  }
-
-  componentDidMount () {
-    let isMobile = false
-    if (canUseDOM) {
-      const userAgent = (window.navigator && navigator.userAgent) || ''
-      let agent = new MobileDetect(userAgent)
-      isMobile = agent.mobile()
-    }
-
-    this.setState({
-      isMobile: isMobile,
-    })
   }
 
   render () {
@@ -123,12 +110,11 @@ class WelcomeHeader extends React.Component {
       'welcome-overlay': !info.logo,
       'welcome-header_movie': Boolean(movieData)
     }
-
     return (
       <section className={classSet(welcomeClassesSet)}>
-        <ReactImgix key="welcome-pgm" className="afrostream-movie__poster" src={posterImg} bg={true}>
+        <div key="welcome-pgm" className="afrostream-movie__poster" style={{backgroundImage: `url(${posterImg})`}}>
           <div className="afrostream-movie__mask"/>
-        </ReactImgix>
+        </div>
         <div key="welcome-pgm-movie" className="afrostream-movie">
           {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
           <div className="afrostream-movie__info">

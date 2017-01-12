@@ -10,3 +10,14 @@ export function getStatic (path) {
     })
   }
 }
+
+export function getComponentRoute (route) {
+  return (dispatch, getState) => {
+    console.log(`static ${route} getComponentRoute`)
+    return async api => ({
+      type: ActionTypes.Static.getComponentRoute,
+      route,
+      res: await api({local: true, path: route, params: {format: 'json'}}).catch(notFound)
+    })
+  }
+}

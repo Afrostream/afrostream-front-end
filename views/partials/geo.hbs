@@ -1,0 +1,51 @@
+<script type="text/javascript">
+  var geoData;
+  var randCallback = 'geo' + String(Math.round(Math.random() * 100000));
+  var url = '{{{config "apiClient.protocol"}}}://{{{config "apiClient.authority"}}}/auth/geo';
+  var __GEO_STATE__ = {
+    countryCode: '--'
+  };
+  var storageId = '{{{config "apiClient.geo"}}}';
+
+  function getGeo () {
+    var storedData = localStorage.getItem(storageId);
+    var resultData = null;
+    if (storedData) {
+      try {
+        resultData = JSON.parse(storedData);
+      } catch (err) {
+        console.log('deserialize oauth data error');
+      }
+    }
+    return resultData;
+  }
+
+  function storeGeo (geoData) {
+    if (geoData) {
+      try {
+        localStorage.setItem(storageId, JSON.stringify(geoData));
+      } catch (err) {
+        console.log('save geo data error');
+      }
+    }
+    return geoData;
+  }
+
+  window[randCallback] = function (infoGeo) {
+    console.log('infoGeo', infoGeo);
+    __GEO_STATE__ = infoGeo;
+    storeGeo(infoGeo);
+  }
+
+  geoData = getGeo();
+
+  if (!geoData) {
+    try {
+      document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?callback=' + randCallback + '"></scr' + 'ipt>');
+    } catch (err) {
+      console.log('Geo prerender Error : ', err.message)
+    }
+  } else {
+    __GEO_STATE__ = geoData;
+  }
+</script>
