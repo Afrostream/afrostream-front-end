@@ -41,7 +41,7 @@ export default function routes (app, buildPath) {
   function parseMD5Files (files, inline) {
 
     let promisedMd5 = []
-    let pathSource = inline && 'static' || buildPath
+    let pathSource = (inline && 'static/js' || buildPath)
     let fileInfo
     _.map(files, (item) => {
       if (env !== 'production') {
@@ -51,7 +51,7 @@ export default function routes (app, buildPath) {
           hash: md5(item.file)
         }
         if (inline) {
-          fileInfo.file = path.join(hostname, pathSource, fileInfo.file)
+          fileInfo.file = path.join(pathSource, fileInfo.file)
         }
         return promisedMd5.push(fileInfo)
       }
