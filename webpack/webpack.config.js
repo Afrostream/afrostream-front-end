@@ -219,15 +219,15 @@ const webpackConfig = {
   //  'window': 'Window'
   //},
   plugins: [
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  name: 'init',
-    //  chunks: ['mobile', 'polyfill'],
-    //  minChunks: 2
-    //}),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['player', 'vendor', 'mobile', 'polyfill', 'init'],
-      //async: process.env.NODE_ENV === 'production',
+      name: 'init',
+      chunks: ['mobile', 'polyfill'],
       minChunks: 2
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['player', 'vendor', 'init'],
+      //async: process.env.NODE_ENV === 'production',
+      minChunks: 3
     }),
 
     ///+++
