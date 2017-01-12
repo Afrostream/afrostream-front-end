@@ -27,8 +27,7 @@ const hostname = (env === 'development') ? `//${host}:${port}` : ''
 export default function routes (app, buildPath) {
 
   const initFiles = [
-    {file: 'init.js'},
-    {file: 'polyfill.js'},
+    {file: 'polyfills.js'},
     {file: 'mobile.js'}
   ]
   //FIXME get all webpack chunk files dynamicaly
@@ -42,6 +41,7 @@ export default function routes (app, buildPath) {
   function parseMD5Files (files, inline) {
 
     let promisedMd5 = []
+    let pathSource = inline && 'static' || buildPath
     let fileInfo
     _.map(files, (item) => {
       if (env !== 'production') {
@@ -51,11 +51,11 @@ export default function routes (app, buildPath) {
           hash: md5(item.file)
         }
         if (inline) {
-          fileInfo.file = path.join(hostname, 'static', fileInfo.file)
+          fileInfo.file = path.join(hostname, pathSource, fileInfo.file)
         }
         return promisedMd5.push(fileInfo)
       }
-      promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, item.file)).then((buf) => {
+      promisedMd5.push(fsPromise.readFileAsync(path.join(pathSource, item.file)).then((buf) => {
         fileInfo = {
           async: item.async || false,
           file: item.file,

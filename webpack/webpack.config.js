@@ -48,15 +48,6 @@ const webpackConfig = {
     hashDigestLength: 32
   },
   entry: {
-    // Set up an ES6-ish environment
-    polyfill: [
-      './src/js/lib/localStoragePolyfill',
-      './src/js/lib/customEventPolyfill',
-      './src/js/lib/requestAnimationFramePolyfill',
-    ],
-    mobile: [
-      'mobile-detect'
-    ],
     main: './src/js/main',
     player: [
       'dashjs',
@@ -65,6 +56,7 @@ const webpackConfig = {
       'afrostream-player'
     ],
     vendor: [
+      'mobile-detect',
       'superagent',
       'lodash',
       'react',
@@ -88,7 +80,10 @@ const webpackConfig = {
       'q',
       'qs',
       'outdated-browser/outdatedbrowser/outdatedbrowser',
-      'material-ui'
+      'material-ui',
+      './src/js/lib/localStoragePolyfill',
+      './src/js/lib/customEventPolyfill',
+      './src/js/lib/requestAnimationFramePolyfill'
     ]
   },
   resolve: {
@@ -220,14 +215,8 @@ const webpackConfig = {
   //},
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'init',
-      chunks: ['mobile', 'polyfill'],
+      names: ['player', 'vendor'],
       minChunks: 2
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['player', 'vendor', 'init'],
-      async: process.env.NODE_ENV === 'production',
-      minChunks: 3
     }),
 
     ///+++
