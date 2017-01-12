@@ -12,7 +12,6 @@ const {images} =config
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(ConfigActionCreators.getConfig('press')),
     store.dispatch(PressActionCreators.fetchAll())
   ])

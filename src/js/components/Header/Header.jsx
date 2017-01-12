@@ -42,7 +42,6 @@ class Header extends React.Component {
 
     const hiddenMode = !Event.get('userActive')
     const chatMode = Event.get('showChat')
-    const pinned = Event.get('pinHeader')
     const user = User.get('user')
 
     let excludedBreacrumbsRoutes = [

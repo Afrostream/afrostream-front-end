@@ -8,7 +8,6 @@ import SeasonList from '../Seasons/SeasonList'
 
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
   await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(EventActionCreators.userActive(true))
   ])
 

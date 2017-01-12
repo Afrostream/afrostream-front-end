@@ -27,7 +27,6 @@ class SearchBox extends React.Component {
       props: {dispatch}
     } = this
 
-    dispatch(EventActionCreators.pinHeader(true))
     this.setState({
       hasFocus: true
     })

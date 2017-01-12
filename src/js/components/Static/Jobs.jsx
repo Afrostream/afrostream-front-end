@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(JobActionCreators.fetchAll())
   ])
 })

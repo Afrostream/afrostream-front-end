@@ -93,7 +93,6 @@ export default {
     userActive: null,
     showError: null,
     showChat: null,
-    pinHeader: null,
     snackMessage: null
   }),
 

@@ -16,14 +16,7 @@ export function showError (error) {
     }
   }
 }
-export function pinHeader (pin) {
-  return (dispatch, getState) => {
-    return {
-      type: ActionTypes.Event.pinHeader,
-      pin
-    }
-  }
-}
+
 export function showChat (show) {
   return (dispatch, getState) => {
     return {

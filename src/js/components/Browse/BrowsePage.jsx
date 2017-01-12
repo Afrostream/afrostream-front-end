@@ -12,7 +12,6 @@ import LoginPage from '../Login/LoginPage'
 
 @prepareRoute(async function ({store}) {
   await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(false)),
     store.dispatch(EventActionCreators.userActive(true))
   ])
   store.dispatch(UserActionCreators.getFavorites('movies'))

@@ -20,9 +20,6 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store, location, params: {movieId, episodeId}}) {
   let {query} = location
-  await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(false)),
-  ])
 
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))

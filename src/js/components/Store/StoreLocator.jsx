@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react'
-import { prepareRoute } from '../../decorators'
 import config from '../../../../config'
-import * as EventActionCreators from '../../actions/event'
 import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
 import TextField from 'material-ui/TextField'
@@ -27,11 +25,6 @@ if (process.env.BROWSER) {
   require('./StoreLocator.less')
 }
 
-@prepareRoute(async function ({store}) {
-  return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true))
-  ])
-})
 class StoreLocator extends React.Component {
 
   state = {

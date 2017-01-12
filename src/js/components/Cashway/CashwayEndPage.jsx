@@ -15,7 +15,6 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(BillingActionCreators.getSubscriptions())
   ])
 })

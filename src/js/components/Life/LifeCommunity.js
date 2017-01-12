@@ -12,7 +12,6 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store}) {
   await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(LifeActionCreators.fetchUsers({}))
   ])
 

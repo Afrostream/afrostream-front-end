@@ -1,11 +1,5 @@
 import React from 'react'
-import { prepareRoute } from '../../decorators'
-import * as EventActionCreators from '../../actions/event'
-@prepareRoute(async function ({store}) {
-  return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true))
-  ])
-})
+
 class SubmitYourFilm extends React.Component {
   render () {
     return (

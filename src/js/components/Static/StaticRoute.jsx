@@ -8,7 +8,6 @@ import window from 'global/window'
 
 @prepareRoute(async function ({store, route}) {
   return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true)),
     store.dispatch(StaticActionCreators.getStatic(route.name))
   ])
 })

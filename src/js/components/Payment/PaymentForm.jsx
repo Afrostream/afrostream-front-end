@@ -1,13 +1,11 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { prepareRoute } from '../../decorators'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import classSet from 'classnames'
 import config from '../../../../config'
 import * as BillingActionCreators from '../../actions/billing'
 import * as UserActionCreators from '../../actions/user'
-import * as EventActionCreators from '../../actions/event'
 import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
 import PaymentImages from './PaymentImages'
@@ -48,11 +46,6 @@ if (canUseDOM) {
 }
 
 @connect(({User, Billing, OAuth}) => ({User, Billing, OAuth}))
-@prepareRoute(async function ({store}) {
-  return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true))
-  ])
-})
 class PaymentForm extends I18n {
 
   constructor (props) {

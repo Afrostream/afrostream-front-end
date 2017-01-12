@@ -1,6 +1,4 @@
 import React from 'react'
-import { prepareRoute } from '../../decorators'
-import * as EventActionCreators from '../../actions/event'
 import StaticMenu from './StaticMenu'
 import { withRouter } from 'react-router'
 
@@ -8,11 +6,6 @@ if (process.env.BROWSER) {
   require('./StaticPage.less')
 }
 
-@prepareRoute(async function ({store}) {
-  return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true))
-  ])
-})
 class StaticPage extends React.Component {
 
   render () {

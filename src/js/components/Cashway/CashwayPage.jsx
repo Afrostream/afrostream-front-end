@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import SignUpButton from '../User/SignUpButton'
-import { prepareRoute } from '../../decorators'
 import config from '../../../../config'
 import * as EventActionCreators from '../../actions/event'
 import scriptLoader from '../../lib/script-loader'
@@ -15,11 +14,6 @@ if (process.env.BROWSER) {
   require('./CashwayPage.less')
 }
 
-@prepareRoute(async function ({store}) {
-  return await Promise.all([
-    store.dispatch(EventActionCreators.pinHeader(true))
-  ])
-})
 class CashwayPage extends React.Component {
 
   state = {
