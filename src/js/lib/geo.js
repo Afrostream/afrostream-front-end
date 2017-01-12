@@ -1,6 +1,7 @@
 import config from '../../../config'
 import { storeGeo } from '../lib/storage'
 import Q from 'q'
+import qs from 'qs'
 import request from 'superagent'
 const {apiClient: {protocol, authority}} = config
 
@@ -8,7 +9,7 @@ export async function getGeo ({query = {}}) {
   const url = protocol + '://' + authority + '/auth/geo'
   return Q(request
     .get(url)
-    .query({query})
+    .query(qs.stringify(query))
     .type('json')
     .then((response) => {
       return response.body
