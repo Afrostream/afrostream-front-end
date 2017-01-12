@@ -11,7 +11,7 @@
   font-family: @font-family-base;
   color: @brand-primary;
   padding: @app-padding;
-  margin-top:  @app-padding;;
+  margin-top: @app-padding;;
   font-size: 1.2em;
 
   a {
@@ -76,6 +76,13 @@
     a:active {
       color: @color-indigo;
       text-decoration: none;
+    }
+  }
+  .__react_component_tooltip.place-top {
+    left: 3px !important;
+    &:before,
+    &:after {
+      left: 15%;
     }
   }
 }

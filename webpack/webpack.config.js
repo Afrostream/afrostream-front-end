@@ -69,7 +69,6 @@ const webpackConfig = {
     player: [
       'dashjs',
       'video.js',
-      'koment-js',
       'afrostream-player'
     ],
     vendor: [
