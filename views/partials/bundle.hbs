@@ -98,7 +98,6 @@
   geoData = getStorage('{{{config "apiClient.geo"}}}');
   tokenData = getStorage('{{{config "apiClient.token"}}}');
 
-  var countryCodeParam = (geoData && geoData.countryCode && '&countryCode=' + geoData.countryCode || '')
   var tokenParam = (tokenData && tokenData.access_token && '&access_token=' + tokenData.access_token || '')
   var refreshParam = (tokenData && tokenData.refresh_token && '&refresh_token=' + tokenData.refresh_token || '')
 
@@ -107,7 +106,7 @@
     if (bodyDiv && bodyDiv.classList) {
       bodyDiv.classList.add('hidden')
     }
-    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?callback=' + randCallback + countryCodeParam + tokenParam + refreshParam + '"></scr' + 'ipt>');
+    document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?callback=' + randCallback + tokenParam + refreshParam + '"></scr' + 'ipt>');
   } catch (err) {
     console.log('Bundle prerender Error : ', err.message)
   }
