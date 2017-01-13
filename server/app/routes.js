@@ -53,7 +53,7 @@ export default function routes (app, buildPath) {
           hash: md5(item.file)
         }
         if (inline) {
-          fileInfo.file = path.join(hostname, 'static', fileInfo.file)
+          fileInfo.file = `${hostname}/static/${fileInfo.file}`
         }
         return promisedMd5.push(fileInfo)
       }

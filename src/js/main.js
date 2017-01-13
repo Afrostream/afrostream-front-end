@@ -11,18 +11,11 @@ import moment from 'moment'
 import _ from 'lodash'
 import config from '../../config'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import { getCountry } from './lib/geo'
 import * as UserActionCreators from './actions/user'
 import document from 'global/document'
 
 import { deserialize } from './lib/utils'
 import { getI18n } from '../../config/i18n'
-
-require('./lib/polyfills/localStoragePolyfill')
-require('./lib/polyfills/customEventPolyfill')
-require('./lib/polyfills/requestAnimationFramePolyfill')
-require('./lib/polyfills/mobile')
-
 
 const {apiClient, heroku} = config
 

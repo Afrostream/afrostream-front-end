@@ -1042,6 +1042,7 @@ class FloatPlayer extends I18n {
 
     const playerData = data || Player.get('/player/data')
     const target = playerData && playerData.get('target') || document.getElementById('player-container')
+    const scroll = playerData && playerData.get('scroll')
     const elVisible = this.player && target && isElementInViewPort(target, 0.60)
 
     let position = elVisible && target && target.getBoundingClientRect() || {
@@ -1049,7 +1050,7 @@ class FloatPlayer extends I18n {
         left: 0
       }
 
-    position.transform = `translate3d(${position.left}px, ${elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
+    position.transform = `translate3d(${position.left}px, ${scroll !== false && elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
 
     this.ticking = false
 
