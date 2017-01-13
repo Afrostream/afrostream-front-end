@@ -80,6 +80,7 @@ class PlayerComponent extends Component {
         videoData = videoData.set('type', videoData.get('type'))
         videoData = videoData.set('videoId', videoId)
         videoData = videoData.set('target', this.refs.wrapper)
+        videoData = videoData.set('scroll', false)
         dispatch(PlayerActionCreators.loadPlayer({
           data: videoData
         }))

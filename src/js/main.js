@@ -18,6 +18,12 @@ import document from 'global/document'
 import { deserialize } from './lib/utils'
 import { getI18n } from '../../config/i18n'
 
+require('./lib/polyfills/localStoragePolyfill')
+require('./lib/polyfills/customEventPolyfill')
+require('./lib/polyfills/requestAnimationFramePolyfill')
+require('./lib/polyfills/mobile')
+
+
 const {apiClient, heroku} = config
 
 const history = browserHistory

@@ -48,6 +48,13 @@ const webpackConfig = {
     hashDigestLength: 32
   },
   entry: {
+    // Set up an ES6-ish environment
+    polyfills: [
+      './src/js/lib/polyfills/localStoragePolyfill',
+      './src/js/lib/polyfills/customEventPolyfill',
+      './src/js/lib/polyfills/requestAnimationFramePolyfill',
+      './src/js/lib/polyfills/mobile.js'
+    ],
     main: './src/js/main',
     player: [
       'dashjs',
@@ -80,10 +87,7 @@ const webpackConfig = {
       'q',
       'qs',
       'outdated-browser/outdatedbrowser/outdatedbrowser',
-      'material-ui',
-      './src/js/lib/localStoragePolyfill',
-      './src/js/lib/customEventPolyfill',
-      './src/js/lib/requestAnimationFramePolyfill'
+      'material-ui'
     ]
   },
   resolve: {
@@ -164,6 +168,10 @@ const webpackConfig = {
         loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
+        test: /.*polyfills/,
+        loader: 'file-loader?name=[name].[ext]?[hash'
+      },
+      {
         test: /video\.js$/,
         loader: 'expose-loader?videojs',
         include: [path.join(nodeModulesPath, 'afrostream-player')]
@@ -214,8 +222,14 @@ const webpackConfig = {
   //  'window': 'Window'
   //},
   plugins: [
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: 'init',
+    //  chunks: ['mobile', 'polyfill'],
+    //  minChunks: 2
+    //}),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['player', 'vendor'],
+      //async: process.env.NODE_ENV === 'production',
       minChunks: 2
     }),
 

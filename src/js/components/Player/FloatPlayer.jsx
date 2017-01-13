@@ -734,9 +734,10 @@ class FloatPlayer extends I18n {
         this.requestTick(true)
       }
     )
-
-    videojs.on(window, 'scroll', ::this.requestTick)
-    videojs.on(window, 'resize', ::this.requestTick)
+    if (!playerData.scroll !== false) {
+      videojs.on(window, 'scroll', ::this.requestTick)
+      videojs.on(window, 'resize', ::this.requestTick)
+    }
     player.on('error', ::this.triggerError)
     player.on('useractive', ::this.triggerUserActive)
     player.on('userinactive', ::this.triggerUserActive)

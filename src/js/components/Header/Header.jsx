@@ -79,7 +79,7 @@ class Header extends React.Component {
       <Headroom disableInlineStyles>
 
         <header className={classSet(sliderClasses)}>
-          {/*{planCode && <SmartBanner {...apps.params}/>}*/}
+          <div dangerouslySetInnerHTML={{__html: '<!--googleoff: all-->'}}/>
           <nav className="float--left" role="navigation">
             <ul className="nav">
               <li>
@@ -112,6 +112,7 @@ class Header extends React.Component {
           <nav className="float--right" role="navigation">
             <UserButton {...this.props}/>
           </nav>
+          <div dangerouslySetInnerHTML={{__html: '<!--googleon: all-->'}}/>
         </header>
       </Headroom>
     )
