@@ -468,6 +468,8 @@ class PaymentForm extends I18n {
         const currency = currentPlan.get('currency')
         const amount = currentPlan.get('amount')
         const currencyConversions = currentPlan.get('currencyConversions')
+        const conversion = currencyConversions.get('EUR')
+        const conversionAmount = currencyConversions.get('amount')
 
         ReactFB.track({
           event: 'CompleteRegistration', params: {
@@ -483,7 +485,7 @@ class PaymentForm extends I18n {
           category: 'Billing',
           action: 'Payment Success',
           label: internalPlanUuid,
-          value: currencyConversions && currencyConversions.EUR && currencyConversions.EUR.amount
+          value: Number(conversionAmount)
         })
 
         self.disableForm(false, 1)
