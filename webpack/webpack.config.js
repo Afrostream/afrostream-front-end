@@ -57,9 +57,6 @@ const webpackConfig = {
     ],
     main: './src/js/main',
     player: [
-      'dashjs',
-      'video.js',
-      'koment-js',
       'afrostream-player'
     ],
     vendor: [
@@ -182,11 +179,6 @@ const webpackConfig = {
         include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {
-        test: /koment-js$/,
-        loader: 'expose-loader?koment',
-        include: [path.join(nodeModulesPath, 'afrostream-player')]
-      },
-      {
         test: /mobile-detect/, loader: 'expose-loader?MobileDetect'
       },
       {
@@ -227,11 +219,11 @@ const webpackConfig = {
   //  'window': 'Window'
   //},
   plugins: [
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  names: ['player', 'vendor'],
-    //  //async: process.env.NODE_ENV === 'production',
-    //  minChunks: 2
-    //}),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['player', 'vendor'],
+      //async: process.env.NODE_ENV === 'production',
+      minChunks: 2
+    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
