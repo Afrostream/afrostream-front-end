@@ -736,8 +736,8 @@ class FloatPlayer extends I18n {
     )
     if (!playerData.scroll !== false) {
       videojs.on(window, 'scroll', ::this.requestTick)
-      videojs.on(window, 'resize', ::this.requestTick)
     }
+    videojs.on(window, 'resize', ::this.requestTick)
     player.on('error', ::this.triggerError)
     player.on('useractive', ::this.triggerUserActive)
     player.on('userinactive', ::this.triggerUserActive)
@@ -1050,7 +1050,7 @@ class FloatPlayer extends I18n {
         left: 0
       }
 
-    position.transform = `translate3d(${position.left}px, ${scroll !== false && elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
+    position.transform = `translate3d(${position.left}px, ${elVisible && ( position.bottom - window.innerHeight) || 0}px, 0)`
 
     this.ticking = false
 
