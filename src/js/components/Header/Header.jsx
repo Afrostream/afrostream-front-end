@@ -8,6 +8,7 @@ import config from '../../../../config'
 import { withRouter } from 'react-router'
 import * as EventActionCreators from '../../actions/event'
 import Breadcrumbs from './Breadcrumbs'
+import _ from 'lodash'
 
 const {apps} = config
 
@@ -34,10 +35,15 @@ class Header extends React.Component {
       props: {
         Event,
         User,
-        router
+        router,
+        routes,
+        params:{
+          videoId
+        }
       }
     } = this
 
+    const sideBarToggled = Event.get('sideBarToggled')
     const hiddenMode = !Event.get('userActive')
     const user = User.get('user')
 
@@ -65,12 +71,12 @@ class Header extends React.Component {
     }
 
     const isOnLife = router.isActive('life')
-    const isOnPlayer = router.isActive('player')
+    const isOnPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player')) || videoId
 
     let sliderClasses = {
       'topbar': true,
       'topbar-life': isOnLife,
-      'topbar-hidden': hiddenMode && isOnPlayer,
+      'topbar-hidden': hiddenMode && isOnPlayer && !sideBarToggled,
       'topbar-fixed-color': true
     }
 

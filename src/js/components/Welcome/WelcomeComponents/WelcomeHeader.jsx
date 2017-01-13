@@ -107,7 +107,7 @@ class WelcomeHeader extends React.Component {
 
     let welcomeClassesSet = {
       'welcome-header': true,
-      'welcome-overlay': !info.logo,
+      'welcome-overlay': info.logo || movieData ,
       'welcome-header_movie': Boolean(movieData)
     }
     return (

@@ -126,6 +126,31 @@
     color: #fff;
     background: none;
   }
+
+  button {
+    display: inline-block;
+    height: @header-height;
+    &.btn-home {
+      @media @mobile {
+        width: @sidebar-width - 70px;
+      }
+      width: @sidebar-width - 50px;
+      img {
+        max-width: 80%;
+      }
+      background: @color-black-2;
+    }
+    border: none;
+    .open-menu-icon {
+      display: inline-block;
+      width: 10%;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      font-size: 2em;
+      vertical-align: middle;
+    }
+  }
 }
 
 .contentdock {
@@ -140,7 +165,6 @@
 @media (min-width: 768px) {
 
   .sidebar-wrapper {
-    padding-top: 15px;
     .sidebar-nav:first-of-type {
       padding: (@app-padding * 0.5) 0 0 0;
     }

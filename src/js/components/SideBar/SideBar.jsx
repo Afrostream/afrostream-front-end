@@ -277,7 +277,10 @@ class SideBar extends React.Component {
     return (
       <div {...rootProps}>
         <div className="sidebar-wrapper" style={sidebarStyle}>
-          <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
+          <button role="button" className="btn-home" onClick={e => this.onSetOpen(false)}>
+            <i className="open-menu-icon zmdi zmdi-menu"/>
+            <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
+          </button>
           <ul className="sidebar-nav">
             {this.getUserConnectedButtons(user, 'profile')}
             <li><Link activeClassName="active" onClick={(e) => ::this.onSetOpen(false)} to="/"><i

@@ -171,7 +171,9 @@ header {
     background-color: transparent;
     .isMobile({ background-color: @color-black-2; });
     //box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 6px, rgba(0, 0, 0, 0.2) 1px 0px 6px;
-    .transition(background-color 0.2s linear);
+    transform: translateY(0);
+    .transition(background-color 0.2s linear, transform 200ms ease-in-out);
+
     .nav-full-width {
       width: 100%;
     }
@@ -235,8 +237,9 @@ header {
   }
 
   &.topbar-hidden {
-    opacity: 0;
-    .transition(opacity 0.4s linear);
+    //opacity: 0;
+    //.transition(opacity 0.4s linear);
+    transform: translateY(-100%);
   }
   &.topbar-fixed-color,
   &.topbar-life {
