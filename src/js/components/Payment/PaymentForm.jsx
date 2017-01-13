@@ -469,7 +469,7 @@ class PaymentForm extends I18n {
         const amount = currentPlan.get('amount')
         const currencyConversions = currentPlan.get('currencyConversions')
         const conversion = currencyConversions.get('EUR')
-        const conversionAmount = currencyConversions.get('amount')
+        const conversionAmount = conversion.get('amount')
 
         ReactFB.track({
           event: 'CompleteRegistration', params: {
