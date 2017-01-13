@@ -126,12 +126,12 @@ const webpackConfig = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader?cacheDirectory'],
+        loaders: ['babel-loader'],
         exclude: [nodeModulesPath],
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel-loader?cacheDirectory'],
+        loaders: ['babel-loader'],
         exclude: [nodeModulesPath]
       },
       {
@@ -165,15 +165,16 @@ const webpackConfig = {
       },
       {
         test: /videojs-vtt\.js/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
+        loader: 'url-loader?name=[name].[ext]?[hash]'
+      },
+      {
+        test: /ismobilejs/,
+        loader: 'file-loader?name=[name].[ext]?[hash]',
+        include: [path.join(nodeModulesPath, 'ismobilejs')]
       },
       {
         test: /.*polyfills/,
         loader: 'file-loader?name=[name].[ext]?[hash]'
-      },
-      {
-        test: /ismobilejs/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /video\.js$/,
@@ -187,9 +188,6 @@ const webpackConfig = {
       },
       {
         test: /mobile-detect/, loader: 'expose-loader?MobileDetect'
-      },
-      {
-        test: /ismobilejs/, loader: 'expose-loader?isMobile'
       },
       {
         test: /jquery\.js$/, loader: 'expose-loader?$'
@@ -230,44 +228,9 @@ const webpackConfig = {
   //},
   plugins: [
     //new webpack.optimize.CommonsChunkPlugin({
-    //  name: 'init',
-    //  chunks: ['mobile', 'polyfill'],
+    //  names: ['player', 'vendor'],
+    //  //async: process.env.NODE_ENV === 'production',
     //  minChunks: 2
-    //}),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['player', 'vendor'],
-      //async: process.env.NODE_ENV === 'production',
-      minChunks: 2
-    }),
-
-    ///+++
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  name: 'common',
-    //  chunks: ['geo', 'storage', 'init']
-    //}),
-
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  name: 'player',
-    //  chunks: ['player'],
-    //}),
-
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  names: ['player', 'vendor', 'common'],
-    //  minChunks: 3
-    //}),
-    ///+++
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  name: 'player',
-    //  names: ['player']
-    //}),
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  name: 'vendor',
-    //  names: ['commons', 'common'],
-    //  minChunks: 2
-    //}),
-    //new webpack.optimize.CommonsChunkPlugin({
-    //  name: 'common',
-    //  chunks: ['geo', 'storage', 'init']
     //}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
