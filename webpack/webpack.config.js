@@ -162,7 +162,7 @@ const webpackConfig = {
       },
       {
         test: /videojs-vtt\.js/,
-        loader: 'url-loader?name=[name].[ext]?[hash]'
+        loader: 'file-loader?name=[name].[ext]?[hash]'
       },
       {
         test: /ismobilejs/,
