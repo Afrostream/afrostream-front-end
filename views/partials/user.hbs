@@ -24,11 +24,9 @@
   window[randCallback] = function (infoUser) {
     console.log('Set user data', infoUser);
     __USER_STATE__ = infoUser;
-    debugger
   }
 
   window[randErrorCallback] = function (error) {
-    debugger
   }
 
   tokenData = getToken();
@@ -42,7 +40,6 @@
       }
       document.write('<scr' + 'ipt type="text/javascript" onerror="+randErrorCallback+" src="' + url + '?afro_token=' + accessToken + '&callback=' + randCallback + '"></scr' + 'ipt>');
     } catch (err) {
-      debugger
       //HIDE content fro flickering
       if (bodyDiv && bodyDiv.classList) {
         bodyDiv.classList.remove('hidden')
