@@ -70,7 +70,7 @@ class Header extends React.Component {
     let sliderClasses = {
       'topbar': true,
       'topbar-life': isOnLife,
-      'topbar-hidden': hiddenMode /*&& isOnPlayer*/,
+      'topbar-hidden': hiddenMode && isOnPlayer,
       'topbar-fixed-color': true
     }
 
