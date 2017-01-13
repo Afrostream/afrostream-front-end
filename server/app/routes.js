@@ -30,7 +30,7 @@ export default function routes (app, buildPath) {
     {file: 'localStoragePolyfill.js'},
     {file: 'customEventPolyfill.js'},
     {file: 'requestAnimationFramePolyfill.js'},
-    {file: 'mobile.js'}
+    {file: 'isMobile.js'}
   ]
   //FIXME get all webpack chunk files dynamicaly
   const buildFiles = [

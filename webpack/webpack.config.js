@@ -53,7 +53,7 @@ const webpackConfig = {
       './src/js/lib/polyfills/localStoragePolyfill',
       './src/js/lib/polyfills/customEventPolyfill',
       './src/js/lib/polyfills/requestAnimationFramePolyfill',
-      './src/js/lib/polyfills/mobile.js'
+      'ismobilejs'
     ],
     main: './src/js/main',
     player: [
@@ -169,7 +169,11 @@ const webpackConfig = {
       },
       {
         test: /.*polyfills/,
-        loader: 'file-loader?name=[name].[ext]?[hash'
+        loader: 'file-loader?name=[name].[ext]?[hash]'
+      },
+      {
+        test: /ismobilejs/,
+        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /video\.js$/,
@@ -183,6 +187,9 @@ const webpackConfig = {
       },
       {
         test: /mobile-detect/, loader: 'expose-loader?MobileDetect'
+      },
+      {
+        test: /ismobilejs/, loader: 'expose-loader?isMobile'
       },
       {
         test: /jquery\.js$/, loader: 'expose-loader?$'
