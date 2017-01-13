@@ -35,7 +35,6 @@ export default function routes (app, buildPath) {
   //FIXME get all webpack chunk files dynamicaly
   const buildFiles = [
     {file: 'vendor.js'},
-    {file: 'polyfills.js'},
     {file: 'player.js'},
     {file: 'main.js'},
     {file: 'main.css'}

@@ -115,7 +115,8 @@ class SideBar extends React.Component {
         break
       case 'profile':
         el = (
-          <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
+          <li><Link id="userButtonLink" activeClassName="active" onlyActiveOnIndex
+                    onClick={(e) => ::this.onSetOpen(false)}
                     to={`/life/community/${user.get('_id')}/${slugify(user.get('nickname'))}`}><img
             src={user.get('picture')}
             alt="50x50"

@@ -54,10 +54,15 @@
       }, __BUNDLE_STATE__);
 
       mainDiv.innerHTML = bodyContent.html;
-      var pictureUser = __INITIAL_STATE__.User && __INITIAL_STATE__.User.user && __INITIAL_STATE__.User.user.picture;
+      var user = __INITIAL_STATE__.User && __INITIAL_STATE__.User.user
+      var pictureUser = user && user.picture;
+      var userButtonLink = document.getElementById('userButtonLink');
       var userButtonImg = document.getElementById('userButtonImg');
       if (userButtonImg && pictureUser) {
         userButtonImg.src = pictureUser;
+      }
+      if (userButtonLink && user) {
+        userButtonLink.href = userButtonLink.href.replace(/undefined/, user._id) + '/' + user.nickname;
       }
       bodyDiv.classList.remove('hidden');
     } catch (err) {
