@@ -166,12 +166,14 @@ export function like ({}) {
     return async () => {
       return await new Promise((resolve, reject) => {
 
-        let creationDate = created_time || new Date()
+        let creationDate = new Date()
+        let location = window.location
+
         window.FB.api(
           `/me/og.likes`,
           'POST',
           {
-            object: window.location,
+            object: location,
             created_time: creationDate.getTime()
           },
           (response) => {
@@ -181,6 +183,40 @@ export function like ({}) {
             return resolve({
               type: ActionTypes.Facebook.readNews,
               res: response.data
+            })
+          }
+        )
+      })
+    }
+  }
+}
+
+export function pageInfo ({}) {
+  return (dispatch, getState) => {
+    if (!window.FB) {
+      return {
+        type: ActionTypes.Facebook.pageInfo,
+        res: []
+      }
+    }
+    /* make the API call */
+    return async () => {
+      return await new Promise((resolve, reject) => {
+
+        let location = window.location
+
+        window.FB.api(
+          `/`,
+          {id: location},
+          (response) => {
+            if (!response || response.error) {
+              return reject(response.error)
+            }
+            debugger
+            return resolve({
+              type: ActionTypes.Facebook.pageInfo,
+              res: response.data,
+              location
             })
           }
         )

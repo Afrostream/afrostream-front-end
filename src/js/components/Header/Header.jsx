@@ -16,7 +16,7 @@ if (process.env.BROWSER) {
   require('./Header.less')
 }
 
-@connect(({Event, User}) => ({Event, User}))
+@connect(({Event, User, Player}) => ({Event, User, Player}))
 class Header extends React.Component {
 
   toggleSideBar () {
@@ -35,6 +35,7 @@ class Header extends React.Component {
       props: {
         Event,
         User,
+        Player,
         router,
         routes,
         params:{
@@ -71,12 +72,13 @@ class Header extends React.Component {
     }
 
     const isOnLife = router.isActive('life')
+    const hasPlayer = Player.get('player')
     const isOnPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player')) || videoId
 
     let sliderClasses = {
       'topbar': true,
       'topbar-life': isOnLife,
-      'topbar-hidden': hiddenMode && isOnPlayer && !sideBarToggled,
+      'topbar-hidden': hiddenMode && isOnPlayer && !sideBarToggled && hasPlayer,
       'topbar-fixed-color': true
     }
 
@@ -94,11 +96,9 @@ class Header extends React.Component {
                   <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
                 </button>
               </li>
-              {user && <li>
+              <li>
                 <SearchInput/>
-              </li>}
-
-
+              </li>
             </ul>
           </nav>
           <nav className="float--left float-bottom-mobile" role="navigation">

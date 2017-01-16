@@ -137,6 +137,7 @@ export default {
     initialized: null,
     like: null,
     readNews: null,
+    pageInfo: null,
     watchVideo: null,
     getFriends: null,
     getFriendList: null,

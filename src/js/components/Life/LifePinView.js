@@ -21,6 +21,7 @@ import ReactImgix from '../Image/ReactImgix'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import scriptLoader from '../../lib/script-loader'
 import { StickyContainer, Sticky } from 'react-sticky'
+import window from 'global/window'
 
 const {addThisApi, addThis, bitly} = config
 
@@ -32,11 +33,12 @@ if (process.env.BROWSER) {
   if (pinId) {
     return await Promise.all([
       store.dispatch(LifeActionCreators.fetchPin(pinId)),
+      store.dispatch(FacebookActionCreators.pageInfo({})),
       store.dispatch(FacebookActionCreators.readNews({}))
     ])
   }
 })
-@connect(({Life, User}) => ({Life, User}))
+@connect(({Life, User, Facebook}) => ({Life, User, Facebook}))
 class LifePinView extends ClickablePin {
 
   constructor (props, context) {
@@ -120,15 +122,20 @@ class LifePinView extends ClickablePin {
     const {
       props:{
         Life,
-        User
+        User,
+        Facebook
       }
     } = this
 
     const type = data.get('type')
+    const location = window.location
+    const pageInfos = Facebook.get(`pageInfo/${location}`)
+    const shareInfo = pageInfos && pageInfos.get('share')
+    const nbShares = shareInfo && shareInfo.get('share_count') || 0
     const pinnedUser = data.get('user')
 
     const pinId = data.get('_id')
-    const nbLikes = data.get('likes')
+    const nbLikes = data.get('likes') + nbShares
     const currentUser = User.get('user')
     const lifeUserId = currentUser && currentUser.get('_id')
     const likedPins = lifeUserId && Life.get(`life/users/${lifeUserId}/pins/likes`)

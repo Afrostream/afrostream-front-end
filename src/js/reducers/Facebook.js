@@ -59,6 +59,15 @@ export default createReducer(initialState, {
     })
   },
 
+  [ActionTypes.Facebook.pageInfo](state, {res, location}) {
+    if (!res) {
+      return state
+    }
+    return state.merge({
+      [`pageInfo/${location}`]: res
+    })
+  },
+
   [ActionTypes.Facebook.like](state, {res}) {
     if (!res) {
       return state
