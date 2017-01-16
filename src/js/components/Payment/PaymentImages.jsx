@@ -39,9 +39,7 @@ class PaymentImages extends React.Component {
       }
     })
 
-    let uniqSpots = _.uniq(recoList, (o) => {
-      return o['_id']
-    })
+    let uniqSpots = _.uniqBy(recoList, '_id')
     //get only 8 mea
     let selectionMovies = Immutable.fromJS(_.take(uniqSpots, 8))
 
