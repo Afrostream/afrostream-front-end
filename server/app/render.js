@@ -160,7 +160,6 @@ export default function render (req, res, layout, {payload, isStatic}) {
           const storeState = _.merge({intl: {locale}}, store.getState())
           const initialState = serializeJs(storeState, {isJSON: true})
 
-          console.log('initialState ok')
           //console.log('preferredLocale : ', language, preferredLocale, locale)
 
           const format = req.query.format

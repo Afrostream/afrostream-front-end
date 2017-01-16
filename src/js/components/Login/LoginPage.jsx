@@ -13,41 +13,40 @@ if (process.env.BROWSER) {
 @prepareRoute(async function ({store, location, params}) {
 
   let {lang} = params
-  let {query} = location
+  let {query, pathname} = location
   let {data} = query
 
-  const langPath = lang && `${lang}/` || ''
   let target = 'show'
   let closable = true
 
   switch (true) {
-    case ~location.pathname.indexOf(`/reset`):
-      target = `showReset`
+    case ~pathname.indexOf('/reset'):
+      target = 'showReset'
       break
-    case ~location.pathname.indexOf(`/signup`):
-      target = `showSignup`
+    case ~pathname.indexOf('/signup'):
+      target = 'showSignup'
       break
-    case ~location.pathname.indexOf(`/signin`):
-      target = `showSignin`
+    case ~pathname.indexOf('/signin'):
+      target = 'showSignin'
       break
-    case ~location.pathname.indexOf(`/newsletter`):
-      target = `newsletter`
+    case ~pathname.indexOf('/newsletter'):
+      target = 'newsletter'
       break
-    case ~location.pathname.indexOf(`/parrainage`):
-      target = `sponsorship`
+    case ~pathname.indexOf('/parrainage'):
+      target = 'sponsorship'
       break
-    case ~location.pathname.indexOf(`/coupon`):
+    case pathname.indexOf('/coupon'):
       if (data) {
         const decodedData = decodeSafeUrl(data)
         await store.dispatch(BillingActionCreators.createCoupon(decodedData))
       }
-      console.log('match')
-      target = `redeemCoupon`
+      target = 'redeemCoupon'
       break
     default :
-      target = `geowall`
+      target = 'geowall'
       break
   }
+
 
   await store.dispatch(ModalActionCreators.open({target, closable}))
 })
