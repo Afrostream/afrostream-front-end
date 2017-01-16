@@ -78,9 +78,11 @@ function initSite () {
         .send(body)
     }
   )
-
   /* global __INITIAL_STATE__:true */
   const store = createStore(api, history, state)
+  const user = store.getState().User.user
+  const geo = store.getState().Geo.geo
+
   ReactDOM.render(
     <Provider {...{store}} >
       <IntlProvider key="intl" {...{locale: clientLocale, messages, locale}}>
@@ -90,7 +92,9 @@ function initSite () {
     document.getElementById('main')
   )
 
-  store.dispatch(UserActionCreators.getProfile())
+  if (!user || user.get('_id')) {
+    store.dispatch(UserActionCreators.getProfile())
+  }
 }
 
 initSite()
