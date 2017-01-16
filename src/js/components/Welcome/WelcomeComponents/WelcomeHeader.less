@@ -4,18 +4,20 @@
   width: 100%;
   position: relative;
   padding: @header-height 0 @header-height 0;
+  .isMobile({ padding: @header-height-mobile 0 0 0; });
   position: relative;
   text-align: center;
   color: @white-base;
 
   .slide-show {
     padding: 0;
-    min-height: 66vh;
+    min-height: 35vh;
     .movie {
-      min-height: 66vh;
+      min-height: 35vh;
     }
     .movie .movie-info_content {
       vertical-align: bottom;
+      display: table-cell;
     }
     .subscribe-button {
       vertical-align: bottom;
@@ -23,6 +25,7 @@
       .isMobile({ font-size: 1em; });
     }
   }
+
   .isMobile({ padding-top: @header-height-mobile; });
   //@media all and (min-width: @screen-sm-min) {
   //  height: 80vh;
@@ -46,7 +49,7 @@
     left: 0;
     right: 0;
     top: @header-height;
-    .isMobile({ top: @header-height-mobile; });
+    .isMobile({ position: relative; top: 0; bottom: inherit; min-height: 35vh; });
     bottom: 0;
     background-image: url(../../../../assets/images/default/1920x815.jpg);
     //background-position: center top;
@@ -69,20 +72,19 @@
       //.horizontal-gradient(transparent, 20%, #000, 60%);
     }
 
+  }
+
+  &.welcome-header_movie {
     &.welcome-overlay {
       .afrostream-movie__mask {
         .isWideScreen({ background-color: fade(#000, 40%); });
       }
     }
-  }
-
-  &.welcome-header_movie {
     .afrostream-movie__poster {
       background-size: cover;
     }
     .afrostream-movie__mask {
       background-color: fade(#000, 30%);
-      background: none;
     }
   }
 
@@ -104,9 +106,11 @@
     vertical-align: middle;
     text-align: center;
     max-width: 100%;
-    margin: @header-height @app-padding @app-padding @app-padding;
-    @media all and (max-width: @screen-sm-min) {
-      margin: @app-padding;
+    .afrostream-movie__subscribe {
+      margin: @header-height @app-padding @app-padding @app-padding;
+      @media all and (max-width: @screen-sm-min) {
+        margin: @app-padding;
+      }
     }
     .afrostream-movie__info {
       h1 {

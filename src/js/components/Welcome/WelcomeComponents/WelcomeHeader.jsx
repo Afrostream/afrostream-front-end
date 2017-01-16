@@ -107,26 +107,32 @@ class WelcomeHeader extends React.Component {
 
     let welcomeClassesSet = {
       'welcome-header': true,
-      'welcome-overlay': info.logo || movieData ,
+      'welcome-overlay': info.logo || movieData,
       'welcome-header_movie': Boolean(movieData)
     }
+
+
     return (
       <section className={classSet(welcomeClassesSet)}>
-        <div key="welcome-pgm" className="afrostream-movie__poster" style={{backgroundImage: `url(${posterImg})`}}>
-          <div className="afrostream-movie__mask"/>
-        </div>
-        <div key="welcome-pgm-movie" className="afrostream-movie">
-          {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
-          <div className="afrostream-movie__info">
-            {info.movie.title && <h1>{info.movie.title}</h1>}
-            {info.movie.synopsis && <div className='detail-text'>{info.movie.synopsis}</div>}
-          </div>
-          <div className="afrostream-movie__subscribe">
-            <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
-              return (<span key={`statement-${i}`}>{statement}</span>)
-            })}</div>
-            <SignUpButton label={info.action}/>
-          </div>
+        {!movieData && <SlideShow dots={false} autoplay={true} infinite={false}/>}
+        {movieData && [
+          <ReactImgix key="welcome-pgm" className="afrostream-movie__poster" src={posterImg} bg={true}>
+            <div className="afrostream-movie__mask"/>
+            {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
+          </ReactImgix>,
+          <SignUpButton key="welcome-pgm-signup" className="subscribe-button subscribe-button-mobile"
+                        label={info.action}/>,
+          <div key="welcome-pgm-movie" className="afrostream-movie">
+            <div className="afrostream-movie__info">
+              <h1>{info.movie.title}</h1>
+              <div className='detail-text'>{info.movie.synopsis}</div>
+            </div>
+          </div>] }
+        <div className="afrostream-movie__subscribe">
+          <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
+            return (<span key={`statement-${i}`}>{statement}</span>)
+          })}</div>
+          <SignUpButton label={info.action}/>
         </div>
       </section>
     )
