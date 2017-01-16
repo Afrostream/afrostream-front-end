@@ -20,22 +20,22 @@ if (process.env.BROWSER) {
   let closable = true
 
   switch (true) {
-    case Boolean(~pathname.indexOf('/reset')):
+    case Boolean(~pathname.indexOf('reset')):
       target = 'showReset'
       break
-    case Boolean(~pathname.indexOf('/signup')):
+    case Boolean(~pathname.indexOf('signup')):
       target = 'showSignup'
       break
-    case Boolean(~pathname.indexOf('/signin')):
+    case Boolean(~pathname.indexOf('signin')):
       target = 'showSignin'
       break
-    case Boolean(~pathname.indexOf('/newsletter')):
+    case Boolean(~pathname.indexOf('newsletter')):
       target = 'newsletter'
       break
-    case Boolean(~pathname.indexOf('/parrainage')):
+    case Boolean(~pathname.indexOf('parrainage')):
       target = 'sponsorship'
       break
-    case Boolean(~pathname.indexOf('/coupon')):
+    case Boolean(~pathname.indexOf('coupon')):
       if (data) {
         const decodedData = decodeSafeUrl(data)
         await store.dispatch(BillingActionCreators.createCoupon(decodedData))
@@ -47,7 +47,6 @@ if (process.env.BROWSER) {
       break
   }
 
-  console.log('target : ', target, pathname)
   await store.dispatch(ModalActionCreators.open({target, closable}))
 })
 @connect(({User}) => ({User}))
