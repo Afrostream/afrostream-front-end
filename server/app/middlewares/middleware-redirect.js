@@ -3,10 +3,12 @@ const env = process.env.NODE_ENV || 'development'
 
 export function forceSSL () {
   return function (req, res, next) {
-    if (env !== 'production') {
+    const proto = req.get('x-forwarded-proto')
+    const cdnHostname = req.get('x-afsm-forwarded-host')
+
+    if (env !== 'production' && !cdnHostname.match(/^(staging)\./i)) {    // force ssl on staging
       return next()
     }
-    const proto = req.get('x-forwarded-proto')
 
     if (!proto || proto === 'https') {
       return next()
