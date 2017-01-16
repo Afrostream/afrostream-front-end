@@ -3,6 +3,7 @@
   var tokenData;
   var randCallback = 'bundle' + String(Math.round(Math.random() * 100000));
   var url = '/auth/bundle';
+  var initBundleTimeout = 0;
   var bodyDiv = document.body;
 
   var __BUNDLE_STATE__ = {
@@ -103,9 +104,13 @@
     if (bodyDiv && bodyDiv.classList) {
       bodyDiv.classList.add('hidden')
     }
+    initBundleTimeout = setTimeout(function () {
+      bodyDiv.classList.remove('hidden')
+    }, 10000);
     document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?callback=' + randCallback + tokenParam + refreshParam + '"></scr' + 'ipt>');
   } catch (err) {
     console.log('Bundle prerender Error : ', err.message)
+    bodyDiv.classList.remove('hidden')
   }
 
 </script>

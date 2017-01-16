@@ -2,6 +2,7 @@
   var url = '/';
   var jsonpCallbackBody = 'jsonpCallbackBody';
   var mainDiv = document.getElementById('main');
+  var initBodyTimeout = 0;
   var bodyDiv = document.body;
   var deserializeState = function (serializedJavascript) {
     return eval('(' + serializedJavascript + ')')
@@ -47,6 +48,7 @@
 
   window['jsonpCallbackBody'] = function (bodyContent) {
     try {
+      clearTimeout(initBodyTimeout)
       __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state), {
         Event: {
           isMobile: isMobile.any
@@ -76,6 +78,9 @@
     var countryCodeParam = (__BUNDLE_STATE__.Geo && __BUNDLE_STATE__.Geo.geo.countryCode && '&country=' + __BUNDLE_STATE__.Geo.geo.countryCode || '')
     var userPlanParam = (__BUNDLE_STATE__.User && __BUNDLE_STATE__.User.user && __BUNDLE_STATE__.User.user.planCode && '&subscribed=' + __BUNDLE_STATE__.User.user.planCode || '')
     var isMobileParam = (isMobile.any && '&isMobile=' + isMobile.any || '')
+    initBodyTimeout = setTimeout(function () {
+      window['jsonpCallbackBody']({});
+    }, 10000);
     document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?format=json' + ('&location=' + window.location.pathname.replace('/', '')) + '&callback=jsonpCallbackBody' + countryCodeParam + userPlanParam + isMobileParam + '"></scr' + 'ipt>');
   } else {
     window['__BUNDLE_STATE__'] = {
