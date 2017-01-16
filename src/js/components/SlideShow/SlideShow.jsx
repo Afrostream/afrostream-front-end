@@ -40,6 +40,10 @@ class SlideShow extends React.Component {
       category = Immutable.List.of(Movie.get(`movies/${movieId}`))
     }
 
+    if (!category) {
+      return <div />
+    }
+
     const settings = {
       autoplay: this.props.autoplay,
       dots: this.props.dots,
