@@ -47,6 +47,7 @@ if (process.env.BROWSER) {
       break
   }
 
+  //console.log('target : ', target, pathname, Boolean(~pathname.indexOf('coupon')))
   await store.dispatch(ModalActionCreators.open({target, closable}))
 })
 @connect(({User}) => ({User}))

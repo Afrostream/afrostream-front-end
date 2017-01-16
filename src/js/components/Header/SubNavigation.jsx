@@ -53,6 +53,7 @@ class SubNavigation extends Component {
         <ul className="sub-navigation">
           <li key={`theme-streaming`}>
             <Link activeClassName="active"
+                  onlyActiveOnIndex
                   to="/"><FormattedMessage
               id={ `menu.streaming` }/></Link>
           </li>
