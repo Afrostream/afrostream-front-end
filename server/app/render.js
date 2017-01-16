@@ -99,7 +99,13 @@ export default function render (req, res, layout, {payload, isStatic}) {
             geo.countryCode = country
           }
           // *** Init Store
-          const store = createStore(api, history, {Geo: {geo}, User: {user}, Event: {isMobile}})
+          const store = createStore(api, history,
+            {
+              OAuth: {token: {}},
+              Geo: {geo},
+              User: {user},
+              Event: {isMobile}
+            })
           const state = store.getState()
           let {params, location, routes} = renderProps
 

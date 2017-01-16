@@ -102,7 +102,7 @@
   try {
     geoData = getStorage('{{{config "apiClient.geo"}}}');
     tokenData = getStorage('{{{config "apiClient.token"}}}');
-    __BUNDLE_STATE__.OAuth.token = tokenData && tokenData.access_token;
+    __BUNDLE_STATE__.OAuth.token = tokenData;
     var tokenParam = (__BUNDLE_STATE__.OAuth.token && __BUNDLE_STATE__.OAuth.token.access_token && '&access_token=' + __BUNDLE_STATE__.OAuth.token.access_token || '')
     var refreshParam = (__BUNDLE_STATE__.OAuth.token && __BUNDLE_STATE__.OAuth.token.refresh_token && '&refresh_token=' + __BUNDLE_STATE__.OAuth.token.refresh_token || '')
     //HIDE content fro flickering
