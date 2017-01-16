@@ -12,6 +12,10 @@ import {
 @connect(({User, Billing, Geo}) => ({User, Billing, Geo}))
 class HomePage extends React.Component {
 
+  constructor (props) {
+    super(props)
+  }
+
   componentWillReceiveProps () {
     this.checkAuth()
   }

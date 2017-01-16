@@ -23,22 +23,20 @@ class SlideShow extends React.Component {
         Category,
         Movie,
         maxLength,
-        params:{
-          movieId
-        }
+        movieId
       }
     } = this
 
     const categoryId = Category.get(`categoryId`)
     let category
 
-    if (categoryId) {
-      category = Category.get(`categorys/${categoryId}/spots`)
-    }
-
     if (movieId) {
       category = Immutable.List.of(Movie.get(`movies/${movieId}`))
     }
+    else if (categoryId) {
+      category = Category.get(`categorys/${categoryId}/spots`)
+    }
+
 
     if (!category) {
       return <div />
@@ -98,4 +96,5 @@ SlideShow.defaultProps = {
   speed: 5000,
   maxLength: 200
 }
+
 export default withRouter(SlideShow)
