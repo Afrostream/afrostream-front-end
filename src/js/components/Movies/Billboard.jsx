@@ -198,10 +198,6 @@ class Billboard extends LoadVideo {
       return (
         <div className="billboard-no-users">
           {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
-          {movieInfo && <div className="billboard-infos text-left">
-            <div className="billboard-title billboard-row">{title}</div>
-            <div className="billboard-synopsis billboard-row">{synopsis}</div>
-          </div>}
           <div className="afrostream-movie__subscribe">
             <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
               return (<span key={`statement-${i}`}>{statement}</span>)
@@ -209,6 +205,10 @@ class Billboard extends LoadVideo {
             </div>
             <SignUpButton className="subscribe-button" label="home.action"/>
           </div>
+          {movieInfo && <div className="billboard-infos text-left">
+            <div className="billboard-title billboard-row">{title}</div>
+            <div className="billboard-synopsis billboard-row">{synopsis}</div>
+          </div>}
         </div>
       )
     }

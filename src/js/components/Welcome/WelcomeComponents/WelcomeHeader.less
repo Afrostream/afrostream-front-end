@@ -15,9 +15,10 @@
     .movie {
       display: table;
       height: auto;
+      min-height: 76vh;
 
       .movie-info_content {
-        vertical-align: bottom;
+        vertical-align: middle;
         display: table-cell;
         height: auto;
         position: relative;
@@ -32,72 +33,12 @@
 
       .movie-background {
         background-position: 50% 50%;
-        .isMobile({ background-size: contain; })
+        .isMobile({ background-position: 50% 0; height: 50vh; })
       }
     }
   }
 
   .isMobile({ padding-top: @header-height-mobile; });
-  //@media all and (min-width: @screen-sm-min) {
-  //  height: 80vh;
-  //}
-
-  //&:before {
-  //  content: '';
-  //  display: inline-block;
-  //  height: 100%;
-  //  vertical-align: middle;
-  //}
-  //&:hover {
-  //  .afrostream-movie__poster {
-  //    opacity: 0.5;
-  //  }
-  //}
-  .afrostream-movie__poster {
-    .transition(opacity 0.3s, linear);
-    position: absolute;
-    .isMobile({ bottom: 50%; });
-    left: 0;
-    right: 0;
-    top: @header-height;
-    .isMobile({ position: relative; top: 0; bottom: inherit; min-height: 35vh; });
-    bottom: 0;
-    background-image: url(../../../../assets/images/default/1920x815.jpg);
-    //background-position: center top;
-    //background-size: contain;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    &:not(.overlay) {
-      background-position: left top;
-    }
-
-    .afrostream-movie__mask {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background-color: fade(#000, 40%);
-      //.isMobile({ .gradient(#000, transparent); background-color: none; });
-      //.horizontal-gradient(transparent, 20%, #000, 60%);
-    }
-
-  }
-
-  &.welcome-header_movie {
-    &.welcome-overlay {
-      .afrostream-movie__mask {
-        .isWideScreen({ background-color: fade(#000, 40%); });
-      }
-    }
-    .afrostream-movie__poster {
-      background-size: cover;
-    }
-    .afrostream-movie__mask {
-      background-color: fade(#000, 30%);
-    }
-  }
 
   .afrostream-movie__logo {
     .aspect-ratio(16, 9);
@@ -111,73 +52,4 @@
     .isMobile({ top: 0; padding-left: 10%; background-position: right center; });
   }
 
-  .afrostream-movie {
-    position: absolute;
-    top: @header-height;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-    max-width: 100%;
-    .afrostream-movie__subscribe {
-      margin: @header-height @app-padding @app-padding @app-padding;
-      @media all and (max-width: @screen-sm-min) {
-        margin: @app-padding;
-      }
-    }
-
-    .afrostream-movie__subscribe,
-    .afrostream-movie__info {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    .afrostream-movie__info {
-
-      h1 {
-        font-family: @font-thin;
-        color: @white-base;
-        text-transform: uppercase;
-        font-size: 4em;
-        text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.6);
-      }
-
-      .detail-text {
-        font-family: @font-family-base;
-        color: @white-base;
-        text-align: justify;
-        font-size: 1.6em;
-        line-height: 1.7em;
-        text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
-      }
-    }
-
-  }
-}
-
-//Firefox fix
-@-moz-document url-prefix() {
-  .welcome-header {
-    //height: 80vh;
-  }
-}
-
-@media @mobile {
-  .welcome-header {
-    &.welcome-header_movie {
-      .afrostream-movie__poster {
-        position: relative;
-        min-height: 35vh;
-        .afrostream-movie__mask {
-          display: none;
-        }
-      }
-      .afrostream-movie {
-        margin: 0 @app-padding-mobile @app-padding-mobile @app-padding-mobile;
-      }
-    }
-  }
 }
