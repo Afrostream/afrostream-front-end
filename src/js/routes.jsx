@@ -48,7 +48,6 @@ const buildLangsStaticRoutes = function () {
 
 const buildHome = function (lang) {
   const homeRoutes = [
-    <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
     <Route key={`${lang}-compte`} name="compte" path="compte" component={AccountPage}>,
       <Route key={`${lang}-cancelSubscription`} name="cancelSubscription"
              path="cancel-subscription(/:subscriptionBillingUuid)"
@@ -82,6 +81,7 @@ const buildHome = function (lang) {
 const buildRoutes = function (lang) {
 
   let subRoutes = [
+    <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
     <Route key={`${lang}-company`} name="company" path="company" component={Static.StaticPage}>
       <Route key={`${lang}-company-press`} name="about" path="about" component={Static.ABOUT}/>
       <Route key={`${lang}-company-jobs`} name="jobs" path="jobs" component={Static.JOBS}>

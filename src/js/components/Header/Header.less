@@ -161,7 +161,8 @@
 header {
   background-color: fade(@color-black-2, 70%);
   &.topbar {
-    display: block;
+    //display: block;
+    display: flex;
     //position: fixed;
     top: 0;
     left: 0;
@@ -194,6 +195,7 @@ header {
 
       &.float-bottom-mobile {
         max-width: 100%;
+        flex: 1;
         .isMobile({ display: none; max-width: 55%; });
         //background-color: @color-black-2;
         //.isMobile({ position: absolute; top: @header-height-mobile; height: 20px; });
