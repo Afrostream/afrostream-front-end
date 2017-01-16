@@ -28,7 +28,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 
   //GET USER INFO
 
-  if (!user) {
+  if (!user || !user.get('planCode')) {
     await api({
       path: `/api/users/me`,
       passToken: true
