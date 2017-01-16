@@ -84,8 +84,12 @@
 
 
   window[randCallback] = function (data) {
+    clearTimeout(initBodyTimeout)
     try {
-      clearTimeout(initBodyTimeout)
+      if (!data) {
+        bodyDiv.classList.remove('hidden')
+        return false;
+      }
       __BUNDLE_STATE__ = extendState(__BUNDLE_STATE__, data.initialState);
       setStorage('{{{config "apiClient.geo"}}}', __BUNDLE_STATE__.Geo.geo);
       setStorage('{{{config "apiClient.token"}}}', __BUNDLE_STATE__.OAuth.token);
@@ -106,12 +110,12 @@
       bodyDiv.classList.add('hidden')
     }
     initBundleTimeout = setTimeout(function () {
-      bodyDiv.classList.remove('hidden')
+      window[randCallback]();
     }, 10000);
     document.write('<scr' + 'ipt type="text/javascript" src="' + url + '?callback=' + randCallback + tokenParam + refreshParam + '"></scr' + 'ipt>');
   } catch (err) {
     console.log('Bundle prerender Error : ', err.message)
-    bodyDiv.classList.remove('hidden')
+    window[randCallback]();
   }
 
 </script>
