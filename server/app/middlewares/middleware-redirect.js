@@ -6,7 +6,7 @@ export function forceSSL () {
     const proto = req.get('x-forwarded-proto')
     const cdnHostname = req.get('x-afsm-forwarded-host')
 
-    if (env !== 'production' && !cdnHostname.match(/^(staging)\./i)) {    // force ssl on staging
+    if (env !== 'production' && (cdnHostname && !cdnHostname.match(/^(staging)\./i))) {    // force ssl on staging
       return next()
     }
 

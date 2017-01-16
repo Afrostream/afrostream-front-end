@@ -23,7 +23,7 @@ const buildPath = path.resolve(process.cwd(), 'dist')
 
 function errorHandler (err, req, res, next) {
   res.status(500)
-  res.render('error', {error: err})
+  res.render('layouts/error', {error: err})
 }
 app.set('startDate', new Date())
 app.set('x-powered-by', false);

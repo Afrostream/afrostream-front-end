@@ -20,27 +20,28 @@ if (process.env.BROWSER) {
   let target = 'show'
   let closable = true
 
-  switch (location.pathname) {
-    case `/${langPath}reset`:
+  switch (true) {
+    case ~location.pathname.indexOf(`/reset`):
       target = `showReset`
       break
-    case `/${langPath}signup`:
+    case ~location.pathname.indexOf(`/signup`):
       target = `showSignup`
       break
-    case `/${langPath}signin`:
+    case ~location.pathname.indexOf(`/signin`):
       target = `showSignin`
       break
-    case `/${langPath}newsletter`:
+    case ~location.pathname.indexOf(`/newsletter`):
       target = `newsletter`
       break
-    case `/${langPath}parrainage`:
+    case ~location.pathname.indexOf(`/parrainage`):
       target = `sponsorship`
       break
-    case `/${langPath}coupon`:
+    case ~location.pathname.indexOf(`/coupon`):
       if (data) {
         const decodedData = decodeSafeUrl(data)
         await store.dispatch(BillingActionCreators.createCoupon(decodedData))
       }
+      console.log('match')
       target = `redeemCoupon`
       break
     default :
