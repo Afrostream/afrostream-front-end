@@ -212,7 +212,6 @@ export function pageInfo ({}) {
             if (!response || response.error) {
               return reject(response.error)
             }
-            debugger
             return resolve({
               type: ActionTypes.Facebook.pageInfo,
               res: response.data,

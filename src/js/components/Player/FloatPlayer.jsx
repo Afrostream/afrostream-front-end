@@ -1168,7 +1168,7 @@ class FloatPlayer extends I18n {
       movieData = Movie.get(`movies/${movieId}`)
       episodeData = videoData.get('episode')
       seasonData = Season.get(`seasons/${seasonId}`)
-      videoDuration = this.formatTime(videoData.get('duration'))
+      videoDuration = videoData.get('duration') && this.formatTime(videoData.get('duration'))
       csa = movieData.get('CSA')
       //si on a les données de l'episode alors, on remplace les infos affichées
       infos = episodeData ? _.merge(episodeData.toJS() || {}, movieData.toJS() || {}) : movieData.toJS()
