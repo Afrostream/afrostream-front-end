@@ -43,7 +43,7 @@ class MovieInfo extends LoadVideo {
   render () {
 
     let {
-      props: {Movie, User, active, dataId, data, maxLength, load, showBtn}
+      props: {Movie, User, active, dataId, data, maxLength, load, showBtn, movieInfo}
     } = this
 
     data = data || Movie.get(`movies/${dataId}`)
@@ -79,7 +79,7 @@ class MovieInfo extends LoadVideo {
           {user && <Link to={link}>
             <div className="btn-play"/>
           </Link>}
-          {data && <Billboard {...{active, data, dataId, maxLength, load}} />}
+          {data && <Billboard {...{active, data, dataId, maxLength, load, movieInfo}} />}
         </div>
       </div>
     )

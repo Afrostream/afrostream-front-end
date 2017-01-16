@@ -85,6 +85,28 @@
       left: 15%;
     }
   }
+
+  .afrostream-movie__subscribe {
+    bottom: @app-padding * 2;
+    left: @app-padding;
+    margin: 1em 0 1em 0;
+    //position: absolute;
+    @media all and (max-width: @screen-sm-min) {
+      bottom: @app-padding-mobile;
+      left: @app-padding-mobile;
+    }
+    .afrostream-statement {
+      font-family: @font-book;
+      font-weight: bold;
+      font-size: 3em;
+      line-height: 1.2em;
+      margin: 1em 0 1em 0;
+      text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+      span {
+        display: block;
+      }
+    }
+  }
 }
 
 @media @mobile,@tablet {

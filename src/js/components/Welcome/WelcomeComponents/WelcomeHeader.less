@@ -11,13 +11,18 @@
 
   .slide-show {
     padding: 0;
-    min-height: 35vh;
+    height: auto;
+    //min-height: 66vh;
     .movie {
-      min-height: 35vh;
+      display: table;
+      height: auto;
+      //min-height: 66vh;
     }
     .movie .movie-info_content {
       vertical-align: bottom;
       display: table-cell;
+      height: auto;
+      position: relative;
     }
     .subscribe-button {
       vertical-align: bottom;
@@ -101,8 +106,13 @@
   }
 
   .afrostream-movie {
+    position: absolute;
+    top: @header-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
     display: inline-block;
-    position: relative;
     vertical-align: middle;
     text-align: center;
     max-width: 100%;
@@ -112,7 +122,15 @@
         margin: @app-padding;
       }
     }
+
+    .afrostream-movie__subscribe,
     .afrostream-movie__info {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .afrostream-movie__info {
+
       h1 {
         font-family: @font-thin;
         color: @white-base;
@@ -130,31 +148,8 @@
         text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
       }
     }
-  }
 
-  .afrostream-movie__subscribe {
-    bottom: @app-padding * 2;
-    left: @app-padding;
-    margin: 1em 0 1em 0;
-    //position: absolute;
-    @media all and (max-width: @screen-sm-min) {
-      bottom: @app-padding-mobile;
-      left: @app-padding-mobile;
-    }
-    .afrostream-statement {
-      font-family: @font-book;
-      font-weight: bold;
-      font-size: 3.5em;
-      .isMobile({ font-size: 3em; });
-      line-height: 1.2em;
-      margin: 1em 0 1em 0;
-      text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
-      span {
-        display: block;
-      }
-    }
   }
-
 }
 
 //Firefox fix

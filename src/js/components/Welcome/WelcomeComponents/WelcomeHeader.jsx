@@ -114,26 +114,11 @@ class WelcomeHeader extends React.Component {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        {!movieData && <SlideShow dots={false} autoplay={true} infinite={false}/>}
-        {movieData && [
-          <ReactImgix key="welcome-pgm" className="afrostream-movie__poster" src={posterImg} bg={true}>
-            <div className="afrostream-movie__mask"/>
-            {info.logo && <div className="afrostream-movie__logo" style={logoStyle}/>}
-          </ReactImgix>,
-          <SignUpButton key="welcome-pgm-signup" className="subscribe-button subscribe-button-mobile"
-                        label={info.action}/>,
-          <div key="welcome-pgm-movie" className="afrostream-movie">
-            <div className="afrostream-movie__info">
-              <h1>{info.movie.title}</h1>
-              <div className='detail-text'>{info.movie.synopsis}</div>
-            </div>
-          </div>] }
-        <div className="afrostream-movie__subscribe">
-          <div className="afrostream-statement">{info.title.split('\n').map((statement, i) => {
-            return (<span key={`statement-${i}`}>{statement}</span>)
-          })}</div>
-          <SignUpButton label={info.action}/>
-        </div>
+        <SlideShow {...this.props} dots={false} autoplay={true} infinite={false} maxLength={Infinity}
+                   movieInfo={Boolean(movieData)}/>
+
+        <SignUpButton key="welcome-pgm-signup" className="subscribe-button subscribe-button-mobile"
+                      label={info.action}/>
       </section>
     )
   }

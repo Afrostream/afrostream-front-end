@@ -10,6 +10,9 @@ import CsaIcon from './CsaIcon'
 import ReactImgix from '../Image/ReactImgix'
 import { extractImg } from '../../lib/utils'
 import SignUpButton from '../User/SignUpButton'
+import {
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./Billboard.less')
@@ -24,12 +27,14 @@ class Billboard extends LoadVideo {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,
+    movieInfo: PropTypes.bool,
     maxLength: PropTypes.number.isRequired
   }
 
   static defaultProps = {
     data: null,
     active: false,
+    movieInfo: true,
     maxLength: 450
   }
 
@@ -114,7 +119,7 @@ class Billboard extends LoadVideo {
           }
           return (<span key={`cast-${i}`} className="billboard-row_cast">
             {thumb ? <img
-              src={`${config.images.urlPrefix}${thumb}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`}/> : null}
+                src={`${config.images.urlPrefix}${thumb}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`}/> : null}
             {`${(i ? ' | ' : '')} ${cast.get('firstName')} ${cast.get('lastName')} `}
           </span>)
         }).toJS()}
@@ -124,7 +129,7 @@ class Billboard extends LoadVideo {
 
   render () {
     const {
-      props: {User, data, maxLength}
+      props: {User, data, maxLength, movieInfo}
     } = this
 
     if (!data) {
@@ -162,7 +167,6 @@ class Billboard extends LoadVideo {
       let subtitles = videoData.get('captions')
       hasSubtiles = subtitles ? subtitles.size : false
     }
-
     //wrap text
     if (synopsis.length >= maxLength) {
       let cutIndex = synopsis.indexOf(' ', maxLength)
@@ -186,13 +190,23 @@ class Billboard extends LoadVideo {
         format: 'png'
       })
 
-
     if (!user) {
+
+
+      let homeRTitle = this.getTitle('home.title')
+
       return (
-        <div className="billboard-no-users">
+        <div className="billboard-infos billboard-no-users">
           {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
-          <div className="billboard-infos text-left">
+          {movieInfo && <div className="billboard-infos text-left">
             <div className="billboard-title billboard-row">{title}</div>
+            <div className="billboard-synopsis billboard-row">{synopsis}</div>
+          </div>}
+          <div className="afrostream-movie__subscribe">
+            <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
+              return (<span key={`statement-${i}`}>{statement}</span>)
+            })}
+            </div>
             <SignUpButton className="subscribe-button" label="home.action"/>
           </div>
         </div>
@@ -213,8 +227,8 @@ class Billboard extends LoadVideo {
         <Link to={link} ref="slSynopsis" className="billboard-synopsis billboard-row">{synopsis}</Link>
         <div className="billboard-info__btn">
           {hasSubtiles ? <button className="btn btn-xs btn-transparent" href="#">
-            <i className="zmdi zmdi-view-subtitles"></i>Audio et sous titres
-          </button> : <div />}
+              <i className="zmdi zmdi-view-subtitles"></i>Audio et sous titres
+            </button> : <div />}
           {this.getFavorite()}
           {this.getShareButton()}
         </div>
@@ -223,4 +237,4 @@ class Billboard extends LoadVideo {
   }
 }
 
-export default Billboard
+export default injectIntl(Billboard)

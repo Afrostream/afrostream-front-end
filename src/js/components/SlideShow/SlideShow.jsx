@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import Spinner from '../Spinner/Spinner'
 import Slider from 'react-slick'
@@ -9,7 +10,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 if (process.env.BROWSER) {
   require('./SlideShow.less')
 }
-@connect(({Category, Slides}) => ({Category, Slides}))
+@connect(({Category, Movie}) => ({Category, Movie}))
 class SlideShow extends React.Component {
 
   constructor (props) {
@@ -19,14 +20,24 @@ class SlideShow extends React.Component {
   render () {
     const {
       props: {
-        Category
+        Category,
+        Movie,
+        maxLength,
+        params:{
+          movieId
+        }
       }
     } = this
 
     const categoryId = Category.get(`categoryId`)
     let category
+
     if (categoryId) {
       category = Category.get(`categorys/${categoryId}/spots`)
+    }
+
+    if (movieId) {
+      category = Immutable.List.of(Movie.get(`movies/${movieId}`))
     }
 
     const settings = {
@@ -48,16 +59,17 @@ class SlideShow extends React.Component {
         <Slider {...settings}>
           {category.map((data) => <div key={`slide-${data.get('_id')}`}><MovieInfo
             active={true}
-            maxLength={200}
             load={true}
             showBtn={true}
-            { ...{data}}/></div>)}
+            { ...{data}}
+            {...this.props}
+          /></div>)}
         </Slider>}
         {!canUseDOM && category && category.size && <div><MovieInfo
           active={true}
-          maxLength={200}
           load={true}
           showBtn={true}
+          {...this.props}
           data={category.first()}/></div>}
       </div>
     )
@@ -69,13 +81,17 @@ SlideShow.propTypes = {
   dots: React.PropTypes.bool,
   autoplay: React.PropTypes.bool,
   infinite: React.PropTypes.bool,
-  speed: React.PropTypes.number
+  movieInfo: React.PropTypes.bool,
+  speed: React.PropTypes.number,
+  maxLength: PropTypes.number
 }
 
 SlideShow.defaultProps = {
   dots: true,
   autoplay: false,
   infinite: false,
-  speed: 5000
+  movieInfo: true,
+  speed: 5000,
+  maxLength: 200
 }
 export default withRouter(SlideShow)
