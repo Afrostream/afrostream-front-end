@@ -196,7 +196,7 @@ class Billboard extends LoadVideo {
       let homeRTitle = this.getTitle('home.title')
 
       return (
-        <div className="billboard-infos billboard-no-users">
+        <div className="billboard-no-users">
           {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
           {movieInfo && <div className="billboard-infos text-left">
             <div className="billboard-title billboard-row">{title}</div>

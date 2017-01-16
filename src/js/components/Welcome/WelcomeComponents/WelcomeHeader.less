@@ -12,22 +12,27 @@
   .slide-show {
     padding: 0;
     height: auto;
-    //min-height: 66vh;
     .movie {
       display: table;
       height: auto;
-      //min-height: 66vh;
-    }
-    .movie .movie-info_content {
-      vertical-align: bottom;
-      display: table-cell;
-      height: auto;
-      position: relative;
-    }
-    .subscribe-button {
-      vertical-align: bottom;
-      margin: 1em 0 1em 0;
-      .isMobile({ font-size: 1em; });
+
+      .movie-info_content {
+        vertical-align: bottom;
+        display: table-cell;
+        height: auto;
+        position: relative;
+      }
+
+      .billboard-infos {
+        .isMobile({ margin-top: 0; });
+        .billboard-synopsis {
+          .isMobile({ display: block; });
+        }
+      }
+
+      .movie-background {
+        .isMobile({ background-size: contain; })
+      }
     }
   }
 
