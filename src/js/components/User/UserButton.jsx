@@ -41,19 +41,6 @@ class UserButton extends React.Component {
     if (token) {
       if (user) {
         return <ul className="nav"/>
-        //return (
-        //  <ul className="nav">
-        //    <li>
-        //      <Link to="compte" role="button" onClick={::this.toggleSideBar} id="userButton"
-        //            className="btn-user">
-        //        <img src={user.get('picture')}
-        //             alt="user-button"
-        //             id="userButtonImg"
-        //             className="icon-user"/>
-        //      </Link>
-        //    </li>
-        //  </ul>
-        //)
       }
       else {
         return this.getLoginState()
