@@ -65,7 +65,7 @@
           userButtonImg.src = pictureUser;
         }
         if (userButtonLink && user) {
-          userButtonLink.href = userButtonLink.href.replace(/undefined/, user._id) + '/' + user.nickname;
+          userButtonLink.setAttribute('href', '/life/community/' + user._id + '/' + user.nickname);
         }
       }
       bodyDiv.classList.remove('hidden');
