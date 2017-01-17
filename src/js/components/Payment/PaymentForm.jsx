@@ -444,7 +444,7 @@ class PaymentForm extends I18n {
 
     let isCash = router.isActive('cash')
     const originPath = this.getPath()
-
+    const currentPlan = this.hasPlan()
     return Q()
       .then(() => {
         switch (formData.billingProviderName) {
@@ -463,13 +463,20 @@ class PaymentForm extends I18n {
       })
       .then(({res:{body:{subStatus}}}) => {
 
-        const currentPlan = this.hasPlan()
         const internalPlanUuid = currentPlan.get('internalPlanUuid')
         const currency = currentPlan.get('currency')
         const amount = currentPlan.get('amount')
         const currencyConversions = currentPlan.get('currencyConversions')
         const conversion = currencyConversions.get('EUR')
         const conversionAmount = conversion.get('amount')
+
+        //call ga click
+        ReactGA.event({
+          category: 'Billing',
+          action: 'Payment Success',
+          label: internalPlanUuid,
+          value: Number(conversionAmount)
+        })
 
         ReactFB.track({
           event: 'CompleteRegistration', params: {
@@ -480,13 +487,6 @@ class PaymentForm extends I18n {
           }
         })
 
-        //call ga click
-        ReactGA.event({
-          category: 'Billing',
-          action: 'Payment Success',
-          label: internalPlanUuid,
-          value: Number(conversionAmount)
-        })
 
         self.disableForm(false, 1)
 
