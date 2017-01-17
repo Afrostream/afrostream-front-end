@@ -41,7 +41,8 @@ class SubNavigation extends Component {
     const {
       props: {
         themesList,
-        to
+        to,
+        streaming
       }
     } = this
 
@@ -51,12 +52,12 @@ class SubNavigation extends Component {
     return (
       <Headroom disableInlineStyles>
         <ul className="sub-navigation">
-          <li key={`theme-streaming`}>
+          {streaming && <li key={`theme-streaming`}>
             <Link activeClassName="active"
                   onlyActiveOnIndex
                   to="/"><FormattedMessage
               id={ `menu.streaming` }/></Link>
-          </li>
+          </li>}
           {themesList && themesList.map((theme, i) => {
 
               let mapTo = to
@@ -108,9 +109,12 @@ class SubNavigation extends Component {
 SubNavigation.propTypes = {
   themesList: PropTypes.instanceOf(Immutable.List),
   to: PropTypes.string.isRequired,
+  streaming: PropTypes.bool,
 }
 
-SubNavigation.defaultProps = {}
+SubNavigation.defaultProps = {
+  streaming: false
+}
 
 
 export default SubNavigation
