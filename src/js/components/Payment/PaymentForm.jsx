@@ -357,18 +357,7 @@ class PaymentForm extends I18n {
     const self = this
     const user = User.get('user')
     const currentPlan = this.hasPlan()
-    const planName = currentPlan && currentPlan.get('name')
-    const amountInCents = currentPlan && currentPlan.get('amountInCents') * 0.01
-    const currency = currentPlan && currentPlan.get('currency')
     const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid') || this.props.params.internalPlanUuid
-
-    ReactGA.plugin.execute('ecommerce', 'addItem', {
-      id: internalPlanUuid,
-      name: planName,
-      price: amountInCents,
-      quantity: 1,
-      currency
-    })
 
     let billingInfo = {
       internalPlanUuid,
@@ -476,6 +465,7 @@ class PaymentForm extends I18n {
       .then(({res:{body:{subStatus, subscriptionBillingUuid}}}) => {
 
         const internalPlanUuid = currentPlan.get('internalPlanUuid')
+        const planName = currentPlan.get('name')
         const currency = currentPlan.get('currency')
         const amount = Number(currentPlan.get('amountInCents') * 0.01)
         const amountExclTax = Number(currentPlan.get('amountInCentsExclTax') * 0.01)
@@ -489,6 +479,14 @@ class PaymentForm extends I18n {
           revenue: conversionAmount,
           currency,
           tax
+        })
+
+        ReactGA.plugin.execute('ecommerce', 'addItem', {
+          id: internalPlanUuid,
+          name: planName,
+          price: amount,
+          quantity: 1,
+          currency
         })
 
         ReactFB.track({

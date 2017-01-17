@@ -45,7 +45,7 @@ class SlideShow extends React.Component {
     const settings = {
       autoplay: this.props.autoplay,
       dots: this.props.dots,
-      infinite: this.props.infinite,
+      infinite: this.props.infinite && category.size > 1,
       autoplaySpeed: this.props.autoplaySpeed,
       speed: 500,
       adaptiveHeight: true,
