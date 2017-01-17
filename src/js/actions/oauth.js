@@ -150,16 +150,6 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
           storeToken(event.data)
           beforeUnload()
         }, false)
-        //intervalCheck = setInterval(function () {
-        //  try {
-        //    //if (!oauthPopup || !oauthPopup.onbeforeunload) {
-        //    if (!oauthPopup) {
-        //      beforeUnload()
-        //    }
-        //  } catch (e) {
-        //    console.log('onbeforeunlod error ', e)
-        //  }
-        //}, 1000)
       })
     }
   }
@@ -208,6 +198,14 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
           case 'ajax':
             oauthPopup = request.get(url).then(() => {
               actionDispatcher(UserActionCreators.pendingUser(false))
+            }, (error) => {
+              return reject({
+                response: {
+                  body: {
+                    error
+                  }
+                }
+              })
             })
             break
           default:
