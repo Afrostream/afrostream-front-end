@@ -251,6 +251,7 @@ export function getInternalplans ({
 
   return (dispatch, getState, actionDispatcher) => {
     return async api => {
+      const geo = getState().Geo.get('geo')
       let isMobile = getState().Event.get('isMobile')
       let forcedInternalPlanUuid = internalPlanUuid !== 'none' && internalPlanUuid
       let forcedContextBillingUuid = contextBillingUuid
@@ -270,7 +271,7 @@ export function getInternalplans ({
 
       if (!forcedCountry) {
         try {
-          forcedCountry = getState().Geo.get('geo') && getState().Geo.get('geo').get('countryCode')
+          forcedCountry = geo && geo.get('countryCode')
         } catch (err) {
           console.error('getInternalplans error requesting /auth/geo ', err)
         }
@@ -312,8 +313,6 @@ export function getInternalplans ({
         if (filterUserReferenceUuid) {
           params = _.merge(params, {
             filterEnabled: true,
-            country: forcedCountry,
-            contextCountry: forcedCountry,
             filterUserReferenceUuid
           })
         }
