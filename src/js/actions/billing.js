@@ -1,5 +1,6 @@
 import ActionTypes from '../consts/ActionTypes'
 import { merge } from 'lodash'
+import _ from 'lodash'
 import config from '../../../config/'
 import * as OAuthActionCreators from './oauth'
 import MobileDetect from 'mobile-detect'
@@ -250,16 +251,17 @@ export function getInternalplans ({
 
   return (dispatch, getState, actionDispatcher) => {
     return async api => {
-      let isMobile = false
+      let isMobile = getState().Event.get('isMobile')
       let forcedInternalPlanUuid = internalPlanUuid !== 'none' && internalPlanUuid
       let forcedContextBillingUuid = contextBillingUuid
       let forcedCountry = country
 
-      if (canUseDOM) {
-        const userAgent = (window.navigator && navigator.userAgent) || ''
-        let agent = new MobileDetect(userAgent)
-        isMobile = agent.mobile()
-      }
+      //if (canUseDOM) {
+      //  const userAgent = (window.navigator && navigator.userAgent) || ''
+      //  let agent = new MobileDetect(userAgent)
+      //  isMobile = agent.mobile()
+      //}
+
       //ONLY for common && mobile devices context,not cashway
       if (forcedContextBillingUuid === 'common' && isMobile && checkMobile && !forcedInternalPlanUuid) {
         //forcedInternalPlanUuid = config.netsize.internalPlanUuid
@@ -268,7 +270,7 @@ export function getInternalplans ({
 
       if (!forcedCountry) {
         try {
-          forcedCountry = getState().country
+          forcedCountry = getState().Geo.get('geo') && getState().Geo.get('geo').get('countryCode')
         } catch (err) {
           console.error('getInternalplans error requesting /auth/geo ', err)
         }
@@ -308,12 +310,12 @@ export function getInternalplans ({
         const user = getState().User.get('user')
         const filterUserReferenceUuid = user && user.get('_id') || userId
         if (filterUserReferenceUuid) {
-          params = {
+          params = _.merge(params, {
             filterEnabled: true,
             country: forcedCountry,
             contextCountry: forcedCountry,
             filterUserReferenceUuid
-          }
+          })
         }
 
       }
