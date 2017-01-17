@@ -17,7 +17,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   //HAS TOKEN STORED
   let donePath = getState().Modal.get('donePath')
   let user = getState().User.get('user')
-  const {location:{query}} = getState().router
+  const {location:{query}, params} = getState().router
   dispatch(pendingUser(true))
   //const token = getState().OAuth.get('token')
   //
@@ -81,10 +81,10 @@ async function mergeProfile ({api, data, getState, dispatch}) {
 
       if (body) {
 
-        let firstPlan = _.find(body, (plan) => {
-          let planUuid = plan.internalPlanUuid
-          return planUuid === config.netsize.internalPlanUuid
-        })
+        let firstPlan = (!params || !params.planCode) && _.find(body, (plan) => {
+            let planUuid = plan.internalPlanUuid
+            return planUuid === config.netsize.internalPlanUuid
+          })
 
         if (!firstPlan && config.featuresFlip.redirectAllPlans) {
           firstPlan = _.head(body)
