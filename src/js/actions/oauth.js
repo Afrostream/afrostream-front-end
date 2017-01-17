@@ -161,35 +161,49 @@ export function cookieCheck ({modalType = 'popup', strategy = 'netsize', interna
   }
 }
 
-const encodeUrlCallback = function (strategy, token, path, callback) {
-  return encodeURIComponent(`https://${config.domain.host}/auth/${strategy}/${path}?access_token=${token}${callback ? '&returnUrl=' + callback : ''}`)
+const encodeUrlCallback = function ({strategy, token, path, callback, encode = true}) {
+  let url = `https://${config.domain.host}/auth/${strategy}/${path}?access_token=${token}${callback ? '&returnUrl=' + callback : ''}`
+  if (encode) {
+    url = encodeURIComponent(url)
+  }
+  return url
 }
 
 
 export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', internalPlan = {}, modalType = 'popup'}) {
   return (dispatch, getState, actionDispatcher) => {
-    actionDispatcher(UserActionCreators.pendingUser(true))
-
-    const token = getState().OAuth.get('token')
-    let url = `https://${config.domain.host}/auth/${strategy}/${path}`
-    //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
-    if (token) {
-      let query = _.merge({}, internalPlan)
-      const accessToken = token.get('access_token')
-      const finalCB = encodeUrlCallback(strategy, accessToken, 'final-callback')
-      query = _.merge(query, internalPlan, {
-        'access_token': accessToken,
-        'returnUrl': path === 'check' ? encodeUrlCallback(strategy, accessToken, 'subscribe', finalCB) : finalCB
-      })
-      url = `${url}?${qs.stringify(query)}`
-    }
-
-    let width = 600,
-      height = 450,
-      top = (window.outerHeight - height) / 2,
-      left = (window.outerWidth - width) / 2
-
     return async () => {
+      actionDispatcher(UserActionCreators.pendingUser(true))
+
+      const token = getState().OAuth.get('token')
+      let url = `https://${config.domain.host}/auth/${strategy}/${path}`
+      //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
+      if (token) {
+        const accessToken = token.get('access_token')
+        const finalCB = encodeUrlCallback({
+          strategy,
+          token: accessToken,
+          path: 'final-callback',
+          encode: true
+        })
+        let query = await _.merge({}, internalPlan, {
+          'access_token': accessToken,
+          'returnUrl': path === 'check' ? encodeUrlCallback({
+              strategy,
+              token: accessToken,
+              path: 'subscribe',
+              encode: false,
+              callback: finalCB
+            }) : finalCB
+        })
+        //safe ecode url
+        url = `${url}?${qs.stringify(query, null, null, {encodeURIComponent: e => e})}`
+      }
+
+      let width = 600,
+        height = 450,
+        top = (window.outerHeight - height) / 2,
+        left = (window.outerWidth - width) / 2
 
       return await new Promise((resolve, reject) => {
         let oauthPopup
