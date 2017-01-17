@@ -305,7 +305,6 @@ export function getInternalplans ({
         country: forcedCountry,
         contextCountry: forcedCountry
       }
-
       //ONLY for common context,not cashway
       if (contextBillingUuid === 'common') {
         const user = getState().User.get('user')
