@@ -19,7 +19,7 @@ router.use(function (req, res) {
     req.url = req.url.replace('access_token=' + token, '')
     req.originalUrl = req.originalUrl.replace('access_token=' + token, '')
   }
-  proxy(req, res, {headers: {'Access-Token': token}})
+  proxy(req, res, {timeout: 25000, headers: {'Access-Token': token}})
 })
 
 module.exports = router

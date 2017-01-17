@@ -6,6 +6,7 @@ export async function callback (req, res) {
   getData(req, '/auth/wecashup/callback', {
     followRedirect: false,
     method: 'POST',
+    timeout: 25000,
     headers: {
       cookie: req.get('cookie'),
       'content-type': 'application/json'
