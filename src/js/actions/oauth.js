@@ -280,7 +280,7 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
           }
           window[eventMethod](messageEvent, (event) => {
             console.log('received response:  ', event.data, event.origin, config.domain.host)
-            if (!~event.origin.indexOf(config.domain.host)) return
+            if (typeof event.data === 'string' || !~event.origin.indexOf(config.domain.host)) return
             beforeUnload(event.data && event.data.data, internalPlan)
           }, false)
         } catch (error) {
