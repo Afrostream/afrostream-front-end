@@ -66,7 +66,7 @@ handlebars.registerHelper('_', function () {
   return _[func].apply(_, arguments)
 })
 handlebars.registerHelper('inlineScript', function (p) {
-  if (Boolean(~'production|staging'.indexOf(env))) {
+  if (Boolean(~'production|staging'.indexOf(process.env.NODE_ENV))) {
     return `<script>${p}</script>`
   }
   return `<script src="${p}"></script>`
