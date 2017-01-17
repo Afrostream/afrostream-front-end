@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as UserActionCreators from '../../actions/user'
-import { Link } from '../Utils'
+import { Link, I18n } from '../Utils'
+import {
+  injectIntl
+} from 'react-intl'
 
 @connect(({User}) => ({User}))
-class PaymentSuccess extends React.Component {
+class PaymentSuccess extends I18n {
 
   logOut () {
     const {
@@ -20,13 +23,13 @@ class PaymentSuccess extends React.Component {
     return (
       <div className="payment-wrapper">
         <div className="payment-success">
-          <h3>{'Votre abonnement a bien été enregistré'}</h3>
+          <h2>{this.getTitle('payment.success.title')}</h2>
 
-          <h3>merci pour votre inscription</h3>
+          <h3>{this.getTitle('payment.success.message')}</h3>
 
           <p className="success">
             <Link className="success-button"
-                  to="/">Commencez la visite sur le site
+                  to="/">{this.getTitle('payment.success.link')}
             </Link>
           </p>
         </div>
@@ -36,4 +39,4 @@ class PaymentSuccess extends React.Component {
 
 }
 
-export default PaymentSuccess
+export default injectIntl(PaymentSuccess)

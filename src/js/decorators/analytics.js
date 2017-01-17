@@ -41,6 +41,7 @@ export default function analytics () {
         if (canUseDOM) {
           ga.initialize(config.google.analyticsKey, {debug: true})
           ga.plugin.require('linkid')
+          ga.plugin.require('ecommerce')
           ga.pageview(location.pathname)
         }
       }

@@ -357,8 +357,18 @@ class PaymentForm extends I18n {
     const self = this
     const user = User.get('user')
     const currentPlan = this.hasPlan()
-
+    const planName = currentPlan && currentPlan.get('name')
+    const amountInCents = currentPlan && currentPlan.get('amountInCents') * 0.01
+    const currency = currentPlan && currentPlan.get('currency')
     const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid') || this.props.params.internalPlanUuid
+
+    ReactGA.plugin.execute('ecommerce', 'addItem', {
+      id: internalPlanUuid,
+      name: planName,
+      price: amountInCents,
+      quantity: 1,
+      currency
+    })
 
     let billingInfo = {
       internalPlanUuid,
@@ -414,6 +424,8 @@ class PaymentForm extends I18n {
         billingInfo = _.merge(billingInfo, subBillingInfo)
         return this.submitSubscription(billingInfo)
       }).catch((err) => {
+      //Clear the shopping cart of all transactions and items
+      ReactGA.plugin.execute('ecommerce', 'clear')
       self.error(err)
     })
   }
@@ -461,21 +473,22 @@ class PaymentForm extends I18n {
             break
         }
       })
-      .then(({res:{body:{subStatus}}}) => {
+      .then(({res:{body:{subStatus, subscriptionBillingUuid}}}) => {
 
         const internalPlanUuid = currentPlan.get('internalPlanUuid')
         const currency = currentPlan.get('currency')
-        const amount = currentPlan.get('amount')
+        const amount = Number(currentPlan.get('amountInCents') * 0.01)
+        const amountExclTax = Number(currentPlan.get('amountInCentsExclTax') * 0.01)
+        const tax = amount - amountExclTax
         const currencyConversions = currentPlan.get('currencyConversions')
         const conversion = currencyConversions.get('EUR')
         const conversionAmount = conversion.get('amount')
 
-        //call ga click
-        ReactGA.event({
-          category: 'Billing',
-          action: 'Payment Success',
-          label: internalPlanUuid,
-          value: Number(conversionAmount)
+        ReactGA.plugin.execute('ecommerce', 'addTransaction', {
+          id: subscriptionBillingUuid,
+          revenue: conversionAmount,
+          currency,
+          tax
         })
 
         ReactFB.track({
@@ -487,7 +500,6 @@ class PaymentForm extends I18n {
           }
         })
 
-
         self.disableForm(false, 1)
 
         methodForm.onSuccess()
@@ -495,6 +507,10 @@ class PaymentForm extends I18n {
         return dispatch(UserActionCreators.getProfile())
       })
       .then(() => {
+
+        //Finally send the data to Google Analytics
+        ReactGA.plugin.execute('ecommerce', 'send')
+
         self.props.history.push(`${originPath}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch(({response : {body: {error, code, message}}}) => {
         let globalMessage = this.getTitle('payment.errors.global')
@@ -513,6 +529,8 @@ class PaymentForm extends I18n {
 
         self.disableForm(false, 2, globalMessage)
         methodForm.onError()
+        //Clear the shopping cart of all transactions and items
+        ReactGA.plugin.execute('ecommerce', 'clear')
         self.props.history.push(`${originPath}/select-plan/${planCode}/error`)
       })
   }

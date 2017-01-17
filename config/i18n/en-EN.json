@@ -289,6 +289,11 @@
       "showMap": "see the map",
       "partner": "Present your barcode and pay to validate your subscription"
     },
+    "success": {
+      "title": "Your subscription has been successfully registered",
+      "message": "Thank you for your registration",
+      "linkMessage": "Start the visit on the website"
+    },
     "errors": {
       "noLib": {
         "title": "Payment unavailable",

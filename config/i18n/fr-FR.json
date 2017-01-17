@@ -289,6 +289,11 @@
       "showMap": "voir la carte",
       "partner": "Présentez votre code-barre et payez pour valider votre abonnement"
     },
+    "success": {
+      "title": "Votre abonnement a bien été enregistré",
+      "message": "Merci pour votre inscription",
+      "linkMessage": "Commencez la visite sur le site"
+    },
     "errors": {
       "noLib": {
         "title": "Paiement indisponible",
