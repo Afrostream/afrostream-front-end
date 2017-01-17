@@ -45,14 +45,14 @@ export default function routes (app, buildPath) {
     let promisedMd5 = []
     let fileInfo
     _.map(files, (item) => {
-      if (env !== 'production') {
+      if (!Boolean(~'production|staging'.indexOf(env))) {
         fileInfo = {
           async: item.async || false,
           file: item.file,
           hash: md5(item.file)
         }
         if (inline) {
-          fileInfo.file = `${hostname}/static/${fileInfo.file}`
+          fileInfo.file = `${hostname}/static/${fileInfo.file}?${fileInfo.hash}`
         }
         return promisedMd5.push(fileInfo)
       }
