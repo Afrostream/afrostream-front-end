@@ -72,7 +72,7 @@ class SearchPage extends I18n {
     }
 
     return (<div key={`search-movie`} className="col-md-5">
-      <MoviesSlider {...this.props} dataList={movies} axis="y"/>
+      <MoviesSlider {...this.props} favorite={false} dataList={movies} axis="y"/>
     </div>)
 
   }
