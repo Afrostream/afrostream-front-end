@@ -168,6 +168,16 @@ export default function routes (app, buildPath) {
   // SHARING
   // --------------------------------------------------
 
+  // /test/timeout?t=10
+  app.get('/test/timeout', function (req, res) {
+    res.noCache()
+    const delay = (parseInt(req.query.t, 10) || 3) * 1000
+    const start = new Date()
+    setTimeout(() => {
+      res.json({start:start, now: new Date(), delay:delay})
+    }, delay)
+  })
+
   app.use('/alive', alive)
 
   // COMPONENTS
