@@ -29,7 +29,7 @@ class PaymentSuccess extends I18n {
 
           <p className="success">
             <Link className="success-button"
-                  to="/">{this.getTitle('payment.success.link')}
+                  to="/">{this.getTitle('payment.success.linkMessage')}
             </Link>
           </p>
         </div>
