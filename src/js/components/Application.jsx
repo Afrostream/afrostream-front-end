@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
 import SideBar from './SideBar/SideBar'
-import SplashScreen from './SplashScreen/SplashScreen'
 import AlertMessage from './Alert/AlertMessage'
 import FloatPlayer from './Player/FloatPlayer'
 import ModalView from './Modal/ModalView'
@@ -115,7 +114,6 @@ class Application extends React.Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={appClasses}>
-          <SplashScreen />
           <AlertMessage />
           <Header {...this.props}/>
           <SideBar {...{toggled, docked}} {...this.props}>
