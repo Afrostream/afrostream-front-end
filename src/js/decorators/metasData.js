@@ -254,55 +254,56 @@ export default () => {
           metas.meta.push({
             name: 'description',
             content: metas.description,
-            override: true
           })
 
           metas.meta.push({
             property: 'og:description',
             content: metas.description,
-            override: true
           })
           metas.meta.push({
             name: 'twitter:description',
             content: metas.description,
-            override: true
           })
         }
 
         metas.meta.push({
           property: 'og:type',
           content: metas.type,
-          override: true
         })
 
 
         metas.meta.push({
           property: 'og:image',
           content: image,
-          override: true
+        })
+
+        metas.meta.push({
+          property: 'og:image:width',
+          content: 1200,
+        })
+
+        metas.meta.push({
+          property: 'og:image:height',
+          content: 630,
         })
 
         metas.meta.push({
           name: 'twitter:image:src',
           content: image,
-          override: true
         })
 
 
         metas.link.push({
           rel: 'canonical',
           href: metas.slug,
-          override: true
         })
         metas.meta.push({
           property: 'og:url',
           content: metas.slug,
-          override: true
         })
         metas.meta.push({
           name: 'twitter:site',
           content: metas.slug,
-          override: true
         })
 
         return metas
