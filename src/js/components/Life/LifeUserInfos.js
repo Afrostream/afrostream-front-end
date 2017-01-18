@@ -50,11 +50,13 @@ class LifeUserInfos extends Component {
         <div className="row text-center">
           <div
             className={`col-md-${isCurrentUser ? 4 : 12} col-xs-${isCurrentUser ? 6 : 12} col-md-offset-${isCurrentUser ? 2 : 0}`}>
-            <AvatarCard {...{user}} {...this.props} />
+            <AvatarCard {...{user}} {...this.props} bio={true}/>
           </div>
           {isCurrentUser && <div className="col-md-4 col-xs-6 ">
             <PinButton buttonClass="fa fa-pencil-square-o" label="life.sticky.tooltip" {...this.props} />
           </div>}
+        </div>
+        <div className="row">
           <div className="addthis_toolbox addthis_inline_share_toolbox_apql"/>
         </div>
         {pins &&

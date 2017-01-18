@@ -57,6 +57,7 @@ class AvatarCard extends I18n {
       props: {
         user,
         User,
+        bio,
         upload
       }
     } = this
@@ -80,7 +81,7 @@ class AvatarCard extends I18n {
     }
 
     const isCurrentUser = gloBalUser && gloBalUser.get('_id') === id
-
+    const userBio = bio && user.get('biography')
     const avatarClass = {
       'avatar': true,
       'avatar-upload': upload || isCurrentUser
@@ -96,6 +97,7 @@ class AvatarCard extends I18n {
           <div className="content">
             <p>{user.get('nickname')}</p>
             {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size.toString()})}</p>}
+            {userBio && <p className="user-bio">{userBio}</p>}
           </div>
         </Link>
       </div>
@@ -106,12 +108,14 @@ class AvatarCard extends I18n {
 
 AvatarCard.propTypes = {
   user: PropTypes.instanceOf(Immutable.Map),
+  bio: PropTypes.bool,
   upload: PropTypes.bool,
   className: PropTypes.string
 }
 
 AvatarCard.defaultProps = {
   user: null,
+  bio: false,
   upload: false,
   className: 'avatar-card'
 }

@@ -422,7 +422,7 @@ export function extractImg ({
   let imageUrl = defaultImage || config.metadata.defaultImage
   if (data) {
 
-    const imageUrlExplicit = data.get('imageUrl')
+    let imageUrlExplicit = data.get('imageUrl')
     if (key) {
       thumb = data.get(key)
     }
@@ -435,6 +435,9 @@ export function extractImg ({
 
 
     if (thumb) {
+      if (typeof thumb === 'string') {
+        return thumb
+      }
       const path = thumb.get('path')
       if (path) {
         imageUrl = path

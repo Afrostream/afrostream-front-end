@@ -656,7 +656,10 @@
     },
     "metas": {
       "title": "{themes} {defaultTitle} Afrostream Life",
-      "description": "The social media for black creativity"
+      "description": "The social media for black creativity",
+      "user": {
+        "title": "Afrostream Life Profile @{defaultTitle}"
+      }
     }
   },
   "sponsors": {

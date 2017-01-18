@@ -237,7 +237,7 @@ export default () => {
         let image = extractImg({
           data,
           defaultImage: config.metadata.shareImage,
-          keys: ['poster', 'thumb', 'image'],
+          keys: ['poster', 'thumb', 'image', 'picture'],
           width: 1120
         })
 
