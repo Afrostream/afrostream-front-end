@@ -134,7 +134,7 @@ class AccountProfil extends React.Component {
         inputAttributes = {
           onClick: (event) => this.syncFB()
         }
-        element = <div className="row-fluid">
+        element = <div className="row-fluid text-center">
           <AvatarCard user={user} {...inputAttributes}/>
           <RaisedButton {...{label}} {...inputAttributes} style={{
             marginTop: 20,
@@ -234,12 +234,19 @@ class AccountProfil extends React.Component {
           }
         }
 
+        if (section.multiLine) {
+          inputAttributes.textareaStyle = {border: '1px solid rgba(0,0,0,0.3)', padding: 10}
+        }
+
         element = <TextField underlineShow={false}
+                             rows={section.rows}
                              autoComplete={section.autoComplete}
+                             multiLine={section.multiLine}
                              disabled={section.disabled}
                              defaultValue={sectionValue}
                              name={`${section.key}-input`}
                              hintText={label}
+                             fullWidth={section.multiLine}
                              pattern={section.pattern}
                              type={section.type.toLowerCase()}
                              floatingLabelText={label}

@@ -403,6 +403,7 @@ export function deserialize (serializedJavascript) {
 export function extractImg ({
   data,
   key,
+  isMobile = false,
   keys = [],
   defaultImage,
   width = 1280,
@@ -412,6 +413,12 @@ export function extractImg ({
   crop = 'entropy'
 }) {
   let thumb
+
+  let sizes = {
+    width,
+    height
+  }
+
   let imageUrl = defaultImage || config.metadata.defaultImage
   if (data) {
 
@@ -440,7 +447,12 @@ export function extractImg ({
 
   }
 
-  imageUrl = `${config.images.urlPrefix}${imageUrl}?&crop=${crop}&fit=${fit}&w=${width}&h=${height}&q=${config.images.quality}&fm=${format || config.images.type}`
+  if (isMobile) {
+    sizes.width = Math.min(sizes.width, 768)
+    sizes.height = Math.min(Math.round(sizes.width * 1.666), 650)
+  }
+
+  imageUrl = `${config.images.urlPrefix}${imageUrl}?&crop=${crop}&fit=${fit}&w=${sizes.width}&h=${sizes.height}&q=${config.images.quality}&fm=${format || config.images.type}`
 
   return imageUrl
 

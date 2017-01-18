@@ -344,6 +344,7 @@
     },
     "profile": {
       "password": "Modifier mon mot de passe",
+      "biography": "Description",
       "picture": "Modifier mon avatar",
       "profile": "Informations personnelles",
       "birthDate": "Date de naissance",
@@ -646,7 +647,10 @@
     },
     "metas": {
       "title": "{themes} {defaultTitle} Afrostream Life",
-      "description": "Le média social de la créativité afro"
+      "description": "Le média social de la créativité afro",
+      "user": {
+        "title": "Mon profil {defaultTitle} Afrostream Life"
+      }
     }
   },
   "sponsors": {

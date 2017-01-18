@@ -64,8 +64,7 @@ export default class ReactImgix extends Component {
   state = {
     width: null,
     height: null,
-    mounted: false,
-    isMobile: false
+    mounted: false
   }
 
   createLoader () {
@@ -98,11 +97,6 @@ export default class ReactImgix extends Component {
   }
 
   componentDidMount () {
-    const ua = this.detectUA()
-    const isMobile = ua.phone()
-    this.setState({
-      isMobile
-    })
     this.createLoader()
   }
 
@@ -177,11 +171,6 @@ export default class ReactImgix extends Component {
         const size = parseInt(matchWith[0].replace('&w=', ''))
         const windowSize = (window && window.innerWidth) || 1024
         _src = _src.replace(regexWidth, `&w=${Math.min(windowSize, size)}`)
-      }
-
-      if (this.state.isMobile) {
-        //Replace quality
-        _src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=50`)
       }
     }
 

@@ -55,6 +55,7 @@ class LifeUserInfos extends Component {
           {isCurrentUser && <div className="col-md-4 col-xs-6 ">
             <PinButton buttonClass="fa fa-pencil-square-o" label="life.sticky.tooltip" {...this.props} />
           </div>}
+          <div className="addthis_toolbox addthis_inline_share_toolbox_apql"/>
         </div>
         {pins &&
         <div className="col-md-12 no-padding">

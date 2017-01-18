@@ -1,4 +1,5 @@
 import express from 'express'
+import twitter from  './twitter'
 import facebook from  './facebook'
 import bouygues from  './bouygues'
 import orange from  './orange'
@@ -14,6 +15,7 @@ router.use(function (req, res, next) {
 })
 
 router.use('/facebook', facebook)
+router.use('/twitter', twitter)
 router.use('/bouygues', bouygues)
 router.use('/orange', orange)
 router.use('/netsize', netsize)

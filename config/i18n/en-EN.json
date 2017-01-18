@@ -344,6 +344,7 @@
     },
     "profile": {
       "password": "Change my password",
+      "biography": "Description",
       "picture": "Edit my avatar",
       "profile": "Personal information",
       "birthDate": "Date of birth",

@@ -45,6 +45,7 @@ const client = {
         {key: 'nickname', type: 'text', col: 8},
         {key: 'last_name', type: 'text', autoComplete: 'surname', col: 4},
         {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 4},
+        {key: 'biography', type: 'text', autoComplete: 'biography', col: 12, multiLine: true, rows: 5},
         {
           key: 'gender',
           type: 'radio',
@@ -69,7 +70,8 @@ const client = {
       ],
       social: [
         {key: 'webPushNotificationsData', type: 'toggle', icon: 'zmdi zmdi-notifications', col: 12},
-        {key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}],
+        {key: 'socialSharing', type: 'toggle', icon: 'zmdi zmdi-share', col: 12}
+      ],
       player: [
         {
           key: 'playerAudio',
@@ -245,6 +247,12 @@ const client = {
         social: true,
         icon: 'zmdi zmdi-facebook-box',
         active: isBoolean(process.env.OAUTH_FACEBOOK_ENABLED || true)
+      },
+      {
+        name: 'twitter',
+        social: true,
+        icon: 'zmdi zmdi-twitter-box',
+        active: isBoolean(process.env.OAUTH_TWITTER_ENABLED || true)
       },
       {
         name: 'bouygues',

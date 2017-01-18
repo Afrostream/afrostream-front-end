@@ -83,23 +83,33 @@ export default () => {
                 defaultTitle = `${(data.get('title') || defaultTitle)} |`
                 metas.type = 'article'
               }
+              metas.htmlAttributes.prefix = 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#'
+              if (params.themeId) {
+                data = store.getState().Life.get(`life/themes/${params.themeId}`)
+                if (data) {
+                  themesList = Immutable.List([data])
+                }
+              }
+
+              if (themesList) {
+                let themesFlat = themesList.map((theme) => {
+                  return theme.get('label')
+                })
+                themes = _.join(themesFlat.toJS(), ' - ') + ' |'
+              }
+              defaultTitle = this.getTitle('life.metas.title', {themes, defaultTitle})
             }
-            else if (params.themeId) {
-              data = store.getState().Life.get(`life/themes/${params.themeId}`)
+            if (params.lifeUserId) {
+              data = store.getState().Life.get(`life/users/${params.lifeUserId}`)
               if (data) {
-                themesList = Immutable.List([data])
+                defaultTitle = this.getTitle('life.metas.user.title', {defaultTitle: data.get('nickname') || ''})
+                defaultDescription = data.get('biography') || defaultDescription
               }
             }
 
-            if (themesList) {
-              let themesFlat = themesList.map((theme) => {
-                return theme.get('label')
-              })
-              themes = _.join(themesFlat.toJS(), ' - ') + ' |'
-            }
-            metas.htmlAttributes.prefix = 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#'
-            metas.title = this.getTitle('life.metas.title', {themes, defaultTitle})
+            metas.title = defaultTitle
             metas.description = defaultDescription
+
             break
 
           case Boolean(~location.pathname.indexOf('/coupon')) :

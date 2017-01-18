@@ -9,7 +9,7 @@ import ReactImgix from '../Image/ReactImgix'
 import Immutable from 'immutable'
 import PinButton from './PinButton'
 
-@connect(({Life, User}) => ({Life, User}))
+@connect(({Life, User, Event}) => ({Life, User, Event}))
 class LifePin extends ClickablePin {
 
   constructor (props, context) {
@@ -67,6 +67,7 @@ class LifePin extends ClickablePin {
 
     const {
       props:{
+        Event,
         index,
         data,
         over,
@@ -84,12 +85,14 @@ class LifePin extends ClickablePin {
     const pinRole = data.get('role')
     const isPremium = pinRole === 'premium' || pinRole === 'vip'
     const isFull = true
+    const isMobile = Event.get('isMobile')
 
     let imageUrl = extractImg({
       data,
       key: 'image',
       width: imageWidth,
       height: imageHeight,
+      isMobile,
       crop: isFull && index ? 'entropy' : 'faces',
       fit: 'min'
     })
