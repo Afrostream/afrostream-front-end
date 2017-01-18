@@ -49,10 +49,10 @@ class LifeUserInfos extends Component {
     return (<div key="life-themes-list" className="life-theme">
         <div className="row text-center">
           <div
-            className={`col-md-${isCurrentUser ? 4 : 12} col-xs-${isCurrentUser ? 6 : 12} col-md-offset-${isCurrentUser ? 2 : 0}`}>
+            className={`col-md-${isCurrentUser ? 8 : 12} col-xs-${isCurrentUser ? 8 : 12}`}>
             <AvatarCard {...{user}} {...this.props} bio={true}/>
           </div>
-          {isCurrentUser && <div className="col-md-4 col-xs-6 ">
+          {isCurrentUser && <div className="col-md-4 col-xs-4 ">
             <PinButton buttonClass="fa fa-pencil-square-o" label="life.sticky.tooltip" {...this.props} />
           </div>}
         </div>
