@@ -249,12 +249,6 @@ const client = {
         active: isBoolean(process.env.OAUTH_FACEBOOK_ENABLED || true)
       },
       {
-        name: 'twitter',
-        social: true,
-        icon: 'zmdi zmdi-twitter-box',
-        active: isBoolean(process.env.OAUTH_TWITTER_ENABLED || true)
-      },
-      {
         name: 'bouygues',
         social: false,
         icon: 'zmdi zmdi-bouygues',
