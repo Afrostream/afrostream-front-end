@@ -194,13 +194,9 @@ class ModalCoupon extends ModalComponent {
       }
     } = this
 
-    let couponStore = Billing.get('coupon')
-    let coupon
-
-    if (couponStore) {
-      coupon = couponStore.get('coupon')
-    }
-
+    const couponStore = Billing.get('coupon')
+    const coupon = couponStore && couponStore.get('coupon')
+    const code = coupon && coupon.get('code') || ''
     return (
       <div className="coupon">
         <label htmlFor="coupon" className="sad-placeholder">
@@ -209,7 +205,7 @@ class ModalCoupon extends ModalComponent {
         <div className="input-box">
           <i className="icon-barcode"></i>
           <input name="coupon" ref="coupon" id="coupon" type="text" className="input-coupon" required
-                 defaultValue={coupon ? coupon.get('code') : ''}
+                 value={code}
                  placeholder={this.getTitle('couponPlaceholder')}
                  title={this.getTitle('couponPlaceholder')}/>
         </div>

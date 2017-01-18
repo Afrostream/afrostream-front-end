@@ -39,7 +39,7 @@ export default createReducer(initialState, {
       [`internalPlans`]: data
     }
 
-    _.forEach(data, (plan)=> {
+    _.forEach(data, (plan) => {
       return mergedValues[`internalPlans/${plan.internalPlanUuid}`] = plan
     })
     return state.merge(mergedValues)
@@ -100,7 +100,6 @@ export default createReducer(initialState, {
     const data = res.body
     return state.merge({
       ['coupon']: data
-
     })
   },
 
