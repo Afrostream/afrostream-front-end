@@ -30,15 +30,15 @@ class HomePage extends React.Component {
 
   checkAuth () {
     const {
-      props: {intl, history, router, User, Billing}
+      props: {intl, history, router, params, User, Billing}
     } = this
     const {locale, defaultLocale}= intl
     const user = User.get('user')
     if (user) {
       let isCash = router.isActive('cash')
-      let planCode = user.get('planCode')
       let subscriptionsStatus = user.get('subscriptionsStatus')
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null
+      let planCode = subscriptionsStatus && subscriptionsStatus.get('planCode') || user.get('planCode')
       let langRoute = `${locale && locale !== defaultLocale && ('/' + locale) || ''}`
       const noRedirectRoute = router.isActive(`${langRoute}/compte`) || router.isActive(`${langRoute}/life`) || router.isActive(`${langRoute}/select-plan`)
       if (!planCode && !noRedirectRoute) {
@@ -48,10 +48,10 @@ class HomePage extends React.Component {
         } else {
           let validPlans = Billing.get(`internalPlans`)
           if (validPlans) {
-            let firstPlan = validPlans.find((plan) => {
-              let planUuid = plan.get('internalPlanUuid')
-              return planUuid === config.netsize.internalPlanUuid
-            })
+            let firstPlan = (!params || !params.planCode) && validPlans.find((plan) => {
+                let planUuid = plan.get('internalPlanUuid')
+                return planUuid === config.netsize.internalPlanUuid
+              })
 
             if (!firstPlan && config.featuresFlip.redirectAllPlans) {
               firstPlan = validPlans.first()

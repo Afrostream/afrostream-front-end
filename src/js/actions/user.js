@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes'
+import Immutable from 'immutable'
 import { isAuthorized } from '../lib/geo'
 import * as ModalActionCreators from './modal'
 import * as OAuthActionCreators from './oauth'
@@ -17,6 +18,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   //HAS TOKEN STORED
   let donePath = getState().Modal.get('donePath')
   let user = getState().User.get('user')
+
   const {location:{query}, params} = getState().router
   dispatch(pendingUser(true))
   //const token = getState().OAuth.get('token')
@@ -25,10 +27,8 @@ async function mergeProfile ({api, data, getState, dispatch}) {
   //  throw new Error('No token present')
   //  return data
   //}
-
   //GET USER INFO
-
-  if (!user || !user.get('planCode')) {
+  if (!user || (user instanceof Immutable.Map && !user.get('planCode'))) {
     await api({
       path: `/api/users/me`,
       passToken: true
@@ -41,11 +41,14 @@ async function mergeProfile ({api, data, getState, dispatch}) {
     throw new Error('No user found')
   }
 
+  if (user instanceof Immutable.Map) {
+    user = user.toJS()
+  }
   //MERGE USER DATA
   let subscriptionsStatus = user.subscriptionsStatus
   let status = subscriptionsStatus && subscriptionsStatus.status
   let userSubscriptions = subscriptionsStatus && subscriptionsStatus.subscriptions
-  let planCode = user.planCode
+  let planCode = subscriptionsStatus && subscriptionsStatus.planCode || user.planCode
   user.status = status
   user.isActive = planCode && userSubscriptions && _.find(userSubscriptions || [], (subscription) => subscription.isActive === 'yes')
   user.splashList = user.splashList || []
@@ -68,36 +71,35 @@ async function mergeProfile ({api, data, getState, dispatch}) {
     //  throw new Error('User not authorized Geoloc /auth/geo ')
   }
   if (!planCode && !donePath) {
-    //if (user.status && user.status !== 'active') {
-    //  donePath = `/select-plan/none/${user.status}`
-    //} else {
-    //get InternalPlan
-    await dispatch(BillingActionCreators.getInternalplans({
-      contextBillingUuid: 'common',
-      passToken: true,
-      reload: true,
-      userId: user._id
-    })).then(({res: {body = []}}) => {
+    if (user.status && user.status !== 'active') {
+      donePath = `/select-plan/none/${user.status}`
+    } else {
+      //get InternalPlan
+      await dispatch(BillingActionCreators.getInternalplans({
+        contextBillingUuid: 'common',
+        passToken: true,
+        reload: true,
+        userId: user._id
+      })).then(({res: {body = []}}) => {
 
-      if (body) {
+        if (body) {
+          let firstPlan = (!params || !params.planCode) && _.find(body, (plan) => {
+              let planUuid = plan.internalPlanUuid
+              return planUuid === config.netsize.internalPlanUuid
+            })
 
-        let firstPlan = (!params || !params.planCode) && _.find(body, (plan) => {
-            let planUuid = plan.internalPlanUuid
-            return planUuid === config.netsize.internalPlanUuid
-          })
+          if (!firstPlan && config.featuresFlip.redirectAllPlans) {
+            firstPlan = _.head(body)
+          }
 
-        if (!firstPlan && config.featuresFlip.redirectAllPlans) {
-          firstPlan = _.head(body)
+          if (firstPlan) {
+            donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
+          }
+
+          return donePath
         }
-
-        if (firstPlan) {
-          donePath = `/select-plan/${firstPlan.internalPlanUuid}/checkout`
-        }
-
-        return donePath
-      }
-    })
-    //}
+      })
+    }
   }
 
   //ADD FAVORITE
