@@ -34,7 +34,7 @@ class WelcomeMoviesSlider extends React.Component {
       dots: this.props.dots,
       infinite: this.props.infinite,
       autoplaySpeed: this.props.autoplaySpeed,
-      speed: 500,
+      speed: this.props.speed,
       adaptiveHeight: true,
       vertical: false,
       arrows: false,
