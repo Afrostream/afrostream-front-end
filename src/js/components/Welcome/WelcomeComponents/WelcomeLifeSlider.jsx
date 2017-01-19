@@ -3,6 +3,7 @@ import Slider from 'react-slick'
 import config from '../../../../../config'
 import { withRouter } from 'react-router'
 import WelcomeLife from './WelcomeLife'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 const {life, images} = config
 
@@ -28,7 +29,7 @@ class WelcomeLifeSlider extends React.Component {
 
     return (
       <div className="slide-show" ref="slC">
-        <Slider {...settings}>
+        {canUseDOM && <Slider {...settings}>
           <div>
             <WelcomeLife {...this.props}
                          title="life.welcome.label"
@@ -41,7 +42,13 @@ class WelcomeLifeSlider extends React.Component {
                          action="life.welcomeMobile.action"
                          imageUrl={life.welcomeMobile}/>
           </div>
-        </Slider>
+        </Slider>}
+        {!canUseDOM && <div>
+          <WelcomeLife {...this.props}
+                       title="life.welcome.label"
+                       action="life.welcome.action"
+                       imageUrl={life.welcome}/>
+        </div>}
       </div>
     )
   }

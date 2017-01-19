@@ -7,6 +7,8 @@ import classSet from 'classnames'
 import Thumb from '../../../components/Movies/Thumb'
 import * as CategoryActionCreators from '../../../actions/category'
 import _ from 'lodash'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
 if (process.env.BROWSER) {
   require('./Spots.less')
@@ -34,7 +36,9 @@ class Spots extends React.Component {
     this.spotsList_ = list
     clearInterval(this.updateSpotInterval_)
     this.updateSpot()
-    this.updateSpotInterval_ = setInterval(::this.updateSpot, 500)
+    if (canUseDOM) {
+      this.updateSpotInterval_ = setInterval(::this.updateSpot, 500)
+    }
   }
 
   updateSpot () {
@@ -77,6 +81,9 @@ class Spots extends React.Component {
 
       this.uniqSpots_ = _.uniqBy(recoList, '_id')
       //get only 8 mea
+      if (this.uniqSpots_.length < this.props.limit) {
+        return
+      }
       this.spotsList(_.sampleSize(this.uniqSpots_, this.props.limit))
     }
 
@@ -93,15 +100,23 @@ class Spots extends React.Component {
       thumbH: 220 * multiplicate
     }
 
-    return (<Thumb
-      favorite={false}
-      share={false}
-      preload={true}
-      id={dataId}
-      key={`data-thumb-${dataId}-${index}`}
-      {...params}
-      {...this.props}
-      {...{data, dataId}}  />)
+    return (
+      <ReactCSSTransitionGroup transitionName="thumbs"
+                               className="spot-thumb"
+                               transitionEnter={true}
+                               transitionLeave={true}
+                               key={`data-thumb-${dataId}-${index}`}
+                               transitionEnterTimeout={300}
+                               transitionLeaveTimeout={300} component="div">
+        <Thumb
+          favorite={false}
+          share={false}
+          preload={false}
+          id={dataId}
+          {...params}
+          {...this.props}
+          {...{data, dataId}}  />
+      </ReactCSSTransitionGroup>)
   }
 
   /**
