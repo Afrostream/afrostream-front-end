@@ -36,7 +36,7 @@ const config = _.merge(
         },
         {
           property: 'og:image:width',
-          content: '1120'
+          content: '1200'
         },
         {
           name: 'keywords',

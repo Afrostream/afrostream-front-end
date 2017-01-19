@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import window from 'global/window'
 import config from '../../../config'
 import _ from 'lodash'
@@ -480,4 +481,31 @@ export function addRemoveEvent (type, element, add = true, method) {
   if (add) element.dataset.events += ',' + type
   else element.dataset.events = element.dataset.events.replace(new RegExp(type), '')
   element[`${add ? 'add' : 'remove'}EventListener`](type, method)
+}
+
+
+export const _immu = {}
+_immu.sample = function (list, n) {
+  if (n === undefined) return list.get(_immu.random(list.size - 1))
+  return _immu.shuffle(list).slice(0, Math.max(0, n))
+}
+
+_immu.shuffle = function (list) {
+  var set = list
+  var size = set.size
+  var shuffled = Immutable.List(Array(size))
+  for (var index = 0, rand; index < size; index++) {
+    rand = _immu.random(0, index)
+    if (rand !== index) shuffled = shuffled.set(index, shuffled.get(rand))
+    shuffled = shuffled.set(rand, set.get(index))
+  }
+  return shuffled
+}
+
+_immu.random = function (min, max) {
+  if (max == null) {
+    max = min
+    min = 0
+  }
+  return min + Math.floor(Math.random() * (max - min + 1))
 }
