@@ -82,8 +82,8 @@ export default () => {
                 defaultDescription = data.get('description') || defaultDescription
                 defaultTitle = `${(data.get('title') || defaultTitle)} |`
                 metas.type = 'article'
+                metas.htmlAttributes.prefix = 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#'
               }
-              metas.htmlAttributes.prefix = 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#'
               if (params.themeId) {
                 data = store.getState().Life.get(`life/themes/${params.themeId}`)
                 if (data) {
@@ -104,6 +104,8 @@ export default () => {
               if (data) {
                 defaultTitle = this.getTitle('life.metas.user.title', {defaultTitle: data.get('nickname') || ''})
                 defaultDescription = data.get('biography') || defaultDescription
+                metas.htmlAttributes.prefix = 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# profile: http://ogp.me/ns/profile#'
+                metas.type = 'profile'
               }
             }
 
