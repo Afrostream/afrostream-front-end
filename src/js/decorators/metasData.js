@@ -275,18 +275,8 @@ export default () => {
 
 
         metas.meta.push({
-          property: 'og:image',
+          property: 'og:image:url',
           content: image,
-        })
-
-        metas.meta.push({
-          property: 'og:image:width',
-          content: 1200,
-        })
-
-        metas.meta.push({
-          property: 'og:image:height',
-          content: 630,
         })
 
         metas.meta.push({
