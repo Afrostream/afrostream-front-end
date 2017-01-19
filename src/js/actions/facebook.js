@@ -96,7 +96,7 @@ export function watchVideo ({
           `/me/video.watches`,
           'POST',
           {
-            video: window.location,
+            video: window.location.href,
             created_time: creationDate.getTime(),
             expires_in: duration
           },
@@ -135,7 +135,7 @@ export function readNews ({
           `/me/news.reads`,
           'POST',
           {
-            article: window.location,
+            article: window.location.href,
             created_time: creationDate.getTime()
           },
           (response) => {
@@ -167,7 +167,7 @@ export function like ({}) {
       return await new Promise((resolve, reject) => {
 
         let creationDate = new Date()
-        let location = window.location
+        let location = window.location.href
 
         window.FB.api(
           `/me/og.likes`,
@@ -203,7 +203,7 @@ export function pageInfo ({}) {
     return async () => {
       return await new Promise((resolve, reject) => {
 
-        let location = window.location
+        let location = window.location.href
 
         window.FB.api(
           `/`,
