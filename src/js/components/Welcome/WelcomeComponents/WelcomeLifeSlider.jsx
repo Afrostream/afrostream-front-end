@@ -30,13 +30,13 @@ class WelcomeLifeSlider extends React.Component {
     return (
       <div className="slide-show" ref="slC">
         {canUseDOM && <Slider {...settings}>
-          <div>
+          <div key="life-element-slider-1">
             <WelcomeLife {...this.props}
                          title="life.welcome.label"
                          action="life.welcome.action"
                          imageUrl={life.welcome}/>
           </div>
-          <div>
+          <div key="life-element-slider-2">
             <WelcomeLife {...this.props}
                          title="life.welcomeMobile.label"
                          action="life.welcomeMobile.action"

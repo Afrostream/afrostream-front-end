@@ -34,8 +34,8 @@ class WelcomeLife extends I18n {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        <Link to="/life">
-          <ReactImgix key="welcome-life" className="welcome-life_img" src={posterImg} bg={true}>
+        <Link to={this.props.to}>
+          <ReactImgix key="welcome-life" className="welcome-life_img" src={posterImg} bg={true} blur={false}>
             <div className="afrostream-life__mask"/>
           </ReactImgix>
           <ReactImgix src={`/images/logo-life.png`} alt="afrostream-logo" className="afrostream-logo"/>
@@ -55,11 +55,14 @@ class WelcomeLife extends I18n {
 }
 
 WelcomeLife.propTypes = {
+  to: PropTypes.string,
   title: PropTypes.string.isRequired,
   imageUrl: PropTypes.string.isRequired,
   action: PropTypes.string.isRequired
 }
 
-WelcomeLife.defaultProps = {}
+WelcomeLife.defaultProps = {
+  to: '/life'
+}
 
 export default injectIntl(WelcomeLife)

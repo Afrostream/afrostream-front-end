@@ -13,6 +13,16 @@ const config = _.merge(
         image: '/production/screen/blackish-home-v5.jpg',
         logo: ''
       },
+      carousel: {
+        mobile: [
+          '/production/carousel/apercu_catalogue_mobile_slide1.png',
+          '/production/carousel/apercu_catalogue_mobile_slide2.png'
+        ],
+        desktop: [
+          '/production/carousel/apercu_catalogue_desktop_slide1.png',
+          '/production/carousel/apercu_catalogue_desktop_slide2.png'
+        ]
+      },
       metas: [
         {
           property: 'fb:app_id',
