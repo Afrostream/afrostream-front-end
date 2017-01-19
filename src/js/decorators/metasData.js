@@ -284,7 +284,6 @@ export default () => {
           content: image,
         })
 
-
         metas.link.push({
           rel: 'canonical',
           href: metas.slug,

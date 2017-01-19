@@ -649,7 +649,7 @@
       "title": "{themes} {defaultTitle} Afrostream Life",
       "description": "Le média social de la créativité afro",
       "user": {
-        "title": "Mon profil Afrostream Life @{defaultTitle}"
+        "title": "@{defaultTitle} sur Afrostream Life"
       }
     }
   },

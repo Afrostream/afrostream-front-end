@@ -4,36 +4,47 @@
   text-align: center;
   position: relative;
   width: 100%;
-  padding: @thumb-margin 0 @thumb-margin 0;
-
-  .browse-categorie_list_label {
-    text-transform: uppercase;
-    color: @brand-primary;
-    font-size: 2em;
-    font-family: @font-thin;
-    text-transform: uppercase;
-    margin: 10px @app-padding 10px @app-padding;
-    .isMobile({ margin: 10px @app-padding-mobile 10px @app-padding-mobile; });
-  }
 
   .movies-data-list.spots {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+    .isMobile({ flex-direction: row; });
+    .isNotMobile({ height: 460px; });
 
     .movies-list__selection {
       font-size: 2.7em;
     }
 
-    .thumb {
-      float: left;
-      order: 0;
+    @thumb-spot-width: @thumb-width + (@thumb-margin * 2);
+
+    .spot-thumb {
+      .thumb {
+        display: flex;
+        flex: 1 1 auto;
+        float: left;
+        width: 100%;
+        padding: 0;
+      }
+      order: 1;
       flex: 1 1 auto;
+      padding: 0px;
       //flex-basis: 270px; /* default value */
       flex-grow: 0;
       align-self: auto;
-      .isMobile({ width: 50%; });
+      width: @thumb-spot-width;
+      .isMobile({ width: 33.3%; });
+      &:nth-child(7) {
+        .isMobile({ order: 0; width: 100%; });
+        flex: 1 1 100%;
+        width: @thumb-spot-width * 2;
+      }
     }
+  }
+
+  .main {
+    flex: 1 100%;
+    background: blue;
   }
 }
