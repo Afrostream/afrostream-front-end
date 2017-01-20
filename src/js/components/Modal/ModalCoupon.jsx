@@ -25,17 +25,6 @@ class ModalCoupon extends ModalComponent {
     }
   }
 
-  componentDidMount () {
-    const {
-      props: {location}
-    } = this
-    let {query} = location
-    let {code} = query
-    if (code) {
-      this.refs.coupon.value = code
-    }
-  }
-
   async finalyse () {
     const {
       props: {
@@ -188,15 +177,20 @@ class ModalCoupon extends ModalComponent {
 
   getCoupon () {
 
+
     const {
       props: {
+        location,
         Billing
       }
     } = this
 
+    let {query} = location
+
     const couponStore = Billing.get('coupon')
     const coupon = couponStore && couponStore.get('coupon')
-    const code = coupon && coupon.get('code') || ''
+    const code = coupon && coupon.get('code') || query.code || ''
+
     return (
       <div className="coupon">
         <label htmlFor="coupon" className="sad-placeholder">
@@ -204,9 +198,10 @@ class ModalCoupon extends ModalComponent {
         </label>
         <div className="input-box">
           <i className="icon-barcode"></i>
-          <input name="coupon" ref="coupon" id="coupon" type="text" className="input-coupon" required
-                 value={code}
+          <input name="coupon" ref="coupon" id="coupon" type="text" className="input-coupon"
+                 key={`inputCouponValue:${code}`}
                  placeholder={this.getTitle('couponPlaceholder')}
+                 defaultValue={code}
                  title={this.getTitle('couponPlaceholder')}/>
         </div>
       </div>
