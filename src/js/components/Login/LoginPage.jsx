@@ -67,7 +67,7 @@ class LoginPage extends React.Component {
 
   render () {
 
-    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=1280&q=${config.images.quality}&fm=${config.images.type}&blur=50)`}
+    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${config.metadata.shareImage}?crop=faces&fit=${this.state.isMobile ? 'min' : 'clip'}&w=1280&q=${config.images.quality}&fm=${config.images.type})`}
 
     return (
       <div className="row-fluid">
