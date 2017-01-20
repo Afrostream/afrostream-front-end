@@ -9,7 +9,7 @@ import * as CategoryActionCreators from '../../../actions/category'
 import _ from 'lodash'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-
+import window from 'global/window'
 if (process.env.BROWSER) {
   require('./Spots.less')
 }
@@ -30,6 +30,14 @@ class Spots extends React.Component {
     this.updateSpotInterval_ = 0
     this.spotsList_ = null
     this.uniqSpots_ = null
+  }
+
+  componentDidMount () {
+    window.addEventListener('resize', ::this.updateLimit)
+  }
+
+  componentWillUnMount () {
+    window.removeEventListener('resize', ::this.updateLimit)
   }
 
   spotsList (list) {
@@ -80,19 +88,27 @@ class Spots extends React.Component {
       })
 
       this.uniqSpots_ = _.uniqBy(recoList, '_id')
-      //get only 8 mea
-      if (this.uniqSpots_.length < this.props.limit) {
-        return
-      }
-      this.spotsList(_.sampleSize(this.uniqSpots_, this.props.limit))
+      this.updateLimit()
     }
 
+  }
+
+  updateLimit () {
+    this.limit = Math.ceil(((window && window.innerWidth || 1280) / 200) * 2)
+    if (this.limit % 1 === 0) {
+      this.limit += 2
+    }
+    //get only 8 mea
+    if (this.uniqSpots_.length < this.limit) {
+      return
+    }
+    this.spotsList(_.sampleSize(this.uniqSpots_, this.limit))
   }
 
   renderMovie (data, index) {
     let dataId = data.get('_id')
 
-    const middleItem = index === Math.floor(this.props.limit * 0.5)
+    const middleItem = !Boolean((index + 1) % 7)
     const multiplicate = (1 + Number(Boolean(middleItem)))
 
     let params = {
@@ -145,12 +161,8 @@ class Spots extends React.Component {
   }
 }
 
-Spots.propsTypes = {
-  limit: React.PropTypes.number
-}
+Spots.propsTypes = {}
 
-Spots.defaultProps = {
-  limit: 13
-}
+Spots.defaultProps = {}
 
 export default Spots
