@@ -3,7 +3,7 @@
 .welcome-header {
   width: 100%;
   position: relative;
-  padding: @header-height 0 @header-height 0;
+  padding: @header-height 0 0 0;
   .isMobile({ padding: @header-height-mobile 0 0 0; });
   position: relative;
   text-align: center;
@@ -16,9 +16,11 @@
       display: table;
       height: auto;
       min-height: 85vh;
+      .isMobile({ min-height: 100vh; margin-top: -@header-height-mobile; });
 
       .movie-info_content {
         vertical-align: middle;
+        .isMobile({ vertical-align: bottom; });
         display: table-cell;
         height: auto;
         position: relative;

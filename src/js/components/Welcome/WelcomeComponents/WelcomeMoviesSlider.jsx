@@ -6,10 +6,11 @@ import _ from 'lodash'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { connect } from 'react-redux'
 import ReactImgix from '../../Image/ReactImgix'
+import * as ModalActionCreators from '../../../actions/modal'
 
 const {metadata, images} = config
 
-@connect(({Event}) => ({Event}))
+@connect(({Event, User}) => ({Event, User}))
 class WelcomeMoviesSlider extends React.Component {
 
   constructor (props) {
@@ -19,11 +20,31 @@ class WelcomeMoviesSlider extends React.Component {
   renderSliderItem (imageUrl, index, isMobile) {
     let posterImg = `${images.urlPrefix}${imageUrl}?crop=faces&fit=clip&w=${isMobile ? 400 : 1280}&q=${images.quality}&fm=${images.type}`
     return (
-      <section>
+      <section onClick={::this.showLock}>
         <div className="welcome-slider-item" key={`life-element-slider-${index}`}><ReactImgix
           className="welcome-slider_img"
           src={posterImg} bg={true}/></div>
       </section>)
+  }
+
+  showLock () {
+    const {
+      props: {
+        User,
+        dispatch,
+        router
+      }
+    } = this
+
+    const user = User.get('user')
+    if (user) {
+      return router.push(this.props.to)
+    }
+
+    dispatch(ModalActionCreators.open({
+      target: 'showSignup',
+      donePath: this.props.to
+    }))
   }
 
   render () {
@@ -59,15 +80,17 @@ WelcomeMoviesSlider.propTypes = {
   dots: React.PropTypes.bool,
   autoplay: React.PropTypes.bool,
   infinite: React.PropTypes.bool,
-  speed: React.PropTypes.number
+  speed: React.PropTypes.number,
+  to: React.PropTypes.string
 }
 
 WelcomeMoviesSlider.defaultProps = {
+  to: '/',
   dots: true,
   autoplay: true,
   infinite: true,
-  speed: 10000,
-  autoplaySpeed: 1000
+  speed: 1000,
+  autoplaySpeed: 10000
 }
 
 export default withRouter(WelcomeMoviesSlider)

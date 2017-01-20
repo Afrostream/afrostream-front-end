@@ -91,13 +91,11 @@ export function watchVideo ({
     return async () => {
       return await new Promise((resolve, reject) => {
 
-        let creationDate = created_time || new Date()
         window.FB.api(
           `/me/video.watches`,
           'POST',
           {
             video: window.location,
-            created_time: creationDate.getTime(),
             expires_in: duration
           },
           (response) => {
@@ -130,13 +128,11 @@ export function readNews ({
     return async () => {
       return await new Promise((resolve, reject) => {
 
-        let creationDate = created_time || new Date()
         window.FB.api(
           `/me/news.reads`,
           'POST',
           {
-            article: window.location,
-            created_time: creationDate.getTime()
+            article: window.location
           },
           (response) => {
             if (!response || response.error) {
@@ -166,15 +162,13 @@ export function like ({}) {
     return async () => {
       return await new Promise((resolve, reject) => {
 
-        let creationDate = new Date()
         let location = window.location
 
         window.FB.api(
           `/me/og.likes`,
           'POST',
           {
-            object: location,
-            created_time: creationDate.getTime()
+            object: location
           },
           (response) => {
             if (!response || response.error) {
