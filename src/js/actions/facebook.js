@@ -1,6 +1,5 @@
 import ActionTypes from '../consts/ActionTypes'
 import _ from 'lodash'
-import qs from 'qs'
 import window from 'global/window'
 /**
  * Get list friendlist
@@ -77,7 +76,6 @@ export function getFriends () {
 
 export function watchVideo ({
   duration,
-  created_time,
 }) {
   return (dispatch, getState) => {
     const auth = getState().Facebook.get('auth')
@@ -113,9 +111,7 @@ export function watchVideo ({
   }
 }
 
-export function readNews ({
-  created_time,
-}) {
+export function readNews ({}) {
   return (dispatch, getState) => {
     const auth = getState().Facebook.get('auth')
     if (!auth || auth.get('status') !== 'connected') {
