@@ -21,7 +21,7 @@ class WelcomeMoviesSlider extends React.Component {
     let posterImg = `${images.urlPrefix}${imageUrl}?crop=faces&fit=clip&w=${isMobile ? 400 : 1280}&q=${images.quality}&fm=${images.type}`
     return (
       <section onClick={::this.showLock}>
-        <div className="welcome-slider-item" key={`life-element-slider-${index}`}><ReactImgix
+        <div className="content welcome-slider-item" key={`life-element-slider-${index}`}><ReactImgix
           className="welcome-slider_img"
           src={posterImg} bg={true}/></div>
       </section>)
@@ -57,7 +57,7 @@ class WelcomeMoviesSlider extends React.Component {
       autoplaySpeed: this.props.autoplaySpeed,
       speed: this.props.speed,
       pauseOnHover: false,
-      adaptiveHeight: true,
+      adaptiveHeight: false,
       vertical: false,
       arrows: false,
       dotsClass: 'pager'
