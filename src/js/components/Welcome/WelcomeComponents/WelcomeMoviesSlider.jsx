@@ -56,6 +56,7 @@ class WelcomeMoviesSlider extends React.Component {
       infinite: this.props.infinite,
       autoplaySpeed: this.props.autoplaySpeed,
       speed: this.props.speed,
+      pauseOnHover: false,
       adaptiveHeight: true,
       vertical: false,
       arrows: false,
@@ -90,7 +91,7 @@ WelcomeMoviesSlider.defaultProps = {
   autoplay: true,
   infinite: true,
   speed: 1000,
-  autoplaySpeed: 10000
+  autoplaySpeed: 6000
 }
 
 export default withRouter(WelcomeMoviesSlider)
