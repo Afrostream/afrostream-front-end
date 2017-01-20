@@ -95,7 +95,7 @@ export function watchVideo ({
           `/me/video.watches`,
           'POST',
           {
-            video: window.location,
+            video: window.location.href,
             expires_in: duration
           },
           (response) => {
@@ -132,7 +132,7 @@ export function readNews ({
           `/me/news.reads`,
           'POST',
           {
-            article: window.location
+            article: window.location.href
           },
           (response) => {
             if (!response || response.error) {
@@ -162,7 +162,7 @@ export function like ({}) {
     return async () => {
       return await new Promise((resolve, reject) => {
 
-        let location = window.location
+        let location = window.location.href
 
         window.FB.api(
           `/me/og.likes`,
@@ -197,7 +197,7 @@ export function pageInfo ({}) {
     return async () => {
       return await new Promise((resolve, reject) => {
 
-        let location = window.location
+        let location = window.location.href
 
         window.FB.api(
           `/`,
