@@ -17,6 +17,23 @@
       //top: 35%;
       display: none;
     }
+
+    &.overlay .movie-background {
+      left: 35%;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      .afrostream-movie__mask {
+        background-color: inherit;
+        .horizontal-gradient(@color-black-2, 0%, transparent, 40%);
+      }
+    }
+    .movie-background {
+      .afrostream-movie__mask {
+        .isMobile({ .gradient(transparent, @color-black-2); });
+      }
+    }
+
     .movie-info_content {
       display: inline-block;
       position: absolute;
@@ -30,7 +47,7 @@
     .billboard-infos {
       vertical-align: bottom;
       margin-bottom: 50px;
-      max-width: 85%;
+      max-width: 40%;
     }
   }
 

@@ -30,7 +30,7 @@ class BrowsePage extends React.Component {
         {authorized && [
           <SplashScreen />,
           <BrowseMenu key="browse-menu"/>,
-          <SlideShow key="slide-show"/>,
+          <SlideShow key="slide-show" gradient={true}/>,
           <UserMoviesList key="user-movies-list" limit={5}/>,
           <MoviesList key="movies-list"/>
         ]}

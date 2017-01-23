@@ -36,7 +36,7 @@
     "sponsorship": "parrainage",
     "category": "categorie",
     "last": "derniers",
-    "favoris": "favoris"
+    "favoris": "ma-liste"
   },
   "lang": {
     "fr": "Français",
@@ -55,7 +55,7 @@
     "streaming": "Streaming",
     "life": "Life",
     "community": "Communauté",
-    "favoris": "Favoris",
+    "favoris": "Ma liste",
     "last": "Nouveautés",
     "sponsorship": "Inviter des amis",
     "profil": "Mon profil",

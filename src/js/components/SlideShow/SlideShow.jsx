@@ -80,6 +80,7 @@ class SlideShow extends React.Component {
 
 SlideShow.propTypes = {
   history: React.PropTypes.object,
+  gradient: React.PropTypes.bool,
   dots: React.PropTypes.bool,
   autoplay: React.PropTypes.bool,
   infinite: React.PropTypes.bool,
@@ -90,6 +91,7 @@ SlideShow.propTypes = {
 
 SlideShow.defaultProps = {
   dots: true,
+  gradient: false,
   autoplay: false,
   infinite: false,
   movieInfo: true,

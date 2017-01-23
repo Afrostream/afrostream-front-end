@@ -42,7 +42,8 @@ class WelcomeHeader extends React.Component {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        <SlideShow {...this.props} dots={false} autoplay={true} infinite={true} maxLength={450} {...{movieId}}
+        <SlideShow {...this.props} dots={false} autoplay={true} infinite={true}
+                   maxLength={450} {...{movieId}}
                    movieInfo={Boolean(movieId)}/>
       </section>
     )

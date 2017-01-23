@@ -28,6 +28,7 @@ class MovieInfo extends LoadVideo {
 
   static propTypes = {
     active: PropTypes.bool,
+    overlay: PropTypes.bool,
     showBtn: PropTypes.bool,
     load: PropTypes.bool,
     maxLength: PropTypes.number
@@ -35,6 +36,7 @@ class MovieInfo extends LoadVideo {
 
   static defaultProps = {
     maxLength: 450,
+    overlay: false,
     showBtn: true,
     load: true,
     active: false
@@ -57,6 +59,7 @@ class MovieInfo extends LoadVideo {
     const classes = classSet({
       'movie': true,
       'serie': isSerie,
+      'overlay': this.props.gradient,
       'movie--active': this.props.active,
       'movie--btn_play': showBtn === true || !isSerie
     })

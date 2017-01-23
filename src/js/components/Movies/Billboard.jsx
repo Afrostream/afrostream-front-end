@@ -185,8 +185,8 @@ class Billboard extends LoadVideo {
         data,
         key: 'logo',
         fit: 'none',
-        width: 500,
-        height: 380,
+        width: 300,
+        height: 170,
         format: 'png'
       })
 
@@ -217,6 +217,7 @@ class Billboard extends LoadVideo {
       <div className="billboard-infos">
         {type ? <div ref="slTag" className="billboard-tag billboard-row">{type === 'movie' ? 'film' : type}</div> :
           <div ref="slNull"/>}
+        {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
         {<CsaIcon {...{csa}}/>}
         <Link to={link} ref="slTitle" className="billboard-title billboard-row">{title}</Link>
         {<RateComponent defaultValue={rating} disabled={true} {...{videoId}}/>}
