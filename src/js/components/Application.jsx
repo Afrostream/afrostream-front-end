@@ -71,14 +71,14 @@ if (process.env.BROWSER) {
 
   await store.dispatch(CategoryActionCreators.getSpots())
 
-  if (movieId && movieId !== 'undefined') {
+  if (movieId) {
     await store.dispatch(MovieActionCreators.getMovie(movieId))
   }
-  if (seasonId && seasonId !== 'undefined') {
+  if (seasonId) {
     await store.dispatch(SeasonActionCreators.getSeason(seasonId))
   }
 
-  if (episodeId && episodeId !== 'undefined') {
+  if (episodeId) {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 

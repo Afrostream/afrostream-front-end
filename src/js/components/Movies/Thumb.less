@@ -4,7 +4,6 @@
   position: relative;
   color: @brand-primary;
   padding: @thumb-margin;
-
   text-align: left;
   vertical-align: top;
   width: @thumb-width + (@thumb-margin * 2);
@@ -40,6 +39,30 @@
         .thumb-info__title {
           font-family: @font-heavy;
           font-size: 3em;
+          line-height: 1;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+    .thumb-buttons {
+      display: none;
+    }
+  }
+  &.pin {
+    width: @thumb-width-pin;
+    a {
+      .thumb-background {
+        height: @thumb-height-pin;
+        padding-top: inherit;
+      }
+      .thumb-info {
+        position: absolute;
+        bottom: 0;
+        padding: 1.5em 20% 1.5em 1.5em;
+        color: @brand-primary;
+        .thumb-info__title {
+          font-family: @font-heavy;
+          font-size: 2.5em;
           line-height: 1;
           text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }

@@ -44,7 +44,7 @@ class Spots extends React.Component {
   updateSpot () {
     const diffList = _.difference(this.uniqSpots_, this.spotsList_)
     if (diffList.length) {
-      const randomIndex = Math.floor(Math.random() * this.spotsList_.length);
+      const randomIndex = Math.floor(Math.random() * this.spotsList_.length)
       const movieRandItem = _.sample(diffList)
       this.spotsList_.splice(randomIndex, 1, movieRandItem)
     }

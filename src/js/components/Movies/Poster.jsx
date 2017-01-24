@@ -49,7 +49,24 @@ class Poster extends LoadVideo {
       props: {data, type}
     } = this
 
-    return type || data.get('type')
+    let resultType = type || data.get('type')
+
+    switch (resultType) {
+      case 'pin':
+      case 'image':
+      case 'event':
+      case 'audio':
+      case 'rich':
+      case 'video':
+      case 'website':
+      case 'article':
+        resultType = 'pin'
+        break
+      default:
+        break
+    }
+
+    return resultType
   }
 
   extractProfile (image, ratio = '16:31') {
@@ -95,11 +112,12 @@ class Poster extends LoadVideo {
     }
 
     const type = this.getType()
+
     const extractType = (type === 'movie' ? 'thumb' : 'poster')
 
     const imageUrl = extractImg({
       data,
-      key: extractType,
+      keys: [extractType, 'image'],
       width: thumbW,
       height: thumbH,
       fit: 'min'

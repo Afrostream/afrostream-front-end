@@ -136,8 +136,20 @@ const webpackConfig = {
         loaders: ['json']
       },
       {
-        test: /\.css$/,
-        loaders: [ExtractTextPlugin.extract('style-loader', 'css-loader')],
+        test: /\.(css|less)$/,
+        loaders: [ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loaders: [
+            {
+              //notExtractLoader: 'style-loader',
+              loader: 'css-loader',
+              options: {sourceMap: true, importLoaders: 1}
+            },
+            {
+              loader: 'less-loader',
+              options: {sourceMap: true, importLoaders: 1}
+            }]
+        })],
         include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {

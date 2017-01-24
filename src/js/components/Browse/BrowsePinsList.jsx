@@ -1,17 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import MoviesSlider from './MoviesSlider'
+import MoviesSlider from '../Movies/MoviesSlider'
 import {
   intlShape,
   injectIntl
 } from 'react-intl'
 
 if (process.env.BROWSER) {
-  require('./UserMoviesList.less')
+  require('./BrowsePinsList.less')
 }
 
-@connect(({User}) => ({User}))
-class UserMoviesList extends React.Component {
+@connect(({User, Life}) => ({User, Life}))
+class BrowsePinsList extends React.Component {
 
   constructor (props) {
     super(props)
@@ -20,34 +20,37 @@ class UserMoviesList extends React.Component {
   render () {
     const {
       props: {
-        User,
+        Life,
         axis,
         label,
+        themeId,
         rowHeight,
         thumbW,
         thumbH
       }
     } = this
 
-    const historyList = User.get('history')
-    if (!historyList) {
+    const dataList = Life.get(`life/pins/${themeId}`)
+
+    if (!dataList) {
       return (<div />)
     }
-    const dataList = this.props.limit && historyList.take(this.props.limit) || historyList
-    const slug = 'history'
+    const slug = 'life'
+    const type = 'pin'
     const showTitle = true
     const showDescription = false
     const share = false
     const favorite = false
     const load = false
-    const type = 'episode'
+
     return (
-      <div className="user-movie-history">
+      <div className="browse-pins-list">
         <MoviesSlider
           {...this.props}
           columnMaxWidth={thumbW}
-          className="user-movie-history_list movies-data-list"
-          key={`user-movie-history`} {...{
+          columnminWidth={thumbW}
+          className="browse-pins-data-list movies-data-list"
+          key={`browse-pins-list`} {...{
           dataList,
           label,
           slug,
@@ -67,21 +70,22 @@ class UserMoviesList extends React.Component {
   }
 }
 
-UserMoviesList.propTypes = {
+BrowsePinsList.propTypes = {
   intl: intlShape.isRequired,
   thumbW: React.PropTypes.number,
   thumbH: React.PropTypes.number,
   rowHeight: React.PropTypes.number,
   limit: React.PropTypes.number,
+  themeId: React.PropTypes.string,
   label: React.PropTypes.string,
   axis: React.PropTypes.string
 }
 
-UserMoviesList.defaultProps = {
-  thumbW: 200,
-  thumbH: 110,
-  rowHeight: 160,
+BrowsePinsList.defaultProps = {
+  thumbW: 620,
+  thumbH: 340,
+  rowHeight: 340,
   axis: 'x',
-  label: 'history.label'
+  label: 'life.label'
 }
-export default injectIntl(UserMoviesList)
+export default injectIntl(BrowsePinsList)

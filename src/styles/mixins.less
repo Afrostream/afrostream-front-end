@@ -76,7 +76,7 @@
 }
 
 .horizontal-gradient (@startColor: #eee, @start : 0%, @endColor: white, @end : 0%) {
-  //background-color: @startColor;
+  background-color: @startColor;
   background-image: -webkit-gradient(linear, left top, right top, from(@startColor start), to(@endColor @end));
   background-image: -webkit-linear-gradient(left, @startColor @start, @endColor @end);
   background-image: -moz-linear-gradient(left, @startColor @start, @endColor @end);
@@ -100,6 +100,14 @@
   background: -moz-linear-gradient(top, @startColor, @endColor);
   background: -ms-linear-gradient(top, @startColor, @endColor);
   background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+.gradient-degree (@degree : 0,@startColor: #eee, @start : 0%, @endColor: white, @end : 0%) {
+  background-image: -webkit-gradient(@degree, from(@startColor start), to(@endColor @end));
+  background-image: -webkit-linear-gradient(@degree, @startColor @start, @endColor @end);
+  background-image: -moz-linear-gradient(@degree, @startColor @start, @endColor @end);
+  background-image: -ms-linear-gradient(@degree, @startColor @start, @endColor @end);
+  background-image: -o-linear-gradient(@degree, @startColor @start, @endColor @end);
 }
 
 .aspect-ratio-w(@width, @height) {

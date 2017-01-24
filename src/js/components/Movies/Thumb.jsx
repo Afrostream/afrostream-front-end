@@ -120,9 +120,9 @@ class Thumb extends Poster {
 
     let thumbClass = {
       'thumb': true,
-      'episode': type === 'episode',
-      'spot': type === 'spot'
     }
+    thumbClass[type] = true
+    thumbClass.movie = false
 
     return (
       <div ref="thumb" className={classSet(thumbClass)}

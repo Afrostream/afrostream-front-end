@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Immutable from 'immutable'
 import { I18n } from './Utils'
+import { slugify } from '../lib/utils'
 
 export default class LoadVideo extends I18n {
 
@@ -57,10 +58,14 @@ export default class LoadVideo extends I18n {
     }
 
     let movieId = dataValue.get('_id')
-    let movieSlug = dataValue.get('slug')
+    let movieTitle = dataValue.get('title')
+    let movieSlug = dataValue.get('slug') || slugify(movieTitle)
     let dataType = dataValue.get('type')
-
+    let fixedType = this.getType()
     let link = `/${movieId}/${movieSlug}`
+    if (fixedType === 'pin') {
+      return `/life/pin${link}`
+    }
     let seasonId
     let seasonSlug
     let episodeId

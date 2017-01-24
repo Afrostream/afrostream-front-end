@@ -4171,7 +4171,7 @@
       "version": "1.2.2",
       "dependencies": {
         "ansi-regex": {
-          "version": "2.0.0"
+          "version": "2.1.1"
         },
         "ansi-styles": {
           "version": "2.2.1"
@@ -4188,13 +4188,13 @@
           "version": "2.0.0"
         },
         "postcss": {
-          "version": "5.2.10"
+          "version": "5.2.11"
         },
         "strip-ansi": {
           "version": "3.0.1"
         },
         "supports-color": {
-          "version": "3.1.2"
+          "version": "3.2.3"
         }
       }
     },

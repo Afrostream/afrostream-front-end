@@ -11,18 +11,16 @@ if (process.env.BROWSER) {
   require('./MoviesSlider.less')
 }
 
-const GUTTER_SIZE = 3
-const CELL_WIDTH = 160
-
 class MoviesSlider extends I18n {
 
   constructor (props, context) {
     super(props, context)
-    this._columnYMap = []
   }
 
   static propTypes = {
     dataList: PropTypes.instanceOf(Immutable.List),
+    columnMaxWidth: React.PropTypes.number,
+    columnMinWidth: React.PropTypes.number,
     virtual: React.PropTypes.bool,
     favorite: React.PropTypes.bool,
     share: React.PropTypes.bool,
@@ -36,6 +34,8 @@ class MoviesSlider extends I18n {
 
   static defaultProps = {
     selectedId: null,
+    columnMaxWidth: 620,
+    columnMinWidth: 620,
     label: '',
     slug: '',
     axis: 'x',
@@ -46,41 +46,34 @@ class MoviesSlider extends I18n {
     favorite: true
   }
 
-  cellSizeAndPositionGetter ({index}) {
-    const {
-      props: {
-        dataList
-      }
-    } = this
+  getType (data) {
 
-    let data = dataList.get(index)
-    let columnCount = 6
-    const columnPosition = index % (columnCount || 1)
-    const datum = dataList.get(index % data.size)
+    let resultType = data.get('type')
 
-    // Poor man's Masonry layout; columns won't all line up equally with the bottom.
-    const height = 220
-    const width = CELL_WIDTH
-    const x = columnPosition * (GUTTER_SIZE + width)
-    const y = this._columnYMap[columnPosition] || 0
-
-    this._columnYMap[columnPosition] = y + height + GUTTER_SIZE
-
-    return {
-      height,
-      width,
-      x,
-      y
+    switch (resultType) {
+      case 'image':
+      case 'event':
+      case 'audio':
+      case 'rich':
+      case 'video':
+      case 'website':
+      case 'article':
+        resultType = 'pin'
+        break
+      default:
+        break
     }
+
+    return resultType
   }
 
-
   renderBlock (data) {
+    let isPin = this.getType(data) === 'pin'
     let isAdSpot = data.get('adSpot')
     let dataId = data.get('_id')
     let params = {}
-    if (isAdSpot) {
 
+    if (isAdSpot) {
       params = {
         thumbW: 240,
         thumbH: 465,
@@ -90,7 +83,15 @@ class MoviesSlider extends I18n {
       }
     }
 
-    //console.log('render category thumb : ', dataId)
+    if (isPin) {
+      params = {
+        thumbW: 620,
+        thumbH: 250,
+        type: 'pin',
+        fit: 'min',
+        crop: 'face'
+      }
+    }
 
     return (
       <Thumb
@@ -193,8 +194,7 @@ class MoviesSlider extends I18n {
           {({width}) => (
             <ColumnSizer
               ref="react-list"
-              columnMaxWidth={210}
-              columnMinWidth={210}
+              {...this.props}
               columnCount={dataList.size}
               width={width}>
               {({adjustedWidth, getColumnWidth, registerChild}) => (
