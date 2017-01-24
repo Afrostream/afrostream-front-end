@@ -20,13 +20,14 @@
 
     &.overlay .movie-background {
       left: 35%;
+      .isMobile({ left: 0; });
       right: 0;
       bottom: 0;
       top: 0;
       .afrostream-movie__mask {
         background-color: inherit;
         .horizontal-gradient(@color-black-2, 0, transparent, 50%);
-        .isMobile({ background-image: none; });
+        .isMobile({ background: none; });
 
       }
     }
