@@ -47,8 +47,8 @@ class BrowsePinsList extends React.Component {
       <div className="browse-pins-list">
         <MoviesSlider
           {...this.props}
-          columnMaxWidth={thumbW}
-          columnminWidth={thumbW}
+          columnMaxWidth={620}
+          columnMinWidth={620}
           className="browse-pins-data-list movies-data-list"
           key={`browse-pins-list`} {...{
           dataList,
