@@ -199,6 +199,7 @@
     "label": "Reprendre la lecture"
   },
   "search": {
+    "placeHolder": "Rechercher ...",
     "noData": "La recherche n'a trouvé aucun resultat"
   },
   "breadcrumbs": {

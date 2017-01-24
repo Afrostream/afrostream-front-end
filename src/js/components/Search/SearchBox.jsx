@@ -4,13 +4,18 @@ import _ from 'lodash'
 import classSet from 'classnames'
 import { withRouter } from 'react-router'
 import * as EventActionCreators from '../../actions/event'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
+import { I18n } from '../Utils'
 
 if (process.env.BROWSER) {
   require('./SearchBox.less')
 }
 
-@connect(({Search}) => ({Search}))
-class SearchBox extends React.Component {
+@connect(({Search, Event}) => ({Search, Event}))
+class SearchBox extends I18n {
 
   constructor (props) {
     super(props)
@@ -24,7 +29,7 @@ class SearchBox extends React.Component {
 
   handleFocus () {
     const {
-      props: {dispatch}
+      props: {}
     } = this
 
     this.setState({
@@ -75,6 +80,9 @@ class SearchBox extends React.Component {
   }
 
   render () {
+    const {
+      props: {Event}
+    } = this
 
     let fielClass = {
       'search-box': true,
@@ -85,6 +93,7 @@ class SearchBox extends React.Component {
       <div className={classSet(fielClass)}>
         <i className="zmdi zmdi-close" onClick={::this.goBack}/>
         <input
+          placeholder={this.getTitle('search.placeHolder')}
           onChange={::this.debounceSearch}
           onFocus={::this.handleFocus}
           onBlur={::this.handleBlur}
@@ -106,4 +115,4 @@ SearchBox.defaultProps = {
   defaultOpen: false
 }
 
-export default withRouter(SearchBox)
+export default withRouter(injectIntl(SearchBox))

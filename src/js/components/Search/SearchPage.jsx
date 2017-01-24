@@ -142,6 +142,10 @@ class SearchPage extends I18n {
 
     const searchRows = searchFetched && searchFetched.get('rows')
 
+    if (!searchRows || !searchRows.size) {
+      return this.state.fetching ? '' : this.getTitle('search.noData')
+    }
+
     return searchRows && searchRows.map((search) => {
         switch (search.get('index')) {
           case 'movies':

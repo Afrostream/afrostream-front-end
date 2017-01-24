@@ -199,6 +199,7 @@
     "label": "Resume reading"
   },
   "search": {
+    "placeHolder": "Search ...",
     "noData": "The search found no results."
   },
   "breadcrumbs": {
