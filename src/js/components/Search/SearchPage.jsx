@@ -30,7 +30,7 @@ if (process.env.BROWSER) {
   return store.dispatch(UserActionCreators.getFavorites('movies'))
 })
 
-@connect(({Search}) => ({Search}))
+@connect(({Search, User}) => ({Search, User}))
 class SearchPage extends I18n {
 
   constructor (props, context) {
@@ -117,10 +117,24 @@ class SearchPage extends I18n {
 
   renderRows () {
     const {
-      props: {Search}
+      props: {Search, User}
     } = this
 
     const searchFetched = Search.get(`search`)
+    const user = User.get(`user`)
+    let authorized
+    let planCode
+    let canShowMovies = false
+    if (user) {
+      authorized = user.get('authorized') && user.get('planCode')
+      planCode = user.get('planCode')
+      const subscriptionsStatus = user.get('subscriptionsStatus')
+      if (subscriptionsStatus) {
+        const subscriptions = subscriptionsStatus.get('subscriptions')
+        canShowMovies = Boolean(subscriptions && subscriptions.filter((a) => a.get('isActive') === 'yes').size)
+      }
+    }
+
 
     if (!searchFetched) {
       return
@@ -131,7 +145,7 @@ class SearchPage extends I18n {
     return searchRows && searchRows.map((search) => {
         switch (search.get('index')) {
           case 'movies':
-            return this.renderMovies(search.get('hits'))
+            return canShowMovies && this.renderMovies(search.get('hits'))
             break
           case 'lifePins':
             return this.renderPins(search.get('hits'))
