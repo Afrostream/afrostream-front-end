@@ -74,14 +74,14 @@ class Header extends React.Component {
     const isOnLife = router.isActive('life')
     const hasPlayer = Player.get('player')
     const isOnPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player')) || videoId
-    const isOnHome = router.isActive('home') || _.last(routes, route => ( route.name === 'home')) && !user
+    const isOnHome = _.last(routes).name === 'home' && !user
+
     let sliderClasses = {
       'topbar': true,
       'topbar-life': isOnLife,
       'topbar-hidden': hiddenMode && isOnPlayer && !sideBarToggled && hasPlayer,
       'topbar-fixed-color': true
     }
-
 
     return (
       <Headroom disableInlineStyles>

@@ -20,7 +20,7 @@ class WelcomeMoviesSlider extends React.Component {
   renderSliderItem (imageUrl, index, isMobile) {
     let posterImg = `${images.urlPrefix}${imageUrl}?crop=faces&fit=clip&w=${isMobile ? 400 : 1280}&q=${images.quality}&fm=${images.type}`
     return (
-      <section onClick={::this.showLock}>
+      <section onClick={::this.showLock} key={`slider-home-${index}`}>
         <div className="content welcome-slider-item" key={`life-element-slider-${index}`}><ReactImgix
           className="welcome-slider_img"
           src={posterImg} bg={true}/></div>

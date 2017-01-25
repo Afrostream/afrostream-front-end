@@ -8,7 +8,10 @@ class BackgroundVideo extends Component {
       type: PropTypes.string,
     })),
     children: PropTypes.node,
-    preload: PropTypes.bool,
+    preload: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
     muted: PropTypes.muted,
     loop: PropTypes.bool,
     autoPlay: PropTypes.bool,
@@ -22,7 +25,7 @@ class BackgroundVideo extends Component {
 
   static defaultProps = {
     videos: [],
-    preload: true,
+    preload: 'auto',
     muted: true,
     loop: true,
     autoPlay: true,
