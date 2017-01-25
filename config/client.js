@@ -167,7 +167,7 @@ const client = {
   alerts: [],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
-    abCode:'81965388-0',
+    abCode: process.env.GA_AB_TRACKING_ID || '********-0',
     firebase: {
       apiKey: 'AIzaSyBJ3H7rJHdhaLg8KfkjvwxvwDhbrbR4NpI',
       authDomain: 'afrostream-86e6c.firebaseapp.com',

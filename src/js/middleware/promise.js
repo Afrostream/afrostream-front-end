@@ -17,9 +17,9 @@ export default function (api, {getState, dispatch}) {
             data = _.merge({params: {language: locale.toUpperCase()}}, data)
           }
           if (geo) {
-            const country = geo.get('countryCode')
-            if (country) {
-              data = _.merge({params: {country}}, data)
+            const countryCode = geo.get('countryCode')
+            if (countryCode) {
+              data = _.merge({params: {country: countryCode}}, data)
             }
           }
           return api(data)
