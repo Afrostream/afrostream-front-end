@@ -74,7 +74,7 @@ class Header extends React.Component {
     const isOnLife = router.isActive('life')
     const hasPlayer = Player.get('player')
     const isOnPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player')) || videoId
-
+    const isOnHome = router.isActive('home') || _.last(routes, route => ( route.name === 'home')) && !user
     let sliderClasses = {
       'topbar': true,
       'topbar-life': isOnLife,
@@ -96,9 +96,9 @@ class Header extends React.Component {
                   <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
                 </button>
               </li>
-              <li>
+              {!isOnHome && <li>
                 <SearchInput/>
-              </li>
+              </li>}
             </ul>
           </nav>
           <nav className="float--left float-bottom-mobile" role="navigation">

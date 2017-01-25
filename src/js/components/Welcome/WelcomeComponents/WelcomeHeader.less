@@ -5,7 +5,6 @@
   position: relative;
   padding: @header-height 0 0 0;
   .isMobile({ padding: @header-height-mobile 0 0 0; });
-  position: relative;
   text-align: center;
   color: @white-base;
 
@@ -15,7 +14,7 @@
     .movie {
       display: table;
       height: auto;
-      min-height: 85vh;
+      min-height: @welcome-header-height;
       .isMobile({ min-height: 100vh; margin-top: -@header-height-mobile; padding-top: @header-height-mobile; });
 
       .movie-info_content {
@@ -54,4 +53,72 @@
     .isMobile({ top: 0; padding-left: 10%; background-position: right center; });
   }
 
+  .video-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    min-height: calc(@welcome-header-height ~'-' @header-height);
+    .fullHeight();
+
+    .video-background {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: 0;
+      -ms-transform: translateX(-50%) translateY(-50%);
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+      background: url(../../../../assets/images/default/1044x731.jpg) no-repeat;
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
+    .video-overlay,
+    .video-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    .video-overlay {
+      background-color: fade(@color-black-2, 20%);
+    }
+
+    .video-content {
+      &:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+      .afrostream-movie__subscribe {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 3em 0 1em 0;
+        .afrostream-statement {
+          font-family: @font-book;
+          font-weight: bold;
+          font-size: 4em;
+          line-height: 1.2em;
+          margin: 1em 0.5em 1em 0.5em;
+          text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+          span {
+            display: block;
+          }
+        }
+
+        .subscribe-button {
+
+        }
+      }
+    }
+  }
 }

@@ -68,10 +68,10 @@ const buildHome = function (lang) {
              path=":videoId"
              component={PlayerPage}/>
     </Route>,
-    <IndexRoute key={`${lang}-home-index`} component={HomePage}/>
+    <IndexRoute key={`${lang}-home-index`} name="home" component={HomePage}/>
   ]
 
-  const finalRoutes = (<Route key={`${lang}-home`} component={HomePage}>
+  const finalRoutes = (<Route key={`${lang}-home`} name="home" component={HomePage}>
     {homeRoutes}
   </Route>)
 

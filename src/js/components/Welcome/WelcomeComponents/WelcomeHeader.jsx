@@ -1,16 +1,22 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
-import classSet from 'classnames'
 import config from '../../../../../config'
+import classSet from 'classnames'
+import { I18n } from '../../Utils'
 import SlideShow from '../../SlideShow/SlideShow'
+import BackgroundVideo from '../../Player/BackgroundVideo'
+import SignUpButton from '../../User/SignUpButton'
+import {
+  injectIntl
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
 }
 
-@connect(({User, Movie, Video, Season, Episode}) => ({User, Movie, Video, Season, Episode}))
-class WelcomeHeader extends React.Component {
+@connect(({Event, User, Movie, Video, Season, Episode}) => ({Event, User, Movie, Video, Season, Episode}))
+class WelcomeHeader extends I18n {
 
   constructor (props) {
     super(props)
@@ -27,10 +33,12 @@ class WelcomeHeader extends React.Component {
 
     const {
       props: {
-        params
+        params,
+        Event,
+        location
       }
     } = this
-
+    let {query} = location
     let {movieId} = params
 
     let welcomeClassesSet = {
@@ -39,12 +47,27 @@ class WelcomeHeader extends React.Component {
       'welcome-header_movie': Boolean(movieId)
     }
 
+    const isMobile = Event.get('isMobile')
+    const isVideoQuery = query.videoHome
+    let homeRTitle = this.getTitle('home.title')
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        <SlideShow {...this.props} dots={false} autoplay={true} infinite={true}
-                   maxLength={450} {...{movieId}}
-                   movieInfo={Boolean(movieId)}/>
+        {!isMobile && isVideoQuery && <BackgroundVideo
+          preload={'metadata'}
+          videos={config.metadata.videos}
+        >
+          <div className="afrostream-movie__subscribe">
+            <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
+              return (<span key={`statement-${i}`}>{statement}</span>)
+            })}
+            </div>
+            <SignUpButton className="subscribe-button" label="home.action"/>
+          </div>
+        </BackgroundVideo>}
+        {isMobile && <SlideShow {...this.props} dots={false} autoplay={true} infinite={true}
+                                maxLength={450} {...{movieId}}
+                                movieInfo={Boolean(movieId)}/>}
       </section>
     )
   }
@@ -56,4 +79,4 @@ WelcomeHeader.propTypes = {
 
 WelcomeHeader.defaultProps = {}
 
-export default WelcomeHeader
+export default injectIntl(WelcomeHeader)
