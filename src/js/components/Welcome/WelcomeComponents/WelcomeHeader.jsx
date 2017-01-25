@@ -75,7 +75,6 @@ class WelcomeHeader extends I18n {
           </div>
         </BackgroundVideo>}
         {(isMobile || !isVideoQuery) && <SlideShow
-          onClick={::this.showLock}
           {...this.props} dots={false} autoplay={true} infinite={true}
           maxLength={450} {...{movieId}}
           movieInfo={Boolean(movieId)}/>}

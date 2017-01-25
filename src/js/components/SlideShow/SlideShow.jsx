@@ -6,15 +6,32 @@ import Slider from 'react-slick'
 import { withRouter } from 'react-router'
 import MovieInfo from '../Movies/MovieInfo'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import * as ModalActionCreators from '../../actions/modal'
 
 if (process.env.BROWSER) {
   require('./SlideShow.less')
 }
-@connect(({Category, Movie}) => ({Category, Movie}))
+@connect(({Category, Movie, User}) => ({Category, Movie, User}))
 class SlideShow extends React.Component {
 
   constructor (props) {
     super(props)
+  }
+
+  showLock () {
+    const {
+      props: {
+        dispatch,
+        User
+      }
+    } = this
+
+    const user = User.get('user')
+    if (!user) {
+      dispatch(ModalActionCreators.open({
+        target: 'showSignup'
+      }))
+    }
   }
 
   render () {
@@ -59,7 +76,8 @@ class SlideShow extends React.Component {
         {!category && <Spinner />}
         {canUseDOM && category &&
         <Slider {...settings}>
-          {category.map((data) => <div key={`slide-${data.get('_id')}`}><MovieInfo
+          {category.map((data) => <div key={`slide-${data.get('_id')}`} onClick={::this.showLock}><MovieInfo
+
             active={true}
             load={true}
             showBtn={true}
