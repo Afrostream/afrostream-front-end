@@ -17,7 +17,7 @@ import document from 'global/document'
 import { deserialize } from './lib/utils'
 import { getI18n } from '../../config/i18n'
 
-const {apiClient, heroku} = config
+const {apiClient} = config
 
 const history = browserHistory
 /* global __GEO_STATE__:true */
@@ -56,8 +56,7 @@ function initSite () {
     }) => {
       pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '')
       let url = `${apiClient.urlPrefix}${pathname}`
-      query.from = query.from || heroku.appName
-      query.country = query.country || '--'
+
       if (legacy) {
         url = url.replace(apiClient.urlPrefix, `${apiClient.protocol}://${apiClient.authority}`)
       }

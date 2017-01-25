@@ -14,12 +14,12 @@ export default function (api, {getState, dispatch}) {
           const {intl:{locale}, Geo} = state
           const geo = Geo.get('geo')
           if (locale) {
-            data = _.merge({params: {language: locale.toUpperCase()}}, data)
+            data = _.merge({options: {language: locale.toUpperCase()}}, data)
           }
           if (geo) {
-            const countryCode = geo.get('countryCode')
+            const countryCode = geo.get('countryCode') || 'FR'
             if (countryCode) {
-              data = _.merge({params: {country: countryCode}}, data)
+              data = _.merge({options: {country: countryCode}}, data)
             }
           }
           return api(data)

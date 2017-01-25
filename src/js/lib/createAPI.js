@@ -8,7 +8,7 @@ import request from 'superagent'
 import NProgress from 'nprogress'
 import { storeToken, getToken, clearToken } from '../lib/storage'
 
-const {apiClient} = config
+const {apiClient, heroku} = config
 
 NProgress.configure({showSpinner: false})
 
@@ -118,6 +118,7 @@ export default function createAPI (createRequest) {
   return async function api ({
     path,
     method = 'GET',
+    options = {},
     params = {},
     legacy = false,
     showLoader = true,
@@ -133,6 +134,10 @@ export default function createAPI (createRequest) {
     }
 
     query = qs.parse(queryStr) || {}
+
+    query.from = query.from || heroku.appName
+    query.country = query.country || options.country || '--'
+    query.language = query.language || options.language || 'FR'
 
     if (method === 'GET') {
       if (params && _.isObject(params)) {
