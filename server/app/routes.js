@@ -197,6 +197,7 @@ export default function routes (app, buildPath) {
     // Render
     const layout = 'layouts/main'
     const payload = {
+      abCode: config.google.abCode,
       initJs,
       externalsJs,
       initialState: {},
