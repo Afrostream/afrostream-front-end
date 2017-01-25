@@ -98,7 +98,7 @@ class Application extends React.Component {
 
   render () {
 
-    const {props: {router, dispatch, children, Event, Modal, User, intl}} = this
+    const {props: {location, router, dispatch, children, Event, Modal, User, intl}} = this
     const isOnLife = router.isActive('life')
     const isMobile = Event.get('isMobile')
     const user = User.get('user')
@@ -106,9 +106,13 @@ class Application extends React.Component {
     const toggled = Event.get('sideBarToggled')
     const snackMessage = Event.get('snackMessage')
     const hasPopup = Modal.get('target')
+    const {query} = location
+    const abColor = query.buttonColor
+
     let appClasses = classNames({
       'app': true,
-      'lock-open': hasPopup
+      'lock-open': hasPopup,
+      'ab-color': abColor
     })
 
     return (
