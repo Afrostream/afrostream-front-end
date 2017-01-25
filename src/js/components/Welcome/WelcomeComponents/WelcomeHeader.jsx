@@ -65,9 +65,9 @@ class WelcomeHeader extends I18n {
             <SignUpButton className="subscribe-button" label="home.action"/>
           </div>
         </BackgroundVideo>}
-        {isMobile && <SlideShow {...this.props} dots={false} autoplay={true} infinite={true}
-                                maxLength={450} {...{movieId}}
-                                movieInfo={Boolean(movieId)}/>}
+        {(isMobile || !isVideoQuery) && <SlideShow {...this.props} dots={false} autoplay={true} infinite={true}
+                                                   maxLength={450} {...{movieId}}
+                                                   movieInfo={Boolean(movieId)}/>}
       </section>
     )
   }

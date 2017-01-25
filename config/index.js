@@ -23,7 +23,7 @@ const config = _.merge(
           '/production/carousel/apercu_catalogue_desktop_slide2.png'
         ]
       },
-      videos: [{src: '/videos/afrostream-trailer-2017.mp4', type: 'video/mp4'}],
+      videos: [{src: 'http://afrostream-video.imgix.net/afrostream-trailer-2017.mp4', type: 'video/mp4'}],
       metas: [
         {
           property: 'fb:app_id',
