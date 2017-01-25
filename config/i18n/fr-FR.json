@@ -65,7 +65,7 @@
   },
   "home": {
     "title": "Les meilleurs films et séries\nafro-américains et africains.\nEn illimité.",
-    "action": "PROFITEZ D'UNE SEMAINE<br />OFFERTE",
+    "action": "Profitez d'une semaine<br />OFFERTE",
     "movie": {
       "title": "{movieName} | Le film en streaming sur AFROSTREAM",
       "description": "Regardez {movieName}, film avec {actors} en streaming sur tous vos écrans grâce à AFROSTREAM"

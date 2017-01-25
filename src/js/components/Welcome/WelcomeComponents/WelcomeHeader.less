@@ -54,6 +54,7 @@
   }
 
   .video-container {
+    cursor: pointer;
     overflow: hidden;
     position: relative;
     display: inline-block;
@@ -97,13 +98,13 @@
         content: '';
         display: inline-block;
         height: 100%;
-        vertical-align: middle;
+        vertical-align: bottom;
       }
 
       .afrostream-movie__subscribe {
         display: inline-block;
-        vertical-align: middle;
-        margin: 3em 0 1em 0;
+        vertical-align: bottom;
+        margin: 1em 0 5em 0;
         .afrostream-statement {
           font-family: @font-book;
           font-weight: bold;
@@ -117,7 +118,11 @@
         }
 
         .subscribe-button {
-
+          //font-family: @font-book;
+          font-size: 2.5em;
+          text-transform: inherit;
+          border-radius: 2px;
+          box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
         }
       }
     }

@@ -7,6 +7,7 @@ import { I18n } from '../../Utils'
 import SlideShow from '../../SlideShow/SlideShow'
 import BackgroundVideo from '../../Player/BackgroundVideo'
 import SignUpButton from '../../User/SignUpButton'
+import * as ModalActionCreators from '../../../actions/modal'
 import {
   injectIntl
 } from 'react-intl'
@@ -29,6 +30,18 @@ class WelcomeHeader extends I18n {
     }
   }
 
+  showLock () {
+    const {
+      props: {
+        dispatch,
+      }
+    } = this
+
+    dispatch(ModalActionCreators.open({
+      target: 'showSignup'
+    }))
+  }
+
   render () {
 
     const {
@@ -49,19 +62,15 @@ class WelcomeHeader extends I18n {
 
     const isMobile = Event.get('isMobile')
     const isVideoQuery = query.videoHome
-    let homeRTitle = this.getTitle('home.title')
 
     return (
       <section className={classSet(welcomeClassesSet)}>
         {!isMobile && isVideoQuery && <BackgroundVideo
           preload={'metadata'}
           videos={config.metadata.videos}
+          onClick={::this.showLock}
         >
           <div className="afrostream-movie__subscribe">
-            <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
-              return (<span key={`statement-${i}`}>{statement}</span>)
-            })}
-            </div>
             <SignUpButton className="subscribe-button" label="home.action"/>
           </div>
         </BackgroundVideo>}
