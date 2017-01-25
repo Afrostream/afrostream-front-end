@@ -103,13 +103,13 @@ class SearchPage extends I18n {
     )
   }
 
-  renderPins (pins) {
+  renderPins (pins, full) {
     if (!pins || !pins.size) {
       return
     }
 
     return (
-      <div key={`search-pins`} className="col-md-5">
+      <div key={`search-pins`} className={`col-md-${full && 10 || 5}`}>
         <LifeList highlightFirst={false} over={false} {...this.props} {...{pins}}/>
       </div>
     )
@@ -152,7 +152,7 @@ class SearchPage extends I18n {
             return canShowMovies && this.renderMovies(search.get('hits'))
             break
           case 'lifePins':
-            return this.renderPins(search.get('hits'))
+            return this.renderPins(search.get('hits'), !canShowMovies)
             break
           case 'actors':
             return this.renderActors(search.get('hits'))
