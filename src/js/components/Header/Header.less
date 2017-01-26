@@ -185,10 +185,7 @@ header {
         float: left;
       }
       &.float--right {
-        flex: 1;
         display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
         float: right;
         ul.nav {
           float: right;
@@ -197,7 +194,7 @@ header {
       &.float--bottom {
         flex: 1;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         position: absolute;
         left: 0;
@@ -206,7 +203,7 @@ header {
       }
 
       &.float-bottom-mobile {
-        max-width: 75%;
+        overflow: hidden;
         flex: 1;
         .isMobile({ display: none; max-width: 55%; });
         //background-color: @color-black-2;
