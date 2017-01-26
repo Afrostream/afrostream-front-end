@@ -138,14 +138,14 @@
       "title": "FOLLOW US",
       "facebook": "Facebook",
       "twitter": "Twitter",
-      "newsletter": "Newsletters »
+      "newsletter": "Newsletters"
     },
     "oauth2": {
       "title": "BOXES"
     }
   },
   "newsletter": {
-    "header": "Newsletters »,
+    "header": "Newsletters",
     "instructions": "Keep me informed by email",
     "result": "Thank you, you are now subscribed to our newsletters",
     "action": "Send"
