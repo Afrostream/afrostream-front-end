@@ -7,11 +7,11 @@ import {
 } from 'react-intl'
 
 if (process.env.BROWSER) {
-  require('./BrowsePinsList.less')
+  require('./BrowseLifeUsersList.less')
 }
 
 @connect(({User, Life}) => ({User, Life}))
-class BrowsePinsList extends React.Component {
+class BrowseLifeUsersList extends React.Component {
 
   constructor (props) {
     super(props)
@@ -30,13 +30,13 @@ class BrowsePinsList extends React.Component {
       }
     } = this
 
-    const dataList = Life.get(`life/pins/${themeId}`)
+    const dataList = Life.get(`life/users/${themeId}`)
 
     if (!dataList) {
       return (<div />)
     }
     const slug = 'life'
-    const type = 'pin'
+    const type = 'user'
     const showTitle = true
     const showDescription = false
     const share = false
@@ -44,13 +44,13 @@ class BrowsePinsList extends React.Component {
     const load = false
 
     return (
-      <div className="browse-pins-list">
+      <div className="browse-life-users-list">
         <MoviesSlider
           {...this.props}
           columnMaxWidth={thumbW}
           columnMinWidth={thumbW}
-          className="browse-pins-data-list movies-data-list"
-          key={`browse-pins-list`} {...{
+          className="browse-life-users-data-list movies-data-list"
+          key={`browse-life-users-list`} {...{
           dataList,
           label,
           slug,
@@ -70,7 +70,7 @@ class BrowsePinsList extends React.Component {
   }
 }
 
-BrowsePinsList.propTypes = {
+BrowseLifeUsersList.propTypes = {
   intl: intlShape.isRequired,
   thumbW: React.PropTypes.number,
   thumbH: React.PropTypes.number,
@@ -81,11 +81,12 @@ BrowsePinsList.propTypes = {
   axis: React.PropTypes.string
 }
 
-BrowsePinsList.defaultProps = {
-  thumbW: 620,
-  thumbH: 340,
-  rowHeight: 340,
+BrowseLifeUsersList.defaultProps = {
+  thumbW: 160,
+  thumbH: 160,
+  rowHeight: 140,
   axis: 'x',
-  label: 'life.label'
+  label: 'life.users.label'
 }
-export default injectIntl(BrowsePinsList)
+
+export default injectIntl(BrowseLifeUsersList)

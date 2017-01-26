@@ -66,6 +66,11 @@ export default class LoadVideo extends I18n {
     if (fixedType === 'pin') {
       return `/life/pin${link}`
     }
+    if (fixedType === 'user') {
+      movieSlug = dataValue.get('nickname')
+      let link = `/${movieId}/${movieSlug}`
+      return `/life/community${link}`
+    }
     let seasonId
     let seasonSlug
     let episodeId

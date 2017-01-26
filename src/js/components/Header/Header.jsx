@@ -96,9 +96,6 @@ class Header extends React.Component {
                   <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
                 </button>
               </li>
-              {!isOnHome && <li>
-                <SearchInput/>
-              </li>}
             </ul>
           </nav>
           <nav className="float--left float-bottom-mobile" role="navigation">
@@ -116,6 +113,9 @@ class Header extends React.Component {
               itemElement="li"/>
           </nav>
           <nav className="float--right" role="navigation">
+            {!isOnHome && <li>
+              <SearchInput/>
+            </li>}
             <UserButton {...this.props}/>
           </nav>
           <div dangerouslySetInnerHTML={{__html: '<!--googleon: all-->'}}/>

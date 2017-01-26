@@ -73,6 +73,30 @@
       display: none;
     }
   }
+  &.user {
+    width: @thumb-width-user;
+    height: @thumb-height-user;
+    border-radius: 50%;
+    border: 1px solid fade(@color-indigo, 30%);
+    a {
+      .thumb-background {
+        height: 100%;
+        padding-top: inherit;
+        border-radius: 50%;
+        border: 5px solid fade(@color-indigo, 90%);
+        &:before,
+        &:after {
+          border-radius: 50%;
+        }
+      }
+      .thumb-info {
+        display: none;
+      }
+    }
+    .thumb-buttons {
+      display: none;
+    }
+  }
   a {
     position: relative;
     display: inline-block;

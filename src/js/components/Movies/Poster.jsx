@@ -76,6 +76,10 @@ class Poster extends LoadVideo {
     var rect
     var profiles = image.get('profiles')
     let type = this.getType()
+
+    if (type === 'user') {
+      return `?type=large`
+    }
     if (!profiles || type !== 'spot') {
       return `&crop=${this.props.crop}&fit=${this.props.fit}`
     }
@@ -84,7 +88,10 @@ class Poster extends LoadVideo {
     } catch (e) {
       console.log(e)
     }
-    return rect && `&rect=${_.values(rect.toJS()).join()}`
+    if (rect) {
+      return `&facepad=1.5&rect=${_.values(rect.toJS()).join()}`
+    }
+    return ''
   }
 
   createLoader () {
@@ -117,15 +124,15 @@ class Poster extends LoadVideo {
 
     const imageUrl = extractImg({
       data,
-      keys: [extractType, 'image'],
+      keys: [extractType, 'image', 'picture'],
       width: thumbW,
       height: thumbH,
       fit: 'min'
     })
 
     const thumb = data.get(extractType)
-    const rect = this.extractProfile(thumb, '16:31')
-    const imageStyles = `${imageUrl}&facepad=1.5${rect}`
+    const rect = this.extractProfile(thumb || data, '16:31')
+    const imageStyles = `${imageUrl}${rect}`
 
     if (this.props.preload) {
 

@@ -628,6 +628,9 @@
   },
   "life": {
     "label": "Afrostream Life",
+    "users": {
+      "label": "Community"
+    },
     "welcome": {
       "label": "The social \nmedia for black \ncreativity",
       "action": "Join for free"

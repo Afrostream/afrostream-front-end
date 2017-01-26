@@ -14,7 +14,6 @@ if (process.env.BROWSER) {
   await Promise.all([
     store.dispatch(LifeActionCreators.fetchUsers({}))
   ])
-
 })
 class LifeCommunity extends Component {
 

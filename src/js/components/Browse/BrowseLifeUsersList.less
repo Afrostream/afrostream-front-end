@@ -1,0 +1,23 @@
+@import (reference) '../../../styles/config.less';
+@import '../../../styles/arrow.less';
+
+.browse-life-users-list {
+  position: relative;
+  background-color: @brand-thumbs;
+  width: 100%;
+  padding: @thumb-margin 0 0 0;
+  .browse-life-users-data-list {
+    min-height: 200px;
+    .slider {
+      &.axis-x {
+        display: inline-block;
+        white-space: nowrap;
+        > div {
+          > div > div > div {
+            height: 300px;
+          }
+        }
+      }
+    }
+  }
+}

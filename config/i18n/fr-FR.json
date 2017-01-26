@@ -619,6 +619,9 @@
   },
   "life": {
     "label": "Afrostream Life",
+    "users": {
+      "label": "Communauté"
+    },
     "welcome": {
       "label": "Le média social \n de la créativité \n afro",
       "action": "Découvrez \n gratuitement"
