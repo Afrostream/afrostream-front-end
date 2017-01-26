@@ -75,6 +75,9 @@ class Thumb extends Poster {
           title = this.getTitle('thumb.episodeLabel', {episodeNumber, title})
         }
         break
+      case 'user':
+        title = data.get('nickname')
+        break
       case 'season':
         title = this.getTitle('thumb.seasonLabel', {seasonNumber, title})
         break

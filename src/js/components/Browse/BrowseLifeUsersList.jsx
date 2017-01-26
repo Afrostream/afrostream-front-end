@@ -84,7 +84,7 @@ BrowseLifeUsersList.propTypes = {
 BrowseLifeUsersList.defaultProps = {
   thumbW: 160,
   thumbH: 160,
-  rowHeight: 140,
+  rowHeight: 190,
   axis: 'x',
   label: 'life.users.label'
 }

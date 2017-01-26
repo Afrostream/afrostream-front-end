@@ -55,24 +55,24 @@
     "streaming": "Streaming",
     "life": "Life",
     "community": "Community",
-    "favoris": "Bookmark",
-    "last": "News",
+    "favoris": "My Playlist",
+    "last": "Recently Added",
     "sponsorship": "Sponsorship",
     "profil": "Profile",
-    "params": "Account",
-    "history": "History",
+    "params": "My Account",
+    "history": "Viewing Activity",
     "logout": "Sign out"
   },
   "home": {
     "title": "The Best Black Films and TV Series",
     "action": "START YOUR FIRST <br /> WEEK FREE",
     "movie": {
-      "title": "{movieName} | The movie streaming on AFROSTREAM",
-      "description": "Watch {movieName}, movie with {actors} streaming on all your screens with AFROSTREAM"
+      "title": "Watch {movieName} Online | AFROSTREAM",
+      "description": "{movieName}: movie with {actors} streaming on all your screens with AFROSTREAM"
     },
     "serie": {
-      "title": "{serieName} | The TV series en streaming on AFROSTREAM",
-      "description": "Watch the episodes of TV series {serieName} streaming and unlimited on all your screens with AFROSTREAM."
+      "title": "Watch {serieName} Online | AFROSTREAM",
+      "description": "{serieName}: Watch all episodes of TV series {serieName} streaming and unlimited on all your screens with AFROSTREAM."
     },
     "season": {
       "title": "{serieName} | The season {seasonNumber} streaming on AFROSTREAM",
@@ -110,15 +110,15 @@
     "support": {
       "title": "HELP",
       "help": "Contact",
-      "faq": "The answers to your questions",
+      "faq": "Help center",
       "cgu": "Terms of use",
       "policy": "Privacy policy"
     },
     "recharge": {
-      "title": "REFILL",
+      "title": "FIND US",
       "stores": "Stores locator",
       "cashway": "Payment in cash with ",
-      "coupon": "Coupon"
+      "coupon": "Gift Cards"
     },
     "pro": {
       "title": "CORPORATE",
@@ -138,14 +138,14 @@
       "title": "FOLLOW US",
       "facebook": "Facebook",
       "twitter": "Twitter",
-      "newsletter": "Newsletter"
+      "newsletter": "Newsletters »
     },
     "oauth2": {
       "title": "BOXES"
     }
   },
   "newsletter": {
-    "header": "Newsletter",
+    "header": "Newsletters »,
     "instructions": "Keep me informed by email",
     "result": "Thank you, you are now subscribed to our newsletters",
     "action": "Send"
@@ -158,7 +158,7 @@
   },
   "storesLocator": {
     "title": "Are you looking for a store to subscribe to Afrostream?",
-    "description": "You can now subscribe to Afrostream in store. Check out the map and find the store nearest you.",
+    "description": "You can now subscribe to Afrostream in store. Check out the map and find the nearest store.",
     "where": "Where to find a store?",
     "inputFind": "City...",
     "find": "Find a point of sale"
@@ -174,7 +174,7 @@
   "planCodes": {
     "selectTitle": "Choose your plan",
     "onePlanTitle": "Your plan",
-    "noPlans": "Auncune formule n'est possible dans votre pays",
+    "noPlans": "No plans are currently available in your country. Please come back later.",
     "noMobilePlans": "Choose another payment method",
     "freePeriodLabel": "and enjoy {trialPeriodLength} {trialPeriodUnit} test",
     "title": "Plan",
@@ -196,7 +196,7 @@
   },
   "history": {
     "pageLabel": "My Playback History",
-    "label": "Resume reading"
+    "label": "Continue Watching"
   },
   "search": {
     "placeHolder": "Search ...",
@@ -227,7 +227,7 @@
     "promo": {
       "label": "Promo code (optional)",
       "disabledLabel": "Promotional codes are not compatible with this method of payment.",
-      "activate": "Attention, this is a coupon that can be activated directly by clicking here",
+      "activate": "Warning, this is a coupon that can be activated directly by clicking here",
       "placeHolder": "Enter your code"
     },
     "virement": {
@@ -450,7 +450,7 @@
     "strategyDomainInvalid": "The domain {domain} has not been set up.",
     "signinText": "Log In",
     "signupText": "Sign Up",
-    "successText": "You are connected correctly",
+    "successText": "You are connected correctly signed in",
     "cancelAction": "Cancel",
     "forgotText": "Don't remember your password?",
     "footerText": "",
