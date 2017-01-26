@@ -48,6 +48,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
       query.country = query.country || locale || 'whatever'
 
       console.log('server call query : ', query)
+
       if (local) {
         url = pathname
       }
@@ -98,19 +99,10 @@ export default function render (req, res, layout, {payload, isStatic}) {
           if (country) {
             geo.countryCode = country
           }
-          // *** Init Store
-          const store = createStore(api, history,
-            {
-              OAuth: {token: {}},
-              Geo: {geo},
-              User: {user},
-              Event: {isMobile}
-            })
-          const state = store.getState()
-          let {params, location, routes} = renderProps
 
+          let {params, location, routes} = renderProps
           let route = routes && routes[routes.length - 1]
-          const {intl} = state
+
           // Try full locale, fallback to locale without region code, fallback to en
           const routeParamLang = _.find(routes, (route) => route.lang)
           //TODO FIXME render locale server whith preferredLocale
@@ -121,6 +113,21 @@ export default function render (req, res, layout, {payload, isStatic}) {
           const messages = _.flattenJson(getI18n(locale))
 
           params.lang = locale
+
+
+          // *** Init Store
+          const store = createStore(api, history,
+            {
+              OAuth: {token: {}},
+              Geo: {geo},
+              User: {user},
+              Event: {isMobile},
+              intl: {defaultLocale: locale}
+            })
+
+
+          const state = store.getState()
+          const {intl} = state
 
           const recursiveFunction = function (collection, result) {
             if (collection && collection.prepareRoute) {
@@ -160,7 +167,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
           const storeState = _.merge({intl: {locale}}, store.getState())
           const initialState = serializeJs(storeState, {isJSON: true})
 
-          //console.log('preferredLocale : ', language, preferredLocale, locale)
+          console.log('preferredLocale : ', language, preferredLocale, locale)
 
           const format = req.query.format
           let metadata = Helmet.rewind()
