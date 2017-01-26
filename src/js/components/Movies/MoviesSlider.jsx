@@ -6,6 +6,7 @@ import Thumb from '../Movies/Thumb'
 import ReactList from 'react-list'
 import { AutoSizer, ColumnSizer, VirtualScroll, Grid, Collection } from 'react-virtualized'
 import { I18n } from '../Utils'
+import { Link } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./MoviesSlider.less')
@@ -188,8 +189,10 @@ class MoviesSlider extends I18n {
     }
     return (
       <div className={this.props.className}>
-        {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
-        {label ? <div className="movies-list__selection">{this.getTitle(label)}</div> : ''}
+        {slug && <div id={slug} className="movies-list__anchor"/> }
+        {slug && <Link to={`/${slug}`} className="movies-list__selection">{this.getTitle(label)}</Link>}
+        {!slug && label && <div className="movies-list__selection">{this.getTitle(label)}</div> }
+
         <AutoSizer className="slider-container" disableHeight>
           {({width}) => (
             <ColumnSizer

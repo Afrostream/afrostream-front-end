@@ -20,7 +20,7 @@ import LoginPage from '../Login/LoginPage'
   ])
   store.dispatch(UserActionCreators.getFavorites('movies'))
   store.dispatch(UserActionCreators.getHistory())
-  store.dispatch(LifeActionCreators.fetchPins({}))
+  store.dispatch(LifeActionCreators.fetchPins({limit: 14}))
   store.dispatch(LifeActionCreators.fetchUsers({}))
 })
 @connect(({User}) => ({User}))
@@ -37,8 +37,8 @@ class BrowsePage extends React.Component {
           //<BrowseMenu key="browse-menu"/>,
           <SlideShow key="slide-show" gradient={true}/>,
           <UserMoviesList key="user-movies-list"/>,
-          <BrowsePinsList key="browse-pins-list"/>,
           <BrowseLifeUsersList key="life-users-list"/>,
+          <BrowsePinsList key="browse-pins-list"/>,
           <MoviesList key="movies-list"/>
         ]}
       </div>

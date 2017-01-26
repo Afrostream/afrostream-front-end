@@ -35,7 +35,7 @@ class BrowseLifeUsersList extends React.Component {
     if (!dataList) {
       return (<div />)
     }
-    const slug = 'life'
+    const slug = 'life/community'
     const type = 'user'
     const showTitle = true
     const showDescription = false
