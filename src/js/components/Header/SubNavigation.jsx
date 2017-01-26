@@ -42,7 +42,8 @@ class SubNavigation extends Component {
       props: {
         themesList,
         to,
-        streaming
+        streaming,
+        children
       }
     } = this
 
@@ -71,6 +72,7 @@ class SubNavigation extends Component {
             }
           )}
         </ul>
+        {children && children}
         {/* <div className="sub-navigation">
          <AutoSizer disableHeight>
          {({width}) => (

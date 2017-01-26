@@ -180,13 +180,25 @@ header {
     }
 
     nav {
+
       &.float--left {
         float: left;
       }
       &.float--right {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
         float: right;
+        ul.nav {
+          float: right;
+        }
       }
       &.float--bottom {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         position: absolute;
         left: 0;
         right: 0;
@@ -194,7 +206,7 @@ header {
       }
 
       &.float-bottom-mobile {
-        max-width: 100%;
+        max-width: 75%;
         flex: 1;
         .isMobile({ display: none; max-width: 55%; });
         //background-color: @color-black-2;
@@ -208,12 +220,15 @@ header {
         float: left;
         display: flex;
         list-style: none;
+        &.full-width {
+          flex: 1;
+        }
         > li {
           display: inline-block;
           zoom: 1;
           height: @header-height;
           &:not(.step) {
-            min-width: 50px;
+            //min-width: 50px;
           }
           line-height: @header-height;
           button, a {
@@ -222,7 +237,8 @@ header {
             display: inline-block;
             &.btn-home {
               @media @mobile {
-                width: @sidebar-width - 70px;
+                //width: @sidebar-width - 70px;
+                width: 40vw;
               }
               width: @sidebar-width - 50px;
               img {

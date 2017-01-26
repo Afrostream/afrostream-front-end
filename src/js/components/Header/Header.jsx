@@ -44,6 +44,7 @@ class Header extends React.Component {
       }
     } = this
 
+    const isMobile = Event.get('isMobile')
     const sideBarToggled = Event.get('sideBarToggled')
     const hiddenMode = !Event.get('userActive')
     const user = User.get('user')
@@ -98,7 +99,7 @@ class Header extends React.Component {
               </li>
             </ul>
           </nav>
-          <nav className="float--left float-bottom-mobile" role="navigation">
+          {!isMobile && <nav className="float--left float-bottom-mobile" role="navigation">
             <Breadcrumbs
               {...this.context}
               {...this.props}
@@ -111,11 +112,13 @@ class Header extends React.Component {
               wrapperElement="ul"
               activeItemClass="active"
               itemElement="li"/>
-          </nav>
+          </nav>}
           <nav className="float--right" role="navigation">
-            {!isOnHome && <li>
-              <SearchInput/>
-            </li>}
+            {!isOnHome && <ul className="nav full-width">
+              <li>
+                <SearchInput/>
+              </li>
+            </ul>}
             <UserButton {...this.props}/>
           </nav>
           <div dangerouslySetInnerHTML={{__html: '<!--googleon: all-->'}}/>

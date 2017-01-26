@@ -62,7 +62,7 @@
     }
     ::-webkit-input-placeholder,
     :-moz-placeholder,
-    ::-moz-placeholde,
+    ::-moz-placeholder,
     :-ms-input-placeholder {
       color: fade(@brand-primary, 10%);
     }
@@ -73,6 +73,7 @@
     font-size: 3em;
     font-family: @font-roman;
     padding: 11px 11px 8px 50px;
+    .isMobile({ padding: 11px 11px 8px 40px; });
     border-radius: @btn-radius;
     color: @brand-black;
     position: relative;
@@ -89,7 +90,7 @@
   }
   ::-webkit-input-placeholder,
   :-moz-placeholder,
-  ::-moz-placeholde,
+  ::-moz-placeholder,
   :-ms-input-placeholder {
     color: transparent;
   }

@@ -48,10 +48,11 @@ class LifeHome extends Component {
 
     return (
       <div className="row-fluid no-padding">
-        <SubNavigation {...{themesList}} to="/life/{_id}/{slug}" streaming={true}/>
+        <SubNavigation {...{themesList}} to="/life/{_id}/{slug}" streaming={true}>
+          <LifeSticky {...this.props}/>
+        </SubNavigation>
         <div className="container-fluid no-padding life-home life-themes brand-grey">
           {children}
-          <LifeSticky {...this.props}/>
         </div>
       </div>
     )
