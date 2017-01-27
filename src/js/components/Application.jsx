@@ -89,7 +89,7 @@ if (process.env.BROWSER) {
 @analytics()
 @fbSDK()
 @fbTracking()
-@connect(({Event, User, Modal, Config}) => ({Event, User, Modal, Config}))
+@connect(({Event, User, Modal, Config, GA}) => ({Event, User, Modal, Config, GA}))
 class Application extends React.Component {
 
   constructor (props, context) {
@@ -98,7 +98,19 @@ class Application extends React.Component {
 
   render () {
 
-    const {props: {location, router, dispatch, children, Event, Modal, User, intl}} = this
+    const {
+      props: {
+        location,
+        router,
+        dispatch,
+        children,
+        Event,
+        GA,
+        Modal,
+        User,
+        intl
+      }
+    } = this
     const isOnLife = router.isActive('life')
     const isMobile = Event.get('isMobile')
     const user = User.get('user')
@@ -107,7 +119,10 @@ class Application extends React.Component {
     const snackMessage = Event.get('snackMessage')
     const hasPopup = Modal.get('target')
     const {query} = location
-    const abColor = query.buttonColor
+
+    const abColor = GA.get('variations').find(variation => {
+      return variation.get('name') === 'buttonsColors' && variation.get('choose') === 1
+    })
 
     let appClasses = classNames({
       'app': true,
