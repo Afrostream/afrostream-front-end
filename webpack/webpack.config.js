@@ -141,7 +141,7 @@ const webpackConfig = {
           fallbackLoader: 'style-loader',
           loaders: [
             {
-              //notExtractLoader: 'style-loader',
+              notExtractLoader: 'style-loader',
               loader: 'css-loader',
               options: {sourceMap: true, importLoaders: 1}
             },
@@ -281,7 +281,7 @@ const webpackConfig = {
     })
   ],
 
-  postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
+  //postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
 }
 
 export default webpackConfig
