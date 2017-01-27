@@ -16,7 +16,7 @@ if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
 }
 
-@connect(({Event, User, Movie, Video, Season, Episode}) => ({Event, User, Movie, Video, Season, Episode}))
+@connect(({Event, User, Movie, Video, Season, Episode, GA}) => ({Event, User, Movie, Video, Season, Episode, GA}))
 class WelcomeHeader extends I18n {
 
   constructor (props) {
@@ -48,6 +48,7 @@ class WelcomeHeader extends I18n {
       props: {
         params,
         Event,
+        GA,
         location
       }
     } = this
@@ -61,7 +62,10 @@ class WelcomeHeader extends I18n {
     }
 
     const isMobile = Event.get('isMobile')
-    const isVideoQuery = query.videoHome
+
+    const isVideoQuery = GA.get('variations').find(variation => {
+        return variation.get('name') === 'videoHome' && variation.get('choose') === 1
+      }) || query.videoHome
 
     return (
       <section className={classSet(welcomeClassesSet)}>

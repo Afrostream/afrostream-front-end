@@ -199,6 +199,7 @@ export default function routes (app, buildPath) {
     const payload = {
       GATrackingId: config.google.analyticsKey,
       GAabCode: config.google.abCode,
+      GAabCodes: config.google.abCodes,
       initJs,
       externalsJs,
       initialState: {},

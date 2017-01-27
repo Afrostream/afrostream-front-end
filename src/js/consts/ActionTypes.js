@@ -157,5 +157,9 @@ export default {
     likePin: null,
     fetchUsers: null,
     fetchUserPins: null
+  }),
+
+  GA: keyMirror({
+    variations: null
   })
 }
