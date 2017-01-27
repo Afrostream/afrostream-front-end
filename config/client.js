@@ -168,7 +168,7 @@ const client = {
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
     //Code ab tests multiples
-    abCodes: [
+    abCodes: isProduction && [
       {
         name: 'buttonsColors',
         key: 'PZB4RJafS86uEtgXCkNfHQ'
@@ -177,7 +177,7 @@ const client = {
         name: 'videoHome',
         key: 'XbWIn2TRQtCHw1ORGLmMxQ'
       }
-    ],
+    ] || [],
     firebase: {
       apiKey: 'AIzaSyBJ3H7rJHdhaLg8KfkjvwxvwDhbrbR4NpI',
       authDomain: 'afrostream-86e6c.firebaseapp.com',
