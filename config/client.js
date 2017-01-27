@@ -167,7 +167,6 @@ const client = {
   alerts: [],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
-    abCode: process.env.GA_AB_TRACKING_ID || '********-0',
     //Code ab tests multiples
     abCodes: [
       {
