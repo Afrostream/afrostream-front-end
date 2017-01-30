@@ -9,11 +9,13 @@
 {{#each GAabCodes}}
 <script src="//www.google-analytics.com/cx/api.js?experiment={{{this.key}}}"></script>
 <script type="text/javascript">
+  var choosedVariationAlalytics = cxApi.chooseVariation()
   __ANALYTICS_STATE__.GA.variations.push({
     key: '{{{this.key}}}',
     name: '{{{this.name}}}',
-    choose: cxApi.chooseVariation()
+    choose: choosedVariationAlalytics
   });
+  cxApi.setChosenVariation(choosedVariationAlalytics, '{{{this.key}}}'); 
 </script>
 {{/each}}
 <!-- END Google Analytics Content Experiment A/B testcode -->
