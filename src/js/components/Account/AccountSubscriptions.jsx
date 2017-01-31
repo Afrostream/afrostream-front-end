@@ -31,6 +31,7 @@ class AccountSubscriptions extends React.Component {
     const subscriptionsList = Billing.get('subscriptions')
 
     const providerLogos = {
+      'wecashup': '/images/payment/wecashup.png',
       'afr': '/images/payment/afr.png',
       'celery': '/images/payment/bank-cards-paypal.png',
       'stripe': '/images/payment/bank-cards-paypal.png',
@@ -47,7 +48,7 @@ class AccountSubscriptions extends React.Component {
       return <div />
     }
 
-    let currentSubscription = subscriptionsList.find((obj)=> {
+    let currentSubscription = subscriptionsList.find((obj) => {
       return obj.get('isActive') === 'yes' && obj.get('isCancelable')
     })
 
