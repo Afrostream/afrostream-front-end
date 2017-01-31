@@ -9,13 +9,17 @@ import { AutoSizer, ColumnSizer, CellMeasurer, Grid } from 'react-virtualized'
 import {
   FormattedMessage,
 } from 'react-intl'
-
+import { I18n } from '../Utils'
+import { slugify } from '../../lib/utils'
+import {
+  injectIntl,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./SubNavigation.less')
 }
 
-class SubNavigation extends Component {
+class SubNavigation extends I18n {
   renderItem ({columnIndex, rowIndex}) {
     const {
       props: {
@@ -32,7 +36,7 @@ class SubNavigation extends Component {
     return (
       <div className="cell" key={`theme-${columnIndex}`}>
         <Link activeClassName="active"
-              to={mapTo}>{theme.get('label')}</Link>
+              to={mapTo}>{this.getTitle(theme.get('label'))}</Link>
       </div>
     )
   }
@@ -67,7 +71,7 @@ class SubNavigation extends Component {
 
               return (<li key={`theme-${i}`}>
                 <Link activeClassName="active"
-                      to={mapTo}>{theme.get('label')}</Link>
+                      to={mapTo}>{this.getTitle(theme.get('label'))}</Link>
               </li>)
             }
           )}
@@ -119,4 +123,4 @@ SubNavigation.defaultProps = {
 }
 
 
-export default SubNavigation
+export default injectIntl(SubNavigation)

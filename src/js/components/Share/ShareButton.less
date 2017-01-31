@@ -5,7 +5,7 @@
   position: relative;
   margin: 5px 5px 5px 0px;
   border-radius: 5% !important;
-  width: 40px;
+  min-width: 40px;
   &.active {
     color: @color-yellow;
   }
@@ -14,5 +14,8 @@
   }
   span {
     margin: 1em;
+  }
+  .btn-label {
+    .isMobile({ display: none; });
   }
 }

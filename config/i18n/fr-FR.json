@@ -57,8 +57,8 @@
     "community": "Communauté",
     "favoris": "Ma liste",
     "last": "Nouveautés",
-    "sponsorship": "Inviter des amis",
-    "profil": "Mon profil",
+    "sponsorship": "Codes Promo",
+    "profil": "Mon blog",
     "params": "Mon Compte",
     "history": "Mon historique",
     "logout": "Se deconnecter"
@@ -405,13 +405,13 @@
     }
   },
   "favorites": {
-    "add": "Ajouter à mes favoris",
-    "delete": "Supprimer de mes favoris",
-    "noData": "Aucun Favoris ajouté à mon profil",
-    "labelPage": "Mes Favoris"
+    "add": "Ajouter à ma liste",
+    "delete": "Supprimer de ma liste",
+    "noData": "Aucun élement ajouté à mon profil",
+    "labelPage": "Ma Liste"
   },
   "share": {
-    "tooltip": "Recommander",
+    "tooltip": "Partager",
     "label": "Partager avec mes amis",
     "labelBtn": "Partager"
   },

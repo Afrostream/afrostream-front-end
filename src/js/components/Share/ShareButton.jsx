@@ -28,10 +28,7 @@ class ShareButton extends I18n {
 
 
   getLabel () {
-    if (!this.props.label) {
-      return
-    }
-    return this.props.label
+    return <span className="btn-label">{this.getTitle(this.props.tooltip)}</span>
   }
 
   sharePopup () {
@@ -78,7 +75,6 @@ ShareButton.defaultProps = {
   link: null,
   description: null,
   title: null,
-  label: '',
   tooltip: 'share.tooltip',
   direction: 'top'
 }

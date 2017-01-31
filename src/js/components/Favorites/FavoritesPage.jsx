@@ -9,7 +9,7 @@ import FavoritesList from './FavoritesList'
     store.dispatch(UserActionCreators.getFavorites('episodes'))
   ])
 })
-class BrowsePage extends React.Component {
+class FavoritesPage extends React.Component {
 
   render () {
     return (
@@ -20,4 +20,4 @@ class BrowsePage extends React.Component {
   }
 }
 
-export default BrowsePage
+export default FavoritesPage

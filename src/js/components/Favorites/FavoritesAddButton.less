@@ -5,7 +5,7 @@
   position: relative;
   margin: 5px 5px 5px 0px;
   border-radius: 5% !important;
-  width: 40px;
+  min-width: 40px;
 
   &.pending {
     color: fade(@color-yellow, 80%);
@@ -24,6 +24,12 @@
   }
   .spinner {
     font-size: 1em;
+  }
+  span {
+    margin: 1em;
+  }
+  .btn-label {
+    .isMobile({ display: none; });
   }
 
 }

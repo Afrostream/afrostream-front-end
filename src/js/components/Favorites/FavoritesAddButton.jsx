@@ -77,6 +77,10 @@ class FavoritesAddButton extends I18n {
       })
   }
 
+  getLabel () {
+    return <span className="btn-label">{this.getTitle(this.props.tooltip)}</span>
+  }
+
   render () {
     const {
       props: {
@@ -112,6 +116,7 @@ class FavoritesAddButton extends I18n {
               data-place={this.props.direction}
               data-for={`fav-${dataId}`} {...inputAttributes}>
         <i className={classSet(favoriteClass)}></i>
+        <span className="btn-label">{titleLabel}</span>
         {this.state.pendingFavorite ? <Spinner /> : ''}
         <ReactTooltip id={`fav-${dataId}`} className="fav-tooltip" type="dark"
                       effect="solid"/>
