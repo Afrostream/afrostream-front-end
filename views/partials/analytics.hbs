@@ -7,10 +7,27 @@
   }
 </script>
 <script src="//www.google-analytics.com/cx/api.js"></script>
+<!-- Google Analytics Content Tracking code -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', '{{{GATrackingId}}}', 'auto');
+</script>
+<!-- END Google Analytics Content Tracking code -->
 {{#each GAabCodes}}
 <!--<script src="//www.google-analytics.com/cx/api.js?experiment={{{this.key}}}"></script>-->
 <script type="text/javascript">
-  var choosedVariationAlalytics = cxApi.getChosenVariation('{{{this.key}}}')
+  var choosedVariationAlalytics = cxApi.getChosenVariation('{{{this.key}}}');
   if (choosedVariationAlalytics === cxApi.NO_CHOSEN_VARIATION) {
     choosedVariationAlalytics = Math.floor(Math.random() * ({{{this.nbVariations}}} +1));
   }
@@ -20,6 +37,7 @@
     choose: choosedVariationAlalytics
   });
   cxApi.setChosenVariation(choosedVariationAlalytics, '{{{this.key}}}');
+  ga('send', 'pageview');
 </script>
 {{/each}}
 <!-- END Google Analytics Content Experiment A/B testcode -->
