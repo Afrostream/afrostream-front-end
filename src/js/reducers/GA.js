@@ -8,15 +8,13 @@ const initialState = Immutable.fromJS({
 
 export default createReducer(initialState, {
 
-  [ActionTypes.GA.variations](state, {res}) {
-    if (!res) {
+  [ActionTypes.GA.setVariations](state, {variations}) {
+    if (!variations) {
       return state
     }
 
-    const data = res.body
-
     return state.merge({
-      ['variations']: data
+      ['variations']: variations
     })
   }
 })

@@ -51,10 +51,13 @@
     try {
       if (bodyContent) {
         __INITIAL_STATE__ = extendState(deserializeState(__INITIAL_STATE__), JSON.parse(bodyContent.state), {
-          Event: {
-            isMobile: isMobile.any
-          }
-        }, __BUNDLE_STATE__, __ANALYTICS_STATE__);
+            Event: {
+              isMobile: isMobile.any
+            }
+          },
+          __BUNDLE_STATE__ || {},
+          __ANALYTICS_STATE__ || {}
+        );
 
         mainDiv.innerHTML = bodyContent.html;
         var user = __INITIAL_STATE__.User && __INITIAL_STATE__.User.user

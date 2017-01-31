@@ -160,6 +160,6 @@ export default {
   }),
 
   GA: keyMirror({
-    variations: null
+    setVariations: null
   })
 }

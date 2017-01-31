@@ -168,14 +168,16 @@ const client = {
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
     //Code ab tests multiples
-    abCodes: isProduction && [
+    abCodes: [
       {
         name: 'buttonsColors',
-        key: 'PZB4RJafS86uEtgXCkNfHQ'
+        key: 'PZB4RJafS86uEtgXCkNfHQ',
+        nbVariations: 1
       },
       {
         name: 'videoHome',
-        key: 'XbWIn2TRQtCHw1ORGLmMxQ'
+        key: 'XbWIn2TRQtCHw1ORGLmMxQ',
+        nbVariations: 1
       }
     ] || [],
     firebase: {
