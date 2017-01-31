@@ -168,7 +168,7 @@ const client = {
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
     //Code ab tests multiples
-    abCodes: [
+    abCodes: isProduction && [
       {
         name: 'buttonsColors',
         key: 'PZB4RJafS86uEtgXCkNfHQ',
