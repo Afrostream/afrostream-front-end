@@ -127,7 +127,7 @@ const client = {
   stripeApi: '//js.stripe.com/v2/',
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   wecashupApi: {
-    url: '//www.wecashup.cloud/live/2-form/js/MobileMoney.js',
+    url: '//www.wecashup.cloud/' + (isProduction ? 'live' : 'demo' ) + '/2-form/js/MobileMoney.js',
     modalClass: 'featherlight',
     attributes: {
       'class': 'wecashup_button',
