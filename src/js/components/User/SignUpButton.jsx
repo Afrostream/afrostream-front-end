@@ -14,7 +14,7 @@ if (process.env.BROWSER) {
 class SignUpButton extends React.Component {
 
   render () {
-    return (<button className={this.props.className}
+    return (<button className={`${this.props.className} subscribe-button`}
                     type="button"
                     onClick={::this.showLock}>
       <FormattedHTMLMessage id={this.props.label}/>
@@ -55,7 +55,7 @@ SignUpButton.propTypes = {
 SignUpButton.defaultProps = {
   target: 'showSignup',
   label: '',
-  className: 'subscribe-button',
+  className: '',
   to: '/',
   cb: null
 }

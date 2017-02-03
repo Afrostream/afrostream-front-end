@@ -63,13 +63,9 @@ class WelcomeHeader extends I18n {
 
     const isMobile = Event.get('isMobile')
 
-    const isVideoQuery = GA.get('variations').find(variation => {
-        return variation.get('name') === 'videoHome' && variation.get('choose') === 1
-      }) || query.videoHome
-
     return (
       <section className={classSet(welcomeClassesSet)}>
-        {!isMobile && isVideoQuery && <BackgroundVideo
+        {!isMobile && !movieId && <BackgroundVideo
           preload={'metadata'}
           videos={config.metadata.videos}
           onClick={::this.showLock}
@@ -78,7 +74,7 @@ class WelcomeHeader extends I18n {
             <SignUpButton className="subscribe-button" label="home.action"/>
           </div>
         </BackgroundVideo>}
-        {(isMobile || !isVideoQuery) && <SlideShow
+        {(isMobile || movieId) && <SlideShow
           {...this.props} dots={false} autoplay={true} infinite={true}
           maxLength={450} {...{movieId}}
           movieInfo={Boolean(movieId)}/>}

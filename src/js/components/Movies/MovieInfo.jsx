@@ -19,7 +19,7 @@ if (process.env.BROWSER) {
   require('./MovieInfo.less')
 }
 
-@connect(({Movie, Season, User}) => ({Movie, Season, User}))
+@connect(({Movie, Season, User, Event}) => ({Movie, Season, User, Event}))
 class MovieInfo extends LoadVideo {
 
   constructor (props) {
@@ -45,7 +45,7 @@ class MovieInfo extends LoadVideo {
   render () {
 
     let {
-      props: {Movie, User, active, dataId, data, maxLength, load, showBtn, movieInfo}
+      props: {Movie, User, Event, active, dataId, data, maxLength, load, showBtn, movieInfo}
     } = this
 
     data = data || Movie.get(`movies/${dataId}`)
@@ -63,9 +63,11 @@ class MovieInfo extends LoadVideo {
       'movie--active': this.props.active,
       'movie--btn_play': showBtn === true || !isSerie
     })
+    const isMobile = Event.get('isMobile')
 
     let imageUrl = extractImg({
       data,
+      isMobile,
       key: 'poster',
       crop: 'faces',
       fit: 'crop',

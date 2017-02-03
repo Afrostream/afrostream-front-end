@@ -65,7 +65,8 @@
   .movie-background {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 35%;
+    .isMobile({ left: 0; });
     bottom: 0;
     right: 0;
     background-image: url(../../../assets/images/default/1920x815.jpg);
@@ -79,7 +80,9 @@
       left: 0;
       bottom: 0;
       right: 0;
-      background-color: fade(#000, 30%);
+      background-color: inherit;
+      .horizontal-gradient(@color-black-2, 0, transparent, 50%);
+      .isMobile({ background: none; });
     }
   }
   &.movie--btn_play {

@@ -77,7 +77,6 @@ class SlideShow extends React.Component {
         {canUseDOM && category &&
         <Slider {...settings}>
           {category.map((data) => <div key={`slide-${data.get('_id')}`} onClick={::this.showLock}><MovieInfo
-
             active={true}
             load={true}
             showBtn={true}
