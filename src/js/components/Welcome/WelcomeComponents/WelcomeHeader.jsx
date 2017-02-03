@@ -62,6 +62,7 @@ class WelcomeHeader extends I18n {
     }
 
     const isMobile = Event.get('isMobile')
+    let homeRTitle = this.getTitle('home.title')
 
     return (
       <section className={classSet(welcomeClassesSet)}>
@@ -71,6 +72,10 @@ class WelcomeHeader extends I18n {
           onClick={::this.showLock}
         >
           <div className="afrostream-movie__subscribe">
+            <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
+              return (<span key={`statement-${i}`}>{statement}</span>)
+            })}
+            </div>
             <SignUpButton className="subscribe-button" label="home.action"/>
           </div>
         </BackgroundVideo>}
