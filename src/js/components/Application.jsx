@@ -120,14 +120,13 @@ class Application extends React.Component {
     const hasPopup = Modal.get('target')
     const {query} = location
 
-    const abColor = GA.get('variations').find(variation => {
-      return variation.get('name') === 'buttonsColors' && variation.get('choose') === 1
-    })
+    //const abColor = GA.get('variations').find(variation => {
+    //  return variation.get('name') === 'buttonsColors' && variation.get('choose') === 1
+    //})
 
     let appClasses = classNames({
       'app': true,
-      'lock-open': hasPopup,
-      'ab-color': abColor
+      'lock-open': hasPopup
     })
 
     return (

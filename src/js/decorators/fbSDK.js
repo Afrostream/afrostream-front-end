@@ -39,13 +39,13 @@ export default function fbSDK () {
       }
 
       componentDidMount () {
-        window.fbAsyncInit = ()=> {
+        window.fbAsyncInit = () => {
           FB.init({
             appId: facebook.appId,
             xfbml: true,
             version: facebook.sdkVersion
           })
-
+          FB.AppEvents.logPageView()
           // after initialization, get the login status
           this.getLoginStatus()
         },
