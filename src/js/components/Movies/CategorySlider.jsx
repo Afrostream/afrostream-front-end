@@ -103,7 +103,7 @@ class CategorySlider extends MoviesSlider {
     return (
       <div className={classSet(listClass)}>
         {slug && <div id={slug} className="movies-list__anchor"/>}
-        {label && <Link to={`/genre/${categoryId}/${catSlug}`} className="movies-list__selection">{label}</Link>}
+        {label && <Link to={`/category/${categoryId}/${catSlug}`} className="movies-list__selection">{label}</Link>}
         {category && dataList ?
           <AutoSizer className="slider-container" disableHeight>
             {({width}) => (

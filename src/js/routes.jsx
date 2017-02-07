@@ -21,7 +21,7 @@ import CancelSubscription from './components/Account/CancelSubscription'
 import NoMatch from './components/NoMatch'
 //STATIC
 import Footer from './components/Footer/Footer'
-import MovieList from './components/Movies/MoviesList'
+import MoviesList from './components/Movies/MoviesList'
 import Spots from './components/Welcome/WelcomeComponents/Spots'
 
 const langs = ['fr', 'en']
@@ -54,8 +54,6 @@ const buildHome = function (lang) {
              component={CancelSubscription}/>
     </Route>,
     <Route key={`${lang}-sponsorship`} name="sponsorship" path="parrainage" component={SponsorsPage}/>,
-    <Route key={`${lang}-category`} name="category" path="category(/:categoryId)(/:categorySlug)"
-           component={BrowseGenrePage}/>,
     <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
     <Route key={`${lang}-history`} name="history" path="history" component={BrowseHistoryPage}/>,
     <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
@@ -118,6 +116,11 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-payment`} name="payment" path="select-plan" component={PaymentPage}>
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
+    <Route key={`${lang}-category`} name="category" path="category"
+           component={MoviesList}>
+      <Route key={`${lang}-category-page`} name="categoryPage" path=":categoryId(/:categorySlug)"
+             component={BrowseGenrePage}/>
+    </Route>,
     <Redirect key={`${lang}-redirect-blog`} from="/blog/**/*" to="life"/>,
     <Redirect key={`${lang}-redirect-browse`} from="/browse/**/*" to="category"/>,
     //push subroutes after static routes
@@ -131,7 +134,7 @@ const buildRoutes = function (lang) {
 const buildStaticRoutes = function (lang) {
   let subRoutes = [
     <Route key={`${lang}-footer`} name="footer" path="footer" isStatic={true} component={Footer}/>,
-    <Route key={`${lang}-movieList`} name="movieList" path="movies/list" isStatic={true} component={MovieList}/>,
+    <Route key={`${lang}-moviesList`} name="moviesList" path="movies/list" isStatic={true} component={MoviesList}/>,
     <Route key={`${lang}-spotsList`} name="spotsList" path="categorys/spots" isStatic={true} component={Spots}/>
   ]
   return subRoutes

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ReactList from 'react-list'
 import CategorySlider from './CategorySlider'
+import { withRouter } from 'react-router'
 
 if (process.env.BROWSER) {
   require('./MoviesList.less')
@@ -17,13 +18,14 @@ class MoviesList extends React.Component {
   renderList (index) {
     const {
       props: {
-        Category
+        Category,
+        router
       }
     } = this
 
     //LIST
+    const isOpenCatalog = router.isActive('category')
     const categories = Category.get(`menu`)
-
     //ITEM
     let categorie = categories.get(index)
     if (!categorie) {
@@ -33,16 +35,22 @@ class MoviesList extends React.Component {
     const slug = categorie.get('slug')
     const categoryId = categorie.get('_id')
 
-    return (<CategorySlider
-      key={`categorie-${categoryId}`} {...this.props} {...{categoryId, label, slug}} />)
+    return (<CategorySlider virtual={isOpenCatalog}
+                            key={`categorie-${categoryId}`} {...this.props} {...{categoryId, label, slug}} />)
   }
 
   render () {
     const {
       props: {
-        Category
+        Category,
+        children,
+        router
       }
     } = this
+
+    if (children) {
+      return children
+    }
 
     const categories = Category.get(`menu`)
     if (!categories) {
@@ -51,18 +59,17 @@ class MoviesList extends React.Component {
 
     return (
       <div className="movies-list">
-        {<ReactList
+        <ReactList
           ref="react-movies-list"
           axis="y"
           itemRenderer={::this.renderList}
           length={categories.size}
           type={'simple'}
           pageSize={4}
-        />}
-        {/*categories.map((item)=>this.renderList(item))*/}
+        />
       </div>
     )
   }
 }
 
-export default MoviesList
+export default withRouter(MoviesList)

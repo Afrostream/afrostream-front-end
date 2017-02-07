@@ -23,7 +23,7 @@ class WelcomeMoviesSlider extends React.Component {
       <section onClick={::this.showLock} key={`slider-home-${index}`}>
         <div className="content welcome-slider-item" key={`life-element-slider-${index}`}><ReactImgix
           className="welcome-slider_img"
-          src={posterImg} bg={true}/></div>
+          src={posterImg} bg={true} blur={false}/></div>
       </section>)
   }
 
