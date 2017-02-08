@@ -42,7 +42,7 @@ class CategoryList extends React.Component {
     const slug = `category/${categoryId}/${categorie.get('slug')}`
     const dataList = categorie.get('movies')
 
-    return (<MoviesSlider virtual={false}
+    return (<MoviesSlider virtual={false} preload={false}
                           key={`categorie-${categoryId}`} {...this.props} {...{dataList, label, slug}} />)
 
   }

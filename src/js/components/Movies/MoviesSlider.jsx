@@ -22,6 +22,7 @@ class MoviesSlider extends I18n {
     dataList: PropTypes.instanceOf(Immutable.List),
     columnMaxWidth: React.PropTypes.number,
     columnMinWidth: React.PropTypes.number,
+    preload: React.PropTypes.bool,
     virtual: React.PropTypes.bool,
     favorite: React.PropTypes.bool,
     share: React.PropTypes.bool,
@@ -43,6 +44,7 @@ class MoviesSlider extends I18n {
     className: 'movies-data-list',
     rowHeight: 200,
     virtual: false,
+    preload: true,
     share: false,
     favorite: true
   }
@@ -96,7 +98,6 @@ class MoviesSlider extends I18n {
 
     return (
       <Thumb
-        preload={true}
         id={dataId}
         key={`data-thumb-${dataId}`}
         {...params} {...this.props} {...{data, dataId}}  />
