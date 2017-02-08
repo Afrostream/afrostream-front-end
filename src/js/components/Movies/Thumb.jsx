@@ -8,7 +8,7 @@ if (process.env.BROWSER) {
   require('./Thumb.less')
 }
 
-@connect(({Movie, Season}) => ({Movie, Season}))
+@connect(({Movie, Season, User}) => ({Movie, Season, User}))
 class Thumb extends Poster {
 
 
@@ -101,6 +101,17 @@ class Thumb extends Poster {
   }
 
   getButtons () {
+
+    const {
+      props: {User}
+    } = this
+
+    const user = User.get('user')
+
+    if (!user) {
+      return null
+    }
+
     if (!this.state.hover) {
       return <div className="thumb-buttons"/>
     }
