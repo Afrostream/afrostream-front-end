@@ -22,6 +22,12 @@ class Poster extends LoadVideo {
     this.state = {status: props.data ? Status.LOADING : Status.PENDING, src: '', isNew: false, hover: false}
   }
 
+  componentWillMount () {
+    if (this.state.status === Status.LOADING) {
+      this.createLoader(true)
+    }
+  }
+
   componentDidMount () {
     if (this.state.status === Status.LOADING) {
       this.createLoader()
@@ -33,7 +39,6 @@ class Poster extends LoadVideo {
     const {
       props: {data}
     } = this
-
 
     if (!shallowEqual(nextProps.data, data)) {
       this.createLoader()
@@ -94,7 +99,7 @@ class Poster extends LoadVideo {
     return ''
   }
 
-  createLoader () {
+  createLoader (force = false) {
     const {
       props: {data, thumbW, thumbH}
     } = this
@@ -134,7 +139,7 @@ class Poster extends LoadVideo {
     const rect = this.extractProfile(thumb || data, '16:31')
     const imageStyles = `${imageUrl}${rect}`
 
-    if (this.props.preload) {
+    if (this.props.preload && !force) {
 
       this.destroyLoader()  // We can only have one loader at a time.
 
