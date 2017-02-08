@@ -9,6 +9,7 @@ import { ArrowStepper } from '../Slider'
 import MoviesSlider from './MoviesSlider'
 import classSet from 'classnames'
 import { AutoSizer, ColumnSizer, Grid } from 'react-virtualized'
+import ReactList from 'react-list'
 import {
   intlShape,
   injectIntl
@@ -51,7 +52,6 @@ class CategorySlider extends MoviesSlider {
     const category = Category.get(`categorys/${categoryId}`)
     const dataList = category.get('mergeSpotsWithMovies')
     let data = dataList.get(columnIndex)
-    //console.log('renderItem category : ', Boolean(data))
     if (data instanceof Immutable.Map) {
       return this.renderBlock(data)
     }
@@ -68,7 +68,8 @@ class CategorySlider extends MoviesSlider {
         Category,
         categoryId,
         label,
-        slug
+        slug,
+        virtual
       }
     } = this
     //console.log('render category : ', categoryId)
@@ -104,7 +105,15 @@ class CategorySlider extends MoviesSlider {
       <div className={classSet(listClass)}>
         {slug && <div id={slug} className="movies-list__anchor"/>}
         {label && <Link to={`/category/${categoryId}/${catSlug}`} className="movies-list__selection">{label}</Link>}
-        {category && dataList ?
+        {!virtual && <ReactList
+          ref="reactList"
+          axis={`x`}
+          itemRenderer={(index) => ::this.renderItem({columnIndex: index})}
+          length={dataList.size}
+          type={'uniform'}
+          pageSize={Infinity}
+        />}
+        {virtual && category && dataList ?
           <AutoSizer className="slider-container" disableHeight>
             {({width}) => (
               <ColumnSizer
@@ -143,11 +152,13 @@ class CategorySlider extends MoviesSlider {
 
 CategorySlider.propTypes = {
   categoryId: React.PropTypes.number,
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
+  virtual: React.PropTypes.bool
 }
 
 CategorySlider.defaultProps = {
-  categoryId: null
+  categoryId: null,
+  virtual: true
 }
 
 export default injectIntl(CategorySlider)

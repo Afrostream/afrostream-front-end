@@ -29,19 +29,6 @@ class FavoritesAddButton extends I18n {
   }
 
 
-  static propTypes = {
-    data: PropTypes.instanceOf(Immutable.Map),
-    dataId: PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.number
-    ])
-  }
-
-  static defaultProps = {
-    data: null,
-    dataId: null
-  }
-
   getType () {
     const {
       props: {data}
@@ -84,7 +71,7 @@ class FavoritesAddButton extends I18n {
   render () {
     const {
       props: {
-        User, dataId
+        User, dataId, showLabel
       }
     } = this
 
@@ -116,7 +103,7 @@ class FavoritesAddButton extends I18n {
               data-place={this.props.direction}
               data-for={`fav-${dataId}`} {...inputAttributes}>
         <i className={classSet(favoriteClass)}></i>
-        <span className="btn-label">{titleLabel}</span>
+        {showLabel && <span className="btn-label">{titleLabel}</span>}
         {this.state.pendingFavorite ? <Spinner /> : ''}
         <ReactTooltip id={`fav-${dataId}`} className="fav-tooltip" type="dark"
                       effect="solid"/>
@@ -125,8 +112,22 @@ class FavoritesAddButton extends I18n {
   }
 }
 
+
+FavoritesAddButton.propTypes = {
+  direction: PropTypes.string,
+  showLabel: PropTypes.bool,
+  data: PropTypes.instanceOf(Immutable.Map),
+  dataId: PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number
+  ])
+}
+
 FavoritesAddButton.defaultProps = {
-  direction: 'top'
+  direction: 'top',
+  showLabel: true,
+  data: null,
+  dataId: null
 }
 
 export default injectIntl(FavoritesAddButton)

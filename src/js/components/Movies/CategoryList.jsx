@@ -1,40 +1,50 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ReactList from 'react-list'
-import CategorySlider from './CategorySlider'
+import MoviesSlider from './MoviesSlider'
 import { withRouter } from 'react-router'
+import { prepareRoute } from '../../decorators'
+import * as CategoryActionCreators from '../../actions/category'
+import { Link } from '../Utils'
 
 if (process.env.BROWSER) {
-  require('./MoviesList.less')
+  require('./CategoryList.less')
 }
 
+@prepareRoute(async function ({store}) {
+  return await store.dispatch(CategoryActionCreators.getMeaList())
+})
+
 @connect(({Category}) => ({Category}))
-class MoviesList extends React.Component {
+class CategoryList extends React.Component {
 
   constructor (props) {
     super(props)
   }
 
+
   renderList (index) {
     const {
       props: {
-        Category,
+        Category
       }
     } = this
 
     //LIST
-    const categories = Category.get(`menu`)
+    const categories = Category.get(`meaList`)
     //ITEM
     let categorie = categories.get(index)
     if (!categorie) {
       return
     }
     const label = categorie.get('label')
-    const slug = categorie.get('slug')
     const categoryId = categorie.get('_id')
+    const slug = `category/${categoryId}/${categorie.get('slug')}`
+    const dataList = categorie.get('movies')
 
-    return (<CategorySlider
-      key={`categorie-${categoryId}`} {...this.props} {...{categoryId, label, slug}} />)
+    return (<MoviesSlider virtual={false}
+                          key={`categorie-${categoryId}`} {...this.props} {...{dataList, label, slug}} />)
+
   }
 
   render () {
@@ -49,24 +59,23 @@ class MoviesList extends React.Component {
       return children
     }
 
-    const categories = Category.get(`menu`)
+    const categories = Category.get(`meaList`)
     if (!categories) {
       return <div />
     }
 
     return (
-      <div className={`movies-list`}>
+      <div className={`category-list`}>
         <ReactList
           ref="react-movies-list"
           axis="y"
           itemRenderer={::this.renderList}
           length={categories.size}
           type={'simple'}
-          pageSize={4}
         />
       </div>
     )
   }
 }
 
-export default withRouter(MoviesList)
+export default withRouter(CategoryList)

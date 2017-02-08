@@ -169,7 +169,7 @@ class MoviesSlider extends I18n {
       })
     }
 
-    if (axis === 'y' && !virtual) {
+    if (!virtual) {
       return (
         <div className={this.props.className}>
           {slug ? <div id={slug} className="movies-list__anchor"/> : ''}
@@ -182,6 +182,7 @@ class MoviesSlider extends I18n {
               itemRenderer={::this.renderIndex}
               length={dataList.size}
               type={'uniform'}
+              pageSize={Infinity}
             />
           </div>
         </div>

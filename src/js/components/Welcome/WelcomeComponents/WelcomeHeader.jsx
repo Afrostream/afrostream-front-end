@@ -77,6 +77,7 @@ class WelcomeHeader extends I18n {
             })}
             </div>
             <SignUpButton className="subscribe-button" label="home.action"/>
+            <div className="mouse"/>
           </div>
         </BackgroundVideo>}
         {(isMobile || movieId) && <SlideShow

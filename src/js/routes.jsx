@@ -21,6 +21,7 @@ import CancelSubscription from './components/Account/CancelSubscription'
 import NoMatch from './components/NoMatch'
 //STATIC
 import Footer from './components/Footer/Footer'
+import CaterogyList from './components/Movies/CategoryList'
 import MoviesList from './components/Movies/MoviesList'
 import Spots from './components/Welcome/WelcomeComponents/Spots'
 
@@ -117,7 +118,7 @@ const buildRoutes = function (lang) {
       <Route name="paymentMethod" path=":planCode(/:status)" component={PaymentForm}/>
     </Route>,
     <Route key={`${lang}-category`} name="category" path="category"
-           component={MoviesList}>
+           component={CaterogyList}>
       <Route key={`${lang}-category-page`} name="categoryPage" path=":categoryId(/:categorySlug)"
              component={BrowseGenrePage}/>
     </Route>,

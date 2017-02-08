@@ -194,7 +194,7 @@ class Poster extends LoadVideo {
 
     let link = this.getLink()
 
-    return <ShareButton ref={`share-add-${data.get('_id')}`} link={link} title={data.get('title')}
+    return <ShareButton showLabel={false} ref={`share-add-${data.get('_id')}`} link={link} title={data.get('title')}
                         description={data.get('synopsis')}/>
   }
 
@@ -210,7 +210,7 @@ class Poster extends LoadVideo {
       return
     }
 
-    return (<FavoritesAddButton {...this.props} ref={`favorite-add-${data.get('_id')}`}/>)
+    return (<FavoritesAddButton {...this.props} showLabel={false} ref={`favorite-add-${data.get('_id')}`}/>)
   }
 
   getNew () {

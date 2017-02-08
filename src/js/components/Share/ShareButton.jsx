@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import classSet from 'classnames'
@@ -43,6 +43,12 @@ class ShareButton extends I18n {
 
   render () {
 
+    const {
+      props: {
+        showLabel
+      }
+    } = this
+
     let favoriteClass = {
       'zmdi': true,
       'zmdi-share': true
@@ -56,7 +62,7 @@ class ShareButton extends I18n {
               data-tip={this.getTitle(this.props.tooltip)}
               {...inputAttributes}>
         <i className={classSet(favoriteClass)}></i>
-        {this.getLabel()}
+        {showLabel && this.getLabel()}
         <ReactTooltip className="fav-tooltip" place={this.props.direction} type="dark" effect="solid"/>
       </button>
     )
@@ -65,6 +71,7 @@ class ShareButton extends I18n {
 
 ShareButton.propTypes = {
   link: React.PropTypes.string,
+  showLabel: PropTypes.bool,
   description: React.PropTypes.string,
   title: React.PropTypes.string,
   tooltip: React.PropTypes.string,
@@ -73,6 +80,7 @@ ShareButton.propTypes = {
 
 ShareButton.defaultProps = {
   link: null,
+  showLabel: true,
   description: null,
   title: null,
   tooltip: 'share.tooltip',

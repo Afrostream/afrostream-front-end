@@ -34,7 +34,6 @@ class BrowsePage extends React.Component {
         {!authorized && <LoginPage modalType="newsletter" closable={false} {...this.props}/>}
         {authorized && [
           <SplashScreen key="splash-screens"/>,
-          <BrowseMenu key="browse-menu"/>,
           <SlideShow key="slide-show" gradient={true}/>,
           <UserMoviesList key="user-movies-list"/>,
           <BrowseLifeUsersList key="life-users-list"/>,

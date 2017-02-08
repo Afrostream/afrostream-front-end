@@ -1,0 +1,15 @@
+@import (reference) '../../../styles/config.less';
+@import '../../../styles/arrow.less';
+
+.category-list {
+  position: relative;
+  background-color: @brand-thumbs;
+  width: 100%;
+  padding: (@header-height + @app-padding) 0 @thumb-margin 0;
+  .slider-container {
+    overflow-x: auto;
+    > div > div > div {
+      justify-content: flex-start;
+    }
+  }
+}
