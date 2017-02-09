@@ -7,7 +7,7 @@ import { Link } from '../Utils'
 import * as ModalActionCreators from '../../actions/modal'
 import config from '../../../../config'
 import SignUpButton from '../User/SignUpButton'
-
+import { I18n } from'../Utils'
 import {
   injectIntl
 } from 'react-intl'
@@ -15,7 +15,7 @@ import {
 const {images, internalPlansCountDown} = config
 
 @connect(({User, Billing}) => ({User, Billing}))
-class InternalPlansCountDown extends React.Component {
+class InternalPlansCountDown extends I18n {
 
   openModal (donePath) {
     const {
@@ -47,10 +47,12 @@ class InternalPlansCountDown extends React.Component {
           <div className="afrostream-statement">
             <div className="discount-statement">
               <div className="price bolder">3,99
-                <span className="currency">€</span><span className="mini">/mois</span>
+                <span className="currency">€</span><span
+                  className="mini">/{this.getTitle('home.countdown.month')}</span>
               </div>
-              au lieu de
-              <div className="off">6,99<span className="currency">€</span><span className="mini">/mois</span></div>
+              {this.getTitle('home.countdown.instead')}
+              <div className="off">6,99<span className="currency">€</span><span
+                className="mini">/{this.getTitle('home.countdown.month')}</span></div>
             </div>
           </div>
         </div>

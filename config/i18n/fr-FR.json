@@ -100,6 +100,10 @@
       "title": "Nos formules",
       "baseline": "Service uniquement disponible en France, DOM-TOM,Belgique, Luxembourg, Suisse, Sénégal, Côte d'Ivoire.",
       "link": "Les réponses à vos questions"
+    },
+    "countdown": {
+      "instead": "au lieu de",
+      "month": "mois"
     }
   },
   "browse": {
@@ -208,6 +212,8 @@
   },
   "countdown": {
     "action": "J'en profite",
+    "beforeText": "Plus que",
+    "afterText": "pour en profiter",
     "days": "J",
     "hours": "H",
     "minutes": "M",

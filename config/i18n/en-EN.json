@@ -100,6 +100,10 @@
       "title": "Our Plans",
       "baseline": "Service is only available in France, French overseas territories, Belgium, Luxembourg, Switzerland, Senegal, Ivory Coast.",
       "link": "The answers to your questions."
+    },
+    "countdown": {
+      "instead": "instead of",
+      "month": "month"
     }
   },
   "browse": {
@@ -208,6 +212,8 @@
   },
   "countdown": {
     "action": "GO !",
+    "beforeText": "Only",
+    "afterText": "left",
     "days": "D",
     "hours": "H",
     "minutes": "M",
