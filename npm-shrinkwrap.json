@@ -299,9 +299,9 @@
       "resolved": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-statsd.git#1e38aa4dc156f1a77bfff03360774a16ea70d84e"
     },
     "afrostream-player": {
-      "version": "2.2.40",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.40",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#25d2d3f64ff431c7cc5d4fb5b83a80a263e03897"
+      "version": "2.2.41",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.41",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#0fc6fb7b091e2a58666de9b4657d848a6c9a5483"
     },
     "after": {
       "version": "0.8.2"
@@ -5117,7 +5117,7 @@
       "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#a50a20da6fb62edfe5595b4609dfc0612597cbf0"
     },
     "videojs-mux": {
-      "version": "2.0.27"
+      "version": "2.0.28"
     },
     "videojs-standard": {
       "version": "4.0.3"
@@ -5144,7 +5144,7 @@
           "version": "14.0.0"
         },
         "buffer": {
-          "version": "5.0.3"
+          "version": "5.0.4"
         }
       }
     },
