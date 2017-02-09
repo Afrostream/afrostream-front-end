@@ -40,7 +40,6 @@ class InternalPlansCountDown extends I18n {
     return (
       <CountDown
         eventTime={internalPlansCountDown.countDownDateTo}
-        contentPosition={'top'}
       >
         {countdownImg}
         <div className="afrostream-movie__subscribe">
