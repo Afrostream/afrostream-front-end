@@ -7,6 +7,8 @@ const initialState = Immutable.fromJS({
   'categoryId': 1
 })
 
+const MIN_SPOTS = 5
+
 /**
  * Used in _.reduce to fill the arrays of blocs
  */
@@ -27,13 +29,14 @@ const accumulateInBloc = function (finalResult = [], bloc) {
 
 const mergeSpots = function (spots, dataList) {
   //Concat adspots and categrorie movies remove duplicates
-  spots = spots || []
   dataList = dataList || []
+  spots = spots || []
   let filteredList = []
 
-  if (!spots.length) {
-    return dataList
+  if (spots.length < MIN_SPOTS && dataList.length < (MIN_SPOTS * 2)) {
+    spots = _.take(dataList, MIN_SPOTS)
   }
+
   spots = _.map(spots, (spot) => {
     spot.adSpot = true
     return spot
@@ -56,7 +59,7 @@ export default createReducer(initialState, {
     }
     const data = res.body
     let categoryId = state.get('categoryId')
-    const categoryBase = _.find(data, (category)=> {
+    const categoryBase = _.find(data, (category) => {
       return category._id == categoryId
     })
 
