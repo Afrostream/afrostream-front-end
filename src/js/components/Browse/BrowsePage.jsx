@@ -19,7 +19,7 @@ import LoginPage from '../Login/LoginPage'
     store.dispatch(EventActionCreators.userActive(true))
   ])
   store.dispatch(UserActionCreators.getFavorites('movies'))
-  store.dispatch(UserActionCreators.getHistory())
+  store.dispatch(UserActionCreators.getHistory({limit: 10}))
   store.dispatch(LifeActionCreators.fetchPins({limit: 14}))
   store.dispatch(LifeActionCreators.fetchUsers({}))
 })

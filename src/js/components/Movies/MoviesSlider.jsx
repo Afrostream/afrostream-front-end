@@ -43,7 +43,7 @@ class MoviesSlider extends I18n {
     axis: 'x',
     className: 'movies-data-list',
     rowHeight: 200,
-    virtual: false,
+    virtual: true,
     preload: true,
     share: false,
     favorite: true
@@ -170,7 +170,7 @@ class MoviesSlider extends I18n {
       })
     }
 
-    if (!virtual) {
+    if (axis === 'y' || !virtual) {
       return (
         <div className={this.props.className}>
           {slug ? <div id={slug} className="movies-list__anchor"/> : ''}

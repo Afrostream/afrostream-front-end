@@ -133,7 +133,7 @@ async function mergeProfile ({api, data, getState, dispatch}) {
  * Get history movies/episodes for user
  * @returns {Function}
  */
-export function getHistory () {
+export function getHistory ({limit = 100}) {
   return (dispatch, getState) => {
     const user = getState().User.get('user')
     if (!user || !user.get('_id')) {
@@ -149,7 +149,7 @@ export function getHistory () {
         path: `/api/users/${user.get('_id')}/history`,
         passToken: true,
         params: {
-          limit: 100
+          limit
         }
       })
     })
