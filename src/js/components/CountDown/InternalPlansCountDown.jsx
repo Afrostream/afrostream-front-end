@@ -46,15 +46,11 @@ class InternalPlansCountDown extends React.Component {
         <div className="afrostream-movie__subscribe">
           <div className="afrostream-statement">
             <div className="discount-statement">
-              <div className="info-statement">
-                <div className="price bolder">3,99<span className="currency">€</span><span className="mini">/mois</span>
-                </div>
+              <div className="price bolder">3,99
+                <span className="currency">€</span><span className="mini">/mois</span>
               </div>
-              <div className="discount">
-                <div>au lieu de</div>
-                <div className="off">6,99<span className="currency">€</span><span className="mini">/mois</span></div>
-                <div className="underline">à vie !</div>
-              </div>
+              au lieu de
+              <div className="off">6,99<span className="currency">€</span><span className="mini">/mois</span></div>
             </div>
           </div>
         </div>

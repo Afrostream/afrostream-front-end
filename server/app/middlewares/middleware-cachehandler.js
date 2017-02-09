@@ -25,7 +25,7 @@ export default function (options) {
       res.set('Cache-Control', 'public, max-age=0')
     }
     res.cache = function (duration) {
-      res.set('Cache-Control', 'public, max-age=' + (duration || 60) + ', stale-while-revalidate=10')
+      res.set('Cache-Control', 'public, max-age=' + (duration || 3600) + ', stale-while-revalidate=10')
     }
     res.isStatic = function () {
       res.set('Cache-Control', 'public, max-age=31536000')

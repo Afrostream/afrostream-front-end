@@ -17,6 +17,8 @@ if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
 }
 
+const {metadata, images} =config
+
 @connect(({Event, User, Movie, Video, Season, Episode, GA}) => ({Event, User, Movie, Video, Season, Episode, GA}))
 class WelcomeHeader extends I18n {
 
@@ -65,10 +67,14 @@ class WelcomeHeader extends I18n {
     const isMobile = false//Event.get('isMobile')
     let homeRTitle = this.getTitle('home.title')
 
+    let posterImg = `${images.urlPrefix}${metadata.screen && metadata.screen.image || metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
+
+
     return (
       <section className={classSet(welcomeClassesSet)}>
         {!isMobile && !movieId && <BackgroundVideo
           preload={'metadata'}
+          poster={posterImg}
           videos={config.metadata.videos}
           onClick={::this.showLock}
         >
