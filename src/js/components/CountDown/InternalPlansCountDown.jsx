@@ -96,7 +96,6 @@ class InternalPlansCountDown extends I18n {
     const presentTime = new Date().getTime()
     const startTime = new Date(internalPlansCountDown.countDownDateFrom).getTime()
     const endTime = new Date(internalPlansCountDown.countDownDateTo).getTime()
-    debugger
     if (presentTime - startTime >= 0 && presentTime - endTime <= 0) return this.renderProperLink()
     return this.props.children || <div />
   }
