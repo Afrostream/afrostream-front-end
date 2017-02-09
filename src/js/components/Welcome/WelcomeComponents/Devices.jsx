@@ -4,7 +4,8 @@ import _ from 'lodash'
 import {
   FormattedMessage
 } from 'react-intl'
-import ReactImgix from "../../Image/ReactImgix"
+import ReactImgix from '../../Image/ReactImgix'
+
 if (process.env.BROWSER) {
   require('./Devices.less')
 }
@@ -13,12 +14,6 @@ class Devices extends React.Component {
 
 
   render () {
-
-    const {
-      props: {
-        intl
-      }
-    } = this
 
     const featuresList = [
       'engagment',
