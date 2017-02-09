@@ -51,7 +51,7 @@ let clientConfig = merge({}, webpackConfig, {
         if_return: true,
         join_vars: true,
         drop_console: productionMode,
-        pure_funcs: productionMode ? ['vjs.log', 'videojs.log'] : []
+        pure_funcs: productionMode ? ['vjs.log', 'videojs.log', 'logByType'] : []
       },
       minimize: true,
       sourceMap: !productionMode

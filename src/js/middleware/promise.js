@@ -13,7 +13,6 @@ export default function (api, {getState, dispatch}) {
           //Pass locale to all calls
           const {intl:{defaultLocale}, Geo} = state
           const geo = Geo.get('geo')
-          console.log('locale', defaultLocale)
           if (defaultLocale) {
             data = _.merge({options: {language: defaultLocale.toUpperCase()}}, data)
           }
