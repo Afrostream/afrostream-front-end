@@ -44,7 +44,6 @@ class WelcomePage extends React.Component {
         <Devices {...this.props} />
         <WelcomeMoviesSlider dots={false} autoplay={true} infinite={true}/>
         <SelectPlan {...this.props} showImages={false}/>
-        <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
         <WelcomeLifeSlider dots={false} autoplay={true} infinite={true}/>
       </div>
     )

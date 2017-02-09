@@ -193,10 +193,10 @@ const client = {
     internalPlanUuid: 'nsafrostreammonthly'
   },
   internalPlansCountDown: {
-    countDownDateFrom: '2016-12-12',
-    countDownDateTo: '2017-01-01',
-    imageUrl: '/production/image/2016/12/promo-noel-v5-{lang}.jpg',
-    internalPlanUuid: 'afrnooneyear',
+    countDownDateFrom: '2017-02-07',
+    countDownDateTo: '2017-02-29',
+    imageUrl: null,//'/production/image/2016/12/promo-noel-v5-{lang}.jpg',
+    internalPlanUuid: 'afrostreammonthly-swl',
     internalPlanQuery: ''
   },
   sentry: {

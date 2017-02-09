@@ -17,113 +17,6 @@ const {images, internalPlansCountDown} = config
 @connect(({User, Billing}) => ({User, Billing}))
 class InternalPlansCountDown extends React.Component {
 
-  drawSnow () {
-    const {snowCVX} = this.refs
-
-    if (!snowCVX) {
-      return
-    }
-    const ctx = snowCVX.getContext('2d')
-    const container = ReactDOM.findDOMNode(this)
-
-    this.snowW = ctx.width = container.clientWidth
-    this.snowH = ctx.height = container.clientHeight
-
-    let snow, arr = []
-    let num = 200, tsc = 1, sp = 1
-    let sc = 0.8, t = 0, mv = 20, min = 1, f = null
-
-    /**
-     * Calls rAF if it's not already
-     * been done already
-     */
-    const requestTick = () => {
-      if (!this.ticking) {
-        requestAnimationFrame(initSnow)
-        this.ticking = true
-      }
-    }
-
-
-    const initSnow = () => {
-      ctx.clearRect(0, 0, this.snowW, this.snowH)
-      ctx.fillRect(0, 0, this.snowW, this.snowH)
-      ctx.fill()
-      for (let i = 0; i < arr.length; ++i) {
-        f = arr[i]
-        f.t += .05
-        f.t = f.t >= Math.PI * 2 ? 0 : f.t
-        f.y += f.sp
-        f.x += Math.sin(f.t * tsc) * (f.sz * .3)
-        if (f.y > this.snowH + 100) f.y = -10 - Math.random() * mv
-        if (f.x > this.snowW + mv) f.x = -mv
-        if (f.x < -mv) f.x = this.snowW + mv
-        try {
-          f.draw()
-        } catch (e) {
-          console.log('Draw snow err')
-        }
-      }
-      this.ticking = false
-    }
-
-    let Flake = function () {
-      this.x = 0
-      this.g = 0
-      this.y = 0
-      this.sz = 0
-
-      this.draw = function () {
-        this.g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.sz)
-        this.g.addColorStop(0, 'rgba(255,255,255,0.6)')
-        this.g.addColorStop(1, 'rgba(255,255,255,0)')
-        ctx.moveTo(this.x, this.y)
-        ctx.fillStyle = this.g
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.sz, 0, Math.PI * 2, true)
-        ctx.fill()
-      }
-    }
-
-    for (let i = 0; i < num; ++i) {
-      snow = new Flake()
-      snow.y = Math.random() * (this.snowH + 50)
-      snow.x = Math.random() * this.snowW
-      snow.t = Math.random() * (Math.PI * 2)
-      snow.sz = (100 / (10 + (Math.random() * 100))) * sc
-      snow.sp = (Math.pow(snow.sz * .8, 2) * .15) * sp
-      snow.sp = snow.sp < min ? min : snow.sp
-      arr.push(snow)
-    }
-
-    this.intervallSnow = setInterval(requestTick, 50)
-
-    /*________________________________________*/
-    window.addEventListener('resize', ::this.resizeSnow)
-  }
-
-  resizeSnow () {
-    const {snowCVX} = this.refs
-
-    if (!snowCVX) {
-      return
-    }
-    const ctx = snowCVX.getContext('2d')
-    const container = ReactDOM.findDOMNode(this)
-
-    this.snowW = ctx.width = container.clientWidth
-    this.snowH = ctx.height = container.clientHeight
-  }
-
-  componentDidMount () {
-    this.drawSnow()
-  }
-
-  componentWillUnmount () {
-    clearInterval(this.intervallSnow)
-    window.removeEventListener('resize', ::this.resizeSnow)
-  }
-
   openModal (donePath) {
     const {
       props: {
@@ -139,15 +32,34 @@ class InternalPlansCountDown extends React.Component {
 
 
   renderCountDown () {
-    const countdownImg = `${images.urlPrefix}${internalPlansCountDown.imageUrl.replace(/{lang}/, this.props.intl.locale)}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}&txt=©DR&txtclr=fff&txtsize=10&markalpha=70&txtalign=bottom,right`
+    let countdownImg
+    if (internalPlansCountDown.imageUrl) {
+      const countdownImgUri = `${images.urlPrefix}${internalPlansCountDown.imageUrl.replace(/{lang}/, this.props.intl.locale)}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}&txt=©DR&txtclr=fff&txtsize=10&markalpha=70&txtalign=bottom,right`
+      countdownImg = <ReactImgix src={countdownImgUri} blur={false}/>
+    }
     return (
       <CountDown
         eventTime={internalPlansCountDown.countDownDateTo}
+        contentPosition={'top'}
       >
-        <ReactImgix src={countdownImg} blur={false}/>
+        {countdownImg}
+        <div className="afrostream-movie__subscribe">
+          <div className="afrostream-statement">
+            <div className="discount-statement">
+              <div className="info-statement">
+                <div className="price bolder">3,99<span className="currency">€</span><span className="mini">/mois</span>
+                </div>
+              </div>
+              <div className="discount">
+                <div>au lieu de</div>
+                <div className="off">6,99<span className="currency">€</span><span className="mini">/mois</span></div>
+                <div className="underline">à vie !</div>
+              </div>
+            </div>
+          </div>
+        </div>
         {this.props.action && <SignUpButton key="welcome-pgm-signup" className="subscribe-button"
                                             label={this.props.action}/>}
-        <canvas ref="snowCVX"/>
       </CountDown>
     )
   }
@@ -196,7 +108,7 @@ InternalPlansCountDown.propTypes = {
   action: React.PropTypes.string
 }
 InternalPlansCountDown.defaultProps = {
-  className: '',
+  className: 'countdown',
   action: 'countdown.action'
 }
 

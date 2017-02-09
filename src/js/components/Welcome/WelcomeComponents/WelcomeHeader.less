@@ -72,6 +72,17 @@
     .isMobile({ top: 0; padding-left: 10%; background-position: right center; });
   }
 
+  .countdown {
+    display: inline-block;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
   .mouse {
     position: relative;
     margin: 3em auto 0 auto;
@@ -144,21 +155,122 @@
         .afrostream-statement {
           font-family: @font-book;
           font-weight: bold;
-          font-size: 4em;
+          font-size: 5em;
           line-height: 1.2em;
           margin: 1em 0.5em 1em 0.5em;
           text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
           span {
-            display: block;
+            display: inline-block;
           }
         }
 
         .subscribe-button {
-          //font-family: @font-book;
-          font-size: 2.5em;
           text-transform: inherit;
           border-radius: 2px;
           box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+      }
+
+      //COUNTDOWN
+      .countdown-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        &:before {
+          display: inline-block;
+          height: 100%;
+          content: "";
+          vertical-align: middle;
+        }
+        .countdown-content {
+          width: 100%;
+          display: inline-block;
+          vertical-align: middle;
+          padding: 2em;
+        }
+      }
+      .countdown-timer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      .afrostream-movie__subscribe {
+        margin: 0;
+        .afrostream-statement {
+          text-align: left;
+          .isMobile({ margin: 0; text-align: center; });
+        }
+      }
+      .discount-statement {
+        display: flex;
+        flex-direction: row;
+        .isMobile({ flex-direction: column; });
+        text-transform: uppercase;
+        font-family: @font-oswald;
+        .info-statement {
+          .price {
+            text-align: center;
+            font-size: 2em;
+            padding: 0.3em;
+            .isMobile({ padding: 0; });
+          }
+          .title {
+            text-align: left;
+            max-width: 8em;
+          }
+        }
+
+        .discount {
+          font-size: 1.2em;
+          line-height: 1.3em;
+          .bolder {
+            font-size: 1.3em;
+          }
+        }
+        .bolder {
+          color: @plan-red-color;
+        }
+        .currency {
+          display: inline-block;
+          font-size: 0.5em;
+          font-family: @font-oswald;
+        }
+        .mini {
+          font-size: 0.3em;
+          display: inline-block;
+        }
+        .off {
+          display: inline-block;
+          font-size: 1.1em;
+          color: @plan-red-color;
+          position: relative;
+          &:before,
+          &:after {
+            position: absolute;
+            top: .6em;
+            content: '';
+            display: block;
+            width: 2.2em;
+            height: .1em;
+            background-color: @brand-primary;
+          }
+          &:after {
+            transform: rotate(25deg);
+          }
+          &:before {
+            transform: rotate(-25deg);
+          }
+        }
+        .underline {
+          &:after {
+            content: "";
+            width: 2em;
+            height: 5px;
+            background-color: @plan-red-color;
+          }
         }
       }
     }

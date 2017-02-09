@@ -11,6 +11,7 @@ import * as ModalActionCreators from '../../../actions/modal'
 import {
   injectIntl
 } from 'react-intl'
+import InternalPlansCountDown from '../../CountDown/InternalPlansCountDown'
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
@@ -61,7 +62,7 @@ class WelcomeHeader extends I18n {
       'welcome-header_movie': Boolean(movieId)
     }
 
-    const isMobile = Event.get('isMobile')
+    const isMobile = false//Event.get('isMobile')
     let homeRTitle = this.getTitle('home.title')
 
     return (
@@ -71,14 +72,16 @@ class WelcomeHeader extends I18n {
           videos={config.metadata.videos}
           onClick={::this.showLock}
         >
-          <div className="afrostream-movie__subscribe">
-            <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
-              return (<span key={`statement-${i}`}>{statement}</span>)
-            })}
+          <InternalPlansCountDown {...this.props} >
+            <div className="afrostream-movie__subscribe">
+              <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
+                return (<span key={`statement-${i}`}>{statement}</span>)
+              })}
+              </div>
+              <SignUpButton className="subscribe-button" label="home.action"/>
+              <div className="mouse"/>
             </div>
-            <SignUpButton className="subscribe-button" label="home.action"/>
-            <div className="mouse"/>
-          </div>
+          </InternalPlansCountDown>
         </BackgroundVideo>}
         {(isMobile || movieId) && <SlideShow
           {...this.props} dots={false} autoplay={true} infinite={true}

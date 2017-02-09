@@ -6,7 +6,6 @@ import * as EventActionCreators from '../../actions/event'
 import * as IntercomActionCreators from '../../actions/intercom'
 import * as BillingActionCreators from '../../actions/billing'
 import SelectPlan from './SelectPlan'
-import InternalPlansCountDown from '../CountDown/InternalPlansCountDown'
 
 import { withRouter } from 'react-router'
 import {
@@ -54,7 +53,6 @@ class PaymentPage extends React.Component {
     return (
       <div className="row-fluid brand-bg">
         <div className="container brand-bg content-padding payment-page">
-          {!children && <InternalPlansCountDown />}
           {children ? children : <SelectPlan {...this.props}/>}
         </div>
       </div>

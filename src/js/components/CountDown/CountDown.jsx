@@ -76,18 +76,12 @@ class CountDown extends I18n {
                     <span>{seconds} <span className="countdown-text-unit">{this.getTitle('countdown.seconds')}</span></span>
                     <span className="countdown-text-unit countdown-prez">{this.props.afterText}</span>
                 </div>
-                {/*<div className="countdown-text-row">
-                    <span>{this.getTitle('countdown.days')}</span>
-                    <span>{this.getTitle('countdown.hours')}</span>
-                    <span>{this.getTitle('countdown.minutes')}</span>
-                    <span>{this.getTitle('countdown.seconds')}</span>
-                </div>*/}
                 {this.state.eventAvailableText && <div className="event-available-text">
                     {this.state.eventAvailableText}
                 </div>}
             </div>
             {this.props.contentPosition === 'bottom' && <div className="countdown-content">{children}</div>}
-          </div> 
+          </div>
       )
   }
 

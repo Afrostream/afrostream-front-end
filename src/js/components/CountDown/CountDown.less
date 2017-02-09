@@ -3,7 +3,6 @@
 .countdown-wrapper {
   margin-bottom: 24px;
   text-align: center;
-  box-shadow: rgba(0, 0, 0, 0.15) 1px 0px 5px, rgba(0, 0, 0, 0.2) 1px 0px 5px;
   margin-bottom: 24px;
   position: relative;
 
@@ -14,6 +13,7 @@
     width: 100%;
     height: 100%;
   }
+
   .countdown-content {
     position: relative;
     img {
@@ -21,21 +21,16 @@
       height: 100%;
     }
     .subscribe-button {
-      position: absolute;
-      left: 50%;
-      margin-left: -100px;
-      bottom: 0.5em;
       font-size: 2em;
-      background-color: @subscriber-color;
-      font-family: @font-book;
-      border: 1px solid @subscriber-color;
+      background-color: fade(@plan-red-color, 90%);
+      border: 1px solid fade(@plan-red-color, 90%);
     }
   }
 
   .countdown-timer {
     font-size: 40px;
 
-    background-color: @plan-red-color;
+    background-color: fade(@plan-red-color, 90%);
     color: white;
     padding-top: 8px;
     padding-bottom: 12px;
@@ -105,7 +100,7 @@
             &:first-of-type {
               flex: 2;
             }
-            &:last-of-type{
+            &:last-of-type {
               display: none;
             }
             flex: 4;
