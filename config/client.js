@@ -154,8 +154,8 @@ const client = {
     //Code ab tests multiples
     abCodes: isProduction && [
       {
-        name: 'buttonsColors',
-        key: 'PZB4RJafS86uEtgXCkNfHQ',
+        name: 'countdownColors',
+        key: 'FuHmAhI3SB6LZ-tvcWkDPA',
         nbVariations: 1
       }
     ] || [],

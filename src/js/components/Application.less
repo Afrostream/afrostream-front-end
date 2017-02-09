@@ -223,9 +223,24 @@ a.active {
 
 .app {
   &.ab-color {
-    button.primary {
-      background-color: fade(@color-mea, 90%) !important;
-      border: 1px solid darken(@color-mea, 5%) !important;
+    .countdown-wrapper {
+      .subscribe-button {
+        background-color: fade(@subscriber-color, 90%);
+        border: 1px solid fade(@subscriber-color, 90%);
+      }
+
+      .countdown-timer {
+        background-color: fade(@subscriber-color, 90%);
+      }
+      .off,
+      .bolder {
+        color: @subscriber-color !important;
+      }
+      .underline {
+        &:after {
+          background-color: @subscriber-color !important;
+        }
+      }
     }
   }
 }
