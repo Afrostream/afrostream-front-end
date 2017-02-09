@@ -58,6 +58,7 @@ class InternalPlansCountDown extends I18n {
         </div>
         {this.props.action && <SignUpButton key="welcome-pgm-signup" className="subscribe-button"
                                             label={this.props.action}/>}
+        <div className="mouse"/>
       </CountDown>
     )
   }
