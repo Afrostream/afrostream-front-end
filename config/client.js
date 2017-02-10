@@ -153,11 +153,11 @@ const client = {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
     //Code ab tests multiples
     abCodes: isProduction && [
-      {
-        name: 'countdownColors',
-        key: 'FuHmAhI3SB6LZ-tvcWkDPA',
-        nbVariations: 1
-      }
+      //{
+      //  name: 'countdownColors',
+      //  key: 'FuHmAhI3SB6LZ-tvcWkDPA',
+      //  nbVariations: 1
+      //}
     ] || [],
     firebase: {
       apiKey: 'AIzaSyBJ3H7rJHdhaLg8KfkjvwxvwDhbrbR4NpI',
