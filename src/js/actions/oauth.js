@@ -176,7 +176,7 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
       actionDispatcher(UserActionCreators.pendingUser(true))
 
       const token = getState().OAuth.get('token')
-      let url = `https://www.${config.domain.host}/auth/${strategy}/${path}`
+      let url = `https://${(config.subdomain && config.subdomain + '.' ) || ''}${config.domain.host}/auth/${strategy}/${path}`
       //Si il y a un user et qu'on veut desynchro le strategy account, on passe le token en parametre
       if (token) {
         const accessToken = token.get('access_token')

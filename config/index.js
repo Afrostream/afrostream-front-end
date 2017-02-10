@@ -57,7 +57,7 @@ const config = _.merge(
     domain: {
       host: process.env.DOMAIN_HOST || 'localhost'
     },
-    subdomain: process.env.SUBDOMAIN || 'www',
+    subdomain: process.env.SUBDOMAIN || '',
     /**
      * Front-End Server
      */

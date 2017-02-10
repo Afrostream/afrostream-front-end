@@ -305,9 +305,9 @@
       "resolved": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-statsd.git#1e38aa4dc156f1a77bfff03360774a16ea70d84e"
     },
     "afrostream-player": {
-      "version": "2.2.38",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.38",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#627d8d13cb169b7ec2102b41f2639198edf4be66"
+      "version": "2.2.45",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.45",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#a17abf8a59454155e53b856bba517c4d615d1d07"
     },
     "after": {
       "version": "0.8.2"
@@ -870,7 +870,7 @@
       "version": "3.3.7"
     },
     "bootstrap-slider": {
-      "version": "6.1.7"
+      "version": "9.7.1"
     },
     "bootstrap-switch": {
       "version": "3.3.2"
@@ -1071,7 +1071,7 @@
       "version": "1.1.0"
     },
     "codem-isoboxer": {
-      "version": "0.2.7"
+      "version": "0.2.2"
     },
     "color": {
       "version": "0.11.4"
@@ -1318,7 +1318,7 @@
       }
     },
     "dashjs": {
-      "version": "2.4.1"
+      "version": "2.3.0"
     },
     "date-now": {
       "version": "0.1.4"
@@ -5002,9 +5002,9 @@
       "version": "1.1.2"
     },
     "videojs-metrics": {
-      "version": "1.2.0",
-      "from": "git+https://github.com/Afrostream/videojs-metrics.git#2.0.1",
-      "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#a50a20da6fb62edfe5595b4609dfc0612597cbf0"
+      "version": "2.0.2",
+      "from": "git+https://github.com/Afrostream/videojs-metrics.git#2.0.2",
+      "resolved": "git+https://github.com/Afrostream/videojs-metrics.git#730d68135a01b3137e73b8055756b3d5246b4937"
     },
     "videojs-mux": {
       "version": "2.0.28"
