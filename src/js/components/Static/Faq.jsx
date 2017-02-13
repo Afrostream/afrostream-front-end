@@ -17,7 +17,7 @@ class Faq extends React.Component {
             <ul>
               <li>
                 <a
-                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@free je veux @AFROSTREAM dans ma @freebox. Quand est ce que cela sera possible ?"
+                  href="http://twitter.com/share?url=http://bit.ly/AFROSTREAMTV&text=@LALIGNEDEFREE je veux @AFROSTREAM dans ma Freebox. Quand est ce que cela sera possible ?"
                   target="_blank">
                   Demander Afrostream chez Free</a>
               </li>
