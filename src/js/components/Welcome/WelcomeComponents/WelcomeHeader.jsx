@@ -64,7 +64,7 @@ class WelcomeHeader extends I18n {
       'welcome-header_movie': Boolean(movieId)
     }
 
-    const isMobile = false//Event.get('isMobile')
+    const isMobile = Event.get('isMobile')
     let homeRTitle = this.getTitle('home.title')
 
     let posterImg = `${images.urlPrefix}${metadata.screen && metadata.screen.image || metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
@@ -72,7 +72,8 @@ class WelcomeHeader extends I18n {
 
     return (
       <section className={classSet(welcomeClassesSet)}>
-        {!isMobile && !movieId && <BackgroundVideo
+        {!movieId && <BackgroundVideo
+          {...{isMobile}}
           preload={'metadata'}
           poster={posterImg}
           videos={config.metadata.videos}
@@ -89,7 +90,7 @@ class WelcomeHeader extends I18n {
             </div>
           </InternalPlansCountDown>
         </BackgroundVideo>}
-        {(isMobile || movieId) && <SlideShow
+        {movieId && <SlideShow
           {...this.props} dots={false} autoplay={true} infinite={true}
           maxLength={450} {...{movieId}}
           movieInfo={Boolean(movieId)}/>}

@@ -12,6 +12,7 @@ class BackgroundVideo extends Component {
       PropTypes.string,
       PropTypes.bool
     ]),
+    isMobile: PropTypes.bool,
     muted: PropTypes.bool,
     loop: PropTypes.bool,
     autoPlay: PropTypes.bool,
@@ -26,6 +27,7 @@ class BackgroundVideo extends Component {
   static defaultProps = {
     videos: [],
     preload: 'auto',
+    isMobile: false,
     muted: true,
     loop: true,
     autoPlay: true,
@@ -70,13 +72,14 @@ class BackgroundVideo extends Component {
     const overlayElement = (this.props.overlay) ? <div className={videoOverlayClassNames}/> : null
 
     return (
-      <div className={videoClassNames} onClick={this.props.onClick}>
-        <video id={this.props.videoId}
-               className="video-background"
-               {...videoProps}
+      <div className={videoClassNames} onClick={this.props.onClick}
+           style={{backgroundImage: `url(${this.props.poster})`}}>
+        {!isMobile && <video id={this.props.videoId}
+                             className="video-background"
+                             {...videoProps}
         >
           {videos}
-        </video>
+        </video>}
         {overlayElement}
         <div className="video-content">{this.props.children}</div>
       </div>
