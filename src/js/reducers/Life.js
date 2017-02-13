@@ -39,16 +39,17 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.publishPin](state, {res}) {
+  [ActionTypes.Life.publishPin](state, {res, lifeUserId}) {
     if (!res) {
       return state
     }
+
     return state.merge({
       [`life/wrap`]: null
     })
   },
 
-  [ActionTypes.Life.removePin](state, {res}) {
+  [ActionTypes.Life.removePin](state, {res, lifeUserId}) {
     if (!res) {
       return state
     }
@@ -105,14 +106,14 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.fetchUserPins](state, {res, lifeUserId}) {
+  [ActionTypes.Life.fetchUserPins](state, {res, lifeUserId, replace = false}) {
     if (!res) {
       return state
     }
     const pins = res.body
 
     let savedUserPins = state.get(`life/users/${lifeUserId}/pins`)
-    let mappedUserPins = _.unionBy(savedUserPins && savedUserPins.toJS() || [], pins, '_id')
+    let mappedUserPins = _.unionBy(!replace && savedUserPins && savedUserPins.toJS() || [], pins, '_id')
 
     return state.merge({
       [`life/users/${lifeUserId}/pins`]: mappedUserPins

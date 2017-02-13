@@ -70,19 +70,20 @@ export function publishPin (data) {
   return (api, getState, dispatch) => {
 
     const user = getState().User.get('user')
-    const userId = user && user.get('_id')
+    const lifeUserId = user && user.get('_id')
 
     return async () => {
       return {
         type: ActionTypes.Life.publishPin,
+        lifeUserId,
         res: await api({
           path: `/api/life/pins`,
           method: 'POST',
           params: data,
           passToken: true
         }).then(() => {
-          if (userId) {
-            dispatch(fetchUsers({userId}))
+          if (lifeUserId) {
+            dispatch(fetchUserPins({lifeUserId, replace: true}))
           }
         })
       }
@@ -94,18 +95,19 @@ export function removePin (pinId) {
   return (api, getState, dispatch) => {
 
     const user = getState().User.get('user')
-    const userId = user && user.get('_id')
+    const lifeUserId = user && user.get('_id')
 
     return async () => {
       return {
         type: ActionTypes.Life.removePin,
+        lifeUserId,
         res: await api({
           path: `/api/life/pins/${pinId}`,
           method: 'DELETE',
           passToken: true
         }).then(() => {
-          if (userId) {
-            dispatch(fetchUsers(userId, {}))
+          if (lifeUserId) {
+            dispatch(fetchUserPins({lifeUserId, replace: true}))
           }
         })
       }
@@ -202,12 +204,13 @@ export function fetchPins ({themeId, limit = 7, offset = 0}) {
   }
 }
 
-export function fetchUserPins ({lifeUserId, limit = 50, offset}) {
+export function fetchUserPins ({lifeUserId, limit = 50, offset, replace = false}) {
 
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Life.fetchUserPins,
       lifeUserId,
+      replace,
       res: await api({
         path: `/api/life/pins`,
         params: {

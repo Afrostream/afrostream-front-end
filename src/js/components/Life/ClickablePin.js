@@ -60,6 +60,7 @@ class ClickablePin extends Component {
     const {
       props: {dispatch, data}
     } = this
+
     if (e) {
       e.preventDefault()
     }

@@ -366,14 +366,16 @@
   }
   //HOVER EFFECT only descktop
   .isNotMobile({ .brick {
+    &:hover {
+      .pin-btn {
+        visibility: visible;
+        opacity: 1;
+        background-color: fade(@color-black-2, 70%);
+      }
+    }
+
     &:not(:first-of-type) {
       &:hover {
-        .pin-btn {
-          visibility: visible;
-          opacity: 1;
-          background-color: fade(@color-black-2, 30%);
-        }
-
         .brick-background {
 
           .brick-background_mask {
@@ -393,8 +395,7 @@
         }
       }
     }
-  } });
-  //END HOVER
+  } }); //END HOVER
   .brick {
 
     display: inline-block;
@@ -643,11 +644,9 @@
     }
 
   }
-
   .brick {
     .isMobile({ width: 100%; max-width: 100%; });
   }
-
   &.hightlight-first {
     .brick {
       &:first-child {
