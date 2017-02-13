@@ -3,21 +3,21 @@
 .search-box {
   position: relative;
   display: inline-block;
-  height: 100%;
   @box-size: 40vw;
   @box-size-collapse: 50px;
-  margin: 0;
+  margin: 15px @app-padding 0 0;
   color: @color-black-2;
-  background-color: fade(@brand-primary, 10%);
-  border-radius: @btn-radius;
+  background-color: fade(@brand-primary, 5%);
+  border-radius: 20px;
+  border: 1px solid fade(@brand-primary, 10%);
   text-align: left;
   .transition(all 0.15s linear);
   &:before {
     position: absolute;
     content: '\f1c3';
     font-family: @font-material;
-    font-size: 3em;
-    line-height: 2.3;
+    font-size: 2em;
+    line-height: 1.8;
     left: 14px;
     color: @brand-primary;
   }
@@ -36,18 +36,19 @@
   &.has-focus {
     width: 100%;
     background-color: lighten(@color-black-2, 5%);
-    .isMobile({ position: fixed; left: 0; top: @header-height - 1px; right: 0; background: fade(@color-indigo, 90%); margin: 0; padding: 1em; });
+    .isMobile({ border-radius: 0px; position: fixed; left: 0; top: @header-height - 1px; right: 0; background: fade(@color-indigo, 90%); margin: 0; padding: 1em; });
     i {
       display: block;
     }
     &:before {
-      .isMobile({ left: 14px; font-size: 2em; line-height: 2; });
+      .isMobile({ left: 14px; font-size: 2em; line-height: 1; });
     }
     input {
       .isMobile({ width: 100%; });
       padding: 11px 11px 8px 50px;
       width: @box-size;
       color: @brand-primary;
+      display: block;
       &::-webkit-textfield-decoration-container {
         &:before {
           margin-left: -30px;
@@ -70,9 +71,11 @@
 
   input {
     height: 100%;
-    font-size: 3em;
+    display: block;
+    font-size: 1.3em;
     font-family: @font-roman;
     padding: 11px 11px 8px 50px;
+    .transition(all 0.15s linear);
     .isMobile({ padding: 11px 11px 8px 40px; });
     border-radius: @btn-radius;
     color: @brand-black;
