@@ -43,7 +43,6 @@ class WelcomePage extends React.Component {
         <WelcomeHeader {...this.props}/>
         <Devices {...this.props} />
         <WelcomeMoviesSlider dots={false} autoplay={true} infinite={true}/>
-        <SelectPlan {...this.props} showImages={false}/>
         <WelcomeLifeSlider dots={false} autoplay={true} infinite={true}/>
       </div>
     )
