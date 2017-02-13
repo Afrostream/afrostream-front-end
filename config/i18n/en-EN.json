@@ -409,6 +409,9 @@
       }
     }
   },
+  "sponsorship": {
+    "add": "Sponsor friends"
+  },
   "favorites": {
     "add": "Add to my favorites",
     "delete": "Remove from my favorites",

@@ -12,6 +12,7 @@ import classSet from 'classnames'
 import { slugify, extractImg } from '../../lib/utils'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 
+import SponsorshipAddButton from '../Sponsors/SponsorshipAddButton'
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import { Billboard, CsaIcon } from '../Movies'
 import ShareButton from '../Share/ShareButton'
@@ -1234,12 +1235,7 @@ class FloatPlayer extends I18n {
           {renderData && <div className="player-buttons">
             <FavoritesAddButton direction="top" data={renderData} dataId={renderData.get('_id')}/>
             <ShareButton direction="top"/>
-            <RaisedButton onClick={::this.showKoment}
-                          label={
-                            <FormattedMessage id="comment.label"/>
-                          }
-                          primary={true}
-                          icon={<i className="zmdi zmdi-comment-more"></i>}/>
+            <SponsorshipAddButton direction="top"/>
           </div>}
           {videoDuration ?
             <div className="video-infos_duration"><label>Durée : </label>{videoDuration}</div> : ''}

@@ -25,7 +25,7 @@ class Devices extends React.Component {
     return (
       <section className="devices">
         <div className="container-fluid no-padding">
-          <ReactImgix className="device-element-image" bg={true}
+          <ReactImgix className="device-element-image" bg={true} blur={false}
                       src="https://images.cdn.afrostream.net/production/screen/Macbook-Pro-And-Coffe-Cup-Mockup-.jpg?fit=crop&w=1280&fm=jpg&q=65"/>
           <div className="device-element-text">
             <FormattedMessage tagName="h2" id="home.devices.title"/>

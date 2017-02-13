@@ -410,6 +410,9 @@
       }
     }
   },
+  "sponsorship": {
+    "add": "Parrainer un ami"
+  },
   "favorites": {
     "add": "Ajouter à ma liste",
     "delete": "Supprimer de ma liste",

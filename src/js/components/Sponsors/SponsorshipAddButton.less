@@ -1,17 +1,31 @@
 @import (reference) '../../../styles/config.less';
 
-.btn.share_button {
-  background-color: fade(@color-indigo, 70%);
+.btn.sponsorship-add_button {
+  background-color: fade(@plan-red-color, 70%);
   position: relative;
   margin: 5px 5px 5px 0px;
   border-radius: @btn-radius;
-  cursor: pointer;
   min-width: 40px;
+  display: inline-block;
+  cursor: pointer;
+
+  &.pending {
+    color: fade(@color-yellow, 80%);
+  }
   &.active {
     color: @color-yellow;
   }
   &:hover {
     color: @color-yellow;
+    &.active {
+      color: @brand-primary;
+    }
+    &.fa-heart {
+      content: '\f15f';
+    }
+  }
+  .spinner {
+    font-size: 1em;
   }
   span {
     margin: 1em;
@@ -19,4 +33,5 @@
   .btn-label {
     .isMobile({ display: none; });
   }
+
 }

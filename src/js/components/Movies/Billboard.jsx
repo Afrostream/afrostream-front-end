@@ -4,6 +4,7 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { connect } from 'react-redux'
 import LoadVideo from '../LoadVideo'
 import ShareButton from '../Share/ShareButton'
+import SponsorshipAddButton from '../Sponsors/SponsorshipAddButton'
 import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import RateComponent from '../Recommendation/RateComponent'
 import CsaIcon from './CsaIcon'
@@ -48,6 +49,15 @@ class Billboard extends LoadVideo {
     }
 
     return (<FavoritesAddButton direction="top" {...{data, dataId}}/>)
+  }
+
+  getSponsorship () {
+
+    if (!this.isValid()) {
+      return
+    }
+
+    return (<SponsorshipAddButton direction="top"/>)
   }
 
   getShareButton () {
@@ -232,6 +242,7 @@ class Billboard extends LoadVideo {
             </button> : <div />}
           {this.getFavorite()}
           {this.getShareButton()}
+          {this.getSponsorship()}
         </div>
       </div>
     )
