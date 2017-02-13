@@ -305,9 +305,9 @@
       "resolved": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-statsd.git#1e38aa4dc156f1a77bfff03360774a16ea70d84e"
     },
     "afrostream-player": {
-      "version": "2.2.46",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.46",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#1d8ac37789b0399dcb057f159589b2f64d81f22d"
+      "version": "2.2.47",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.2.47",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#e6b342a6494183025916fd637e02303de1c7e136"
     },
     "after": {
       "version": "0.8.2"
@@ -870,7 +870,7 @@
       "version": "3.3.7"
     },
     "bootstrap-slider": {
-      "version": "9.7.1"
+      "version": "9.7.2"
     },
     "bootstrap-switch": {
       "version": "3.3.2"
@@ -1176,7 +1176,7 @@
       }
     },
     "connect": {
-      "version": "3.5.0",
+      "version": "3.5.1",
       "dependencies": {
         "debug": {
           "version": "2.2.0"
@@ -1833,7 +1833,7 @@
       "version": "2.2.3"
     },
     "finalhandler": {
-      "version": "0.5.0",
+      "version": "0.5.1",
       "dependencies": {
         "debug": {
           "version": "2.2.0"
