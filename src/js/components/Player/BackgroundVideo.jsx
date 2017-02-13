@@ -12,7 +12,10 @@ class BackgroundVideo extends Component {
       PropTypes.string,
       PropTypes.bool
     ]),
-    isMobile: PropTypes.bool,
+    isMobile: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
     muted: PropTypes.bool,
     loop: PropTypes.bool,
     autoPlay: PropTypes.bool,
