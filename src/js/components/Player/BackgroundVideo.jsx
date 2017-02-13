@@ -74,9 +74,9 @@ class BackgroundVideo extends Component {
     return (
       <div className={videoClassNames} onClick={this.props.onClick}
            style={{backgroundImage: `url(${this.props.poster})`}}>
-        {!isMobile && <video id={this.props.videoId}
-                             className="video-background"
-                             {...videoProps}
+        {!this.props.isMobile && <video id={this.props.videoId}
+                                        className="video-background"
+                                        {...videoProps}
         >
           {videos}
         </video>}
