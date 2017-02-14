@@ -121,6 +121,7 @@ class AvatarCard extends I18n {
     const canUpload = upload || isCurrentUser
     const canFollow = !isCurrentUser
     const followed = this.isFollowed()
+    const followers = user && user.get('followers') || 0
 
     const avatarClass = {
       'avatar': true,
@@ -159,7 +160,7 @@ class AvatarCard extends I18n {
         <div className="content">
           {nickName && <p>{nickName}</p>}
           {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size.toString()})}</p>}
-          <p>{this.getTitle('life.sticky.nbfollowers', {followers: user.get('followers').toString()})}</p>
+          <p>{this.getTitle('life.sticky.nbfollowers', {followers: followers.toString()})}</p>
           {canFollow && <p><Link {...propsTo}
                                  onClick={::this.followUser}>{titleLabel}</Link></p>}
           {userBio && <p className="user-bio">{userBio}</p>}
