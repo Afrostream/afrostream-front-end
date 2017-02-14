@@ -14,7 +14,8 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
-    store.dispatch(LifeActionCreators.fetchUserLikes())
+    store.dispatch(LifeActionCreators.fetchUserLikes()),
+    store.dispatch(LifeActionCreators.fetchUsersFollow())
   ])
 })
 @connect(({Life, User}) => ({Life, User}))
@@ -33,6 +34,7 @@ class LifeHome extends Component {
     } = this
     if (!shallowEqual(nextProps.User.get('user'), User.get('user'))) {
       dispatch(LifeActionCreators.fetchUserLikes())
+      dispatch(LifeActionCreators.fetchUsersFollow())
     }
   }
 

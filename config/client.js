@@ -62,6 +62,9 @@ const client = {
           col: 4
 
         },
+        {key: 'postalAddressStreet', type: 'text', icon: '', col: 4},
+        {key: 'postalAddressCode', type: 'text', icon: '', col: 4},
+        {key: 'postalAddressCity', type: 'text', icon: '', col: 4},
         {key: 'birthDate', type: 'date', icon: '', col: 4},
         {key: 'emailNewsletter', type: 'checkbox', col: 8},
         {key: 'emailOptIn', type: 'checkbox', col: 8},

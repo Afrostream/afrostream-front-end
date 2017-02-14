@@ -351,7 +351,8 @@
     },
     "profile": {
       "password": "Modifier mon mot de passe",
-      "biography": "Description",
+      "biography": "Biographie",
+      "postalAddressCity": "Ville",
       "picture": "Modifier mon avatar",
       "profile": "Informations personnelles",
       "birthDate": "Date de naissance",
@@ -629,7 +630,10 @@
   "life": {
     "label": "Afrostream Life",
     "users": {
-      "label": "Communauté"
+      "label": "Communauté",
+      "unfollow": "Ne plus suivre cet utilisateur {userName}",
+      "follow": "Suivre cet utilisateur {userName}",
+      "upload": "Ajouter une photo"
     },
     "welcome": {
       "label": "Le média social \n de la créativité \n afro",
@@ -641,6 +645,7 @@
     },
     "sticky": {
       "nbpost": "Nombre de posts : {pins}",
+      "nbfollowers": "Nombre de followers : {followers}",
       "tooltip": "Poster du contenu",
       "remove": "Supprimer ce contenu"
     },

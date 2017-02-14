@@ -8,8 +8,16 @@ import {
   intlShape,
   injectIntl
 } from 'react-intl'
+import { prepareRoute } from '../decorators'
+import * as LifeActionCreators from '../actions/life'
+import * as CategoryActionCreators from '../actions/category'
 
 @connect(({User, Billing, Geo}) => ({User, Billing, Geo}))
+@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
+  await store.dispatch(CategoryActionCreators.getMenu())
+  await store.dispatch(CategoryActionCreators.getSpots())
+  return await store.dispatch(LifeActionCreators.fetchThemes())
+})
 class HomePage extends React.Component {
 
   constructor (props) {

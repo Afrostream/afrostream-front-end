@@ -146,6 +146,37 @@ export function fetchUserLikes () {
   }
 }
 
+export function fetchUsersFollow () {
+  return (api, getState, dispatch) => {
+    const user = getState().User.get('user')
+    if (!user) {
+      return {
+        type: ActionTypes.Life.fetchUsersFollow
+      }
+    }
+    const lifeUserId = user && user.get('_id')
+
+    if (!lifeUserId) {
+      return {
+        type: ActionTypes.Life.fetchUsersFollow
+      }
+    }
+    return async () => {
+      return {
+        type: ActionTypes.Life.fetchUsersFollow,
+        lifeUserId,
+        res: await api({
+          path: `/api/life/users/${lifeUserId}/follow`,
+          passToken: true,
+          params: {
+            follow: true
+          }
+        })
+      }
+    }
+  }
+}
+
 export function likePin ({data, liked}) {
   return (api, getState, dispatch) => {
 
@@ -167,6 +198,34 @@ export function likePin ({data, liked}) {
           }
         })
       }
+    }
+  }
+}
+
+export function followUser ({data, follow}) {
+  return (api, getState, dispatch) => {
+
+    const user = getState().User.get('user')
+    const lifeUserId = user && user.get('_id')
+    const followUserId = data && data.get('_id')
+
+    return async () => {
+      return await api({
+        path: `/api/life/users/${lifeUserId}/follow/${followUserId}`,
+        method: 'PUT',
+        passToken: true,
+        params: {
+          follow
+        }
+      }).then((res) => {
+        dispatch(fetchUsers({lifeUserId: followUserId}))
+        return {
+          type: ActionTypes.Life.followUser,
+          followUserId,
+          lifeUserId,
+          res
+        }
+      })
     }
   }
 }

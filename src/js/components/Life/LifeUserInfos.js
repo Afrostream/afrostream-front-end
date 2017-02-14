@@ -6,6 +6,7 @@ import AvatarCard from '../User/AvatarCard'
 import PinButton from './PinButton'
 import { prepareRoute } from '../../decorators'
 import * as LifeActionCreators from '../../actions/life'
+import shallowEqual from 'react-pure-render/shallowEqual'
 
 @prepareRoute(async function ({store, params:{lifeUserId}}) {
   await Promise.all([

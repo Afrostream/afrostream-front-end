@@ -19,6 +19,34 @@ class ClickablePin extends Component {
     super(props, context)
   }
 
+  followUser (e, follow) {
+    const {
+      props: {
+        dispatch,
+        data,
+        User
+      }
+    } = this
+
+    const currentUser = User.get('user')
+    if (currentUser) {
+      if (e) {
+        e.preventDefault()
+        e.target.classList.toggle('followed')
+      }
+
+      const followUser = data.get('user')
+
+      return dispatch(LifeActionCreators.followUser({
+        follow,
+        data: followUser
+      }))
+    } else {
+      e.preventDefault()
+      this.modalLogin()
+    }
+  }
+
   likePin (e, liked) {
     const {
       props: {
@@ -146,10 +174,13 @@ class ClickablePin extends Component {
         dispatch
       }
     } = this
+
+    if (e && e.defaultPrevented) {
+      return
+    }
     const pinRole = data.get('role') || config.userRoles[1]
     const acl = this.validRole(pinRole)
     const pinUrl = this.getUrl(data)
-
     if (!acl) {
       e.preventDefault()
       const modalRole = this.targetRole()

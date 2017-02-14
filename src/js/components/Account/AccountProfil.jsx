@@ -238,14 +238,14 @@ class AccountProfil extends React.Component {
           inputAttributes.textareaStyle = {border: '1px solid rgba(0,0,0,0.3)', padding: 10}
         }
 
-        element = <TextField underlineShow={false}
+        element = <TextField underlineShow={true}
                              rows={section.rows}
                              autoComplete={section.autoComplete}
                              multiLine={section.multiLine}
                              disabled={section.disabled}
                              defaultValue={sectionValue}
                              name={`${section.key}-input`}
-                             hintText={label}
+                             hintText={!section.multiLine && label}
                              fullWidth={section.multiLine}
                              pattern={section.pattern}
                              type={section.type.toLowerCase()}

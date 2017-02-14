@@ -145,18 +145,31 @@ export default createReducer(initialState, {
     const pins = res.body
 
     return state.merge({
-      [`life/users/${lifeUserId}/pins/likes`]: pins
+      [`life/users/${lifeUserId}/likes`]: pins
     })
   },
 
-  [ActionTypes.Life.likePin](state, {res, lifeUserId, pinId}) {
+  [ActionTypes.Life.fetchUsersFollow](state, {res, lifeUserId}) {
+
+    if (!res) {
+      return state
+    }
+
+    const users = res.body
+
+    return state.merge({
+      [`life/users/${lifeUserId}/followedUsers`]: users
+    })
+  },
+
+  [ActionTypes.Life.likePin](state, {res, lifeUserId}) {
     if (!res) {
       return state
     }
 
     const likedPin = res.body
 
-    const savedLikePins = state.get(`life/users/${lifeUserId}/pins/likes`)
+    const savedLikePins = state.get(`life/users/${lifeUserId}/likes`)
     const mergedLikePins = _.unionBy([likedPin], savedLikePins && savedLikePins.toJS() || [], '_id')
 
     //Update model pins
@@ -173,8 +186,23 @@ export default createReducer(initialState, {
     //  })
 
     return state.merge({
-      [`life/users/${lifeUserId}/pins/likes`]: mergedLikePins,
-      //[`life/pins/user/${lifeUserId}`]: storedPins
+      [`life/users/${lifeUserId}/likes`]: mergedLikePins
+    })
+  },
+
+  [ActionTypes.Life.followUser](state, {res, lifeUserId}) {
+    if (!res) {
+      return state
+    }
+
+    const followUser = res.body
+
+    const savedFollowed = state.get(`life/users/${lifeUserId}/followedUsers`)
+    const mergedFollowedUsers = _.unionBy([followUser], savedFollowed && savedFollowed.toJS() || [], 'followUserId')
+
+
+    return state.merge({
+      [`life/users/${lifeUserId}/followedUsers`]: mergedFollowedUsers,
     })
   },
 

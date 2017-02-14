@@ -7,6 +7,7 @@ import ClickablePin from './ClickablePin'
 import classSet from 'classnames'
 import ReactImgix from '../Image/ReactImgix'
 import Immutable from 'immutable'
+import _ from 'lodash'
 import PinButton from './PinButton'
 
 @connect(({Life, User, Event}) => ({Life, User, Event}))
@@ -27,29 +28,41 @@ class LifePin extends ClickablePin {
 
     const type = data.get('type')
     const pinnedUser = data.get('user')
+    const pinnedUserId = pinnedUser && pinnedUser.get('_id')
     const cardTypeIcon = {
       'card-bubble': true,
       'card-bubble-type': true
     }
-    cardTypeIcon[type] = true
 
     const pinId = data.get('_id')
     const nbLikes = data.get('likes')
     const currentUser = User.get('user')
     const lifeUserId = currentUser && currentUser.get('_id')
-    const likedPins = lifeUserId && Life.get(`life/users/${lifeUserId}/pins/likes`)
+
+
+    const likedPins = lifeUserId && Life.get(`life/users/${lifeUserId}/likes`)
     const likedPin = likedPins && likedPins.find((pin) => pin.get('pinId') === pinId)
     const liked = likedPin && likedPin.get('liked')
 
-    const likeTypeIcon = {
-      'card-bubble': true,
-      'card-bubble-type': true,
+    const followedUsers = lifeUserId && Life.get(`life/users/${lifeUserId}/followedUsers`)
+    const followedUser = followedUsers && followedUsers.find((follow) => follow.get('followUserId') == pinnedUserId)
+    const followed = followedUser && followedUser.get('follow')
+
+    const likeTypeIcon = _.merge({
       'like': true,
-      'liked': liked,
+      'liked': liked
+    }, cardTypeIcon)
+
+    const userTypeIcon = _.merge({
+      'user': true,
+      'followed': followed,
       'disabled': !currentUser
-    }
+    }, cardTypeIcon)
+
+    cardTypeIcon[type] = true
+
     return (<div className="card-bubbles">
-      {pinnedUser && <div className="card-bubble card-bubble-user">
+      {pinnedUser && <div className={classSet(userTypeIcon)} onClick={(e) => ::this.followUser(e, !followed)}>
         <img src={pinnedUser.get('picture')}
              alt="user-button"
              className="icon-user"/>
