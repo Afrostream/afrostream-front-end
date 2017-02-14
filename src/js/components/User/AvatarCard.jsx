@@ -111,12 +111,11 @@ class AvatarCard extends I18n {
 
     const gloBalUser = User.get('user')
 
-    const nickName = user.get('nickname')
     const id = user.get('_id')
 
 
     const isCurrentUser = gloBalUser && gloBalUser.get('_id') === id
-    const userName = user && user.get('nickname')
+    const nickName = user && user.get('nickname') && `@${user.get('nickname')}` || ''
     const userBio = bio && user.get('biography')
 
     const canUpload = upload || isCurrentUser
@@ -142,7 +141,7 @@ class AvatarCard extends I18n {
       }
     }
 
-    const titleLabel = this.getTitle(`life.users.${(canUpload && 'upload') || (canFollow && (followed ? 'unfollow' : 'follow'))}`, {userName})
+    const titleLabel = this.getTitle(`life.users.${(canUpload && 'upload') || (canFollow && (followed ? 'unfollow' : 'follow'))}`, {nickName})
 
     return (
       <div className={this.props.className}>
@@ -156,13 +155,15 @@ class AvatarCard extends I18n {
           </div>
           <ReactTooltip id={`user-tip`} type="dark"
                         effect="solid"/>
-          <div className="content">
-            <p>{user.get('nickname')}</p>
-            {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size.toString()})}</p>}
-            {<p>{this.getTitle('life.sticky.nbfollowers', {followers: user.get('followers').toString()})}</p>}
-            {userBio && <p className="user-bio">{userBio}</p>}
-          </div>
         </Link>
+        <div className="content">
+          {nickName && <p>{nickName}</p>}
+          {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size.toString()})}</p>}
+          <p>{this.getTitle('life.sticky.nbfollowers', {followers: user.get('followers').toString()})}</p>
+          {canFollow && <p><Link {...propsTo}
+                                 onClick={::this.followUser}>{titleLabel}</Link></p>}
+          {userBio && <p className="user-bio">{userBio}</p>}
+        </div>
       </div>
     )
   }

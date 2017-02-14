@@ -56,7 +56,7 @@ class LifePin extends ClickablePin {
     const userTypeIcon = _.merge({
       'user': true,
       'followed': followed,
-      'disabled': !currentUser
+      'disabled': currentUser
     }, cardTypeIcon)
 
     cardTypeIcon[type] = true

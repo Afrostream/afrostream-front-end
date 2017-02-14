@@ -24,10 +24,13 @@ class ClickablePin extends Component {
       props: {
         dispatch,
         data,
-        User
+        User,
+        isCurrentUser
       }
     } = this
-
+    if (isCurrentUser) {
+      return
+    }
     const currentUser = User.get('user')
     if (currentUser) {
       if (e) {

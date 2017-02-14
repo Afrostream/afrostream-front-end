@@ -631,9 +631,11 @@
     "label": "Afrostream Life",
     "users": {
       "label": "Communauté",
-      "unfollow": "Ne plus suivre cet utilisateur {userName}",
-      "follow": "Suivre cet utilisateur {userName}",
-      "upload": "Ajouter une photo"
+      "unfollow": "Ne plus suivre {nickName}",
+      "follow": "Suivre {nickName}",
+      "upload": "Ajouter une photo",
+      "followed": "Vous suivez désormais cet utilisateur",
+      "unfollowed": "Vous ne suivez plus cet utilisateur"
     },
     "welcome": {
       "label": "Le média social \n de la créativité \n afro",

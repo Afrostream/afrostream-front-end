@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes'
+import * as EventActionCreator from './event'
 import { notFoundPost } from './notFoundAction'
 import _ from 'lodash'
 import URL from 'url'
@@ -219,6 +220,7 @@ export function followUser ({data, follow}) {
         }
       }).then((res) => {
         dispatch(fetchUsers({lifeUserId: followUserId}))
+        dispatch(EventActionCreator.snackMessage({message: `life.users.${follow ? 'followed' : 'unfollowed'}`}))
         return {
           type: ActionTypes.Life.followUser,
           followUserId,

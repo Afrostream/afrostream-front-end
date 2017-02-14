@@ -640,9 +640,11 @@
     "label": "Afrostream Life",
     "users": {
       "label": "Community",
-      "unfollow": "Unfollow this user {userName}",
-      "follow": "Follow this user {userName}",
-      "upload": "Add an avatar"
+      "unfollow": "Unfollow {nickName}",
+      "follow": "Follow {nickName}",
+      "upload": "Add an avatar",
+      "followed": "You follow this user",
+      "unfollowed": "You no longer follow this user"
     },
     "welcome": {
       "label": "The social \nmedia for black \ncreativity",
