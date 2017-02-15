@@ -42,7 +42,8 @@ class LifeHome extends Component {
     const {
       props: {
         children,
-        Life
+        Life,
+        router
       }
     } = this
 

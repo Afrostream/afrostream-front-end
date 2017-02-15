@@ -139,7 +139,10 @@ class Application extends React.Component {
           <FloatPlayer {...this.props}/>
           <ModalView {...this.props}/>
           {snackMessage && snackMessage.size && <Snackbar
-            style={{backgroundColor: snackMessage.get('type') === 'error' ? red400 : '#333333'}}
+            contentStyle={{color: '#FFFFFF'}}
+            bodyStyle={{
+              backgroundColor: snackMessage.get('type') === 'error' ? red400 : '#3498db'
+            }}
             open={Boolean(snackMessage)}
             message={intl.formatMessage({id: snackMessage.get('message')})}
             autoHideDuration={4000}

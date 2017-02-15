@@ -69,7 +69,7 @@ class LifePin extends ClickablePin {
 
     const canFollow = !isCurrentUser
 
-    const titleLabel = this.getTitle(`life.users.${(canFollow && (followed ? 'unfollow' : 'follow'))}`, {nickName})
+    const titleLabel = this.getTitle(`life.users.${(followed ? 'unfollow' : 'follow')}`, {nickName})
 
 
     return (<div className="card-bubbles">

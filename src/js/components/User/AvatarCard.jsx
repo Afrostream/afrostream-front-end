@@ -142,7 +142,7 @@ class AvatarCard extends I18n {
       }
     }
 
-    const titleLabel = this.getTitle(`life.users.${(canUpload && 'upload') || (canFollow && (followed ? 'unfollow' : 'follow'))}`, {nickName})
+    const titleLabel = this.getTitle(`life.users.${(canUpload && 'upload') || (followed ? 'unfollow' : 'follow')}`, {nickName})
 
     return (
       <div className={this.props.className}>
