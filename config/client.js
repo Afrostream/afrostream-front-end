@@ -42,15 +42,17 @@ const client = {
     keys: {
       profile: [
         {key: 'picture', type: 'picture', col: 12},
-        {key: 'nickname', type: 'text', col: 8},
-        {key: 'last_name', type: 'text', autoComplete: 'surname', col: 4},
-        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 4},
+        {key: 'nickname', type: 'text', col: 12},
+        {key: 'last_name', type: 'text', autoComplete: 'surname', col: 6},
+        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 6},
         {key: 'biography', type: 'text', autoComplete: 'biography', col: 12, multiLine: true, rows: 5},
+        {key: 'address', type: 'autocomplete', icon: '', col: 12},
         {
           key: 'gender',
           type: 'radio',
           icon: 'zmdi zmdi-female',
           iconRight: 'zmdi zmdi-male-alt',
+          col: 12,
           list: [{value: 'women'}, {value: 'men'}]
         },
         {
@@ -59,17 +61,14 @@ const client = {
           icon: 'zmdi zmdi-smartphone-android',
           autoComplete: 'phone',
           pattern: '[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}',
-          col: 4
+          col: 6
 
         },
-        {key: 'postalAddressStreet', type: 'text', icon: '', col: 4},
-        {key: 'postalAddressCode', type: 'text', icon: '', col: 4},
-        {key: 'postalAddressCity', type: 'text', icon: '', col: 4},
-        {key: 'birthDate', type: 'date', icon: '', col: 4},
-        {key: 'emailNewsletter', type: 'checkbox', col: 8},
-        {key: 'emailOptIn', type: 'checkbox', col: 8},
-        {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 8},
-        {key: 'password', type: 'password', col: 6},
+        {key: 'birthDate', type: 'date', icon: '', col: 6},
+        {key: 'emailNewsletter', type: 'checkbox', col: 12},
+        {key: 'emailOptIn', type: 'checkbox', col: 12},
+        {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 12},
+        {key: 'password', type: 'password', col: 12},
       ],
       social: [
         {key: 'webPushNotificationsData', type: 'toggle', icon: 'zmdi zmdi-notifications', col: 12},
@@ -126,7 +125,7 @@ const client = {
   addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-583c553b01382bdf',
   recurlyApi: '//js.recurly.com/v3/recurly.js',
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
-  gmapApi: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8',
+  gmapApi: '//maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8&libraries=places',
   stripeApi: '//js.stripe.com/v2/',
   braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   wecashupApi: {

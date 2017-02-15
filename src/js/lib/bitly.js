@@ -1,4 +1,3 @@
-import Promise from 'bluebird'
 import _ from 'lodash'
 import qs from 'qs'
 import xhr from 'xhr'

@@ -10,11 +10,13 @@ import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
 import DatePicker from 'material-ui/DatePicker'
 import SelectField from 'material-ui/SelectField'
+import AutoComplete from 'material-ui/AutoComplete'
 import MenuItem from 'material-ui/MenuItem'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import Checkbox from 'material-ui/Checkbox'
 import RaisedButton from 'material-ui/RaisedButton'
 import AvatarCard from '../User/AvatarCard'
+import window from 'global/window'
 import {
   FormattedMessage,
 } from 'react-intl'
@@ -49,8 +51,67 @@ class AccountProfil extends React.Component {
     this.state = {fetching: false}
   }
 
+  getAddressProperty (place, property, shortName) {
+    const addressComponents = place.address_components
+    for (let componentIndex in addressComponents) {
+      let component = addressComponents[componentIndex]
+      let types = component.types
+      if (types.length > 0) {
+        for (let typeIndex in types) {
+          let type = types[typeIndex]
+          if (type === property) {
+            return (shortName) ? component.short_name : component.long_name
+          }
+        }
+      }
+    }
+    return null
+  }
 
-  updateUserHandler (key, value) {
+  getStreetAddress (place) {
+    let streetNumber = this.getAddressProperty(place, 'street_number')
+    let street = this.getAddressProperty(place, 'route')
+    let orEmpty = (entity) => {
+      return entity || ''
+    }
+    let address = orEmpty(streetNumber) + ' ' + orEmpty(street)
+    if (/\S/.test(address)) {
+      return address.trim()
+    }
+    return place.name
+  }
+
+  initMap () {
+    const places = window.google && window.google.maps && window.google.maps.places
+    const {addressLocation}=this.refs
+    if (places && addressLocation && !addressLocation._autocomplete) {
+
+      addressLocation._autocomplete = new places.Autocomplete(addressLocation.input, {
+        types: ['geocode']
+      })
+      addressLocation._autocomplete.addListener('place_changed', () => {
+        const place = addressLocation._autocomplete.getPlace()
+
+        const putData = {
+          postalAddressStreet: this.getStreetAddress(place),
+          postalAddressCountry: this.getAddressProperty(place, 'country', true),
+          postalAddressCity: this.getAddressProperty(place, 'locality'),
+          postalAddressRegion: this.getAddressProperty(place, 'administrative_area_level_1'),
+          postalAddressLocality: this.getAddressProperty(place, 'administrative_area_level_2'),
+          postalAddressCode: this.getAddressProperty(place, 'postal_code')
+        }
+
+        this.updateUserHandler({putData})
+      })
+    }
+  }
+
+  componentDidUpdate () {
+    this.initMap()
+  }
+
+
+  updateUserHandler ({key, value, putData = {}}) {
     const {
       props: {
         dispatch
@@ -60,8 +121,11 @@ class AccountProfil extends React.Component {
     this.setState({
       fetching: true
     })
-    let putData = {}
-    putData[key] = value
+
+    if (key && value) {
+      putData[key] = value
+    }
+
     dispatch(UserActionCreators.updateUserProfile(putData))
       .then(() => {
         this.setState({
@@ -120,13 +184,24 @@ class AccountProfil extends React.Component {
     const isEnable = Boolean(sectionValue)
     let inputAttributes = {
       onChange: (event, key, payload) => {
-        this.updateUserHandler(section.key, payload)
+        this.updateUserHandler({key: section.key, value: payload})
       }
     }
 
     let element
 
     switch (section.type) {
+      case  'autocomplete':
+
+        const street = user.get('postalAddressStreet')
+        const city = user.get('postalAddressCity')
+        const adresse = `${(street && street + ', ') || ''} ${(city && city) || ''}`
+
+        element = <TextField defaultValue={adresse}
+                             fullWidth={true}
+                             floatingLabelText={label} ref="addressLocation"
+                             floatingLabelFixed={true}/>
+        break
       case  'password':
         element = <Link to="/reset"><RaisedButton {...{label}} {...inputAttributes}/></Link>
         break
@@ -234,10 +309,6 @@ class AccountProfil extends React.Component {
           }
         }
 
-        if (section.multiLine) {
-          inputAttributes.textareaStyle = {border: '1px solid rgba(0,0,0,0.3)', padding: 10}
-        }
-
         element = <TextField underlineShow={true}
                              rows={section.rows}
                              autoComplete={section.autoComplete}
@@ -260,8 +331,7 @@ class AccountProfil extends React.Component {
   renderUserProfile () {
     const {
       props: {
-        profile,
-        intl
+        profile
       }
     } = this
 
@@ -316,7 +386,7 @@ AccountProfil.propTypes = {
 }
 
 AccountProfil.defaultProps = {
-  col: 12
+  col: 6
 }
 
 

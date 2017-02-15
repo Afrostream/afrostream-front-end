@@ -60,10 +60,11 @@ let clientConfig = merge({}, webpackConfig, {
     new CompressionPlugin({
       asset: '[file].gz',
       algorithm: 'gzip',
-      regExp: /\.js$|\.html$/,
+      regExp: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
     }),
+    new webpack.optimize.AggressiveMergingPlugin(),
     //new OfflinePlugin(merge(webpackConfig.sw, {}))
   )
 })

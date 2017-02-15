@@ -10,6 +10,9 @@ import {
   intlShape,
   injectIntl
 } from 'react-intl'
+import scriptLoader from '../../lib/script-loader'
+import config from '../../../../config'
+const {gmapApi} = config
 
 if (process.env.BROWSER) {
   require('./AccountPage.less')
@@ -72,4 +75,4 @@ AccountPage.propTypes = {
   intl: intlShape.isRequired
 }
 
-export default injectIntl(AccountPage)
+export default scriptLoader(gmapApi)(injectIntl(AccountPage))

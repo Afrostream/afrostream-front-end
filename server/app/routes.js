@@ -14,9 +14,6 @@ import _ from 'lodash'
 import render from './render'
 import { alive } from './controller'
 import md5 from 'md5'
-import Promise from 'bluebird'
-
-const fsPromise = Promise.promisifyAll(fs)
 
 // --------------------------------------------------
 
@@ -40,6 +37,20 @@ export default function routes (app, buildPath) {
     {file: 'main.css'}
   ]
 
+  function promiseFSAsync (filename) {
+
+    return new Promise(function (resolve, reject) {
+      try {
+        fs.readFile(filename, function (err, data) {
+          if (err) return reject(err)
+          resolve(data)
+        })
+      } catch (err) {
+        reject(err)
+      }
+    })
+  }
+
   function parseMD5Files (files, inline) {
 
     let promisedMd5 = []
@@ -56,7 +67,9 @@ export default function routes (app, buildPath) {
         }
         return promisedMd5.push(fileInfo)
       }
-      promisedMd5.push(fsPromise.readFileAsync(path.join(buildPath, item.file)).then((buf) => {
+
+      promisedMd5.push(promiseFSAsync(path.join(buildPath, item.file)).then((buf) => {
+
         fileInfo = {
           async: item.async || false,
           file: item.file,

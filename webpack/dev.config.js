@@ -4,9 +4,9 @@ import webpackConfig from './webpack.config'
 import config from '../config'
 import path from 'path'
 //
-// import DashboardPlugin from 'webpack-dashboard/plugin'
-// import Dashboard from 'webpack-dashboard'
-// const dashboard = new Dashboard()
+//import DashboardPlugin from 'webpack-dashboard/plugin'
+//import Dashboard from 'webpack-dashboard'
+//const dashboard = new Dashboard()
 //
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 // Configuration for the client-side bundle (app.js)
@@ -39,7 +39,7 @@ clientConfig.entry.main = [
 ]
 
 clientConfig.plugins.push(
-  // new DashboardPlugin(dashboard.setData),
+  //new DashboardPlugin(dashboard.setData),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin(),
   new webpack.ProgressPlugin(function (percentage, message) {

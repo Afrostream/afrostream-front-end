@@ -8,12 +8,13 @@ import * as ModalActionCreators from '../../actions/modal'
 import { slugify, extractImg } from '../../lib/utils'
 import Immutable from 'immutable'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import { I18n } from '../Utils'
 
 if (canUseDOM) {
   var ReactGA = require('react-ga')
 }
 
-class ClickablePin extends Component {
+class ClickablePin extends I18n {
 
   constructor (props, context) {
     super(props, context)

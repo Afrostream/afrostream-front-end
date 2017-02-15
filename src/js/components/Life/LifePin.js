@@ -9,6 +9,10 @@ import ReactImgix from '../Image/ReactImgix'
 import Immutable from 'immutable'
 import _ from 'lodash'
 import PinButton from './PinButton'
+import ReactTooltip from 'react-tooltip'
+import {
+  injectIntl
+} from 'react-intl'
 
 @connect(({Life, User, Event}) => ({Life, User, Event}))
 class LifePin extends ClickablePin {
@@ -22,13 +26,15 @@ class LifePin extends ClickablePin {
       props:{
         data,
         Life,
-        User
+        User,
+        isCurrentUser
       }
     } = this
 
     const type = data.get('type')
     const pinnedUser = data.get('user')
     const pinnedUserId = pinnedUser && pinnedUser.get('_id')
+    const nickName = pinnedUser && pinnedUser.get('nickname') && `@${pinnedUser.get('nickname')}` || ''
     const cardTypeIcon = {
       'card-bubble': true,
       'card-bubble-type': true
@@ -56,16 +62,26 @@ class LifePin extends ClickablePin {
     const userTypeIcon = _.merge({
       'user': true,
       'followed': followed,
-      'disabled': currentUser
+      'disabled': isCurrentUser
     }, cardTypeIcon)
 
     cardTypeIcon[type] = true
 
+    const canFollow = !isCurrentUser
+
+    const titleLabel = this.getTitle(`life.users.${(canFollow && (followed ? 'unfollow' : 'follow'))}`, {nickName})
+
+
     return (<div className="card-bubbles">
-      {pinnedUser && <div className={classSet(userTypeIcon)} onClick={(e) => ::this.followUser(e, !followed)}>
+      {pinnedUser && <div className={classSet(userTypeIcon)}
+                          data-tip={titleLabel}
+                          data-place={'top'}
+                          data-for={`user-tip`} onClick={(e) => ::this.followUser(e, !followed)}>
         <img src={pinnedUser.get('picture')}
              alt="user-button"
              className="icon-user"/>
+        <ReactTooltip id={`user-tip`} type="dark"
+                      effect="solid"/>
       </div>}
       <div className={classSet(cardTypeIcon)}/>
       <div className={classSet(likeTypeIcon)} onClick={(e) => ::this.likePin(e, !liked)}>
@@ -186,4 +202,4 @@ LifePin.defaultProps = {
   showBubble: true
 }
 
-export default LifePin
+export default injectIntl(LifePin)

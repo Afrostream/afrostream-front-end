@@ -352,12 +352,9 @@
     "profile": {
       "password": "Change my password",
       "biography": "Description",
-      "postalAddressCity": "City",
       "picture": "Edit my avatar",
       "profile": "Personal information",
-      "postalAddressCode": "Postal code",
-      "postalAddressCity": "City",
-      "postalAddressStreet": "Street",
+      "address": "Address",
       "birthDate": "Date of birth",
       "nickname": "Username",
       "first_name": "Name",

@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom'
-import StackBlur from 'stackblur-canvas'
 import React, { Component, PropTypes } from 'react'
 import URL from 'url'
 import config from '../../../../config'

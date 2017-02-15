@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import config from '../../../../config'
 import scriptLoader from '../../lib/script-loader'
 import { withRouter } from 'react-router'
-import TextField from 'material-ui/TextField'
 import {
   intlShape,
   injectIntl
@@ -69,7 +68,7 @@ class StoreLocator extends React.Component {
 
     const infowindow = new google.maps.InfoWindow()
 
-    this.map.data.setStyle((feature)=> {
+    this.map.data.setStyle((feature) => {
       return {
         title: feature.getProperty('name') || null,
         icon: '/images/flat-marker.png'
@@ -119,7 +118,7 @@ class StoreLocator extends React.Component {
         Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)))
 
 
-    this.map.data.forEach((e)=> {
+    this.map.data.forEach((e) => {
       this.map.data.remove(e)
     })
 
@@ -129,7 +128,7 @@ class StoreLocator extends React.Component {
 
   searchLocation () {
     clearTimeout(this.serachTimeout)
-    this.serachTimeout = setTimeout(()=> {
+    this.serachTimeout = setTimeout(() => {
       const e = document.getElementById('map-search')
       this.geoCoder.geocode({
           address: e.value,
@@ -179,14 +178,8 @@ class StoreLocator extends React.Component {
           </section>
           <section>
             <FormattedMessage tagName="h3" id="storesLocator.where"/>
-            <TextField id="map-search" defaultValue={this.state.location} onChange={::this.searchLocation}
-                       floatingLabelFixed={true}
-                       floatingLabelStyle={textStyle}
-                       disabledStyle={textStyle}
-                       hintStyle={textStyle}
-                       underlineStyle={textStyle}
-                       hintText={intl.formatMessage({id: 'storesLocator.inputFind'})}
-                       floatingLabelText={intl.formatMessage({id: 'storesLocator.find'})}/>
+            <input type="text" id="map-search" defaultValue={this.state.location} onChange={::this.searchLocation}
+                   placeholder={intl.formatMessage({id: 'storesLocator.inputFind'})}/>
             <div id="map-canvas" className="map-canvas"></div>
           </section>
         </div>

@@ -10,11 +10,11 @@ import { Link } from '../Utils'
 import { slugify } from '../../lib/utils'
 import ReactImgix from '../Image/ReactImgix'
 import { I18n } from '../Utils'
+import ReactTooltip from 'react-tooltip'
 
 import {
   injectIntl
 } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
 
 if (process.env.BROWSER) {
   require('./AvatarCard.less')
