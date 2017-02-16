@@ -258,7 +258,7 @@ export function fetchPins ({themeId, limit = 7, offset = 0, filterAll = false}) 
       themeId
     }
 
-    if (filterAll) {
+    if (filterAll === true) {
       params.all = filterAll
     }
 
