@@ -16,7 +16,6 @@ import * as CategoryActionCreators from '../actions/category'
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
   await store.dispatch(CategoryActionCreators.getMenu())
   await store.dispatch(CategoryActionCreators.getSpots())
-  return await store.dispatch(LifeActionCreators.fetchThemes())
 })
 class HomePage extends React.Component {
 

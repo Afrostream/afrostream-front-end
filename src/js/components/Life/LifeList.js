@@ -140,6 +140,7 @@ class LifeList extends Component {
     const {
       props: {
         virtual,
+        timelineMode,
         highlightFirst
       }
     } = this
@@ -147,6 +148,7 @@ class LifeList extends Component {
 
     const classList = {
       'life-list': true,
+      'timeline-mode': timelineMode,
       'hightlight-first': highlightFirst,
       'flat': !virtual,
       'virtual': virtual
@@ -167,6 +169,7 @@ class LifeList extends Component {
 }
 
 LifeList.propTypes = {
+  timelineMode: PropTypes.bool,
   isCurrentUser: PropTypes.bool,
   moduloSpots: PropTypes.number,
   highlightFirst: PropTypes.bool,
@@ -187,6 +190,7 @@ LifeList.propTypes = {
 
 
 LifeList.defaultProps = {
+  timelineMode: false,
   isCurrentUser: false,
   moduloSpots: 6,
   highlightFirst: true,

@@ -640,6 +640,9 @@
     "label": "Afrostream Life",
     "users": {
       "label": "Community",
+      "labelMenu": "The community",
+      "labelTimeline": "All posts",
+      "labelFollow": "Followed users",
       "unfollow": "Unfollow {nickName}",
       "follow": "Follow {nickName}",
       "upload": "Add an avatar",

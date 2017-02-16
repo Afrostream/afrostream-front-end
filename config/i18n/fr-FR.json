@@ -631,6 +631,9 @@
     "label": "Afrostream Life",
     "users": {
       "label": "Communauté",
+      "labelMenu": "La communauté",
+      "labelTimeline": "Tous les posts",
+      "labelFollow": "Utilisateurs suivis",
       "unfollow": "Ne plus suivre {nickName}",
       "follow": "Suivre {nickName}",
       "upload": "Ajouter une photo",

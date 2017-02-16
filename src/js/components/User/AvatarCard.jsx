@@ -36,7 +36,8 @@ class AvatarCard extends I18n {
       props: {
         Life,
         User,
-        user
+        user,
+        params
       }
     } = this
 
@@ -101,7 +102,8 @@ class AvatarCard extends I18n {
         user,
         User,
         bio,
-        upload
+        upload,
+        params
       }
     } = this
 
@@ -119,7 +121,7 @@ class AvatarCard extends I18n {
     const userBio = bio && user.get('biography')
 
     const canUpload = upload || isCurrentUser
-    const canFollow = !isCurrentUser
+    const canFollow = !isCurrentUser && params.lifeUserId
     const followed = this.isFollowed()
     const followers = user && user.get('followers') || 0
 
@@ -142,7 +144,7 @@ class AvatarCard extends I18n {
       }
     }
 
-    const titleLabel = this.getTitle(`life.users.${(canUpload && 'upload') || (followed ? 'unfollow' : 'follow')}`, {nickName})
+    const titleLabel = canFollow && this.getTitle(`life.users.${(canUpload && 'upload') || (followed ? 'unfollow' : 'follow')}`, {nickName}) || ''
 
     return (
       <div className={this.props.className}>

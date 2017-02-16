@@ -160,14 +160,6 @@ class LifePin extends ClickablePin {
           <div className="card-description">
             {description}
           </div>
-          <div className="card-date">
-            {
-              `${pinnedDate.format('L')}`
-            }
-            {pinnedUser &&
-            ` - ${pinnedUser.get('nickname')}`
-            }
-          </div>
 
         </div>}
         {isCurrentUser && <PinButton buttonClass="fa fa-trash"
@@ -175,6 +167,14 @@ class LifePin extends ClickablePin {
                                      target="life-remove"
                                      {...this.props}
                                      onClick={::this.removePin}/>}
+      </div>
+      <div className="card-date"><span className="date">
+        {
+          `${pinnedDate.format('L')}`
+        }</span>
+        {pinnedUser &&
+        <span className="date-nickname">{pinnedUser.get('nickname')}</span>
+        }
       </div>
     </Link>)
   }

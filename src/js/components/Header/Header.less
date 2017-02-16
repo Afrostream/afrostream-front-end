@@ -120,8 +120,7 @@
     height: @sub-navigation-height !important;
   }
   .headroom {
-    top: @header-height;
-    .isMobile({ top: @header-height-mobile; });
+    top: 0;
     left: 0;
     right: 0;
     z-index: @nav-z + 2;
@@ -139,13 +138,14 @@
 
   .headroom--unpinned {
     position: fixed;
-    transform: translateY(-@header-height);
-    .isMobile({ transform: translateY(-@header-height-mobile); });
+    transform: translateY(0);
+    .isMobile({ transform: translateY(0); });
   }
 
   .headroom--pinned {
     position: fixed;
-    transform: translateY(0);
+    transform: translateY(@header-height);
+    .isMobile({ transform: translateY(@header-height-mobile); });
   }
 
 }

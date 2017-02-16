@@ -7,7 +7,19 @@ import createReducer from '../lib/createReducer'
 const initialState = Immutable.fromJS({
   'life/themes': null,
   'life/pins': null,
-  'life/pins/res': []
+  'life/pins/res': [],
+  'communityMenu': [
+    {
+      'label': 'life.users.labelMenu',
+      'slug': '',
+      '_id': 'community'
+    },
+    {
+      'label': 'life.users.labelTimeline',
+      'slug': 'timeline',
+      '_id': 'community'
+    }
+  ]
 })
 
 /**
@@ -70,7 +82,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.fetchPins](state, {res, themeId, lifeUserId}) {
+  [ActionTypes.Life.fetchPins](state, {res, themeId, lifeUserId, replace = false}) {
     if (!res) {
       return state
     }
@@ -78,7 +90,7 @@ export default createReducer(initialState, {
 
     const savePath = (lifeUserId && 'user/' + lifeUserId) || themeId
     let savedPins = state.get(`life/pins/${savePath}`)
-    let mappedUserPins = _.unionBy(savedPins && savedPins.toJS() || [], pins, '_id')
+    let mappedUserPins = _.unionBy(!replace && savedPins && savedPins.toJS() || [], pins, '_id')
 
     return state.merge({
       [`life/pins/${savePath}`]: mappedUserPins

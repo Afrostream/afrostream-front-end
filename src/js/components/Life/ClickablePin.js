@@ -29,13 +29,19 @@ class ClickablePin extends I18n {
         isCurrentUser
       }
     } = this
+
+
+    if (e) {
+      e.preventDefault()
+    }
+
     if (isCurrentUser) {
       return
     }
+
     const currentUser = User.get('user')
     if (currentUser) {
-      if (e) {
-        e.preventDefault()
+      if (e && e.target) {
         e.target.classList.toggle('followed')
       }
 
@@ -46,7 +52,6 @@ class ClickablePin extends I18n {
         data: followUser
       }))
     } else {
-      e.preventDefault()
       this.modalLogin()
     }
   }

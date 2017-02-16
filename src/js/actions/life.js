@@ -241,22 +241,6 @@ export function fetchSpots ({themeId, limit = 22, offset = 0}) {
         path: `/api/life/spots`,
         params: {
           limit,
-          themeId
-        }
-      })
-    })
-  }
-}
-
-export function fetchPins ({themeId, limit = 7, offset = 0}) {
-  return (dispatch, getState) => {
-    return async api => ({
-      type: ActionTypes.Life.fetchPins,
-      themeId,
-      res: await api({
-        path: `/api/life/pins`,
-        params: {
-          limit,
           offset,
           themeId
         }
@@ -265,15 +249,43 @@ export function fetchPins ({themeId, limit = 7, offset = 0}) {
   }
 }
 
-export function fetchUserPins ({lifeUserId, limit = 50, offset, replace = false}) {
+export function fetchPins ({themeId, limit = 7, offset = 0, filterAll = false}) {
+  return (dispatch, getState) => {
+
+    let params = {
+      limit,
+      offset,
+      themeId
+    }
+
+    if (filterAll) {
+      params.all = filterAll
+    }
+
+    return async api => ({
+      type: ActionTypes.Life.fetchPins,
+      themeId,
+      res: await api({
+        path: `/api/life/pins`,
+        params
+      })
+    })
+  }
+}
+
+export function fetchUserPins ({lifeUserId, limit = 50, offset = 0, replace = false}) {
 
   return (dispatch, getState) => {
+    const user = getState().User.get('user')
+    const userId = user && user.get('_id')
+    const isCurrentUser = String(userId) === String(lifeUserId)
     return async api => ({
       type: ActionTypes.Life.fetchUserPins,
       lifeUserId,
       replace,
       res: await api({
-        path: `/api/life/pins`,
+        path: `/api/life/pins${ isCurrentUser ? '/mine' : ''}`,
+        passToken: true,
         params: {
           userId: lifeUserId,
           limit,
@@ -285,7 +297,7 @@ export function fetchUserPins ({lifeUserId, limit = 50, offset, replace = false}
 }
 
 
-export function fetchUsers ({lifeUserId, limit = 50, offset}) {
+export function fetchUsers ({lifeUserId, limit = 50, offset = 0}) {
 
   return (dispatch, getState) => {
     return async api => ({
@@ -325,6 +337,7 @@ export function fetchPin (pinId) {
       pinId,
       res: await api({
         path: `/api/life/pins/${pinId}`
+
 
         , params: {filterCountry: false}
       }).catch(notFoundPost)

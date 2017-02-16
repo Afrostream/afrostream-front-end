@@ -7,6 +7,7 @@ import PinButton from './PinButton'
 import { prepareRoute } from '../../decorators'
 import * as LifeActionCreators from '../../actions/life'
 import shallowEqual from 'react-pure-render/shallowEqual'
+import config from '../../../../config'
 
 @prepareRoute(async function ({store, params:{lifeUserId}}) {
   await Promise.all([
@@ -47,8 +48,10 @@ class LifeUserInfos extends Component {
     const id = user.get('_id')
     const isCurrentUser = gloBalUser && gloBalUser.get('_id') === id
 
+    let imageStyle = {}//{backgroundImage: `url(${config.images.urlPrefix}${config.metadata.defaultImage}?crop=faces&fit=clip&w=1280&q=${config.images.quality}&fm=${config.images.type})`}
+
     return (<div key="life-themes-list" className="life-theme">
-        <div className="row text-center">
+        <div className="row theme-header" style={imageStyle}>
           <div
             className={`col-md-${isCurrentUser ? 8 : 12} col-xs-${isCurrentUser ? 8 : 12}`}>
             <AvatarCard {...{user}} {...this.props} bio={true}/>

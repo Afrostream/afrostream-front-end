@@ -2,9 +2,6 @@ import React, { PropTypes, Component } from 'react'
 import { prepareRoute } from '../../decorators'
 import { connect } from 'react-redux'
 import * as LifeActionCreators from '../../actions/life'
-import * as EventActionCreators from '../../actions/event'
-import LifeSticky from './LifeSticky'
-import SubNavigation from '../Header/SubNavigation'
 import { withRouter } from 'react-router'
 import shallowEqual from 'react-pure-render/shallowEqual'
 
@@ -14,6 +11,7 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
+    store.dispatch(LifeActionCreators.fetchThemes()),
     store.dispatch(LifeActionCreators.fetchUserLikes()),
     store.dispatch(LifeActionCreators.fetchUsersFollow())
   ])
@@ -41,19 +39,12 @@ class LifeHome extends Component {
   render () {
     const {
       props: {
-        children,
-        Life,
-        router
+        children
       }
     } = this
 
-    const themesList = Life.get('life/themes/')
-
     return (
       <div className="row-fluid no-padding">
-        <SubNavigation {...{themesList}} to="/life/{_id}/{slug}" streaming={true}>
-          <LifeSticky {...this.props}/>
-        </SubNavigation>
         <div className="container-fluid no-padding life-home life-themes brand-grey">
           {children}
         </div>
