@@ -53,10 +53,10 @@ class LifeUserInfos extends Component {
     return (<div key="life-themes-list" className="life-theme">
         <div className="row theme-header" style={imageStyle}>
           <div
-            className={`col-md-4 col-xs-${isCurrentUser ? 8 : 12} col-centered`}>
+            className={`col-md-${isCurrentUser ? 8 : 12} col-centered`}>
             <AvatarCard {...{user}} {...this.props} bio={true}/>
           </div>
-          {isCurrentUser && <div className="col-md-4 col-xs-4 col-centered">
+          {isCurrentUser && <div className="col-md-4 col-centered">
             <PinButton buttonClass="fa fa-pencil-square-o" label="life.sticky.tooltip" {...this.props} />
           </div>}
         </div>
