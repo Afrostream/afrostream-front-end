@@ -7,7 +7,7 @@
     "app": "./node_modules/.bin/babel-node server/app",
     "lint": "node ./node_modules/eslint/bin/eslint.js -c .eslintrc .",
     "clean": "rm -rf dist && mkdir dist",
-    "build:prod": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --progress --verbose --display-error-details --config webpack/prod.config.js",
+    "build:prod": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --config webpack/prod.config.js",
     "build": "npm run clean && npm run build:prod",
     "watch": "./node_modules/.bin/babel-node webpack/webpack-dev-server.js --hot --inline --watch",
     "dev": "echo 'requiring node v6.9.1' && . ~/.nvm/nvm.sh && nvm use 6.9.1 && node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch\" \"npm run app\"",
