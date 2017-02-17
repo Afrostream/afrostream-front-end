@@ -170,7 +170,6 @@ class LifeList extends Component {
 
 LifeList.propTypes = {
   timelineMode: PropTypes.bool,
-  isCurrentUser: PropTypes.bool,
   moduloSpots: PropTypes.number,
   highlightFirst: PropTypes.bool,
   virtual: PropTypes.bool,
