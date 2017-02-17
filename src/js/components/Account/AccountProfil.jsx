@@ -96,8 +96,8 @@ class AccountProfil extends React.Component {
           postalAddressStreet: this.getStreetAddress(place),
           postalAddressCountry: this.getAddressProperty(place, 'country', true),
           postalAddressCity: this.getAddressProperty(place, 'locality'),
-          postalAddressRegion: this.getAddressProperty(place, 'administrative_area_level_1'),
-          postalAddressLocality: this.getAddressProperty(place, 'administrative_area_level_2'),
+          postalAddressLocality: this.getAddressProperty(place, 'administrative_area_level_1'),
+          postalAddressRegion: this.getAddressProperty(place, 'administrative_area_level_2'),
           postalAddressCode: this.getAddressProperty(place, 'postal_code')
         }
 
@@ -220,7 +220,7 @@ class AccountProfil extends React.Component {
       case 'date':
         inputAttributes = {
           onChange: (event, date) => {
-            this.updateUserHandler(section.key, date)
+            this.updateUserHandler({key: section.key, value: date})
           }
         }
         let selectedDate = (sectionValue && new Date(sectionValue) || new Date())
@@ -234,7 +234,7 @@ class AccountProfil extends React.Component {
         inputAttributes = {
           onChange: (event, payload) => {
             let value = payload
-            this.updateUserHandler(section.key, value)
+            this.updateUserHandler({key: section.key, value})
           }
         }
         element =
@@ -259,7 +259,7 @@ class AccountProfil extends React.Component {
       case 'checkbox':
         inputAttributes = {
           onCheck: (event, isInputChecked) => {
-            this.updateUserHandler(section.key, isInputChecked)
+            this.updateUserHandler({key: section.key, value: isInputChecked})
           }
         }
         element = <Checkbox checked={isEnable} {...inputAttributes} {...{label}}/>
@@ -274,10 +274,10 @@ class AccountProfil extends React.Component {
             }
             if (section.key === 'webPushNotificationsData') {
               return dispatch(SWActionCreators.setPushNotifications(payload)).then(({value}) => {
-                this.updateUserHandler(section.key, value)
+                this.updateUserHandler({key: section.key, value})
               })
             }
-            this.updateUserHandler(section.key, value)
+            this.updateUserHandler({key: section.key, value})
           }
         }
 
@@ -304,7 +304,7 @@ class AccountProfil extends React.Component {
             clearTimeout(this.updateTimeout)
             this.updateTimeout = setTimeout(() => {
 
-              this.updateUserHandler(section.key, payload)
+              this.updateUserHandler({key: section.key, value: payload})
             }, 1500)
           }
         }
