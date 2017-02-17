@@ -27,7 +27,7 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
-    new webpack.BannerPlugin({banner: 'App has been developed by @benjipott Afrostream.', raw: true, entryOnly: true}),
+    new webpack.BannerPlugin({banner: 'App has been developed by @benjipott Afrostream.'}),
     //WEBPACK2 FEATURE
     new webpack.LoaderOptionsPlugin({
       debug: false,
