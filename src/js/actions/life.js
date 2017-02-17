@@ -1,4 +1,5 @@
 import ActionTypes from '../consts/ActionTypes'
+import * as EventActionCreator from './event'
 import { notFoundPost } from './notFoundAction'
 import _ from 'lodash'
 import URL from 'url'
@@ -70,19 +71,20 @@ export function publishPin (data) {
   return (api, getState, dispatch) => {
 
     const user = getState().User.get('user')
-    const userId = user && user.get('_id')
+    const lifeUserId = user && user.get('_id')
 
     return async () => {
       return {
         type: ActionTypes.Life.publishPin,
+        lifeUserId,
         res: await api({
           path: `/api/life/pins`,
           method: 'POST',
           params: data,
           passToken: true
         }).then(() => {
-          if (userId) {
-            dispatch(fetchUsers({userId}))
+          if (lifeUserId) {
+            dispatch(fetchUserPins({lifeUserId, replace: true}))
           }
         })
       }
@@ -94,18 +96,19 @@ export function removePin (pinId) {
   return (api, getState, dispatch) => {
 
     const user = getState().User.get('user')
-    const userId = user && user.get('_id')
+    const lifeUserId = user && user.get('_id')
 
     return async () => {
       return {
         type: ActionTypes.Life.removePin,
+        lifeUserId,
         res: await api({
           path: `/api/life/pins/${pinId}`,
           method: 'DELETE',
           passToken: true
         }).then(() => {
-          if (userId) {
-            dispatch(fetchUsers(userId, {}))
+          if (lifeUserId) {
+            dispatch(fetchUserPins({lifeUserId, replace: true}))
           }
         })
       }
@@ -144,6 +147,37 @@ export function fetchUserLikes () {
   }
 }
 
+export function fetchUsersFollow () {
+  return (api, getState, dispatch) => {
+    const user = getState().User.get('user')
+    if (!user) {
+      return {
+        type: ActionTypes.Life.fetchUsersFollow
+      }
+    }
+    const lifeUserId = user && user.get('_id')
+
+    if (!lifeUserId) {
+      return {
+        type: ActionTypes.Life.fetchUsersFollow
+      }
+    }
+    return async () => {
+      return {
+        type: ActionTypes.Life.fetchUsersFollow,
+        lifeUserId,
+        res: await api({
+          path: `/api/life/users/${lifeUserId}/follow`,
+          passToken: true,
+          params: {
+            follow: true
+          }
+        })
+      }
+    }
+  }
+}
+
 export function likePin ({data, liked}) {
   return (api, getState, dispatch) => {
 
@@ -169,6 +203,35 @@ export function likePin ({data, liked}) {
   }
 }
 
+export function followUser ({data, follow}) {
+  return (api, getState, dispatch) => {
+
+    const user = getState().User.get('user')
+    const lifeUserId = user && user.get('_id')
+    const followUserId = data && data.get('_id')
+
+    return async () => {
+      return await api({
+        path: `/api/life/users/${lifeUserId}/follow/${followUserId}`,
+        method: 'PUT',
+        passToken: true,
+        params: {
+          follow
+        }
+      }).then((res) => {
+        dispatch(fetchUsers({lifeUserId: followUserId}))
+        dispatch(EventActionCreator.snackMessage({message: `life.users.${follow ? 'followed' : 'unfollowed'}`}))
+        return {
+          type: ActionTypes.Life.followUser,
+          followUserId,
+          lifeUserId,
+          res
+        }
+      })
+    }
+  }
+}
+
 export function fetchSpots ({themeId, limit = 22, offset = 0}) {
   return (dispatch, getState) => {
     return async api => ({
@@ -176,22 +239,6 @@ export function fetchSpots ({themeId, limit = 22, offset = 0}) {
       themeId,
       res: await api({
         path: `/api/life/spots`,
-        params: {
-          limit,
-          themeId
-        }
-      })
-    })
-  }
-}
-
-export function fetchPins ({themeId, limit = 7, offset = 0}) {
-  return (dispatch, getState) => {
-    return async api => ({
-      type: ActionTypes.Life.fetchPins,
-      themeId,
-      res: await api({
-        path: `/api/life/pins`,
         params: {
           limit,
           offset,
@@ -202,14 +249,43 @@ export function fetchPins ({themeId, limit = 7, offset = 0}) {
   }
 }
 
-export function fetchUserPins ({lifeUserId, limit = 50, offset}) {
+export function fetchPins ({themeId, limit = 7, offset = 0, filterAll = false}) {
+  return (dispatch, getState) => {
+
+    let params = {
+      limit,
+      offset,
+      themeId
+    }
+
+    if (filterAll === true) {
+      params.all = filterAll
+    }
+
+    return async api => ({
+      type: ActionTypes.Life.fetchPins,
+      themeId,
+      res: await api({
+        path: `/api/life/pins`,
+        params
+      })
+    })
+  }
+}
+
+export function fetchUserPins ({lifeUserId, limit = 50, offset = 0, replace = false}) {
 
   return (dispatch, getState) => {
+    const user = getState().User.get('user')
+    const userId = user && user.get('_id')
+    const isCurrentUser = String(userId) === String(lifeUserId)
     return async api => ({
       type: ActionTypes.Life.fetchUserPins,
       lifeUserId,
+      replace,
       res: await api({
-        path: `/api/life/pins`,
+        path: `/api/life/pins${ isCurrentUser ? '/mine' : ''}`,
+        passToken: true,
         params: {
           userId: lifeUserId,
           limit,
@@ -221,7 +297,7 @@ export function fetchUserPins ({lifeUserId, limit = 50, offset}) {
 }
 
 
-export function fetchUsers ({lifeUserId, limit = 50, offset}) {
+export function fetchUsers ({lifeUserId, limit = 50, offset = 0}) {
 
   return (dispatch, getState) => {
     return async api => ({
@@ -261,6 +337,7 @@ export function fetchPin (pinId) {
       pinId,
       res: await api({
         path: `/api/life/pins/${pinId}`
+
 
         , params: {filterCountry: false}
       }).catch(notFoundPost)

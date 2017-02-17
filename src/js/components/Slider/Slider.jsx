@@ -2,11 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames'
-
-if (canUseDOM) {
-  require('gsap')
-  var {TweenMax, Expo} = window.GreenSockGlobals
-}
+import  { TweenLight, Expo } from 'gsap'
 
 class Slider extends React.Component {
 
@@ -54,7 +50,7 @@ class Slider extends React.Component {
    */
   handleScroll () {
     clearTimeout(this.scrollTimeout)
-    this.scrollTimeout = setTimeout(()=> {
+    this.scrollTimeout = setTimeout(() => {
       this.setState({
         scrollLeft: this.container.scrollLeft
       })

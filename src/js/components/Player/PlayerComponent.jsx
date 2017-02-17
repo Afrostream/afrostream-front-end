@@ -16,10 +16,6 @@ if (process.env.BROWSER) {
   require('./PlayerComponent.less')
 }
 
-if (canUseDOM) {
-  var base64 = require('js-base64').Base64
-}
-
 @connect(({Config, OAuth, Video, Movie, Season, Episode, Event, User, Player}) => ({
   Config,
   OAuth,

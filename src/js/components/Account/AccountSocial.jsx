@@ -36,12 +36,12 @@ class AccountSocial extends React.Component {
     })
 
     dispatch(OAuthActionCreators.strategy({strategy, path: isSynchro ? 'unlink' : 'link'}))
-      .then(()=> {
+      .then(() => {
         dispatch(UserActionCreators.getProfile())
         this.setState({
           fetching: false
         })
-      }).catch(()=> {
+      }).catch(() => {
       this.setState({
         fetching: false
       })
@@ -52,7 +52,7 @@ class AccountSocial extends React.Component {
   getSocialProvider (user) {
 
 
-    return _.filter(oauth2.providers, {active: true}).map((strategy)=> {
+    return _.filter(oauth2.providers, {active: true}).map((strategy) => {
       const providerInfos = user.get(strategy.name)
       const isSynchro = Boolean(providerInfos)
       const inputAttributes = {
@@ -60,19 +60,21 @@ class AccountSocial extends React.Component {
           this.synchroniseHandler({isSynchro: !payload, strategy: strategy.name})
         }
       }
-      return (<div className="row" key={`${strategy.name}-synchro`}>
-          <div className="col-xs-2 col-md-2 text-center">
-            <i className={strategy.icon}/>
-          </div>
-          <div className="col-xs-8 col-md-8">
-            <FormattedHTMLMessage
-              id={ `account.oauth2.link` } values={{strategy: strategy.name}}/>
-          </div>
-          <div className="col-xs-2 col-md-2">
-            <Toggle
-              toggled={isSynchro}
-              {...inputAttributes}
-            />
+      return (<div className="col-md-12" key={`${strategy.name}-synchro`}>
+          <div className="row">
+            <div className="col-xs-2 col-md-2 text-center">
+              <i className={strategy.icon}/>
+            </div>
+            <div className="col-xs-8 col-md-8">
+              <FormattedHTMLMessage
+                id={ `account.oauth2.link` } values={{strategy: strategy.name}}/>
+            </div>
+            <div className="col-xs-2 col-md-2">
+              <Toggle
+                toggled={isSynchro}
+                {...inputAttributes}
+              />
+            </div>
           </div>
         </div>
       )
@@ -110,7 +112,7 @@ AccountSocial.propTypes = {
 }
 
 AccountSocial.defaultProps = {
-  col: 12
+  col: 6
 }
 
 export default AccountSocial

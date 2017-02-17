@@ -354,6 +354,7 @@
       "biography": "Description",
       "picture": "Edit my avatar",
       "profile": "Personal information",
+      "address": "Address",
       "birthDate": "Date of birth",
       "nickname": "Username",
       "first_name": "Name",
@@ -638,7 +639,15 @@
   "life": {
     "label": "Afrostream Life",
     "users": {
-      "label": "Community"
+      "label": "Community",
+      "labelMenu": "The community",
+      "labelTimeline": "All posts",
+      "labelFollow": "Followed users",
+      "unfollow": "Unfollow {nickName}",
+      "follow": "Follow {nickName}",
+      "upload": "Add an avatar",
+      "followed": "You follow this user",
+      "unfollowed": "You no longer follow this user"
     },
     "welcome": {
       "label": "The social \nmedia for black \ncreativity",
@@ -650,6 +659,7 @@
     },
     "sticky": {
       "nbpost": "Number of post : {pins}",
+      "nbfollowers": "Number de follower : {followers}",
       "tooltip": "Post content",
       "remove": "Remove content"
     },

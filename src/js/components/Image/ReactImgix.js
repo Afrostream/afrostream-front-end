@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom'
-import StackBlur from 'stackblur-canvas'
 import React, { Component, PropTypes } from 'react'
 import URL from 'url'
 import config from '../../../../config'
@@ -155,7 +154,7 @@ export default class ReactImgix extends Component {
 
     //_src = _src.replace(/&q=([1-9][0-9]*|0)/g, `&q=30`)
     //_src = _src.replace(/&w=([1-9][0-9]*|0)/g, `&w=20`)
-    //_src = _src.replace(/&h=([1-9][0-9]*|0)/g, `&h=20`)
+    _src = _src.replace(/http:\/\/afrostream.dev/g, ``)
 
     const url = URL.parse(_src)
     if (~config.images.urlPrefix.indexOf(url.hostname)) {

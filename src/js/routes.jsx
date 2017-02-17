@@ -102,6 +102,7 @@ const buildRoutes = function (lang) {
     <Route key={`${lang}-newsletter`} name="newsletter" path="newsletter" component={LoginPage}/>,
     <Route key={`${lang}-life`} name="life" path="life" component={Life.LifeHome}>
       <Route name="community" path="community" component={Life.LifeCommunity}>
+        <Route name="lifeUsersTimeline" path="timeline" component={Life.LifeTimeline}/>
         <Route name="lifeUserInfos" path=":lifeUserId(/:lifeUserName)" component={Life.LifeUserInfos}/>
       </Route>
       <Route name="lifePin" path="pin/:pinId(/:pinSlug)" component={Life.LifePinView}/>

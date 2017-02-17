@@ -20,6 +20,31 @@
     margin: 0 auto;
     .aspect-ratio(1, 1);
     width: 10em;
+    &:after {
+      opacity: 0;
+      font-family: @font-material;
+      content: "\f15c";
+      font-size: 4em;
+      top: 0;
+      bottom: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      line-height: 2.5;
+      color: @brand-primary;
+      .transition(opacity 0.2s linear);
+    }
+
+    &:hover {
+      background-color: @color-black-2;
+      .avatar-card__background_image {
+        opacity: 0.3;
+      }
+      &:after {
+        opacity: 1;
+      }
+    }
+
     img,
     .avatar-card__background_image {
       position: absolute;
@@ -37,22 +62,28 @@
       .transition(all .2s linear);
       &:hover {
         background-color: @color-black-2;
-        .avatar-card__background_image {
-          opacity: 0.3;
-        }
       }
       &:hover:after {
-        font-family: @font-material;
         content: "\f28c";
-        font-size: 4em;
-        top: 0;
-        bottom: 0;
-        position: absolute;
-        left: 0;
-        right: 0;
-        line-height: 2.5;
-        color: @brand-primary;
       }
+    }
+    &.avatar-follow {
+      .transition(all .2s linear);
+      &:hover {
+        background-color: @color-mea;
+      }
+
+      &:after {
+        content: "\f278";
+      }
+
+      &.followed {
+        background-color: @color-black-2;
+        &:after {
+          content: "\f273";
+        }
+      }
+
     }
   }
   .content {
@@ -62,6 +93,12 @@
     font-size: 1.3em;
     &:first-letter {
       text-transform: uppercase;
+    }
+    a,
+    a:hover {
+      text-decoration: underline;
+      color: @color-black-2;
+      cursor: pointer;
     }
   }
 }

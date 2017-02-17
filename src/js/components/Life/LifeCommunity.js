@@ -5,6 +5,8 @@ import * as LifeActionCreators from '../../actions/life'
 import * as EventActionCreators from '../../actions/event'
 import LifeUsersList from './LifeUsersList'
 import { withRouter } from 'react-router'
+import LifeSticky from './LifeSticky'
+import SubNavigation from '../Header/SubNavigation'
 
 if (process.env.BROWSER) {
   require('./LifeCommunity.less')
@@ -15,6 +17,7 @@ if (process.env.BROWSER) {
     store.dispatch(LifeActionCreators.fetchUsers({}))
   ])
 })
+@connect(({Life}) => ({Life}))
 class LifeCommunity extends Component {
 
   constructor (props, context) {
@@ -23,14 +26,20 @@ class LifeCommunity extends Component {
 
   render () {
     const {
-      props: {children}
+      props: {children, Life}
     } = this
 
     if (children) {
       return children
     }
+
+    const themesList = Life.get('communityMenu')
+
     return (
       <div className="life-theme life-community">
+        <SubNavigation {...{themesList}} to="/life/{_id}/{slug}" streaming={true}>
+          <LifeSticky {...this.props}/>
+        </SubNavigation>
         <LifeUsersList {...this.props}/>
       </div>
     )

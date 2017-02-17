@@ -67,10 +67,6 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
 
-  await store.dispatch(CategoryActionCreators.getMenu())
-
-  await store.dispatch(CategoryActionCreators.getSpots())
-
   if (movieId && movieId !== 'undefined') {
     await store.dispatch(MovieActionCreators.getMovie(movieId))
   }
@@ -82,7 +78,6 @@ if (process.env.BROWSER) {
     await store.dispatch(EpisodeActionCreators.getEpisode(episodeId))
   }
 
-  return await store.dispatch(LifeActionCreators.fetchThemes())
 })
 
 @metasData()
@@ -144,7 +139,10 @@ class Application extends React.Component {
           <FloatPlayer {...this.props}/>
           <ModalView {...this.props}/>
           {snackMessage && snackMessage.size && <Snackbar
-            style={{backgroundColor: snackMessage.get('type') === 'error' ? red400 : '#333333'}}
+            contentStyle={{color: '#FFFFFF'}}
+            bodyStyle={{
+              backgroundColor: snackMessage.get('type') === 'error' ? red400 : '#3498db'
+            }}
             open={Boolean(snackMessage)}
             message={intl.formatMessage({id: snackMessage.get('message')})}
             autoHideDuration={4000}

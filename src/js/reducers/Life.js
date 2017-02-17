@@ -7,7 +7,19 @@ import createReducer from '../lib/createReducer'
 const initialState = Immutable.fromJS({
   'life/themes': null,
   'life/pins': null,
-  'life/pins/res': []
+  'life/pins/res': [],
+  'communityMenu': [
+    {
+      'label': 'life.users.labelMenu',
+      'slug': '',
+      '_id': 'community'
+    },
+    {
+      'label': 'life.users.labelTimeline',
+      'slug': 'timeline',
+      '_id': 'community'
+    }
+  ]
 })
 
 /**
@@ -39,16 +51,17 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.publishPin](state, {res}) {
+  [ActionTypes.Life.publishPin](state, {res, lifeUserId}) {
     if (!res) {
       return state
     }
+
     return state.merge({
       [`life/wrap`]: null
     })
   },
 
-  [ActionTypes.Life.removePin](state, {res}) {
+  [ActionTypes.Life.removePin](state, {res, lifeUserId}) {
     if (!res) {
       return state
     }
@@ -69,7 +82,7 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.fetchPins](state, {res, themeId, lifeUserId}) {
+  [ActionTypes.Life.fetchPins](state, {res, themeId, lifeUserId, replace = false}) {
     if (!res) {
       return state
     }
@@ -77,7 +90,7 @@ export default createReducer(initialState, {
 
     const savePath = (lifeUserId && 'user/' + lifeUserId) || themeId
     let savedPins = state.get(`life/pins/${savePath}`)
-    let mappedUserPins = _.unionBy(savedPins && savedPins.toJS() || [], pins, '_id')
+    let mappedUserPins = _.unionBy(!replace && savedPins && savedPins.toJS() || [], pins, '_id')
 
     return state.merge({
       [`life/pins/${savePath}`]: mappedUserPins
@@ -105,14 +118,14 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Life.fetchUserPins](state, {res, lifeUserId}) {
+  [ActionTypes.Life.fetchUserPins](state, {res, lifeUserId, replace = false}) {
     if (!res) {
       return state
     }
     const pins = res.body
 
     let savedUserPins = state.get(`life/users/${lifeUserId}/pins`)
-    let mappedUserPins = _.unionBy(savedUserPins && savedUserPins.toJS() || [], pins, '_id')
+    let mappedUserPins = _.unionBy(!replace && savedUserPins && savedUserPins.toJS() || [], pins, '_id')
 
     return state.merge({
       [`life/users/${lifeUserId}/pins`]: mappedUserPins
@@ -144,18 +157,31 @@ export default createReducer(initialState, {
     const pins = res.body
 
     return state.merge({
-      [`life/users/${lifeUserId}/pins/likes`]: pins
+      [`life/users/${lifeUserId}/likes`]: pins
     })
   },
 
-  [ActionTypes.Life.likePin](state, {res, lifeUserId, pinId}) {
+  [ActionTypes.Life.fetchUsersFollow](state, {res, lifeUserId}) {
+
+    if (!res) {
+      return state
+    }
+
+    const users = res.body
+
+    return state.merge({
+      [`life/users/${lifeUserId}/followedUsers`]: users
+    })
+  },
+
+  [ActionTypes.Life.likePin](state, {res, lifeUserId}) {
     if (!res) {
       return state
     }
 
     const likedPin = res.body
 
-    const savedLikePins = state.get(`life/users/${lifeUserId}/pins/likes`)
+    const savedLikePins = state.get(`life/users/${lifeUserId}/likes`)
     const mergedLikePins = _.unionBy([likedPin], savedLikePins && savedLikePins.toJS() || [], '_id')
 
     //Update model pins
@@ -172,8 +198,23 @@ export default createReducer(initialState, {
     //  })
 
     return state.merge({
-      [`life/users/${lifeUserId}/pins/likes`]: mergedLikePins,
-      //[`life/pins/user/${lifeUserId}`]: storedPins
+      [`life/users/${lifeUserId}/likes`]: mergedLikePins
+    })
+  },
+
+  [ActionTypes.Life.followUser](state, {res, lifeUserId}) {
+    if (!res) {
+      return state
+    }
+
+    const followUser = res.body
+
+    const savedFollowed = state.get(`life/users/${lifeUserId}/followedUsers`)
+    const mergedFollowedUsers = _.unionBy([followUser], savedFollowed && savedFollowed.toJS() || [], 'followUserId')
+
+
+    return state.merge({
+      [`life/users/${lifeUserId}/followedUsers`]: mergedFollowedUsers,
     })
   },
 

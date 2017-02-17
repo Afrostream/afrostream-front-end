@@ -98,7 +98,7 @@ class FavoritesAddButton extends I18n {
     const titleLabel = this.getTitle(`${!isFavorite ? 'favorites.add' : 'favorites.delete'}`)
 
     return (
-      <button className="btn favorite-add_button" type="button" d
+      <button className="btn favorite-add_button" type="button"
               data-tip={titleLabel}
               data-place={this.props.direction}
               data-for={`fav-${dataId}`} {...inputAttributes}>

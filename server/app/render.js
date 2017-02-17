@@ -100,7 +100,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
             geo.countryCode = country
           }
 
-          let {params, location, routes} = renderProps
+          let {params, location, routes, router} = renderProps
           let route = routes && routes[routes.length - 1]
 
           // Try full locale, fallback to locale without region code, fallback to en
@@ -146,7 +146,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
               continue
             }
             try {
-              await prepareRoute({store, params, location, route})
+              await prepareRoute({store, params, router, location, route})
             } catch (err) {
               console.error('Prepare route ERROR:', pretty.render(err))
             }

@@ -209,7 +209,7 @@ class LifePinView extends ClickablePin {
               <div className="addthis_toolbox addthis_relatedposts_inline_zl50"/>
             </div>
             <div className="col-md-3 col-xs-3 no-padding col-right">
-              {pinnedUser && <AvatarCard user={pinnedUser}/>}
+              {pinnedUser && <AvatarCard {...this.props} user={pinnedUser}/>}
               <Sticky bottomOffset={150}>
                 <div className="addthis_toolbox addthis_inline_share_toolbox_ubvc"/>
                 <div className="spot-lists">

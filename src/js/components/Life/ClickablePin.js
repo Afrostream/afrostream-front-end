@@ -8,15 +8,52 @@ import * as ModalActionCreators from '../../actions/modal'
 import { slugify, extractImg } from '../../lib/utils'
 import Immutable from 'immutable'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import { I18n } from '../Utils'
 
 if (canUseDOM) {
   var ReactGA = require('react-ga')
 }
 
-class ClickablePin extends Component {
+class ClickablePin extends I18n {
 
   constructor (props, context) {
     super(props, context)
+  }
+
+  followUser (e, follow) {
+    const {
+      props: {
+        dispatch,
+        data,
+        User,
+        isCurrentUser
+      }
+    } = this
+
+
+    if (e) {
+      e.preventDefault()
+    }
+
+    if (isCurrentUser) {
+      return
+    }
+
+    const currentUser = User.get('user')
+    if (currentUser) {
+      if (e && e.target) {
+        e.target.classList.toggle('followed')
+      }
+
+      const followUser = data.get('user')
+
+      return dispatch(LifeActionCreators.followUser({
+        follow,
+        data: followUser
+      }))
+    } else {
+      this.modalLogin()
+    }
   }
 
   likePin (e, liked) {
@@ -60,6 +97,7 @@ class ClickablePin extends Component {
     const {
       props: {dispatch, data}
     } = this
+
     if (e) {
       e.preventDefault()
     }
@@ -145,10 +183,13 @@ class ClickablePin extends Component {
         dispatch
       }
     } = this
+
+    if (e && e.defaultPrevented) {
+      return
+    }
     const pinRole = data.get('role') || config.userRoles[1]
     const acl = this.validRole(pinRole)
     const pinUrl = this.getUrl(data)
-
     if (!acl) {
       e.preventDefault()
       const modalRole = this.targetRole()

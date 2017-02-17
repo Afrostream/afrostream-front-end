@@ -4,11 +4,7 @@ import shallowCompare from 'react-addons-shallow-compare'
 import classSet from 'classnames'
 import ReactDOM from 'react-dom'
 import _ from 'lodash'
-
-if (canUseDOM) {
-  require('gsap')
-  var {TweenMax, Expo} = window.GreenSockGlobals
-}
+import  { TweenLight, Expo } from 'gsap'
 
 /**
  * This HOC decorates a virtualized component and responds to arrow-key events by scrolling one row or column at a time.
@@ -213,7 +209,7 @@ export default class ArrowStepper extends Component {
    * @param duration {Number} Duration of the animation
    */
   animateHorizontalScroll (to) {
-    TweenMax.to(this.container, 0.8, {scrollLeft: (this.container.scrollLeft + to), ease: Expo.easeInOut})
+    TweenLight.to(this.container, 0.8, {scrollLeft: (this.container.scrollLeft + to), ease: Expo.easeInOut})
   }
 
   _onScroll ({clientWidth, scrollLeft, scrollWidth}) {

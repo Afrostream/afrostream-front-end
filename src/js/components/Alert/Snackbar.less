@@ -1,0 +1,60 @@
+.react-snackbar-container {
+  position: fixed;
+  left: 20px;
+  bottom: 0;
+  z-index: 99999;
+}
+
+.react-snackbar {
+  overflow: hidden;
+  clear: both;
+  min-width: 288px;
+  max-width: 568px;
+  cursor: pointer;
+  background-color: #323232;
+  color: #FFFFFF;
+  height: auto;
+  font-size: 14px;
+  padding: 14px 15px;
+
+  margin-bottom: 20px;
+
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  transition: transform(0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s);
+  transform: none;
+}
+
+.react-snackbar.react-snackbar-opened {
+  height: auto;
+  padding: 14px 15px;
+  margin-bottom: 20px;
+  height: auto;
+
+  transition: transform(0.2s ease-in-out, opacity 0.2s ease-in, height 0 linear 0.2s);
+  -moz-transform: none;
+  -webkit-transform: none;
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  .react-snackbar-container {
+    left: 0px !important;
+    right: 0px;
+    width: 100%;
+  }
+
+  .react-snackbar-container .react-snackbar {
+    min-width: 100%;
+  }
+
+  .react-snackbar-container [class="react-snackbar react-snackbar-opened"] ~ .react-snackbar.toast {
+    margin-top: 20px;
+  }
+
+  .react-snackbar-container [class="react-snackbar react-snackbar-opened"] {
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+}

@@ -7,7 +7,12 @@ import ClickablePin from './ClickablePin'
 import classSet from 'classnames'
 import ReactImgix from '../Image/ReactImgix'
 import Immutable from 'immutable'
+import _ from 'lodash'
 import PinButton from './PinButton'
+import ReactTooltip from 'react-tooltip'
+import {
+  injectIntl
+} from 'react-intl'
 
 @connect(({Life, User, Event}) => ({Life, User, Event}))
 class LifePin extends ClickablePin {
@@ -21,38 +26,62 @@ class LifePin extends ClickablePin {
       props:{
         data,
         Life,
-        User
+        User,
+        isCurrentUser
       }
     } = this
 
     const type = data.get('type')
     const pinnedUser = data.get('user')
+    const pinnedUserId = pinnedUser && pinnedUser.get('_id')
+    const nickName = pinnedUser && pinnedUser.get('nickname') && `@${pinnedUser.get('nickname')}` || ''
     const cardTypeIcon = {
       'card-bubble': true,
       'card-bubble-type': true
     }
-    cardTypeIcon[type] = true
 
     const pinId = data.get('_id')
     const nbLikes = data.get('likes')
     const currentUser = User.get('user')
     const lifeUserId = currentUser && currentUser.get('_id')
-    const likedPins = lifeUserId && Life.get(`life/users/${lifeUserId}/pins/likes`)
+
+
+    const likedPins = lifeUserId && Life.get(`life/users/${lifeUserId}/likes`)
     const likedPin = likedPins && likedPins.find((pin) => pin.get('pinId') === pinId)
     const liked = likedPin && likedPin.get('liked')
 
-    const likeTypeIcon = {
-      'card-bubble': true,
-      'card-bubble-type': true,
+    const followedUsers = lifeUserId && Life.get(`life/users/${lifeUserId}/followedUsers`)
+    const followedUser = followedUsers && followedUsers.find((follow) => follow.get('followUserId') == pinnedUserId)
+    const followed = followedUser && followedUser.get('follow')
+
+    const likeTypeIcon = _.merge({
       'like': true,
-      'liked': liked,
-      'disabled': !currentUser
-    }
+      'liked': liked
+    }, cardTypeIcon)
+
+    const userTypeIcon = _.merge({
+      'user': true,
+      'followed': followed,
+      'disabled': isCurrentUser
+    }, cardTypeIcon)
+
+    cardTypeIcon[type] = true
+
+    const canFollow = !isCurrentUser
+
+    const titleLabel = this.getTitle(`life.users.${(followed ? 'unfollow' : 'follow')}`, {nickName})
+
+
     return (<div className="card-bubbles">
-      {pinnedUser && <div className="card-bubble card-bubble-user">
+      {pinnedUser && <div className={classSet(userTypeIcon)}
+                          data-tip={titleLabel}
+                          data-place={'top'}
+                          data-for={`user-tip`} onClick={(e) => ::this.followUser(e, !followed)}>
         <img src={pinnedUser.get('picture')}
              alt="user-button"
              className="icon-user"/>
+        <ReactTooltip id={`user-tip`} type="dark"
+                      effect="solid"/>
       </div>}
       <div className={classSet(cardTypeIcon)}/>
       <div className={classSet(likeTypeIcon)} onClick={(e) => ::this.likePin(e, !liked)}>
@@ -131,14 +160,6 @@ class LifePin extends ClickablePin {
           <div className="card-description">
             {description}
           </div>
-          <div className="card-date">
-            {
-              `${pinnedDate.format('L')}`
-            }
-            {pinnedUser &&
-            ` - ${pinnedUser.get('nickname')}`
-            }
-          </div>
 
         </div>}
         {isCurrentUser && <PinButton buttonClass="fa fa-trash"
@@ -146,6 +167,14 @@ class LifePin extends ClickablePin {
                                      target="life-remove"
                                      {...this.props}
                                      onClick={::this.removePin}/>}
+      </div>
+      <div className="card-date"><span className="date">
+        {
+          `${pinnedDate.format('L')}`
+        }</span>
+        {pinnedUser &&
+        <span className="date-nickname">{pinnedUser.get('nickname')}</span>
+        }
       </div>
     </Link>)
   }
@@ -173,4 +202,4 @@ LifePin.defaultProps = {
   showBubble: true
 }
 
-export default LifePin
+export default injectIntl(LifePin)

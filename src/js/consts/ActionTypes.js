@@ -153,8 +153,10 @@ export default {
     fetchSpots: null,
     fetchPins: null,
     fetchPin: null,
+    fetchUsersFollow: null,
     fetchUserLikes: null,
     likePin: null,
+    followUser: null,
     fetchUsers: null,
     fetchUserPins: null
   }),

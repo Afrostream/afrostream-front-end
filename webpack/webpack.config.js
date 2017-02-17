@@ -6,6 +6,7 @@ import ReactIntlPlugin from'react-intl-webpack-plugin'
 import config from '../config'
 import { merge } from 'lodash'
 import herokuConfig from '../app.json'
+import Visualizer from 'webpack-visualizer-plugin'
 
 // chargement de la conf de staging (lorsque l'on est en local)
 if (process.env.LOAD_STAGING) {
@@ -61,30 +62,39 @@ const webpackConfig = {
     ],
     vendor: [
       'mobile-detect',
+      'immutable',
       'superagent',
+      'url',
       'lodash',
       'react',
       'react-dom',
+      'react-sticky',
+      'react-helmet',
+      'react-tooltip',
+      'react-slick',
       'react-router',
       'react-intl',
+      'react-intl-redux',
       'react-redux',
       'react-list',
       'react-virtualized',
+      'iban',
       'redux',
+      'redux-router',
       'fbjs/lib/ExecutionEnvironment',
       'history',
       'moment',
       'classnames',
       'xhr',
-      'jquery',
       'payment',
-      'bootstrap',
       'raven-js',
       'mobile-detect',
+      'material-ui',
+      'intl',
       'q',
       'qs',
-      'outdated-browser/outdatedbrowser/outdatedbrowser',
-      'material-ui'
+      'gsap',
+      'outdated-browser/outdatedbrowser/outdatedbrowser'
     ]
   },
   resolve: {
@@ -194,15 +204,6 @@ const webpackConfig = {
         test: /mobile-detect/, loader: 'expose-loader?MobileDetect'
       },
       {
-        test: /jquery\.js$/, loader: 'expose-loader?$'
-      },
-      {
-        test: /jquery\.js$/, loader: 'expose-loader?jQuery'
-      },
-      {
-        test: /jquery\.js$/, loader: 'expose-loader?jquery'
-      },
-      {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
         loader: 'expose-loader?outdatedBrowser',
         include: [path.join(nodeModulesPath, 'outdated-browser/outdatedbrowser')]
@@ -231,6 +232,7 @@ const webpackConfig = {
   //  'window': 'Window'
   //},
   plugins: [
+    new Visualizer(),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['player', 'vendor'],
       //async: process.env.NODE_ENV === 'production',
@@ -244,10 +246,7 @@ const webpackConfig = {
     new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
       MobileDetect: 'mobile-detect',
-      videojs: 'video.js',
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.$': 'jquery'
+      videojs: 'video.js'
     }),
     new webpack.DefinePlugin({
       'global.GENTLY': false,

@@ -77,35 +77,6 @@ class SubNavigation extends I18n {
           )}
         </ul>
         {children && children}
-        {/* <div className="sub-navigation">
-         <AutoSizer disableHeight>
-         {({width}) => (
-         <div style={{width}}>
-         <CellMeasurer
-         cellRenderer={::this.renderItem}
-         columnCount={themesList.size}
-         height={50}
-         rowCount={1}
-         >
-         {({getColumnWidth, columnCount}) => (
-         <Grid
-         ref="reactGrid"
-         cellRenderer={::this.renderItem}
-         columnWidth={getColumnWidth}
-         columnCount={columnCount}
-         overscanColumnCount={0}
-         overscanRowCount={0}
-         rowHeight={50}
-         height={50}
-         rowCount={1}
-         width={width}
-         />
-         )}
-         </CellMeasurer>
-         </div>
-         )}
-         </AutoSizer>
-         </div>*/}
       </Headroom>
     )
   }

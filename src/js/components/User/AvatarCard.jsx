@@ -5,10 +5,12 @@ import { connect } from 'react-redux'
 import * as ModalActionCreators from '../../actions/modal'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as EventActionCreators from '../../actions/event'
+import * as LifeActionCreators from '../../actions/life'
 import { Link } from '../Utils'
 import { slugify } from '../../lib/utils'
 import ReactImgix from '../Image/ReactImgix'
 import { I18n } from '../Utils'
+import ReactTooltip from 'react-tooltip'
 
 import {
   injectIntl
@@ -18,12 +20,54 @@ if (process.env.BROWSER) {
   require('./AvatarCard.less')
 }
 
-@connect(({User}) => ({User}))
+@connect(({User, Life}) => ({User, Life}))
 class AvatarCard extends I18n {
 
   onError (e) {
     e.target.src = require('../../../assets/images/default/134x200.jpg')
   }
+
+  componentDidUpdate () {
+    ReactTooltip.rebuild()
+  }
+
+  isFollowed () {
+    const {
+      props: {
+        Life,
+        User,
+        user,
+        params
+      }
+    } = this
+
+    const globalUser = User.get('user')
+    const pinnedUserId = user.get('_id')
+    const lifeUserId = globalUser && globalUser.get('_id')
+    const followedUsers = lifeUserId && Life.get(`life/users/${lifeUserId}/followedUsers`)
+    const followedUser = followedUsers && followedUsers.find((follow) => follow.get('followUserId') == pinnedUserId)
+    const followed = followedUser && followedUser.get('follow')
+    return followed
+  }
+
+  followUser () {
+    const {
+      props: {
+        dispatch,
+        User,
+        user
+      }
+    } = this
+
+    const globalUser = User.get('user')
+    const followed = this.isFollowed()
+
+    if (globalUser) {
+      return dispatch(LifeActionCreators.followUser({data: user, follow: !followed}))
+    }
+    dispatch(ModalActionCreators.open({target: 'showSignup'}))
+  }
+
 
   syncFB () {
     const {
@@ -58,7 +102,8 @@ class AvatarCard extends I18n {
         user,
         User,
         bio,
-        upload
+        upload,
+        params
       }
     } = this
 
@@ -68,38 +113,60 @@ class AvatarCard extends I18n {
 
     const gloBalUser = User.get('user')
 
-    const nickName = user.get('nickname')
     const id = user.get('_id')
+
+
+    const isCurrentUser = gloBalUser && gloBalUser.get('_id') === id
+    const nickName = user && user.get('nickname') && `@${user.get('nickname')}` || ''
+    const userBio = bio && user.get('biography')
+
+    const canUpload = upload || isCurrentUser
+    const canFollow = !isCurrentUser && params.lifeUserId
+    const followed = this.isFollowed()
+    const followers = user && user.get('followers') || 0
+
+    const avatarClass = {
+      'avatar': true,
+      'avatar-upload': canUpload,
+      'avatar-follow': canFollow,
+      'followed': followed
+    }
 
     const propsTo = {
       to: `/life/community/${id}/${slugify(nickName)}`,
       onClick: () => {
-        if (isCurrentUser) {
+        if (canUpload) {
           this.syncFB()
+        }
+        if (canFollow) {
+          this.followUser()
         }
       }
     }
 
-    const isCurrentUser = gloBalUser && gloBalUser.get('_id') === id
-    const userBio = bio && user.get('biography')
-    const avatarClass = {
-      'avatar': true,
-      'avatar-upload': upload || isCurrentUser
-    }
+    const titleLabel = canFollow && this.getTitle(`life.users.${(canUpload && 'upload') || (followed ? 'unfollow' : 'follow')}`, {nickName}) || ''
 
     return (
       <div className={this.props.className}>
         <Link {...propsTo}>
-          <div className={classSet(avatarClass)}>
+          <div className={classSet(avatarClass)}
+               data-tip={titleLabel}
+               data-place={'bottom'}
+               data-for={`user-tip`}>
             {imageUrl && <ReactImgix className="avatar-card__background_image" src={`${imageUrl}?type=large`} bg={true}
                                      onError={this.onError} alt="user-avatar"/>}
           </div>
-          <div className="content">
-            <p>{user.get('nickname')}</p>
-            {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size.toString()})}</p>}
-            {userBio && <p className="user-bio">{userBio}</p>}
-          </div>
+          <ReactTooltip id={`user-tip`} type="dark"
+                        effect="solid"/>
         </Link>
+        <div className="content">
+          {nickName && <p>{nickName}</p>}
+          {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size.toString()})}</p>}
+          <p>{this.getTitle('life.sticky.nbfollowers', {followers: followers.toString()})}</p>
+          {canFollow && <p><Link {...propsTo}
+                                 onClick={::this.followUser}>{titleLabel}</Link></p>}
+          {userBio && <p className="user-bio">{userBio}</p>}
+        </div>
       </div>
     )
   }
