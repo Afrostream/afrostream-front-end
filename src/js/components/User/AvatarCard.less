@@ -56,7 +56,7 @@
       background-repeat: no-repeat;
       background-size: cover;
       border-radius: 50%;
-      border: 5px solid fade(@color-indigo, 90%);
+      //border: 5px solid fade(@color-indigo, 90%);
     }
     &.avatar-upload {
       .transition(all .2s linear);
@@ -78,7 +78,9 @@
       }
 
       &.followed {
-        background-color: @color-black-2;
+        &:hover {
+          background-color: @color-black-2;
+        }
         &:after {
           content: "\f273";
         }
@@ -89,16 +91,57 @@
   .content {
     padding: 10px;
     color: @color-indigo;
-    font-family: @font-oswald;
+    font-family: @font-family-base;
     font-size: 1.3em;
-    &:first-letter {
-      text-transform: uppercase;
-    }
+    text-align: left;
+    vertical-align: top;
+    //&:first-letter {
+    //  text-transform: uppercase;
+    //}
     a,
     a:hover {
       text-decoration: underline;
       color: @color-black-2;
       cursor: pointer;
     }
+
+    .nickname {
+      pointer-events: none;
+      font-family: @font-oswald;
+      font-size: 1.9em;
+    }
+    span {
+      pointer-events: none;
+      display: inline-block;
+      margin: 0.3em;
+      b {
+        padding: 0 0.3em 0 0;
+        font-family: @font-heavy;
+      }
+    }
   }
+  .btn.btn-follow_button {
+    background-color: fade(@subscriber-color, 70%);
+    position: relative;
+    margin: 5px 5px 5px 0px;
+    border-radius: @btn-radius;
+    min-width: 40px;
+    cursor: pointer;
+    color: @brand-primary;
+    font-family: @font-family-base;
+    text-decoration: none;
+    &:hover {
+      background-color: fade(@subscriber-color, 90%);
+    }
+    span {
+      margin: 1em;
+    }
+  }
+
+  .user-bio {
+    padding: @app-padding;
+    background: darken(@brand-primary, 5%);
+    word-wrap: break-word;
+  }
+
 }

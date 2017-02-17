@@ -643,6 +643,7 @@
       "labelMenu": "The community",
       "labelTimeline": "All posts",
       "labelFollow": "Followed users",
+      "show": "Show {nickName} profile",
       "unfollow": "Unfollow {nickName}",
       "follow": "Follow {nickName}",
       "upload": "Add an avatar",
@@ -660,6 +661,9 @@
     "sticky": {
       "nbpost": "Number of post : {pins}",
       "nbfollowers": "Number de follower : {followers}",
+      "nbpost": "<b>{pins}</b> post",
+      "nbfollowers": "<b>{followers}</b> followers",
+      "nbfollowed": "<b>{followers}</b> followed",
       "tooltip": "Post content",
       "remove": "Remove content"
     },

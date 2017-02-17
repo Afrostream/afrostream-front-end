@@ -117,7 +117,7 @@ class AvatarCard extends I18n {
 
 
     const isCurrentUser = gloBalUser && gloBalUser.get('_id') === id
-    const nickName = user && user.get('nickname') && `@${user.get('nickname')}` || ''
+    const nickName = user && user.get('nickname') && `${user.get('nickname')}` || ''
     const userBio = bio && user.get('biography')
 
     const canUpload = upload || isCurrentUser
@@ -147,8 +147,8 @@ class AvatarCard extends I18n {
     const titleLabel = canFollow && this.getTitle(`life.users.${(canUpload && 'upload') || (followed ? 'unfollow' : 'follow')}`, {nickName}) || ''
 
     return (
-      <div className={this.props.className}>
-        <Link {...propsTo}>
+      <div className={`row row-centered ${this.props.className}`}>
+        <Link {...propsTo} className="col-centered col-md-4">
           <div className={classSet(avatarClass)}
                data-tip={titleLabel}
                data-place={'bottom'}
@@ -159,13 +159,32 @@ class AvatarCard extends I18n {
           <ReactTooltip id={`user-tip`} type="dark"
                         effect="solid"/>
         </Link>
-        <div className="content">
-          {nickName && <p>{nickName}</p>}
-          {pins && <p>{this.getTitle('life.sticky.nbpost', {pins: pins.size.toString()})}</p>}
-          <p>{this.getTitle('life.sticky.nbfollowers', {followers: followers.toString()})}</p>
-          {canFollow && <p><Link {...propsTo}
-                                 onClick={::this.followUser}>{titleLabel}</Link></p>}
-          {userBio && <p className="user-bio">{userBio}</p>}
+        <div className="content col-centered col-md-8">
+          <div className="row">
+            {nickName &&
+            <div className="col-md-12">
+              <div className="nickname">
+                {nickName}
+              </div>
+              <div>
+                {canFollow && <Link {...propsTo} role="button" className="btn btn-follow_button"
+                                    onClick={::this.followUser}>{titleLabel}</Link>}
+              </div>
+            </div>}
+            <div className="col-md-12">
+              {pins && pins.size > 0 && <span>
+                <b>{pins.size.toString()}</b>
+                {this.getTitle('life.sticky.nbpost')}
+              </span> || ''}
+              {followers && followers > 0 && <span>
+                <b>{followers.toString()}</b>
+                {this.getTitle('life.sticky.nbfollowers')}
+              </span> || ''}
+            </div>
+            <div className="col-md-12">
+              {userBio && <div className="user-bio">{userBio}</div>}
+            </div>
+          </div>
         </div>
       </div>
     )

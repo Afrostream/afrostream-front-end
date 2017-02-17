@@ -21,13 +21,12 @@ class LifePin extends ClickablePin {
     super(props, context)
   }
 
-  renderBubbles () {
+  renderBubbles (isCurrentUser) {
     const {
       props:{
         data,
         Life,
-        User,
-        isCurrentUser
+        User
       }
     } = this
 
@@ -61,22 +60,19 @@ class LifePin extends ClickablePin {
 
     const userTypeIcon = _.merge({
       'user': true,
-      'followed': followed,
-      'disabled': isCurrentUser
+      'followed': followed
     }, cardTypeIcon)
 
     cardTypeIcon[type] = true
 
-    const canFollow = !isCurrentUser
-
-    const titleLabel = this.getTitle(`life.users.${(followed ? 'unfollow' : 'follow')}`, {nickName})
+    const titleLabel = this.getTitle(`life.users.show`, {nickName})
 
 
     return (<div className="card-bubbles">
       {pinnedUser && <div className={classSet(userTypeIcon)}
                           data-tip={titleLabel}
                           data-place={'top'}
-                          data-for={`user-tip`} onClick={(e) => ::this.followUser(e, !followed)}>
+                          data-for={`user-tip`} onClick={(e) => ::this.showUser(e)}>
         <img src={pinnedUser.get('picture')}
              alt="user-button"
              className="icon-user"/>
@@ -100,21 +96,26 @@ class LifePin extends ClickablePin {
         index,
         data,
         over,
-        isCurrentUser,
         imageWidth,
-        imageHeight
+        imageHeight,
+        User
       }
     }= this
+
+    const currentUser = User.get('user')
+    const currentUserId = currentUser && currentUser.get('_id')
 
     const type = data.get('type')
     const pinnedDate = moment(data.get('date'))
     const pinnedUser = data.get('user')
+    const pinnedUserId = pinnedUser.get('_id')
     const description = data.get('description')
     const themes = data.get('themes')
     const pinRole = data.get('role')
     const isPremium = pinRole === 'premium' || pinRole === 'vip'
     const isFull = true
     const isMobile = Event.get('isMobile')
+    const isCurrentUser = pinnedUserId === currentUserId
 
     let imageUrl = extractImg({
       data,
@@ -153,10 +154,10 @@ class LifePin extends ClickablePin {
           <div className="card-info">
             <div target="_self">{data.get('title')}</div>
           </div>
-          {this.renderBubbles()}
+          {this.renderBubbles(isCurrentUser)}
         </div>
         {description && over && <div className="card-sub-info">
-          {this.renderBubbles()}
+          {this.renderBubbles(isCurrentUser)}
           <div className="card-description">
             {description}
           </div>
@@ -181,7 +182,6 @@ class LifePin extends ClickablePin {
 }
 
 LifePin.propTypes = {
-  isCurrentUser: PropTypes.bool,
   data: PropTypes.instanceOf(Immutable.Map),
   index: PropTypes.number,
   imageHeight: PropTypes.number,
@@ -194,7 +194,6 @@ LifePin.propTypes = {
 
 
 LifePin.defaultProps = {
-  isCurrentUser: false,
   index: 0,
   imageWidth: 1080,
   imageHeight: 500,

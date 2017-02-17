@@ -62,7 +62,7 @@ class LifeUsersList extends Component {
 
     return (
       <div className="col-md-3 col-xs-4" {...{key}}>
-        <AvatarCard className="avatar-card col-md-3" {...{user}} {...this.props} />
+        <AvatarCard {...{user}} {...this.props} />
       </div>
     )
   }
