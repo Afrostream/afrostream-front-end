@@ -4,12 +4,10 @@ import webpackConfig from './webpack.config'
 import { merge } from 'lodash'
 import path from 'path'
 import fs from 'fs'
-import OfflinePlugin from 'offline-plugin'
 const assetsPath = path.resolve(__dirname, '../dist')
 const node_modules_dir = path.resolve(__dirname, '../node_modules')
 const productionMode = process.env.NODE_ENV === 'production'
 
-//require('offline-plugin/runtime').install()
 //
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
@@ -65,7 +63,6 @@ let clientConfig = merge({}, webpackConfig, {
       minRatio: 0.8
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    //new OfflinePlugin(merge(webpackConfig.sw, {}))
   )
 })
 
@@ -93,7 +90,7 @@ let serverConfig = merge({}, {
   },
   externals: nodeModules,
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json', '.node']
+    extensions: ['.js', '.jsx', '.json', '.node']
   },
 
   node: {
@@ -106,8 +103,8 @@ let serverConfig = merge({}, {
   module: {
     noParse: /node_modules\/json-schema\/lib\/validate\.js/,
     rules: [
-      {test: /\.node$/, loader: 'node-loader'},
-      {test: /\.json$/, loader: 'json-loader'},
+      {test: /\.node$/, use: 'node-loader'},
+      {test: /\.json$/, use: 'json-loader'},
       {
         test: /\.jsx?$/,
         use: ['babel-loader'],
@@ -121,7 +118,7 @@ let serverConfig = merge({}, {
       {
         test: /\.(ico)$/,
         exclude: /node_modules/,
-        user: 'file-loader?name=img/[path][name].[ext]&context=./app/images'
+        use: 'file-loader?name=img/[path][name].[ext]&context=./app/images'
       }
     ]
   },

@@ -117,7 +117,6 @@
     "node-libs-browser": "^0.5.2",
     "normalize.css": "^3.0.3",
     "nprogress": "^0.2.0",
-    "offline-plugin": "^4.5.4",
     "optimist": "^0.6.1",
     "outdated-browser": "^1.0.2",
     "packageify": "^0.2.2",
