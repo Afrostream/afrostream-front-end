@@ -56,6 +56,29 @@ class ClickablePin extends I18n {
     }
   }
 
+  showUser (e) {
+    const {
+      props: {
+        dispatch,
+        data,
+        User,
+        router,
+        isCurrentUser
+      }
+    } = this
+
+
+    if (e) {
+      e.preventDefault()
+    }
+
+    const user = data.get('user')
+    const id = user.get('_id')
+    const nickname = user.get('nickname')
+
+    router.push(`/life/community/${id}/${slugify(nickname)}`)
+  }
+
   likePin (e, liked) {
     const {
       props: {

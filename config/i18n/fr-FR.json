@@ -634,6 +634,7 @@
       "labelMenu": "La communauté",
       "labelTimeline": "Tous les posts",
       "labelFollow": "Utilisateurs suivis",
+      "show": "Voir le profil de {nickName}",
       "unfollow": "Ne plus suivre {nickName}",
       "follow": "Suivre {nickName}",
       "upload": "Ajouter une photo",
@@ -649,8 +650,9 @@
       "action": "Rejoignez-nous"
     },
     "sticky": {
-      "nbpost": "Nombre de posts : {pins}",
-      "nbfollowers": "Nombre de followers : {followers}",
+      "nbpost": "publications",
+      "nbfollowers": "abonné(s)",
+      "nbfollowing": "suivi(s)",
       "tooltip": "Poster du contenu",
       "remove": "Supprimer ce contenu"
     },

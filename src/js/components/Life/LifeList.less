@@ -126,20 +126,12 @@
     }
     &.user {
       &:after {
-        opacity: 0.7;
+        opacity: 0;
       }
       &:hover {
         &:after {
           opacity: 1;
         }
-      }
-      &.followed {
-        &:after {
-          content: "\f068";
-        }
-      }
-      &:after {
-        content: "\f067";
       }
     }
 
@@ -148,7 +140,6 @@
       animation: heartUnlike .25s @bezier both;
 
       &:after {
-        content: "\f004";
         color: @brand-primary;
       }
 
@@ -245,6 +236,18 @@
         }
       }
 
+    }
+
+    &.user {
+      &:after {
+        line-height: 1.7;
+        content: "\f06e";
+      }
+    }
+    &.like {
+      &:after {
+        content: "\f004";
+      }
     }
     &.pin {
       &:after {

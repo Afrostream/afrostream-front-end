@@ -29,13 +29,13 @@ let clientConfig = merge({}, webpackConfig, {
   },
   module: {},
   plugins: webpackConfig.plugins.concat(
-    new webpack.BannerPlugin('App has been developed by @benjipott Afrostream.'),
+    new webpack.BannerPlugin({banner: 'App has been developed by @benjipott Afrostream.', raw: true, entryOnly: true}),
     //WEBPACK2 FEATURE
-    //new webpack.LoaderOptionsPlugin({
-    //  debug: false,
-    //  minimize: true,
-    //  sourceMap: !productionMode
-    //}),
+    new webpack.LoaderOptionsPlugin({
+      debug: false,
+      minimize: true,
+      sourceMap: !productionMode
+    }),
     new webpack.optimize.UglifyJsPlugin({
       mangle: {
         except: ['require', 'export', '$super']
@@ -105,23 +105,23 @@ let serverConfig = merge({}, {
 
   module: {
     noParse: /node_modules\/json-schema\/lib\/validate\.js/,
-    loaders: [
+    rules: [
       {test: /\.node$/, loader: 'node-loader'},
-      {test: /\.json$/, loader: 'json'},
+      {test: /\.json$/, loader: 'json-loader'},
       {
         test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         exclude: [node_modules_dir]
       },
       {
         test: /\.(ico)$/,
         exclude: /node_modules/,
-        loader: 'file-loader?name=img/[path][name].[ext]&context=./app/images'
+        user: 'file-loader?name=img/[path][name].[ext]&context=./app/images'
       }
     ]
   },
@@ -129,12 +129,12 @@ let serverConfig = merge({}, {
   target: 'node',
 
   plugins: [
+    new webpack.IgnorePlugin(/\.(css|less|sass|gif|jpg|png|svg|favicon|ico|swf|xap)$/),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['server'],
+      name: 'server',
+      filename: 'server.js',
       minChunks: Infinity
     }),
-    new webpack.IgnorePlugin(/\.(css|less|sass|gif|jpg|png|svg|favicon|ico|swf|xap)$/),
-    new webpack.optimize.CommonsChunkPlugin('server', 'server.js'),
   ],
 
   devtool: 'source-map'

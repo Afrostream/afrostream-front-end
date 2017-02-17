@@ -14,6 +14,8 @@ if (process.env.LOAD_STAGING) {
   process.env = merge(process.env, herokuConfig.env)
 }
 
+const productionMode = process.env.NODE_ENV === 'production'
+
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',
@@ -39,7 +41,6 @@ const {webpackDevServer: {host, port}} = config
 const webpackDevServerUrl = `http://${host}:${port}`
 
 const webpackConfig = {
-  sw: {},
   devtool: '#cheap-source-map',
   output: {
     path: assetsPath,
@@ -61,11 +62,22 @@ const webpackConfig = {
       'afrostream-player'
     ],
     vendor: [
-      'mobile-detect',
+      'classnames',
+      'fbjs/lib/ExecutionEnvironment',
+      'gsap',
+      'history',
+      'iban',
       'immutable',
-      'superagent',
-      'url',
+      'intl',
       'lodash',
+      'material-ui',
+      'mobile-detect',
+      'moment',
+      'outdated-browser/outdatedbrowser/outdatedbrowser',
+      'payment',
+      'q',
+      'qs',
+      'raven-js',
       'react',
       'react-dom',
       'react-sticky',
@@ -78,36 +90,20 @@ const webpackConfig = {
       'react-redux',
       'react-list',
       'react-virtualized',
-      'iban',
       'redux',
       'redux-router',
-      'fbjs/lib/ExecutionEnvironment',
-      'history',
-      'moment',
-      'classnames',
-      'xhr',
-      'payment',
-      'raven-js',
-      'mobile-detect',
-      'material-ui',
-      'intl',
-      'q',
-      'qs',
-      'gsap',
-      'outdated-browser/outdatedbrowser/outdatedbrowser'
+      'superagent',
+      'url',
+      'xhr'
     ]
   },
   resolve: {
-    modulesDirectories: [
+    modules: [
       srcPath,
       serverPath,
       nodeModulesPath,
     ],
-    extensions: ['.js', '.jsx', '.json', ''],
-    loaderExtensions: ['.js', ''],
-    loaderPostfixes: [''],
-    unsafeCache: true,
-    postfixes: ['']
+    extensions: ['.js', '.jsx', '.json', '.less']
   },
   profile: true,
   stats: {
@@ -126,96 +122,93 @@ const webpackConfig = {
     publicPath: true
   },
   module: {
-    preLoaders: [
-      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [nodeModulesPath]},
-      {test: /\.js$/, loader: 'eslint-loader', exclude: [nodeModulesPath]}
-    ],
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
-        loaders: ['babel-loader'],
+        test: /\.(jsx|js)$/,
+        use: ['babel-loader'],
         exclude: [nodeModulesPath],
       },
       {
-        test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
+        test: /\.(jsx|js)$/,
+        enforce: 'pre',
+        use: [{
+          options: {
+            configFile: path.join(__dirname, '../.eslintrc'),
+            useEslintrc: false
+          },
+          loader: 'eslint-loader'
+        }],
         exclude: [nodeModulesPath]
       },
       {
         test: /\.json$/,
-        loaders: ['json']
+        use: ['json-loader']
       },
       {
-        test: /\.(css|less)$/,
-        loaders: [ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loaders: [
-            {
-              //notExtractLoader: 'style-loader',
-              loader: 'css-loader',
-              options: {sourceMap: true, importLoaders: 1}
-            },
-            {
-              loader: 'less-loader',
-              options: {sourceMap: true, importLoaders: 1}
-            }]
-        })],
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader']
+        }),
         include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'less-loader']
+        })
       },
       {
         test: /\.(gif|jpg|png|svg|favicon|ico|swf|xap)/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
+        use: 'url-loader?name=[name].[ext]?[hash]&limit=10000'
       },
       {
         test: /.(woff|woff2)([\?]?.*)$/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
+        use: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /.ttf([\?]?.*)$/,
-        loader: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
+        use: 'url-loader?name=[name].[ext]?[hash]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /.eot([\?]?.*)$/,
-        loader: 'file-loader?name=[name].[ext]?[hash]'
+        use: 'file-loader?name=[name].[ext]?[hash]'
       },
       {
         test: /videojs-vtt\.js/,
-        loader: 'file-loader?name=[name].[ext]?[hash]'
+        use: 'file-loader?name=[name].[ext]?[hash]'
       },
       {
         test: /ismobilejs/,
-        loader: 'file-loader?name=[name].[ext]?[hash]',
+        use: 'file-loader?name=[name].[ext]?[hash]',
         include: [path.join(nodeModulesPath, 'ismobilejs')]
       },
       {
         test: /.*polyfills/,
-        loader: 'file-loader?name=[name].[ext]?[hash]'
+        use: 'file-loader?name=[name].[ext]?[hash]'
       },
       {
         test: /video\.js$/,
-        loader: 'expose-loader?videojs',
+        use: 'expose-loader?videojs',
         include: [path.join(nodeModulesPath, 'afrostream-player')]
       },
       {
-        test: /mobile-detect/, loader: 'expose-loader?MobileDetect'
+        test: /mobile-detect/, use: 'expose-loader?MobileDetect'
       },
       {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
-        loader: 'expose-loader?outdatedBrowser',
+        use: 'expose-loader?outdatedBrowser',
         include: [path.join(nodeModulesPath, 'outdated-browser/outdatedbrowser')]
       },
       {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
-        loaders: ['imports?this=>window'],
+        use: ['imports-loader?this=>window'],
         include: [path.join(nodeModulesPath, 'outdated-browser/outdatedbrowser')]
       },
       {
         test: /outdated-browser\/outdatedbrowser\/outdatedbrowser*/,
-        loaders: ['exports-loader?outdatedBrowser'],
+        use: ['exports-loader?outdatedBrowser'],
         include: [path.join(nodeModulesPath, 'outdated-browser/outdatedbrowser')]
       }
     ],
@@ -238,11 +231,21 @@ const webpackConfig = {
       //async: process.env.NODE_ENV === 'production',
       minChunks: 2
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: !productionMode,
+      minimize: productionMode,
+      sourceMap: !productionMode,
+      options: {
+        postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
+      }
+    }),
     new webpack.ContextReplacementPlugin(/moment[\\\/]lang$/, /^\.\/(en|fr)$/),
     new webpack.ContextReplacementPlugin(/moment\.js[\/\\]locale$/, /^\.\/(fr|en)$/),
-    new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new ExtractTextPlugin({
+      filename: '[name].css',
+      allChunks: true,
+      disable: false
+    }),
     new ReactIntlPlugin(),
     new webpack.ProvidePlugin({
       MobileDetect: 'mobile-detect',
@@ -278,9 +281,7 @@ const webpackConfig = {
         SUBDOMAIN: JSON.stringify(process.env.SUBDOMAIN)
       }
     })
-  ],
-
-  postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
+  ]
 }
 
 export default webpackConfig

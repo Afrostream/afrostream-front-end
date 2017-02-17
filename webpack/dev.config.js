@@ -8,7 +8,7 @@ import path from 'path'
 //import Dashboard from 'webpack-dashboard'
 //const dashboard = new Dashboard()
 //
-const node_modules_dir = path.resolve(__dirname, '../node_modules')
+const nodeModulesPath = path.resolve(__dirname, '../node_modules')
 // Configuration for the client-side bundle (app.js)
 // -----------------------------------------------------------------------------
 const {webpackDevServer: {host, port}} = config
@@ -16,23 +16,30 @@ const {browserSyncServer: {bSyncHost, bSyncPort}} = config
 
 const webpackDevServerUrl = `http://${host}:${port}`
 let clientConfig = merge({}, webpackConfig, {
-  debug: true,
   devServer: {
-    quiet: true, // add
-    hot: true,
     historyApiFallback: true,
-    noInfo: true,
-    watch: true,
-    progress: true,
-    watchOptions: {
-      ignored: node_modules_dir
-    },
-    clientLogLevel: 'none',
-    https: false
+    compress: false,
+    inline: true,
+    hot: true,
+    stats: {
+      assets: true,
+      children: false,
+      chunks: false,
+      hash: false,
+      modules: false,
+      publicPath: false,
+      timings: true,
+      version: false,
+      warnings: true,
+      colors: {
+        green: '\u001b[32m',
+      }
+    }
   }
 })
 
 clientConfig.entry.main = [
+  //`react-dev-utils/webpackHotDevClient`,
   `webpack-dev-server/client?${webpackDevServerUrl}`,
   'webpack/hot/only-dev-server',
   clientConfig.entry.main
@@ -43,9 +50,6 @@ clientConfig.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin(),
   new webpack.ProgressPlugin(function (percentage, message) {
-    var MOVE_LEFT = new Buffer('1b5b3130303044', 'hex').toString()
-    var CLEAR_LINE = new Buffer('1b5b304b', 'hex').toString()
-    //process.stdout.write(CLEAR_LINE + Math.round(percentage * 100) + '% :' + message + MOVE_LEFT)
     if (percentage === 0) {
       console.log('');
       console.log('webpack: bundle build is started ... wait a moment ...');
@@ -62,7 +66,7 @@ clientConfig.plugins.push(
   //})
 )
 
-clientConfig.module.loaders[0].loaders.unshift('react-hot')
+clientConfig.module.rules[0].use.unshift('react-hot-loader')
 
 //
 // Configuration for the server-side bundle (server.js)
@@ -78,20 +82,17 @@ let serverConfig = merge({}, webpackConfig, {
     libraryTarget: 'commonjs2'
   },
   module: {
-    preLoaders: [
-      {test: /\.jsx?$/, loader: 'eslint-loader', exclude: [node_modules_dir]},
-      {test: /\.js$/, loader: 'eslint-loader', exclude: [node_modules_dir]}
-    ],
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
-        loaders: ['babel-loader'],
-        exclude: [node_modules_dir]
+        test: /\.(js|jsx)$/,
+        use: ['babel-loader'],
+        exclude: [nodeModulesPath],
       },
       {
-        test: /\.js$/, // include .js files
-        loaders: ['babel-loader'],
-        exclude: [node_modules_dir]
+        test: /\.(js|jsx)$/,
+        use: 'eslint-loader',
+        enforce: 'pre',
+        exclude: [nodeModulesPath]
       }
     ]
   },

@@ -69,14 +69,14 @@ class LifePin extends ClickablePin {
 
     const canFollow = !isCurrentUser
 
-    const titleLabel = this.getTitle(`life.users.${(followed ? 'unfollow' : 'follow')}`, {nickName})
+    const titleLabel = this.getTitle(`life.users.show`, {nickName})
 
 
     return (<div className="card-bubbles">
       {pinnedUser && <div className={classSet(userTypeIcon)}
                           data-tip={titleLabel}
                           data-place={'top'}
-                          data-for={`user-tip`} onClick={(e) => ::this.followUser(e, !followed)}>
+                          data-for={`user-tip`} onClick={(e) => ::this.showUser(e)}>
         <img src={pinnedUser.get('picture')}
              alt="user-button"
              className="icon-user"/>
