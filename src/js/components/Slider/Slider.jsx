@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import classSet from 'classnames'
-import  { TweenLight, Expo } from 'gsap'
+import  { TweenMax, Expo } from 'gsap'
 
 class Slider extends React.Component {
 
