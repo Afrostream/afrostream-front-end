@@ -55,8 +55,7 @@ class BraintreeForm extends CouponForm {
             }
 
             paypalInstance.tokenize({
-              flow: 'checkout',
-              inten: 'sale',
+              flow: 'vault',
               planId: billingInfo.internalPlanUuid,
               singleUse: false,
               enableShippingAddress: true,
