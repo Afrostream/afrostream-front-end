@@ -110,7 +110,7 @@ class AvatarCard extends I18n {
     const imageUrl = user.get('picture')
 
     const pins = user.get('lifePins')
-    const pinscount = user.get('pinscount')
+    const pinscount = user.get('pinscount') || (pins && pins.size) || 0
 
     const gloBalUser = User.get('user')
 
@@ -173,8 +173,8 @@ class AvatarCard extends I18n {
               </div>
             </div>}
             <div className="col-md-12">
-              {((pins && pins.size > 0) || (pinscount && pinscount > 0)) && <span>
-                <b>{pins.size.toString()}</b>
+              {pinscount && pinscount > 0 && <span>
+                <b>{pinscount.toString()}</b>
                 {this.getTitle('life.sticky.nbpost')}
               </span> || ''}
               {followers && followers > 0 && <span>
