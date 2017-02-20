@@ -6,8 +6,13 @@ import moment from 'moment'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import window from 'global/window'
 import CouponForm from './CouponForm'
+import braintreeLib from 'braintree-web'
 
 class BraintreeForm extends CouponForm {
+
+  state = {
+    hasLib: true
+  }
 
   constructor (props, context) {
     super(props, context)
@@ -21,16 +26,6 @@ class BraintreeForm extends CouponForm {
     selected: false
   }
 
-  componentWillReceiveProps ({isScriptLoaded, isScriptLoadSucceed}) {
-    if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished
-      if (!isScriptLoadSucceed) {
-        this.setState({
-          hasLib: isScriptLoadSucceed
-        })
-      }
-    }
-  }
-
   async submit (billingInfo, currentPlan) {
     const {
       props:{provider}
@@ -39,48 +34,57 @@ class BraintreeForm extends CouponForm {
     return await new Promise(
       (resolve, reject) => {
         //Detect si le payment via la lib braintree est dispo
-        const braintreeLib = window['braintree']
         let error = {
           message: '',
           fields: []
         }
-        if (braintreeLib) {
-          braintreeLib.setup(config.braintree.key, 'paypal', {
-            onReady: (integration) => {
-              integration.paypal.initAuthFlow()
-            },
-            onError: (err) => {
-              return reject(err)
-            },
-            onPaymentMethodReceived: (payload) => {
-              console.log(payload)
-              return resolve({
-                billingProviderName: provider,
-                billingInfo: {
-                  countryCode: payload.details.billingAddress.countryCodeAlpha2
-                },
-                subOpts: {
-                  customerBankAccountToken: payload.nonce,
-                  couponCode: couponCode.getValue()
-                }
-              })
-              // retrieve nonce from payload.nonce
-            },
-            paypal: {
+        braintreeLib.client.create({
+          authorization: config.braintree.key
+        }, (clientErr, clientInstance) => {
+
+          if (clientErr) {
+            return reject(clientErr)
+          }
+
+          braintreeLib.paypal.create({
+            client: clientInstance
+          }, (paypalErr, paypalInstance) => {
+
+            if (paypalErr) {
+              return reject(paypalErr)
+            }
+
+            paypalInstance.tokenize({
+              flow: 'checkout',
+              inten: 'sale',
               planId: billingInfo.internalPlanUuid,
               singleUse: false,
               enableShippingAddress: true,
               amount: parseFloat(currentPlan.get('amount').replace(/,/, '.')),
               currency: currentPlan.get('currency'),
               locale: `${moment.locale()}_${moment.locale().toUpperCase()}`,
-              headless: true,
-              onAuthorizationDismissed: () => {
-                error.message = this.getTitle('payment.errors.cancelled')
-                return reject(error)
-              },
-            }
+              headless: true
+            }, (tokenizeErr, payload) => {
+
+              if (tokenizeErr) {
+                return reject(tokenizeErr)
+              }
+
+              console.log(payload)
+              return resolve({
+                billingProviderName: provider,
+                billingInfo: {
+                  countryCode: payload.details.billingAddress && (payload.details.billingAddress.countryCodeAlpha2 || payload.details.billingAddress.countryCode) || payload.details.countryCode
+                },
+                subOpts: {
+                  customerBankAccountToken: payload.nonce,
+                  couponCode: couponCode.getValue()
+                }
+              })
+            })
+
           })
-        }
+        })
       }
     )
   }

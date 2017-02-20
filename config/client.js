@@ -127,7 +127,6 @@ const client = {
   cashwayApi: '//maps.cashway.fr/js/cwm.min.js',
   gmapApi: '//maps.googleapis.com/maps/api/js?key=AIzaSyAhppNXQh6Nhbs_-5ySMgU93h-y2VeXLo8&libraries=places',
   stripeApi: '//js.stripe.com/v2/',
-  braintreeApi: '//js.braintreegateway.com/js/braintree-2.25.0.min.js',
   wecashupApi: {
     url: '//www.wecashup.cloud/' + (isProduction ? 'live' : 'demo' ) + '/2-form/js/MobileMoney.js',
     modalClass: 'featherlight',

@@ -34,8 +34,7 @@ import {
 const {
   gocarlessApi,
   recurlyApi,
-  stripeApi,
-  braintreeApi
+  stripeApi
 } = config
 
 if (process.env.BROWSER) {
@@ -695,7 +694,6 @@ export default  scriptLoader(
   [
     stripeApi,
     recurlyApi,
-    gocarlessApi,
-    braintreeApi
+    gocarlessApi
   ]
 )(withRouter(injectIntl(PaymentForm)))
