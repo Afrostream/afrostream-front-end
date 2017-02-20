@@ -897,6 +897,9 @@
     "braces": {
       "version": "1.8.5"
     },
+    "braintree-web": {
+      "version": "3.8.0"
+    },
     "breakable": {
       "version": "1.0.0"
     },
@@ -1028,6 +1031,9 @@
     },
     "canvas": {
       "version": "1.6.2"
+    },
+    "card-validator": {
+      "version": "4.0.0"
     },
     "cardinal": {
       "version": "1.0.0"
@@ -1277,6 +1283,9 @@
     },
     "create-hmac": {
       "version": "1.1.4"
+    },
+    "credit-card-type": {
+      "version": "5.0.1"
     },
     "cross-spawn": {
       "version": "3.0.1",
@@ -1973,6 +1982,9 @@
     "forwarded": {
       "version": "0.1.0"
     },
+    "framebus": {
+      "version": "2.0.7"
+    },
     "fresh": {
       "version": "0.3.0"
     },
@@ -2236,6 +2248,11 @@
     "ieee754": {
       "version": "1.1.8"
     },
+    "iframer": {
+      "version": "1.0.2",
+      "from": "braintree/iframer#1.0.2",
+      "resolved": "git://github.com/braintree/iframer.git#2f6618e30dca02c8a4c4c8419568ae7cfca683d4"
+    },
     "ignore": {
       "version": "3.2.2"
     },
@@ -2283,6 +2300,9 @@
     },
     "ini": {
       "version": "1.3.4"
+    },
+    "inject-stylesheet": {
+      "version": "1.0.0"
     },
     "inline-source-map": {
       "version": "0.6.2"
@@ -4016,6 +4036,9 @@
     "promise": {
       "version": "7.1.1"
     },
+    "promise-polyfill": {
+      "version": "6.0.2"
+    },
     "proxy-addr": {
       "version": "1.1.3"
     },
@@ -4201,7 +4224,7 @@
       }
     },
     "react-tooltip": {
-      "version": "3.2.6"
+      "version": "3.2.7"
     },
     "react-virtualized": {
       "version": "7.24.3"
@@ -4434,6 +4457,9 @@
     },
     "restore-cursor": {
       "version": "1.0.1"
+    },
+    "restricted-input": {
+      "version": "1.0.9"
     },
     "right-align": {
       "version": "0.1.3"

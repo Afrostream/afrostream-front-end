@@ -273,7 +273,7 @@
     },
     "paypal": {
       "label": "Paiement par Paypal",
-      "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Paypal"
+      "paypalText": "Pour finaliser la souscription, cliquer sur le bouton \"{submitBtn}\" et utiliser votre compte Paypal ( Désactivez votre bloqueur de popup )"
     },
     "future": {
       "title": "Vous y êtes presque !",
