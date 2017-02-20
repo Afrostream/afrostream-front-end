@@ -94,6 +94,7 @@
     font-family: @font-family-base;
     font-size: 1.3em;
     text-align: left;
+    .isMobile({ text-align: center; });
     vertical-align: top;
     //&:first-letter {
     //  text-transform: uppercase;
@@ -109,6 +110,7 @@
       pointer-events: none;
       font-family: @font-oswald;
       font-size: 1.9em;
+      .isMobile({ font-size: 1.1em; });
     }
     span {
       pointer-events: none;
