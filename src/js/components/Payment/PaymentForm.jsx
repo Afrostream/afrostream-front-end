@@ -385,7 +385,7 @@ class PaymentForm extends I18n {
 
 
         const isFormValid = form && form.checkValidity()
-        if (!isFormValid) {
+        if (!isFormValid && (form && form.elements)) {
           let errorEl
           _.forEach(form.elements, (element) => {
             const elementValid = element.checkValidity()

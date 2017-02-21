@@ -48,7 +48,7 @@ clientConfig.entry.main = [
 clientConfig.plugins.push(
   //new DashboardPlugin(dashboard.setData),
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin(),
+  new webpack.NoEmitOnErrorsPlugin(),
   new webpack.ProgressPlugin(function (percentage, message) {
     if (percentage === 0) {
       console.log('');
