@@ -83,17 +83,18 @@ const client = {
         },
         {
           key: 'playerCaption', type: 'select', icon: 'zmdi zmdi-view-subtitles',
-          list: [{label: 'lang.fr', value: 'fra'}, {label: 'lang.en', value: 'eng'}]
+          list: [{label: 'lang.null', value: null}, {label: 'lang.fr', value: 'fra'}, {label: 'lang.en', value: 'eng'}]
         },
         {
           key: 'playerQuality', type: 'select', icon: 'zmdi zmdi-router',
           list: [
+            {label: 'quality.0', value: 0},
             {label: 'quality.5', value: 5},
             {label: 'quality.4', value: 4},
             {label: 'quality.3', value: 3},
             {label: 'quality.2', value: 2},
-            {label: 'quality.1', value: 1},
-            {label: 'quality.0', value: 0}]
+            {label: 'quality.1', value: 1}
+          ]
         },
         {key: 'playerKoment', type: 'toggle', icon: 'zmdi zmdi-comment-more'},
         {key: 'playerAutoNext', type: 'toggle', icon: 'zmdi zmdi-skip-next'}

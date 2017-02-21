@@ -122,7 +122,7 @@ class AccountProfil extends React.Component {
       fetching: true
     })
 
-    if (key && value) {
+    if (key) {
       putData[key] = value
     }
 
@@ -253,7 +253,7 @@ class AccountProfil extends React.Component {
         element = <SelectField value={sectionValue} {...inputAttributes} floatingLabelText={label}>
           {section.list.map((item, key) => <MenuItem value={item.value}
                                                      primaryText={intl.formatMessage({id: item.label})}
-                                                     key={item.value}/>)}
+                                                     key={`select-${item.value}`}/>)}
         </SelectField>
         break
       case 'checkbox':

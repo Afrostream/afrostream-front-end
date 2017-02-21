@@ -8,10 +8,15 @@ import { encodeSafeUrl } from '../../lib/utils'
 import Immutable from 'immutable'
 import * as BillingActionCreators from '../../actions/billing'
 import * as FBActionCreators from '../../actions/facebook'
+import * as EventActionCreator from '../../actions/event'
 import * as ModalActionCreators from '../../actions/modal'
 import ReactTooltip from 'react-tooltip'
+import TextField from 'material-ui/TextField'
+import qs from 'qs'
+import copy from 'copy-to-clipboard'
 
 const {couponsCampaignBillingUuid, couponsCampaignType, billingProviderName} = config.sponsors
+const {metadata} = config
 
 if (process.env.BROWSER) {
   require('./ModalSponsors.less')
@@ -114,19 +119,21 @@ class ModalSponsors extends ModalComponent {
   }
 
 
-  sharePlan (campaign) {
+  encodePlan (campaign) {
     const {props:{User, dispatch}} = this
     const user = User.get('user')
+    let shareData = null
     if (user && campaign) {
       const name = campaign.get('name')
       const description = campaign.get('description')
+
       const data = encodeSafeUrl({
         userReferenceUuid: user.get('_id'),
         billingProviderName,
         couponsCampaignBillingUuid
       }, false)
 
-      let shareData = Immutable.fromJS({
+      shareData = Immutable.fromJS({
         title: `Parrainage`,
         description: `${description} ${this.getTitle('shareDesc')}`,
         link: 'coupon',
@@ -134,8 +141,16 @@ class ModalSponsors extends ModalComponent {
           data
         }
       })
+    }
 
-      dispatch(ModalActionCreators.open({target: 'strategy', data: shareData}))
+    return shareData
+  }
+
+  sharePlan (campaign) {
+    const {props:{dispatch}} = this
+    const data = this.encodePlan(campaign)
+    if (data) {
+      dispatch(ModalActionCreators.open({target: 'strategy', data}))
     }
   }
 
@@ -209,6 +224,42 @@ class ModalSponsors extends ModalComponent {
     return <button className="generate-btn" {...inputProps} >{this.getTitle('share')}</button>
   }
 
+  copyClip (link) {
+    const {props:{dispatch}} = this
+    copy(link, {})
+    dispatch(EventActionCreator.snackMessage({message: `sponsors.copied`}))
+  }
+
+  getLink () {
+
+    const {props:{Billing}} = this
+
+
+    const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
+
+    if (!coupon) {
+      return
+    }
+
+    const plan = coupon.get('couponsCampaign').get('internalPlan')
+    const data = this.encodePlan(plan)
+    const query = data.get('query')
+
+    let shareParams = qs.stringify(query && query.toJS() || {})
+    const link = `${metadata.domain}/${data.get('link')}?${shareParams}`
+
+    return (<div>
+        <TextField id="urlPast" defaultValue={link}/>
+        <button onClick={(e) => ::this.copyClip(link)} className="btn" data-clipboard-target="#urlPast"
+                data-tip={this.getTitle('copy')}>
+          <i className="zmdi zmdi-copy"/>
+          <ReactTooltip place="top" type="dark"
+                        effect="solid"/>
+        </button>
+      </div>
+    )
+  }
+
   render () {
 
     const {props:{Billing}} = this
@@ -247,6 +298,7 @@ class ModalSponsors extends ModalComponent {
                     </div>
                     <div className="mode-container">
                       <div className="mode">
+                        {this.getLink()}
                         {this.getSponsorsComponent()}
                         {this.getSponsorsList()}
                       </div>

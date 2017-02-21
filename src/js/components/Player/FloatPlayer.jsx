@@ -560,6 +560,7 @@ class FloatPlayer extends I18n {
           }
         })
       }
+
       if (user.get('playerCaption')) {
         playerData.dash = _.merge(playerData.dash, {
           inititalMediaSettings: {

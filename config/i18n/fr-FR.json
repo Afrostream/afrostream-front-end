@@ -39,6 +39,7 @@
     "favoris": "ma-liste"
   },
   "lang": {
+    "null": "Pas de sous-titres",
     "fr": "Français",
     "en": "Anglais"
   },
@@ -688,6 +689,8 @@
     },
     "activeAccount": "Vous devez avoir un compte actif pour parrainer un ami",
     "placeHolder": "Parrainer un ami",
+    "copy": "Copier dans le presse papier",
+    "copied": "Le lien est copié dans le presse papier",
     "emailField": "Son email",
     "max": "Vous avez atteint le nombre maximum d'amis parrainés",
     "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",

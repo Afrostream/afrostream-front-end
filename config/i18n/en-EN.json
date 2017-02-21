@@ -39,6 +39,7 @@
     "favoris": "favorites"
   },
   "lang": {
+    "null": "No captions",
     "fr": "French",
     "en": "English"
   },
@@ -699,6 +700,8 @@
     },
     "activeAccount": "You must have an active account to sponsor a friend",
     "placeHolder": "Sponsor a friend",
+    "copy": "Copy to clipboard",
+    "copied": "Link copied to clipboard",
     "emailField": "His email",
     "max": "You have reached the maximum number of sponsored friends",
     "shareDesc": "For any subscription to Afrostream with this coupon.",

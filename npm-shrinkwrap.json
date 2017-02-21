@@ -307,9 +307,9 @@
       "resolved": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/afrostream-node-statsd.git#1e38aa4dc156f1a77bfff03360774a16ea70d84e"
     },
     "afrostream-player": {
-      "version": "2.3.1",
-      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.3.1",
-      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#92a636e811ef6dbe400001afcb1de64ece35528f"
+      "version": "2.3.2",
+      "from": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#2.3.2",
+      "resolved": "git+https://de75ef098b5bf0f4c9e4b464d74a34a60e71ef50:x-oauth-basic@github.com/Afrostream/afrostream-player.git#20434a941f9c68469dbdb5aeb9dbd9c6eef07e8d"
     },
     "after": {
       "version": "0.8.2"
@@ -1253,6 +1253,9 @@
     },
     "cookiejar": {
       "version": "2.1.0"
+    },
+    "copy-to-clipboard": {
+      "version": "3.0.5"
     },
     "core-js": {
       "version": "2.4.1"
@@ -4974,6 +4977,9 @@
     },
     "to-single-quotes": {
       "version": "2.0.1"
+    },
+    "toggle-selection": {
+      "version": "1.0.5"
     },
     "touch": {
       "version": "1.0.0",

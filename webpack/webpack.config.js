@@ -63,6 +63,7 @@ const webpackConfig = {
     ],
     vendor: [
       'classnames',
+      'copy-to-clipboard',
       'fbjs/lib/ExecutionEnvironment',
       'gsap',
       'history',
