@@ -55,7 +55,7 @@ class CashwayForm extends CouponForm {
         return {
           billingProviderName: provider,
           subOpts: {
-            couponCode: couponCode.code
+            couponCode: coupon.code
           }
         }
       })
