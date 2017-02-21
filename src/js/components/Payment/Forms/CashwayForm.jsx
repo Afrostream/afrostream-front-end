@@ -32,7 +32,7 @@ class CashwayForm extends CouponForm {
     }))
       .then(({res: {body: {couponsCampaigns = []}}}) => {
 
-        const couponCampaign = _.find(couponsCampaigns, ({internalPlan : {internalPlanUuid}})=> {
+        const couponCampaign = _.find(couponsCampaigns, ({internalPlan : {internalPlanUuid}}) => {
           return internalPlanUuid === currentPlan.get('internalPlanUuid')
         })
 
@@ -55,7 +55,7 @@ class CashwayForm extends CouponForm {
         return {
           billingProviderName: provider,
           subOpts: {
-            couponCode: couponCode.getValue()
+            couponCode: couponCode.code
           }
         }
       })
