@@ -119,7 +119,7 @@ const client = {
   externalsJs: [
     '//www.gstatic.com/firebasejs/live/3.0/firebase.js',
     '//www.gstatic.com/cv/js/sender/v1/cast_sender.js',
-    '//smartplugin.youbora.com/v5/javascript/dashjs/5.3.2/sp.min.js'
+    //'//smartplugin.youbora.com/v5/javascript/dashjs/5.3.2/sp.min.js'
   ],
   gocarlessApi: '//pay' + (process.env.NODE_ENV !== 'production' ? '-sandbox' : '') + '.gocardless.com/js/beta',
   addThisApi: '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-583c553b01382bdf',
