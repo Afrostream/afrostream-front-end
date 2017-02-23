@@ -6,7 +6,7 @@
   padding: @thumb-margin;
   text-align: left;
   vertical-align: top;
-  width: @thumb-width + (@thumb-margin * 2);
+  width: @thumb-width;
   max-width: 100%;
   height: 100%;
   &.episode {
@@ -151,13 +151,13 @@
     }
     .thumb-background {
       //border: 1px solid #FFFFFF;
-      position: relative;
+      position: absolute;
       top: 0;
       left: 0;
       bottom: 0;
       right: 0;
       //height: @thumb-height;
-      padding-top: 143%;
+      //padding-top: 143%;
       vertical-align: middle;
       background-image: url(../../../assets/images/default/134x200.jpg);
       background-size: cover;

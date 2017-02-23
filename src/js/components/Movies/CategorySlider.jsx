@@ -19,7 +19,7 @@ import {
 @prepareRoute(async function ({store, categoryId}) {
   store.dispatch(CategoryActionCreators.getCategory(categoryId))
 })
-@connect(({Category}) => ({Category}))
+@connect(({Category, Event}) => ({Category, Event}))
 class CategorySlider extends MoviesSlider {
 
   constructor (props) {
@@ -27,17 +27,22 @@ class CategorySlider extends MoviesSlider {
     super(props)
   }
 
-  getColumnWidth ({index}) {
+  getColumnWidth ({index, getWidth}) {
     const {
       props: {
         categoryId,
-        Category
+        Category,
+        Event
       }
     } = this
 
     const category = Category.get(`categorys/${categoryId}`)
     const dataList = category.get('mergeSpotsWithMovies')
-    let data = dataList.get(index)
+    const data = dataList.get(index)
+    const isMobile = Event.get('isMobile')
+    if (isMobile) {
+      return getWidth()
+    }
     if (data instanceof Immutable.Map) {
       let isAdSpot = data.get('adSpot')
       return isAdSpot ? 480 : 240
@@ -133,7 +138,7 @@ class CategorySlider extends MoviesSlider {
                       <Grid
                         ref={registerChild}
                         cellRenderer={::this.renderItem}
-                        columnWidth={::this.getColumnWidth}
+                        columnWidth={({index}) => this.getColumnWidth({index, getWidth: getColumnWidth})}
                         columnCount={columnCount}
                         rowHeight={335}
                         height={335}

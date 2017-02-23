@@ -7,7 +7,7 @@ const initialState = Immutable.fromJS({
   'categoryId': 1
 })
 
-const MIN_SPOTS = 5
+const MIN_SPOTS = 2
 
 /**
  * Used in _.reduce to fill the arrays of blocs
