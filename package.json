@@ -9,7 +9,7 @@
     "clean": "rm -rf dist && mkdir dist",
     "build:prod": "./node_modules/.bin/babel-node ./node_modules/webpack/bin/webpack.js --config webpack/prod.config.js",
     "build": "npm run clean && npm run build:prod",
-    "watch": "./node_modules/.bin/babel-node webpack/webpack-dev-server.js --hot --inline --watch",
+    "watch": "./node_modules/.bin/babel-node webpack/webpack-dev-server.js",
     "dev": "echo 'requiring node v6.9.1' && . ~/.nvm/nvm.sh && nvm use 6.9.1 && node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch\" \"npm run app\"",
     "staging": "export LOAD_STAGING=true && export API_END_POINT=https://afr-api-v1-staging.herokuapp.com && npm run dev",
     "start": "node ./dist/server.js",

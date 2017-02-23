@@ -38,7 +38,11 @@ class CategorySlider extends MoviesSlider {
     const category = Category.get(`categorys/${categoryId}`)
     const dataList = category.get('mergeSpotsWithMovies')
     let data = dataList.get(index)
-    return data.size === 1 ? 240 : 160
+    if (data instanceof Immutable.Map) {
+      let isAdSpot = data.get('adSpot')
+      return isAdSpot ? 480 : 240
+    }
+    return data.size === 1 ? 240 : 240
   }
 
   renderItem ({columnIndex, rowIndex}) {
@@ -119,8 +123,8 @@ class CategorySlider extends MoviesSlider {
               <ColumnSizer
                 ref="reactList"
                 cellSizeAndPositionGetter={::this.getRowHeight}
-                columnMaxWidth={240}
-                columnMinWidth={160}
+                columnMaxWidth={480}
+                columnMinWidth={240}
                 columnCount={dataList.size}
                 width={width}>
                 {({adjustedWidth, getColumnWidth, registerChild, columnCount}) => (
@@ -131,8 +135,8 @@ class CategorySlider extends MoviesSlider {
                         cellRenderer={::this.renderItem}
                         columnWidth={::this.getColumnWidth}
                         columnCount={columnCount}
-                        rowHeight={listClass.spots ? 440 : 220}
-                        height={listClass.spots ? 440 : 220}
+                        rowHeight={335}
+                        height={335}
                         rowCount={1}
                         onScroll={onScroll}
                         scrollLeft={scrollLeft}

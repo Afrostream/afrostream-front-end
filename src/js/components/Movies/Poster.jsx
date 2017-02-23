@@ -136,7 +136,7 @@ class Poster extends LoadVideo {
     })
 
     const thumb = data.get(extractType)
-    const rect = this.extractProfile(thumb || data, '16:31')
+    const rect = this.extractProfile(thumb || data, '16:9')
     const imageStyles = `${imageUrl}${rect}`
 
     if (this.props.preload && !force) {

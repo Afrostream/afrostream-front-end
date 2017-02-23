@@ -14,7 +14,7 @@ const MIN_SPOTS = 5
  */
 const accumulateInBloc = function (finalResult = [], bloc) {
   // By default, 1 page = 1 bloc
-  let maxBloc = bloc.adSpot ? 1 : 2
+  let maxBloc = 1// bloc.adSpot ? 1 : 2
   if (_.last(finalResult).length && _.last(finalResult)[0].adSpot) {
     maxBloc = 1
   }
@@ -46,7 +46,7 @@ const mergeSpots = function (spots, dataList) {
   filteredList = _.concat(filteredList, dataList)
 
   const uniqSpots = _.uniqBy(filteredList, '_id')
-  const blocSpots = _(uniqSpots).reduce(accumulateInBloc, [[]])
+  const blocSpots = uniqSpots// _(uniqSpots).reduce(accumulateInBloc, [[]])
 
   return blocSpots
 }

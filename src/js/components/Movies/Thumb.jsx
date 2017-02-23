@@ -30,8 +30,8 @@ class Thumb extends Poster {
   }
 
   static defaultProps = {
-    thumbW: 140,
-    thumbH: 200,
+    thumbW: 240,
+    thumbH: 340,
     preload: false,
     favorite: true,
     share: true,
@@ -61,9 +61,6 @@ class Thumb extends Poster {
 
     const type = this.getType()
 
-    if (type === 'movie') {
-      return null
-    }
     const maxLength = 80
 
     let episodeNumber = data.get('episodeNumber')

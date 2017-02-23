@@ -96,8 +96,8 @@ class Spots extends React.Component {
     const multiplicate = (1 + Number(Boolean(middleItem)))
 
     let params = {
-      thumbW: 160 * multiplicate,
-      thumbH: 220 * multiplicate
+      thumbW: 240 * multiplicate,
+      thumbH: 340 * multiplicate
     }
 
     return (

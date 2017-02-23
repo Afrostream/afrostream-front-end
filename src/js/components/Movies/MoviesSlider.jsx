@@ -36,8 +36,8 @@ class MoviesSlider extends I18n {
 
   static defaultProps = {
     selectedId: null,
-    columnMaxWidth: 240,
-    columnMinWidth: 210,
+    columnMaxWidth: 520,
+    columnMinWidth: 240,
     label: '',
     slug: '',
     axis: 'x',
@@ -78,8 +78,8 @@ class MoviesSlider extends I18n {
 
     if (isAdSpot) {
       params = {
-        thumbW: 240,
-        thumbH: 465,
+        thumbW: 540,
+        thumbH: 335,
         type: 'spot',
         fit: 'min',
         crop: 'face'
