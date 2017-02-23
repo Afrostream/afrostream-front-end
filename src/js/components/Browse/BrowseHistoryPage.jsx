@@ -17,7 +17,7 @@ if (process.env.BROWSER) {
 
 @prepareRoute(async function ({store}) {
   return await Promise.all([
-    store.dispatch(UserActionCreators.getHistory())
+    store.dispatch(UserActionCreators.getHistory({}))
   ])
 })
 @connect(({User}) => ({User}))
