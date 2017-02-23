@@ -24,6 +24,8 @@
         position: relative;
         color: @color-black-2;
         padding: 0 0 1em 1em;
+        opacity: 1;
+        visibility: visible;
         .thumb-info__title {
           font-family: @font-family-base;
           font-size: 1.2em;
@@ -44,11 +46,18 @@
       .thumb-background {
         height: 100%;
         padding-top: inherit;
+        &:after {
+          .gradient(transparent, fade(@color-black-2, 60%));
+        }
       }
 
     }
     .thumb-buttons {
-      display: none;
+      //display: none;
+    }
+    .thumb-info {
+      opacity: 1;
+      visibility: visible;
     }
   }
   &.pin {
@@ -63,6 +72,8 @@
         bottom: 0;
         padding: 1.5em 20% 1.5em 1.5em;
         color: @brand-primary;
+        opacity: 1;
+        visibility: visible;
         .thumb-info__title {
           font-family: @font-heavy;
           font-size: 2.5em;
@@ -129,6 +140,9 @@
       white-space: normal;
       box-sizing: inherit;
       color: @brand-primary;
+      opacity: 0;
+      visibility: hidden;
+      .transition(opacity 0.1s linear);
       .thumb-info__title,
       .thumb-info__synopsis {
         font-family: @font-light;
@@ -151,13 +165,13 @@
     }
     .thumb-background {
       //border: 1px solid #FFFFFF;
-      position: absolute;
+      position: relative;
       top: 0;
       left: 0;
       bottom: 0;
       right: 0;
       //height: @thumb-height;
-      //padding-top: 143%;
+      padding-top: 143%;
       vertical-align: middle;
       background-image: url(../../../assets/images/default/134x200.jpg);
       background-size: cover;
@@ -188,16 +202,15 @@
       }
       &:after {
         content: '';
-        //background-color: fade(@color-black-2, 50%);
-        .gradient(transparent, fade(@color-black-2, 60%));
-        //opacity: 0;
-        //visibility: hidden;
+        background-color: fade(@color-black-2, 50%);
+        opacity: 0;
+        visibility: hidden;
         position: absolute;
         top: 0;
         left: 0;
         bottom: 0;
         right: 0;
-        .transition(background 0.2s linear);
+        .transition(opacity 0.2s linear);
       }
 
     }
@@ -206,11 +219,14 @@
   &:hover {
     .thumb-background {
       &:after {
-        .gradient(fade(@color-black-2, 60%), fade(@color-black-2, 60%));
-        .transition(background 0.2s linear);
-        //opacity: 1;
-        //visibility: visible;
+        .transition(opacity 0.2s linear);
+        opacity: 1;
+        visibility: visible;
       }
+    }
+    .thumb-info {
+      opacity: 1;
+      visibility: visible;
     }
     .thumb-buttons {
       opacity: 1;
