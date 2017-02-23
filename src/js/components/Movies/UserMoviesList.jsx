@@ -80,7 +80,7 @@ UserMoviesList.propTypes = {
 UserMoviesList.defaultProps = {
   thumbW: 200,
   thumbH: 110,
-  rowHeight: 160,
+  rowHeight: 200,
   axis: 'x',
   label: 'history.label'
 }

@@ -36,13 +36,13 @@ class MoviesSlider extends I18n {
 
   static defaultProps = {
     selectedId: null,
-    columnMaxWidth: 520,
+    columnMaxWidth: 480,
     columnMinWidth: 240,
     label: '',
     slug: '',
     axis: 'x',
     className: 'movies-data-list',
-    rowHeight: 200,
+    rowHeight: 335,
     virtual: true,
     preload: true,
     share: false,
