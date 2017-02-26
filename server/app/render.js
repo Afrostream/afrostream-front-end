@@ -119,7 +119,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
               Geo: {geo},
               User: {user},
               Event: {isMobile},
-              intl: {defaultLocale: locale}
+              intl: {locale}
             })
 
           const state = store.getState()
