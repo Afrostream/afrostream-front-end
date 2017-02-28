@@ -51,11 +51,9 @@ class WelcomeHeader extends I18n {
       props: {
         params,
         Event,
-        GA,
-        location
+        Movie
       }
     } = this
-    let {query} = location
     let {movieId} = params
 
     let welcomeClassesSet = {
@@ -64,14 +62,17 @@ class WelcomeHeader extends I18n {
       'welcome-header_movie': Boolean(movieId)
     }
 
+    const currentMovie = Movie.get(`movies/${movieId}`)
+    const movieName = currentMovie && currentMovie.get('title')
     const isMobile = Event.get('isMobile')
-    let homeRTitle = this.getTitle('home.title')
+    const homeRTitle = this.getTitle('home.title')
+    const titleMeta = this.getTitle('home.titleMeta', {movieName})
 
     let posterImg = `${images.urlPrefix}${metadata.screen && metadata.screen.image || metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
 
 
     return (
-      <section className={classSet(welcomeClassesSet)}>
+      <section className={classSet(welcomeClassesSet)} title={titleMeta}>
         {!movieId && <BackgroundVideo
           {...{isMobile}}
           preload={'metadata'}

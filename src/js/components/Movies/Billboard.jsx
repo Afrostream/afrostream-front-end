@@ -213,11 +213,12 @@ class Billboard extends LoadVideo {
               return (<span key={`statement-${i}`}>{statement}</span>)
             })}
             </div>
-            <SignUpButton className="subscribe-button" label="home.action"/>
+            <SignUpButton className="subscribe-button" label="home.action" title="home.titleMeta"
+                          values={{movieName: title}}/>
           </div>
           {movieInfo && <div className="billboard-infos text-left">
-            <div className="billboard-title billboard-row">{title}</div>
-            <div className="billboard-synopsis billboard-row">{synopsis}</div>
+            <h1 className="billboard-title billboard-row">{title}</h1>
+            <h2 className="billboard-synopsis billboard-row">{synopsis}</h2>
           </div>}
         </div>
       )

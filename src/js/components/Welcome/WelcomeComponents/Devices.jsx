@@ -5,15 +5,27 @@ import {
   FormattedMessage
 } from 'react-intl'
 import ReactImgix from '../../Image/ReactImgix'
+import { connect } from 'react-redux'
 
 if (process.env.BROWSER) {
   require('./Devices.less')
 }
-
+@connect(({Movie}) => ({Movie}))
 class Devices extends React.Component {
 
 
   render () {
+    const {
+      props: {
+        params,
+        Movie
+      }
+    } = this
+
+    let {movieId} = params
+
+    const currenMovie = Movie.get(`movies/${movieId}`)
+    const movieName = currenMovie && currenMovie.get('title')
 
     const featuresList = [
       'engagment',
@@ -28,7 +40,7 @@ class Devices extends React.Component {
           <ReactImgix className="device-element-image" bg={true} blur={false}
                       src="https://images.cdn.afrostream.net/production/screen/Macbook-Pro-And-Coffe-Cup-Mockup-.jpg?fit=crop&w=1280&fm=jpg&q=65"/>
           <div className="device-element-text">
-            <FormattedMessage tagName="h2" id="home.devices.title"/>
+            <FormattedMessage tagName="h2" id="home.devices.title" values={{movieName}}/>
             <ul className="features-list">
               {
                 _.map(featuresList, (feature, key) => (
@@ -38,7 +50,7 @@ class Devices extends React.Component {
                   </li>))
               }
             </ul>
-            <SignUpButton label="home.devices.action"/>
+            <SignUpButton label="home.devices.action" title="home.devices.titleAction" values={{movieName}}/>
           </div>
         </div>
       </section>
