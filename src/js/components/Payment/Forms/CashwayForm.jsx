@@ -32,8 +32,12 @@ class CashwayForm extends CouponForm {
     }))
       .then(({res: {body: {couponsCampaigns = []}}}) => {
 
-        const couponCampaign = _.find(couponsCampaigns, ({internalPlan : {internalPlanUuid}}) => {
-          return internalPlanUuid === currentPlan.get('internalPlanUuid')
+        const couponCampaign = _.find(couponsCampaigns, ({internalPlans}) => {
+
+          return _.find(internalPlans, ({internalPlanUuid}) => {
+            return internalPlanUuid === currentPlan.get('internalPlanUuid')
+          }
+          
         })
 
         if (!couponCampaign) {
