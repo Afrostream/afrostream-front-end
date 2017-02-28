@@ -6,12 +6,16 @@ import {
 } from 'react-intl'
 import ReactImgix from '../../Image/ReactImgix'
 import { connect } from 'react-redux'
+import { I18n } from '../../Utils'
+import {
+  injectIntl,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./Devices.less')
 }
 @connect(({Movie}) => ({Movie}))
-class Devices extends React.Component {
+class Devices extends I18n {
 
 
   render () {
@@ -25,7 +29,7 @@ class Devices extends React.Component {
     let {movieId} = params
 
     const currenMovie = Movie.get(`movies/${movieId}`)
-    const movieName = currenMovie && currenMovie.get('title')
+    const movieName = currenMovie && `${currenMovie.get('title')} ${this.getTitle('and')} ` || ''
 
     const featuresList = [
       'engagment',
@@ -58,4 +62,4 @@ class Devices extends React.Component {
   }
 }
 
-export default Devices
+export default injectIntl(Devices)

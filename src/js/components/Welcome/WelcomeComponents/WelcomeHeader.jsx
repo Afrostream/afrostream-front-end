@@ -63,7 +63,7 @@ class WelcomeHeader extends I18n {
     }
 
     const currentMovie = Movie.get(`movies/${movieId}`)
-    const movieName = currentMovie && currentMovie.get('title')
+    const movieName = currentMovie && currentMovie.get('title') || this.getTitle('home.title').toLowerCase()
     const isMobile = Event.get('isMobile')
     const homeRTitle = this.getTitle('home.title')
     const titleMeta = this.getTitle('home.titleMeta', {movieName})

@@ -1,4 +1,5 @@
 {
+  "and": "et",
   "routes": {
     "app": "accueil",
     "company": "compagnie",
@@ -85,8 +86,8 @@
       "description": "Regardez l'épisode {episodeNumber} de la saison {seasonNumber} de {serieName} en streaming sur tous vos écrans grâce à AFROSTREAM."
     },
     "devices": {
-      "title": "Regardez {movieName} et vos films et séries afro préférés quand vous voulez, où vous voulez en illimité",
-      "titleAction": "Démarrez votre semaine d'essai offerte pour regarder {movieName} et vos films et séries afro préférés",
+      "title": "Regardez {movieName}vos films et séries afro préférés quand vous voulez, où vous voulez en illimité",
+      "titleAction": "Démarrez votre semaine d'essai offerte pour regarder {movieName}vos films et séries afro préférés",
       "action": "Démarrez votre semaine d'essai offerte",
       "features": {
         "engagment": "Sans engagement",

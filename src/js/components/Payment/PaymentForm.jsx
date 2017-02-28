@@ -422,12 +422,13 @@ class PaymentForm extends I18n {
     const {
       props: {
         router,
+        routes,
         params: {lang}
       }
     } = this
 
-    let isCash = router.isActive('cash')
-    return `${isCash ? '/cash' : ''}${lang ? '/' + lang : ''}`
+    let isCash = router.isActive('cash') || _.find(routes, route => ( route.name === 'cash'))
+    return `${lang ? '/' + lang : ''}${isCash ? '/cash' : ''}`
   }
 
   async submitSubscription (formData) {
@@ -435,6 +436,7 @@ class PaymentForm extends I18n {
       props: {
         dispatch,
         router,
+        history,
         params: {planCode}
       }
     } = this
@@ -508,7 +510,7 @@ class PaymentForm extends I18n {
         //Finally send the data to Google Analytics
         ReactGA.plugin.execute('ecommerce', 'send')
 
-        self.props.history.push(`${originPath}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
+        history.push(`${originPath}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
       }).catch(({response : {body: {error, code, message}}}) => {
         let globalMessage = this.getTitle('payment.errors.global')
 
@@ -524,11 +526,11 @@ class PaymentForm extends I18n {
         }
 
 
-        self.disableForm(false, 2, globalMessage)
         methodForm.onError()
+        self.disableForm(false, 2, globalMessage)
         //Clear the shopping cart of all transactions and items
         ReactGA.plugin.execute('ecommerce', 'clear')
-        self.props.history.push(`${originPath}/select-plan/${planCode}/error`)
+        history.push(`${originPath}/select-plan/${planCode}/error`)
       })
   }
 

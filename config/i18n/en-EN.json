@@ -1,4 +1,5 @@
 {
+  "and": "and",
   "routes": {
     "app": "home",
     "company": "company",
@@ -85,8 +86,8 @@
       "description": "Watch the {episodeNumber} season {seasonNumber} episode of {serieName} streaming on all your screens with AFROSTREAM."
     },
     "devices": {
-      "title": "Your favorite Black films and series in unlimited access when you want and where you want.",
-      "titleAction": "Start your free trial week to watch {movieName} and your favorite Afro movies and series",
+      "title": "Watch  {movieName}your favorite Black films and series in unlimited access when you want and where you want.",
+      "titleAction": "Start your free trial week to watch {movieName}your favorite Afro movies and series",
       "action": "Sign up now !",
       "features": {
         "engagment": "Without engagement",

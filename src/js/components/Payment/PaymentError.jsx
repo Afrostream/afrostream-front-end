@@ -47,7 +47,7 @@ class PaymentError extends I18n {
             }
           }, 1000)
         }
-      }     
+      }
   }
 
   renderLinks () {
