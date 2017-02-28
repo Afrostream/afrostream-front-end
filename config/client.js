@@ -232,7 +232,7 @@ const client = {
   reco: {
     enabled: true,
     limit: 3,
-    time: 45
+    time: 10
   },
   oauth2: {
     providers: [
