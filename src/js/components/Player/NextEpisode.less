@@ -48,6 +48,7 @@
     .next-episode__thumbs {
       margin-left: -@thumb-margin;
       .thumb {
+
         &.episode {
           width: 100%;
           height: auto;
@@ -59,8 +60,11 @@
           background-repeat: no-repeat;
           height: 220px;
         }
-        .thumb-info__title {
-          font-size: 1.8em;
+        .thumb-info {
+          .thumb-info__title {
+            color: @brand-primary;
+            font-size: 1.8em;
+          }
         }
       }
     }

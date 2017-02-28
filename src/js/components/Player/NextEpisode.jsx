@@ -55,7 +55,8 @@ class NextEpisode extends I18n {
           {this.props.auto ? <div
               className="next-episode__label">{`${this.getTitle('next.label', {seconds: this.props.time})}`}</div> : '' }
           <div className="next-episode__thumbs">
-            <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135} type="episode"/>
+            <Thumb {...{dataId, data}} favorite={false} share={false} thumbW={240} thumbH={135}
+                   type="episode" {...this.props}/>
           </div>
           <NextGoBack {...this.props} />
         </div>
