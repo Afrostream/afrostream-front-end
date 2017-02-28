@@ -36,8 +36,8 @@ class CashwayForm extends CouponForm {
 
           return _.find(internalPlans, ({internalPlanUuid}) => {
             return internalPlanUuid === currentPlan.get('internalPlanUuid')
-          }
-          
+          })
+
         })
 
         if (!couponCampaign) {
