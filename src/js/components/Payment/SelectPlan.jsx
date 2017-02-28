@@ -299,7 +299,7 @@ class SelectPlan extends I18n {
       'internalMobile',
       'internalUnlimited',
       'internalEngagment',
-      'internalVip',
+      //'internalVip',
       'internalActionLabel'
     ]
 
