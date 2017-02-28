@@ -41,7 +41,7 @@ export default function (api, history, initialState) {
 
   const mergedState = _.merge({
     intl: {
-      defaultLocale: 'fr',
+      defaultLocale: 'en',
       locales: localesData
     }
   }, initialState)

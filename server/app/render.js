@@ -108,8 +108,12 @@ export default function render (req, res, layout, {payload, isStatic}) {
           //TODO FIXME render locale server whith preferredLocale
           const language = (routeParamLang && routeParamLang.lang) || (preferredLocale && preferredLocale[0]) || 'FR'
           // Split locales with a region code
-          const locale = language.toLowerCase().split(/[_-]+/)[0]
+          let locale = language.toLowerCase().split(/[_-]+/)[0]
+          if (!~['fr', 'en'].indexOf(locale)) {
+            locale = 'en'
+          }
           const messages = _.flattenJson(getI18n(locale))
+
 
           params.lang = locale
           // *** Init Store
@@ -119,11 +123,8 @@ export default function render (req, res, layout, {payload, isStatic}) {
               Geo: {geo},
               User: {user},
               Event: {isMobile},
-              intl: {locale}
+              intl: {locale, messages}
             })
-
-          const state = store.getState()
-          const {intl} = state
 
           const recursiveFunction = function (collection, result) {
             if (collection && collection.prepareRoute) {
@@ -154,7 +155,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
 
           const body = ReactDOMServer.renderToString(
             <Provider {...{store}}>
-              <IntlProvider key="intl" {...{messages, locale}}>
+              <IntlProvider {...{messages, locale}}>
                 <RouterContext {...{...renderProps}} />
               </IntlProvider>
             </Provider>
@@ -173,7 +174,7 @@ export default function render (req, res, layout, {payload, isStatic}) {
 
               const componentHtml = ReactDOMServer.renderToString(
                 <Provider {...{store}}>
-                  <IntlProvider key="intl" {...{messages, locale}}>
+                  <IntlProvider>
                     <RouterContext {...{...renderProps, location}} childRoutes={routes}/>
                   </IntlProvider>
                 </Provider>
