@@ -147,14 +147,15 @@ class SearchPage extends I18n {
     }
 
     return searchRows && searchRows.map((search) => {
-        switch (search.get('index')) {
-          case process.env.NODE_ENV + '_Movie':
+        const searchKey = search.get('index').replace(/(?:^\w*_)/g, '')
+        switch (searchKey) {
+          case 'Movie':
             return canShowMovies && this.renderMovies(search.get('hits'))
             break
-          case process.env.NODE_ENV + 'LifePin':
+          case 'LifePin':
             return this.renderPins(search.get('hits'), !canShowMovies)
             break
-          case process.env.NODE_ENV + 'Actor':
+          case 'Actor':
             return this.renderActors(search.get('hits'))
             break
         }
