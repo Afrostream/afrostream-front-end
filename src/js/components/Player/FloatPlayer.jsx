@@ -617,27 +617,29 @@ class FloatPlayer extends I18n {
     })
 
     //MUX QOS Initialize mux monitoring
-    playerData.plugins = _.merge(playerData.plugins || {}, {
-      mux: {
-        data: {
-          page_type: 'watchpage',
-          viewer_user_id: userId, // ex: '12345'
-          // Player Metadata
-          player_init_time: Date.now(),
+    if (playerData.plugins && playerData.plugins.mux) {
+      playerData.plugins = _.merge(playerData.plugins || {}, {
+        mux: {
+          data: {
+            page_type: 'watchpage',
+            viewer_user_id: userId, // ex: '12345'
+            // Player Metadata
+            player_init_time: Date.now(),
 
-          // Video Metadata (cleared with 'videochange' event)
-          video_id: videoData.videoId,
-          video_title: videoSlug,
-          video_variant_name: videoSlug,
-          video_content_type: videoData.get('type'),
-          video_language_code: intl.locale,
-          video_duration: videoData.get('duration'),
-          video_stream_type: isLive ? 'live' : 'on-demand',
-          video_encoding_variant: '', // ex: 'Variant 1'
-          video_cdn: '' // ex: 'Fastly', 'Akamai'
+            // Video Metadata (cleared with 'videochange' event)
+            video_id: videoData.videoId,
+            video_title: videoSlug,
+            video_variant_name: videoSlug,
+            video_content_type: videoData.get('type'),
+            video_language_code: intl.locale,
+            video_duration: videoData.get('duration'),
+            video_stream_type: isLive ? 'live' : 'on-demand',
+            video_encoding_variant: '', // ex: 'Variant 1'
+            video_cdn: '' // ex: 'Fastly', 'Akamai'
+          }
         }
-      }
-    })
+      })
+    }
 
     return playerData
   }

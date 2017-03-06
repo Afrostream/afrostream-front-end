@@ -403,14 +403,14 @@ const client = {
   },
   player: {
     plugins: {
-      mux: {
-        debug: !isProduction,
-        data: {
-          'property_key': isProduction ? 'a_PjG6XMl-D-SkS2H-ygrHpYo' : 'gXlHgJvAkN15beJpBEcO8z1CR',
-          'player_name': playerPackage.name,
-          'player_version': playerPackage.version,
-        }
-      }
+      //mux: {
+      //  debug: !isProduction,
+      //  data: {
+      //    'property_key': isProduction ? 'a_PjG6XMl-D-SkS2H-ygrHpYo' : 'gXlHgJvAkN15beJpBEcO8z1CR',
+      //    'player_name': playerPackage.name,
+      //    'player_version': playerPackage.version,
+      //  }
+      //}
     },
     'autoplay': true,
     'controls': true,
