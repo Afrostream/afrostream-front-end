@@ -616,24 +616,6 @@ class FloatPlayer extends I18n {
       }
     })
 
-    if (playerData.dash && playerData.dash.youbora) {
-      //YOUBORA PLUGIN (metrics QOS)
-      playerData.dash = _.merge(playerData.dash || {}, {
-        youbora: {
-          username: userId,
-          media: {
-            title: videoSlug,
-            duration: videoData.get('duration'),
-            isLive: isLive
-          },
-          properties: {
-            content_id: videoData.get('_id'),
-          }
-        }
-      })
-    }
-
-
     //MUX QOS Initialize mux monitoring
     playerData.plugins = _.merge(playerData.plugins || {}, {
       mux: {
