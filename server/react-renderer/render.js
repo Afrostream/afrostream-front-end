@@ -1,3 +1,6 @@
+global.navigator = global.navigator || {}
+global.navigator.userAgent = global.navigator.userAgent || 'all'
+
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory, useQueries } from 'history'

@@ -1,0 +1,36 @@
+{
+  "parser": "babel-eslint",
+  "settings": {
+    "ecmascript": 6,
+    "jsx": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "rules": {
+    "no-debugger": 1,
+    "new-parens": 0,
+    "no-shadow": 0,
+    "no-underscore-dangle": 0,
+    "no-console": 0,
+    "no-extra-semi": 0,
+    "semi": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      1,
+      "single",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
+    "strict": 2
+  }
+}
