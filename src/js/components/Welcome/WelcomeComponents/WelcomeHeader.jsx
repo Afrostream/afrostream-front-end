@@ -86,7 +86,6 @@ class WelcomeHeader extends I18n {
                 return (<span key={`statement-${i}`}>{statement}</span>)
               })}
               </div>
-              <SignUpButton className="subscribe-button" label="home.action"/>
               <div className="mouse"/>
             </div>
           </InternalPlansCountDown>
