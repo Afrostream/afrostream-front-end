@@ -152,6 +152,7 @@ const client = {
   alerts: [],
   google: {
     analyticsKey: process.env.GA_TRACKING_ID || 'UA-*******-**',
+    adSenseKey: process.env.GA_ADSENSE_ID || 'ca-pub-5887481529465530',
     //Code ab tests multiples
     abCodes: isProduction && [
       //{
