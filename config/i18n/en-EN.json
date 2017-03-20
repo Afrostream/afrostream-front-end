@@ -182,7 +182,7 @@
   "planCodes": {
     "selectTitle": "Choose your plan",
     "onePlanTitle": "Your plan",
-    "noPlans": "The subscription service is temporarily unavailable. You can write to support@afrostream.tv for any questions. Thank you for your understanding. Afrostream",
+    "noPlans": "Due to technical reasons, the subscription service is temporarily unavailable. For any question, you can write to support@afrostream.tv. Thank you for your understanding and support. Afrostream",
     "noMobilePlans": "Choose another payment method",
     "freePeriodLabel": "and enjoy {trialPeriodLength} {trialPeriodUnit} test",
     "title": "Plan",
