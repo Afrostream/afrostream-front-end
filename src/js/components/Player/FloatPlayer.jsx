@@ -723,7 +723,7 @@ class FloatPlayer extends I18n {
         this.requestTick(true)
       }
     )
-    if (!playerData.scroll !== false) {
+    if (playerData.scroll !== false) {
       videojs.on(window, 'scroll', ::this.requestTick)
     }
     videojs.on(window, 'resize', ::this.requestTick)
@@ -1112,7 +1112,8 @@ class FloatPlayer extends I18n {
           seasonId,
           movieId,
           videoId
-        }
+        },
+        data
       },
       state: {
         savedData
@@ -1136,7 +1137,7 @@ class FloatPlayer extends I18n {
       'reopen': true,
       'hide': this.state.elVisible || !savedData.videoId || savedData.pathname === this.props.location.pathname
     })
-
+    const playerData = data || Player.get('/player/data')
     const videoData = Video.get(`videos/${videoId}`)
     let movieData
     let episodeData
@@ -1189,7 +1190,7 @@ class FloatPlayer extends I18n {
       'hidden': !this.player,
       'player': videoData,
       'float-player': true,
-      'fixed': this.props.float,
+      'fixed': (playerData && playerData.get('scroll') !== false) || this.props.float,
       'pinned': this.state.elVisible,
       'unpinned': !this.state.elVisible,
       'player-next-reco': this.state.nextReco,

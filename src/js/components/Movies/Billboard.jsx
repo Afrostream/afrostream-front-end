@@ -9,6 +9,7 @@ import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import RateComponent from '../Recommendation/RateComponent'
 import CsaIcon from './CsaIcon'
 import ReactImgix from '../Image/ReactImgix'
+import BackgroundVideo from '../Player/BackgroundVideo'
 import { extractImg } from '../../lib/utils'
 import SignUpButton from '../User/SignUpButton'
 import {
@@ -19,7 +20,7 @@ if (process.env.BROWSER) {
   require('./Billboard.less')
 }
 
-@connect(({Movie, Season, User}) => ({Movie, Season, User}))
+@connect(({Movie, Season, User, Event}) => ({Movie, Season, User, Event}))
 class Billboard extends LoadVideo {
 
   constructor (props) {
@@ -139,7 +140,7 @@ class Billboard extends LoadVideo {
 
   render () {
     const {
-      props: {User, data, maxLength, movieInfo}
+      props: {User, Event, data, maxLength, movieInfo}
     } = this
 
     if (!data) {
@@ -157,6 +158,7 @@ class Billboard extends LoadVideo {
     let seasons = data.get('seasons')
     let videoData = data.get('video')
     let videoId = data.get('videoId')
+    let trailers = []
     let csa = data.get('CSA')
     let rating = data.get('rating') || 3
     if (seasons && seasons.size) {
@@ -176,6 +178,7 @@ class Billboard extends LoadVideo {
     if (videoData) {
       let subtitles = videoData.get('captions')
       hasSubtiles = subtitles ? subtitles.size : false
+      trailers.push({src: videoData.get('sourceMp4Deciphered'), type: 'video/mp4'})
     }
     //wrap text
     if (synopsis.length >= maxLength) {
@@ -190,7 +193,7 @@ class Billboard extends LoadVideo {
 
 
     const user = User.get('user')
-
+    const isMobile = Event.get('isMobile')
     let logo = data.get('logo') && extractImg({
         data,
         key: 'logo',
@@ -206,21 +209,23 @@ class Billboard extends LoadVideo {
       let homeRTitle = this.getTitle('home.title')
 
       return (
-        <div className="billboard-no-users">
-          {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
-          <div className="afrostream-movie__subscribe">
-            <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
-              return (<span key={`statement-${i}`}>{statement}</span>)
-            })}
+        <BackgroundVideo
+          {...{isMobile, videos: trailers}}
+          preload={'metadata'}>
+          <div className="billboard-no-users">
+            {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
+            <div className="afrostream-movie__subscribe">
+              <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
+                return (<span key={`statement-${i}`}>{statement}</span>)
+              })}
+              </div>
             </div>
-            <SignUpButton className="subscribe-button" label="home.action" title="home.titleMeta"
-                          values={{movieName: title}}/>
+            {movieInfo && <div className="billboard-infos text-left">
+              <h1 className="billboard-title billboard-row">{title}</h1>
+              <h2 className="billboard-synopsis billboard-row">{synopsis}</h2>
+            </div>}
           </div>
-          {movieInfo && <div className="billboard-infos text-left">
-            <h1 className="billboard-title billboard-row">{title}</h1>
-            <h2 className="billboard-synopsis billboard-row">{synopsis}</h2>
-          </div>}
-        </div>
+        </BackgroundVideo>
       )
     }
 

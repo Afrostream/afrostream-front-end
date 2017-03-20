@@ -58,6 +58,14 @@
     }
   }
 
+  &.welcome-overlay {
+    .movie-background {
+      left: 0;
+      .afrostream-movie__mask {
+        .horizontal-gradient(fade(@color-black-2, 30%), 0, fade(@color-black-2, 30%), 100%);
+      }
+    }
+  }
   .isMobile({ padding-top: @header-height-mobile; });
 
   .afrostream-movie__logo {
