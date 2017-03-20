@@ -9,7 +9,7 @@ import FavoritesAddButton from '../Favorites/FavoritesAddButton'
 import RateComponent from '../Recommendation/RateComponent'
 import CsaIcon from './CsaIcon'
 import ReactImgix from '../Image/ReactImgix'
-import BackgroundVideo from '../Player/BackgroundVideo'
+
 import { extractImg } from '../../lib/utils'
 import SignUpButton from '../User/SignUpButton'
 import {
@@ -158,7 +158,6 @@ class Billboard extends LoadVideo {
     let seasons = data.get('seasons')
     let videoData = data.get('video')
     let videoId = data.get('videoId')
-    let trailers = []
     let csa = data.get('CSA')
     let rating = data.get('rating') || 3
     if (seasons && seasons.size) {
@@ -178,7 +177,6 @@ class Billboard extends LoadVideo {
     if (videoData) {
       let subtitles = videoData.get('captions')
       hasSubtiles = subtitles ? subtitles.size : false
-      trailers.push({src: videoData.get('sourceMp4Deciphered'), type: 'video/mp4'})
     }
     //wrap text
     if (synopsis.length >= maxLength) {
@@ -209,9 +207,6 @@ class Billboard extends LoadVideo {
       let homeRTitle = this.getTitle('home.title')
 
       return (
-        <BackgroundVideo
-          {...{isMobile, videos: trailers}}
-          preload={'metadata'}>
           <div className="billboard-no-users">
             {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
             <div className="afrostream-movie__subscribe">
@@ -225,7 +220,7 @@ class Billboard extends LoadVideo {
               <h2 className="billboard-synopsis billboard-row">{synopsis}</h2>
             </div>}
           </div>
-        </BackgroundVideo>
+
       )
     }
 

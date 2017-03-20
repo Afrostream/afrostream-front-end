@@ -40,6 +40,15 @@ class BackgroundVideo extends Component {
     overlay: true,
   }
 
+  componentDidMount () {
+    const videoElement = document.getElementById(this.props.videoId)
+
+    if (videoElement && this.props.autoPlay) {
+      videoElement.load()
+      videoElement.play()
+    }
+  }
+
   componentWillUnmount () {
     const videoElement = document.getElementById(this.props.videoId)
 
@@ -51,16 +60,16 @@ class BackgroundVideo extends Component {
   }
 
   render () {
-    const videos = this.props.videos.map((video, index) =>
-      <source key={index} src={video.src} type={video.type}/>)
-
     const videoProps = {
       muted: this.props.muted,
       preload: this.props.preload,
       loop: this.props.loop,
-      autoPlay: this.props.autoPlay,
+      autoPlay: false,
       poster: this.props.poster,
     }
+
+    const videos = this.props.videos.map((video, index) =>
+      <source key={index} src={video.src} type={video.type}/>)
 
     const videoClassNames = classNames({
       'video-container': true,

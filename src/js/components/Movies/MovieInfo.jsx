@@ -14,6 +14,7 @@ import ReactImgix from '../Image/ReactImgix'
 import * as VideoActionCreators from '../../actions/video'
 import SignUpButton from '../User/SignUpButton'
 import { extractImg } from '../../lib/utils'
+import BackgroundVideo from '../Player/BackgroundVideo'
 
 if (process.env.BROWSER) {
   require('./MovieInfo.less')
@@ -54,6 +55,9 @@ class MovieInfo extends LoadVideo {
       return (<Spinner />)
     }
 
+    let trailers = []
+    const isMobile = Event.get('isMobile')
+    const videoData = data.get('video')
     const user = User.get('user')
     const isSerie = data.get('type') === 'serie' || data.get('type') === 'error'
     const classes = classSet({
@@ -63,7 +67,10 @@ class MovieInfo extends LoadVideo {
       'movie--active': this.props.active,
       'movie--btn_play': showBtn === true || !isSerie
     })
-    const isMobile = Event.get('isMobile')
+
+    if (videoData && videoData.get('sourceMp4Deciphered')) {
+      trailers.push({src: videoData.get('sourceMp4Deciphered'), type: 'video/mp4'})
+    }
 
     let imageUrl = extractImg({
       data,
@@ -77,15 +84,20 @@ class MovieInfo extends LoadVideo {
     const link = this.getLink()
     return (
       <div ref="slContainer" className={classes}>
-        <div className="movie-info_content">
+        <BackgroundVideo
+          {...{isMobile, videos: trailers, poster: !isMobile && imageUrl}}
+          preload={'metadata'}>
+          {isMobile &&
           <ReactImgix ref="slBackground" bg={true} blur={false} src={imageUrl} className="movie-background">
             <div className="afrostream-movie__mask"/>
-          </ReactImgix>
-          {user && <Link to={link}>
-            <div className="btn-play"/>
-          </Link>}
-          {data && <Billboard {...{active, data, dataId, maxLength, load, movieInfo}} />}
-        </div>
+          </ReactImgix>}
+          <div className="movie-info_content">
+            {user && <Link to={link}>
+              <div className="btn-play"/>
+            </Link>}
+            {data && <Billboard {...{active, data, dataId, maxLength, load, movieInfo}} />}
+          </div>
+        </BackgroundVideo>
       </div>
     )
   }
