@@ -556,7 +556,7 @@
     "status": {
       "redeemed": "The code has already been used.",
       "pending": "The code is on hold.",
-      "expired": "The code has already been used."
+      "expired": "Deadline for use of your coupon is exceeded."
     },
     "errors": {
       "30": {

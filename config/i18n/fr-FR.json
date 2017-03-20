@@ -547,7 +547,7 @@
     "status": {
       "redeemed": "Le code a déjà été utilisé.",
       "pending": "Le code est en attente.",
-      "expired": "Le code a déjà été utilisé."
+      "expired": "La date limite d'utilisation de votre coupon est dépassée."
     },
     "errors": {
       "30": {
