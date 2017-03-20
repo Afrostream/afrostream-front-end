@@ -25,6 +25,9 @@
       if (signupClientType === 'legacy-api.tapptic') {
         document.location = String(document.location.href).replace(/^https?:\/\/[^/]+\//, 'afrostream://');
       }
+      if (signupClientType === 'legacy-api.android') {
+        document.location = String(document.location.href).replace(/^https?:\/\/[^#]+\#/, 'afrostream://callback/');
+      }
     }
 
     // postpone close :
