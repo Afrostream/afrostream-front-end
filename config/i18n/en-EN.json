@@ -66,7 +66,7 @@
     "logout": "Sign out"
   },
   "home": {
-    "title": "The Best Black Films and TV Series",
+    "title": "{movieName}the Best Black Films and TV Series",
     "titleMeta": "Enjoy a week to watch {movieName}",
     "action": "START YOUR FIRST <br /> WEEK FREE",
     "movie": {

@@ -17,7 +17,7 @@ if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
 }
 
-const {metadata, images} =config
+const {metadata, images} = config
 
 @connect(({Event, User, Movie, Video, Season, Episode, GA}) => ({Event, User, Movie, Video, Season, Episode, GA}))
 class WelcomeHeader extends I18n {
@@ -62,22 +62,28 @@ class WelcomeHeader extends I18n {
       'welcome-header_movie': Boolean(movieId)
     }
 
+    let trailers = [config.metadata.videos]
+
     const currentMovie = Movie.get(`movies/${movieId}`)
-    const movieName = currentMovie && currentMovie.get('title') || this.getTitle('home.title').toLowerCase()
     const isMobile = Event.get('isMobile')
-    const homeRTitle = this.getTitle('home.title')
+    const movieName = (currentMovie && `${currentMovie.get('title')} ${this.getTitle('and')} `) || ''
+    const homeRTitle = this.getTitle('home.title', {movieName})
     const titleMeta = this.getTitle('home.titleMeta', {movieName})
+    const videoData = currentMovie && currentMovie.get('video')
+
+    if (videoData && videoData.get('sourceMp4Deciphered')) {
+      trailers = []
+      trailers.push({src: videoData.get('sourceMp4Deciphered'), type: 'video/mp4'})
+    }
 
     let posterImg = `${images.urlPrefix}${metadata.screen && metadata.screen.image || metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
 
-
     return (
       <section className={classSet(welcomeClassesSet)} title={titleMeta}>
-        {!movieId && <BackgroundVideo
-          {...{isMobile}}
+        {<BackgroundVideo
+          {...{isMobile, videos: trailers}}
           preload={'metadata'}
           poster={posterImg}
-          videos={config.metadata.videos}
           onClick={::this.showLock}
         >
           <InternalPlansCountDown {...this.props} >

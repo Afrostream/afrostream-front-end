@@ -42,7 +42,7 @@
       display: table;
       height: auto;
       min-height: @welcome-header-height;
-      .isMobile({ min-height: 100vh; margin-top: -@header-height-mobile; padding-top: @header-height-mobile; });
+      //.isMobile({ min-height: 100vh; margin-top: -@header-height-mobile; padding-top: @header-height-mobile; });
 
       .movie-info_content {
         vertical-align: middle;
@@ -50,10 +50,13 @@
         display: table-cell;
         height: auto;
         position: relative;
+        .billboard-no-users {
+          text-align: left;
+        }
       }
 
       .billboard-infos {
-        max-width: 65%;
+        //max-width: 65%;
         .isMobile({ max-width: 100%; margin-top: 0; });
         .billboard-synopsis {
           .isMobile({ display: block; });
@@ -109,14 +112,25 @@
     }
   }
   &.welcome-overlay {
+    .movie {
+      min-height: inherit;
+    }
+
     .video-container {
+      //.video-overlay {
+      //  background-color: transparent;
+      //  .horizontal-gradient(@color-black-2, 10%, transparent, 100%);
+      //}
+      //.video-background {
+      //  .transform(translateX(-40%) translateY(-50%));
+      //}
       .video-content {
         &:before {
           .isMobile({ vertical-align: top; });
         }
         .movie-info_content {
           vertical-align: bottom;
-          .isMobile({ vertical-align: top; top: 40vh; });
+          .isMobile({ vertical-align: top; /* top: 40vh;*/ });
         }
         .movie-background {
           .isMobile({ height: 40vh; });
@@ -125,15 +139,13 @@
     }
 
     .movie-background {
-      left: 0;
-      position: relative;
       display: inline-block;
+      .isMobile({ position: relative; });
       .afrostream-movie__mask {
-        .horizontal-gradient(fade(@color-black-2, 30%), 0, fade(@color-black-2, 30%), 100%);
+        //.horizontal-gradient(fade(@color-black-2, 30%), 0, fade(@color-black-2, 30%), 100%);
       }
     }
     .billboard-infos {
-
       .billboard-synopsis {
         .isMobile({ font-size: 1em; });
       }
@@ -145,7 +157,7 @@
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    .isMobile({ height: auto; min-height: 40vh; });
+    .isMobile({ height: auto; min-height: calc(70vh ~'-' @header-height); });
     min-height: calc(@welcome-header-height ~'-' @header-height);
     .fullHeight();
     background: url(../../../../assets/images/default/1044x731.jpg) no-repeat;
@@ -202,6 +214,11 @@
           text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
           span {
             display: inline-block;
+          }
+          &:first-of-type {
+            &:first-letter {
+              text-transform: uppercase;
+            }
           }
         }
 

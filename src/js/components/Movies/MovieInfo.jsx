@@ -86,8 +86,7 @@ class MovieInfo extends LoadVideo {
     const link = this.getLink()
 
     const content = (<div className="movie-info_content">
-      {!showTrailer &&
-      <ReactImgix ref="slBackground" bg={true} blur={false} src={imageUrl} className="movie-background">
+      {<ReactImgix ref="slBackground" bg={true} blur={false} src={imageUrl} className="movie-background">
         <div className="afrostream-movie__mask"/>
       </ReactImgix>}
       {user && <Link to={link}>
@@ -98,12 +97,13 @@ class MovieInfo extends LoadVideo {
 
     return (
       <div ref="slContainer" className={classes}>
-        {showTrailer && <BackgroundVideo
-          {...{videos: trailers, poster: imageUrl}}
-          preload={'metadata'}>
-          {!isMobile && content}
-        </BackgroundVideo>}
-        {(isMobile || !showTrailer) && content}
+        {/*showTrailer && <BackgroundVideo
+         {...{videos: trailers, poster: imageUrl}}
+         preload={'metadata'}>
+         {!isMobile && content}
+         </BackgroundVideo>*/}
+        {/*(isMobile || !showTrailer) && content*/}
+        {content}
       </div>
     )
   }

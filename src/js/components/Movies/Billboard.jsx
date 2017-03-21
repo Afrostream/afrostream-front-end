@@ -130,7 +130,7 @@ class Billboard extends LoadVideo {
           }
           return (<span key={`cast-${i}`} className="billboard-row_cast">
             {thumb ? <img
-                src={`${config.images.urlPrefix}${thumb}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`}/> : null}
+              src={`${config.images.urlPrefix}${thumb}?crop=faces&fit=clip&w=1120&h=630&q=${config.images.quality}&fm=${config.images.type}`}/> : null}
             {`${(i ? ' | ' : '')} ${cast.get('firstName')} ${cast.get('lastName')} `}
           </span>)
         }).toJS()}
@@ -204,22 +204,22 @@ class Billboard extends LoadVideo {
     if (!user) {
 
 
-      let homeRTitle = this.getTitle('home.title')
+      //let homeRTitle = this.getTitle('home.title')
 
       return (
-          <div className="billboard-no-users">
-            {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
-            <div className="afrostream-movie__subscribe">
-              <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
-                return (<span key={`statement-${i}`}>{statement}</span>)
-              })}
-              </div>
-            </div>
-            {movieInfo && <div className="billboard-infos text-left">
-              <h1 className="billboard-title billboard-row">{title}</h1>
-              <h2 className="billboard-synopsis billboard-row">{synopsis}</h2>
-            </div>}
-          </div>
+        <div className="billboard-no-users">
+          {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
+          {/*<div className="afrostream-movie__subscribe">
+           <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
+           return (<span key={`statement-${i}`}>{statement}</span>)
+           })}
+           </div>
+           </div>*/}
+          {movieInfo && <div className="billboard-infos text-left">
+            <h1 className="billboard-title billboard-row">{title}</h1>
+            <h2 className="billboard-synopsis billboard-row">{synopsis}</h2>
+          </div>}
+        </div>
 
       )
     }
@@ -239,8 +239,8 @@ class Billboard extends LoadVideo {
         <Link to={link} ref="slSynopsis" className="billboard-synopsis billboard-row">{synopsis}</Link>
         <div className="billboard-info__btn">
           {hasSubtiles ? <button className="btn btn-xs btn-transparent" href="#">
-              <i className="zmdi zmdi-view-subtitles"></i>Audio et sous titres
-            </button> : <div />}
+            <i className="zmdi zmdi-view-subtitles"></i>Audio et sous titres
+          </button> : <div />}
           {this.getFavorite()}
           {this.getShareButton()}
           {this.getSponsorship()}
