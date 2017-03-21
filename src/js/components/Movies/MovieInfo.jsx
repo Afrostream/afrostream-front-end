@@ -74,30 +74,29 @@ class MovieInfo extends LoadVideo {
 
     let imageUrl = extractImg({
       data,
-      isMobile,
+      //isMobile,
       key: 'poster',
       crop: 'faces',
       fit: 'crop',
       height: 'none'
     })
 
+    const content = (<div className="movie-info_content">
+      {user && <Link to={link}>
+        <div className="btn-play"/>
+      </Link>}
+      {data && <Billboard {...{active, data, dataId, maxLength, load, movieInfo}} />}
+    </div>)
+
     const link = this.getLink()
     return (
       <div ref="slContainer" className={classes}>
         <BackgroundVideo
-          {...{isMobile, videos: trailers, poster: !isMobile && imageUrl}}
+          {...{videos: trailers, poster: imageUrl}}
           preload={'metadata'}>
-          {isMobile &&
-          <ReactImgix ref="slBackground" bg={true} blur={false} src={imageUrl} className="movie-background">
-            <div className="afrostream-movie__mask"/>
-          </ReactImgix>}
-          <div className="movie-info_content">
-            {user && <Link to={link}>
-              <div className="btn-play"/>
-            </Link>}
-            {data && <Billboard {...{active, data, dataId, maxLength, load, movieInfo}} />}
-          </div>
+          {!isMobile && content}
         </BackgroundVideo>
+        {isMobile && content}
       </div>
     )
   }

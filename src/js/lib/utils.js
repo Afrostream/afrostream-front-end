@@ -408,7 +408,7 @@ export function extractImg ({
   keys = [],
   defaultImage,
   width = 1280,
-  height = 'none',
+  height = '',
   format = 'jpg',
   fit = 'clip',
   crop = 'entropy'
