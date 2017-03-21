@@ -62,7 +62,7 @@ class WelcomeHeader extends I18n {
       'welcome-header_movie': Boolean(movieId)
     }
 
-    let trailers = [config.metadata.videos]
+    let trailers = config.metadata.videos
 
     const currentMovie = Movie.get(`movies/${movieId}`)
     const isMobile = Event.get('isMobile')
