@@ -74,7 +74,7 @@ class SlideShow extends React.Component {
     return (
       <div className="slide-show" ref="slC">
         {!category && <Spinner />}
-        {canUseDOM && category.size &&
+        {canUseDOM && category.size > 1 &&
         <Slider {...settings}>
           {category.map((data) => <div key={`slide-${data.get('_id')}`} onClick={::this.showLock}><MovieInfo
             active={true}
