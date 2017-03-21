@@ -26,7 +26,7 @@
         document.location = String(document.location.href).replace(/^https?:\/\/[^/]+\//, 'afrostream://');
       }
       if (signupClientType === 'legacy-api.android') {
-        document.location = String(document.location.href).replace(/^https?:\/\/[^#]+\#/, 'afrostream://callback/');
+        document.location = String(document.location.href).replace(/#/, '?').replace('callback', 'callback-android');
       }
     }
 
