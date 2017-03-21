@@ -48,7 +48,7 @@ class MovieInfo extends LoadVideo {
   render () {
 
     let {
-      props: {Movie, User, Event, active, dataId, data, overlay,showTrailer, maxLength, load, showBtn, movieInfo}
+      props: {Movie, User, Event, active, dataId, data, showTrailer, maxLength, load, showBtn, movieInfo}
     } = this
 
     data = data || Movie.get(`movies/${dataId}`)
@@ -84,8 +84,10 @@ class MovieInfo extends LoadVideo {
     })
 
     const link = this.getLink()
+
     const content = (<div className="movie-info_content">
-      {!showTrailer && <ReactImgix ref="slBackground" bg={true} blur={false} src={imageUrl} className="movie-background">
+      {!showTrailer &&
+      <ReactImgix ref="slBackground" bg={true} blur={false} src={imageUrl} className="movie-background">
         <div className="afrostream-movie__mask"/>
       </ReactImgix>}
       {user && <Link to={link}>
@@ -101,7 +103,7 @@ class MovieInfo extends LoadVideo {
           preload={'metadata'}>
           {!isMobile && content}
         </BackgroundVideo>}
-        {isMobile && content}
+        {(isMobile || !showTrailer) && content}
       </div>
     )
   }

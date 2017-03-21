@@ -161,7 +161,7 @@ class LifeList extends Component {
         itemRenderer={::this.renderInfiniteItem}
         items={pinsList}
         length={pinsList.size + 1}
-        threshold={500}
+        threshold={600}
         type={'simple'}
       />
     </div>)

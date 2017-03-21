@@ -74,7 +74,7 @@ class SlideShow extends React.Component {
     return (
       <div className="slide-show" ref="slC">
         {!category && <Spinner />}
-        {canUseDOM && category && category.size > 1 &&
+        {canUseDOM && category.size &&
         <Slider {...settings}>
           {category.map((data) => <div key={`slide-${data.get('_id')}`} onClick={::this.showLock}><MovieInfo
             active={true}
@@ -84,7 +84,7 @@ class SlideShow extends React.Component {
             {...this.props}
           /></div>)}
         </Slider>}
-        {(!canUseDOM || (category && category.size === 1)) && <MovieInfo
+        {(!canUseDOM || (category.size === 1)) && <MovieInfo
           active={true}
           load={true}
           showBtn={true}
