@@ -11,7 +11,7 @@ import {
 class Link extends React.Component {
 
   parseTo (to) {
-    return URL.parse(to)
+    return URL.parse(to || '')
   }
 
   isInternal (toLocation) {

@@ -29,6 +29,7 @@ class MovieInfo extends LoadVideo {
 
   static propTypes = {
     active: PropTypes.bool,
+    showTrailer: PropTypes.bool,
     overlay: PropTypes.bool,
     showBtn: PropTypes.bool,
     load: PropTypes.bool,
@@ -37,6 +38,7 @@ class MovieInfo extends LoadVideo {
 
   static defaultProps = {
     maxLength: 450,
+    showTrailer: false,
     overlay: false,
     showBtn: true,
     load: true,
@@ -46,7 +48,7 @@ class MovieInfo extends LoadVideo {
   render () {
 
     let {
-      props: {Movie, User, Event, active, dataId, data, maxLength, load, showBtn, movieInfo}
+      props: {Movie, User, Event, active, dataId, data, overlay,showTrailer, maxLength, load, showBtn, movieInfo}
     } = this
 
     data = data || Movie.get(`movies/${dataId}`)
@@ -81,21 +83,24 @@ class MovieInfo extends LoadVideo {
       height: 'none'
     })
 
+    const link = this.getLink()
     const content = (<div className="movie-info_content">
+      {!showTrailer && <ReactImgix ref="slBackground" bg={true} blur={false} src={imageUrl} className="movie-background">
+        <div className="afrostream-movie__mask"/>
+      </ReactImgix>}
       {user && <Link to={link}>
         <div className="btn-play"/>
       </Link>}
       {data && <Billboard {...{active, data, dataId, maxLength, load, movieInfo}} />}
     </div>)
 
-    const link = this.getLink()
     return (
       <div ref="slContainer" className={classes}>
-        <BackgroundVideo
+        {showTrailer && <BackgroundVideo
           {...{videos: trailers, poster: imageUrl}}
           preload={'metadata'}>
           {!isMobile && content}
-        </BackgroundVideo>
+        </BackgroundVideo>}
         {isMobile && content}
       </div>
     )

@@ -91,7 +91,7 @@ class WelcomeHeader extends I18n {
           </InternalPlansCountDown>
         </BackgroundVideo>}
         {movieId && <SlideShow
-          {...this.props} dots={false} autoplay={true} infinite={true}
+          {...this.props} showTrailer={true} dots={false} autoplay={true} infinite={true}
           maxLength={450} {...{movieId}}
           movieInfo={Boolean(movieId)}/>}
       </section>

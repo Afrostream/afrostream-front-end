@@ -84,12 +84,12 @@ class SlideShow extends React.Component {
             {...this.props}
           /></div>)}
         </Slider>}
-        {(!canUseDOM || (category && category.size)) && <MovieInfo
+        {(!canUseDOM || (category && category.size === 1)) && <MovieInfo
           active={true}
           load={true}
           showBtn={true}
           {...this.props}
-          data={category.first()}/>}
+          data={category && category.first()}/>}
       </div>
     )
   }
@@ -99,6 +99,7 @@ SlideShow.propTypes = {
   history: React.PropTypes.object,
   gradient: React.PropTypes.bool,
   dots: React.PropTypes.bool,
+  showTrailer: React.PropTypes.bool,
   autoplay: React.PropTypes.bool,
   infinite: React.PropTypes.bool,
   movieInfo: React.PropTypes.bool,
@@ -108,6 +109,7 @@ SlideShow.propTypes = {
 
 SlideShow.defaultProps = {
   dots: true,
+  showTrailer: false,
   gradient: false,
   autoplay: false,
   infinite: false,

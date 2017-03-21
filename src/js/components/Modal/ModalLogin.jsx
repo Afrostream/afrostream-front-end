@@ -190,6 +190,7 @@ class ModalLogin extends ModalComponent {
     const {
       dispatch
     } = this.props
+    
     let errMess = err.message
     if (err.response) {
       if (err.response.body) {
