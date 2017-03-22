@@ -209,6 +209,9 @@ class Footer extends Component {
                   <FormattedMessage id={ 'footer.social.newsletter' }/>
                 </Link>
               </li>
+              <li>
+                <img src="/images/comodo_secure_seal_76x26_transp 2.png" alt="ssl-secure-logo"/>
+              </li>
             </ul>
           </div>
         </div>
