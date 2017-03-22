@@ -58,12 +58,10 @@ class LifeList extends Component {
     if (!spotList) {
       return false
     }
-    const firstPage = Number(index <= this.props.moduloSpots)
-    const listIndex = index + 1
-    const spotIndex = Math.round(listIndex / this.props.moduloSpots)
+    const moduloCompare = this.props.moduloSpots + 1
+    const spotIndex = Math.round(index / moduloCompare)
     const hasMaxSpots = (spotIndex > spotList.size)
-
-    return spotList && !((listIndex + firstPage) % this.props.moduloSpots) && !hasMaxSpots && spotIndex
+    return index && spotList && !((index % moduloCompare)) && !hasMaxSpots && spotIndex
   }
 
   renderInfiniteItem (index, key) {
@@ -161,7 +159,7 @@ class LifeList extends Component {
         itemRenderer={::this.renderInfiniteItem}
         items={pinsList}
         length={pinsList.size + 1}
-        threshold={600}
+        threshold={1500}
         type={'simple'}
       />
     </div>)

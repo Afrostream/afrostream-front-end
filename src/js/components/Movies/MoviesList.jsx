@@ -62,7 +62,7 @@ class MoviesList extends React.Component {
           itemRenderer={::this.renderList}
           length={categories.size}
           type={'simple'}
-          pageSize={4}
+          pageSize={8}
         />
       </div>
     )
