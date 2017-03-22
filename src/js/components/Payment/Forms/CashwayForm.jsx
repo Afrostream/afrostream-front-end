@@ -43,7 +43,6 @@ class CashwayForm extends CouponForm {
         if (!couponCampaign) {
           throw new Error('Billing campaign not found')
         }
-
         return dispatch(BillingActionCreators.createCoupon({
           billingProviderName: provider,
           lastName: billingInfo.lastName,
