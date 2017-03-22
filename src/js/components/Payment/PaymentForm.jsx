@@ -183,22 +183,6 @@ class PaymentForm extends I18n {
                 floatingLabelFixed={true}
                 fullWidth={true}
                 type="text"
-                className="first-name"
-                data-billing="first_name"
-                ref="firstName"
-                id="first_name"
-                autoComplete="given-name"
-                name="first-name"
-                defaultValue={firstName}
-                floatingLabelText={this.getTitle('payment.name')}
-                required
-                disabled={this.state.disabledForm}/>
-            </div>
-            <div className="col-md-6">
-              <TextField
-                floatingLabelFixed={true}
-                fullWidth={true}
-                type="text"
                 className="last-name"
                 data-billing="last_name"
                 ref="lastName"
@@ -207,6 +191,22 @@ class PaymentForm extends I18n {
                 name="last-name"
                 defaultValue={lastName}
                 floatingLabelText={this.getTitle('payment.lastName')}
+                required
+                disabled={this.state.disabledForm}/>
+            </div>
+            <div className="col-md-6">
+              <TextField
+                floatingLabelFixed={true}
+                fullWidth={true}
+                type="text"
+                className="first-name"
+                data-billing="first_name"
+                ref="firstName"
+                id="first_name"
+                autoComplete="given-name"
+                name="first-name"
+                defaultValue={firstName}
+                floatingLabelText={this.getTitle('payment.name')}
                 required
                 disabled={this.state.disabledForm}/>
             </div>
@@ -463,7 +463,7 @@ class PaymentForm extends I18n {
             break
         }
       })
-      .then(({res:{body:{subStatus, subscriptionBillingUuid}}}) => {
+      .then(({res: {body: {subStatus, subscriptionBillingUuid}}}) => {
 
         const internalPlanUuid = currentPlan.get('internalPlanUuid')
         const planName = currentPlan.get('name')
@@ -511,7 +511,7 @@ class PaymentForm extends I18n {
         ReactGA.plugin.execute('ecommerce', 'send')
 
         history.push(`${originPath}/select-plan/${planCode}/${isCash ? 'future' : 'success'}`)
-      }).catch(({response : {body: {error, code, message}}}) => {
+      }).catch(({response: {body: {error, code, message}}}) => {
         let globalMessage = this.getTitle('payment.errors.global')
 
         if (error) {
@@ -537,7 +537,7 @@ class PaymentForm extends I18n {
   // A simple error handling function to expose errors to the customer
   error (err) {
 
-    const {props : {dispatch}} =this
+    const {props: {dispatch}} = this
 
     let formatError = err
     if (err instanceof Array) {
