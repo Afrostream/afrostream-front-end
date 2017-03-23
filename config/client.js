@@ -33,7 +33,7 @@ const protData = {
 }
 
 const client = {
-  defaultCouponCode: 'PRIXDOUX',
+  defaultCouponCode: '',//'PRIXDOUX',
   featuresFlip: {
     sponsorship: true,
     koment: true,
