@@ -696,7 +696,10 @@
     "copied": "Le lien est copié dans le presse papier",
     "emailField": "Son email",
     "max": "Vous avez atteint le nombre maximum d'amis parrainés",
-    "shareDesc": "pour tout abonnement à Afrostream grâce à ce coupon.",
+    "share": {
+      "title": "14 jours offerts à Afrostream",
+      "description": "Bonjour, Grâce à moi, tu vas pouvoir profiter gratuitement pendant 14 jours des meilleurs films et séries afro.Pour en bénéficier, clique sur le lien ci-dessous. Bonne journée et à bientôt !"
+    },
     "status": {
       "redeemed": "Votre ami à un compte Afrostream",
       "active": "Votre ami à validé ce coupon",
@@ -712,7 +715,7 @@
       "empty": "est requis"
     },
     "new": "Générer un coupon",
-    "share": "Partager à mes amis"
+    "action": "Partager à mes amis"
   },
   "press": {
     "menu": {

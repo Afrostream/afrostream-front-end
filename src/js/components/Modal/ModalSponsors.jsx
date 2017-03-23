@@ -120,7 +120,7 @@ class ModalSponsors extends ModalComponent {
 
 
   encodePlan (campaign) {
-    const {props:{User, dispatch}} = this
+    const {props: {User, dispatch}} = this
     const user = User.get('user')
     let shareData = null
     if (user && campaign) {
@@ -134,8 +134,8 @@ class ModalSponsors extends ModalComponent {
       }, false)
 
       shareData = Immutable.fromJS({
-        title: `Parrainage`,
-        description: `${description} ${this.getTitle('shareDesc')}`,
+        title: this.getTitle('share.title'),
+        description: `${this.getTitle('share.description')}`,
         link: 'coupon',
         query: {
           data
@@ -147,7 +147,7 @@ class ModalSponsors extends ModalComponent {
   }
 
   sharePlan (campaign) {
-    const {props:{dispatch}} = this
+    const {props: {dispatch}} = this
     const data = this.encodePlan(campaign)
     if (data) {
       dispatch(ModalActionCreators.open({target: 'strategy', data}))
@@ -172,7 +172,7 @@ class ModalSponsors extends ModalComponent {
 
   getSponsorsList () {
 
-    const {props:{Billing}} = this
+    const {props: {Billing}} = this
     const sponsorsData = Billing.get('sponsorsList')
     const sponsorsList = sponsorsData && sponsorsData.get('coupons')
     if (!sponsorsList) {
@@ -208,7 +208,7 @@ class ModalSponsors extends ModalComponent {
 
   getSponsorsComponent () {
 
-    const {props:{Billing}} = this
+    const {props: {Billing}} = this
 
     const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
 
@@ -221,18 +221,18 @@ class ModalSponsors extends ModalComponent {
     const inputProps = {
       onClick: e => ::this.sharePlan(plan)
     }
-    return <button className="generate-btn" {...inputProps} >{this.getTitle('share')}</button>
+    return <button className="generate-btn" {...inputProps} >{this.getTitle('action')}</button>
   }
 
   copyClip (link) {
-    const {props:{dispatch}} = this
+    const {props: {dispatch}} = this
     copy(link, {})
     dispatch(EventActionCreator.snackMessage({message: `sponsors.copied`}))
   }
 
   getLink () {
 
-    const {props:{Billing}} = this
+    const {props: {Billing}} = this
 
 
     const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
@@ -262,7 +262,7 @@ class ModalSponsors extends ModalComponent {
 
   render () {
 
-    const {props:{Billing}} = this
+    const {props: {Billing}} = this
     const sponsorsData = Billing.get('sponsorsList')
     const sponsorsList = sponsorsData && sponsorsData.get('coupons') || Immutable.fromJS([])
 

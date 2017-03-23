@@ -38,7 +38,7 @@ class Header extends React.Component {
         Player,
         router,
         routes,
-        params:{
+        params: {
           videoId
         }
       }
@@ -85,8 +85,7 @@ class Header extends React.Component {
     }
 
     return (
-      <Headroom disableInlineStyles>
-
+      <div className="headroom headroom--pinned">
         <header className={classSet(sliderClasses)}>
           <div dangerouslySetInnerHTML={{__html: '<!--googleoff: all-->'}}/>
           <nav className="float--left" role="navigation">
@@ -123,7 +122,7 @@ class Header extends React.Component {
           </nav>
           <div dangerouslySetInnerHTML={{__html: '<!--googleon: all-->'}}/>
         </header>
-      </Headroom>
+      </div>
     )
   }
 }

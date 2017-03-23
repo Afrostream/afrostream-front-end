@@ -707,7 +707,10 @@
     "copied": "Link copied to clipboard",
     "emailField": "His email",
     "max": "You have reached the maximum number of sponsored friends",
-    "shareDesc": "For any subscription to Afrostream with this coupon.",
+    "share": {
+      "title": "14 days offered at Afrostream",
+      "description": "Hello, Thanks to me, you will be able to enjoy free of charge for 14 days of the best Afro movies and series.To benefit, click on the link below. Good day and see you soon!"
+    },
     "status": {
       "redeemed": "Your friend to an Afrostream account",
       "active": "Your friend has validated his coupon",
@@ -721,7 +724,9 @@
     "validation": {
       "email": "Must be a valid email",
       "empty": "is required"
-    }
+    },
+    "new": "create a coupon",
+    "action": "Share with my friends"
   },
   "press": {
     "menu": {

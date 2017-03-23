@@ -55,7 +55,7 @@ class SubNavigation extends I18n {
       return (<div />)
     }
     return (
-      <Headroom disableInlineStyles>
+      <div className="headroom headroom--pinned">
         <ul className="sub-navigation">
           {streaming && <li key={`theme-streaming`}>
             <Link activeClassName="active"
@@ -77,7 +77,7 @@ class SubNavigation extends I18n {
           )}
         </ul>
         {children && children}
-      </Headroom>
+      </div>
     )
   }
 }
