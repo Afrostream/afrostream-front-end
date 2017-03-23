@@ -110,6 +110,12 @@ class Poster extends LoadVideo {
     }
 
     let dateFrom = data.get('dateFrom')
+    let forcedNewFlag = data.get('bannerNew')
+    if (forcedNewFlag && forcedNewFlag !== this.state.isNew) {
+      return this.setState({
+        isNew: true
+      })
+    }
     if (dateFrom) {
       let dateNow = Date.now()
       let compare = dateNow - new Date(dateFrom).getTime()
