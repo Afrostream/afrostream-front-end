@@ -4,8 +4,8 @@ import CouponForm from './CouponForm'
 
 class CashwayForm extends CouponForm {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this.state = {
       hasLib: true
     }

@@ -114,7 +114,7 @@ class Poster extends LoadVideo {
       let dateNow = Date.now()
       let compare = dateNow - new Date(dateFrom).getTime()
       const type = this.getType()
-      let nbDay = config.movies.isNew[type] || 10
+      let nbDay = config.movies.isNew[type] || 30
       let isNew = compare <= (nbDay * 24 * 3600 * 1000)
       if (isNew !== this.state.isNew) {
         this.setState({

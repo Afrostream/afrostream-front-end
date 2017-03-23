@@ -80,7 +80,7 @@ class WecashupForm extends CouponForm {
   componentDidMount () {
     super.componentDidMount()
 
-    const {props:{plan}} =this
+    const {props: {plan}} = this
 
     if (this.state.isScriptLoadSucceed || this.state.isScriptPending) {
       return
@@ -116,7 +116,7 @@ class WecashupForm extends CouponForm {
 
   onClickHandler (e) {
 
-    const {props :{form}} =this
+    const {props: {form}} = this
     const isFormValid = form && form.checkValidity()
     let event = document.createEvent('CustomEvent')
     event.initCustomEvent('submit', true, true, {})
@@ -155,8 +155,8 @@ class WecashupForm extends CouponForm {
 
   async submit (billingInfo, currentPlan) {
     const {
-      props:{provider}
-    }=this
+      props: {provider}
+    } = this
 
     //todo await postmessage with token infos dispatched from auth/wecashup/callback
 

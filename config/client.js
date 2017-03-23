@@ -33,6 +33,7 @@ const protData = {
 }
 
 const client = {
+  defaultCouponCode: 'PRIXDOUX',
   featuresFlip: {
     sponsorship: true,
     koment: true,
@@ -224,9 +225,9 @@ const client = {
   },
   movies: {
     isNew: {
-      episode: 2,
-      movie: 10,
-      season: 20
+      episode: 7,
+      movie: 30,
+      season: 30
     }
   },
   reco: {

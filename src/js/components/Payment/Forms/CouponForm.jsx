@@ -7,6 +7,8 @@ import { Link, I18n } from '../../Utils'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import ReactTooltip from 'react-tooltip'
 
+const {defaultCouponCode} = config
+
 class CouponForm extends I18n {
 
   constructor (props, context) {
@@ -26,7 +28,10 @@ class CouponForm extends I18n {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (!shallowEqual(nextProps.plan, this.props.plan)) {
+    if (nextProps.selected !== this.props.selected && nextProps.selected) {
+      this.checkCoupon(defaultCouponCode)
+    }
+    if (!shallowEqual(nextProps, this.props)) {
       this.attachTooltip()
     }
   }
@@ -39,7 +44,7 @@ class CouponForm extends I18n {
       }
     } = this
 
-    let isCouponCodeCompatible = false
+    let isCouponCodeCompatible = true
     if (plan) {
       const providerPlans = plan.get('providerPlans')
       const currentProvider = providerPlans.find((prov) => prov.get('provider').get('providerName') === provider)
@@ -51,11 +56,7 @@ class CouponForm extends I18n {
   }
 
   attachTooltip () {
-    const {couponContainer} = this.refs
-    let isCouponCodeCompatible = this.isCouponCodeCompatible()
-    if (couponContainer && !isCouponCodeCompatible) {
-      ReactTooltip.rebuild()
-    }
+    ReactTooltip.rebuild()
   }
 
 
@@ -82,12 +83,12 @@ class CouponForm extends I18n {
     //Validate coupon
     return await dispatch(BillingActionCreators.couponValidate(formData))
       .then(({
-        res:{
-          body:{
-            coupon
-          }
-        }
-      }) => {
+               res: {
+                 body: {
+                   coupon
+                 }
+               }
+             }) => {
         const validCoupon = coupon && coupon.status === 'waiting'
         this.setState({
           validCoupon,
@@ -113,7 +114,9 @@ class CouponForm extends I18n {
     let validCoupon = this.state.validCoupon
     let couponName = ''
     let couponIcon = 'zmdi-block'
-
+    let dataTip = {
+      ['data-tip']: !isCouponCodeCompatible ? this.getTitle('payment.promo.disabledLabel') : ''
+    }
     let inputAttributes = {
       disabled: Boolean(!isCouponCodeCompatible),
       onChange: (event, payload) => {
@@ -130,7 +133,7 @@ class CouponForm extends I18n {
       const couponCampeign = coupon.get('campaign')
       const couponType = couponCampeign.get('couponsCampaignType')
       validCoupon = coupon && coupon.get('status') === 'waiting'
-      inputAttributes.defaultValue = couponCode
+      inputAttributes.defaultValue = couponCode || defaultCouponCode
       if (couponType !== 'promo') {
         couponName = (
           <Link className="coupon-warning"
@@ -140,12 +143,17 @@ class CouponForm extends I18n {
         couponIcon = 'zmdi-check'
         couponName = couponCampeign.get('description')
       }
+    } else {
+      if (isCouponCodeCompatible) {
+        inputAttributes.defaultValue = defaultCouponCode || ''
+      }
     }
 
+
     return (
-      <div className="col-md-12" ref="couponContainer" data-tip={this.getTitle('payment.promo.disabledLabel')}>
-        { !isCouponCodeCompatible && <ReactTooltip place="top" type="dark"
-                                                   effect="solid"/> }
+      <div className="col-md-12" ref="couponContainer" {...dataTip}>
+        <ReactTooltip place="top" type="dark"
+                      effect="solid"/>
         <div className="row no-padding">
           <div className="col-md-11">
             <TextField
@@ -165,7 +173,7 @@ class CouponForm extends I18n {
             <i className={`zmdi coupon-check
                                 ${couponIcon }
                                 zmdi-hc-2x`}
-               aria-hidden=" true"/>
+               aria-hidden="true"/>
             {this.state.fetching && <Spinner/>}
           </div>
         </div>

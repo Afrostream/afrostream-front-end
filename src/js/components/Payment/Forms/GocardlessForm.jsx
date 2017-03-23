@@ -14,8 +14,8 @@ const {gocardless} = config
 
 class GocardlessForm extends CouponForm {
 
-  constructor (props) {
-    super(props)
+  constructor (props, context) {
+    super(props, context)
     this.state = {
       modal: false,
       modalData: null
