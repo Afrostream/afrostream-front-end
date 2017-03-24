@@ -33,9 +33,9 @@ class InternalPlansCountDown extends I18n {
 
   renderCountDown () {
     let countdownImg
-    if (internalPlansCountDown.imageUrl) {
+    if (internalPlansCountDown.imageUrl && this.props.bgImage) {
       const countdownImgUri = `${images.urlPrefix}${internalPlansCountDown.imageUrl.replace(/{lang}/, this.props.intl.locale)}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}&txt=©DR&txtclr=fff&txtsize=10&markalpha=70&txtalign=bottom,right`
-      countdownImg = <ReactImgix src={countdownImgUri} blur={false}/>
+      countdownImg = <ReactImgix className={'countdown-img'} src={countdownImgUri} blur={false} bg={true}/>
     }
     return (
       <CountDown
@@ -46,13 +46,19 @@ class InternalPlansCountDown extends I18n {
         <div className="afrostream-movie__subscribe">
           <div className="afrostream-statement">
             <div className="discount-statement">
-              <div className="price bolder">3,99
-                <span className="currency">€</span><span
-                  className="mini">/{this.getTitle('home.countdown.month')}</span>
+              Le premier mois à
+              <div className="price bolder">1
+                <span className="currency">€</span>
+                {/*<span className="mini">
+                 /{this.getTitle('home.countdown.month')}
+                 </span>*/}
               </div>
               {this.getTitle('home.countdown.instead')}
-              <div className="off">6,99<span className="currency">€</span><span
-                className="mini">/{this.getTitle('home.countdown.month')}</span></div>
+              <div className="off">6,99<span className="currency">€</span>
+                <span className="mini"> * puis 6,99</span>
+                <span className="currency">€</span>
+                <span className="mini">{this.getTitle('home.countdown.month')}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -65,7 +71,7 @@ class InternalPlansCountDown extends I18n {
 
   renderProperLink () {
 
-    const {props:{User, Billing}} =this
+    const {props: {User, Billing}} = this
     const user = User.get('user')
     const {internalPlanUuid, internalPlanQuery} = internalPlansCountDown
     const countdown = this.renderCountDown()
@@ -102,10 +108,14 @@ class InternalPlansCountDown extends I18n {
 }
 
 InternalPlansCountDown.propTypes = {
+  mode: React.PropTypes.string,
   className: React.PropTypes.string,
+  bgImage: React.PropTypes.bool,
   action: React.PropTypes.string
 }
 InternalPlansCountDown.defaultProps = {
+  mode: 'horizontal',
+  bgImage: false,
   className: 'countdown',
   action: 'countdown.action'
 }

@@ -157,7 +157,7 @@
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    .isMobile({ height: auto; min-height: calc(70vh ~'-' @header-height); });
+    .isMobile({ height: auto; min-height: calc(@welcome-header-height ~'-' @header-height); });
     min-height: calc(@welcome-header-height ~'-' @header-height);
     .fullHeight();
     background: url(../../../../assets/images/default/1044x731.jpg) no-repeat;
@@ -247,6 +247,9 @@
           display: inline-block;
           vertical-align: middle;
           padding: 2em;
+          .mouse {
+            margin-top: 3em;
+          }
         }
       }
       .countdown-timer {
@@ -254,6 +257,9 @@
         left: 0;
         right: 0;
         top: 0;
+      }
+      .discount-statement {
+        font-size: 1em;
       }
       .afrostream-movie__subscribe {
         margin: 0;
@@ -263,80 +269,93 @@
           .isMobile({ margin: 0; });
         }
       }
-      .discount-statement {
-        display: flex;
-        flex-direction: row;
-        align-items: baseline;
-        justify-content: center;
-        .isMobile({ flex-direction: column; align-items: center; });
-        text-transform: uppercase;
-        font-family: @font-oswald;
+    }
+  }
+}
 
-        .price {
-          display: inline-block;
-          text-align: center;
-          font-size: 2em;
-          padding: 0.3em;
-          .isMobile({ padding: 0; });
-        }
+.discount-statement {
+  position: relative;
+  color: @brand-primary;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  .isMobile({ flex-direction: column; align-items: center; });
+  text-transform: uppercase;
+  font-family: @font-oswald;
+  font-size: 3em;
 
-        .title {
-          display: inline-block;
-          text-align: left;
-          max-width: 8em;
-        }
+  .price {
+    display: inline-block;
+    text-align: center;
+    font-size: 2em;
+    padding: 0.3em;
+    .isMobile({ padding: 10px; });
+  }
 
-        .discount {
-          font-size: 1.2em;
-          line-height: 1.3em;
-          .bolder {
-            font-size: 1.3em;
-          }
-        }
-        .bolder {
-          color: @plan-red-color;
-        }
-        .currency {
-          display: inline-block;
-          font-size: 0.5em;
-          font-family: @font-oswald;
-        }
-        .mini {
-          font-size: 0.3em;
-          display: inline-block;
-        }
-        .off {
-          display: inline-block;
-          font-size: 1.1em;
-          color: @plan-red-color;
-          margin: 0.3em;
-          position: relative;
-          &:before,
-          &:after {
-            position: absolute;
-            top: .6em;
-            content: '';
-            display: block;
-            width: 2.2em;
-            height: .1em;
-            background-color: @brand-primary;
-          }
-          &:after {
-            transform: rotate(25deg);
-          }
-          &:before {
-            transform: rotate(-25deg);
-          }
-        }
-        .underline {
-          &:after {
-            content: "";
-            width: 2em;
-            height: 5px;
-            background-color: @plan-red-color;
-          }
-        }
-      }
+  .title {
+    display: inline-block;
+    text-align: left;
+    max-width: 8em;
+  }
+
+  .discount {
+    font-size: 1.2em;
+    line-height: 1.3em;
+    .bolder {
+      font-size: 1.3em;
+    }
+  }
+  .bolder {
+    color: @subscriber-color;
+  }
+  .currency {
+    display: inline-block;
+    font-size: 0.5em;
+    font-family: @font-oswald;
+  }
+  .mini {
+    font-size: 0.2em;
+    display: inline-block;
+    text-transform: lowercase;
+    padding: 0 5px 0 5px;
+    &:first-of-type {
+      padding-left: 30px;
+    }
+  }
+  .off {
+    display: inline-block;
+    font-size: 1.1em;
+    color: @plan-red-color;
+    margin: 0.3em;
+    position: relative;
+    .currency {
+      font-size: 0.15em;
+      padding: 0;
+    }
+    &:before,
+    &:after {
+      position: absolute;
+      top: .6em;
+      content: '';
+      display: block;
+      width: 2.2em;
+      height: .1em;
+      background-color: @brand-primary;
+    }
+    &:after {
+      transform: rotate(25deg);
+    }
+    &:before {
+      transform: rotate(-25deg);
+    }
+  }
+  .underline {
+    &:after {
+      content: "";
+      width: 2em;
+      height: 5px;
+      background-color: @plan-red-color;
     }
   }
 }

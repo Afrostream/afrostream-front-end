@@ -22,6 +22,7 @@ import shallowEqual from 'react-pure-render/shallowEqual'
 import scriptLoader from '../../lib/script-loader'
 import { StickyContainer, Sticky } from 'react-sticky'
 import window from 'global/window'
+import InternalPlansCountDown from '../CountDown/InternalPlansCountDown'
 
 const {addThisApi, addThis, bitly} = config
 
@@ -29,7 +30,7 @@ if (process.env.BROWSER) {
   require('./LifePinView.less')
 }
 
-@prepareRoute(async function ({store, params:{pinId}}) {
+@prepareRoute(async function ({store, params: {pinId}}) {
   if (pinId) {
     return await Promise.all([
       store.dispatch(LifeActionCreators.fetchPin(pinId)),
@@ -120,7 +121,7 @@ class LifePinView extends ClickablePin {
 
   renderBubbles (data) {
     const {
-      props:{
+      props: {
         Life,
         User,
         Facebook
@@ -162,7 +163,7 @@ class LifePinView extends ClickablePin {
     const {
       props: {
         Life,
-        params:{
+        params: {
           pinId
         }
       }
@@ -211,6 +212,7 @@ class LifePinView extends ClickablePin {
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard {...this.props} user={pinnedUser}/>}
               <Sticky bottomOffset={150}>
+                <InternalPlansCountDown bgImage={true} mode="vertical"/>
                 <div className="addthis_toolbox addthis_inline_share_toolbox_ubvc"/>
                 <div className="spot-lists">
                   {spots && spots.map((data, key) => <LifeSpot {...{

@@ -16,9 +16,30 @@
 
   .countdown-content {
     position: relative;
+    .countdown-img,
     img {
+      position: absolute;
       width: 100%;
       height: 100%;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .countdown-img {
+      &:after {
+        content: "";
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        background-color: fade(#000000, 30%);
+      }
     }
     .subscribe-button {
       font-size: 2em;
@@ -192,6 +213,29 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+article {
+  .countdown-wrapper {
+    display: flex;
+    flex-direction: column;
+    .countdown-timer {
+      width: 100%;
+      .countdown-number-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    .countdown-content {
+      width: 100%;
+      padding: 1em;
+      .discount-statement {
+        flex-direction: column;
+        align-items: center;
       }
     }
   }

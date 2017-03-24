@@ -11,12 +11,13 @@ import { withRouter } from 'react-router'
 import {
   injectIntl
 } from 'react-intl'
+import InternalPlansCountDown from '../CountDown/InternalPlansCountDown'
 
 if (process.env.BROWSER) {
   require('./PaymentPage.less')
 }
 
-@prepareRoute(async function ({store, location, router, params:{planCode}}) {
+@prepareRoute(async function ({store, location, router, params: {planCode}}) {
   let {query} = location
   let isCash = router && router.isActive('cash')
   let contextBillingUuid = isCash ? 'cashway' : (query && query.contextBillingUuid || 'common')
@@ -53,6 +54,7 @@ class PaymentPage extends React.Component {
     return (
       <div className="row-fluid brand-bg">
         <div className="container brand-bg content-padding payment-page">
+          {!children && <InternalPlansCountDown bgImage={true}/>}
           {children ? children : <SelectPlan {...this.props}/>}
         </div>
       </div>
