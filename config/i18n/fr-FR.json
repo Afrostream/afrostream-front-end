@@ -68,7 +68,7 @@
   "home": {
     "title": "{movieName}les meilleurs films et séries\nafro-américains et africains.\nEn illimité.",
     "titleMeta": "Profitez d'une semaine offerte pour regarder {movieName}",
-    "action": "Profitez du premier mois à 1€ !",
+    "action": "Profitez du premier mois à 1€",
     "movie": {
       "title": "{movieName} | Le film en streaming sur AFROSTREAM",
       "description": "Regardez {movieName}, film avec {actors} en streaming sur tous vos écrans grâce à AFROSTREAM"
@@ -88,7 +88,7 @@
     "devices": {
       "title": "Regardez {movieName}vos films et séries afro préférés quand vous voulez, où vous voulez en illimité",
       "titleAction": "Démarrez votre semaine d'essai offerte pour regarder {movieName}vos films et séries afro préférés",
-      "action": "Profitez du premier mois à 1€ !",
+      "action": "Profitez du premier mois à 1€",
       "features": {
         "engagment": "Sans engagement",
         "free": "La première semaine est offerte",
