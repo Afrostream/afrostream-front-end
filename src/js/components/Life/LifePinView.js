@@ -215,7 +215,7 @@ class LifePinView extends ClickablePin {
                 <InternalPlansCountDown bgImage={true} mode="vertical"/>
                 <div className="addthis_toolbox addthis_inline_share_toolbox_ubvc"/>
                 <div className="spot-lists">
-                  {spots && spots.map((data, key) => <LifeSpot {...{
+                  {spots && spots.filter((spot) => spot.get('type') === 'vertical').map((data, key) => <LifeSpot {...{
                     data,
                     key
                   }} {...this.props} />).toJS()}
