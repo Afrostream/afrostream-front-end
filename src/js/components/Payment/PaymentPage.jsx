@@ -54,7 +54,7 @@ class PaymentPage extends React.Component {
     return (
       <div className="row-fluid brand-bg">
         <div className="container brand-bg content-padding payment-page">
-          {!children && <InternalPlansCountDown bgImage={true}/>}
+          {!children && <InternalPlansCountDown bgImage={true} action=""/>}
           {children ? children : <SelectPlan {...this.props}/>}
         </div>
       </div>

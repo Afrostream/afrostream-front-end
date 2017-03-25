@@ -212,7 +212,7 @@ class LifePinView extends ClickablePin {
             <div className="col-md-3 col-xs-3 no-padding col-right">
               {pinnedUser && <AvatarCard {...this.props} user={pinnedUser}/>}
               <Sticky bottomOffset={150}>
-                <InternalPlansCountDown bgImage={true} mode="vertical"/>
+                <InternalPlansCountDown bgImage={true} bgImageMode={false} action="" mode="vertical"/>
                 <div className="addthis_toolbox addthis_inline_share_toolbox_ubvc"/>
                 <div className="spot-lists">
                   {spots && spots.filter((spot) => spot.get('type') === 'vertical').map((data, key) => <LifeSpot {...{

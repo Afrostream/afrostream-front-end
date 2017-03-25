@@ -35,15 +35,16 @@ class InternalPlansCountDown extends I18n {
     let countdownImg
     if (internalPlansCountDown.imageUrl && this.props.bgImage) {
       const countdownImgUri = `${images.urlPrefix}${internalPlansCountDown.imageUrl.replace(/{lang}/, this.props.intl.locale)}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}&txt=©DR&txtclr=fff&txtsize=10&markalpha=70&txtalign=bottom,right`
-      countdownImg = <ReactImgix className={'countdown-img'} src={countdownImgUri} blur={false} bg={true}/>
+      countdownImg = <ReactImgix className={'countdown-img'}
+                                 src={countdownImgUri} blur={false} bg={this.props.bgImageMode}/>
     }
     return (
       <CountDown
         eventTime={internalPlansCountDown.countDownDateTo}
         contentPosition={'bottom'}
       >
-        {countdownImg}
-        <div className="afrostream-movie__subscribe">
+        {countdownImg && countdownImg}
+        {!countdownImg && <div className="afrostream-movie__subscribe">
           <div className="afrostream-statement">
             <div className="discount-statement">
               Le premier mois à
@@ -61,7 +62,7 @@ class InternalPlansCountDown extends I18n {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
         {this.props.action && <SignUpButton key="welcome-pgm-signup" className="subscribe-button"
                                             label={this.props.action}/>}
         <div className="mouse"/>
@@ -111,11 +112,13 @@ InternalPlansCountDown.propTypes = {
   mode: React.PropTypes.string,
   className: React.PropTypes.string,
   bgImage: React.PropTypes.bool,
+  bgImageMode: React.PropTypes.bool,
   action: React.PropTypes.string
 }
 InternalPlansCountDown.defaultProps = {
   mode: 'horizontal',
   bgImage: false,
+  bgImageMode: false,
   className: 'countdown',
   action: 'countdown.action'
 }

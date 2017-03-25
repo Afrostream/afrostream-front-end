@@ -403,7 +403,9 @@
       "periods": {
         "year": "Year(s)",
         "month": "Month",
-        "day": "Day(s)"
+        "day": "Day(s)",
+        "first": "the first",
+        "then": "then"
       },
       "status": {
         "canceled": "Canceled",

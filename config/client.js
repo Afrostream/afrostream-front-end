@@ -198,7 +198,7 @@ const client = {
   internalPlansCountDown: {
     countDownDateFrom: '2017-02-07',
     countDownDateTo: '2017-03-31',
-    imageUrl: '/production/screen/blackish-home-v5.jpg',
+    imageUrl: '/production/screen/promo-un-euro.jpg',
     internalPlanUuid: 'afrostreammonthlyrts',
     internalPlanQuery: ''
   },

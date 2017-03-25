@@ -64,7 +64,7 @@ class SelectPlan extends I18n {
   getPlanCol (label) {
 
     const {
-      props : {router, User, Billing}
+      props: {router, User, Billing}
     } = this
 
     let isCash = router.isActive('cash')
@@ -126,7 +126,7 @@ class SelectPlan extends I18n {
         case 'price':
           let period = `/${plan.get('periodLength')} ${this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`)}`
           value = (<div className="select-plan_price">
-            {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
+            {formatPrice(100, plan.get('currency'), true)} {this.getTitle(`account.billing.periods.first`)} {this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`)} {this.getTitle(`account.billing.periods.then`)} {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
             <span className="select-plan_period">
             {period}
             </span>
@@ -294,8 +294,8 @@ class SelectPlan extends I18n {
       'name',
       'internalActionLabel',
       'price',
-      'trialEnabled',
-      'internalMaxScreens',
+      //'trialEnabled',
+      //'internalMaxScreens',
       'internalMobile',
       'internalUnlimited',
       'internalEngagment',
