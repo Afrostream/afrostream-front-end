@@ -10,7 +10,7 @@ import ModalCoupon from '../Modal/ModalCoupon'
 import * as MovieActionCreators from '../../actions/movie'
 import * as EpisodeActionCreators from '../../actions/episode'
 import * as BillingActionCreators from '../../actions/billing'
-
+import InternalPlansCountDown from '../CountDown/InternalPlansCountDown'
 
 if (process.env.BROWSER) {
   require('./WelcomePage.less')
@@ -41,6 +41,7 @@ class WelcomePage extends React.Component {
     return (
       <div className="welcome-page">
         <WelcomeHeader {...this.props}/>
+        <InternalPlansCountDown {...this.props} bgImage={true} action=""/>
         <Devices {...this.props} />
         <WelcomeMoviesSlider dots={false} autoplay={true} infinite={true}/>
         <WelcomeLifeSlider dots={false} autoplay={true} infinite={true}/>

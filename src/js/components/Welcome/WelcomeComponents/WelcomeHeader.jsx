@@ -11,7 +11,6 @@ import * as ModalActionCreators from '../../../actions/modal'
 import {
   injectIntl
 } from 'react-intl'
-import InternalPlansCountDown from '../../CountDown/InternalPlansCountDown'
 
 if (process.env.BROWSER) {
   require('./WelcomeHeader.less')
@@ -86,16 +85,14 @@ class WelcomeHeader extends I18n {
           poster={posterImg}
           onClick={::this.showLock}
         >
-          <InternalPlansCountDown {...this.props} >
-            <div className="afrostream-movie__subscribe">
-              <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
-                return (<span key={`statement-${i}`}>{statement}</span>)
-              })}
-              </div>
-              <SignUpButton className="subscribe-button" label="home.action"/>
-              <div className="mouse"/>
+          <div className="afrostream-movie__subscribe">
+            <div className="afrostream-statement">{homeRTitle.split('\n').map((statement, i) => {
+              return (<span key={`statement-${i}`}>{statement}</span>)
+            })}
             </div>
-          </InternalPlansCountDown>
+            <SignUpButton className="subscribe-button" label="home.action"/>
+            <div className="mouse"/>
+          </div>
         </BackgroundVideo>}
         {movieId && <SlideShow
           {...this.props} showTrailer={true} dots={false} autoplay={true} infinite={true}
