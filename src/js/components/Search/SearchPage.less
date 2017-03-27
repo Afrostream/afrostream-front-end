@@ -142,12 +142,14 @@
     padding: @app-padding;
 
     .brick {
-      min-height: 360px;
-      width: 100%;
-      max-width: 100%;
+      min-height: 335px;
+      .isMobile({ width: 100%; max-width: 100%; });
+      width: 50%;
+      max-width: 50%;
+
       .brick-content {
-        margin-right: 15px;
-        margin-bottom: 15px;
+        margin-right: 20px;
+        margin-bottom: 20px;
         .card-body {
           .card-info {
             font-size: 1.3em;

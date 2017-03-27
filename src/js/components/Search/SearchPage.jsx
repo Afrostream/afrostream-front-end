@@ -71,7 +71,7 @@ class SearchPage extends I18n {
       return
     }
 
-    return (<div key={`search-movie`} className="col-md-6">
+    return (<div key={`search-movie`} className="col-md-5">
       <MoviesSlider {...this.props} favorite={false} dataList={movies} axis="y"/>
     </div>)
 
@@ -109,7 +109,7 @@ class SearchPage extends I18n {
     }
 
     return (
-      <div key={`search-pins`} className={`col-md-${full && 10 || 4}`}>
+      <div key={`search-pins`} className={`col-md-${full && 10 || 5}`}>
         <LifeList highlightFirst={false} over={false} {...this.props} {...{pins}}/>
       </div>
     )
