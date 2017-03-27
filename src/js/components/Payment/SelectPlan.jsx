@@ -347,7 +347,7 @@ SelectPlan.propTypes = {
 }
 
 SelectPlan.defaultProps = {
-  showImages: true
+  showImages: false
 }
 
 export default withRouter(SelectPlan)
