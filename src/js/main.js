@@ -19,7 +19,7 @@ const {apiClient} = config
 const history = browserHistory
 /* global __INITIAL_STATE__:true */
 const state = typeof __INITIAL_STATE__ === 'string' && deserialize(__INITIAL_STATE__) || __INITIAL_STATE__
-const {intl:{locale}} = state
+const {intl: {locale}} = state
 moment.locale(locale)
 
 function initSite () {
@@ -28,14 +28,14 @@ function initSite () {
      * Client's createRequest() method
      */
     ({
-      method = 'GET',
-      headers = {},
-      pathname = '',
-      query = {},
-      body = {},
-      legacy = false,
-      local = false
-    }) => {
+       method = 'GET',
+       headers = {},
+       pathname = '',
+       query = {},
+       body = {},
+       legacy = false,
+       local = false
+     }) => {
       pathname = pathname.replace(new RegExp(`^${apiClient.urlPrefix}`), '')
       let url = `${apiClient.urlPrefix}${pathname}`
 

@@ -195,13 +195,14 @@ const client = {
   netsize: {
     internalPlanUuid: 'nsafrostreammonthly'
   },
-  internalPlansCountDown: {
+  countdowns: [{
+    countryCode: 'FR',
     countDownDateFrom: '2017-02-07',
     countDownDateTo: '2017-03-31',
     imageUrl: '/production/screen/promo-un-euro.jpg',
     internalPlanUuid: 'afrostreammonthlyrts',
     internalPlanQuery: ''
-  },
+  }],
   sentry: {
     dns: process.env.SENTRY_DSN || '',
     config: {}

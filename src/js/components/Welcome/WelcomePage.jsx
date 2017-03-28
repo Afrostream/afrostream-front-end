@@ -41,7 +41,7 @@ class WelcomePage extends React.Component {
     return (
       <div className="welcome-page">
         <WelcomeHeader {...this.props}/>
-        <InternalPlansCountDown {...this.props} bgImage={true} action=""/>
+        <InternalPlansCountDown bgImage={true} action=""/>
         <Devices {...this.props} />
         <WelcomeMoviesSlider dots={false} autoplay={true} infinite={true}/>
         <WelcomeLifeSlider dots={false} autoplay={true} infinite={true}/>

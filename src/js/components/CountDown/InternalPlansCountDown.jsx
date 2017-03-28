@@ -12,9 +12,9 @@ import {
   injectIntl
 } from 'react-intl'
 
-const {images, internalPlansCountDown} = config
+const {images, countdowns = []} = config
 
-@connect(({User, Billing}) => ({User, Billing}))
+@connect(({User, Geo, Billing}) => ({User, Geo, Billing}))
 class InternalPlansCountDown extends I18n {
 
   openModal (donePath) {
@@ -33,6 +33,7 @@ class InternalPlansCountDown extends I18n {
 
   renderCountDown () {
     let countdownImg
+    const internalPlansCountDown = this.getLocaleCountdown()
     if (internalPlansCountDown.imageUrl && this.props.bgImage) {
       const countdownImgUri = `${images.urlPrefix}${internalPlansCountDown.imageUrl.replace(/{lang}/, this.props.intl.locale)}?crop=faces&fit=clip&w=1280&q=${images.quality}&fm=${images.type}&txt=©DR&txtclr=fff&txtsize=10&markalpha=70&txtalign=bottom,right`
       countdownImg = <ReactImgix className={'countdown-img'}
@@ -45,23 +46,6 @@ class InternalPlansCountDown extends I18n {
       >
         {countdownImg && countdownImg}
         {!countdownImg && <div className="afrostream-movie__subscribe">
-          <div className="afrostream-statement">
-            <div className="discount-statement">
-              Le premier mois à
-              <div className="price bolder">1
-                <span className="currency">€</span>
-                {/*<span className="mini">
-                 /{this.getTitle('home.countdown.month')}
-                 </span>*/}
-              </div>
-              {this.getTitle('home.countdown.instead')}
-              <div className="off">6,99<span className="currency">€</span>
-                <span className="mini"> * puis 6,99</span>
-                <span className="currency">€</span>
-                <span className="mini">{this.getTitle('home.countdown.month')}</span>
-              </div>
-            </div>
-          </div>
         </div>}
         {this.props.action && <SignUpButton key="welcome-pgm-signup" className="subscribe-button"
                                             label={this.props.action}/>}
@@ -74,6 +58,7 @@ class InternalPlansCountDown extends I18n {
 
     const {props: {User, Billing}} = this
     const user = User.get('user')
+    const internalPlansCountDown = this.getLocaleCountdown()
     const {internalPlanUuid, internalPlanQuery} = internalPlansCountDown
     const countdown = this.renderCountDown()
     const validPlans = Billing.get(`internalPlans/common`)
@@ -99,11 +84,28 @@ class InternalPlansCountDown extends I18n {
     )
   }
 
+
+  getLocaleCountdown () {
+    const {props: {Geo}} = this
+    const geo = Geo.get('geo')
+    return countdowns.find((countdown) => {
+      const isCurrentLocale = countdown.countryCode === geo.get('countryCode')
+      if (!isCurrentLocale) {
+        return false
+      }
+      const presentTime = new Date().getTime()
+      const startTime = new Date(countdown.countDownDateFrom).getTime()
+      const endTime = new Date(countdown.countDownDateTo).getTime()
+      if (presentTime - startTime >= 0 && presentTime - endTime <= 0) return countdown
+      return false
+    })
+  }
+
   render () {
-    const presentTime = new Date().getTime()
-    const startTime = new Date(internalPlansCountDown.countDownDateFrom).getTime()
-    const endTime = new Date(internalPlansCountDown.countDownDateTo).getTime()
-    if (presentTime - startTime >= 0 && presentTime - endTime <= 0) return this.renderProperLink()
+    const internalPlansCountDown = this.getLocaleCountdown()
+    if (internalPlansCountDown) {
+      return this.renderProperLink()
+    }
     return this.props.children || <div />
   }
 }
