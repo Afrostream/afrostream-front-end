@@ -666,11 +666,9 @@
       "action": "Join us"
     },
     "sticky": {
-      "nbpost": "Number of post : {pins}",
-      "nbfollowers": "Number de follower : {followers}",
-      "nbpost": "<b>{pins}</b> post",
-      "nbfollowers": "<b>{followers}</b> followers",
-      "nbfollowed": "<b>{followers}</b> followed",
+      "nbpost": "posts",
+      "nbfollowers": "followers",
+      "nbfollowing": "followeds",
       "tooltip": "Post content",
       "remove": "Remove content"
     },
