@@ -489,6 +489,7 @@
     "userConsentFailed": "Permissions were not granted. Try again.",
     "loginProvider": "Connect with {strategy}",
     "language": {
+      "phone": "Must be a valid phone number",
       "email": "Must be a valid email",
       "password": "The password",
       "repeat_password": "The verification password",

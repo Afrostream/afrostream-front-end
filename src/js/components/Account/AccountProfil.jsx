@@ -17,6 +17,7 @@ import Checkbox from 'material-ui/Checkbox'
 import RaisedButton from 'material-ui/RaisedButton'
 import AvatarCard from '../User/AvatarCard'
 import window from 'global/window'
+import { I18n } from '../Utils'
 import {
   FormattedMessage,
 } from 'react-intl'
@@ -46,7 +47,7 @@ if (process.env.BROWSER) {
 }
 
 @connect(({User, Geo}) => ({User, Geo}))
-class AccountProfil extends React.Component {
+class AccountProfil extends I18n {
 
   constructor (props, context) {
     super(props, context)
@@ -172,7 +173,7 @@ class AccountProfil extends React.Component {
     const {phoneInput} = this.refs
     let parsedNumber = bool && false || v
     let isValid = false
-    let message = 'Votre numero de telephone n\'est pas valide'
+    let message = this.getTitle('signin.language.phone')
     try {
       isValid = phoneUtil.isValidNumber(this.formatPhone(v))
     } catch (e) {
