@@ -1,3 +1,3 @@
-[submodule "static/chromecast-receiver"]
-	path = static/chromecast-receiver
-	url = git@github.com:Afrostream/chromecast-custom-receiver.git
+[submodule "static/chromecast-custom"]
+	path = static/chromecast-custom
+	url = https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/chromecast-custom-receiver.git
