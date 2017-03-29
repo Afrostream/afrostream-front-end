@@ -261,7 +261,7 @@ class AccountProfil extends I18n {
         element = <TextField defaultValue={sectionValue}
                              type="tel"
                              ref="phoneInput"
-                             intText={this.validatePhone('+33660916742', false)}
+                             hintText={this.validatePhone('+33660916742', false)}
                              pattern={section.pattern}
                              fullWidth={true}
                              {...inputAttributes}

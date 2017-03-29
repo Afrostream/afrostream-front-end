@@ -1,0 +1,3 @@
+[submodule "static/chromecast-custom-receiver"]
+	path = static/chromecast-custom-receiver
+	url = https://github.com/Afrostream/chromecast-custom-receiver
