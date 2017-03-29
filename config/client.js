@@ -44,8 +44,8 @@ const client = {
       profile: [
         {key: 'picture', type: 'picture', col: 12},
         {key: 'nickname', type: 'text', col: 12},
-        {key: 'last_name', type: 'text', autoComplete: 'surname', col: 6},
-        {key: 'first_name', type: 'text', autoComplete: 'given-name', col: 6},
+        {key: 'first_name', type: 'text', autoComplete: 'surname', col: 6},
+        {key: 'last_name', type: 'text', autoComplete: 'given-name', col: 6},
         {key: 'biography', type: 'text', autoComplete: 'biography', col: 12, multiLine: true, rows: 5},
         {key: 'address', type: 'autocomplete', icon: '', col: 12},
         {
@@ -61,11 +61,11 @@ const client = {
           type: 'tel',
           icon: 'zmdi zmdi-smartphone-android',
           autoComplete: 'phone',
-          pattern: '[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}',
-          col: 6
+          pattern: '^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$',
+          col: 12
 
         },
-        {key: 'birthDate', type: 'date', icon: '', col: 6},
+        {key: 'birthDate', type: 'date', icon: '', col: 12},
         {key: 'emailNewsletter', type: 'checkbox', col: 12},
         {key: 'emailOptIn', type: 'checkbox', col: 12},
         {key: 'email', type: 'email', disabled: true, autoComplete: 'email', col: 12},

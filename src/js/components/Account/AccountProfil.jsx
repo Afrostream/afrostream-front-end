@@ -24,8 +24,10 @@ import {
 import areIntlLocalesSupported from 'intl-locales-supported'
 
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import { PhoneNumberUtil, PhoneNumberFormat } from 'google-libphonenumber'
 
 let DateTimeFormat
+let phoneUtil = PhoneNumberUtil.getInstance()
 /**
  * Use the native Intl.DateTimeFormat if available, or a polyfill if not.
  */
@@ -37,13 +39,13 @@ if (areIntlLocalesSupported(['fr'])) {
   require('intl/locale-data/jsonp/fr')
 }
 
-const {userProfile}= config
+const {userProfile} = config
 
 if (process.env.BROWSER) {
   require('./AccountProfil.less')
 }
 
-@connect(({User}) => ({User}))
+@connect(({User, Geo}) => ({User, Geo}))
 class AccountProfil extends React.Component {
 
   constructor (props, context) {
@@ -83,7 +85,7 @@ class AccountProfil extends React.Component {
 
   initMap () {
     const places = window.google && window.google.maps && window.google.maps.places
-    const {addressLocation}=this.refs
+    const {addressLocation} = this.refs
     if (places && addressLocation && !addressLocation._autocomplete) {
 
       addressLocation._autocomplete = new places.Autocomplete(addressLocation.input, {
@@ -166,6 +168,45 @@ class AccountProfil extends React.Component {
 
   }
 
+  validatePhone (v, bool = true) {
+    const {phoneInput} = this.refs
+    let parsedNumber = bool && false || v
+    let isValid = false
+    let message = 'Votre numero de telephone n\'est pas valide'
+    try {
+      isValid = phoneUtil.isValidNumber(this.formatPhone(v))
+    } catch (e) {
+      console.log('Error formatting number', e.message)
+    }
+    if (phoneInput) {
+      phoneInput.setState({
+        errorText: !isValid ? message : ''
+      })
+    }
+    try {
+      parsedNumber = phoneUtil.format(this.formatPhone(v), PhoneNumberFormat.E164)//INTERNATIONAL
+    } catch (e) {
+      console.log('Error parsing input number', e)
+    }
+    return bool ? (isValid && parsedNumber) : parsedNumber
+  }
+
+  formatPhone (p) {
+    const {
+      props: {
+        Geo
+      }
+    } = this
+    const geo = Geo.get('geo')
+    const countryCode = geo.get('countryCode') || 'FR'
+    let formatedNumber = p
+    try {
+      formatedNumber = phoneUtil.parse(p, countryCode)
+    } catch (e) {
+      console.log('Error formating input number', e)
+    }
+    return formatedNumber
+  }
 
   renderFormElement (section) {
     const {
@@ -200,6 +241,30 @@ class AccountProfil extends React.Component {
         element = <TextField defaultValue={adresse}
                              fullWidth={true}
                              floatingLabelText={label} ref="addressLocation"
+                             floatingLabelFixed={true}/>
+        break
+      case  'tel':
+
+        inputAttributes = {
+          onChange: (event, payload) => {
+            const value = this.validatePhone(payload)
+            if (value || payload === '') {
+              event.target.value = value
+              this.updateUserHandler({key: section.key, value})
+            }
+          }
+        }
+
+        //const value = this.validatePhone(sectionValue, false)
+
+        element = <TextField defaultValue={sectionValue}
+                             type="tel"
+                             ref="phoneInput"
+                             intText={this.validatePhone('+33660916742', false)}
+                             pattern={section.pattern}
+                             fullWidth={true}
+                             {...inputAttributes}
+                             floatingLabelText={label}
                              floatingLabelFixed={true}/>
         break
       case  'password':
