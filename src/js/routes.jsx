@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
+import { getI18n } from '../../config/i18n'
 import { Route, Redirect, IndexRoute } from 'react-router'
 import Application from './components/Application'
 import MoviePage from './components/Movies/MoviePage'
@@ -48,16 +49,18 @@ const buildLangsStaticRoutes = function () {
 }
 
 const buildHome = function (lang) {
+
+  const i18nConf = getI18n(lang).routes
   const homeRoutes = [
-    <Route key={`${lang}-compte`} name="compte" path="compte" component={AccountPage}>,
+    <Route key={`${lang}-compte`} name="compte" path={i18nConf.compte} component={AccountPage}>,
       <Route key={`${lang}-cancelSubscription`} name="cancelSubscription"
              path="cancel-subscription(/:subscriptionBillingUuid)"
              component={CancelSubscription}/>
     </Route>,
-    <Route key={`${lang}-sponsorship`} name="sponsorship" path="parrainage" component={SponsorsPage}/>,
-    <Route key={`${lang}-last`} name="last" path="last" component={BrowseLastPage}/>,
-    <Route key={`${lang}-history`} name="history" path="history" component={BrowseHistoryPage}/>,
-    <Route key={`${lang}-favoris`} name="favoris" path="favoris" component={FavoritesPage}/>,
+    <Route key={`${lang}-sponsorship`} name="sponsorship" path={i18nConf.sponsorship} component={SponsorsPage}/>,
+    <Route key={`${lang}-last`} name="last" path={i18nConf.last} component={BrowseLastPage}/>,
+    <Route key={`${lang}-history`} name="history" path={i18nConf.history} component={BrowseHistoryPage}/>,
+    <Route key={`${lang}-favoris`} name="favoris" path={i18nConf.favoris} component={FavoritesPage}/>,
     <Route key={`${lang}-movie`}
            name="movie"
            path=":movieId(/:movieSlug)(/:seasonId/:seasonSlug)(/:episodeId/:episodeSlug)"
@@ -79,17 +82,19 @@ const buildHome = function (lang) {
 }
 const buildRoutes = function (lang) {
 
+  const i18nConf = getI18n(lang).routes
+
   let subRoutes = [
-    <Route key={`${lang}-search`} name="search" path="recherche" component={SearchPage}/>,
-    <Route key={`${lang}-company`} name="company" path="company" component={Static.StaticPage}>
-      <Route key={`${lang}-company-press`} name="about" path="about" component={Static.ABOUT}/>
-      <Route key={`${lang}-company-jobs`} name="jobs" path="jobs" component={Static.JOBS}>
+    <Route key={`${lang}-search`} name="search" path={i18nConf.search} component={SearchPage}/>,
+    <Route key={`${lang}-company`} name="company" path={i18nConf.company} component={Static.StaticPage}>
+      <Route key={`${lang}-company-press`} name="about" path={i18nConf.about} component={Static.ABOUT}/>
+      <Route key={`${lang}-company-jobs`} name="jobs" path={i18nConf.jobs} component={Static.JOBS}>
         <Route key={`${lang}-company-jobs-job`} name="job" path=":jobId(/:jobSlug)" component={Static.JOB}/>
       </Route>
-      <Route key={`${lang}-company-jobs`} name="press" path="press" component={Static.PRESS}/>
+      <Route key={`${lang}-company-jobs`} name="press" path={i18nConf.press} component={Static.PRESS}/>
       <Route key={`${lang}-company-nomatch`} path="*" name="companynomatch" component={NoMatch}/>
     </Route>,
-    <Route key={`${lang}-faq`} name="faq" path="faq" component={Static.FAQ}/>,
+    <Route key={`${lang}-faq`} name="faq" path={i18nConf.faq} component={Static.FAQ}/>,
     <Route key={`${lang}-submit`} name="submit" path="submit-content" component={Static.SubmitYourFilm}/>,
     <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.StaticRoute}/>,
     <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.StaticRoute}/>,
