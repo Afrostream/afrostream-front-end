@@ -9,6 +9,7 @@ import { withRouter } from 'react-router'
 import * as ModalActionCreators from '../../actions/modal'
 import * as BillingActionCreators from '../../actions/billing'
 import { I18n } from '../Utils'
+import ModalCoupon from '../Modal/ModalCoupon'
 
 if (process.env.BROWSER) {
   require('./SelectPlan.less')
@@ -334,6 +335,7 @@ class SelectPlan extends I18n {
 
         {this.getFooter()}
         {this.props.showImages && <PaymentImages />}
+        <ModalCoupon type="redeemCoupon" closable={false} modal={false} {...this.props}/>
       </div>
     )
   }
