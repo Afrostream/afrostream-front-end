@@ -55,7 +55,7 @@ class SearchBox extends I18n {
   goBack () {
     let input = this.getInput()
     input.value = ''
-    let isInSearch = this.props.router.isActive('recherche')
+    let isInSearch = this.props.router.isActive('search')
     this.handleBlur()
     if (isInSearch) {
       this.props.router.push('/')
@@ -76,7 +76,7 @@ class SearchBox extends I18n {
     if (input.length < 3) {
       return
     }
-    this.props.router.push({pathname: '/recherche', query: {search: input}})
+    this.props.router.push({pathname: '/search', query: {search: input}})
   }
 
   render () {
@@ -86,7 +86,7 @@ class SearchBox extends I18n {
 
     let fielClass = {
       'search-box': true,
-      'has-focus': this.props.router.isActive('recherche') || this.state.hasFocus
+      'has-focus': this.props.router.isActive('search') || this.state.hasFocus
     }
 
     return (
