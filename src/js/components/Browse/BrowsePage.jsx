@@ -23,12 +23,15 @@ import LoginPage from '../Login/LoginPage'
   store.dispatch(LifeActionCreators.fetchPins({limit: 14}))
   store.dispatch(LifeActionCreators.fetchUsers({}))
 })
-@connect(({User}) => ({User}))
+@connect(({User, Geo}) => ({User, Geo}))
 class BrowsePage extends React.Component {
   render () {
-    const {props: {User}} = this
+    const {props: {User, Geo}} = this
     const user = User.get('user')
     const authorized = user && user.get('authorized')
+    const geo = Geo.get('geo')
+    const countryCode = geo.get('countryCode')
+    const filterLife = countryCode === 'FR'
     return (
       <div className="row-fluid">
         {!authorized && <LoginPage modalType="newsletter" closable={false} {...this.props}/>}
@@ -36,8 +39,12 @@ class BrowsePage extends React.Component {
           <SplashScreen key="splash-screens"/>,
           <SlideShow key="slide-show" gradient={true}/>,
           <UserMoviesList key="user-movies-list"/>,
+        ]}
+        {filterLife && [
           <BrowseLifeUsersList key="life-users-list"/>,
           <BrowsePinsList key="browse-pins-list"/>,
+        ]}
+        {authorized && [
           <MoviesList key="movies-list"/>
         ]}
       </div>
