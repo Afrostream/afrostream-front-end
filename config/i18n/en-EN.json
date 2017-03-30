@@ -32,12 +32,12 @@
     "paymentMethod": "paymentMethod",
     "search": "search",
     "history": "history",
-    "compte": "account",
+    "account": "account",
     "cancelSubscription": "cancelSubscription",
     "sponsorship": "sponsorship",
     "category": "category",
     "last": "last added",
-    "favoris": "favorites"
+    "favorites": "favorites"
   },
   "lang": {
     "null": "No captions",
@@ -489,6 +489,7 @@
     "userConsentFailed": "Permissions were not granted. Try again.",
     "loginProvider": "Connect with {strategy}",
     "language": {
+      "phone": "Must be a valid phone number",
       "email": "Must be a valid email",
       "password": "The password",
       "repeat_password": "The verification password",
@@ -653,8 +654,8 @@
       "unfollow": "Unfollow {nickName}",
       "follow": "Follow {nickName}",
       "upload": "Add an avatar",
-      "followed": "You follow {nickName}",
-      "unfollowed": "You no longer follow {nickName}"
+      "followed": "You follow this user",
+      "unfollowed": "You no longer follow this user"
     },
     "welcome": {
       "label": "The social \nmedia for black \ncreativity",
@@ -665,11 +666,9 @@
       "action": "Join us"
     },
     "sticky": {
-      "nbpost": "Number of post : {pins}",
-      "nbfollowers": "Number de follower : {followers}",
-      "nbpost": "<b>{pins}</b> post",
-      "nbfollowers": "<b>{followers}</b> followers",
-      "nbfollowed": "<b>{followers}</b> followed",
+      "nbpost": "posts",
+      "nbfollowers": "followers",
+      "nbfollowing": "followeds",
       "tooltip": "Post content",
       "remove": "Remove content"
     },
