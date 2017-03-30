@@ -124,18 +124,21 @@ class SideBar extends React.Component {
             className="icon-user"/><FormattedMessage id={ 'menu.profil' }/></Link></li>
         )
         break
-      case 'compte':
+      case 'account':
         el = (
-          <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/compte"><i
-            className="fa fa-cog"/><FormattedMessage id={ 'menu.params' }/></Link></li>
+          <li>
+            <Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/account">
+              <i className="fa fa-cog"/><FormattedMessage id={ 'menu.params' }/></Link>
+          </li>
         )
         break
       case 'logout':
         el = (
           <ul className="sidebar-nav">
             <li role="separator" className="divider"></li>
-            <li><Link to="/" onClick={::this.logout}><i
-              className="zmdi zmdi-lock-toggled"/><FormattedMessage id={ 'menu.logout' }/></Link></li>
+            <li><Link to="/" onClick={::this.logout}>
+              <i className="zmdi zmdi-lock-toggled"/><FormattedMessage id={ 'menu.logout' }/></Link>
+            </li>
             <li role="separator" className="divider"></li>
           </ul>
         )
@@ -314,7 +317,7 @@ class SideBar extends React.Component {
             {this.getUserConnectedButtons(user, 'last')}
             {this.getUserConnectedButtons(user, 'history')}
             {this.getUserConnectedButtons(user, 'sponsorship')}
-            {this.getUserConnectedButtons(user, 'compte')}
+            {this.getUserConnectedButtons(user, 'account')}
           </ul>
           {this.getUserConnectedButtons(user, 'logout')}
         </div>

@@ -123,12 +123,12 @@ const buildRoutes = function (lang) {
       <Route key={`${lang}-category-page`} name="categoryPage" path=":categoryId(/:categorySlug)"
              component={BrowseGenrePage}/>
     </Route>,
-    <Redirect key={`${lang}-redirect-account`} from={`/compte`} to="account"/>,
-    <Redirect key={`${lang}-redirect-sponsorship`} from={`/parrainage`} to="sponsorship"/>,
-    <Redirect key={`${lang}-redirect-favorites`} from={`/favoris`} to="favorites"/>,
-    <Redirect key={`${lang}-redirect-search`} from={`/recherche`} to="search"/>,
-    <Redirect key={`${lang}-redirect-blog`} from={`/blog/**/*`} to="life"/>,
-    <Redirect key={`${lang}-redirect-browse`} from={`/browse/**/*`} to="category"/>,
+    <Redirect key={`${lang}-redirect-account`} from={`${(lang && '/' + lang) || ''}/compte`} to="account"/>,
+    <Redirect key={`${lang}-redirect-sponsorship`} from={`${(lang && '/' + lang) || ''}/parrainage`} to="sponsorship"/>,
+    <Redirect key={`${lang}-redirect-favorites`} from={`${(lang && '/' + lang) || ''}/favoris`} to="favorites"/>,
+    <Redirect key={`${lang}-redirect-search`} from={`${(lang && '/' + lang) || ''}/recherche`} to="search"/>,
+    <Redirect key={`${lang}-redirect-blog`} from={`${(lang && '/' + lang) || ''}/blog/**/*`} to="life"/>,
+    <Redirect key={`${lang}-redirect-browse`} from={`${(lang && '/' + lang) || ''}/browse/**/*`} to="category"/>,
     //push subroutes after static routes
     buildHome(lang)
   ]
