@@ -198,7 +198,7 @@ const client = {
   countdowns: [{
     countryCode: 'FR',
     countDownDateFrom: '2017-02-07',
-    countDownDateTo: '2017-03-31',
+    countDownDateTo: '2017-04-02',
     imageUrl: '/production/screen/promo-un-euro.jpg',
     internalPlanUuid: 'afrostreammonthlyrts',
     internalPlanQuery: ''
