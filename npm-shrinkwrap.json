@@ -1051,6 +1051,11 @@
     "chokidar": {
       "version": "1.6.1"
     },
+    "chromecast-custom-receiver": {
+      "version": "1.0.0",
+      "from": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/chromecast-custom-receiver.git#v1.0.0",
+      "resolved": "git+https://afrostream-tech:39378b0626f1b2d4c733eeb5c5be73908b3c8c53@github.com/Afrostream/chromecast-custom-receiver.git#a4472dc1bb97d535853deb438f9dff712b54f1c6"
+    },
     "cipher-base": {
       "version": "1.0.3"
     },

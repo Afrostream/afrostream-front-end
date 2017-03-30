@@ -19,6 +19,7 @@ const app = express()
 // --------------------------------------------------
 
 const staticPath = './static'
+const chromecastStaticPath = './node_modules/chromecast-custom-receiver'
 const buildPath = path.resolve(process.cwd(), 'dist')
 
 function errorHandler (err, req, res, next) {
@@ -42,6 +43,7 @@ app.use('/static', function (req, res, next) {
 })
 app.use(userIp());
 app.use(express.static(staticPath))
+app.use(express.static(chromecastStaticPath))
 app.use('/static', express.static(buildPath))
 app.use(favicon(path.join(staticPath, 'favicon.ico')))
 app.use(bodyParser.urlencoded({extended: false}))

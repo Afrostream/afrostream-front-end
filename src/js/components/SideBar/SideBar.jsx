@@ -18,7 +18,7 @@ import {
 if (process.env.BROWSER) {
   require('./SideBar.less')
 }
-@connect(({User, Event, Facebook}) => ({User, Event, Facebook}))
+@connect(({User, Event, Geo, Facebook}) => ({User, Event, Geo, Facebook}))
 class SideBar extends React.Component {
 
 
@@ -164,9 +164,14 @@ class SideBar extends React.Component {
     const {
       props: {
         User,
+        Geo,
         toggled
       }
     } = this
+
+    const geo = Geo.get('geo')
+    const countryCode = geo.get('countryCode')
+    const filterLife = countryCode === 'FR'
 
     const useTouch = this.state.dragSupported
     const rootProps = {
@@ -287,11 +292,24 @@ class SideBar extends React.Component {
               className="zmdi zmdi-tv-play"/><FormattedMessage
               id={ `menu.streaming` }/>
             </Link></li>
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)} to="/life"><i
-              className="glyphicon glyphicon-fire"/><FormattedMessage id={ 'menu.life' }/></Link></li>
-            <li><Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
-                      to="/life/community"><i
-              className="zmdi zmdi-accounts-list-alt"/><FormattedMessage id={ 'menu.community' }/></Link></li>
+            {filterLife &&
+            [
+              <li>
+                <Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
+                      to="/life">
+                  <i className="glyphicon glyphicon-fire"/>
+                  <FormattedMessage id={ 'menu.life' }/>
+                </Link>
+              </li>,
+              <li>
+                <Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
+                      to="/life/community">
+                  <i className="zmdi zmdi-accounts-list-alt"/>
+                  <FormattedMessage id={ 'menu.community' }/>
+                </Link>
+              </li>
+            ]}
+
             {this.getUserConnectedButtons(user, 'favoris')}
             {this.getUserConnectedButtons(user, 'last')}
             {this.getUserConnectedButtons(user, 'history')}
