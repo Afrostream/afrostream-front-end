@@ -27,7 +27,8 @@ class SponsorsPage extends I18n {
 
   renderCoupon () {
 
-    const {props:{Billing}} = this
+    const {props: {Billing, intl}} = this
+    let {locale} = intl
     const coupon = Billing.get(`coupons/${couponsCampaignBillingUuid}`)
     if (!coupon) {
       return
@@ -47,10 +48,18 @@ class SponsorsPage extends I18n {
     if (!path) {
       return
     }
+    let planName = plan.get('name')
+    const details = plan.get('details')
+    const translations = details && details.get('translations')
+    if (translations) {
+      const tsName = translations.get('name')
+      planName = tsName && tsName.get(locale.toUpperCase()) || plan.get('name')
+    }
+
 
     let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${path}?crop=faces&fit=clip&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`}
     return <div>
-      <h1>{plan.get('name')} à vos amis en les parrainant</h1>
+      <h1>{planName}</h1>
       <section className="card" style={imageStyle}/>
     </div>
   }

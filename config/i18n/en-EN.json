@@ -68,7 +68,7 @@
   "home": {
     "title": "{movieName}the Best Black Films and TV Series",
     "titleMeta": "Enjoy a week to watch {movieName}",
-    "action": "START YOUR FIRST <br /> WEEK FREE",
+    "action": "Start your subscription",
     "movie": {
       "title": "Watch {movieName} Online | AFROSTREAM",
       "description": "{movieName}: movie with {actors} streaming on all your screens with AFROSTREAM"
@@ -98,7 +98,7 @@
     },
     "spots": {
       "title": "Preview our catalog",
-      "action": "START YOUR FIRST <br /> WEEK FREE"
+      "action": "Start your subscription"
     },
     "plans": {
       "title": "Our Plans",
