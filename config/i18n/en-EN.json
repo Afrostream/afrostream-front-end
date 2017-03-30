@@ -14,10 +14,10 @@
     "cgu": "cgu",
     "policy": "policy",
     "reset": "reset",
-    "signin": "signin",
-    "signup": "signup",
+    "signin": "sign in",
+    "signup": "sign up",
     "coupon": "coupon",
-    "login": "login",
+    "login": "log in",
     "newsletter": "newsletter",
     "life": "life",
     "community": "community",
@@ -32,16 +32,16 @@
     "paymentMethod": "paymentMethod",
     "search": "search",
     "history": "history",
-    "account": "account",
+    "compte": "account",
     "cancelSubscription": "cancelSubscription",
     "sponsorship": "sponsorship",
     "category": "category",
-    "last": "last",
-    "favorites": "favorites"
+    "last": "last added",
+    "favoris": "favorites"
   },
   "lang": {
     "null": "No captions",
-    "fr": "French",
+    "fr": "Français",
     "en": "English"
   },
   "quality": {
@@ -86,12 +86,12 @@
       "description": "Watch the {episodeNumber} season {seasonNumber} episode of {serieName} streaming on all your screens with AFROSTREAM."
     },
     "devices": {
-      "title": "Watch  {movieName}your favorite Black films and series in unlimited access when you want and where you want.",
-      "titleAction": "Signup now to watch {movieName}your favorite Afro movies and series",
+      "title": "Watch {movieName} your favorite Black films and series in unlimited access when you want and where you want.",
+      "titleAction": "Signup now to watch {movieName} your favorite Afro movies and series",
       "action": "Sign up now !",
       "features": {
         "engagment": "Without engagement",
-        "free": "The first week is offered",
+        "free": "The first week is free",
         "box": "Available on computer, tablet, smartphone",
         "hd": "Enjoy a high quality image"
       }
@@ -102,7 +102,7 @@
     },
     "plans": {
       "title": "Our Plans",
-      "baseline": "Service is only available in France, French overseas territories, Belgium, Luxembourg, Switzerland, Senegal, Ivory Coast.",
+      "baseline": "Service is only available in France, UK, French overseas territories, French speaking territories, Belgium, Luxembourg, Switzerland",
       "link": "The answers to your questions."
     },
     "countdown": {
@@ -155,7 +155,7 @@
   "newsletter": {
     "header": "Newsletters",
     "instructions": "Keep me informed by email",
-    "result": "Thank you, you are now subscribed to our newsletters",
+    "result": "Thank you, you have now subscribed to our newsletters",
     "action": "Send"
   },
   "geowall": {
@@ -166,7 +166,7 @@
   },
   "storesLocator": {
     "title": "Are you looking for a store to subscribe to Afrostream?",
-    "description": "You can now subscribe to Afrostream in store. Check out the map and find the nearest store.",
+    "description": "You can now subscribe to Afrostream in stores. Check out the map and find the nearest store.",
     "where": "Where to find a store?",
     "inputFind": "City...",
     "find": "Find a point of sale"
@@ -253,7 +253,7 @@
         "ibanRef": "Reference",
         "ibanRefDispo": "Available by mail after confirmation",
         "ibanDate": "Date",
-        "submit": "Confirme",
+        "submit": "Confirm",
         "cancel": "Cancel",
         "cgu": "Afrostream will appear on your bank statement \n We will notify you by e-mail 3 days before the date of the debit. \n A signing this debit mandate, you authorize GC re Afrostream to send instructions to your bank to debit your account, And (B) your bank to debit your account in accordance with GC Re Afrostream's instructions. \n You are entitled to reimbursement by your bank in accordance with the terms and conditions set forth in the agreement with you. All claims must be submitted within 8 weeks of the debit date of your account. \n Your rights to the above mandate are explained in a document that you can obtain from your bank."
       }
@@ -368,8 +368,8 @@
       "email": "Email",
       "synchro": "Synchronized Accounts",
       "social": "Social sharing",
-      "socialSharing": "Share my friends with my business",
-      "webPushNotificationsData": "Enable push notifications (be notified of a new addition on the platform)",
+      "socialSharing": "Share my activity on Afrostream with my friends",
+      "webPushNotificationsData": "Enable push notifications (be notified when we add new content on Afrostream)",
       "player": "Video settings",
       "playerAudio": "Audio language",
       "playerCaption": "Subtitles",
@@ -384,13 +384,13 @@
       "off": "Off"
     },
     "cancel": {
-      "info": "The cancellation will be effective as of the end of the current billing period, {endDate}",
+      "info": "The cancellation will be effective at the end of the current billing period, {endDate}",
       "status": {
-        "active": "Are you sure you no longer want to see Afro movies and series?",
-        "canceled": "Votre abonnement été annulé.",
-        "unCancelable": "Votre abonnement ne peut être annulé."
+        "active": "Are you sure you no longer want to see the best african and african american movies and series?",
+        "canceled": "Your suscription was cancelled.",
+        "unCancelable": "Your subscription cannot be cancelled."
       },
-      "submitBtn": "Confirm interrupt",
+      "submitBtn": "Confirm",
       "cancelBtn": "Continue the subscription"
     },
     "billing": {
@@ -417,17 +417,17 @@
     }
   },
   "sponsorship": {
-    "add": "Sponsor friends"
+    "add": "Sponsor my friends"
   },
   "favorites": {
-    "add": "Add to my favorites",
-    "delete": "Remove from my favorites",
+    "add": "Add to my playlist",
+    "delete": "Remove from my playlist",
     "noData": "No Favorites added to my profile",
-    "labelPage": "My Favourites"
+    "labelPage": "My Playlist"
   },
   "share": {
     "tooltip": "Recommend",
-    "label": "Share with friends",
+    "label": "Share with my friends",
     "labelBtn": "Share"
   },
   "next": {
@@ -489,7 +489,6 @@
     "userConsentFailed": "Permissions were not granted. Try again.",
     "loginProvider": "Connect with {strategy}",
     "language": {
-      "phone": "Must be a valid phone number",
       "email": "Must be a valid email",
       "password": "The password",
       "repeat_password": "The verification password",
@@ -654,8 +653,8 @@
       "unfollow": "Unfollow {nickName}",
       "follow": "Follow {nickName}",
       "upload": "Add an avatar",
-      "followed": "You follow this user",
-      "unfollowed": "You no longer follow this user"
+      "followed": "You follow {nickName}",
+      "unfollowed": "You no longer follow {nickName}"
     },
     "welcome": {
       "label": "The social \nmedia for black \ncreativity",
@@ -666,9 +665,11 @@
       "action": "Join us"
     },
     "sticky": {
-      "nbpost": "posts",
-      "nbfollowers": "followers",
-      "nbfollowing": "followeds",
+      "nbpost": "Number of post : {pins}",
+      "nbfollowers": "Number de follower : {followers}",
+      "nbpost": "<b>{pins}</b> post",
+      "nbfollowers": "<b>{followers}</b> followers",
+      "nbfollowed": "<b>{followers}</b> followed",
       "tooltip": "Post content",
       "remove": "Remove content"
     },
@@ -726,7 +727,7 @@
       "email": "Must be a valid email",
       "empty": "is required"
     },
-    "new": "create a coupon",
+    "new": " Create a coupon",
     "action": "Share with my friends"
   },
   "press": {
@@ -734,17 +735,17 @@
       "about": {
         "label": "About Us",
         "links": {
-          "founder": "Co-Founder Bios"
+          "founder": "Co-Founders Bios"
         }
       },
       "jobs": {
-        "label": "Job"
+        "label": "Jobs"
       },
       "press": {
         "label": "Press",
         "links": {
           "mediakit": {
-            "label": "Kit Médias"
+            "label": "Media kit"
           },
           "videos": {
             "label": "Videos"
