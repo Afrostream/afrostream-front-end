@@ -32,12 +32,12 @@
     "paymentMethod": "paymentMethod",
     "search": "search",
     "history": "history",
-    "compte": "account",
+    "account": "account",
     "cancelSubscription": "cancelSubscription",
     "sponsorship": "sponsorship",
     "category": "category",
     "last": "last",
-    "favoris": "favorites"
+    "favorites": "favorites"
   },
   "lang": {
     "null": "No captions",

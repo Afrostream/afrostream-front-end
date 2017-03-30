@@ -31,13 +31,13 @@
     "payment": "paiement",
     "paymentMethod": "methode",
     "search": "recherche",
-    "compte": "compte",
+    "account": "compte",
     "history": "mon-historique",
     "cancelSubscription": "annuler",
     "sponsorship": "parrainage",
     "category": "categorie",
     "last": "derniers",
-    "favoris": "ma-liste"
+    "favorites": "ma-liste"
   },
   "lang": {
     "null": "Pas de sous-titres",

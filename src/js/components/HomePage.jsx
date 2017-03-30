@@ -39,7 +39,7 @@ class HomePage extends React.Component {
     const {
       props: {intl, history, router, params, User, Billing}
     } = this
-    const {locale, defaultLocale}= intl
+    const {locale, defaultLocale} = intl
     const user = User.get('user')
     if (user) {
       let isCash = router.isActive('cash')
@@ -47,7 +47,7 @@ class HomePage extends React.Component {
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null
       let planCode = subscriptionsStatus && subscriptionsStatus.get('planCode') || user.get('planCode')
       let langRoute = `${locale && locale !== defaultLocale && ('/' + locale) || ''}`
-      const noRedirectRoute = router.isActive(`${langRoute}/compte`) || router.isActive(`${langRoute}/life`) || router.isActive(`${langRoute}/select-plan`)
+      const noRedirectRoute = router.isActive(`${langRoute}/account`) || router.isActive(`${langRoute}/life`) || router.isActive(`${langRoute}/select-plan`)
       if (!planCode && !noRedirectRoute) {
         let donePath = `${langRoute}${isCash ? '/cash' : ''}/select-plan`
         if (status && status !== 'active') {

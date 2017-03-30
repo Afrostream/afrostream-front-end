@@ -249,7 +249,7 @@ class AccountProfil extends I18n {
         inputAttributes = {
           onChange: (event, payload) => {
             const value = this.validatePhone(payload)
-            if (value || payload === '') {
+            if (value) {
               event.target.value = value
               this.updateUserHandler({key: section.key, value})
             }
