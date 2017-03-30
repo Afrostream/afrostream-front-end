@@ -43,7 +43,7 @@ app.use('/static', function (req, res, next) {
 })
 app.use(userIp());
 app.use(express.static(staticPath))
-app.use(express.static(chromecastStaticPath))
+app.use('/chromecast', express.static(chromecastStaticPath))
 app.use('/static', express.static(buildPath))
 app.use(favicon(path.join(staticPath, 'favicon.ico')))
 app.use(bodyParser.urlencoded({extended: false}))
