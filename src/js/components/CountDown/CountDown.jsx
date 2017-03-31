@@ -80,6 +80,7 @@ class CountDown extends I18n {
             {this.state.eventAvailableText}
           </div>}
         </div>
+        {this.props.infos && <div className="countdown-infos">{this.props.infos}</div>}
         {this.props.contentPosition === 'bottom' && <div className="countdown-content">{children}</div>}
       </div>
     )
@@ -98,13 +99,15 @@ CountDown.propTypes = {
   // Date and hour of the incoming event, formatted for Date.parse() : "YYYY-MM-DD HH:MM [GMT]"
   eventTime: React.PropTypes.string.isRequired,
   // Supplementary optional text displayed in the countdown when it attains 0
-  eventAvailableText: React.PropTypes.string
+  eventAvailableText: React.PropTypes.string,
+  infos: React.PropTypes.string
 }
 
 CountDown.defaultProps = {
   interval: 1000,
   contentPosition: 'bottom',
   beforeText: 'countdown.beforeText',
+  infos: null,
   afterText: 'countdown.afterText'
 }
 

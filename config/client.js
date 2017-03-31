@@ -201,7 +201,8 @@ const client = {
     countDownDateTo: '2017-04-02',
     imageUrl: '/production/screen/promo-un-euro.jpg',
     internalPlanUuid: 'afrostreammonthlyrts',
-    internalPlanQuery: ''
+    internalPlanQuery: '',
+    infos: '* Offre valable pour tout nouvel abonné et tout réabonnement pour un accès uniquement sur ordinateurs, tablettes et smartphones. Apres le premier mois à 1euro, l’offre passe au prix de 6,99 euros par mois en renouvellement automatique. Offre non cumulable. Offre valable jusqu‘au 2 avril 2017.'
   }],
   sentry: {
     dns: process.env.SENTRY_DSN || '',

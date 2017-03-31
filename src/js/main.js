@@ -19,6 +19,7 @@ const {apiClient} = config
 const history = browserHistory
 /* global __INITIAL_STATE__:true */
 const state = typeof __INITIAL_STATE__ === 'string' && deserialize(__INITIAL_STATE__) || __INITIAL_STATE__
+state.Geo.geo.countryCode = 'FR'
 const {intl: {locale}} = state
 moment.locale(locale)
 

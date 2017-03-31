@@ -41,6 +41,7 @@ class InternalPlansCountDown extends I18n {
     }
     return (
       <CountDown
+        infos={internalPlansCountDown.infos}
         eventTime={internalPlansCountDown.countDownDateTo}
         contentPosition={'bottom'}
       >

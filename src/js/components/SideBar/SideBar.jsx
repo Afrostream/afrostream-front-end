@@ -297,14 +297,14 @@ class SideBar extends React.Component {
             </Link></li>
             {filterLife &&
             [
-              <li>
+              <li key="link-life-home">
                 <Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
                       to="/life">
                   <i className="glyphicon glyphicon-fire"/>
                   <FormattedMessage id={ 'menu.life' }/>
                 </Link>
               </li>,
-              <li>
+              <li key="link-life-community">
                 <Link activeClassName="active" onlyActiveOnIndex onClick={(e) => ::this.onSetOpen(false)}
                       to="/life/community">
                   <i className="zmdi zmdi-accounts-list-alt"/>
