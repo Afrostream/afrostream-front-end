@@ -69,7 +69,7 @@
     "title": "{movieName}les meilleurs films et séries\nafro-américains et africains.\nEn illimité.",
     "titleMeta": "Profitez du premier mois à 1€ pour regarder {movieName}",
     "action": "Profitez du premier mois à 1€*",
-    "abTest": "1 euro au lien de 6,99€/mois*, j'en profite !",
+    "abTest": "1 euro au lieu de 6,99€/mois*, j'en profite !",
     "movie": {
       "title": "{movieName} | Le film en streaming sur AFROSTREAM",
       "description": "Regardez {movieName}, film avec {actors} en streaming sur tous vos écrans grâce à AFROSTREAM"
