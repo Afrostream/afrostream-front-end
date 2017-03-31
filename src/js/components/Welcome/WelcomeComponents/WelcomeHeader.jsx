@@ -50,7 +50,8 @@ class WelcomeHeader extends I18n {
       props: {
         params,
         Event,
-        Movie
+        Movie,
+        GA
       }
     } = this
     let {movieId} = params
