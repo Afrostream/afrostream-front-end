@@ -26,7 +26,7 @@ class SeasonList extends React.Component {
       props: {
         Movie,
         Season,
-        params:{
+        params: {
           movieId,
           seasonId
         }
@@ -63,12 +63,12 @@ class SeasonList extends React.Component {
     return (
       <div className="selection">
         {seasons ? seasons.map((season, i) => <SeasonTabButton
-            key={`season-${season.get('_id')}-${i}`}
-            active={page === i}
-            index={i}
-            {...this.props}
-            {...{season}}
-          />).toJS() : ''}
+          key={`season-${season.get('_id')}-${i}`}
+          active={page === i}
+          index={i}
+          {...this.props}
+          {...{season}}
+        />).toJS() : ''}
       </div>
     )
   }
@@ -78,7 +78,7 @@ class SeasonList extends React.Component {
       props: {
         dispatch,
         Season,
-        params:{
+        params: {
           episodeId
         }
       }
@@ -105,7 +105,7 @@ class SeasonList extends React.Component {
     }
     return (
       <MoviesSlider key="season-list" {...this.props} {...{dataList, thumbW, thumbH, selectedId, type, load}}
-                    rowHeight={200}/>
+                    rowHeight={200} columnMinWidth={210}/>
     )
   }
 }
