@@ -69,6 +69,7 @@
     "title": "{movieName}the Best Black Films and TV Series",
     "titleMeta": "Enjoy a week to watch {movieName}",
     "action": "Start your subscription",
+    "abTest": "Start your subscription",
     "movie": {
       "title": "Watch {movieName} Online | AFROSTREAM",
       "description": "{movieName}: movie with {actors} streaming on all your screens with AFROSTREAM"
