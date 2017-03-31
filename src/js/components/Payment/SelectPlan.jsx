@@ -82,7 +82,7 @@ class SelectPlan extends I18n {
     return validPlans.map((plan, key) => {
       const internalPlanUuid = plan.get('internalPlanUuid')
 
-      const promoPlan = internalPlanUuid === config.promoFlashInternalPlanUUID
+      const promoPlan = internalPlanUuid == config.promoFlashInternalPlanUUID
 
       let objVal = plan.get(label)
 
@@ -127,10 +127,14 @@ class SelectPlan extends I18n {
           break
 
         case 'price':
-          let period = `/${plan.get('periodLength')} ${this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`)}`
+          let period = `/${plan.get('periodLength')} ${this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`).toLowerCase()}`
           value = (<div className="select-plan_price">
             {!promoPlan && formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
-            {promoPlan && formatPrice(100, plan.get('currency'), true)} {this.getTitle(`account.billing.periods.first`)} {this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`)} {this.getTitle(`account.billing.periods.then`)} {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
+            {promoPlan && `${formatPrice(100, plan.get('currency'), true)}
+            ${this.getTitle(`account.billing.periods.first`)}
+            ${this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`).toLowerCase()}
+            ${this.getTitle(`account.billing.periods.then`)}
+            ${formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}`}
             <span className="select-plan_period">
             {period}
             </span>
