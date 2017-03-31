@@ -6,6 +6,8 @@
   margin-bottom: 24px;
   position: relative;
   .countdown-infos {
+    background: @color-black-2;
+    padding: 5px;
     font-size: 8px;
     color: #fff;
     position: relative;
@@ -22,9 +24,8 @@
     position: relative;
     .countdown-img,
     img {
-      position: absolute;
+      position: relative;
       width: 100%;
-      height: 100%;
       left: 0;
       top: 0;
       right: 0;
@@ -236,9 +237,7 @@ article {
       }
     }
     .countdown-content {
-      height: 250px;
       width: 100%;
-      padding: 1em;
       .discount-statement {
         flex-direction: column;
         align-items: center;
@@ -258,13 +257,12 @@ article {
     font-size: 1.4em;
   }
   .countdown-content {
-    .isMobile({ height: 250px; });
+    position: relative;
   }
 }
 
 @media @desktop-xl {
   .countdown-wrapper {
-    height: 500px;
     display: flex;
     .countdown-timer {
       width: 50%;

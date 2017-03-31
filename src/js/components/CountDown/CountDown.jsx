@@ -66,7 +66,10 @@ class CountDown extends I18n {
   _renderCountDown ({days, hours, minutes, seconds}, children) {
     return (
       <div className="countdown-wrapper">
-        {this.props.contentPosition === 'top' && <div className="countdown-content">{children}</div>}
+        {this.props.contentPosition === 'top' && <div className="countdown-content">
+          {this.props.infos && <div className="countdown-infos">{this.props.infos}</div>}
+          {children}
+        </div>}
         <div className="countdown-timer">
           <div className="countdown-number-row">
             <span className="countdown-text-unit countdown-prez">{this.getTitle(this.props.beforeText)}</span>
@@ -80,8 +83,10 @@ class CountDown extends I18n {
             {this.state.eventAvailableText}
           </div>}
         </div>
-        {this.props.infos && <div className="countdown-infos">{this.props.infos}</div>}
-        {this.props.contentPosition === 'bottom' && <div className="countdown-content">{children}</div>}
+        {this.props.contentPosition === 'bottom' && <div className="countdown-content">
+          {children}
+          {this.props.infos && <div className="countdown-infos">{this.props.infos}</div>}
+        </div>}
       </div>
     )
   }
