@@ -82,6 +82,8 @@ class SelectPlan extends I18n {
     return validPlans.map((plan, key) => {
       const internalPlanUuid = plan.get('internalPlanUuid')
 
+      const promoPlan = internalPlanUuid === config.promoFlashInternalPlanUUID
+
       let objVal = plan.get(label)
 
       if (objVal === undefined) {
@@ -127,7 +129,8 @@ class SelectPlan extends I18n {
         case 'price':
           let period = `/${plan.get('periodLength')} ${this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`)}`
           value = (<div className="select-plan_price">
-            {formatPrice(100, plan.get('currency'), true)} {this.getTitle(`account.billing.periods.first`)} {this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`)} {this.getTitle(`account.billing.periods.then`)} {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
+            {!promoPlan && formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
+            {promoPlan && formatPrice(100, plan.get('currency'), true)} {this.getTitle(`account.billing.periods.first`)} {this.getTitle(`account.billing.periods.${plan.get('periodUnit')}`)} {this.getTitle(`account.billing.periods.then`)} {formatPrice(plan.get('amountInCents'), plan.get('currency'), true)}
             <span className="select-plan_period">
             {period}
             </span>
@@ -290,6 +293,7 @@ class SelectPlan extends I18n {
 
   render () {
     let plans = this.getPlans()
+
     let cols = [
       'formule',
       'name',

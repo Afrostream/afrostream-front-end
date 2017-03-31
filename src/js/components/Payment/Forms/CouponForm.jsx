@@ -7,7 +7,7 @@ import { Link, I18n } from '../../Utils'
 import shallowEqual from 'react-pure-render/shallowEqual'
 import ReactTooltip from 'react-tooltip'
 
-const {defaultCouponCode} = config
+const {defaultCouponCode, promoFlashInternalPlanUUID} = config
 
 class CouponForm extends I18n {
 
@@ -28,8 +28,16 @@ class CouponForm extends I18n {
   }
 
   componentWillReceiveProps (nextProps) {
+    const {
+      props: {
+        plan
+      }
+    } = this
+
     if (nextProps.selected !== this.props.selected && nextProps.selected) {
-      this.checkCoupon(defaultCouponCode)
+      if (plan && plan.get('internalPlanUuid') === promoFlashInternalPlanUUID) {
+        this.checkCoupon(defaultCouponCode)
+      }
     }
     if (!shallowEqual(nextProps, this.props)) {
       this.attachTooltip()
@@ -105,6 +113,7 @@ class CouponForm extends I18n {
   renderPromoCode () {
     const {
       props: {
+        plan,
         Billing
       }
     } = this
@@ -127,13 +136,16 @@ class CouponForm extends I18n {
       }
     }
 
+
+    const promoPlan = (plan && (plan.get('internalPlanUuid') === promoFlashInternalPlanUUID && defaultCouponCode)) || ''
+
     if (coupon && coupon.size) {
       const couponCode = coupon.get('code')
       const providers = coupon.get('internalCouponsCampaign').get('providers')
       const couponCampeign = coupon.get('campaign')
       const couponType = couponCampeign.get('couponsCampaignType')
       validCoupon = coupon && coupon.get('status') === 'waiting'
-      inputAttributes.defaultValue = couponCode || defaultCouponCode
+      inputAttributes.defaultValue = couponCode || promoPlan
       if (couponType !== 'promo') {
         couponName = (
           <Link className="coupon-warning"
@@ -145,7 +157,7 @@ class CouponForm extends I18n {
       }
     } else {
       if (isCouponCodeCompatible) {
-        inputAttributes.defaultValue = defaultCouponCode || ''
+        inputAttributes.defaultValue = promoPlan
       }
     }
 

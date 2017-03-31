@@ -34,6 +34,7 @@ const protData = {
 
 const client = {
   defaultCouponCode: 'PRIXDOUX',
+  promoFlashInternalPlanUUID: 'afrostreammonthlyrts',
   featuresFlip: {
     sponsorship: true,
     koment: true,
