@@ -22,13 +22,13 @@ export async function fetchToken (refreshToken) {
     })
 }
 
-export async function getGeoInfo (req, initialState) {
+export async function getGeoInfo (req) {
   return getGeo({
     query: {
       ip: req.userIp
     }
   }).then((geo) => {
-    initialState = _.merge(initialState, {Geo: {geo}})
+    return {Geo: {geo}}
   })
 }
 
@@ -59,7 +59,7 @@ export async function getUserInfo (req, initialState) {
         authorized: true,
         picture: '/images/default/carre.jpg'
       }, response.body)
-      return initialState = _.merge(initialState, {User: {user}})
+      return {User: {user}}
     })
     .then(
       r => r,
@@ -92,9 +92,12 @@ exports.index = async function (req, res) {
   res.noCache()
 
   return Q.all([
-    getGeoInfo(req, initialState).then(r => r, err => console.log(JSON.stringify(err))),
+    getGeoInfo(req).then(r => r, err => console.log(JSON.stringify(err))),
     getUserInfo(req, initialState).then(r => r, err => console.log(JSON.stringify(err)))
-  ]).then(() => {
+  ]).then((results) => {
+      _.forEach(results, (result) => {
+        initialState = _.merge(initialState, result)
+      })
       res.status(200).jsonp({initialState})
     },
     error => {
