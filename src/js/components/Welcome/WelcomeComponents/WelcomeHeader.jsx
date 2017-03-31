@@ -75,6 +75,10 @@ class WelcomeHeader extends I18n {
       trailers.push({src: videoData.get('sourceMp4Deciphered'), type: 'video/mp4'})
     }
 
+    const isHomeAB = GA.get('variations').find(variation => {
+      return variation.get('name') === 'promo1euro' && variation.get('choose') === 1
+    })
+
     let posterImg = `${images.urlPrefix}${metadata.screen && metadata.screen.image || metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
 
     return (
@@ -90,7 +94,7 @@ class WelcomeHeader extends I18n {
               return (<span key={`statement-${i}`}>{statement}</span>)
             })}
             </div>
-            <SignUpButton className="subscribe-button" label="home.action"/>
+            <SignUpButton className="subscribe-button" label={`home.${isHomeAB && 'abTest' || 'action'}`}/>
             <div className="mouse"/>
           </div>
         </BackgroundVideo>}

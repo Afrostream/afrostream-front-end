@@ -156,11 +156,11 @@ const client = {
     adSenseKey: process.env.GA_ADSENSE_ID || 'ca-pub-5887481529465530',
     //Code ab tests multiples
     abCodes: isProduction && [
-      //{
-      //  name: 'countdownColors',
-      //  key: 'FuHmAhI3SB6LZ-tvcWkDPA',
-      //  nbVariations: 1
-      //}
+      {
+        name: 'promo1euro',
+        key: '3gI3800nQ9efKr8qwUJfzQ',
+        nbVariations: 1
+      }
     ] || [],
     firebase: {
       apiKey: 'AIzaSyBJ3H7rJHdhaLg8KfkjvwxvwDhbrbR4NpI',
