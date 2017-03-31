@@ -9,6 +9,7 @@ import {
   intlShape,
   injectIntl
 } from 'react-intl'
+import PaymentImages from '../Payment/PaymentImages'
 
 if (process.env.BROWSER) {
   require('./SponsorsPage.less')
@@ -57,10 +58,12 @@ class SponsorsPage extends I18n {
     }
 
 
-    let imageStyle = {backgroundImage: `url(${config.images.urlPrefix}${path}?crop=faces&fit=clip&w=${this.state.size.width}&q=${config.images.quality}&fm=${config.images.type})`}
     return <div>
-      <h1>{planName}</h1>
-      <section className="card" style={imageStyle}/>
+      <section className="card">
+        <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
+        <div className="info">{planName}</div>
+        <PaymentImages limit={4}/>
+      </section>
     </div>
   }
 

@@ -22,7 +22,7 @@ class PaymentImages extends React.Component {
   render () {
     const {
       props: {
-        Category
+        Category, limit
       }
     } = this
 
@@ -41,22 +41,24 @@ class PaymentImages extends React.Component {
 
     let uniqSpots = _.uniqBy(recoList, '_id')
     //get only 8 mea
-    let selectionMovies = Immutable.fromJS(_.take(uniqSpots, 8))
+    let selectionMovies = Immutable.fromJS(_.take(uniqSpots, limit))
 
     return (
-      <div>
-        <div className="payment-pages__thumbs-row">
-          {selectionMovies ? selectionMovies.map((data, i) => <Poster
-              key={`movie-payment-a-${i}`} {...{data}}/>).toJS() : ''}
-        </div>
+      <div className="payment-pages__thumbs-row">
+        {selectionMovies ? selectionMovies.map((data, i) => <Poster
+          key={`movie-payment-a-${i}`} {...{data}}/>).toJS() : ''}
       </div>
     )
 
   }
 }
 
-PaymentImages.propTypes = {}
+PaymentImages.propTypes = {
+  limit: React.PropTypes.number
+}
 
-PaymentImages.defaultProps = {}
+PaymentImages.defaultProps = {
+  limit: 8
+}
 
 export default PaymentImages
