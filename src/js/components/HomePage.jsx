@@ -13,9 +13,9 @@ import * as LifeActionCreators from '../actions/life'
 import * as CategoryActionCreators from '../actions/category'
 
 @connect(({User, Billing, Geo}) => ({User, Billing, Geo}))
-@prepareRoute(async function ({store, params: {movieId, seasonId, episodeId}}) {
+@prepareRoute(async function ({store}) {
   await store.dispatch(CategoryActionCreators.getMenu())
-  await store.dispatch(CategoryActionCreators.getSpots())
+  await store.dispatch(CategoryActionCreators.getCarrousel())
 })
 class HomePage extends React.Component {
 

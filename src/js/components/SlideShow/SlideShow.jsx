@@ -37,32 +37,22 @@ class SlideShow extends React.Component {
   render () {
     const {
       props: {
-        Category,
-        Movie,
-        maxLength,
-        movieId
+        Category
       }
     } = this
 
-    const categoryId = Category.get(`categoryId`)
-    let category
+    const carrousel = Category.get(`categorys/carrousel`)
+    const category = carrousel && carrousel.size && carrousel.first()
+    const spots = category && category.get(`adSpots`)
 
-    if (movieId) {
-      category = Immutable.List.of(Movie.get(`movies/${movieId}`))
-    }
-    else if (categoryId) {
-      category = Category.get(`categorys/${categoryId}/spots`)
-    }
-
-
-    if (!category) {
+    if (!spots) {
       return <div />
     }
 
     const settings = {
       autoplay: this.props.autoplay,
       dots: this.props.dots,
-      infinite: this.props.infinite && category.size > 1,
+      infinite: this.props.infinite && spots.size > 1,
       autoplaySpeed: this.props.autoplaySpeed,
       speed: 500,
       adaptiveHeight: true,
@@ -73,10 +63,10 @@ class SlideShow extends React.Component {
 
     return (
       <div className="slide-show" ref="slC">
-        {!category && <Spinner />}
-        {canUseDOM && category.size > 1 &&
+        {!spots && <Spinner />}
+        {canUseDOM && spots.size > 1 &&
         <Slider {...settings}>
-          {category.map((data) => <div key={`slide-${data.get('_id')}`} onClick={::this.showLock}><MovieInfo
+          {spots.map((data) => <div key={`slide-${data.get('_id')}`} onClick={::this.showLock}><MovieInfo
             active={true}
             load={true}
             showBtn={true}
@@ -84,12 +74,12 @@ class SlideShow extends React.Component {
             {...this.props}
           /></div>)}
         </Slider>}
-        {(!canUseDOM || (category.size === 1)) && <MovieInfo
+        {(!canUseDOM || (spots.size === 1)) && <MovieInfo
           active={true}
           load={true}
           showBtn={true}
           {...this.props}
-          data={category && category.first()}/>}
+          data={spots && spots.first()}/>}
       </div>
     )
   }

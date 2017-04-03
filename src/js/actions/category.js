@@ -11,6 +11,21 @@ export function getAllSpots () {
   }
 }
 
+export function getCarrousel () {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Category.getCarrousel,
+      res: await api({
+        path: `/api/categorys`,
+        params: {
+          type: 'carrousel',
+          populate: 'adSpots,adSpots.poster'
+        }
+      })
+    })
+  }
+}
+
 export function getSpots (categoryId) {
   return (dispatch, getState) => {
 

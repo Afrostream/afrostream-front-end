@@ -87,6 +87,17 @@ export default createReducer(initialState, {
     })
   },
 
+  [ActionTypes.Category.getCarrousel](state, {res}) {
+    if (!res) {
+      return state
+    }
+    const data = res.body
+
+    return state.merge({
+      [`categorys/carrousel`]: data
+    })
+  },
+
   [ActionTypes.Category.getCategory](state, {categoryId, status, res}) {
     if (!res) {
       return state
