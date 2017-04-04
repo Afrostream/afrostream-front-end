@@ -153,6 +153,7 @@ export const staticRoutes = buildLangsStaticRoutes()
 
 export const routes = (
   <Route name="app" path="/" component={Application}>
+    <Route key={`uk-home-index`} path="uk" component={HomePage} lang={'EN'}/>
     {buildLangsRoutes()}
     <Route path="*" name="nomatch" component={NoMatch}/>
   </Route>

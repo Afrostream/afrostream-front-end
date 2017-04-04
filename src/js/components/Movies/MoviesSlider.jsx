@@ -201,8 +201,8 @@ class MoviesSlider extends I18n {
               ref="react-list"
               {...this.props}
               columnCount={dataList.size}
-              columnMaxWidth={210}
-              columnMinWidth={210}
+              columnMaxWidth={this.props.columnMaxWidth}
+              columnMinWidth={this.props.columnMinWidth}
               width={width}>
               {({adjustedWidth, getColumnWidth, registerChild}) => (
                 <ArrowStepper columnCount={dataList.size}>

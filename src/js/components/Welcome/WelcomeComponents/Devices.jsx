@@ -42,7 +42,7 @@ class Devices extends I18n {
       <section className="devices">
         <div className="container-fluid no-padding">
           <ReactImgix className="device-element-image" bg={true} blur={false}
-                      src="https://images.cdn.afrostream.net/production/screen/Macbook-Pro-And-Coffe-Cup-Mockup-.jpg?fit=crop&w=1280&fm=jpg&q=65"/>
+                      src="https://images.cdn.afrostream.net/production/screen/mockup-uk.jpg?fit=crop&w=1280&fm=jpg&q=65"/>
           <div className="device-element-text">
             <FormattedMessage tagName="h2" id="home.devices.title" values={{movieName}}/>
             <ul className="features-list">

@@ -162,7 +162,7 @@
     .fullHeight();
     background: url(../../../../assets/images/default/1044x731.jpg) no-repeat;
     background-size: cover;
-    background-position: 50% 50%;
+    background-position: 50% 0%;
     .video-background {
       position: absolute;
       top: 50%;
@@ -208,17 +208,17 @@
           font-family: @font-book;
           font-weight: bold;
           font-size: 5em;
-          .isMobile({ font-size: 3em; margin: 2em 0.5em 4em 0.5em; });
+          .isMobile({ font-size: 3em; margin: 2em 1em 4em 1em; });
           line-height: 1.2em;
           margin: 1em 0.5em 1em 0.5em;
           text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
           span {
             display: inline-block;
-          }
-          &:first-of-type {
             &:first-letter {
               text-transform: uppercase;
             }
+          }
+          &:first-of-type {
           }
         }
 
@@ -263,11 +263,15 @@
         font-size: 1em;
       }*/
       .afrostream-movie__subscribe {
-        margin: 0;
+        //margin: 0;
         width: 100%;
+        .isMobile({ margin: 0; });
         .afrostream-statement {
           text-align: center;
-          .isMobile({ margin: 0; });
+          &:first-letter {
+            text-transform: uppercase;
+          }
+          .isMobile({ margin: 0.5em; });
         }
       }
     }

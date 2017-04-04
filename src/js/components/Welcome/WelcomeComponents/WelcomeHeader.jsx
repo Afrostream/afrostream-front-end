@@ -51,7 +51,8 @@ class WelcomeHeader extends I18n {
         params,
         Event,
         Movie,
-        GA
+        GA,
+        router
       }
     } = this
     let {movieId} = params
@@ -70,6 +71,7 @@ class WelcomeHeader extends I18n {
     const homeRTitle = this.getTitle('home.title', {movieName})
     const titleMeta = this.getTitle('home.titleMeta', {movieName})
     const videoData = currentMovie && currentMovie.get('video')
+    const isOnUk = router.isActive('uk')
 
     if (videoData && videoData.get('sourceMp4Deciphered')) {
       trailers = []
@@ -80,7 +82,13 @@ class WelcomeHeader extends I18n {
       return variation.get('name') === 'promo1euro' && variation.get('choose') === 1
     })
 
+
     let posterImg = `${images.urlPrefix}${metadata.screen && metadata.screen.image || metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
+
+    if (isOnUk) {
+      trailers = []
+      posterImg = `${images.urlPrefix}${metadata.screen && metadata.screen.imageUK || metadata.shareImage}?crop=faces&fit=clip&w=${this.state.size.width}&q=${images.quality}&fm=${images.type}`
+    }
 
     return (
       <section className={classSet(welcomeClassesSet)} title={titleMeta}>
@@ -95,8 +103,8 @@ class WelcomeHeader extends I18n {
               return (<span key={`statement-${i}`}>{statement}</span>)
             })}
             </div>
-            <SignUpButton className="subscribe-button" label={`home.${isHomeAB && 'abTest' || 'action'}`}/>
             <div className="mouse"/>
+            <SignUpButton className="subscribe-button" label={`home.${isHomeAB && 'abTest' || 'action'}`}/>
           </div>
         </BackgroundVideo>}
         {movieId && <SlideShow

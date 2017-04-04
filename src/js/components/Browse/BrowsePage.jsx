@@ -40,7 +40,7 @@ class BrowsePage extends React.Component {
           <SlideShow key="slide-show" gradient={true}/>,
           <UserMoviesList key="user-movies-list"/>,
         ]}
-        {filterLife && [
+        {!filterLife && [
           <BrowseLifeUsersList key="life-users-list"/>,
           <BrowsePinsList key="browse-pins-list"/>,
         ]}
