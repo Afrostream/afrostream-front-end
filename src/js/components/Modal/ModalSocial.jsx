@@ -46,7 +46,7 @@ class ModalSocial extends ModalComponent {
         description = data.get('description')
       }
       if (data.get('link')) {
-        url = `${metadata.domain}/${data.get('link')}?${shareParams}`
+        url = `${metadata.domain}${data.get('link')}?${shareParams}`
       }
     }
     let self = this
