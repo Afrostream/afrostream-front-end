@@ -58,7 +58,7 @@ class SelectPlan extends I18n {
     let {query} = location
     let isCash = router.isActive('cash')
     const internalPlanQuery = query && query.contextBillingUuid
-    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : (internalPlanQuery || 'common')}`)
+    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : (internalPlanQuery || 'common')}`).reverse()
     return validPlans
   }
 
