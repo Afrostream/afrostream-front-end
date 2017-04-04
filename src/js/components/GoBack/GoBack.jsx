@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import { withRouter } from 'react-router'
+import { I18n } from '../Utils'
+import {
+  intlShape,
+  injectIntl
+} from 'react-intl'
 /**
  * GoBack component
  * Simple history back button
@@ -19,7 +24,7 @@ if (process.env.BROWSER) {
 
 
 @connect(({Event}) => ({Event}))
-class GoBack extends React.Component {
+class GoBack extends I18n {
   constructor (props, context) {
     super(props, context)
   }
@@ -37,11 +42,10 @@ class GoBack extends React.Component {
     }
 
     return (
-      <li className="pull-left">
-        <button role="button" className={classSet(returnClassesSet)} onClick={::this.navigationGoBack}>
-          <i className="zmdi zmdi-chevron-left zmdi-hc-3x"></i><span className="return-btn-label">RETOUR</span>
-        </button>
-      </li>
+      <button role="button" className={classSet(returnClassesSet)} onClick={::this.navigationGoBack}>
+        <i className="zmdi zmdi-chevron-left zmdi-hc-3x"></i><span
+        className="return-btn-label">{this.getTitle('back')}</span>
+      </button>
     )
   }
 }
@@ -51,4 +55,4 @@ GoBack.propTypes = {
 }
 
 
-export default withRouter(GoBack)
+export default withRouter(injectIntl(GoBack))

@@ -1,5 +1,6 @@
 {
   "and": "et",
+  "back": "retour",
   "routes": {
     "app": "accueil",
     "company": "compagnie",
@@ -204,6 +205,7 @@
     }
   },
   "history": {
+    "noData": "Aucune vidéo lue",
     "pageLabel": "Mon historique de lecture",
     "label": "Reprendre la lecture"
   },

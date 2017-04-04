@@ -1,17 +1,22 @@
 @import (reference) '../../../styles/config.less';
 
 .btn-goback {
+  background: @color-black-2;
+  color: #fff;
   .zmdi {
     float: left;
   }
   .return-btn-label {
     font-size: 1.2em;
+    line-height: 2;
+    padding: 15px;
+    text-transform: uppercase;
   }
   &.return-btn-hidden {
     display: none;
   }
 }
 
-nav .btn-goback .zmdi {
+.btn-goback .zmdi {
   margin: -4px 0 -4px 5px;
 }

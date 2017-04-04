@@ -1,5 +1,6 @@
 {
   "and": "and",
+  "back": "back",
   "routes": {
     "app": "home",
     "company": "company",
@@ -204,6 +205,7 @@
     }
   },
   "history": {
+    "noData": "No video played",
     "pageLabel": "My Playback History",
     "label": "Continue Watching"
   },

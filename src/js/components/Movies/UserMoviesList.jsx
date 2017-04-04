@@ -1,17 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import GoBack from '../GoBack/GoBack'
+import _ from 'lodash'
+import { withRouter } from 'react-router'
 import MoviesSlider from './MoviesSlider'
 import {
   intlShape,
   injectIntl
 } from 'react-intl'
+import { I18n } from '../Utils'
 
 if (process.env.BROWSER) {
   require('./UserMoviesList.less')
 }
 
 @connect(({User}) => ({User}))
-class UserMoviesList extends React.Component {
+class UserMoviesList extends I18n {
 
   constructor (props) {
     super(props)
@@ -24,6 +28,8 @@ class UserMoviesList extends React.Component {
         axis,
         label,
         rowHeight,
+        router,
+        routes,
         thumbW,
         thumbH
       }
@@ -41,8 +47,11 @@ class UserMoviesList extends React.Component {
     const favorite = false
     const load = false
     const type = 'episode'
+    const inHistoryPage = router.isActive('history') || _.find(routes, route => ( route.name === 'history'))
     return (
       <div className="user-movie-history">
+        {dataList && !dataList.size && inHistoryPage &&
+        <div className="row text-center"><h2>{this.getTitle('history.noData')}</h2><GoBack /></div>}
         <MoviesSlider
           {...this.props}
           columnMaxWidth={thumbW}
@@ -84,4 +93,5 @@ UserMoviesList.defaultProps = {
   axis: 'x',
   label: 'history.label'
 }
-export default injectIntl(UserMoviesList)
+
+export default withRouter(injectIntl(UserMoviesList))
