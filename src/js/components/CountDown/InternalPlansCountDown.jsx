@@ -87,7 +87,12 @@ class InternalPlansCountDown extends I18n {
 
 
   getLocaleCountdown () {
-    const {props: {Geo}} = this
+    const {props: {Geo, router}} = this
+    const isOnUk = router.isActive('uk')
+    if (isOnUk) {
+      return false
+    }
+
     const geo = Geo.get('geo')
     return countdowns.find((countdown) => {
       const isCurrentLocale = countdown.countryCode === geo.get('countryCode')
