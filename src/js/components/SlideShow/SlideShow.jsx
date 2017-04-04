@@ -37,13 +37,19 @@ class SlideShow extends React.Component {
   render () {
     const {
       props: {
-        Category
+        Category,
+        Movie,
+        movieId
       }
     } = this
 
     const carrousel = Category.get(`categorys/carrousel`)
+    const categoryId = Category.get(`categoryId`)
     const category = carrousel && carrousel.size && carrousel.first()
-    const spots = category && category.get(`adSpots`)
+    let spots = category && category.get(`adSpots`)
+    if (movieId) {
+      spots = Immutable.List.of(Movie.get(`movies/${movieId}`))
+    }
 
     if (!spots) {
       return <div />
