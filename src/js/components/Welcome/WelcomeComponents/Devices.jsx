@@ -7,6 +7,7 @@ import {
 import ReactImgix from '../../Image/ReactImgix'
 import { connect } from 'react-redux'
 import { I18n } from '../../Utils'
+import config from '../../../../../config'
 import {
   injectIntl,
 } from 'react-intl'
@@ -14,6 +15,9 @@ import {
 if (process.env.BROWSER) {
   require('./Devices.less')
 }
+
+const {images} = config
+
 @connect(({Movie}) => ({Movie}))
 class Devices extends I18n {
 
@@ -22,7 +26,8 @@ class Devices extends I18n {
     const {
       props: {
         params,
-        Movie
+        Movie,
+        router
       }
     } = this
 
@@ -31,6 +36,8 @@ class Devices extends I18n {
     const currenMovie = Movie.get(`movies/${movieId}`)
     const movieName = currenMovie && `${currenMovie.get('title')} ${this.getTitle('and')} ` || ''
 
+    const isOnUk = router.isActive('uk')
+
     const featuresList = [
       'engagment',
       //'free',
@@ -38,11 +45,17 @@ class Devices extends I18n {
       'hd'
     ]
 
+    let posterImg = `${images.urlPrefix}/production/screen/Macbook-Pro-And-Coffe-Cup-Mockup-.jpg?fit=crop&w=1280&q=${images.quality}&fm=${images.type}`
+
+    if (isOnUk) {
+      posterImg = `${images.urlPrefix}/production/screen/mockup-uk.jpg?fit=crop&w=1280&q=${images.quality}&fm=${images.type}`
+    }
+
     return (
       <section className="devices">
         <div className="container-fluid no-padding">
           <ReactImgix className="device-element-image" bg={true} blur={false}
-                      src="https://images.cdn.afrostream.net/production/screen/mockup-uk.jpg?fit=crop&w=1280&fm=jpg&q=65"/>
+                      src={posterImg}/>
           <div className="device-element-text">
             <FormattedMessage tagName="h2" id="home.devices.title" values={{movieName}}/>
             <ul className="features-list">

@@ -49,7 +49,14 @@ class WelcomeMoviesSlider extends React.Component {
 
   render () {
 
-    const {props:{Event}} =this
+    const {props: {Event,router}} = this
+
+    const isOnUk = router.isActive('uk')
+
+    if (isOnUk) {
+      return <div />
+    }
+
     const settings = {
       autoplay: this.props.autoplay,
       dots: this.props.dots,
