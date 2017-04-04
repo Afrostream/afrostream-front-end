@@ -11,6 +11,7 @@ import { I18n } from'../Utils'
 import {
   injectIntl
 } from 'react-intl'
+import { withRouter } from 'react-router'
 
 const {images, countdowns = []} = config
 
@@ -132,4 +133,4 @@ InternalPlansCountDown.defaultProps = {
 }
 
 
-export default injectIntl(InternalPlansCountDown)
+export default withRouter(injectIntl(InternalPlansCountDown))
