@@ -1,11 +1,15 @@
 import React from 'react'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
+import { I18n } from '../../Utils'
+import {
+  injectIntl,
+} from 'react-intl'
 
 if (process.env.BROWSER) {
   require('./CookieMessage.less')
 }
 
-class CookieMessage extends React.Component {
+class CookieMessage extends I18n {
 
   // do not render cookie message on server-side
   state = {
@@ -47,10 +51,9 @@ class CookieMessage extends React.Component {
       return (
         <div className="alert-message">
           <div dangerouslySetInnerHTML={{__html: '<!--googleoff: all-->'}}/>
-          Afrostream utilise des cookies pour vous proposer des contenus et services
-          adaptés à vos centres d'intérêts. <a href="/articles/cookies_policy.pdf"
-                                               onClick={this.setCookieToken.bind(this)} target="_blank">En savoir
-          plus</a>
+          {this.getTitle('cookies.message')}
+          <a href="/articles/cookies_policy.pdf"
+             onClick={this.setCookieToken.bind(this)} target="_blank">{this.getTitle('cookies.link')}</a>
           <button className="alert-button" onClick={::this.setCookieToken}>OK
           </button>
           <div dangerouslySetInnerHTML={{__html: '<!--googleon: all-->'}}/>
@@ -60,4 +63,4 @@ class CookieMessage extends React.Component {
   }
 }
 
-export default CookieMessage
+export default injectIntl(CookieMessage)

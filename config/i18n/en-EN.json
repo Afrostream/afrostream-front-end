@@ -69,6 +69,10 @@
     "history": "Viewing Activity",
     "logout": "Sign out"
   },
+  "cookies": {
+    "message": "Afrostream uses cookies to provide you with content and services tailored to your interests. ",
+    "link": "to know more"
+  },
   "home": {
     "metas": {
       "title": "AFROSTREAM | The best black movies and TV shows with unlimited access",

@@ -69,6 +69,10 @@
     "history": "Mon historique",
     "logout": "Se deconnecter"
   },
+  "cookies": {
+    "message": "Afrostream utilise des cookies pour vous proposer des contenus et services adaptés à vos centres d'intérêts. ",
+    "link": "En savoir plus"
+  },
   "home": {
     "metas": {
       "title": "AFROSTREAM | Les meilleurs films et séries afro en illimité",
