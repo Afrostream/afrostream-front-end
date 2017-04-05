@@ -70,6 +70,10 @@
     "logout": "Sign out"
   },
   "home": {
+    "metas": {
+      "title": "AFROSTREAM | The best black movies and TV shows with unlimited access",
+      "description": "Watch the best selection of movies and TV show, with unlimited access, anywhere, everywhere. No commitment. Choose your best deal, weekly or monthly access, Cancel anytime."
+    },
     "title": "{movieName}the Best Black Films and TV Series",
     "titleMeta": "Enjoy a week to watch {movieName}",
     "action": "Start your subscription",

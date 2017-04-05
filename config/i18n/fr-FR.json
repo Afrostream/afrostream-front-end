@@ -70,6 +70,10 @@
     "logout": "Se deconnecter"
   },
   "home": {
+    "metas": {
+      "title": "AFROSTREAM | Les meilleurs films et séries afro en illimité",
+      "description": "Profitez d'une sélection des meilleurs films & séries afro à regarder en illimité sur tous vos écrans grâce à Afrostream, la première semaine est offerte."
+    },
     "title": "{movieName}les meilleurs films et séries\nafro-américains et africains.\nEn illimité.",
     "titleMeta": "Profitez du premier mois à 1€ pour regarder {movieName}",
     "action": "Profitez du premier mois à 1€*",

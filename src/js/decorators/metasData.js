@@ -36,11 +36,15 @@ export default () => {
       getdata () {
         const {
           context: {store},
-          props: {params, location}
+          props: {params, location, intl}
         } = this
 
         let {lang} = params
         let {query} = location
+
+        if (!lang) {
+          lang = intl.locale
+        }
 
         let slug = `${config.metadata.domain}${location.pathname !== '/' ? location.pathname : '' }`
 
@@ -52,8 +56,8 @@ export default () => {
         }
 
         let metas = {
-          title: _.cloneDeep(config.metadata.title),
-          description: _.cloneDeep(config.metadata.description),
+          title: this.getTitle('home.metas.title'),
+          description: this.getTitle('home.metas.description'),
           meta: _.cloneDeep(config.metadata.metas),
           htmlAttributes: {lang},
           type: 'website',
