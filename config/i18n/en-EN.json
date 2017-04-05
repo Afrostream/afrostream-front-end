@@ -141,8 +141,8 @@
     },
     "apps": {
       "title": "MOBILE APPLICATIONS",
-      "ios": "IOS",
-      "android": "Andoid"
+      "ios": "iOS",
+      "android": "Android"
     },
     "social": {
       "title": "FOLLOW US",
@@ -162,7 +162,7 @@
   },
   "geowall": {
     "header": "Coming Soon",
-    "instructions": "Enter your details below and be the first to get notified when we launch there :",
+    "instructions": "Enter your details below and be the first to get notified when Afrostream become available in your country :",
     "result": "Thank you",
     "action": "Notify me"
   },
@@ -197,10 +197,10 @@
       "prelevementMensuel": "Automatic debit payment",
       "price": "Price",
       "trialEnabled": "7 day free trial",
-      "internalMaxScreens": "Available simultaneously screen(s)",
+      "internalMaxScreens": "Available simultaneously on multiple screen(s)",
       "internalMobile": "Watch on your computer, smartphone and tablet",
       "internalUnlimited": "Unlimited movies and TV shows",
-      "internalEngagment": "Cancel Anytime after the first month",
+      "internalEngagment": "Cancel anytime after the first month",
       "internalVip": "Invitations to VIP film screenings and special events"
     }
   },
@@ -211,7 +211,7 @@
   },
   "search": {
     "placeHolder": "Search ...",
-    "noData": "The search found no results."
+    "noData": "The search found no results. You should try again."
   },
   "breadcrumbs": {
     "episodeLabel": "Episode {episodeNumber}",
@@ -286,7 +286,7 @@
       "title": "You're almost there!",
       "link": "mailto:support@afrostream.tv",
       "linkMessage": "If you have any questions, please contact our technical support.",
-      "message": "More than a final step. Upon receipt of your payment, we will give you access to all movies and series in unlimited.",
+      "message": "Only one final step. Upon receipt of your payment, we will give you access to all movies and series in unlimited.",
       "links": "<a href='/en/select-plan'>Choose another payment method</a>"
     },
     "expired": {
@@ -376,11 +376,11 @@
       "player": "Video settings",
       "playerAudio": "Audio language",
       "playerCaption": "Subtitles",
-      "playerQuality": "Read quality",
+      "playerQuality": "Video quality",
       "playerKoment": "Show comments automatically",
       "playerAutoNext": "Switch to next episode automatically",
       "emailOptIn": "I would like to receive exclusive offers from partners selected by Afrostream",
-      "emailNewsletter": "I want to receive promotions and news about Afrostream",
+      "emailNewsletter": "I want to receive promotions and news from and about Afrostream",
       "men": "Man",
       "women": "Woman",
       "on": "On",
@@ -454,14 +454,14 @@
     "typeEpisode": "this episode",
     "typeMovie": "this movie",
     "typeSerie": "this series",
-    "like": "I loved",
-    "dislike": "I did not like"
+    "like": "I loved it",
+    "dislike": "I did not like it"
   },
   "signin": {
     "title": "Sign in",
     "action": "Sign In",
     "actionDomain": "Log in to {domain}",
-    "all": "Not your account?",
+    "all": "Not your account ?",
     "headerText": "Please enter your email and password",
     "providers": "You are subscribed to an operator ({providers}) ?",
     "strategyEmailEmpty": "The email is empty.",
@@ -469,7 +469,7 @@
     "strategyDomainInvalid": "The domain {domain} has not been set up.",
     "signinText": "Log In",
     "signupText": "Sign Up",
-    "successText": "You are connected correctly signed in",
+    "successText": "You are correctly signed in",
     "cancelAction": "Cancel",
     "forgotText": "Don't remember your password?",
     "footerText": "",
@@ -521,9 +521,9 @@
     "footerText": "",
     "serverErrorText": "There was an error processing the signup.",
     "userExistsErrorText": "The user already exists.",
-    "signupOnSSODomainErrorText": "This domain {domain} has been configured for Single Sign On and you can't create an account. Try signing in instead.",
+    "signupOnSSODomainErrorText": "This domain {domain} has been configured for single sign on and you can't create an account. Try signing in instead.",
     "usernameInUseErrorText": "The username is already in use.",
-    "invalidPassword": "Password is too weak.",
+    "invalidPassword": "Wrong password",
     "passwordStrength": {
       "nonEmpty": "A non-empty password is required",
       "lengthAtLeast": "At least %d characters",
@@ -722,7 +722,7 @@
     },
     "errors": {
       "error": "You can no longer sponsor.",
-      "self sponsorship is forbidden": "You can not sponsor",
+      "self sponsorship is forbidden": "You cannot sponsor",
       "recipient that has an active subscription cannot be sponsored": "This email has already been sponsored or already has an active account"
     },
     "validation": {
