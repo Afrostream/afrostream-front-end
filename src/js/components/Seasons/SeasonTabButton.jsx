@@ -4,10 +4,10 @@ import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import classSet from 'classnames'
 import * as SeasonActionCreators from '../../actions/season'
-import { Link } from '../Utils'
+import { Link, I18n } from '../Utils'
 
 @connect(({Season, Movie}) => ({Season, Movie}))
-class SeasonTabButton extends Component {
+class SeasonTabButton extends I18n {
 
   static propTypes = {
     active: React.PropTypes.bool.isRequired,
@@ -19,7 +19,7 @@ class SeasonTabButton extends Component {
     const {
       props: {
         Movie, active, index, season,
-        params:{
+        params: {
           movieId,
           movieSlug
         }
@@ -41,7 +41,7 @@ class SeasonTabButton extends Component {
     //:movieId(/:movieSlug)(/:seasonId)(/:seasonSlug)(/:episodeId)(/:episodeSlug)
     return (
       <Link className={classes} activeClassName="active"
-            to={`/${movieId}/${movieSlug || movie.get('slug')}/${seasonId}/${seasonSlug}`}>{shortTitle ? shortTitle : ('SAISON ' + seasonNumber)}</Link>
+            to={`/${movieId}/${movieSlug || movie.get('slug')}/${seasonId}/${seasonSlug}`}>{shortTitle ? shortTitle : (`${this.getTitle('season')} ${seasonNumber}`)}</Link>
     )
   }
 

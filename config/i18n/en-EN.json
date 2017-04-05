@@ -1,6 +1,7 @@
 {
   "and": "and",
   "back": "back",
+  "season": "season",
   "routes": {
     "app": "home",
     "company": "company",
