@@ -1,7 +1,9 @@
 {
   "and": "et",
   "back": "retour",
+  "with": "avec",
   "season": "saison",
+  "creator": "création",
   "routes": {
     "app": "accueil",
     "company": "compagnie",

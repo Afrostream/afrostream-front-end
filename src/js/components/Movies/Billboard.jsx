@@ -111,7 +111,7 @@ class Billboard extends LoadVideo {
 
     return (
       <div className="billboard-row">
-        <label> Création : </label> {creator}
+        <label>{`${this.getTitle('creator')} : `} : </label> {creator}
       </div>
     )
   }
@@ -122,7 +122,7 @@ class Billboard extends LoadVideo {
     }
     return (
       <div className="billboard-row">
-        <label> Avec : </label>
+        <label>{`${this.getTitle('with')} : `} </label>
         {casts.map((cast, i) => {
           let thumb = cast.get('poster')
           if (thumb) {

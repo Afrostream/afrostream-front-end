@@ -1,7 +1,9 @@
 {
   "and": "and",
   "back": "back",
+  "with": "with",
   "season": "season",
+  "creator": "creator",
   "routes": {
     "app": "home",
     "company": "company",
