@@ -42,6 +42,11 @@
   .movie__logo {
     width: 200px;
   }
+  label {
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
   .billboard-seasons {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
     font-size: 1.2em;
@@ -50,9 +55,6 @@
     label {
       color: @brand-secondary;
       font-family: @font-book;
-      &:first-letter {
-        text-transform: uppercase;
-      }
     }
     label.yellow {
       color: @color-yellow;
