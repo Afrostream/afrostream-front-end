@@ -182,19 +182,19 @@ class Footer extends Component {
                   <FormattedMessage id={ 'footer.apps.android' }/><i className="zmdi zmdi-android"/>
                 </a>
               </li>
-              <li>
+              {!isOnUk && [<li key={'footer-link-orange'}>
                 <a className="footer-link"
                    href="https://boutique.orange.fr/tv/pass-video"
                    target="_blank">
                   Orange <i className="zmdi zmdi-orange"/>
                 </a>
-              </li>
-              <li>
-                <a className="footer-link" href="https://www.services.bouyguestelecom.fr/television/svod_afrostream"
-                   target="_blank">
-                  Bouygues <i className="zmdi zmdi-bouygues"/>
-                </a>
-              </li>
+              </li>,
+                <li key={'footer-link-bouygues'}>
+                  <a className="footer-link" href="https://www.services.bouyguestelecom.fr/television/svod_afrostream"
+                     target="_blank">
+                    Bouygues <i className="zmdi zmdi-bouygues"/>
+                  </a>
+                </li>]}
             </ul>
           </div>
           <div className="get-help col-xs-12 col-md-2 hidden-xs">
