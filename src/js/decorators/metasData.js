@@ -238,7 +238,7 @@ export default () => {
       }
 
       getMetadata () {
-
+        const {props: {router}} = this
         const extractData = this.getdata()
         const data = extractData.data
         const metas = extractData.metas
