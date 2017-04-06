@@ -7,7 +7,7 @@
   "movie": "film",
   "serie": "serie",
   "episode": "episode",
-  "saison": "saison",
+  "season": "saison",
   "routes": {
     "app": "accueil",
     "company": "compagnie",
