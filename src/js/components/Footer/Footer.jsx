@@ -16,7 +16,7 @@ if (process.env.BROWSER) {
   require('./Footer.less')
 }
 
-const {featuresFlip} = config
+const {featuresFlip, social} = config
 
 @prepareStatic('components/footer')
 @connect()
@@ -61,6 +61,10 @@ class Footer extends Component {
       'footer-hidden': hasPlayer
     }
     const showCashway = featuresFlip.cashway
+    const isOnUk = reouter.isActive('uk')
+
+    const fbUsername = social.facebook.users[isOnUk ? 'UK' : 'FR']
+    const twitterUsername = social.twitter.users[isOnUk ? 'UK' : 'FR']
 
     return (
       <footer className={classSet(footerClasses)}>
@@ -198,12 +202,12 @@ class Footer extends Component {
                               id={ 'footer.social.title' }/>
             <ul className="footer-links">
               <li>
-                <a className="footer-link" href="https://www.facebook.com/afrostreamtv?fref=ts">
+                <a className="footer-link" href={`https://www.facebook.com/${fbUsername}?fref=ts`}>
                   <FormattedMessage id={ 'footer.social.facebook' }/><i className="zmdi zmdi-facebook"/>
                 </a>
               </li>
               <li>
-                <a className="footer-link" href="https://twitter.com/intent/user?screen_name=AFROSTREAM">
+                <a className="footer-link" href={`https://twitter.com/intent/user?screen_name=${twitterUsername}`}>
                   <FormattedMessage id={ 'footer.social.twitter' }/><i className="zmdi zmdi-twitter"/>
                 </a>
               </li>
