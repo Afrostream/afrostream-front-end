@@ -76,6 +76,7 @@ class SlideShow extends React.Component {
             active={true}
             load={true}
             showBtn={true}
+            dataId={data.get('_id')}
             { ...{data}}
             {...this.props}
           /></div>)}
@@ -85,6 +86,7 @@ class SlideShow extends React.Component {
           load={true}
           showBtn={true}
           {...this.props}
+          dataId={spots && spots.first().get('_id')}
           data={spots && spots.first()}/>}
       </div>
     )
