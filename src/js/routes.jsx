@@ -89,10 +89,10 @@ const buildRoutes = function (lang) {
       <Route key={`${lang}-company-jobs`} name="press" path="press" component={Static.PRESS}/>
       <Route key={`${lang}-company-nomatch`} path="*" name="companynomatch" component={NoMatch}/>
     </Route>,
-    <Route key={`${lang}-faq`} name="faq" path="faq" component={Static.FAQ}/>,
     <Route key={`${lang}-submit`} name="submit" path="submit-content" component={Static.SubmitYourFilm}/>,
     <Route key={`${lang}-legals`} name="legals" path="legals" component={Static.StaticRoute}/>,
     <Route key={`${lang}-cgu`} name="cgu" path="cgu" component={Static.StaticRoute}/>,
+    <Route key={`${lang}-faq`} name="faq" path="faq" component={Static.StaticRoute}/>,
     <Route key={`${lang}-policy`} name="policy" path="policy" component={Static.StaticRoute}/>,
     <Route key={`${lang}-reset`} name="reset" path="reset" component={LoginPage}/>,
     <Route key={`${lang}-signin`} name="signin" path="signin" component={LoginPage}/>,
