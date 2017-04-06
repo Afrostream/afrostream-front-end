@@ -79,19 +79,19 @@
   },
   "home": {
     "metas": {
-      "title": "AFROSTREAM | The best black movies and TV shows with unlimited access",
-      "description": "Watch the best selection of movies and TV show, with unlimited access, anywhere, everywhere. No commitment. Choose your best deal, weekly or monthly access, Cancel anytime."
+      "title": "AFROSTREAM | Watch the best black films and TV shows",
+      "description": "Watch the best selection of black movies and TV show, with unlimited access, anywhere, everywhere. No commitment. Choose your best deal, weekly or monthly access, Cancel anytime."
     },
-    "title": "{movieName}the Best Black Films and TV Series",
-    "titleMeta": "Enjoy a week to watch {movieName}",
+    "title": "Watch {movieName} the best black films and TV shows",
+    "titleMeta": "Get a free week trial to watch {movieName}",
     "action": "Start your free trial",
     "abTest": "Start your free trial",
     "movie": {
-      "title": "Watch {movieName} Online | AFROSTREAM",
+      "title": "Watch {movieName} online | AFROSTREAM",
       "description": "{movieName}: movie with {actors} streaming on all your screens with AFROSTREAM"
     },
     "serie": {
-      "title": "Watch {serieName} Online | AFROSTREAM",
+      "title": "Watch {serieName} online | AFROSTREAM",
       "description": "{serieName}: Watch all episodes of TV series {serieName} streaming and unlimited on all your screens with AFROSTREAM."
     },
     "season": {
@@ -107,7 +107,7 @@
       "titleAction": "Signup now to watch {movieName} your favorite Afro movies and series",
       "action": "Sign up now !",
       "features": {
-        "engagment": "Without engagement",
+        "engagment": "No commitment",
         "free": "The first week is free",
         "box": "Available on computer, tablet, smartphone",
         "hd": "Enjoy a high quality image"
@@ -211,11 +211,11 @@
       "formule": "Plan",
       "prelevementMensuel": "Automatic debit payment",
       "price": "Price",
-      "trialEnabled": "7 day free trial",
+      "trialEnabled": "7 days free trial",
       "internalMaxScreens": "Available simultaneously on multiple screen(s)",
       "internalMobile": "Watch on your computer, smartphone and tablet",
       "internalUnlimited": "Unlimited movies and TV shows",
-      "internalEngagment": "Cancel anytime after the first month",
+      "internalEngagment": "Cancel anytime",
       "internalVip": "Invitations to VIP film screenings and special events"
     }
   },
