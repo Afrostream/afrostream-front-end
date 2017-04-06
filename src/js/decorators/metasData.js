@@ -12,10 +12,11 @@ export default () => {
     class MetasDataDecorator extends I18n {
 
       static contextTypes = {
-        store: PropTypes.object.isRequired
+        store: PropTypes.object.isRequired,
       }
 
       static propsTypes = {
+        router: PropTypes.object.isRequired,
         location: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired
       }
@@ -239,10 +240,11 @@ export default () => {
         const extractData = this.getdata()
         const data = extractData.data
         const metas = extractData.metas
+        const isOnUK = router.isActive('uk')
 
         let image = extractImg({
           data,
-          defaultImage: config.metadata.shareImage,
+          defaultImage: (isOnUK && config.metadata.screen.shareUK) || config.metadata.shareImage,
           keys: ['poster', 'thumb', 'image', 'picture'],
           width: 1120
         })

@@ -12,6 +12,7 @@ const config = _.merge(
       screen: {
         image: '/production/screen/blackish-home-v5.jpg',
         imageUK: '/production/screen/HearMeMove.jpeg',
+        shareUK: '/production/screen/meta-og-home-uk.jpg',
         logo: ''
       },
       carousel: {
