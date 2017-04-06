@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import classSet from 'classnames'
 import { withRouter, Link } from 'react-router'
 import { getI18n } from '../../../../config/i18n'
+import config from '../../../../config'
 import _ from 'lodash'
 import { updateIntl } from 'react-intl-redux'
 import {
@@ -14,6 +15,8 @@ import { prepareStatic } from '../../decorators'
 if (process.env.BROWSER) {
   require('./Footer.less')
 }
+
+const {featuresFlip} = config
 
 @prepareStatic('components/footer')
 @connect()
@@ -42,7 +45,6 @@ class Footer extends Component {
 
     const {
       props: {
-        params,
         router,
         routes,
         intl
@@ -54,11 +56,12 @@ class Footer extends Component {
     let switchLang = locale === 'en' ? 'fr' : 'us'
     let switchLangRoute = locale === 'en' ? 'fr' : 'en'
     let hasPlayer = router.isActive('player') || _.find(routes, route => ( route.name === 'player'))
-
     let footerClasses = {
       'footer': true,
       'footer-hidden': hasPlayer
     }
+    const showCashway = featuresFlip.cashway
+
     return (
       <footer className={classSet(footerClasses)}>
         <div className="links row-fluid">
@@ -106,7 +109,7 @@ class Footer extends Component {
             <FormattedMessage tagName="h4"
                               id={ 'footer.recharge.title' }/>
             <ul className="footer-links">
-              <li>
+              {showCashway && <li>
                 <Link className="footer-link" to="/cash">
                   <FormattedMessage
                     id={ 'footer.recharge.cashway' }
@@ -114,7 +117,7 @@ class Footer extends Component {
                   <img src="/images/payment/cashway-inline-white.png" width="60"
                        className="img-responsive"/>
                 </Link>
-              </li>
+              </li>}
               <li>
                 <Link className="footer-link" to="/store-locator">
                   <FormattedMessage

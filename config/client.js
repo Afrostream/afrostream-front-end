@@ -37,6 +37,7 @@ const client = {
   promoFlashInternalPlanUUID: 'afrostreammonthlyrts',
   featuresFlip: {
     sponsorship: true,
+    cashway: false,
     koment: true,
     redirectAllPlans: false
   },
