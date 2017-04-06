@@ -226,7 +226,7 @@ class Billboard extends LoadVideo {
 
     return (
       <div className="billboard-infos">
-        {type ? <div ref="slTag" className="billboard-tag billboard-row">{type === 'movie' ? 'film' : type}</div> :
+        {type ? <div ref="slTag" className="billboard-tag billboard-row">{this.getTitle(type)}</div> :
           <div ref="slNull"/>}
         {logo && <ReactImgix className="afrostream-movie__logo" src={logo} bg={true}/>}
         {<CsaIcon {...{csa}}/>}

@@ -4,6 +4,10 @@
   "with": "with",
   "season": "season",
   "creator": "creator",
+  "movie": "movie",
+  "serie": "tv show",
+  "episode": "episode",
+  "saison": "season",
   "routes": {
     "app": "home",
     "company": "company",
