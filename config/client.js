@@ -302,10 +302,10 @@ const client = {
       facebook: {
         enabled: true,      // Enable Facebook. [Default: true]
         icon: 'zmdi-facebook',
-        users: [{
+        users: {
           'FR': 'afrostreamtv',
           'UK': 'afrostreamuk'
-        }],
+        },
         url: 'https://www.facebook.com/sharer/sharer.php',
         title: 'Facebook',
         label: 'Share',
@@ -335,10 +335,10 @@ const client = {
       twitter: {
         enabled: true,      // Enable Twitter. [Default: true]
         label: 'Tweet',
-        users: [{
+        users: {
           'FR': 'AFROSTREAM',
           'UK': 'Afrostream_UK'
-        }],
+        },
         icon: 'zmdi-twitter',
         url: 'https://twitter.com/intent/tweet',
         title: 'Twitter',
