@@ -61,7 +61,7 @@ class Footer extends Component {
       'footer-hidden': hasPlayer
     }
     const showCashway = featuresFlip.cashway
-    const isOnUk = reouter.isActive('uk')
+    const isOnUk = router.isActive('uk')
 
     const fbUsername = social.facebook.users[isOnUk ? 'UK' : 'FR']
     const twitterUsername = social.twitter.users[isOnUk ? 'UK' : 'FR']
