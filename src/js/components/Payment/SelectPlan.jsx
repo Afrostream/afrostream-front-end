@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Link } from '../Utils'
 import { connect } from 'react-redux'
 import PaymentImages from './PaymentImages'
+import Immutable from 'immutable'
 import config from '../../../../config'
 import _ from 'lodash'
 import { formatPrice, isBoolean } from '../../lib/utils'
@@ -58,8 +59,8 @@ class SelectPlan extends I18n {
     let {query} = location
     let isCash = router.isActive('cash')
     const internalPlanQuery = query && query.contextBillingUuid
-    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : (internalPlanQuery || 'common')}`).reverse()
-    return validPlans
+    let validPlans = Billing.get(`internalPlans/${isCash ? 'cashway' : (internalPlanQuery || 'common')}`)
+    return validPlans && validPlans.size && validPlans.reverse() || Immutable.fromJS([])
   }
 
   getPlanCol (label) {
