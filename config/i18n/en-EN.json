@@ -82,7 +82,7 @@
       "title": "AFROSTREAM | Watch the best black films and TV shows",
       "description": "Watch the best selection of black movies and TV show, with unlimited access, anywhere, everywhere. No commitment. Choose your best deal, weekly or monthly access, Cancel anytime."
     },
-    "title": "Watch {movieName} the best black films and TV shows",
+    "title": "Watch {movieName}the best black films and TV shows",
     "titleMeta": "Get a free week trial to watch {movieName}",
     "action": "Start your free trial",
     "abTest": "Start your free trial",
