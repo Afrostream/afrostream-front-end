@@ -485,6 +485,12 @@ const client = {
       'protData': protData
     },
     'languages': {
+      'en': {
+        'Subtitles': 'Subtitles',
+        'subtitles off': 'Subtitles disabled',
+        'Quality Selection': 'Quality',
+        'Quality': 'Quality',
+      },
       'fr': {
         'Koment': 'Afficher les commentaires',
         'Non-Koment': 'Masquer les commentaires',
