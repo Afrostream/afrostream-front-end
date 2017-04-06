@@ -6,6 +6,8 @@ import qs from 'qs'
 import { extractImg } from '../lib/utils'
 import { I18n } from '../components/Utils'
 import Immutable from 'immutable'
+import { withRouter } from 'react-router'
+
 export default () => {
 
   return (MetasDataComponent) => {
@@ -307,6 +309,6 @@ export default () => {
       }
 
     }
-    return MetasDataDecorator
+    return withRouter(MetasDataDecorator)
   }
 }
