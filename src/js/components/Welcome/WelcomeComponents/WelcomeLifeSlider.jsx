@@ -15,6 +15,8 @@ class WelcomeLifeSlider extends React.Component {
 
   render () {
 
+    const {props: {router}} = this
+
     const settings = {
       autoplay: this.props.autoplay,
       dots: this.props.dots,
@@ -25,6 +27,12 @@ class WelcomeLifeSlider extends React.Component {
       vertical: false,
       arrows: false,
       dotsClass: 'pager'
+    }
+
+    const isOnUk = router.isActive('uk')
+
+    if (isOnUk) {
+      return <div />
     }
 
     return (
