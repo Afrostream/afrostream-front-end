@@ -63,8 +63,8 @@ class Footer extends Component {
     const showCashway = featuresFlip.cashway
     const isOnUk = router.isActive('uk')
 
-    const fbUsername = social.facebook.users[isOnUk ? 'UK' : 'FR']
-    const twitterUsername = social.twitter.users[isOnUk ? 'UK' : 'FR']
+    const fbUsername = social.networks.facebook.users[isOnUk ? 'UK' : 'FR']
+    const twitterUsername = social.networks.twitter.users[isOnUk ? 'UK' : 'FR']
 
     return (
       <footer className={classSet(footerClasses)}>
