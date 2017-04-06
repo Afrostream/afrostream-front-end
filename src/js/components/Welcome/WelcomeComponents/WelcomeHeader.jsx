@@ -69,7 +69,6 @@ class WelcomeHeader extends I18n {
     const isMobile = Event.get('isMobile')
     const movieName = (currentMovie && `${currentMovie.get('title')} ${this.getTitle('and')} `) || ''
     const homeRTitle = this.getTitle('home.title', {movieName})
-    const titleMeta = this.getTitle('home.titleMeta', {movieName})
     const videoData = currentMovie && currentMovie.get('video')
     const isOnUk = router.isActive('uk')
 
@@ -91,7 +90,7 @@ class WelcomeHeader extends I18n {
     }
 
     return (
-      <section className={classSet(welcomeClassesSet)} title={titleMeta}>
+      <section className={classSet(welcomeClassesSet)}>
         {<BackgroundVideo
           {...{isMobile, videos: trailers}}
           preload={'metadata'}
