@@ -146,7 +146,7 @@ class FloatPlayer extends I18n {
     const {
       props: {
         User,
-        params:{
+        params: {
           videoId
         }
       }
@@ -226,7 +226,7 @@ class FloatPlayer extends I18n {
         Season,
         Episode,
         dispatch,
-        params:{
+        params: {
           videoId,
           movieId,
           episodeId,
@@ -320,13 +320,13 @@ class FloatPlayer extends I18n {
     const {
       props: {
         Movie,
-        params:{
+        intl,
+        params: {
           videoId,
           movieId
         }
       }
     } = this
-
     const movieData = Movie.get(`movies/${movieId}`)
     this.nextEpisode = await this.getNextEpisode()
     if (!this.nextEpisode) {
@@ -358,7 +358,7 @@ class FloatPlayer extends I18n {
       props: {
         OAuth, Player, User, Movie, playerId,
         intl,
-        params:{movieId, videoId}
+        params: {movieId, videoId}
       }
     } = this
 
@@ -616,6 +616,8 @@ class FloatPlayer extends I18n {
       }
     })
 
+    playerData.language = intl.locale
+
     //MUX QOS Initialize mux monitoring
     if (playerData.plugins && playerData.plugins.mux) {
       playerData.plugins = _.merge(playerData.plugins || {}, {
@@ -656,7 +658,7 @@ class FloatPlayer extends I18n {
     const {
       props: {
         User,
-        params:{videoId}
+        params: {videoId}
       }
     } = this
 
@@ -795,7 +797,7 @@ class FloatPlayer extends I18n {
   onFirstPlay () {
     const {
       props: {
-        dispatch, params:{videoId}, User
+        dispatch, params: {videoId}, User
       }
     } = this
 
@@ -860,7 +862,7 @@ class FloatPlayer extends I18n {
   trackVideo () {
     let {
       props: {
-        dispatch, params:{videoId}
+        dispatch, params: {videoId}
       }
     } = this
 
@@ -1108,7 +1110,7 @@ class FloatPlayer extends I18n {
         Season,
         Movie,
         Video,
-        params:{
+        params: {
           seasonId,
           movieId,
           videoId
