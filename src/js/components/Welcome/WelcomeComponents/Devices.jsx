@@ -45,11 +45,7 @@ class Devices extends I18n {
       'hd'
     ]
 
-    let posterImg = `${images.urlPrefix}/production/screen/Macbook-Pro-And-Coffe-Cup-Mockup-.jpg?fit=crop&w=1280&q=${images.quality}&fm=${images.type}`
-
-    if (isOnUk) {
-      posterImg = `${images.urlPrefix}/production/screen/mockup-uk-3.jpg?fit=crop&w=1280&q=${images.quality}&fm=${images.type}`
-    }
+    let posterImg = `${images.urlPrefix}/production/screen/mockup-${isOnUk ? 'uk' : 'fr'}-3.jpg?fit=crop&w=1280&q=${images.quality}&fm=${images.type}`
 
     return (
       <section className="devices">
