@@ -169,12 +169,12 @@ class Footer extends Component {
             <FormattedMessage tagName="h4"
                               id={ 'footer.apps.title' }/>
             <ul className="footer-links">
-              <li>
+              {!isOnUk && <li>
                 <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
                    target="_blank">
                   <FormattedMessage id={ 'footer.apps.ios' }/><i className="zmdi zmdi-apple"/>
                 </a>
-              </li>
+              </li>}
               <li>
                 <a className="footer-link"
                    href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
