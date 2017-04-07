@@ -92,7 +92,7 @@ class Billboard extends LoadVideo {
       return
     }
 
-    let label = ` ${this.getTitle('season')} ${(seasons.size > 1 ? 's' : '')}`
+    let label = ` ${this.getTitle('season')}${(seasons.size > 1 ? 's' : '')}`
     let schedule = data.get('schedule') || ''
     return (seasons.size ?
       <div ref="slSeasons" className="billboard-seasons billboard-row">

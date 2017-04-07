@@ -105,7 +105,7 @@ class SeasonList extends React.Component {
     }
     return (
       <MoviesSlider key="season-list" {...this.props} {...{dataList, thumbW, thumbH, selectedId, type, load}}
-                    rowHeight={200} columnMinWidth={210}/>
+                    rowHeight={200} columnMinWidth={210} columnMaxWidth={210}/>
     )
   }
 }
