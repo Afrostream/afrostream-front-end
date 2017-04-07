@@ -16,7 +16,7 @@ if (process.env.BROWSER) {
   require('./Header.less')
 }
 
-@connect(({Event, User, Player}) => ({Event, User, Player}))
+@connect(({Event, User, Player, Geo}) => ({Event, User, Player, Geo}))
 class Header extends React.Component {
 
   toggleSideBar () {
@@ -35,6 +35,7 @@ class Header extends React.Component {
       props: {
         Event,
         User,
+        Geo,
         Player,
         router,
         routes,
@@ -44,6 +45,11 @@ class Header extends React.Component {
       }
     } = this
 
+    const geo = Geo.get('geo')
+    const countryCode = geo.get('countryCode')
+    const filterLife = countryCode === 'FR'
+
+    const isOnUk = router.isActive('uk')
     const isMobile = Event.get('isMobile')
     const sideBarToggled = Event.get('sideBarToggled')
     const hiddenMode = !Event.get('userActive')
@@ -92,7 +98,7 @@ class Header extends React.Component {
             <ul className="nav">
               <li>
                 <button role="button" className="btn-home" onClick={::this.toggleSideBar}>
-                  <i className="open-menu-icon zmdi zmdi-menu"/>
+                  {!((isOnUk || !filterLife) && !user) && <i className="open-menu-icon zmdi zmdi-menu"/>}
                   <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
                 </button>
               </li>

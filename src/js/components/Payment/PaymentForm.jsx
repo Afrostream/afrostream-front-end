@@ -344,12 +344,15 @@ class PaymentForm extends I18n {
     const {
       props: {
         User,
-        dispatch
+        Billing,
+        dispatch,
+        location
       }
     } = this
 
     e.preventDefault()
 
+    let {query, pathname} = location
     this.disableForm(false)
 
     const {droits, cgu, firstName, lastName, methodForm, form} = this.refs
@@ -358,10 +361,14 @@ class PaymentForm extends I18n {
     const currentPlan = this.hasPlan()
     const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid') || this.props.params.internalPlanUuid
 
+
     let billingInfo = {
       internalPlanUuid,
       firstName: firstName && firstName.getValue(),
-      lastName: lastName && lastName.getValue()
+      lastName: lastName && lastName.getValue(),
+      subOpts: {
+        utm_medium: Billing.get('utm_medium')
+      }
     }
 
     Q.fcall(() => {

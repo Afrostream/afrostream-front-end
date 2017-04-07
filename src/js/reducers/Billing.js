@@ -3,7 +3,8 @@ import ActionTypes from '../consts/ActionTypes'
 import createReducer from '../lib/createReducer'
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
-  'coupon': {}
+  'coupon': {},
+  'utm_medium': ''
 })
 
 

@@ -168,7 +168,8 @@ class SideBar extends React.Component {
       props: {
         User,
         Geo,
-        toggled
+        toggled,
+        router
       }
     } = this
 
@@ -190,7 +191,7 @@ class SideBar extends React.Component {
     let dragHandle = null
     const user = User.get('user')
     const isTouching = this.isTouching()
-
+    const isOnUk = router.isActive('uk')
     const overlayStyle = {
       position: 'fixed',
       top: 0,
@@ -279,12 +280,14 @@ class SideBar extends React.Component {
                           style={overlayStyle}
                           role="presentation"
                           tabIndex="0"
+                          key="overlay-side"
                           onClick={this.overlayClicked}/>)
 
 
     return (
       <div {...rootProps}>
-        <div className="sidebar-wrapper" style={sidebarStyle}>
+        {!((isOnUk || !filterLife) && !user) && [<div className="sidebar-wrapper" style={sidebarStyle}
+                                                      key="side-bar-side">
           <button role="button" className="btn-home" onClick={e => this.onSetOpen(false)}>
             <i className="open-menu-icon zmdi zmdi-menu"/>
             <img src={`/images/logo.png`} alt="afrostream-logo" className="logo"/>
@@ -320,8 +323,9 @@ class SideBar extends React.Component {
             {this.getUserConnectedButtons(user, 'account')}
           </ul>
           {this.getUserConnectedButtons(user, 'logout')}
-        </div>
-        {overlay}
+        </div>,
+          overlay
+        ]}
         <div style={contentStyle} className={classSet({contentdock: true, docked: this.props.docked})}>
           {dragHandle}
           {this.props.children}

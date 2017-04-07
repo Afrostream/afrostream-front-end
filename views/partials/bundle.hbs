@@ -6,18 +6,11 @@
   var initBundleTimeout = 0;
   var bodyDiv = document.body;
 
-  var __BUNDLE_STATE__ = {
-    Geo: {
-      geo: {
-        countryCode: '--'
-      }
-    },
-    User: {
-      user: null
-    },
-    OAuth: {
-      token: null
-    }
+  var getUrlParameter = function (name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
   };
 
   var extendState = function () {
@@ -82,6 +75,23 @@
     return data;
   }
 
+
+  var __BUNDLE_STATE__ = {
+    Geo: {
+      geo: {
+        countryCode: '--'
+      }
+    },
+    User: {
+      user: null
+    },
+    OAuth: {
+      token: null
+    },
+    Billing: {
+      'utm_medium': getUrlParameter('utm_medium')
+    }
+  };
 
   window[randCallback] = function (data) {
     clearTimeout(initBundleTimeout)
