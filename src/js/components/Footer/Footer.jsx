@@ -122,13 +122,13 @@ class Footer extends Component {
                        className="img-responsive"/>
                 </Link>
               </li>}
-              <li>
+              {!isOnUk && <li>
                 <Link className="footer-link" to="/store-locator">
                   <FormattedMessage
                     id={ 'footer.recharge.stores' }
                   />
                 </Link>
-              </li>
+              </li>}
               <li>
                 <Link className="footer-link" to="/coupon">
                   <FormattedMessage
@@ -169,18 +169,19 @@ class Footer extends Component {
             <FormattedMessage tagName="h4"
                               id={ 'footer.apps.title' }/>
             <ul className="footer-links">
+              <li key={'footer-link-android'}>
+                <a className="footer-link"
+                   href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
+                   target="_blank">
+                  <FormattedMessage id={ 'footer.apps.android' }/><i className="zmdi zmdi-android"/>
+                </a>
+              </li>
               {!isOnUk && [
-                <li>
-                  <a className="footer-link" href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
+                <li key={'footer-link-ios'}>
+                  <a className="footer-link"
+                     href="https://itunes.apple.com/fr/app/afrostream/id1066377914?mt=8"
                      target="_blank">
                     <FormattedMessage id={ 'footer.apps.ios' }/><i className="zmdi zmdi-apple"/>
-                  </a>
-                </li>,
-                <li>
-                  <a className="footer-link"
-                     href="https://play.google.com/store/apps/details?id=tv.afrostream.app&hl=fr"
-                     target="_blank">
-                    <FormattedMessage id={ 'footer.apps.android' }/><i className="zmdi zmdi-android"/>
                   </a>
                 </li>,
                 <li key={'footer-link-orange'}>

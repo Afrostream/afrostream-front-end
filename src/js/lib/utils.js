@@ -25,7 +25,16 @@ function flattenJson (x, result = {}, prefix) {
 
 _.mixin({
   deepMap,
-  flattenJson
+  flattenJson,
+  deeply: function (map) {
+    return function (obj, fn) {
+      return map(_.mapValues(obj, function (v) {
+        return _.isPlainObject(v) ? _.deeply(map)(v, fn) : _.isArray(v) ? v.map(function (x) {
+          return _.deeply(map)(x, fn);
+        }) : v;
+      }), fn);
+    }
+  }
 })
 
 export function btoa (x) {
@@ -402,17 +411,17 @@ export function deserialize (serializedJavascript) {
 }
 
 export function extractImg ({
-  data,
-  key,
-  isMobile = false,
-  keys = [],
-  defaultImage,
-  width = 1280,
-  height = '',
-  format = 'jpg',
-  fit = 'clip',
-  crop = 'entropy'
-}) {
+                              data,
+                              key,
+                              isMobile = false,
+                              keys = [],
+                              defaultImage,
+                              width = 1280,
+                              height = '',
+                              format = 'jpg',
+                              fit = 'clip',
+                              crop = 'entropy'
+                            }) {
   let thumb
 
   let sizes = {

@@ -3,6 +3,7 @@ import { prepareRoute } from '../../decorators'
 import * as BillingActionCreators from '../../actions/billing'
 import { connect } from 'react-redux'
 import AccountSubscriptions from './AccountSubscriptions'
+import AccountProgress from './AccountProgress'
 import AccountSocial from './AccountSocial'
 import AccountProfil from './AccountProfil'
 import {
@@ -52,6 +53,7 @@ class AccountPage extends React.Component {
       <div>
         <FormattedMessage tagName="h1"
                           id={ 'account.header' }/>
+        <AccountProgress {...this.props}/>
         <AccountProfil profile="profile" {...this.props}/>
         <AccountProfil profile="social" {...this.props}/>
         <AccountSocial />
