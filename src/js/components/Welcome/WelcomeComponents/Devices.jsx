@@ -40,7 +40,7 @@ class Devices extends I18n {
 
     const featuresList = [
       'engagment',
-      //'free',
+      'free',
       'box',
       'hd'
     ]
