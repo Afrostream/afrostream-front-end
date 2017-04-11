@@ -118,7 +118,7 @@ class SmartBanner extends Component {
       this.type = 'android'
     }
 
-    this.settings = mixins[this.type]
+    this.settings = mixins[this.type] || {}
 
     // Don't show banner if device isn't iOS or Android, website is loaded in app,
     // user dismissed banner, or we have no app id in meta

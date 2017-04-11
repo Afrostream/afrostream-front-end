@@ -93,7 +93,6 @@ class WelcomeHeader extends I18n {
       <section className={classSet(welcomeClassesSet)}>
         {<BackgroundVideo
           {...{isMobile, videos: trailers}}
-          preload={'metadata'}
           poster={posterImg}
           onClick={::this.showLock}
         >

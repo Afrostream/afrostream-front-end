@@ -5,6 +5,7 @@ import Footer from './Footer/Footer'
 import SideBar from './SideBar/SideBar'
 import AlertMessage from './Alert/AlertMessage'
 import FloatPlayer from './Player/FloatPlayer'
+
 import ModalView from './Modal/ModalView'
 import Snackbar from 'material-ui/Snackbar'
 import classNames from 'classnames'
@@ -12,7 +13,6 @@ import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import { metasData, analytics, fbTracking, fbSDK } from '../decorators'
 import { withRouter } from 'react-router'
 import { prepareRoute } from '../decorators'
-
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 

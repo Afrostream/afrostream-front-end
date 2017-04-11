@@ -64,7 +64,7 @@ class AccountProgress extends I18n {
       <div className="account-details__container col-md-12">
         <div className="panel-profil profile-progress">
           <div className="row">
-            <div className="col-sd-2 col-md-2">
+            <div className="col-xs-4 col-md-2">
               <CircularProgress
                 className="progress-circle"
                 mode="determinate"
@@ -73,7 +73,7 @@ class AccountProgress extends I18n {
                 thickness={20}
               />
             </div>
-            <div className="col-sd-10 col-md-10 progress-text">
+            <div className="col-xs-8 col-md-10 progress-text">
               {` ${this.getTitle('account.profile.progress')} ${this.state.completed} %`}
             </div>
           </div>

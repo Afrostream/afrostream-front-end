@@ -9,6 +9,7 @@ import { withRouter } from 'react-router'
 import * as EventActionCreators from '../../actions/event'
 import Breadcrumbs from './Breadcrumbs'
 import _ from 'lodash'
+import SmartBanner from './SmartBanner'
 
 const {apps} = config
 
@@ -92,6 +93,7 @@ class Header extends React.Component {
 
     return (
       <div className="headroom headroom--pinned">
+        <SmartBanner {...apps.params}/>
         <header className={classSet(sliderClasses)}>
           <div dangerouslySetInnerHTML={{__html: '<!--googleoff: all-->'}}/>
           <nav className="float--left" role="navigation">
