@@ -17,12 +17,12 @@ const config = _.merge(
       },
       carousel: {
         mobile: [
-          '/production/carousel/apercu_catalogue_mobile_slide1.png',
-          '/production/carousel/apercu_catalogue_mobile_slide2.png'
+          '/production/carousel/apercu_catalogue_mobile_slide1{lang}.png',
+          '/production/carousel/apercu_catalogue_mobile_slide2{lang}.png'
         ],
         desktop: [
-          '/production/carousel/apercu_catalogue_desktop_slide1.png',
-          '/production/carousel/apercu_catalogue_desktop_slide2.png'
+          '/production/carousel/apercu_catalogue_desktop_slide1{lang}.png',
+          '/production/carousel/apercu_catalogue_desktop_slide2{lang}.png'
         ]
       },
       videos: [{src: 'https://afrostream-video.imgix.net/Afrostream-boucle-2.mp4', type: 'video/mp4'}],

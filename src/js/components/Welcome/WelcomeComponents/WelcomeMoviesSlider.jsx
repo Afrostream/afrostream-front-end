@@ -64,12 +64,6 @@ class WelcomeMoviesSlider extends React.Component {
 
     const {props: {Event, router}} = this
 
-    const isOnUk = router.isActive('uk')
-
-    if (isOnUk) {
-      return <div />
-    }
-
     const settings = {
       autoplay: this.props.autoplay,
       dots: this.props.dots,
@@ -83,13 +77,15 @@ class WelcomeMoviesSlider extends React.Component {
       dotsClass: 'pager'
     }
 
+    const isOnUk = router.isActive('uk')
+    const lang = isOnUk ? '-uk' : ''
     const isMobile = Event.get('isMobile') && !(this.state.agent && this.state.agent.tablet())
     const carouselItems = metadata.carousel[isMobile ? 'mobile' : 'desktop']
 
     return (
       <div className="welcome-slider">
         {canUseDOM && <Slider {...settings}>
-          {carouselItems && _.map(carouselItems, (slide, index) => this.renderSliderItem(slide, index, isMobile))}
+          {carouselItems && _.map(carouselItems, (slide, index) => this.renderSliderItem(slide.replace(/{lang}/, lang), index, isMobile))}
         </Slider>}
         {!canUseDOM && carouselItems && this.renderSliderItem(_.find(carouselItems, 1), 1)}
       </div>
