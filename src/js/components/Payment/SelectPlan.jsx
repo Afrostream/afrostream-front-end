@@ -251,7 +251,7 @@ class SelectPlan extends I18n {
     if (validPlans) {
       let trialPeriodPlan = validPlans.filter((plan) => {
         return isBoolean(plan.get('trialEnabled'))
-      }).first()
+      }).last()
       if (trialPeriodPlan) {
         const trialPeriodLength = trialPeriodPlan.get('trialPeriodLength')
         const trialPeriodUnit = this.getTitle(
