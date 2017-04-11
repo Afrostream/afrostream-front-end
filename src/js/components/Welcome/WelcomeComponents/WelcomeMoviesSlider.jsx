@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Slider from 'react-slick'
+import MobileDetect from 'mobile-detect'
 import config from '../../../../../config'
 import { withRouter } from 'react-router'
 import _ from 'lodash'
@@ -13,8 +14,20 @@ const {metadata, images} = config
 @connect(({Event, User}) => ({Event, User}))
 class WelcomeMoviesSlider extends React.Component {
 
+  state = {
+    agent: null
+  }
+
   constructor (props) {
     super(props)
+  }
+
+  componentDidMount () {
+    const userAgent = (window.navigator && navigator.userAgent) || ''
+    let agent = new MobileDetect(userAgent)
+    this.setState({
+      agent
+    })
   }
 
   renderSliderItem (imageUrl, index, isMobile) {
@@ -49,7 +62,7 @@ class WelcomeMoviesSlider extends React.Component {
 
   render () {
 
-    const {props: {Event,router}} = this
+    const {props: {Event, router}} = this
 
     const isOnUk = router.isActive('uk')
 
@@ -70,8 +83,9 @@ class WelcomeMoviesSlider extends React.Component {
       dotsClass: 'pager'
     }
 
-    const isMobile = Event.get('isMobile')
+    const isMobile = Event.get('isMobile') && !(this.state.agent && this.state.agent.tablet())
     const carouselItems = metadata.carousel[isMobile ? 'mobile' : 'desktop']
+
     return (
       <div className="welcome-slider">
         {canUseDOM && <Slider {...settings}>

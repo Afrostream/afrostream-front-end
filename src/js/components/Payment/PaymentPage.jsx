@@ -36,7 +36,16 @@ class PaymentPage extends React.Component {
       }
     } = this
 
+    this.checkAuth()
     dispatch(IntercomActionCreators.createIntercom())
+  }
+
+  componentWillReceiveProps () {
+    this.checkAuth()
+  }
+
+  componentWillUpdate () {
+    this.checkAuth()
   }
 
   componentWillUnmount () {
@@ -46,6 +55,24 @@ class PaymentPage extends React.Component {
       }
     } = this
     dispatch(IntercomActionCreators.removeIntercom())
+  }
+
+  checkAuth () {
+    const {
+      props: {intl, history, router, route, User}
+    } = this
+    const {locale, defaultLocale} = intl
+    const user = User.get('user')
+    if (user) {
+      let subscriptionsStatus = user.get('subscriptionsStatus')
+      let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null
+      let planCode = subscriptionsStatus && subscriptionsStatus.get('planCode') || user.get('planCode')
+      let langRoute = `${locale && locale !== defaultLocale && ('/' + locale) || ''}`
+      const noRedirectRoute = router.isActive(`${langRoute}/select-plan`) || (route && route.name === 'payment')
+      if (status === 'active' && planCode && noRedirectRoute) {
+        history.push(`${langRoute}/account`)
+      }
+    }
   }
 
   render () {

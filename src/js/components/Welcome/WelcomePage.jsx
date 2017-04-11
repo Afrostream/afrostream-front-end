@@ -44,6 +44,7 @@ class WelcomePage extends React.Component {
         <InternalPlansCountDown bgImage={true} action=""/>
         <Devices {...this.props} />
         <WelcomeMoviesSlider dots={false} autoplay={true} infinite={true}/>
+        <SelectPlan {...this.props} showImages={false}/>
         <WelcomeLifeSlider dots={false} autoplay={true} infinite={true}/>
       </div>
     )
