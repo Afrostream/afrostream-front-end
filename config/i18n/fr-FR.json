@@ -84,8 +84,8 @@
     },
     "title": "{movieName}les meilleurs films et séries\nafro-américains et africains.\nEn illimité.",
     "titleMeta": "Profitez d'une semaine offerte pour regarder {movieName}",
-    "action": "Profitez d'une semaine offerte",
-    "abTest": "Démarrez votre semaine d'essai offerte, j'en profite !",
+    "action": "Découvrez Afrostream sans engagement !",
+    "abTest": "Découvrez Afrostream sans engagement !, j'en profite !",
     "movie": {
       "title": "{movieName} | Le film en streaming sur AFROSTREAM",
       "description": "Regardez {movieName}, film avec {actors} en streaming sur tous vos écrans grâce à AFROSTREAM"
@@ -105,7 +105,7 @@
     "devices": {
       "title": "Regardez {movieName}vos films et séries afro préférés quand vous voulez, où vous voulez en illimité",
       "titleAction": "Profitez d'une semaine offerte pour regarder {movieName}vos films et séries afro préférés",
-      "action": "Démarrez votre semaine d'essai offerte",
+      "action": "Découvrez Afrostream sans engagement !",
       "features": {
         "engagment": "Sans engagement",
         "free": "La première semaine est offerte",
@@ -115,7 +115,7 @@
     },
     "spots": {
       "title": "Aperçu de notre catalogue",
-      "action": "DÉMARREZ VOTRE SEMAINE<br />D’ESSAI OFFERTE"
+      "action": "DÉMARREZ VOTRE SEMAINE<br />SANS ENGAGEMENT"
     },
     "plans": {
       "title": "Nos formules",
