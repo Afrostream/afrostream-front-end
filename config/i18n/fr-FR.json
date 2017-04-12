@@ -363,7 +363,7 @@
     "plan": {
       "header": "DÉTAIL DE L'ABONNEMENT",
       "updatePlan": "Changer de forfait",
-      "cancelPlan": "Interrompre votre abonnement"
+      "cancelPlan": "Interrompre l'abonnement"
     },
     "oauth2": {
       "header": "Profils liés",
