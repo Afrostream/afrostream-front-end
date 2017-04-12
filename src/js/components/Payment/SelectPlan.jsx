@@ -248,24 +248,24 @@ class SelectPlan extends I18n {
     let isCash = this.props.router.isActive('cash')
     let validPlans = this.getPlans()
     let periodTrialLabel = ''
-    if (validPlans) {
-      let trialPeriodPlan = validPlans.filter((plan) => {
-        return isBoolean(plan.get('trialEnabled'))
-      }).last()
-      if (trialPeriodPlan) {
-        const trialPeriodLength = trialPeriodPlan.get('trialPeriodLength')
-        const trialPeriodUnit = this.getTitle(
-          `account.billing.periods.${trialPeriodPlan.get('trialPeriodUnit')}`
-        )
-        periodTrialLabel = this.getTitle(
-          `planCodes.freePeriodLabel`
-          , {
-            trialPeriodLength,
-            trialPeriodUnit
-          })
-      }
-
-    }
+    //if (validPlans) {
+    //  let trialPeriodPlan = validPlans.filter((plan) => {
+    //    return isBoolean(plan.get('trialEnabled'))
+    //  }).last()
+    //  if (trialPeriodPlan) {
+    //    const trialPeriodLength = trialPeriodPlan.get('trialPeriodLength')
+    //    const trialPeriodUnit = this.getTitle(
+    //      `account.billing.periods.${trialPeriodPlan.get('trialPeriodUnit')}`
+    //    )
+    //    periodTrialLabel = this.getTitle(
+    //      `planCodes.freePeriodLabel`
+    //      , {
+    //        trialPeriodLength,
+    //        trialPeriodUnit
+    //      })
+    //  }
+    //
+    //}
 
     const chooseLabel = this.getTitle(
       `planCodes.${validPlans && validPlans.size > 1 ? 'selectTitle' : 'onePlanTitle'}`
