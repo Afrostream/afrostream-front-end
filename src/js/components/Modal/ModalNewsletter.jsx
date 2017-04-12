@@ -20,10 +20,10 @@ class ModalNewsletter extends ModalGeoWall {
 
   handleClose (e) {
     const {
-      props : {history}
+      props: {history}
     } = this
 
-    history.push('/')
+    //history.push('/')
     super.handleClose(e)
   }
 
@@ -38,7 +38,7 @@ class ModalNewsletter extends ModalGeoWall {
     e.stopPropagation()
     e.preventDefault()
     const email = this.refs.email.value
-    this.props.dispatch(WaitingUsersActionCreators.create(email)).then(()=> {
+    this.props.dispatch(WaitingUsersActionCreators.create(email)).then(() => {
       this.setState({
         sended: true,
         email: email
@@ -88,12 +88,12 @@ class ModalNewsletter extends ModalGeoWall {
                     <div className="header top-header ">
                       <div className="bg-gradient"></div>
                       <FormattedMessage tagName="h1" id={`${this.props.header}`}/>
-                      <a className={closeClass}  onClick={::this.handleClose}></a>
+                      <a className={closeClass} onClick={::this.handleClose}></a>
                     </div>
                     <div className="mode-container">
                       <div className="mode">
                         <div className="instructions">
-                          {this.props.result}
+                          { this.getTitle(this.props.result)}
                         </div>
                       </div>
                     </div>
