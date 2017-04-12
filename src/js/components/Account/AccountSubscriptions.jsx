@@ -51,8 +51,7 @@ class AccountSubscriptions extends React.Component {
     let currentSubscription = subscriptionsList.find((obj) => {
       return obj.get('isActive') === 'yes' && obj.get('isCancelable')
     })
-
-    const isCancelable = currentSubscription && currentSubscription.get('isCancelable')
+    const isCancelable = currentSubscription && currentSubscription.get('isCancelable') && currentSubscription.get('subStatus') !== 'canceled'
     const uuid = currentSubscription && currentSubscription.get('subscriptionBillingUuid')
 
     return (
@@ -67,11 +66,14 @@ class AccountSubscriptions extends React.Component {
             <Table displayRowCheckbox={false} style={{padding: '0'}}>
               <TableHeader style={{border: 'none'}} adjustForCheckbox={false} displaySelectAll={false}>
                 <TableRow style={{border: 'none'}} selectable={false}>
-                  <TableHeaderColumn><FormattedMessage id={ `account.billing.dateLabel`}/></TableHeaderColumn>
-                  <TableHeaderColumn><FormattedMessage id={ `account.billing.decriptionLabel`}/></TableHeaderColumn>
-                  <TableHeaderColumn><FormattedMessage id={ `account.billing.periodLabel`}/></TableHeaderColumn>
-                  <TableHeaderColumn><FormattedMessage id={ `account.billing.methodLabel`}/></TableHeaderColumn>
-                  <TableHeaderColumn><FormattedMessage id={ `account.billing.statusLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn width="15%"><FormattedMessage
+                    id={ `account.billing.dateLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn width="50%"><FormattedMessage
+                    id={ `account.billing.decriptionLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn width="20%"><FormattedMessage
+                    id={ `account.billing.methodLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn width="15%"><FormattedMessage
+                    id={ `account.billing.statusLabel`}/></TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={false}>
@@ -116,19 +118,17 @@ class AccountSubscriptions extends React.Component {
                         break
                     }
 
-                    let isCancelable = (subscription.get('subStatus') === 'canceled') || (subscription.get('isCancelable') === 'no')
-
-
                     return (
                       <TableRow key={`subscription-${i}-info`}>
-                        <TableRowColumn scope="row">{subscriptionDate}</TableRowColumn>
-                        <TableRowColumn>{internalPlan.get('description')}</TableRowColumn>
-                        <TableRowColumn>{period}
+                        <TableRowColumn scope="row" width="15%">{subscriptionDate}</TableRowColumn>
+                        <TableRowColumn width="50%">
+                          {internalPlan.get('description')}
+                          {period}
                           <LinearProgress style={{height: '0.7em'}} mode="determinate" value={percentComplete}/>
                         </TableRowColumn>
-                        <TableRowColumn><img src={providerLogo} alt={providerName}
-                                             className="img-responsive"/></TableRowColumn>
-                        <TableRowColumn><FormattedMessage
+                        <TableRowColumn width="20%"><img src={providerLogo} alt={providerName}
+                                                         className="img-responsive"/></TableRowColumn>
+                        <TableRowColumn width="15%"><FormattedMessage
                           id={ `account.billing.status.${statusLabel}` }/></TableRowColumn>
                       </TableRow>)
                   }
