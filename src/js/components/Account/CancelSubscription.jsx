@@ -37,7 +37,7 @@ class CancelSubscription extends React.Component {
     const {
       Billing,
       User,
-      params:{
+      params: {
         subscriptionBillingUuid
       },
       location: {
@@ -107,7 +107,7 @@ class CancelSubscription extends React.Component {
       props: {
         Billing,
         User,
-        params:{
+        params: {
           subscriptionBillingUuid
         },
         location: {
@@ -166,6 +166,10 @@ class CancelSubscription extends React.Component {
                           disabled={this.state.pending}/>
             <Link to="/">
               <RaisedButton label={<FormattedMessage id={`account.cancel.cancelBtn`}/>} style={style}
+                            disabled={this.state.pending}/>
+            </Link>
+            <Link to="/last">
+              <RaisedButton label={<FormattedMessage id={`account.cancel.lastBtn`}/>} style={style} primary={true}
                             disabled={this.state.pending}/>
             </Link>
           </div>

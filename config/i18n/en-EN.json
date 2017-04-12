@@ -410,7 +410,8 @@
         "unCancelable": "Your subscription cannot be cancelled."
       },
       "submitBtn": "Confirm",
-      "cancelBtn": "Continue the subscription"
+      "cancelBtn": "Continue the subscription",
+      "lastBtn": "I want to see more movies"
     },
     "billing": {
       "header": "Billing Information",

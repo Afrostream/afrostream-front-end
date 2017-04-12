@@ -405,12 +405,13 @@
     "cancel": {
       "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}",
       "status": {
-        "active": "Êtes vous certains de ne plus vouloir voir de films et séries afro ?",
+        "active": "Voulez-vous vraiment interrompre votre abonnement ? Vous ne pourrez-plus accéder à Afrostream.",
         "canceled": "Votre abonnement été annulé.",
         "unCancelable": "Votre abonnement ne peut être annulé."
       },
       "submitBtn": "Confirmer l'interruption",
-      "cancelBtn": "Continuer l'abonnement"
+      "cancelBtn": "Continuer l'abonnement",
+      "lastBtn": "Je veux voir des nouveautés"
     },
     "billing": {
       "header": "Détails de facturation",
