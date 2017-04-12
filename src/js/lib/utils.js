@@ -30,9 +30,9 @@ _.mixin({
     return function (obj, fn) {
       return map(_.mapValues(obj, function (v) {
         return _.isPlainObject(v) ? _.deeply(map)(v, fn) : _.isArray(v) ? v.map(function (x) {
-          return _.deeply(map)(x, fn);
-        }) : v;
-      }), fn);
+          return _.deeply(map)(x, fn)
+        }) : v
+      }), fn)
     }
   }
 })

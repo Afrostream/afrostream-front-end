@@ -51,13 +51,29 @@ class PaymentMethod extends React.Component {
     let providerDefault = null
 
     if (plan) {
-      providers = plan.get('providerPlans')
+      providers = plan.get('providerPlansByPaymentMethodType')
       if (providers && providers.size) {
-        providerDefault = providers.sortBy((provider, key) => {
-          return config.payment.order.indexOf(key)
-        }).first().get('provider').get('providerName')
+        //providerDefault = providers.sortBy((provider, key) => {
+        //  return config.payment.order.indexOf(key)
+        //}).first().get('provider').get('providerName')
+
+        providers.map((providerList, key) => {
+          let providerDefault = key
+          try {
+            const provider = providerList.first()
+            if (provider) {
+              provider.mapKeys((pKey) => {
+                providerDefault = pKey
+              })
+            }
+          } catch (e) {
+            console.log('no provider found')
+          }
+        })
+
       }
     }
+
 
     return plan && providers && providers.size && providerDefault
   }
@@ -173,12 +189,21 @@ class PaymentMethod extends React.Component {
     }
 
     if (plan) {
-      let providers = plan.get('providerPlans')
-      providers.sortBy((provider, key) => {
-        return config.payment.order.indexOf(key)
-      }).map((provider, key) => {
-        if (allMethods.hasOwnProperty(key)) {
-          methods.push(allMethods[key])
+      let providers = plan.get('providerPlansByPaymentMethodType')
+      providers.map((providerList, key) => {
+        let providerName = key
+        try {
+          const provider = providerList.first()
+          if (provider) {
+            provider.mapKeys((pKey) => {
+              providerName = pKey
+            })
+          }
+        } catch (e) {
+          console.log('no provider found')
+        }
+        if (allMethods.hasOwnProperty(providerName)) {
+          methods.push(allMethods[providerName])
         }
       })
     }
