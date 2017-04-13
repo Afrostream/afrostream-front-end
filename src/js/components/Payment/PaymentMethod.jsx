@@ -58,19 +58,17 @@ class PaymentMethod extends React.Component {
         //  return config.payment.order.indexOf(key)
         //}).first().get('provider').get('providerName')
 
-        providers.map((providerList, key) => {
+        providers.map((providerList) => {
           try {
-            providerList.map((provider) => {
-              if (provider) {
-                provider.mapKeys((pKey) => {
-                  if (providerDefault) {
-                    return
-                  }
-                  providerDefault = pKey
-                })
-              }
-
-            })
+            const provider = providerList.first()
+            if (provider) {
+              provider.mapKeys((pKey) => {
+                if (providerDefault) {
+                  return
+                }
+                providerDefault = pKey
+              })
+            }
           } catch (e) {
             console.log('no provider found')
           }
@@ -198,11 +196,12 @@ class PaymentMethod extends React.Component {
       providers.map((providerList, key) => {
         let providerName = key
         try {
-          providerList.map((provider) => {
+          const provider = providerList.first()
+          if (provider) {
             provider.mapKeys((pKey) => {
               providerName = pKey
             })
-          })
+          }
         } catch (e) {
           console.log('no provider found')
         }

@@ -253,7 +253,6 @@ class PaymentForm extends I18n {
         })
       }
     }
-
     return (<div className="row">
         <div className="col-md-12">
           {methodForm && methodForm.method() !== methodForm.WECASHUP && <button
