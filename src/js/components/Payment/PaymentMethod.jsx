@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import _ from 'lodash'
 import Immutable from 'immutable'
 import config from '../../../../config'
 import {
@@ -30,7 +31,7 @@ const Methods = {
 
 class PaymentMethod extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     let method = payment.default
     this.state = {
@@ -39,7 +40,7 @@ class PaymentMethod extends React.Component {
     }
   }
 
-  multipleMethods () {
+  multipleMethods() {
     const {
       props: {
         plan
@@ -47,8 +48,8 @@ class PaymentMethod extends React.Component {
     } = this
 
 
-    let providers = null
-    let providerDefault = null
+    let providers
+    let providerDefault
 
     if (plan) {
       providers = plan.get('providerPlansByPaymentMethodType')
@@ -58,31 +59,35 @@ class PaymentMethod extends React.Component {
         //}).first().get('provider').get('providerName')
 
         providers.map((providerList, key) => {
-          let providerDefault = key
           try {
-            const provider = providerList.first()
-            if (provider) {
-              provider.mapKeys((pKey) => {
-                providerDefault = pKey
-              })
-            }
+            providerList.map((provider) => {
+              if (provider) {
+                provider.mapKeys((pKey) => {
+                  if (providerDefault) {
+                    return
+                  }
+                  providerDefault = pKey
+                })
+              }
+
+            })
           } catch (e) {
             console.log('no provider found')
           }
         })
-
+        return plan && providers && providers.size && providerDefault
       }
     }
+    return false
 
 
-    return plan && providers && providers.size && providerDefault
   }
 
-  method () {
+  method() {
     return this.state.method
   }
 
-  componentDidMount () {
+  componentDidMount() {
 
     this.container = ReactDOM.findDOMNode(this)
     this.container.addEventListener('changemethod', this.switchMethod.bind(this))
@@ -101,7 +106,7 @@ class PaymentMethod extends React.Component {
     })
   }
 
-  onSuccess () {
+  onSuccess() {
     switch (this.state.method) {
       case  Methods.WECASHUP:
         return this.refs.wecashup.onSuccess()
@@ -111,7 +116,7 @@ class PaymentMethod extends React.Component {
     }
   }
 
-  onError () {
+  onError() {
     switch (this.state.method) {
       case  Methods.WECASHUP:
         return this.refs.wecashup.onError()
@@ -121,7 +126,7 @@ class PaymentMethod extends React.Component {
     }
   }
 
-  async submit (billingInfo, currentPlan) {
+  async submit(billingInfo, currentPlan) {
     switch (this.state.method) {
       case  Methods.NETSIZE:
         return await this.refs.netsize.submit(billingInfo, currentPlan)
@@ -147,7 +152,7 @@ class PaymentMethod extends React.Component {
     }
   }
 
-  switchMethod (event) {
+  switchMethod(event) {
     if (!this.multipleMethods()) {
       return
     }
@@ -158,7 +163,7 @@ class PaymentMethod extends React.Component {
     })
   }
 
-  renderMethods () {
+  renderMethods() {
 
     const {
       props: {
@@ -193,16 +198,17 @@ class PaymentMethod extends React.Component {
       providers.map((providerList, key) => {
         let providerName = key
         try {
-          const provider = providerList.first()
-          if (provider) {
+          providerList.map((provider) => {
             provider.mapKeys((pKey) => {
               providerName = pKey
             })
-          }
+          })
         } catch (e) {
           console.log('no provider found')
         }
-        if (allMethods.hasOwnProperty(providerName)) {
+        if (allMethods.hasOwnProperty(providerName) && !_.find(methods, (method) => {
+            return providerName === method.ref
+          })) {
           methods.push(allMethods[providerName])
         }
       })
@@ -211,7 +217,7 @@ class PaymentMethod extends React.Component {
   }
 
 
-  render () {
+  render() {
     return (
       <div className="panel-group">
         {this.renderMethods()}

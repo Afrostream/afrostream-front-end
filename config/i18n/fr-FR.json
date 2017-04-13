@@ -403,11 +403,11 @@
       "off": "Désactivé"
     },
     "cancel": {
-      "info": "L'annulation sera effective dès la fin de la période de facturation en cours, le {endDate}",
+      "info": "Nous vous confirmons que votre abonnement se terminera le {endDate}. Vous ne serez plus facturé au-delà.",
       "status": {
         "active": "Voulez-vous vraiment interrompre votre abonnement ? Vous ne pourrez-plus accéder à Afrostream.",
         "canceled": "Votre abonnement été annulé.",
-        "unCancelable": "Votre abonnement ne peut être annulé."
+        "unCancelable": "Votre abonnement a bien été annulé."
       },
       "submitBtn": "Confirmer l'interruption",
       "cancelBtn": "Continuer l'abonnement",
