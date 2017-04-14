@@ -47,7 +47,7 @@ if (canUseDOM) {
 @connect(({User, Billing, OAuth}) => ({User, Billing, OAuth}))
 class PaymentForm extends I18n {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
   }
 
@@ -58,7 +58,7 @@ class PaymentForm extends I18n {
     pageHeader: 'payment.header'
   }
 
-  hasPlan () {
+  hasPlan() {
 
     const {
       props: {
@@ -75,7 +75,7 @@ class PaymentForm extends I18n {
     return plan
   }
 
-  setupUser () {
+  setupUser() {
     const {
       props: {
         User,
@@ -100,7 +100,7 @@ class PaymentForm extends I18n {
     }
   }
 
-  setupPlan () {
+  setupPlan() {
     let currentPlan = this.hasPlan()
     if (!currentPlan) {
       return
@@ -116,22 +116,22 @@ class PaymentForm extends I18n {
     })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setupUser()
     this.setupPlan()
     this.attachTooltip()
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     this.attachTooltip()
     this.setupUser()
   }
 
-  attachTooltip () {
+  attachTooltip() {
     ReactTooltip.rebuild()
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const {
       props: {
         Billing,
@@ -150,7 +150,7 @@ class PaymentForm extends I18n {
     }
   }
 
-  renderUserForm () {
+  renderUserForm() {
 
     const {
       props: {
@@ -215,7 +215,7 @@ class PaymentForm extends I18n {
       </div>)
   }
 
-  renderSubmit () {
+  renderSubmit() {
 
     const {
       props: {
@@ -272,7 +272,7 @@ class PaymentForm extends I18n {
     )
   }
 
-  renderDroits () {
+  renderDroits() {
 
     let checkClass = {
       'col-md-12': true,
@@ -309,7 +309,7 @@ class PaymentForm extends I18n {
     )
   }
 
-  renderCGU () {
+  renderCGU() {
 
     let checkClass = {
       'col-md-12': true,
@@ -339,7 +339,7 @@ class PaymentForm extends I18n {
     </div>)
   }
 
-  async onSubmit (e) {
+  async onSubmit(e) {
     const {
       props: {
         User,
@@ -424,7 +424,7 @@ class PaymentForm extends I18n {
     })
   }
 
-  getPath () {
+  getPath() {
     const {
       props: {
         router,
@@ -437,7 +437,7 @@ class PaymentForm extends I18n {
     return `${lang ? '/' + lang : ''}${isCash ? '/cash' : ''}`
   }
 
-  async submitSubscription (formData) {
+  async submitSubscription(formData) {
     const {
       props: {
         dispatch,
@@ -541,7 +541,7 @@ class PaymentForm extends I18n {
   }
 
   // A simple error handling function to expose errors to the customer
-  error (err) {
+  error(err) {
 
     const {props: {dispatch}} = this
 
@@ -568,7 +568,7 @@ class PaymentForm extends I18n {
     //dispatch(EventActionCreators.snackMessage({message: formatError.message, type: 'error'}))
   }
 
-  disableForm (disabled, status = 0, message = '') {
+  disableForm(disabled, status = 0, message = '') {
     this.setState({
       disabledForm: disabled,
       message: message,
@@ -582,7 +582,7 @@ class PaymentForm extends I18n {
     })
   }
 
-  renderPaymentMethod (planLabel) {
+  renderPaymentMethod(planLabel) {
     const currentPlan = this.hasPlan()
     const internalPlanUuid = currentPlan && currentPlan.get('internalPlanUuid') || this.props.params.internalPlanUuid
     return (
@@ -593,7 +593,7 @@ class PaymentForm extends I18n {
                      planLabel={planLabel}/>)
   }
 
-  renderForm () {
+  renderForm() {
 
     var spinnerClasses = {
       'spinner-payment': true,
@@ -633,7 +633,7 @@ class PaymentForm extends I18n {
     )
   }
 
-  render () {
+  render() {
     const {
       props: {
         params: {status}

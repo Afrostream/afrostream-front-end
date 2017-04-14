@@ -11,6 +11,7 @@ import {
 import { prepareRoute } from '../decorators'
 import * as LifeActionCreators from '../actions/life'
 import * as CategoryActionCreators from '../actions/category'
+import LoginPage from './Login/LoginPage'
 
 @connect(({User, Billing, Geo}) => ({User, Billing, Geo}))
 @prepareRoute(async function ({store}) {
@@ -19,29 +20,30 @@ import * as CategoryActionCreators from '../actions/category'
 })
 class HomePage extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
   }
 
-  componentWillReceiveProps () {
+  componentWillReceiveProps() {
     this.checkAuth()
   }
 
-  componentWillUpdate () {
+  componentWillUpdate() {
     this.checkAuth()
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.checkAuth()
   }
 
-  checkAuth () {
+  checkAuth() {
     const {
       props: {intl, history, router, params, User, Billing}
     } = this
     const {locale, defaultLocale} = intl
     const user = User.get('user')
     if (user) {
+      const authorized = user.get('authorized')
       let isCash = router.isActive('cash')
       let subscriptionsStatus = user.get('subscriptionsStatus')
       let status = subscriptionsStatus ? subscriptionsStatus.get('status') : null
@@ -51,7 +53,7 @@ class HomePage extends React.Component {
       if (status === 'active' && planCode && router.isActive(`${langRoute}/select-plan`)) {
         return history.push(`${langRoute}/account`)
       }
-      if (!planCode && !noRedirectRoute) {
+      if (!planCode && !noRedirectRoute && authorized) {
         let donePath = `${langRoute}${isCash ? '/cash' : ''}/select-plan`
         if (status && status !== 'active') {
           donePath = `${donePath}/none/${status}`
@@ -77,10 +79,14 @@ class HomePage extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const {props: {User, children}} = this
     const user = User.get('user')
     if (user) {
+      const authorized = user.get('authorized')
+      if (!authorized) {
+        return <LoginPage modalType="newsletter" closable={false} {...this.props}/>
+      }
       if (children) {
         return children
       }

@@ -12,7 +12,6 @@ import MoviesList from '../Movies/MoviesList'
 import BrowseLifeUsersList from './BrowseLifeUsersList'
 import UserMoviesList from '../Movies/UserMoviesList'
 import BrowsePinsList from './BrowsePinsList'
-import LoginPage from '../Login/LoginPage'
 
 @prepareRoute(async function ({store}) {
   await Promise.all([
@@ -25,28 +24,22 @@ import LoginPage from '../Login/LoginPage'
 })
 @connect(({User, Geo}) => ({User, Geo}))
 class BrowsePage extends React.Component {
-  render () {
+  render() {
     const {props: {User, Geo}} = this
     const user = User.get('user')
-    const authorized = user && user.get('authorized')
     const geo = Geo.get('geo')
     const countryCode = geo.get('countryCode')
     const filterLife = countryCode === 'FR'
     return (
       <div className="row-fluid">
-        {!authorized && <LoginPage modalType="newsletter" closable={false} {...this.props}/>}
-        {authorized && [
-          <SplashScreen key="splash-screens"/>,
-          <SlideShow key="slide-show" gradient={true}/>,
-          <UserMoviesList key="user-movies-list"/>,
-        ]}
+        <SplashScreen key="splash-screens"/>,
+        <SlideShow key="slide-show" gradient={true}/>,
+        <UserMoviesList key="user-movies-list"/>,
         {filterLife && [
           <BrowseLifeUsersList key="life-users-list"/>,
           <BrowsePinsList key="browse-pins-list"/>,
         ]}
-        {authorized && [
-          <MoviesList key="movies-list"/>
-        ]}
+        <MoviesList key="movies-list"/>
       </div>
     )
   }
