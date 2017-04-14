@@ -7,8 +7,9 @@ import * as LifeActionCreators from '../../actions/life'
 import LifeSticky from './LifeSticky'
 import SubNavigation from '../Header/SubNavigation'
 
-@prepareRoute(async function ({store, router, params:{themeId}}) {
+@prepareRoute(async function ({store, router, params: {themeId}}) {
   return await Promise.all([
+    store.dispatch(LifeActionCreators.fetchThemes(themeId)),
     store.dispatch(LifeActionCreators.fetchPins({themeId})),
     store.dispatch(LifeActionCreators.fetchSpots({themeId}))
   ])
@@ -16,15 +17,15 @@ import SubNavigation from '../Header/SubNavigation'
 @connect(({Life, User}) => ({Life, User}))
 class LifeTheme extends Component {
 
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
   }
 
-  render () {
+  render() {
     const {
       props: {
         Life,
-        params:{
+        params: {
           themeId
         }
       }

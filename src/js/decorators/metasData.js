@@ -25,7 +25,7 @@ export default () => {
 
       static defaultProps = {}
 
-      render () {
+      render() {
         const {props: {children}} = this
         let metas = this.getMetadata()
         return (
@@ -36,7 +36,7 @@ export default () => {
         )
       }
 
-      getdata () {
+      getdata() {
         const {
           context: {store},
           props: {params, location, intl}
@@ -82,6 +82,22 @@ export default () => {
             let themesList = store.getState().Life.get(`life/themes/`)
             let defaultTitle = ''
             let defaultDescription = this.getTitle('life.metas.description')
+
+            if (params.themeId) {
+              data = store.getState().Life.get(`life/themes/${params.themeId}`) || themesList.find((theme) => theme.get('_id') == params.themeId)
+              if (data) {
+                defaultDescription = data.get('description') || defaultDescription
+                const keywords = data.get('keywords')
+                if (keywords && keywords.size) {
+                  metas.meta.push({
+                    name: 'keywords',
+                    content: _.join(keywords.toJS(), ',')
+                  })
+                }
+                themesList = Immutable.List([data])
+              }
+            }
+
             if (params.pinId) {
               data = store.getState().Life.get(`life/pins/${params.pinId}`)
               if (data) {
@@ -93,19 +109,29 @@ export default () => {
               }
               if (params.themeId) {
                 data = store.getState().Life.get(`life/themes/${params.themeId}`)
+                defaultDescription = data.get('description') || defaultDescription
+                const keywords = data.get('keywords')
+                if (keywords && keywords.size) {
+                  metas.meta.push({
+                    name: 'keywords',
+                    content: _.join(keywords.toJS(), ',')
+                  })
+                }
                 if (data) {
                   themesList = Immutable.List([data])
                 }
               }
 
-              if (themesList) {
-                let themesFlat = themesList.map((theme) => {
-                  return theme.get('label')
-                })
-                themes = _.join(themesFlat.toJS(), ' - ') + ' |'
-              }
-              defaultTitle = this.getTitle('life.metas.title', {themes, defaultTitle})
             }
+
+            if (themesList) {
+              let themesFlat = themesList.map((theme) => {
+                return theme.get('label')
+              })
+              themes = _.join(themesFlat.toJS(), ' - ') + ' |'
+            }
+            defaultTitle = this.getTitle('life.metas.title', {themes, defaultTitle})
+
             if (params.lifeUserId) {
               data = store.getState().Life.get(`life/users/${params.lifeUserId}`)
               if (data) {
@@ -237,7 +263,7 @@ export default () => {
         return {metas, data}
       }
 
-      getMetadata () {
+      getMetadata() {
         const {props: {router}} = this
         const extractData = this.getdata()
         const data = extractData.data
@@ -273,6 +299,13 @@ export default () => {
           metas.meta.push({
             name: 'twitter:description',
             content: metas.description,
+          })
+        }
+
+        if (metas.keywords) {
+          metas.meta.push({
+            name: 'keywords',
+            content: metas.keywords,
           })
         }
 

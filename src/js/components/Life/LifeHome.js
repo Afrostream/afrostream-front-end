@@ -9,9 +9,9 @@ if (process.env.BROWSER) {
   require('./LifeHome.less')
 }
 
-@prepareRoute(async function ({store}) {
+@prepareRoute(async function ({store, params: {themeId}}) {
   return await Promise.all([
-    store.dispatch(LifeActionCreators.fetchThemes()),
+    store.dispatch(LifeActionCreators.fetchThemes(themeId)),
     store.dispatch(LifeActionCreators.fetchUserLikes()),
     store.dispatch(LifeActionCreators.fetchUsersFollow())
   ])
@@ -19,11 +19,11 @@ if (process.env.BROWSER) {
 @connect(({Life, User}) => ({Life, User}))
 class LifeHome extends Component {
 
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const {
       props: {
         dispatch,
@@ -36,7 +36,7 @@ class LifeHome extends Component {
     }
   }
 
-  render () {
+  render() {
     const {
       props: {
         children
