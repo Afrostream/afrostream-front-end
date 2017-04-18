@@ -32,9 +32,9 @@ class BrowsePage extends React.Component {
     const filterLife = countryCode === 'FR'
     return (
       <div className="row-fluid">
-        <SplashScreen key="splash-screens"/>,
-        <SlideShow key="slide-show" gradient={true}/>,
-        <UserMoviesList key="user-movies-list"/>,
+        <SplashScreen key="splash-screens"/>
+        <SlideShow key="slide-show" gradient={true}/>
+        <UserMoviesList key="user-movies-list"/>
         {filterLife && [
           <BrowseLifeUsersList key="life-users-list"/>,
           <BrowsePinsList key="browse-pins-list"/>,
