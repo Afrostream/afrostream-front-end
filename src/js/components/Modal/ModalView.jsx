@@ -7,6 +7,7 @@ import ModalSocial from './ModalSocial'
 import ModalCoupon from './ModalCoupon'
 import ModalCashwayPlan from './ModalCashwayPlan'
 import ModalSponsors from './ModalSponsors'
+import ModalDiscount from './ModalDiscount'
 import ModalPlayer from './ModalPlayer'
 import ModalImage from './ModalImage'
 import ModalComponent from './ModalComponent'
@@ -29,10 +30,10 @@ class ModalView extends React.Component {
     history: React.PropTypes.object
   }
 
-  render () {
+  render() {
     const {
       props: {
-        Modal, params:{lang}
+        Modal, params: {lang}
       }
     } = this
 
@@ -125,6 +126,9 @@ class ModalView extends React.Component {
         break
       case 'life-remove':
         return <ModalLifeRemove title="modal.removeTitle" {...{closable, cb, type, className, data}} {...this.props} />
+        break
+      case 'discount':
+        return <ModalDiscount {...{closable, cb, type, className, data}} {...this.props}/>
         break
       default:
         return <div />

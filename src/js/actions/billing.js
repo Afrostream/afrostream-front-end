@@ -7,10 +7,27 @@ import MobileDetect from 'mobile-detect'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import window from 'global/window'
 /**
+ * Get Config list for user
+ * @returns {Function}
+ */
+export function getConfig() {
+  return (dispatch, getState) => {
+    return async api => {
+      return {
+        type: ActionTypes.Billing.getConfig,
+        res: await api({
+          path: `/api/billings/config`,
+          passToken: true
+        })
+      }
+    }
+  }
+}
+/**
  * Get subscriptions list for user
  * @returns {Function}
  */
-export function getSubscriptions () {
+export function getSubscriptions() {
   return (dispatch, getState) => {
     const user = getState().User.get('user')
     if (!user) {
@@ -36,7 +53,7 @@ export function getSubscriptions () {
  * @param data
  * @returns {Function}
  */
-export function subscribe (data) {
+export function subscribe(data) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.subscribe,
@@ -55,7 +72,7 @@ export function subscribe (data) {
   }
 }
 
-export function cancelSubscription (subscription) {
+export function cancelSubscription(subscription) {
   return (dispatch, getState, actionDispatcher) => {
     let uuid = subscription.get('subscriptionBillingUuid')
     let plan = subscription.get('internalPlan')
@@ -77,13 +94,29 @@ export function cancelSubscription (subscription) {
   }
 }
 
+export function switchSubscription(subscription, toInternalPlanUuid) {
+  return (dispatch, getState, actionDispatcher) => {
+    const uuid = subscription.get('subscriptionBillingUuid')
+
+    return async api => ({
+      type: ActionTypes.Billing.switchSubscription,
+      res: await api({
+        path: `/api/billings/subscriptions/${uuid}/updateinternalplan/${toInternalPlanUuid}`,
+        method: 'PUT',
+        params: {timeframe: 'now'},
+        passToken: true
+      })
+    })
+  }
+}
+
 /**
  * validate an afrostream coupon
  *
  * @param data
  * @returns {Function}
  */
-export function couponValidate (data) {
+export function couponValidate(data) {
   return (dispatch, getState, actionDispatcher) => {
     return async api => ({
       type: ActionTypes.Billing.couponValidate,
@@ -121,7 +154,7 @@ export function couponValidate (data) {
  * @param data
  * @returns {Function}
  */
-export function couponActivate () {
+export function couponActivate() {
   return (dispatch, getState, actionDispatcher) => {
 
     const user = getState().User.get('user')
@@ -178,7 +211,7 @@ export function couponActivate () {
  * }
  * @returns {Function}
  */
-export function createCoupon (data) {
+export function createCoupon(data) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.createCoupon,
@@ -202,7 +235,7 @@ export function createCoupon (data) {
  * }
  * @returns {Function}
  */
-export function getSponsorsList (params) {
+export function getSponsorsList(params) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.sponsorsList,
@@ -219,7 +252,7 @@ export function getSponsorsList (params) {
  * Get coupon campain from billingProviderUuid
  * @returns {Function}
  */
-export function getCouponCampaigns (params) {
+export function getCouponCampaigns(params) {
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.getCouponCampaigns,
@@ -239,15 +272,15 @@ export function getCouponCampaigns (params) {
  * @param passToken
  * @returns {function(*, *)}
  */
-export function getInternalplans ({
-  contextBillingUuid = 'common',
-  internalPlanUuid = null,
-  passToken = true,
-  reload = false,
-  checkMobile = true,
-  userId = null,
-  country
-}) {
+export function getInternalplans({
+                                   contextBillingUuid = 'common',
+                                   internalPlanUuid = null,
+                                   passToken = true,
+                                   reload = false,
+                                   checkMobile = true,
+                                   userId = null,
+                                   country
+                                 }) {
 
   return (dispatch, getState, actionDispatcher) => {
     return async api => {

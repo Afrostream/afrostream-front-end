@@ -3,12 +3,13 @@ import ActionTypes from '../consts/ActionTypes'
 import createReducer from '../lib/createReducer'
 import _ from 'lodash'
 const initialState = Immutable.fromJS({
+  'getConfig': {},
   'coupon': {},
   'utm_medium': ''
 })
 
 
-function mergeData (origin, data) {
+function mergeData(origin, data) {
   if (!origin) {
     return data
   }
@@ -46,6 +47,16 @@ export default createReducer(initialState, {
     return state.merge(mergedValues)
   },
 
+  [ActionTypes.Billing.getConfig](state, {res}) {
+    if (!res) {
+      return state
+    }
+    const data = res.body.response
+    return state.merge({
+      ['config']: data && data.config || {}
+    })
+  },
+
   [ActionTypes.Billing.subscribe](state, {res}) {
     if (!res) {
       return state
@@ -57,6 +68,16 @@ export default createReducer(initialState, {
   },
 
   [ActionTypes.Billing.cancelSubscription](state, {res}) {
+    if (!res) {
+      return state
+    }
+    const data = res.body
+    return state.merge({
+      ['subscriptions']: mergeData(state.get('subscriptions'), data)
+    })
+  },
+
+  [ActionTypes.Billing.switchSubscription](state, {res}) {
     if (!res) {
       return state
     }

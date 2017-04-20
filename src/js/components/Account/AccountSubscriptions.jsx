@@ -1,14 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { Link } from '../Utils'
+import _ from 'lodash'
+import { Link, I18n } from '../Utils'
 import { formatPrice } from '../../lib/utils'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 import LinearProgress from 'material-ui/LinearProgress'
 import RaisedButton from 'material-ui/RaisedButton'
+import Q from 'q'
 import {
+  injectIntl,
   FormattedMessage,
 } from 'react-intl'
+import * as BillingActionCreators from '../../actions/billing'
+import * as ModalActionCreators from '../../actions/modal'
 
 if (process.env.BROWSER) {
   require('./AccountSubscriptions.less')
@@ -18,9 +23,85 @@ const style = {
 }
 
 @connect(({User, Billing}) => ({User, Billing}))
-class AccountSubscriptions extends React.Component {
+class AccountSubscriptions extends I18n {
 
-  render () {
+  async discountModal(currentSubscription) {
+    const {
+      props: {
+        User,
+        history,
+        dispatch
+      }
+    } = this
+
+    const user = User.get('user')
+    const internalPlan = currentSubscription.get('internalPlan')
+    const internalPlanUuid = internalPlan.get('internalPlanUuid')
+    const isPlanChangeCompatible = currentSubscription && (currentSubscription.get('isPlanChangeCompatible') === 'yes')
+
+    return await Q()
+      .then(() => {
+        if (!isPlanChangeCompatible) {
+          throw new Error('user cant switch plan now')
+        }
+        return isPlanChangeCompatible
+      })
+      .then(() => {
+        return dispatch(BillingActionCreators.getConfig())
+      })
+      .then(({
+               res: {
+                 body: {
+                   response: {config}
+                 }
+               }
+             }) => {
+        return _.find(config.planChangeProposalsOnCancel.internalPlans, (switchPlan) => {
+          return switchPlan.fromInternalPlanUuid === internalPlanUuid
+        })
+      })
+      .then((switchPlan) => {
+        if (!switchPlan) {
+          throw new Error('cant switch plan for the moment')
+        }
+        const {toInternalPlanUuid} = switchPlan
+        return dispatch(BillingActionCreators.getInternalplans({internalPlanUuid: toInternalPlanUuid}))
+      })
+      .then(({res: {body}}) => {
+        if (!body || !body.length) {
+          throw new Error('switch plan not compatible')
+        }
+
+        const plan = _.first(body)
+        if (!plan) {
+          throw new Error('switch plan not compatible')
+        }
+
+        const format = {
+          switchPrice: formatPrice(plan.amountInCents, plan.currency, true),
+          switchTime: this.getTitle(`account.billing.periods.${plan.periodUnit}`),
+          originalPrice: formatPrice(internalPlan.get('amountInCents'), internalPlan.get('currency'), true),
+          originalTime: this.getTitle(`account.billing.periods.${internalPlan.get('periodUnit')}`)
+        }
+
+        dispatch(ModalActionCreators.open({
+          target: 'discount',
+          className: 'large',
+          data: {
+            donePath: `/compte/cancel-subscription/${internalPlanUuid}`,
+            switchPlan: plan,
+            currentSubscription,
+            format
+          }
+        }))
+      }).catch((err) => {
+        debugger
+        history.push(`/compte/cancel-subscription/${internalPlanUuid}`)
+      })
+
+  }
+
+  render() {
     const {
       props: {
         Billing,
@@ -52,7 +133,6 @@ class AccountSubscriptions extends React.Component {
       return obj.get('isActive') === 'yes' && obj.get('isCancelable')
     })
     const isCancelable = currentSubscription && currentSubscription.get('isCancelable') && currentSubscription.get('subStatus') !== 'canceled'
-    const uuid = currentSubscription && currentSubscription.get('subscriptionBillingUuid')
 
     return (
       <div className="account-details__container col-md-12">
@@ -60,8 +140,11 @@ class AccountSubscriptions extends React.Component {
           <div className="pannel-header"><FormattedMessage id={ 'account.plan.header' }/></div>
           <div className="row-fluid row-profil">
             {isCancelable &&
-            <Link to={`/compte/cancel-subscription/${uuid}`} disabled={!isCancelable} style={style}>
-              <RaisedButton label={<FormattedMessage id={ 'account.plan.cancelPlan' }/>}/></Link>
+            <RaisedButton
+              onClick={(e) => this.discountModal(currentSubscription)}
+              disabled={!isCancelable}
+              style={style}
+              label={<FormattedMessage id={ 'account.plan.cancelPlan' }/>}/>
             }
             <Table displayRowCheckbox={false} style={{padding: '0'}}>
               <TableHeader style={{border: 'none'}} adjustForCheckbox={false} displaySelectAll={false}>
@@ -81,7 +164,6 @@ class AccountSubscriptions extends React.Component {
                 {subscriptionsList.map((subscription, i) => {
 
                     let subscriptionDate = moment(subscription.get('subActivatedDate') || subscription.get('creationDate')).format('L')
-                    let uuid = subscription.get('subscriptionBillingUuid')
                     let internalPlan = subscription.get('internalPlan')
                     let providerPlan = subscription.get('provider')
                     //PERIOD
@@ -141,4 +223,10 @@ class AccountSubscriptions extends React.Component {
   }
 }
 
-export default AccountSubscriptions
+AccountSubscriptions.propTypes = {
+  dispatch: React.PropTypes.func,
+  location: React.PropTypes.object.isRequired,
+  history: React.PropTypes.object.isRequired
+}
+
+export default injectIntl(AccountSubscriptions)

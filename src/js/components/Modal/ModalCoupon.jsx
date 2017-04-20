@@ -15,7 +15,7 @@ import Q from 'q'
 @connect(({Billing, User}) => ({Billing, User}))
 class ModalCoupon extends ModalComponent {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       success: false,
@@ -25,7 +25,7 @@ class ModalCoupon extends ModalComponent {
     }
   }
 
-  async finalyse () {
+  async finalyse() {
     const {
       props: {
         dispatch
@@ -40,7 +40,7 @@ class ModalCoupon extends ModalComponent {
         return dispatch(UserActionCreators.getProfile())
       }).then(() => {
         return this.props.history.push('/')
-      }).catch(({response:{body:{error, code, message}}}) => {
+      }).catch(({response: {body: {error, code, message}}}) => {
         const errorCode = (code && this.getTitle(`errors.${code}.message`))
         return this.setState({
           success: false,
@@ -51,12 +51,12 @@ class ModalCoupon extends ModalComponent {
       })
   }
 
-  handleClose (e) {
+  handleClose(e) {
     super.handleClose(e)
     this.props.history.push(`/`)
   }
 
-  async handleSubmit (event) {
+  async handleSubmit(event) {
     event.preventDefault()
 
     const {
@@ -87,12 +87,12 @@ class ModalCoupon extends ModalComponent {
         return dispatch(BillingActionCreators.couponValidate(formData))
       })
       .then(({
-        res:{
-          body:{
-            coupon
-          }
-        }
-      }) => {
+               res: {
+                 body: {
+                   coupon
+                 }
+               }
+             }) => {
         //coupon valid
         const status = coupon && coupon.status
         if (coupon && status === 'waiting') {
@@ -126,11 +126,11 @@ class ModalCoupon extends ModalComponent {
       })
   }
 
-  getI18n () {
+  getI18n() {
     return 'coupon'
   }
 
-  getForm () {
+  getForm() {
     if (this.state.success) {
       return (<div className="notloggedin mode">
         <div className="instructions">{this.getTitle('successText')}</div>
@@ -175,7 +175,7 @@ class ModalCoupon extends ModalComponent {
     )
   }
 
-  getCoupon () {
+  getCoupon() {
 
 
     const {
@@ -208,7 +208,7 @@ class ModalCoupon extends ModalComponent {
     )
   }
 
-  getRedeemCoupon () {
+  getRedeemCoupon() {
     return (
       <div className="emailPassword">
         <div className="inputs-wrapper">
@@ -223,7 +223,7 @@ class ModalCoupon extends ModalComponent {
     )
   }
 
-  render () {
+  render() {
 
     var errClass = classNames({
       'error': true,

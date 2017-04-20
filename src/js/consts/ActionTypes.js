@@ -19,12 +19,14 @@ export default {
 
   Billing: keyMirror({
     subscribe: null,
+    getConfig: null,
     getSubscriptions: null,
     getInternalplans: null,
     couponValidate: null,
     couponActivate: null,
     createCoupon: null,
     sponsorsList: null,
+    switchSubscription: null,
     cancelSubscription: null,
     getCouponCampaigns: null
   }),
