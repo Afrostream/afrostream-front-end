@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import * as UserActionCreators from '../../actions/user'
 import * as BillingActionCreators from '../../actions/billing'
 import ModalComponent from './ModalComponent'
+import Spinner from '../Spinner/Spinner'
 import { withRouter } from 'react-router'
 import Q from 'q'
 import {
@@ -94,7 +95,7 @@ class ModalDiscount extends ModalComponent {
     return 'discount'
   }
 
-  render() {
+  getForm() {
 
     const {
       props: {
@@ -108,6 +109,31 @@ class ModalDiscount extends ModalComponent {
       originalPrice: 6.99,
       originalTime: 'month',
     }, data && data.get('format') && data.get('format').toJS() || {})
+
+    if (this.state.loading) {
+      return (<div className="loading mode">
+        <Spinner/>
+      </div>)
+    }
+
+    if (this.state.success) {
+      return (<div />)
+    }
+
+    return <form noValidate="" onSubmit={::this.handleSubmit}>
+      <div className="instructions">{this.getTitle('description', mergeFormat)}</div>
+      <div className="action">
+        <button name="submit-btn" type="submit"
+                className="primary next">{this.getTitle('action', mergeFormat)}</button>
+        <div className="options">
+          <a onClick={::this.handleCancel}
+             className="centered btn-small cancel">{this.getTitle('cancel')}</a>
+        </div>
+      </div>
+    </form>
+  }
+
+  render() {
 
     var errClass = classNames({
       'error': true,
@@ -167,17 +193,7 @@ class ModalDiscount extends ModalComponent {
                     </div>
                     <div className="mode-container">
                       <div className="mode">
-                        {!this.state.success && <form noValidate="" onSubmit={::this.handleSubmit}>
-                          <div className="instructions">{this.getTitle('description', mergeFormat)}</div>
-                          <div className="action">
-                            <button name="submit-btn" type="submit"
-                                    className="primary next">{this.getTitle('action', mergeFormat)}</button>
-                            <div className="options">
-                              <a onClick={::this.handleCancel}
-                                 className="centered btn-small cancel">{this.getTitle('cancel')}</a>
-                            </div>
-                          </div>
-                        </form>}
+                        {this.getForm()}
                       </div>
                     </div>
                   </div>
