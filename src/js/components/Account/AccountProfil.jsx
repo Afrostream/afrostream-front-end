@@ -2,8 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
+import * as ModalActionCreators from '../../actions/modal'
 import * as SWActionCreators from '../../actions/sw'
-
+import classNames from 'classnames'
 import { Link } from '../Utils'
 import config from '../../../../config'
 import TextField from 'material-ui/TextField'
@@ -49,12 +50,12 @@ if (process.env.BROWSER) {
 @connect(({User, Geo}) => ({User, Geo}))
 class AccountProfil extends I18n {
 
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
-    this.state = {fetching: false}
+    this.state = {fetching: false, error: null}
   }
 
-  getAddressProperty (place, property, shortName) {
+  getAddressProperty(place, property, shortName) {
     const addressComponents = place.address_components
     for (let componentIndex in addressComponents) {
       let component = addressComponents[componentIndex]
@@ -71,7 +72,7 @@ class AccountProfil extends I18n {
     return null
   }
 
-  getStreetAddress (place) {
+  getStreetAddress(place) {
     let streetNumber = this.getAddressProperty(place, 'street_number')
     let street = this.getAddressProperty(place, 'route')
     let orEmpty = (entity) => {
@@ -84,7 +85,7 @@ class AccountProfil extends I18n {
     return place.name
   }
 
-  initMap () {
+  initMap() {
     const places = window.google && window.google.maps && window.google.maps.places
     const {addressLocation} = this.refs
     if (places && addressLocation && !addressLocation._autocomplete) {
@@ -109,12 +110,12 @@ class AccountProfil extends I18n {
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     this.initMap()
   }
 
 
-  updateUserHandler ({key, value, putData = {}}) {
+  updateUserHandler({key, value, putData = {}}) {
     const {
       props: {
         dispatch
@@ -142,7 +143,7 @@ class AccountProfil extends I18n {
   }
 
 
-  syncFB () {
+  syncFB() {
     const {
       props: {
         dispatch,
@@ -161,15 +162,16 @@ class AccountProfil extends I18n {
         this.setState({
           fetching: false
         })
-      }).catch(() => {
+      }).catch((err) => {
       this.setState({
-        fetching: false
+        fetching: false,
+        error: err.message
       })
     })
 
   }
 
-  validatePhone (v, bool = true) {
+  validatePhone(v, bool = true) {
     const {phoneInput} = this.refs
     let parsedNumber = bool && false || v
     let isValid = false
@@ -192,7 +194,7 @@ class AccountProfil extends I18n {
     return bool ? (isValid && parsedNumber) : parsedNumber
   }
 
-  formatPhone (p) {
+  formatPhone(p) {
     const {
       props: {
         Geo
@@ -209,7 +211,7 @@ class AccountProfil extends I18n {
     return formatedNumber
   }
 
-  renderFormElement (section) {
+  renderFormElement(section) {
     const {
       props: {
         User,
@@ -394,7 +396,7 @@ class AccountProfil extends I18n {
     return element
   }
 
-  renderUserProfile () {
+  renderUserProfile() {
     const {
       props: {
         profile
@@ -424,7 +426,7 @@ class AccountProfil extends I18n {
     </div>)
   }
 
-  render () {
+  render() {
     const {
       props: {
         User,
@@ -432,12 +434,18 @@ class AccountProfil extends I18n {
       }
     } = this
 
+    var errClass = classNames({
+      'error': true,
+      'hide': !this.state.error
+    })
+
     const user = User.get('user')
     if (!user) {
       return <div />
     }
     return (
       <div className={`account-details__container col-md-${col}`}>
+        <h2 className={errClass}>{this.state.error}</h2>
         <form>
           {this.renderUserProfile()}
         </form>

@@ -8,7 +8,7 @@ import window from 'global/window'
 import _ from 'lodash'
 import qs from 'qs'
 
-export function signin (form) {
+export function signin(form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
@@ -23,7 +23,7 @@ export function signin (form) {
   }
 }
 
-export function signup (form) {
+export function signup(form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
@@ -38,7 +38,7 @@ export function signup (form) {
   }
 }
 
-export function reset (form) {
+export function reset(form) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
     return async api => ({
@@ -58,7 +58,7 @@ export function reset (form) {
   }
 }
 
-export function refresh () {
+export function refresh() {
   return (dispatch, getState, actionDispatcher) => {
 
     let tokenData = getToken()
@@ -80,7 +80,7 @@ export function refresh () {
  * Get token from localStorage and set in store
  * @returns {Promise}
  */
-export function getIdToken () {
+export function getIdToken() {
   return () => {
     return {
       type: ActionTypes.OAuth.getIdToken
@@ -92,7 +92,7 @@ export function getIdToken () {
  * @param isSynchro
  * @returns {Function}
  */
-export function strategy ({strategy = 'facebook', path = 'signup'}) {
+export function strategy({strategy = 'facebook', path = 'signup'}) {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher(UserActionCreators.pendingUser(true))
 
@@ -146,7 +146,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
         }
         window[eventMethod](messageEvent, (event) => {
           console.log('received response:  ', event.data, event.origin, config.domain.host)
-          if (!~event.origin.indexOf(config.domain.host)) return
+          if (!~event.origin.indexOf(config.domain.host)) return reject(event.data)
           storeToken(event.data)
           beforeUnload()
         }, false)
@@ -155,7 +155,7 @@ export function strategy ({strategy = 'facebook', path = 'signup'}) {
   }
 }
 
-export function cookieCheck ({modalType = 'popup', strategy = 'netsize', internalPlan = {}}) {
+export function cookieCheck({modalType = 'popup', strategy = 'netsize', internalPlan = {}}) {
   return (dispatch, getState, actionDispatcher) => {
     return actionDispatcher(mobileSubscribe({strategy, modalType, path: 'check', internalPlan}))
   }
@@ -170,7 +170,7 @@ const encodeUrlCallback = function ({strategy, token, path, callback, encode = t
 }
 
 
-export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', internalPlan = {}, modalType = 'popup'}) {
+export function mobileSubscribe({strategy = 'netsize', path = 'subscribe', internalPlan = {}, modalType = 'popup'}) {
   return (dispatch, getState, actionDispatcher) => {
     return async () => {
       actionDispatcher(UserActionCreators.pendingUser(true))
@@ -189,12 +189,12 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
         let query = await _.merge({}, internalPlan, {
           'access_token': accessToken,
           'returnUrl': path === 'check' ? encodeUrlCallback({
-              strategy,
-              token: accessToken,
-              path: 'subscribe',
-              encode: false,
-              callback: finalCB
-            }) : finalCB
+            strategy,
+            token: accessToken,
+            path: 'subscribe',
+            encode: false,
+            callback: finalCB
+          }) : finalCB
         })
         //safe ecode url
         url = `${url}?${qs.stringify(query, null, null, {encodeURIComponent: e => e})}`
@@ -318,7 +318,7 @@ export function mobileSubscribe ({strategy = 'netsize', path = 'subscribe', inte
  * Logout user
  * @returns {Function}
  */
-export function logOut () {
+export function logOut() {
   return (dispatch, getState, actionDispatcher) => {
     actionDispatcher({
       type: ActionTypes.User.logOut

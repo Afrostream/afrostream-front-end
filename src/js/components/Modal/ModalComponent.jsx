@@ -5,7 +5,7 @@ import { I18n } from '../Utils'
 
 class ModalComponent extends I18n {
 
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
   }
 
@@ -14,43 +14,43 @@ class ModalComponent extends I18n {
     history: React.PropTypes.object
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (!this.props.closable) {
       this.closeModal()
     }
   }
 
-  closeModal () {
+  closeModal() {
     if (this.props.dispatch) {
       this.props.dispatch(ModalActionCreators.close())
     }
   }
 
-  getI18n () {
+  getI18n() {
     return 'modal'
   }
 
-  handleClose (e) {
+  handleClose(e) {
     e.stopPropagation()
     e.preventDefault()
     this.closeModal()
   }
 
-  renderContent () {
-    return
+  renderContent() {
+    return this.props.description && <h2>{this.getTitle(this.props.description)}</h2>
   }
 
-  renderTitle () {
+  renderTitle() {
     return this.props.title && <h1>{this.getTitle(this.props.title)}</h1>
   }
 
-  renderFooter () {
-    return
+  renderFooter() {
+    return this.props.footer
   }
 
-  render () {
+  render() {
 
-    const {props:{children, closable, className}} =this
+    const {props: {children, closable, className}} = this
     let closeClass = classNames({
       'close': true,
       'icon-budicon-3': true,
@@ -97,12 +97,14 @@ ModalComponent.propTypes = {
   dispatch: React.PropTypes.func,
   closable: React.PropTypes.bool,
   modal: React.PropTypes.bool,
+  footer: React.PropTypes.object,
   title: React.PropTypes.string,
   className: React.PropTypes.string,
   cb: React.PropTypes.func
 }
 
 ModalComponent.defaultProps = {
+  footer: null,
   closable: true,
   modal: true,
   className: ''

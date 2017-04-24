@@ -94,8 +94,7 @@ class AccountSubscriptions extends I18n {
             format
           }
         }))
-      }).catch((err) => {
-        debugger
+      }).catch(() => {
         history.push(`/compte/cancel-subscription/${internalPlanUuid}`)
       })
 
