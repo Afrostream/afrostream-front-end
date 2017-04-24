@@ -158,11 +158,18 @@ class AccountProfil extends I18n {
     }
     dispatch(OAuthActionCreators.strategy({strategy, isSynchro: user.get(strategy)}))
       .then(() => {
-        dispatch(UserActionCreators.getProfile())
-        this.setState({
-          fetching: false
-        })
-      }).catch((err) => {
+          dispatch(UserActionCreators.getProfile())
+          this.setState({
+            fetching: false
+          })
+        },
+        (err) => {
+          this.setState({
+            fetching: false,
+            error: err.message
+          })
+        }
+      ).catch((err) => {
       this.setState({
         fetching: false,
         error: err.message
