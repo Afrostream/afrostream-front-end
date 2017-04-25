@@ -207,7 +207,7 @@
   "planCodes": {
     "selectTitle": "Choose your plan",
     "onePlanTitle": "Your plan",
-    "noPlans": "There is no plan available for this country. For any question, you can write to support@afrostream.tv. Thank you for your understanding and support. Afrostream",
+    "noPlans": "There is no subscription plan available for this country. For any question, you can write to support@afrostream.tv. Thank you for your understanding and support. Afrostream",
     "noMobilePlans": "Choose another payment method",
     "freePeriodLabel": "and enjoy {trialPeriodLength} {trialPeriodUnit} test",
     "title": "Plan",
