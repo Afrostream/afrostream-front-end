@@ -12,6 +12,7 @@ import { prepareRoute } from '../decorators'
 import * as LifeActionCreators from '../actions/life'
 import * as CategoryActionCreators from '../actions/category'
 import LoginPage from './Login/LoginPage'
+import ModalNewsletter from './Modal/ModalNewsletter'
 
 @connect(({User, Billing, Geo}) => ({User, Billing, Geo}))
 @prepareRoute(async function ({store}) {
@@ -84,8 +85,21 @@ class HomePage extends React.Component {
     const user = User.get('user')
     if (user) {
       const authorized = user.get('authorized')
+      const header = `geowall.header`
+      const instructions = `geowall.instructions`
+      const result = `geowall.result`
+      const action = `geowall.action`
       if (!authorized) {
-        return <LoginPage modalType="newsletter" closable={false} {...this.props}/>
+        return <div className="row-fluid">
+          <div className="login-page">
+            <div className="auth-container">
+              <div id="login-container">
+                <ModalNewsletter closable={false} modal={false} {...this.props}
+                                 {...{header, instructions, result, action}}/>
+              </div>
+            </div>
+          </div>
+        </div>
       }
       if (children) {
         return children

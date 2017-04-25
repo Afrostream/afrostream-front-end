@@ -9,7 +9,7 @@ import {
 
 class ModalNewsletter extends ModalGeoWall {
 
-  constructor (props, context) {
+  constructor(props, context) {
     super(props, context)
   }
 
@@ -18,7 +18,7 @@ class ModalNewsletter extends ModalGeoWall {
     email: ''
   }
 
-  handleClose (e) {
+  handleClose(e) {
     const {
       props: {history}
     } = this
@@ -27,14 +27,14 @@ class ModalNewsletter extends ModalGeoWall {
     super.handleClose(e)
   }
 
-  initState () {
+  initState() {
     this.setState({
       sended: false,
       email: ''
     })
   }
 
-  handleSubmit (e) {
+  handleSubmit(e) {
     e.stopPropagation()
     e.preventDefault()
     const email = this.refs.email.value
@@ -47,7 +47,7 @@ class ModalNewsletter extends ModalGeoWall {
     })
   }
 
-  render () {
+  render() {
     if (!this.state.sended) {
       return super.render()
     }
@@ -93,7 +93,7 @@ class ModalNewsletter extends ModalGeoWall {
                     <div className="mode-container">
                       <div className="mode">
                         <div className="instructions">
-                          { this.getTitle(this.props.result)}
+                          <FormattedMessage id={`${this.props.result}`}/>
                         </div>
                       </div>
                     </div>
