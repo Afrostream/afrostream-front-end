@@ -139,13 +139,16 @@ export function strategy({strategy = 'facebook', path = 'signup'}) {
         //window.loginCallBack = beforeUnload
         let eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent'
         let messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message'
-        oauthPopup.onbeforeunload = (e) => {
+        oauthPopup.onbeforeunload = () => {
           intervalCheck = setTimeout(() => {
             beforeUnload(null)
           }, 1000)
         }
         window[eventMethod](messageEvent, (event) => {
           console.log('received response:  ', event.data, event.origin, config.domain.host)
+          if (event && event.data && event.data.message) {
+            return reject(event.data)
+          }
           if (!~event.origin.indexOf(config.domain.host)) return reject(event.data)
           storeToken(event.data)
           beforeUnload()

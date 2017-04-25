@@ -4,12 +4,13 @@ import Toggle from 'material-ui/Toggle'
 import * as OAuthActionCreators from '../../actions/oauth'
 import * as UserActionCreators from '../../actions/user'
 import config from '../../../../config'
+import classNames from 'classnames'
 import {
   FormattedMessage,
   FormattedHTMLMessage
 } from 'react-intl'
 
-const {oauth2}= config
+const {oauth2} = config
 
 if (process.env.BROWSER) {
   require('./AccountSocial.less')
@@ -18,13 +19,13 @@ if (process.env.BROWSER) {
 @connect(({User}) => ({User}))
 class AccountSocial extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
-    this.state = {fetching: false}
+    this.state = {fetching: false, error: null}
   }
 
 
-  synchroniseHandler ({isSynchro, strategy}) {
+  synchroniseHandler({isSynchro, strategy}) {
     const {
       props: {
         dispatch
@@ -37,19 +38,21 @@ class AccountSocial extends React.Component {
 
     dispatch(OAuthActionCreators.strategy({strategy, path: isSynchro ? 'unlink' : 'link'}))
       .then(() => {
-        dispatch(UserActionCreators.getProfile())
         this.setState({
-          fetching: false
+          fetching: false,
+          error: null
         })
-      }).catch(() => {
+        return dispatch(UserActionCreators.getProfile())
+      }).catch((err) => {
       this.setState({
-        fetching: false
+        fetching: false,
+        error: err.message
       })
     })
   }
 
 
-  getSocialProvider (user) {
+  getSocialProvider(user) {
 
 
     return _.filter(oauth2.providers, {active: true}).map((strategy) => {
@@ -81,7 +84,7 @@ class AccountSocial extends React.Component {
     })
   }
 
-  render () {
+  render() {
     const {
       props: {
         User,
@@ -93,11 +96,19 @@ class AccountSocial extends React.Component {
     if (!user) {
       return <div />
     }
-
+    var errClass = classNames({
+      'row-fluid row-profil': true,
+      'error': true,
+      'hide': !this.state.error
+    })
     return (
       <div className={`account-details__container col-md-${col}`}>
         <div className="panel-profil">
+
           <div className="pannel-header"><FormattedMessage id={ `account.profile.synchro` }/></div>
+          <div className={errClass}>
+            <h3>{this.state.error}</h3>
+          </div>
           <div className="row-fluid row-profil">
             {this.getSocialProvider(user)}
           </div>

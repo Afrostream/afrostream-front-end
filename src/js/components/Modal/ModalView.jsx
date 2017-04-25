@@ -67,12 +67,10 @@ class ModalView extends React.Component {
                            {...{header, instructions, result, action}}
           />
         )
-        break
       case 'cashway':
         return (
           <ModalCashwayPlan closable={closable} {...this.props}/>
         )
-        break
       case 'show':
       case 'showSignin':
       case 'showSignup':
@@ -84,52 +82,41 @@ class ModalView extends React.Component {
         return (
           <ModalLogin {...{closable, cb, type, className}} {...this.props}/>
         )
-        break
       case 'redeemCoupon':
         return (
           <ModalCoupon {...{closable, cb, type, className}} {...this.props}/>
         )
-        break
       case 'strategy':
         return (
           <ModalSocial {...{closable, cb, type, className, data}} {...this.props} />
         )
-        break
       case 'sponsorship':
         return (
           <ModalSponsors {...{closable, cb, type, className, data}} {...this.props} />
         )
-        break
       case 'player':
         return (
           <ModalPlayer {...{closable, cb, type, className, data}} {...this.props} />
         )
-        break
       case 'player':
         return (
           <ModalPlayer {...{closable, cb, type, className, data}} {...this.props}/>
         )
-        break
       case 'image':
         return (
           <ModalImage {...{closable, cb, type, className, data}} {...this.props} />
         )
-        break
       //LIFE ACL
       case 'life-premium':
       case 'life-vip':
         return <ModalComponent {...{closable, cb, type, className, data}} {...this.props}><SelectPlan {...this.props}
                                                                                                       showImages={false}/></ModalComponent>
-        break
       case 'life-add':
         return <ModalLifeAdd {...{closable, cb, type, className, data}} {...this.props} />
-        break
       case 'life-remove':
         return <ModalLifeRemove title="modal.removeTitle" {...{closable, cb, type, className, data}} {...this.props} />
-        break
       case 'discount':
         return <ModalDiscount {...{closable, cb, type, className, data}} {...this.props}/>
-        break
       default:
         return <div />
     }

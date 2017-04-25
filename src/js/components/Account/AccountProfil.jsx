@@ -162,12 +162,6 @@ class AccountProfil extends I18n {
           this.setState({
             fetching: false
           })
-        },
-        (err) => {
-          this.setState({
-            fetching: false,
-            error: err.message
-          })
         }
       ).catch((err) => {
       this.setState({
