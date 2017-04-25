@@ -207,7 +207,7 @@
   "planCodes": {
     "selectTitle": "Choisissez votre formule",
     "onePlanTitle": "Votre formule",
-    "noPlans": "Il n'y pas de formule d'abonnement disponible pour ce pays. Vous pouvez écrire à support@afrostream.tv pour toute question. Merci de votre compréhension. Afrostream",
+    "noPlans": "Il n'y a pas de formule d'abonnement disponible pour ce pays. Vous pouvez écrire à support@afrostream.tv pour toute question. Merci de votre compréhension. Afrostream",
     "noMobilePlans": "Choisir une autre offre",
     "freePeriodLabel": "et profitez de {trialPeriodLength} {trialPeriodUnit} d'essai",
     "title": "Formule",
