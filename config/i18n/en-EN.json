@@ -178,7 +178,7 @@
     "success": "Thank you",
     "duration": {
       "once": "on the next payment of your membership",
-      "repeating": "on the next payment of your membership",
+      "repeating": "on the {unit} nexts payment of your membership",
       "forever": " of your membership"
     }
   },
