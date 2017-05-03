@@ -55,7 +55,7 @@ class ModalDiscount extends ModalComponent {
     } = this
 
     const user = User.get('user')
-    const switchPlan = data.get('switchPlan')
+    const coupon = data.get('coupon')
     const currentSubscription = data.get('currentSubscription')
 
     this.setState({
@@ -65,10 +65,10 @@ class ModalDiscount extends ModalComponent {
     //Validate coupon
     return await Q()
       .then(() => {
-        if (!switchPlan) {
+        if (!coupon) {
           throw new Error('cant switch plan for the moment')
         }
-        return dispatch(BillingActionCreators.switchSubscription(currentSubscription, switchPlan.get('internalPlanUuid')))
+        return dispatch(BillingActionCreators.switchSubscription(currentSubscription, coupon.get('code')))
       })
       .then(({
                res: {
@@ -104,8 +104,8 @@ class ModalDiscount extends ModalComponent {
     } = this
 
     const mergeFormat = _.merge({
+      percent: 10,
       switchPrice: 3.99,
-      switchTime: 'month',
       originalPrice: 6.99,
       originalTime: 'month',
     }, data && data.get('format') && data.get('format').toJS() || {})

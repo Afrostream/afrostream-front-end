@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import config from '../../../../config'
 import _ from 'lodash'
 import { Link, I18n } from '../Utils'
 import { formatPrice } from '../../lib/utils'
@@ -14,6 +15,8 @@ import {
 } from 'react-intl'
 import * as BillingActionCreators from '../../actions/billing'
 import * as ModalActionCreators from '../../actions/modal'
+
+const {billingProviderName} = config.sponsors
 
 if (process.env.BROWSER) {
   require('./AccountSubscriptions.less')
@@ -37,7 +40,7 @@ class AccountSubscriptions extends I18n {
     const user = User.get('user')
     const internalPlan = currentSubscription.get('internalPlan')
     const internalPlanUuid = internalPlan.get('internalPlanUuid')
-    const isPlanChangeCompatible = currentSubscription && (currentSubscription.get('isPlanChangeCompatible') === 'yes')
+    const isPlanChangeCompatible = currentSubscription && (currentSubscription.get('isCouponCodeOnLifetimeCompatible') === 'yes')
 
     return await Q()
       .then(() => {
@@ -56,7 +59,10 @@ class AccountSubscriptions extends I18n {
                  }
                }
              }) => {
-        return _.find(config.planChangeProposalsOnCancel.internalPlans, (switchPlan) => {
+        if (!config || !config.couponCodeProposalsOnCancel || !config.couponCodeProposalsOnCancel.internalPlans) {
+          return null
+        }
+        return _.find(config.couponCodeProposalsOnCancel.internalPlans, (switchPlan) => {
           return switchPlan.fromInternalPlanUuid === internalPlanUuid
         })
       })
@@ -64,22 +70,32 @@ class AccountSubscriptions extends I18n {
         if (!switchPlan) {
           throw new Error('cant switch plan for the moment')
         }
-        const {toInternalPlanUuid} = switchPlan
-        return dispatch(BillingActionCreators.getInternalplans({internalPlanUuid: toInternalPlanUuid}))
+        const {toInternalPlanUuid, couponCode} = switchPlan
+        if (!couponCode) {
+          return dispatch(BillingActionCreators.getInternalplans({internalPlanUuid: toInternalPlanUuid}))
+        }
+        return dispatch(BillingActionCreators.couponValidate({
+          coupon: couponCode
+        }))
       })
       .then(({res: {body}}) => {
-        if (!body || !body.length) {
+
+        if (!body) {
           throw new Error('switch plan not compatible')
         }
 
-        const plan = _.first(body)
-        if (!plan) {
-          throw new Error('switch plan not compatible')
-        }
+        //const plan = _.first(body)
+        //if (!plan) {
+        //  throw new Error('switch plan not compatible')
+        //}
+
+        const {coupon} = body
+        const {campaign} = coupon
 
         const format = {
-          switchPrice: formatPrice(plan.amountInCents, plan.currency, true),
-          switchTime: this.getTitle(`account.billing.periods.${plan.periodUnit}`),
+          discount: this.getTitle(`discount.duration.${campaign.discountDuration}`),
+          switchPrice: campaign.amountInCents ? formatPrice(campaign.amountInCents, campaign.currency, true) : '',
+          percent: campaign.percent ? campaign.percent : '',
           originalPrice: formatPrice(internalPlan.get('amountInCents'), internalPlan.get('currency'), true),
           originalTime: this.getTitle(`account.billing.periods.${internalPlan.get('periodUnit')}`)
         }
@@ -89,7 +105,7 @@ class AccountSubscriptions extends I18n {
           className: 'large',
           data: {
             donePath: `/compte/cancel-subscription/${internalPlanUuid}`,
-            switchPlan: plan,
+            coupon,
             currentSubscription,
             format
           }

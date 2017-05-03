@@ -171,11 +171,16 @@
   },
   "discount": {
     "title": "Does everything have an end ? We have a final proposal for you.",
-    "description": "Change your mind NOW and get a {switchPrice}/{switchTime} membership instead of the {originalPrice}/{originalTime} you had. You will not have an opportunity like this again, get it NOW !",
-    "action": "I want that {switchPrice} membership",
+    "description": "Change your mind NOW and get -{percent}% off {discount}. You will not have an opportunity like this again, get it NOW !",
+    "action": "I want that",
     "cancel": "No thank you",
     "successTitle": "Your new subscription is done",
-    "success": "Thank you"
+    "success": "Thank you",
+    "duration": {
+      "once": "on the next payment of your membership",
+      "repeating": "on the next payment of your membership",
+      "forever": " of your membership"
+    }
   },
   "newsletter": {
     "header": "Newsletters",

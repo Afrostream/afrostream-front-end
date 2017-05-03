@@ -171,11 +171,16 @@
   },
   "discount": {
     "title": "Vous nous faites vos adieux ? On a une dernière proposition pour vous.",
-    "description": "Changez d’avis MAINTENANT et bénéficiez d’un abonnement à {switchPrice}/{switchTime} au lieu de {originalPrice}/{originalTime}. Cette offre ne se représentera plus, n’hésitez pas !",
-    "action": "Je reste abonné(e) pour {switchPrice} au lieu de {originalPrice}",
+    "description": "Changez d’avis MAINTENANT et bénéficiez de -{percent}% de réduction {discount}. Cette offre ne se représentera plus, n’hésitez pas !",
+    "action": "Je reste abonné(e)",
     "cancel": "Non merci",
     "successTitle": "Votre nouveau plan est activé",
-    "success": "Merci, et bonne continuation sur notre service"
+    "success": "Merci, et bonne continuation sur notre service",
+    "duration": {
+      "once": "sur le prochain prélèvement de votre abonnement",
+      "repeating": "sur les {unit} prochains prélèvements de votre abonnement",
+      "forever": "sur votre abonnement"
+    }
   },
   "newsletter": {
     "header": "Newsletter",

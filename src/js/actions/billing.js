@@ -94,16 +94,15 @@ export function cancelSubscription(subscription) {
   }
 }
 
-export function switchSubscription(subscription, toInternalPlanUuid) {
+export function switchSubscription(subscription, couponCode) {
   return (dispatch, getState, actionDispatcher) => {
     const uuid = subscription.get('subscriptionBillingUuid')
 
     return async api => ({
       type: ActionTypes.Billing.switchSubscription,
       res: await api({
-        path: `/api/billings/subscriptions/${uuid}/updateinternalplan/${toInternalPlanUuid}`,
+        path: `/api/billings/subscriptions/${uuid}/coupons/${couponCode}/redeem`,
         method: 'PUT',
-        params: {timeframe: 'now'},
         passToken: true
       })
     })
@@ -120,31 +119,11 @@ export function couponValidate(data) {
   return (dispatch, getState, actionDispatcher) => {
     return async api => ({
       type: ActionTypes.Billing.couponValidate,
-      statsd: {
-        method: 'increment',
-        key: 'billing.coupon.validate',
-        value: 1
-      },
       res: await api({
         path: `/api/billings/coupons`,
         params: data,
         passToken: true
-      })/*.catch((err) => {
-       actionDispatcher({
-       type: ActionTypes.Billing.couponValidate,
-       statsd: {
-       method: 'increment',
-       key: 'billing.coupon.validate',
-       value: 1
-       },
-       res: {
-       body: {
-       coupon: null
-       }
-       }
-       })
-       throw err
-       })*/
+      })
     })
   }
 }
@@ -212,6 +191,7 @@ export function couponActivate() {
  * @returns {Function}
  */
 export function createCoupon(data) {
+  coupon
   return (dispatch, getState) => {
     return async api => ({
       type: ActionTypes.Billing.createCoupon,
