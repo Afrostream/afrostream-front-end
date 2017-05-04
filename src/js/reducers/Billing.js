@@ -87,10 +87,10 @@ export default createReducer(initialState, {
     })
   },
 
-  [ActionTypes.Billing.couponValidate](state, {res}) {
+  [ActionTypes.Billing.couponValidate](state, {res, save}) {
     const data = res && res.body
     return state.merge({
-      ['coupon']: data && data.coupon
+      ['coupon']: save && data && data.coupon
     })
   },
 

@@ -76,7 +76,7 @@ class AccountSubscriptions extends I18n {
         }
         return dispatch(BillingActionCreators.couponValidate({
           coupon: couponCode
-        }))
+        }, false))
       })
       .then(({res: {body}}) => {
 

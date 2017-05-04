@@ -115,10 +115,11 @@ export function switchSubscription(subscription, couponCode) {
  * @param data
  * @returns {Function}
  */
-export function couponValidate(data) {
+export function couponValidate(data, save = true) {
   return (dispatch, getState, actionDispatcher) => {
     return async api => ({
       type: ActionTypes.Billing.couponValidate,
+      save,
       res: await api({
         path: `/api/billings/coupons`,
         params: data,
