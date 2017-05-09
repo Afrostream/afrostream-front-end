@@ -174,7 +174,7 @@
     "description": "Change your mind NOW and get -{percent}% off {discount}. You will not have an opportunity like this again, get it NOW !",
     "action": "I want that",
     "cancel": "No thank you",
-    "successTitle": "Your new subscription is done",
+    "successTitle": "Your discount has been applied",
     "success": "Thank you",
     "duration": {
       "once": "on the next payment of your membership",
