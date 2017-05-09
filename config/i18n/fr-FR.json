@@ -174,7 +174,7 @@
     "description": "Changez d’avis MAINTENANT et bénéficiez de -{percent}% de réduction {discount}. Cette offre ne se représentera plus, n’hésitez pas !",
     "action": "Je reste abonné(e)",
     "cancel": "Non merci",
-    "successTitle": "Votre nouveau plan est activé",
+    "successTitle": "Votre réduction a été appliquée",
     "success": "Merci, et bonne continuation sur notre service",
     "duration": {
       "once": "sur le prochain prélèvement de votre abonnement",
