@@ -37,6 +37,9 @@ let clientConfig = merge({}, webpackConfig, {
       colors: {
         green: '\u001b[32m',
       }
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
     }
   }
 })
@@ -110,4 +113,3 @@ let serverConfig = merge({}, webpackConfig, {
 serverConfig.output.path = serverConfig.output.path + '/server'
 
 export default clientConfig
-
