@@ -17,6 +17,9 @@ const {browserSyncServer: {bSyncHost, bSyncPort}} = config
 const webpackDevServerUrl = `http://${host}:${port}`
 let clientConfig = merge({}, webpackConfig, {
   devServer: {
+    // putain de webpack: disabling security check.
+    disableHostCheck: true,
+    //
     historyApiFallback: true,
     compress: false,
     inline: true,
