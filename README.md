@@ -17,11 +17,11 @@ npm run dev
 npm run staging
 ```
 
-Run localhost:3000 in browser 
+Run afrostream.dev:3000 in browser
 
 ##Deploy
 ```
-git push 
+git push
 ```
 Make on pull request build a new heroku app review automatically
 Push on master to build it
