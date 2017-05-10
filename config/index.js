@@ -57,7 +57,7 @@ const config = _.merge(
         }]
     },
     domain: {
-      host: process.env.DOMAIN_HOST || 'localhost'
+      host: process.env.DOMAIN_HOST || 'afrostream.dev'
     },
     subdomain: process.env.SUBDOMAIN || '',
     /**
@@ -75,7 +75,7 @@ const config = _.merge(
      * API Server
      */
     apiServer: {
-      urlPrefix: process.env.API_END_POINT || 'http://localhost:3002'
+      urlPrefix: process.env.API_END_POINT || 'http://afrostream.dev:3002'
     },
 
     /**
