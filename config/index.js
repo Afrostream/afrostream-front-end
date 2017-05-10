@@ -82,7 +82,7 @@ const config = _.merge(
      * WebpackDevServer
      */
     webpackDevServer: {
-      host: '0.0.0.0',
+      host: 'afrostream.dev',
       port: 8081
     },
     // List of user roles
@@ -91,7 +91,7 @@ const config = _.merge(
      * browserSync
      */
     browserSyncServer: {
-      host: '0.0.0.0',
+      host: 'afrostream.dev',
       port: 8082
     }
   }, client)
