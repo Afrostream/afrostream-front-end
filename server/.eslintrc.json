@@ -1,0 +1,33 @@
+{
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "plugins": [
+      "react"
+    ],
+    "extends": "eslint:recommended",
+    "globals": {
+      "rootRequire": true
+    },
+    "rules": {
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "semi": [
+          1,
+          "never"
+        ],
+        "no-console": "off"
+    },
+    "settings": {
+      "ecmascript": 6,
+      "jsx": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "sourceType": "module"
+    }
+}
