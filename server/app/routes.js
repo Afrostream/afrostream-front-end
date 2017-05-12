@@ -15,6 +15,8 @@ import _ from 'lodash'
 import * as controllerReact from './controller.react.js'
 import { alive as controllerAlive } from './controller.alive'
 
+import favicon from 'serve-favicon'
+
 import md5 from 'md5'
 
 // --------------------------------------------------
@@ -108,6 +110,11 @@ export default function routes (app) {
   parseMD5Files(app, app.get('buildFiles')).then((res) => {
     app.set('hashBuildFiles', res)
   })
+
+  app.use(express.static(app.get('staticPath')))
+  app.use('/chromecast', express.static(app.get('chromecastStaticPath')))
+
+  app.use(favicon(path.join(app.get('staticPath'), 'favicon.ico')))
 
   // static dir
   app.use('/static', function (req, res, next) {
