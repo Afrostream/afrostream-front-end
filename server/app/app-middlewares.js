@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import userIp from 'afrostream-node-middleware-userip'
 import allowOrigin from './middlewares/middleware-allowcrossdomain'
 import cacheHandler from './middlewares/middleware-cachehandler'
-import errorHandler from './middlewares/middlewares-errorhandler'
+import errorHandler from './middlewares/middleware-errorhandler'
 
 const setup = app => {
   app.use(forceSSL())
