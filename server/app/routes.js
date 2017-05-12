@@ -11,17 +11,18 @@ import config from '../../config'
 import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
-import render from './render'
-import { alive } from './controller'
+import * as controllerReact from './controller.react.js'
+import { alive as controllerAlive } from './controller.alive'
+
 import md5 from 'md5'
 
 // --------------------------------------------------
-
-const env = process.env.NODE_ENV || 'development'
 const {webpackDevServer: {host, port}} = config
+const env = process.env.NODE_ENV || 'development'
 const hostname = (env === 'development') ? `//${host}:${port}` : ''
 
-export default function routes (app, buildPath) {
+export default function routes (app) {
+  const buildPath = app.get('buildPath')
 
   const initFiles = [
     {file: 'localStoragePolyfill.js'},
@@ -126,6 +127,12 @@ export default function routes (app, buildPath) {
     return templateStr
   }
 
+  // static dir
+  app.use('/static', function (req, res, next) {
+    res.isStatic()
+    next()
+  }, express.static(buildPath))
+
   // SiteMap
   // --------------------------------------------------
   app.get('/sitemap.xml', (req, res) => {
@@ -181,7 +188,7 @@ export default function routes (app, buildPath) {
   // SHARING
   // --------------------------------------------------
 
-  app.use('/alive', alive)
+  app.get('/alive', controllerAlive)
 
   // COMPONENTS
   // --------------------------------------------------
@@ -197,32 +204,6 @@ export default function routes (app, buildPath) {
   app.get('/bootstrap.css', (req, res) => {
     res.send(bootstrapFiles(res, 'css', hashBuildFiles))
   })
-  // BOOTSTRAP
-  // --------------------------------------------------
-  // RENDER
-  // --------------------------------------------------
-  app.get('/*', (req, res) => {
-    //set .noCache() to uncaching site
 
-    res.cache()
-    const externalsJs = config.externalsJs
-    const initJs = hashInitFiles
-    // Render
-    const layout = 'layouts/main'
-    const payload = {
-      ADSenseId: config.google.adSenseKey,
-      GATrackingId: config.google.analyticsKey,
-      GAabCode: config.google.abCode,
-      GAabCodes: config.google.abCodes,
-      initJs,
-      externalsJs,
-      initialState: {},
-      body: ''
-    }
-
-    render(req, res, layout, {
-      payload
-    })
-  })
-
+  app.get('/*', controllerReact.renderMain)
 }
