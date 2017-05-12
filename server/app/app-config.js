@@ -1,6 +1,6 @@
 import path from 'path'
 
-const setup = app => {
+export const setup = app => {
   app.set('startDate', new Date())
   app.set('x-powered-by', false)
   app.set('etag', false)
@@ -24,5 +24,3 @@ const setup = app => {
   app.set('hashInitFiles', [])
   app.set('hashBuildFiles', [])
 }
-
-export default setup

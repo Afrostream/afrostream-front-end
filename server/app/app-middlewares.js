@@ -7,7 +7,7 @@ import allowOrigin from './middlewares/middleware-allowcrossdomain'
 import cacheHandler from './middlewares/middleware-cachehandler'
 import errorHandler from './middlewares/middleware-errorhandler'
 
-const setup = app => {
+export const setup = app => {
   app.use(forceSSL())
   app.use(forceWWW())
   app.use(compression())
@@ -19,5 +19,3 @@ const setup = app => {
   app.use(allowOrigin())
   app.use(errorHandler())
 }
-
-export default setup

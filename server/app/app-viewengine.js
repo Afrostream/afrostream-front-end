@@ -5,7 +5,7 @@ import expressHandlebars from 'express-handlebars'
 
 import config from '../../config'
 
-const setup = app => {
+export const setup = app => {
   handlebars.registerHelper('json-stringify', ::JSON.stringify)
   handlebars.registerHelper('json', function (context) {
     return JSON.stringify(context)
@@ -33,5 +33,3 @@ const setup = app => {
   }))
   app.set('view engine', 'hbs')
 }
-
-export default setup
