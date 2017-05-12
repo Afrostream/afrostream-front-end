@@ -21,7 +21,30 @@ import serializeJs from 'serialize-javascript'
 const pretty = new PrettyError()
 const {apps, apiServer, heroku} = config
 
-export default function render (req, res, layout, {payload, isStatic}) {
+export function renderMain(req, res) {
+  res.cache()
+
+  const externalsJs = config.externalsJs
+  const initJs = hashInitFiles
+  // Render
+  const layout = 'layouts/main'
+  const payload = {
+    ADSenseId: config.google.adSenseKey,
+    GATrackingId: config.google.analyticsKey,
+    GAabCode: config.google.abCode,
+    GAabCodes: config.google.abCodes,
+    initJs,
+    externalsJs,
+    initialState: {},
+    body: ''
+  }
+
+  render(req, res, layout, {
+    payload
+  })
+}
+
+export function renderLayout(req, res, layout, {payload, isStatic}) {
   const routes = isStatic ? staticRoutes : dynamikRoutes
   const history = useRouterHistory(useQueries(createMemoryHistory))()
   const location = history.createLocation(req.query.location || req.url)

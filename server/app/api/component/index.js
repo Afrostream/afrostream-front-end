@@ -1,5 +1,5 @@
 import express from 'express'
-import RenderStatic from '../../render'
+import RenderStatic from '../../controller.react'
 
 const router = express.Router()
 
