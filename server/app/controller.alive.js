@@ -1,4 +1,4 @@
-export function alive (req, res) {
+export function alive(req, res) {
   res.noCache()
   res.json({
     alive: true,
