@@ -1,4 +1,4 @@
-export default function (options) {
+export default function () {
   return function cacheHandler (req, res, next) {
     res.noCache = function () {
       // fastly exception

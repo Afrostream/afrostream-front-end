@@ -1,3 +1,10 @@
+import _ from 'lodash'
+
+import handlebars from 'handlebars'
+import expressHandlebars from 'express-handlebars'
+
+import config from '../../config'
+
 const setup = app => {
   handlebars.registerHelper('json-stringify', ::JSON.stringify)
   handlebars.registerHelper('json', function (context) {
@@ -7,12 +14,12 @@ const setup = app => {
     return _.get(config, context)
   })
   handlebars.registerHelper('_', function () {
-    var options = [].pop.call(arguments)
+    [].pop.call(arguments)
     var func = [].shift.call(arguments)
     return _[func].apply(_, arguments)
   })
   handlebars.registerHelper('inlineScript', function (p) {
-    if (Boolean(~'production|staging'.indexOf(process.env.NODE_ENV))) {
+    if ('production|staging'.indexOf(process.env.NODE_ENV) >= 0) {
       return `<script>${p}</script>`
     }
     return `<script src="${p}"></script>`

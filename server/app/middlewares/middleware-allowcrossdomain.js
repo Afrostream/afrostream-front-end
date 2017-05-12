@@ -1,6 +1,6 @@
 import config from '../../../config'
 
-const allowOrigin = function (options) {
+const allowOrigin = function () {
   return function (req, res, next) {
     res.header('Access-Control-Allow-Origin', config.apiClient.urlPrefix)
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST')

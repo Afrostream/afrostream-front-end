@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory, useQueries } from 'history'
 import { useRouterHistory, match } from 'react-router'
@@ -9,11 +8,7 @@ import { getPreferredLocales } from './locale'
 import createStore from '../../src/js/lib/createStore'
 import createAPI from '../../src/js/lib/createAPI'
 import { routes as dynamikRoutes, staticRoutes } from  '../../src/js/routes'
-import { RouterContext } from 'react-router'
-import { Provider } from 'react-redux'
-import { IntlProvider } from 'react-intl-redux'
 import PrettyError from 'pretty-error'
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import Helmet from 'react-helmet'
 import _ from 'lodash'
 import serializeJs from 'serialize-javascript'
@@ -25,7 +20,7 @@ export function renderMain(req, res) {
   res.cache()
 
   const externalsJs = config.externalsJs
-  const initJs = hashInitFiles
+  const initJs = req.app.get('hashInitFiles')
   // Render
   const layout = 'layouts/main'
   const payload = {
@@ -39,9 +34,7 @@ export function renderMain(req, res) {
     body: ''
   }
 
-  render(req, res, layout, {
-    payload
-  })
+  renderLayout(req, res, layout, { payload })
 }
 
 export function renderLayout(req, res, layout, {payload, isStatic}) {
@@ -154,9 +147,9 @@ export function renderLayout(req, res, layout, {payload, isStatic}) {
               result.push(collection.prepareRoute)
             }
             if (collection && collection.WrappedComponent) {
-              recursiveFunction(collection.WrappedComponent, result);
+              recursiveFunction(collection.WrappedComponent, result)
             }
-          };
+          }
 
           const prepareRouteMethods = _.reduce(renderProps.components, (result, component) => {
             recursiveFunction(component, result)
@@ -191,11 +184,11 @@ export function renderLayout(req, res, layout, {payload, isStatic}) {
 
           const format = req.query.format
           let metadata = Helmet.rewind()
+          let componentHtml
 
           switch (format) {
             case 'json':
-
-              const componentHtml = ReactDOMServer.renderToString(
+              componentHtml = ReactDOMServer.renderToString(
                 <Provider {...{store}}>
                   <IntlProvider>
                     <RouterContext {...{...renderProps, location}} childRoutes={routes}/>
@@ -207,8 +200,6 @@ export function renderLayout(req, res, layout, {payload, isStatic}) {
                 html: componentHtml,
                 state: initialState
               })
-
-              break
             default:
               return res.render(layout, {
                 ...payload,
@@ -225,7 +216,6 @@ export function renderLayout(req, res, layout, {payload, isStatic}) {
                 },
                 initialState
               })
-              break
           }
         }
       } catch (err) {
