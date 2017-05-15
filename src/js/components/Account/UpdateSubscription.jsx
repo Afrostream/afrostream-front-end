@@ -16,9 +16,6 @@ import {
 import {
   StripeForm
 } from '../Payment/Forms'
-// i18n ?
-//import config from '../../../../config'
-//import { I18n } from '../Utils'
 
 const style = {
   margin: 12
