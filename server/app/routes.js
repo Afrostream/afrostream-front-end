@@ -113,7 +113,6 @@ export default function routes (app) {
 
   app.use(express.static(app.get('staticPath')))
   app.use('/chromecast', express.static(app.get('chromecastStaticPath')))
-
   app.use(favicon(path.join(app.get('staticPath'), 'favicon.ico')))
 
   // static dir

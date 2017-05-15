@@ -1,3 +1,12 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+import { Provider } from 'react-redux'
+import { IntlProvider } from 'react-intl-redux'
+
+import { RouterContext } from 'react-router'
+
+
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory, useQueries } from 'history'
 import { useRouterHistory, match } from 'react-router'
@@ -7,22 +16,18 @@ import { getI18n } from '../../config/i18n'
 import { getPreferredLocales } from './locale'
 import createStore from '../../src/js/lib/createStore'
 import createAPI from '../../src/js/lib/createAPI'
-import { routes as dynamikRoutes, staticRoutes } from  '../../src/js/routes'
+import { dynamicRoutes, staticRoutes } from  '../../src/js/routes'
 import PrettyError from 'pretty-error'
 import Helmet from 'react-helmet'
 import _ from 'lodash'
 import serializeJs from 'serialize-javascript'
 
 const pretty = new PrettyError()
-const {apps, apiServer, heroku} = config
+const { apps, apiServer, heroku } = config
 
 export function renderMain(req, res) {
-  res.cache()
-
   const externalsJs = config.externalsJs
   const initJs = req.app.get('hashInitFiles')
-  // Render
-  const layout = 'layouts/main'
   const payload = {
     ADSenseId: config.google.adSenseKey,
     GATrackingId: config.google.analyticsKey,
@@ -34,11 +39,12 @@ export function renderMain(req, res) {
     body: ''
   }
 
-  renderLayout(req, res, layout, { payload })
+  res.cache()
+  renderLayout(req, res, 'layouts/main', { payload })
 }
 
 export function renderLayout(req, res, layout, {payload, isStatic}) {
-  const routes = isStatic ? staticRoutes : dynamikRoutes
+  const routes = isStatic ? staticRoutes : dynamicRoutes
   const history = useRouterHistory(useQueries(createMemoryHistory))()
   const location = history.createLocation(req.query.location || req.url)
   const {query} = location
@@ -77,7 +83,6 @@ export function renderLayout(req, res, layout, {payload, isStatic}) {
           .query(query)
           .set(headers)
       }
-
       return request(method, url)
         .query(query)
         .set(headers)
@@ -85,11 +90,9 @@ export function renderLayout(req, res, layout, {payload, isStatic}) {
     }
   )
 
-
-  match({
-      routes,
-      location
-    }, async (err, redirectLocation, renderProps) => {
+  match(
+    { routes, location }
+  , async (err, redirectLocation, renderProps) => {
       try {
         if (redirectLocation) {
           res.redirect(301, redirectLocation.pathname + redirectLocation.search)
