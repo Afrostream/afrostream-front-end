@@ -19,7 +19,10 @@ export const setup = app => {
     return _[func].apply(_, arguments)
   })
   handlebars.registerHelper('inlineScript', function (p) {
-    return `<script>${p}</script>`
+    if ('production|staging'.indexOf(process.env.NODE_ENV) >= 0) {
+      return `<script>${p}</script>`
+    }
+    return `<script src="${p}"></script>`
   })
 
   app.engine('hbs', expressHandlebars({

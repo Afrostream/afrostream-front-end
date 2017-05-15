@@ -24,10 +24,10 @@ const {webpackDevServer: {host, port}} = config
 const env = process.env.NODE_ENV || 'development'
 const hostname = (env === 'development') ? `//${host}:${port}` : ''
 
-function promiseFSAsync (filename) {
+function readFile(filename) {
   return new Promise(function (resolve, reject) {
     try {
-      fs.readFile(filename, function (err, data) {
+      fs.readFile(filename, (err, data) => {
         if (err) return reject(err)
         resolve(data)
       })
@@ -37,38 +37,29 @@ function promiseFSAsync (filename) {
   })
 }
 
-function parseMD5Files (app, files, inline) {
-  let promisedMd5 = []
-  let fileInfo
-  _.map(files, (item) => {
+function parseMD5Files (app, filesInfos, inline) {
+  return Promise.all(filesInfos.map(fileInfo => {
     if ('production|staging'.indexOf(env) >= 0) {
-      fileInfo = {
-        async: item.async || false,
-        file: item.file,
-        hash: md5(item.file)
-      }
-      if (inline) {
-        fileInfo.file = `${hostname}/static/${fileInfo.file}?${fileInfo.hash}`
-      }
-      return promisedMd5.push(fileInfo)
+      const filename = path.join(app.get('buildPath'), fileInfo.file)
+      // staging&prod: md5 based on the buffer
+      return readFile(filename)
+        .then(buf => {
+          return {
+            async: fileInfo.async || false,
+            file: (inline ? buf.toString() : fileInfo.file),
+            hash: md5(buf)
+          }
+        })
     }
-
-    promisedMd5.push(promiseFSAsync(path.join(app.get('buildPath'), item.file)).then((buf) => {
-
-      fileInfo = {
-        async: item.async || false,
-        file: item.file,
-        hash: md5(buf)
+    else {
+      // dev: md5 based on the filename
+      return {
+        async: fileInfo.async || false,
+        file: (inline ? `${hostname}/static/${fileInfo.file}?${fileInfo.hash}` : fileInfo.file),
+        hash: md5(fileInfo.file)
       }
-
-      if (inline) {
-        fileInfo.file = buf.toString()
-      }
-
-      return fileInfo
-    }))
-  })
-  return Promise.all(promisedMd5)
+    }
+  }))
 }
 
 const bootstrapFiles = function (res, type, bootstrapFiles) {
