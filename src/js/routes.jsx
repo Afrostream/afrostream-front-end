@@ -16,6 +16,7 @@ import * as Static from './components/Static'
 import * as Life from './components/Life'
 import AccountPage from './components/Account/AccountPage'
 import CancelSubscription from './components/Account/CancelSubscription'
+import UpdateSubscription from './components/Account/UpdateSubscription'
 import NoMatch from './components/NoMatch'
 //STATIC
 import Footer from './components/Footer/Footer'
@@ -96,6 +97,7 @@ const buildDynamicRoutes = langList =>
         , Route({ key: `${lang}-home`, name:'home', component: HomePage}
           , Route({key: `${lang}-compte`, name:'account', path:'account', component: AccountPage}
             , Route({key: `${lang}-cancelSubscription`, name:'cancelSubscription', path:'cancel-subscription(/:subscriptionBillingUuid)', component:CancelSubscription })
+            , Route({key: `${lang}-updateSubscription`, name:'updateSubscription', path:'update-subscription(/:subscriptionBillingUuid)', component:UpdateSubscription })
           )
           , Route({key: `${lang}-sponsorship`, name:'sponsorship', path:'sponsorship', component: SponsorsPage})
           , Route({key: `${lang}-last`, name:'last', path:'last', component: BrowseLastPage})
