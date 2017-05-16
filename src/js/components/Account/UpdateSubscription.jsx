@@ -9,6 +9,12 @@ import { withRouter } from 'react-router'
 import { isBoolean } from '../../lib/utils'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import scriptLoader from '../../lib/script-loader'
+import config from '../../../../config'
+const {
+  stripeApi
+} = config
+
 import {
   injectIntl
 } from 'react-intl'
@@ -35,6 +41,55 @@ class UpdateSubscription extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const state = {
+      subscription: null,
+      user: null,
+      stripeId: null
+    }
+
+    const {
+      Billing,
+      User,
+      params: {
+        subscriptionBillingUuid
+      },
+      location: {
+        pathname
+      }
+    } = nextProps
+
+    // FIXME: le processing de la data pourrait être calculé hors du render()
+    const subscriptionsList = Billing.get('subscriptions')
+    const user = User.get('user')
+
+    // FIXME: message d'erreur spécifique
+    if (!subscriptionsList ||
+        !user ||
+        !subscriptionBillingUuid) {
+      return this.setState({pending: false, error: 'user'})
+    }
+
+    let subscription = subscriptionsList.find((obj) => {
+      return obj.get('subscriptionBillingUuid') === subscriptionBillingUuid &&
+             obj.get('provider').get('providerName') === 'stripe'
+    })
+
+    if (!subscription ||
+        !subscription.get('user') ||
+        !subscription.get('user').get('userProviderUuid')) {
+      return this.setState({pending: false, error: 'subscription'})
+    }
+
+    const stripeId = subscription.get('user').get('userProviderUuid')
+
+    state.subscription = subscription
+    state.user = user
+    state.stripeId = stripeId
+    state.pending = false
+    this.setState(state)
+  }
+
   getUserSubscription (user) {
     let subscription = user.getIn(['subscriptionsStatus', 'subscriptions'])
       .filter(sub => {
@@ -53,8 +108,18 @@ class UpdateSubscription extends React.Component {
     return subscription.get('subscriptionBillingUuid')
   }
 
-  async submit(billingInfo, currentPlan) {
-    return await this.refs.stripe.submit(billingInfo, currentPlan)
+  async onSubmit(e) {
+    let billingInfo = {
+      firstName: this.state.user.firstName,
+      lastName: this.state.user.lastName
+    }
+
+    result = await this.refs.stripe.submit(billingInfo, null)
+
+    console.log(result)
+    console.log(result.subOpts.customerBankAccountToken)
+
+    return result
   }
 
   render () {
@@ -68,54 +133,46 @@ class UpdateSubscription extends React.Component {
         location: {
           pathname
         }
+      },
+      state: {
+        user, subscription, stripeId
       }
     } = this
 
-    // FIXME: le processing de la data pourrait être calculé hors du render()
-    const subscriptionsList = Billing.get('subscriptions')
-    const user = User.get('user')
-
-    // FIXME: message d'erreur spécifique
-    if (!subscriptionsList ||
-        !user ||
-        !subscriptionBillingUuid) {
-      return (
-        <div />
-      )
+    if (!subscription) {
+      return (<div />)
     }
-
-    let currentSubscription = subscriptionsList.find((obj) => {
-      console.log( obj.get('subscriptionBillingUuid')
-    , obj.toJSON(), obj.get('provider').get('providerName'))
-      return obj.get('subscriptionBillingUuid') === subscriptionBillingUuid &&
-             obj.get('provider').get('providerName') === 'stripe'
-    })
-
-    if (!currentSubscription ||
-        !currentSubscription.get('user') ||
-        !currentSubscription.get('user').get('userProviderUuid')) {
-      return (
-        <div />
-      )
-    }
-
-    const stripeId = currentSubscription.get('user').get('userProviderUuid')
-
-    console.log('stripe id = ', stripeId)
 
     return (
       <div className="panel-group">
-        Mise à jour des coordonnées bancaires (stripe ID: {stripeId})
-        <br/>
-        <StripeForm
-          key="method-stripe"
-          ref="stripe"
-          provider="stripe"
-          {...this.props}
-          selected={true}/>
+        <form ref="form" onSubmit={::this.onSubmit} id="subscription-update" data-async>
+          <div>
+            Mise à jour des coordonnées bancaires (stripe ID: {stripeId})
+          </div>
+          <StripeForm
+            key="method-stripe"
+            ref="stripe"
+            provider="stripe"
+            {...this.props}
+            selected={true}/>
+          <div className="row">
+            <div className="col-md-12">
+              <button
+                type="submit"
+                form="subscription-update"
+                className="button-create-subscription pull-right wecashup_button">
+                UPDATE
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     )
   }
 }
 
-export default withRouter(injectIntl(UpdateSubscription))
+export default scriptLoader(
+  [
+    stripeApi
+  ]
+)(withRouter(injectIntl(UpdateSubscription)))
