@@ -386,7 +386,7 @@ const client = {
     key: process.env.RECURLY_PUBLIC_KEY || ''
   },
   stripe: {
-    key: process.env.STRIPE_PUBLIC_KEY || ''
+    key: process.env.STRIPE_PUBLIC_KEY || 'pk_test_s9YFHvFFIjo2gdAL5x4k2ISh'
   },
   braintree: {
     key: process.env.BRAINTREE_PUBLIC_KEY || ''
