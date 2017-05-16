@@ -102,7 +102,7 @@ class RecurlyForm extends CouponForm {
       'cvv': cvc.getValue(),
       // optional attributes
       'unit-amount-in-cents': currentPlan.get('amountInCents'),
-      'coupon_code': couponCode.getValue(),
+      'coupon_code': (couponCode && couponCode.getValue() || ''),
       'country': country.getValue()
     }
 
@@ -119,7 +119,7 @@ class RecurlyForm extends CouponForm {
             billingProviderName: provider,
             subOpts: {
               customerBankAccountToken: token.id,
-              couponCode: couponCode.getValue()
+              couponCode: (couponCode && couponCode.getValue() || '')
             }
           })
         })
@@ -135,6 +135,8 @@ class RecurlyForm extends CouponForm {
 
   getForm () {
     if (!this.props.selected) return
+
+    const promoCode = this.props.noPromoCode ? '' : this.renderPromoCode()
 
     return (
       <div className="row no-padding">
@@ -183,7 +185,7 @@ class RecurlyForm extends CouponForm {
             </div>
           </div>
         </div>
-        {this.renderPromoCode()}
+        {promoCode}
       </div>
     )
   }

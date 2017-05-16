@@ -160,6 +160,7 @@ class UpdateSubscription extends React.Component {
               key="method-stripe"
               ref="stripe"
               provider="stripe"
+              noPromoCode={true}
               {...this.props}
               selected={true}/>
           </div>
