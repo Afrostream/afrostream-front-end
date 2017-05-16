@@ -23,6 +23,10 @@ import {
   StripeForm
 } from '../Payment/Forms'
 
+if (process.env.BROWSER) {
+  require('../Payment/PaymentPage.less')
+}
+
 const style = {
   margin: 12
 }
@@ -70,7 +74,9 @@ class UpdateSubscription extends React.Component {
       return this.setState({pending: false, error: 'user'})
     }
 
-    let subscription = subscriptionsList.find((obj) => {
+    let subscription = subscriptionsList.find((obj, i) => {
+      console.log('subscription ', i, ' uuid ', obj.get('subscriptionBillingUuid'),
+       'provider', obj.get('provider').get('providerName'))
       return obj.get('subscriptionBillingUuid') === subscriptionBillingUuid &&
              obj.get('provider').get('providerName') === 'stripe'
     })
@@ -114,12 +120,12 @@ class UpdateSubscription extends React.Component {
       lastName: this.state.user.lastName
     }
 
-    result = await this.refs.stripe.submit(billingInfo, null)
+    e.preventDefault()
+
+    const result = await this.refs.stripe.submit(billingInfo, null)
 
     console.log(result)
     console.log(result.subOpts.customerBankAccountToken)
-
-    return result
   }
 
   render () {
@@ -140,30 +146,30 @@ class UpdateSubscription extends React.Component {
     } = this
 
     if (!subscription) {
-      return (<div />)
+      return (<div><pre>{JSON.stringify(this.state)}</pre></div>)
     }
 
     return (
-      <div className="panel-group">
-        <form ref="form" onSubmit={::this.onSubmit} id="subscription-update" data-async>
-          <div>
-            Mise à jour des coordonnées bancaires (stripe ID: {stripeId})
+      <div className="payment-wrapper">
+        <form ref="form" onSubmit={::this.onSubmit} id="subscription-update" data-async className="payment-form">
+          <div className="enter-payment-details">
+            Mise à jour des coordonnées bancaires
           </div>
-          <StripeForm
-            key="method-stripe"
-            ref="stripe"
-            provider="stripe"
-            {...this.props}
-            selected={true}/>
-          <div className="row">
-            <div className="col-md-12">
-              <button
-                type="submit"
-                form="subscription-update"
-                className="button-create-subscription pull-right wecashup_button">
-                UPDATE
-              </button>
-            </div>
+          <div className="panel">
+            <StripeForm
+              key="method-stripe"
+              ref="stripe"
+              provider="stripe"
+              {...this.props}
+              selected={true}/>
+          </div>
+          <div className="col-md-12">
+            <button
+              type="submit"
+              form="subscription-update"
+              className="button-create-subscription pull-right wecashup_button">
+              UPDATE
+            </button>
           </div>
         </form>
       </div>
