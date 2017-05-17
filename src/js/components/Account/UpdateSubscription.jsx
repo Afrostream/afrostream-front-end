@@ -49,7 +49,8 @@ class UpdateSubscription extends React.Component {
     const state = {
       subscription: null,
       user: null,
-      stripeId: null
+      stripeId: null,
+      disabled: false
     }
 
     const {
@@ -71,7 +72,7 @@ class UpdateSubscription extends React.Component {
     if (!subscriptionsList ||
         !user ||
         !subscriptionBillingUuid) {
-      return this.setState({pending: false, error: 'user'})
+      return this.setState({pending: false, error: new Error('user'), disabled: true})
     }
 
     let subscription = subscriptionsList.find((obj, i) => {
@@ -84,7 +85,7 @@ class UpdateSubscription extends React.Component {
     if (!subscription ||
         !subscription.get('user') ||
         !subscription.get('user').get('userProviderUuid')) {
-      return this.setState({pending: false, error: 'subscription'})
+      return this.setState({pending: false, error: new Error('subscription'), disabled: true})
     }
 
     const stripeId = subscription.get('user').get('userProviderUuid')
@@ -141,7 +142,7 @@ class UpdateSubscription extends React.Component {
         }
       },
       state: {
-        user, subscription, stripeId
+        user, subscription, stripeId, disabled
       }
     } = this
 
@@ -168,7 +169,8 @@ class UpdateSubscription extends React.Component {
             <button
               type="submit"
               form="subscription-update"
-              className="button-create-subscription pull-right wecashup_button">
+              className="button-create-subscription pull-right wecashup_button"
+              disabled={disabled}>
               UPDATE
             </button>
           </div>
