@@ -68,11 +68,9 @@ class UpdateSubscription extends I18n {
       }
     } = nextProps
 
-    // FIXME: le processing de la data pourrait être calculé hors du render()
     const subscriptionsList = Billing.get('subscriptions')
     const user = User.get('user')
 
-    // FIXME: message d'erreur spécifique
     if (!subscriptionsList ||
         !user ||
         !subscriptionBillingUuid) {
@@ -80,8 +78,9 @@ class UpdateSubscription extends I18n {
     }
 
     let subscription = subscriptionsList.find((obj, i) => {
-      console.log('subscription ', i, ' uuid ', obj.get('subscriptionBillingUuid'),
-       'provider', obj.get('provider').get('providerName'), obj.toJSON())
+      // debug:
+      //console.log('subscription ', i, ' uuid ', obj.get('subscriptionBillingUuid'),
+      // 'provider', obj.get('provider').get('providerName'), obj.toJSON())
       return obj.get('subscriptionBillingUuid') === subscriptionBillingUuid &&
              obj.get('provider').get('providerName') === 'stripe'
     })
@@ -130,6 +129,7 @@ class UpdateSubscription extends I18n {
         lastName: this.state.user.lastName
       }, null)
 
+      // debug:
       // console.log(result.subOpts.customerBankAccountToken)
 
       const {
@@ -138,6 +138,7 @@ class UpdateSubscription extends I18n {
         }
       } = this
 
+      // debug:
       // console.log(this.state.subscription)
 
       let billingResult = await dispatch(BillingActionCreators.updateUser({
@@ -147,7 +148,7 @@ class UpdateSubscription extends I18n {
 
       this.setState({disabled: false, loading: false, error: null})
 
-      // success: returning to page account
+      // success: returning to account page
       browserHistory.push('/account')
     } catch(e) {
       this.setState({disabled: false, loading: false, error: e})
@@ -177,8 +178,6 @@ class UpdateSubscription extends I18n {
     }
 
     const error = this.state.error ? this.getTitle('payment.errors.cannotUpdateSubscription') : ''
-
-    console.log(this.state.error)
 
     return (
       <div className="payment-wrapper">
