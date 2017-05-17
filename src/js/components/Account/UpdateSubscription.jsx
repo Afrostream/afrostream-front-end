@@ -77,7 +77,7 @@ class UpdateSubscription extends React.Component {
 
     let subscription = subscriptionsList.find((obj, i) => {
       console.log('subscription ', i, ' uuid ', obj.get('subscriptionBillingUuid'),
-       'provider', obj.get('provider').get('providerName'))
+       'provider', obj.get('provider').get('providerName'), obj.toJSON())
       return obj.get('subscriptionBillingUuid') === subscriptionBillingUuid &&
              obj.get('provider').get('providerName') === 'stripe'
     })
@@ -116,17 +116,38 @@ class UpdateSubscription extends React.Component {
   }
 
   async onSubmit(e) {
-    let billingInfo = {
-      firstName: this.state.user.firstName,
-      lastName: this.state.user.lastName
-    }
-
     e.preventDefault()
 
-    const result = await this.refs.stripe.submit(billingInfo, null)
+    this.setState({disabled: true})
 
-    console.log(result)
-    console.log(result.subOpts.customerBankAccountToken)
+    try {
+      const result = await this.refs.stripe.submit({
+        firstName: this.state.user.firstName,
+        lastName: this.state.user.lastName
+      }, null)
+
+      console.log(result)
+      console.log(result.subOpts.customerBankAccountToken)
+
+      const {
+        props: {
+          dispatch
+        }
+      } = this
+
+      console.log(this.state.subscription)
+
+      let billingResult = await dispatch(BillingActionCreators.updateUser({
+        billingUserUuid: this.state.subscription.get('user').get('userBillingUuid'),
+        billingUserInfos: { subOpts: { customerBankAccountToken: result.subOpts.customerBankAccountToken } }
+      }))
+
+      console.log('billing result ', billingResult)
+    } catch(e) {
+      console.log('error: ', e.message)
+      this.setState({error: e})
+    }
+    this.setState({disabled: false})
   }
 
   render () {

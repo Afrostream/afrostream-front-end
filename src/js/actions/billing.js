@@ -343,3 +343,17 @@ export function getInternalplans({
     }
   }
 }
+
+export function updateUser({billingUserUuid,billingUserInfos}) {
+  return (dispatch, getState) => {
+    return async api => ({
+      type: ActionTypes.Billing.updateUser,
+      res: await api({
+        path: `/api/billings/users/${billingUserUuid}`,
+        method: 'PUT',
+        params: billingUserInfos,
+        passToken: true
+      })
+    })
+  }
+}
