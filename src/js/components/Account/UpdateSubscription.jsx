@@ -12,6 +12,7 @@ import classSet from 'classnames'
 import Spinner from '../Spinner/Spinner'
 import scriptLoader from '../../lib/script-loader'
 import config from '../../../../config'
+import { I18n } from '../Utils'
 const {
   stripeApi
 } = config
@@ -33,7 +34,7 @@ const style = {
 }
 
 @connect(({Billing, User}) => ({Billing, User}))
-class UpdateSubscription extends React.Component {
+class UpdateSubscription extends I18n {
   static contextTypes = {
     history: PropTypes.object.isRequired
   }
@@ -177,7 +178,7 @@ class UpdateSubscription extends React.Component {
       <div className="payment-wrapper">
         <form ref="form" onSubmit={::this.onSubmit} id="subscription-update" data-async className="payment-form">
           <div className="enter-payment-details">
-            Mise à jour des coordonnées bancaires
+            {this.getTitle('payment.updateCreditCard')}
           </div>
           <div className="panel">
             <StripeForm

@@ -262,6 +262,7 @@
     "methodHeader": "Choisissez votre methode de payment",
     "name": "Votre Prénom",
     "lastName": "Votre Nom",
+    "updateCreditCard": "Mise à jour des coordonnées bancaires",
     "country": {
       "label": "Pays"
     },
@@ -352,7 +353,8 @@
       "fields": "Les champs indiqués semblent invalides : {fields}",
       "abo": "Erreur lors de la création de l’abonnement : ",
       "exludedCard": "Ce type ne carte n‘est pas pris en charge actuellement",
-      "retry": "Merci de réessayer"
+      "retry": "Merci de réessayer",
+      "cannotUpdateSubscription": "Une erreur s'est produite lors de la mise à jour"
     },
     "cgu": {
       "label": "J'accepte les Conditions Générales d'Utilisation",
