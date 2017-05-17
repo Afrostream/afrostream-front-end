@@ -8,7 +8,8 @@ import PaymentImages from '../Payment/PaymentImages'
 import { withRouter } from 'react-router'
 import { isBoolean } from '../../lib/utils'
 import RaisedButton from 'material-ui/RaisedButton'
-
+import classSet from 'classnames'
+import Spinner from '../Spinner/Spinner'
 import scriptLoader from '../../lib/script-loader'
 import config from '../../../../config'
 const {
@@ -50,6 +51,7 @@ class UpdateSubscription extends React.Component {
       subscription: null,
       user: null,
       stripeId: null,
+      loading: false,
       disabled: false
     }
 
@@ -118,7 +120,7 @@ class UpdateSubscription extends React.Component {
   async onSubmit(e) {
     e.preventDefault()
 
-    this.setState({disabled: true})
+    this.setState({disabled: true, loading: true})
 
     try {
       const result = await this.refs.stripe.submit({
@@ -147,7 +149,7 @@ class UpdateSubscription extends React.Component {
       console.log('error: ', e.message)
       this.setState({error: e})
     }
-    this.setState({disabled: false})
+    this.setState({disabled: false, loading: false})
   }
 
   render () {
@@ -163,7 +165,7 @@ class UpdateSubscription extends React.Component {
         }
       },
       state: {
-        user, subscription, stripeId, disabled
+        user, subscription, stripeId, disabled, loading
       }
     } = this
 
@@ -187,6 +189,13 @@ class UpdateSubscription extends React.Component {
               selected={true}/>
           </div>
           <div className="col-md-12">
+            <span className={classSet({
+              'spinner-payment': true,
+              'spinner-loading': this.state.loading
+            })}>
+              <Spinner />
+            </span>
+
             <button
               type="submit"
               form="subscription-update"
