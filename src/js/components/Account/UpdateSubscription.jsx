@@ -53,7 +53,8 @@ class UpdateSubscription extends I18n {
       user: null,
       stripeId: null,
       loading: false,
-      disabled: false
+      disabled: false,
+      error: null
     }
 
     const {
@@ -121,7 +122,7 @@ class UpdateSubscription extends I18n {
   async onSubmit(e) {
     e.preventDefault()
 
-    this.setState({disabled: true, loading: true})
+    this.setState({disabled: true, loading: true, error: null})
 
     try {
       const result = await this.refs.stripe.submit({
@@ -129,8 +130,7 @@ class UpdateSubscription extends I18n {
         lastName: this.state.user.lastName
       }, null)
 
-      console.log(result)
-      console.log(result.subOpts.customerBankAccountToken)
+      // console.log(result.subOpts.customerBankAccountToken)
 
       const {
         props: {
@@ -138,19 +138,21 @@ class UpdateSubscription extends I18n {
         }
       } = this
 
-      console.log(this.state.subscription)
+      // console.log(this.state.subscription)
 
       let billingResult = await dispatch(BillingActionCreators.updateUser({
         billingUserUuid: this.state.subscription.get('user').get('userBillingUuid'),
         billingUserInfos: { subOpts: { customerBankAccountToken: result.subOpts.customerBankAccountToken } }
       }))
 
-      console.log('billing result ', billingResult)
+      this.setState({disabled: false, loading: false, error: null})
+
+      // success: returning to page account
+      browserHistory.push('/account')
     } catch(e) {
-      console.log('error: ', e.message)
-      this.setState({error: e})
+      this.setState({disabled: false, loading: false, error: e})
     }
-    this.setState({disabled: false, loading: false})
+
   }
 
   render () {
@@ -171,8 +173,12 @@ class UpdateSubscription extends I18n {
     } = this
 
     if (!subscription) {
-      return (<div><pre>{JSON.stringify(this.state)}</pre></div>)
+      return (<div />)
     }
+
+    const error = this.state.error ? this.getTitle('payment.errors.cannotUpdateSubscription') : ''
+
+    console.log(this.state.error)
 
     return (
       <div className="payment-wrapper">
@@ -190,6 +196,8 @@ class UpdateSubscription extends I18n {
               selected={true}/>
           </div>
           <div className="col-md-12">
+            <span className="payment-error" style={{display:'inline-block',width:'inherit',color:'red'}}>{error}</span>
+
             <span className={classSet({
               'spinner-payment': true,
               'spinner-loading': this.state.loading
