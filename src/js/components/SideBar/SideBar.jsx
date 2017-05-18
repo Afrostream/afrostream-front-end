@@ -175,7 +175,7 @@ class SideBar extends React.Component {
 
     const geo = Geo.get('geo')
     const countryCode = geo.get('countryCode')
-    const filterLife = countryCode === 'FR'
+    const filterLife = true // countryCode === 'FR'
 
     const useTouch = this.state.dragSupported
     const rootProps = {
