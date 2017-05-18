@@ -197,8 +197,6 @@ class AccountSubscriptions extends I18n {
                     let providerLogo = providerLogos.hasOwnProperty(providerName) ? providerLogos[providerName] : ''
                     //STATUS
                     let subscriptionStatus = subscription.get('subStatus')
-                    // GUI
-                    const isUpdatable = (providerName === 'stripe')
 
                     let statusLabel
                     switch (subscriptionStatus) {
@@ -219,7 +217,7 @@ class AccountSubscriptions extends I18n {
                     }
 
                     let updateButton
-                    if (providerName === 'stripe' && i === 0) {
+                    if (providerName === 'stripe' && subscription.get('isActive') === 'yes') {
                       updateButton = <Link to={`/account/update-subscription/${subscription.get('subscriptionBillingUuid')}`}>
                         <RaisedButton label="UPDATE"/>
                       </Link>
