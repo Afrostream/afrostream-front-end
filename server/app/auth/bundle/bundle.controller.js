@@ -79,7 +79,7 @@ export async function getUserInfo (req, initialState) {
             })
         }
         throw err
-      });
+      })
 }
 
 exports.index = async function (req, res) {

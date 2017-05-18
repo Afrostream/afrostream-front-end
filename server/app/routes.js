@@ -1,3 +1,4 @@
+import express from 'express'
 import {
   proxy,
   avatar,
@@ -11,120 +12,105 @@ import config from '../../config'
 import fs from 'fs'
 import path from 'path'
 import _ from 'lodash'
-import render from './render'
-import { alive } from './controller'
+import * as controllerReact from './controller.react.js'
+import { alive as controllerAlive } from './controller.alive'
+
+import favicon from 'serve-favicon'
+
 import md5 from 'md5'
 
 // --------------------------------------------------
-
-const env = process.env.NODE_ENV || 'development'
 const {webpackDevServer: {host, port}} = config
+const env = process.env.NODE_ENV || 'development'
 const hostname = (env === 'development') ? `//${host}:${port}` : ''
 
-export default function routes (app, buildPath) {
-
-  const initFiles = [
-    {file: 'localStoragePolyfill.js'},
-    {file: 'customEventPolyfill.js'},
-    {file: 'requestAnimationFramePolyfill.js'},
-    {file: 'isMobile.js'}
-  ]
-  //FIXME get all webpack chunk files dynamicaly
-  const buildFiles = [
-    {file: 'vendor.js'},
-    {file: 'player.js'},
-    {file: 'main.js'},
-    {file: 'main.css'}
-  ]
-
-  function promiseFSAsync (filename) {
-
-    return new Promise(function (resolve, reject) {
-      try {
-        fs.readFile(filename, function (err, data) {
-          if (err) return reject(err)
-          resolve(data)
-        })
-      } catch (err) {
-        reject(err)
-      }
-    })
-  }
-
-  function parseMD5Files (files, inline) {
-
-    let promisedMd5 = []
-    let fileInfo
-    _.map(files, (item) => {
-      if (!Boolean(~'production|staging'.indexOf(env))) {
-        fileInfo = {
-          async: item.async || false,
-          file: item.file,
-          hash: md5(item.file)
-        }
-        if (inline) {
-          fileInfo.file = `${hostname}/static/${fileInfo.file}?${fileInfo.hash}`
-        }
-        return promisedMd5.push(fileInfo)
-      }
-
-      promisedMd5.push(promiseFSAsync(path.join(buildPath, item.file)).then((buf) => {
-
-        fileInfo = {
-          async: item.async || false,
-          file: item.file,
-          hash: md5(buf)
-        }
-
-        if (inline) {
-          fileInfo.file = buf.toString()
-        }
-
-        return fileInfo
-      }))
-    })
-    return Promise.all(promisedMd5)
-  }
-
-
-  let hashInitFiles = []
-  let hashBuildFiles = []
-  parseMD5Files(initFiles, true).then((res) => {
-    hashInitFiles = res
-  })
-  parseMD5Files(buildFiles).then((res) => {
-    hashBuildFiles = res
-  })
-// Render layout
-  const bootstrapFiles = function (res, type, bootstrapFiles) {
-    const matchType = new RegExp(`.${type}$`)
-    let files = _.filter(bootstrapFiles, (item) => {
-      return item.file.match(matchType)
-    })
-    let loadType = type === 'js' ? 'javascript' : type
-    res.noCache()
-    res.header('Content-type', `text/${loadType}`)
-    // Js files
-    let templateStr = ''
-    let fileLoader = ''
-    switch (type) {
-      case 'js':
-        fileLoader = `document.write('<scr' + 'ipt src="{url}" {async}></scr' + 'ipt>');`
-        break
-      case 'css':
-        fileLoader = ' @import url("{url}") screen;'
-        break
-      default:
-        break
+function readFile(filename) {
+  return new Promise(function (resolve, reject) {
+    try {
+      fs.readFile(filename, (err, data) => {
+        if (err) return reject(err)
+        resolve(data)
+      })
+    } catch (err) {
+      reject(err)
     }
-    _.map(files, (item) => {
-      let sourceFile = fileLoader.replace(/{url}/, `${hostname}/static/${item.file}?${item.hash}`)
-      sourceFile = sourceFile.replace(/{async}/, item.async ? 'async' : '')
-      templateStr += sourceFile
-    })
+  })
+}
 
-    return templateStr
+function parseMD5Files (app, filesInfos, inline) {
+  return Promise.all(filesInfos.map(fileInfo => {
+    if ('production|staging'.indexOf(env) >= 0) {
+      const filename = path.join(app.get('buildPath'), fileInfo.file)
+      // staging&prod: md5 based on the buffer
+      return readFile(filename)
+        .then(buf => {
+          return {
+            async: fileInfo.async || false,
+            file: (inline ? buf.toString() : fileInfo.file),
+            hash: md5(buf)
+          }
+        })
+    }
+    else {
+      // dev: md5 based on the filename
+      return {
+        async: fileInfo.async || false,
+        file: (inline ? `${hostname}/static/${fileInfo.file}?${fileInfo.hash}` : fileInfo.file),
+        hash: md5(fileInfo.file)
+      }
+    }
+  }))
+}
+
+const bootstrapFiles = function (res, type, bootstrapFiles) {
+  const matchType = new RegExp(`.${type}$`)
+  let files = _.filter(bootstrapFiles, (item) => {
+    return item.file.match(matchType)
+  })
+  let loadType = type === 'js' ? 'javascript' : type
+  res.noCache()
+  res.header('Content-type', `text/${loadType}`)
+  // Js files
+  let templateStr = ''
+  let fileLoader = ''
+  switch (type) {
+    case 'js':
+      fileLoader = `document.write('<scr' + 'ipt src="{url}" {async}></scr' + 'ipt>');`
+      break
+    case 'css':
+      fileLoader = ' @import url("{url}") screen;'
+      break
+    default:
+      break
   }
+  _.map(files, (item) => {
+    let sourceFile = fileLoader.replace(/{url}/, `${hostname}/static/${item.file}?${item.hash}`)
+    sourceFile = sourceFile.replace(/{async}/, item.async ? 'async' : '')
+    templateStr += sourceFile
+  })
+
+  return templateStr
+}
+
+export default function routes (app) {
+  const buildPath = app.get('buildPath')
+
+  parseMD5Files(app, app.get('initFiles'), true).then((res) => {
+    app.set('hashInitFiles', res)
+  })
+  parseMD5Files(app, app.get('buildFiles')).then((res) => {
+    app.set('hashBuildFiles', res)
+  })
+
+  app.use(express.static(app.get('staticPath')))
+  app.use('/chromecast', express.static(app.get('chromecastStaticPath')))
+  app.use(favicon(path.join(app.get('staticPath'), 'favicon.ico')))
+
+  // static dir
+  app.use('/static', function (req, res, next) {
+    res.isStatic()
+    next()
+  }, express.static(buildPath))
 
   // SiteMap
   // --------------------------------------------------
@@ -181,7 +167,7 @@ export default function routes (app, buildPath) {
   // SHARING
   // --------------------------------------------------
 
-  app.use('/alive', alive)
+  app.get('/alive', controllerAlive)
 
   // COMPONENTS
   // --------------------------------------------------
@@ -191,38 +177,12 @@ export default function routes (app, buildPath) {
   // --------------------------------------------------
 
   app.get('/bootstrap.js', (req, res) => {
-    res.send(bootstrapFiles(res, 'js', hashBuildFiles))
+    res.send(bootstrapFiles(res, 'js', app.get('hashBuildFiles')))
   })
 
   app.get('/bootstrap.css', (req, res) => {
-    res.send(bootstrapFiles(res, 'css', hashBuildFiles))
-  })
-  // BOOTSTRAP
-  // --------------------------------------------------
-  // RENDER
-  // --------------------------------------------------
-  app.get('/*', (req, res) => {
-    //set .noCache() to uncaching site
-
-    res.cache()
-    const externalsJs = config.externalsJs
-    const initJs = hashInitFiles
-    // Render
-    const layout = 'layouts/main'
-    const payload = {
-      ADSenseId: config.google.adSenseKey,
-      GATrackingId: config.google.analyticsKey,
-      GAabCode: config.google.abCode,
-      GAabCodes: config.google.abCodes,
-      initJs,
-      externalsJs,
-      initialState: {},
-      body: ''
-    }
-
-    render(req, res, layout, {
-      payload
-    })
+    res.send(bootstrapFiles(res, 'css', app.get('hashBuildFiles')))
   })
 
+  app.get('/*', controllerReact.renderMain)
 }

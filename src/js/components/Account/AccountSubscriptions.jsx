@@ -164,14 +164,15 @@ class AccountSubscriptions extends I18n {
             <Table displayRowCheckbox={false} style={{padding: '0'}}>
               <TableHeader style={{border: 'none'}} adjustForCheckbox={false} displaySelectAll={false}>
                 <TableRow style={{border: 'none'}} selectable={false}>
-                  <TableHeaderColumn width="15%"><FormattedMessage
+                  <TableHeaderColumn width="13%"><FormattedMessage
                     id={ `account.billing.dateLabel`}/></TableHeaderColumn>
-                  <TableHeaderColumn width="50%"><FormattedMessage
+                  <TableHeaderColumn width="45%"><FormattedMessage
                     id={ `account.billing.decriptionLabel`}/></TableHeaderColumn>
-                  <TableHeaderColumn width="20%"><FormattedMessage
-                    id={ `account.billing.methodLabel`}/></TableHeaderColumn>
                   <TableHeaderColumn width="15%"><FormattedMessage
+                    id={ `account.billing.methodLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn width="13%"><FormattedMessage
                     id={ `account.billing.statusLabel`}/></TableHeaderColumn>
+                  <TableHeaderColumn width="14%"></TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={false}>
@@ -196,6 +197,8 @@ class AccountSubscriptions extends I18n {
                     let providerLogo = providerLogos.hasOwnProperty(providerName) ? providerLogos[providerName] : ''
                     //STATUS
                     let subscriptionStatus = subscription.get('subStatus')
+                    // GUI
+                    const isUpdatable = (providerName === 'stripe')
 
                     let statusLabel
                     switch (subscriptionStatus) {
@@ -215,18 +218,29 @@ class AccountSubscriptions extends I18n {
                         break
                     }
 
+                    let updateButton
+                    if (providerName === 'stripe') {
+                      updateButton = <Link to={`account/update-subscription/${subscription.get('subscriptionBillingUuid')}`}>
+                        <RaisedButton label="UPDATE"/>
+                      </Link>
+                    }
+
                     return (
                       <TableRow key={`subscription-${i}-info`}>
-                        <TableRowColumn scope="row" width="15%">{subscriptionDate}</TableRowColumn>
-                        <TableRowColumn width="50%">
+                        <TableRowColumn scope="row" width="13%">{subscriptionDate}</TableRowColumn>
+                        <TableRowColumn width="45%">
                           {internalPlan.get('description')}
                           {period}
                           <LinearProgress style={{height: '0.7em'}} mode="determinate" value={percentComplete}/>
                         </TableRowColumn>
-                        <TableRowColumn width="20%"><img src={providerLogo} alt={providerName}
+                        <TableRowColumn width="15%">
+                          <img src={providerLogo} alt={providerName}
                                                          className="img-responsive"/></TableRowColumn>
-                        <TableRowColumn width="15%"><FormattedMessage
-                          id={ `account.billing.status.${statusLabel}` }/></TableRowColumn>
+                                                       <TableRowColumn width="13%"><FormattedMessage
+                        id={ `account.billing.status.${statusLabel}` }/></TableRowColumn>
+                        <TableRowColumn width="14%">
+                          {updateButton}
+                        </TableRowColumn>
                       </TableRow>)
                   }
                 ).toJS()}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ReduxRouter } from 'redux-router'
 import { RouterContext } from 'react-router'
-import routes from '../routes'
+import { dynamicRoutes } from '../routes'
 import { applyRouterMiddleware } from 'react-router'
 import useScroll from 'react-router-scroll/lib/useScroll'
 
@@ -21,7 +21,7 @@ class AppRouter extends React.Component {
       <ReduxRouter
         {...this.props}
         {...{RoutingContext}}>
-        {routes}
+        {dynamicRoutes}
       </ReduxRouter>
     )
   }

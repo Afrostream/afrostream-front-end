@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory, useQueries } from 'history'
 import { useRouterHistory, match } from 'react-router'
@@ -8,21 +7,35 @@ import { getI18n } from '../../config/i18n'
 import { getPreferredLocales } from './locale'
 import createStore from '../../src/js/lib/createStore'
 import createAPI from '../../src/js/lib/createAPI'
-import { routes as dynamikRoutes, staticRoutes } from  '../../src/js/routes'
-import { RouterContext } from 'react-router'
-import { Provider } from 'react-redux'
-import { IntlProvider } from 'react-intl-redux'
+import { dynamicRoutes, staticRoutes } from  '../../src/js/routes'
 import PrettyError from 'pretty-error'
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment'
 import Helmet from 'react-helmet'
 import _ from 'lodash'
 import serializeJs from 'serialize-javascript'
 
 const pretty = new PrettyError()
-const {apps, apiServer, heroku} = config
+const { apps, apiServer, heroku } = config
 
-export default function render (req, res, layout, {payload, isStatic}) {
-  const routes = isStatic ? staticRoutes : dynamikRoutes
+export function renderMain(req, res) {
+  const externalsJs = config.externalsJs
+  const initJs = req.app.get('hashInitFiles')
+  const payload = {
+    ADSenseId: config.google.adSenseKey,
+    GATrackingId: config.google.analyticsKey,
+    GAabCode: config.google.abCode,
+    GAabCodes: config.google.abCodes,
+    initJs,
+    externalsJs,
+    initialState: {},
+    body: ''
+  }
+
+  res.cache()
+  renderLayout(req, res, 'layouts/main', { payload })
+}
+
+export function renderLayout(req, res, layout, {payload, isStatic}) {
+  const routes = isStatic ? staticRoutes : dynamicRoutes
   const history = useRouterHistory(useQueries(createMemoryHistory))()
   const location = history.createLocation(req.query.location || req.url)
   const {query} = location
@@ -47,13 +60,9 @@ export default function render (req, res, layout, {payload, isStatic}) {
       query.from = query.from || heroku.appName
       query.country = query.country || locale || 'whatever'
 
-      console.log('server call query : ', query)
-
       if (local) {
         url = pathname
       }
-
-      console.log('url : ', url)
 
       //FIX HW disallow body null and return 502
       if (method === 'GET') {
@@ -61,7 +70,6 @@ export default function render (req, res, layout, {payload, isStatic}) {
           .query(query)
           .set(headers)
       }
-
       return request(method, url)
         .query(query)
         .set(headers)
@@ -69,11 +77,9 @@ export default function render (req, res, layout, {payload, isStatic}) {
     }
   )
 
-
-  match({
-      routes,
-      location
-    }, async (err, redirectLocation, renderProps) => {
+  match(
+    { routes, location }
+  , async (err, redirectLocation, renderProps) => {
       try {
         if (redirectLocation) {
           res.redirect(301, redirectLocation.pathname + redirectLocation.search)
@@ -131,9 +137,9 @@ export default function render (req, res, layout, {payload, isStatic}) {
               result.push(collection.prepareRoute)
             }
             if (collection && collection.WrappedComponent) {
-              recursiveFunction(collection.WrappedComponent, result);
+              recursiveFunction(collection.WrappedComponent, result)
             }
-          };
+          }
 
           const prepareRouteMethods = _.reduce(renderProps.components, (result, component) => {
             recursiveFunction(component, result)
@@ -168,11 +174,11 @@ export default function render (req, res, layout, {payload, isStatic}) {
 
           const format = req.query.format
           let metadata = Helmet.rewind()
+          let componentHtml
 
           switch (format) {
             case 'json':
-
-              const componentHtml = ReactDOMServer.renderToString(
+              componentHtml = ReactDOMServer.renderToString(
                 <Provider {...{store}}>
                   <IntlProvider>
                     <RouterContext {...{...renderProps, location}} childRoutes={routes}/>
@@ -184,8 +190,6 @@ export default function render (req, res, layout, {payload, isStatic}) {
                 html: componentHtml,
                 state: initialState
               })
-
-              break
             default:
               return res.render(layout, {
                 ...payload,
@@ -202,7 +206,6 @@ export default function render (req, res, layout, {payload, isStatic}) {
                 },
                 initialState
               })
-              break
           }
         }
       } catch (err) {

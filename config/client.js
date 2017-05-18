@@ -180,7 +180,7 @@ const client = {
   apiClient: {
     protocol: process.env.API_CLIENT_PROTOCOL || 'https',
     authority: process.env.API_CLIENT_AUTHORITY || 'afr-api-v1-staging.herokuapp.com',
-    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://localhost:3002',
+    urlPrefix: process.env.API_CLIENT_END_POINT || process.env.API_END_POINT || 'http://afrostream.dev:3002',
     token: 'accessToken',
     geo: 'geo'
   },
@@ -386,7 +386,7 @@ const client = {
     key: process.env.RECURLY_PUBLIC_KEY || ''
   },
   stripe: {
-    key: process.env.STRIPE_PUBLIC_KEY || ''
+    key: process.env.STRIPE_PUBLIC_KEY || 'pk_test_s9YFHvFFIjo2gdAL5x4k2ISh'
   },
   braintree: {
     key: process.env.BRAINTREE_PUBLIC_KEY || ''

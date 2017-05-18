@@ -28,7 +28,8 @@ export default {
     sponsorsList: null,
     switchSubscription: null,
     cancelSubscription: null,
-    getCouponCampaigns: null
+    getCouponCampaigns: null,
+    updateUser: null
   }),
 
   User: keyMirror({

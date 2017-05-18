@@ -57,12 +57,12 @@ clientConfig.plugins.push(
   new webpack.NoEmitOnErrorsPlugin(),
   new webpack.ProgressPlugin(function (percentage, message) {
     if (percentage === 0) {
-      console.log('');
-      console.log('webpack: bundle build is started ... wait a moment ...');
+      console.log('')
+      console.log('webpack: bundle build is started ... wait a moment ...')
     }
     if (percentage === 1) {
-      console.log('');
-      console.log('webpack: bundle build is now finished.');
+      console.log('')
+      console.log('webpack: bundle build is now finished.')
     }
   })
   //new BrowserSyncPlugin({

@@ -56,7 +56,7 @@ class StripeForm extends RecurlyForm {
             billingProviderName: provider,
             subOpts: {
               customerBankAccountToken: response.id,
-              couponCode: couponCode.getValue()
+              couponCode: (couponCode && couponCode.getValue() || '')
             }
           })
         })

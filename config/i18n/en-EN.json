@@ -262,6 +262,7 @@
     "methodHeader": "Choose your payment method",
     "name": "Your first name",
     "lastName": "Your name",
+    "updateCreditCard": "Credit card update",
     "country": {
       "label": "Country"
     },
@@ -352,7 +353,8 @@
       "fields": "The fields shown appear to be invalid: ",
       "abo": "Error creating the subscription:",
       "exludedCard": "This type does not currently support card",
-      "retry": "Please try again"
+      "retry": "Please try again",
+      "cannotUpdateSubscription": "An error occured during the update"
     },
     "cgu": {
       "label": "I accept the general terms of use",
