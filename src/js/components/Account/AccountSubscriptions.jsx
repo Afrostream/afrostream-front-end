@@ -220,7 +220,7 @@ class AccountSubscriptions extends I18n {
 
                     let updateButton
                     if (providerName === 'stripe') {
-                      updateButton = <Link to={`account/update-subscription/${subscription.get('subscriptionBillingUuid')}`}>
+                      updateButton = <Link to={`/account/update-subscription/${subscription.get('subscriptionBillingUuid')}`}>
                         <RaisedButton label="UPDATE"/>
                       </Link>
                     }
