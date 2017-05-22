@@ -102,19 +102,19 @@ class LifePin extends ClickablePin {
       }
     }= this
 
-    const currentUser = User.get('user')
+    const currentUser = User && User.get('user')
     const currentUserId = currentUser && currentUser.get('_id')
 
-    const type = data.get('type')
-    const pinnedDate = moment(data.get('date'))
-    const pinnedUser = data.get('user')
-    const pinnedUserId = pinnedUser.get('_id')
-    const description = data.get('description')
-    const themes = data.get('themes')
-    const pinRole = data.get('role')
+    const type = data && data.get('type')
+    const pinnedDate = moment(data && data.get('date'))
+    const pinnedUser = data && data.get('user')
+    const pinnedUserId = pinnedUser && pinnedUser.get('_id')
+    const description = data && data.get('description')
+    const themes = data && data.get('themes')
+    const pinRole = data && data.get('role')
     const isPremium = pinRole === 'premium' || pinRole === 'vip'
     const isFull = true
-    const isMobile = Event.get('isMobile')
+    const isMobile = Event && Event.get('isMobile')
     const isCurrentUser = pinnedUserId === currentUserId
 
     let imageUrl = extractImg({
@@ -149,10 +149,10 @@ class LifePin extends ClickablePin {
         <div className="card-body">
           <div className="card-meta">
             {themes && themes.map((theme, a) => <div key={`data-card-theme-${a}`}
-                                                     className="card-theme">{theme.get('label')}</div>)}
+                                                     className="card-theme">{theme && theme.get('label')}</div>)}
           </div>
           <div className="card-info">
-            <div target="_self">{data.get('title')}</div>
+            <div target="_self">{data && data.get('title')}</div>
           </div>
           {this.renderBubbles(isCurrentUser)}
         </div>
@@ -174,7 +174,7 @@ class LifePin extends ClickablePin {
           `${pinnedDate.format('L')}`
         }</span>
         {pinnedUser &&
-        <span className="date-nickname">{pinnedUser.get('nickname')}</span>
+        <span className="date-nickname">{pinnedUser && pinnedUser.get('nickname')}</span>
         }
       </div>
     </Link>)
