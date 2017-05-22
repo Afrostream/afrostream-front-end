@@ -112,16 +112,22 @@ class ModalLifeAdd extends ModalComponent {
     const {stepIndex, finished} = this.state
     if (finished) {
       const scrappedData = Life.get(`life/wrap/original`)
-      return dispatch(LifeActionCreators.publishPin(_.merge(scrappedData.toJS(), {
-        description: description.getValue()
-      }))).then(() => {
-        dispatch(EventActionCreator.snackMessage({message: 'life.modal.success'}))
-        this.closeModal()
-      }).catch((err) => {
-        console.log('life post error', err)
+
+      if (scrappedData) {
+        return dispatch(LifeActionCreators.publishPin(_.merge(scrappedData.toJS(), {
+          description: description.getValue()
+        }))).then(() => {
+          dispatch(EventActionCreator.snackMessage({message: 'life.modal.success'}))
+          this.closeModal()
+        }).catch((err) => {
+          console.log('life post error', err)
+          dispatch(EventActionCreator.snackMessage({message: 'life.modal.errors.post'}))
+          this.closeModal()
+        })
+      } else {
         dispatch(EventActionCreator.snackMessage({message: 'life.modal.errors.post'}))
         this.closeModal()
-      })
+      }
     }
     this.setState({
       stepIndex: stepIndex + 1
