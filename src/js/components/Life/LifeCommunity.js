@@ -36,7 +36,7 @@ class LifeCommunity extends Component {
     const themesList = Life.get('communityMenu')
 
     return (
-      <div className="life-theme life-community">
+      <div className="life-theme life-community" style={{paddingTop:'50px'}}>
         <SubNavigation {...{themesList}} to="/life/{_id}/{slug}" streaming={true}>
           <LifeSticky {...this.props}/>
         </SubNavigation>
