@@ -23,40 +23,40 @@ export function wrappPin (scrapUrl) {
     return async api => {
       let original = null
       let proxified = null
-      await api({
-        path: `/api/life/pins/scrap`,
-        method: 'POST',
-        passToken: true,
-        params: {
-          scrapUrl
-        }
-      }).then(({body}) => {
-        original = body
-        proxified = _.clone(body)
+      let scappedData, body
 
-        //find http in all values and proxify it in ssl
-        proxified = _.deepMap(proxified, (value) => {
-          const url = URL.parse(value || '')
-          if (value && url.protocol === 'http:') {
-            value = `/proxy?url=${encodeURIComponent(value)}`
+      try {
+        scappedData = await api({
+          path: `/api/life/pins/scrap`,
+          method: 'POST',
+          passToken: true,
+          params: {
+            scrapUrl
           }
-          return value
         })
+        body = scappedData.body
+      } catch (e) {
+        console.error(e)
+        throw new Error('Cannot fetch data ('+e.message+')')
+      }
 
-        const maxLength = 255
-        if (proxified.description && proxified.description.length >= maxLength) {
-          let shortDescription = proxified.description.substring(0, maxLength - 3) + '...'
-          proxified.description = shortDescription
-        }
+      original = body
+      proxified = _.clone(body)
 
-      }).catch((e) => {
-        console.log('wrapp error', e)
-        return {
-          type: ActionTypes.Life.wrappPin,
-          original,
-          proxified
+      //find http in all values and proxify it in ssl
+      proxified = _.deepMap(proxified, (value) => {
+        const url = URL.parse(value || '')
+        if (value && url.protocol === 'http:') {
+          value = `/proxy?url=${encodeURIComponent(value)}`
         }
+        return value
       })
+
+      const maxLength = 255
+      if (proxified.description && proxified.description.length >= maxLength) {
+        let shortDescription = proxified.description.substring(0, maxLength - 3) + '...'
+        proxified.description = shortDescription
+      }
 
       return {
         type: ActionTypes.Life.wrappPin,
