@@ -6,6 +6,7 @@ export function clearToken (oauthData) {
   return localStorage.removeItem(storageId)
 }
 
+// if you change this function, change also in main.js
 export function storeToken (oauthData) {
   const storageId = apiClient.token
   if (oauthData.access_token) {
