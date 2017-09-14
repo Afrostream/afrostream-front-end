@@ -102,7 +102,6 @@ class WelcomeHeader extends I18n {
             })}
             </div>
             <div className="mouse"/>
-            <SignUpButton className="subscribe-button" label={`home.${isHomeAB && 'abTest' || 'action'}`}/>
           </div>
         </BackgroundVideo>}
         {movieId && <SlideShow

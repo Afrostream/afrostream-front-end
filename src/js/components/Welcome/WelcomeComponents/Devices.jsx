@@ -63,7 +63,6 @@ class Devices extends I18n {
                   </li>))
               }
             </ul>
-            <SignUpButton label="home.devices.action" title="home.devices.titleAction" values={{movieName}}/>
           </div>
         </div>
       </section>

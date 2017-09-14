@@ -46,8 +46,6 @@ class WelcomeLife extends I18n {
               })}
             </div>
           </div>
-          <SignUpButton key="welcome-pgm-signup" className="subscribe-button"
-                        label={this.props.action}/>
         </Link>
       </section>
     )
