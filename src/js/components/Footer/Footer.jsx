@@ -95,13 +95,6 @@ class Footer extends Component {
                 </Link>
               </li>
               <li>
-                <a className="footer-link" href="mailto:support@afrostream.tv">
-                  <FormattedMessage
-                    id={ 'footer.support.help' }
-                  />
-                </a>
-              </li>
-              <li>
                 <Link className="footer-link" to={`/${switchLangRoute}`}
                       onClick={e => ::this.switchLang(e, switchLangRoute)}>
                   <span className={`flag-icon flag-icon-${switchLang}`}></span>
@@ -109,63 +102,8 @@ class Footer extends Component {
               </li>
             </ul>
           </div>
-          <div className="get-help col-xs-12 col-md-4 padding-left-paiement hidden-xs">
-            <FormattedMessage tagName="h4"
-                              id={ 'footer.recharge.title' }/>
-            <ul className="footer-links">
-              {showCashway && <li>
-                <Link className="footer-link" to="/cash">
-                  <FormattedMessage
-                    id={ 'footer.recharge.cashway' }
-                  />
-                  <img src="/images/payment/cashway-inline-white.png" width="60"
-                       className="img-responsive"/>
-                </Link>
-              </li>}
-              {!isOnUk && <li>
-                <Link className="footer-link" to="/store-locator">
-                  <FormattedMessage
-                    id={ 'footer.recharge.stores' }
-                  />
-                </Link>
-              </li>}
-              <li>
-                <Link className="footer-link" to="/coupon">
-                  <FormattedMessage
-                    id={ 'footer.recharge.coupon' }
-                  />
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="get-help col-xs-12 col-md-2 hidden-xs">
-            <FormattedMessage tagName="h4"
-                              id={ 'footer.pro.title' }/>
 
-            <ul className="footer-links">
-              {/*<li>
-               <Link className="footer-link" to="/company/jobs">
-               <FormattedMessage id={ 'footer.pro.jobs' }/>
-               </Link>
-               </li>*/}
-              <li>
-                <Link className="footer-link" to="/submit-content">
-                  <FormattedMessage id={ 'footer.pro.submit' }/>
-                </Link>
-              </li>
-              <li>
-                <Link className="footer-link" to="/company/press">
-                  <FormattedMessage id={ 'footer.pro.press' }/>
-                </Link>
-              </li>
-              {/*<li>
-               <Link className="footer-link" to="/company/press">
-               <FormattedMessage id={ 'footer.pro.mediaKit' }/>
-               </Link>
-               </li>*/}
-            </ul>
-          </div>
-          <div className="get-help col-xs-12 col-md-2 hidden-xs">
+           <div className="get-help col-xs-12 col-md-2 hidden-xs">
             <FormattedMessage tagName="h4"
                               id={ 'footer.apps.title' }/>
             <ul className="footer-links">
