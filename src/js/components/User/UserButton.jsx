@@ -61,17 +61,9 @@ class UserButton extends React.Component {
     const inputSigninAction = {
       onClick: event => ::this.showLock('showSignin')
     }
-    const inputSignupAction = {
-      onClick: event => ::this.showLock('showSignup')
-    }
 
     return (
       <ul className="nav">
-        <li>
-          <button role="button" className="btn-signup pull-right" {...inputSignupAction}>
-            <FormattedMessage id="signup.title"/>
-          </button>
-        </li>
         <li>
           <button role="button" className="btn-signin pull-right"  {...inputSigninAction}>
             <FormattedMessage id="signin.title"/>
