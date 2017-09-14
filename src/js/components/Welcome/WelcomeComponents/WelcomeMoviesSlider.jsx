@@ -49,6 +49,7 @@ class WelcomeMoviesSlider extends React.Component {
       }
     } = this
 
+    /*
     const user = User.get('user')
     if (user) {
       return router.push(this.props.to)
@@ -58,6 +59,7 @@ class WelcomeMoviesSlider extends React.Component {
       target: 'showSignup',
       donePath: this.props.to
     }))
+    */
   }
 
   render () {

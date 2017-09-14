@@ -39,9 +39,11 @@ class WelcomeHeader extends I18n {
       }
     } = this
 
+    /*
     dispatch(ModalActionCreators.open({
       target: 'showSignup'
     }))
+    */
   }
 
   render () {
