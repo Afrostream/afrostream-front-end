@@ -94,6 +94,14 @@ class Footer extends Component {
                   />
                 </Link>
               </li>
+              <li>          
+                  <a className="footer-link" href="mailto:support@afrostream.tv">
+                   <FormattedMessage
+                     id={ 'footer.support.help' }
+                   />
+                 </a>
+               </li>
+             
               <li>
                 <Link className="footer-link" to={`/${switchLangRoute}`}
                       onClick={e => ::this.switchLang(e, switchLangRoute)}>
