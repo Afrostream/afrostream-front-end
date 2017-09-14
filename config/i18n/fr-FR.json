@@ -212,7 +212,7 @@
   "planCodes": {
     "selectTitle": "Choisissez votre formule",
     "onePlanTitle": "Votre formule",
-    "noPlans": "Il n'y a pas de formule d'abonnement disponible pour ce pays. Vous pouvez écrire à support@afrostream.tv pour toute question. Merci de votre compréhension. Afrostream",
+    "noPlans": "Le service Afrostream ne propose plus de souscrire à un nouvel abonnement au service en France, Belgique, Luxembourg et Suisse et en Afrique",
     "noMobilePlans": "Choisir une autre offre",
     "freePeriodLabel": "et profitez de {trialPeriodLength} {trialPeriodUnit} d'essai",
     "title": "Formule",
