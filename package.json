@@ -170,7 +170,7 @@
     "transform-loader": "^0.2.2",
     "ua-parser": "^0.3.5",
     "url": "^0.11.0",
-    "url-loader": "^0.5.6",
+    "url-loader": "^0.6.0",
     "videojs-vtt.js": "^0.12.1",
     "webpack": "^2.2.1",
     "webpack-visualizer-plugin": "^0.1.10",
